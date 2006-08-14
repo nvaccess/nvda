@@ -28,6 +28,7 @@ confspec = StringIO("""# NVDA Configuration File
 		reportClassOfAllObjects = boolean(default=false)
 		reportKeyboardShortcuts = boolean(default=true)
 		reportTooltips = boolean(default=true)
+		reportHelpBalloons = boolean(default=true)
 
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)

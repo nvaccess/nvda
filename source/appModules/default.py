@@ -205,8 +205,11 @@ def event_hideObject(window,objectID,childID):
 def event_showObject(window,objectID,childID):
 	if objectID==-4:
 		accObject=getObjectFromEvent(window,objectID,childID)
-		if (conf["presentation"]["reportTooltips"] is True) and getObjectRole(accObject)==ROLE_SYSTEM_TOOLTIP:
-			audio.speakObjectProperties(roleName=getRoleName(ROLE_SYSTEM_TOOLTIP),value=getObjectName(accObject))
+		role=getObjectRole(accObject)
+		if conf["presentation"]["reportTooltips"] and role==ROLE_SYSTEM_TOOLTIP:
+			audio.speakObjectProperties(roleName=getRoleName(role),value=getObjectName(accObject))
+		elif conf["presentation"]["reportHelpBalloons"] and role==ROLE_SYSTEM_HELPBALLOON:
+			audio.speakObjectProperties(roleName=getRoleName(role),value=getObjectName(accObject))
 
 def event_objectAcceleratorChange(window,objectID,childID):
 	accObject=getObjectFromEvent(window,objectID,childID)
