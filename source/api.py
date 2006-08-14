@@ -713,3 +713,11 @@ def getCaretIndex():
 	(window,objectID,childID)=globalVars.focus_locator
 	point=getWindowInsertionPoint(window)
 	return point
+
+def key(name):
+	l = name.split("+")
+	if len(l) >= 2:
+		modifiers = frozenset(l[0:-1])
+	else:
+		modifiers = None
+	return (modifiers, l[-1])

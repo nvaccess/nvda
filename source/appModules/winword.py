@@ -68,11 +68,11 @@ def script_speakWord(key):
 			pass
 
 keyMap.update({
-(None, "ExtendedRight"): script_speakCharacter,
-(None, "ExtendedLeft"): script_speakCharacter,
-(None, "ExtendedUp"): script_speakLine,
-(None, "ExtendedDown"): script_speakLine,
-(None, "Back"): script_backspace,
-(frozenset(["Control"]), "ExtendedLeft"): script_speakWord,
-(frozenset(["Control"]), "ExtendedRight"): script_speakWord,
+key("ExtendedRight"): script_speakCharacter,
+key("ExtendedLeft"): script_speakCharacter,
+key("ExtendedUp"): script_speakLine,
+key("ExtendedDown"): script_speakLine,
+key("Back"): script_backspace,
+key("Control+ExtendedRight"): script_speakWord,
+key("Control+ExtendedLeft"): script_speakWord,
 })
