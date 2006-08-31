@@ -37,5 +37,6 @@
 "{":"left brace",
 "|":"bar",
 "}":"right brace",
-"~":"tilda"
+"~":"tilda",
+"•":"bullet",
 }

@@ -4,16 +4,17 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import struct
 import pyAA
-import win32api
-import win32con
-import win32com.client
 import win32gui
+import win32com.client
 import debug
 import globalVars
 import dictionaries
 from stateUtils import *
+import audio
+from config import conf
+import appModules
+import gui
 
 # Initialise WMI; required for getProcessName.
 _wmi = win32com.client.GetObject('winmgmts:')
@@ -23,11 +24,90 @@ _wmi = win32com.client.GetObject('winmgmts:')
 def quit():
 	globalVars.stayAlive=False
 
-def getSpeakableKeyList(keyList):
-	keyName=""
-	for key in keyList:
-		keyName="%s %s"%(keyName,key)
-	return keyName
+def showGui():
+	gui.showGui()
+
+def getCurrentAppModule():
+	return appModules.current
+
+def getFocusObject():
+	return globalVars.focusObject
+
+def getFocusLocator():
+	return globalVars.focus_locator
+
+def setFocusLocator(window,objectID,childID):
+	globalVars.focus_locator=(window,objectID,childID)
+
+def setFocusObject(obj):
+	globalVars.focusObject=obj
+	if globalVars.navigatorTracksFocus:
+		setNavigatorObject(obj)
+
+def getNavigatorObject():
+	return globalVars.navigatorObject
+
+def setNavigatorObject(obj):
+	globalVars.navigatorObject=obj
+	setNavigatorIndex(obj.getCaretIndex())
+
+
+def getNavigatorIndex():
+	return globalVars.navigatorIndex
+
+def setNavigatorIndex(index):
+	globalVars.navigatorIndex=index
+
+def keyHasScript(keyPress):
+	if getCurrentAppModule().keyMap.has_key(keyPress):
+		return True
+	if getFocusObject().keyMap.has_key(keyPress):
+		return True
+	return False
+
+def executeScript(keyPress):
+	script=getCurrentAppModule().keyMap.get(keyPress,None)
+	if not script:
+		script=getFocusObject().keyMap.get(keyPress,None)
+	if script:
+		try:
+			script(keyPress)
+			return True
+		except:
+			audio.speakMessage("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
+			debug.writeException("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
+			return False
+
+def eventExists(name,locator):
+	if getCurrentAppModule().__dict__.has_key("event_%s"%name):
+		return True
+	focusLocator=getFocusLocator()
+	focusObject=getFocusObject()
+	if (locator==focusLocator) and hasattr(focusObject,"event_%s"%name):
+		return True
+	return False
+
+def executeEvent(name,locator):
+	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
+	if event:
+		try:
+			event(obj)
+			return True
+		except:
+			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
+			debug.writeException("Error executing event %s from appModule"%event.__name__)
+			return False
+	focusLocator=getFocusLocator()
+	focusObject=getFocusObject()
+	if locator==focusLocator and hasattr(focusObject,"event_%s"%name): 
+		event=getattr(focusObject,"event_%s"%name)
+		try:
+			event()
+			return True
+		except:
+			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
+			debug.writeException("Error executing event %s from focusObject"%event.__name__)
+			return False
 
 def getRoleName(role):
 	if dictionaries.roleNames.has_key(role) is True:
@@ -49,113 +129,6 @@ def getStateName(state,opposite=False):
 	if opposite is True:
 		name="not %s"%name
 	return name
-
-def getObjectName(accObject):
-	try:
-		res=accObject.GetName()
-	except:
-		debug.writeError("api.getObjectName: failed to get name from object %s, but trying to get window name instead"%accObject)
-		res=None
-	if res is None:
-		try:
-			window=accObject.Window
-		except:
-			debug.writeError("api.getObjectName: failed to get window from object %s"%accObject)
-			return None
-		res=win32gui.GetWindowText(window)
-	return res
-
-def getObjectValue(accObject):
-	try:
-		return accObject.GetValue()
-	except:
-		debug.writeError("api.getObjectValue: failed to get value from object %s"%accObject)
-		return None
-
-def getObjectRole(accObject):
-	try:
-		return accObject.GetRole()
-	except:
-		debug.writeError("api.getObjectRole: failed to get role from object %s"%accObject)
-		return None
-
-def getObjectRoleText(accObject):
-	try:
-		return accObject.GetRoleText()
-	except:
-		debug.writeError("api.getObjectRoleText: failed to get role text from object %s"%accObject)
-		return None
-
-def getObjectStates(accObject):
-	try:
-		return accObject.GetState()
-	except:
-		debug.writeError("api.getObjectStates: failed to get states from object %s"%accObject)
-		return None
-
-def getObjectStateText(accObject):
-	try:
-		text=accObject.GetStateText()
-	except:
-		debug.writeError("api.getObjectStateText: failed to get state text for object %s"%accObject)
-		return None
-	return text
-
-def getObjectDescription(accObject):
-	try:
-		return accObject.GetDescription()
-	except:
-		debug.writeError("api.getObjectDescription: failed to get description from object %s"%accObject)
-		return None
-
-def getObjectHelp(accObject):
-	try:
-		return accObject.GetHelp()
-	except:
-		debug.writeError("api.getObjectHelp: failed to get help from object %s"%accObject)
-		return None
-
-def getObjectKeyboardShortcut(accObject):
-	try:
-		return accObject.GetKeyboardShortcut()
-	except:
-		debug.writeError("api.getObjectKeyboardShortcut: failed to get keyboard shortcut from object %s"%accObject)
-		return None
-
-def getObjectProcessID(accObject):
-	try:
-		return accObject.ProcessID
-	except:
-		debug.writeError("api.getObjectProcessID: failed to get process ID from object %s"%accObject)
-		return None
-
-def getObjectPath(accObject):
-	try:
-		return accObject.GetPath()
-	except:
-		debug.writeError("api.getObjectPath: failed to get path from object %s"%accObject)
-		return None
-
-def getObjectLocation(accObject):
-	try:
-		return accObject.GetLocation()
-	except:
-		debug.writeError("api.getObjectLocation: failed to get location from object %s"%accObject)
-		return None
-
-def getObjectPositionInGroup(accObject):
-	try:
-		index=accObject.GetChildID()
-	except:
-		debug.writeError("api.getObjectPositionInGroup: failed to get child ID from object %s"%accObject)
-		return None
-	try:
-		count=accObject.GetParent().GetChildCount()
-	except:
-		debug.writeError("api.getObjectPositionInGroup: failed to get parent's child count from object %s"%accObject)
-		return None
-	if index>0:
-		return "%d of %d" % (index,count)
 
 def getObjectGroupName(accObject):
 	try:
@@ -182,251 +155,23 @@ def getObjectGroupName(accObject):
 		debug.writeError("api.getObjectGroupName: error finding group name")
 		return None
 
-def getObjectClass(accObject):
-	try:
-		return accObject.GetClassName()
-	except:
-		debug.writeError("api.getObjectClass: failed to get class from object %s"%accObject)
-		return None
-
-def getObjectFromPoint(position):
+def getMSAAObjectFromPoint(position):
 	try:
 		return pyAA.AccessibleObjectFromPoint(position)
 	except:
 		debug.writeException("api.getObjectFromPoint")
 		return None
 
-def objectHasFocus(accObject):
-	try:
-		states=accObject.GetState()
-	except:
-		debug.writeError("api.objectHasFocus: failed to get states for object %s"%accObject)
-		return False
-	if states&pyAA.Constants.STATE_SYSTEM_FOCUSED:
-		return True
-	else:
-		return False
-
-def getFocusWindow():
-	return win32gui.GetFocus()
-
 def getForegroundWindow():
 	return win32gui.GetForegroundWindow()
 
-def getObjectActiveChild(accObject):
-	try:
-		return accObject.GetFocus()
-	except:
-		debug.writeError("api.getObjectActiveChild: failed to get active child object from object %s"%accObject)
-		return None
-
-def getObjectFromEvent(window,objectID,childID):
+def getMSAAObjectFromEvent(window,objectID,childID):
 	try:
 		accObject=pyAA.AccessibleObjectFromEvent(window,objectID,childID)
 	except:
 		debug.writeError("api.getObjectFromEvent: failed to get object with window %d, object ID %d, and child ID %d"%(window,objectID,childID))
 		return None
 	return accObject
-
-def getWindowFromObject(accObject):
-	try:
-		return accObject.Window
-	except:
-		debug.writeError("api.getWindowFromObject: failed to get window from object %s"%accObject)
-		return None
-
-def getObjectChildCount(accObject):
-	try:
-		return accObject.GetChildCount()
-	except:
-		debug.writeError("api.getObjectChildCount: failed to get child count from object %s"%accObject) 
-		return None
-
-def getObjectChildID(accObject):
-	try:
-		return accObject.GetChildID()
-	except:
-		debug.writeError("api.getObjectChildID: failed to get child ID from object %s"%accObject) 
-		return None
-
-def getObjectChildren(accObject):
-	children=[]
-	try:
-		for child in accObject.GetChildren():
-			if getObjectRole(child)==ROLE_SYSTEM_WINDOW:
-				child=getObjectFromEvent(getWindowFromObject(child),-4,0)
-			if child is not None:
-				children.append(child)
-	except:
-		debug.writeError("api.getObjectChildren: exception in accObject.GetChildren()")
-		return None
-	if len(children)>0:
-		return children
-	else:
-		return None
-
-def getObjectSelectedChildren(accObject):
-	try:
-		return accObject.GetSelection()
-	except:
-		debug.writeError("api.getObjectSelectedChildren: failed to get selected items from object %s"%accObject) 
-		return None
-
-def getObjectParent(accObject):
-	try:
-		accObject=accObject.GetParent()
-	except:
-		debug.writeError("api.getObjectParent: failed to get parent object") 
-		return None
-	try:
-		role=accObject.GetRole()
-	except:
-		debug.writeError("api.getObjectParent: failed to get role of object %s"%accObject)
-		return None
-	if role==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-		try:
-			accObject=accObject.GetParent()
-			accObject=pyAA.AccessibleObjectFromEvent(accObject.Window,pyAA.Constants.OBJID_CLIENT,0)
-		except:
-			debug.writeError("api.getObjectParent: failed to get client object of parent window")
-			return None
-	try:
-		role=accObject.GetRole()
-	except:
-		debug.writeError("api.getObjectNext: failed to get role for next object")
-		role=None
-	if (role is not None) and (role>=0):
-		return accObject
-	else:
-		return None
-
-def getObjectNext(accObject):
-	try:
-		parentRole=accObject.GetParent().GetRole()
-	except:
-		parentRole=None
-	if parentRole==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-		try:
-			accObject=pyAA.AccessibleObjectFromEvent(accObject.GetParent().Navigate(pyAA.Constants.NAVDIR_NEXT).Window,pyAA.Constants.OBJID_CLIENT,0)
-		except:
-			debug.writeError("api.getObjectNext: failed to get next client object via parent window object")
-			return None
-	else:
-		try:
-			accObject=accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-		except:
-			debug.writeError("api.getObjectNext: failed to get next object")
-			return None
-	try:
-		role=accObject.GetRole()
-	except:
-		debug.writeError("api.getObjectNext: failed to get role for next object")
-		role=None
-	if (role is not None) and (role>=0):
-		return accObject
-	else:
-		return None
-
-def getObjectPrevious(accObject):
-	try:
-		parentRole=accObject.GetParent().GetRole()
-	except:
-		parentRole=None
-	if parentRole==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-		try:
-			accObject=pyAA.AccessibleObjectFromEvent(accObject.GetParent().Navigate(pyAA.Constants.NAVDIR_PREVIOUS).Window,pyAA.Constants.OBJID_CLIENT,0)
-		except:
-			debug.writeError("api.getObjectPrevious: failed to get previous client object via parent window object")
-			return None
-	else:
-		try:
-			accObject=accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-		except:
-			debug.writeError("api.getObjectPrevious: failed to get previous object")
-			return None
-	try:
-		role=accObject.GetRole()
-	except:
-		debug.writeError("api.getObjectNext: failed to get role for next object")
-		role=None
-	if (role is not None) and (role>=0):
-		return accObject
-	else:
-		return None
-
-def getObjectFirstChild(accObject):
-	o=None
-	childID=getObjectChildID(accObject)
-	if childID is None:
-		debug.writeError("api.getObjectFirstChild: failed to get a child ID from object %s"%accObject)
-		return None
-	if childID>0:
-		try:
-			o=accObject.GetChild(childID)
-		except:
-			debug.writeError("api.getObjectFirstChild: failed to get a real object from child ID %d of object %s"%(childID,accObject))
-			return None
-	else:
-		try:
-			o=accObject.Navigate(pyAA.Constants.NAVDIR_FIRSTCHILD)
-		except:
-			debug.writeError("api.getObjectFirstChild: failed to get child object")
-			return None
-		role=getObjectRole(o)
-		if role is None:
-			debug.writeError("api.getObjectFirstChild: failed to get role from object %s"%accObject)
-			return None
-		if role==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-			try:
-				o=pyAA.AccessibleObjectFromWindow(o.Window,pyAA.Constants.OBJID_CLIENT)
-			except:
-				debug.writeError("api.getObjectFirstChild: failed to get client object from window object")
-				return None
-	try:
-		role=o.GetRole()
-	except:
-		debug.writeError("api.getObjectNext: failed to get role for next object")
-		role=None
-	if (role is not None) and (role>=0):
-		return o
-	else:
-		return None
-
-def getObjectLeft(accObject):
-	try:
-		accObject=accObject.Navigate(pyAA.Constants.NAVDIR_RIGHT)
-	except:
-		debug.writeError("api.getObjectRight: failed to get left object")
-		return None
-
-
-def getObjectRight(accObject):
-	try:
-		accObject=accObject.Navigate(pyAA.Constants.NAVDIR_RIGHT)
-	except:
-		debug.writeError("api.getObjectRight: failed to get right object")
-		return None
-
-def getObjectUp(accObject):
-	try:
-		accObject=accObject.Navigate(pyAA.Constants.NAVDIR_UP)
-	except:
-		debug.writeError("api.getObjectUp: failed to get upobject")
-		return None
-
-def getObjectDown(accObject):
-	try:
-		accObject=accObject.Navigate(pyAA.Constants.NAVDIR_DOWN)
-	except:
-		debug.writeError("api.getObjectDown: failed to get down object")
-		return None
-
-def doObjectDefaultAction(accObject):
-	try:
-		accObject.DoDefaultAction()
-	except:
-		debug.writeError("DoObjectDefaultAction: failed to do default action of object %s"%accObject) 
-		return None
 
 def getWindowLocation(window):
 	return win32gui.GetClientRect(window)
@@ -717,7 +462,13 @@ def getCaretIndex():
 def key(name):
 	l = name.split("+")
 	if len(l) >= 2:
-		modifiers = frozenset(l[0:-1])
+		s=set()
+		for m in l[0:-1]:
+			m="%s%s"%(m[0].upper(),m[1:])
+			s.add(m)
+		modifiers = frozenset(s)
 	else:
 		modifiers = None
+	if len(l[-1])==1:
+		l[-1]=l[-1].upper()
 	return (modifiers, l[-1])

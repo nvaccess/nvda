@@ -4,10 +4,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-focus_locator=None
+focus_locator=(None,None,None)
+focusObject=None
+mouse_location=None
 navigatorObject=None
-navigatorObjectTuple=None
-navigatorPosition=None
+navigatorIndex=(0,0)
+navigatorTracksFocus=True
 textSymbols={}
 characterSymbols={}
 roleNames={}

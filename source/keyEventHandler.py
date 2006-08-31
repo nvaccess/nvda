@@ -8,12 +8,12 @@ import win32api
 import Queue
 import pyHook
 import debug
-import appModules
 import audio
+from api import *
 
 queue_keys=Queue.Queue(1000)
-keyUpIgnoredSet=set()
-ignoreKeyCounter=0
+keyUpIgnoreSet=set()
+keyPressIgnoreSet=set()
 controlDown=False
 shiftDown=False
 altDown=False
@@ -24,12 +24,23 @@ extendedWinDown=False
 ignoreNextKeyPress = False
 
 def sendKey(keyPress):
-	global ignoreNextKeyPress
+	global keyPressIgnoreSet
 	keyList=[]
-	ignoreNextKeyPress=True
 	#Process modifier keys
 	if keyPress[0] is not None:
 		for modifier in keyPress[0]:
+			if (modifier=="Alt") and altDown:
+				continue
+			elif (modifier=="Control") and controlDown:
+				continue
+			elif (modifier=="Shift") and shiftDown:
+				continue
+			elif (modifier=="Win") and winDown:
+				continue
+			elif (modifier=="ExtendedWin") and extendedWinDown:
+				continue
+			elif (modifier=="Insert") and insertDown:
+				continue
 			if modifier[0:8]=="Extended":
 				extended=1
 				modifier=modifier[8:]
@@ -51,11 +62,15 @@ def sendKey(keyPress):
 		else:
 			extended=0
 		key=key.upper()
-		keyID=pyHook.HookConstants.VKeyToID("VK_%s"%key)
+		if len(key)==1:
+			keyID=ord(key)
+		else:
+			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%key)
 		keyList.append((keyID,extended))
 	if (keyList is None) or (len(keyList)==0):
 		return
 	#Send key down events for these keys
+	debug.writeMessage("send key: %s"%keyList)
 	for key in keyList:
 		win32api.keybd_event(key[0],0,key[1],0)
 	#Send key up events for the keys in reverse order
@@ -67,71 +82,75 @@ def sendKey(keyPress):
 
 def internal_keyDownEvent(event):
 	global controlDown, shiftDown, altDown, insertDown, extendedInsertDown, winDown, extendedWinDown, ignoreNextKeyPress, ignoreKeyCounter
-	if ignoreNextKeyPress is True:
-		ignoreKeyCounter+=1
-		return True
 	try:
-		queue_keys.put_nowait((None, "SilenceSpeech"))
-	except Queue.Empty:
-		debug.writeError("internal_keyDownEvent: no room in queue")
-	if (event.Key=="Insert") and (event.Extended==0):
-		insertDown=True
-		return False
-	if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
-		controlDown=True
-		return True
-	if (event.Key=="Lshift") or (event.Key=="Rshift"):
-		shiftDown=True
-		return True
-	if (event.Key=="Lmenu") or (event.Key=="Rmenu"):
-		altDown=True
-		return True
-	if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
-		winDown=True
-		return True
-	if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==1):
-		extendedWinDown=True
-		return True
-	modifierList=[]
-	if insertDown is True:
-		modifierList.append("Insert")
-	if controlDown is True:
-		modifierList.append("Control")
-	if shiftDown is True:
-		modifierList.append("Shift")
-	if altDown is True:
-		modifierList.append("Alt")
-	if winDown is True:
-		modifierList.append("Win")
-	if extendedWinDown is True:
-		modifierList.append("ExtendedWin")
-	if len(modifierList) > 0:
-		modifiers=frozenset(modifierList)
-	else:
-		modifiers=None
-	keyName=event.Key
-	if event.Extended==1:
-		keyName="Extended%s"%keyName
-	keyPress=(modifiers,keyName)
-	debug.writeMessage("key press: %s %s"%keyPress)
-	if appModules.current.keyMap.has_key(keyPress):
+		if event.Injected:
+			return True
 		try:
-			queue_keys.put_nowait(keyPress)
+			queue_keys.put_nowait((None, "SilenceSpeech"))
 		except Queue.Empty:
 			debug.writeError("internal_keyDownEvent: no room in queue")
+		if (event.Key=="Insert") and (event.Extended==0):
+			insertDown=True
 			return True
-		keyUpIgnoredSet.add((event.Key,event.Extended))
-		return False
-	else:
-		return True
+		if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
+			controlDown=True
+			return True
+		if (event.Key=="Lshift") or (event.Key=="Rshift"):
+			shiftDown=True
+			return True
+		if (event.Key=="Lmenu") or (event.Key=="Rmenu"):
+			altDown=True
+			return True
+		if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
+			winDown=True
+			return True
+		if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==1):
+			extendedWinDown=True
+			return True
+		modifierList=[]
+		if insertDown is True:
+			modifierList.append("Insert")
+		if controlDown is True:
+			modifierList.append("Control")
+		if shiftDown is True:
+			modifierList.append("Shift")
+		if altDown is True:
+			modifierList.append("Alt")
+		if winDown is True:
+			modifierList.append("Win")
+		if extendedWinDown is True:
+			modifierList.append("ExtendedWin")
+		if len(modifierList) > 0:
+			modifiers=frozenset(modifierList)
+		else:
+			modifiers=None
+		keyName=event.Key
+		if event.Extended==1:
+			keyName="Extended%s"%keyName
+		keyPress=(modifiers,keyName)
+		debug.writeMessage("key press: %s %s"%keyPress)
+		if keyPress in keyPressIgnoreSet:
+			keyPressIgnoreSet.remove(keyPress)
+			keyUpIgnoreSet.add((event.Key,event.Extended))
+			return True
+		if keyHasScript(keyPress):
+			debug.writeMessage("key has script")
+			try:
+				queue_keys.put_nowait(keyPress)
+			except Queue.Empty:
+				debug.writeError("internal_keyDownEvent: no room in queue")
+				return True
+			keyUpIgnoreSet.add((event.Key,event.Extended))
+			return False
+		else:
+			return True
+	except:
+		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent")
+		debug.writeException("keyEventHandler.internal_keyDownEvent")
 
 def internal_keyUpEvent(event):
 	global controlDown, shiftDown, altDown, insertDown, winDown, extendedWinDown, ignoreNextKeyPress, ignoreKeyCounter
-	if ignoreNextKeyPress is True:
-		if ignoreKeyCounter > 0:
-			ignoreKeyCounter-=1
-		if ignoreKeyCounter == 0:
-			ignoreNextKeyPress=False
+	if event.Injected:
 		return True
 	if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
 		controlDown=False
@@ -151,12 +170,10 @@ def internal_keyUpEvent(event):
 	elif ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==1):
 		extendedWinDown = False
 		return True
-	if (event.Key,event.Extended) in keyUpIgnoredSet:
-		keyUpIgnoredSet.remove((event.Key,event.Extended))
+	if (event.Key,event.Extended) in keyUpIgnoreSet:
+		keyUpIgnoreSet.remove((event.Key,event.Extended))
 		return False
-	else:
-		return True
-		return True
+	return True
 
 #Register internal key press event with  operating system
 

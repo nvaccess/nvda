@@ -48,23 +48,27 @@ pyAA.Constants.EVENT_OBJECT_VALUECHANGE:"objectValueChange"
 
 def internal_objectEvent(event):
 	global lastProcessID
-	if (event.AccessibleObject is None) or (event.Window==0):
-		return False
-	window=event.Window
-	objectID=event.ObjectID
-	childID=event.ChildID
-	if (objectID==0) and (childID==0):
-		objectID=-4
-	accObject=event.AccessibleObject
-	objectProcessID=getObjectProcessID(accObject)
-	if (event.EventID==pyAA.Constants.EVENT_SYSTEM_FOREGROUND) and (objectProcessID!=lastProcessID):
-		queue_events.put(("appChange",window,objectID,childID))
-		lastProcessID=objectProcessID
-	else:
-		eventName=eventMap.get(event.EventID,None)
-		if eventName is not None:
+	try:
+		if (event.AccessibleObject is None) or (event.Window==0):
+			return False
+		window=event.Window
+		objectID=event.ObjectID
+		childID=event.ChildID
+		if (objectID==0) and (childID==0):
+			objectID=-4
+		if getMSAAObjectFromEvent(window,objectID,childID) is None:
+			return None
+		accObject=event.AccessibleObject
+		objectProcessID=accObject.ProcessID
+		if (event.EventID==pyAA.Constants.EVENT_SYSTEM_FOREGROUND) and (objectProcessID!=lastProcessID):
+			queue_events.put(("appChange",window,objectID,childID))
+			lastProcessID=objectProcessID
+		else:
+			eventName=eventMap.get(event.EventID,None)
 			queue_events.put((eventName,window,objectID,childID))
-	return False
+		return False
+	except:
+		debug.writeException("MSAAEventHandler.internal_objectEvent")
 
 #Register internal object event with MSAA
 
