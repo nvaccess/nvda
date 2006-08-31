@@ -4,7 +4,7 @@ from glob import glob
 
 setup(
 	name = "NVDA",
-	windows = [{"script": "core.pyw", "dest_base": "nvda"}],
+	windows = ["nvda.pyw"],
 	options = {"py2exe": {"bundle_files": 3}},
 	zipfile = None,
 	data_files = [
