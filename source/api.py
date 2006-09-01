@@ -91,7 +91,7 @@ def executeEvent(name,locator):
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:
-			event(obj)
+			event(locator)
 			return True
 		except:
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)

@@ -655,7 +655,7 @@ class NVDAObject_mozillaLink(NVDAObject):
 
 	def getChildren(self):
 		children=NVDAObject.getChildren(self)
-		if (len(children)==1) and (children[0].getRole()==pyAA.Constants.ROLE_SYSTEM_TEXT):
+		if (len(children)==1) and (NVDAObject.getRole(children[0])==pyAA.Constants.ROLE_SYSTEM_TEXT):
 			return []
 		return children
 
@@ -672,24 +672,77 @@ class NVDAObject_mozillaListItem(NVDAObject):
 
 	def getName(self):
 		child=self.getFirstChild()
-		if child and child.getRole()==ROLE_SYSTEM_STATICTEXT:
+		if child and NVDAObject.getRole(child)==ROLE_SYSTEM_STATICTEXT:
 			name=child.getName()
+		else:
+			name=""
 		return name
 
 	def getChildren(self):
 		children=NVDAObject.getChildren(self)
-		if (len(children)>=1) and (children[0].getRole()==ROLE_SYSTEM_STATICTEXT):
+		if (len(children)>=1) and (NVDAObject.getRole(children[0])==ROLE_SYSTEM_STATICTEXT):
 			del children[0]
 		return children
 
- 
+class NVDAObject_mozillaHeading(NVDAObject):
+
+	def getBufferText(self):
+		line="%s %s"%(self.getRole(),self.getValue())
+		children=self.getChildren()
+		if len(children)==1:
+			return [line]
+		else:
+			return NVDAObject.getBufferText(self)
+
+	def getValue(self):
+		children=self.getChildren()
+		if len(children)==1:
+			return "%s %s %s"%(children[0].getName(),getRoleName(children[0].getRole()),children[0].getValue())
+		else:
+			return ""
+
+class NVDAObject_mozillaText(NVDAObject):
+
+	def getName(self):
+		name=NVDAObject.getName(self)
+		value=NVDAObject.getValue(self)
+		if name and not value:
+			return ""
+		else:
+			return name
+
+	def getRole(self):
+		if NVDAObject.getStates(self)&STATE_SYSTEM_READONLY:
+			return ROLE_SYSTEM_STATICTEXT
+		else:
+			return NVDAObject.getRole(self)
+
+	def getValue(self):
+		name=NVDAObject.getName(self)
+		value=NVDAObject.getValue(self)
+		if name and not value:
+			return name
+		else:
+			return ""
+
+	def getStates(self):
+		states=NVDAObject.getStates(self)
+		if states&STATE_SYSTEM_READONLY:
+			states=states-STATE_SYSTEM_READONLY
+		return states
+
 classMap={
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,
 "MozillaContentWindowClass_15":NVDAObject_mozillaDocument,
 "MozillaContentWindowClass_30":NVDAObject_mozillaLink,
-"MozillaWindowClass_30":NVDAObject_mozillaLink,
 "MozillaContentWindowClass_34":NVDAObject_mozillaListItem,
-"MozillaWindowClass_34":NVDAObject_mozillaListItem,
+"MozillaContentWindowClass_h1":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_h2":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_h3":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_h4":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_h5":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_h6":NVDAObject_mozillaHeading,
+"MozillaContentWindowClass_42":NVDAObject_mozillaText,
 }
