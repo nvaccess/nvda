@@ -769,7 +769,6 @@ class NVDAObject_mozillaText(NVDAObject):
 classMap={
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
-"_WwG":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,
 "MozillaContentWindowClass_15":NVDAObject_mozillaDocument,
 "MozillaContentWindowClass_30":NVDAObject_mozillaLink,
