@@ -698,7 +698,7 @@ class NVDAObject_Edit(NVDAObject):
 			sendKey(keyPress)
 
 	def event_objectValueChange(self):
-		audio.speakMessage("edit")
+		pass
 
 class NVDAObject_checkBox(NVDAObject):
 
@@ -788,7 +788,7 @@ class NVDAObject_mozillaHeading(NVDAObject):
 		else:
 			return ""
 
-class NVDAObject_mozillaText(NVDAObject):
+class NVDAObject_mozillaText(NVDAObject_Edit):
 
 	def getName(self):
 		name=NVDAObject.getName(self)

@@ -117,7 +117,6 @@ def main():
 	except:
 			audio.speakMessage("Exception in main loop")
 			debug.writeException("core.py main loop")
-			sys.exit()
 	gui.terminate()
 	try:
 		config.save()

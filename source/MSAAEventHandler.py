@@ -10,31 +10,21 @@ import debug
 
 lastProcessID=None
 queue_events=Queue.Queue(10000)
-objectEventHandle=None
+objectEventHandles=[]
 
 eventMap={
 pyAA.Constants.EVENT_SYSTEM_FOREGROUND:"foreground",
-pyAA.Constants.EVENT_MAX:"maximize",
-pyAA.Constants.EVENT_MIN:"minimize",
 pyAA.Constants.EVENT_SYSTEM_MENUSTART:"menuStart",
 pyAA.Constants.EVENT_SYSTEM_MENUEND:"menuEnd",
 pyAA.Constants.EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 pyAA.Constants.EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 pyAA.Constants.EVENT_SYSTEM_SWITCHSTART:"switchStart",
 pyAA.Constants.EVENT_SYSTEM_SWITCHEND:"switchEnd",
-pyAA.Constants.EVENT_OBJECT_CREATE:"createObject",
-pyAA.Constants.EVENT_OBJECT_DESTROY:"destroyObject",
 pyAA.Constants.EVENT_OBJECT_FOCUS:"focusObject",
-pyAA.Constants.EVENT_OBJECT_HIDE:"hideObject",
-pyAA.Constants.EVENT_OBJECT_SHOW:"showObject",
-pyAA.Constants.EVENT_OBJECT_ACCELERATORCHANGE:"objectAcceleratorChange",
 pyAA.Constants.EVENT_OBJECT_DESCRIPTIONCHANGE:"objectDescriptionChange",
-pyAA.Constants.EVENT_OBJECT_DEFACTIONCHANGE:"objectDefactionChange",
 pyAA.Constants.EVENT_OBJECT_HELPCHANGE:"objectHelpChange",
 pyAA.Constants.EVENT_OBJECT_LOCATIONCHANGE:"objectLocationChange",
 pyAA.Constants.EVENT_OBJECT_NAMECHANGE:"objectNameChange",
-pyAA.Constants.EVENT_OBJECT_PARENTCHANGE:"objectParentChange",
-pyAA.Constants.EVENT_OBJECT_REORDER:"objectReorder",
 pyAA.Constants.EVENT_OBJECT_SELECTION:"objectSelection",
 pyAA.Constants.EVENT_OBJECT_SELECTIONADD:"objectSelectionAdd",
 pyAA.Constants.EVENT_OBJECT_SELECTIONREMOVE:"objectSelectionRemove",
@@ -81,8 +71,9 @@ def internal_objectEvent(event):
 
 def initialize():
 	global objectEventHandle
-	objectEventHandle=pyAA.AddWinEventHook(callback=internal_objectEvent)
+	for eventType in eventMap.keys():
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType))
 
 def terminate():
-	global objectEventHandle
-	pyAA.DeleteWinEventHook(objectEventHandle)
+	for handle in objectEventHandles:
+		pyAA.DeleteWinEventHook(handle)
