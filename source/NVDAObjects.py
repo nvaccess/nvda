@@ -517,6 +517,15 @@ class NVDAObject(object):
 		audio.speakObjectProperties(stateNames=getStateNames(states_off,opposite=True))
 		self.lastStates=states
 
+class NVDAObject_Shell_TrayWnd(NVDAObject):
+
+	def event_foreground(self):
+		pass
+
+class NVDAObject_Progman(NVDAObject):
+
+	def event_foreground(self):
+		pass
 
 class NVDAObject_Edit(NVDAObject):
 
@@ -767,6 +776,8 @@ class NVDAObject_mozillaText(NVDAObject):
 		return states
 
 classMap={
+"Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
+"Progman":NVDAObject_Progman,
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,
