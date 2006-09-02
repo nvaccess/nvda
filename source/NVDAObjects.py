@@ -278,15 +278,17 @@ class NVDAObject(object):
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
 			try:
-				accObject=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				nextObject=NVDAObject(accObject)
-				accObject=accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				testObject=NVDAObject(accObject)
+				nextObject=NVDAObject(parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
 			except:
-				debug.writeException("next object using window")
+				debug.writeError("NVDAObject.getNext: failed to get next window object")
 				return None
-				if nextObject and testObject and (testObject==parentObject) and (nextObject!=parentObject):  
-					return NVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
+			try:
+				testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
+			except:
+				debug.writeError("NVDAObject.getNext: failed to get test object from next window object")
+				return None
+			if nextObject and testObject and (testObject==parentObject) and (nextObject!=parentObject):  
+				return NVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
 				nextObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
@@ -300,26 +302,30 @@ class NVDAObject(object):
 
 	def getPrevious(self):
 		try:
-			parentObject=self.accObject.GetParent()
-			parentRole=parentObject.GetRole()
+			parentObject=NVDAObject(self.accObject.GetParent())
+			parentRole=parentObject.getRole()
 		except:
-			return None
-		if parentRole==pyAA.Constants.ROLE_SYSTEM_WINDOW:
+			parentObject=None
+			parentRole=None
+		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
 			try:
-				prevObject=parentObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				testObject=prevObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				if prevObject and testObject and ((prevObject.Window!=testObject.Window) or (prevObject.GetRole()!=testObject.GetRole()) or (prevObject.ChildID!=testObject.ChildID)):
-					return NVDAObject(pyAA.AccessibleObjectFromWindow(prevObject.Window,pyAA.Constants.OBJID_CLIENT))
-				else:
-					return None
+				prevObject=NVDAObject(parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
 			except:
+				debug.writeError("NVDAObject.getPrevious: failed to get previous window object")
 				return None
+			try:
+				testObject=NVDAObject(prevObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
+			except:
+				debug.writeError("NVDAObject.getPrevious: failed to get test object from previous window object")
+				return None
+			if prevObject and testObject and (testObject==parentObject) and (prevObject!=parentObject):  
+				return NVDAObject(pyAA.AccessibleObjectFromWindow(prevObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
-				prevObject=self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				testObject=prevObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				if prevObject and testObject and ((prevObject.Window!=testObject.Window) or (prevObject.GetRole()!=testObject.GetRole()) or (prevObject.ChildID!=testObject.ChildID)):
-					return NVDAObject(prevObject)
+				prevObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
+				testObject=NVDAObject(prevObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
+				if prevObject and testObject and (self==testObject) and (prevObject!=self):
+					return prevObject
 				else:
 					return None
 			except:
@@ -531,12 +537,12 @@ class NVDAObject_dialog(NVDAObject):
 		self.speakObject()
 		for child in self.getChildren():
 			states=child.getStates()
-			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE):
+			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
 				child.speakObject()
 			if child.getRole()==ROLE_SYSTEM_PROPERTYPAGE:
 				for grandChild in child.getChildren():
 					states=grandChild.getStates()
-					if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE):
+					if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
 						grandChild.speakObject()
 
 
