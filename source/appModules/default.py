@@ -1,6 +1,8 @@
 from keyEventHandler import key
 from api import *
 import audio
+import datetime
+
 
 def event_moduleStart():
 	pass
@@ -10,6 +12,12 @@ def event_switchStart(window,objectID,childID):
 
 def event_switchEnd(window,objectID,childID):
 	audio.cancel()
+
+def script_dateTime(keyPress):
+	text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")
+	if text[0]=='0':
+		text=text[1:]
+	audio.speakMessage(text)
 
 def script_navigator_object_current(keyPress):
 	curObject=getNavigatorObject()
@@ -145,6 +153,7 @@ def script_showGui(keyPress):
 keyMap={
 key("insert+q"):script_quit,
 key("insert+n"):script_showGui,
+key("insert+F12"):script_dateTime,
 key("Up"):script_navigator_line_current,
 key("Home"):script_navigator_line_previous,
 key("Prior"):script_navigator_line_next,
