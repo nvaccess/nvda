@@ -205,6 +205,7 @@ class NVDAObject(object):
 		states-=(states&STATE_SYSTEM_INVISIBLE)
 		states-=(states&STATE_SYSTEM_HOTTRACKED)
 		states-=(states&STATE_SYSTEM_OFFSCREEN)
+		states-=(states&STATE_SYSTEM_DEFAULT)
 		return states
 
 	def getDescription(self):
@@ -519,10 +520,25 @@ class NVDAObject(object):
 		if states is None:
 			return None
 		states_on=states-(states&self.lastStates)
-		audio.speakObjectProperties(stateNames=getStateNames(states_on))
+		audio.speakObjectProperties(stateText=getStateNames(states_on))
 		states_off=self.lastStates-(states&self.lastStates)
-		audio.speakObjectProperties(stateNames=getStateNames(states_off,opposite=True))
+		audio.speakObjectProperties(stateText=getStateNames(states_off,opposite=True))
 		self.lastStates=states
+
+class NVDAObject_dialog(NVDAObject):
+
+	def event_foreground(self):
+		self.speakObject()
+		for child in self.getChildren():
+			states=child.getStates()
+			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE):
+				child.speakObject()
+			if child.getRole()==ROLE_SYSTEM_PROPERTYPAGE:
+				for grandChild in child.getChildren():
+					states=grandChild.getStates()
+					if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE):
+						grandChild.speakObject()
+
 
 class NVDAObject_Shell_TrayWnd(NVDAObject):
 
@@ -804,6 +820,7 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
 "Progman":NVDAObject_Progman,
+"#32770_18":NVDAObject_dialog,
 "TrayClockWClass":NVDAObject_TrayClockWClass,
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
