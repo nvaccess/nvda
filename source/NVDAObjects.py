@@ -76,7 +76,7 @@ class NVDAObject(object):
 		self.accObject=accObject
 		self.lines=[]
 		self.keyMap={}
-		self.lastStates=self.getStates()
+		self.lastStates=self.getFilteredStates()
 
 	def __eq__(self,other):
 		if (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()):
@@ -95,11 +95,9 @@ class NVDAObject(object):
 		if conf["presentation"]["reportKeyboardShortcuts"]:
 			thisLine+=" %s"%self.getKeyboardShortcut()
 		thisLine+=" %s"%self.getName()
-		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (self.getRole()==ROLE_SYSTEM_CLIENT)):
-			thisLine+=" %s"%self.getClassName()
-		thisLine+=" %s"%getRoleName(self.getRole())
+		thisLine+=" %s"%self.getTypeString()
 		thisLine+=" %s"%self.getValue()
-		thisLine+=" %s"%getStateNames(self.getStates())
+		thisLine+=" %s"%getStateNames(self.getFilteredStates())
 		text=[]
 		children=self.getChildren()
 		for child in children:
@@ -119,16 +117,8 @@ class NVDAObject(object):
 	def speakObject(obj):
 		window=obj.getWindowHandle()
 		name=obj.getName()
-		role=obj.getRole()
-		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
-			className=obj.getClassName()
-		else:
-			className=None
-		roleName=getRoleName(role)
-		states=obj.getStates()
-		stateNames=""
-		if states is not None:
-			stateNames=getStateNames(states)
+		typeString=obj.getTypeString()
+		stateNames=getStateNames(obj.getFilteredStates())
 		value=obj.getValue()
 		description=obj.getDescription()
 		if description==name:
@@ -150,7 +140,7 @@ class NVDAObject(object):
 		#else:
 		#	groupName=None
 		groupName=None
-		audio.speakObjectProperties(groupName=groupName,name=name,className=className,roleName=roleName,stateNames=stateNames,value=value,description=description,help=help,keyboardShortcut=keyboardShortcut,position=position)
+		audio.speakObjectProperties(groupName=groupName,name=name,typeString=typeString,stateText=stateNames,value=value,description=description,help=help,keyboardShortcut=keyboardShortcut,position=position)
 
 	def getWindowHandle(self):
 		try:
@@ -188,16 +178,33 @@ class NVDAObject(object):
 		except:
 			return ""
 
+	def getTypeString(self):
+		role=self.getRole()
+		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
+			typeString=self.getClassName()
+		else:
+			typeString=""
+		return typeString+" %s"%getRoleName(self.getRole())
+
+
 	def getStates(self):
 		states=0
 		try:
 			states=self.accObject.GetState()
 		except:
 			pass
+		return states
+
+	def getFilteredStates(self):
+		states=self.getStates()
 		states-=(states&STATE_SYSTEM_FOCUSED)
 		states-=(states&STATE_SYSTEM_FOCUSABLE)
 		states-=(states&STATE_SYSTEM_SELECTABLE)
 		states-=(states&STATE_SYSTEM_MULTISELECTABLE)
+		states-=(states&STATE_SYSTEM_READONLY)
+		states-=(states&STATE_SYSTEM_INVISIBLE)
+		states-=(states&STATE_SYSTEM_HOTTRACKED)
+		states-=(states&STATE_SYSTEM_OFFSCREEN)
 		return states
 
 	def getDescription(self):
@@ -508,7 +515,7 @@ class NVDAObject(object):
 		audio.speakObjectProperties(value=self.getValue())
 
 	def event_objectStateChange(self):
-		states=self.getStates()
+		states=self.getFilteredStates()
 		if states is None:
 			return None
 		states_on=states-(states&self.lastStates)
@@ -685,17 +692,31 @@ class NVDAObject_mozillaDocument(NVDAObject):
 
 	def event_focusObject(self):
 		audio.cancel()
-		audio.speakText(self.getText())
+		if self.getStates()&STATE_SYSTEM_BUSY:
+			audio.speakMessage("Loading document...")
+		else:
+			audio.speakText(self.getText())
 
 class NVDAObject_mozillaLink(NVDAObject):
 
 	def getValue(self):
 		return ""
 
-	def getStates(self):
-		states=NVDAObject.getStates(self)
-		states-=(states&pyAA.Constants.STATE_SYSTEM_LINKED)
+	def getFilteredStates(self):
+		states=NVDAObject.getFilteredStates(self)
+		states-=(states&STATE_SYSTEM_LINKED)
+		states-=(states&STATE_SYSTEM_TRAVERSED)
 		return states
+
+	def getTypeString(self):
+		states=self.getStates()
+		typeString=""
+		if states&STATE_SYSTEM_TRAVERSED:
+			typeString+="visited "
+		if states&STATE_SYSTEM_SELECTABLE:
+			typeString+="same page "
+		typeString+=NVDAObject.getTypeString(self)
+		return typeString
 
 	def getChildren(self):
 		children=NVDAObject.getChildren(self)
@@ -775,9 +796,15 @@ class NVDAObject_mozillaText(NVDAObject):
 			states=states-STATE_SYSTEM_READONLY
 		return states
 
+class NVDAObject_TrayClockWClass(NVDAObject):
+
+	def getRole(self):
+		return ROLE_SYSTEM_CLOCK
+
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
 "Progman":NVDAObject_Progman,
+"TrayClockWClass":NVDAObject_TrayClockWClass,
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,

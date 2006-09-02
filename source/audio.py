@@ -30,18 +30,16 @@ def speakMessage(text,wait=False):
 	text=processText(text)
 	synth.speakText(text,None,wait)
 
-def speakObjectProperties(name=None,className=None,roleName=None,stateNames=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
+def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
 	text=""
 	if groupName is not None:
 		text="%s %s"%(text,groupName)
 	if name is not None:
 		text="%s %s"%(text,name)
-	if className is not None:
-		text="%s %s"%(text,className)
-	if roleName is not None:
-		text="%s %s"%(text,roleName)
-	if stateNames is not None:
-		text="%s %s"%(text,stateNames)
+	if typeString is not None:
+		text="%s %s"%(text,typeString)
+	if stateText is not None:
+		text="%s %s"%(text,stateText)
 	if value is not None:
 		text="%s %s"%(text,value)
 	if description is not None:
