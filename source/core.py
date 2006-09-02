@@ -37,13 +37,14 @@ def appChange(window,objectID,childID):
 		sys.exit()
 	executeEvent("foreground",(window,objectID,childID))
 
-def event_mouseMove(position):
-	obj=getNVDAObjectByPoint(position)
+def event_mouseMove(point):
+	obj=getNVDAObjectByPoint(point)
 	if not obj:
 		return None
 	location=obj.getLocation()
 	if location!=globalVars.mouse_location:
-		speakObject(obj)
+		audio.cancel()
+		obj.speakObject()
 		globalVars.mouse_location=location
 
 def main():
@@ -106,7 +107,7 @@ def main():
 				mouseEvent=mouseEventHandler.queue_events.get_nowait()
 				if mouseEvent[0]=="mouseMove":
 					try:
-						event_mouseMove(position)
+						event_mouseMove(mouseEvent[1])
 					except:
 						debug.writeException("event_mouseMove")
 			except Queue.Empty:

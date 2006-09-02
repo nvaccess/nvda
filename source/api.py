@@ -39,8 +39,8 @@ def getNVDAObjectByLocator(window,objectID,childID):
 		return None
 	return obj
 
-def getNVDAObjectByPosition(position):
-	accObject=getMSAAObjectFromPoint(position)
+def getNVDAObjectByPoint(point):
+	accObject=getMSAAObjectFromPoint(point)
 	if not accObject:
 		return None
 	obj=NVDAObjects.NVDAObject(accObject)
