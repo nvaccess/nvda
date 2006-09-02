@@ -1,7 +1,15 @@
+from keyEventHandler import key
 from api import *
+import audio
 
 def event_moduleStart():
 	pass
+
+def event_switchStart(window,objectID,childID):
+	audio.speakMessage("task switcher")
+
+def event_switchEnd(window,objectID,childID):
+	audio.cancel()
 
 def script_navigator_object_current(keyPress):
 	curObject=getNavigatorObject()

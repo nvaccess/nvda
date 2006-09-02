@@ -7,7 +7,6 @@
 import Queue
 import pyAA
 import debug
-from api import *
 
 lastProcessID=None
 queue_events=Queue.Queue(10000)
@@ -56,10 +55,18 @@ def internal_objectEvent(event):
 		childID=event.ChildID
 		if (objectID==0) and (childID==0):
 			objectID=-4
-		if getMSAAObjectFromEvent(window,objectID,childID) is None:
+			try:
+				accObject=pyAA.AccessibleObjectFromEvent(window,objectID,childID)
+			except:
+				return None
+		else:
+			accObject=event.AccessibleObject
+		if not accObject:
 			return None
-		accObject=event.AccessibleObject
-		objectProcessID=accObject.ProcessID
+		try:
+			objectProcessID=accObject.ProcessID
+		except:
+			objectProcessID=None
 		if (event.EventID==pyAA.Constants.EVENT_SYSTEM_FOREGROUND) and (objectProcessID!=lastProcessID):
 			queue_events.put(("appChange",window,objectID,childID))
 			lastProcessID=objectProcessID

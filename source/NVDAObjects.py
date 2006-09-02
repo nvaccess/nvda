@@ -6,20 +6,53 @@ import win32con
 import win32gui
 import pyAA
 import debug
-from api import *
-import keyEventHandler
+import audio
+from keyEventHandler import key, sendKey
+from constants import *
 from config import conf
+import dictionaries
 
 re_multiSpacing=re.compile(r' +')
 
-def makeNVDAObject(accObject):
-	return NVDAObject(accObject)
+#Some api functions specific to NVDAObjects
+
+def getRoleName(role):
+	if dictionaries.roleNames.has_key(role) is True:
+		return dictionaries.roleNames[role]
+	else:
+		return role
+
+def createStateList(stateBits):
+	stateList=[]
+	for bitPos in range(32):
+		bitVal=1<<bitPos
+		if stateBits&bitVal:
+			stateList+=[bitVal]
+	return stateList
+
+def getStateNames(states,opposite=False):
+	str=""
+	for state in createStateList(states):
+		str="%s %s"%(str,getStateName(state,opposite=opposite))
+	return str
+
+def getStateName(state,opposite=False):
+	if dictionaries.stateNames.has_key(state):
+		name=dictionaries.stateNames[state]
+	else:
+		name=state
+	if opposite is True:
+		name="not %s"%name
+	return name
+
+#The classes
 
 class NVDAObject(object):
 
 	def __new__(cls,*args):
 		if (len(args)!=1) or not isinstance(args[0],pyAA.AA.AccessibleObject):
-			raise TypeError("class takes an object of type pyAA.AA.AccessibleObject as its only parameter")
+			debug.writeError("class takes an object of type pyAA.AA.AccessibleObject as its only parameter")
+			return None
 		accObject=args[0]
 		try:
 			window=accObject.Window
@@ -95,10 +128,7 @@ class NVDAObject(object):
 		states=obj.getStates()
 		stateNames=""
 		if states is not None:
-			states=filterStates(states)
-			stateNames=""
-			for state in createStateList(states):
-				stateNames="%s %s"%(stateNames,getStateName(state))
+			stateNames=getStateNames(states)
 		value=obj.getValue()
 		description=obj.getDescription()
 		if description==name:
@@ -225,11 +255,11 @@ class NVDAObject(object):
 			return None
 		if accObject.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
 			try:
-				return makeNVDAObject(accObject.GetParent())
+				return NVDAObject(accObject.GetParent())
 			except:
 				return None
 		else:
-			return makeNVDAObject(accObject)
+			return NVDAObject(accObject)
 
 	def getNext(self):
 		try:
@@ -240,13 +270,15 @@ class NVDAObject(object):
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
 			try:
-				nextObject=NVDAObject(parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
-				testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-				if nextObject and testObject and (testObject==parentObject) and (nextObject!=parentObject):  
-					return makeNVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
+				accObject=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
+				nextObject=NVDAObject(accObject)
+				accObject=accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
+				testObject=NVDAObject(accObject)
 			except:
 				debug.writeException("next object using window")
 				return None
+				if nextObject and testObject and (testObject==parentObject) and (nextObject!=parentObject):  
+					return NVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
 				nextObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
@@ -269,7 +301,7 @@ class NVDAObject(object):
 				prevObject=parentObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
 				testObject=prevObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
 				if prevObject and testObject and ((prevObject.Window!=testObject.Window) or (prevObject.GetRole()!=testObject.GetRole()) or (prevObject.ChildID!=testObject.ChildID)):
-					return makeNVDAObject(pyAA.AccessibleObjectFromWindow(prevObject.Window,pyAA.Constants.OBJID_CLIENT))
+					return NVDAObject(pyAA.AccessibleObjectFromWindow(prevObject.Window,pyAA.Constants.OBJID_CLIENT))
 				else:
 					return None
 			except:
@@ -279,7 +311,7 @@ class NVDAObject(object):
 				prevObject=self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
 				testObject=prevObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
 				if prevObject and testObject and ((prevObject.Window!=testObject.Window) or (prevObject.GetRole()!=testObject.GetRole()) or (prevObject.ChildID!=testObject.ChildID)):
-					return makeNVDAObject(prevObject)
+					return NVDAObject(prevObject)
 				else:
 					return None
 			except:
@@ -292,7 +324,7 @@ class NVDAObject(object):
 				childObject=pyAA.AccessibleObjectFromWindow(childObject.Window,pyAA.Constants.OBJID_CLIENT)
 			testObject=self.accObject
 			if childObject and ((childObject.Window!=testObject.Window) or (childObject.GetRole()!=testObject.GetRole()) or (childObject.ChildID!=testObject.ChildID)):
-				return makeNVDAObject(childObject)
+				return NVDAObject(childObject)
 			else:
 				return None
 		except:
@@ -320,7 +352,7 @@ class NVDAObject(object):
 			child=self.accObject.GetFocus()
 		except:
 			return None
-		return makeNVDAObject(child)
+		return NVDAObject(child)
 
 	def hasFocus(self):
 		states=0
@@ -579,22 +611,22 @@ class NVDAObject_Edit(NVDAObject):
 		return selection
 
 	def script_moveByLine(self,keyPress):
-		keyEventHandler.sendKey(keyPress)
+		sendKey(keyPress)
 		audio.speakText(self.getLine())
 
 	def script_moveByCharacter(self,keyPress):
-		keyEventHandler.sendKey(keyPress)
+		sendKey(keyPress)
 		audio.speakSymbol(self.getCharacter())
 
 	def script_moveByWord(self,keyPress):
-		keyEventHandler.sendKey(keyPress)
+		sendKey(keyPress)
 		audio.speakText(self.getWord())
 
 	def script_changeSelection(self,keyPress):
 		selectionPoints=self.getCaretIndecies()
 		if selectionPoints[0]==selectionPoints[1]:
 			selectionPoints=None
-		keyEventHandler.sendKey(keyPress)
+		sendKey(keyPress)
 		newSelectionPoints=self.getCaretIndecies()
 		if newSelectionPoints[0]==newSelectionPoints[1]:
 			newSelectionPoints=None
@@ -613,19 +645,19 @@ class NVDAObject_Edit(NVDAObject):
 				audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],selectionPoints[0]))
 
 	def script_delete(self,keyPress):
-		keyEventHandler.sendKey(keyPress)
+		sendKey(keyPress)
 		sayCharacter()
 
 	def script_backspace(self,keyPress):
 		point=self.getCaretIndex()
 		if not point==[0,0]: 
 			delChar=self.getCharacter(index=self.getPreviousCharacterIndex(point))
-			keyEventHandler.sendKey(keyPress)
+			sendKey(keyPress)
 			newPoint=self.getCaretIndex()
 			if newPoint<point:
 				audio.speakSymbol(delChar)
 		else:
-			keyEventHandler.sendKey(keyPress)
+			sendKey(keyPress)
 
 	def event_objectValueChange(self):
 		audio.speakMessage("edit")
@@ -638,6 +670,9 @@ class NVDAObject_checkBox(NVDAObject):
 		return states
 
 class NVDAObject_mozillaDocument(NVDAObject):
+
+	def getValue(self):
+		return ""
 
 	def event_focusObject(self):
 		audio.cancel()

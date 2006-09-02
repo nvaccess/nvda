@@ -13,11 +13,10 @@ import win32gui
 import pythoncom
 import winsound
 import cPickle
-from constants import *
 import dictionaries
 import globalVars
 from api import *
-from NVDAObjects import NVDAObject
+from constants import *
 import keyEventHandler
 import mouseEventHandler
 import MSAAEventHandler
@@ -27,10 +26,7 @@ import config
 import gui
 
 def appChange(window,objectID,childID):
-	accObject=getMSAAObjectFromEvent(window,objectID,childID)
-	if not accObject:
-		return None
-	obj=NVDAObject(accObject)
+	obj=getNVDAObjectByLocator(window,objectID,childID)
 	if not obj:
 		return None
 	name=obj.getName()
@@ -42,7 +38,9 @@ def appChange(window,objectID,childID):
 	executeEvent("foreground",(window,objectID,childID))
 
 def event_mouseMove(position):
-	obj=NVDAObject(getMSAAObjectFromPoint(position))
+	obj=getNVDAObjectByPoint(position)
+	if not obj:
+		return None
 	location=obj.getLocation()
 	if location!=globalVars.mouse_location:
 		speakObject(obj)
@@ -60,9 +58,10 @@ def main():
 		if (foregroundWindow is None) or (foregroundWindow==0):
 			debug.writeError("core.main: failed to get foreground window")
 			sys.exit()
-		setFocusLocator(foregroundWindow,OBJID_CLIENT,0)
-		setFocusObject(NVDAObject(getMSAAObjectFromEvent(foregroundWindow,OBJID_CLIENT,0)))
-		appChange(foregroundWindow,OBJID_CLIENT,0)
+		if not setFocusObjectByLocator(foregroundWindow,-4,0):
+			debug.writeError("core.main: failed to set focus object (%s,%s,%s)"%(foregroundWindow,OBJID_CLIENT,0))
+			return False
+		appChange(foregroundWindow,-4,0)
 		MSAAEventHandler.initialize()
 		keyEventHandler.initialize()
 		mouseEventHandler.initialize()
@@ -82,8 +81,7 @@ def main():
 			try:
 				MSAAEvent=MSAAEventHandler.queue_events.get_nowait()
 				if (MSAAEvent[0]=="focusObject") or (MSAAEvent[0]=="foreground") or (MSAAEvent[0]=="appChange"):
-					setFocusLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-					setFocusObject(NVDAObject(getMSAAObjectFromEvent(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])))
+					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 				if MSAAEvent[0]=="appChange":
 					try:
 						appChange(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
@@ -98,8 +96,10 @@ def main():
 				keyPress=keyEventHandler.queue_keys.get_nowait()
 				if keyPress == (None, "SilenceSpeech"):
 					audio.cancel()
-				else:
+				elif keyHasScript(keyPress):
 					executeScript(keyPress)
+				else:
+					keyEventHandler.sendKey(keyPress)
 			except Queue.Empty:
 				pass
 			try:
@@ -124,3 +124,4 @@ def main():
 	except:
 		pass
 	MSAAEventHandler.terminate()
+	return True

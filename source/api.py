@@ -10,11 +10,11 @@ import win32com.client
 import debug
 import globalVars
 import dictionaries
-from stateUtils import *
 import audio
 from config import conf
 import appModules
 import gui
+import NVDAObjects
 
 # Initialise WMI; required for getProcessName.
 _wmi = win32com.client.GetObject('winmgmts:')
@@ -30,19 +30,39 @@ def showGui():
 def getCurrentAppModule():
 	return appModules.current
 
+def getNVDAObjectByLocator(window,objectID,childID):
+	accObject=getMSAAObjectFromEvent(window,objectID,childID)
+	if not accObject:
+		return None
+	obj=NVDAObjects.NVDAObject(accObject)
+	if not obj:
+		return None
+	return obj
+
+def getNVDAObjectByPosition(position):
+	accObject=getMSAAObjectFromPoint(position)
+	if not accObject:
+		return None
+	obj=NVDAObjects.NVDAObject(accObject)
+	if not obj:
+		return None
+	return obj
+
 def getFocusObject():
 	return globalVars.focusObject
 
 def getFocusLocator():
 	return globalVars.focus_locator
 
-def setFocusLocator(window,objectID,childID):
+def setFocusObjectByLocator(window,objectID,childID):
+	focusObject=getNVDAObjectByLocator(window,objectID,childID)
+	if not focusObject:
+		return False
 	globalVars.focus_locator=(window,objectID,childID)
-
-def setFocusObject(obj):
-	globalVars.focusObject=obj
+	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
-		setNavigatorObject(obj)
+		setNavigatorObject(focusObject)
+	return True
 
 def getNavigatorObject():
 	return globalVars.navigatorObject
@@ -91,7 +111,7 @@ def executeEvent(name,locator):
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:
-			event(locator)
+			apply(event,locator)
 			return True
 		except:
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
@@ -108,27 +128,6 @@ def executeEvent(name,locator):
 			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
 			debug.writeException("Error executing event %s from focusObject"%event.__name__)
 			return False
-
-def getRoleName(role):
-	if dictionaries.roleNames.has_key(role) is True:
-		return dictionaries.roleNames[role]
-	else:
-		return role
-
-def getStateNames(states,opposite=False):
-	str=""
-	for state in createStateList(states):
-		str="%s %s"%(str,getStateName(state,opposite=opposite))
-	return str
-
-def getStateName(state,opposite=False):
-	if dictionaries.stateNames.has_key(state):
-		name=dictionaries.stateNames[state]
-	else:
-		name=state
-	if opposite is True:
-		name="not %s"%name
-	return name
 
 def getObjectGroupName(accObject):
 	try:
@@ -459,16 +458,3 @@ def getCaretIndex():
 	point=getWindowInsertionPoint(window)
 	return point
 
-def key(name):
-	l = name.split("+")
-	if len(l) >= 2:
-		s=set()
-		for m in l[0:-1]:
-			m="%s%s"%(m[0].upper(),m[1:])
-			s.add(m)
-		modifiers = frozenset(s)
-	else:
-		modifiers = None
-	if len(l[-1])==1:
-		l[-1]=l[-1].upper()
-	return (modifiers, l[-1])

@@ -9,7 +9,6 @@ import Queue
 import pyHook
 import debug
 import audio
-from api import *
 
 queue_keys=Queue.Queue(1000)
 keyUpIgnoreSet=set()
@@ -22,6 +21,20 @@ winDown=False
 extendedWinDown=False
 
 ignoreNextKeyPress = False
+
+def key(name):
+	l = name.split("+")
+	if len(l) >= 2:
+		s=set()
+		for m in l[0:-1]:
+			m="%s%s"%(m[0].upper(),m[1:])
+			s.add(m)
+		modifiers = frozenset(s)
+	else:
+		modifiers = None
+	if len(l[-1])==1:
+		l[-1]=l[-1].upper()
+	return (modifiers, l[-1])
 
 def sendKey(keyPress):
 	global keyPressIgnoreSet
@@ -133,17 +146,15 @@ def internal_keyDownEvent(event):
 			keyPressIgnoreSet.remove(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
-		if keyHasScript(keyPress):
-			debug.writeMessage("key has script")
-			try:
-				queue_keys.put_nowait(keyPress)
-			except Queue.Empty:
-				debug.writeError("internal_keyDownEvent: no room in queue")
-				return True
-			keyUpIgnoreSet.add((event.Key,event.Extended))
-			return False
-		else:
+		if altDown and (event.KeyID==pyHook.HookConstants.vk_to_id['VK_TAB']):
 			return True
+		try:
+			queue_keys.put_nowait(keyPress)
+		except Queue.Empty:
+			debug.writeError("internal_keyDownEvent: no room in queue")
+			return True
+		keyUpIgnoreSet.add((event.Key,event.Extended))
+		return False
 	except:
 		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent")
 		debug.writeException("keyEventHandler.internal_keyDownEvent")
