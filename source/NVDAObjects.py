@@ -404,7 +404,7 @@ class NVDAObject(object):
 			if (index[0]==0) or not crossLines:
 				return None
 			else:
-				newIndex=[index[0]-1,self.getLineLength(index[0]-1)-1]
+				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))-1]
 		else:
 			newIndex=[index[0],index[1]-1]
 		return newIndex
@@ -505,7 +505,9 @@ class NVDAObject(object):
 			for lineNum in range(end[0])[start[1]+1:]:
 				lines.append(self.getLine(index=[lineNum,0]))
 			lines.insert(0,self.getLine(index=start)[start[1]:])
-			lines.append(self.getLine(index=end)[:end[1]])
+			endLine=self.getLine(index=end)
+			if endLine:
+				lines.append(self.getLine(index=end)[:end[1]])
 			text=""
 			for line in lines:
 				text+="%s "%line
@@ -684,7 +686,7 @@ class NVDAObject_Edit(NVDAObject):
 
 	def script_delete(self,keyPress):
 		sendKey(keyPress)
-		sayCharacter()
+		audio.speakSymbol(self.getCharacter())
 
 	def script_backspace(self,keyPress):
 		point=self.getCaretIndex()
