@@ -9,6 +9,8 @@ import Queue
 import pyHook
 import debug
 import audio
+import api
+
 
 queue_keys=Queue.Queue(1000)
 keyUpIgnoreSet=set()
@@ -146,18 +148,22 @@ def internal_keyDownEvent(event):
 			keyPressIgnoreSet.remove(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
-		if altDown and (event.KeyID==pyHook.HookConstants.vk_to_id['VK_TAB']):
+		#if altDown and (event.KeyID==pyHook.HookConstants.vk_to_id['VK_TAB']):
+		#	return True
+		if api.keyHasScript(keyPress):
+			try:
+				queue_keys.put_nowait(keyPress)
+			except Queue.Empty:
+				debug.writeError("internal_keyDownEvent: no room in queue")
+				return True
+			keyUpIgnoreSet.add((event.Key,event.Extended))
+			return False
+		else:
 			return True
-		try:
-			queue_keys.put_nowait(keyPress)
-		except Queue.Empty:
-			debug.writeError("internal_keyDownEvent: no room in queue")
-			return True
-		keyUpIgnoreSet.add((event.Key,event.Extended))
-		return False
 	except:
 		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent")
 		debug.writeException("keyEventHandler.internal_keyDownEvent")
+		return True
 
 def internal_keyUpEvent(event):
 	global controlDown, shiftDown, altDown, insertDown, winDown, extendedWinDown, ignoreNextKeyPress, ignoreKeyCounter

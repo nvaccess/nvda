@@ -97,10 +97,8 @@ def main():
 				keyPress=keyEventHandler.queue_keys.get_nowait()
 				if keyPress == (None, "SilenceSpeech"):
 					audio.cancel()
-				elif keyHasScript(keyPress):
-					executeScript(keyPress)
 				else:
-					keyEventHandler.sendKey(keyPress)
+					executeScript(keyPress)
 			except Queue.Empty:
 				pass
 			try:
