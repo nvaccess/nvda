@@ -103,7 +103,7 @@ class NVDAObject(object):
 		for child in children:
 			text+=child.getBufferText()
 		if len(children)>0:
-			text.append("end of %s %s"%(self.getName(),getRoleName(self.getRole())))
+			text.append("end of %s %s"%(self.getName(),self.getTypeString()))
 			thisLine="%s (contains %s items):"%(thisLine,len(children))
 		thisLine=thisLine.strip()
 		thisLine=re_multiSpacing.sub(" ",thisLine)
