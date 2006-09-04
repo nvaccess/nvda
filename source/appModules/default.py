@@ -143,6 +143,11 @@ def script_navigator_character_previous(keyPress):
 		audio.speakMessage("left")
 		audio.speakText(curObject.getCharacter(index=curIndex))
 
+def script_navigator_character_activate(keyPress):
+	curObject=getNavigatorObject()
+	curIndex=getNavigatorIndex()
+	curObject.activateAtIndex(curIndex)
+
 def script_quit(keyPress):
 	audio.speakMessage("Exiting NVDA",wait=True)
 	quit()
@@ -160,6 +165,7 @@ key("Prior"):script_navigator_line_next,
 key("Down"):script_navigator_character_current,
 key("End"):script_navigator_character_previous,
 key("Next"):script_navigator_character_next,
+key("ExtendedReturn"):script_navigator_character_activate,
 key("Insert+Clear"):script_navigator_object_current,
 key("Insert+Up"):script_navigator_object_parent,
 key("Insert+Down"):script_navigator_object_firstChild,

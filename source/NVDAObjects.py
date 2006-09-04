@@ -74,7 +74,7 @@ class NVDAObject(object):
 
 	def __init__(self,accObject):
 		self.accObject=accObject
-		self.lines=[]
+		self.virtualBuffer=[]
 		self.keyMap={}
 		self.lastStates=self.getFilteredStates()
 
@@ -90,7 +90,7 @@ class NVDAObject(object):
 		else:
 			return False
 
-	def getBufferText(self):
+	def getVirtualBuffer(self):
 		thisLine=""
 		if conf["presentation"]["reportKeyboardShortcuts"]:
 			thisLine+=" %s"%self.getKeyboardShortcut()
@@ -98,21 +98,21 @@ class NVDAObject(object):
 		thisLine+=" %s"%self.getTypeString()
 		thisLine+=" %s"%self.getValue()
 		thisLine+=" %s"%getStateNames(self.getFilteredStates())
-		text=[]
+		buf=[]
 		children=self.getChildren()
 		for child in children:
-			text+=child.getBufferText()
+			buf+=child.getVirtualBuffer()
 		if len(children)>0:
-			text.append("end of %s %s"%(self.getName(),self.getTypeString()))
+			buf.append(("end of %s %s"%(self.getName(),self.getTypeString()),self.doDefaultAction))
 			thisLine="%s (contains %s items):"%(thisLine,len(children))
 		thisLine=thisLine.strip()
 		thisLine=re_multiSpacing.sub(" ",thisLine)
-		text.insert(0,thisLine)
-		return text
+		buf.insert(0,(thisLine,self.doDefaultAction))
+		return buf
 
-	def updateBuffer(self):
-		if len(self.lines)==0: 
-			self.lines=self.getBufferText()
+	def updateVirtualBuffer(self):
+		if len(self.virtualBuffer)==0: 
+			self.virtualBuffer=self.getVirtualBuffer()
 
 	def speakObject(obj):
 		window=obj.getWindowHandle()
@@ -385,6 +385,13 @@ class NVDAObject(object):
 	def getCaretIndex(self):
 		return [0,0]
 
+	def activateAtIndex(self,index):
+		self.updateVirtualBuffer()
+		f=self.virtualBuffer[index[0]][1]
+		if callable(f):
+			f()
+
+
 	def getNextCharacterIndex(self,index,crossLines=True):
 		lineLength=self.getLineLength(index=index)
 		lineCount=self.getLineCount()
@@ -436,14 +443,14 @@ class NVDAObject(object):
 			return [index[0]-1,0]
  
 	def getLineCount(self):
-		self.updateBuffer()
-		return len(self.lines)
+		self.updateVirtualBuffer()
+		return len(self.virtualBuffer)
 
 	def getLineLength(self,index=None):
-		self.updateBuffer()
+		self.updateVirtualBuffer()
 		if index is None:
 			index=getCaretIndex()
-		return len(self.lines[index[0]])
+		return len(self.virtualBuffer[index[0]][0])
 
 	def getLineNumber(self,index=None):
 		if index is None:
@@ -454,13 +461,13 @@ class NVDAObject(object):
 		return index[0]
 
 	def getLine(self,index=None):
-		self.updateBuffer()
+		self.updateVirtualBuffer()
 		if index is None:
 			index=self.getCaretIndex()
-		return self.lines[index[0]]
+		return self.virtualBuffer[index[0]][0]
 
 	def getCharacter(self,index=None):
-		self.updateBuffer()
+		self.updateVirtualBuffer()
 		if index is None:
 			index=self.getCaretIndex()
 		if index[1]>=self.getLineLength(index=index):
@@ -715,11 +722,11 @@ class NVDAObject_mozillaDocument(NVDAObject):
 		return ""
 
 	def event_focusObject(self):
-		audio.cancel()
-		if self.getStates()&STATE_SYSTEM_BUSY:
-			audio.speakMessage("Loading document...")
-		else:
-			audio.speakText(self.getText())
+		audio.speakMessage("Loading document...")
+		if not (self.getStates()&STATE_SYSTEM_BUSY):
+			text=self.getText()
+			audio.cancel()
+			audio.speakText(text)
 
 class NVDAObject_mozillaLink(NVDAObject):
 
@@ -737,7 +744,7 @@ class NVDAObject_mozillaLink(NVDAObject):
 		typeString=""
 		if states&STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
-		if states&STATE_SYSTEM_SELECTABLE:
+		if states&STATE_SYSTEM_SELECTED:
 			typeString+="same page "
 		typeString+=NVDAObject.getTypeString(self)
 		return typeString
@@ -750,14 +757,14 @@ class NVDAObject_mozillaLink(NVDAObject):
 
 class NVDAObject_mozillaListItem(NVDAObject):
 
-	def getBufferText(self):
-		lines=[]
+	def getVirtualBuffer(self):
+		buf=[]
 		for child in self.getChildren():
-			lines+=child.getBufferText()
-		if len(lines)==0:
-			lines.append(" ")
-		lines[0]="%s %s"%(self.getName(),lines[0])
-		return lines
+			buf+=child.getVirtualBuffer()
+		if len(buf)==0:
+			buf.append((" ",None))
+		buf[0]=("%s %s"%(self.getName(),buf[0][0]),buf[0][1])
+		return buf
 
 	def getName(self):
 		child=self.getFirstChild()
@@ -775,13 +782,13 @@ class NVDAObject_mozillaListItem(NVDAObject):
 
 class NVDAObject_mozillaHeading(NVDAObject):
 
-	def getBufferText(self):
+	def getVirtualBuffer(self):
 		line="%s %s"%(self.getRole(),self.getValue())
 		children=self.getChildren()
 		if len(children)==1:
-			return [line]
+			return [(line,children[0].doDefaultAction)]
 		else:
-			return NVDAObject.getBufferText(self)
+			return NVDAObject.getVirtualBuffer(self)
 
 	def getValue(self):
 		children=self.getChildren()
