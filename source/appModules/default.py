@@ -143,6 +143,33 @@ def script_navigator_character_previous(keyPress):
 		audio.speakMessage("left")
 		audio.speakText(curObject.getCharacter(index=curIndex))
 
+def script_navigator_word_current(keyPress):
+	curObject=getNavigatorObject()
+	curIndex=getNavigatorIndex()
+	audio.speakText(curObject.getWord(index=curIndex))
+
+def script_navigator_word_next(keyPress):
+	curObject=getNavigatorObject()
+	curIndex=getNavigatorIndex()
+	nextIndex=curObject.getNextCharacterIndex(curObject.getWordEndIndex(curIndex),crossLines=False)
+	if nextIndex:
+		audio.speakText(curObject.getWord(index=nextIndex))
+		setNavigatorIndex(nextIndex)
+	else:
+		audio.speakMessage("right")
+		audio.speakText(curObject.getWord(index=curIndex))
+
+def script_navigator_word_previous(keyPress):
+	curObject=getNavigatorObject()
+	curIndex=getNavigatorIndex()
+	prevIndex=curObject.getPreviousWordIndex(curIndex)
+	if prevIndex:
+		audio.speakText(curObject.getWord(index=prevIndex))
+		setNavigatorIndex(prevIndex)
+	else:
+		audio.speakMessage("left")
+		audio.speakText(curObject.getWord(index=curIndex))
+
 def script_navigator_character_activate(keyPress):
 	curObject=getNavigatorObject()
 	curIndex=getNavigatorIndex()
@@ -165,6 +192,9 @@ key("Prior"):script_navigator_line_next,
 key("Down"):script_navigator_character_current,
 key("End"):script_navigator_character_previous,
 key("Next"):script_navigator_character_next,
+key("Clear"):script_navigator_word_current,
+key("Left"):script_navigator_word_previous,
+key("Right"):script_navigator_word_next,
 key("ExtendedReturn"):script_navigator_character_activate,
 key("Insert+Clear"):script_navigator_object_current,
 key("Insert+Up"):script_navigator_object_parent,

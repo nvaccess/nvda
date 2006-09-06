@@ -428,6 +428,22 @@ class NVDAObject(object):
 				return prevIndex
 		return curIndex
 
+	def getPreviousWordIndex(self,index):
+		whitespace=['\n','\r','\t',' ','\0']
+		if not index:
+			raise TypeError("function takes a character index as its ownly argument")
+		curIndex=index
+		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
+			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
+		if not curIndex:
+			return None
+		curIndex = self.getPreviousCharacterIndex(curIndex, crossLines = False)
+		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
+			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
+		if not curIndex:
+			return None
+		return self.getNextCharacterIndex(curIndex, crossLines = False)
+
 	def getNextLineIndex(self,index):
 		lineCount=self.getLineCount()
 		if index[0]>=lineCount-1:
