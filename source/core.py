@@ -24,6 +24,7 @@ import appModules
 import audio
 import config
 import gui
+import virtualBuffer
 
 def appChange(window,objectID,childID):
 	obj=getNVDAObjectByLocator(window,objectID,childID)
@@ -62,6 +63,7 @@ def main():
 		if not setFocusObjectByLocator(foregroundWindow,-4,0):
 			debug.writeError("core.main: failed to set focus object (%s,%s,%s)"%(foregroundWindow,OBJID_CLIENT,0))
 			return False
+		setVirtualBuffer(foregroundWindow)
 		appChange(foregroundWindow,-4,0)
 		MSAAEventHandler.initialize()
 		keyEventHandler.initialize()
@@ -90,7 +92,9 @@ def main():
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 						debug.writeException("core.main: while executing event_%s in app module"%MSAAEvent[0])
 				else:
-						executeEvent(MSAAEvent[0],MSAAEvent[1:])
+					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]) or isDecendantWindow(getVirtualBuffer().getWindowHandle(),MSAAEvent[1]):
+						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+					executeEvent(MSAAEvent[0],MSAAEvent[1:])
 			except Queue.Empty:
 				pass
 			try:

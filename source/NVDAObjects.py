@@ -11,8 +11,8 @@ from keyEventHandler import key, sendKey
 from constants import *
 from config import conf
 import dictionaries
+import api
 
-re_multiSpacing=re.compile(r' +')
 
 #Some api functions specific to NVDAObjects
 
@@ -74,9 +74,8 @@ class NVDAObject(object):
 
 	def __init__(self,accObject):
 		self.accObject=accObject
-		self.virtualBuffer=[]
 		self.keyMap={}
-		self.lastStates=self.getFilteredStates()
+		self.lastStates=self.getStates()
 
 	def __eq__(self,other):
 		if (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()):
@@ -90,35 +89,11 @@ class NVDAObject(object):
 		else:
 			return False
 
-	def getVirtualBuffer(self):
-		thisLine=""
-		if conf["presentation"]["reportKeyboardShortcuts"]:
-			thisLine+=" %s"%self.getKeyboardShortcut()
-		thisLine+=" %s"%self.getName()
-		thisLine+=" %s"%self.getTypeString()
-		thisLine+=" %s"%self.getValue()
-		thisLine+=" %s"%getStateNames(self.getFilteredStates())
-		buf=[]
-		children=self.getChildren()
-		for child in children:
-			buf+=child.getVirtualBuffer()
-		if len(children)>0:
-			buf.append(("end of %s %s"%(self.getName(),self.getTypeString()),self.doDefaultAction))
-			thisLine="%s (contains %s items):"%(thisLine,len(children))
-		thisLine=thisLine.strip()
-		thisLine=re_multiSpacing.sub(" ",thisLine)
-		buf.insert(0,(thisLine,self.doDefaultAction))
-		return buf
-
-	def updateVirtualBuffer(self):
-		if len(self.virtualBuffer)==0: 
-			self.virtualBuffer=self.getVirtualBuffer()
-
 	def speakObject(obj):
 		window=obj.getWindowHandle()
 		name=obj.getName()
 		typeString=obj.getTypeString()
-		stateNames=getStateNames(obj.getFilteredStates())
+		stateNames=getStateNames(obj.filterStates(obj.getStates()))
 		value=obj.getValue()
 		description=obj.getDescription()
 		if description==name:
@@ -195,8 +170,7 @@ class NVDAObject(object):
 			pass
 		return states
 
-	def getFilteredStates(self):
-		states=self.getStates()
+	def filterStates(self,states):
 		states-=(states&STATE_SYSTEM_FOCUSED)
 		states-=(states&STATE_SYSTEM_FOCUSABLE)
 		states-=(states&STATE_SYSTEM_SELECTABLE)
@@ -233,7 +207,7 @@ class NVDAObject(object):
 
 	def getChildID(self):
 		try:
-			return self.accObject.ChildID
+			return self.accObject.child
 		except:
 			return None
 
@@ -379,111 +353,7 @@ class NVDAObject(object):
 		else:
 			return False
 
-	def getCaretIndecies():
-		return [[0,0],[0,0]]
-
-	def getCaretIndex(self):
-		return [0,0]
-
-	def activateAtIndex(self,index):
-		self.updateVirtualBuffer()
-		f=self.virtualBuffer[index[0]][1]
-		if callable(f):
-			f()
-
-
-	def getNextCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
-		lineCount=self.getLineCount()
-		if index[1]==lineLength:
-			if (index[0]==lineCount-1) or not crossLines:
-				return None
-			else:
-				newIndex=[index[0]+1,0]
-		else:
-			newIndex=[index[0],index[1]+1]
-		return newIndex
-
-	def getPreviousCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
-		lineCount=self.getLineCount()
-		if index[1]==0:
-			if (index[0]==0) or not crossLines:
-				return None
-			else:
-				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))-1]
-		else:
-			newIndex=[index[0],index[1]-1]
-		return newIndex
-
-	def getWordEndIndex(self,index):
-		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while self.getCharacter(index=curIndex) not in whitespace:
-			prevIndex=curIndex
-			curIndex=self.getNextCharacterIndex(curIndex,crossLines=False)
-			if not curIndex:
-				return prevIndex
-		return curIndex
-
-	def getPreviousWordIndex(self,index):
-		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		curIndex = self.getPreviousCharacterIndex(curIndex, crossLines = False)
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		return self.getNextCharacterIndex(curIndex, crossLines = False)
-
-	def getNextLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]>=lineCount-1:
-			return None
-		else:
-			return [index[0]+1,0]
-
-	def getPreviousLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]<=0:
-			return None
-		else:
-			return [index[0]-1,0]
- 
-	def getLineCount(self):
-		self.updateVirtualBuffer()
-		return len(self.virtualBuffer)
-
-	def getLineLength(self,index=None):
-		self.updateVirtualBuffer()
-		if index is None:
-			index=getCaretIndex()
-		return len(self.virtualBuffer[index[0]][0])
-
-	def getLineNumber(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		if index is None:
-			debug.writeError("window.getLineNumber: failed to get index")
-			return None
-		return index[0]
-
-	def getLine(self,index=None):
-		self.updateVirtualBuffer()
-		if index is None:
-			index=self.getCaretIndex()
-		return self.virtualBuffer[index[0]][0]
-
 	def getCharacter(self,index=None):
-		self.updateVirtualBuffer()
 		if index is None:
 			index=self.getCaretIndex()
 		if index[1]>=self.getLineLength(index=index):
@@ -500,46 +370,15 @@ class NVDAObject(object):
 			text=self.getTextRange(index,end)
 		return text
 
-
-
-	def getSelection(self):
-		return None
-
-	def getText(self):
-		text=""
-		index=[0,0]
-		while index:
-			text+="%s "%self.getLine(index=index)
-			index=self.getNextLineIndex(index)
-		return text
-
-	def getTextRange(self,start,end):
-		if start[0]==end[0]:
-			if start[1]>end[1]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
-			line=self.getLine(index=start)
-			if not line:
-				return None
-			return line[start[1]:end[1]]
-		else:
-			if start[0]>end[0]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
-			lines=[]
-			for lineNum in range(end[0])[start[1]+1:]:
-				lines.append(self.getLine(index=[lineNum,0]))
-			lines.insert(0,self.getLine(index=start)[start[1]:])
-			endLine=self.getLine(index=end)
-			if endLine:
-				lines.append(self.getLine(index=end)[:end[1]])
-			text=""
-			for line in lines:
-				text+="%s "%line
-			return text
-
 	def event_foreground(self):
+		api.setVirtualBuffer(self.getWindowHandle())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 		self.speakObject()
 
 	def event_focusObject(self):
+		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
+			api.setVirtualBuffer(api.getForegroundWindow())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 		if self.hasFocus():
 			self.speakObject()
 
@@ -547,13 +386,13 @@ class NVDAObject(object):
 		audio.speakObjectProperties(value=self.getValue())
 
 	def event_objectStateChange(self):
-		states=self.getFilteredStates()
+		states=self.getStates()
 		if states is None:
 			return None
 		states_on=states-(states&self.lastStates)
-		audio.speakObjectProperties(stateText=getStateNames(states_on))
+		audio.speakObjectProperties(stateText=getStateNames(self.filterStates(states_on)))
 		states_off=self.lastStates-(states&self.lastStates)
-		audio.speakObjectProperties(stateText=getStateNames(states_off,opposite=True))
+		audio.speakObjectProperties(stateText=getStateNames(self.filterStates(states_off),opposite=True))
 		self.lastStates=states
 
 class NVDAObject_dialog(NVDAObject):
@@ -732,25 +571,61 @@ class NVDAObject_checkBox(NVDAObject):
 		states-=states&pyAA.Constants.STATE_SYSTEM_PRESSED
 		return states
 
-class NVDAObject_mozillaDocument(NVDAObject):
+class NVDAObject_mozillaApplication(NVDAObject):
 
 	def getValue(self):
 		return ""
 
 	def event_focusObject(self):
-		audio.speakMessage("Loading document...")
-		if not (self.getStates()&STATE_SYSTEM_BUSY):
-			text=self.getText()
-			audio.cancel()
-			audio.speakText(text)
+		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
+			api.setVirtualBuffer(api.getForegroundWindow())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
-class NVDAObject_mozillaLink(NVDAObject):
+
+class NVDAObject_mozillaContentWindow(NVDAObject):
+
+	def getChildID(self):
+		return int(re.match(r'^_([0-9a-f]*)_.*$',self.accObject.ia.this).group(1),16)*-1
+
+	def event_focusObject(self):
+		self.speakObject()
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+
+class NVDAObject_mozillaDocument(NVDAObject_mozillaContentWindow):
 
 	def getValue(self):
 		return ""
 
-	def getFilteredStates(self):
-		states=NVDAObject.getFilteredStates(self)
+	def event_focusObject(self):
+		if self==api.getVirtualBuffer().getRootObject():
+			return
+		audio.speakMessage("Loading document...")
+		if not self.getStates()&STATE_SYSTEM_BUSY:
+			api.setVirtualBuffer(self.getWindowHandle())
+			api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+			audio.cancel()
+			audio.speakText(api.getVirtualBuffer().getText())
+
+	def event_objectStateChange(self):
+		states=self.getStates()
+		states_on=states-(states&self.lastStates)
+		states_off=self.lastStates-(states&self.lastStates)
+		debug.writeMessage("doc state: %s, %s"%(getStateNames(states_on),getStateNames(states_off)))
+		if states_on&STATE_SYSTEM_BUSY:
+			audio.speakMessage("Loading document...")
+		if states_off&STATE_SYSTEM_BUSY:
+			api.setVirtualBuffer(self.getWindowHandle())
+			audio.cancel()
+			audio.speakText(api.getVirtualBuffer().getText())
+		NVDAObject_mozillaContentWindow(self)
+
+class NVDAObject_mozillaLink(NVDAObject_mozillaContentWindow):
+
+	def getValue(self):
+		return ""
+
+	def filterStates(self,states):
+		states=NVDAObject_mozillaContentWindow.filterStates(self,states)
 		states-=(states&STATE_SYSTEM_LINKED)
 		states-=(states&STATE_SYSTEM_TRAVERSED)
 		return states
@@ -771,20 +646,11 @@ class NVDAObject_mozillaLink(NVDAObject):
 			return []
 		return children
 
-class NVDAObject_mozillaListItem(NVDAObject):
-
-	def getVirtualBuffer(self):
-		buf=[]
-		for child in self.getChildren():
-			buf+=child.getVirtualBuffer()
-		if len(buf)==0:
-			buf.append((" ",None))
-		buf[0]=("%s %s"%(self.getName(),buf[0][0]),buf[0][1])
-		return buf
+class NVDAObject_mozillaListItem(NVDAObject_mozillaContentWindow):
 
 	def getName(self):
 		child=self.getFirstChild()
-		if child and NVDAObject.getRole(child)==ROLE_SYSTEM_STATICTEXT:
+		if child and self.getRole()==ROLE_SYSTEM_STATICTEXT:
 			name=child.getName()
 		else:
 			name=""
@@ -796,24 +662,7 @@ class NVDAObject_mozillaListItem(NVDAObject):
 			del children[0]
 		return children
 
-class NVDAObject_mozillaHeading(NVDAObject):
-
-	def getVirtualBuffer(self):
-		line="%s %s"%(self.getRole(),self.getValue())
-		children=self.getChildren()
-		if len(children)==1:
-			return [(line,children[0].doDefaultAction)]
-		else:
-			return NVDAObject.getVirtualBuffer(self)
-
-	def getValue(self):
-		children=self.getChildren()
-		if len(children)==1:
-			return "%s %s %s"%(children[0].getName(),getRoleName(children[0].getRole()),children[0].getValue())
-		else:
-			return ""
-
-class NVDAObject_mozillaText(NVDAObject_Edit):
+class NVDAObject_mozillaText(NVDAObject_mozillaContentWindow):
 
 	def getName(self):
 		name=NVDAObject.getName(self)
@@ -837,12 +686,6 @@ class NVDAObject_mozillaText(NVDAObject_Edit):
 		else:
 			return ""
 
-	def getStates(self):
-		states=NVDAObject.getStates(self)
-		if states&STATE_SYSTEM_READONLY:
-			states=states-STATE_SYSTEM_READONLY
-		return states
-
 class NVDAObject_TrayClockWClass(NVDAObject):
 
 	def getRole(self):
@@ -856,14 +699,10 @@ classMap={
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,
+"MozillaUIWindowClass_14":NVDAObject_mozillaApplication,
+"MozillaContentWindowClass":NVDAObject_mozillaContentWindow,
 "MozillaContentWindowClass_15":NVDAObject_mozillaDocument,
 "MozillaContentWindowClass_30":NVDAObject_mozillaLink,
 "MozillaContentWindowClass_34":NVDAObject_mozillaListItem,
-"MozillaContentWindowClass_h1":NVDAObject_mozillaHeading,
-"MozillaContentWindowClass_h2":NVDAObject_mozillaHeading,
-"MozillaContentWindowClass_h3":NVDAObject_mozillaHeading,
-"MozillaContentWindowClass_h4":NVDAObject_mozillaHeading,
-"MozillaContentWindowClass_h5":NVDAObject_mozillaHeading,
-"MozillaContentWindowClass_h6":NVDAObject_mozillaHeading,
 "MozillaContentWindowClass_42":NVDAObject_mozillaText,
 }

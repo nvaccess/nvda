@@ -15,6 +15,7 @@ from config import conf
 import appModules
 import gui
 import NVDAObjects
+import virtualBuffer
 
 # Initialise WMI; required for getProcessName.
 _wmi = win32com.client.GetObject('winmgmts:')
@@ -55,6 +56,8 @@ def getFocusLocator():
 	return globalVars.focus_locator
 
 def setFocusObjectByLocator(window,objectID,childID):
+	if (window,objectID,childID)==getFocusLocator():
+		return False
 	focusObject=getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -64,20 +67,30 @@ def setFocusObjectByLocator(window,objectID,childID):
 		setNavigatorObject(focusObject)
 	return True
 
+def getVirtualBuffer():
+	return globalVars.virtualBuffer
+
+def setVirtualBuffer(window):
+	v=virtualBuffer.virtualBuffer(window)
+	globalVars.virtualBuffer=v
+	globalVars.virtualBufferCursor=v.getCaretIndex()
+
+def getVirtualBufferCursor():
+	return globalVars.virtualBufferCursor
+
+
+def setVirtualBufferCursor(index):
+	globalVars.virtualBufferCursor=index
+
+
+def isDecendantWindow(parent,child):
+	return win32gui.IsChild(parent,child)
+
 def getNavigatorObject():
 	return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
 	globalVars.navigatorObject=obj
-	setNavigatorIndex(obj.getCaretIndex())
-
-
-def getNavigatorIndex():
-	return globalVars.navigatorIndex
-
-def setNavigatorIndex(index):
-	globalVars.navigatorIndex=index
-
 def keyHasScript(keyPress):
 	if getCurrentAppModule().keyMap.has_key(keyPress):
 		return True
