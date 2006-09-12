@@ -234,7 +234,7 @@ class virtualBuffer(object):
 				text+="%s "%line
 			return text
 
-class virtualBuffer_mozillaContentWindow(virtualBuffer):
+class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
 
 	def handleEvent(self,name,window,objectID,childID):
 		obj=api.getNVDAObjectByLocator(window,objectID,childID)
@@ -243,6 +243,14 @@ class virtualBuffer_mozillaContentWindow(virtualBuffer):
 		if not ((obj.getRole()==ROLE_SYSTEM_DOCUMENT) and not (name=="objectReorder")):
 			virtualBuffer.handleEvent(self,name,window,objectID,childID)
 
+class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
+
+	def generateObjectBuffer(self,obj):
+		if obj.getRole()==ROLE_SYSTEM_DOCUMENT:
+			return [("%s %s"%(obj.getName(),obj.getTypeString()),obj,1)]
+		return virtualBuffer.generateObjectBuffer(self,obj)
+
 classMap={
-"MozillaContentWindowClass":virtualBuffer_mozillaContentWindow,
+"MozillaContentWindowClass":virtualBuffer_mozillaContentWindowClass,
+"MozillaUIWindowClass":virtualBuffer_mozillaUIWindowClass,
 }

@@ -243,7 +243,7 @@ class NVDAObject(object):
 		else:
 			return NVDAObject(accObject)
 
-	def getNext(self):
+	def getNext(self,checkReverse=True):
 		try:
 			parentObject=NVDAObject(self.accObject.GetParent())
 			parentRole=parentObject.getRole()
@@ -256,18 +256,24 @@ class NVDAObject(object):
 			except:
 				debug.writeError("NVDAObject.getNext: failed to get next window object")
 				return None
-			try:
-				testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-			except:
-				debug.writeError("NVDAObject.getNext: failed to get test object from next window object")
-				return None
-			if nextObject and testObject and (testObject==parentObject) and (nextObject!=parentObject):  
+			if checkReverse:
+				try:
+					testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
+				except:
+					debug.writeError("NVDAObject.getNext: failed to get test object from next window object")
+					return None
+			else:
+				testObject=None
+			if nextObject and (nextObject!=parentObject) and (not checkReverse or (testObject and (testObject==parentObject))):  
 				return NVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
 				nextObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
-				testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-				if nextObject and testObject and (self==testObject) and (nextObject!=self):
+				if checkReverse:
+					testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
+				else:
+					testObject=None
+				if nextObject and (nextObject!=self) and (not checkReverse or (testObject and (testObject==self))):
 					return nextObject
 				else:
 					return None
@@ -571,7 +577,15 @@ class NVDAObject_checkBox(NVDAObject):
 		states-=states&pyAA.Constants.STATE_SYSTEM_PRESSED
 		return states
 
-class NVDAObject_mozillaApplication(NVDAObject):
+class NVDAObject_mozillaUIWindowClass(NVDAObject):
+
+	def event_focusObject(self):
+		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
+			api.setVirtualBuffer(api.getForegroundWindow())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+		self.speakObject()
+
+class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
 
 	def getValue(self):
 		return ""
@@ -581,8 +595,21 @@ class NVDAObject_mozillaApplication(NVDAObject):
 			api.setVirtualBuffer(api.getForegroundWindow())
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
+	def getFirstChild(self):
+		try:
+			children=self.accObject.GetChildren()
+		except:
+			return None
+		for child in children:
+			try:
+				role=child.GetRole()
+				if role not in [ROLE_SYSTEM_TOOLTIP,ROLE_SYSTEM_MENUPOPUP]:
+					return NVDAObject(child)
+			except:
+				pass
 
-class NVDAObject_mozillaContentWindow(NVDAObject):
+
+class NVDAObject_mozillaContentWindowClass(NVDAObject):
 
 	def getChildID(self):
 		return int(re.match(r'^_([0-9a-f]*)_.*$',self.accObject.ia.this).group(1),16)*-1
@@ -591,7 +618,7 @@ class NVDAObject_mozillaContentWindow(NVDAObject):
 		self.speakObject()
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
-class NVDAObject_mozillaDocument(NVDAObject_mozillaContentWindow):
+class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWindowClass):
 
 	def getValue(self):
 		return ""
@@ -617,15 +644,15 @@ class NVDAObject_mozillaDocument(NVDAObject_mozillaContentWindow):
 			api.setVirtualBuffer(self.getWindowHandle())
 			audio.cancel()
 			audio.speakText(api.getVirtualBuffer().getText())
-		NVDAObject_mozillaContentWindow(self)
+		NVDAObject_mozillaContentWindowClass(self)
 
-class NVDAObject_mozillaLink(NVDAObject_mozillaContentWindow):
+class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowClass):
 
 	def getValue(self):
 		return ""
 
 	def filterStates(self,states):
-		states=NVDAObject_mozillaContentWindow.filterStates(self,states)
+		states=NVDAObject_mozillaContentWindowClass.filterStates(self,states)
 		states-=(states&STATE_SYSTEM_LINKED)
 		states-=(states&STATE_SYSTEM_TRAVERSED)
 		return states
@@ -646,7 +673,7 @@ class NVDAObject_mozillaLink(NVDAObject_mozillaContentWindow):
 			return []
 		return children
 
-class NVDAObject_mozillaListItem(NVDAObject_mozillaContentWindow):
+class NVDAObject_mozillaContentWindowClass_listItem(NVDAObject_mozillaContentWindowClass):
 
 	def getName(self):
 		child=self.getFirstChild()
@@ -662,7 +689,7 @@ class NVDAObject_mozillaListItem(NVDAObject_mozillaContentWindow):
 			del children[0]
 		return children
 
-class NVDAObject_mozillaText(NVDAObject_mozillaContentWindow):
+class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowClass):
 
 	def getName(self):
 		name=NVDAObject.getName(self)
@@ -699,10 +726,11 @@ classMap={
 "Edit":NVDAObject_Edit,
 "RICHEDIT50W":NVDAObject_Edit,
 "Button_44":NVDAObject_checkBox,
-"MozillaUIWindowClass_14":NVDAObject_mozillaApplication,
-"MozillaContentWindowClass":NVDAObject_mozillaContentWindow,
-"MozillaContentWindowClass_15":NVDAObject_mozillaDocument,
-"MozillaContentWindowClass_30":NVDAObject_mozillaLink,
-"MozillaContentWindowClass_34":NVDAObject_mozillaListItem,
-"MozillaContentWindowClass_42":NVDAObject_mozillaText,
+"MozillaUIWindowClass":NVDAObject_mozillaUIWindowClass,
+"MozillaUIWindowClass_14":NVDAObject_mozillaUIWindowClass_application,
+"MozillaContentWindowClass":NVDAObject_mozillaContentWindowClass,
+"MozillaContentWindowClass_15":NVDAObject_mozillaContentWindowClass_document,
+"MozillaContentWindowClass_30":NVDAObject_mozillaContentWindowClass_link,
+"MozillaContentWindowClass_34":NVDAObject_mozillaContentWindowClass_listItem,
+"MozillaContentWindowClass_42":NVDAObject_mozillaContentWindowClass_text,
 }
