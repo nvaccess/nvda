@@ -34,6 +34,10 @@ confspec = StringIO("""# NVDA Configuration File
 	reportObjectUnderMouse = boolean(default=true)
 	reportMouseShapeChanges = boolean(default=false)
 
+#Virtual buffer settings
+[virtualBuffer]
+	includeTableStructure = boolean(default=false)
+
 """.replace("\n", "\r\n"))
 
 ### Globals

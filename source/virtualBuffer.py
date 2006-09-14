@@ -20,6 +20,9 @@ class virtualBuffer(object):
 	def __init__(self,window):
 		self.virtualBuffer=[]
 		self.window=window
+		if window==api.getForegroundWindow():
+			self.appendObject(window,-2,0)
+			self.appendObject(window,-3,0)
 		self.appendObject(window,OBJID_CLIENT,0)
 
 	def getWindowHandle(self):
@@ -242,6 +245,15 @@ class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
 			return
 		if not ((obj.getRole()==ROLE_SYSTEM_DOCUMENT) and not (name=="objectReorder")):
 			virtualBuffer.handleEvent(self,name,window,objectID,childID)
+
+	def generateObjectBuffer(self,obj):
+		lines=[]
+		if not conf["virtualBuffer"]["includeTableStructure"] and (obj.getRole() in [ROLE_SYSTEM_CELL,ROLE_SYSTEM_TABLE,"tbody","thead"]):
+			for child in obj.getChildren():
+				lines+=self.generateObjectBuffer(child)
+		else:
+			lines+=virtualBuffer.generateObjectBuffer(self,obj)
+		return lines
 
 class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
 

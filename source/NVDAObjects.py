@@ -78,13 +78,13 @@ class NVDAObject(object):
 		self.lastStates=self.getStates()
 
 	def __eq__(self,other):
-		if (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()):
+		if (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()) and (self.getKeyboardShortcut()==other.getKeyboardShortcut()):
 			return True
 		else:
 			return False
 
 	def __ne__(self,other):
-		if (self.getProcessID()!=other.getProcessID()) or (self.getWindowHandle()!=other.getWindowHandle()) or (self.getRole()!=other.getRole()) or (self.getChildID()!=other.getChildID()) or (self.getLocation()!=other.getLocation()):
+		if (self.getProcessID()!=other.getProcessID()) or (self.getWindowHandle()!=other.getWindowHandle()) or (self.getRole()!=other.getRole()) or (self.getChildID()!=other.getChildID()) or (self.getLocation()!=other.getLocation()) or (self.getKeyboardShortcut()!=other.getKeyboardShortcut()):
 			return True
 		else:
 			return False
@@ -333,12 +333,9 @@ class NVDAObject(object):
 	def getChildren(self):
 		children=[]
 		obj=self.getFirstChild()
-		if obj:
+		while obj:
 			children.append(obj)
-			next=obj.getNext()
-			while next:
-				children.append(next)
-				next=next.getNext()
+			obj=obj.getNext()
 		return children
 
 	def getActiveChild(self):
@@ -359,34 +356,18 @@ class NVDAObject(object):
 		else:
 			return False
 
-	def getCharacter(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		if index[1]>=self.getLineLength(index=index):
-			return None
-		return self.getLine(index=index)[index[1]]
-
-	def getWord(self,index=None):
-		if not index:
-			index=self.getCaretIndex()
-		end=self.getWordEndIndex(index)
-		if not end or (end==index):
-			text=self.getCharacter(index=index)
-		else:
-			text=self.getTextRange(index,end)
-		return text
-
 	def event_foreground(self):
-		api.setVirtualBuffer(self.getWindowHandle())
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 		self.speakObject()
 
-	def event_focusObject(self):
+	def updateVirtualBuffer(self):
 		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
 			api.setVirtualBuffer(api.getForegroundWindow())
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+
+	def event_focusObject(self):
 		if self.hasFocus():
 			self.speakObject()
+			self.updateVirtualBuffer()
 
 	def event_objectValueChange(self):
 		audio.speakObjectProperties(value=self.getValue())
@@ -402,6 +383,9 @@ class NVDAObject(object):
 		self.lastStates=states
 
 class NVDAObject_dialog(NVDAObject):
+	"""
+	Based on NVDAObject but on foreground events, the dialog contents gets read.
+	"""
 
 	def event_foreground(self):
 		self.speakObject()
@@ -417,16 +401,27 @@ class NVDAObject_dialog(NVDAObject):
 
 
 class NVDAObject_Shell_TrayWnd(NVDAObject):
-
+	"""
+	Based on NVDAObject but on foreground events nothing gets spoken.
+	This is the window which holds the windows start button and taskbar.
+	"""
+ 
 	def event_foreground(self):
 		pass
 
 class NVDAObject_Progman(NVDAObject):
+	"""
+	Based on NVDAObject but on foreground events nothing gets spoken.
+	This is the window which holds the windows desktop.
+	"""
 
 	def event_foreground(self):
 		pass
 
 class NVDAObject_Edit(NVDAObject):
+	"""
+	Based on NVDAObject, but speaks moving and editing with in the edit control.
+	"""
 
 	def __init__(self,accObject):
 		NVDAObject.__init__(self,accObject)
@@ -504,6 +499,23 @@ class NVDAObject_Edit(NVDAObject):
 		line="%s"%lineBuf[0:lineLength]
 		return line
 
+	def getCharacter(self,index=None):
+		if index is None:
+			index=self.getCaretIndex()
+		if index[1]>=self.getLineLength(index=index):
+			return None
+		return self.getLine(index=index)[index[1]]
+
+	def getWord(self,index=None):
+		if not index:
+			index=self.getCaretIndex()
+		end=self.getWordEndIndex(index)
+		if not end or (end==index):
+			text=self.getCharacter(index=index)
+		else:
+			text=self.getTextRange(index,end)
+		return text
+
 	def getSelection(self,indecies=None):
 		if indecies is None:
 			indecies=self.getCaretIndecies()
@@ -571,13 +583,19 @@ class NVDAObject_Edit(NVDAObject):
 		pass
 
 class NVDAObject_checkBox(NVDAObject):
+	"""
+	Based on NVDAObject, but filterStates removes the pressed state for checkboxes.
+	"""
 
-	def getStates(self):
-		states=NVDAObject.getStates(self)
+	def filterStates(self,states):
 		states-=states&pyAA.Constants.STATE_SYSTEM_PRESSED
 		return states
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject):
+	"""
+	Based on NVDAObject, but on focus events, actions are performed whether or not the object really has focus.
+	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
+	"""
 
 	def event_focusObject(self):
 		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
@@ -586,14 +604,18 @@ class NVDAObject_mozillaUIWindowClass(NVDAObject):
 		self.speakObject()
 
 class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
+	"""
+	Based on NVDAObject_mozillaUIWindowClass, but:
+	*Value is always empty because otherwise it is a long url to a .shul file that generated the mozilla application.
+	*firstChild is the first child that is not a tooltip or a menu popup since these don't seem to allow getNext etc.
+	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
+	"""
 
 	def getValue(self):
 		return ""
 
 	def event_focusObject(self):
-		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
-			api.setVirtualBuffer(api.getForegroundWindow())
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+		self.updateVirtualBuffer()
 
 	def getFirstChild(self):
 		try:
@@ -610,28 +632,36 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 
 class NVDAObject_mozillaContentWindowClass(NVDAObject):
+	"""
+	Based on NVDAObject, but updateVirtualBuffer only updates the cursor position, not the actual buffer since only the document object should do this. 
+	"""
 
-	def getChildID(self):
-		return int(re.match(r'^_([0-9a-f]*)_.*$',self.accObject.ia.this).group(1),16)*-1
-
-	def event_focusObject(self):
-		self.speakObject()
+	def updateVirtualBuffer(self):
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
 class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWindowClass):
+	"""
+	Based on NVDAObject_mozillaContentWindowClass but:
+	*Value is always empty because otherwise it is the URL of the document.
+	*updateVirtualBuffer loads the document --- this window and its decendant objects in to the buffer if the busy state is not set, rather than the 	foreground window. It then speaks the contents.
+	*event_objectStateChange reports that the document is loading if the busy state is turned on, but if it is turned off, it updates the virtualBuffer.
+	"""
 
 	def getValue(self):
 		return ""
 
+	def updateVirtualBuffer(self):
+		if self!=api.getVirtualBuffer().getRootObject():
+			audio.speakMessage("Loading document...")
+			if not self.getStates()&STATE_SYSTEM_BUSY:
+				api.setVirtualBuffer(self.getWindowHandle())
+				api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+				audio.cancel()
+				audio.speakText(api.getVirtualBuffer().getText())
+
 	def event_focusObject(self):
-		if self==api.getVirtualBuffer().getRootObject():
-			return
-		audio.speakMessage("Loading document...")
-		if not self.getStates()&STATE_SYSTEM_BUSY:
-			api.setVirtualBuffer(self.getWindowHandle())
-			api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
-			audio.cancel()
-			audio.speakText(api.getVirtualBuffer().getText())
+		self.speakObject()
+		self.updateVirtualBuffer()
 
 	def event_objectStateChange(self):
 		states=self.getStates()
@@ -641,12 +671,17 @@ class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWin
 		if states_on&STATE_SYSTEM_BUSY:
 			audio.speakMessage("Loading document...")
 		if states_off&STATE_SYSTEM_BUSY:
-			api.setVirtualBuffer(self.getWindowHandle())
-			audio.cancel()
-			audio.speakText(api.getVirtualBuffer().getText())
+			self.updateVirtualBuffer()
 		NVDAObject_mozillaContentWindowClass(self)
 
 class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowClass):
+	"""
+	Based on NVDAObject_mozillaContentWindowClass, but:
+	*Value is always empty otherwise it would be the full url.
+	*typeString is link, visited link, or same page link depending on certain states.
+	*filterStates filters out linked and traversed since these don't need to be reported.
+	*getChildren does not include any text objects, since text objects are where the name of the link comes from.
+	"""
 
 	def getValue(self):
 		return ""
@@ -669,11 +704,18 @@ class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowC
 
 	def getChildren(self):
 		children=NVDAObject.getChildren(self)
-		if (len(children)==1) and (NVDAObject.getRole(children[0])==pyAA.Constants.ROLE_SYSTEM_TEXT):
-			return []
-		return children
+		newChildren=[]
+		for child in children:
+			if child.getRole()!=ROLE_SYSTEM_STATICTEXT:
+				newChildren.append(child)
+		return newChildren
 
 class NVDAObject_mozillaContentWindowClass_listItem(NVDAObject_mozillaContentWindowClass):
+	"""
+	Based on NVDAObject_mozillaContentWindowClass, but:
+	*Name is the bullet or counter for the list item which is found in the text object which is the first child of this object.
+	*getChildren ignores the first child wich is the text object that contains the bullet or counter for the list item.
+	"""
 
 	def getName(self):
 		child=self.getFirstChild()
@@ -690,6 +732,11 @@ class NVDAObject_mozillaContentWindowClass_listItem(NVDAObject_mozillaContentWin
 		return children
 
 class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowClass):
+	"""
+	Based on NVDAObject_mozillaContentWindowClass but:
+	*If the object has a name but no value, the name is used as the value and no name is provided.
+	*the role is changed to static text if it has the read only state set.
+	"""
 
 	def getName(self):
 		name=NVDAObject.getName(self)
@@ -714,6 +761,9 @@ class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowC
 			return ""
 
 class NVDAObject_TrayClockWClass(NVDAObject):
+	"""
+	Based on NVDAObject but the role is changed to clock.
+	"""
 
 	def getRole(self):
 		return ROLE_SYSTEM_CLOCK
