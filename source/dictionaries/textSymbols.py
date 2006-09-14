@@ -39,4 +39,5 @@
 "}":"right brace",
 "~":"tilda",
 "•":"bullet",
+"»":"right double angle bracket",
 }
