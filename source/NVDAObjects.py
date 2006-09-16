@@ -3,7 +3,9 @@ import re
 import win32api
 import win32com
 import win32con
+import win32console
 import win32gui
+import win32process
 import pyAA
 import debug
 import audio
@@ -418,7 +420,7 @@ class NVDAObject_Progman(NVDAObject):
 	def event_foreground(self):
 		pass
 
-class NVDAObject_Edit(NVDAObject):
+class NVDAObject_edit(NVDAObject):
 	"""
 	Based on NVDAObject, but speaks moving and editing with in the edit control.
 	"""
@@ -498,6 +500,72 @@ class NVDAObject_Edit(NVDAObject):
 		res=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETLINE,lineNum,lineBuf)
 		line="%s"%lineBuf[0:lineLength]
 		return line
+
+	def getNextCharacterIndex(self,index,crossLines=True):
+		lineLength=self.getLineLength(index=index)
+		lineCount=self.getLineCount()
+		if index[1]==lineLength:
+			if (index[0]==lineCount-1) or not crossLines:
+				return None
+			else:
+				newIndex=[index[0]+1,0]
+		else:
+			newIndex=[index[0],index[1]+1]
+		return newIndex
+
+	def getPreviousCharacterIndex(self,index,crossLines=True):
+		lineLength=self.getLineLength(index=index)
+		lineCount=self.getLineCount()
+		if index[1]==0:
+			if (index[0]==0) or not crossLines:
+				return None
+			else:
+				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))-1]
+		else:
+			newIndex=[index[0],index[1]-1]
+		return newIndex
+
+	def getWordEndIndex(self,index):
+		whitespace=['\n','\r','\t',' ','\0']
+		if not index:
+			raise TypeError("function takes a character index as its ownly argument")
+		curIndex=index
+		while self.getCharacter(index=curIndex) not in whitespace:
+			prevIndex=curIndex
+			curIndex=self.getNextCharacterIndex(curIndex,crossLines=False)
+			if not curIndex:
+				return prevIndex
+		return curIndex
+
+	def getPreviousWordIndex(self,index):
+		whitespace=['\n','\r','\t',' ','\0']
+		if not index:
+			raise TypeError("function takes a character index as its ownly argument")
+		curIndex=index
+		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
+			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
+		if not curIndex:
+			return None
+		curIndex = self.getPreviousCharacterIndex(curIndex, crossLines = False)
+		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
+			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
+		if not curIndex:
+			return None
+		return self.getNextCharacterIndex(curIndex, crossLines = False)
+
+	def getNextLineIndex(self,index):
+		lineCount=self.getLineCount()
+		if index[0]>=lineCount-1:
+			return None
+		else:
+			return [index[0]+1,0]
+
+	def getPreviousLineIndex(self,index):
+		lineCount=self.getLineCount()
+		if index[0]<=0:
+			return None
+		else:
+			return [index[0]-1,0]
 
 	def getCharacter(self,index=None):
 		if index is None:
@@ -768,13 +836,56 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 	def getRole(self):
 		return ROLE_SYSTEM_CLOCK
 
+class NVDAObject_consoleWindowClass(NVDAObject_edit):
+
+	def __init__(self,accObject):
+		NVDAObject_edit.__init__(self,accObject)
+		processID=win32process.GetWindowThreadProcessId(self.getWindowHandle())[1]
+		try:
+			win32console.FreeConsole()
+		except:
+			pass
+		win32console.AttachConsole(processID)
+		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
+		debug.writeMessage("console settings: %s"%str(self.consoleBuffer.GetConsoleScreenBufferInfo()))
+
+	def getVisibleLineRange(self):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return (info["Window"].Top,info["Window"].Bottom)
+
+	def getCaretIndex(self):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return [info["CursorPosition"].Y,info["CursorPosition"].X]
+
+	def getLine(self,index=None):
+		if not index:
+			index=self.getCaretIndex()
+		debug.writeMessage("console index: %s"%index)
+		line=self.consoleBuffer.ReadConsoleOutputCharacter(self.getLineLength(),win32console.PyCOORDType(0,index[0]))
+		debug.writeMessage("console line \"%s\""%line)
+		return line
+
+	def getLineCount(self):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return info["Size"].Y
+
+	def getLineLength(self,index=None):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return info["Size"].X
+
+	def event_focusObject(self):
+		self.updateVirtualBuffer()
+		visibleLineRange=self.getVisibleLineRange()
+		for lineNum in range(visibleLineRange[0],visibleLineRange[1]+1):
+			audio.speakText(self.getLine([lineNum,0])) 
+
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
 "Progman":NVDAObject_Progman,
 "#32770_18":NVDAObject_dialog,
 "TrayClockWClass":NVDAObject_TrayClockWClass,
-"Edit":NVDAObject_Edit,
-"RICHEDIT50W":NVDAObject_Edit,
+"Edit":NVDAObject_edit,
+"RICHEDIT50W":NVDAObject_edit,
 "Button_44":NVDAObject_checkBox,
 "MozillaUIWindowClass":NVDAObject_mozillaUIWindowClass,
 "MozillaUIWindowClass_14":NVDAObject_mozillaUIWindowClass_application,
@@ -783,4 +894,5 @@ classMap={
 "MozillaContentWindowClass_30":NVDAObject_mozillaContentWindowClass_link,
 "MozillaContentWindowClass_34":NVDAObject_mozillaContentWindowClass_listItem,
 "MozillaContentWindowClass_42":NVDAObject_mozillaContentWindowClass_text,
+"ConsoleWindowClass":NVDAObject_consoleWindowClass,
 }

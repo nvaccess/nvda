@@ -13,6 +13,9 @@ def event_switchStart(window,objectID,childID):
 def event_switchEnd(window,objectID,childID):
 	audio.cancel()
 
+def event_menuStart(window,objectID,childID):
+	globalVars.menuMode=True
+
 def script_dateTime(keyPress):
 	text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")
 	if text[0]=='0':

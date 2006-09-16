@@ -11,6 +11,7 @@ navigatorObject=None
 navigatorTracksFocus=True
 virtualBuffer=None
 virtualBufferCursor=[0,0]
+menuMode=False
 textSymbols={}
 characterSymbols={}
 roleNames={}

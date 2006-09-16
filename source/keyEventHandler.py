@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 import win32api
 import Queue
 import pyHook
@@ -92,6 +93,7 @@ def sendKey(keyPress):
 	keyList.reverse()
 	for key in keyList:
 		win32api.keybd_event(key[0],0,key[1]+2,0)
+	time.sleep(0.05)
 
 #Internal functions for key presses
 

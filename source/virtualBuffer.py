@@ -1,5 +1,8 @@
 import re
 import win32gui
+import win32process
+import win32console
+import debug
 from constants import *
 import api
 import audio
@@ -262,7 +265,29 @@ class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
 			return [("%s %s"%(obj.getName(),obj.getTypeString()),obj,1)]
 		return virtualBuffer.generateObjectBuffer(self,obj)
 
+class virtualBuffer_consoleWindowClass(virtualBuffer):
+
+	def getCaretIndex(self):
+		index=api.getFocusObject().getCaretIndex()
+		visibleLineRange=api.getFocusObject().getVisibleLineRange()
+		index[0]=index[0]-visibleLineRange[0]
+		return index
+
+	def getLine(self,index=None):
+		if index:
+			visibleLineRange=api.getFocusObject().getVisibleLineRange()
+			index=[index[0]+visibleLineRange[0],index[1]]
+		return api.getFocusObject().getLine(index=index)
+
+	def getLineLength(self,index=None):
+		return api.getFocusObject().getLineLength(index=index)
+
+	def getLineCount(self):
+		visibleLineRange=api.getFocusObject().getVisibleLineRange()
+		return (visibleLineRange[1]-visibleLineRange[0])+1
+
 classMap={
 "MozillaContentWindowClass":virtualBuffer_mozillaContentWindowClass,
 "MozillaUIWindowClass":virtualBuffer_mozillaUIWindowClass,
+"ConsoleWindowClass":virtualBuffer_consoleWindowClass,
 }
