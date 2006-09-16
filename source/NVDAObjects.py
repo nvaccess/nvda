@@ -1,3 +1,6 @@
+import time
+import difflib
+import thread
 import struct
 import re
 import win32api
@@ -849,6 +852,11 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
 		debug.writeMessage("console settings: %s"%str(self.consoleBuffer.GetConsoleScreenBufferInfo()))
 
+	def __del__(self):
+		self.keepUpdating=False
+		time.sleep(0.1)
+		NVDAObject_edit.__del__(self)
+
 	def getVisibleLineRange(self):
 		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
 		return (info["Window"].Top,info["Window"].Bottom)
@@ -874,10 +882,34 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return info["Size"].X
 
 	def event_focusObject(self):
+		self.keepUpdating=True
+		self.thread=thread.start_new_thread(self._consoleUpdater,())
 		self.updateVirtualBuffer()
 		visibleLineRange=self.getVisibleLineRange()
 		for lineNum in range(visibleLineRange[0],visibleLineRange[1]+1):
 			audio.speakText(self.getLine([lineNum,0])) 
+
+	def _getVisibleLines(self):
+		lines=[]
+		visibleLineRange=self.getVisibleLineRange()
+		for num in range(visibleLineRange[0],visibleLineRange[1]+1):
+			lines.append(self.getLine(index=[num,0]))
+		return lines
+
+	def _consoleUpdater(self):
+		oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
+		oldLines=self._getVisibleLines()
+		while self.keepUpdating:
+			newCaretIndex=api.getVirtualBuffer().getCaretIndex()
+			if newCaretIndex!=oldCaretIndex:
+				api.setVirtualBufferCursor(newCaretIndex)
+				oldCaretIndex=newCaretIndex
+			newLines=self._getVisibleLines()
+			for line in difflib.ndiff(oldLines,newLines):
+				if (line[0]=="+") and (len(line)>=3):
+					audio.speakText(line[2:])
+			oldLines=newLines
+			time.sleep(0.1)
 
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,

@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import pyAA
+import difflib
 import win32gui
 import win32com.client
 import debug
@@ -453,21 +454,17 @@ def getProcessName(processID):
 	else:
 		return ""
 
-def getCharacter():
-	(window,objectID,childID)=globalVars.focus_locator
-	point=getWindowInsertionPoint(window)
-	character=getWindowCharacter(window,point)
-	return character
+def strNewText(a,b):
+	gen=difflib.ndiff(a,b)
+	newText=""
+	block=""
+	for line in gen:
+		if line[0]=="+":
+			block+=line[2]
+		elif block:
+			newText+="%s "%block
+			block=""
+	return newText
 
-def getLine():
-	(window,objectID,childID)=globalVars.focus_locator
-	point=getWindowInsertionPoint(window)
-	lineNum=getWindowLineNumber(window,point)
-	line=getWindowLine(window,lineNum)
-	return line
 
-def getCaretIndex():
-	(window,objectID,childID)=globalVars.focus_locator
-	point=getWindowInsertionPoint(window)
-	return point
 

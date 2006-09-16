@@ -7,6 +7,7 @@
 import Queue
 import pyAA
 import debug
+import audio
 
 lastProcessID=None
 queue_events=Queue.Queue(10000)
