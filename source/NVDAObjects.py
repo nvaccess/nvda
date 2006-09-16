@@ -850,7 +850,6 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			pass
 		win32console.AttachConsole(processID)
 		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
-		debug.writeMessage("console settings: %s"%str(self.consoleBuffer.GetConsoleScreenBufferInfo()))
 
 	def __del__(self):
 		self.keepUpdating=False
@@ -868,9 +867,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def getLine(self,index=None):
 		if not index:
 			index=self.getCaretIndex()
-		debug.writeMessage("console index: %s"%index)
 		line=self.consoleBuffer.ReadConsoleOutputCharacter(self.getLineLength(),win32console.PyCOORDType(0,index[0]))
-		debug.writeMessage("console line \"%s\""%line)
 		return line
 
 	def getLineCount(self):
@@ -897,19 +894,36 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return lines
 
 	def _consoleUpdater(self):
-		oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
-		oldLines=self._getVisibleLines()
-		while self.keepUpdating:
-			newCaretIndex=api.getVirtualBuffer().getCaretIndex()
-			if newCaretIndex!=oldCaretIndex:
-				api.setVirtualBufferCursor(newCaretIndex)
-				oldCaretIndex=newCaretIndex
-			newLines=self._getVisibleLines()
-			for line in difflib.ndiff(oldLines,newLines):
-				if (line[0]=="+") and (len(line)>=3):
-					audio.speakText(line[2:])
-			oldLines=newLines
-			time.sleep(0.1)
+		try:
+			oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
+			oldLines=self._getVisibleLines()
+			while self.keepUpdating:
+				newCaretIndex=api.getVirtualBuffer().getCaretIndex()
+				if newCaretIndex!=oldCaretIndex:
+					api.setVirtualBufferCursor(newCaretIndex)
+					oldCaretIndex=newCaretIndex
+				newLines=self._getVisibleLines()
+				diffLines=list(difflib.ndiff(oldLines,newLines))
+				for lineNum in range(len(diffLines)):
+					if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
+						if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
+							newText=""
+							block=""
+							diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
+							for charNum in range(len(diffChars)):
+								if (diffChars[charNum][0]=="+") and (len(diffChars[charNum])>=3):
+									block+=diffChars[charNum][2]
+								elif block:
+									newText+="%s "%block
+									block=""
+							if newText:
+								audio.speakText(newText)
+						elif len(diffLines[lineNum])>=3:
+							audio.speakText(diffLines[lineNum][2:])
+				oldLines=newLines
+				time.sleep(0.1)
+		except:
+			debug.writeException("NVDAObject_consoleWindowClass._consoleUpdater")
 
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
