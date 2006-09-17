@@ -126,6 +126,8 @@ def eventExists(name,locator):
 	return False
 
 def executeEvent(name,locator):
+	if (name=="caret") and (locator[0]!=getFocusLocator()[0]):
+		setFocusObjectByLocator(locator[0],locator[1],locator[2])
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:
@@ -135,6 +137,7 @@ def executeEvent(name,locator):
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 			return False
+	thisObj=getNVDAObjectByLocator(locator[0],locator[1],locator[2])
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
 	if locator==focusLocator and hasattr(focusObject,"event_%s"%name): 
@@ -145,6 +148,15 @@ def executeEvent(name,locator):
 		except:
 			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
 			debug.writeException("Error executing event %s from focusObject"%event.__name__)
+			return False
+	elif thisObj and hasattr(thisObj,"event_%s"%name):
+		event=getattr(thisObj,"event_%s"%name)
+		try:
+			event()
+			return True
+		except:
+			audio.speakMessage("Error executing event %s from object"%event.__name__)
+			debug.writeException("Error executing event %s from object"%event.__name__)
 			return False
 
 def getObjectGroupName(accObject):

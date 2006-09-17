@@ -632,7 +632,7 @@ class NVDAObject_edit(NVDAObject):
 			return None
 		return selection
 
-	def event_objectLocationChange(self):
+	def event_caret(self):
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
 	def script_moveByLine(self,keyPress):
@@ -970,8 +970,31 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		except:
 			debug.writeException("NVDAObject_consoleWindowClass._consoleUpdater")
 
+class NVDAObject_tooltip(NVDAObject):
+
+	def getName(self):
+		name=NVDAObject.getName(self)
+		value=NVDAObject.getValue(self)
+		if name and not value:
+			return ""
+		else:
+			return name
+
+	def getValue(self):
+		name=NVDAObject.getName(self)
+		value=NVDAObject.getValue(self)
+		if name and not value:
+			return name
+		else:
+			return ""
+
+	def event_showObject(self):
+		if conf["presentation"]["reportTooltips"]:
+			self.speakObject()
+
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
+"tooltips_class32":NVDAObject_tooltip,
 "Progman":NVDAObject_Progman,
 "#32770_18":NVDAObject_dialog,
 "TrayClockWClass":NVDAObject_TrayClockWClass,

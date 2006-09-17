@@ -22,6 +22,7 @@ pyAA.Constants.EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 pyAA.Constants.EVENT_SYSTEM_SWITCHSTART:"switchStart",
 pyAA.Constants.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 pyAA.Constants.EVENT_OBJECT_FOCUS:"focusObject",
+pyAA.Constants.EVENT_OBJECT_SHOW:"showObject",
 pyAA.Constants.EVENT_OBJECT_DESCRIPTIONCHANGE:"objectDescriptionChange",
 pyAA.Constants.EVENT_OBJECT_HELPCHANGE:"objectHelpChange",
 pyAA.Constants.EVENT_OBJECT_LOCATIONCHANGE:"objectLocationChange",
@@ -62,6 +63,8 @@ def internal_objectEvent(event):
 		if (event.EventID==pyAA.Constants.EVENT_SYSTEM_FOREGROUND) and (objectProcessID!=lastProcessID):
 			queue_events.put(("appChange",window,objectID,childID))
 			lastProcessID=objectProcessID
+		elif (event.EventID==pyAA.Constants.EVENT_OBJECT_LOCATIONCHANGE) and (event.ObjectID==pyAA.Constants.OBJID_CARET):
+			queue_events.put(("caret",window,objectID,childID))
 		else:
 			eventName=eventMap.get(event.EventID,None)
 			queue_events.put((eventName,window,objectID,childID))
@@ -74,7 +77,12 @@ def internal_objectEvent(event):
 def initialize():
 	global objectEventHandle
 	for eventType in eventMap.keys():
-		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType))
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType,obj_id=pyAA.Constants.OBJID_WINDOW))
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType,obj_id=pyAA.Constants.OBJID_CLIENT))
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType,obj_id=pyAA.Constants.OBJID_TITLEBAR))
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType,obj_id=pyAA.Constants.OBJID_SYSMENU))
+		objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=eventType,obj_id=pyAA.Constants.OBJID_MENU))
+	objectEventHandles.append(pyAA.AddWinEventHook(callback=internal_objectEvent,event=pyAA.Constants.EVENT_OBJECT_LOCATIONCHANGE,obj_id=pyAA.Constants.OBJID_CARET))
 
 def terminate():
 	for handle in objectEventHandles:
