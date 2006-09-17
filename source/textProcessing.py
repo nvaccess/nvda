@@ -24,10 +24,10 @@ def processTextSymbols(text,keepInflection=False):
 	protector=False
 	str=""
 	for char in text:
-			if (char=="^") or (char=="~"):
-				str=" %s "%dictionaries.textSymbols[char]
-			else:
-				str+=char
+		if (char=="^") or (char=="~"):
+			str+=" %s "%dictionaries.textSymbols[char]
+		else:
+			str+=char
 	text=str
 	if keepInflection:
 		text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%dictionaries.textSymbols["."],text)

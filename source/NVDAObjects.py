@@ -223,7 +223,6 @@ class NVDAObject(object):
 		try:
 			return self.accObject.ProcessID
 		except:
-			debug.writeException("NVDAObjects.NVDAObject.getProcessID")
 			return None
 
 	def getLocation(self):
@@ -865,9 +864,15 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return [info["CursorPosition"].Y,info["CursorPosition"].X]
 
 	def getLine(self,index=None):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		maxLen=info["Size"].X
 		if not index:
 			index=self.getCaretIndex()
-		line=self.consoleBuffer.ReadConsoleOutputCharacter(self.getLineLength(),win32console.PyCOORDType(0,index[0]))
+		line=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,index[0]))
+		if line.isspace():
+			line=None
+		else:
+			line=line.rstrip()
 		return line
 
 	def getLineCount(self):
@@ -875,8 +880,11 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return info["Size"].Y
 
 	def getLineLength(self,index=None):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return info["Size"].X
+		line=self.getLine()
+		if line is None:
+			return 0
+		else:
+			return len(line)
 
 	def event_focusObject(self):
 		self.keepUpdating=True
@@ -890,14 +898,16 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		lines=[]
 		visibleLineRange=self.getVisibleLineRange()
 		for num in range(visibleLineRange[0],visibleLineRange[1]+1):
-			lines.append(self.getLine(index=[num,0]))
+			line=self.getLine(index=[num,0])
+			if line is not None:
+				lines.append(line)
 		return lines
 
 	def _consoleUpdater(self):
 		try:
 			oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
 			oldLines=self._getVisibleLines()
-			while self.keepUpdating:
+			while self.keepUpdating and win32gui.IsWindow(self.getWindowHandle()):
 				newCaretIndex=api.getVirtualBuffer().getCaretIndex()
 				if newCaretIndex!=oldCaretIndex:
 					api.setVirtualBufferCursor(newCaretIndex)

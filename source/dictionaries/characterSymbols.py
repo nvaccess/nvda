@@ -6,6 +6,7 @@
 
 {
 None:"blank",
+"":"blank",
 "\0":"NUL",
 "\11":"tab",
 "\n":"Line feed",
