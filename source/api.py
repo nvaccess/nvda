@@ -85,7 +85,11 @@ def setVirtualBufferCursor(index):
 
 
 def isDecendantWindow(parent,child):
-	return win32gui.IsChild(parent,child)
+	if (parent==child) or win32gui.IsChild(parent,child):
+		return True
+	else:
+		return False
+
 
 def getNavigatorObject():
 	return globalVars.navigatorObject

@@ -41,6 +41,8 @@ class virtualBuffer(object):
 		self.refreshObject(window,objectID,childID)
 
 	def generateObjectBuffer(self,thisObj):
+		if thisObj.getWindowHandle()!=self.getWindowHandle():
+			return []
 		lines=[]
 		children=thisObj.getChildren()
 		startText=""
@@ -209,14 +211,6 @@ class virtualBuffer(object):
 			text=self.getTextRange(index,end)
 		return text
 
-	def getText(self):
-		text=""
-		index=[0,0]
-		while index:
-			text+="%s "%self.getLine(index=index)
-			index=self.getNextLineIndex(index)
-		return text
-
 	def getTextRange(self,start,end):
 		if start[0]==end[0]:
 			if start[1]>end[1]:
@@ -239,6 +233,14 @@ class virtualBuffer(object):
 			for line in lines:
 				text+="%s "%line
 			return text
+
+	def getText(self):
+		text=""
+		index=[0,0]
+		while index:
+			text+="%s "%self.getLine(index=index)
+			index=self.getNextLineIndex(index)
+		return text
 
 class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
 
@@ -265,7 +267,7 @@ class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
 			return [("%s %s"%(obj.getName(),obj.getTypeString()),obj,1)]
 		return virtualBuffer.generateObjectBuffer(self,obj)
 
-class virtualBuffer_consoleWindowClass(virtualBuffer):
+class virtualBuffer_cursorBufferWindow(virtualBuffer):
 
 	def getCaretIndex(self):
 		index=api.getFocusObject().getCaretIndex()
@@ -284,10 +286,12 @@ class virtualBuffer_consoleWindowClass(virtualBuffer):
 
 	def getLineCount(self):
 		visibleLineRange=api.getFocusObject().getVisibleLineRange()
-		return (visibleLineRange[1]-visibleLineRange[0])+1
+		return (visibleLineRange[1]-visibleLineRange[0])
 
 classMap={
 "MozillaContentWindowClass":virtualBuffer_mozillaContentWindowClass,
 "MozillaUIWindowClass":virtualBuffer_mozillaUIWindowClass,
-"ConsoleWindowClass":virtualBuffer_consoleWindowClass,
+"Edit":virtualBuffer_cursorBufferWindow,
+"RICHEDIT50W":virtualBuffer_cursorBufferWindow,
+"ConsoleWindowClass":virtualBuffer_cursorBufferWindow,
 }

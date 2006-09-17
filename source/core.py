@@ -55,7 +55,7 @@ def main():
 		dictionaries.load("roleNames")
 		dictionaries.load("stateNames")
 		audio.initialize()
-		audio.speakMessage("NonVisual Desktop Acces started!")
+		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
 		foregroundWindow=getForegroundWindow()
 		if (foregroundWindow is None) or (foregroundWindow==0):
 			debug.writeError("core.main: failed to get foreground window")
@@ -92,7 +92,7 @@ def main():
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 						debug.writeException("core.main: while executing event_%s in app module"%MSAAEvent[0])
 				else:
-					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]) or isDecendantWindow(getVirtualBuffer().getWindowHandle(),MSAAEvent[1]):
+					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]):
 						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					executeEvent(MSAAEvent[0],MSAAEvent[1:])
 			except Queue.Empty:

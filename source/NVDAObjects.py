@@ -83,13 +83,13 @@ class NVDAObject(object):
 		self.lastStates=self.getStates()
 
 	def __eq__(self,other):
-		if (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()) and (self.getKeyboardShortcut()==other.getKeyboardShortcut()):
+		if self and other and (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()) and (self.getKeyboardShortcut()==other.getKeyboardShortcut()):
 			return True
 		else:
 			return False
 
 	def __ne__(self,other):
-		if (self.getProcessID()!=other.getProcessID()) or (self.getWindowHandle()!=other.getWindowHandle()) or (self.getRole()!=other.getRole()) or (self.getChildID()!=other.getChildID()) or (self.getLocation()!=other.getLocation()) or (self.getKeyboardShortcut()!=other.getKeyboardShortcut()):
+		if not other or (self.getProcessID()!=other.getProcessID()) or (self.getWindowHandle()!=other.getWindowHandle()) or (self.getRole()!=other.getRole()) or (self.getChildID()!=other.getChildID()) or (self.getLocation()!=other.getLocation()) or (self.getKeyboardShortcut()!=other.getKeyboardShortcut()):
 			return True
 		else:
 			return False
@@ -351,21 +351,19 @@ class NVDAObject(object):
 
 	def hasFocus(self):
 		states=0
-		try:
-			states=self.accObject.GetState()
-		except:
-			pass
-		if states&pyAA.Constants.STATE_SYSTEM_FOCUSED:
+		states=self.getStates()
+		if (states&STATE_SYSTEM_FOCUSED) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
 			return True
 		else:
 			return False
 
 	def event_foreground(self):
+		audio.cancel()
 		self.speakObject()
 
 	def updateVirtualBuffer(self):
-		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
-			api.setVirtualBuffer(api.getForegroundWindow())
+		if api.getVirtualBuffer().getWindowHandle()!=self.getWindowHandle():
+			api.setVirtualBuffer(self.getWindowHandle())
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
 	def event_focusObject(self):
@@ -450,19 +448,22 @@ class NVDAObject_edit(NVDAObject):
 			key("Back"):self.script_backspace,
 		}
 
+	def getVisibleLineRange(self):
+		return (0,self.getLineCount())
+
 	def getCaretIndecies(self):
 		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
 		if word<0:
 			debug.writeError("window.getCaretIndex: got invalid selection word from window")
-			return None
+			return ([0,0],[0,0]) 
 		curPos=win32api.LOWORD(word)
 		lineNum=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,curPos,0)
 		linePos=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
-		startIndex=(lineNum,curPos-linePos)
+		startIndex=[lineNum,curPos-linePos]
 		curPos=win32api.HIWORD(word)
 		lineNum=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,curPos,0)
 		linePos=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
-		endIndex=(lineNum,curPos-linePos)
+		endIndex=[lineNum,curPos-linePos]
 		point=(startIndex,endIndex)
 		return point
 
@@ -569,6 +570,37 @@ class NVDAObject_edit(NVDAObject):
 		else:
 			return [index[0]-1,0]
 
+	def getText(self):
+		text=""
+		index=[0,0]
+		while index:
+			text+="%s "%self.getLine(index=index)
+			index=self.getNextLineIndex(index)
+		return text
+
+	def getTextRange(self,start,end):
+		if start[0]==end[0]:
+			if start[1]>end[1]:
+				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
+			line=self.getLine(index=start)
+			if not line:
+				return None
+			return line[start[1]:end[1]]
+		else:
+			if start[0]>end[0]:
+				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
+			lines=[]
+			for lineNum in range(end[0])[start[1]+1:]:
+				lines.append(self.getLine(index=[lineNum,0]))
+			lines.insert(0,self.getLine(index=start)[start[1]:])
+			endLine=self.getLine(index=end)
+			if endLine:
+				lines.append(self.getLine(index=end)[:end[1]])
+			text=""
+			for line in lines:
+				text+="%s "%line
+			return text
+
 	def getCharacter(self,index=None):
 		if index is None:
 			index=self.getCaretIndex()
@@ -599,6 +631,9 @@ class NVDAObject_edit(NVDAObject):
 		if selection is None:
 			return None
 		return selection
+
+	def event_objectLocationChange(self):
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
 	def script_moveByLine(self,keyPress):
 		sendKey(keyPress)
@@ -857,7 +892,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
 	def getVisibleLineRange(self):
 		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return (info["Window"].Top,info["Window"].Bottom)
+		return (info["Window"].Top,info["Window"].Bottom+1)
 
 	def getCaretIndex(self):
 		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
@@ -891,13 +926,13 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
 		self.updateVirtualBuffer()
 		visibleLineRange=self.getVisibleLineRange()
-		for lineNum in range(visibleLineRange[0],visibleLineRange[1]+1):
-			audio.speakText(self.getLine([lineNum,0])) 
+		for line in self.getVisibleLines():
+			audio.speakText(line)
 
-	def _getVisibleLines(self):
+	def getVisibleLines(self):
 		lines=[]
 		visibleLineRange=self.getVisibleLineRange()
-		for num in range(visibleLineRange[0],visibleLineRange[1]+1):
+		for num in range(visibleLineRange[0],visibleLineRange[1]):
 			line=self.getLine(index=[num,0])
 			if line is not None:
 				lines.append(line)
@@ -906,13 +941,13 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def _consoleUpdater(self):
 		try:
 			oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
-			oldLines=self._getVisibleLines()
+			oldLines=self.getVisibleLines()
 			while self.keepUpdating and win32gui.IsWindow(self.getWindowHandle()):
 				newCaretIndex=api.getVirtualBuffer().getCaretIndex()
 				if newCaretIndex!=oldCaretIndex:
 					api.setVirtualBufferCursor(newCaretIndex)
 					oldCaretIndex=newCaretIndex
-				newLines=self._getVisibleLines()
+				newLines=self.getVisibleLines()
 				diffLines=list(difflib.ndiff(oldLines,newLines))
 				for lineNum in range(len(diffLines)):
 					if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
@@ -921,7 +956,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 							block=""
 							diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
 							for charNum in range(len(diffChars)):
-								if (diffChars[charNum][0]=="+") and (len(diffChars[charNum])>=3):
+								if (diffChars[charNum][0]=="+") and (len(diffChars[charNum])==3):
 									block+=diffChars[charNum][2]
 								elif block:
 									newText+="%s "%block
