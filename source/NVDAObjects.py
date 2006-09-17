@@ -523,7 +523,7 @@ class NVDAObject_edit(NVDAObject):
 			if (index[0]==0) or not crossLines:
 				return None
 			else:
-				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))-1]
+				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))]
 		else:
 			newIndex=[index[0],index[1]-1]
 		return newIndex
@@ -606,7 +606,11 @@ class NVDAObject_edit(NVDAObject):
 			index=self.getCaretIndex()
 		if index[1]>=self.getLineLength(index=index):
 			return None
-		return self.getLine(index=index)[index[1]]
+		line=self.getLine(index=index)
+		if line and (len(line)>=index[1]):
+			return line[index[1]]
+		else:
+			return None
 
 	def getWord(self,index=None):
 		if not index:
