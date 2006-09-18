@@ -1,4 +1,5 @@
 from keyEventHandler import key
+from constants import *
 from api import *
 import audio
 import datetime
@@ -14,7 +15,17 @@ def event_switchEnd(window,objectID,childID):
 	audio.cancel()
 
 def event_menuStart(window,objectID,childID):
-	globalVars.menuMode=True
+	audio.cancel()
+	if not getMenuMode():
+		obj=getNVDAObjectByLocator(window,objectID,childID)
+		if obj and (obj.getRole() in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]):
+			obj.speakObject()
+			for child in obj.getChildren():
+				if child.hasFocus():
+					child.speakObject()
+					break
+	setMenuMode(True)
+
 
 def script_dateTime(keyPress):
 	text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")

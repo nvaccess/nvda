@@ -349,6 +349,17 @@ class NVDAObject(object):
 			return None
 		return NVDAObject(child)
 
+	def getSelectedChildren(self):
+		try:
+			accChildren=self.accObject.GetSelection()
+		except:
+			accChildren=[]
+		children=[]
+		for accChild in accChildren:
+			children.append(NVDAObject(accChild))
+		return children
+
+
 	def hasFocus(self):
 		states=0
 		states=self.getStates()
@@ -366,8 +377,13 @@ class NVDAObject(object):
 			api.setVirtualBuffer(self.getWindowHandle())
 		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
 
+	def updateMenuMode(self):
+		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
+			api.setMenuMode(False)
+
 	def event_focusObject(self):
-		if self.hasFocus():
+		self.updateMenuMode()
+		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
 			self.speakObject()
 			self.updateVirtualBuffer()
 

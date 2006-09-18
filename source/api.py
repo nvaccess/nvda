@@ -128,6 +128,7 @@ def eventExists(name,locator):
 def executeEvent(name,locator):
 	if (name=="caret") and (locator[0]!=getFocusLocator()[0]):
 		setFocusObjectByLocator(locator[0],locator[1],locator[2])
+		executeEvent("focusObject",locator)
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:
@@ -482,5 +483,8 @@ def strNewText(a,b):
 			block=""
 	return newText
 
+def setMenuMode(switch):
+	globalVars.menuMode=switch
 
-
+def getMenuMode():
+	return globalVars.menuMode
