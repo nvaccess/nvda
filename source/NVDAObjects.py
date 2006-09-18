@@ -958,6 +958,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
 	def event_focusObject(self):
 		self.keepUpdating=True
+		self._oldestLines=None
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
 		self.updateVirtualBuffer()
 		visibleLineRange=self.getVisibleLineRange()
@@ -983,24 +984,29 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 					api.setVirtualBufferCursor(newCaretIndex)
 					oldCaretIndex=newCaretIndex
 				newLines=self.getVisibleLines()
-				diffLines=list(difflib.ndiff(oldLines,newLines))
-				for lineNum in range(len(diffLines)):
-					if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
-						if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-							newText=""
-							block=""
-							diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
-							for charNum in range(len(diffChars)):
-								if (diffChars[charNum][0]=="+") and (len(diffChars[charNum])==3):
-									block+=diffChars[charNum][2]
-								elif block:
-									newText+="%s "%block
-									block=""
-							if newText:
-								audio.speakText(newText)
-						elif len(diffLines[lineNum])>=3:
-							audio.speakText(diffLines[lineNum][2:])
-				oldLines=newLines
+				if newLines!=oldLines:
+					if not self._oldestLines:
+						self._oldestLines=oldLines
+					oldLines=newLines
+				elif self._oldestLines:
+					diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(self._oldestLines,newLines)))
+					self._oldestLines=None
+					for lineNum in range(len(diffLines)):
+						if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
+							if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
+								newText=""
+								block=""
+								diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
+								for charNum in range(len(diffChars)):
+									if (diffChars[charNum][0]=="+"):
+										block+=diffChars[charNum][2]
+									elif block:
+										audio.speakText(block)
+										block=""
+								if block:
+									audio.speakText(block)
+							else:
+								audio.speakText(diffLines[lineNum][2:])
 				time.sleep(0.1)
 		except:
 			debug.writeException("NVDAObject_consoleWindowClass._consoleUpdater")
