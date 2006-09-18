@@ -116,7 +116,7 @@ def main():
 				pass
 			# If there are no events already waiting, sleep to avoid needlessly hogging the CPU.
 			if keyEventHandler.queue_keys.empty() and mouseEventHandler.queue_events.empty() and MSAAEventHandler.queue_events.empty():
-				time.sleep(0.001)
+				time.sleep(0.01)
 	except:
 			audio.speakMessage("Exception in main loop")
 			debug.writeException("core.py main loop")

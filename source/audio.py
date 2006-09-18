@@ -28,7 +28,8 @@ def cancel():
 
 def speakMessage(text,wait=False):
 	text=processText(text)
-	synth.speakText(text,None,wait)
+	if text and not text.isspace():
+		synth.speakText(text,None,wait)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
 	text=""
@@ -51,16 +52,19 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 	if position is not None:
 		text="%s %s"%(text,position)
 	text=processText(text)
-	synth.speakText(text,None,wait)
+	if text and not text.isspace():
+		synth.speakText(text,None,wait)
 
 def speakSymbol(symbol,wait=False):
-	symbol=processSymbol(symbol)
-	synth.speakText(symbol,None,wait)
+	text=processSymbol(symbol)
+	if text and not text.isspace():
+		synth.speakText(text,None,wait)
 
 def speakText(text,wait=False):
 	if (text is None) or (len(text)==1):
 		speakSymbol(text,wait=wait)
 		return
 	text=processText(text)
-	synth.speakText(text,None,wait)
+	if text and not text.isspace():
+		synth.speakText(text,None,wait)
 

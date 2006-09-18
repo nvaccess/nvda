@@ -15,16 +15,16 @@ def event_switchEnd(window,objectID,childID):
 	audio.cancel()
 
 def event_menuStart(window,objectID,childID):
-	audio.cancel()
 	if not getMenuMode():
 		obj=getNVDAObjectByLocator(window,objectID,childID)
 		if obj and (obj.getRole() in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]):
+			setMenuMode(True)
+			audio.cancel()
 			obj.speakObject()
 			for child in obj.getChildren():
 				if child.hasFocus():
 					child.speakObject()
 					break
-	setMenuMode(True)
 
 
 def script_dateTime(keyPress):

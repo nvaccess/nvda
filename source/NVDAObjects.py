@@ -363,10 +363,16 @@ class NVDAObject(object):
 	def hasFocus(self):
 		states=0
 		states=self.getStates()
-		if (states&STATE_SYSTEM_FOCUSED) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
+		if (states&STATE_SYSTEM_FOCUSED):
 			return True
 		else:
 			return False
+
+	def setFocus(self):
+		try:
+			self.accObject.SetFocus()
+		except:
+			pass
 
 	def event_foreground(self):
 		audio.cancel()
@@ -380,6 +386,15 @@ class NVDAObject(object):
 	def updateMenuMode(self):
 		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
 			api.setMenuMode(False)
+
+	def event_showObject(self):
+		if (self.getRole()==ROLE_SYSTEM_MENUPOPUP) and not api.getMenuMode():
+			audio.cancel()
+			self.speakObject()
+			for child in self.getChildren():
+				if child.hasFocus():
+					child.speakObject()
+			api.setMenuMode(True)
 
 	def event_focusObject(self):
 		self.updateMenuMode()
@@ -1028,5 +1043,5 @@ classMap={
 "MozillaContentWindowClass_30":NVDAObject_mozillaContentWindowClass_link,
 "MozillaContentWindowClass_34":NVDAObject_mozillaContentWindowClass_listItem,
 "MozillaContentWindowClass_42":NVDAObject_mozillaContentWindowClass_text,
-"ConsoleWindowClass":NVDAObject_consoleWindowClass,
+"ConsoleWindowClass_10":NVDAObject_consoleWindowClass,
 }
