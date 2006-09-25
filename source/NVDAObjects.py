@@ -1,3 +1,5 @@
+import ctypes
+import comtypes.client
 import time
 import difflib
 import thread
@@ -17,7 +19,6 @@ from constants import *
 from config import conf
 import dictionaries
 import api
-
 
 #Some api functions specific to NVDAObjects
 
@@ -81,6 +82,34 @@ class NVDAObject(object):
 		self.accObject=accObject
 		self.keyMap={}
 		self.lastStates=self.getStates()
+		self.doneFocus=False
+		self.hash=self._makeHash()
+	def _makeHash(self):
+		l=10000000
+		p=17
+		h=0
+		window=self.getWindowHandle()
+		if isinstance(window,int):
+			h=(h+(window*p))%l
+		role=self.getRole()
+		if isinstance(role,basestring):
+			role=hash(role)
+		if isinstance(role,int):
+			h=(h+(role*p))%l
+		childID=self.getChildID()
+		if isinstance(childID,int):
+			h=(h+(childID*p))%l
+		location=self.getLocation()
+		if location:
+			left,top,right,bottom=location
+			h=(h+(left*p))%l
+			h=(h+(top*p))%l
+			h=(h+(right*p))%l
+			h=(h+(bottom*p))%l
+		return h
+
+	def __hash__(self):
+		return self.hash
 
 	def __eq__(self,other):
 		if self and other and (self.getProcessID()==other.getProcessID()) and (self.getWindowHandle()==other.getWindowHandle()) and (self.getRole()==other.getRole()) and (self.getChildID()==other.getChildID()) and (self.getLocation()==other.getLocation()) and (self.getKeyboardShortcut()==other.getKeyboardShortcut()):
@@ -247,7 +276,7 @@ class NVDAObject(object):
 		else:
 			return NVDAObject(accObject)
 
-	def getNext(self,checkReverse=True):
+	def getNext(self):
 		try:
 			parentObject=NVDAObject(self.accObject.GetParent())
 			parentRole=parentObject.getRole()
@@ -256,28 +285,23 @@ class NVDAObject(object):
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
 			try:
-				nextObject=NVDAObject(parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
+				next=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
+				next=pyAA.AccessibleObjectFromWindow(next.Window,-4)
+				nextObject=NVDAObject(next)
+				if nextObject!=self:
+					return nextObject
+				else:
+					return None
 			except:
 				debug.writeError("NVDAObject.getNext: failed to get next window object")
 				return None
-			if checkReverse:
-				try:
-					testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-				except:
-					debug.writeError("NVDAObject.getNext: failed to get test object from next window object")
-					return None
-			else:
-				testObject=None
-			if nextObject and (nextObject!=parentObject) and (not checkReverse or (testObject and (testObject==parentObject))):  
-				return NVDAObject(pyAA.AccessibleObjectFromWindow(nextObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
-				nextObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
-				if checkReverse:
-					testObject=NVDAObject(nextObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-				else:
-					testObject=None
-				if nextObject and (nextObject!=self) and (not checkReverse or (testObject and (testObject==self))):
+				next=self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
+				nextObject=NVDAObject(next)
+				if nextObject.getRole()==ROLE_SYSTEM_WINDOW:
+					nextObject=api.getNVDAObjectByLocator(nextObject.getWindowHandle(),-4,0)
+				if nextObject!=self:
 					return nextObject
 				else:
 					return None
@@ -293,22 +317,23 @@ class NVDAObject(object):
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
 			try:
-				prevObject=NVDAObject(parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
+				prev=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
+				prev=pyAA.AccessibleObjectFromWindow(prev.Window,-4)
+				prevObject=NVDAObject(prev)
+				if prevObject!=self:
+					return prevObject
+				else:
+					return None
 			except:
-				debug.writeError("NVDAObject.getPrevious: failed to get previous window object")
+				debug.writeError("NVDAObject.getPrevious: failed to get next window object")
 				return None
-			try:
-				testObject=NVDAObject(prevObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
-			except:
-				debug.writeError("NVDAObject.getPrevious: failed to get test object from previous window object")
-				return None
-			if prevObject and testObject and (testObject==parentObject) and (prevObject!=parentObject):  
-				return NVDAObject(pyAA.AccessibleObjectFromWindow(prevObject.getWindowHandle(),pyAA.Constants.OBJID_CLIENT))
 		else:
 			try:
-				prevObject=NVDAObject(self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS))
-				testObject=NVDAObject(prevObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT))
-				if prevObject and testObject and (self==testObject) and (prevObject!=self):
+				prev=self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
+				prevObject=NVDAObject(prev)
+				if prevObject.getRole()==ROLE_SYSTEM_WINDOW:
+					prevObject=api.getNVDAObjectByLocator(prevObject.getWindowHandle(),-4,0)
+				if prevObject!=self:
 					return prevObject
 				else:
 					return None
@@ -317,12 +342,12 @@ class NVDAObject(object):
 
 	def getFirstChild(self):
 		try:
-			childObject=self.accObject.Navigate(pyAA.Constants.NAVDIR_FIRSTCHILD)
-			if childObject.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-				childObject=pyAA.AccessibleObjectFromWindow(childObject.Window,pyAA.Constants.OBJID_CLIENT)
-			testObject=self.accObject
-			if childObject and ((childObject.Window!=testObject.Window) or (childObject.GetRole()!=testObject.GetRole()) or (childObject.ChildID!=testObject.ChildID)):
-				return NVDAObject(childObject)
+			child=self.accObject.Navigate(pyAA.Constants.NAVDIR_FIRSTCHILD)
+			if child.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
+				child=pyAA.AccessibleObjectFromWindow(child.Window,-4)
+			childObject=NVDAObject(child)
+			if childObject!=self:
+				return childObject
 			else:
 				return None
 		except:
@@ -381,39 +406,62 @@ class NVDAObject(object):
 	def updateVirtualBuffer(self):
 		if api.getVirtualBuffer().getWindowHandle()!=self.getWindowHandle():
 			api.setVirtualBuffer(self.getWindowHandle())
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
-
+			audio.speakMessage("new buffer")
 	def updateMenuMode(self):
 		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
 			api.setMenuMode(False)
 
 	def event_showObject(self):
-		if (self.getRole()==ROLE_SYSTEM_MENUPOPUP) and not api.getMenuMode():
+		if self.getRole()==ROLE_SYSTEM_MENUPOPUP:
+			self.event_menuStart()
+
+	def event_focusObject(self):
+		if self.doneFocus:
+			return
+		self.doneFocus=True
+		self.updateMenuMode()
+		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
+			if self.getRole()==ROLE_SYSTEM_MENUITEM:
+				audio.cancel()
+			self.speakObject()
+
+	def event_menuStart(self):
+		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
+			return
+		if not api.getMenuMode():
 			audio.cancel()
+			api.setMenuMode(True)
 			self.speakObject()
 			for child in self.getChildren():
 				if child.hasFocus():
 					child.speakObject()
-			api.setMenuMode(True)
-
-	def event_focusObject(self):
-		self.updateMenuMode()
-		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
-			self.speakObject()
-			self.updateVirtualBuffer()
+					break
 
 	def event_objectValueChange(self):
-		audio.speakObjectProperties(value=self.getValue())
+		if self.hasFocus():
+			audio.speakObjectProperties(value=self.getValue())
 
 	def event_objectStateChange(self):
 		states=self.getStates()
-		if states is None:
+		if states is None or not self.hasFocus():
 			return None
 		states_on=states-(states&self.lastStates)
 		audio.speakObjectProperties(stateText=getStateNames(self.filterStates(states_on)))
 		states_off=self.lastStates-(states&self.lastStates)
 		audio.speakObjectProperties(stateText=getStateNames(self.filterStates(states_off),opposite=True))
 		self.lastStates=states
+
+	def event_objectSelection(self):
+		return self.event_objectStateChange()
+
+	def event_objectSelectionAdd(self):
+		return self.event_objectStateChange()
+
+	def event_objectSelectionRemove(self):
+		return self.event_objectStateChange()
+
+	def event_objectSelectionWithIn(self):
+		return self.event_objectStateChange()
 
 class NVDAObject_dialog(NVDAObject):
 	"""
@@ -479,28 +527,34 @@ class NVDAObject_edit(NVDAObject):
 			key("Back"):self.script_backspace,
 		}
 
-	def getVisibleLineRange(self):
-		return (0,self.getLineCount())
+	def getValue(self):
+		return self.getCurrentLine()
 
-	def getCaretIndecies(self):
+	def getVisibleLineRange(self):
+		return (self.getLineNumber(self.getStartPosition()),self.getLineNumber(self.getEndPosition()))
+
+	def getCaretRange(self):
 		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
 		if word<0:
-			debug.writeError("window.getCaretIndex: got invalid selection word from window")
-			return ([0,0],[0,0]) 
-		curPos=win32api.LOWORD(word)
-		lineNum=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,curPos,0)
-		linePos=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
-		startIndex=[lineNum,curPos-linePos]
-		curPos=win32api.HIWORD(word)
-		lineNum=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,curPos,0)
-		linePos=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
-		endIndex=[lineNum,curPos-linePos]
-		point=(startIndex,endIndex)
-		return point
+			debug.writeError("window.getCaretPosition: got invalid selection word from window")
+			return None
+		start=win32api.LOWORD(word)
+		end=win32api.HIWORD(word)
+		return (start,end)
 
-	def getCaretIndex(self):
-		point=self.getCaretIndecies()
-		return point[1]
+	def getCaretPosition(self):
+		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
+		if word<0:
+			debug.writeError("window.getCaretPosition: got invalid selection word from window")
+			return None
+		pos=win32api.LOWORD(word)
+		return pos
+
+	def getStartPosition(self):
+		return 0
+
+	def getEndPosition(self):
+		return self.getTextLength()
 
 	def getLineCount(self):
 		lineCount=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETLINECOUNT,0,0)
@@ -509,25 +563,23 @@ class NVDAObject_edit(NVDAObject):
 			return None
 		return lineCount
 
+	def getLineNumber(self,pos):
+		return win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,pos,0)
 
-	def getLineLength(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		lineLength=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINELENGTH,win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,index[0],0),0)
+	def getLineStart(self,lineNum):
+		return win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
+
+	def getLineLength(self,lineNum):
+		lineStart=self.getLineStart(lineNum)
+		lineLength=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINELENGTH,lineStart,0)
 		if lineLength<0:
 			debug.writeError("window.getLineLength: line length invalid or negative (line number %d, line position %d"%(lineNum,curPos))
 			return None
 		return lineLength
 
-	def getLine(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		lineNum=index[0]
-		lineLength=self.getLineLength(index=index)
-		if lineLength is None:
-			debug.writeError("window.getLine: line length is not valid")
-			return None
-		if lineLength==0:
+	def getLine(self,lineNum):
+		lineLength=self.getLineLength(lineNum)
+		if not lineLength:
 			return None
 		lineBuf=struct.pack('i',lineLength+1)
 		lineBuf=lineBuf+"".ljust(lineLength-2)
@@ -535,161 +587,95 @@ class NVDAObject_edit(NVDAObject):
 		line="%s"%lineBuf[0:lineLength]
 		return line
 
-	def getNextCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
-		lineCount=self.getLineCount()
-		if index[1]==lineLength:
-			if (index[0]==lineCount-1) or not crossLines:
-				return None
-			else:
-				newIndex=[index[0]+1,0]
-		else:
-			newIndex=[index[0],index[1]+1]
-		return newIndex
+	def getCurrentLine(self):
+		return self.getLine(self.getLineNumber(self.getCaretPosition()))
 
-	def getPreviousCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
-		lineCount=self.getLineCount()
-		if index[1]==0:
-			if (index[0]==0) or not crossLines:
-				return None
-			else:
-				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))]
+	def nextCharacter(self,pos):
+		if pos<self.getEndPosition():
+			return pos+1
 		else:
-			newIndex=[index[0],index[1]-1]
-		return newIndex
+			return None
 
-	def getWordEndIndex(self,index):
+	def previousCharacter(self,pos):
+		if pos>self.getStartPosition():
+			return pos-1
+		else:
+			return None
+
+	def nextWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while self.getCharacter(index=curIndex) not in whitespace:
-			prevIndex=curIndex
-			curIndex=self.getNextCharacterIndex(curIndex,crossLines=False)
-			if not curIndex:
-				return prevIndex
-		return curIndex
+		curPos=pos
+		while curPos and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.nextCharacter(curPos)
+		while curPos and (self.getCharacter(curPos) in whitespace):
+			curPos=self.nextCharacter(curPos)
+		return curPos
 
-	def getPreviousWordIndex(self,index):
+	def previousWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		curIndex = self.getPreviousCharacterIndex(curIndex, crossLines = False)
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		return self.getNextCharacterIndex(curIndex, crossLines = False)
-
-	def getNextLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]>=lineCount-1:
-			return None
+		curPos=pos
+		while (curPos>0) and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.previousCharacter(curPos)
+		while (curPos>0) and (self.getCharacter(curPos) in whitespace):
+			curPos=self.previousCharacter(curPos)
+		while (curPos>0) and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.previousCharacter(curPos)
+		if curPos:
+			return currPos
 		else:
-			return [index[0]+1,0]
-
-	def getPreviousLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]<=0:
 			return None
-		else:
-			return [index[0]-1,0]
+
+ 
+	def getTextLength(self):
+		return ctypes.windll.user32.SendMessageW(self.getWindowHandle(),win32con.WM_GETTEXTLENGTH,0,0)
 
 	def getText(self):
-		text=""
-		index=[0,0]
-		while index:
-			text+="%s "%self.getLine(index=index)
-			index=self.getNextLineIndex(index)
-		return text
+		textLength=self.getTextLength()
+		textBuf=ctypes.create_unicode_buffer(textLength+1)
+		ctypes.windll.user32.SendMessageW(self.getWindowHandle(),win32con.WM_GETTEXT,textLength+1,textBuf)
+		return textBuf.value+u""
 
 	def getTextRange(self,start,end):
-		if start[0]==end[0]:
-			if start[1]>end[1]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
-			line=self.getLine(index=start)
-			if not line:
-				return None
-			return line[start[1]:end[1]]
-		else:
-			if start[0]>end[0]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
-			lines=[]
-			for lineNum in range(end[0])[start[1]+1:]:
-				lines.append(self.getLine(index=[lineNum,0]))
-			lines.insert(0,self.getLine(index=start)[start[1]:])
-			endLine=self.getLine(index=end)
-			if endLine:
-				lines.append(self.getLine(index=end)[:end[1]])
-			text=""
-			for line in lines:
-				text+="%s "%line
-			return text
+		text=self.getText()
+		if (start>=end) or (end>len(text)):
+			return None
+		return text[start:end]
 
-	def getCharacter(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		if index[1]>=self.getLineLength(index=index):
-			return None
-		line=self.getLine(index=index)
-		if line and (len(line)>=index[1]):
-			return line[index[1]]
-		else:
-			return None
+	def getCharacter(self,pos):
+		return self.getTextRange(pos,pos+1)
 
-	def getWord(self,index=None):
-		if not index:
-			index=self.getCaretIndex()
-		end=self.getWordEndIndex(index)
-		if not end or (end==index):
-			text=self.getCharacter(index=index)
-		else:
-			text=self.getTextRange(index,end)
-		return text
+	def getCurrentCharacter(self):
+		return self.getCharacter(self.getCaretPosition())
 
-	def getSelection(self,indecies=None):
-		if indecies is None:
-			indecies=self.getCaretIndecies()
-		if indecies is None:
-			debug.writeError("window.getCharacter: failed to get index")
-			return None
-		if indecies[0]==indecies[1]:
-			debug.writeError("window.getSelection: no selection")
-			return None
-		selection=self.getTextRange(indecies[0],indecies[1])
-		if selection is None:
-			return None
-		return selection
+	def getWord(self,pos):
+		nextWord=self.nextWord(pos)
+		if nextWord:
+			return self.getTextRange(self.previousWord(nextWord),nextWord)
+		else:
+			return self.getTextRange(pos,self.getEndPosition())
+
+	def getCurrentWord(self):
+		return self.getWord(self.getCaretPosition())
 
 	def event_caret(self):
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretPosition())
 
 	def script_moveByLine(self,keyPress):
 		sendKey(keyPress)
-		audio.speakText(self.getLine())
+		audio.speakText(self.getCurrentLine())
 
 	def script_moveByCharacter(self,keyPress):
 		sendKey(keyPress)
-		audio.speakSymbol(self.getCharacter())
+		audio.speakSymbol(self.getCurrentCharacter())
 
 	def script_moveByWord(self,keyPress):
 		sendKey(keyPress)
-		audio.speakText(self.getWord())
+		audio.speakText(self.getCurrentWord())
 
 	def script_changeSelection(self,keyPress):
-		selectionPoints=self.getCaretIndecies()
-		if selectionPoints[0]==selectionPoints[1]:
-			selectionPoints=None
+		selectionPoints=self.getCaretRange()
 		sendKey(keyPress)
-		newSelectionPoints=self.getCaretIndecies()
-		if newSelectionPoints[0]==newSelectionPoints[1]:
-			newSelectionPoints=None
+		newSelectionPoints=self.getCaretRange()
 		if newSelectionPoints and not selectionPoints:
 			audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],newSelectionPoints[1]))
 		elif not newSelectionPoints:
@@ -706,14 +692,15 @@ class NVDAObject_edit(NVDAObject):
 
 	def script_delete(self,keyPress):
 		sendKey(keyPress)
-		audio.speakSymbol(self.getCharacter())
+		audio.speakSymbol(self.getCurrentCharacter())
 
 	def script_backspace(self,keyPress):
-		point=self.getCaretIndex()
-		if not point==[0,0]: 
-			delChar=self.getCharacter(index=self.getPreviousCharacterIndex(point))
+		point=self.getCaretPosition()
+
+		if not point==self.getStartPosition():
+			delChar=self.getCharacter(self.previousCharacter(point))
 			sendKey(keyPress)
-			newPoint=self.getCaretIndex()
+			newPoint=self.getCaretPosition()
 			if newPoint<point:
 				audio.speakSymbol(delChar)
 		else:
@@ -728,6 +715,7 @@ class NVDAObject_checkBox(NVDAObject):
 	"""
 
 	def filterStates(self,states):
+		states=NVDAObject.filterStates(self,states)
 		states-=states&pyAA.Constants.STATE_SYSTEM_PRESSED
 		return states
 
@@ -740,7 +728,7 @@ class NVDAObject_mozillaUIWindowClass(NVDAObject):
 	def event_focusObject(self):
 		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
 			api.setVirtualBuffer(api.getForegroundWindow())
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
+		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretPosition())
 		self.speakObject()
 
 class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
@@ -776,9 +764,6 @@ class NVDAObject_mozillaContentWindowClass(NVDAObject):
 	Based on NVDAObject, but updateVirtualBuffer only updates the cursor position, not the actual buffer since only the document object should do this. 
 	"""
 
-	def updateVirtualBuffer(self):
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
-
 class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWindowClass):
 	"""
 	Based on NVDAObject_mozillaContentWindowClass but:
@@ -789,30 +774,6 @@ class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWin
 
 	def getValue(self):
 		return ""
-
-	def updateVirtualBuffer(self):
-		if self!=api.getVirtualBuffer().getRootObject():
-			audio.speakMessage("Loading document...")
-			if not self.getStates()&STATE_SYSTEM_BUSY:
-				api.setVirtualBuffer(self.getWindowHandle())
-				api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretIndex())
-				audio.cancel()
-				audio.speakText(api.getVirtualBuffer().getText())
-
-	def event_focusObject(self):
-		self.speakObject()
-		self.updateVirtualBuffer()
-
-	def event_objectStateChange(self):
-		states=self.getStates()
-		states_on=states-(states&self.lastStates)
-		states_off=self.lastStates-(states&self.lastStates)
-		debug.writeMessage("doc state: %s, %s"%(getStateNames(states_on),getStateNames(states_off)))
-		if states_on&STATE_SYSTEM_BUSY:
-			audio.speakMessage("Loading document...")
-		if states_off&STATE_SYSTEM_BUSY:
-			self.updateVirtualBuffer()
-		NVDAObject_mozillaContentWindowClass(self)
 
 class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowClass):
 	"""
@@ -919,26 +880,45 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			pass
 		win32console.AttachConsole(processID)
 		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
+		debug.writeMessage("console settings: %s"%self.consoleBuffer.GetConsoleScreenBufferInfo())
 
 	def __del__(self):
 		self.keepUpdating=False
 		time.sleep(0.1)
 		NVDAObject_edit.__del__(self)
 
+	def getConsoleVerticalLength(self):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return info["Size"].Y
+
+	def getConsoleHorizontalLength(self):
+		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
+		return info["Size"].X
+
 	def getVisibleLineRange(self):
 		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return (info["Window"].Top,info["Window"].Bottom+1)
+		topLineNum=info["Window"].Top
+		bottomLineNum=info["Window"].Bottom
+		return (topLineNum,bottomLineNum)
 
-	def getCaretIndex(self):
+	def getCaretPosition(self):
 		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return [info["CursorPosition"].Y,info["CursorPosition"].X]
+		y=info["CursorPosition"].Y
+		x=info["CursorPosition"].X
+		return self.getLineStart(y)+x
 
-	def getLine(self,index=None):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		maxLen=info["Size"].X
-		if not index:
-			index=self.getCaretIndex()
-		line=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,index[0]))
+	def getEndPosition(self):
+		return self.getConsoleVerticalLength()*self.getConsoleHorizontalLength()
+
+	def getLineStart(self,lineNum):
+		return lineNum*self.getConsoleHorizontalLength()
+
+	def getLineNumber(self,pos):
+		return pos/self.getConsoleHorizontalLength()
+
+	def getLine(self,lineNum):
+		maxLen=self.getConsoleHorizontalLength()
+		line=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,lineNum))
 		if line.isspace():
 			line=None
 		else:
@@ -946,8 +926,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return line
 
 	def getLineCount(self):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return info["Size"].Y
+		return self.getConsoleVerticalLength()
 
 	def getLineLength(self,index=None):
 		line=self.getLine()
@@ -956,33 +935,37 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		else:
 			return len(line)
 
+	def getText(self):
+		maxLen=self.getEndPosition()
+		text=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,0))
+		return text
+
+	def getVisibleLines(self):
+		visibleRange=self.getVisibleLineRange()
+		lines=[]
+		for lineNum in range(visibleRange[0],visibleRange[1]):
+			line=self.getLine(lineNum)
+			if line:
+				lines.append(line)
+		return lines
+
 	def event_focusObject(self):
 		self.keepUpdating=True
 		self._oldestLines=None
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
 		self.updateVirtualBuffer()
-		visibleLineRange=self.getVisibleLineRange()
 		for line in self.getVisibleLines():
 			audio.speakText(line)
 
-	def getVisibleLines(self):
-		lines=[]
-		visibleLineRange=self.getVisibleLineRange()
-		for num in range(visibleLineRange[0],visibleLineRange[1]):
-			line=self.getLine(index=[num,0])
-			if line is not None:
-				lines.append(line)
-		return lines
-
 	def _consoleUpdater(self):
 		try:
-			oldCaretIndex=api.getVirtualBuffer().getCaretIndex()
+			oldCaretPosition=api.getVirtualBuffer().getCaretPosition()
 			oldLines=self.getVisibleLines()
 			while self.keepUpdating and win32gui.IsWindow(self.getWindowHandle()):
-				newCaretIndex=api.getVirtualBuffer().getCaretIndex()
-				if newCaretIndex!=oldCaretIndex:
-					api.setVirtualBufferCursor(newCaretIndex)
-					oldCaretIndex=newCaretIndex
+				newCaretPosition=api.getVirtualBuffer().getCaretPosition()
+				if newCaretPosition!=oldCaretPosition:
+					api.setVirtualBufferCursor(newCaretPosition)
+					oldCaretPosition=newCaretPosition
 				newLines=self.getVisibleLines()
 				if newLines!=oldLines:
 					if not self._oldestLines:
@@ -1033,6 +1016,102 @@ class NVDAObject_tooltip(NVDAObject):
 		if conf["presentation"]["reportTooltips"]:
 			self.speakObject()
 
+class NVDAObject_ITextDocument(NVDAObject_edit):
+
+	def __init__(self,accObject):
+		NVDAObject_edit.__init__(self,accObject)
+		self.msftedit=comtypes.client.GetModule('msftedit.dll')
+		ptr=ctypes.c_void_p()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(self.msftedit.ITextDocument._iid_),ctypes.byref(ptr))
+		self.document=ctypes.cast(ptr,ctypes.POINTER(self.msftedit.ITextDocument))
+		self.keyMap.update({
+key("insert+f"):self.script_fontInfo,
+})
+
+	def getCaretRange(self):
+		start=self.document.Selection.Start
+		end=self.document.Selection.End
+		if start!=end:
+			return (start,end)
+		else:
+			return None
+
+	def getCaretPosition(self):
+		return self.document.Selection.Start
+
+	def getVisibleLineRange(self):
+		range=self.document.Selection.Duplicate
+		range.Expand(self.msftedit.tomWindow)
+		return (self.getLineNumber(range.Start),self.getLineNumber(range.End))
+
+	def getStartPosition(self):
+		return 0
+
+	def getEndPosition(self):
+		range=self.document.Range(0,0)
+		range.Expand(self.msftedit.tomStory)
+		return range.End
+
+	def getLineNumber(self,pos):
+		range=self.document.Range(0,0)
+		range.Move(self.msftedit.tomCharacter,pos)
+		return range.GetIndex(self.msftedit.tomLine)-1
+
+	def getLineStart(self,lineNum):
+		range=self.document.Range(0,0)
+		range.Move(self.msftedit.tomLine,lineNum)
+		return range.Start
+
+	def getLine(self,lineNum):
+		start=self.getLineStart(lineNum)
+		range=self.document.Range(start,start)
+		range.Expand(self.msftedit.tomLine)
+		text=range.Text
+		if text!='\r':
+			return text
+		else:
+			return None
+
+	def getLineCount(self):
+		range=self.document.Range(0,0)
+		range.Expand(self.msftedit.tomStory)
+		return self.getLineNumber(range.End)
+
+	def nextWord(self,pos):
+		range=self.document.Range(pos,pos)
+		delta=range.Move(self.msftedit.tomWord,1)
+		if delta:
+			return range.Start
+		else:
+			return None
+
+	def previousWord(self,pos):
+		range=self.document.Range(pos,pos)
+		delta=range.Move(self.msftedit.tomWord,-1)
+		if delta:
+			return range.Start
+		else:
+			return None
+
+	def getTextRange(self,start,end):
+		range=self.document.Range(start,end)
+		return range.Text
+
+	def getFontName(self,pos):
+		return self.document.Range(pos,pos).Font.Name
+
+	def getCurrentFontName(self):
+		return self.getFontName(self.getCaretPosition())
+
+	def getFontSize(self,pos):
+		return "%d"%self.document.Range(pos,pos).Font.Size
+
+	def getCurrentFontSize(self):
+		return self.getFontSize(self.getCaretPosition())
+
+	def script_fontInfo(self,keyPress):
+		audio.speakMessage("Font: %s, %s pt"%(self.getCurrentFontName(),self.getCurrentFontSize()))
+
 classMap={
 "Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
 "tooltips_class32":NVDAObject_tooltip,
@@ -1040,7 +1119,8 @@ classMap={
 "#32770_18":NVDAObject_dialog,
 "TrayClockWClass":NVDAObject_TrayClockWClass,
 "Edit":NVDAObject_edit,
-"RICHEDIT50W":NVDAObject_edit,
+"RICHEDIT50W":NVDAObject_ITextDocument,
+"_WwG":NVDAObject_ITextDocument,
 "Button_44":NVDAObject_checkBox,
 "MozillaUIWindowClass":NVDAObject_mozillaUIWindowClass,
 "MozillaUIWindowClass_14":NVDAObject_mozillaUIWindowClass_application,

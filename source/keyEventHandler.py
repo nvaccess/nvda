@@ -108,7 +108,7 @@ def internal_keyDownEvent(event):
 			debug.writeError("internal_keyDownEvent: no room in queue")
 		if (event.Key=="Insert") and (event.Extended==0):
 			insertDown=True
-			return True
+			return False
 		if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
 			controlDown=True
 			return True

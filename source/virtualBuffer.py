@@ -1,3 +1,4 @@
+import time
 import re
 import win32gui
 import win32process
@@ -11,21 +12,19 @@ from NVDAObjects import getStateNames
 
 re_multiSpacing=re.compile(r' +')
 
-class virtualBuffer(object):
+def makeVirtualBuffer(window):
+	className=win32gui.GetClassName(window)
+	if classMap.has_key(className):
+		return classMap[className](window)
+	else:
+		return virtualBuffer(window)
 
-	def __new__(cls,window):
-		className=win32gui.GetClassName(window)
-		if classMap.has_key(className):
-			return object.__new__(classMap[className],window)
-		else:
-			return object.__new__(cls,window)
+class virtualBuffer(object):
 
 	def __init__(self,window):
 		self.virtualBuffer=[]
+		self.objects={}
 		self.window=window
-		if window==api.getForegroundWindow():
-			self.appendObject(window,-2,0)
-			self.appendObject(window,-3,0)
 		self.appendObject(window,OBJID_CLIENT,0)
 
 	def getWindowHandle(self):
@@ -38,13 +37,22 @@ class virtualBuffer(object):
 			return None
 
 	def handleEvent(self,name,window,objectID,childID):
-		self.refreshObject(window,objectID,childID)
+		if name not in ["focusObject","foreground"]:
+			self.refreshObject(window,objectID,childID)
 
 	def generateObjectBuffer(self,thisObj):
 		if thisObj.getWindowHandle()!=self.getWindowHandle():
-			return []
+			return None
 		lines=[]
+		objList={}
 		children=thisObj.getChildren()
+		for child in children:
+			res=self.generateObjectBuffer(child)
+			if res and (len(res)==2):
+				for key in res[1]:
+					value=(res[1][key][0]+len(lines)+1,res[1][key][1]+len(lines)+1)
+					objList[key]=value
+				lines+=res[0]
 		startText=""
 		if conf["presentation"]["reportKeyboardShortcuts"]:
 			startText+=" %s"%thisObj.getKeyboardShortcut()
@@ -54,239 +62,262 @@ class virtualBuffer(object):
 		startText+=" %s"%getStateNames(thisObj.filterStates(thisObj.getStates()))
 		startText=startText.strip()
 		startText=re_multiSpacing.sub(" ",startText)
-		startLine=(startText,thisObj,1)
-		for child in children:
-			childBuffer=self.generateObjectBuffer(child)
-			lines+=childBuffer
-		if len(lines)>1:
+		if len(lines)>0:
+			startText+=" (has %d items):"%len(children)
 			endText="end of %s %s"%(thisObj.getName(),thisObj.getTypeString())
-			lines.append((endText,thisObj,None))
-			startLine=("%s (contains %d items):"%(startLine[0],len(children)),startLine[1],len(lines)+1)
-		elif len(lines)==1:
-			startLine=("%s:"%startLine[0],startLine[1],len(lines)+1)
-		lines.insert(0,startLine)
-		return lines
+			lines.append((endText,thisObj))
+		lines.insert(0,(startText,thisObj))
+		objList[thisObj]=(0,len(lines))
+		return (lines,objList)
+
 
 	def appendObject(self,window,objectID,childID):
 		obj=api.getNVDAObjectByLocator(window,objectID,childID)
 		if obj:
-			self.virtualBuffer+=self.generateObjectBuffer(obj)
-
-	def getObjectLineRange(self,obj):
-		for line in enumerate(self.virtualBuffer):
-			if line[1][1]==obj:
-				return (line[0],line[0]+line[1][2])
-		return None
+			res=self.generateObjectBuffer(obj)
+			if not res:
+				return
+			lines,objList=res
+			for key in objList:
+				value=(objList[key][0]+len(self.virtualBuffer),objList[key][1]+len(self.virtualBuffer))
+				self.objects[key]=value
+			self.virtualBuffer+=lines
 
 	def refreshObject(self,window,objectID,childID):
 		obj=api.getNVDAObjectByLocator(window,objectID,childID)
 		if not obj:
 			return
-		lineRange=self.getObjectLineRange(obj)
-		if not lineRange or (lineRange[0]>=len(self.virtualBuffer)) or (lineRange[1]>=len(self.virtualBuffer)):
+		r=self.getObjectRange(obj)
+		if not r:
 			return
-		for lineNum in range(lineRange[0],lineRange[1]):
-			del self.virtualBuffer[lineRange[0]]
-		for line in enumerate(self.generateObjectBuffer(obj)):
-			self.virtualBuffer.insert(lineRange[0]+line[0],line[1])
+		for lineNum in range(r[0],r[1]):
+			if self.objects.has_key(self.virtualBuffer[r[0]][1]):
+				del self.objects[self.virtualBuffer[r[0]][1]]
+			del self.virtualBuffer[r[0]]
+		res=self.generateObjectBuffer(obj)
+		if not res:
+			return
+		lines,objList=res
+		for key in objList:
+			value=(objList[key][0]+r[0],objList[key][1]+r[0])
+			self.objects[key]=value
+		for line in enumerate(lines):
+			self.virtualBuffer.insert(r[0]+line[0],line[1])
 
-	def getIndexByLocator(self,window,objectID,childID):
+	def getObjectRange(self,obj):
+		return self.objects.get(obj,None)
+
+	def getPositionByLocator(self,window,objectID,childID):
 		obj=api.getNVDAObjectByLocator(window,objectID,childID)
 		if not obj:
 			return None
-		for line in enumerate(self.virtualBuffer):
-			if line[1][1]==obj:
-				return [line[0],0]
+		if self.objects.has_key(obj):
+			return [self.objects[obj][0],0]
 		return None
 
-	def getCaretIndex(self):
-		obj=apply(api.getNVDAObjectByLocator,api.getFocusLocator())
-		lineRange=self.getObjectLineRange(obj)
-		if not lineRange:
-			return [0,0]
-		index=[lineRange[0],0]
-		if not index:
-			index=[0,0]
-		return index
+	def getCaretPosition(self):
+		pos=apply(self.getPositionByLocator,api.getFocusLocator())
+		if not pos:
+			pos=[0,0]
+		return pos
 
-	def activateIndex(self,index=None):
-		if not index:
-			index=self.getCaretIndex()
-		obj=self.virtualBuffer[index[0]][1]
+	def getEndPosition(self):
+		endLineNum=self.getLineCount()-1
+		endLineLength=self.getLineLength(endLineNum)
+		endLineStart=self.getLineStart(endLineNum)
+		pos=[endLineNum,endLineStart[1]+endLineLength]
+		return pos
+
+ 	def getLineNumber(self,pos):
+		return pos[0]
+
+	def getLineStart(self,lineNum):
+		return [lineNum,0]
+
+	def activatePosition(self,pos):
+		obj=self.virtualBuffer[self.getLineNumber(pos)][1]
 		obj.doDefaultAction()
 
-	def getNextCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
+	def nextCharacter(self,pos):
+		lineNum=self.getLineNumber(pos)
 		lineCount=self.getLineCount()
-		if index[1]==lineLength:
-			if (index[0]==lineCount-1) or not crossLines:
+		if pos[1]==self.getLineLength(lineNum)-1:
+			if lineNum==lineCount-1:
 				return None
 			else:
-				newIndex=[index[0]+1,0]
+				return [lineNum+1,0]
 		else:
-			newIndex=[index[0],index[1]+1]
-		return newIndex
+			return [lineNum,pos[1]+1]
 
-	def getPreviousCharacterIndex(self,index,crossLines=True):
-		lineLength=self.getLineLength(index=index)
+	def previousCharacter(self,pos):
+		lineNum=self.getLineNumber(pos)
 		lineCount=self.getLineCount()
-		if index[1]==0:
-			if (index[0]==0) or not crossLines:
+		if pos[1]==0:
+			if lineNum==0:
 				return None
 			else:
-				newIndex=[index[0]-1,self.getLineLength(self.getPreviousLineIndex(index))-1]
+				return [lineNum-1,self.getLineLength(lineNum-1)-1]
 		else:
-			newIndex=[index[0],index[1]-1]
-		return newIndex
+			return [lineNum,pos[1]-1]
 
-	def getWordEndIndex(self,index):
+	def nextWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while self.getCharacter(index=curIndex) not in whitespace:
-			prevIndex=curIndex
-			curIndex=self.getNextCharacterIndex(curIndex,crossLines=False)
-			if not curIndex:
-				return prevIndex
-		return curIndex
+		curPos=pos
+		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.nextCharacter(curPos)
+		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) in whitespace):
+			curPos=self.nextCharacter(curPos)
+		return curPos
 
-	def getPreviousWordIndex(self,index):
+	def previousWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
-		if not index:
-			raise TypeError("function takes a character index as its ownly argument")
-		curIndex=index
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		curIndex = self.getPreviousCharacterIndex(curIndex, crossLines = False)
-		while curIndex and self.getCharacter(index=curIndex) not in whitespace:
-			curIndex=self.getPreviousCharacterIndex(curIndex,crossLines=False)
-		if not curIndex:
-			return None
-		return self.getNextCharacterIndex(curIndex, crossLines = False)
+		curPos=pos
+		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.previousCharacter(curPos)
+		pos=curPos
+		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) in whitespace):
+			curPos=self.previousCharacter(curPos)
+		pos=curPos
+		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
+			curPos=self.previousCharacter(curPos)
+		if curPos:
+			curPos=self.nextCharacter(curPos)
+		return curPos
 
-	def getNextLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]>=lineCount-1:
-			return None
-		else:
-			return [index[0]+1,0]
-
-	def getPreviousLineIndex(self,index):
-		lineCount=self.getLineCount()
-		if index[0]<=0:
-			return None
-		else:
-			return [index[0]-1,0]
- 
 	def getLineCount(self):
 		return len(self.virtualBuffer)
 
-	def getLineLength(self,index=None):
-		if index is None:
-			index=getCaretIndex()
-		return len(self.virtualBuffer[index[0]][0])
+	def getLineLength(self,lineNum):
+		return len(self.virtualBuffer[lineNum][0])
 
-	def getLine(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		return self.virtualBuffer[index[0]][0]
+	def getLine(self,lineNum):
+		return self.virtualBuffer[lineNum][0]
 
-	def getCharacter(self,index=None):
-		if index is None:
-			index=self.getCaretIndex()
-		if index[1]>=self.getLineLength(index=index):
-			return None
-		return self.getLine(index=index)[index[1]]
-
-	def getWord(self,index=None):
-		if not index:
-			index=self.getCaretIndex()
-		end=self.getWordEndIndex(index)
-		if not end or (end==index):
-			text=self.getCharacter(index=index)
-		else:
-			text=self.getTextRange(index,end)
+	def getText(self):
+		text=""
+		for line in self.virtualBuffer:
+			text+="%s "%line[0]
 		return text
 
 	def getTextRange(self,start,end):
 		if start[0]==end[0]:
 			if start[1]>end[1]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
-			line=self.getLine(index=start)
+				return None
+			line=self.getLine(start[0])
 			if not line:
 				return None
 			return line[start[1]:end[1]]
 		else:
 			if start[0]>end[0]:
-				raise TypeError("Start and end indexes are invalid (%s, %s)"%(start,end))
+				return None
 			lines=[]
-			for lineNum in range(end[0])[start[1]+1:]:
-				lines.append(self.getLine(index=[lineNum,0]))
-			lines.insert(0,self.getLine(index=start)[start[1]:])
-			endLine=self.getLine(index=end)
+			for lineNum in range(start[0]+1,end[0]):
+				lines.append(self.getLine(lineNum))
+			lines.insert(0,self.getLine(start[0])[start[1]:])
+			endLine=self.getLine(end[0])
 			if endLine:
-				lines.append(self.getLine(index=end)[:end[1]])
+				lines.append(endLine[:end[1]])
 			text=""
 			for line in lines:
-				text+="%s "%line
+				text+="%s"%line
 			return text
 
-	def getText(self):
-		text=""
-		index=[0,0]
-		while index:
-			text+="%s "%self.getLine(index=index)
-			index=self.getNextLineIndex(index)
-		return text
+	def getCharacter(self,pos):
+		return self.getTextRange(pos,self.nextCharacter(pos))
+
+	def getWord(self,pos):
+		nextWord=self.nextWord(pos)
+		if nextWord:
+			return self.getTextRange(pos,nextWord)
+		else:
+			return self.getTextRange(pos,self.getEndPosition())
 
 class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
 
-	def handleEvent(self,name,window,objectID,childID):
-		obj=api.getNVDAObjectByLocator(window,objectID,childID)
-		if not obj:
-			return
-		if not ((obj.getRole()==ROLE_SYSTEM_DOCUMENT) and not (name=="objectReorder")):
-			virtualBuffer.handleEvent(self,name,window,objectID,childID)
+	def __init__(self,window):
+		audio.cancel()
+		audio.speakMessage("Loading document...")
+		virtualBuffer.__init__(self,window)
+		time.sleep(0.1)
+		audio.cancel()
+		audio.speakText(self.getText())
 
-	def generateObjectBuffer(self,obj):
-		lines=[]
-		if not conf["virtualBuffer"]["includeTableStructure"] and (obj.getRole() in [ROLE_SYSTEM_CELL,ROLE_SYSTEM_TABLE,"tbody","thead"]):
-			for child in obj.getChildren():
-				lines+=self.generateObjectBuffer(child)
-		else:
-			lines+=virtualBuffer.generateObjectBuffer(self,obj)
-		return lines
+	def refreshObject(self,window,objectID,childID):
+		obj=api.getNVDAObjectByLocator(window,objectID,childID)
+		if obj and (obj.getRole()==ROLE_SYSTEM_DOCUMENT):
+			audio.cancel()
+			audio.speakMessage("Loading document...")
+			if obj.getStates()&STATE_SYSTEM_BUSY:
+				return
+		virtualBuffer.refreshObject(self,window,objectID,childID)
+		if obj and (obj.getRole()==ROLE_SYSTEM_DOCUMENT):
+			time.sleep(0.1)
+			audio.cancel()
+			audio.speakText(self.getText())
 
 class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
 
 	def generateObjectBuffer(self,obj):
-		if obj.getRole()==ROLE_SYSTEM_DOCUMENT:
-			return [("%s %s"%(obj.getName(),obj.getTypeString()),obj,1)]
-		return virtualBuffer.generateObjectBuffer(self,obj)
+		return ([("%s %s"%(obj.getName(),obj.getTypeString()),obj)],{})
 
-class virtualBuffer_cursorBufferWindow(virtualBuffer):
+class virtualBuffer_cursorBufferWindow(object):
 
-	def getCaretIndex(self):
-		index=api.getFocusObject().getCaretIndex()
-		visibleLineRange=api.getFocusObject().getVisibleLineRange()
-		index[0]=index[0]-visibleLineRange[0]
-		return index
+	def __init__(self,window):
+		self.window=window
 
-	def getLine(self,index=None):
-		if index:
-			visibleLineRange=api.getFocusObject().getVisibleLineRange()
-			index=[index[0]+visibleLineRange[0],index[1]]
-		return api.getFocusObject().getLine(index=index)
+	def handleEvent(self,name,window,objectID,childID):
+		pass
 
-	def getLineLength(self,index=None):
-		return api.getFocusObject().getLineLength(index=index)
+	def getWindowHandle(self):
+		return self.window
+
+	def getCaretPosition(self):
+		obj=api.getFocusObject()
+		return obj.getCaretPosition()
+
+	def getLineNumber(self,pos):
+		obj=api.getFocusObject()
+		return obj.getLineNumber(pos)-obj.getVisibleLineRange()[0]
+
+	def getLineStart(self,lineNum):
+		obj=api.getFocusObject()
+		lineNum=lineNum+obj.getVisibleLineRange()[0]
+		return obj.getLineStart(lineNum)
+
+	def getLine(self,lineNum):
+		obj=api.getFocusObject()
+		lineNum=lineNum+obj.getVisibleLineRange()[0]
+		return obj.getLine(lineNum)
 
 	def getLineCount(self):
-		visibleLineRange=api.getFocusObject().getVisibleLineRange()
-		return (visibleLineRange[1]-visibleLineRange[0])
+		obj=api.getFocusObject()
+		v=obj.getVisibleLineRange()
+		return (v[1]-v[0])+1
+		return obj.getLineCount()
+
+	def nextCharacter(self,pos):
+		obj=api.getFocusObject()
+		return obj.nextCharacter(pos)
+
+	def previousCharacter(self,pos):
+		obj=api.getFocusObject()
+		return obj.previousCharacter(pos)
+
+	def nextWord(self,pos):
+		obj=api.getFocusObject()
+		return obj.nextWord(pos)
+
+	def previousWord(self,pos):
+		obj=api.getFocusObject()
+		return obj.previousWord(pos)
+
+	def getCharacter(self,pos):
+		obj=api.getFocusObject()
+		return obj.getCharacter(pos)
+
+	def getWord(self,pos):
+		obj=api.getFocusObject()
+		return obj.getWord(pos)
 
 classMap={
 "MozillaContentWindowClass":virtualBuffer_mozillaContentWindowClass,

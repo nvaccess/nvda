@@ -6,11 +6,10 @@
 
 {
 None:"blank",
-"":"blank",
-"\0":"NUL",
+"\0":"blank",
 "\11":"tab",
 "\n":"Line feed",
-"\r":"Carige return",
+"\r":"blank",
 " ":"space",
 "!":"bang",
 '"':'quote',

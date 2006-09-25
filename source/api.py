@@ -66,15 +66,18 @@ def setFocusObjectByLocator(window,objectID,childID):
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
+	v=getVirtualBuffer()
+	if not v or (v.getWindowHandle()!=globalVars.focusObject.getWindowHandle()):
+		setVirtualBuffer(globalVars.focusObject.getWindowHandle())
+	setVirtualBufferCursor(getVirtualBuffer().getCaretPosition())
 	return True
 
 def getVirtualBuffer():
 	return globalVars.virtualBuffer
 
 def setVirtualBuffer(window):
-	v=virtualBuffer.virtualBuffer(window)
+	v=virtualBuffer.makeVirtualBuffer(window)
 	globalVars.virtualBuffer=v
-	globalVars.virtualBufferCursor=v.getCaretIndex()
 
 def getVirtualBufferCursor():
 	return globalVars.virtualBufferCursor

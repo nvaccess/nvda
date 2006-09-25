@@ -83,7 +83,7 @@ def main():
 				quit()
 			try:
 				MSAAEvent=MSAAEventHandler.queue_events.get_nowait()
-				if (MSAAEvent[0]=="focusObject") or (MSAAEvent[0]=="foreground") or (MSAAEvent[0]=="appChange"):
+				if MSAAEvent[0] in ["focusObject","foreground","appChange"]:
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 				if MSAAEvent[0]=="appChange":
 					try:

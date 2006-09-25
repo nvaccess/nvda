@@ -14,19 +14,6 @@ def event_switchStart(window,objectID,childID):
 def event_switchEnd(window,objectID,childID):
 	audio.cancel()
 
-def event_menuStart(window,objectID,childID):
-	if not getMenuMode():
-		obj=getNVDAObjectByLocator(window,objectID,childID)
-		if obj and (obj.getRole() in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]):
-			setMenuMode(True)
-			audio.cancel()
-			obj.speakObject()
-			for child in obj.getChildren():
-				if child.hasFocus():
-					child.speakObject()
-					break
-
-
 def script_dateTime(keyPress):
 	text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")
 	if text[0]=='0':
@@ -109,97 +96,103 @@ def script_navigator_object_where(keyPress):
 		curObject.speakObject()
 		curObject=curObject.getParent()
 
+def script_virtualBuffer_moveToCaret(keyPress):
+	buf=getVirtualBuffer()
+	pos=	buf.getCaretPosition()
+	setVirtualBufferCursor(pos)
+	audio.speakText(buf.getLine(buf.getLineNumber(pos)))
+
 def script_virtualBuffer_line_current(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	audio.speakText(buf.getLine(index=curIndex))
+	curPos=getVirtualBufferCursor()
+	curLineNum=buf.getLineNumber(curPos)
+	audio.speakText(buf.getLine(curLineNum))
 
 def script_virtualBuffer_line_next(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	nextIndex=buf.getNextLineIndex(curIndex)
-	if nextIndex:
-		audio.speakText(buf.getLine(index=nextIndex))
-		setVirtualBufferCursor(nextIndex)
+	curPos=getVirtualBufferCursor()
+	curLineNum=buf.getLineNumber(curPos)
+	if curLineNum<buf.getLineCount()-1:
+		nextLineNum=curLineNum+1
+	else:
+		nextLineNum=None
+	if nextLineNum:
+		audio.speakText(buf.getLine(nextLineNum))
+		setVirtualBufferCursor(buf.getLineStart(nextLineNum))
 	else:
 		audio.speakMessage("bottom")
-		audio.speakText(buf.getLine(index=curIndex))
+		audio.speakText(buf.getLine(curLineNum))
 
 def script_virtualBuffer_line_previous(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	prevIndex=buf.getPreviousLineIndex(curIndex)
-	if prevIndex:
-		audio.speakText(buf.getLine(index=prevIndex))
-		setVirtualBufferCursor(prevIndex)
+	curPos=getVirtualBufferCursor()
+	curLineNum=buf.getLineNumber(curPos)
+	if curLineNum>0:
+		prevLineNum=curLineNum-1
+		audio.speakText(buf.getLine(prevLineNum))
+		setVirtualBufferCursor(buf.getLineStart(prevLineNum))
 	else:
 		audio.speakMessage("top")
-		audio.speakText(buf.getLine(index=curIndex))
+		audio.speakText(buf.getLine(curLineNum))
 
 def script_virtualBuffer_character_current(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	audio.speakText(buf.getCharacter(index=curIndex))
-
-def script_virtualBuffer_moveToCaret(keyPress):
-	buf=getVirtualBuffer()
-	index=buf.getCaretIndex()
-	setVirtualBufferCursor(index)
-	audio.speakText(buf.getLine())
+	curPos=getVirtualBufferCursor()
+	audio.speakText(buf.getCharacter(curPos))
 
 def script_virtualBuffer_character_next(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	nextIndex=buf.getNextCharacterIndex(curIndex,crossLines=False)
-	if nextIndex:
-		audio.speakText(buf.getCharacter(index=nextIndex))
-		setVirtualBufferCursor(nextIndex)
+	curPos=getVirtualBufferCursor()
+	nextPos=buf.nextCharacter(curPos)
+	if nextPos and (buf.getLineNumber(curPos)==buf.getLineNumber(nextPos)):
+		audio.speakText(buf.getCharacter(nextPos))
+		setVirtualBufferCursor(nextPos)
 	else:
 		audio.speakMessage("right")
-		audio.speakText(buf.getCharacter(index=curIndex))
+		audio.speakText(buf.getCharacter(curPos))
 
 def script_virtualBuffer_character_previous(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	prevIndex=buf.getPreviousCharacterIndex(curIndex,crossLines=False)
-	if prevIndex:
-		audio.speakText(buf.getCharacter(index=prevIndex))
-		setVirtualBufferCursor(prevIndex)
+	curPos=getVirtualBufferCursor()
+	prevPos=buf.previousCharacter(curPos)
+	if (prevPos is not None) and (buf.getLineNumber(curPos)==buf.getLineNumber(prevPos)):
+		audio.speakText(buf.getCharacter(prevPos))
+		setVirtualBufferCursor(prevPos)
 	else:
 		audio.speakMessage("left")
-		audio.speakText(buf.getCharacter(index=curIndex))
+		audio.speakText(buf.getCharacter(curPos))
 
 def script_virtualBuffer_word_current(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	audio.speakText(buf.getWord(index=curIndex))
+	curPos=getVirtualBufferCursor()
+	audio.speakText(buf.getWord(curPos))
 
 def script_virtualBuffer_word_next(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	nextIndex=buf.getNextCharacterIndex(buf.getWordEndIndex(curIndex),crossLines=False)
-	if nextIndex:
-		audio.speakText(buf.getWord(index=nextIndex))
-		setVirtualBufferCursor(nextIndex)
+	curPos=getVirtualBufferCursor()
+	nextPos=buf.nextWord(curPos)
+	if nextPos:
+		audio.speakText(buf.getWord(nextPos))
+		setVirtualBufferCursor(nextPos)
 	else:
-		audio.speakMessage("right")
-		audio.speakText(buf.getWord(index=curIndex))
+		audio.speakMessage("bottom")
+		audio.speakText(buf.getWord(curPos))
 
 def script_virtualBuffer_word_previous(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	prevIndex=buf.getPreviousWordIndex(curIndex)
-	if prevIndex:
-		audio.speakText(buf.getWord(index=prevIndex))
-		setVirtualBufferCursor(prevIndex)
+	curPos=getVirtualBufferCursor()
+	prevPos=buf.previousWord(curPos)
+	if prevPos:
+		audio.speakText(buf.getWord(prevPos))
+		setVirtualBufferCursor(prevPos)
 	else:
-		audio.speakMessage("left")
-		audio.speakText(buf.getWord(index=curIndex))
+		audio.speakMessage("top")
+		audio.speakText(buf.getWord(curPos))
 
 def script_virtualBuffer_activateObject(keyPress):
 	buf=getVirtualBuffer()
-	curIndex=getVirtualBufferCursor()
-	buf.activateIndex(curIndex)
+	curPos=getVirtualBufferCursor()
+	buf.activatePosition(curPos)
 
 def script_quit(keyPress):
 	audio.speakMessage("Exiting NVDA",wait=True)
