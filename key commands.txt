@@ -4,7 +4,7 @@ General
 Quit NVDA: insert+q
 NVDA menu: insert+n (not complete yet)
  
-Text navigation with in current window (moving only moves the navigator, not the cursor)
+Navigation of the virtualBuffer: 
 current line: numpad8
 previous line: numpad7
 next line: numpad9
@@ -14,6 +14,7 @@ next character: numpad3
 current word: numpad5
 previous word: numpad4
 next word: numpad6
+Move to caret: numpad subtract
 
 Object navigation (moving only moves the navigator, not the focus)
 read currentObject: insert+numpad5
@@ -28,3 +29,6 @@ move to and read down object: insert+shift+numpad2
 Do object default action: insert+numpadReturn
 Read current object and decendants: insert+numpadPlus
 read current object and ansesters: insert+shift+numpadPlus
+
+Edit field commands:
+Read current font: insert+f
