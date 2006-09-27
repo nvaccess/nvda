@@ -17,6 +17,7 @@ import dictionaries
 import globalVars
 from api import *
 from constants import *
+import NVDAObjects
 import keyEventHandler
 import mouseEventHandler
 import MSAAEventHandler
@@ -27,7 +28,7 @@ import gui
 import virtualBuffer
 
 def appChange(window,objectID,childID):
-	obj=getNVDAObjectByLocator(window,objectID,childID)
+	obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not obj:
 		return None
 	name=obj.getName()
@@ -39,7 +40,7 @@ def appChange(window,objectID,childID):
 	executeEvent("foreground",(window,objectID,childID))
 
 def event_mouseMove(point):
-	obj=getNVDAObjectByPoint(point)
+	obj=NVDAObjects.getNVDAObjectByPoint(point)
 	if not obj:
 		return None
 	location=obj.getLocation()
@@ -120,6 +121,9 @@ def main():
 	except:
 			audio.speakMessage("Exception in main loop")
 			debug.writeException("core.py main loop")
+	appModule=getCurrentAppModule()
+	if appModule:
+		appModule.event_moduleEnd()
 	gui.terminate()
 	try:
 		config.save()

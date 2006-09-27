@@ -22,6 +22,44 @@ import api
 
 #Some api functions specific to NVDAObjects
 
+def getNVDAObjectClass(windowClass,objectRole):
+	if dynamicMap.has_key((windowClass,objectRole)):
+		return dynamicMap[(windowClass,objectRole)]
+	elif dynamicMap.has_key((windowClass,None)):
+		return dynamicMap[(windowClass,None)]
+	elif staticMap.has_key((windowClass,objectRole)):
+		return staticMap[(windowClass,objectRole)]
+	elif staticMap.has_key((windowClass,None)):
+		return staticMap[(windowClass,None)]
+	else:
+		return NVDAObject
+
+def getNVDAObjectByAccessibleObject(accObject):
+	try:
+		return getNVDAObjectClass(win32gui.GetClassName(accObject.Window),accObject.Role)(accObject)
+	except:
+		return None
+
+def getNVDAObjectByLocator(window,objectID,childID):
+	try:
+		obj=pyAA.AccessibleObjectFromEvent(window,objectID,childID)
+		return getNVDAObjectByAccessibleObject(obj)
+	except:
+		return None
+
+def getNVDAObjectByPoint(x,y):
+	try:
+		obj=pyAA.AccessibleObjectFromPoint(x,y)
+		return getNVDAObjectByAccessibleObject(obj)
+	except:
+		return None
+
+def registerNVDAObjectClass(windowClass,objectRole,cls):
+	dynamicMap[(windowClass,objectRole)]=cls
+
+def unregisterNVDAObjectClass(windowClass,objectRole):
+	del dynamicMap[(windowClass,objectRole)]
+
 def getRoleName(role):
 	if dictionaries.roleNames.has_key(role) is True:
 		return dictionaries.roleNames[role]
@@ -54,29 +92,6 @@ def getStateName(state,opposite=False):
 #The classes
 
 class NVDAObject(object):
-
-	def __new__(cls,*args):
-		if (len(args)!=1) or not isinstance(args[0],pyAA.AA.AccessibleObject):
-			debug.writeError("class takes an object of type pyAA.AA.AccessibleObject as its only parameter")
-			return None
-		accObject=args[0]
-		try:
-			window=accObject.Window
-		except:
-			return None
-		if not win32gui.IsWindow(window):
-			return None
-		className=win32gui.GetClassName(window)
-		try:
-			role=accObject.GetRole()
-		except:
-			return None
-		NVDAClass=classMap.get("%s_%s"%(className,role),None)
-		if not NVDAClass:
-			NVDAClass=classMap.get("%s"%className,None)
-			if not NVDAClass:
-				NVDAClass=cls
-		return object.__new__(NVDAClass,*args)
 
 	def __init__(self,accObject):
 		self.accObject=accObject
@@ -270,15 +285,15 @@ class NVDAObject(object):
 			return None
 		if accObject.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
 			try:
-				return NVDAObject(accObject.GetParent())
+				return getNVDAObjectByAccessibleObject(accObject.GetParent())
 			except:
 				return None
 		else:
-			return NVDAObject(accObject)
+			return getNVDAObjectByAccessibleObject(accObject)
 
 	def getNext(self):
 		try:
-			parentObject=NVDAObject(self.accObject.GetParent())
+			parentObject=getNVDAObjectByAccessibleObject(self.accObject.GetParent())
 			parentRole=parentObject.getRole()
 		except:
 			parentObject=None
@@ -287,7 +302,7 @@ class NVDAObject(object):
 			try:
 				next=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
 				next=pyAA.AccessibleObjectFromWindow(next.Window,-4)
-				nextObject=NVDAObject(next)
+				nextObject=getNVDAObjectByAccessibleObject(next)
 				if nextObject!=self:
 					return nextObject
 				else:
@@ -298,7 +313,7 @@ class NVDAObject(object):
 		else:
 			try:
 				next=self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				nextObject=NVDAObject(next)
+				nextObject=getNVDAObjectByAccessibleObject(next)
 				if nextObject.getRole()==ROLE_SYSTEM_WINDOW:
 					nextObject=api.getNVDAObjectByLocator(nextObject.getWindowHandle(),-4,0)
 				if nextObject!=self:
@@ -310,7 +325,7 @@ class NVDAObject(object):
 
 	def getPrevious(self):
 		try:
-			parentObject=NVDAObject(self.accObject.GetParent())
+			parentObject=getNVDAObjectByAccessibleObject(self.accObject.GetParent())
 			parentRole=parentObject.getRole()
 		except:
 			parentObject=None
@@ -319,7 +334,7 @@ class NVDAObject(object):
 			try:
 				prev=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
 				prev=pyAA.AccessibleObjectFromWindow(prev.Window,-4)
-				prevObject=NVDAObject(prev)
+				prevObject=getNVDAObjectByAccessibleObject(prev)
 				if prevObject!=self:
 					return prevObject
 				else:
@@ -330,7 +345,7 @@ class NVDAObject(object):
 		else:
 			try:
 				prev=self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				prevObject=NVDAObject(prev)
+				prevObject=getNVDAObjectByAccessibleObject(prev)
 				if prevObject.getRole()==ROLE_SYSTEM_WINDOW:
 					prevObject=api.getNVDAObjectByLocator(prevObject.getWindowHandle(),-4,0)
 				if prevObject!=self:
@@ -345,7 +360,7 @@ class NVDAObject(object):
 			child=self.accObject.Navigate(pyAA.Constants.NAVDIR_FIRSTCHILD)
 			if child.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
 				child=pyAA.AccessibleObjectFromWindow(child.Window,-4)
-			childObject=NVDAObject(child)
+			childObject=getNVDAObjectByAccessibleObject(child)
 			if childObject!=self:
 				return childObject
 			else:
@@ -372,7 +387,7 @@ class NVDAObject(object):
 			child=self.accObject.GetFocus()
 		except:
 			return None
-		return NVDAObject(child)
+		return getNVDAObjectByAccessibleObject(child)
 
 	def getSelectedChildren(self):
 		try:
@@ -381,7 +396,7 @@ class NVDAObject(object):
 			accChildren=[]
 		children=[]
 		for accChild in accChildren:
-			children.append(NVDAObject(accChild))
+			children.append(getNVDAObjectByAccessibleObject(accChild))
 		return children
 
 
@@ -754,7 +769,7 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 			try:
 				role=child.GetRole()
 				if role not in [ROLE_SYSTEM_TOOLTIP,ROLE_SYSTEM_MENUPOPUP]:
-					return NVDAObject(child)
+					return getNVDAObjectByAccessibleObject(child)
 			except:
 				pass
 
@@ -1048,23 +1063,26 @@ key("insert+f"):self.script_fontInfo,
 		return 0
 
 	def getEndPosition(self):
-		range=self.document.Range(0,0)
+		range=self.document.Selection.Duplicate
 		range.Expand(self.msftedit.tomStory)
 		return range.End
 
 	def getLineNumber(self,pos):
-		range=self.document.Range(0,0)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=0
 		range.Move(self.msftedit.tomCharacter,pos)
 		return range.GetIndex(self.msftedit.tomLine)-1
 
 	def getLineStart(self,lineNum):
-		range=self.document.Range(0,0)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=0
 		range.Move(self.msftedit.tomLine,lineNum)
 		return range.Start
 
 	def getLine(self,lineNum):
 		start=self.getLineStart(lineNum)
-		range=self.document.Range(start,start)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=start
 		range.Expand(self.msftedit.tomLine)
 		text=range.Text
 		if text!='\r':
@@ -1073,12 +1091,14 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def getLineCount(self):
-		range=self.document.Range(0,0)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=0
 		range.Expand(self.msftedit.tomStory)
 		return self.getLineNumber(range.End)
 
 	def nextWord(self,pos):
-		range=self.document.Range(pos,pos)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=pos
 		delta=range.Move(self.msftedit.tomWord,1)
 		if delta:
 			return range.Start
@@ -1086,7 +1106,8 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def previousWord(self,pos):
-		range=self.document.Range(pos,pos)
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=pos
 		delta=range.Move(self.msftedit.tomWord,-1)
 		if delta:
 			return range.Start
@@ -1094,17 +1115,23 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def getTextRange(self,start,end):
-		range=self.document.Range(start,end)
+		range=self.document.Selection.Duplicate
+		range.Start=start
+		range.End=end
 		return range.Text
 
 	def getFontName(self,pos):
-		return self.document.Range(pos,pos).Font.Name
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=pos
+		return range.Font.Name
 
 	def getCurrentFontName(self):
 		return self.getFontName(self.getCaretPosition())
 
 	def getFontSize(self,pos):
-		return "%d"%self.document.Range(pos,pos).Font.Size
+		range=self.document.Selection.Duplicate
+		range.Start=range.End=pos
+		return "%d"%range.Font.Size
 
 	def getCurrentFontSize(self):
 		return self.getFontSize(self.getCaretPosition())
@@ -1112,22 +1139,25 @@ key("insert+f"):self.script_fontInfo,
 	def script_fontInfo(self,keyPress):
 		audio.speakMessage("Font: %s, %s pt"%(self.getCurrentFontName(),self.getCurrentFontSize()))
 
-classMap={
-"Shell_TrayWnd":NVDAObject_Shell_TrayWnd,
-"tooltips_class32":NVDAObject_tooltip,
-"Progman":NVDAObject_Progman,
-"#32770_18":NVDAObject_dialog,
-"TrayClockWClass":NVDAObject_TrayClockWClass,
-"Edit":NVDAObject_edit,
-"RICHEDIT50W":NVDAObject_ITextDocument,
-"_WwG":NVDAObject_ITextDocument,
-"Button_44":NVDAObject_checkBox,
-"MozillaUIWindowClass":NVDAObject_mozillaUIWindowClass,
-"MozillaUIWindowClass_14":NVDAObject_mozillaUIWindowClass_application,
-"MozillaContentWindowClass":NVDAObject_mozillaContentWindowClass,
-"MozillaContentWindowClass_15":NVDAObject_mozillaContentWindowClass_document,
-"MozillaContentWindowClass_30":NVDAObject_mozillaContentWindowClass_link,
-"MozillaContentWindowClass_34":NVDAObject_mozillaContentWindowClass_listItem,
-"MozillaContentWindowClass_42":NVDAObject_mozillaContentWindowClass_text,
-"ConsoleWindowClass_10":NVDAObject_consoleWindowClass,
+
+staticMap={
+("Shell_TrayWnd",None):NVDAObject_Shell_TrayWnd,
+("tooltips_class32",None):NVDAObject_tooltip,
+("Progman",None):NVDAObject_Progman,
+("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
+("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
+("Button",ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
+("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
+("MozillaContentWindowClass",None):NVDAObject_mozillaContentWindowClass,
+("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaContentWindowClass_document,
+("MozillaContentWindowClass",ROLE_SYSTEM_LINK):NVDAObject_mozillaContentWindowClass_link,
+("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaContentWindowClass_listItem,
+("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaContentWindowClass_text,
+("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClass,
 }
+
+dynamicMap={}
+

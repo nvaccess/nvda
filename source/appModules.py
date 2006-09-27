@@ -19,12 +19,15 @@ def __fetchAppModule__(name):
 			module.event_moduleStart()
 			return module
 		except:
-			audio.speakMessage("Error loading app module %s"%name)
+			audio.speakMessage("Error loading app module %s"%name,wait=True)
 			debug.writeException("__fetchAppModule__: while loading app module")
 			return None
 
 def load(name):
 	global current
+	if current:
+		current.event_moduleEnd()
+		current=None
 	module=__fetchAppModule__(name)
 	if module:
 		current=module

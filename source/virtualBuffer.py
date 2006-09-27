@@ -8,7 +8,7 @@ from constants import *
 import api
 import audio
 from config import conf
-from NVDAObjects import getStateNames
+import NVDAObjects
 
 re_multiSpacing=re.compile(r' +')
 
@@ -59,7 +59,7 @@ class virtualBuffer(object):
 		startText+=" %s"%thisObj.getName()
 		startText+=" %s"%thisObj.getTypeString()
 		startText+=" %s"%thisObj.getValue()
-		startText+=" %s"%getStateNames(thisObj.filterStates(thisObj.getStates()))
+		startText+=" %s"%NVDAObjects.getStateNames(thisObj.filterStates(thisObj.getStates()))
 		startText=startText.strip()
 		startText=re_multiSpacing.sub(" ",startText)
 		if len(lines)>0:
@@ -72,7 +72,7 @@ class virtualBuffer(object):
 
 
 	def appendObject(self,window,objectID,childID):
-		obj=api.getNVDAObjectByLocator(window,objectID,childID)
+		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 		if obj:
 			res=self.generateObjectBuffer(obj)
 			if not res:
@@ -84,7 +84,7 @@ class virtualBuffer(object):
 			self.virtualBuffer+=lines
 
 	def refreshObject(self,window,objectID,childID):
-		obj=api.getNVDAObjectByLocator(window,objectID,childID)
+		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 		if not obj:
 			return
 		r=self.getObjectRange(obj)
@@ -108,7 +108,7 @@ class virtualBuffer(object):
 		return self.objects.get(obj,None)
 
 	def getPositionByLocator(self,window,objectID,childID):
-		obj=api.getNVDAObjectByLocator(window,objectID,childID)
+		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 		if not obj:
 			return None
 		if self.objects.has_key(obj):
@@ -243,7 +243,7 @@ class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
 		audio.speakText(self.getText())
 
 	def refreshObject(self,window,objectID,childID):
-		obj=api.getNVDAObjectByLocator(window,objectID,childID)
+		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 		if obj and (obj.getRole()==ROLE_SYSTEM_DOCUMENT):
 			audio.cancel()
 			audio.speakMessage("Loading document...")

@@ -1,11 +1,15 @@
+import datetime
 from keyEventHandler import key
 from constants import *
 from api import *
 import audio
-import datetime
+import NVDAObjects
 
 
 def event_moduleStart():
+	pass
+
+def event_moduleEnd():
 	pass
 
 def event_switchStart(window,objectID,childID):
