@@ -38,12 +38,15 @@ def getNVDAObjectByAccessibleObject(accObject):
 	try:
 		return getNVDAObjectClass(win32gui.GetClassName(accObject.Window),accObject.Role)(accObject)
 	except:
+		audio.speakMessage("Error creating NVDAObject")
+		debug.writeException("NVDAObjects.getNVDAObjectByAccessibleObject")
 		return None
 
 def getNVDAObjectByLocator(window,objectID,childID):
 	try:
 		obj=pyAA.AccessibleObjectFromEvent(window,objectID,childID)
-		return getNVDAObjectByAccessibleObject(obj)
+		if obj.GetRole()>0:
+			return getNVDAObjectByAccessibleObject(obj)
 	except:
 		return None
 
@@ -538,6 +541,10 @@ class NVDAObject_edit(NVDAObject):
 			key("Control+Shift+ExtendedRight"):self.script_changeSelection,
 			key("ExtendedHome"):self.script_moveByCharacter,
 			key("ExtendedEnd"):self.script_moveByCharacter,
+			key("control+extendedHome"):self.script_moveByLine,
+			key("control+extendedEnd"):self.script_moveByLine,
+			key("control+shift+extendedHome"):self.script_changeSelection,
+			key("control+shift+extendedEnd"):self.script_changeSelection,
 			key("ExtendedDelete"):self.script_delete,
 			key("Back"):self.script_backspace,
 		}

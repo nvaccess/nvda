@@ -27,16 +27,20 @@ ignoreNextKeyPress = False
 
 def key(name):
 	l = name.split("+")
+	for num in range(len(l)):
+		t=l[num]
+		if len(t)>1:
+			t="%s%s"%(t[0].upper(),t[1:])
+		elif len(t)==1:
+			t=t[0].upper()
+		l[num]=t
 	if len(l) >= 2:
 		s=set()
 		for m in l[0:-1]:
-			m="%s%s"%(m[0].upper(),m[1:])
 			s.add(m)
 		modifiers = frozenset(s)
 	else:
 		modifiers = None
-	if len(l[-1])==1:
-		l[-1]=l[-1].upper()
 	return (modifiers, l[-1])
 
 def sendKey(keyPress):
