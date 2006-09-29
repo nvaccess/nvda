@@ -16,6 +16,11 @@ wdStartOfRangeRowNumber=13
 wdMaximumNumberOfRows=15
 wdStartOfRangeColumnNumber=16
 wdMaximumNumberOfColumns=18
+#Horizontal alignment
+wdAlignParagraphLeft=0
+wdAlignParagraphCenter=1
+wdAlignParagraphRight=2
+wdAlignParagraphJustify=3
 #Units
 wdCharacter=1
 wdWord=2
@@ -48,7 +53,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_edit):
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IUnknown._iid_),ctypes.byref(ptr))
 		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
 		self.documentWindow=comtypes.client.wrap(ptr).ActivePane
-		self.lastStyle=self.lastFontName=self.lastFontSize=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=None
+		self.lastStyle=self.lastFontName=self.lastFontSize=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=self.lastParagraphAlignment=self.lastBold=self.lastItalic=self.lastUnderline=None
 		self.keyMap.update({
 key("insert+f"):self.script_formatInfo,
 })
@@ -139,7 +144,7 @@ key("insert+f"):self.script_formatInfo,
 	def getFontSize(self,pos):
 		range=self.documentWindow.Selection.Range
 		range.Start=range.End=pos
-		return "%d"%range.Font.Size
+		return int(range.Font.Size)
 
 	def getCurrentFontSize(self):
 		return self.getFontSize(self.getCaretPosition())
@@ -203,6 +208,46 @@ key("insert+f"):self.script_formatInfo,
 	def getPageCount(self):
 		return self.documentWindow.Selection.Information(wdNumberOfPagesInDocument)
 
+	def getParagraphAlignment(self,pos):
+		range=self.documentWindow.Selection.Range
+		range.Start=range.End=pos
+		align=range.ParagraphFormat.Alignment
+		if align==wdAlignParagraphLeft:
+			return "left"
+		elif align==wdAlignParagraphCenter:
+			return "centered"
+		elif align==wdAlignParagraphRight:
+			return "right"
+		elif align>=wdAlignParagraphJustify:
+			return "justified"
+
+	def getCurrentParagraphAlignment(self):
+		return self.getParagraphAlignment(self.getCaretPosition())
+
+	def isBold(self,pos):
+		range=self.documentWindow.Selection.Range
+		range.Start=range.End=pos
+		return range.Font.Bold
+
+	def isCurrentBold(self):
+		return self.isBold(self.getCaretPosition())
+
+	def isItalic(self,pos):
+		range=self.documentWindow.Selection.Range
+		range.Start=range.End=pos
+		return range.Font.Italic
+
+	def isCurrentItalic(self):
+		return self.isItalic(self.getCaretPosition())
+
+	def isUnderline(self,pos):
+		range=self.documentWindow.Selection.Range
+		range.Start=range.End=pos
+		return range.Font.Underline
+
+	def isCurrentUnderline(self):
+		return self.isUnderline(self.getCaretPosition())
+
 	def reportChanges(self):
 		pageNumber=self.getCurrentPageNumber()
 		if pageNumber!=self.lastPageNumber:
@@ -234,6 +279,32 @@ key("insert+f"):self.script_formatInfo,
 		if fontSize!=self.lastFontSize:
 			audio.speakMessage("%s point"%fontSize)
 			self.lastFontSize=fontSize
+		bold=self.isCurrentBold()
+		if bold!=self.lastBold:
+			if bold:
+				audio.speakMessage("bold")
+			elif self.lastBold:
+				audio.speakMessage("bold off")
+			self.lastBold=bold
+			self.lastFontSize=fontSize
+		italic=self.isCurrentItalic()
+		if italic!=self.lastItalic:
+			if italic:
+				audio.speakMessage("Italic")
+			elif self.lastItalic:
+				audio.speakMessage("italic off")
+			self.lastItalic=italic
+		underline=self.isCurrentUnderline()
+		if underline!=self.lastUnderline:
+			if underline:
+				audio.speakMessage("underline")
+			elif self.lastUnderline:
+				audio.speakMessage("underline off")
+			self.lastUnderline=underline
+		alignment=self.getCurrentParagraphAlignment()
+		if alignment!=self.lastParagraphAlignment:
+			audio.speakMessage("Aligned %s"%alignment)
+			self.lastParagraphAlignment=alignment
 
 	def script_moveByLine(self,keyPress):
 		sendKey(keyPress)
@@ -256,4 +327,13 @@ key("insert+f"):self.script_formatInfo,
 		audio.speakSymbol(self.getCurrentCharacter())
 
 	def script_formatInfo(self,keyPress):
-		audio.speakMessage("%s: %s, %s point"%(self.getCurrentStyle(),self.getCurrentFontName(),self.getCurrentFontSize()))
+		audio.speakMessage("%s style"%self.getCurrentStyle())
+		audio.speakMessage("%s font"%self.getCurrentFontName())
+		audio.speakMessage("%d point"%self.getCurrentFontSize())
+		if self.isCurrentBold():
+			audio.speakMessage("bold")
+		if self.isCurrentItalic():
+			audio.speakMessage("Italic")
+		if self.isCurrentUnderline():
+			audio.speakMessage("underline")
+		audio.speakMessage("align %s"%self.getCurrentParagraphAlignment())
