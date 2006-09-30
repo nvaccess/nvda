@@ -38,7 +38,6 @@ def getNVDAObjectByAccessibleObject(accObject):
 	try:
 		return getNVDAObjectClass(win32gui.GetClassName(accObject.Window),accObject.Role)(accObject)
 	except:
-		audio.speakMessage("Error creating NVDAObject")
 		debug.writeException("NVDAObjects.getNVDAObjectByAccessibleObject")
 		return None
 

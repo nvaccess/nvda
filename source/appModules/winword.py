@@ -4,6 +4,7 @@ import ctypes
 from default import *
 import audio
 from keyEventHandler import sendKey
+from config import conf
 
 #Word constants
 
@@ -249,62 +250,69 @@ key("insert+f"):self.script_formatInfo,
 		return self.isUnderline(self.getCaretPosition())
 
 	def reportChanges(self):
-		pageNumber=self.getCurrentPageNumber()
-		if pageNumber!=self.lastPageNumber:
-			audio.speakMessage("Page %d of %d"%(pageNumber,self.getPageCount()))
-			self.lastPageNumber=pageNumber
-		isTable=self.isCurrentTable()
-		if isTable!=self.lastIsTable:
-			if isTable:
-				audio.speakMessage("Table with %d columns and %d rows"%(self.getCurrentColumnCount(),self.getCurrentRowCount()))
-			elif self.lastIsTable: 
-				audio.speakMessage("out of table")
-				self.lastRowNumber=self.lastColumnNumber=None
-			self.lastIsTable=isTable
-		rowNumber=self.getCurrentRowNumber()
-		columnNumber=self.getCurrentColumnNumber()
-		if self.isCurrentTable() and ((rowNumber!=self.lastRowNumber) or (columnNumber!=self.lastColumnNumber)):
-			audio.speakMessage("col %d row %d"%(columnNumber,rowNumber))
-			self.lastRowNumber=rowNumber
-			self.lastColumnNumber=columnNumber
-		style=self.getCurrentStyle()
-		if style!=self.lastStyle:
-			audio.speakMessage("%s style"%style)
-			self.lastStyle=style
-		fontName=self.getCurrentFontName()
-		if fontName!=self.lastFontName:
-			audio.speakMessage("%s font"%fontName)
-			self.lastFontName=fontName
-		fontSize=self.getCurrentFontSize()
-		if fontSize!=self.lastFontSize:
-			audio.speakMessage("%s point"%fontSize)
-			self.lastFontSize=fontSize
-		bold=self.isCurrentBold()
-		if bold!=self.lastBold:
-			if bold:
-				audio.speakMessage("bold")
-			elif self.lastBold:
-				audio.speakMessage("bold off")
-			self.lastBold=bold
-			self.lastFontSize=fontSize
-		italic=self.isCurrentItalic()
-		if italic!=self.lastItalic:
-			if italic:
-				audio.speakMessage("Italic")
-			elif self.lastItalic:
-				audio.speakMessage("italic off")
-			self.lastItalic=italic
-		underline=self.isCurrentUnderline()
-		if underline!=self.lastUnderline:
-			if underline:
-				audio.speakMessage("underline")
-			elif self.lastUnderline:
-				audio.speakMessage("underline off")
-			self.lastUnderline=underline
-		alignment=self.getCurrentParagraphAlignment()
-		if alignment!=self.lastParagraphAlignment:
-			audio.speakMessage("Aligned %s"%alignment)
-			self.lastParagraphAlignment=alignment
+		if conf["documentFormat"]["reportPageChanges"]:
+			pageNumber=self.getCurrentPageNumber()
+			if pageNumber!=self.lastPageNumber:
+				audio.speakMessage("Page %d of %d"%(pageNumber,self.getPageCount()))
+				self.lastPageNumber=pageNumber
+		if conf["documentFormat"]["reportTables"]:
+			isTable=self.isCurrentTable()
+			if isTable!=self.lastIsTable:
+				if isTable:
+					audio.speakMessage("Table with %d columns and %d rows"%(self.getCurrentColumnCount(),self.getCurrentRowCount()))
+				elif self.lastIsTable: 
+					audio.speakMessage("out of table")
+					self.lastRowNumber=self.lastColumnNumber=None
+				self.lastIsTable=isTable
+			rowNumber=self.getCurrentRowNumber()
+			columnNumber=self.getCurrentColumnNumber()
+			if self.isCurrentTable() and ((rowNumber!=self.lastRowNumber) or (columnNumber!=self.lastColumnNumber)):
+				audio.speakMessage("col %d row %d"%(columnNumber,rowNumber))
+				self.lastRowNumber=rowNumber
+				self.lastColumnNumber=columnNumber
+		if conf["documentFormat"]["reportStyleChanges"]:
+			style=self.getCurrentStyle()
+			if style!=self.lastStyle:
+				audio.speakMessage("%s style"%style)
+				self.lastStyle=style
+		if conf["documentFormat"]["reportFontChanges"]:
+			fontName=self.getCurrentFontName()
+			if fontName!=self.lastFontName:
+				audio.speakMessage("%s font"%fontName)
+				self.lastFontName=fontName
+		if conf["documentFormat"]["reportFontSizeChanges"]:
+			fontSize=self.getCurrentFontSize()
+			if fontSize!=self.lastFontSize:
+				audio.speakMessage("%s point"%fontSize)
+				self.lastFontSize=fontSize
+		if conf["documentFormat"]["reportFontAttributeChanges"]:
+			bold=self.isCurrentBold()
+			if bold!=self.lastBold:
+				if bold:
+					audio.speakMessage("bold")
+				elif self.lastBold:
+					audio.speakMessage("bold off")
+				self.lastBold=bold
+				self.lastFontSize=fontSize
+			italic=self.isCurrentItalic()
+			if italic!=self.lastItalic:
+				if italic:
+					audio.speakMessage("Italic")
+				elif self.lastItalic:
+					audio.speakMessage("italic off")
+				self.lastItalic=italic
+			underline=self.isCurrentUnderline()
+			if underline!=self.lastUnderline:
+				if underline:
+					audio.speakMessage("underline")
+				elif self.lastUnderline:
+					audio.speakMessage("underline off")
+				self.lastUnderline=underline
+		if conf["documentFormat"]["reportAlignmentChanges"]:
+			alignment=self.getCurrentParagraphAlignment()
+			if alignment!=self.lastParagraphAlignment:
+				audio.speakMessage("Aligned %s"%alignment)
+				self.lastParagraphAlignment=alignment
 
 	def script_moveByLine(self,keyPress):
 		sendKey(keyPress)

@@ -18,7 +18,7 @@ confspec = StringIO("""# NVDA Configuration File
 
 	[[__many__]]
 		# rate, pitch and volume are all between 0 and 100
-		rate = integer(default=10)
+		rate = integer(default=60)
 		pitch = integer(default=50)
 		volume = integer(default=50)
 
@@ -34,9 +34,15 @@ confspec = StringIO("""# NVDA Configuration File
 	reportObjectUnderMouse = boolean(default=true)
 	reportMouseShapeChanges = boolean(default=false)
 
-#Virtual buffer settings
-[virtualBuffer]
-	includeTableStructure = boolean(default=false)
+[documentFormat]
+	reportFontChanges = boolean(default=false)
+	reportFontSizeChanges = boolean(default=true)
+	reportFontAttributeChanges = boolean(default=True)
+	reportAlignmentChanges = boolean(default=True)
+	reportStyleChanges = boolean(default=false)
+	reportTables = boolean(default=true)
+	reportPageChanges = boolean(default=true)
+ 
 
 """.replace("\n", "\r\n"))
 
