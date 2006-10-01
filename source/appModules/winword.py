@@ -1,10 +1,12 @@
 import comtypes.client
 import comtypes.automation
 import ctypes
-from default import *
 import audio
+from constants import *
 from keyEventHandler import sendKey
 from config import conf
+import NVDAObjects
+import _MSOffice
 
 #Word constants
 
@@ -40,11 +42,15 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-def event_moduleStart():
-	NVDAObjects.registerNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
+class appModule(_MSOffice.appModule):
 
-def event_moduleEnd():
-	NVDAObjects.unregisterNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT)
+	def __init__(self):
+		_MSOffice.appModule.__init__(self)
+		NVDAObjects.registerNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
+
+	def __del__(self):
+		NVDAObjects.unregisterNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT)
+		_MSOfficeHelper.appModule.__del__(self)
 
 class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 

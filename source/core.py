@@ -34,9 +34,7 @@ def appChange(window,objectID,childID):
 	name=obj.getName()
 	appName = os.path.splitext(getProcessName(obj.getProcessID()))[0].lower()
 	role=obj.getRole()
-	if appModules.load(appName) is False:
-		debug.writeError("core.event_appChange(): Error, could not load app module %s"%appName) 
-		sys.exit()
+	appModules.load(appName)
 	executeEvent("foreground",window,objectID,childID)
 
 def event_mouseMove(point):
@@ -121,9 +119,6 @@ def main():
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")
-	appModule=getCurrentAppModule()
-	if appModule:
-		appModule.event_moduleEnd()
 	gui.terminate()
 	try:
 		config.save()

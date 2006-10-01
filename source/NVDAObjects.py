@@ -643,7 +643,7 @@ class NVDAObject_edit(NVDAObject):
 		while (curPos>0) and (self.getCharacter(curPos) not in whitespace):
 			curPos=self.previousCharacter(curPos)
 		if curPos:
-			return currPos
+			return curPos
 		else:
 			return None
 
