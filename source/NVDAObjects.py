@@ -1044,11 +1044,16 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		NVDAObject_edit.__init__(self,accObject)
 		self.msftedit=comtypes.client.GetModule('msftedit.dll')
 		ptr=ctypes.c_void_p()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(self.msftedit.ITextDocument._iid_),ctypes.byref(ptr))
-		self.document=ctypes.cast(ptr,ctypes.POINTER(self.msftedit.ITextDocument))
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IUnknown._iid_),ctypes.byref(ptr))
+		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
+		self.document=comtypes.client.wrap(ptr)
+		self.lastFontName=self.lastFontSize=self.lastBold=self.lastItalic=self.lastUnderline=self.lastParagraphAlignment=None
 		self.keyMap.update({
-key("insert+f"):self.script_fontInfo,
+key("insert+f"):self.script_formatInfo,
 })
+
+	def _duplicateDocumentRange(self,range):
+		return range.Duplicate
 
 	def getCaretRange(self):
 		start=self.document.Selection.Start
@@ -1062,7 +1067,7 @@ key("insert+f"):self.script_fontInfo,
 		return self.document.Selection.Start
 
 	def getVisibleLineRange(self):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Expand(self.msftedit.tomWindow)
 		return (self.getLineNumber(range.Start),self.getLineNumber(range.End))
 
@@ -1070,25 +1075,25 @@ key("insert+f"):self.script_fontInfo,
 		return 0
 
 	def getEndPosition(self):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Expand(self.msftedit.tomStory)
 		return range.End
 
 	def getLineNumber(self,pos):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
 		range.Move(self.msftedit.tomCharacter,pos)
 		return range.GetIndex(self.msftedit.tomLine)-1
 
 	def getLineStart(self,lineNum):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
 		range.Move(self.msftedit.tomLine,lineNum)
 		return range.Start
 
 	def getLine(self,lineNum):
 		start=self.getLineStart(lineNum)
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=start
 		range.Expand(self.msftedit.tomLine)
 		text=range.Text
@@ -1098,13 +1103,13 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def getLineCount(self):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
 		range.Expand(self.msftedit.tomStory)
 		return self.getLineNumber(range.End)
 
 	def nextWord(self,pos):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
 		delta=range.Move(self.msftedit.tomWord,1)
 		if delta:
@@ -1113,7 +1118,7 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def previousWord(self,pos):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
 		delta=range.Move(self.msftedit.tomWord,-1)
 		if delta:
@@ -1122,13 +1127,13 @@ key("insert+f"):self.script_fontInfo,
 			return None
 
 	def getTextRange(self,start,end):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=start
 		range.End=end
 		return range.Text
 
 	def getFontName(self,pos):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
 		return range.Font.Name
 
@@ -1136,15 +1141,124 @@ key("insert+f"):self.script_fontInfo,
 		return self.getFontName(self.getCaretPosition())
 
 	def getFontSize(self,pos):
-		range=self.document.Selection.Duplicate
+		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
 		return "%d"%range.Font.Size
 
 	def getCurrentFontSize(self):
 		return self.getFontSize(self.getCaretPosition())
 
-	def script_fontInfo(self,keyPress):
-		audio.speakMessage("Font: %s, %s pt"%(self.getCurrentFontName(),self.getCurrentFontSize()))
+	def getParagraphAlignment(self,pos):
+		range=self._duplicateDocumentRange(self.document.Selection)
+		range.Start=range.End=pos
+		align=range.Para.Alignment
+		if align==self.msftedit.tomAlignLeft:
+			return "left"
+		elif align==self.msftedit.tomAlignCenter:
+			return "centered"
+		elif align==self.msftedit.tomAlignRight:
+			return "right"
+		elif align>=self.msftedit.tomAlignJustify:
+			return "justified"
+
+	def getCurrentParagraphAlignment(self):
+		return self.getParagraphAlignment(self.getCaretPosition())
+
+	def isBold(self,pos):
+		range=self._duplicateDocumentRange(self.document.Selection)
+		range.Start=range.End=pos
+		return range.Font.Bold
+
+	def isCurrentBold(self):
+		return self.isBold(self.getCaretPosition())
+
+	def isItalic(self,pos):
+		range=self._duplicateDocumentRange(self.document.Selection)
+		range.Start=range.End=pos
+		return range.Font.Italic
+
+	def isCurrentItalic(self):
+		return self.isItalic(self.getCaretPosition())
+
+	def isUnderline(self,pos):
+		range=self._duplicateDocumentRange(self.document.Selection)
+		range.Start=range.End=pos
+		return range.Font.Underline
+
+	def isCurrentUnderline(self):
+		return self.isUnderline(self.getCaretPosition())
+
+	def reportChanges(self):
+		if conf["documentFormat"]["reportFontChanges"]:
+			fontName=self.getCurrentFontName()
+			if fontName!=self.lastFontName:
+				audio.speakMessage("%s font"%fontName)
+				self.lastFontName=fontName
+		if conf["documentFormat"]["reportFontSizeChanges"]:
+			fontSize=self.getCurrentFontSize()
+			if fontSize!=self.lastFontSize:
+				audio.speakMessage("%s point"%fontSize)
+				self.lastFontSize=fontSize
+		if conf["documentFormat"]["reportFontAttributeChanges"]:
+			bold=self.isCurrentBold()
+			if bold!=self.lastBold:
+				if bold:
+					audio.speakMessage("bold")
+				elif self.lastBold:
+					audio.speakMessage("bold off")
+				self.lastBold=bold
+				self.lastFontSize=fontSize
+			italic=self.isCurrentItalic()
+			if italic!=self.lastItalic:
+				if italic:
+					audio.speakMessage("Italic")
+				elif self.lastItalic:
+					audio.speakMessage("italic off")
+				self.lastItalic=italic
+			underline=self.isCurrentUnderline()
+			if underline!=self.lastUnderline:
+				if underline:
+					audio.speakMessage("underline")
+				elif self.lastUnderline:
+					audio.speakMessage("underline off")
+				self.lastUnderline=underline
+		if conf["documentFormat"]["reportAlignmentChanges"]:
+			alignment=self.getCurrentParagraphAlignment()
+			if alignment!=self.lastParagraphAlignment:
+				audio.speakMessage("Aligned %s"%alignment)
+				self.lastParagraphAlignment=alignment
+
+	def script_moveByLine(self,keyPress):
+		sendKey(keyPress)
+		self.reportChanges()
+		audio.speakText(self.getCurrentLine())
+
+	def script_moveByCharacter(self,keyPress):
+		sendKey(keyPress)
+		self.reportChanges()
+		audio.speakSymbol(self.getCurrentCharacter())
+
+	def script_moveByWord(self,keyPress):
+		sendKey(keyPress)
+		self.reportChanges()
+		audio.speakText(self.getCurrentWord())
+
+	def script_delete(self,keyPress):
+		sendKey(keyPress)
+		self.reportChanges()
+		audio.speakSymbol(self.getCurrentCharacter())
+
+	def script_formatInfo(self,keyPress):
+		audio.speakMessage("%s style"%self.getCurrentStyle())
+		audio.speakMessage("%s font"%self.getCurrentFontName())
+		audio.speakMessage("%d point"%self.getCurrentFontSize())
+		if self.isCurrentBold():
+			audio.speakMessage("bold")
+		if self.isCurrentItalic():
+			audio.speakMessage("Italic")
+		if self.isCurrentUnderline():
+			audio.speakMessage("underline")
+		audio.speakMessage("align %s"%self.getCurrentParagraphAlignment())
 
 
 staticMap={
