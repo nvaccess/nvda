@@ -167,8 +167,8 @@ def internal_keyDownEvent(event):
 		else:
 			return True
 	except:
-		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent")
 		debug.writeException("keyEventHandler.internal_keyDownEvent")
+		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent")
 		return True
 
 def internal_keyUpEvent(event):

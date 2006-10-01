@@ -17,10 +17,11 @@ confspec = StringIO("""# NVDA Configuration File
 	synth = string(default=com_sapi5)
 
 	[[__many__]]
-		# rate, pitch and volume are all between 0 and 100
 		rate = integer(default=60)
 		pitch = integer(default=50)
-		volume = integer(default=50)
+		volume = integer(default=100)
+		voice = integer(default=1)
+		relativeUppercasePitch = integer(default=20)
 
 # Presentation settings
 [presentation]

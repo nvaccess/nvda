@@ -1,42 +1,65 @@
 import os
-import win32com.client
+import comtypes.client
 
 tts=None
+curVoice=1
+curPitch=50
 
 class constants:
 	SVSFlagsAsync = 1
 	SVSFPurgeBeforeSpeak = 2
+	SVSFIsXML = 8
 
 def initialize():
 	global tts
-	tts = win32com.client.Dispatch('sapi.SPVoice')
+	tts = comtypes.client.CreateObject('sapi.SPVoice')
+	tts.Speak("<sapi>",constants.SVSFIsXML)
 
 def getRate():
-		return (tts.Rate+10)*5
+		return (tts.Rate*5)+50
+
+def getPitch():
+	return curPitch
 
 def getVolume():
 		return tts.Volume
 
 def getVoice():
-		return os.path.basename(tts.Voice.Id)
+	return curVoice
 
 def getVoiceList():
-		return None # todo
+	pass
 
 def setRate(value):
-	tts.Rate = (value/5)-10
+	tts.Rate = (value-50)/5
+
+def setPitch(value):
+	global curPitch
+	curPitch=value
 
 def setVolume(value):
 	tts.Volume = value
 
 def setVoice(value):
-	pass # todo
+	global curVoice
+	tts.Voice(tts.GetVoices().Item(value-1))
+	curVoice=value
 
-def speakText(text,markup,wait=False):
-	flags=0
+def speakText(text,wait=False):
+	flags=constants.SVSFIsXML
+	if curPitch>=70:
+		pitch=24
+	elif curPitch>50:
+		pitch=10
+	elif curPitch==50:
+		pitch=0
+	elif curPitch>=40:
+		pitch=-10
+	else:
+		pitch=-24
 	if wait is False:
 		flags=constants.SVSFlagsAsync
-	tts.Speak(text,flags)
+	tts.Speak("<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text),flags)
 
 def playSound(fileName,wait=False):
 	pass # todo

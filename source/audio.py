@@ -9,7 +9,9 @@ def initialize():
 	global synth
 	synth=__import__("synth_"+conf["speech"]["synth"])
 	synth.initialize()
+	synth.setVoice(getSynthConfig()["voice"])
 	synth.setRate(getSynthConfig()["rate"])
+	synth.setVolume(getSynthConfig()["volume"])
 
 def processText(text):
 	text=splitMultiCaseWords(text)
@@ -24,12 +26,12 @@ def playSound(fileName,wait=False):
 
 def cancel():
 	synth.cancel()
-	winsound.PlaySound("waves/silence.wav",winsound.SND_PURGE | winsound.SND_ASYNC)
+	#winsound.PlaySound("waves/silence.wav",winsound.SND_PURGE | winsound.SND_ASYNC)
 
 def speakMessage(text,wait=False):
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,None,wait)
+		synth.speakText(text,wait)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
 	text=""
@@ -53,12 +55,20 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 		text="%s %s"%(text,position)
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,None,wait)
+		synth.speakText(text,wait)
 
 def speakSymbol(symbol,wait=False):
-	text=processSymbol(symbol)
-	if text and not text.isspace():
-		synth.speakText(text,None,wait)
+	symbol=processSymbol(symbol)
+	if (symbol[0]>='A') and (symbol[0]<='Z'):
+		uppercase=True
+	else:
+		uppercase=False
+	if uppercase:
+		oldPitch=synth.getPitch()
+		synth.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
+	synth.speakText("%s"%symbol,wait)
+	if uppercase:
+		synth.setPitch(oldPitch)
 
 def speakText(text,wait=False):
 	if (text is None) or (len(text)==1):
@@ -66,5 +76,5 @@ def speakText(text,wait=False):
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,None,wait)
+		synth.speakText(text,wait)
 

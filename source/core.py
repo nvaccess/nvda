@@ -37,7 +37,7 @@ def appChange(window,objectID,childID):
 	if appModules.load(appName) is False:
 		debug.writeError("core.event_appChange(): Error, could not load app module %s"%appName) 
 		sys.exit()
-	executeEvent("foreground",(window,objectID,childID))
+	executeEvent("foreground",window,objectID,childID)
 
 def event_mouseMove(point):
 	obj=NVDAObjects.getNVDAObjectByPoint(point)
@@ -90,12 +90,12 @@ def main():
 					try:
 						appChange(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
-						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 						debug.writeException("core.main: while executing event_%s in app module"%MSAAEvent[0])
+						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
 					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]):
 						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-					executeEvent(MSAAEvent[0],MSAAEvent[1:])
+					executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 			except Queue.Empty:
 				pass
 			try:
@@ -119,8 +119,8 @@ def main():
 			if keyEventHandler.queue_keys.empty() and mouseEventHandler.queue_events.empty() and MSAAEventHandler.queue_events.empty():
 				time.sleep(0.01)
 	except:
-			audio.speakMessage("Exception in main loop")
 			debug.writeException("core.py main loop")
+			audio.speakMessage("Exception in main loop")
 	appModule=getCurrentAppModule()
 	if appModule:
 		appModule.event_moduleEnd()

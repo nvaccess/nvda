@@ -64,8 +64,10 @@ def splitMultiCaseWords(text):
 	return text
 
 def processSymbol(symbol):
-	text=dictionaries.characterSymbols.get(symbol,symbol)
-	if (symbol>='A') and (symbol<='Z'):
-		text="cap %s"%text
-	return text
+	#if (symbol>='A') and (symbol<='Z'):
+	#	newSymbol="cap"+symbol[0]
+	#else:
+	newSymbol=dictionaries.characterSymbols.get(symbol,symbol)
+	return newSymbol
+
 

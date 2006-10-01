@@ -26,7 +26,7 @@ def getVoiceList():
 	pass
 
 def setRate(value):
-	value=value*8
+	value=value*4
 	tts.Speed=value
 
 def setVolume(value):
@@ -35,7 +35,7 @@ def setVolume(value):
 def setVoice(value):
 	pass
 
-def speakText(text,markup,wait=False):
+def speakText(text,wait=False):
 	tts.Speak(text,0)
 	if wait is True:
 		while tts.IsSpeaking:

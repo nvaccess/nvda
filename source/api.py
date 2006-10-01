@@ -110,27 +110,25 @@ def eventExists(name,locator):
 		return True
 	return False
 
-def executeEvent(name,locator):
-	if (name=="caret") and (locator[0]!=getFocusLocator()[0]):
-		setFocusObjectByLocator(locator[0],OBJID_CLIENT,0)
+def executeEvent(name,window,objectID,childID):
+	if (name=="caret") and (window!=getFocusLocator()[0]):
+		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("focusObject",locator)
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:
-			apply(event,locator)
-			return True
+			event(window,objectID,childID)
 		except:
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 			return False
-	thisObj=NVDAObjects.getNVDAObjectByLocator(locator[0],locator[1],locator[2])
+	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
-	if locator==focusLocator and hasattr(focusObject,"event_%s"%name): 
+	if (window,objectID,childID)==focusLocator and hasattr(focusObject,"event_%s"%name): 
 		event=getattr(focusObject,"event_%s"%name)
 		try:
 			event()
-			return True
 		except:
 			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
 			debug.writeException("Error executing event %s from focusObject"%event.__name__)
@@ -139,11 +137,11 @@ def executeEvent(name,locator):
 		event=getattr(thisObj,"event_%s"%name)
 		try:
 			event()
-			return True
 		except:
 			audio.speakMessage("Error executing event %s from object"%event.__name__)
 			debug.writeException("Error executing event %s from object"%event.__name__)
 			return False
+	return True
 
 def getObjectGroupName(accObject):
 	try:

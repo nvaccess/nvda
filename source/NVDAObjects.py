@@ -964,7 +964,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def getVisibleLines(self):
 		visibleRange=self.getVisibleLineRange()
 		lines=[]
-		for lineNum in range(visibleRange[0],visibleRange[1]):
+		for lineNum in range(visibleRange[0],visibleRange[1]+1):
 			line=self.getLine(lineNum)
 			if line:
 				lines.append(line)
@@ -1153,6 +1153,7 @@ staticMap={
 ("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("RICHEDIT20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("Button",ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
