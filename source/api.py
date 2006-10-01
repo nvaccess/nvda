@@ -113,7 +113,7 @@ def eventExists(name,locator):
 def executeEvent(name,window,objectID,childID):
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
-		executeEvent("focusObject",locator)
+		executeEvent("focusObject",window,objectID,childID)
 	event=getCurrentAppModule().__dict__.get("event_%s"%name,None)
 	if event:
 		try:

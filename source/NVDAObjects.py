@@ -160,7 +160,8 @@ class NVDAObject(object):
 			parent=obj.getParent()
 			if parent:
 				parentChildCount=parent.getChildCount()
-				position="%s of %s"%(childID,parentChildCount)
+				if parentChildCount>=childID:
+					position="%s of %s"%(childID,parentChildCount)
 		#if role!=ROLE_SYSTEM_GROUPING:
 		#	groupName=getObjectGroupName(accObject)
 		#else:
