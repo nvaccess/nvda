@@ -21,7 +21,7 @@ import NVDAObjects
 import keyEventHandler
 import mouseEventHandler
 import MSAAEventHandler
-import appModules
+import appModuleHandler
 import audio
 import config
 import gui
@@ -34,7 +34,7 @@ def appChange(window,objectID,childID):
 	name=obj.getName()
 	appName = os.path.splitext(getProcessName(obj.getProcessID()))[0].lower()
 	role=obj.getRole()
-	appModules.load(appName)
+	appModuleHandler.load(appName)
 	executeEvent("foreground",window,objectID,childID)
 
 def event_mouseMove(point):

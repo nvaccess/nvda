@@ -4,8 +4,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import os.path
+import os
 import debug
+
+#This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
+__path__=['.\\synthDrivers']
 
 current=None
 
@@ -21,4 +24,5 @@ def load(name):
 			return False
 	else:
 		debug.writeError("synthDriver %s does not exist"%name)
+		raise ImportError('synthDrivers\\%s'%name)
 		return False

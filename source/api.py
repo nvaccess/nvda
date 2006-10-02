@@ -13,7 +13,7 @@ from constants import *
 import dictionaries
 import audio
 from config import conf
-import appModules
+import appModuleHandler
 import gui
 import NVDAObjects
 import virtualBuffer
@@ -79,14 +79,14 @@ def getNavigatorObject():
 def setNavigatorObject(obj):
 	globalVars.navigatorObject=obj
 def keyHasScript(keyPress):
-	if appModules.current.keyMap.has_key(keyPress):
+	if appModuleHandler.current.keyMap.has_key(keyPress):
 		return True
 	if getFocusObject().keyMap.has_key(keyPress):
 		return True
 	return False
 
 def executeScript(keyPress):
-	script=appModules.current.keyMap.get(keyPress,None)
+	script=appModuleHandler.current.keyMap.get(keyPress,None)
 	if not script:
 		script=getFocusObject().keyMap.get(keyPress,None)
 	if script:
@@ -99,7 +99,7 @@ def executeScript(keyPress):
 			return False
 
 def eventExists(name,locator):
-	if appModules.current.__dict__.has_key("event_%s"%name):
+	if appModuleHandler.current.__dict__.has_key("event_%s"%name):
 		return True
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
@@ -111,7 +111,7 @@ def executeEvent(name,window,objectID,childID):
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("focusObject",window,objectID,childID)
-	event=appModules.current.__dict__.get("event_%s"%name,None)
+	event=appModuleHandler.current.__dict__.get("event_%s"%name,None)
 	if event:
 		try:
 			event(window,objectID,childID)
