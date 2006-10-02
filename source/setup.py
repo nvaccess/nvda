@@ -9,8 +9,7 @@ setup(
 	zipfile = None,
 	data_files = [
 		("dictionaries", glob("dictionaries/*.py")),
-		("", glob("synth_*.py*")),
+		("synthDrivers", glob("synthDrivers/*.py")),
 		("appModules", glob("appModules/*.py*")),
-		("waves", glob("waves/*.wav")),
 	],
 )
