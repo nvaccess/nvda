@@ -2,16 +2,13 @@ import winsound
 import debug
 from textProcessing import *
 from config import conf, getSynthConfig
-
-synth=None
+import synthDrivers
 
 def initialize():
-	global synth
-	synth=__import__("synth_"+conf["speech"]["synth"])
-	synth.initialize()
-	synth.setVoice(getSynthConfig()["voice"])
-	synth.setRate(getSynthConfig()["rate"])
-	synth.setVolume(getSynthConfig()["volume"])
+	synthDrivers.load(conf["speech"]["synth"])
+	synthDrivers.current.setVoice(getSynthConfig()["voice"])
+	synthDrivers.current.setRate(getSynthConfig()["rate"])
+	synthDrivers.current.setVolume(getSynthConfig()["volume"])
 
 def processText(text):
 	text=splitMultiCaseWords(text)
@@ -25,13 +22,12 @@ def playSound(fileName,wait=False):
 	winsound.PlaySound(fileName,flags)
 
 def cancel():
-	synth.cancel()
-	#winsound.PlaySound("waves/silence.wav",winsound.SND_PURGE | winsound.SND_ASYNC)
+	synthDrivers.current.cancel()
 
 def speakMessage(text,wait=False):
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,wait)
+		synthDrivers.current.speakText(text,wait)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
 	text=""
@@ -55,7 +51,7 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 		text="%s %s"%(text,position)
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,wait)
+		synthDrivers.current.speakText(text,wait)
 
 def speakSymbol(symbol,wait=False):
 	symbol=processSymbol(symbol)
@@ -64,11 +60,11 @@ def speakSymbol(symbol,wait=False):
 	else:
 		uppercase=False
 	if uppercase:
-		oldPitch=synth.getPitch()
-		synth.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
-	synth.speakText("%s"%symbol,wait)
+		oldPitch=synthDrivers.current.getPitch()
+		synthDrivers.current.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
+	synthDrivers.current.speakText("%s"%symbol,wait)
 	if uppercase:
-		synth.setPitch(oldPitch)
+		synthDrivers.current.setPitch(oldPitch)
 
 def speakText(text,wait=False):
 	if (text is None) or (len(text)==1):
@@ -76,5 +72,5 @@ def speakText(text,wait=False):
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synth.speakText(text,wait)
+		synthDrivers.current.speakText(text,wait)
 
