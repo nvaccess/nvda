@@ -311,7 +311,6 @@ class NVDAObject(object):
 				else:
 					return None
 			except:
-				debug.writeError("NVDAObject.getNext: failed to get next window object")
 				return None
 		else:
 			try:
@@ -343,7 +342,6 @@ class NVDAObject(object):
 				else:
 					return None
 			except:
-				debug.writeError("NVDAObject.getPrevious: failed to get next window object")
 				return None
 		else:
 			try:
@@ -558,7 +556,6 @@ class NVDAObject_edit(NVDAObject):
 	def getCaretRange(self):
 		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
 		if word<0:
-			debug.writeError("window.getCaretPosition: got invalid selection word from window")
 			return None
 		start=win32api.LOWORD(word)
 		end=win32api.HIWORD(word)
@@ -567,7 +564,6 @@ class NVDAObject_edit(NVDAObject):
 	def getCaretPosition(self):
 		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
 		if word<0:
-			debug.writeError("window.getCaretPosition: got invalid selection word from window")
 			return None
 		pos=win32api.LOWORD(word)
 		return pos
@@ -581,7 +577,6 @@ class NVDAObject_edit(NVDAObject):
 	def getLineCount(self):
 		lineCount=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETLINECOUNT,0,0)
 		if lineCount<0:
-			debug.writeError("window.getLineCount: failed to get line count")
 			return None
 		return lineCount
 
@@ -595,7 +590,6 @@ class NVDAObject_edit(NVDAObject):
 		lineStart=self.getLineStart(lineNum)
 		lineLength=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINELENGTH,lineStart,0)
 		if lineLength<0:
-			debug.writeError("window.getLineLength: line length invalid or negative (line number %d, line position %d"%(lineNum,curPos))
 			return None
 		return lineLength
 

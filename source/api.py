@@ -98,21 +98,25 @@ def executeScript(keyPress):
 			debug.writeException("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
 			return False
 
-def eventExists(name,locator):
-	if appModuleHandler.current.__dict__.has_key("event_%s"%name):
+def eventExists(name,window,objectID,childID):
+	if hasattr(appModuleHandler.current,"event_%s"%name):
 		return True
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
-	if (locator==focusLocator) and hasattr(focusObject,"event_%s"%name):
+	if ((window,objectID,childID)==focusLocator) and hasattr(focusObject,"event_%s"%name):
 		return True
+	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
+	if thisObj:
+		if hasattr(thisObj,"event_%s"%name):
+			return True
 	return False
 
 def executeEvent(name,window,objectID,childID):
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("focusObject",window,objectID,childID)
-	event=appModuleHandler.current.__dict__.get("event_%s"%name,None)
-	if event:
+	if hasattr(appModuleHandler.current,"event_%s"%name):
+		event=getattr(appModuleHandler.current,"event_%s"%name)
 		try:
 			event(window,objectID,childID)
 		except:
