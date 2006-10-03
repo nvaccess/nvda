@@ -15,6 +15,7 @@ import audio
 from config import conf
 import appModuleHandler
 import gui
+from keyEventHandler import key 
 import NVDAObjects
 import virtualBuffer
 
@@ -79,6 +80,11 @@ def getNavigatorObject():
 def setNavigatorObject(obj):
 	globalVars.navigatorObject=obj
 def keyHasScript(keyPress):
+	#The keyboard help script is built in to hasScript and executeScript
+	if globalVars.keyboardHelp:
+		return True
+	if keyPress==key("insert+1"):
+		return True
 	if appModuleHandler.current.keyMap.has_key(keyPress):
 		return True
 	if getFocusObject().keyMap.has_key(keyPress):
@@ -86,9 +92,33 @@ def keyHasScript(keyPress):
 	return False
 
 def executeScript(keyPress):
+	#The keyboard help script is built in to hasScript and executeScript
+	if keyPress==key("insert+1"):
+		if not globalVars.keyboardHelp:
+			globalVars.keyboardHelp=True
+			audio.speakMessage("keyboard help on")
+			return True
+		else:
+			globalVars.keyboardHelp=False
+			audio.speakMessage("keyboard help off")
+			return True
 	script=appModuleHandler.current.keyMap.get(keyPress,None)
 	if not script:
 		script=getFocusObject().keyMap.get(keyPress,None)
+	if globalVars.keyboardHelp:
+		if script:
+			name=script.__name__
+			if script.im_self.__class__.__name__=="appModule":
+				container="module %s"%script.im_self.__class__.__module__
+			else:
+				container=script.im_self.__class__.__name__
+				container+=" in module %s"%script.im_self.__class__.__module__
+			description=script.__doc__
+			if not description:
+				description="no description"
+			audio.speakMessage("%s, from %s, %s"%(name,container,description))
+		else:
+			audio.speakMessage("no script")
 	if script:
 		try:
 			script(keyPress)

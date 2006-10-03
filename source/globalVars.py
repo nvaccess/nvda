@@ -16,4 +16,5 @@ textSymbols={}
 characterSymbols={}
 roleNames={}
 stateNames={}
+keyboardHelp=False
 stayAlive=None

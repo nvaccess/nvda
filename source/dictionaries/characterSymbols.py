@@ -8,7 +8,7 @@
 None:"blank",
 "\0":"blank",
 "\11":"tab",
-"\n":"Line feed",
+"\n":"blank",
 "\r":"blank",
 " ":"space",
 "!":"bang",

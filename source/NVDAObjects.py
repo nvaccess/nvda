@@ -1124,6 +1124,15 @@ key("insert+f"):self.script_formatInfo,
 		else:
 			return None
 
+	def getParagraph(self,pos):
+		range=self._duplicateDocumentRange(self.document.Selection)
+		range.Start=range.End=pos
+		range.Expand(self.msftedit.tomParagraph)
+		return self.getTextRange(range.Start,range.End)
+
+	def getCurrentParagraph(self):
+		return self.getParagraph(self.getCaretPosition())
+
 	def getTextRange(self,start,end):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=start

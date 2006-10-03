@@ -2,8 +2,9 @@ import comtypes.client
 import comtypes.automation
 import ctypes
 import audio
+import debug
 from constants import *
-from keyEventHandler import sendKey
+from keyEventHandler import sendKey, key
 from config import conf
 import NVDAObjects
 import _MSOffice
@@ -58,6 +59,10 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		NVDAObjects.NVDAObject_ITextDocument.__init__(self,accObject)
 		self.document=self.document.ActivePane
 		self.lastStyle=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=None
+		self.keyMap.update({
+key("control+ExtendedUp"):self.script_moveByParagraph,
+key("control+ExtendedDown"):self.script_moveByParagraph,
+})
 
 	def _duplicateDocumentRange(self,range):
 		return range.Range
@@ -78,10 +83,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		text=range.Text
 		self.document.Selection.Start=saveSelection.Start
 		self.document.Selection.End=saveSelection.End
-		if text!='\r':
-			return text
-		else:
-			return None
+		return text
 
 	def getCurrentLine(self):
 		return self.getLine(self.getCaretPosition())
@@ -185,3 +187,8 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 				audio.speakMessage("%s style"%style)
 				self.lastStyle=style
 		NVDAObjects.NVDAObject_ITextDocument.reportChanges(self)
+
+	def script_moveByParagraph(self,keyPress):
+		sendKey(keyPress)
+		audio.speakText(self.getCurrentParagraph())
+
