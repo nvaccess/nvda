@@ -10,6 +10,7 @@ class appModule(object):
 	def __init__(self):
 		self.keyMap={
 key("insert+q"):self.script_quit,
+key("insert+s"):self.script_speech_toggleMute,
 key("insert+n"):self.script_showGui,
 key("insert+F12"):self.script_dateTime,
 key("Up"):self.script_virtualBuffer_line_current,
@@ -219,6 +220,14 @@ key("Insert+Shift+Add"):self.script_navigator_object_where,
 		buf=getVirtualBuffer()
 		curPos=getVirtualBufferCursor()
 		buf.activatePosition(curPos)
+
+	def script_speech_toggleMute(self,keyPress):
+		if audio.allowSpeech:
+			audio.speakMessage("Speech off")
+			audio.allowSpeech=False
+		else:
+			audio.allowSpeech=True
+			audio.speakMessage("Speech on")
 
 	def script_quit(self,keyPress):
 		audio.speakMessage("Exiting NVDA",wait=True)

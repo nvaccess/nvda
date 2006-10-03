@@ -4,6 +4,8 @@ from textProcessing import *
 from config import conf, getSynthConfig
 import synthDriverHandler
 
+allowSpeech=True
+
 def initialize():
 	synthDriverHandler.load(conf["speech"]["synth"])
 	synthDriverHandler.current.setVoice(getSynthConfig()["voice"])
@@ -25,11 +27,15 @@ def cancel():
 	synthDriverHandler.current.cancel()
 
 def speakMessage(text,wait=False):
+	if not allowSpeech:
+		return
 	text=processText(text)
 	if text and not text.isspace():
 		synthDriverHandler.current.speakText(text,wait)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
+	if not allowSpeech:
+		return
 	text=""
 	if groupName is not None:
 		text="%s %s"%(text,groupName)
@@ -54,6 +60,8 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 		synthDriverHandler.current.speakText(text,wait)
 
 def speakSymbol(symbol,wait=False):
+	if not allowSpeech:
+		return
 	symbol=processSymbol(symbol)
 	if (symbol[0]>='A') and (symbol[0]<='Z'):
 		uppercase=True
@@ -67,6 +75,8 @@ def speakSymbol(symbol,wait=False):
 		synthDriverHandler.current.setPitch(oldPitch)
 
 def speakText(text,wait=False):
+	if not allowSpeech:
+		return
 	if (text is None) or (len(text)==1):
 		speakSymbol(text,wait=wait)
 		return
