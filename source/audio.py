@@ -13,7 +13,6 @@ def initialize():
 	synthDriverHandler.current.setVolume(getSynthConfig()["volume"])
 
 def processText(text):
-	text=splitMultiCaseWords(text)
 	text=processTextSymbols(text,keepInflection=True)
 	return text
 

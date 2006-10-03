@@ -8,7 +8,9 @@ import re
 import debug
 import dictionaries
 
-re_word_multiCase=re.compile(r"([a-z])([A-Z])")
+re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
+re_singleCapAfterCapsInWord=re.compile(r"([A-Z])([A-Z][a-z])")
+re_numericAfterAlphaInWord=re.compile(r"([a-zA-Z])([0-9])")
 re_sentence_dot=re.compile(r"(\w|\)|\"|')\.(\s|$)")
 re_sentence_comma=re.compile(r"(\w|\)|\"|'),(\s|$)")
 re_sentence_question=re.compile(r"(\w|\))\?(\s|$)")
@@ -17,10 +19,16 @@ re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
 re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
 
-#Firstly expands ^ and ~ so they can be used as protector symbols
-#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
-#Expands any other symbols and removes ^ and ~ protectors
 def processTextSymbols(text,keepInflection=False):
+	#breaks up words that use a capital letter to denote another word
+	text=re_capAfterNoCapsInWord.sub(r"\1 \2",text)
+	#Like the last one, but this breaks away the last capital letter from an entire group of capital letters imbedded in a word (e.g. NVDAObject) 
+	text=re_singleCapAfterCapsInWord.sub(r"\1 \2",text)
+	#Breaks words that have numbers at the end
+	text=re_numericAfterAlphaInWord.sub(r"\1 \2",text)
+	#expands ^ and ~ so they can be used as protector symbols
+	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
+	#Expands any other symbols and removes ^ and ~ protectors
 	protector=False
 	str=""
 	for char in text:
@@ -57,10 +65,6 @@ def processTextSymbols(text,keepInflection=False):
 	text=str
 	text=text.replace("^","")
 	text=text.replace("~","")
-	return text
-
-def splitMultiCaseWords(text):
-	text=re_word_multiCase.sub(r"\1 \2",text)
 	return text
 
 def processSymbol(symbol):
