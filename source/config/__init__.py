@@ -35,7 +35,9 @@ confspec = StringIO("""# NVDA Configuration File
 	reportObjectUnderMouse = boolean(default=true)
 	reportMouseShapeChanges = boolean(default=false)
 
-[documentFormat]
+#Settings for document reading (such as MS Word and wordpad)
+[documentFormatting]
+	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
 	reportFontChanges = boolean(default=false)
 	reportFontSizeChanges = boolean(default=true)
 	reportFontAttributeChanges = boolean(default=True)
@@ -43,7 +45,6 @@ confspec = StringIO("""# NVDA Configuration File
 	reportStyleChanges = boolean(default=false)
 	reportTables = boolean(default=true)
 	reportPageChanges = boolean(default=true)
- 
 
 """.replace("\n", "\r\n"))
 

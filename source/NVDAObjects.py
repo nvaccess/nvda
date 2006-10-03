@@ -973,27 +973,29 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			return
 		self.doneFocus=True
 		audio.speakObjectProperties(typeString="console")
-		self.keepUpdating=True
 		self._oldestLines=None
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
 
 	def _consoleUpdater(self):
 		try:
 			oldCaretPosition=api.getVirtualBuffer().getCaretPosition()
-			oldLines=self.getVisibleLines()
-			while self.keepUpdating and win32gui.IsWindow(self.getWindowHandle()):
+			self._oldestLines=oldLines=self.getVisibleLines()
+			stabilityCount=0
+			while self.hasFocus() and win32gui.IsWindow(self.getWindowHandle()):
 				newCaretPosition=api.getVirtualBuffer().getCaretPosition()
 				if newCaretPosition!=oldCaretPosition:
 					api.setVirtualBufferCursor(newCaretPosition)
 					oldCaretPosition=newCaretPosition
 				newLines=self.getVisibleLines()
 				if newLines!=oldLines:
-					if not self._oldestLines:
-						self._oldestLines=oldLines
+					stabilityCount=1
 					oldLines=newLines
-				elif self._oldestLines:
+				elif stabilityCount and (stabilityCount<10):
+					stabilityCount+=1
+				elif stabilityCount and (stabilityCount==10):
+					stabilityCount=0
 					diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(self._oldestLines,newLines)))
-					self._oldestLines=None
+					self._oldestLines=oldLines
 					for lineNum in range(len(diffLines)):
 						if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
 							if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
@@ -1010,7 +1012,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 									audio.speakText(block)
 							else:
 								audio.speakText(diffLines[lineNum][2:])
-				time.sleep(0.1)
+				time.sleep(0.01)
 		except:
 			debug.writeException("NVDAObject_consoleWindowClass._consoleUpdater")
 
