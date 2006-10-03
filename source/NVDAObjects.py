@@ -419,7 +419,7 @@ class NVDAObject(object):
 		audio.cancel()
 		self.speakObject()
 
-	def updateVirtualBuffer(self):
+	def oupdateVirtualBuffer(self):
 		if api.getVirtualBuffer().getWindowHandle()!=self.getWindowHandle():
 			api.setVirtualBuffer(self.getWindowHandle())
 			audio.speakMessage("new buffer")
@@ -965,13 +965,17 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 				lines.append(line)
 		return lines
 
+	def getValue(self):
+		return ""
+
 	def event_focusObject(self):
+		if self.doneFocus:
+			return
+		self.doneFocus=True
+		audio.speakObjectProperties(typeString="console")
 		self.keepUpdating=True
 		self._oldestLines=None
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
-		self.updateVirtualBuffer()
-		for line in self.getVisibleLines():
-			audio.speakText(line)
 
 	def _consoleUpdater(self):
 		try:
