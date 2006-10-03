@@ -51,7 +51,7 @@ class appModule(_MSOffice.appModule):
 
 	def __del__(self):
 		NVDAObjects.unregisterNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT)
-		_MSOfficeHelper.appModule.__del__(self)
+		_MSOffice.appModule.__del__(self)
 
 class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
