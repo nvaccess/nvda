@@ -439,6 +439,7 @@ class NVDAObject(object):
 		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
 			if self.getRole()==ROLE_SYSTEM_MENUITEM:
 				audio.cancel()
+			debug.writeMessage("Focus: %s %s %s %s"%(self.getName(),win32gui.GetClassName(self.getWindowHandle()),self.getTypeString(),self.getRole()))
 			self.speakObject()
 
 	def event_menuStart(self):
@@ -1277,7 +1278,7 @@ staticMap={
 ("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
-("RICHEDIT20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
+("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("Button",ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,

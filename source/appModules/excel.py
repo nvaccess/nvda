@@ -16,7 +16,7 @@ class appModule(_MSOffice.appModule):
 
 	def __init__(self):
 		_MSOffice.appModule.__init__(self)
-		NVDAObjects.registerNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelCell)
+		NVDAObjects.registerNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
 		NVDAObjects.registerNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
@@ -24,7 +24,7 @@ class appModule(_MSOffice.appModule):
 		NVDAObjects.unregisterNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
-class NVDAObject_excelCell(NVDAObjects.NVDAObject_edit):
+class NVDAObject_excelEditableCell(NVDAObjects.NVDAObject_edit):
 
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT

@@ -55,7 +55,10 @@ class synthDriver(object):
 		curVoice=value
 
 	def speakText(self,text,wait=False):
-		text=text.encode("ascii","ignore")
+		try:
+			text=text.encode("iso-8859-1","ignore")
+		except:
+			return
 		self.dll.eciAddText(self.handle,text)
 		self.dll.eciSynthesize(self.handle)
 		if wait:
