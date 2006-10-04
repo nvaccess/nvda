@@ -24,6 +24,7 @@ setup(
 	options = {"py2exe": {"bundle_files": 3}},
 	zipfile = None,
 	data_files = [
+		("documentation", glob("../*.txt")),
 		("dictionaries", glob("dictionaries/*.py")),
 		("synthDrivers", glob("synthDrivers/*.py")),
 		("appModules", glob("appModules/*.py*")),
