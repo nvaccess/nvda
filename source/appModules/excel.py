@@ -38,6 +38,7 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
 		self.excelObject=comtypes.client.wrap(ptr).Application
 		self.keyMap.update({
+key("Insert+f"):self.script_formatInfo,
 key("ExtendedUp"):self.script_moveByCell,
 key("ExtendedDown"):self.script_moveByCell,
 key("ExtendedLeft"):self.script_moveByCell,
@@ -76,20 +77,11 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 	def getCellAddress(self,cell):
 		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
-	def getActiveCellAddress(self):
-		return self.getCellAddress(self.getActiveCell())
-
 	def getCellText(self,cell):
 		return cell.Text
 
-	def getActiveCellText(self):
-		return self.getCellText(self.getActiveCell())
-
 	def cellHasFormula(self,cell):
 		return cell.HasFormula
-
-	def activeCellHasFormula(self):
-		return self.cellHasFormula(self.getActiveCell())
 
 	def speakSelection(self):
 		cells=self.getSelectedRange()
@@ -98,10 +90,25 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 			last=cells.Item(cells.Count)
 			audio.speakMessage("Selected %s %s through %s %s"%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
 		else:
-			audio.speakMessage("%s"%self.getActiveCellAddress())
-			if self.activeCellHasFormula():
+			audio.speakMessage("%s"%self.getCellAddress(self.getActiveCell()))
+			if self.cellHasFormula(self.getActiveCell()):
 				audio.speakMessage("has formula")
-			audio.speakText("%s"%self.getActiveCellText())
+			audio.speakText("%s"%self.getCellText(self.getActiveCell()))
+
+	def getFontName(self,cell):
+		return cell.Font.Name
+
+	def getFontSize(self,cell):
+		return int(cell.Font.Size)
+
+	def isBold(self,cell):
+		return cell.Font.Bold
+
+	def isItalic(self,cell):
+		return cell.Font.Italic
+
+	def isUnderline(self,cell):
+		return cell.Font.Underline
 
 	def event_focusObject(self):
 		if self.doneFocus:
@@ -114,3 +121,13 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 		sendKey(keyPress)
 		self.speakSelection()
 
+	def script_formatInfo(self,keyPress):
+		"""Reports the current font name, font size, font attributes of the active cell"""
+		audio.speakMessage("%s font"%self.getFontName(self.getActiveCell()))
+		audio.speakMessage("%s point"%self.getFontSize(self.getActiveCell()))
+		if self.isBold(self.getActiveCell()):
+			audio.speakMessage("bold")
+		if self.isItalic(self.getActiveCell()):
+			audio.speakMessage("italic")
+		if self.isUnderline(self.getActiveCell()):
+			audio.speakMessage("underline")

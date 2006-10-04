@@ -192,3 +192,6 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 		sendKey(keyPress)
 		audio.speakText(self.getCurrentParagraph())
 
+	def script_formatInfo(self,keyPress):
+		audio.speakMessage("%s style"%self.getCurrentStyle())
+		NVDAObjects.NVDAObject_ITextDocument.script_formatInfo(self,keyPress)

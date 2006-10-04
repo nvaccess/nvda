@@ -1167,7 +1167,7 @@ key("insert+f"):self.script_formatInfo,
 	def getFontSize(self,pos):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
-		return "%d"%range.Font.Size
+		return int(range.Font.Size)
 
 	def getCurrentFontSize(self):
 		return self.getFontSize(self.getCaretPosition())
@@ -1273,7 +1273,6 @@ key("insert+f"):self.script_formatInfo,
 		audio.speakSymbol(self.getCurrentCharacter())
 
 	def script_formatInfo(self,keyPress):
-		audio.speakMessage("%s style"%self.getCurrentStyle())
 		audio.speakMessage("%s font"%self.getCurrentFontName())
 		audio.speakMessage("%d point"%self.getCurrentFontSize())
 		if self.isCurrentBold():
