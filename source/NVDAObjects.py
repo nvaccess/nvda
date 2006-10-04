@@ -1,5 +1,6 @@
 import ctypes
 import comtypes.client
+import comtypes.client.dynamic
 import time
 import difflib
 import thread
@@ -1041,9 +1042,22 @@ class NVDAObject_tooltip(NVDAObject):
 
 class NVDAObject_ITextDocument(NVDAObject_edit):
 
+	class constants:
+		#Units
+		tomCharacter=1
+		tomWord=2
+		tomParagraph=4
+		tomLine=5
+		tomStory=6
+		tomWindow=11
+		#Paragraph alignment
+		tomAlignLeft=0
+		tomAlignCenter=1
+		tomAlignRight=2
+		tomAlignJustify=3
+
 	def __init__(self,accObject):
 		NVDAObject_edit.__init__(self,accObject)
-		self.msftedit=comtypes.client.GetModule('msftedit.dll')
 		ptr=ctypes.c_void_p()
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IUnknown._iid_),ctypes.byref(ptr))
 		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
@@ -1069,7 +1083,7 @@ key("insert+f"):self.script_formatInfo,
 
 	def getVisibleLineRange(self):
 		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Expand(self.msftedit.tomWindow)
+		range.Expand(self.constants.tomWindow)
 		return (self.getLineNumber(range.Start),self.getLineNumber(range.End))
 
 	def getStartPosition(self):
@@ -1077,26 +1091,26 @@ key("insert+f"):self.script_formatInfo,
 
 	def getEndPosition(self):
 		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Expand(self.msftedit.tomStory)
+		range.Expand(self.constants.tomStory)
 		return range.End
 
 	def getLineNumber(self,pos):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
-		range.Move(self.msftedit.tomCharacter,pos)
-		return range.GetIndex(self.msftedit.tomLine)-1
+		range.Move(self.constants.tomCharacter,pos)
+		return range.GetIndex(self.constants.tomLine)-1
 
 	def getLineStart(self,lineNum):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
-		range.Move(self.msftedit.tomLine,lineNum)
+		range.Move(self.constants.tomLine,lineNum)
 		return range.Start
 
 	def getLine(self,lineNum):
 		start=self.getLineStart(lineNum)
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=start
-		range.Expand(self.msftedit.tomLine)
+		range.Expand(self.constants.tomLine)
 		text=range.Text
 		if text!='\r':
 			return text
@@ -1106,13 +1120,13 @@ key("insert+f"):self.script_formatInfo,
 	def getLineCount(self):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=0
-		range.Expand(self.msftedit.tomStory)
+		range.Expand(self.constants.tomStory)
 		return self.getLineNumber(range.End)
 
 	def nextWord(self,pos):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
-		delta=range.Move(self.msftedit.tomWord,1)
+		delta=range.Move(self.constants.tomWord,1)
 		if delta:
 			return range.Start
 		else:
@@ -1121,7 +1135,7 @@ key("insert+f"):self.script_formatInfo,
 	def previousWord(self,pos):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
-		delta=range.Move(self.msftedit.tomWord,-1)
+		delta=range.Move(self.constants.tomWord,-1)
 		if delta:
 			return range.Start
 		else:
@@ -1130,7 +1144,7 @@ key("insert+f"):self.script_formatInfo,
 	def getParagraph(self,pos):
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
-		range.Expand(self.msftedit.tomParagraph)
+		range.Expand(self.constants.tomParagraph)
 		return self.getTextRange(range.Start,range.End)
 
 	def getCurrentParagraph(self):
@@ -1162,13 +1176,13 @@ key("insert+f"):self.script_formatInfo,
 		range=self._duplicateDocumentRange(self.document.Selection)
 		range.Start=range.End=pos
 		align=range.Para.Alignment
-		if align==self.msftedit.tomAlignLeft:
+		if align==self.constants.tomAlignLeft:
 			return "left"
-		elif align==self.msftedit.tomAlignCenter:
+		elif align==self.constants.tomAlignCenter:
 			return "centered"
-		elif align==self.msftedit.tomAlignRight:
+		elif align==self.constants.tomAlignRight:
 			return "right"
-		elif align>=self.msftedit.tomAlignJustify:
+		elif align>=self.constants.tomAlignJustify:
 			return "justified"
 
 	def getCurrentParagraphAlignment(self):
