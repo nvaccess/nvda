@@ -50,51 +50,67 @@ key("ExtendedHome"):self.script_moveByCell,
 key("ExtendedEnd"):self.script_moveByCell,
 key("Control+ExtendedHome"):self.script_moveByCell,
 key("Control+ExtendedEnd"):self.script_moveByCell,
+key("Shift+ExtendedUp"):self.script_moveByCell,
+key("Shift+ExtendedDown"):self.script_moveByCell,
+key("Shift+ExtendedLeft"):self.script_moveByCell,
+key("Shift+ExtendedRight"):self.script_moveByCell,
+key("Shift+Control+ExtendedUp"):self.script_moveByCell,
+key("Shift+Control+ExtendedDown"):self.script_moveByCell,
+key("Shift+Control+ExtendedLeft"):self.script_moveByCell,
+key("Shift+Control+ExtendedRight"):self.script_moveByCell,
+key("Shift+ExtendedHome"):self.script_moveByCell,
+key("Shift+ExtendedEnd"):self.script_moveByCell,
+key("Shift+Control+ExtendedHome"):self.script_moveByCell,
+key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 })
-
-	def stripAddress(self,address):
-		return re_dollaredAddress.sub(r"\1\2",address)
 
 	def getRole(self):
 		return ROLE_SYSTEM_TABLE
 
-	def getSelectedCells(self):
-		addr=self.excelObject.Selection.Address()
-		addrRange=addr.split(':')
-		addrRange=map(lambda x: self.stripAddress(x),addrRange)
-		if len(addrRange)==2:
-			return addrRange
-		else:
-			return None
+	def getSelectedRange(self):
+		return self.excelObject.Selection
 
-	def getCurrentCell(self):
-		return self.stripAddress(self.excelObject.ActiveCell.Address())
+	def getActiveCell(self):
+		return self.excelObject.ActiveCell
+
+	def getCellAddress(self,cell):
+		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+
+	def getActiveCellAddress(self):
+		return self.getCellAddress(self.getActiveCell())
 
 	def getCellText(self,cell):
-		return self.excelObject.Range(cell).Text
+		return cell.Text
 
-	def getCurrentCellText(self):
-		return self.getCellText(self.getCurrentCell())
+	def getActiveCellText(self):
+		return self.getCellText(self.getActiveCell())
 
-	def hasFormula(self,cell):
-		return self.excelObject.Range(cell).HasFormula
+	def cellHasFormula(self,cell):
+		return cell.HasFormula
 
-	def speakCell(self,cell):
-		audio.speakMessage("%s"%cell)
-		audio.speakText("%s"%self.getCellText(cell))
-		if self.hasFormula(cell):
-			audio.speakMessage("has formula")
+	def activeCellHasFormula(self):
+		return self.cellHasFormula(self.getActiveCell())
 
-	def speakCurrentCell(self):
-		return self.speakCell(self.getCurrentCell())
+	def speakSelection(self):
+		cells=self.getSelectedRange()
+		if cells.Count>1:
+			first=cells.Item(1)
+			last=cells.Item(cells.Count)
+			audio.speakMessage("Selected %s %s through %s %s"%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
+		else:
+			audio.speakMessage("%s"%self.getActiveCellAddress())
+			if self.activeCellHasFormula():
+				audio.speakMessage("has formula")
+			audio.speakText("%s"%self.getActiveCellText())
 
 	def event_focusObject(self):
 		if self.doneFocus:
 			return
 		NVDAObjects.NVDAObject.event_focusObject(self)
-		self.speakCurrentCell()
+		self.speakSelection()
 
 	def script_moveByCell(self,keyPress):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
-		self.speakCurrentCell() 
+		self.speakSelection()
+
