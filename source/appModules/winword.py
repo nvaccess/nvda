@@ -1,6 +1,4 @@
-import comtypes.client
-import comtypes.automation
-import ctypes
+import win32com.client
 import audio
 import debug
 from constants import *
@@ -43,6 +41,8 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
+word_application=win32com.client.dynamic.Dispatch('word.Application')
+
 class appModule(_MSOffice.appModule):
 
 	def __init__(self):
@@ -57,100 +57,102 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
 	def __init__(self,accObject):
 		NVDAObjects.NVDAObject_ITextDocument.__init__(self,accObject)
-		self.document=self.document.ActivePane
 		self.lastStyle=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=None
 		self.keyMap.update({
 key("control+ExtendedUp"):self.script_moveByParagraph,
 key("control+ExtendedDown"):self.script_moveByParagraph,
 })
 
-	def _duplicateDocumentRange(self,range):
-		return range.Range
+	def getDocumentObjectModel(self):
+		return word_application.ActiveWindow.ActivePane
+
+	def _duplicateDocumentRange(self,rangeObj):
+		return rangeObj.Range
 
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT
 
 	def getLineNumber(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdFirstCharacterLineNumber)-1
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdFirstCharacterLineNumber)-1
 
 	def getLine(self,pos):
-		saveSelection=self.document.Selection
-		range=self.document.Selection
-		range.Start=range.End=pos
-		range.Expand(wdLine)
-		text=range.Text
-		self.document.Selection.Start=saveSelection.Start
-		self.document.Selection.End=saveSelection.End
+		saveSelection=self.dom.Selection
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(wdLine)
+		text=rangeObj.Text
+		self.dom.Selection.Start=saveSelection.Start
+		self.dom.Selection.End=saveSelection.End
 		return text
 
 	def getCurrentLine(self):
 		return self.getLine(self.getCaretPosition())
 
 	def getStyle(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Style.NameLocal
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Style.NameLocal
 
 	def getCurrentStyle(self):
 		return self.getStyle(self.getCaretPosition())
 
 	def isTable(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdWithInTable)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdWithInTable)
 
 	def isCurrentTable(self):
 		return self.isTable(self.getCaretPosition())
 
 	def getRowNumber(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdStartOfRangeRowNumber)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdStartOfRangeRowNumber)
 
 	def getCurrentRowNumber(self):
 		return self.getRowNumber(self.getCaretPosition())
 
 	def getRowCount(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdMaximumNumberOfRows)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdMaximumNumberOfRows)
 
 	def getCurrentRowCount(self):
 		return self.getRowCount(self.getCaretPosition())
 
 	def getColumnNumber(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdStartOfRangeColumnNumber)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdStartOfRangeColumnNumber)
 
 	def getCurrentColumnNumber(self):
 		return self.getColumnNumber(self.getCaretPosition())
 
 	def getColumnCount(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdMaximumNumberOfColumns)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdMaximumNumberOfColumns)
 
 	def getCurrentColumnCount(self):
 		return self.getColumnCount(self.getCaretPosition())
 
 	def getPageNumber(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		return range.Information(wdActiveEndPageNumber)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Information(wdActiveEndPageNumber)
 
 	def getCurrentPageNumber(self):
 		return self.getPageNumber(self.getCaretPosition())
 
 	def getPageCount(self):
-		return self.document.Selection.Information(wdNumberOfPagesInDocument)
+		return self.dom.Selection.Information(wdNumberOfPagesInDocument)
 
 	def getParagraphAlignment(self,pos):
-		range=self.document.Selection.Range
-		range.Start=range.End=pos
-		align=range.ParagraphFormat.Alignment
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		align=rangeObj.ParagraphFormat.Alignment
 		if align==wdAlignParagraphLeft:
 			return "left"
 		elif align==wdAlignParagraphCenter:
@@ -161,12 +163,12 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 			return "justified"
 
 	def reportChanges(self):
-		if conf["documentFormat"]["reportPageChanges"]:
+		if conf["documentFormatting"]["reportPageChanges"]:
 			pageNumber=self.getCurrentPageNumber()
 			if pageNumber!=self.lastPageNumber:
 				audio.speakMessage("Page %d of %d"%(pageNumber,self.getPageCount()))
 				self.lastPageNumber=pageNumber
-		if conf["documentFormat"]["reportTables"]:
+		if conf["documentFormatting"]["reportTables"]:
 			isTable=self.isCurrentTable()
 			if isTable!=self.lastIsTable:
 				if isTable:
@@ -181,7 +183,7 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 				audio.speakMessage("col %d row %d"%(columnNumber,rowNumber))
 				self.lastRowNumber=rowNumber
 				self.lastColumnNumber=columnNumber
-		if conf["documentFormat"]["reportStyleChanges"]:
+		if conf["documentFormatting"]["reportStyleChanges"]:
 			style=self.getCurrentStyle()
 			if style!=self.lastStyle:
 				audio.speakMessage("%s style"%style)

@@ -1058,124 +1058,127 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def __init__(self,accObject):
 		NVDAObject_edit.__init__(self,accObject)
-		ptr=ctypes.c_void_p()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IUnknown._iid_),ctypes.byref(ptr))
-		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
-		self.document=comtypes.client.wrap(ptr)
+		self.dom=self.getDocumentObjectModel()
 		self.lastFontName=self.lastFontSize=self.lastBold=self.lastItalic=self.lastUnderline=self.lastParagraphAlignment=None
 		self.keyMap.update({
 key("insert+f"):self.script_formatInfo,
 })
 
-	def _duplicateDocumentRange(self,range):
-		return range.Duplicate
+	def getDocumentObjectModel(self):
+		ptr=ctypes.c_void_p()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
+		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IDispatch))
+		return comtypes.client.dynamic.Dispatch(ptr)
+
+	def _duplicateDocumentRange(self,rangeObj):
+		return rangeObj.Duplicate
 
 	def getCaretRange(self):
-		start=self.document.Selection.Start
-		end=self.document.Selection.End
+		start=self.dom.Selection.Start
+		end=self.dom.Selection.End
 		if start!=end:
 			return (start,end)
 		else:
 			return None
 
 	def getCaretPosition(self):
-		return self.document.Selection.Start
+		return self.dom.Selection.Start
 
 	def getVisibleLineRange(self):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Expand(self.constants.tomWindow)
-		return (self.getLineNumber(range.Start),self.getLineNumber(range.End))
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Expand(self.constants.tomWindow)
+		return (self.getLineNumber(rangeObj.Start),self.getLineNumber(rangeObj.End))
 
 	def getStartPosition(self):
 		return 0
 
 	def getEndPosition(self):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Expand(self.constants.tomStory)
-		return range.End
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Expand(self.constants.tomStory)
+		return rangeObj.End
 
 	def getLineNumber(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=0
-		range.Move(self.constants.tomCharacter,pos)
-		return range.GetIndex(self.constants.tomLine)-1
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=0
+		rangeObj.Move(self.constants.tomCharacter,pos)
+		return rangeObj.GetIndex(self.constants.tomLine)-1
 
 	def getLineStart(self,lineNum):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=0
-		range.Move(self.constants.tomLine,lineNum)
-		return range.Start
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=0
+		rangeObj.Move(self.constants.tomLine,lineNum)
+		return rangeObj.Start
 
 	def getLine(self,lineNum):
 		start=self.getLineStart(lineNum)
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=start
-		range.Expand(self.constants.tomLine)
-		text=range.Text
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=start
+		rangeObj.Expand(self.constants.tomLine)
+		text=rangeObj.Text
 		if text!='\r':
 			return text
 		else:
 			return None
 
 	def getLineCount(self):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=0
-		range.Expand(self.constants.tomStory)
-		return self.getLineNumber(range.End)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=0
+		rangeObj.Expand(self.constants.tomStory)
+		return self.getLineNumber(rangeObj.End)
 
 	def nextWord(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		delta=range.Move(self.constants.tomWord,1)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		delta=rangeObj.Move(self.constants.tomWord,1)
 		if delta:
-			return range.Start
+			return rangeObj.Start
 		else:
 			return None
 
 	def previousWord(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		delta=range.Move(self.constants.tomWord,-1)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		delta=rangeObj.Move(self.constants.tomWord,-1)
 		if delta:
-			return range.Start
+			return rangeObj.Start
 		else:
 			return None
 
 	def getParagraph(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		range.Expand(self.constants.tomParagraph)
-		return self.getTextRange(range.Start,range.End)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomParagraph)
+		return self.getTextRange(rangeObj.Start,rangeObj.End)
 
 	def getCurrentParagraph(self):
 		return self.getParagraph(self.getCaretPosition())
 
 	def getTextRange(self,start,end):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=start
-		range.End=end
-		return range.Text
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=start
+		rangeObj.End=end
+		return rangeObj.Text
 
 	def getFontName(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		return range.Font.Name
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Font.Name
 
 	def getCurrentFontName(self):
 		return self.getFontName(self.getCaretPosition())
 
 	def getFontSize(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		return int(range.Font.Size)
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return int(rangeObj.Font.Size)
 
 	def getCurrentFontSize(self):
 		return self.getFontSize(self.getCaretPosition())
 
 	def getParagraphAlignment(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		align=range.Para.Alignment
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		align=rangeObj.Para.Alignment
 		if align==self.constants.tomAlignLeft:
 			return "left"
 		elif align==self.constants.tomAlignCenter:
@@ -1189,41 +1192,41 @@ key("insert+f"):self.script_formatInfo,
 		return self.getParagraphAlignment(self.getCaretPosition())
 
 	def isBold(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		return range.Font.Bold
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Font.Bold
 
 	def isCurrentBold(self):
 		return self.isBold(self.getCaretPosition())
 
 	def isItalic(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		return range.Font.Italic
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Font.Italic
 
 	def isCurrentItalic(self):
 		return self.isItalic(self.getCaretPosition())
 
 	def isUnderline(self,pos):
-		range=self._duplicateDocumentRange(self.document.Selection)
-		range.Start=range.End=pos
-		return range.Font.Underline
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		return rangeObj.Font.Underline
 
 	def isCurrentUnderline(self):
 		return self.isUnderline(self.getCaretPosition())
 
 	def reportChanges(self):
-		if conf["documentFormat"]["reportFontChanges"]:
+		if conf["documentFormatting"]["reportFontChanges"]:
 			fontName=self.getCurrentFontName()
 			if fontName!=self.lastFontName:
 				audio.speakMessage("%s font"%fontName)
 				self.lastFontName=fontName
-		if conf["documentFormat"]["reportFontSizeChanges"]:
+		if conf["documentFormatting"]["reportFontSizeChanges"]:
 			fontSize=self.getCurrentFontSize()
 			if fontSize!=self.lastFontSize:
 				audio.speakMessage("%s point"%fontSize)
 				self.lastFontSize=fontSize
-		if conf["documentFormat"]["reportFontAttributeChanges"]:
+		if conf["documentFormatting"]["reportFontAttributeChanges"]:
 			bold=self.isCurrentBold()
 			if bold!=self.lastBold:
 				if bold:
@@ -1246,7 +1249,7 @@ key("insert+f"):self.script_formatInfo,
 				elif self.lastUnderline:
 					audio.speakMessage("underline off")
 				self.lastUnderline=underline
-		if conf["documentFormat"]["reportAlignmentChanges"]:
+		if conf["documentFormatting"]["reportAlignmentChanges"]:
 			alignment=self.getCurrentParagraphAlignment()
 			if alignment!=self.lastParagraphAlignment:
 				audio.speakMessage("Aligned %s"%alignment)
