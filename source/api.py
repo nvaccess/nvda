@@ -15,7 +15,7 @@ import audio
 from config import conf
 import appModuleHandler
 import gui
-from keyEventHandler import key 
+from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffer
 

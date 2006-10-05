@@ -1,4 +1,4 @@
-#keyEventHandler.py
+#keyboardHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -167,8 +167,8 @@ def internal_keyDownEvent(event):
 		else:
 			return True
 	except:
-		debug.writeException("keyEventHandler.internal_keyDownEvent")
-		audio.speakMessage("Error in keyEventHandler.internal_keyPressEvent",wait=True)
+		debug.writeException("keyboardHandler.internal_keyDownEvent")
+		audio.speakMessage("Error in keyboardHandler.internal_keyPressEvent",wait=True)
 		return True
 
 def internal_keyUpEvent(event):

@@ -18,9 +18,9 @@ import globalVars
 from api import *
 from constants import *
 import NVDAObjects
-import keyEventHandler
-import mouseEventHandler
-import MSAAEventHandler
+import keyboardHandler
+import mouseHandler
+import MSAAHandler
 import appModuleHandler
 import audio
 import config
@@ -68,9 +68,9 @@ def main():
 			return False
 		setVirtualBuffer(foregroundWindow)
 		event_foreground(foregroundWindow,-4,0)
-		MSAAEventHandler.initialize()
-		keyEventHandler.initialize()
-		mouseEventHandler.initialize()
+		MSAAHandler.initialize()
+		keyboardHandler.initialize()
+		mouseHandler.initialize()
 		gui.initialize()
 	except:
 		debug.writeException("core.py main init")
@@ -79,8 +79,8 @@ def main():
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
 			pythoncom.PumpWaitingMessages()
-			if not MSAAEventHandler.queue_events.empty():
-				MSAAEvent=MSAAEventHandler.queue_events.get_nowait()
+			if not MSAAHandler.queue_events.empty():
+				MSAAEvent=MSAAHandler.queue_events.get_nowait()
 				if MSAAEvent[0] in ["focusObject","foreground"]:
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 				if MSAAEvent[0]=="foreground":
@@ -99,7 +99,7 @@ def main():
 						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 			try:
-				keyPress=keyEventHandler.queue_keys.get_nowait()
+				keyPress=keyboardHandler.queue_keys.get_nowait()
 				if keyPress == (None, "SilenceSpeech"):
 					audio.cancel()
 				else:
@@ -107,7 +107,7 @@ def main():
 			except Queue.Empty:
 				pass
 			try:
-				mouseEvent=mouseEventHandler.queue_events.get_nowait()
+				mouseEvent=mouseHandler.queue_events.get_nowait()
 				if mouseEvent[0]=="mouseMove":
 					try:
 						event_mouseMove(mouseEvent[1])
@@ -116,7 +116,7 @@ def main():
 			except Queue.Empty:
 				pass
 			# If there are no events already waiting, sleep to avoid needlessly hogging the CPU.
-			if keyEventHandler.queue_keys.empty() and mouseEventHandler.queue_events.empty() and MSAAEventHandler.queue_events.empty():
+			if keyboardHandler.queue_keys.empty() and mouseHandler.queue_events.empty() and MSAAHandler.queue_events.empty():
 				time.sleep(0.01)
 	except:
 			debug.writeException("core.py main loop")
@@ -126,5 +126,5 @@ def main():
 		config.save()
 	except:
 		pass
-	MSAAEventHandler.terminate()
+	MSAAHandler.terminate()
 	return True

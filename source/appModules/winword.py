@@ -2,7 +2,7 @@ import win32com.client
 import audio
 import debug
 from constants import *
-from keyEventHandler import sendKey, key
+from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
 import _MSOffice

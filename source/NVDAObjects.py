@@ -15,7 +15,7 @@ import win32process
 import pyAA
 import debug
 import audio
-from keyEventHandler import key, sendKey
+from keyboardHandler import key, sendKey
 from constants import *
 from config import conf
 import dictionaries

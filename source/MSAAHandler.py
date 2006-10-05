@@ -1,4 +1,4 @@
-#MSAAEventHandler.py
+#MSAAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -42,7 +42,7 @@ EVENT_OBJECT_VALUECHANGE:"objectValueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	debug.writeMessage("MSAAEventHandler.objectEventCallback:  handle %s, event %s (%s), window %s, object ID %s, child ID %s, thread ID %s, timestamp %s"%(handle,eventID,eventMap[eventID],window,objectID,childID,threadID,timestamp))
+	debug.writeMessage("MSAAHandler.objectEventCallback:  handle %s, event %s (%s), window %s, object ID %s, child ID %s, thread ID %s, timestamp %s"%(handle,eventID,eventMap[eventID],window,objectID,childID,threadID,timestamp))
 	try:
 		#Lets test to see if there is really an object here before dealing with it
 		if ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(comtypes.GUID(iid_IAccessible)),ctypes.byref(ctypes.c_void_p()))!=0:
@@ -60,20 +60,20 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			queue_events.put((eventName,window,objectID,childID))
 	except:
 		audio.speakMessage("Error in MSAA event callback")
-		debug.writeException("MSAAEventHandler.internal_objectEvent")
+		debug.writeException("MSAAHandler.internal_objectEvent")
 
 #Register internal object event with MSAA
 
 def initialize():
 	cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
-	debug.writeMessage("MSAAEventHandler.initialize: created c callback function %s"%cObjectEventCallback)
+	debug.writeMessage("MSAAHandler.initialize: created c callback function %s"%cObjectEventCallback)
 	for eventType in eventMap.keys():
 		handle=ctypes.windll.user32.SetWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:
 			objectEventHandles.append(handle)
-			debug.writeMessage("MSAAEventHandler.Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
+			debug.writeMessage("MSAAHandler.Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
 		else:
-			debug.writeError("MSAAEventHandler.initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
+			debug.writeError("MSAAHandler.initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
 
 def terminate():
 	for handle in objectEventHandles:
