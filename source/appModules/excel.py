@@ -1,7 +1,5 @@
 import re
-import comtypes.client
-import comtypes.automation
-import ctypes
+import win32com.client
 import audio
 import debug
 from constants import *
@@ -11,6 +9,7 @@ import NVDAObjects
 import _MSOffice
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
+excel_application=win32com.client.dynamic.Dispatch('Excel.Application')
 
 class appModule(_MSOffice.appModule):
 
@@ -33,10 +32,7 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def __init__(self,accObject):
 		NVDAObjects.NVDAObject.__init__(self,accObject)
-		ptr=ctypes.c_void_p()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IUnknown._iid_),ctypes.byref(ptr))
-		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IUnknown))
-		self.excelObject=comtypes.client.wrap(ptr).Application
+		self.excelObject=excel_application
 		self.keyMap.update({
 key("Insert+f"):self.script_formatInfo,
 key("ExtendedUp"):self.script_moveByCell,
@@ -75,7 +71,7 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 		return self.excelObject.ActiveCell
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+		return re_dollaredAddress.sub(r"\1\2",cell.Address)
 
 	def getCellText(self,cell):
 		return cell.Text
