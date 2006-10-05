@@ -1,5 +1,6 @@
 import os
 import ctypes
+import debug
 
 #Constants
 
@@ -67,5 +68,3 @@ class synthDriver(object):
 	def cancel(self):
 		if self.dll.eciSpeaking(self.handle):
 			self.dll.eciStop(self.handle)
-
-

@@ -27,14 +27,18 @@ import config
 import gui
 import virtualBuffer
 
-def appChange(window,objectID,childID):
+lastProcessID=None
+
+def event_foreground(window,objectID,childID):
+	global lastProcessID
 	obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not obj:
 		return None
-	name=obj.getName()
-	appName = os.path.splitext(getProcessName(obj.getProcessID()))[0].lower()
-	role=obj.getRole()
-	appModuleHandler.load(appName)
+	processID=obj.getProcessID()
+	if processID!=lastProcessID:
+		appName = os.path.splitext(getProcessName(processID))[0].lower()
+		appModuleHandler.load(appName)
+		lastProcessID=processID
 	executeEvent("foreground",window,objectID,childID)
 
 def event_mouseMove(point):
@@ -63,39 +67,37 @@ def main():
 			debug.writeError("core.main: failed to set focus object (%s,%s,%s)"%(foregroundWindow,OBJID_CLIENT,0))
 			return False
 		setVirtualBuffer(foregroundWindow)
-		appChange(foregroundWindow,-4,0)
+		event_foreground(foregroundWindow,-4,0)
 		MSAAEventHandler.initialize()
 		keyEventHandler.initialize()
 		mouseEventHandler.initialize()
 		gui.initialize()
-		globalVars.stayAlive=True
 	except:
 		debug.writeException("core.py main init")
 		sys.exit()
 	try:
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
-			try:
-				pythoncom.PumpWaitingMessages()
-			except KeyboardInterrupt:
-				debug.writeException("core.main: keyboard interupt") 
-				quit()
-			try:
+			pythoncom.PumpWaitingMessages()
+			if not MSAAEventHandler.queue_events.empty():
 				MSAAEvent=MSAAEventHandler.queue_events.get_nowait()
-				if MSAAEvent[0] in ["focusObject","foreground","appChange"]:
+				if MSAAEvent[0] in ["focusObject","foreground"]:
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-				if MSAAEvent[0]=="appChange":
+				if MSAAEvent[0]=="foreground":
 					try:
-						appChange(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+						event_foreground(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
-						debug.writeException("core.main: while executing event_%s in app module"%MSAAEvent[0])
+						debug.writeException("core.main: while executing event_%s in core"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
 					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]):
-						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-					executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-			except Queue.Empty:
-				pass
+						pass
+					#	getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+					try:
+						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+					except:
+						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
+						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 			try:
 				keyPress=keyEventHandler.queue_keys.get_nowait()
 				if keyPress == (None, "SilenceSpeech"):
@@ -115,7 +117,7 @@ def main():
 				pass
 			# If there are no events already waiting, sleep to avoid needlessly hogging the CPU.
 			if keyEventHandler.queue_keys.empty() and mouseEventHandler.queue_events.empty() and MSAAEventHandler.queue_events.empty():
-				time.sleep(0.001)
+				time.sleep(0.01)
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")
