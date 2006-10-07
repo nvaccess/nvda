@@ -30,6 +30,9 @@ class synthDriver(object):
 		os.chdir(oldDir)
 		self.handle=self.dll.eciNew()
 
+	def __del__(self):
+		self.dll.eciDelete(self.handle)
+
 	def getRate(self):
 		return self.dll.eciGetVoiceParam(self.handle,0,eciSpeed)
 

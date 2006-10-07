@@ -13,8 +13,195 @@ import debug
 import audio
 from constants import *
 
+#The queue where other modules can access the events
 queue_events=Queue.Queue(100)
+
+#A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
+
+#Load the IAccessible class from oleacc.dll
+IAccessible=comtypes.client.GetModule('oleacc.dll').IAccessible
+
+#A class to wrap an IAccessible object in to handle addRef and Release
+class IAccWrapper(object):
+
+	def __init__(self,IAccPointer):
+		IAccPointer.AddRef()
+		getattr(self,'__dict__')['ia']=IAccPointer
+
+	def __del__(self):
+		self.Release()
+
+	def __getattr__(self,attr):
+		ia=getattr(self,'__dict__')['ia']
+		return getattr(ia,attr)
+
+	def __setattr__(self,attr,value):
+		ia=getattr(self,'__dict__')['ia']
+		setattr(ia,attr,value)
+
+	def __repr__(self):
+		return "IAccWrapper object: ia %s"%getattr(self,'__dict__')['ia']
+
+#A c ctypes struct to hold the x and y of a point on the screen 
+class screenPointType(ctypes.Structure):
+	_fields_=[('x',ctypes.c_int),('y',ctypes.c_int)]
+
+def accessibleObjectFromWindow(window,objectID):
+	ptr=ctypes.c_void_p()
+	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
+	if res==0:
+		ia=ctypes.cast(ptr,ctypes.POINTER(IAccessible))
+		ia=IAccWrapper(ia)
+		return ia 
+	else:
+		return None
+
+def accessibleObjectFromEvent(window,objectID,childID):
+	try:
+		ia=accessibleObjectFromWindow(window,objectID)
+		if ia and ia.accRole(childID):
+			return (ia,childID)
+		else:
+			return None
+	except:
+		return None
+
+def accessibleObjectFromPoint(x,y):
+	point=screenPointType()
+	point.x=x
+	point.y=y
+	pacc=ctypes.c_void_p()
+	varChild=comtypes.automation.VARIANT()
+	res=ctypes.windll.oleacc.AccessibleObjectFromPoint(point,ctypes.byref(pacc),ctypes.byref(varChild))
+	if not res:
+		pacc=ctypes.cast(pacc,ctypes.POINTER(IAccessible))
+		return (IAccWrapper(pacc),varChild.value)
+
+def windowFromAccessibleObject(ia):
+	hwnd=ctypes.c_int()
+	res=ctypes.windll.oleacc.WindowFromAccessibleObject(ia,ctypes.byref(hwnd))
+	if res==0:
+		return hwnd.value
+	else:
+		return 0
+
+def accName(ia,child):
+	try:
+		return ia.accName(child)
+	except:
+		return ""
+
+def accValue(ia,child):
+	try:
+		return ia.accValue(child)
+	except:
+		return ""
+
+def accRole(ia,child):
+	try:
+		return ia.accRole(child)
+	except:
+		return 0
+
+def accState(ia,child):
+	try:
+		return ia.accState(child)
+	except:
+		return 0
+
+def accDescription(ia,child):
+	try:
+		return ia.accDescription(child)
+	except:
+		return ""
+
+def accHelp(ia,child):
+	try:
+		return ia.accHelp(child)
+	except:
+		return ""
+
+def accKeyboardShortcut(ia,child):
+	try:
+		return ia.accKeyboardShortcut(child)
+	except:
+		return ""
+
+def accDoDefaultAction(ia,child):
+	try:
+		ia.accDoDefaultAction(child)
+	except:
+		pass
+
+def accFocus(ia,child):
+	try:
+		res=ia.accFocus(child)
+		if isinstance(res,ctypes.POINTER(IAccessible)):
+			new_ia=ia
+			new_child=0
+		elif isinstance(res,int):
+			new_ia=ia
+			new_child=res
+		return (new_ia,new_child)
+	except:
+		return None
+
+def accChild(ia,child):
+	try:
+		res=ia.accChild(child)
+		if isinstance(res,ctypes.POINTER(IAccessible)):
+			new_ia=IAccWrapper(res)
+			new_child=0
+		elif isinstance(res,int):
+			new_ia=ia
+			new_child=res
+		return (new_ia,new_child)
+	except:
+		return None
+
+def accChildCount(ia,child):
+	if child==0:
+		count=ia.accChildCount
+	else:
+		count=0
+	return count
+
+def accParent(ia,child):
+	try:
+		if not child:
+			res=ia.accParent
+			if isinstance(res,ctypes.POINTER(IAccessible)):
+				new_ia=ia
+				new_child=0
+			elif isinstance(res,int): 
+				new_ia=ia
+				new_child=res
+		else:
+			new_ia=ia
+			new_child=0
+		return (new_ia,new_child)
+	except:
+		return None
+
+def accNavigate(ia,child,direction):
+	try:
+		res=ia.accNavigate(direction,child)
+		if isinstance(res,ctypes.POINTER(IAccessible)):
+			new_ia=ia
+			new_child=0
+		elif isinstance(res,int):
+			new_ia=ia
+			new_child=res
+		return (new_ia,new_child)
+	except:
+		return None
+
+def accLocation(ia,child):
+	try:
+		return ia.accLocation(child)
+	except:
+		return None
 
 eventMap={
 EVENT_SYSTEM_FOREGROUND:"foreground",
@@ -23,7 +210,7 @@ EVENT_SYSTEM_MENUEND:"menuEnd",
 EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 EVENT_SYSTEM_SWITCHSTART:"switchStart",
-EVENT_SYSTEM_SWITCHEND:"switchEnd",
+#EVENT_SYSTEM_SWITCHEND:"switchEnd",
 EVENT_OBJECT_FOCUS:"focusObject",
 EVENT_OBJECT_SHOW:"showObject",
 EVENT_OBJECT_DESCRIPTIONCHANGE:"objectDescriptionChange",
@@ -42,11 +229,7 @@ EVENT_OBJECT_VALUECHANGE:"objectValueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	debug.writeMessage("MSAAHandler.objectEventCallback:  handle %s, event %s (%s), window %s, object ID %s, child ID %s, thread ID %s, timestamp %s"%(handle,eventID,eventMap[eventID],window,objectID,childID,threadID,timestamp))
 	try:
-		#Lets test to see if there is really an object here before dealing with it
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(comtypes.GUID(iid_IAccessible)),ctypes.byref(ctypes.c_void_p()))!=0:
-			return
 		if (objectID==0) and (childID==0):
 			objectID=-4
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
@@ -60,13 +243,12 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			queue_events.put((eventName,window,objectID,childID))
 	except:
 		audio.speakMessage("Error in MSAA event callback")
-		debug.writeException("MSAAHandler.internal_objectEvent")
+		debug.writeException("MSAAHandler.objectEventCallback")
 
 #Register internal object event with MSAA
+cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
 
 def initialize():
-	cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
-	debug.writeMessage("MSAAHandler.initialize: created c callback function %s"%cObjectEventCallback)
 	for eventType in eventMap.keys():
 		handle=ctypes.windll.user32.SetWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:

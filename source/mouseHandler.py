@@ -24,5 +24,3 @@ def initialize():
 	hookManager=pyHook.HookManager()
 	hookManager.MouseAll=internal_mouseEvent
 	hookManager.HookMouse()
-
-

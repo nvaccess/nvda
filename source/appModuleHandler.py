@@ -20,9 +20,6 @@ def load(name):
 	if os.path.isfile(r'%s\appModules\%s.py'%(os.getcwd(),name)):
 		debug.writeMessage("Found appModule %s"%name)
 		try:
-			#__path__=['.\\appModules']
-			#exec("from %s import appModule"%name)
-			#current=appModule()
 			current=__import__(name,globals(),locals(),[]).appModule()
 			debug.writeMessage("Loaded appModule %s"%name)
 			return True

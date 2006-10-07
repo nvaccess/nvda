@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import pyAA
 import win32gui
 import win32com.client
 import debug
@@ -181,12 +180,12 @@ def getObjectGroupName(accObject):
 		debug.writeError("api.getObjectGrouping: fialed to get location of object %s"%accObject)
 		return None
 	try:
-		while (accObject is not None) and (accObject.GetRole()!=pyAA.Constants.ROLE_SYSTEM_GROUPING):
+		while (accObject is not None) and (accObject.GetRole()!=ROLE_SYSTEM_GROUPING):
 			accObject=getObjectPrevious(accObject)
 			if accObject is None:
 				debug.writeError("api.getObjectGroupName: no more previous objects")
 				return None
-		if accObject.GetRole()==pyAA.Constants.ROLE_SYSTEM_GROUPING:
+		if accObject.GetRole()==ROLE_SYSTEM_GROUPING:
 			(groupLeft,groupTop,groupRight,groupBottom)=accObject.GetLocation()
 			if (objectLeft>=groupLeft) and (objectTop>=groupTop) and (objectRight<=groupRight) and (objectBottom<=groupBottom):
 				return accObject.GetName()
@@ -216,7 +215,7 @@ def makeStateList(stateText):
 	return stateList
 
 def getProcessName(processID):
-	result  =  _wmi.ExecQuery("select * from Win32_Process where ProcessId=%d" % processID[0])
+	result  =  _wmi.ExecQuery("select * from Win32_Process where ProcessId=%d" % processID[1])
 	if len(result) > 0:
 		return result[0].Properties_('Name').Value
 	else:

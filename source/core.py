@@ -10,7 +10,6 @@ import time
 import Queue
 import win32api
 import win32gui
-import pythoncom
 import winsound
 import cPickle
 import dictionaries
@@ -40,9 +39,10 @@ def event_foreground(window,objectID,childID):
 		appModuleHandler.load(appName)
 		lastProcessID=processID
 	executeEvent("foreground",window,objectID,childID)
+	time.sleep(0.1)
 
 def event_mouseMove(point):
-	obj=NVDAObjects.getNVDAObjectByPoint(point)
+	obj=NVDAObjects.getNVDAObjectByPoint(point[0],point[1])
 	if not obj:
 		return None
 	location=obj.getLocation()
@@ -78,9 +78,8 @@ def main():
 	try:
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
-			pythoncom.PumpWaitingMessages()
 			if not MSAAHandler.queue_events.empty():
-				MSAAEvent=MSAAHandler.queue_events.get_nowait()
+				MSAAEvent=MSAAHandler.queue_events.get()
 				if MSAAEvent[0] in ["focusObject","foreground"]:
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 				if MSAAEvent[0]=="foreground":
@@ -91,8 +90,7 @@ def main():
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
 					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]):
-						pass
-					#	getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					try:
 						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
@@ -117,7 +115,8 @@ def main():
 				pass
 			# If there are no events already waiting, sleep to avoid needlessly hogging the CPU.
 			if keyboardHandler.queue_keys.empty() and mouseHandler.queue_events.empty() and MSAAHandler.queue_events.empty():
-				time.sleep(0.01)
+				time.sleep(0.001)
+				res=win32gui.PumpWaitingMessages()
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")

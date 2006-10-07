@@ -3,7 +3,7 @@ import win32com.client
 import audio
 import debug
 from constants import *
-from keyEventHandler import sendKey, key
+from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
 import _MSOffice
@@ -30,8 +30,8 @@ class NVDAObject_excelEditableCell(NVDAObjects.NVDAObject_edit):
 
 class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
-	def __init__(self,accObject):
-		NVDAObjects.NVDAObject.__init__(self,accObject)
+	def __init__(self,*args):
+		NVDAObjects.NVDAObject.__init__(self,*args)
 		self.excelObject=excel_application
 		self.keyMap.update({
 key("Insert+f"):self.script_formatInfo,

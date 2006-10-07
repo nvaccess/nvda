@@ -12,7 +12,6 @@ import win32con
 import win32console
 import win32gui
 import win32process
-import pyAA
 import debug
 import audio
 from keyboardHandler import key, sendKey
@@ -20,6 +19,7 @@ from constants import *
 from config import conf
 import dictionaries
 import api
+import MSAAHandler
 
 #Some api functions specific to NVDAObjects
 
@@ -35,27 +35,22 @@ def getNVDAObjectClass(windowClass,objectRole):
 	else:
 		return NVDAObject
 
-def getNVDAObjectByAccessibleObject(accObject):
+def getNVDAObjectByAccessibleObject(ia,child):
 	try:
-		return getNVDAObjectClass(win32gui.GetClassName(accObject.Window),accObject.Role)(accObject)
+		return getNVDAObjectClass(win32gui.GetClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
 	except:
 		debug.writeException("NVDAObjects.getNVDAObjectByAccessibleObject")
 		return None
 
 def getNVDAObjectByLocator(window,objectID,childID):
-	try:
-		obj=pyAA.AccessibleObjectFromEvent(window,objectID,childID)
-		if obj.GetRole()>0:
-			return getNVDAObjectByAccessibleObject(obj)
-	except:
-		return None
+	res=MSAAHandler.accessibleObjectFromEvent(window,objectID,childID)
+	if res:
+		return getNVDAObjectByAccessibleObject(res[0],res[1])
 
 def getNVDAObjectByPoint(x,y):
-	try:
-		obj=pyAA.AccessibleObjectFromPoint(x,y)
-		return getNVDAObjectByAccessibleObject(obj)
-	except:
-		return None
+	res=MSAAHandler.accessibleObjectFromPoint(x,y)
+	if res:
+		return getNVDAObjectByAccessibleObject(res[0],res[1])
 
 def registerNVDAObjectClass(windowClass,objectRole,cls):
 	dynamicMap[(windowClass,objectRole)]=cls
@@ -96,12 +91,20 @@ def getStateName(state,opposite=False):
 
 class NVDAObject(object):
 
-	def __init__(self,accObject):
-		self.accObject=accObject
+	def __init__(self,*args):
+		if len(args)!=2:
+			raise TypeError("args should be a 2-typle of IAccWrapper object and int")
+		if not isinstance(args[0],MSAAHandler.IAccWrapper):
+			raise TypeError("arg[0] must be an IAccWrapper object, not %s"%type(args[0]))
+		self.ia=args[0]
+		if not isinstance(args[1],int):
+			raise TypeError("arg[1] must be an int, not %s"%type(args[1]))
+		self.child=args[1]
 		self.keyMap={}
 		self.lastStates=self.getStates()
 		self.doneFocus=False
 		self.hash=self._makeHash()
+
 	def _makeHash(self):
 		l=10000000
 		p=17
@@ -171,57 +174,32 @@ class NVDAObject(object):
 		audio.speakObjectProperties(groupName=groupName,name=name,typeString=typeString,stateText=stateNames,value=value,description=description,help=help,keyboardShortcut=keyboardShortcut,position=position)
 
 	def getWindowHandle(self):
-		try:
-			window=self.accObject.Window
-		except:
-			return None
-		return window
+		return MSAAHandler.windowFromAccessibleObject(self.ia)
 
 	def getName(self):
-		try:
-			name=self.accObject.GetName()
-		except:
-			name=""
-		if not name:
+		name=MSAAHandler.accName(self.ia,self.child)
+		if not name and (self.child==0):
 			window=self.getWindowHandle()
-			if not window:
-				return ""
-			name=win32gui.GetWindowText(window)
+			if window:
+				name=win32gui.GetWindowText(window)
 		return name
 
 	def getValue(self):
-		value=None
-		try:
-			value=self.accObject.GetValue()
-		except:
-			pass
-		if value:
-			return value
-		else:
-			return ""
+		value=MSAAHandler.accValue(self.ia,self.child)
 
 	def getRole(self):
-		try:
-			return self.accObject.GetRole()
-		except:
-			return ""
+		return MSAAHandler.accRole(self.ia,self.child)
 
 	def getTypeString(self):
 		role=self.getRole()
 		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
-			typeString=self.getClassName()
+			typeString=win32gui.GetClassName(self.getWindowHandle())
 		else:
 			typeString=""
 		return typeString+" %s"%getRoleName(self.getRole())
 
-
 	def getStates(self):
-		states=0
-		try:
-			states=self.accObject.GetState()
-		except:
-			pass
-		return states
+		return MSAAHandler.accState(self.ia,self.child)
 
 	def filterStates(self,states):
 		states-=(states&STATE_SYSTEM_FOCUSED)
@@ -237,20 +215,20 @@ class NVDAObject(object):
 
 	def getDescription(self):
 		try:
-			return self.accObject.GetDescription()
+			return self.ia.accDescription(self.child)
 		except:
 			return ""
 
 	def getHelp(self):
 		try:
-			return self.accObject.GetHelp()
+			return self.ia.accHelp(self.child)
 		except:
 			return ""
 
 	def getKeyboardShortcut(self):
 		keyboardShortcut=None
 		try:
-			keyboardShortcut=self.accObject.GetKeyboardShortcut()
+			keyboardShortcut=self.ia.accKeyboardShortcut(self.child)
 		except:
 			return ""
 		if not keyboardShortcut:
@@ -260,121 +238,93 @@ class NVDAObject(object):
 
 	def getChildID(self):
 		try:
-			return self.accObject.child
+			return self.child
 		except:
 			return None
 
 	def getChildCount(self):
-		return len(self.getChildren())
+		count=MSAAHandler.accChildCount(self.ia,self.child)
+		return count
 
 	def getProcessID(self):
 		try:
-			return self.accObject.ProcessID
+			return win32process.GetWindowThreadProcessId(self.getWindowHandle())
 		except:
 			return None
 
 	def getLocation(self):
-		try:
-			return self.accObject.GetLocation()
-		except:
-			return None
-
-	def getClassName(self):
-		return win32gui.GetClassName(self.getWindowHandle())
+		return MSAAHandler.accLocation(self.ia,self.child)
 
 	def getParent(self):
-		try:
-			accObject=self.accObject.GetParent()
-		except:
-			return None
-		if accObject.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-			try:
-				return getNVDAObjectByAccessibleObject(accObject.GetParent())
-			except:
-				return None
+		res=MSAAHandler.accParent(self.ia,self.child)
+		if res:
+			(ia,child)=res
 		else:
-			return getNVDAObjectByAccessibleObject(accObject)
+			return None
+		obj=getNVDAObjectByAccessibleObject(ia,child)
+		if obj and (obj.getRole()==ROLE_SYSTEM_WINDOW):
+			return obj.getParent()
+		else:
+			return obj
 
 	def getNext(self):
-		try:
-			parentObject=getNVDAObjectByAccessibleObject(self.accObject.GetParent())
+		res=MSAAHandler.accParent(self.ia,self.child)
+		if res:
+			parentObject=getNVDAObjectByAccessibleObject(res[0],res[1])
 			parentRole=parentObject.getRole()
-		except:
+		else:
 			parentObject=None
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
-			try:
-				next=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				next=pyAA.AccessibleObjectFromWindow(next.Window,-4)
-				nextObject=getNVDAObjectByAccessibleObject(next)
-				if nextObject!=self:
-					return nextObject
-				else:
-					return None
-			except:
-				return None
+			obj=parentObject
 		else:
-			try:
-				next=self.accObject.Navigate(pyAA.Constants.NAVDIR_NEXT)
-				nextObject=getNVDAObjectByAccessibleObject(next)
-				if nextObject.getRole()==ROLE_SYSTEM_WINDOW:
-					nextObject=api.getNVDAObjectByLocator(nextObject.getWindowHandle(),-4,0)
-				if nextObject!=self:
-					return nextObject
-				else:
-					return None
-			except:
+			obj=self
+		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_NEXT)
+		if res:
+			nextObject=getNVDAObjectByAccessibleObject(res[0],res[1])
+			if nextObject and (nextObject.getRole()==ROLE_SYSTEM_WINDOW):
+				nextObject=getNVDAObjectByLocator(nextObject.getWindowHandle(),-4,0)
+			if nextObject!=self:
+				return nextObject
+			else:
 				return None
 
 	def getPrevious(self):
-		try:
-			parentObject=getNVDAObjectByAccessibleObject(self.accObject.GetParent())
+		res=MSAAHandler.accParent(self.ia,self.child)
+		if res:
+			parentObject=getNVDAObjectByAccessibleObject(res[0],res[1])
 			parentRole=parentObject.getRole()
-		except:
+		else:
 			parentObject=None
 			parentRole=None
 		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
-			try:
-				prev=parentObject.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				prev=pyAA.AccessibleObjectFromWindow(prev.Window,-4)
-				prevObject=getNVDAObjectByAccessibleObject(prev)
-				if prevObject!=self:
-					return prevObject
-				else:
-					return None
-			except:
-				return None
+			obj=parentObject
 		else:
-			try:
-				prev=self.accObject.Navigate(pyAA.Constants.NAVDIR_PREVIOUS)
-				prevObject=getNVDAObjectByAccessibleObject(prev)
-				if prevObject.getRole()==ROLE_SYSTEM_WINDOW:
-					prevObject=api.getNVDAObjectByLocator(prevObject.getWindowHandle(),-4,0)
-				if prevObject!=self:
-					return prevObject
-				else:
-					return None
-			except:
+			obj=self
+		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_PREVIOUS)
+		if res:
+			previousObject=getNVDAObjectByAccessibleObject(res[0],res[1])
+			if previousObject and (previousObject.getRole()==ROLE_SYSTEM_WINDOW):
+				previousObject=getNVDAObjectByLocator(previousObject.getWindowHandle(),-4,0)
+			if previousObject!=self:
+				return previousObject
+			else:
 				return None
 
 	def getFirstChild(self):
-		try:
-			child=self.accObject.Navigate(pyAA.Constants.NAVDIR_FIRSTCHILD)
-			if child.GetRole()==pyAA.Constants.ROLE_SYSTEM_WINDOW:
-				child=pyAA.AccessibleObjectFromWindow(child.Window,-4)
-			childObject=getNVDAObjectByAccessibleObject(child)
-			if childObject!=self:
-				return childObject
-			else:
-				return None
-		except:
+		res=MSAAHandler.accNavigate(self.ia,self.child,NAVDIR_FIRSTCHILD)
+		if res:
+			obj=getNVDAObjectByAccessibleObject(res[0],res[1])
+		else:
 			return None
+		if obj and (obj.getRole()==ROLE_SYSTEM_WINDOW):
+			return getNVDAObjectByLocator(obj.getWindowHandle(),OBJID_CLIENT,0)
+		else:
+			return obj
+
 
 	def doDefaultAction(self):
-		try:
-			self.accObject.DoDefaultAction()
-		except:
-			pass
+		MSAAHandler.accDoDefaultAction(self.ia,self.child)
 
 	def getChildren(self):
 		children=[]
@@ -385,22 +335,9 @@ class NVDAObject(object):
 		return children
 
 	def getActiveChild(self):
-		try:
-			child=self.accObject.GetFocus()
-		except:
-			return None
-		return getNVDAObjectByAccessibleObject(child)
-
-	def getSelectedChildren(self):
-		try:
-			accChildren=self.accObject.GetSelection()
-		except:
-			accChildren=[]
-		children=[]
-		for accChild in accChildren:
-			children.append(getNVDAObjectByAccessibleObject(accChild))
-		return children
-
+		res=MSAAHandler.accFocus()
+		if res:
+			return getNVDAObjectByAccessibleObject(res[0],res[1])
 
 	def hasFocus(self):
 		states=0
@@ -411,10 +348,7 @@ class NVDAObject(object):
 			return False
 
 	def setFocus(self):
-		try:
-			self.accObject.SetFocus()
-		except:
-			pass
+		self.ia.SetFocus()
 
 	def event_foreground(self):
 		audio.cancel()
@@ -440,7 +374,6 @@ class NVDAObject(object):
 		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
 			if self.getRole()==ROLE_SYSTEM_MENUITEM:
 				audio.cancel()
-			debug.writeMessage("Focus: %s %s %s %s"%(self.getName(),win32gui.GetClassName(self.getWindowHandle()),self.getTypeString(),self.getRole()))
 			self.speakObject()
 
 	def event_menuStart(self):
@@ -522,8 +455,8 @@ class NVDAObject_edit(NVDAObject):
 	Based on NVDAObject, but speaks moving and editing with in the edit control.
 	"""
 
-	def __init__(self,accObject):
-		NVDAObject.__init__(self,accObject)
+	def __init__(self,*args):
+		NVDAObject.__init__(self,*args)
 		self.keyMap={
 			key("ExtendedUp"):self.script_moveByLine,
 			key("ExtendedDown"):self.script_moveByLine,
@@ -649,7 +582,7 @@ class NVDAObject_edit(NVDAObject):
 
 	def getText(self):
 		textLength=self.getTextLength()
-		textBuf=ctypes.create_unicode_buffer(textLength+1)
+		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		ctypes.windll.user32.SendMessageW(self.getWindowHandle(),win32con.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u""
 
@@ -734,7 +667,7 @@ class NVDAObject_checkBox(NVDAObject):
 
 	def filterStates(self,states):
 		states=NVDAObject.filterStates(self,states)
-		states-=states&pyAA.Constants.STATE_SYSTEM_PRESSED
+		states-=states&STATE_SYSTEM_PRESSED
 		return states
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject):
@@ -765,7 +698,7 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 	def getFirstChild(self):
 		try:
-			children=self.accObject.GetChildren()
+			children=self.ia.accChildren()
 		except:
 			return None
 		for child in children:
@@ -889,8 +822,8 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 
 class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
-	def __init__(self,accObject):
-		NVDAObject_edit.__init__(self,accObject)
+	def __init__(self,*args):
+		NVDAObject_edit.__init__(self,*args)
 		processID=win32process.GetWindowThreadProcessId(self.getWindowHandle())[1]
 		try:
 			win32console.FreeConsole()
@@ -898,7 +831,6 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			pass
 		win32console.AttachConsole(processID)
 		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
-		debug.writeMessage("console settings: %s"%self.consoleBuffer.GetConsoleScreenBufferInfo())
 
 	def __del__(self):
 		self.keepUpdating=False
@@ -1056,19 +988,27 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		tomAlignRight=2
 		tomAlignJustify=3
 
-	def __init__(self,accObject):
-		NVDAObject_edit.__init__(self,accObject)
+	def __init__(self,*args):
+		NVDAObject_edit.__init__(self,*args)
 		self.dom=self.getDocumentObjectModel()
 		self.lastFontName=self.lastFontSize=self.lastBold=self.lastItalic=self.lastUnderline=self.lastParagraphAlignment=None
 		self.keyMap.update({
 key("insert+f"):self.script_formatInfo,
 })
 
+	def __del__(self):
+		self.destroyObjectModel(self.dom)
+		NVDAObject_edit.__del__(self)
+
 	def getDocumentObjectModel(self):
-		ptr=ctypes.c_void_p()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
-		ptr=ctypes.cast(ptr,ctypes.POINTER(comtypes.automation.IDispatch))
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
 		return comtypes.client.dynamic.Dispatch(ptr)
+
+	def destroyObjectModel(self,om):
+		pass
+
+
 
 	def _duplicateDocumentRange(self,rangeObj):
 		return rangeObj.Duplicate

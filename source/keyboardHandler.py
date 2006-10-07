@@ -90,7 +90,6 @@ def sendKey(keyPress):
 	if (keyList is None) or (len(keyList)==0):
 		return
 	#Send key down events for these keys
-	debug.writeMessage("send key: %s"%keyList)
 	for key in keyList:
 		win32api.keybd_event(key[0],0,key[1],0)
 	#Send key up events for the keys in reverse order
@@ -149,7 +148,6 @@ def internal_keyDownEvent(event):
 		if event.Extended==1:
 			keyName="Extended%s"%keyName
 		keyPress=(modifiers,keyName)
-		debug.writeMessage("key press: %s %s"%keyPress)
 		if keyPress in keyPressIgnoreSet:
 			keyPressIgnoreSet.remove(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))

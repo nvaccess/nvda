@@ -55,8 +55,8 @@ class appModule(_MSOffice.appModule):
 
 class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
-	def __init__(self,accObject):
-		NVDAObjects.NVDAObject_ITextDocument.__init__(self,accObject)
+	def __init__(self,*args):
+		NVDAObjects.NVDAObject_ITextDocument.__init__(self,*args)
 		self.lastStyle=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=None
 		self.keyMap.update({
 key("control+ExtendedUp"):self.script_moveByParagraph,
@@ -65,6 +65,9 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 
 	def getDocumentObjectModel(self):
 		return word_application.ActiveWindow.ActivePane
+
+	def destroyObjectModel(self,om):
+		pass
 
 	def _duplicateDocumentRange(self,rangeObj):
 		return rangeObj.Range

@@ -5,6 +5,8 @@ stderrFile=open("stderr.log","w")
 if stderrFile is None:
 	sys.exit()
 sys.stderr=stderrFile
+sys.stdout=stderrFile
+
 import debug
 debug.start("debug.log")
 
@@ -14,5 +16,6 @@ try:
 	core.main()
 except:
 	debug.writeException("nvda.pyw executing core.main")
+debug.stop()
 winsound.Beep(880,100)
 

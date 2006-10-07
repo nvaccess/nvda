@@ -25,7 +25,8 @@ class virtualBuffer(object):
 		self.virtualBuffer=[]
 		self.objects={}
 		self.window=window
-		self.appendObject(window,OBJID_CLIENT,0)
+		self.virtualBuffer=[("None",None)]
+		#self.appendObject(window,OBJID_CLIENT,0)
 
 	def getWindowHandle(self):
 		return self.window
