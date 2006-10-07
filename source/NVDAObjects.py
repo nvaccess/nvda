@@ -1002,6 +1002,7 @@ key("insert+f"):self.script_formatInfo,
 
 	def getDocumentObjectModel(self):
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
+		time.sleep(0.01)
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
 		return comtypes.client.dynamic.Dispatch(ptr)
 
