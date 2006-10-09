@@ -39,7 +39,6 @@ def event_foreground(window,objectID,childID):
 		appModuleHandler.load(appName)
 		lastProcessID=processID
 	executeEvent("foreground",window,objectID,childID)
-	time.sleep(0.1)
 
 def event_mouseMove(point):
 	obj=NVDAObjects.getNVDAObjectByPoint(point[0],point[1])

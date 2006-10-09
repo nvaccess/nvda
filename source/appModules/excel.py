@@ -1,3 +1,4 @@
+import time
 import re
 import win32com.client
 import audio
@@ -9,7 +10,7 @@ import NVDAObjects
 import _MSOffice
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
-excel_application=win32com.client.dynamic.Dispatch('Excel.Application')
+
 
 class appModule(_MSOffice.appModule):
 
@@ -32,7 +33,7 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def __init__(self,*args):
 		NVDAObjects.NVDAObject.__init__(self,*args)
-		self.excelObject=excel_application
+		self.excelObject=win32com.client.dynamic.Dispatch('Excel.Application')
 		self.keyMap.update({
 key("Insert+f"):self.script_formatInfo,
 key("ExtendedUp"):self.script_moveByCell,

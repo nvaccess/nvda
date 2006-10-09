@@ -30,7 +30,7 @@ class IAccWrapper(object):
 		getattr(self,'__dict__')['ia']=IAccPointer
 
 	def __del__(self):
-		self.Release()
+		getattr(self,'__get__')['ia'].Release()
 
 	def __getattr__(self,attr):
 		ia=getattr(self,'__dict__')['ia']
@@ -48,11 +48,10 @@ class screenPointType(ctypes.Structure):
 	_fields_=[('x',ctypes.c_int),('y',ctypes.c_int)]
 
 def accessibleObjectFromWindow(window,objectID):
-	ptr=ctypes.c_void_p()
+	ptr=ctypes.POINTER(IAccessible)()
 	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
 	if res==0:
-		ia=ctypes.cast(ptr,ctypes.POINTER(IAccessible))
-		ia=IAccWrapper(ia)
+		ia=IAccWrapper(ptr)
 		return ia 
 	else:
 		return None
@@ -71,16 +70,15 @@ def accessibleObjectFromPoint(x,y):
 	point=screenPointType()
 	point.x=x
 	point.y=y
-	pacc=ctypes.c_void_p()
+	pacc=ctypes.POINTER(IAccessible)()
 	varChild=comtypes.automation.VARIANT()
 	res=ctypes.windll.oleacc.AccessibleObjectFromPoint(point,ctypes.byref(pacc),ctypes.byref(varChild))
-	if not res:
-		pacc=ctypes.cast(pacc,ctypes.POINTER(IAccessible))
+	if res==0:
 		return (IAccWrapper(pacc),varChild.value)
 
 def windowFromAccessibleObject(ia):
 	hwnd=ctypes.c_int()
-	res=ctypes.windll.oleacc.WindowFromAccessibleObject(ia,ctypes.byref(hwnd))
+	res=ctypes.windll.oleacc.WindowFromAccessibleObject(getattr(ia,'__dict__')['ia'],ctypes.byref(hwnd))
 	if res==0:
 		return hwnd.value
 	else:
@@ -210,13 +208,14 @@ EVENT_SYSTEM_MENUEND:"menuEnd",
 EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 EVENT_SYSTEM_SWITCHSTART:"switchStart",
-#EVENT_SYSTEM_SWITCHEND:"switchEnd",
+EVENT_SYSTEM_SWITCHEND:"switchEnd",
 EVENT_OBJECT_FOCUS:"focusObject",
 EVENT_OBJECT_SHOW:"showObject",
-EVENT_OBJECT_DESCRIPTIONCHANGE:"objectDescriptionChange",
-EVENT_OBJECT_HELPCHANGE:"objectHelpChange",
+EVENT_OBJECT_HIDE:"hideObject",
+#EVENT_OBJECT_DESCRIPTIONCHANGE:"objectDescriptionChange",
+#EVENT_OBJECT_HELPCHANGE:"objectHelpChange",
 EVENT_OBJECT_LOCATIONCHANGE:"objectLocationChange",
-EVENT_OBJECT_NAMECHANGE:"objectNameChange",
+#EVENT_OBJECT_NAMECHANGE:"objectNameChange",
 EVENT_OBJECT_REORDER:"objectReorder",
 EVENT_OBJECT_SELECTION:"objectSelection",
 EVENT_OBJECT_SELECTIONADD:"objectSelectionAdd",
@@ -229,14 +228,15 @@ EVENT_OBJECT_VALUECHANGE:"objectValueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	debug.writeMessage("objectEventCallback: %s, %s, %s, %s"%(eventMap[eventID],window,objectID,childID))
 	try:
-		if (objectID==0) and (childID==0):
-			objectID=-4
+		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW,EVENT_OBJECT_HIDE]):
+			objectID=OBJID_CLIENT
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
 			while queue_events.full():
 				time.sleep(0.001)
 			queue_events.put(("caret",window,objectID,childID))
-		elif win32gui.IsWindow(window) and (objectID not in [OBJID_CURSOR,OBJID_CARET]):
+		elif win32gui.IsWindow(window) and (objectID not in [OBJID_CURSOR,OBJID_CARET]) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
 			eventName=eventMap.get(eventID,None)
 			while queue_events.full():
 				time.sleep(0.001)

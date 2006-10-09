@@ -146,32 +146,34 @@ def executeEvent(name,window,objectID,childID):
 		executeEvent("focusObject",window,objectID,childID)
 	if hasattr(appModuleHandler.current,"event_%s"%name):
 		event=getattr(appModuleHandler.current,"event_%s"%name)
+		return True
 		try:
 			event(window,objectID,childID)
 		except:
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 			return False
-	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
 	if (window,objectID,childID)==focusLocator and hasattr(focusObject,"event_%s"%name): 
 		event=getattr(focusObject,"event_%s"%name)
 		try:
 			event()
+			return True
 		except:
 			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
 			debug.writeException("Error executing event %s from focusObject"%event.__name__)
 			return False
-	elif thisObj and hasattr(thisObj,"event_%s"%name):
+	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
+	if thisObj and hasattr(thisObj,"event_%s"%name):
 		event=getattr(thisObj,"event_%s"%name)
 		try:
 			event()
+			return True
 		except:
 			audio.speakMessage("Error executing event %s from object"%event.__name__)
 			debug.writeException("Error executing event %s from object"%event.__name__)
 			return False
-	return True
 
 def getObjectGroupName(accObject):
 	try:
