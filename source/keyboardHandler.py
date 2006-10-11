@@ -5,10 +5,10 @@
 #See the file COPYING for more details.
 
 import time
-import win32api
 import Queue
 import pyHook
 import debug
+import winUser
 import audio
 import api
 
@@ -91,11 +91,11 @@ def sendKey(keyPress):
 		return
 	#Send key down events for these keys
 	for key in keyList:
-		win32api.keybd_event(key[0],0,key[1],0)
+		winUser.keybd_event(key[0],0,key[1],0)
 	#Send key up events for the keys in reverse order
 	keyList.reverse()
 	for key in keyList:
-		win32api.keybd_event(key[0],0,key[1]+2,0)
+		winUser.keybd_event(key[0],0,key[1]+2,0)
 	time.sleep(0.05)
 
 #Internal functions for key presses

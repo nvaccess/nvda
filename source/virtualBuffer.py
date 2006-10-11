@@ -1,8 +1,6 @@
 import time
 import re
-import win32gui
-import win32process
-import win32console
+import winUser
 import debug
 from constants import *
 import api
@@ -13,7 +11,7 @@ import NVDAObjects
 re_multiSpacing=re.compile(r' +')
 
 def makeVirtualBuffer(window):
-	className=win32gui.GetClassName(window)
+	className=winUser.getClassName(window)
 	if classMap.has_key(className):
 		return classMap[className](window)
 	else:

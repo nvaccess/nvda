@@ -6,13 +6,9 @@ import difflib
 import thread
 import struct
 import re
-import win32api
-import win32com
-import win32con
-import win32console
-import win32gui
-import win32process
 import debug
+import winUser
+import winKernel
 import audio
 from keyboardHandler import key, sendKey
 from constants import *
@@ -37,7 +33,7 @@ def getNVDAObjectClass(windowClass,objectRole):
 
 def getNVDAObjectByAccessibleObject(ia,child):
 	try:
-		return getNVDAObjectClass(win32gui.GetClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
+		return getNVDAObjectClass(winUser.getClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
 	except:
 		debug.writeException("NVDAObjects.getNVDAObjectByAccessibleObject")
 		return None
@@ -177,12 +173,7 @@ class NVDAObject(object):
 		return MSAAHandler.windowFromAccessibleObject(self.ia)
 
 	def getName(self):
-		name=MSAAHandler.accName(self.ia,self.child)
-		if not name and (self.child==0):
-			window=self.getWindowHandle()
-			if window:
-				name=win32gui.GetWindowText(window)
-		return name
+		return MSAAHandler.accName(self.ia,self.child)
 
 	def getValue(self):
 		value=MSAAHandler.accValue(self.ia,self.child)
@@ -193,7 +184,7 @@ class NVDAObject(object):
 	def getTypeString(self):
 		role=self.getRole()
 		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
-			typeString=win32gui.GetClassName(self.getWindowHandle())
+			typeString=winUser.getClassName(self.getWindowHandle())
 		else:
 			typeString=""
 		return typeString+" %s"%getRoleName(self.getRole())
@@ -247,10 +238,8 @@ class NVDAObject(object):
 		return count
 
 	def getProcessID(self):
-		try:
-			return win32process.GetWindowThreadProcessId(self.getWindowHandle())
-		except:
-			return None
+		return winUser.getWindowThreadProcessID(self.getWindowHandle())
+ 
 
 	def getLocation(self):
 		return MSAAHandler.accLocation(self.ia,self.child)
@@ -489,18 +478,18 @@ class NVDAObject_edit(NVDAObject):
 		return (self.getLineNumber(self.getStartPosition()),self.getLineNumber(self.getEndPosition()))
 
 	def getCaretRange(self):
-		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
+		word=winUser.sendMessage(self.getWindowHandle(),EM_GETSEL,0,0)
 		if word<0:
 			return None
-		start=win32api.LOWORD(word)
-		end=win32api.HIWORD(word)
+		start=winUser.LOWORD(word)
+		end=winUser.HIWORD(word)
 		return (start,end)
 
 	def getCaretPosition(self):
-		word=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETSEL,0,0)
+		word=winUser.sendMessage(self.getWindowHandle(),EM_GETSEL,0,0)
 		if word<0:
 			return None
-		pos=win32api.LOWORD(word)
+		pos=winUser.LOWORD(word)
 		return pos
 
 	def getStartPosition(self):
@@ -510,20 +499,20 @@ class NVDAObject_edit(NVDAObject):
 		return self.getTextLength()
 
 	def getLineCount(self):
-		lineCount=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETLINECOUNT,0,0)
+		lineCount=winUser.sendMessage(self.getWindowHandle(),EM_GETLINECOUNT,0,0)
 		if lineCount<0:
 			return None
 		return lineCount
 
 	def getLineNumber(self,pos):
-		return win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEFROMCHAR,pos,0)
+		return winUser.sendMessage(self.getWindowHandle(),EM_LINEFROMCHAR,pos,0)
 
 	def getLineStart(self,lineNum):
-		return win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINEINDEX,lineNum,0)
+		return winUser.sendMessage(self.getWindowHandle(),EM_LINEINDEX,lineNum,0)
 
 	def getLineLength(self,lineNum):
 		lineStart=self.getLineStart(lineNum)
-		lineLength=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_LINELENGTH,lineStart,0)
+		lineLength=winUser.sendMessage(self.getWindowHandle(),EM_LINELENGTH,lineStart,0)
 		if lineLength<0:
 			return None
 		return lineLength
@@ -532,11 +521,10 @@ class NVDAObject_edit(NVDAObject):
 		lineLength=self.getLineLength(lineNum)
 		if not lineLength:
 			return None
-		lineBuf=struct.pack('i',lineLength+1)
-		lineBuf=lineBuf+"".ljust(lineLength-2)
-		res=win32gui.SendMessage(self.getWindowHandle(),win32con.EM_GETLINE,lineNum,lineBuf)
-		line="%s"%lineBuf[0:lineLength]
-		return line
+		buf=ctypes.create_unicode_buffer(lineLength+1)
+		buf.value=struct.pack('i',lineLength+1)
+		res=winUser.sendMessage(self.getWindowHandle(),EM_GETLINE,lineNum,buf)
+		return buf.value
 
 	def getCurrentLine(self):
 		return self.getLine(self.getLineNumber(self.getCaretPosition()))
@@ -578,12 +566,12 @@ class NVDAObject_edit(NVDAObject):
 
  
 	def getTextLength(self):
-		return ctypes.windll.user32.SendMessageW(self.getWindowHandle(),win32con.WM_GETTEXTLENGTH,0,0)
+		return winUser.sendMessage(self.getWindowHandle(),WM_GETTEXTLENGTH,0,0)
 
 	def getText(self):
 		textLength=self.getTextLength()
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
-		ctypes.windll.user32.SendMessageW(self.getWindowHandle(),win32con.WM_GETTEXT,textLength+1,textBuf)
+		winUser.sendMessage(self.getWindowHandle(),WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u""
 
 	def getTextRange(self,start,end):
@@ -824,13 +812,17 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
 	def __init__(self,*args):
 		NVDAObject_edit.__init__(self,*args)
-		processID=win32process.GetWindowThreadProcessId(self.getWindowHandle())[1]
+		processID=self.getProcessID()[0]
 		try:
-			win32console.FreeConsole()
+			winKernel.freeConsole()
 		except:
+			debug.writeException("freeConsole")
 			pass
-		win32console.AttachConsole(processID)
-		self.consoleBuffer=win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
+		winKernel.attachConsole(processID)
+		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		for key in dir(info):
+			debug.writeMessage("%s: %s"%(key,getattr(info,key)))
 
 	def __del__(self):
 		self.keepUpdating=False
@@ -838,23 +830,24 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		NVDAObject_edit.__del__(self)
 
 	def getConsoleVerticalLength(self):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return info["Size"].Y
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		return info.consoleSize.y
 
 	def getConsoleHorizontalLength(self):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		return info["Size"].X
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		return info.consoleSize.x
 
 	def getVisibleLineRange(self):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		topLineNum=info["Window"].Top
-		bottomLineNum=info["Window"].Bottom
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		topLineNum=info.windowRect.top
+		bottomLineNum=info.windowRect.bottom
+		#audio.speakMessage("top %s, bottom %s"%(topLineNum,bottomLineNum))
 		return (topLineNum,bottomLineNum)
 
 	def getCaretPosition(self):
-		info=self.consoleBuffer.GetConsoleScreenBufferInfo()
-		y=info["CursorPosition"].Y
-		x=info["CursorPosition"].X
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		y=info.cursorPosition.y
+		x=info.cursorPosition.x
 		return self.getLineStart(y)+x
 
 	def getEndPosition(self):
@@ -868,7 +861,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
 	def getLine(self,lineNum):
 		maxLen=self.getConsoleHorizontalLength()
-		line=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,lineNum))
+		line=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,lineNum)
 		if line.isspace():
 			line=None
 		else:
@@ -887,7 +880,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
 	def getText(self):
 		maxLen=self.getEndPosition()
-		text=self.consoleBuffer.ReadConsoleOutputCharacter(maxLen,win32console.PyCOORDType(0,0))
+		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,0)
 		return text
 
 	def getVisibleLines(self):
@@ -907,7 +900,8 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			return
 		self.doneFocus=True
 		audio.speakObjectProperties(typeString="console")
-		self._oldestLines=None
+		for line in self.getVisibleLines():
+			audio.speakText(line)
 		self.thread=thread.start_new_thread(self._consoleUpdater,())
 
 	def _consoleUpdater(self):
@@ -915,7 +909,7 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			oldCaretPosition=api.getVirtualBuffer().getCaretPosition()
 			self._oldestLines=oldLines=self.getVisibleLines()
 			stabilityCount=0
-			while self.hasFocus() and win32gui.IsWindow(self.getWindowHandle()):
+			while self.hasFocus() and winUser.isWindow(self.getWindowHandle()):
 				newCaretPosition=api.getVirtualBuffer().getCaretPosition()
 				if newCaretPosition!=oldCaretPosition:
 					api.setVirtualBufferCursor(newCaretPosition)

@@ -4,16 +4,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import ctypes
 import sys
 import os
 import time
-import Queue
-import win32api
-import win32gui
-import winsound
-import cPickle
 import dictionaries
 import globalVars
+import winUser
 from api import *
 from constants import *
 import NVDAObjects
@@ -27,6 +24,7 @@ import gui
 import virtualBuffer
 
 lastProcessID=None
+msg=winUser.msgType()
 
 def event_foreground(window,objectID,childID):
 	global lastProcessID
@@ -35,7 +33,7 @@ def event_foreground(window,objectID,childID):
 		return None
 	processID=obj.getProcessID()
 	if processID!=lastProcessID:
-		appName = os.path.splitext(getProcessName(processID))[0].lower()
+		appName=getAppName(processID)
 		appModuleHandler.load(appName)
 		lastProcessID=processID
 	executeEvent("foreground",window,objectID,childID)
@@ -58,7 +56,7 @@ def main():
 		dictionaries.load("stateNames")
 		audio.initialize()
 		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
-		foregroundWindow=getForegroundWindow()
+		foregroundWindow=winUser.getForegroundWindow()
 		if (foregroundWindow is None) or (foregroundWindow==0):
 			debug.writeError("core.main: failed to get foreground window")
 			sys.exit()
@@ -95,27 +93,25 @@ def main():
 					except:
 						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
-			try:
-				keyPress=keyboardHandler.queue_keys.get_nowait()
+			if not keyboardHandler.queue_keys.empty():
+				keyPress=keyboardHandler.queue_keys.get()
 				if keyPress == (None, "SilenceSpeech"):
 					audio.cancel()
 				else:
 					executeScript(keyPress)
-			except Queue.Empty:
-				pass
-			try:
+			if not mouseHandler.queue_events.empty():
 				mouseEvent=mouseHandler.queue_events.get_nowait()
 				if mouseEvent[0]=="mouseMove":
 					try:
 						event_mouseMove(mouseEvent[1])
 					except:
 						debug.writeException("event_mouseMove")
-			except Queue.Empty:
-				pass
 			# If there are no events already waiting, sleep to avoid needlessly hogging the CPU.
 			if keyboardHandler.queue_keys.empty() and mouseHandler.queue_events.empty() and MSAAHandler.queue_events.empty():
 				time.sleep(0.001)
-				res=win32gui.PumpWaitingMessages()
+				if winUser.peekMessage(ctypes.byref(msg),0,0,0,1):
+					winUser.translateMessage(ctypes.byref(msg))
+					winUser.dispatchMessage(ctypes.byref(msg))
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")

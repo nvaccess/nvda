@@ -5,13 +5,14 @@
 #See the file COPYING for more details.
 
 import time
-import win32gui
 import Queue
 import ctypes
 import comtypes
 import debug
+import winUser
 import audio
 from constants import *
+import api
 
 #The queue where other modules can access the events
 queue_events=Queue.Queue(100)
@@ -228,7 +229,6 @@ EVENT_OBJECT_VALUECHANGE:"objectValueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	debug.writeMessage("objectEventCallback: %s, %s, %s, %s"%(eventMap[eventID],window,objectID,childID))
 	try:
 		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW,EVENT_OBJECT_HIDE]):
 			objectID=OBJID_CLIENT
@@ -236,7 +236,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			while queue_events.full():
 				time.sleep(0.001)
 			queue_events.put(("caret",window,objectID,childID))
-		elif win32gui.IsWindow(window) and (objectID not in [OBJID_CURSOR,OBJID_CARET]) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
+		elif winUser.isWindow(window) and (objectID not in [OBJID_CURSOR,OBJID_CARET]) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
 			eventName=eventMap.get(eventID,None)
 			while queue_events.full():
 				time.sleep(0.001)
@@ -250,7 +250,7 @@ cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,c
 
 def initialize():
 	for eventType in eventMap.keys():
-		handle=ctypes.windll.user32.SetWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
+		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:
 			objectEventHandles.append(handle)
 			debug.writeMessage("MSAAHandler.Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
@@ -259,4 +259,4 @@ def initialize():
 
 def terminate():
 	for handle in objectEventHandles:
-		ctypes.windll.user32.UnhookWinEvent(handle)
+		winUser.unhookWinEvent(handle)

@@ -1,6 +1,6 @@
 import threading
 import wx
-import win32gui
+import winUser
 import globalVars
 import debug
 
@@ -29,7 +29,7 @@ class MenuFrame(wx.Frame):
 		self.menu.Append(id_exitCommand, "E&xit", "Exit NVDA")
 		wx.EVT_MENU(self, id_exitCommand, self.onExitCommand)
 		self.Show(True)
-		fg = win32gui.GetForegroundWindow()
+		fg = winUser.GetForegroundWindow()
 		try:
 			win32gui.SetForegroundWindow(self.GetHandle())
 		except:

@@ -4,9 +4,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import win32gui
-import win32com.client
+import ctypes
+import comtypes.client
+import os.path
 import debug
+import winKernel
 import globalVars
 from constants import *
 import dictionaries
@@ -19,7 +21,7 @@ import NVDAObjects
 import virtualBuffer
 
 # Initialise WMI; required for getProcessName.
-_wmi = win32com.client.GetObject('winmgmts:')
+#_wmi = win32com.client.GetObject('winmgmts:')
 
 #User functions
 
@@ -65,12 +67,6 @@ def getVirtualBufferCursor():
 def setVirtualBufferCursor(index):
 	globalVars.virtualBufferCursor=index
 
-
-def isDecendantWindow(parent,child):
-	if (parent==child) or win32gui.IsChild(parent,child):
-		return True
-	else:
-		return False
 
 
 def getNavigatorObject():
@@ -200,31 +196,21 @@ def getObjectGroupName(accObject):
 		debug.writeError("api.getObjectGroupName: error finding group name")
 		return None
 
-def getForegroundWindow():
-	return win32gui.GetForegroundWindow()
-
-def getWindowLocation(window):
-	return win32gui.GetClientRect(window)
-
-def getWindowControlID(window):
-	return win32gui.GetWindowLong(window)
-
-def getWindowClass(window):
-	return win32gui.GetClassName(window)
-
 def makeStateList(stateText):
 	stateList=stateText.split("+")
 	return stateList
 
-def getProcessName(processID):
-	result  =  _wmi.ExecQuery("select * from Win32_Process where ProcessId=%d" % processID[1])
-	if len(result) > 0:
-		return result[0].Properties_('Name').Value
-	else:
-		return ""
+def getAppName(processID):
+	procHandle=winKernel.openProcess(PROCESS_ALL_ACCESS,False,processID[0])
+	buf=ctypes.create_unicode_buffer(1024)
+	res=ctypes.windll.psapi.GetProcessImageFileNameW(procHandle,buf,1024)
+	winKernel.closeHandle(procHandle)
+	return os.path.splitext(buf.value.split('\\')[-1])[0].lower()
+
 
 def setMenuMode(switch):
 	globalVars.menuMode=switch
 
 def getMenuMode():
 	return globalVars.menuMode
+
