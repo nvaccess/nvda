@@ -156,7 +156,7 @@ def accFocus(ia,child):
 	try:
 		res=ia.accFocus(child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
-			new_ia=ia
+			new_ia=IAccWrapper(res)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -190,7 +190,7 @@ def accParent(ia,child):
 		if not child:
 			res=ia.accParent
 			if isinstance(res,ctypes.POINTER(IAccessible)):
-				new_ia=ia
+				new_ia=IAccWrapper(res)
 				new_child=0
 			elif isinstance(res,int): 
 				new_ia=ia
@@ -206,7 +206,7 @@ def accNavigate(ia,child,direction):
 	try:
 		res=ia.accNavigate(direction,child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
-			new_ia=ia
+			new_ia=IAccWrapper(res)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
