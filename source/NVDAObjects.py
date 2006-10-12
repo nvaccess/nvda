@@ -24,10 +24,14 @@ def getNVDAObjectClass(windowClass,objectRole):
 		return dynamicMap[(windowClass,objectRole)]
 	elif dynamicMap.has_key((windowClass,None)):
 		return dynamicMap[(windowClass,None)]
+	elif dynamicMap.has_key((None,objectRole)):
+		return dynamicMap[(None,objectRole)]
 	elif staticMap.has_key((windowClass,objectRole)):
 		return staticMap[(windowClass,objectRole)]
 	elif staticMap.has_key((windowClass,None)):
 		return staticMap[(windowClass,None)]
+	elif staticMap.has_key((None,objectRole)):
+		return staticMap[(None,objectRole)]
 	else:
 		return NVDAObject
 
@@ -1225,15 +1229,15 @@ key("insert+f"):self.script_formatInfo,
 
 
 staticMap={
-("Shell_TrayWnd",None):NVDAObject_Shell_TrayWnd,
+("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd,
 ("tooltips_class32",None):NVDAObject_tooltip,
-("Progman",None):NVDAObject_Progman,
+("Progman",ROLE_SYSTEM_CLIENT):NVDAObject_Progman,
 ("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
 ("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
-("Button",ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+(None,ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
 ("MozillaContentWindowClass",None):NVDAObject_mozillaContentWindowClass,
