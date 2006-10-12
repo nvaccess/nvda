@@ -187,7 +187,7 @@ class NVDAObject(object):
 		return MSAAHandler.accName(self.ia,self.child)
 
 	def getValue(self):
-		value=MSAAHandler.accValue(self.ia,self.child)
+		return MSAAHandler.accValue(self.ia,self.child)
 
 	def getRole(self):
 		return MSAAHandler.accRole(self.ia,self.child)
@@ -668,6 +668,11 @@ class NVDAObject_checkBox(NVDAObject):
 		states=NVDAObject.filterStates(self,states)
 		states-=states&STATE_SYSTEM_PRESSED
 		return states
+
+class NVDAObject_outlineItem(NVDAObject):
+
+	def getValue(self):
+		return "level %s"%NVDAObject.getValue(self)
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject):
 	"""
@@ -1238,6 +1243,7 @@ staticMap={
 ("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 (None,ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+(None,ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
 ("MozillaContentWindowClass",None):NVDAObject_mozillaContentWindowClass,
