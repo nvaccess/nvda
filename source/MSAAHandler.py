@@ -46,14 +46,16 @@ class IAccWrapper(object):
 
 #A c ctypes struct to hold the x and y of a point on the screen 
 class screenPointType(ctypes.Structure):
-	_fields_=[('x',ctypes.c_int),('y',ctypes.c_int)]
+	_fields_=[
+	('x',ctypes.c_int),
+	('y',ctypes.c_int)
+	]
 
 def accessibleObjectFromWindow(window,objectID):
 	ptr=ctypes.POINTER(IAccessible)()
 	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
 	if res==0:
-		ia=IAccWrapper(ptr)
-		return ia 
+		return IAccWrapper(ptr)
 	else:
 		return None
 
@@ -84,6 +86,24 @@ def windowFromAccessibleObject(ia):
 		return hwnd.value
 	else:
 		return 0
+
+def getRoleText(role):
+	len=ctypes.windll.oleacc.GetRoleTextW(role,0,0)
+	if len:
+		buf=ctypes.create_unicode_buffer(len+2)
+		ctypes.windll.oleacc.GetRoleTextW(role,buf,len+1)
+		return buf.value
+	else:
+		return None
+
+def getStateText(state):
+	len=ctypes.windll.oleacc.GetStateTextW(state,0,0)
+	if len:
+		buf=ctypes.create_unicode_buffer(len+2)
+		ctypes.windll.oleacc.GetStateTextW(state,buf,len+1)
+		return buf.value
+	else:
+		return None
 
 def accName(ia,child):
 	try:

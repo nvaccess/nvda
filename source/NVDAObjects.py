@@ -55,8 +55,11 @@ def unregisterNVDAObjectClass(windowClass,objectRole):
 	del dynamicMap[(windowClass,objectRole)]
 
 def getRoleName(role):
-	if dictionaries.roleNames.has_key(role) is True:
-		return dictionaries.roleNames[role]
+	dictRole=dictionaries.roleNames.get(role,None)
+	if dictRole:
+		return dictRole
+	elif isinstance(role,int):
+		return MSAAHandler.getRoleText(role)
 	else:
 		return role
 
@@ -75,13 +78,17 @@ def getStateNames(states,opposite=False):
 	return str
 
 def getStateName(state,opposite=False):
-	if dictionaries.stateNames.has_key(state):
-		name=dictionaries.stateNames[state]
+	dictState=dictionaries.stateNames.get(state,None)
+	if dictState:
+		newState=dictstate
+	elif isinstance(state,int):
+		newState=MSAAHandler.getStateText(state)
 	else:
-		name=state
-	if opposite is True:
-		name="not %s"%name
-	return name
+		newState=state
+	if opposite:
+		newState="not %s"%newState
+	return newState
+
 
 #The classes
 
@@ -821,13 +828,6 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		winKernel.attachConsole(processID)
 		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		for key in dir(info):
-			debug.writeMessage("%s: %s"%(key,getattr(info,key)))
-
-	def __del__(self):
-		self.keepUpdating=False
-		time.sleep(0.1)
-		NVDAObject_edit.__del__(self)
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
