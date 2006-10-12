@@ -60,13 +60,12 @@ def accessibleObjectFromWindow(window,objectID):
 		return None
 
 def accessibleObjectFromEvent(window,objectID,childID):
-	try:
-		ia=accessibleObjectFromWindow(window,objectID)
-		if ia and ia.accRole(childID):
-			return (ia,childID)
-		else:
-			return None
-	except:
+	pacc=ctypes.POINTER(IAccessible)()
+	varChild=comtypes.automation.VARIANT()
+	res=ctypes.windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
+	if res==0:
+		return (IAccWrapper(pacc),varChild.value)
+	else:
 		return None
 
 def accessibleObjectFromPoint(x,y):
