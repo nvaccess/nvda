@@ -31,7 +31,7 @@ class IAccWrapper(object):
 		getattr(self,'__dict__')['ia']=IAccPointer
 
 	def __del__(self):
-		getattr(self,'__get__')['ia'].Release()
+		getattr(self,'__dict__')['ia'].Release()
 
 	def __getattr__(self,attr):
 		ia=getattr(self,'__dict__')['ia']

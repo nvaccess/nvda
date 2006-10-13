@@ -836,7 +836,23 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			pass
 		winKernel.attachConsole(processID)
 		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		self.oldLines=self.getVisibleLines()
+		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
+		self.consoleEventHookHandles=[]
+
+	def __del__(self):
+		for handle in self.consoleEventHookHandles:
+			winUser.unhookWinEventHook(handle)
+		NVDAObject_edit.__del__(self)
+
+	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
+		if self.hasFocus():
+			api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretPosition())
+			newLines=self.getVisibleLines()
+			if newLines!=self.oldLines:
+				if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
+					self.speakNewText(newLines,self.oldLines)
+				self.oldLines=newLines
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -911,47 +927,29 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		audio.speakObjectProperties(typeString="console")
 		for line in self.getVisibleLines():
 			audio.speakText(line)
-		self.thread=thread.start_new_thread(self._consoleUpdater,())
+		for eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
+			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
+			if handle:
+				self.consoleEventHookHandles.append(handle)
 
-	def _consoleUpdater(self):
-		try:
-			oldCaretPosition=api.getVirtualBuffer().getCaretPosition()
-			self._oldestLines=oldLines=self.getVisibleLines()
-			stabilityCount=0
-			while self.hasFocus() and winUser.isWindow(self.getWindowHandle()):
-				newCaretPosition=api.getVirtualBuffer().getCaretPosition()
-				if newCaretPosition!=oldCaretPosition:
-					api.setVirtualBufferCursor(newCaretPosition)
-					oldCaretPosition=newCaretPosition
-				newLines=self.getVisibleLines()
-				if newLines!=oldLines:
-					stabilityCount=1
-					oldLines=newLines
-				elif stabilityCount and (stabilityCount<10):
-					stabilityCount+=1
-				elif stabilityCount and (stabilityCount==10):
-					stabilityCount=0
-					diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(self._oldestLines,newLines)))
-					self._oldestLines=oldLines
-					for lineNum in range(len(diffLines)):
-						if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
-							if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-								newText=""
-								block=""
-								diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
-								for charNum in range(len(diffChars)):
-									if (diffChars[charNum][0]=="+"):
-										block+=diffChars[charNum][2]
-									elif block:
-										audio.speakText(block)
-										block=""
-								if block:
-									audio.speakText(block)
-							else:
-								audio.speakText(diffLines[lineNum][2:])
-				time.sleep(0.01)
-		except:
-			debug.writeException("NVDAObject_consoleWindowClass._consoleUpdater")
+	def speakNewText(self,newLines,oldLines):
+		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
+		for lineNum in range(len(diffLines)):
+			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
+				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
+					newText=""
+					block=""
+					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
+					for charNum in range(len(diffChars)):
+						if (diffChars[charNum][0]=="+"):
+							block+=diffChars[charNum][2]
+						elif block:
+							audio.speakText(block)
+							block=""
+					if block:
+						audio.speakText(block)
+				else:
+					audio.speakText(diffLines[lineNum][2:])
 
 class NVDAObject_tooltip(NVDAObject):
 
