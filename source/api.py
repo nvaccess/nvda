@@ -18,7 +18,6 @@ import appModuleHandler
 import gui
 from keyboardHandler import key 
 import NVDAObjects
-import virtualBuffer
 
 # Initialise WMI; required for getProcessName.
 #_wmi = win32com.client.GetObject('winmgmts:')
@@ -47,27 +46,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
-	v=getVirtualBuffer()
-	if not v or (v.getWindowHandle()!=globalVars.focusObject.getWindowHandle()):
-		setVirtualBuffer(globalVars.focusObject.getWindowHandle())
-	setVirtualBufferCursor(getVirtualBuffer().getCaretPosition())
 	return True
-
-def getVirtualBuffer():
-	return globalVars.virtualBuffer
-
-def setVirtualBuffer(window):
-	v=virtualBuffer.makeVirtualBuffer(window)
-	globalVars.virtualBuffer=v
-
-def getVirtualBufferCursor():
-	return globalVars.virtualBufferCursor
-
-
-def setVirtualBufferCursor(index):
-	globalVars.virtualBufferCursor=index
-
-
 
 def getNavigatorObject():
 	return globalVars.navigatorObject
@@ -151,7 +130,7 @@ def executeEvent(name,window,objectID,childID):
 			return False
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
-	if (window,objectID,childID)==focusLocator and hasattr(focusObject,"event_%s"%name): 
+	if (((window,objectID,childID)==focusLocator) or (name=="caret")) and hasattr(focusObject,"event_%s"%name): 
 		event=getattr(focusObject,"event_%s"%name)
 		try:
 			event()

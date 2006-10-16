@@ -21,7 +21,6 @@ import appModuleHandler
 import audio
 import config
 import gui
-import virtualBuffer
 
 lastProcessID=None
 msg=winUser.msgType()
@@ -63,7 +62,6 @@ def main():
 		if not setFocusObjectByLocator(foregroundWindow,-4,0):
 			debug.writeError("core.main: failed to set focus object (%s,%s,%s)"%(foregroundWindow,OBJID_CLIENT,0))
 			return False
-		setVirtualBuffer(foregroundWindow)
 		event_foreground(foregroundWindow,-4,0)
 		MSAAHandler.initialize()
 		keyboardHandler.initialize()
@@ -86,8 +84,6 @@ def main():
 						debug.writeException("core.main: while executing event_%s in core"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
-					if (getVirtualBuffer().getWindowHandle()==MSAAEvent[1]):
-						getVirtualBuffer().handleEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					try:
 						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
