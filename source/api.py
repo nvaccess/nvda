@@ -39,6 +39,12 @@ def getFocusLocator():
 def setFocusObjectByLocator(window,objectID,childID):
 	if (window,objectID,childID)==getFocusLocator():
 		return False
+	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
+		try:
+			globalVars.focusObject.event_looseFocus()
+		except:
+			debug.writeException("event_looseFocus in focusObject")
+			audio.speakMessage("Error in event_looseFocus of focusObject")
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -93,6 +99,7 @@ def executeScript(keyPress):
 			audio.speakMessage("%s, from %s, %s"%(name,container,description))
 		else:
 			audio.speakMessage("no script")
+		return
 	if script:
 		try:
 			script(keyPress)
@@ -118,10 +125,9 @@ def eventExists(name,window,objectID,childID):
 def executeEvent(name,window,objectID,childID):
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
-		executeEvent("focusObject",window,objectID,childID)
+		executeEvent("gainFocus",window,objectID,childID)
 	if hasattr(appModuleHandler.current,"event_%s"%name):
 		event=getattr(appModuleHandler.current,"event_%s"%name)
-		return True
 		try:
 			event(window,objectID,childID)
 		except:
@@ -133,6 +139,8 @@ def executeEvent(name,window,objectID,childID):
 	if (((window,objectID,childID)==focusLocator) or (name=="caret")) and hasattr(focusObject,"event_%s"%name): 
 		event=getattr(focusObject,"event_%s"%name)
 		try:
+			if name=="looseFocus":
+				audio.speakMessage("lost focus",wait=True)
 			event()
 			return True
 		except:

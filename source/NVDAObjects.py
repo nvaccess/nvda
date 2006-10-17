@@ -110,7 +110,6 @@ class NVDAObject(object):
 		self.child=args[1]
 		self.keyMap={}
 		self.lastStates=self.getStates()
-		self.doneFocus=False
 		self.hash=self._makeHash()
 
 	def _makeHash(self):
@@ -355,27 +354,23 @@ class NVDAObject(object):
 		audio.cancel()
 		self.speakObject()
 
-	def oupdateVirtualBuffer(self):
-		if api.getVirtualBuffer().getWindowHandle()!=self.getWindowHandle():
-			api.setVirtualBuffer(self.getWindowHandle())
-			audio.speakMessage("new buffer")
-	def updateMenuMode(self):
-		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
-			api.setMenuMode(False)
-
-	def event_showObject(self):
+	def event_show(self):
 		if self.getRole()==ROLE_SYSTEM_MENUPOPUP:
 			self.event_menuStart()
 
-	def event_focusObject(self):
-		if self.doneFocus:
-			return
-		self.doneFocus=True
+	def updateMenuMode(self):
+		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
+			api.setMenuMode(False)
+		if self.getRole()==ROLE_SYSTEM_MENUITEM:
+			audio.cancel()
+
+	def event_gainFocus(self):
 		self.updateMenuMode()
 		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
-			if self.getRole()==ROLE_SYSTEM_MENUITEM:
-				audio.cancel()
 			self.speakObject()
+
+	def event_looseFocus(self):
+		pass
 
 	def event_menuStart(self):
 		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
@@ -389,11 +384,11 @@ class NVDAObject(object):
 					child.speakObject()
 					break
 
-	def event_objectValueChange(self):
+	def event_valueChange(self):
 		if self.hasFocus():
 			audio.speakObjectProperties(value=self.getValue())
 
-	def event_objectStateChange(self):
+	def event_stateChange(self):
 		states=self.getStates()
 		if states is None or not self.hasFocus():
 			return None
@@ -403,17 +398,17 @@ class NVDAObject(object):
 		audio.speakObjectProperties(stateText=getStateNames(self.filterStates(states_off),opposite=True))
 		self.lastStates=states
 
-	def event_objectSelection(self):
-		return self.event_objectStateChange()
+	def event_selection(self):
+		return self.event_stateChange()
 
-	def event_objectSelectionAdd(self):
-		return self.event_objectStateChange()
+	def event_selectionAdd(self):
+		return self.event_stateChange()
 
-	def event_objectSelectionRemove(self):
-		return self.event_objectStateChange()
+	def event_selectionRemove(self):
+		return self.event_stateChange()
 
-	def event_objectSelectionWithIn(self):
-		return self.event_objectStateChange()
+	def event_selectionWithIn(self):
+		return self.event_stateChange()
 
 class NVDAObject_dialog(NVDAObject):
 	"""
@@ -586,8 +581,12 @@ class NVDAObject_edit(NVDAObject):
 	def wordEnd(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
 		while (pos is not None) and (self.getCharacter(pos) not in whitespace):
+			oldPos=pos
 			pos=self.nextCharacter(pos)
-		return pos
+		if pos is not None:
+			return pos
+		else:
+			return oldPos
 
 	def nextWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
@@ -634,7 +633,7 @@ class NVDAObject_edit(NVDAObject):
 		textLength=self.getTextLength()
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		winUser.sendMessage(self.getWindowHandle(),WM_GETTEXT,textLength+1,textBuf)
-		return textBuf.value+u""
+		return textBuf.value+u"\0"
 
 	def getTextRange(self,start,end):
 		text=self.getText()
@@ -781,7 +780,7 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getCharacter(self.reviewCursor))
 
 
-	def event_objectValueChange(self):
+	def event_valueChange(self):
 		pass
 
 class NVDAObject_checkBox(NVDAObject):
@@ -805,10 +804,7 @@ class NVDAObject_mozillaUIWindowClass(NVDAObject):
 	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
 	"""
 
-	def event_focusObject(self):
-		if api.getVirtualBuffer().getWindowHandle()!=api.getForegroundWindow():
-			api.setVirtualBuffer(api.getForegroundWindow())
-		api.setVirtualBufferCursor(api.getVirtualBuffer().getCaretPosition())
+	def event_gainFocus(self):
 		self.speakObject()
 
 class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
@@ -821,9 +817,6 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 	def getValue(self):
 		return ""
-
-	def event_focusObject(self):
-		self.updateVirtualBuffer()
 
 	def getFirstChild(self):
 		try:
@@ -838,19 +831,13 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 			except:
 				pass
 
+	def event_gainFocus(self):
+		pass
 
 class NVDAObject_mozillaContentWindowClass(NVDAObject):
-	"""
-	Based on NVDAObject, but updateVirtualBuffer only updates the cursor position, not the actual buffer since only the document object should do this. 
-	"""
+	pass
 
 class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWindowClass):
-	"""
-	Based on NVDAObject_mozillaContentWindowClass but:
-	*Value is always empty because otherwise it is the URL of the document.
-	*updateVirtualBuffer loads the document --- this window and its decendant objects in to the buffer if the busy state is not set, rather than the 	foreground window. It then speaks the contents.
-	*event_objectStateChange reports that the document is loading if the busy state is turned on, but if it is turned off, it updates the virtualBuffer.
-	"""
 
 	def getValue(self):
 		return ""
@@ -951,33 +938,13 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 
 class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
-	def __init__(self,*args):
-		NVDAObject_edit.__init__(self,*args)
-		processID=self.getProcessID()[0]
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-			pass
-		winKernel.attachConsole(processID)
-		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
-		self.oldLines=self.getVisibleLines()
-		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		self.consoleEventHookHandles=[]
-
-	def __del__(self):
-		for handle in self.consoleEventHookHandles:
-			winUser.unhookWinEventHook(handle)
-		NVDAObject_edit.__del__(self)
-
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
-		if self.hasFocus():
-			self.reviewCursor=self.getCaretPosition()
-			newLines=self.getVisibleLines()
-			if newLines!=self.oldLines:
-				if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
-					self.speakNewText(newLines,self.oldLines)
-				self.oldLines=newLines
+		self.reviewCursor=self.getCaretPosition()
+		newLines=self.getVisibleLines()
+		if newLines!=self.oldLines:
+			if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
+				self.speakNewText(newLines,self.oldLines)
+			self.oldLines=newLines
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -1045,10 +1012,18 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def getValue(self):
 		return ""
 
-	def event_focusObject(self):
-		if self.doneFocus:
-			return
-		self.doneFocus=True
+	def event_gainFocus(self):
+		processID=self.getProcessID()[0]
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
+			pass
+		winKernel.attachConsole(processID)
+		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		self.oldLines=self.getVisibleLines()
+		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
+		self.consoleEventHookHandles=[]
 		audio.speakObjectProperties(typeString="console")
 		for line in self.getVisibleLines():
 			audio.speakText(line)
@@ -1056,6 +1031,14 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
 				self.consoleEventHookHandles.append(handle)
+
+	def event_looseFocus(self):
+		for handle in self.consoleEventHookHandles:
+			winUser.unhookWinEvent(handle)
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
 
 	def speakNewText(self,newLines,oldLines):
 		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))

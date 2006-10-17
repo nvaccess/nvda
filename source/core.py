@@ -73,9 +73,15 @@ def main():
 	try:
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
+			if not keyboardHandler.queue_keys.empty():
+				keyPress=keyboardHandler.queue_keys.get()
+				if keyPress == (None, "SilenceSpeech"):
+					audio.cancel()
+				else:
+					executeScript(keyPress)
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
-				if MSAAEvent[0] in ["focusObject","foreground"]:
+				if MSAAEvent[0] in ["gainFocus","foreground"]:
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 				if MSAAEvent[0]=="foreground":
 					try:
@@ -89,12 +95,6 @@ def main():
 					except:
 						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
-			if not keyboardHandler.queue_keys.empty():
-				keyPress=keyboardHandler.queue_keys.get()
-				if keyPress == (None, "SilenceSpeech"):
-					audio.cancel()
-				else:
-					executeScript(keyPress)
 			if not mouseHandler.queue_events.empty():
 				mouseEvent=mouseHandler.queue_events.get_nowait()
 				if mouseEvent[0]=="mouseMove":
@@ -111,6 +111,8 @@ def main():
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")
+	if globalVars.focusObject and getattr(globalVars.focusObject,"event_looseFocus"):
+		globalVars.focusObject.event_looseFocus()
 	gui.terminate()
 	try:
 		config.save()
