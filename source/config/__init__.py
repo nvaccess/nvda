@@ -38,13 +38,14 @@ confspec = StringIO("""# NVDA Configuration File
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
-	reportFontChanges = boolean(default=false)
-	reportFontSizeChanges = boolean(default=true)
-	reportFontAttributeChanges = boolean(default=True)
-	reportAlignmentChanges = boolean(default=True)
-	reportStyleChanges = boolean(default=false)
-	reportTables = boolean(default=true)
-	reportPageChanges = boolean(default=true)
+	#Each take a string of either "never", "changes", or "always"
+	reportFontName = string(default="never")
+	reportFontSize = string(default="never")
+	reportFontAttributes = string(default="never")
+	reportStyle = string(default="never")
+	reportPage = string(default="changes")
+	reportTables = string(default="changes")
+	reportAlignment = string(default="always")
 
 """.replace("\n", "\r\n"))
 

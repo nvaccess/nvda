@@ -57,7 +57,11 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
 	def __init__(self,*args):
 		NVDAObjects.NVDAObject_ITextDocument.__init__(self,*args)
-		self.lastStyle=self.lastIsTable=self.lastRowNumber=self.lastColumnNumber=self.lastPageNumber=None
+		self.presentationTable.insert(0,[self.msgStyle,["documentFormatting","reportStyle"],None,None])
+		self.presentationTable.insert(1,[self.msgPage,["documentFormatting","reportPage"],None,None])
+		self.presentationTable.insert(2,[self.msgTable,["documentFormatting","reportTables"],None,None])
+		self.presentationTable.insert(3,[self.msgTableRow,["documentFormatting","reportTables"],None,None])
+		self.presentationTable.insert(4,[self.msgTableColumn,["documentFormatting","reportTables"],None,None])
 		self.keyMap.update({
 key("control+ExtendedUp"):self.script_moveByParagraph,
 key("control+ExtendedDown"):self.script_moveByParagraph,
@@ -75,63 +79,150 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT
 
+	def event_caret(self):
+		pass #These scripts must move the selection to get lines etc
+
+
+	def getVisibleRange(self):
+		(left,top,right,bottom)=self.getLocation()
+		topRange=self.dom.Application.ActiveWindow.RangeFromPoint(left,top)
+		bottomRange=self.dom.Application.ActiveWindow.RangeFromPoint(right,bottom)
+		return (topRange.Start,bottomRange.Start)
+
 	def getLineNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdFirstCharacterLineNumber)-1
 
+	def getLineStart(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(wdLine)
+		lineStart=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		return lineStart
+
+	def getLineLength(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(wdLine)
+		lineStart=rangeObj.Start
+		lineEnd=rangeObj.End
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		return lineEnd-lineStart
+
 	def getLine(self,pos):
-		saveSelection=self.dom.Selection
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj=self.dom.Selection
 		rangeObj.Start=rangeObj.End=pos
 		rangeObj.Expand(wdLine)
 		text=rangeObj.Text
-		self.dom.Selection.Start=saveSelection.Start
-		self.dom.Selection.End=saveSelection.End
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if text=="\r\n":
+			text=None
 		return text
 
-	def getCurrentLine(self):
-		return self.getLine(self.getCaretPosition())
+	def nextWord(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdWord,1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
+
+	def previousWord(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdWord,-1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
+
+	def nextLine(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdLine,1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
+
+	def previousLine(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdLine,-1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
 
 	def getStyle(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Style.NameLocal
 
-	def getCurrentStyle(self):
-		return self.getStyle(self.getCaretPosition())
+	def msgStyle(self,pos):
+		return "Style %s"%self.getStyle(pos)
+
 
 	def isTable(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdWithInTable)
 
-	def isCurrentTable(self):
-		return self.isTable(self.getCaretPosition())
+	def msgTable(self,pos):
+		if self.isTable(pos):
+			return "Table with %s columns and %s rows"%(self.getColumnCount(pos),self.getRowCount(pos))
+		else:
+			return "not in table"
 
 	def getRowNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdStartOfRangeRowNumber)
 
-	def getCurrentRowNumber(self):
-		return self.getRowNumber(self.getCaretPosition())
+	def msgTableRow(self,pos):
+		rowNum=self.getRowNumber(pos)
+		if rowNum>0:
+			return "row %s"%rowNum
 
 	def getRowCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdMaximumNumberOfRows)
 
-	def getCurrentRowCount(self):
-		return self.getRowCount(self.getCaretPosition())
-
 	def getColumnNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdStartOfRangeColumnNumber)
 
-	def getCurrentColumnNumber(self):
-		return self.getColumnNumber(self.getCaretPosition())
+	def msgTableColumn(self,pos):
+		columnNum=self.getColumnNumber(pos)
+		if columnNum>0:
+			return "column %s"%columnNum
 
 	def getColumnCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -146,8 +237,13 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdActiveEndPageNumber)
 
-	def getCurrentPageNumber(self):
-		return self.getPageNumber(self.getCaretPosition())
+	def msgPage(self,pos):
+		pageNum=self.getPageNumber(pos)
+		pageCount=self.getPageCount()
+		if pageCount>0:
+			return "Page %s of %s"%(pageNum,pageCount)
+		else:
+			return "page %s"%pageNum
 
 	def getPageCount(self):
 		return self.dom.Selection.Information(wdNumberOfPagesInDocument)
@@ -165,38 +261,7 @@ key("control+ExtendedDown"):self.script_moveByParagraph,
 		elif align>=wdAlignParagraphJustify:
 			return "justified"
 
-	def reportChanges(self):
-		if conf["documentFormatting"]["reportPageChanges"]:
-			pageNumber=self.getCurrentPageNumber()
-			if pageNumber!=self.lastPageNumber:
-				audio.speakMessage("Page %d of %d"%(pageNumber,self.getPageCount()))
-				self.lastPageNumber=pageNumber
-		if conf["documentFormatting"]["reportTables"]:
-			isTable=self.isCurrentTable()
-			if isTable!=self.lastIsTable:
-				if isTable:
-					audio.speakMessage("Table with %d columns and %d rows"%(self.getCurrentColumnCount(),self.getCurrentRowCount()))
-				elif self.lastIsTable: 
-					audio.speakMessage("out of table")
-					self.lastRowNumber=self.lastColumnNumber=None
-				self.lastIsTable=isTable
-			rowNumber=self.getCurrentRowNumber()
-			columnNumber=self.getCurrentColumnNumber()
-			if self.isCurrentTable() and ((rowNumber!=self.lastRowNumber) or (columnNumber!=self.lastColumnNumber)):
-				audio.speakMessage("col %d row %d"%(columnNumber,rowNumber))
-				self.lastRowNumber=rowNumber
-				self.lastColumnNumber=columnNumber
-		if conf["documentFormatting"]["reportStyleChanges"]:
-			style=self.getCurrentStyle()
-			if style!=self.lastStyle:
-				audio.speakMessage("%s style"%style)
-				self.lastStyle=style
-		NVDAObjects.NVDAObject_ITextDocument.reportChanges(self)
-
 	def script_moveByParagraph(self,keyPress):
 		sendKey(keyPress)
 		audio.speakText(self.getCurrentParagraph())
 
-	def script_formatInfo(self,keyPress):
-		audio.speakMessage("%s style"%self.getCurrentStyle())
-		NVDAObjects.NVDAObject_ITextDocument.script_formatInfo(self,keyPress)

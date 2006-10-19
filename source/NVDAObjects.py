@@ -454,6 +454,7 @@ class NVDAObject_edit(NVDAObject):
 	def __init__(self,*args):
 		NVDAObject.__init__(self,*args)
 		self.reviewCursor=0
+		self.presentationTable=[]
 		self.keyMap={
 			key("ExtendedUp"):self.script_moveByLine,
 			key("ExtendedDown"):self.script_moveByLine,
@@ -486,6 +487,7 @@ class NVDAObject_edit(NVDAObject):
 			key("home"):self.script_review_previousLine,
 			key("up"):self.script_review_currentLine,
 			key("prior"):self.script_review_nextLine,
+			key("insert+f"):self.script_formatInfo,
 		}
 
 	def getValue(self):
@@ -611,7 +613,7 @@ class NVDAObject_edit(NVDAObject):
 		lineLength=self.getLineLength(pos)
 		lineStart=self.getLineStart(pos)
 		lineEnd=lineStart+lineLength
-		newPos=lineEnd+2
+		newPos=lineEnd+1
 		if newPos<self.getEndPosition():
 			return newPos
 		else:
@@ -659,18 +661,62 @@ class NVDAObject_edit(NVDAObject):
 	def event_caret(self):
 		self.reviewCursor=self.getCaretPosition()
 
+	def event_gainFocus(self):
+		self.speakObject()
+		self.reportPresentation()
+
+	def reportPresentation(self):
+		#The old values are at index 2
+		pos=self.getCaretPosition()
+		for ruleNum in range(len(self.presentationTable)):
+			messageFunc=self.presentationTable[ruleNum][0]
+			reportWhen=conf
+			for item in self.presentationTable[ruleNum][1]:
+				reportWhen=reportWhen.get(item,{})
+			if reportWhen=="always":
+				message=messageFunc(pos)
+				if message is not None:
+					audio.speakMessage(messageFunc(pos))
+			elif reportWhen=="changes":
+				message=messageFunc(pos)
+				if (message is not None) and (message!=self.presentationTable[ruleNum][2]):
+					audio.speakMessage(message)
+				self.presentationTable[ruleNum][2]=message
+
+	def reportReviewPresentation(self):
+		#The old values are at index 3
+		pos=self.reviewCursor
+		for ruleNum in range(len(self.presentationTable)):
+			messageFunc=self.presentationTable[ruleNum][0]
+			reportWhen=conf
+			for item in self.presentationTable[ruleNum][1]:
+				reportWhen=reportWhen.get(item,{})
+			if reportWhen=="always":
+				message=messageFunc(pos)
+				if message is not None:
+					audio.speakMessage(messageFunc(pos))
+			elif reportWhen=="changes":
+				message=messageFunc(pos)
+				if (message is not None) and (message!=self.presentationTable[ruleNum][3]):
+					audio.speakMessage(message)
+				self.presentationTable[ruleNum][3]=message
 
 	def script_moveByLine(self,keyPress):
 		sendKey(keyPress)
+		self.reportPresentation()
 		audio.speakText(self.getCurrentLine())
 
 	def script_moveByCharacter(self,keyPress):
 		sendKey(keyPress)
+		self.reportPresentation()
 		audio.speakSymbol(self.getCurrentCharacter())
+		self.reviewCursor=self.getCaretPosition()
 
 	def script_moveByWord(self,keyPress):
 		sendKey(keyPress)
+		self.reportPresentation()
 		audio.speakText(self.getCurrentWord())
+		self.reviewCursor=self.getCaretPosition()
 
 	def script_changeSelection(self,keyPress):
 		selectionPoints=self.getCaretRange()
@@ -689,14 +735,16 @@ class NVDAObject_edit(NVDAObject):
 				audio.speakText("unselected %s"%self.getTextRange(newSelectionPoints[1],selectionPoints[1]))
 			elif newSelectionPoints[0]<selectionPoints[0]:
 				audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],selectionPoints[0]))
+		self.reviewCursor=self.getCaretPosition()
 
 	def script_delete(self,keyPress):
 		sendKey(keyPress)
+		self.reportPresentation()
 		audio.speakSymbol(self.getCurrentCharacter())
+		self.reviewCursor=self.getCaretPosition()
 
 	def script_backspace(self,keyPress):
 		point=self.getCaretPosition()
-
 		if not point==self.getStartPosition():
 			delChar=self.getCharacter(self.previousCharacter(point))
 			sendKey(keyPress)
@@ -705,8 +753,17 @@ class NVDAObject_edit(NVDAObject):
 				audio.speakSymbol(delChar)
 		else:
 			sendKey(keyPress)
+		self.reviewCursor=self.getCaretPosition()
+
+	def script_formatInfo(self,keyPress):
+		pos=self.getCaretPosition()
+		for rule in self.presentationTable:
+			message=rule[0](pos)
+			if message is not None:
+				audio.speakMessage(message)
 
 	def script_review_currentLine(self,keyPress):
+		self.reportReviewPresentation()
 		line=self.getLine(self.reviewCursor)
 		audio.speakText(line)
 
@@ -715,6 +772,7 @@ class NVDAObject_edit(NVDAObject):
 		nextPos=self.nextLine(pos)
 		if (pos<self.getVisibleRange()[1]) and (nextPos is not None):
 			self.reviewCursor=nextPos
+			self.reportReviewPresentation()
 		else:
 			audio.speakMessage("bottom")
 		audio.speakText(self.getLine(self.reviewCursor))
@@ -724,11 +782,13 @@ class NVDAObject_edit(NVDAObject):
 		prevPos=self.previousLine(pos)
 		if (pos>self.getVisibleRange()[0]) and (prevPos is not None):
 			self.reviewCursor=prevPos
+			self.reportReviewPresentation()
 		else:
 			audio.speakMessage("top")
 		audio.speakText(self.getLine(self.reviewCursor))
 
 	def script_review_currentWord(self,keyPress):
+		self.reportReviewPresentation()
 		word=self.getWord(self.reviewCursor)
 		audio.speakText(word)
 
@@ -737,6 +797,7 @@ class NVDAObject_edit(NVDAObject):
 		nextPos=self.nextWord(pos)
 		if (pos<self.getVisibleRange()[1]) and (nextPos is not None):
 			self.reviewCursor=nextPos
+			self.reportReviewPresentation()
 			if self.getLineNumber(nextPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
@@ -748,6 +809,7 @@ class NVDAObject_edit(NVDAObject):
 		prevPos=self.previousWord(pos)
 		if (prevPos is not None) and (prevPos>=self.getVisibleRange()[0]):
 			self.reviewCursor=prevPos
+			self.reportReviewPresentation()
 			if self.getLineNumber(prevPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
@@ -755,6 +817,7 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getWord(self.reviewCursor))
 
 	def script_review_currentCharacter(self,keyPress):
+		self.reportReviewPresentation()
 		character=self.getCharacter(self.reviewCursor)
 		audio.speakText(character)
 
@@ -765,6 +828,7 @@ class NVDAObject_edit(NVDAObject):
 		lineEnd=lineStart+self.getLineLength(pos)
 		if (nextPos<=lineEnd) and (nextPos is not None): 
 			self.reviewCursor=nextPos
+			self.reportReviewPresentation()
 		else:
 			audio.speakMessage("right")
 		audio.speakText(self.getCharacter(self.reviewCursor))
@@ -775,10 +839,10 @@ class NVDAObject_edit(NVDAObject):
 		lineStart=self.getLineStart(pos)
 		if (prevPos>=lineStart) and (prevPos is not None):
 			self.reviewCursor=prevPos
+			self.reportReviewPresentation()
 		else:
 			audio.speakMessage("left")
 		audio.speakText(self.getCharacter(self.reviewCursor))
-
 
 	def event_valueChange(self):
 		pass
@@ -1100,10 +1164,14 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 	def __init__(self,*args):
 		NVDAObject_edit.__init__(self,*args)
 		self.dom=self.getDocumentObjectModel()
-		self.lastFontName=self.lastFontSize=self.lastBold=self.lastItalic=self.lastUnderline=self.lastParagraphAlignment=None
-		self.keyMap.update({
-key("insert+f"):self.script_formatInfo,
-})
+		self.presentationTable+=[
+			[self.msgFontName,["documentFormatting","reportFontName"],None,None],
+			[self.msgFontSize,["documentFormatting","reportFontSize"],None,None],
+			[self.msgBold,["documentFormatting","reportFontAttributes"],None,None],
+			[self.msgItalic,["documentFormatting","reportFontAttributes"],None,None],
+			[self.msgUnderline,["documentFormatting","reportFontAttributes"],None,None],
+			[self.msgParagraphAlignment,["documentFormatting","reportAlignment"],None,None],
+		]
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -1220,16 +1288,16 @@ key("insert+f"):self.script_formatInfo,
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Font.Name
 
-	def getCurrentFontName(self):
-		return self.getFontName(self.getCaretPosition())
+	def msgFontName(self,pos):
+		return "font %s"%self.getFontName(pos)
 
 	def getFontSize(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return int(rangeObj.Font.Size)
 
-	def getCurrentFontSize(self):
-		return self.getFontSize(self.getCaretPosition())
+	def msgFontSize(self,pos):
+		return "%s point"%self.getFontSize(pos)
 
 	def getParagraphAlignment(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -1244,104 +1312,44 @@ key("insert+f"):self.script_formatInfo,
 		elif align>=self.constants.tomAlignJustify:
 			return "justified"
 
-	def getCurrentParagraphAlignment(self):
-		return self.getParagraphAlignment(self.getCaretPosition())
+	def msgParagraphAlignment(self,pos):
+		return "alignment %s"%self.getParagraphAlignment(pos)
 
 	def isBold(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Font.Bold
 
-	def isCurrentBold(self):
-		return self.isBold(self.getCaretPosition())
+	def msgBold(self,pos):
+		if self.isBold(pos):
+			bold="on"
+		else:
+			bold="off"
+		return "bold %s"%bold
 
 	def isItalic(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Font.Italic
 
-	def isCurrentItalic(self):
-		return self.isItalic(self.getCaretPosition())
+	def msgItalic(self,pos):
+		if self.isItalic(pos):
+			italic="on"
+		else:
+			italic="off"
+		return "italic %s"%italic
 
 	def isUnderline(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Font.Underline
 
-	def isCurrentUnderline(self):
-		return self.isUnderline(self.getCaretPosition())
-
-	def reportChanges(self):
-		if conf["documentFormatting"]["reportFontChanges"]:
-			fontName=self.getCurrentFontName()
-			if fontName!=self.lastFontName:
-				audio.speakMessage("%s font"%fontName)
-				self.lastFontName=fontName
-		if conf["documentFormatting"]["reportFontSizeChanges"]:
-			fontSize=self.getCurrentFontSize()
-			if fontSize!=self.lastFontSize:
-				audio.speakMessage("%s point"%fontSize)
-				self.lastFontSize=fontSize
-		if conf["documentFormatting"]["reportFontAttributeChanges"]:
-			bold=self.isCurrentBold()
-			if bold!=self.lastBold:
-				if bold:
-					audio.speakMessage("bold")
-				elif self.lastBold:
-					audio.speakMessage("bold off")
-				self.lastBold=bold
-				self.lastFontSize=fontSize
-			italic=self.isCurrentItalic()
-			if italic!=self.lastItalic:
-				if italic:
-					audio.speakMessage("Italic")
-				elif self.lastItalic:
-					audio.speakMessage("italic off")
-				self.lastItalic=italic
-			underline=self.isCurrentUnderline()
-			if underline!=self.lastUnderline:
-				if underline:
-					audio.speakMessage("underline")
-				elif self.lastUnderline:
-					audio.speakMessage("underline off")
-				self.lastUnderline=underline
-		if conf["documentFormatting"]["reportAlignmentChanges"]:
-			alignment=self.getCurrentParagraphAlignment()
-			if alignment!=self.lastParagraphAlignment:
-				audio.speakMessage("Aligned %s"%alignment)
-				self.lastParagraphAlignment=alignment
-
-	def script_moveByLine(self,keyPress):
-		sendKey(keyPress)
-		self.reportChanges()
-		audio.speakText(self.getCurrentLine())
-
-	def script_moveByCharacter(self,keyPress):
-		sendKey(keyPress)
-		self.reportChanges()
-		audio.speakSymbol(self.getCurrentCharacter())
-
-	def script_moveByWord(self,keyPress):
-		sendKey(keyPress)
-		self.reportChanges()
-		audio.speakText(self.getCurrentWord())
-
-	def script_delete(self,keyPress):
-		sendKey(keyPress)
-		self.reportChanges()
-		audio.speakSymbol(self.getCurrentCharacter())
-
-	def script_formatInfo(self,keyPress):
-		audio.speakMessage("%s font"%self.getCurrentFontName())
-		audio.speakMessage("%d point"%self.getCurrentFontSize())
-		if self.isCurrentBold():
-			audio.speakMessage("bold")
-		if self.isCurrentItalic():
-			audio.speakMessage("Italic")
-		if self.isCurrentUnderline():
-			audio.speakMessage("underline")
-		audio.speakMessage("align %s"%self.getCurrentParagraphAlignment())
-
+	def msgUnderline(self,pos):
+		if self.isUnderline(pos):
+			underline="on"
+		else:
+			underline="off"
+		return "underline %s"%underline
 
 staticMap={
 ("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd,
