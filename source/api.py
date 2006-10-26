@@ -18,6 +18,7 @@ import appModuleHandler
 import gui
 from keyboardHandler import key 
 import NVDAObjects
+import virtualBuffer
 
 # Initialise WMI; required for getProcessName.
 #_wmi = win32com.client.GetObject('winmgmts:')
@@ -45,6 +46,9 @@ def setFocusObjectByLocator(window,objectID,childID):
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 			audio.speakMessage("Error in event_looseFocus of focusObject")
+	v=getVirtualBuffer()
+	if (not v) or (window!=v.getWindowHandle()):
+		setVirtualBuffer(window)
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -53,6 +57,12 @@ def setFocusObjectByLocator(window,objectID,childID):
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
 	return True
+
+def getVirtualBuffer():
+	return globalVars.virtualBuffer
+
+def setVirtualBuffer(window):
+	globalVars.virtualBuffer=virtualBuffer.getVirtualBuffer(window)
 
 def getNavigatorObject():
 	return globalVars.navigatorObject
@@ -134,6 +144,14 @@ def executeEvent(name,window,objectID,childID):
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 			return False
+	v=getVirtualBuffer()
+	if v and (v.getWindowHandle()==window) and hasattr(v,"event_%s"%name):
+		event=getattr(v,"event_%s"%name)
+		try:
+			event(objectID,childID)
+		except:
+			audio.speakMessage("Error in virtualBuffer event")
+			debug.writeException("virtualBuffer event")
 	focusLocator=getFocusLocator()
 	focusObject=getFocusObject()
 	if (((window,objectID,childID)==focusLocator) or (name=="caret")) and hasattr(focusObject,"event_%s"%name): 

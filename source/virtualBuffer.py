@@ -1,327 +1,264 @@
 import time
-import re
-import winUser
+import win32com.client
 import debug
-from constants import *
+import winUser
 import api
 import audio
-from config import conf
 import NVDAObjects
 
-re_multiSpacing=re.compile(r' +')
-
-def makeVirtualBuffer(window):
+def getVirtualBuffer(window):
 	className=winUser.getClassName(window)
-	if classMap.has_key(className):
-		return classMap[className](window)
+	if dynamicMap.has_key(className):
+		return dynamicMap[className](window)
+	elif staticMap.has_key(className):
+		return staticMap[className](window)
 	else:
 		return virtualBuffer(window)
 
 class virtualBuffer(object):
 
 	def __init__(self,window):
-		self.virtualBuffer=[]
-		self.objects={}
 		self.window=window
-		self.virtualBuffer=[("None",None)]
-		#self.appendObject(window,OBJID_CLIENT,0)
+		self.text=""
+		self.caret=0
 
 	def getWindowHandle(self):
 		return self.window
- 
-	def getRootObject(self):
-		if len(self.virtualBuffer)>=1:
-			return self.virtualBuffer[0][1]
-		else:
-			return None
-
-	def handleEvent(self,name,window,objectID,childID):
-		if name not in ["focusObject","foreground"]:
-			self.refreshObject(window,objectID,childID)
-
-	def generateObjectBuffer(self,thisObj):
-		if thisObj.getWindowHandle()!=self.getWindowHandle():
-			return None
-		lines=[]
-		objList={}
-		children=thisObj.getChildren()
-		for child in children:
-			res=self.generateObjectBuffer(child)
-			if res and (len(res)==2):
-				for key in res[1]:
-					value=(res[1][key][0]+len(lines)+1,res[1][key][1]+len(lines)+1)
-					objList[key]=value
-				lines+=res[0]
-		startText=""
-		if conf["presentation"]["reportKeyboardShortcuts"]:
-			startText+=" %s"%thisObj.getKeyboardShortcut()
-		startText+=" %s"%thisObj.getName()
-		startText+=" %s"%thisObj.getTypeString()
-		startText+=" %s"%thisObj.getValue()
-		startText+=" %s"%NVDAObjects.getStateNames(thisObj.filterStates(thisObj.getStates()))
-		startText=startText.strip()
-		startText=re_multiSpacing.sub(" ",startText)
-		if len(lines)>0:
-			startText+=" (has %d items):"%len(children)
-			endText="end of %s %s"%(thisObj.getName(),thisObj.getTypeString())
-			lines.append((endText,thisObj))
-		lines.insert(0,(startText,thisObj))
-		objList[thisObj]=(0,len(lines))
-		return (lines,objList)
-
-
-	def appendObject(self,window,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-		if obj:
-			res=self.generateObjectBuffer(obj)
-			if not res:
-				return
-			lines,objList=res
-			for key in objList:
-				value=(objList[key][0]+len(self.virtualBuffer),objList[key][1]+len(self.virtualBuffer))
-				self.objects[key]=value
-			self.virtualBuffer+=lines
-
-	def refreshObject(self,window,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-		if not obj:
-			return
-		r=self.getObjectRange(obj)
-		if not r:
-			return
-		for lineNum in range(r[0],r[1]):
-			if self.objects.has_key(self.virtualBuffer[r[0]][1]):
-				del self.objects[self.virtualBuffer[r[0]][1]]
-			del self.virtualBuffer[r[0]]
-		res=self.generateObjectBuffer(obj)
-		if not res:
-			return
-		lines,objList=res
-		for key in objList:
-			value=(objList[key][0]+r[0],objList[key][1]+r[0])
-			self.objects[key]=value
-		for line in enumerate(lines):
-			self.virtualBuffer.insert(r[0]+line[0],line[1])
-
-	def getObjectRange(self,obj):
-		return self.objects.get(obj,None)
-
-	def getPositionByLocator(self,window,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-		if not obj:
-			return None
-		if self.objects.has_key(obj):
-			return [self.objects[obj][0],0]
-		return None
 
 	def getCaretPosition(self):
-		pos=apply(self.getPositionByLocator,api.getFocusLocator())
-		if not pos:
-			pos=[0,0]
-		return pos
-
-	def getEndPosition(self):
-		endLineNum=self.getLineCount()-1
-		endLineLength=self.getLineLength(endLineNum)
-		endLineStart=self.getLineStart(endLineNum)
-		pos=[endLineNum,endLineStart[1]+endLineLength]
-		return pos
-
- 	def getLineNumber(self,pos):
-		return pos[0]
-
-	def getLineStart(self,lineNum):
-		return [lineNum,0]
-
-	def activatePosition(self,pos):
-		obj=self.virtualBuffer[self.getLineNumber(pos)][1]
-		obj.doDefaultAction()
-
-	def nextCharacter(self,pos):
-		lineNum=self.getLineNumber(pos)
-		lineCount=self.getLineCount()
-		if pos[1]==self.getLineLength(lineNum)-1:
-			if lineNum==lineCount-1:
-				return None
-			else:
-				return [lineNum+1,0]
-		else:
-			return [lineNum,pos[1]+1]
-
-	def previousCharacter(self,pos):
-		lineNum=self.getLineNumber(pos)
-		lineCount=self.getLineCount()
-		if pos[1]==0:
-			if lineNum==0:
-				return None
-			else:
-				return [lineNum-1,self.getLineLength(lineNum-1)-1]
-		else:
-			return [lineNum,pos[1]-1]
-
-	def nextWord(self,pos):
-		whitespace=['\n','\r','\t',' ','\0']
-		curPos=pos
-		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
-			curPos=self.nextCharacter(curPos)
-		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) in whitespace):
-			curPos=self.nextCharacter(curPos)
-		return curPos
-
-	def previousWord(self,pos):
-		whitespace=['\n','\r','\t',' ','\0']
-		curPos=pos
-		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
-			curPos=self.previousCharacter(curPos)
-		pos=curPos
-		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) in whitespace):
-			curPos=self.previousCharacter(curPos)
-		pos=curPos
-		while curPos and (self.getLineNumber(pos)==self.getLineNumber(curPos)) and (self.getCharacter(curPos) not in whitespace):
-			curPos=self.previousCharacter(curPos)
-		if curPos:
-			curPos=self.nextCharacter(curPos)
-		return curPos
+		return self.caret
 
 	def getLineCount(self):
-		return len(self.virtualBuffer)
+		return -1
 
-	def getLineLength(self,lineNum):
-		return len(self.virtualBuffer[lineNum][0])
+	def getLineNumber(self,pos):
+		return -1
 
-	def getLine(self,lineNum):
-		return self.virtualBuffer[lineNum][0]
+	def getLineStart(self,pos):
+		startPos=pos
+		if startPos>0 and (self.text[startPos]=='\n'):
+			startPos=startPos-1
+		while (startPos>-1) and (self.text[startPos]!='\n'):
+			startPos-=1
+		return startPos+1
 
-	def getText(self):
-		text=""
-		for line in self.virtualBuffer:
-			text+="%s "%line[0]
-		return text
+	def getLineLength(self,pos):
+		startPos=self.getLineStart(pos)
+		endPos=startPos
+		while (endPos<=self.getTextLength()) and (self.text[endPos]!='\n'):
+			endPos+=1
+		return (endPos-startPos)
+
+	def getLine(self,pos):
+		startPos=self.getLineStart(pos)
+		length=self.getLineLength(pos)
+		endPos=startPos+length
+		return self.getTextRange(startPos,endPos)
 
 	def getTextRange(self,start,end):
-		if start[0]==end[0]:
-			if start[1]>end[1]:
-				return None
-			line=self.getLine(start[0])
-			if not line:
-				return None
-			return line[start[1]:end[1]]
-		else:
-			if start[0]>end[0]:
-				return None
-			lines=[]
-			for lineNum in range(start[0]+1,end[0]):
-				lines.append(self.getLine(lineNum))
-			lines.insert(0,self.getLine(start[0])[start[1]:])
-			endLine=self.getLine(end[0])
-			if endLine:
-				lines.append(endLine[:end[1]])
-			text=""
-			for line in lines:
-				text+="%s"%line
-			return text
+		if (start>=end) or (end>len(self.text)):
+			return None
+		return self.text[start:end]
 
-	def getCharacter(self,pos):
-		return self.getTextRange(pos,self.nextCharacter(pos))
+	def getTextLength(self):
+		return len(self.text)
 
-	def getWord(self,pos):
-		nextWord=self.nextWord(pos)
-		if nextWord:
-			return self.getTextRange(pos,nextWord)
-		else:
-			return self.getTextRange(pos,self.getEndPosition())
+	def getText(self):
+		return self.text
 
-class virtualBuffer_mozillaContentWindowClass(virtualBuffer):
+class virtualBuffer_internetExplorerServer(virtualBuffer):
+
+	clsid_shellWindows='{9BA05972-F6A8-11CF-A442-00A0C90A8F39}'
 
 	def __init__(self,window):
-		audio.cancel()
-		audio.speakMessage("Loading document...")
 		virtualBuffer.__init__(self,window)
-		time.sleep(0.1)
+		shellWindows=win32com.client.Dispatch(self.clsid_shellWindows)
+		for i in range(100):
+			if shellWindows[i].Hwnd==winUser.getForegroundWindow():
+				foundNum=i
+				break
+		self.dom=shellWindows[foundNum].document
+		audio.speakMessage("Loading document...")
+		while shellWindows[foundNum].busy:
+			time.sleep(0.01)
+		self.addNode(self.dom.body)
 		audio.cancel()
 		audio.speakText(self.getText())
 
-	def refreshObject(self,window,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-		if obj and (obj.getRole()==ROLE_SYSTEM_DOCUMENT):
-			audio.cancel()
-			audio.speakMessage("Loading document...")
-			if obj.getStates()&STATE_SYSTEM_BUSY:
-				return
-		virtualBuffer.refreshObject(self,window,objectID,childID)
-		if obj and (obj.getRole()==ROLE_SYSTEM_DOCUMENT):
-			time.sleep(0.1)
-			audio.cancel()
-			audio.speakText(self.getText())
+	def event_gainFocus(self,objectID,childID):
+		focus=self.getFocusDomNode()
+		index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
+		if index==-1:
+			return
+		self.caret=self.nodes[index][2]
 
-class virtualBuffer_mozillaUIWindowClass(virtualBuffer):
+	def activatePosition(self,pos):
+		index=self.getNodesIndexByPosition(pos)
+		if index==-1:
+			return
+		uniqueID=self.nodes[index][0]
+		domNode=self.getDomNodeByUniqueID(uniqueID)
+		if not domNode:
+			return
+		domNode.click()
 
-	def generateObjectBuffer(self,obj):
-		return ([("%s %s"%(obj.getName(),obj.getTypeString()),obj)],{})
+	def addNode(self,domNode):
+		(nodes,text)=self.generateNode(domNode)
+		self.nodes=nodes
+		self.text=text
 
-class virtualBuffer_cursorBufferWindow(object):
+	def refreshNode(self,uniqueID):
+		domNode=self.getDomNodeByUniqueID(uniqueID)
+		index=self.getNodesIndexByUniqueID(uniqueID)
+		preText=self.text[0:self.nodes[index][2]]
+		postText=self.text[self.nodes[index][3]:]
+		preNodes=self.nodes[0:index]
+		postNodes=self.nodes[index+self.nodes[index][1]:]
+		(newNodes,newText)=self.generateNode(domNode)
+		for j in range(len(newNodes)):
+			newNodes[index][2]+=len(preText)
+			newNodes[index][3]+=len(preText)
+		self.text=preText+newText+postText
+		self.nodes=preNodes+newNodes+postNodes
 
-	def __init__(self,window):
-		self.window=window
+	def getDomNodeByMSAA(self,objectID,childID):
+		obj=NVDAObjects.getNVDAObjectByLocator(self.getWindowHandle(),objectID,childID)
+		if not obj:
+			return None
+		(left,top,right,bottom)=obj.getLocation()
+		domNode=self.dom.elementFromPoint(left,top)
+		return domNode
 
-	def handleEvent(self,name,window,objectID,childID):
-		pass
+	def getDomNodeByUniqueID(self,uniqueID):
+		for num in range(self.dom.all.length):
+			if int(self.dom.all[num].uniqueID[6:])==uniqueID:
+				return self.dom.all[num]
+		else:
+			return
 
-	def getWindowHandle(self):
-		return self.window
+	def getNodesIndexByUniqueID(self,uniqueID):
+		for i in range(len(self.nodes)):
+			if self.nodes[i][0]==uniqueID:
+				return i
+		else:
+			return -1
 
-	def getCaretPosition(self):
-		obj=api.getFocusObject()
-		return obj.getCaretPosition()
+	def getFocusDomNode(self):
+		return self.dom.activeElement
 
-	def getLineNumber(self,pos):
-		obj=api.getFocusObject()
-		return obj.getLineNumber(pos)-obj.getVisibleLineRange()[0]
+	def getStartTag(self,domNode):
+		tagName=self.getTagName(domNode)
+		if tagName=="A":
+			return "link "
+		elif tagName=="TABLE":
+			return "\ntable\n"
+		elif tagName=="UL":
+			return "\nlist with %s items "%domNode.Children.length
+		elif tagName=="LI":
+			return "\n* "
+		elif tagName=="IMG":
+			label=domNode.getAttribute('alt')
+			if not label:
+				label=domNode.getAttribute('src')
+			return "graphic %s"%domNode.getAttribute('alt')
+		elif tagName in ["H1","H2","H3","H4","H5","H6"]:
+			return "\n%s "%tagName 
+		elif tagName=="P":
+			return "\n"
+		else:
+			return ""
 
-	def getLineStart(self,lineNum):
-		obj=api.getFocusObject()
-		lineNum=lineNum+obj.getVisibleLineRange()[0]
-		return obj.getLineStart(lineNum)
+	def getEndTag(self,domNode):
+		tagName=self.getTagName(domNode)
+		if tagName=="TABLE":
+			return "\ntable end"
+		elif tagName=="UL":
+			return "\nlist end\n"
+		elif tagName=="P":
+			return "\n"
+		elif tagName=="INPUT":
+			type=domNode.getAttribute('type')
+			if type=="text":
+				text="edit %s"%domNode.getAttribute('value')
+			elif type=="checkbox":
+				text="checkbox "
+			elif type=="radio":
+				text="radioButton "
+			else:
+				text=type
+			return "\n%s\n"%text
+		elif tagName=="SELECT":
+			return "\nCombo box %s\n"%domNode.getAttribute('value')
+		else:
+			return ""
 
-	def getLine(self,lineNum):
-		obj=api.getFocusObject()
-		lineNum=lineNum+obj.getVisibleLineRange()[0]
-		return obj.getLine(lineNum)
+	def getData(self,domNode):
+		tagName=self.getTagName(domNode)
+		if tagName=="TEXT":
+			parentTagName=self.getTagName(domNode.parentNode)
+		else:
+			parentTagName=""
+		try:
+			data="%s "%domNode.data
+		except:
+			return ""
+		if data and not data.isspace():
+			return "%s "%data
+		if parentTagName in ["A","B","EM","FONT","H1","H2","H3","H4","H5","h6","I","STRONG"]:
+			return "%s "%data
+		elif data and (not data.isspace()):
+			return "\n%s "%data
+		else:
+			return ""
 
-	def getLineCount(self):
-		obj=api.getFocusObject()
-		v=obj.getVisibleLineRange()
-		return (v[1]-v[0])+1
-		return obj.getLineCount()
+	def getUniqueID(self,domNode):
+		try:
+			return int(domNode.uniqueID[6:])
+		except:
+			return -1
 
-	def nextCharacter(self,pos):
-		obj=api.getFocusObject()
-		return obj.nextCharacter(pos)
+	def getNodesIndexByPosition(self,pos):
+		for i in range(len(self.nodes))[::-1]:
+			if (pos>=self.nodes[i][2]) and (pos<=self.nodes[i][3]):
+				return i
+		else:
+			return -1
 
-	def previousCharacter(self,pos):
-		obj=api.getFocusObject()
-		return obj.previousCharacter(pos)
+	def getTagName(self,domNode):
+		try:
+			return domNode.tagName
+		except:
+			return "TEXT"
 
-	def nextWord(self,pos):
-		obj=api.getFocusObject()
-		return obj.nextWord(pos)
+	def generateNode(self,domNode):
+		uniqueID=self.getUniqueID(domNode)
+		text=""
+		nodes=[]
+		text+=self.getStartTag(domNode)
+		text+=self.getData(domNode)
+		childCount=0
+		try:
+			childDomNode=domNode.firstChild
+		except:
+			childDomNode=None
+		while childDomNode:
+			childCount+=1
+			(childNodes,childText)=self.generateNode(childDomNode)
+			for j in range(len(childNodes)):
+				childNodes[j][2]+=len(text)
+				childNodes[j][3]+=len(text)
+			text+=childText
+			nodes+=childNodes
+			try:
+				childDomNode=childDomNode.nextSibling
+			except:
+				childDomNode=None
+		text+=self.getEndTag(domNode)
+		nodes.insert(0,[uniqueID,childCount,0,len(text)])
+		return (nodes,text)
 
-	def previousWord(self,pos):
-		obj=api.getFocusObject()
-		return obj.previousWord(pos)
-
-	def getCharacter(self,pos):
-		obj=api.getFocusObject()
-		return obj.getCharacter(pos)
-
-	def getWord(self,pos):
-		obj=api.getFocusObject()
-		return obj.getWord(pos)
-
-classMap={
-"MozillaContentWindowClass":virtualBuffer_mozillaContentWindowClass,
-"MozillaUIWindowClass":virtualBuffer_mozillaUIWindowClass,
-"Edit":virtualBuffer_cursorBufferWindow,
-"RICHEDIT50W":virtualBuffer_cursorBufferWindow,
-"ConsoleWindowClass":virtualBuffer_cursorBufferWindow,
+staticMap={
+"Internet Explorer_Server":virtualBuffer_internetExplorerServer,
 }
+
+dynamicMap={}

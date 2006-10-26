@@ -664,6 +664,7 @@ class NVDAObject_edit(NVDAObject):
 	def event_gainFocus(self):
 		self.speakObject()
 		self.reportPresentation()
+		self.reviewCursor=self.getCaretPosition()
 
 	def reportPresentation(self):
 		#The old values are at index 2
@@ -1351,6 +1352,50 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 			underline="off"
 		return "underline %s"%underline
 
+class NVDAObject_virtualBuffer(NVDAObject_edit):
+
+	def __init__(self,*args):
+		NVDAObject_edit.__init__(self,*args)
+		self.keyMap.update({
+			key("ExtendedRight"):self.script_review_nextCharacter,
+			key("ExtendedLeft"):self.script_review_previousCharacter,
+			key("ExtendedUp"):self.script_review_previousLine,
+			key("ExtendedDown"):self.script_review_nextLine,
+			key("Control+ExtendedRight"):self.script_review_nextWord,
+			key("Control+ExtendedLeft"):self.script_review_previousWord,
+		key("Return"):self.script_activatePosition,
+		})
+
+	def getValue(self):
+		return NVDAObject.getValue(self)
+
+	def getCaretPosition(self):
+		return api.getVirtualBuffer().getCaretPosition()
+
+	def getLineCount(self):
+		return api.getVirtualBuffer().getLineCount()
+
+	def getLineNumber(self,pos):
+		return api.getVirtualBuffer().getLineNumber(pos)
+
+	def getLineStart(self,pos):
+		return api.getVirtualBuffer().getLineStart(pos)
+
+	def getLineLength(self,pos):
+		return api.getVirtualBuffer().getLineLength(pos)
+
+	def getLine(self,pos):
+		return api.getVirtualBuffer().getLine(pos)
+
+	def getTextLength(self):
+		return api.getVirtualBuffer().getTextLength()
+
+	def getText(self):
+		return api.getVirtualBuffer().getText()
+
+	def script_activatePosition(self,keyPress):
+		api.getVirtualBuffer().activatePosition(self.reviewCursor)
+
 staticMap={
 ("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd,
 ("tooltips_class32",None):NVDAObject_tooltip,
@@ -1370,6 +1415,7 @@ staticMap={
 ("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaContentWindowClass_listItem,
 ("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaContentWindowClass_text,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClass,
+("Internet Explorer_Server",None):NVDAObject_virtualBuffer,
 }
 
 dynamicMap={}

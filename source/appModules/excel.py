@@ -1,7 +1,6 @@
 import time
 import re
-import ctypes
-import comtypes.automation
+import win32com.client
 import audio
 import debug
 from constants import *
@@ -9,6 +8,8 @@ from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
 import _MSOffice
+
+excel_application=win32com.client.dynamic.Dispatch('Excel.Application')
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -33,9 +34,7 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def __init__(self,*args):
 		NVDAObjects.NVDAObject.__init__(self,*args)
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),-16,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
-		self.excelObject=comtypes.client.dynamic.Dispatch(ptr).Application
+		self.excelObject=excel_application
 		self.keyMap.update({
 key("Insert+f"):self.script_formatInfo,
 key("ExtendedUp"):self.script_moveByCell,
@@ -71,10 +70,11 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 		return self.excelObject.Selection
 
 	def getActiveCell(self):
+		time.sleep(0.01)
 		return self.excelObject.ActiveCell
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+		return re_dollaredAddress.sub(r"\1\2",cell.Address)
 
 	def getCellText(self,cell):
 		return cell.Text
@@ -109,10 +109,8 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 	def isUnderline(self,cell):
 		return cell.Font.Underline
 
-	def event_focusObject(self):
-		if self.doneFocus:
-			return
-		NVDAObjects.NVDAObject.event_focusObject(self)
+	def event_gainFocus(self):
+		self.speakObject()
 		self.speakSelection()
 
 	def script_moveByCell(self,keyPress):
