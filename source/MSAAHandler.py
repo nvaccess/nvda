@@ -248,6 +248,7 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	debug.writeMessage("objectEventCallback: %s, %s, %s, %s"%(eventMap[eventID],window,objectID,childID))
 	try:
 		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW,EVENT_OBJECT_HIDE]):
 			objectID=OBJID_CLIENT
@@ -255,7 +256,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			while queue_events.full():
 				time.sleep(0.001)
 			queue_events.put(("caret",window,objectID,childID))
-		elif winUser.isWindow(window) and (objectID not in [OBJID_CURSOR,OBJID_CARET]) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
+		elif winUser.isWindow(window) and (objectID>=-4) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
 			eventName=eventMap.get(eventID,None)
 			while queue_events.full():
 				time.sleep(0.001)

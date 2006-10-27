@@ -82,16 +82,22 @@ def main():
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
 				if MSAAEvent[0] in ["gainFocus","foreground"]:
+					debug.writeMessage("track: set focus by locator")
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+					debug.writeMessage("track: done")
 				if MSAAEvent[0]=="foreground":
 					try:
+						debug.writeMessage("track: event_foreground")
 						event_foreground(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+						debug.writeMessage("track: done")
 					except:
 						debug.writeException("core.main: while executing event_%s in core"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
 					try:
+						debug.writeMessage("track: executeEvent")
 						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
+						debug.writeMessage("track: done")
 					except:
 						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
