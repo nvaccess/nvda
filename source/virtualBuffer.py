@@ -77,20 +77,27 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			if shellWindows[i].Hwnd==winUser.getForegroundWindow():
 				foundNum=i
 				break
-		self.dom=shellWindows[foundNum].document
-		audio.speakMessage("Loading document...")
-		while shellWindows[foundNum].busy:
-			time.sleep(0.01)
-		self.addNode(self.dom.body)
-		audio.cancel()
-		audio.speakText(self.getText())
+		self.app=shellWindows[foundNum]
+		self.dom=self.app.document
 
 	def event_gainFocus(self,objectID,childID):
-		focus=self.getFocusDomNode()
-		index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
-		if index==-1:
-			return
-		self.caret=self.nodes[index][2]
+		if objectID==-4:
+			while self.app.busy:
+				time.sleep(0.01)
+			self.loadDocument()
+		else:
+			focus=self.getFocusDomNode()
+			index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
+			if index==-1:
+				return
+			self.caret=self.nodes[index][2]
+
+	def loadDocument(self):
+		audio.speakMessage("Loading document...")
+		self.addNode(self.dom.body)
+		self.caret=0
+		audio.cancel()
+		audio.speakText(self.getText())
 
 	def activatePosition(self,pos):
 		index=self.getNodesIndexByPosition(pos)
@@ -154,6 +161,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			return "\ntable\n"
 		elif tagName=="UL":
 			return "\nlist with %s items "%domNode.Children.length
+		elif tagName=="DL":
+			return "\ndefinition list with %s items "%domNode.Children.length
 		elif tagName=="LI":
 			return "\n* "
 		elif tagName=="IMG":
@@ -163,32 +172,42 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			return "graphic %s"%domNode.getAttribute('alt')
 		elif tagName in ["H1","H2","H3","H4","H5","H6"]:
 			return "\n%s "%tagName 
-		elif tagName=="P":
+		elif tagName in ["BR","P","DIV"]:
 			return "\n"
+		elif tagName=="BLOCKQUOTE":
+			return "\nblockQuote\n"
+		elif tagName=="INPUT":
+			type=domNode.getAttribute('type')
+			if type=="hidden":
+				text=""
+			elif type=="text":
+				text="edit %s"%domNode.getAttribute('value')
+			elif type=="checkbox":
+				text="checkbox "
+			elif type=="radio":
+				text="radioButton "
+			elif type=="submit":
+				text="%s button"%domNode.getAttribute('value')
+			else:
+				text=type
+			return "\n%s\n"%text
+		elif tagName=="SELECT":
+			return "\nCombo box %s\n"%domNode.getAttribute('value')
 		else:
 			return ""
 
 	def getEndTag(self,domNode):
 		tagName=self.getTagName(domNode)
 		if tagName=="TABLE":
-			return "\ntable end"
+			return "\ntable end\n"
 		elif tagName=="UL":
 			return "\nlist end\n"
-		elif tagName=="P":
+		elif tagName=="DL":
+			return "\nlist end\n"
+		elif tagName in ["P","DIV"]:
 			return "\n"
-		elif tagName=="INPUT":
-			type=domNode.getAttribute('type')
-			if type=="text":
-				text="edit %s"%domNode.getAttribute('value')
-			elif type=="checkbox":
-				text="checkbox "
-			elif type=="radio":
-				text="radioButton "
-			else:
-				text=type
-			return "\n%s\n"%text
-		elif tagName=="SELECT":
-			return "\nCombo box %s\n"%domNode.getAttribute('value')
+		elif tagName=="BLOCKQUOTE":
+			return "\nblockQuote end\n"
 		else:
 			return ""
 
