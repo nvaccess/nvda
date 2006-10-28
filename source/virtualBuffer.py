@@ -82,8 +82,6 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def event_gainFocus(self,objectID,childID):
 		if objectID==-4:
-			while self.app.busy:
-				time.sleep(0.01)
 			self.loadDocument()
 		else:
 			focus=self.getFocusDomNode()
@@ -93,6 +91,14 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			self.caret=self.nodes[index][2]
 
 	def loadDocument(self):
+		oldStatusText=None
+		while self.app.busy:
+			time.sleep(0.01)
+			statusText=self.app.statusText
+			if statusText!=oldStatusText:
+				audio.cancel()
+				audio.speakMessage(statusText)
+				oldStatusText=statusText
 		audio.speakMessage("Loading document...")
 		self.addNode(self.dom.body)
 		self.caret=0
@@ -156,15 +162,21 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 	def getStartTag(self,domNode):
 		tagName=self.getTagName(domNode)
 		if tagName=="A":
-			return "link "
+			return "\nlink "
 		elif tagName=="TABLE":
 			return "\ntable\n"
 		elif tagName=="UL":
 			return "\nlist with %s items "%domNode.Children.length
+		elif tagName=="OL":
+			return "\nlist with %s items "%domNode.Children.length
 		elif tagName=="DL":
 			return "\ndefinition list with %s items "%domNode.Children.length
 		elif tagName=="LI":
-			return "\n* "
+			return "\n"
+		elif tagName=="DT":
+			return "\n"
+		elif tagName=="DD":
+			return "="
 		elif tagName=="IMG":
 			label=domNode.getAttribute('alt')
 			if not label:
@@ -198,13 +210,17 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def getEndTag(self,domNode):
 		tagName=self.getTagName(domNode)
+		if tagName=="A":
+			return "\n"
 		if tagName=="TABLE":
 			return "\ntable end\n"
 		elif tagName=="UL":
 			return "\nlist end\n"
+		elif tagName=="OL":
+			return "\nlist end\n"
 		elif tagName=="DL":
 			return "\nlist end\n"
-		elif tagName in ["P","DIV"]:
+		elif tagName in ["P","DIV","TH","TD"]:
 			return "\n"
 		elif tagName=="BLOCKQUOTE":
 			return "\nblockQuote end\n"
