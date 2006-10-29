@@ -30,14 +30,6 @@ def unpackWords(bytes):
 	byteString=struct.pack('i',bytes)
 	return struct.unpack('hh',byteString)
 
-def old_LOWORD(bytes):
-	(hi,lo)=unpackWords(bytes)
-	return lo
-
-def old_HIWORD(bytes):
-	(hi,lo)=unpackWords(bytes)
-	return hi
-
 def LOWORD(bytes):
 	return win32api.LOWORD(bytes)
 
@@ -70,6 +62,9 @@ def isDecendantWindow(parentHwnd,childHwnd):
 
 def getForegroundWindow():
 	return user32.GetForegroundWindow()
+
+def getDesktopWindow():
+		return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
 	return user32.GetWindowLong(hwnd)

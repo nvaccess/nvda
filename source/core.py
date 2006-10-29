@@ -56,12 +56,10 @@ def main():
 		audio.initialize()
 		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
 		foregroundWindow=winUser.getForegroundWindow()
-		if (foregroundWindow is None) or (foregroundWindow==0):
-			debug.writeError("core.main: failed to get foreground window")
-			sys.exit()
-		if not setFocusObjectByLocator(foregroundWindow,-4,0):
-			debug.writeError("core.main: failed to set focus object (%s,%s,%s)"%(foregroundWindow,OBJID_CLIENT,0))
-			return False
+		if foregroundWindow==0:
+			foregroundWindow=winUser.getDesktopWindow()
+		if foregroundWindow:
+			setFocusObjectByLocator(foregroundWindow,-4,0)
 		event_foreground(foregroundWindow,-4,0)
 		MSAAHandler.initialize()
 		keyboardHandler.initialize()
@@ -82,22 +80,16 @@ def main():
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
 				if MSAAEvent[0] in ["gainFocus","foreground"]:
-					debug.writeMessage("track: set focus by locator")
 					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-					debug.writeMessage("track: done")
 				if MSAAEvent[0]=="foreground":
 					try:
-						debug.writeMessage("track: event_foreground")
 						event_foreground(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-						debug.writeMessage("track: done")
 					except:
 						debug.writeException("core.main: while executing event_%s in core"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
 					try:
-						debug.writeMessage("track: executeEvent")
 						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-						debug.writeMessage("track: done")
 					except:
 						debug.writeException("core.main: while executing event_%s"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])

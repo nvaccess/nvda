@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-focus_locator=(None,None,None)
+focus_locator=(0,0,0)
 focusObject=None
 mouse_location=None
 navigatorObject=None

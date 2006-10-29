@@ -73,22 +73,33 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 	def __init__(self,window):
 		virtualBuffer.__init__(self,window)
 		shellWindows=win32com.client.Dispatch(self.clsid_shellWindows)
-		for i in range(100):
-			if shellWindows[i].Hwnd==winUser.getForegroundWindow():
-				foundNum=i
-				break
-		self.app=shellWindows[foundNum]
-		self.dom=self.app.document
+		foundNum=0
+		try:
+			for i in range(100):
+				if shellWindows[i].Hwnd==winUser.getForegroundWindow():
+					foundNum=i
+					break
+		except:
+			pass
+		if foundNum:
+			self.app=shellWindows[foundNum]
+			self.dom=self.app.document
+		else:
+			self.app=None
+			self.dom=None
+		self.nodes=[]
+		self.text=""
 
 	def event_gainFocus(self,objectID,childID):
-		if objectID==-4:
-			self.loadDocument()
-		else:
-			focus=self.getFocusDomNode()
-			index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
-			if index==-1:
-				return
-			self.caret=self.nodes[index][2]
+		if self.dom:
+			if objectID==-4:
+				self.loadDocument()
+			else:
+				focus=self.getFocusDomNode()
+				index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
+				if index==-1:
+					return
+				self.caret=self.nodes[index][2]
 
 	def loadDocument(self):
 		oldStatusText=None

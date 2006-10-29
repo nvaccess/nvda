@@ -388,6 +388,10 @@ class NVDAObject(object):
 		if self.hasFocus():
 			audio.speakObjectProperties(value=self.getValue())
 
+	def event_nameChange(self):
+		if self.hasFocus():
+			audio.speakObjectProperties(name=self.getName())
+
 	def event_stateChange(self):
 		states=self.getStates()
 		if states is None or not self.hasFocus():
