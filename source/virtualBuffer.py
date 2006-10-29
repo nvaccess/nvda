@@ -290,6 +290,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		while childDomNode:
 			childCount+=1
 			(childNodes,childText)=self.generateNode(childDomNode)
+			if (len(text)>0) and (len(childText)>0) and (text[-1]=='\n') and (childText[0]=='\n'):
+				text=text[:-1]
 			for j in range(len(childNodes)):
 				childNodes[j][2]+=len(text)
 				childNodes[j][3]+=len(text)
