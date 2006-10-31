@@ -109,7 +109,7 @@ def main():
 	except:
 			debug.writeException("core.py main loop")
 			audio.speakMessage("Exception in main loop")
-	if globalVars.focusObject and getattr(globalVars.focusObject,"event_looseFocus"):
+	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
 	gui.terminate()
 	try:

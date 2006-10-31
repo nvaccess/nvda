@@ -1,7 +1,7 @@
 import winsound
 import ctypes
-import comtypes.client
-import comtypes.client.dynamic
+import comtypes.automation
+import comtypesClient
 import time
 import difflib
 import thread
@@ -17,6 +17,7 @@ from config import conf
 import dictionaries
 import api
 import MSAAHandler
+import virtualBuffer
 
 #Some api functions specific to NVDAObjects
 
@@ -368,9 +369,6 @@ class NVDAObject(object):
 		self.updateMenuMode()
 		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
 			self.speakObject()
-
-	def event_looseFocus(self):
-		pass
 
 	def event_menuStart(self):
 		if self.getRole() not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
@@ -1007,13 +1005,31 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 
 class NVDAObject_consoleWindowClass(NVDAObject_edit):
 
+	def __init__(self,*args):
+		NVDAObject_edit.__init__(self,*args)
+		processID=self.getProcessID()[0]
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
+			pass
+		winKernel.attachConsole(processID)
+		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		self.consoleEventHookHandles=[]
+
+	def __del__(self):
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
+		NVDAObject_edit.__del__(self)
+
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		self.reviewCursor=self.getCaretPosition()
 		newLines=self.getVisibleLines()
-		if newLines!=self.oldLines:
-			if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
-				self.speakNewText(newLines,self.oldLines)
-			self.oldLines=newLines
+		if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
+			self.speakNewText(newLines,self.oldLines)
+		self.oldLines=newLines
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -1082,32 +1098,22 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 		return ""
 
 	def event_gainFocus(self):
-		processID=self.getProcessID()[0]
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-			pass
-		winKernel.attachConsole(processID)
-		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
 		self.oldLines=self.getVisibleLines()
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		self.consoleEventHookHandles=[]
-		audio.speakObjectProperties(typeString="console")
-		for line in self.getVisibleLines():
-			audio.speakText(line)
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
 				self.consoleEventHookHandles.append(handle)
+			else:
+				raise OSError('Could not register console event %s'%eventID)
+		audio.speakObjectProperties(typeString="console")
+		for line in self.getVisibleLines():
+			audio.speakText(line)
 
 	def event_looseFocus(self):
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
 
 	def speakNewText(self,newLines,oldLines):
 		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
@@ -1183,12 +1189,12 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		NVDAObject_edit.__del__(self)
 
 	def getDocumentObjectModel(self):
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
 		if res==0:
-			return comtypes.client.dynamic.Dispatch(ptr)
+			return comtypesClient.wrap(domPointer)
 		else:
-			raise OSError("No IDispatch interface")
+			raise OSError("No ITextDocument interface")
 
 	def destroyObjectModel(self,om):
 		pass
@@ -1361,45 +1367,110 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 	def __init__(self,*args):
 		NVDAObject_edit.__init__(self,*args)
 		self.keyMap.update({
-			key("ExtendedRight"):self.script_review_nextCharacter,
-			key("ExtendedLeft"):self.script_review_previousCharacter,
-			key("ExtendedUp"):self.script_review_previousLine,
-			key("ExtendedDown"):self.script_review_nextLine,
-			key("Control+ExtendedRight"):self.script_review_nextWord,
-			key("Control+ExtendedLeft"):self.script_review_previousWord,
-		key("Return"):self.script_activatePosition,
+			key("insert+space"):self.script_toggleFocusInteractionMode,
+			key("ExtendedRight"):self.script_rightArrow,
+			key("ExtendedLeft"):self.script_leftArrow,
+			key("ExtendedUp"):self.script_upArrow,
+			key("ExtendedDown"):self.script_downArrow,
+			key("Control+ExtendedRight"):self.script_controlRightArrow,
+			key("Control+ExtendedLeft"):self.script_controlLeftArrow,
+		key("Return"):self.script_enter,
+		key("Space"):self.script_space,
 		})
+		self.focusInteractionMode=False
 
 	def getValue(self):
 		return NVDAObject.getValue(self)
 
 	def getCaretPosition(self):
-		return api.getVirtualBuffer().getCaretPosition()
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getCaretPosition()
 
 	def getLineCount(self):
-		return api.getVirtualBuffer().getLineCount()
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLineCount()
 
 	def getLineNumber(self,pos):
-		return api.getVirtualBuffer().getLineNumber(pos)
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLineNumber(pos)
 
 	def getLineStart(self,pos):
-		return api.getVirtualBuffer().getLineStart(pos)
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLineStart(pos)
 
 	def getLineLength(self,pos):
-		return api.getVirtualBuffer().getLineLength(pos)
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLineLength(pos)
 
 	def getLine(self,pos):
-		return api.getVirtualBuffer().getLine(pos)
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLine(pos)
 
 	def getTextLength(self):
-		return api.getVirtualBuffer().getTextLength()
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getTextLength()
 
 	def getText(self):
-		return api.getVirtualBuffer().getText()
+		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getText()
+
+	def script_toggleFocusInteractionMode(self,keyPress):
+		if not self.focusInteractionMode:
+			audio.speakMessage("Focus interaction mode on")
+			self.focusInteractionMode=True
+		else:
+			audio.speakMessage("Focus interaction mode off")
+			self.focusInteractionMode=False
+
+	def script_rightArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_nextCharacter(keyPress)
+
+	def script_leftArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_previousCharacter(keyPress)
+
+	def script_upArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_previousLine(keyPress)
+
+	def script_downArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_nextLine(keyPress)
+
+	def script_controlRightArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_nextWord(keyPress)
+
+	def script_controlLeftArrow(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_previousWord(keyPress)
+
+	def script_enter(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
+
+	def script_space(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
 
 	def script_activatePosition(self,keyPress):
-		api.getVirtualBuffer().activatePosition(self.reviewCursor)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
 
+class NVDAObject_internetExplorerServer(NVDAObject_virtualBuffer):
+
+	def event_gainFocus(self):
+		if self.getRole() not in [ROLE_SYSTEM_DOCUMENT,ROLE_SYSTEM_PANE]:
+			NVDAObject_virtualBuffer.event_gainFocus(self)
+ 
 staticMap={
 ("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd,
 ("tooltips_class32",None):NVDAObject_tooltip,
@@ -1419,7 +1490,7 @@ staticMap={
 ("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaContentWindowClass_listItem,
 ("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaContentWindowClass_text,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClass,
-("Internet Explorer_Server",None):NVDAObject_virtualBuffer,
+("Internet Explorer_Server",None):NVDAObject_internetExplorerServer,
 }
 
 dynamicMap={}

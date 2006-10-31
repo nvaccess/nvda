@@ -7,7 +7,8 @@
 import time
 import Queue
 import ctypes
-import comtypes
+import comtypesClient
+import comtypes.automation
 import debug
 import winUser
 import audio
@@ -20,8 +21,8 @@ queue_events=Queue.Queue(100)
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
 
-#Load the IAccessible class from oleacc.dll
-IAccessible=comtypes.client.GetModule('oleacc.dll').IAccessible
+#Load IAccessible from oleacc.dll
+IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 
 #A class to wrap an IAccessible object in to handle addRef and Release
 class IAccWrapper(object):
@@ -248,9 +249,8 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	debug.writeMessage("objectEventCallback: %s, %s, %s, %s"%(eventMap[eventID],window,objectID,childID))
 	try:
-		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW,EVENT_OBJECT_HIDE]):
+		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW]):
 			objectID=OBJID_CLIENT
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
 			while queue_events.full():

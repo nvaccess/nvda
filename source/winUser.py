@@ -51,6 +51,9 @@ def dispatchMessage(*args):
 def peekMessage(*args):
 	return user32.PeekMessageW(*args)
 
+def registerWindowMessage(name):
+	return user32.RegisterWindowMessageW(name)
+
 def isWindow(hwnd):
 	return user32.IsWindow(hwnd)
 

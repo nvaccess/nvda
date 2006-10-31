@@ -1,2 +1,2 @@
-*Some errors with previousWord and nextWord on the virtualBuffer when in dos console windows.
-*Dos windows sometimes read new text twice (seems to be an issue when the user has had focus on multiple dos windows)
+*Sometimes NVDA does not detect the alt key going up after an alt+tab which can mean that it does funny things untill you perhaps enter and leave the menu bar or something.
+*Dos console support does not work if NVDA executable is run as a service. This chould be to do with how I'm using cygwin to test NVDA as a service, or it could have something to do with services not being able to atache to other consoles.

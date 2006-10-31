@@ -1,19 +1,40 @@
 import time
-import win32com.client
+import ctypes
+import comtypes.automation
+import comtypesClient
 import debug
 import winUser
 import api
 import audio
 import NVDAObjects
 
+runningTable={}
+
+def isVirtualBufferWindow(window):
+	return runningTable.has_key(window)
+
+def removeVirtualBuffer(window):
+	debug.writeMessage("vb: removing %s (%s)"%(runningTable[window].__class__.__name__,window))
+	del runningTable[window]
+
 def getVirtualBuffer(window):
-	className=winUser.getClassName(window)
-	if dynamicMap.has_key(className):
-		return dynamicMap[className](window)
-	elif staticMap.has_key(className):
-		return staticMap[className](window)
+	if not runningTable.has_key(window):
+		className=winUser.getClassName(window)
+		if dynamicMap.has_key(className):
+			virtualBufferClass=dynamicMap[className]
+		elif staticMap.has_key(className):
+			virtualBufferClass=staticMap[className]
+		else:
+			virtualBufferClass=None
+		if virtualBufferClass:
+			virtualBufferObject=virtualBufferClass(window)
+			runningTable[window]=virtualBufferObject
+			debug.writeMessage("vb: got %s (%s)"%(runningTable[window].__class__.__name__,window))
+			return runningTable[window]
 	else:
-		return virtualBuffer(window)
+		debug.writeMessage("vb: fetching window")
+		debug.writeMessage("vb: got %s (%s)"%(runningTable[window].__class__.__name__,window))
+		return runningTable[window]
 
 class virtualBuffer(object):
 
@@ -68,48 +89,34 @@ class virtualBuffer(object):
 
 class virtualBuffer_internetExplorerServer(virtualBuffer):
 
-	clsid_shellWindows='{9BA05972-F6A8-11CF-A442-00A0C90A8F39}'
-
 	def __init__(self,window):
 		virtualBuffer.__init__(self,window)
-		shellWindows=win32com.client.Dispatch(self.clsid_shellWindows)
-		foundNum=0
-		try:
-			for i in range(100):
-				if shellWindows[i].Hwnd==winUser.getForegroundWindow():
-					foundNum=i
-					break
-		except:
-			pass
-		if foundNum:
-			self.app=shellWindows[foundNum]
-			self.dom=self.app.document
-		else:
-			self.app=None
-			self.dom=None
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
+		lresult=winUser.sendMessage(window,wm,0,0)
+		debug.writeMessage("vb internetExplorer_server: lresult %s"%lresult)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
+		self.dom=comtypesClient.wrap(domPointer)
+		debug.writeMessage("vb internetExplorer_server dom %s"%self.dom)
+		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
 		self.nodes=[]
 		self.text=""
+		self.loadDocument()
 
 	def event_gainFocus(self,objectID,childID):
-		if self.dom:
-			if objectID==-4:
-				self.loadDocument()
-			else:
-				focus=self.getFocusDomNode()
-				index=self.getNodesIndexByUniqueID(self.getUniqueID(focus))
-				if index==-1:
-					return
-				self.caret=self.nodes[index][2]
+		if len(self.nodes)==0:
+			return
+		focusDomNode=self.getFocusDomNode()
+		uniqueID=self.getUniqueID(focusDomNode)
+		index=self.getNodesIndexByUniqueID(uniqueID)
+		if index==-1:
+			return
+		self.caret=self.nodes[index][2]
 
 	def loadDocument(self):
-		oldStatusText=None
-		while self.app.busy:
-			time.sleep(0.01)
-			statusText=self.app.statusText
-			if statusText!=oldStatusText:
-				audio.cancel()
-				audio.speakMessage(statusText)
-				oldStatusText=statusText
 		audio.speakMessage("Loading document...")
 		self.addNode(self.dom.body)
 		self.caret=0
@@ -128,8 +135,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def addNode(self,domNode):
 		(nodes,text)=self.generateNode(domNode)
-		self.nodes=nodes
-		self.text=text
+		self.nodes+=nodes
+		self.text+=text
 
 	def refreshNode(self,uniqueID):
 		domNode=self.getDomNodeByUniqueID(uniqueID)
@@ -154,11 +161,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		return domNode
 
 	def getDomNodeByUniqueID(self,uniqueID):
-		for num in range(self.dom.all.length):
-			if int(self.dom.all[num].uniqueID[6:])==uniqueID:
-				return self.dom.all[num]
-		else:
-			return
+		return self.dom.getElementById(uniqueID)
 
 	def getNodesIndexByUniqueID(self,uniqueID):
 		for i in range(len(self.nodes)):
@@ -177,11 +180,11 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		elif tagName=="TABLE":
 			return "\ntable\n"
 		elif tagName=="UL":
-			return "\nlist with %s items "%domNode.Children.length
+			return "\nlist with %s items "%domNode.children.length
 		elif tagName=="OL":
-			return "\nlist with %s items "%domNode.Children.length
+			return "\nlist with %s items "%domNode.children.length
 		elif tagName=="DL":
-			return "\ndefinition list with %s items "%domNode.Children.length
+			return "\ndefinition list with %s items "%domNode.children.length
 		elif tagName=="LI":
 			return "\n"
 		elif tagName=="DT":
@@ -207,8 +210,12 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 				text="edit %s"%domNode.getAttribute('value')
 			elif type=="checkbox":
 				text="checkbox "
+				if domNode.checked:
+					text+="checked "
 			elif type=="radio":
 				text="radioButton "
+				if domNode.checked:
+					text+="checked "
 			elif type=="submit":
 				text="%s button"%domNode.getAttribute('value')
 			else:
@@ -259,7 +266,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def getUniqueID(self,domNode):
 		try:
-			return int(domNode.uniqueID[6:])
+			return domNode.uniqueID
 		except:
 			return -1
 
@@ -278,6 +285,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def generateNode(self,domNode):
 		uniqueID=self.getUniqueID(domNode)
+		debug.writeMessage("vb internetExplorer_server generateNode %s"%domNode)
 		text=""
 		nodes=[]
 		text+=self.getStartTag(domNode)
@@ -302,7 +310,11 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			except:
 				childDomNode=None
 		text+=self.getEndTag(domNode)
-		nodes.insert(0,[uniqueID,childCount,0,len(text)])
+		if (len(text)>0) and (text[0]=='\n'):
+			start=1
+		else:
+			start=0
+		nodes.insert(0,[uniqueID,childCount,start,len(text)])
 		return (nodes,text)
 
 staticMap={

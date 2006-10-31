@@ -120,6 +120,7 @@ def internal_keyDownEvent(event):
 			return True
 		if (event.Key=="Lmenu") or (event.Key=="Rmenu"):
 			altDown=True
+			debug.writeMessage("key: alt down")
 			return True
 		if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
 			winDown=True
@@ -154,6 +155,7 @@ def internal_keyDownEvent(event):
 			return True
 		#if altDown and (event.KeyID==pyHook.HookConstants.vk_to_id['VK_TAB']):
 		#	return True
+		debug.writeMessage("key press: %s"%str(keyPress))
 		if api.keyHasScript(keyPress):
 			try:
 				queue_keys.put_nowait(keyPress)
@@ -180,11 +182,12 @@ def internal_keyUpEvent(event):
 		shiftDown=False
 		return True
 	elif (event.Key=="Lmenu") or (event.Key=="Rmenu"):
+		debug.writeMessage("key: ult up")
 		altDown = False
 		return True
 	elif (event.Key=="Insert") and (event.Extended==0):
 		insertDown = False
-		return True
+		return False
 	elif ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
 		winDown = False
 		return True

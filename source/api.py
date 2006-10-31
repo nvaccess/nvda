@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import ctypes
-import comtypes.client
 import os.path
 import debug
 import winKernel
@@ -46,9 +45,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 			audio.speakMessage("Error in event_looseFocus of focusObject")
-	v=getVirtualBuffer()
-	if (not v) or (window!=v.getWindowHandle()):
-		setVirtualBuffer(window)
+	virtualBuffer.getVirtualBuffer(window)
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -57,12 +54,6 @@ def setFocusObjectByLocator(window,objectID,childID):
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
 	return True
-
-def getVirtualBuffer():
-	return globalVars.virtualBuffer
-
-def setVirtualBuffer(window):
-	globalVars.virtualBuffer=virtualBuffer.getVirtualBuffer(window)
 
 def getNavigatorObject():
 	return globalVars.navigatorObject
@@ -136,6 +127,8 @@ def executeEvent(name,window,objectID,childID):
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("gainFocus",window,objectID,childID)
+	if (name=="hide") and (objectID==0) and virtualBuffer.isVirtualBufferWindow(window): 
+		virtualBuffer.removeVirtualBuffer(window)
 	if hasattr(appModuleHandler.current,"event_%s"%name):
 		event=getattr(appModuleHandler.current,"event_%s"%name)
 		try:
@@ -144,7 +137,7 @@ def executeEvent(name,window,objectID,childID):
 			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 			return False
-	v=getVirtualBuffer()
+	v=virtualBuffer.getVirtualBuffer(window)
 	if v and (v.getWindowHandle()==window) and hasattr(v,"event_%s"%name):
 		debug.writeMessage("virtualBuffer event %s, %s, %s"%(name,objectID,childID))
 		event=getattr(v,"event_%s"%name)
