@@ -32,6 +32,12 @@ def getVirtualBuffer(window):
 	else:
 		return runningTable[window]
 
+def registerVirtualBufferClass(windowClass,cls):
+	dynamicMap[windowClass]=cls
+
+def unregisterVirtualBufferClass(windowClass):
+	del dynamicMap[windowClass]
+
 class virtualBuffer(object):
 
 	def __init__(self,window):
