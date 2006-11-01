@@ -45,7 +45,6 @@ def setFocusObjectByLocator(window,objectID,childID):
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 			audio.speakMessage("Error in event_looseFocus of focusObject")
-	virtualBuffer.getVirtualBuffer(window)
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -53,6 +52,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
+	virtualBuffer.getVirtualBuffer(window)
 	return True
 
 def getNavigatorObject():
