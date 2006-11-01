@@ -54,6 +54,9 @@ def peekMessage(*args):
 def registerWindowMessage(name):
 	return user32.RegisterWindowMessageW(name)
 
+def getAsyncKeyState(v):
+	return user32.GetAsyncKeyState(v)
+
 def isWindow(hwnd):
 	return user32.IsWindow(hwnd)
 
