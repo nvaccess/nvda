@@ -14,7 +14,6 @@ def isVirtualBufferWindow(window):
 	return runningTable.has_key(window)
 
 def removeVirtualBuffer(window):
-	debug.writeMessage("vb: removing %s (%s)"%(runningTable[window].__class__.__name__,window))
 	del runningTable[window]
 
 def getVirtualBuffer(window):
@@ -29,11 +28,8 @@ def getVirtualBuffer(window):
 		if virtualBufferClass:
 			virtualBufferObject=virtualBufferClass(window)
 			runningTable[window]=virtualBufferObject
-			debug.writeMessage("vb: got %s (%s)"%(runningTable[window].__class__.__name__,window))
 			return runningTable[window]
 	else:
-		debug.writeMessage("vb: fetching window")
-		debug.writeMessage("vb: got %s (%s)"%(runningTable[window].__class__.__name__,window))
 		return runningTable[window]
 
 class virtualBuffer(object):
@@ -89,9 +85,23 @@ class virtualBuffer(object):
 
 class virtualBuffer_internetExplorerServer(virtualBuffer):
 
+	class domEventsType(object):
+
+		def __init__(self,virtualBufferObject):
+			self.virtualBufferObject=virtualBufferObject
+
+		def onreadystatechange(self,arg,event):
+			readyState=self.virtualBufferObject.dom.readyState
+			if readyState!="complete":
+				self.virtualBufferObject.text="Loading...\n"
+				self.virtualBufferObject.nodes=[]
+			else:
+				self.virtualBufferObject.loadDocument()
+
 	def __init__(self,window):
 		virtualBuffer.__init__(self,window)
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		mshtml=comtypesClient.GetModule('mshtml.tlb')
+		domPointer=ctypes.POINTER(mshtml.DispHTMLDocument)()
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
@@ -99,12 +109,16 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		debug.writeMessage("vb internetExplorer_server: lresult %s"%lresult)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
-		self.dom=comtypesClient.wrap(domPointer)
-		debug.writeMessage("vb internetExplorer_server dom %s"%self.dom)
+		self.dom=domPointer
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
+		self.domEventsObject=self.domEventsType(self)
+		self.eventConnection=comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=mshtml.HTMLDocumentEvents2)
 		self.nodes=[]
 		self.text=""
-		self.loadDocument()
+		if self.dom.readyState!="complete":
+			self.text="Loading...\n"
+		else:
+			self.loadDocument()
 
 	def event_gainFocus(self,objectID,childID):
 		if len(self.nodes)==0:
@@ -117,11 +131,13 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		self.caret=self.nodes[index][2]
 
 	def loadDocument(self):
-		audio.speakMessage("Loading document...")
+		if self.getWindowHandle()==api.getFocusLocator()[0]:
+			audio.speakMessage("Loading document...")
 		self.addNode(self.dom.body)
 		self.caret=0
-		audio.cancel()
-		audio.speakText(self.getText())
+		if self.getWindowHandle()==api.getFocusLocator()[0]:
+			audio.cancel()
+			audio.speakText(self.getText())
 
 	def activatePosition(self,pos):
 		index=self.getNodesIndexByPosition(pos)
@@ -135,8 +151,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def addNode(self,domNode):
 		(nodes,text)=self.generateNode(domNode)
-		self.nodes+=nodes
-		self.text+=text
+		self.nodes=nodes
+		self.text=text
 
 	def refreshNode(self,uniqueID):
 		domNode=self.getDomNodeByUniqueID(uniqueID)
@@ -285,7 +301,6 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def generateNode(self,domNode):
 		uniqueID=self.getUniqueID(domNode)
-		debug.writeMessage("vb internetExplorer_server generateNode %s"%domNode)
 		text=""
 		nodes=[]
 		text+=self.getStartTag(domNode)

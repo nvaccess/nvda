@@ -139,7 +139,6 @@ def executeEvent(name,window,objectID,childID):
 			return False
 	v=virtualBuffer.getVirtualBuffer(window)
 	if v and (v.getWindowHandle()==window) and hasattr(v,"event_%s"%name):
-		debug.writeMessage("virtualBuffer event %s, %s, %s"%(name,objectID,childID))
 		event=getattr(v,"event_%s"%name)
 		try:
 			event(objectID,childID)
