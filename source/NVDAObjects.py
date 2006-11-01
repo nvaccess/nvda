@@ -1484,11 +1484,7 @@ staticMap={
 (None,ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
-("MozillaContentWindowClass",None):NVDAObject_mozillaContentWindowClass,
-("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaContentWindowClass_document,
-("MozillaContentWindowClass",ROLE_SYSTEM_LINK):NVDAObject_mozillaContentWindowClass_link,
-("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaContentWindowClass_listItem,
-("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaContentWindowClass_text,
+#("MozillaContentWindowClass",None):NVDAObject_virtualBuffer,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClass,
 ("Internet Explorer_Server",None):NVDAObject_internetExplorerServer,
 }

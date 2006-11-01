@@ -96,6 +96,9 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		def __init__(self,virtualBufferObject):
 			self.virtualBufferObject=virtualBufferObject
 
+		def onchange(self,arg,event):
+			self.virtualBufferObject.refreshNode(event.srcElement.uniqueID)
+
 		def onreadystatechange(self,arg,event):
 			readyState=self.virtualBufferObject.dom.readyState
 			if readyState!="complete":
@@ -103,6 +106,9 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 				self.virtualBufferObject.nodes=[]
 			else:
 				self.virtualBufferObject.loadDocument()
+
+		def __getattr__(self,name):
+			debug.writeMessage("vb event getattr %s"%name)
 
 	def __init__(self,window):
 		virtualBuffer.__init__(self,window)
@@ -244,7 +250,9 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 				text=type
 			return "\n%s\n"%text
 		elif tagName=="SELECT":
-			return "\nCombo box %s\n"%domNode.getAttribute('value')
+			#item seems to return an IDispatch that hasn't been wrapped in a comtypes typelib automatically yet.
+			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
+			return "\nCombo box %s\n"%itemText
 		else:
 			return ""
 
@@ -277,14 +285,11 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			data="%s "%domNode.data
 		except:
 			return ""
-		if data and not data.isspace():
-			return "%s "%data
-		if parentTagName in ["A","B","EM","FONT","H1","H2","H3","H4","H5","h6","I","STRONG"]:
-			return "%s "%data
-		elif data and (not data.isspace()):
-			return "\n%s "%data
-		else:
+		if not data or data.isspace():
 			return ""
+		if parentTagName in ["OPTION"]:
+			return ""
+		return "%s "%data
 
 	def getUniqueID(self,domNode):
 		try:
@@ -340,6 +345,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 staticMap={
 "Internet Explorer_Server":virtualBuffer_internetExplorerServer,
+"MozillaContentWindowClass":virtualBuffer_internetExplorerServer,
 }
 
 dynamicMap={}
