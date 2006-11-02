@@ -96,7 +96,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		def __init__(self,virtualBufferObject):
 			self.virtualBufferObject=virtualBufferObject
 
-		def onchange(self,arg,event):
+		def ondeactivate(self,arg,event):
+			debug.writeMessage("vb event onfocusout: %s"%event.srcElement)
 			self.virtualBufferObject.refreshNode(event.srcElement.uniqueID)
 
 		def onreadystatechange(self,arg,event):
@@ -108,7 +109,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 				self.virtualBufferObject.loadDocument()
 
 		def __getattr__(self,name):
-			debug.writeMessage("vb event getattr %s"%name)
+			pass #debug.writeMessage("vb event getattr %s"%name)
 
 	def __init__(self,window):
 		virtualBuffer.__init__(self,window)
@@ -167,17 +168,23 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		self.text=text
 
 	def refreshNode(self,uniqueID):
+		debug.writeMessage("refresh node uniqueID %s"%uniqueID)
 		domNode=self.getDomNodeByUniqueID(uniqueID)
+		debug.writeMessage("refresh node domNode %s"%domNode)
 		index=self.getNodesIndexByUniqueID(uniqueID)
+		debug.writeMessage("refresh node index %s"%index)
 		preText=self.text[0:self.nodes[index][2]]
 		postText=self.text[self.nodes[index][3]:]
 		preNodes=self.nodes[0:index]
 		postNodes=self.nodes[index+self.nodes[index][1]:]
 		(newNodes,newText)=self.generateNode(domNode)
+		if (len(preText)>0) and (len(newText)>0) and (preText[-1]=='\n') and (newText[0]=='\n'):
+			preText=preText[:-1]
 		for j in range(len(newNodes)):
-			newNodes[index][2]+=len(preText)
-			newNodes[index][3]+=len(preText)
+			newNodes[j][2]+=len(preText)
+			newNodes[j][3]+=len(preText)
 		self.text=preText+newText+postText
+		audio.speakMessage(self.text)
 		self.nodes=preNodes+newNodes+postNodes
 
 	def getDomNodeByMSAA(self,objectID,childID):
