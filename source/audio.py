@@ -1,3 +1,6 @@
+import time
+import thread
+import Queue
 import winsound
 import debug
 from textProcessing import *
@@ -5,12 +8,33 @@ from config import conf, getSynthConfig
 import synthDriverHandler
 
 allowSpeech=True
+queue_synthFunction=Queue.Queue(100)
+keepLoopAlive=True
+
+def queueSynthFunction(name,*args,**vars):
+	while queue_synthFunction.full():
+		time.sleep(0.001)
+	queue_synthFunction.put((name,args,vars))
+
+def synthFunctionLoop():
+	while keepLoopAlive:
+		while queue_synthFunction.empty():
+			time.sleep(0.001)
+		(name,args,vars)=queue_synthFunction.get()
+		getattr(synthDriverHandler.current,name)(*args,**vars)
+		time.sleep(0.01)
 
 def initialize():
+	global thread_synthFunctionLoop
 	synthDriverHandler.load(conf["speech"]["synth"])
 	synthDriverHandler.current.setVoice(getSynthConfig()["voice"])
 	synthDriverHandler.current.setRate(getSynthConfig()["rate"])
 	synthDriverHandler.current.setVolume(getSynthConfig()["volume"])
+	thread_synthFunctionLoop=thread.start_new_thread(synthFunctionLoop,())
+
+def terminate():
+	global keepLoopAlive
+	keepLoopAlive=False
 
 def processText(text):
 	text=processTextSymbols(text,keepInflection=True)
@@ -23,14 +47,19 @@ def playSound(fileName,wait=False):
 	winsound.PlaySound(fileName,flags)
 
 def cancel():
-	synthDriverHandler.current.cancel()
+	queue_synthFunction.queue.clear()
+	queueSynthFunction("cancel")
+
+def speakRealtimeMessage(text):
+	text=processText(text)
+	synthDriverHandler.current.speakText(text,wait=True)
 
 def speakMessage(text,wait=False):
 	if not allowSpeech:
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait)
+		queueSynthFunction("speakText",text,wait=wait)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
 	if not allowSpeech:
@@ -56,7 +85,7 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 		text="%s %s"%(text,position)
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait)
+		queueSynthFunction("speakText",text,wait=wait)
 
 def speakSymbol(symbol,wait=False):
 	if not allowSpeech:
@@ -68,10 +97,10 @@ def speakSymbol(symbol,wait=False):
 		uppercase=False
 	if uppercase:
 		oldPitch=synthDriverHandler.current.getPitch()
-		synthDriverHandler.current.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
-	synthDriverHandler.current.speakText("%s"%symbol,wait)
+		queueSynthFunction("setPitch",oldPitch+getSynthConfig()["relativeUppercasePitch"])
+	queueSynthFunction("speakText",symbol,wait=wait)
 	if uppercase:
-		synthDriverHandler.current.setPitch(oldPitch)
+		queueSynthFunction("setPitch",oldPitch)
 
 def speakText(text,wait=False):
 	if not allowSpeech:
@@ -81,5 +110,5 @@ def speakText(text,wait=False):
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait)
+		queueSynthFunction("speakText",text,wait=wait)
 

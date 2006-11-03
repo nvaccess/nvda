@@ -5,8 +5,6 @@
 #See the file COPYING for more details.
 
 import ctypes
-import sys
-import os
 import time
 import dictionaries
 import globalVars
@@ -54,7 +52,7 @@ def main():
 		dictionaries.load("roleNames")
 		dictionaries.load("stateNames")
 		audio.initialize()
-		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
+		audio.speakRealtimeMessage("NonVisual Desktop Acces started!")
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
@@ -67,16 +65,13 @@ def main():
 		gui.initialize()
 	except:
 		debug.writeException("core.py main init")
-		sys.exit()
+		return False
 	try:
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
 			if not keyboardHandler.queue_keys.empty():
 				keyPress=keyboardHandler.queue_keys.get()
-				if keyPress == (None, "SilenceSpeech"):
-					audio.cancel()
-				else:
-					executeScript(keyPress)
+				executeScript(keyPress)
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
 				if (MSAAEvent[0]=="foreground") and (MSAAEvent[1:]!=getForegroundLocator()):
@@ -118,4 +113,5 @@ def main():
 	except:
 		pass
 	MSAAHandler.terminate()
+	audio.terminate()
 	return True

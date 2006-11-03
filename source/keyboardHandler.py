@@ -105,11 +105,8 @@ def internal_keyDownEvent(event):
 	try:
 		if event.Injected:
 			return True
-		try:
-			queue_keys.put_nowait((None, "SilenceSpeech"))
-		except Queue.Empty:
-			debug.writeError("internal_keyDownEvent: no room in queue")
-		if (event.Key=="Insert") and (event.Extended==0):
+		audio.cancel()
+		if event.Key=="Insert":
 			insertDown=True
 			return False
 		if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
@@ -182,10 +179,9 @@ def internal_keyUpEvent(event):
 		shiftDown=False
 		return True
 	elif (event.Key=="Lmenu") or (event.Key=="Rmenu"):
-		debug.writeMessage("key: ult up")
 		altDown = False
 		return True
-	elif (event.Key=="Insert") and (event.Extended==0):
+	elif event.Key=="Insert":
 		insertDown = False
 		return False
 	elif ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
