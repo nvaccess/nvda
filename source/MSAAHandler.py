@@ -249,6 +249,7 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 #Internal function for object events
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	debug.writeMessage("MSAA event %s"%eventMap[eventID])
 	try:
 		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW]):
 			objectID=OBJID_CLIENT

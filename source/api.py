@@ -29,6 +29,24 @@ def quit():
 
 def showGui():
 	gui.showGui()
+def getFocusObject():
+	return globalVars.focusObject
+
+def getForegroundObject():
+	return globalVars.foregroundObject
+
+def getForegroundLocator():
+	return globalVars.foreground_locator
+
+def setForegroundObjectByLocator(window,objectID,childID):
+	foregroundObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
+	if not foregroundObject:
+		return False
+	globalVars.foreground_locator=(window,objectID,childID)
+	globalVars.foregroundObject=foregroundObject
+	if globalVars.navigatorTracksFocus:
+		setNavigatorObject(foregroundObject)
+	return True
 
 def getFocusObject():
 	return globalVars.focusObject
@@ -124,19 +142,11 @@ def eventExists(name,window,objectID,childID):
 	return False
 
 def executeEvent(name,window,objectID,childID):
+	#If caret event is on object that has not got focus, then set focus and then continue
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("gainFocus",window,objectID,childID)
-	if (name=="hide") and (objectID==0) and virtualBuffer.isVirtualBufferWindow(window): 
-		virtualBuffer.removeVirtualBuffer(window)
-	if hasattr(appModuleHandler.current,"event_%s"%name):
-		event=getattr(appModuleHandler.current,"event_%s"%name)
-		try:
-			event(window,objectID,childID)
-		except:
-			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
-			debug.writeException("Error executing event %s from appModule"%event.__name__)
-			return False
+	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
 	v=virtualBuffer.getVirtualBuffer(window)
 	if v and (v.getWindowHandle()==window) and hasattr(v,"event_%s"%name):
 		event=getattr(v,"event_%s"%name)
@@ -145,29 +155,44 @@ def executeEvent(name,window,objectID,childID):
 		except:
 			audio.speakMessage("Error in virtualBuffer event")
 			debug.writeException("virtualBuffer event")
-	focusLocator=getFocusLocator()
-	focusObject=getFocusObject()
-	if (((window,objectID,childID)==focusLocator) or (name=="caret")) and hasattr(focusObject,"event_%s"%name): 
-		event=getattr(focusObject,"event_%s"%name)
+	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
+	#and then continue 
+	if (name=="hide") and (objectID==0) and virtualBuffer.isVirtualBufferWindow(window): 
+		virtualBuffer.removeVirtualBuffer(window)
+	#This event is either for the current appModule if the appModule has an event handler,
+	#the foregroundObject if its a foreground event and the foreground object handles this event,
+	#the focus object if the focus object has a handler for this event,
+	#the specific object that this event describes if the object has a handler for this event.
+	if hasattr(appModuleHandler.current,"event_%s"%name):
+		event=getattr(appModuleHandler.current,"event_%s"%name)
 		try:
-			if name=="looseFocus":
-				audio.speakMessage("lost focus",wait=True)
-			event()
-			return True
+			event(window,objectID,childID)
+		except:
+			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
+			debug.writeException("Error executing event %s from appModule"%event.__name__)
+		return
+	if (name=="foreground") and (getForegroundLocator()==(window,objectID,childID)) and hasattr(getForegroundObject(),"event_%s"%name):
+		try:
+			getattr(getForegroundObject(),"event_%s"%name)()
+		except:
+			debug.writeException("foregroundObject: event_%s"%name)
+			audio.speakMessage("Error in event_%s of foreground object"%name)
+		return
+	if ((getFocusLocator()==(window,objectID,childID)) or (name=="caret")) and hasattr(getFocusObject(),"event_%s"%name):
+		try:
+			getattr(getFocusObject(),"event_%s"%name)()
 		except:
 			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
 			debug.writeException("Error executing event %s from focusObject"%event.__name__)
-			return False
+		return
 	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if thisObj and hasattr(thisObj,"event_%s"%name):
-		event=getattr(thisObj,"event_%s"%name)
 		try:
-			event()
-			return True
+			getattr(thisObj,"event_%s"%name)()
 		except:
 			audio.speakMessage("Error executing event %s from object"%event.__name__)
 			debug.writeException("Error executing event %s from object"%event.__name__)
-			return False
+		return
 
 def getObjectGroupName(accObject):
 	try:

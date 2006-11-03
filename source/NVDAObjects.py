@@ -38,11 +38,7 @@ def getNVDAObjectClass(windowClass,objectRole):
 		return NVDAObject
 
 def getNVDAObjectByAccessibleObject(ia,child):
-	try:
-		return getNVDAObjectClass(winUser.getClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
-	except:
-		debug.writeException("NVDAObjects.getNVDAObjectByAccessibleObject")
-		return None
+	return getNVDAObjectClass(winUser.getClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
 
 def getNVDAObjectByLocator(window,objectID,childID):
 	res=MSAAHandler.accessibleObjectFromEvent(window,objectID,childID)
@@ -439,6 +435,9 @@ class NVDAObject_Shell_TrayWnd(NVDAObject):
 	def event_foreground(self):
 		pass
 
+	def event_gainFocus(self):
+		pass
+
 class NVDAObject_Progman(NVDAObject):
 	"""
 	Based on NVDAObject but on foreground events nothing gets spoken.
@@ -446,6 +445,9 @@ class NVDAObject_Progman(NVDAObject):
 	"""
 
 	def event_foreground(self):
+		pass
+
+	def event_gainFocus(self):
 		pass
 
 class NVDAObject_edit(NVDAObject):
@@ -668,6 +670,9 @@ class NVDAObject_edit(NVDAObject):
 		self.reportPresentation()
 		self.reviewCursor=self.getCaretPosition()
 
+	def event_valueChange(self):
+		pass
+
 	def reportPresentation(self):
 		#The old values are at index 2
 		pos=self.getCaretPosition()
@@ -728,7 +733,7 @@ class NVDAObject_edit(NVDAObject):
 		if newSelectionPoints and not selectionPoints:
 			audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],newSelectionPoints[1]))
 		elif not newSelectionPoints:
-			audio.speakSymbol(self.getCharacter())
+			audio.speakSymbol(self.getCharacter(self.getCaretPosition()))
 		elif selectionPoints and newSelectionPoints: 
 			if newSelectionPoints[1]>selectionPoints[1]:
 				audio.speakText("selected %s"%self.getTextRange(selectionPoints[1],newSelectionPoints[1]))
@@ -846,9 +851,6 @@ class NVDAObject_edit(NVDAObject):
 		else:
 			audio.speakMessage("left")
 		audio.speakText(self.getCharacter(self.reviewCursor))
-
-	def event_valueChange(self):
-		pass
 
 class NVDAObject_checkBox(NVDAObject):
 	"""
@@ -1003,7 +1005,12 @@ class NVDAObject_TrayClockWClass(NVDAObject):
 	def getRole(self):
 		return ROLE_SYSTEM_CLOCK
 
-class NVDAObject_consoleWindowClass(NVDAObject_edit):
+class NVDAObject_consoleWindowClass(NVDAObject):
+
+	def event_nameChange(self):
+		pass
+
+class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 
 	def __init__(self,*args):
 		NVDAObject_edit.__init__(self,*args)
@@ -1014,7 +1021,10 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 			debug.writeException("freeConsole")
 			pass
 		winKernel.attachConsole(processID)
-		self.consoleHandle=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		res=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		if not res:
+			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
+		self.consoleHandle=res
 		self.consoleEventHookHandles=[]
 
 	def __del__(self):
@@ -1100,10 +1110,11 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def event_gainFocus(self):
 		self.oldLines=self.getVisibleLines()
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		self.consoleEventHookHandles=[]
+		time.sleep(0.01)
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
+				debug.writeMessage("NVDAObject_consoleWindowClassClient: registered event: %s, handle %s"%(eventID,handle))
 				self.consoleEventHookHandles.append(handle)
 			else:
 				raise OSError('Could not register console event %s'%eventID)
@@ -1114,6 +1125,12 @@ class NVDAObject_consoleWindowClass(NVDAObject_edit):
 	def event_looseFocus(self):
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
+
+	def event_nameChange(self):
+		pass
+
+	def event_valueChange(self):
+		pass
 
 	def speakNewText(self,newLines,oldLines):
 		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
@@ -1485,7 +1502,8 @@ staticMap={
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
 #("MozillaContentWindowClass",None):NVDAObject_virtualBuffer,
-("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClass,
+("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
+("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 ("Internet Explorer_Server",None):NVDAObject_internetExplorerServer,
 }
 

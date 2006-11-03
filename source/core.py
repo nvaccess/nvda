@@ -58,8 +58,8 @@ def main():
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
-		if foregroundWindow:
-			setFocusObjectByLocator(foregroundWindow,-4,0)
+		setForegroundObjectByLocator(foregroundWindow,-4,0)
+		setFocusObjectByLocator(foregroundWindow,-4,0)
 		event_foreground(foregroundWindow,-4,0)
 		MSAAHandler.initialize()
 		keyboardHandler.initialize()
@@ -79,15 +79,16 @@ def main():
 					executeScript(keyPress)
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
-				if MSAAEvent[0] in ["gainFocus","foreground"]:
-					setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
-				if MSAAEvent[0]=="foreground":
+				if (MSAAEvent[0]=="foreground") and (MSAAEvent[1:]!=getForegroundLocator()):
+					setForegroundObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					try:
 						event_foreground(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
 						debug.writeException("core.main: while executing event_%s in core"%MSAAEvent[0])
 						audio.speakMessage("Error executing MSAA event %s"%MSAAEvent[0])
 				else:
+					if (MSAAEvent[0]=="gainFocus") and (MSAAEvent[1:]!=getFocusLocator()):
+						setFocusObjectByLocator(MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					try:
 						executeEvent(MSAAEvent[0],MSAAEvent[1],MSAAEvent[2],MSAAEvent[3])
 					except:
