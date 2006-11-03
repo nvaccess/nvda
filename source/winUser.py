@@ -100,3 +100,7 @@ def getClassName(window):
 def keybd_event(*args):
 	return user32.keybd_event(*args)
 
+def getAncestor(hwnd,flags):
+	return user32.GetAncestor(hwnd,flags)
+
+

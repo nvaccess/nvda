@@ -182,16 +182,16 @@ def executeEvent(name,window,objectID,childID):
 		try:
 			getattr(getFocusObject(),"event_%s"%name)()
 		except:
-			audio.speakMessage("Error executing event %s from focusObject"%event.__name__)
-			debug.writeException("Error executing event %s from focusObject"%event.__name__)
+			audio.speakMessage("Error executing event event_%s from focusObject"%name)
+			debug.writeException("Error executing event event_%s from focusObject"%name)
 		return
 	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if thisObj and hasattr(thisObj,"event_%s"%name):
 		try:
 			getattr(thisObj,"event_%s"%name)()
 		except:
-			audio.speakMessage("Error executing event %s from object"%event.__name__)
-			debug.writeException("Error executing event %s from object"%event.__name__)
+			audio.speakMessage("Error executing event event_%s from object"%name)
+			debug.writeException("Error executing event event_%s from object"%name)
 		return
 
 def getObjectGroupName(accObject):

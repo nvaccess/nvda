@@ -1035,11 +1035,16 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 		NVDAObject_edit.__del__(self)
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
+		if window!=self.getWindowHandle():
+			return
 		self.reviewCursor=self.getCaretPosition()
-		newLines=self.getVisibleLines()
-		if eventID in [EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SCROLL]:
-			self.speakNewText(newLines,self.oldLines)
-		self.oldLines=newLines
+		if eventID==EVENT_CONSOLE_UPDATE_REGION:
+			startX=winUser.LOWORD(objectID)
+			startY=winUser.HIWORD(objectID)
+			endX=winUser.LOWORD(childID)
+			endY=winUser.HIWORD(childID)
+			debug.writeMessage("console update: %s, %s, %s, %s"%(startX,startY,endX,endY))
+			audio.speakMessage("%s"%self.getTextRange(self.getPositionFromCoord(startX,startY),self.getPositionFromCoord(endX,endY)+1))
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -1108,9 +1113,7 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 		return ""
 
 	def event_gainFocus(self):
-		self.oldLines=self.getVisibleLines()
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		time.sleep(0.01)
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
@@ -1125,31 +1128,6 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 	def event_looseFocus(self):
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
-
-	def event_nameChange(self):
-		pass
-
-	def event_valueChange(self):
-		pass
-
-	def speakNewText(self,newLines,oldLines):
-		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
-		for lineNum in range(len(diffLines)):
-			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
-				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-					newText=""
-					block=""
-					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
-					for charNum in range(len(diffChars)):
-						if (diffChars[charNum][0]=="+"):
-							block+=diffChars[charNum][2]
-						elif block:
-							audio.speakText(block)
-							block=""
-					if block:
-						audio.speakText(block)
-				else:
-					audio.speakText(diffLines[lineNum][2:])
 
 class NVDAObject_tooltip(NVDAObject):
 
