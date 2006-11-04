@@ -34,6 +34,9 @@ def freeConsole():
 def getStdHandle(handleID):
 	return kernel32.GetStdHandle(handleID)
 
+def getConsoleProcessList(processList,processCount):
+	return kernel32.GetConsoleProcessList(processList,processCount)
+
 def readConsoleOutputCharacter(handle,length,x,y):
 	point=consoleCoordType()
 	point.x=x

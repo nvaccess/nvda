@@ -1041,6 +1041,11 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 		if eventID!=EVENT_CONSOLE_UPDATE_SIMPLE:
 			self.speakNewText(newLines,self.oldLines)
 		self.oldLines=newLines
+		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
+		if num<2:
+			winKernel.freeConsole()
+
+
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
