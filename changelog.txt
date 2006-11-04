@@ -1,0 +1,45 @@
+Changes since revision 82:
+*Added support for the automatic speaking of font, style, page number etc of documents.
+*Fixed many small bugs to do with navigating documents by character, word and line.
+*Added support for Microsoft Word:
+-Navigating by character, word and line
+-Finding out current font, page number, style, whether you are in a table
+*Added support for Microsoft Excel:
+-Navigating around cells
+-Finding out current font, coordinates, whether it has a formular
+*Much improved support for dos console windows:
+-Fixed bug that would crash NVDA when dos console windows close
+-More responsive reading of new text (now watches for MSAA console events rather than checking over and over until it changes)
+-No longer speaks new text if the new text is a character that the user has just typed
+*Re-written virtualBuffer support:
+-Now you can use the normal arrow keys to navigate like an edit field
+-insert+space changes to focusInteractionMode so that key presses such as the arrows go straight through to the object with focus. (Used with Internet Explore to interact with certain form fields).
+*Support for Internet Explorer document windows:
+-Works both in and out of Internet Explorer itself (example: html messages in outlook express)
+-Gives you the ability to navigate the document with the arrows (character, word and line)
+-Detects links, form fields, headings etc.
+*A new synth driver for IBM Viavoice has been added as "viavoice" (Works with versions that hav ibmeci50.dll).
+*Improved sapi5 synth driver to include changing the voice
+*When reading by character, pitch of speech goes up to denote capital letters if the synth supports it
+*Improved overall responsivness by implementing MSAA support directly in to NVDA rather than using the pyAA (python Active Accessibility) library
+*Added a keyboard help mode (insert+1)
+*Included some minimal documentation in to the stand alone version of NVDA when it is built
+*Added the ability for appModules to register and unregister their own NVDA objects and virtual Buffer objects
+*Synth drivers now are stored in the synthDrivers directory, rather than in the base directory
+*Added a toggle speech script (insert+s) to temporarily turn off speech
+*Improved text processing before sending it to the synth so that words that have entirely capitalized sections such as in "NVDAObjects" are read correctly. Also so it handles the reading of words ending in numbers properly.
+*Added support for reading plaine/rich text messages in outlook Express. (Together with the internet explorer support for HTML messages, this means all messages should be able to be read).
+ *NVDA now by default asks the operating system for the names of control roles and states, but the defaults can be replaced in the NVDA dictionaries
+
+
+ 
+
+
+
+-
+
+ 
+
+
+
+

@@ -352,7 +352,6 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 staticMap={
 "Internet Explorer_Server":virtualBuffer_internetExplorerServer,
-"MozillaContentWindowClass":virtualBuffer_internetExplorerServer,
 }
 
 dynamicMap={}

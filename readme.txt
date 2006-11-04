@@ -16,10 +16,11 @@ NVDA works pretty much like any screen reader you would be used to.  Its main fe
 *Uses the windows API to be able to read characters, selection and full text, of windows such as edit fields.
 *Uses OLE/com to access documents 
 *Responds to many MSAA events such as focus change, active item change, object creation, object destruction etc, and also when ever any of a control's MSAA attributes change.
+*Can access html pages through internet Explorer_server windows.
 *Responds to key press events.
 *Is modular-based (synth drivers and support for specific applications can be written as modules).
 *Has the ability to navigate the MSAA object tree with out moving the focus.
-*Has a virtualBuffer to access things such as browser windows and dos console windows
+*Can read dos console windows.
 
 Running NVDA
 
