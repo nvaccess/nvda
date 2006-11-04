@@ -483,14 +483,18 @@ class NVDAObject_edit(NVDAObject):
 			key("ExtendedDelete"):self.script_delete,
 			key("Back"):self.script_backspace,
 			key("end"):self.script_review_previousCharacter,
+			key("shift+end"):self.script_review_startOfLine,
 			key("down"):self.script_review_currentCharacter,
 			key("next"):self.script_review_nextCharacter,
+			key("shift+next"):self.script_review_endOfLine,
 			key("left"):self.script_review_previousWord,
 			key("clear"):self.script_review_currentWord,
 			key("right"):self.script_review_nextWord,
 			key("home"):self.script_review_previousLine,
+			key("shift+home"):self.script_review_top,
 			key("up"):self.script_review_currentLine,
 			key("prior"):self.script_review_nextLine,
+			key("shift+prior"):self.script_review_bottom,
 			key("insert+f"):self.script_formatInfo,
 		}
 
@@ -710,23 +714,27 @@ class NVDAObject_edit(NVDAObject):
 				self.presentationTable[ruleNum][3]=message
 
 	def script_moveByLine(self,keyPress):
+		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		self.reportPresentation()
 		audio.speakText(self.getCurrentLine())
 
 	def script_moveByCharacter(self,keyPress):
+		"""Moves and reads the current character"""
 		sendKey(keyPress)
 		self.reportPresentation()
 		audio.speakSymbol(self.getCurrentCharacter())
 		self.reviewCursor=self.getCaretPosition()
 
 	def script_moveByWord(self,keyPress):
+		"""Moves and reads the current word"""
 		sendKey(keyPress)
 		self.reportPresentation()
 		audio.speakText(self.getCurrentWord())
 		self.reviewCursor=self.getCaretPosition()
 
 	def script_changeSelection(self,keyPress):
+		"""Moves and reads the current selection"""
 		selectionPoints=self.getCaretRange()
 		sendKey(keyPress)
 		newSelectionPoints=self.getCaretRange()
@@ -746,12 +754,14 @@ class NVDAObject_edit(NVDAObject):
 		self.reviewCursor=self.getCaretPosition()
 
 	def script_delete(self,keyPress):
+		"""Deletes the character and reads the new current character"""
 		sendKey(keyPress)
 		self.reportPresentation()
 		audio.speakSymbol(self.getCurrentCharacter())
 		self.reviewCursor=self.getCaretPosition()
 
 	def script_backspace(self,keyPress):
+		"""Reads the character before the current character and then deletes it"""
 		point=self.getCaretPosition()
 		if not point==self.getStartPosition():
 			delChar=self.getCharacter(self.previousCharacter(point))
@@ -764,18 +774,35 @@ class NVDAObject_edit(NVDAObject):
 		self.reviewCursor=self.getCaretPosition()
 
 	def script_formatInfo(self,keyPress):
+		"""Reports the current formatting information"""
 		pos=self.getCaretPosition()
 		for rule in self.presentationTable:
 			message=rule[0](pos)
 			if message is not None:
 				audio.speakMessage(message)
 
+	def script_review_top(self,keyPress):
+		"""Move the review cursor to the top and read the line"""
+		self.reviewCursor=self.getVisibleRange()[0]
+		self.reportReviewPresentation()
+		line=self.getLine(self.reviewCursor)
+		audio.speakText(line)
+
+	def script_review_bottom(self,keyPress):
+		"""Move the review cursor to the bottom and read the line"""
+		self.reviewCursor=self.getVisibleRange()[1]-1
+		self.reportReviewPresentation()
+		line=self.getLine(self.reviewCursor)
+		audio.speakText(line)
+
 	def script_review_currentLine(self,keyPress):
+		"""Reads the line at the review cursor position""" 
 		self.reportReviewPresentation()
 		line=self.getLine(self.reviewCursor)
 		audio.speakText(line)
 
 	def script_review_nextLine(self,keyPress):
+		"""Moves the review cursor to the next line and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextLine(pos)
 		if (pos<self.getVisibleRange()[1]) and (nextPos is not None):
@@ -786,6 +813,7 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getLine(self.reviewCursor))
 
 	def script_review_previousLine(self,keyPress):
+		"""Moves the review cursor to the previous line and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousLine(pos)
 		if (pos>self.getVisibleRange()[0]) and (prevPos is not None):
@@ -795,12 +823,28 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage("top")
 		audio.speakText(self.getLine(self.reviewCursor))
 
+	def script_review_startOfLine(self,keyPress):
+		"""Move review cursor to start of line and read the current character"""
+		self.reviewCursor=self.getLineStart(self.reviewCursor)
+		self.reportReviewPresentation()
+		character=self.getCharacter(self.reviewCursor)
+		audio.speakText(character)
+
+	def script_review_endOfLine(self,keyPress):
+		"""Move review cursor to start of line and read the current character"""
+		self.reviewCursor=self.getLineStart(self.reviewCursor)+self.getLineLength(self.reviewCursor)-1
+		self.reportReviewPresentation()
+		character=self.getCharacter(self.reviewCursor)
+		audio.speakText(character)
+
 	def script_review_currentWord(self,keyPress):
+		"""Reads the word at the review cursor position"""
 		self.reportReviewPresentation()
 		word=self.getWord(self.reviewCursor)
 		audio.speakText(word)
 
 	def script_review_nextWord(self,keyPress):
+		"""Moves the review cursor to the next word and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextWord(pos)
 		if (pos<self.getVisibleRange()[1]) and (nextPos is not None):
@@ -813,6 +857,7 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getWord(self.reviewCursor))
 
 	def script_review_previousWord(self,keyPress):
+		"""Moves the review cursor to the previous word and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousWord(pos)
 		if (prevPos is not None) and (prevPos>=self.getVisibleRange()[0]):
@@ -825,11 +870,13 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getWord(self.reviewCursor))
 
 	def script_review_currentCharacter(self,keyPress):
+		"""Reads the character at the review cursor position"""
 		self.reportReviewPresentation()
 		character=self.getCharacter(self.reviewCursor)
 		audio.speakText(character)
 
 	def script_review_nextCharacter(self,keyPress):
+		"""Moves the review cursor to the next character and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextCharacter(pos)
 		lineStart=self.getLineStart(pos)
@@ -842,6 +889,7 @@ class NVDAObject_edit(NVDAObject):
 		audio.speakText(self.getCharacter(self.reviewCursor))
 
 	def script_review_previousCharacter(self,keyPress):
+		"""Moves the review cursor to the previous character and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousCharacter(pos)
 		lineStart=self.getLineStart(pos)
@@ -1394,10 +1442,14 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 			key("ExtendedLeft"):self.script_leftArrow,
 			key("ExtendedUp"):self.script_upArrow,
 			key("ExtendedDown"):self.script_downArrow,
+			key("extendedHome"):self.script_home,
+			key("extendedEnd"):self.script_end,
 			key("Control+ExtendedRight"):self.script_controlRightArrow,
 			key("Control+ExtendedLeft"):self.script_controlLeftArrow,
-		key("Return"):self.script_enter,
-		key("Space"):self.script_space,
+			key("control+extendedHome"):self.script_controlHome,
+			key("control+extendedEnd"):self.script_controlEnd,
+			key("Return"):self.script_enter,
+			key("Space"):self.script_space,
 		})
 		self.focusInteractionMode=False
 
@@ -1429,6 +1481,7 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getText()
 
 	def script_toggleFocusInteractionMode(self,keyPress):
+		"""Toggles focus interaction mode on and off"""
 		if not self.focusInteractionMode:
 			audio.speakMessage("Focus interaction mode on")
 			self.focusInteractionMode=True
@@ -1471,6 +1524,30 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 			sendKey(keyPress)
 			return
 		self.script_review_previousWord(keyPress)
+
+	def script_home(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_startOfLine(keyPress)
+
+	def script_end(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_endOfLine(keyPress)
+
+	def script_controlHome(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_top(keyPress)
+
+	def script_controlEnd(self,keyPress):
+		if self.focusInteractionMode:
+			sendKey(keyPress)
+			return
+		self.script_review_bottom(keyPress)
 
 	def script_enter(self,keyPress):
 		if self.focusInteractionMode:
