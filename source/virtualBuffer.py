@@ -1,6 +1,5 @@
 import time
 import ctypes
-import comtypes.automation
 import comtypesClient
 import debug
 import winUser
@@ -50,6 +49,9 @@ class virtualBuffer(object):
 
 	def getCaretPosition(self):
 		return self.caret
+
+	def setCaretPosition(self,pos):
+		self.caret=pos
 
 	def getLineCount(self):
 		return -1

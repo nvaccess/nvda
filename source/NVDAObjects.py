@@ -672,32 +672,53 @@ class NVDAObject_edit(NVDAObject):
 		return self.getWord(self.getCaretPosition())
 
 	def sayAllGenerator(self):
+		#Setup the initial info (count, caret position, index etc)
+		count=0 #Used to see when we need to start yielding
 		startPos=endPos=curPos=self.getCaretPosition()
 		index=lastIndex=None
 		lastKeyCount=globalVars.keyCounter
+		#A loop that runs while no key is pressed and while we are not at the end of the text
 		while (curPos is not None) and (curPos<self.getEndPosition()):
+			#Speak the current line (if its not blank) with an speech index of its position
 			text=self.getLine(curPos)
 			if text and (text not in ['\n','\r',""]):
 				audio.speakText(text,index=curPos)
+			#Move our current position down by one line
 				endPos=curPos
 			curPos=self.nextLine(curPos)
+			#Grab the current speech index from the synth, and if different to last, move the caret there
 			index=audio.getLastIndex()
 			if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
 		 		self.setCaretPosition(index)
 			lastIndex=index
-			yield None
+			#We don't want to yield for the first 4 loops so the synth can get a good run up
+			if count>4:
+				yield None
+			count+=1
+			#If the current keyPress count has changed, we need to stop
 			if lastKeyCount!=globalVars.keyCounter:
 				break
-		else:
+		else: #We fell off the end of the loop (keyPress count didn't change)
+			#We are at the end of the document, but the speech most likely isn't yet, so loop so it can catch up
 			while (index<endPos):
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
 			 		self.setCaretPosition(index)
 				lastIndex=index
-				yield None
+				if count>4:
+					yield None
+				count+=1
 				if lastKeyCount!=globalVars.keyCounter:
 					break
-		audio.cancel()
+		#If we did see a keyPress, then we still have to give the speech index a chance to catch up to our current location
+		if lastKeyCount!=globalVars.keyCounter:
+			for num in range(2):
+				yield None
+				index=audio.getLastIndex()
+				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
+			 		self.setCaretPosition(index)
+			audio.cancel()
+
 
 	def event_caret(self):
 		self.reviewCursor=self.getCaretPosition()
@@ -752,9 +773,13 @@ class NVDAObject_edit(NVDAObject):
 
 	def script_moveByLine(self,keyPress):
 		"""Moves and then reads the current line"""
+		debug.writeMessage("script_moveByCharacter: started")
 		sendKey(keyPress)
+		debug.writeMessage("script_moveByCharacter: done sendKey")
 		self.reportPresentation()
+		debug.writeMessage("script_moveByCharacter: done reportPresentation")
 		audio.speakText(self.getCurrentLine())
+		debug.writeMessage("script_moveByCharacter: done speakText")
 
 	def script_moveByCharacter(self,keyPress):
 		"""Moves and reads the current character"""
@@ -1499,6 +1524,9 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 
 	def getCaretPosition(self):
 		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getCaretPosition()
+
+	def setCaretPosition(self,pos):
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).setCaretPosition(pos)
 
 	def getLineCount(self):
 		return virtualBuffer.getVirtualBuffer(self.getWindowHandle()).getLineCount()

@@ -133,6 +133,7 @@ key("Insert+Shift+Add"):self.script_navigator_object_where,
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
+		audio.speakMessage("Exiting NVDA",wait=True)
 		quit()
 
 	def script_showGui(self,keyPress):

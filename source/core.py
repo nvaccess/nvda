@@ -53,7 +53,7 @@ def main():
 		dictionaries.load("roleNames")
 		dictionaries.load("stateNames")
 		audio.initialize()
-		audio.speakRealtimeMessage("NonVisual Desktop Acces started!")
+		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
 		NVDAThreads.pump() #Need this cause haven't reached the main loop yet
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
@@ -74,7 +74,10 @@ def main():
 			NVDAThreads.pump()
 			if not keyboardHandler.queue_keys.empty():
 				keyPress=keyboardHandler.queue_keys.get()
-				executeScript(keyPress)
+				if keyPress=="SilenceSpeech":
+					audio.cancel()
+				else:
+					executeScript(keyPress)
 			if not MSAAHandler.queue_events.empty():
 				MSAAEvent=MSAAHandler.queue_events.get()
 				if (MSAAEvent[0]=="foreground") and (MSAAEvent[1:]!=getForegroundLocator()):

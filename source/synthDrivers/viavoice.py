@@ -96,11 +96,9 @@ class synthDriver(object):
 			text=text.encode("iso-8859-1","ignore")
 		except:
 			return
-		self.dll.eciAddText(self.handle,text)
 		if index is not None:
 			res=self.dll.eciInsertIndex(self.handle,index)
-			debug.writeMessage("synthDriver viavoice addText index %s, res %s"%(index,res))
-		self.dll.eciAddText(self.handle,"")
+		self.dll.eciAddText(self.handle,text)
 		self.dll.eciSynthesize(self.handle)
 		if wait:
 			self.dll.eciSynchronize(self.handle)

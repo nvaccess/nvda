@@ -16,7 +16,7 @@ import globalVars
 from constants import *
 
 
-queue_keys=Queue.Queue(1000)
+queue_keys=Queue.Queue(100)
 keyUpIgnoreSet=set()
 keyPressIgnoreSet=set()
 insertDown=False
@@ -102,10 +102,13 @@ def sendKey(keyPress):
 def internal_keyDownEvent(event):
 	global insertDown, ignoreNextKeyPress
 	try:
+		if event.Injected:
+			return True
 		globalVars.keyCounter+=1
-		time.sleep(0.01)
-		audio.cancel()
-		if event.Injected or (event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]):
+		while queue_keys.full():
+			time.sleep(0.001)
+		queue_keys.put("SilenceSpeech")
+		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
 			return True
 		if (event.Key=="Insert") and (event.Extended==0):
 			insertDown=True
@@ -137,11 +140,9 @@ def internal_keyDownEvent(event):
 			return True
 		debug.writeMessage("key press: %s"%str(keyPress))
 		if api.keyHasScript(keyPress):
-			try:
-				queue_keys.put_nowait(keyPress)
-			except Queue.Empty:
-				debug.writeError("internal_keyDownEvent: no room in queue")
-				return True
+			while queue_keys.full():
+				time.sleep(0.001)
+			queue_keys.put(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return False
 		else:
@@ -154,9 +155,11 @@ def internal_keyDownEvent(event):
 def internal_keyUpEvent(event):
 	global insertDown, ignoreNextKeyPress
 	try:
-		if event.Injected or (event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]):
+		if event.Injected:
 			return True
-		elif (event.Key=="Insert") or (event.Extended==0):
+		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
+			return True
+		elif (event.Key=="Insert") and (event.Extended==0):
 			insertDown=False
 			return False
 		elif (event.Key,event.Extended) in keyUpIgnoreSet:
