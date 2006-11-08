@@ -6,6 +6,7 @@
 
 import ctypes
 import time
+import NVDAThreads
 import dictionaries
 import globalVars
 import winUser
@@ -53,6 +54,7 @@ def main():
 		dictionaries.load("stateNames")
 		audio.initialize()
 		audio.speakRealtimeMessage("NonVisual Desktop Acces started!")
+		NVDAThreads.pump() #Need this cause haven't reached the main loop yet
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
@@ -69,6 +71,7 @@ def main():
 	try:
 		globalVars.stayAlive=True
 		while globalVars.stayAlive is True:
+			NVDAThreads.pump()
 			if not keyboardHandler.queue_keys.empty():
 				keyPress=keyboardHandler.queue_keys.get()
 				executeScript(keyPress)

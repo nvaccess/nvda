@@ -4,10 +4,10 @@ import comtypes.automation
 import comtypesClient
 import time
 import difflib
-import thread
 import struct
 import re
 import debug
+import NVDAThreads
 import winUser
 import winKernel
 import audio
@@ -18,6 +18,7 @@ import dictionaries
 import api
 import MSAAHandler
 import virtualBuffer
+import globalVars
 
 #Some api functions specific to NVDAObjects
 
@@ -460,6 +461,7 @@ class NVDAObject_edit(NVDAObject):
 		self.reviewCursor=0
 		self.presentationTable=[]
 		self.keyMap={
+			key("insert+extendedDown"):self.script_sayAll,
 			key("ExtendedUp"):self.script_moveByLine,
 			key("ExtendedDown"):self.script_moveByLine,
 			key("ExtendedLeft"):self.script_moveByCharacter,
@@ -518,6 +520,9 @@ class NVDAObject_edit(NVDAObject):
 			return None
 		pos=winUser.LOWORD(word)
 		return pos
+
+	def setCaretPosition(self,pos):
+		winUser.sendMessage(self.getWindowHandle(),EM_SETSEL,pos,pos)
 
 	def getStartPosition(self):
 		return 0
@@ -666,6 +671,34 @@ class NVDAObject_edit(NVDAObject):
 	def getCurrentWord(self):
 		return self.getWord(self.getCaretPosition())
 
+	def sayAllGenerator(self):
+		startPos=endPos=curPos=self.getCaretPosition()
+		index=lastIndex=None
+		lastKeyCount=globalVars.keyCounter
+		while (curPos is not None) and (curPos<self.getEndPosition()):
+			text=self.getLine(curPos)
+			if text and (text not in ['\n','\r',""]):
+				audio.speakText(text,index=curPos)
+				endPos=curPos
+			curPos=self.nextLine(curPos)
+			index=audio.getLastIndex()
+			if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
+		 		self.setCaretPosition(index)
+			lastIndex=index
+			yield None
+			if lastKeyCount!=globalVars.keyCounter:
+				break
+		else:
+			while (index<endPos):
+				index=audio.getLastIndex()
+				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
+			 		self.setCaretPosition(index)
+				lastIndex=index
+				yield None
+				if lastKeyCount!=globalVars.keyCounter:
+					break
+		audio.cancel()
+
 	def event_caret(self):
 		self.reviewCursor=self.getCaretPosition()
 
@@ -712,6 +745,10 @@ class NVDAObject_edit(NVDAObject):
 				if (message is not None) and (message!=self.presentationTable[ruleNum][3]):
 					audio.speakMessage(message)
 				self.presentationTable[ruleNum][3]=message
+
+	def script_sayAll(self,keyPress):
+		NVDAThreads.newThread(self.sayAllGenerator())
+
 
 	def script_moveByLine(self,keyPress):
 		"""Moves and then reads the current line"""
@@ -1282,6 +1319,10 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def getCaretPosition(self):
 		return self.dom.Selection.Start
+
+	def setCaretPosition(self,pos):
+		self.dom.Selection.Start=pos
+		self.dom.Selection.End=pos
 
 	def getVisibleRange(self):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

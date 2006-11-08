@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import winUser
 import time
 import Queue
 import pyHook
@@ -11,17 +12,14 @@ import debug
 import winUser
 import audio
 import api
+import globalVars
+from constants import *
 
 
 queue_keys=Queue.Queue(1000)
 keyUpIgnoreSet=set()
 keyPressIgnoreSet=set()
-controlDown=False
-shiftDown=False
-altDown=False
 insertDown=False
-winDown=False
-extendedWinDown=False
 
 ignoreNextKeyPress = False
 
@@ -49,15 +47,13 @@ def sendKey(keyPress):
 	#Process modifier keys
 	if keyPress[0] is not None:
 		for modifier in keyPress[0]:
-			if (modifier=="Alt") and altDown:
+			if (modifier=="Alt") and (winUser.getKeyState(VK_MENU)&32768):
 				continue
-			elif (modifier=="Control") and controlDown:
+			elif (modifier=="Control") and (winUser.getKeyState(VK_CONTROL)&32768):
 				continue
-			elif (modifier=="Shift") and shiftDown:
+			elif (modifier=="Shift") and (winUser.getKeyState(VK_SHIFT)&32768):
 				continue
-			elif (modifier=="Win") and winDown:
-				continue
-			elif (modifier=="ExtendedWin") and extendedWinDown:
+			elif (modifier=="Win") and ((winUser.getKeyState(VK_LWIN)&32768) or (winUser.getKeyState(VK_RWIN)&32768)):
 				continue
 			elif (modifier=="Insert") and insertDown:
 				continue
@@ -89,6 +85,9 @@ def sendKey(keyPress):
 		keyList.append((keyID,extended))
 	if (keyList is None) or (len(keyList)==0):
 		return
+	#Send key up for any keys that are already down
+	for key in filter(lambda x: winUser.getKeyState(x[0])&32768,keyList):
+		winUser.keybd_event(key[0],0,key[1]+2,0)
 	#Send key down events for these keys
 	for key in keyList:
 		winUser.keybd_event(key[0],0,key[1],0)
@@ -96,48 +95,34 @@ def sendKey(keyPress):
 	keyList.reverse()
 	for key in keyList:
 		winUser.keybd_event(key[0],0,key[1]+2,0)
-	time.sleep(0.05)
+	time.sleep(0.1)
 
 #Internal functions for key presses
 
 def internal_keyDownEvent(event):
-	global controlDown, shiftDown, altDown, insertDown, extendedInsertDown, winDown, extendedWinDown, ignoreNextKeyPress, ignoreKeyCounter
+	global insertDown, ignoreNextKeyPress
 	try:
-		if event.Injected:
-			return True
+		globalVars.keyCounter+=1
+		time.sleep(0.01)
 		audio.cancel()
-		if event.Key=="Insert":
+		if event.Injected or (event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]):
+			return True
+		if (event.Key=="Insert") and (event.Extended==0):
 			insertDown=True
 			return False
-		if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
-			controlDown=True
-			return True
-		if (event.Key=="Lshift") or (event.Key=="Rshift"):
-			shiftDown=True
-			return True
-		if (event.Key=="Lmenu") or (event.Key=="Rmenu"):
-			altDown=True
-			debug.writeMessage("key: alt down")
-			return True
-		if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
-			winDown=True
-			return True
-		if ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==1):
-			extendedWinDown=True
-			return True
 		modifierList=[]
-		if insertDown is True:
+		if insertDown:
 			modifierList.append("Insert")
-		if controlDown is True:
+		if winUser.getKeyState(VK_CONTROL)&32768:
 			modifierList.append("Control")
-		if shiftDown is True:
+		if winUser.getKeyState(VK_SHIFT)&32768:
 			modifierList.append("Shift")
-		if altDown is True:
+		if winUser.getKeyState(VK_MENU)&32768:
 			modifierList.append("Alt")
-		if winDown is True:
+		if winUser.getKeyState(VK_LWIN)&32768:
 			modifierList.append("Win")
-		if extendedWinDown is True:
-			modifierList.append("ExtendedWin")
+		if winUser.getKeyState(VK_RWIN)&32768:
+			modifierList.append("Win")
 		if len(modifierList) > 0:
 			modifiers=frozenset(modifierList)
 		else:
@@ -150,8 +135,6 @@ def internal_keyDownEvent(event):
 			keyPressIgnoreSet.remove(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
-		#if altDown and (event.KeyID==pyHook.HookConstants.vk_to_id['VK_TAB']):
-		#	return True
 		debug.writeMessage("key press: %s"%str(keyPress))
 		if api.keyHasScript(keyPress):
 			try:
@@ -165,35 +148,26 @@ def internal_keyDownEvent(event):
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
-		audio.speakMessage("Error in keyboardHandler.internal_keyPressEvent",wait=True)
+		audio.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
 		return True
 
 def internal_keyUpEvent(event):
-	global controlDown, shiftDown, altDown, insertDown, winDown, extendedWinDown, ignoreNextKeyPress, ignoreKeyCounter
-	if event.Injected:
+	global insertDown, ignoreNextKeyPress
+	try:
+		if event.Injected or (event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]):
+			return True
+		elif (event.Key=="Insert") or (event.Extended==0):
+			insertDown=False
+			return False
+		elif (event.Key,event.Extended) in keyUpIgnoreSet:
+			keyUpIgnoreSet.remove((event.Key,event.Extended))
+			return False
+		else:
+			return True
+	except:
+		debug.writeException("keyboardHandler.internal_keyUpEvent")
+		audio.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
 		return True
-	if (event.Key=="Lcontrol") or (event.Key=="Rcontrol"):
-		controlDown=False
-		return True
-	elif (event.Key=="Lshift") or (event.Key=="Rshift"):
-		shiftDown=False
-		return True
-	elif (event.Key=="Lmenu") or (event.Key=="Rmenu"):
-		altDown = False
-		return True
-	elif event.Key=="Insert":
-		insertDown = False
-		return False
-	elif ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==0):
-		winDown = False
-		return True
-	elif ((event.Key=="Lwin") or (event.Key=="Rwin")) and (event.Extended==1):
-		extendedWinDown = False
-		return True
-	if (event.Key,event.Extended) in keyUpIgnoreSet:
-		keyUpIgnoreSet.remove((event.Key,event.Extended))
-		return False
-	return True
 
 #Register internal key press event with  operating system
 

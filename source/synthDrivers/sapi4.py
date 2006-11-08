@@ -1,9 +1,11 @@
-import win32com.client
+import time
+import comtypesClient
 
 class synthDriver(object):
 
 	def __init__(self):
-		self.tts=win32com.client.Dispatch("speech.voiceText")
+		self.lastIndex=None
+		self.tts=comtypesClient.CreateObject("speech.voiceText")
 		self.tts.Register("local_pc","nvda")
 
 	def getRate(self):
@@ -20,6 +22,9 @@ class synthDriver(object):
 	def getVoice(self):
 		pass
 
+	def getLastIndex(self):
+		return self.lastIndex
+
 	def setRate(self,value):
 		value=value*4
 		self.tts.Speed=value
@@ -30,15 +35,16 @@ class synthDriver(object):
 	def setVoice(self,value):
 		pass
 
-	def speakText(self,text,wait=False):
+	def speakText(self,text,wait=False,index=None):
+		if isinstance(index,int):
+			wait=True
 		self.tts.Speak(text,0)
 		if wait is True:
 			while self.tts.IsSpeaking:
-				pass
-
+				time.sleep(0.01)
+			if isinstance(index,int):
+				self.lastIndex=index
 
 	def cancel(self):
-		self.tts.StopSpeaking()
-
-
-
+		if self.tts.IsSpeaking:
+			self.tts.StopSpeaking()

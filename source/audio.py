@@ -6,35 +6,64 @@ import debug
 from textProcessing import *
 from config import conf, getSynthConfig
 import synthDriverHandler
+import NVDAThreads
 
 allowSpeech=True
 queue_synthFunction=Queue.Queue(100)
 keepLoopAlive=True
+lastIndex=0
+
+def isTextSpoken(textIndex):
+	if textIndex in pastSynthIndices:
+		pastSynthIndices.remove(textIndex)
+		return True
+	else:
+		return False
 
 def queueSynthFunction(name,*args,**vars):
 	while queue_synthFunction.full():
 		time.sleep(0.001)
 	queue_synthFunction.put((name,args,vars))
 
-def synthFunctionLoop():
-	while keepLoopAlive:
-		while queue_synthFunction.empty():
-			time.sleep(0.001)
-		(name,args,vars)=queue_synthFunction.get()
-		getattr(synthDriverHandler.current,name)(*args,**vars)
-		time.sleep(0.01)
+def synthLoop():
+	global lastIndex
+	try:
+		synthDriverHandler.load(conf["speech"]["synth"])
+		synthDriverHandler.current.setVoice(getSynthConfig()["voice"])
+		synthDriverHandler.current.setRate(getSynthConfig()["rate"])
+		synthDriverHandler.current.setVolume(getSynthConfig()["volume"])
+		while keepLoopAlive:
+			lastIndex=synthDriverHandler.current.getLastIndex()
+			if not queue_synthFunction.empty():
+				item=queue_synthFunction.get()
+				if len(item)>=1:
+					name=item[0]
+				else:
+					name=""
+				if len(item)>=2:
+					args=item[1]
+				else:
+					args=()
+				if len(item)>=3:
+					vars=item[2]
+				else:
+					vars={}
+				debug.writeMessage("got synth function %s(%s,%s)"%(name,str(args),str(vars)))
+				getattr(synthDriverHandler.current,name)(*args,**vars)
+			yield None
+	except:
+		debug.writeException("audio synthFunctionLoop")
 
 def initialize():
-	global thread_synthFunctionLoop
-	synthDriverHandler.load(conf["speech"]["synth"])
-	synthDriverHandler.current.setVoice(getSynthConfig()["voice"])
-	synthDriverHandler.current.setRate(getSynthConfig()["rate"])
-	synthDriverHandler.current.setVolume(getSynthConfig()["volume"])
-	thread_synthFunctionLoop=thread.start_new_thread(synthFunctionLoop,())
+	NVDAThreads.newThread(synthLoop())
 
 def terminate():
 	global keepLoopAlive
 	keepLoopAlive=False
+
+def getLastIndex():
+	global lastIndex
+	return lastIndex
 
 def processText(text):
 	text=processTextSymbols(text,keepInflection=True)
@@ -51,8 +80,10 @@ def cancel():
 	queueSynthFunction("cancel")
 
 def speakRealtimeMessage(text):
+	if not allowSpeech:
+		return
 	text=processText(text)
-	synthDriverHandler.current.speakText(text,wait=True)
+	queueSynthFunction("speakText",text,wait=True)
 
 def speakMessage(text,wait=False):
 	if not allowSpeech:
@@ -61,7 +92,7 @@ def speakMessage(text,wait=False):
 	if text and not text.isspace():
 		queueSynthFunction("speakText",text,wait=wait)
 
-def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False):
+def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False,index=None):
 	if not allowSpeech:
 		return
 	text=""
@@ -87,7 +118,7 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 	if text and not text.isspace():
 		queueSynthFunction("speakText",text,wait=wait)
 
-def speakSymbol(symbol,wait=False):
+def speakSymbol(symbol,wait=False,index=None):
 	if not allowSpeech:
 		return
 	symbol=processSymbol(symbol)
@@ -102,13 +133,13 @@ def speakSymbol(symbol,wait=False):
 	if uppercase:
 		queueSynthFunction("setPitch",oldPitch)
 
-def speakText(text,wait=False):
+def speakText(text,wait=False,index=None):
 	if not allowSpeech:
 		return
 	if (text is None) or (len(text)==1):
-		speakSymbol(text,wait=wait)
+		speakSymbol(text,wait=wait,index=index)
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		queueSynthFunction("speakText",text,wait=wait)
+		queueSynthFunction("speakText",text,wait=wait,index=index)
 

@@ -57,6 +57,9 @@ def registerWindowMessage(name):
 def getAsyncKeyState(v):
 	return user32.GetAsyncKeyState(v)
 
+def getKeyState(v):
+	return user32.GetKeyState(v)
+
 def isWindow(hwnd):
 	return user32.IsWindow(hwnd)
 

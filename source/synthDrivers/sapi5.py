@@ -1,5 +1,6 @@
 import os
-import comtypes.client
+import comtypesClient
+import debug
 
 class constants:
 	SVSFlagsAsync = 1
@@ -9,10 +10,24 @@ class constants:
 class synthDriver(object):
 
 	def __init__(self):
-		self.tts = comtypes.client.CreateObject('sapi.SPVoice')
+		self.lastIndex=0
+		self.eventHandler=self.eventHandlerType(self)
+		self.tts = comtypesClient.CreateObject('sapi.SPVoice',sink=self.eventHandler)
 		self.tts.Speak("<sapi>",constants.SVSFIsXML)
 		self.curVoice=1
 		self.curPitch=50
+
+	class eventHandlerType(object):
+
+		def __init__(self,synth):
+			self.synth=synth
+
+		def event(self,*args):
+			debug.writeMessage("func %s"%str(args))
+
+		def __getattr__(self,name):
+			debug.writeMessage("get %s"%name)
+			return self.event
 
 	def getRate(self):
 		return (self.tts.Rate*5)+50
@@ -25,6 +40,9 @@ class synthDriver(object):
 
 	def getVoice(self):
 		return self.curVoice
+
+	def getLastIndex(self):
+		return self.lastIndex
 
 	def setRate(self,value):
 		self.tts.Rate = (value-50)/5
@@ -40,7 +58,7 @@ class synthDriver(object):
 		self.tts.Voice(self.tts.GetVoices().Item(value-1))
 		self.curVoice=value
 
-	def speakText(self,text,wait=False):
+	def speakText(self,text,wait=False,index=None):
 		flags=constants.SVSFIsXML
 		if self.curPitch>=70:
 			pitch=24
@@ -52,9 +70,13 @@ class synthDriver(object):
 			pitch=-10
 		else:
 			pitch=-24
+		if isinstance(index,int):
+			wait=True
 		if wait is False:
 			flags=constants.SVSFlagsAsync
 		self.tts.Speak("<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text),flags)
+		if isinstance(index,int):
+			self.lastIndex=index
 
 	def cancel(self):
 		if self.tts.Status.RunningState == 2:
