@@ -133,8 +133,8 @@ key("Insert+Shift+Add"):self.script_navigator_object_where,
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
-		audio.speakMessage("Exiting NVDA",wait=True)
-		quit()
+		audio.speakMessage("Please Use exit on the NVDA menu in the Nonvisual Desktop Access window")
+
 
 	def script_showGui(self,keyPress):
 		"""Pops up a menu to configure NVDA objects"""

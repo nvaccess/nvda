@@ -72,6 +72,12 @@ def isDecendantWindow(parentHwnd,childHwnd):
 def getForegroundWindow():
 	return user32.GetForegroundWindow()
 
+def setForegroundWindow(hwnd):
+	user32.SetForegroundWindow(hwnd)
+
+def setFocus(hwnd):
+	user32.SetFocus(hwnd)
+
 def getDesktopWindow():
 		return user32.GetDesktopWindow()
 

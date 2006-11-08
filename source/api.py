@@ -25,7 +25,8 @@ import virtualBuffer
 #User functions
 
 def quit():
-	globalVars.stayAlive=False
+	gui.exit()
+
 
 def showGui():
 	gui.showGui()

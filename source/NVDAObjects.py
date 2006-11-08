@@ -364,7 +364,7 @@ class NVDAObject(object):
 
 	def event_gainFocus(self):
 		self.updateMenuMode()
-		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)):
+		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)) and not ((self.getWindowHandle()==winUser.getForegroundWindow()) and (self.getRole()==ROLE_SYSTEM_CLIENT)):
 			self.speakObject()
 
 	def event_menuStart(self):

@@ -113,7 +113,7 @@ def main():
 			audio.speakMessage("Exception in main loop")
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
-	gui.terminate()
+	#gui.terminate()
 	try:
 		config.save()
 	except:
