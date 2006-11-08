@@ -1504,16 +1504,6 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 		NVDAObject_edit.__init__(self,*args)
 		self.keyMap.update({
 			key("insert+space"):self.script_toggleFocusInteractionMode,
-			key("ExtendedRight"):self.script_rightArrow,
-			key("ExtendedLeft"):self.script_leftArrow,
-			key("ExtendedUp"):self.script_upArrow,
-			key("ExtendedDown"):self.script_downArrow,
-			key("extendedHome"):self.script_home,
-			key("extendedEnd"):self.script_end,
-			key("Control+ExtendedRight"):self.script_controlRightArrow,
-			key("Control+ExtendedLeft"):self.script_controlLeftArrow,
-			key("control+extendedHome"):self.script_controlHome,
-			key("control+extendedEnd"):self.script_controlEnd,
 			key("Return"):self.script_enter,
 			key("Space"):self.script_space,
 		})
@@ -1558,80 +1548,38 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 			audio.speakMessage("Focus interaction mode off")
 			self.focusInteractionMode=False
 
-	def script_rightArrow(self,keyPress):
+	def script_moveByCharacter(self,keyPress):
 		if self.focusInteractionMode:
 			sendKey(keyPress)
 			return
-		self.script_review_nextCharacter(keyPress)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).processKey(keyPress)
+		audio.speakText(self.getCharacter(self.getCaretPosition()))
 
-	def script_leftArrow(self,keyPress):
+	def script_moveByWord(self,keyPress):
 		if self.focusInteractionMode:
 			sendKey(keyPress)
 			return
-		self.script_review_previousCharacter(keyPress)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).processKey(keyPress)
+		audio.speakText(self.getWord(self.getCaretPosition()))
 
-	def script_upArrow(self,keyPress):
+	def script_moveByLine(self,keyPress):
 		if self.focusInteractionMode:
 			sendKey(keyPress)
 			return
-		self.script_review_previousLine(keyPress)
-
-	def script_downArrow(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_nextLine(keyPress)
-
-	def script_controlRightArrow(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_nextWord(keyPress)
-
-	def script_controlLeftArrow(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_previousWord(keyPress)
-
-	def script_home(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_startOfLine(keyPress)
-
-	def script_end(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_endOfLine(keyPress)
-
-	def script_controlHome(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_top(keyPress)
-
-	def script_controlEnd(self,keyPress):
-		if self.focusInteractionMode:
-			sendKey(keyPress)
-			return
-		self.script_review_bottom(keyPress)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).processKey(keyPress)
+		audio.speakText(self.getLine(self.getCaretPosition()))
 
 	def script_enter(self,keyPress):
 		if self.focusInteractionMode:
 			sendKey(keyPress)
 			return
-		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.getCaretPosition())
 
 	def script_space(self,keyPress):
 		if self.focusInteractionMode:
 			sendKey(keyPress)
 			return
-		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
-
-	def script_activatePosition(self,keyPress):
-		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.reviewCursor)
+		virtualBuffer.getVirtualBuffer(self.getWindowHandle()).activatePosition(self.getCaretPosition())
 
 class NVDAObject_internetExplorerServer(NVDAObject_virtualBuffer):
 
