@@ -26,13 +26,12 @@ def getCurrentSynthDriver():
 
 def load(name):
 	global current
-	if current:
-		del current
 	try:
-		current=__import__(name,globals(),None,[]).synthDriver()
-		current.setVoice(conf["speech"][name]["voice"])
-		current.setRate(conf["speech"][name]["rate"])
-		current.setVolume(conf["speech"][name]["volume"])
+		newSynth=__import__(name,globals(),None,[]).synthDriver()
+		newSynth.setVoice(conf["speech"][name]["voice"])
+		newSynth.setRate(conf["speech"][name]["rate"])
+		newSynth.setVolume(conf["speech"][name]["volume"])
+		current=newSynth
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
