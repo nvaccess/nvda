@@ -768,7 +768,7 @@ class NVDAObject_edit(NVDAObject):
 				self.presentationTable[ruleNum][3]=message
 
 	def script_sayAll(self,keyPress):
-		NVDAThreads.newThread(self.sayAllGenerator())
+		NVDAThreads.addGenerator(self.sayAllGenerator())
 
 
 	def script_moveByLine(self,keyPress):

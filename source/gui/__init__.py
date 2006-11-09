@@ -51,7 +51,7 @@ class MainFrame(wx.Frame):
 		d.SetSelection(synthList.index(synthDriverHandler.current.getName()))
 		res=d.ShowModal()
 		if res:
-			NVDAThreads.newThread(NVDAThreads.makeGeneratorFunction(synthDriverHandler.load,synthList[d.GetSelection()],))
+			NVDAThreads.executeFunction(synthDriverHandler.load,synthList[d.GetSelection()])
 
 
 
