@@ -1,3 +1,4 @@
+import versionInfo
 import time
 import threading
 import wx
@@ -6,7 +7,7 @@ import globalVars
 import debug
 
 ### Constants
-appTitle = "Nonvisual Desktop Access"
+appTitle = versionInfo.longName
 
 ### Globals
 guiThread = None
@@ -22,6 +23,10 @@ class MainFrame(wx.Frame):
 		self.menu_NVDA.Append(wx.ID_EXIT, "E&xit", "Exit NVDA")
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		self.menuBar.Append(self.menu_NVDA,"&NVDA")
+		self.menu_help = wx.Menu()
+		self.menu_help.Append(wx.ID_ABOUT, "&About...", "About NVDA")
+		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
+		self.menuBar.Append(self.menu_help,"&Help")
 		self.SetMenuBar(self.menuBar)
 		self.Show(True)
 
@@ -30,6 +35,16 @@ class MainFrame(wx.Frame):
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
+
+	def onAboutCommand(self,evt):
+		aboutInfo="""
+%s
+Version: %s
+URL: %s
+%s
+"""%(versionInfo.longName,versionInfo.version,versionInfo.url,versionInfo.copyright)
+		d = wx.MessageDialog(self, aboutInfo, "About", wx.OK)
+		d.ShowModal()
 
 def guiMainLoop():
 	global mainFrame

@@ -1,14 +1,15 @@
 from distutils.core import setup
 import py2exe
 from glob import glob
+from versionInfo import *
 
 setup(
-	name = "NVDA",
-	version="0.1.0",
-	description="A free and open-source screen reader for MS Windows", 
-	maintainer="Michael Curran",
-	maintainer_email="mick@kulgan.net",
-	url="http://www.kulgan.net/nvda/",
+	name = name,
+	version=version,
+	description=description,
+	maintainer=maintainer,
+	maintainer_email=maintainer_email,
+	url=url,
 	classifiers=[
 'Development Status :: 3 - Alpha',
 'Environment :: Win32 (MS Windows)',
