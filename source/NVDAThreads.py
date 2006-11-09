@@ -2,7 +2,13 @@
 threadList=[]
 
 def newThread(generator):
-		threadList.append(generator)
+	"""Adds this generator object to the main thread list which will be iterated in the main core loop""" 
+	threadList.append(generator)
+
+def makeGeneratorFunction(func,*args,**vars):
+	"""Makes a generator function out of a simple function that does not yield itself. Do not use functions that process for a long time"""
+	func(*args,**vars)
+	yield None
 
 def pump():
 	delList=[]

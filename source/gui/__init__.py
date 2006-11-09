@@ -4,7 +4,11 @@ import threading
 import wx
 import winUser
 import globalVars
+import api
 import debug
+import synthDriverHandler
+from config import conf
+import NVDAThreads
 
 ### Constants
 appTitle = versionInfo.longName
@@ -23,6 +27,11 @@ class MainFrame(wx.Frame):
 		self.menu_NVDA.Append(wx.ID_EXIT, "E&xit", "Exit NVDA")
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		self.menuBar.Append(self.menu_NVDA,"&NVDA")
+		self.menu_preferences=wx.Menu()
+		self.id_chooseSynthesizerCommand=wx.NewId()
+		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,"Synthesizer...","Choose speech synthesizer to use")
+		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onChooseSynthesizerCommand)
+		self.menuBar.Append(self.menu_preferences,"&Preferences")
 		self.menu_help = wx.Menu()
 		self.menu_help.Append(wx.ID_ABOUT, "&About...", "About NVDA")
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
@@ -36,6 +45,16 @@ class MainFrame(wx.Frame):
 			globalVars.stayAlive=False
 			self.Destroy()
 
+	def onChooseSynthesizerCommand(self,evt):
+		synthList=synthDriverHandler.getSynthDriverList()
+		d=wx.SingleChoiceDialog(self,"Choose the speech synthesizer you want to use","Synthesizer",synthList)
+		d.SetSelection(synthList.index(synthDriverHandler.current.getName()))
+		res=d.ShowModal()
+		if res:
+			NVDAThreads.newThread(NVDAThreads.makeGeneratorFunction(synthDriverHandler.load,synthList[d.GetSelection()],))
+
+
+
 	def onAboutCommand(self,evt):
 		aboutInfo="""
 %s
@@ -48,10 +67,15 @@ URL: %s
 
 def guiMainLoop():
 	global mainFrame
-	app = wx.PySimpleApp()
-	mainFrame = MainFrame()
-	app.SetTopWindow(mainFrame)
-	app.MainLoop()
+	try:
+		app = wx.PySimpleApp()
+		mainFrame = MainFrame()
+		app.SetTopWindow(mainFrame)
+		app.MainLoop()
+	except:
+		debug.writeException("guiMainLoop")
+		audio.speakMessage("Error in GUI main loop")
+		globalVars.stayAlive=False
 
 def initialize():
 	global guiThread

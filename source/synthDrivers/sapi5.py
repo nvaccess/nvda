@@ -2,6 +2,9 @@ import os
 import comtypesClient
 import debug
 
+name="sapi5"
+description="Microsoft Speech API Engine, version 5, com interface sapi.SPVoice"
+
 class constants:
 	SVSFlagsAsync = 1
 	SVSFPurgeBeforeSpeak = 2
@@ -28,6 +31,12 @@ class synthDriver(object):
 		def __getattr__(self,name):
 			debug.writeMessage("get %s"%name)
 			return self.event
+
+	def getName(self):
+		return name
+
+	def getDescription(self):
+		return description
 
 	def getRate(self):
 		return (self.tts.Rate*5)+50

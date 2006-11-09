@@ -11,10 +11,8 @@ import NVDAThreads
 allowSpeech=True
 
 def initialize():
+	debug.writeMessage("synth driver list: %s"%synthDriverHandler.getSynthDriverList())
 	synthDriverHandler.load(conf["speech"]["synth"])
-	synthDriverHandler.current.setVoice(getSynthConfig()["voice"])
-	synthDriverHandler.current.setRate(getSynthConfig()["rate"])
-	synthDriverHandler.current.setVolume(getSynthConfig()["volume"])
 
 def terminate():
 	del synthDriverHandler.current

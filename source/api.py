@@ -27,7 +27,6 @@ import virtualBuffer
 def quit():
 	gui.exit()
 
-
 def showGui():
 	gui.showGui()
 def getFocusObject():

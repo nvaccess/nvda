@@ -1,12 +1,22 @@
 import time
 import comtypesClient
 
+name="sapi4"
+description="Microsoft Speech API Engine, version 4, com interface speech.voiceText"
+
 class synthDriver(object):
 
 	def __init__(self):
 		self.lastIndex=None
 		self.tts=comtypesClient.CreateObject("speech.voiceText")
 		self.tts.Register("local_pc","nvda")
+
+	def getName(self):
+		return name
+
+	def getDescription(self):
+		return description
+
 
 	def getRate(self):
 		value=self.tts.Speed/8

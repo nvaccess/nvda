@@ -5,6 +5,9 @@ import os
 import ctypes
 import debug
 
+name="viavoice"
+description="IBM ViaVoice, ibmeci50.dll"
+
 #Constants
 
 #Synth parameters
@@ -45,6 +48,12 @@ class synthDriver(object):
 
 	def __del__(self):
 		self.dll.eciDelete(self.handle)
+
+	def getName(self):
+		return name
+
+	def getDescription(self):
+		return description
 
 	def getLastIndex(self):
 		self.dll.eciSpeaking(self.handle)

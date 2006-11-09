@@ -6,23 +6,35 @@
 
 import os
 import debug
+from config import conf, getSynthConfig
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
 
 current=None
 
+def getSynthDriverList():
+	l=os.listdir(__path__[0])
+	l=filter((lambda x: x.endswith(".py") or x.endswith(".pyc") or x.endswith(".pyo") or (os.path.isdir(os.path.join(__path__[0],x)) and not x.startswith("."))),l)
+	l=map((lambda x: os.path.splitext(x)[0]),l)
+	l=set(l)
+	l=list(l)
+	return l
+
+def getCurrentSynthDriver():
+	return current
+
 def load(name):
 	global current
-	if os.path.isfile(r'%s\synthDrivers\%s.py'%(os.getcwd(),name)):
-		try:
-			current=__import__(name,globals(),None,[]).synthDriver()
-			debug.writeMessage("Loaded synthDriver %s"%name)
-			return True
-		except:
-			debug.writeException("Error in synthDriver %s"%name)
-			return False
-	else:
-		debug.writeError("synthDriver %s does not exist"%name)
-		raise ImportError('synthDrivers\\%s'%name)
+	if current:
+		del current
+	try:
+		current=__import__(name,globals(),None,[]).synthDriver()
+		current.setVoice(conf["speech"][name]["voice"])
+		current.setRate(conf["speech"][name]["rate"])
+		current.setVolume(conf["speech"][name]["volume"])
+		debug.writeMessage("Loaded synthDriver %s"%name)
+		return True
+	except:
+		debug.writeException("Error in synthDriver %s"%name)
 		return False
