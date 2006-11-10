@@ -62,15 +62,13 @@ def load():
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
 	conf.validate(val)
-	checkSynth()
 
-def checkSynth():
+def checkSynth(name):
 	"Validate the configuration for the selected synth."
 	speech = conf["speech"]
-	synth = speech["synth"]
 	# If there are no settings for this synth, make sure there are defaults.
-	if not speech.has_key(synth):
-		speech[synth] = {}
+	if not speech.has_key(name):
+		speech[name] = {}
 		conf.validate(val, copy = True, section = speech)
 
 def save(force = False):

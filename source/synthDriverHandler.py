@@ -6,7 +6,7 @@
 
 import os
 import debug
-from config import conf, getSynthConfig
+from config import conf, checkSynth
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
@@ -28,6 +28,7 @@ def load(name):
 	global current
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
+		checkSynth(name)
 		newSynth.setVoice(conf["speech"][name]["voice"])
 		newSynth.setRate(conf["speech"][name]["rate"])
 		newSynth.setVolume(conf["speech"][name]["volume"])
