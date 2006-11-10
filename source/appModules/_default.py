@@ -5,6 +5,7 @@ from api import *
 import audio
 import NVDAObjects
 import synthDriverHandler
+import gui
 
 class appModule(object):
 
@@ -143,7 +144,9 @@ class appModule(object):
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
-		audio.speakMessage("Please Use exit on the NVDA menu in the Nonvisual Desktop Access window")
+		gui.exit()
+
+
 
 
 	def script_showGui(self,keyPress):

@@ -12,6 +12,7 @@ import NVDAThreads
 
 ### Constants
 appTitle = versionInfo.longName
+evt_externalCommand = wx.NewEventType()
 
 ### Globals
 guiThread = None
@@ -37,9 +38,12 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		self.menuBar.Append(self.menu_help,"&Help")
 		self.SetMenuBar(self.menuBar)
+		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
 		self.Show(True)
 
 	def onExitCommand(self, evt):
+		self.SetFocus()
+		time.sleep(0.001)
 		d = wx.MessageDialog(self, "Are you sure you want to exit NVDA?", "Exit NVDA", wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
@@ -81,9 +85,4 @@ def initialize():
 	guiThread.start()
 
 def exit():
-	mainFrame.Close(True)
-
-
-
-
-
+	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
