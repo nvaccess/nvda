@@ -4,11 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-foreground_locator=(0,0,0)
+foregroundLocator=(0,0,0)
 foregroundObject=None
-focus_locator=(0,0,0)
+foregroundProcessID=None
+focusLocator=(0,0,0)
 focusObject=None
-mouse_location=None
+mouseObject=None
+mouseOldX=None
+mouseOldY=None
 navigatorObject=None
 navigatorTracksFocus=True
 menuMode=False

@@ -362,6 +362,11 @@ class NVDAObject(object):
 		if self.getRole()==ROLE_SYSTEM_MENUITEM:
 			audio.cancel()
 
+	def event_mouseMove(self,x,y,oldX,oldY):
+		(left,top,right,bottom)=self.getLocation()
+		if (oldX<left) or (oldX>right) or (oldY<top) or (oldY>bottom):
+			self.speakObject()
+
 	def event_gainFocus(self):
 		self.updateMenuMode()
 		if self.hasFocus() and not (not api.getMenuMode() and (self.getRole()==ROLE_SYSTEM_MENUITEM)) and not ((self.getWindowHandle()==winUser.getForegroundWindow()) and (self.getRole()==ROLE_SYSTEM_CLIENT)):

@@ -6,7 +6,6 @@
 
 import winUser
 import time
-import Queue
 import pyHook
 import debug
 import winUser
@@ -14,9 +13,8 @@ import audio
 import api
 import globalVars
 from constants import *
+import NVDAThreads
 
-
-queue_keys=Queue.Queue(100)
 keyUpIgnoreSet=set()
 keyPressIgnoreSet=set()
 insertDown=False
@@ -105,9 +103,7 @@ def internal_keyDownEvent(event):
 		if event.Injected:
 			return True
 		globalVars.keyCounter+=1
-		while queue_keys.full():
-			time.sleep(0.001)
-		queue_keys.put("SilenceSpeech")
+		NVDAThreads.executeFunction(audio.cancel)
 		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
 			return True
 		if (event.Key=="Insert") and (event.Extended==0):
@@ -140,9 +136,7 @@ def internal_keyDownEvent(event):
 			return True
 		debug.writeMessage("key press: %s"%str(keyPress))
 		if api.keyHasScript(keyPress):
-			while queue_keys.full():
-				time.sleep(0.001)
-			queue_keys.put(keyPress)
+			NVDAThreads.executeFunction(api.executeScript,keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return False
 		else:

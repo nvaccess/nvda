@@ -5,18 +5,18 @@
 #See the file COPYING for more details.
 
 import pyHook
-import Queue
-
-queue_events=Queue.Queue(1000)
+import NVDAThreads
+import api
 
 #Internal mouse event
 
 def internal_mouseEvent(event):
-	if event.MessageName=="mouse move":
-		queue_events.put_nowait(["mouseMove",event.Position])
-	return True
-
-
+	try:
+		if event.MessageName=="mouse move":
+			NVDAThreads.executeFunction(api.notifyMouseMoved,event.Position[0],event.Position[1])
+		return True
+	except:
+		debug.writeException("mouseHandler.internal_mouseEvent")
 
 #Register internal mouse event
 

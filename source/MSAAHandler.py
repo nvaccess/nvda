@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import time
-import Queue
 import ctypes
 import comtypesClient
 import comtypes.automation
@@ -14,9 +13,7 @@ import winUser
 import audio
 from constants import *
 import api
-
-#The queue where other modules can access the events
-queue_events=Queue.Queue(100)
+import NVDAThreads
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -250,19 +247,14 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
+		eventName=eventMap[eventID]
 		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW]):
 			objectID=OBJID_CLIENT
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
-			while queue_events.full():
-				time.sleep(0.001)
-			queue_events.put(("caret",window,objectID,childID))
-		elif winUser.isWindow(window) and (objectID>=-4) and (eventID not in [EVENT_OBJECT_LOCATIONCHANGE]):
-			eventName=eventMap.get(eventID,None)
-			while queue_events.full():
-				time.sleep(0.001)
-			queue_events.put((eventName,window,objectID,childID))
+			eventName="caret"
+		if winUser.isWindow(window) and (objectID>=-4) and (eventName not in ["locationChange",None]):
+			NVDAThreads.executeFunction(api.executeEvent,eventName,window,objectID,childID)
 	except:
-		audio.speakMessage("Error in MSAA event callback")
 		debug.writeException("MSAAHandler.objectEventCallback")
 
 #Register internal object event with MSAA

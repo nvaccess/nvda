@@ -8,6 +8,7 @@ import ctypes
 import os.path
 import debug
 import winKernel
+import winUser
 import globalVars
 from constants import *
 import dictionaries
@@ -36,13 +37,13 @@ def getForegroundObject():
 	return globalVars.foregroundObject
 
 def getForegroundLocator():
-	return globalVars.foreground_locator
+	return globalVars.foregroundLocator
 
 def setForegroundObjectByLocator(window,objectID,childID):
 	foregroundObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not foregroundObject:
 		return False
-	globalVars.foreground_locator=(window,objectID,childID)
+	globalVars.foregroundLocator=(window,objectID,childID)
 	globalVars.foregroundObject=foregroundObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(foregroundObject)
@@ -52,7 +53,7 @@ def getFocusObject():
 	return globalVars.focusObject
 
 def getFocusLocator():
-	return globalVars.focus_locator
+	return globalVars.focusLocator
 
 def setFocusObjectByLocator(window,objectID,childID):
 	if (window,objectID,childID)==getFocusLocator():
@@ -66,7 +67,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
-	globalVars.focus_locator=(window,objectID,childID)
+	globalVars.focusLocator=(window,objectID,childID)
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
@@ -141,7 +142,37 @@ def eventExists(name,window,objectID,childID):
 			return True
 	return False
 
+def notifyMouseMoved(x,y):
+	obj=NVDAObjects.getNVDAObjectByPoint(x,y)
+	if obj==getFocusObject():
+		mouseObject=getFocusObject()
+		globalVars.mouseObject=None
+	elif obj==globalVars.mouseObject:
+		mouseObject=globalVars.mouseObject
+	else:
+		globalVars.mouseObject=mouseObject=obj
+	if hasattr(mouseObject,"event_mouseMove"):
+		try:
+			getattr(mouseObject,"event_mouseMove")(x,y,globalVars.mouseOldX,globalVars.mouseOldY)
+		except:
+			debug.writeException("api.notifyMouseMoved")
+	globalVars.mouseOldX=x
+	globalVars.mouseOldY=y
+
+
+ 
 def executeEvent(name,window,objectID,childID):
+	#If foreground event, see if we should change appModules, and also update the foreground global variables
+	if name=="foreground":
+		processID=winUser.getWindowThreadProcessID(window)
+		if processID!=globalVars.foregroundProcessID:
+			appName=getAppName(processID)
+			appModuleHandler.load(appName)
+			globalVars.foregroundProcessID=processID
+		setForegroundObjectByLocator(window,objectID,childID)
+	#If focus event then update the focus global variables
+	if (name=="gainFocus"):
+		setFocusObjectByLocator(window,objectID,childID)
 	#If caret event is on object that has not got focus, then set focus and then continue
 	if (name=="caret") and (window!=getFocusLocator()[0]):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
