@@ -39,7 +39,12 @@ class synthDriver(object):
 		return description
 
 	def getRate(self):
-		return (self.tts.Rate*5)+50
+		rate=(self.tts.Rate*5)+50
+		if rate<0:
+			rate=0
+		if rate>100:
+			rate=100
+		return rate
 
 	def getPitch(self):
 		return self.curPitch
@@ -53,8 +58,12 @@ class synthDriver(object):
 	def getLastIndex(self):
 		return self.lastIndex
 
-	def setRate(self,value):
-		self.tts.Rate = (value-50)/5
+	def setRate(self,rate):
+		if rate<0:
+			rate=0
+		if rate>100:
+			rate=100
+		self.tts.Rate = (rate-50)/5
 
 	def setPitch(self,value):
 		#pitch is really controled with xml around speak commands

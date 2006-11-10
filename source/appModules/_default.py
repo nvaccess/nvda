@@ -4,25 +4,27 @@ from constants import *
 from api import *
 import audio
 import NVDAObjects
+import synthDriverHandler
 
 class appModule(object):
 
 	def __init__(self):
 		self.keyMap={
-key("insert+q"):self.script_quit,
-key("insert+s"):self.script_speech_toggleMute,
-key("insert+n"):self.script_showGui,
-key("insert+F12"):self.script_dateTime,
-key("Insert+Clear"):self.script_navigator_object_current,
-key("insert+Subtract"):self.script_navigator_object_toFocus,
-key("Insert+Up"):self.script_navigator_object_parent,
-key("Insert+Down"):self.script_navigator_object_firstChild,
-key("Insert+Left"):self.script_navigator_object_previous,
-key("Insert+Right"):self.script_navigator_object_next,
-key("Insert+ExtendedReturn"):self.script_navigator_object_doDefaultAction,
-key("Insert+Add"):self.script_navigator_object_recursive,
-key("Insert+Shift+Add"):self.script_navigator_object_where,
-}
+			key("insert+q"):self.script_quit,
+			key("insert+s"):self.script_speech_toggleMute,
+			key("insert+F12"):self.script_dateTime,
+			key("insert+extendedPrior"):self.script_increaseRate,
+			key("insert+extendedNext"):self.script_decreaseRate,
+			key("Insert+Clear"):self.script_navigator_object_current,
+			key("insert+Subtract"):self.script_navigator_object_toFocus,
+			key("Insert+Up"):self.script_navigator_object_parent,
+			key("Insert+Down"):self.script_navigator_object_firstChild,
+			key("Insert+Left"):self.script_navigator_object_previous,
+			key("Insert+Right"):self.script_navigator_object_next,
+			key("Insert+ExtendedReturn"):self.script_navigator_object_doDefaultAction,
+			key("Insert+Add"):self.script_navigator_object_recursive,
+			key("Insert+Shift+Add"):self.script_navigator_object_where,
+		}
 
 	def event_switchStart(self,window,objectID,childID):
 		audio.speakMessage("task switcher")
@@ -36,6 +38,14 @@ key("Insert+Shift+Add"):self.script_navigator_object_where,
 		if text[0]=='0':
 			text=text[1:]
 		audio.speakMessage(text)
+
+	def script_increaseRate(self,keyPress):
+		synthDriverHandler.current.setRate(synthDriverHandler.current.getRate()+5)
+		audio.speakMessage("rate %s per cent"%synthDriverHandler.current.getRate())
+
+	def script_decreaseRate(self,keyPress):
+		synthDriverHandler.current.setRate(synthDriverHandler.current.getRate()-5)
+		audio.speakMessage("rate %s per cent"%synthDriverHandler.current.getRate())
 
 	def script_navigator_object_current(self,keyPress):
 		"""Reports the object the navigator is currently on""" 

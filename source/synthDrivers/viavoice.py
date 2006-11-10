@@ -72,7 +72,12 @@ class synthDriver(object):
 			debug.writeException("synth driver viavoice indexWatcher")
 
 	def getRate(self):
-		return self.dll.eciGetVoiceParam(self.handle,0,eciSpeed)
+		rate=self.dll.eciGetVoiceParam(self.handle,0,eciSpeed)-30
+		if rate<0:
+			rate=0
+		if rate>100:
+			rate=100
+		return rate
 
 	def getPitch(self):
 			return self.dll.eciGetVoiceParam(self.handle,0,eciPitchBaseline)
@@ -87,8 +92,12 @@ class synthDriver(object):
 		self.dll.eciSpeaking(self.handle)
 		return self.dll.eciGetIndex(self.handle)
 
-	def setRate(self,value):
-		self.dll.eciSetVoiceParam(self.handle,0,eciSpeed,value)
+	def setRate(self,rate):
+		if rate<0:
+			rate=0
+		if rate>100:
+			rate=100
+		self.dll.eciSetVoiceParam(self.handle,0,eciSpeed,rate+30)
 
 	def setPitch(self,value):
 		self.dll.eciSetVoiceParam(self.handle,0,eciPitchBaseline,value)

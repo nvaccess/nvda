@@ -19,7 +19,7 @@ class synthDriver(object):
 
 
 	def getRate(self):
-		value=self.tts.Speed/8
+		value=self.tts.Speed/4
 		if value<0:
 			value=0
 		elif value>100:
@@ -35,9 +35,13 @@ class synthDriver(object):
 	def getLastIndex(self):
 		return self.lastIndex
 
-	def setRate(self,value):
-		value=value*4
-		self.tts.Speed=value
+	def setRate(self,rate):
+		if rate<0:
+			rate=0
+		if rate>100:
+			rate=100
+		rate=rate*4
+		self.tts.Speed=rate
 
 	def setVolume(self,value):
 		pass
