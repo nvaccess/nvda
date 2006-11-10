@@ -144,10 +144,12 @@ def eventExists(name,window,objectID,childID):
 
 def notifyMouseMoved(x,y):
 	obj=NVDAObjects.getNVDAObjectByPoint(x,y)
-	if obj==getFocusObject():
+	if not obj:
+		return
+	if getFocusObject() and (obj.getLocation()==getFocusObject().getLocation()):
 		mouseObject=getFocusObject()
 		globalVars.mouseObject=None
-	elif obj==globalVars.mouseObject:
+	elif globalVars.mouseObject and (obj.getLocation()==globalVars.mouseObject.getLocation()):
 		mouseObject=globalVars.mouseObject
 	else:
 		globalVars.mouseObject=mouseObject=obj

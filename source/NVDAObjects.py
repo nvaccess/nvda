@@ -363,8 +363,11 @@ class NVDAObject(object):
 			audio.cancel()
 
 	def event_mouseMove(self,x,y,oldX,oldY):
-		(left,top,right,bottom)=self.getLocation()
+		(left,top,width,height)=self.getLocation()
+		right=left+width
+		bottom=top+height
 		if (oldX<left) or (oldX>right) or (oldY<top) or (oldY>bottom):
+			audio.cancel()
 			self.speakObject()
 
 	def event_gainFocus(self):
