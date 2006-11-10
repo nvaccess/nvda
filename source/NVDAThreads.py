@@ -1,3 +1,5 @@
+import time
+
 generators={}
 lastGeneratorValues={}
 lastID=0
@@ -31,10 +33,7 @@ def getLastGeneratorValue(ID):
 def executeFunction(func,*args,**vars):
 	g=makeGeneratorFunction(func,*args,**vars)
 	ID=addGenerator(g)
-	while generatorExists(ID):
-		time.sleep(0.001)
-	return getLastGeneratorValue(ID)
-
+	return ID
 
 def makeGeneratorFunction(func,*args,**vars):
 	"""Makes a generator function out of a simple function that does not yield itself. Do not use functions that process for a long time"""

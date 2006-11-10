@@ -53,8 +53,6 @@ class MainFrame(wx.Frame):
 		if res:
 			NVDAThreads.executeFunction(synthDriverHandler.load,synthList[d.GetSelection()])
 
-
-
 	def onAboutCommand(self,evt):
 		aboutInfo="""
 %s
