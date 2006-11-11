@@ -42,7 +42,10 @@ def makeGeneratorFunction(func,*args,**vars):
 
 def pump():
 	delList=[]
-	for ID in generators.keys():
+	orderedGenerators=generators.keys()
+	if orderedGenerators:
+		orderedGenerators.sort(lambda x, y: x-y)
+	for ID in orderedGenerators:
 		try:
 			lastGeneratorValues[ID]=generators[ID].next()
 		except StopIteration:
