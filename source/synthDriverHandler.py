@@ -33,6 +33,7 @@ def load(name):
 		newSynth.setRate(conf["speech"][name]["rate"])
 		newSynth.setVolume(conf["speech"][name]["volume"])
 		current=newSynth
+		conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:

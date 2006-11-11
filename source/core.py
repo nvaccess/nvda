@@ -59,10 +59,6 @@ def main():
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
 	#gui.terminate()
-	try:
-		config.save()
-	except:
-		pass
 	MSAAHandler.terminate()
 	audio.terminate()
 	return True

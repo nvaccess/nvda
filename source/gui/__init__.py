@@ -1,4 +1,3 @@
-import versionInfo
 import time
 import threading
 import wx
@@ -7,7 +6,10 @@ import globalVars
 import api
 import debug
 import synthDriverHandler
-from config import conf
+import config
+import versionInfo
+import audio
+
 import NVDAThreads
 
 ### Constants
@@ -25,6 +27,9 @@ class MainFrame(wx.Frame):
 		wx.EVT_CLOSE(self,self.onExitCommand)
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
+		self.id_onSaveConfigurationCommand=wx.NewId()
+		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, "S&ave configuration\tctrl+s", "Write current configuration to nvda.ini")
+		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
 		self.menu_NVDA.Append(wx.ID_EXIT, "E&xit", "Exit NVDA")
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		self.menuBar.Append(self.menu_NVDA,"&NVDA")
@@ -40,6 +45,10 @@ class MainFrame(wx.Frame):
 		self.SetMenuBar(self.menuBar)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
 		self.Show(True)
+
+	def onSaveConfigurationCommand(self,evt):
+		config.save()
+		NVDAThreads.executeFunction(audio.speakMessage,"Configuration saved")
 
 	def onExitCommand(self, evt):
 		self.Raise()
