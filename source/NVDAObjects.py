@@ -126,12 +126,12 @@ class NVDAObject(object):
 		if isinstance(childID,int):
 			h=(h+(childID*p))%l
 		location=self.getLocation()
-		if location:
-			left,top,right,bottom=location
+		if location and (len(location)==4):
+			left,top,width,height=location
 			h=(h+(left*p))%l
 			h=(h+(top*p))%l
-			h=(h+(right*p))%l
-			h=(h+(bottom*p))%l
+			h=(h+(width*p))%l
+			h=(h+(height*p))%l
 		return h
 
 	def __hash__(self):
@@ -251,7 +251,8 @@ class NVDAObject(object):
  
 
 	def getLocation(self):
-		return MSAAHandler.accLocation(self.ia,self.child)
+		location=MSAAHandler.accLocation(self.ia,self.child)
+		return location
 
 	def getParent(self):
 		res=MSAAHandler.accParent(self.ia,self.child)
@@ -363,7 +364,10 @@ class NVDAObject(object):
 			audio.cancel()
 
 	def event_mouseMove(self,x,y,oldX,oldY):
-		(left,top,width,height)=self.getLocation()
+		location=self.getLocation()
+		if not location or (len(location)!=4):
+			return
+		(left,top,width,height)=location
 		right=left+width
 		bottom=top+height
 		if (oldX<left) or (oldX>right) or (oldY<top) or (oldY>bottom):
@@ -507,6 +511,7 @@ class NVDAObject_edit(NVDAObject):
 			key("shift+prior"):self.script_review_bottom,
 			key("insert+f"):self.script_formatInfo,
 		}
+		self.mousePos=None
 
 	def getValue(self):
 		return self.getCurrentLine()
@@ -531,6 +536,9 @@ class NVDAObject_edit(NVDAObject):
 
 	def setCaretPosition(self,pos):
 		winUser.sendMessage(self.getWindowHandle(),EM_SETSEL,pos,pos)
+
+	def getPositionFromScreenCoords(self,x,y):
+		return winUser.LOLONG(winUser.sendMessage(self.getWindowHandle(),EM_CHARFROMPOS,0,winUser.MAKELONG(x,y)))
 
 	def getStartPosition(self):
 		return 0
@@ -730,6 +738,27 @@ class NVDAObject_edit(NVDAObject):
 
 	def event_caret(self):
 		self.reviewCursor=self.getCaretPosition()
+
+	def old_event_mouseMove(self,x,y,oldX,oldY):
+		location=self.getLocation()
+		if not location or (len(location)!=4):
+			return
+		(left,top,width,height)=location
+		right=left+width
+		bottom=top+height
+		if (oldX<left) or (oldX>right) or (oldY<top) or (oldY>bottom):
+			self.speakObject()
+		curPos=self.getPositionFromScreenCoords(x,y)
+		if (self.mousePos is None) or (self.getLineStart(curPos)!=self.getLineStart(self.mousePos)):
+			audio.cancel()
+			audio.speakText(self.getLine(curPos))
+		elif self.wordStart(curPos)!=self.wordStart(self.mousePos):
+  			audio.cancel()
+			audio.speakText(self.getWord(curPos))
+		elif curPos!=self.mousePos:
+			audio.cancel()
+			audio.speakText(self.getCharacter(curPos))
+		self.mousePos=curPos
 
 	def event_gainFocus(self):
 		self.speakObject()
@@ -1173,6 +1202,9 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
+	def getPositionFromScreenCoords(self,x,y):
+		return 0 #Consoles can't convert screen coords to a terminal position
+
 	def getVisibleRange(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		top=self.getPositionFromCoord(0,info.windowRect.top)
@@ -1356,6 +1388,10 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 	def setCaretPosition(self,pos):
 		self.dom.Selection.Start=pos
 		self.dom.Selection.End=pos
+
+	def old_getPositionFromScreenCoords(self,x,y):
+		r=self.dom.RangeFromPoint(x,y)
+		return r.Start
 
 	def getVisibleRange(self):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

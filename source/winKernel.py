@@ -2,7 +2,7 @@ import ctypes
 
 kernel32=ctypes.windll.kernel32
 
-class consoleCoordType(ctypes.Structure):
+class coordType(ctypes.Structure):
 	_fields_=[
 ('x',ctypes.c_short),
 ('y',ctypes.c_short),
@@ -18,11 +18,11 @@ class consoleWindowRectType(ctypes.Structure):
 
 class consoleScreenBufferInfoType(ctypes.Structure):
 	_fields_=[
-('consoleSize',consoleCoordType),
-('cursorPosition',consoleCoordType),
+('consoleSize',coordType),
+('cursorPosition',coordType),
 ('attributes',ctypes.c_short),
 ('windowRect',consoleWindowRectType),
-('maxWindowSize',consoleCoordType),
+('maxWindowSize',coordType),
 ]
 
 def attachConsole(processID):
@@ -38,7 +38,7 @@ def getConsoleProcessList(processList,processCount):
 	return kernel32.GetConsoleProcessList(processList,processCount)
 
 def readConsoleOutputCharacter(handle,length,x,y):
-	point=consoleCoordType()
+	point=coordType()
 	point.x=x
 	point.y=y
 	buf=ctypes.create_unicode_buffer(length)

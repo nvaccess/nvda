@@ -62,19 +62,25 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	varChild=comtypes.automation.VARIANT()
 	res=ctypes.windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
-		return (IAccWrapper(pacc),varChild.value)
+		if not isinstance(varChild.value,int):
+			child=0
+		else:
+			child=varChild.value
+		return (IAccWrapper(pacc),child)
 	else:
 		return None
 
 def accessibleObjectFromPoint(x,y):
-	point=screenPointType()
-	point.x=x
-	point.y=y
+	point=screenPointType(x,y)
 	pacc=ctypes.POINTER(IAccessible)()
 	varChild=comtypes.automation.VARIANT()
 	res=ctypes.windll.oleacc.AccessibleObjectFromPoint(point,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
-		return (IAccWrapper(pacc),varChild.value)
+		if not isinstance(varChild.value,int):
+			child=0
+		else:
+			child=varChild.value
+		return (IAccWrapper(pacc),child)
 
 def windowFromAccessibleObject(ia):
 	hwnd=ctypes.c_int()

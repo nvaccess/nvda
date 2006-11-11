@@ -1,14 +1,6 @@
-import struct
 import ctypes
-import win32api
 
 user32=ctypes.windll.user32
-
-class hiLoWordType(ctypes.Structure):
-	_fields_=[
-	('lo',ctypes.c_short),
-	('hi',ctypes.c_short),
-	]
 
 class pointType(ctypes.Structure):
 	_fields_=[
@@ -26,15 +18,23 @@ class msgType(ctypes.Structure):
 	('pt',pointType),
 	]
 
-def unpackWords(bytes):
-	byteString=struct.pack('i',bytes)
-	return struct.unpack('hh',byteString)
-
 def LOWORD(bytes):
-	return win32api.LOWORD(bytes)
-
+	return bytes&0xFF
+ 
 def HIWORD(bytes):
-	return win32api.HIWORD(bytes)
+	return bytes>>8
+
+def MAKEWORD(lo,hi):
+	return (hi<<8)+lo
+
+def LOLONG(bytes):
+	return bytes&0xFFFF
+ 
+def HILONG(bytes):
+	return bytes>>16
+
+def MAKELONG(lo,hi):
+	return (hi<<16)+lo
 
 def waitMessage():
 	return user32.WaitMessage()

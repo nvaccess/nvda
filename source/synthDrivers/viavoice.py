@@ -122,6 +122,9 @@ class synthDriver(object):
 			self.dll.eciSynchronize(self.handle)
 
 	def cancel(self):
-		if self.dll.eciSpeaking(self.handle):
-			self.dll.eciStop(self.handle)
+		try:
+			if self.dll.eciSpeaking(self.handle):
+				self.dll.eciStop(self.handle)
+		except:
+			pass
 
