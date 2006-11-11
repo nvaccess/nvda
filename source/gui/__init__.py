@@ -31,15 +31,18 @@ class MainFrame(wx.Frame):
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
 		self.id_onSaveConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, "S&ave configuration\tctrl+s", "Write current configuration to nvda.ini")
+		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, "&Save configuration\tctrl+s", "Write current configuration to nvda.ini")
 		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
 		self.menu_NVDA.Append(wx.ID_EXIT, "E&xit", "Exit NVDA")
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		self.menuBar.Append(self.menu_NVDA,"&NVDA")
 		self.menu_preferences=wx.Menu()
 		self.id_chooseSynthesizerCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,"Synthesizer...","Choose speech synthesizer to use")
+		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,"&Synthesizer...\tctrl+shift+s","Choose speech synthesizer to use")
 		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onChooseSynthesizerCommand)
+		self.id_chooseVoiceCommand=wx.NewId()
+		self.menu_preferences.Append(self.id_chooseVoiceCommand,"&Voice...\tctrl+shift+v","Choose the voice to use")
+		wx.EVT_MENU(self,self.id_chooseVoiceCommand,self.onChooseVoiceCommand)
 		self.menuBar.Append(self.menu_preferences,"&Preferences")
 		self.menu_help = wx.Menu()
 		self.menu_help.Append(wx.ID_ABOUT, "&About...", "About NVDA")
@@ -48,13 +51,13 @@ class MainFrame(wx.Frame):
 		self.SetMenuBar(self.menuBar)
 		self.Show(True)
 
-	def onSaveConfigurationCommand(self,evt):
-		config.save()
-		NVDAThreads.executeFunction(audio.speakMessage,"Configuration saved")
-
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False
 		self.Destroy()
+
+	def onSaveConfigurationCommand(self,evt):
+		config.save()
+		NVDAThreads.executeFunction(audio.speakMessage,"Configuration saved")
 
 	def onExitCommand(self, evt):
 		self.Raise()
@@ -67,9 +70,14 @@ class MainFrame(wx.Frame):
 		synthList=synthDriverHandler.getDriverList()
 		d=wx.SingleChoiceDialog(self,"Choose the speech synthesizer you want to use","Synthesizer",synthList)
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
-		res=d.ShowModal()
-		if res:
+		if d.ShowModal()==wx.ID_OK:
 			NVDAThreads.executeFunction(synthDriverHandler.setDriver,synthList[d.GetSelection()])
+
+	def onChooseVoiceCommand(self,evt):
+		d=wx.SingleChoiceDialog(self,"Choose the voice you want to use","Voice",synthDriverHandler.getVoiceNames())
+		d.SetSelection(config.getSynthConfig()["voice"]-1)
+		if d.ShowModal()==wx.ID_OK:
+			NVDAThreads.executeFunction(synthDriverHandler.setVoice,d.GetSelection()+1)
 
 	def onAboutCommand(self,evt):
 		aboutInfo="""
@@ -102,4 +110,4 @@ def exit():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
 
 def abort():
-	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
+	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, mainFrame.id_onAbortCommand))

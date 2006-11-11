@@ -13,6 +13,7 @@ __path__=['.\\synthDrivers']
 
 driverObject=None
 driverName=None
+driverVoiceNames=[]
 
 def getDriverList():
 	l=os.listdir(__path__[0])
@@ -23,7 +24,7 @@ def getDriverList():
 	return l
 
 def setDriver(name):
-	global driverObject, driverName
+	global driverObject, driverName, driverVoiceNames
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
 		checkSynth(name)
@@ -32,6 +33,7 @@ def setDriver(name):
 		newSynth.setVolume(conf["speech"][name]["volume"])
 		driverObject=newSynth
 		driverName=name
+		driverVoiceNames=driverObject.getVoiceNames()
 		conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
@@ -93,9 +95,10 @@ def getVoice():
 def setVoice(value):
 	driverObject.setVoice(value)
 	conf["speech"][driverName]["voice"]=getVoice()
+	driverObject.setRate(conf["speech"][driverName]["rate"])
 
-def getVoiceNames(value):
-	return driverObject.getVoiceNames()
+def getVoiceNames():
+	return driverVoiceNames
 
 def speakText(text,wait=False,index=None):
 	driverObject.speakText(text,wait=wait,index=index)

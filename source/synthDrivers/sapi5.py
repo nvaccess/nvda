@@ -48,7 +48,7 @@ class synthDriver(object):
 	def getVoiceNames(self):
 		voiceNames=[]
 		for num in range(self.tts.GetVoices().Count):
-			voiceNames.append(self.GetVoices()[num].GetDescription())
+			voiceNames.append(self.tts.GetVoices()[num].GetDescription())
 		return voiceNames
 
 	def getLastIndex(self):

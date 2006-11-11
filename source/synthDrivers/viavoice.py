@@ -6,6 +6,7 @@ import ctypes
 import debug
 
 description="IBM ViaVoice, ibmeci50.dll"
+curVoice=1
 
 #Constants
 
@@ -63,6 +64,7 @@ class synthDriver(object):
 		return self.dll.eciGetVoiceParam(self.handle,0,eciVolume)
 
 	def getVoice(self):
+		global curVoice
 		return curVoice
 
 	def getVoiceNames(self):
@@ -87,6 +89,7 @@ class synthDriver(object):
 		self.dll.eciSetVoiceParam(self.handle,0,eciVolume,value)
 
 	def setVoice(self,value):
+		global curVoice
 		self.dll.eciCopyVoice(self.handle,value,0)
 		curVoice=value
 

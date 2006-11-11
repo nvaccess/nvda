@@ -27,5 +27,5 @@ try:
 		raise RuntimeError("core has errors")
 except:
 	debug.writeException("nvda.pyw executing core.main")
-	winsound.Beep(1600,250)
+	winsound.Beep(700,300)
 debug.stop()
