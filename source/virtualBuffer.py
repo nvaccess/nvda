@@ -258,8 +258,8 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 			self.virtualBufferObject=virtualBufferObject
 
 		def ondeactivate(self,arg,event):
-			debug.writeMessage("vb event onfocusout: %s"%event.srcElement)
-			self.virtualBufferObject.refreshNode(event.srcElement.uniqueID)
+			debug.writeMessage("vb event ondeactive: %s"%event.srcElement)
+			#self.virtualBufferObject.refreshNode(event.srcElement.uniqueID)
 
 		def onreadystatechange(self,arg,event):
 			readyState=self.virtualBufferObject.dom.readyState
@@ -344,13 +344,16 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		preNodes=self.nodes[0:index]
 		postNodes=self.nodes[index+self.nodes[index][1]:]
 		(newNodes,newText)=self.generateNode(domNode)
+		audio.speakMessage("new text: %s"%newText)
 		if (len(preText)>0) and (len(newText)>0) and (preText[-1]=='\n') and (newText[0]=='\n'):
 			preText=preText[:-1]
 		for j in range(len(newNodes)):
 			newNodes[j][2]+=len(preText)
 			newNodes[j][3]+=len(preText)
+		for j in range(len(postNodes)):
+			postNodes[j][2]=postNodes[0][2]+len(preText)+len(newText)
+			postNodes[j][3]=postNodes[0][3]+len(preText)+len(newText)
 		self.text=preText+newText+postText
-		audio.speakMessage(self.text)
 		self.nodes=preNodes+newNodes+postNodes
 
 	def getDomNodeByMSAA(self,objectID,childID):
@@ -492,6 +495,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		childCount=0
 		try:
 			childDomNode=domNode.firstChild
+			audio.speakMessage("children")
 		except:
 			childDomNode=None
 		while childDomNode:
