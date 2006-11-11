@@ -16,6 +16,9 @@ class appModule(object):
 			key("insert+F12"):self.script_dateTime,
 			key("insert+extendedPrior"):self.script_increaseRate,
 			key("insert+extendedNext"):self.script_decreaseRate,
+			key("insert+2"):self.script_toggleSpeakTypedCharacters,
+			key("insert+3"):self.script_toggleSpeakTypedWords,
+			key("insert+4"):self.script_toggleSpeakCommandKeys,
 			key("Insert+Clear"):self.script_navigator_object_current,
 			key("insert+Subtract"):self.script_navigator_object_toFocus,
 			key("Insert+Up"):self.script_navigator_object_parent,
@@ -47,6 +50,30 @@ class appModule(object):
 	def script_decreaseRate(self,keyPress):
 		synthDriverHandler.current.setRate(synthDriverHandler.current.getRate()-5)
 		audio.speakMessage("rate %s per cent"%synthDriverHandler.current.getRate())
+
+	def script_toggleSpeakTypedCharacters(self,keyPress):
+		if conf["keyboard"]["speakTypedCharacters"]:
+			audio.speakMessage("Speak typed characters off")
+			conf["keyboard"]["speakTypedCharacters"]=False
+		else:
+			audio.speakMessage("Speak typed characters on")
+			conf["keyboard"]["speakTypedCharacters"]=True
+
+	def script_toggleSpeakTypedWords(self,keyPress):
+		if conf["keyboard"]["speakTypedWords"]:
+			audio.speakMessage("Speak typed words off")
+			conf["keyboard"]["speakTypedWords"]=False
+		else:
+			audio.speakMessage("Speak typed words on")
+			conf["keyboard"]["speakTypedWords"]=True
+
+	def script_toggleSpeakCommandKeys(self,keyPress):
+		if conf["keyboard"]["speakCommandKeys"]:
+			audio.speakMessage("Speak command keys off")
+			conf["keyboard"]["speakCommandKeys"]=False
+		else:
+			audio.speakMessage("Speak command keys on")
+			conf["keyboard"]["speakCommandKeys"]=True
 
 	def script_navigator_object_current(self,keyPress):
 		"""Reports the object the navigator is currently on""" 

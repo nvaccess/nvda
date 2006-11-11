@@ -21,7 +21,7 @@ mainFrame = None
 class MainFrame(wx.Frame):
 
 	def __init__(self):
-		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle)
+		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,wx.DefaultSize, wx.DEFAULT_FRAME_STYLE)
 		wx.EVT_CLOSE(self,self.onExitCommand)
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()

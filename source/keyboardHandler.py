@@ -14,10 +14,12 @@ import api
 import globalVars
 from constants import *
 import NVDAThreads
+from config import conf
 
 keyUpIgnoreSet=set()
 keyPressIgnoreSet=set()
 insertDown=False
+word=""
 
 ignoreNextKeyPress = False
 
@@ -98,7 +100,7 @@ def sendKey(keyPress):
 #Internal functions for key presses
 
 def internal_keyDownEvent(event):
-	global insertDown, ignoreNextKeyPress
+	global insertDown, ignoreNextKeyPress, word
 	try:
 		if event.Injected:
 			return True
@@ -135,6 +137,29 @@ def internal_keyDownEvent(event):
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
 		debug.writeMessage("key press: %s"%str(keyPress))
+		if ((modifiers is None) or (modifiers==frozenset(['Shift']))) and (event.Ascii in range(33,128)):
+			if conf["keyboard"]["speakTypedCharacters"]:
+				NVDAThreads.executeFunction(audio.speakSymbol,chr(event.Ascii))
+			if conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
+				word+=chr(event.Ascii)
+			elif conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+				NVDAThreads.executeFunction(audio.speakText,word)
+				word=""
+		else:
+			if conf["keyboard"]["speakCommandKeys"]:
+				keyList=[]
+				if (modifiers is not None) and (len(modifiers)>0):
+					keyList+=modifiers
+				keyList.append(keyName)
+				label=""
+				for item in keyList:
+					if item is not None:
+						label+="+%s"%item
+				debug.writeMessage("speaking key: %s"%label)
+				NVDAThreads.executeFunction(audio.speakMessage,label[1:])
+			if conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+				NVDAThreads.executeFunction(audio.speakText,word)
+				word=""
 		if api.keyHasScript(keyPress):
 			NVDAThreads.executeFunction(api.executeScript,keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))

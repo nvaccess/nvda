@@ -35,6 +35,13 @@ confspec = StringIO("""# NVDA Configuration File
 	reportObjectUnderMouse = boolean(default=true)
 	reportMouseShapeChanges = boolean(default=false)
 
+#Keyboard settings
+[keyboard]
+	speakTypedCharacters = boolean(default=true)
+	speakTypedWords = boolean(default=false)
+	speakCommandKeys = boolean(default=false)
+
+
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
