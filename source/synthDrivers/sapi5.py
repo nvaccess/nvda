@@ -32,18 +32,8 @@ class synthDriver(object):
 			debug.writeMessage("get %s"%name)
 			return self.event
 
-	def getName(self):
-		return name
-
-	def getDescription(self):
-		return description
-
 	def getRate(self):
 		rate=(self.tts.Rate*5)+50
-		if rate<0:
-			rate=0
-		if rate>100:
-			rate=100
 		return rate
 
 	def getPitch(self):
@@ -55,14 +45,16 @@ class synthDriver(object):
 	def getVoice(self):
 		return self.curVoice
 
+	def getVoiceNames(self):
+		voiceNames=[]
+		for num in range(self.tts.GetVoices().Count):
+			voiceNames.append(self.GetVoices()[num].GetDescription())
+		return voiceNames
+
 	def getLastIndex(self):
 		return self.lastIndex
 
 	def setRate(self,rate):
-		if rate<0:
-			rate=0
-		if rate>100:
-			rate=100
 		self.tts.Rate = (rate-50)/5
 
 	def setPitch(self,value):
@@ -73,7 +65,7 @@ class synthDriver(object):
 		self.tts.Volume = value
 
 	def setVoice(self,value):
-		self.tts.Voice(self.tts.GetVoices().Item(value-1))
+		self.tts.Voice(self.tts.GetVoices()[value-1])
 		self.curVoice=value
 
 	def speakText(self,text,wait=False,index=None):

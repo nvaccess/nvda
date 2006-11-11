@@ -11,35 +11,24 @@ class synthDriver(object):
 		self.tts=comtypesClient.CreateObject("speech.voiceText")
 		self.tts.Register("local_pc","nvda")
 
-	def getName(self):
-		return name
-
-	def getDescription(self):
-		return description
-
-
 	def getRate(self):
 		value=self.tts.Speed/4
-		if value<0:
-			value=0
-		elif value>100:
-			value=100
 		return value
 
 	def getVolume(self):
-		pass
+		return 100
+
 
 	def getVoice(self):
-		pass
+		return 1
+
+	def getVoiceNames(self):
+		return ["default"]
 
 	def getLastIndex(self):
 		return self.lastIndex
 
 	def setRate(self,rate):
-		if rate<0:
-			rate=0
-		if rate>100:
-			rate=100
 		rate=rate*4
 		self.tts.Speed=rate
 

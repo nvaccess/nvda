@@ -44,6 +44,10 @@ def main():
 		gui.initialize()
 	except:
 		debug.writeException("core.py main init")
+		try:
+			gui.abort()
+		except:
+			pass
 		return False
 	try:
 		globalVars.stayAlive=True
@@ -54,11 +58,14 @@ def main():
 				winUser.dispatchMessage(ctypes.byref(msg))
 			time.sleep(0.001)
 	except:
-			debug.writeException("core.py main loop")
-			audio.speakMessage("Exception in main loop")
+		debug.writeException("core.py main loop")
+		audio.speakMessage("Exception in main loop")
+		try:
+			gui.abort()
+		except:
+			pass
+		return False
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
-	#gui.terminate()
 	MSAAHandler.terminate()
-	audio.terminate()
 	return True

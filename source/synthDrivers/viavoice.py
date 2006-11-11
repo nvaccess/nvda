@@ -5,7 +5,6 @@ import os
 import ctypes
 import debug
 
-name="viavoice"
 description="IBM ViaVoice, ibmeci50.dll"
 
 #Constants
@@ -49,34 +48,12 @@ class synthDriver(object):
 	def __del__(self):
 		self.dll.eciDelete(self.handle)
 
-	def getName(self):
-		return name
-
-	def getDescription(self):
-		return description
-
 	def getLastIndex(self):
 		self.dll.eciSpeaking(self.handle)
 		return self.dll.eciGetIndex(self.handle)
 
-	def indexWatcher(self):
-		try:
-			while self.keepWatching:
-				self.dll.eciSpeaking(self.handle)
-				index=self.dll.eciGetIndex(self.handle)
-				if index and callable(self.spokenTextCallback):
-					debug.writeMessage("synthDriver viavoice indexWatcher index %s"%index)
-					self.spokenTextCallback(index)
-				time.sleep(0.01)
-		except:
-			debug.writeException("synth driver viavoice indexWatcher")
-
 	def getRate(self):
 		rate=self.dll.eciGetVoiceParam(self.handle,0,eciSpeed)-30
-		if rate<0:
-			rate=0
-		if rate>100:
-			rate=100
 		return rate
 
 	def getPitch(self):
@@ -88,15 +65,19 @@ class synthDriver(object):
 	def getVoice(self):
 		return curVoice
 
+	def getVoiceNames(self):
+		voiceNames=[]
+		for v in range(1,9):
+			buf=ctypes.create_string_buffer(30)
+			self.dll.eciGetVoiceName(self.handle,v,buf)
+			voiceNames.append(buf.value)
+		return voiceNames
+
 	def getLastIndex(self):
 		self.dll.eciSpeaking(self.handle)
 		return self.dll.eciGetIndex(self.handle)
 
 	def setRate(self,rate):
-		if rate<0:
-			rate=0
-		if rate>100:
-			rate=100
 		self.dll.eciSetVoiceParam(self.handle,0,eciSpeed,rate+30)
 
 	def setPitch(self,value):

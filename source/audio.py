@@ -11,15 +11,11 @@ import NVDAThreads
 allowSpeech=True
 
 def initialize():
-	debug.writeMessage("synth driver list: %s"%synthDriverHandler.getSynthDriverList())
-	synthDriverHandler.load(conf["speech"]["synth"])
-
-def terminate():
-	del synthDriverHandler.current
+	synthDriverHandler.setDriver(conf["speech"]["synth"])
 
 def getLastIndex():
 	global lastIndex
-	return synthDriverHandler.current.getLastIndex()
+	return synthDriverHandler.getLastIndex()
 
 def processText(text):
 	text=processTextSymbols(text,keepInflection=True)
@@ -32,14 +28,14 @@ def playSound(fileName,wait=False):
 	winsound.PlaySound(fileName,flags)
 
 def cancel():
-	synthDriverHandler.current.cancel()
+	synthDriverHandler.cancel()
 
 def speakMessage(text,wait=False,index=None):
 	if not allowSpeech:
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait=wait,index=index)
+		synthDriverHandler.speakText(text,wait=wait,index=index)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False,index=None):
 	if not allowSpeech:
@@ -65,7 +61,7 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 		text="%s %s"%(text,position)
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait=wait,index=index)
+		synthDriverHandler.speakText(text,wait=wait,index=index)
 
 def speakSymbol(symbol,wait=False,index=None):
 	if not allowSpeech:
@@ -76,11 +72,11 @@ def speakSymbol(symbol,wait=False,index=None):
 	else:
 		uppercase=False
 	if uppercase:
-		oldPitch=synthDriverHandler.current.getPitch()
-		synthDriverHandler.current.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
-	synthDriverHandler.current.speakText(symbol,wait=wait,index=index)
+		oldPitch=synthDriverHandler.getPitch()
+		synthDriverHandler.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
+	synthDriverHandler.speakText(symbol,wait=wait,index=index)
 	if uppercase:
-		synthDriverHandler.current.setPitch(oldPitch)
+		synthDriverHandler.setPitch(oldPitch)
 
 def speakText(text,wait=False,index=None):
 	if not allowSpeech:
@@ -90,5 +86,5 @@ def speakText(text,wait=False,index=None):
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.current.speakText(text,wait=wait,index=index)
+		synthDriverHandler.speakText(text,wait=wait,index=index)
 
