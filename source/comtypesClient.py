@@ -20,7 +20,7 @@
 import sys, os, new, imp
 import weakref
 import ctypes
-
+import compiler
 import comtypes
 from comtypes.hresult import *
 import comtypes.automation
@@ -152,9 +152,12 @@ def GetModule(tlib):
             setattr(comInterfaces, modulename, mod)
             return mod
         # create in file system, and import it
-        ofi = open(os.path.join(gen_dir, modulename + ".py"), "w")
+        fileName=os.path.join(gen_dir, modulename + ".py")
+        ofi = open(fileName,"w")
         ofi.write(code)
         ofi.close()
+        compiler.compileFile(fileName)
+        os.remove(fileName)
         return _my_import("comInterfaces." + modulename)
         
 def _CreateWrapper(tlib, fullname):

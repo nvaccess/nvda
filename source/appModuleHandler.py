@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import win32com.client #Some appModules need this
 import os
 import sys
 import debug

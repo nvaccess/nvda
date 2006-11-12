@@ -1,9 +1,12 @@
 Changes since revision 164:
+*Fixed up some bugs in mouse tracking (NVDA should now report objects as the mouse moves over them).
 *Added key echo scripts:
 -insert+2 toggle speak typed characters
 -insert+3 toggle speak typed words
 -insert+4 toggle speak command keys
-
+*Fixed handling of crashes so that if the screen reader core dies, it should take the GUI down with it
+*Added a voice dialog on the preferences menu
+*Added a save configuration to the NVDA menu. This writes the current config to nvda.ini, previously this was done automatically on exit.
 Changes since revision 82:
 *Added support for the automatic speaking of font, style, page number etc of documents.
 *Fixed many small bugs to do with navigating documents by character, word and line.

@@ -1,6 +1,8 @@
 import time
 import re
-import win32com.client
+import ctypes
+import comtypesClient
+import comtypes.automation
 import audio
 import debug
 from constants import *
@@ -8,8 +10,6 @@ from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
 import _MSOffice
-
-excel_application=win32com.client.dynamic.Dispatch('Excel.Application')
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -34,34 +34,37 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def __init__(self,*args):
 		NVDAObjects.NVDAObject.__init__(self,*args)
-		self.excelObject=excel_application
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+			raise OSError("No native object model")
+		self.excelObject=comtypesClient.wrap(ptr)
 		self.keyMap.update({
-key("Insert+f"):self.script_formatInfo,
-key("ExtendedUp"):self.script_moveByCell,
-key("ExtendedDown"):self.script_moveByCell,
-key("ExtendedLeft"):self.script_moveByCell,
-key("ExtendedRight"):self.script_moveByCell,
-key("Control+ExtendedUp"):self.script_moveByCell,
-key("Control+ExtendedDown"):self.script_moveByCell,
-key("Control+ExtendedLeft"):self.script_moveByCell,
-key("Control+ExtendedRight"):self.script_moveByCell,
-key("ExtendedHome"):self.script_moveByCell,
-key("ExtendedEnd"):self.script_moveByCell,
-key("Control+ExtendedHome"):self.script_moveByCell,
-key("Control+ExtendedEnd"):self.script_moveByCell,
-key("Shift+ExtendedUp"):self.script_moveByCell,
-key("Shift+ExtendedDown"):self.script_moveByCell,
-key("Shift+ExtendedLeft"):self.script_moveByCell,
-key("Shift+ExtendedRight"):self.script_moveByCell,
-key("Shift+Control+ExtendedUp"):self.script_moveByCell,
-key("Shift+Control+ExtendedDown"):self.script_moveByCell,
-key("Shift+Control+ExtendedLeft"):self.script_moveByCell,
-key("Shift+Control+ExtendedRight"):self.script_moveByCell,
-key("Shift+ExtendedHome"):self.script_moveByCell,
-key("Shift+ExtendedEnd"):self.script_moveByCell,
-key("Shift+Control+ExtendedHome"):self.script_moveByCell,
-key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
-})
+			key("Insert+f"):self.script_formatInfo,
+			key("ExtendedUp"):self.script_moveByCell,
+			key("ExtendedDown"):self.script_moveByCell,
+			key("ExtendedLeft"):self.script_moveByCell,
+			key("ExtendedRight"):self.script_moveByCell,
+			key("Control+ExtendedUp"):self.script_moveByCell,
+			key("Control+ExtendedDown"):self.script_moveByCell,
+			key("Control+ExtendedLeft"):self.script_moveByCell,
+			key("Control+ExtendedRight"):self.script_moveByCell,
+			key("ExtendedHome"):self.script_moveByCell,
+			key("ExtendedEnd"):self.script_moveByCell,
+			key("Control+ExtendedHome"):self.script_moveByCell,
+			key("Control+ExtendedEnd"):self.script_moveByCell,
+			key("Shift+ExtendedUp"):self.script_moveByCell,
+			key("Shift+ExtendedDown"):self.script_moveByCell,
+			key("Shift+ExtendedLeft"):self.script_moveByCell,
+			key("Shift+ExtendedRight"):self.script_moveByCell,
+			key("Shift+Control+ExtendedUp"):self.script_moveByCell,
+			key("Shift+Control+ExtendedDown"):self.script_moveByCell,
+			key("Shift+Control+ExtendedLeft"):self.script_moveByCell,
+			key("Shift+Control+ExtendedRight"):self.script_moveByCell,
+			key("Shift+ExtendedHome"):self.script_moveByCell,
+			key("Shift+ExtendedEnd"):self.script_moveByCell,
+			key("Shift+Control+ExtendedHome"):self.script_moveByCell,
+			key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
+		})
 
 	def getRole(self):
 		return ROLE_SYSTEM_TABLE
@@ -74,7 +77,7 @@ key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 		return self.excelObject.ActiveCell
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address)
+		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
 	def getCellText(self,cell):
 		return cell.Text

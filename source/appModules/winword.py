@@ -1,4 +1,6 @@
-import win32com.client
+import ctypes
+import comtypesClient
+import comtypes.automation
 import audio
 import debug
 from constants import *
@@ -41,8 +43,6 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-word_application=win32com.client.dynamic.Dispatch('word.Application')
-
 class appModule(_MSOffice.appModule):
 
 	def __init__(self):
@@ -63,12 +63,15 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		self.presentationTable.insert(3,[self.msgTableRow,["documentFormatting","reportTables"],None,None])
 		self.presentationTable.insert(4,[self.msgTableColumn,["documentFormatting","reportTables"],None,None])
 		self.keyMap.update({
-key("control+ExtendedUp"):self.script_moveByParagraph,
-key("control+ExtendedDown"):self.script_moveByParagraph,
-})
+			key("control+ExtendedUp"):self.script_moveByParagraph,
+			key("control+ExtendedDown"):self.script_moveByParagraph,
+		})
 
 	def getDocumentObjectModel(self):
-		return word_application.ActiveWindow.ActivePane
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+			raise OSError("No native object model")
+		return comtypesClient.wrap(ptr)
 
 	def destroyObjectModel(self,om):
 		pass
