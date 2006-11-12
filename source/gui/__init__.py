@@ -28,7 +28,9 @@ class MainFrame(wx.Frame):
 		self.id_onAbortCommand=wx.NewId()
 		wx.EVT_COMMAND(self,self.id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
-		wx.EVT_CLOSE(self,self.onExitCommand)
+		self.id_onShowGuiCommand=wx.NewId()
+		wx.EVT_COMMAND(self,self.id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
+		wx.EVT_CLOSE(self,self.onHideGuiCommand)
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
 		self.id_onSaveConfigurationCommand=wx.NewId()
@@ -50,11 +52,18 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		self.menuBar.Append(self.menu_help,lang.gui["menuHelp"])
 		self.SetMenuBar(self.menuBar)
-		self.Show(True)
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False
 		self.Destroy()
+
+	def onShowGuiCommand(self,evt):
+		self.Show(True)
+		self.Raise()
+
+	def onHideGuiCommand(self,evt):
+		self.Show(False)
+
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
@@ -109,6 +118,9 @@ def initialize():
 	global guiThread
 	guiThread = threading.Thread(target = guiMainLoop)
 	guiThread.start()
+
+def showGui():
+ 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, mainFrame.id_onShowGuiCommand))
 
 def exit():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))

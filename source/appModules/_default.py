@@ -12,6 +12,7 @@ class appModule(object):
 
 	def __init__(self):
 		self.keyMap={
+			key("insert+n"):self.script_showGui,
 			key("insert+q"):self.script_quit,
 			key("insert+s"):self.script_speech_toggleMute,
 			key("insert+F12"):self.script_dateTime,
@@ -176,4 +177,7 @@ class appModule(object):
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
 		gui.exit()
+
+	def script_showGui(self,keyPress):
+		gui.showGui()
 
