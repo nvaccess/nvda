@@ -71,10 +71,11 @@ class MainFrame(wx.Frame):
 
 	def onExitCommand(self, evt):
 		self.Raise()
-		d = wx.MessageDialog(self, lang.gui["messageExit"], lang.gui["titleExit"], wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+		d = wx.MessageDialog(None, lang.gui["messageExit"], lang.gui["titleExit"], wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
+
 
 	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()
