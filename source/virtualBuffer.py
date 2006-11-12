@@ -7,6 +7,7 @@ from keyboardHandler import key
 import api
 import audio
 import NVDAObjects
+import lang
 
 runningTable={}
 
@@ -306,7 +307,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 
 	def loadDocument(self):
 		if self.getWindowHandle()==api.getFocusLocator()[0]:
-			audio.speakMessage("Loading document...")
+			audio.speakMessage(lang.messages["loadingDocument"]+"...")
 		self.addNode(self.dom.body)
 		self.caret=0
 		if self.getWindowHandle()==api.getFocusLocator()[0]:
@@ -344,7 +345,6 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		preNodes=self.nodes[0:index]
 		postNodes=self.nodes[index+self.nodes[index][1]:]
 		(newNodes,newText)=self.generateNode(domNode)
-		audio.speakMessage("new text: %s"%newText)
 		if (len(preText)>0) and (len(newText)>0) and (preText[-1]=='\n') and (newText[0]=='\n'):
 			preText=preText[:-1]
 		for j in range(len(newNodes)):
@@ -495,7 +495,6 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		childCount=0
 		try:
 			childDomNode=domNode.firstChild
-			audio.speakMessage("children")
 		except:
 			childDomNode=None
 		while childDomNode:

@@ -1648,6 +1648,7 @@ staticMap={
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 ("Internet Explorer_Server",None):NVDAObject_internetExplorerServer,
+("HSEditor",ROLE_SYSTEM_CLIENT):NVDAObject_ITextDocument,
 }
 
 dynamicMap={}

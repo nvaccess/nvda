@@ -13,7 +13,7 @@ confspec = StringIO("""# NVDA Configuration File
 
 #Language settings
 [language]
-	language = string(default=enu)
+	language = string(default="enu")
 
 # Speech settings
 [speech]
@@ -56,7 +56,7 @@ confspec = StringIO("""# NVDA Configuration File
 	reportStyle = string(default="never")
 	reportPage = string(default="changes")
 	reportTables = string(default="changes")
-	reportAlignment = string(default="changes")
+	reportAlignment = string(default="never")
 
 """.replace("\n", "\r\n"))
 
