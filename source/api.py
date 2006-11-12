@@ -11,7 +11,6 @@ import winKernel
 import winUser
 import globalVars
 from constants import *
-import dictionaries
 import audio
 from config import conf
 import appModuleHandler

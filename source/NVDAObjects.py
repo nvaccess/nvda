@@ -14,7 +14,7 @@ import audio
 from keyboardHandler import key, sendKey
 from constants import *
 from config import conf
-import dictionaries
+import lang
 import api
 import MSAAHandler
 import virtualBuffer
@@ -58,7 +58,7 @@ def unregisterNVDAObjectClass(windowClass,objectRole):
 	del dynamicMap[(windowClass,objectRole)]
 
 def getRoleName(role):
-	dictRole=dictionaries.roleNames.get(role,None)
+	dictRole=lang.roleNames.get(role,None)
 	if dictRole:
 		return dictRole
 	elif isinstance(role,int):
@@ -81,7 +81,7 @@ def getStateNames(states,opposite=False):
 	return str
 
 def getStateName(state,opposite=False):
-	dictState=dictionaries.stateNames.get(state,None)
+	dictState=lang.stateNames.get(state,None)
 	if dictState:
 		newState=dictstate
 	elif isinstance(state,int):

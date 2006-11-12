@@ -7,7 +7,7 @@
 import ctypes
 import time
 import NVDAThreads
-import dictionaries
+import lang
 import globalVars
 import winUser
 from api import *
@@ -25,10 +25,6 @@ msg=winUser.msgType()
 
 def main():
 	try:
-		dictionaries.load("characterSymbols")
-		dictionaries.load("textSymbols")
-		dictionaries.load("roleNames")
-		dictionaries.load("stateNames")
 		audio.initialize()
 		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
 		NVDAThreads.pump() #Need this cause haven't reached the main loop yet

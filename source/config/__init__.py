@@ -11,6 +11,10 @@ val = Validator()
 ### The configuration specification
 confspec = StringIO("""# NVDA Configuration File
 
+#Language settings
+[language]
+	language = string(default=enu)
+
 # Speech settings
 [speech]
 	# The synthesiser to use

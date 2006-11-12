@@ -6,7 +6,7 @@
 
 import re
 import debug
-import dictionaries
+import lang
 
 re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
 re_singleCapAfterCapsInWord=re.compile(r"([A-Z])([A-Z][a-z])")
@@ -33,18 +33,18 @@ def processTextSymbols(text,keepInflection=False):
 	str=""
 	for char in text:
 		if (char=="^") or (char=="~"):
-			str+=" %s "%dictionaries.textSymbols[char]
+			str+=" %s "%lang.textSymbols[char]
 		else:
 			str+=char
 	text=str
 	if keepInflection:
-		text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%dictionaries.textSymbols["."],text)
-		text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%dictionaries.textSymbols[","],text)
-		text=re_sentence_question.sub(r"\1 ^%s?~ \2"%dictionaries.textSymbols["?"],text)
-		text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%dictionaries.textSymbols[":"],text)
-		text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%dictionaries.textSymbols[";"],text)
-		text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%dictionaries.textSymbols["!"],text)
-		#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%dictionaries.textSymbols["'"],text)
+		text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%lang.textSymbols["."],text)
+		text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%lang.textSymbols[","],text)
+		text=re_sentence_question.sub(r"\1 ^%s?~ \2"%lang.textSymbols["?"],text)
+		text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%lang.textSymbols[":"],text)
+		text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%lang.textSymbols[";"],text)
+		text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%lang.textSymbols["!"],text)
+		#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%lang.textSymbols["'"],text)
 	str=""
 	for char in text:
 		if char=="^":
@@ -56,8 +56,8 @@ def processTextSymbols(text,keepInflection=False):
 			str+="~"
 			continue
 		if not protector:
-			if (char!=" ") and dictionaries.textSymbols.has_key(char):
-				str+=" ^%s~ "%dictionaries.textSymbols[char]
+			if (char!=" ") and lang.textSymbols.has_key(char):
+				str+=" ^%s~ "%lang.textSymbols[char]
 			else:
 				str+=char
 		else:
@@ -71,7 +71,7 @@ def processSymbol(symbol):
 	#if (symbol>='A') and (symbol<='Z'):
 	#	newSymbol="cap"+symbol[0]
 	#else:
-	newSymbol=dictionaries.characterSymbols.get(symbol,symbol)
+	newSymbol=lang.characterSymbols.get(symbol,symbol)
 	return newSymbol
 
 
