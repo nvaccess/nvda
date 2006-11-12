@@ -18,6 +18,7 @@ import gui
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffer
+import lang
 
 # Initialise WMI; required for getProcessName.
 #_wmi = win32com.client.GetObject('winmgmts:')
@@ -62,7 +63,6 @@ def setFocusObjectByLocator(window,objectID,childID):
 			globalVars.focusObject.event_looseFocus()
 		except:
 			debug.writeException("event_looseFocus in focusObject")
-			audio.speakMessage("Error in event_looseFocus of focusObject")
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
 	if not focusObject:
 		return False
@@ -95,11 +95,11 @@ def executeScript(keyPress):
 	if keyPress==key("insert+1"):
 		if not globalVars.keyboardHelp:
 			globalVars.keyboardHelp=True
-			audio.speakMessage("keyboard help on")
+			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["on"])
 			return True
 		else:
 			globalVars.keyboardHelp=False
-			audio.speakMessage("keyboard help off")
+			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["off"])
 			return True
 	script=appModuleHandler.current.keyMap.get(keyPress,None)
 	if not script:
@@ -114,17 +114,16 @@ def executeScript(keyPress):
 				container+=" in module %s"%script.im_self.__class__.__module__
 			description=script.__doc__
 			if not description:
-				description="no description"
+				description=lang.messages["noDescription"]
 			audio.speakMessage("%s, from %s, %s"%(name,container,description))
 		else:
-			audio.speakMessage("no script")
+			audio.speakMessage(lang.messages["noScript"])
 		return
 	if script:
 		try:
 			script(keyPress)
 			return True
 		except:
-			audio.speakMessage("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
 			debug.writeException("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
 			return False
 
@@ -185,7 +184,6 @@ def executeEvent(name,window,objectID,childID):
 		try:
 			event(objectID,childID)
 		except:
-			audio.speakMessage("Error in virtualBuffer event")
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
 	#and then continue 
@@ -200,7 +198,6 @@ def executeEvent(name,window,objectID,childID):
 		try:
 			event(window,objectID,childID)
 		except:
-			audio.speakMessage("Error executing event %s from appModule"%event.__name__)
 			debug.writeException("Error executing event %s from appModule"%event.__name__)
 		return
 	if (name=="foreground") and (getForegroundLocator()==(window,objectID,childID)) and hasattr(getForegroundObject(),"event_%s"%name):
@@ -208,13 +205,11 @@ def executeEvent(name,window,objectID,childID):
 			getattr(getForegroundObject(),"event_%s"%name)()
 		except:
 			debug.writeException("foregroundObject: event_%s"%name)
-			audio.speakMessage("Error in event_%s of foreground object"%name)
 		return
 	if ((getFocusLocator()==(window,objectID,childID)) or (name=="caret")) and hasattr(getFocusObject(),"event_%s"%name):
 		try:
 			getattr(getFocusObject(),"event_%s"%name)()
 		except:
-			audio.speakMessage("Error executing event event_%s from focusObject"%name)
 			debug.writeException("Error executing event event_%s from focusObject"%name)
 		return
 	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
@@ -222,7 +217,6 @@ def executeEvent(name,window,objectID,childID):
 		try:
 			getattr(thisObj,"event_%s"%name)()
 		except:
-			audio.speakMessage("Error executing event event_%s from object"%name)
 			debug.writeException("Error executing event event_%s from object"%name)
 		return
 

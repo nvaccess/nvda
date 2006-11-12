@@ -14,23 +14,10 @@ class synthDriver(object):
 
 	def __init__(self):
 		self.lastIndex=0
-		self.eventHandler=self.eventHandlerType(self)
-		self.tts = comtypesClient.CreateObject('sapi.SPVoice',sink=self.eventHandler)
+		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
 		self.tts.Speak("<sapi>",constants.SVSFIsXML)
 		self.curVoice=1
 		self.curPitch=50
-
-	class eventHandlerType(object):
-
-		def __init__(self,synth):
-			self.synth=synth
-
-		def event(self,*args):
-			debug.writeMessage("func %s"%str(args))
-
-		def __getattr__(self,name):
-			debug.writeMessage("get %s"%name)
-			return self.event
 
 	def getRate(self):
 		rate=(self.tts.Rate*5)+50

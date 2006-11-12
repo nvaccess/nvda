@@ -6,6 +6,7 @@
 
 import datetime
 import traceback
+import winsound
 
 debugFile=None
 
@@ -15,11 +16,13 @@ def writeMessage(message):
 	debugFile.flush()
 
 def writeError(message):
+	winsound.Beep(200,100)
 	debugFile.write("%s\n"%datetime.datetime.now())
 	debugFile.write("Error: %s\n"%message)
 	debugFile.flush()
 
 def writeException(message):
+	winsound.Beep(200,100)
 	debugFile.write("%s\n"%datetime.datetime.now())
 	debugFile.write("Exception: %s\n----\n%s----\n"%(message,traceback.format_exc()))
 	debugFile.flush()

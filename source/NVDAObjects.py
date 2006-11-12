@@ -89,7 +89,7 @@ def getStateName(state,opposite=False):
 	else:
 		newState=state
 	if opposite:
-		newState="not %s"%newState
+		newState=lang.messages["not"]+" "+newState
 	return newState
 
 
@@ -908,7 +908,7 @@ class NVDAObject_edit(NVDAObject):
 			self.reviewCursor=nextPos
 			self.reportReviewPresentation()
 		else:
-			audio.speakMessage("bottom")
+			audio.speakMessage(lang.messages["bottom"])
 		audio.speakText(self.getLine(self.reviewCursor))
 
 	def script_review_previousLine(self,keyPress):
@@ -919,7 +919,7 @@ class NVDAObject_edit(NVDAObject):
 			self.reviewCursor=prevPos
 			self.reportReviewPresentation()
 		else:
-			audio.speakMessage("top")
+			audio.speakMessage(lang.messages["top"])
 		audio.speakText(self.getLine(self.reviewCursor))
 
 	def script_review_startOfLine(self,keyPress):
@@ -952,7 +952,7 @@ class NVDAObject_edit(NVDAObject):
 			if self.getLineNumber(nextPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
-			audio.speakMessage("bottom")
+			audio.speakMessage(lang.messages["bottom"])
 		audio.speakText(self.getWord(self.reviewCursor))
 
 	def script_review_previousWord(self,keyPress):
@@ -965,7 +965,7 @@ class NVDAObject_edit(NVDAObject):
 			if self.getLineNumber(prevPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
-			audio.speakMessage("top")
+			audio.speakMessage(lang.messages["top"])
 		audio.speakText(self.getWord(self.reviewCursor))
 
 	def script_review_currentCharacter(self,keyPress):
@@ -984,7 +984,7 @@ class NVDAObject_edit(NVDAObject):
 			self.reviewCursor=nextPos
 			self.reportReviewPresentation()
 		else:
-			audio.speakMessage("right")
+			audio.speakMessage(lang.messages["right"])
 		audio.speakText(self.getCharacter(self.reviewCursor))
 
 	def script_review_previousCharacter(self,keyPress):
@@ -996,7 +996,7 @@ class NVDAObject_edit(NVDAObject):
 			self.reviewCursor=prevPos
 			self.reportReviewPresentation()
 		else:
-			audio.speakMessage("left")
+			audio.speakMessage(lang.messages["left"])
 		audio.speakText(self.getCharacter(self.reviewCursor))
 
 class NVDAObject_checkBox(NVDAObject):
@@ -1586,10 +1586,10 @@ class NVDAObject_virtualBuffer(NVDAObject_edit):
 	def script_toggleFocusInteractionMode(self,keyPress):
 		"""Toggles focus interaction mode on and off"""
 		if not self.focusInteractionMode:
-			audio.speakMessage("Focus interaction mode on")
+			audio.speakMessage(lang.messages["focusInteractionMode"]+" "+lang.messages["on"])
 			self.focusInteractionMode=True
 		else:
-			audio.speakMessage("Focus interaction mode off")
+			audio.speakMessage(lang.messages["focusInteractionMode"]+" "+lang.messages["off"])
 			self.focusInteractionMode=False
 
 	def script_moveByCharacter(self,keyPress):

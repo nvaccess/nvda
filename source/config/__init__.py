@@ -56,7 +56,7 @@ confspec = StringIO("""# NVDA Configuration File
 	reportStyle = string(default="never")
 	reportPage = string(default="changes")
 	reportTables = string(default="changes")
-	reportAlignment = string(default="always")
+	reportAlignment = string(default="changes")
 
 """.replace("\n", "\r\n"))
 

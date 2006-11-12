@@ -6,6 +6,7 @@ import audio
 import NVDAObjects
 import synthDriverHandler
 import gui
+import lang
 
 class appModule(object):
 
@@ -31,7 +32,7 @@ class appModule(object):
 		}
 
 	def event_switchStart(self,window,objectID,childID):
-		audio.speakMessage("task switcher")
+		audio.speakMessage(lang.messages["taskSwitcher"])
 
 	def event_switchEnd(self,window,objectID,childID):
 		audio.cancel()
@@ -45,35 +46,38 @@ class appModule(object):
 
 	def script_increaseRate(self,keyPress):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()+5)
-		audio.speakMessage("rate %s per cent"%synthDriverHandler.getRate())
+		audio.speakMessage(lang.messages["rate"]+" %s%"%synthDriverHandler.getRate())
 
 	def script_decreaseRate(self,keyPress):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()-5)
-		audio.speakMessage("rate %s per cent"%synthDriverHandler.getRate())
+		audio.speakMessage(lang.messages["rate"]+" %s%"%synthDriverHandler.getRate())
 
 	def script_toggleSpeakTypedCharacters(self,keyPress):
 		if conf["keyboard"]["speakTypedCharacters"]:
-			audio.speakMessage("Speak typed characters off")
+			onOff=lang.messages["off"]
 			conf["keyboard"]["speakTypedCharacters"]=False
 		else:
-			audio.speakMessage("Speak typed characters on")
+			onOff=lang.messages["on"]
 			conf["keyboard"]["speakTypedCharacters"]=True
+		audio.speakMessage(lang.messages["speakTypedCharacters"]+" "+lang.messages[onOff])
 
 	def script_toggleSpeakTypedWords(self,keyPress):
 		if conf["keyboard"]["speakTypedWords"]:
-			audio.speakMessage("Speak typed words off")
+			onOff=lang.messages["off"]
 			conf["keyboard"]["speakTypedWords"]=False
 		else:
-			audio.speakMessage("Speak typed words on")
+			onOff=lang.messages["on"]
 			conf["keyboard"]["speakTypedWords"]=True
+		audio.speakMessage(lang.messages["speakTypedWords"]+" "+lang.messages[onOff])
 
 	def script_toggleSpeakCommandKeys(self,keyPress):
 		if conf["keyboard"]["speakCommandKeys"]:
-			audio.speakMessage("Speak command keys off")
+			onOff=lang.messages["off"]
 			conf["keyboard"]["speakCommandKeys"]=False
 		else:
-			audio.speakMessage("Speak command keys on")
+			onOff=lang.messages["on"]
 			conf["keyboard"]["speakCommandKeys"]=True
+		audio.speakMessage(lang.messages["speakCommandKeys"]+" "+lang.messages[onOff])
 
 	def script_navigator_object_current(self,keyPress):
 		"""Reports the object the navigator is currently on""" 
@@ -86,7 +90,7 @@ class appModule(object):
 		if obj is None:
 			curObject=getNavigatorObject()
 			if curObject.getChildID()>0:
-				audio.speakMessage("No children")
+				audio.speakMessage(lang.messages["noChildren"])
 				return
 			curObject.speakObject()
 			childObject=curObject.getFirstChild()
@@ -105,7 +109,7 @@ class appModule(object):
 		"""Moves the navigator to the object with focus"""
 		obj=getFocusObject()
 		setNavigatorObject(obj)
-		audio.speakMessage("Moved to focus")
+		audio.speakMessage(lang.messages["moveToFocus"])
 		obj.speakObject()
 
 	def script_navigator_object_parent(self,keyPress):
@@ -116,7 +120,7 @@ class appModule(object):
 			setNavigatorObject(curObject)
 			curObject.speakObject()
 		else:
-			audio.speakMessage("No parent")
+			audio.speakMessage(lang.messages["noParent"])
 
 	def script_navigator_object_next(self,keyPress):
 		"""Moves the navigator to the next object of the one it is currently on"""
@@ -126,7 +130,7 @@ class appModule(object):
 			setNavigatorObject(curObject)
 			curObject.speakObject()
 		else:
-			audio.speakMessage("No next")
+			audio.speakMessage(lang.messages["noNext"])
 
 	def script_navigator_object_previous(self,keyPress):
 		"""Moves the navigator to the previous object of the one it is currently on"""
@@ -136,7 +140,7 @@ class appModule(object):
 			setNavigatorObject(curObject)
 			curObject.speakObject()
 		else:
-			audio.speakMessage("No previous")
+			audio.speakMessage(lang.messages["noPrevious"])
 
 	def script_navigator_object_firstChild(self,keyPress):
 		"""Moves the navigator to the first child object of the one it is currently on"""
@@ -146,7 +150,7 @@ class appModule(object):
 			setNavigatorObject(curObject)
 			curObject.speakObject()
 		else:
-			audio.speakMessage("No children")
+			audio.speakMessage(lang.messages["noChildren"])
 
 	def script_navigator_object_doDefaultAction(self,keyPress):
 		"""Performs the default action on the object the navigator is currently on (example: presses it if it is a button)."""
@@ -163,19 +167,13 @@ class appModule(object):
 	def script_speech_toggleMute(self,keyPress):
 		"""Toggles speech on and off"""
 		if audio.allowSpeech:
-			audio.speakMessage("Speech off")
+			audio.speakMessage(lang.messages["speech"]+" "+lang.messages["off"])
 			audio.allowSpeech=False
 		else:
 			audio.allowSpeech=True
-			audio.speakMessage("Speech on")
+			audio.speakMessage(lang.messages["speech"]+" "+lang.messages["on"])
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
 		gui.exit()
 
-
-
-
-	def script_showGui(self,keyPress):
-		"""Pops up a menu to configure NVDA objects"""
-		showGui()

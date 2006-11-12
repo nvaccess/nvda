@@ -9,6 +9,7 @@ import synthDriverHandler
 import config
 import versionInfo
 import audio
+import lang
 
 import NVDAThreads
 
@@ -31,23 +32,23 @@ class MainFrame(wx.Frame):
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
 		self.id_onSaveConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, "&Save configuration\tctrl+s", "Write current configuration to nvda.ini")
+		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, lang.gui["menuSaveConfiguration"]+"\tctrl+s", lang.gui["menuDescSaveConfiguration"])
 		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
-		self.menu_NVDA.Append(wx.ID_EXIT, "E&xit", "Exit NVDA")
+		self.menu_NVDA.Append(wx.ID_EXIT, lang.gui["menuExit"],lang.gui["menuDescExit"])
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
-		self.menuBar.Append(self.menu_NVDA,"&NVDA")
+		self.menuBar.Append(self.menu_NVDA,lang.gui["menuNVDA"])
 		self.menu_preferences=wx.Menu()
 		self.id_chooseSynthesizerCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,"&Synthesizer...\tctrl+shift+s","Choose speech synthesizer to use")
-		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onChooseSynthesizerCommand)
+		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,lang.gui["menuSynthesizer"]+"...\tctrl+shift+s",lang.gui["menuDescSynthesizer"])
+		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onSynthesizerCommand)
 		self.id_chooseVoiceCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseVoiceCommand,"&Voice...\tctrl+shift+v","Choose the voice to use")
-		wx.EVT_MENU(self,self.id_chooseVoiceCommand,self.onChooseVoiceCommand)
-		self.menuBar.Append(self.menu_preferences,"&Preferences")
+		self.menu_preferences.Append(self.id_chooseVoiceCommand,lang.gui["menuVoice"]+"...\tctrl+shift+v",lang.gui["menuDescVoice"])
+		wx.EVT_MENU(self,self.id_chooseVoiceCommand,self.onVoiceCommand)
+		self.menuBar.Append(self.menu_preferences,lang.gui["menuPreferences"])
 		self.menu_help = wx.Menu()
-		self.menu_help.Append(wx.ID_ABOUT, "&About...", "About NVDA")
+		self.menu_help.Append(wx.ID_ABOUT, lang.gui["menuAbout"]+"...", lang.gui["menuDescAbout"])
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
-		self.menuBar.Append(self.menu_help,"&Help")
+		self.menuBar.Append(self.menu_help,lang.gui["menuHelp"])
 		self.SetMenuBar(self.menuBar)
 		self.Show(True)
 
@@ -57,37 +58,41 @@ class MainFrame(wx.Frame):
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
-		NVDAThreads.executeFunction(audio.speakMessage,"Configuration saved")
+		NVDAThreads.executeFunction(audio.speakMessage,lang.messages["savedConfiguration"])
 
 	def onExitCommand(self, evt):
 		self.Raise()
-		d = wx.MessageDialog(self, "Are you sure you want to exit NVDA?", "Exit NVDA", wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+		d = wx.MessageDialog(self, lang.gui["messageExit"], lang.gui["titleExit"], wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
 
-	def onChooseSynthesizerCommand(self,evt):
+	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()
-		d=wx.SingleChoiceDialog(self,"Choose the speech synthesizer you want to use","Synthesizer",synthList)
+		d=wx.SingleChoiceDialog(self,lang.gui["messageSynthesizer"],lang.gui["titleSynthesizer"],synthList)
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
 		if d.ShowModal()==wx.ID_OK:
 			NVDAThreads.executeFunction(synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
-	def onChooseVoiceCommand(self,evt):
-		d=wx.SingleChoiceDialog(self,"Choose the voice you want to use","Voice",synthDriverHandler.getVoiceNames())
+	def onVoiceCommand(self,evt):
+		d=wx.SingleChoiceDialog(self,lang.gui["messageVoice"],lang.gui["titleVoice"],synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.getSynthConfig()["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
 			NVDAThreads.executeFunction(synthDriverHandler.setVoice,d.GetSelection()+1)
 
 	def onAboutCommand(self,evt):
-		aboutInfo="""
+		try:
+			aboutInfo="""
 %s
-Version: %s
-URL: %s
-%s
-"""%(versionInfo.longName,versionInfo.version,versionInfo.url,versionInfo.copyright)
-		d = wx.MessageDialog(self, aboutInfo, "About", wx.OK)
-		d.ShowModal()
+%s: %s
+%s: %s
+%s: %s <%s>
+%s: %s
+"""%(versionInfo.longName,lang.gui["version"],versionInfo.version,lang.gui["url"],versionInfo.url,lang.gui["maintainer"],versionInfo.maintainer,versionInfo.maintainer_email,lang.gui["copyright"],versionInfo.copyright)
+			d = wx.MessageDialog(self, aboutInfo, lang.gui["titleAbout"], wx.OK)
+			d.ShowModal()
+		except:
+			debug.writeException("gui.mainFrame.onAbout")
 
 def guiMainLoop():
 	global mainFrame
@@ -98,7 +103,6 @@ def guiMainLoop():
 		app.MainLoop()
 	except:
 		debug.writeException("guiMainLoop")
-		audio.speakMessage("Error in GUI main loop")
 		globalVars.stayAlive=False
 
 def initialize():

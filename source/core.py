@@ -26,7 +26,7 @@ msg=winUser.msgType()
 def main():
 	try:
 		audio.initialize()
-		audio.speakMessage("NonVisual Desktop Acces started!",wait=True)
+		audio.speakMessage(lang.messages["startedNVDA"],wait=True)
 		NVDAThreads.pump() #Need this cause haven't reached the main loop yet
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
@@ -55,7 +55,6 @@ def main():
 			time.sleep(0.001)
 	except:
 		debug.writeException("core.py main loop")
-		audio.speakMessage("Exception in main loop")
 		try:
 			gui.abort()
 		except:
