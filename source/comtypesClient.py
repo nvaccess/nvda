@@ -20,7 +20,6 @@
 import sys, os, new, imp
 import weakref
 import ctypes
-import compiler
 import comtypes
 from comtypes.hresult import *
 import comtypes.automation
@@ -156,8 +155,6 @@ def GetModule(tlib):
         ofi = open(fileName,"w")
         ofi.write(code)
         ofi.close()
-        compiler.compileFile(fileName)
-        os.remove(fileName)
         return _my_import("comInterfaces." + modulename)
         
 def _CreateWrapper(tlib, fullname):
