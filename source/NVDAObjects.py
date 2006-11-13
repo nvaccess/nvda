@@ -499,7 +499,6 @@ class NVDAObject_edit(NVDAObject):
 			key("insert+f"):self.script_formatInfo,
 		}
 		self.mousePos=None
-
 	def getValue(self):
 		return self.getCurrentLine()
 
@@ -543,24 +542,25 @@ class NVDAObject_edit(NVDAObject):
 		return winUser.sendMessage(self.getWindowHandle(),EM_LINEFROMCHAR,pos,0)
 
 	def getLineStart(self,pos):
-		lineNum=self.getLineNumber(pos)
-		return winUser.sendMessage(self.getWindowHandle(),EM_LINEINDEX,lineNum,0)
+		startPos=pos
+		if startPos>0 and (self.getCharacter(startPos)=='\n'):
+			startPos=startPos-1
+		while (startPos>-1) and (self.getCharacter(startPos)!='\n'):
+			startPos-=1
+		return startPos+1
 
 	def getLineLength(self,pos):
-		lineLength=winUser.sendMessage(self.getWindowHandle(),EM_LINELENGTH,pos,0)
-		if lineLength<0:
-			return None
-		return lineLength
+		startPos=self.getLineStart(pos)
+		endPos=startPos
+		while (endPos<=self.getTextLength()) and (self.getCharacter(endPos)!='\n'):
+			endPos+=1
+		return (endPos-startPos)
 
 	def getLine(self,pos):
-		lineNum=self.getLineNumber(pos)
-		lineLength=self.getLineLength(pos)
-		if not lineLength:
-			return None
-		buf=ctypes.create_unicode_buffer(lineLength+10)
-		buf.value=struct.pack('i',lineLength)
-		res=winUser.sendMessage(self.getWindowHandle(),EM_GETLINE,lineNum,buf)
-		return buf.value
+		startPos=self.getLineStart(pos)
+		length=self.getLineLength(pos)
+		endPos=startPos+length
+		return self.getTextRange(startPos,endPos)
 
 	def getCurrentLine(self):
 		return self.getLine(self.getCaretPosition())
@@ -638,8 +638,10 @@ class NVDAObject_edit(NVDAObject):
 	def previousLine(self,pos):
 		lineStart=self.getLineStart(pos)
 		pos=lineStart-1
+		if pos<0:
+			return None
 		lineStart=self.getLineStart(pos)
-		if lineStart>=self.getStartPosition():
+		if (lineStart>=self.getStartPosition()) and (lineStart<pos):
 			return lineStart
 		else:
 			return None
