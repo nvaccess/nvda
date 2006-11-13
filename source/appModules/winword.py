@@ -74,6 +74,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 			raise OSError("No native object model")
 		return comtypesClient.wrap(ptr)
 
+
 	def destroyObjectModel(self,om):
 		pass
 

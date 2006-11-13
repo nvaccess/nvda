@@ -1347,7 +1347,7 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 			[self.msgUnderline,["documentFormatting","reportFontAttributes"],None,None],
 			[self.msgParagraphAlignment,["documentFormatting","reportAlignment"],None,None],
 		]
-		self.reviewCursor=self.getCaretPosition()
+		#self.reviewCursor=self.getCaretPosition()
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -1357,6 +1357,8 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
 		if res==0:
+			dom=comtypesClient.wrap(domPointer)
+			debug.writeMessage("ITextDocument dom: %s"%dom)
 			return comtypesClient.wrap(domPointer)
 		else:
 			raise OSError("No ITextDocument interface")

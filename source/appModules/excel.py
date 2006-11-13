@@ -9,6 +9,7 @@ from constants import *
 from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
+import lang
 import _MSOffice
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
@@ -90,11 +91,11 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 		if cells.Count>1:
 			first=cells.Item(1)
 			last=cells.Item(cells.Count)
-			audio.speakMessage("Selected %s %s through %s %s"%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
+			audio.speakMessage((lang.messages["selected"]+" %s %s "+lang.messages["through"]+" %s %s")%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
 		else:
 			text=self.getCellAddress(self.getActiveCell())
 			if self.cellHasFormula(self.getActiveCell()):
-				text+=" has formula"
+				text+=" "+lang.messages["hasFormula"]
 			text+=" %s"%self.getCellText(self.getActiveCell())
 			audio.speakMessage(text)
 
@@ -124,11 +125,11 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def script_formatInfo(self,keyPress):
 		"""Reports the current font name, font size, font attributes of the active cell"""
-		audio.speakMessage("%s font"%self.getFontName(self.getActiveCell()))
-		audio.speakMessage("%s point"%self.getFontSize(self.getActiveCell()))
+		audio.speakMessage(lang.messages["font"]+": %s"%self.getFontName(self.getActiveCell()))
+		audio.speakMessage("%s %s"%(self.getFontSize(self.getActiveCell()),lang.messages["point"]))
 		if self.isBold(self.getActiveCell()):
-			audio.speakMessage("bold")
+			audio.speakMessage(lang.messages["bold"])
 		if self.isItalic(self.getActiveCell()):
-			audio.speakMessage("italic")
+			audio.speakMessage(lang.messages["italic"])
 		if self.isUnderline(self.getActiveCell()):
-			audio.speakMessage("underline")
+			audio.speakMessage(lang.messages["underline"])
