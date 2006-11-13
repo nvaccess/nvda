@@ -496,19 +496,6 @@ class NVDAObject_edit(NVDAObject):
 			key("control+shift+extendedEnd"):self.script_changeSelection,
 			key("ExtendedDelete"):self.script_delete,
 			key("Back"):self.script_backspace,
-			key("end"):self.script_review_previousCharacter,
-			key("shift+end"):self.script_review_startOfLine,
-			key("down"):self.script_review_currentCharacter,
-			key("next"):self.script_review_nextCharacter,
-			key("shift+next"):self.script_review_endOfLine,
-			key("left"):self.script_review_previousWord,
-			key("clear"):self.script_review_currentWord,
-			key("right"):self.script_review_nextWord,
-			key("home"):self.script_review_previousLine,
-			key("shift+home"):self.script_review_top,
-			key("up"):self.script_review_currentLine,
-			key("prior"):self.script_review_nextLine,
-			key("shift+prior"):self.script_review_bottom,
 			key("insert+f"):self.script_formatInfo,
 		}
 		self.mousePos=None
@@ -880,27 +867,27 @@ class NVDAObject_edit(NVDAObject):
 			if message is not None:
 				audio.speakMessage(message)
 
-	def script_review_top(self,keyPress):
+	def review_top(self):
 		"""Move the review cursor to the top and read the line"""
 		self.reviewCursor=self.getVisibleRange()[0]
 		self.reportReviewPresentation()
 		line=self.getLine(self.reviewCursor)
 		audio.speakText(line)
 
-	def script_review_bottom(self,keyPress):
+	def review_bottom(self):
 		"""Move the review cursor to the bottom and read the line"""
 		self.reviewCursor=self.getVisibleRange()[1]-1
 		self.reportReviewPresentation()
 		line=self.getLine(self.reviewCursor)
 		audio.speakText(line)
 
-	def script_review_currentLine(self,keyPress):
+	def review_currentLine(self):
 		"""Reads the line at the review cursor position""" 
 		self.reportReviewPresentation()
 		line=self.getLine(self.reviewCursor)
 		audio.speakText(line)
 
-	def script_review_nextLine(self,keyPress):
+	def review_nextLine(self):
 		"""Moves the review cursor to the next line and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextLine(pos)
@@ -911,7 +898,7 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage(lang.messages["bottom"])
 		audio.speakText(self.getLine(self.reviewCursor))
 
-	def script_review_previousLine(self,keyPress):
+	def review_previousLine(self):
 		"""Moves the review cursor to the previous line and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousLine(pos)
@@ -922,27 +909,27 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage(lang.messages["top"])
 		audio.speakText(self.getLine(self.reviewCursor))
 
-	def script_review_startOfLine(self,keyPress):
+	def review_startOfLine(self):
 		"""Move review cursor to start of line and read the current character"""
 		self.reviewCursor=self.getLineStart(self.reviewCursor)
 		self.reportReviewPresentation()
 		character=self.getCharacter(self.reviewCursor)
 		audio.speakText(character)
 
-	def script_review_endOfLine(self,keyPress):
+	def review_endOfLine(self):
 		"""Move review cursor to start of line and read the current character"""
 		self.reviewCursor=self.getLineStart(self.reviewCursor)+self.getLineLength(self.reviewCursor)-1
 		self.reportReviewPresentation()
 		character=self.getCharacter(self.reviewCursor)
 		audio.speakText(character)
 
-	def script_review_currentWord(self,keyPress):
+	def review_currentWord(self):
 		"""Reads the word at the review cursor position"""
 		self.reportReviewPresentation()
 		word=self.getWord(self.reviewCursor)
 		audio.speakText(word)
 
-	def script_review_nextWord(self,keyPress):
+	def review_nextWord(self):
 		"""Moves the review cursor to the next word and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextWord(pos)
@@ -955,7 +942,7 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage(lang.messages["bottom"])
 		audio.speakText(self.getWord(self.reviewCursor))
 
-	def script_review_previousWord(self,keyPress):
+	def review_previousWord(self):
 		"""Moves the review cursor to the previous word and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousWord(pos)
@@ -968,13 +955,13 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage(lang.messages["top"])
 		audio.speakText(self.getWord(self.reviewCursor))
 
-	def script_review_currentCharacter(self,keyPress):
+	def review_currentCharacter(self):
 		"""Reads the character at the review cursor position"""
 		self.reportReviewPresentation()
 		character=self.getCharacter(self.reviewCursor)
 		audio.speakText(character)
 
-	def script_review_nextCharacter(self,keyPress):
+	def review_nextCharacter(self):
 		"""Moves the review cursor to the next character and reads it"""
 		pos=self.reviewCursor
 		nextPos=self.nextCharacter(pos)
@@ -987,7 +974,7 @@ class NVDAObject_edit(NVDAObject):
 			audio.speakMessage(lang.messages["right"])
 		audio.speakText(self.getCharacter(self.reviewCursor))
 
-	def script_review_previousCharacter(self,keyPress):
+	def review_previousCharacter(self):
 		"""Moves the review cursor to the previous character and reads it"""
 		pos=self.reviewCursor
 		prevPos=self.previousCharacter(pos)
@@ -1639,6 +1626,7 @@ staticMap={
 ("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("Static",ROLE_SYSTEM_STATICTEXT):NVDAObject_edit,
 ("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_ITextDocument,
 (None,ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,

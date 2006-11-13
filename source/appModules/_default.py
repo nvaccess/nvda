@@ -30,6 +30,19 @@ class appModule(object):
 			key("Insert+ExtendedReturn"):self.script_navigator_object_doDefaultAction,
 			key("Insert+Add"):self.script_navigator_object_recursive,
 			key("Insert+Shift+Add"):self.script_navigator_object_where,
+			key("end"):self.script_navigator_review_previousCharacter,
+			key("shift+end"):self.script_navigator_review_startOfLine,
+			key("down"):self.script_navigator_review_currentCharacter,
+			key("next"):self.script_navigator_review_nextCharacter,
+			key("shift+next"):self.script_navigator_review_endOfLine,
+			key("left"):self.script_navigator_review_previousWord,
+			key("clear"):self.script_navigator_review_currentWord,
+			key("right"):self.script_navigator_review_nextWord,
+			key("home"):self.script_navigator_review_previousLine,
+			key("shift+home"):self.script_navigator_review_top,
+			key("up"):self.script_navigator_review_currentLine,
+			key("prior"):self.script_navigator_review_nextLine,
+			key("shift+prior"):self.script_navigator_review_bottom,
 		}
 
 	def event_switchStart(self,window,objectID,childID):
@@ -164,6 +177,97 @@ class appModule(object):
 		while curObject is not None:
 			curObject.speakObject()
 			curObject=curObject.getParent()
+
+	def script_navigator_review_top(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_top"):
+			getattr(obj,"review_top")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_bottom(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_bottom"):
+			getattr(obj,"review_bottom")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_previousLine(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_previousLine"):
+			getattr(obj,"review_previousLine")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_currentLine(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_currentLine"):
+			getattr(obj,"review_currentLine")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_nextLine(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_nextLine"):
+			getattr(obj,"review_nextLine")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_previousWord(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_previousWord"):
+			getattr(obj,"review_previousWord")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_currentWord(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_currentWord"):
+			getattr(obj,"review_currentWord")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_nextWord(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_nextWord"):
+			getattr(obj,"review_nextWord")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_previousCharacter(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_previousCharacter"):
+			getattr(obj,"review_previousCharacter")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_currentCharacter(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_currentCharacter"):
+			getattr(obj,"review_currentCharacter")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_nextCharacter(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_nextCharacter"):
+			getattr(obj,"review_nextCharacter")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_startOfLine(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_startOfLine"):
+			getattr(obj,"review_startOfLine")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
+
+	def script_navigator_review_endOfLine(self,keyPress):
+		obj=getNavigatorObject()
+		if hasattr(obj,"review_endOfLine"):
+			getattr(obj,"review_endOfLine")()
+		else:
+			audio.speakMessage(lang.messages["notSupported"])
 
 	def script_speech_toggleMute(self,keyPress):
 		"""Toggles speech on and off"""
