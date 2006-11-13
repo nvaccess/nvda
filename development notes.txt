@@ -2,34 +2,27 @@ NVDA notes for developers
 
 NVDA structure
 
-NVDA is extremely modularized to make it easier for development and for greater optimization depending on what the user is doing at the time. The system can be broken up in to theoretical parts: loader, core, api, audio, text processing, speech synths, appModules, gui, config, global variables, dictionaries, keyboard, mouse, MSAA, NVDA objects, virtual buffer, debug. Following are explinations of each and how each one interacts with the others.
+NVDA is extremely modularized to make it easier for development and for greater optimization depending on what the user is doing at the time. The system can be broken up in to theoretical parts: loader, core, api, audio, text processing, speech synths, appModules, gui, config, global variables, lang, keyboard, mouse, MSAA, NVDA objects, virtual buffer, debug. Following are explinations of each and how each one interacts with the others.
 
 Loader
 
-The loader, nvda.pyw, is the file that needs to be executed to start NVDA. This sets up debugging (in to debug.log) and it then executes the main function in the core. It also makes the PC speaker beep once before, and once after (though an octive higher) to act as notification of when it really starts and completes.
+The loader, nvda.pyw, is the file that needs to be executed to start NVDA. This sets up debugging (in to debug.log) and it then executes the main function in the core. It also makes the PC speaker do some beeps before, and after (though different sounding for start, quit, and error) to act as notification of when it really starts and completes.
 
-It is expected that all major peaces of code are nested in try except statements and depending on the context, exceptions when caught are sent to debug.
- 
+It is expected that all major peaces of code are nested in try except statements and depending on the context, exceptions when caught are sent to debug. However if there is an exception that raises all the way up to the execution of core.main, the PC speaker will signal its an error and then the loader will exit.
+
 Core
 
 The core, core.py, loads and inicializes all the other parts of the system:
-*It loads the character, role, state and text dictionaries
 *It loads the audio support to manage speech synths
 *At this point it also speaks a welcome message and fires its own foreground changed event to notify the user of where they are for the first time.
 *It loads and initializes MSAA support for listening for MSAA events
 *It loads and initializes keyboard support for listening for keyboard events
 *It loads and initializes mouse support for announcing what is under the mouse as it moves around the screen
-*It loads and initializes the gui which at the moment is just an unfinished menu which can be accessed with insert+n.
+*It loads and initializes the gui which can be accessed with insert+n.
 
 It finally then goes in to an endless loop until it is instructed to stop with a quit command.
 
-The loop is where the core checks the queues of MSAA, keyboard and mouse, and takes appropriate action. For keyboard it receives keys and tries to execute any scripts associated with them from either the current appModule or the current focus NVDAObject. From mouse it receives the current coordinates of the mouse as it moves and reports to the user the ojbect that is currently under the mouse. For MSAA it receives events and tries to execute them in the current appModule or if not there the current focus NVDAObject and if not there then the specific NVDAObject the event was for.
-
-Core also manages application change events by tracking foreground events so that new appModules can be loaded depending on what application is active at the time. 
-
-Core manages a focusObject which is an NVDAObject which represents the current point of focus in the operating system, that is kept alive while it has focus, so that the focus object can have a memory (for things such as state change comparisons this is necessary).
-
-Core also manages a virtual buffer, which is so that a specific buffer of information can be presented to the user via the number pad. (For example, the layout of a web page in Firefox). A new userBuffer is only loaded if the window of the focus object is different from the last time it checked.
+In the loop, core pumps window messages, and also pumps NVDA threads.
 
 When the loop finally ends, core stops gui and MSAA etc before exiting.
 

@@ -1,4 +1,11 @@
 Changes since revision 164:
+*If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
+*Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
+*Got rid of dictionaries in NVDA and replaced them with a lang directory of files with file extentions that match a given language code.
+*Replaced all messages and labels etc in NVDA with references to entries in the lang files. This now means you can create language files for your choice of language, and then set language (under the language section of nvda.ini) to your chosen 3 letter language code.
+*Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
+*Possibly made MS Word and MS Excel ever so slightly more responsive.
+*Fixed bug where tooltips and help balloons were not speaking
 *Fixed up some bugs in mouse tracking (NVDA should now report objects as the mouse moves over them).
 *Added key echo scripts:
 -insert+2 toggle speak typed characters
@@ -7,6 +14,8 @@ Changes since revision 164:
 *Fixed handling of crashes so that if the screen reader core dies, it should take the GUI down with it
 *Added a voice dialog on the preferences menu
 *Added a save configuration to the NVDA menu. This writes the current config to nvda.ini, previously this was done automatically on exit.
+*NVDA now starts with its window completely hidden (not even just minimized). You now need to press insert+n to bring it up, and press alt+f4 to make it go away. 
+*Insert+q now properly activates the exit message dialog box, saying yes will exit NVDA completely.
 Changes since revision 82:
 *Added support for the automatic speaking of font, style, page number etc of documents.
 *Fixed many small bugs to do with navigating documents by character, word and line.
