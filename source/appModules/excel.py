@@ -92,10 +92,11 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 			last=cells.Item(cells.Count)
 			audio.speakMessage("Selected %s %s through %s %s"%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
 		else:
-			audio.speakMessage("%s"%self.getCellAddress(self.getActiveCell()))
+			text=self.getCellAddress(self.getActiveCell())
 			if self.cellHasFormula(self.getActiveCell()):
-				audio.speakMessage("has formula")
-			audio.speakText("%s"%self.getCellText(self.getActiveCell()))
+				text+=" has formula"
+			text+=" %s"%self.getCellText(self.getActiveCell())
+			audio.speakMessage(text)
 
 	def getFontName(self,cell):
 		return cell.Font.Name
