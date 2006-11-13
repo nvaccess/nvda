@@ -25,7 +25,7 @@ NVDA works pretty much like any screen reader you would be used to.  Its main fe
 Running NVDA
 
 If you have the standallone version, you can just run nvda.exe and off you go.
- 
+
 For the python source version: As long as you have installed all dependency packages (python, pyAA, pyTTS, pyHook etc) you should be able to simply press enter on nvda.pyw in the source directory.
 Or in a cmd prompt, move to the source directory and execute nvda.pyw.
 
@@ -41,5 +41,3 @@ We are always looking for testers, and we are always needing people who are inte
 
 If interested, please email
 Michael Curran <mick@kulgan.net>
-
- 

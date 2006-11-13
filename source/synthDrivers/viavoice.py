@@ -51,7 +51,9 @@ class synthDriver(object):
 
 	def getLastIndex(self):
 		self.dll.eciSpeaking(self.handle)
-		return self.dll.eciGetIndex(self.handle)
+		index=self.dll.eciGetIndex(self.handle)
+		debug.writeMessage("viavoice getLastIndex %s"%index)
+		return index
 
 	def getRate(self):
 		rate=self.dll.eciGetVoiceParam(self.handle,0,eciSpeed)-30
@@ -100,6 +102,7 @@ class synthDriver(object):
 			return
 		if index is not None:
 			res=self.dll.eciInsertIndex(self.handle,index)
+			debug.writeMessage("viavoice speak text index %s"%index)
 		self.dll.eciAddText(self.handle,text)
 		self.dll.eciSynthesize(self.handle)
 		if wait:

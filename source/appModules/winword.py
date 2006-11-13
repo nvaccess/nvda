@@ -7,6 +7,7 @@ from constants import *
 from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
+import lang
 import _MSOffice
 
 #Word constants
@@ -188,7 +189,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		return rangeObj.Style.NameLocal
 
 	def msgStyle(self,pos):
-		return "Style %s"%self.getStyle(pos)
+		return lang.messages["style"]+" %s"%self.getStyle(pos)
 
 
 	def isTable(self,pos):
@@ -198,9 +199,9 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
 	def msgTable(self,pos):
 		if self.isTable(pos):
-			return "Table with %s columns and %s rows"%(self.getColumnCount(pos),self.getRowCount(pos))
+			return (NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+lang.messages["columns"]+" and %s "+lang.messages["rows"])%(self.getColumnCount(pos),self.getRowCount(pos))
 		else:
-			return "not in table"
+			return "not in %s"%NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)
 
 	def getRowNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -210,7 +211,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 	def msgTableRow(self,pos):
 		rowNum=self.getRowNumber(pos)
 		if rowNum>0:
-			return "row %s"%rowNum
+			return NVDAObjects.getRoleName(ROLE_SYSTEM_ROW)+" %s"%rowNum
 
 	def getRowCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -225,7 +226,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 	def msgTableColumn(self,pos):
 		columnNum=self.getColumnNumber(pos)
 		if columnNum>0:
-			return "column %s"%columnNum
+			return NVDAObjects.getRoleName(ROLE_SYSTEM_COLUM)+" %s"%columnNum
 
 	def getColumnCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -244,9 +245,9 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		pageNum=self.getPageNumber(pos)
 		pageCount=self.getPageCount()
 		if pageCount>0:
-			return "Page %s of %s"%(pageNum,pageCount)
+			return lang.messages["page"]+" %s of %s"%(pageNum,pageCount)
 		else:
-			return "page %s"%pageNum
+			return lang.messages["page"]+" %s"%pageNum
 
 	def getPageCount(self):
 		return self.dom.Selection.Information(wdNumberOfPagesInDocument)
@@ -256,13 +257,13 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		rangeObj.Start=rangeObj.End=pos
 		align=rangeObj.ParagraphFormat.Alignment
 		if align==wdAlignParagraphLeft:
-			return "left"
+			return lang.messages["left"]
 		elif align==wdAlignParagraphCenter:
-			return "centered"
+			return lang.messages["centered"]
 		elif align==wdAlignParagraphRight:
-			return "right"
+			return lang.messages["right"]
 		elif align>=wdAlignParagraphJustify:
-			return "justified"
+			return lang.messages["justified"]
 
 	def script_moveByParagraph(self,keyPress):
 		sendKey(keyPress)

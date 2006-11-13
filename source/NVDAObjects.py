@@ -686,6 +686,7 @@ class NVDAObject_edit(NVDAObject):
 		while (curPos is not None) and (curPos<self.getEndPosition()):
 			#Speak the current line (if its not blank) with an speech index of its position
 			text=self.getLine(curPos)
+			debug.writeMessage("sayAll: speak text %s"%text)
 			if text and (text not in ['\n','\r',""]):
 				audio.speakText(text,index=curPos)
 			#Move our current position down by one line
@@ -722,8 +723,8 @@ class NVDAObject_edit(NVDAObject):
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
 			 		self.setCaretPosition(index)
-			audio.cancel()
-
+		else: #End of document, and the synth is also finished
+			audio.speakMessage(lang.messages["endOfDocument"])
 
 	def event_caret(self):
 		self.reviewCursor=self.getCaretPosition()
@@ -1441,6 +1442,24 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		else:
 			return None
 
+	def nextLine(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		delta=rangeObj.Move(self.constants.tomLine,1)
+		if delta:
+			return rangeObj.Start
+		else:
+			return None
+
+	def previousLine(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		delta=rangeObj.Move(self.constants.tomLine,-1)
+		if delta:
+			return rangeObj.Start
+		else:
+			return None
+
 	def getParagraph(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
@@ -1469,7 +1488,7 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		return rangeObj.Font.Name
 
 	def msgFontName(self,pos):
-		return "font %s"%self.getFontName(pos)
+		return lang.messages["font"]+" %s"%self.getFontName(pos)
 
 	def getFontSize(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -1477,20 +1496,20 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		return int(rangeObj.Font.Size)
 
 	def msgFontSize(self,pos):
-		return "%s point"%self.getFontSize(pos)
+		return "%s %s"%(self.getFontSize(pos),lang.messages["point"])
 
 	def getParagraphAlignment(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
 		align=rangeObj.Para.Alignment
 		if align==self.constants.tomAlignLeft:
-			return "left"
+			return lang.messages["left"]
 		elif align==self.constants.tomAlignCenter:
-			return "centered"
+			return lang.messages["centered"]
 		elif align==self.constants.tomAlignRight:
-			return "right"
+			return lang.messages["right"]
 		elif align>=self.constants.tomAlignJustify:
-			return "justified"
+			return lang.messages["justified"]
 
 	def msgParagraphAlignment(self,pos):
 		return "alignment %s"%self.getParagraphAlignment(pos)
@@ -1502,10 +1521,10 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def msgBold(self,pos):
 		if self.isBold(pos):
-			bold="on"
+			bold=lang.messages["on"]
 		else:
-			bold="off"
-		return "bold %s"%bold
+			bold=lang.messages["off"]
+		return lang.messages["bold"]+" %s"%bold
 
 	def isItalic(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -1514,10 +1533,10 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def msgItalic(self,pos):
 		if self.isItalic(pos):
-			italic="on"
+			italic=lang.messages["on"]
 		else:
-			italic="off"
-		return "italic %s"%italic
+			italic=lang.messages["off"]
+		return lang.messages["italic"]+" %s"%italic
 
 	def isUnderline(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -1526,10 +1545,10 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def msgUnderline(self,pos):
 		if self.isUnderline(pos):
-			underline="on"
+			underline=lang.messages["on"]
 		else:
-			underline="off"
-		return "underline %s"%underline
+			underline=lang.messages["off"]
+		return lang.messages["underline"]+" %s"%underline
 
 class NVDAObject_virtualBuffer(NVDAObject_edit):
 

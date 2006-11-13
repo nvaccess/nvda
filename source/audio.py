@@ -14,7 +14,6 @@ def initialize():
 	synthDriverHandler.setDriver(conf["speech"]["synth"])
 
 def getLastIndex():
-	global lastIndex
 	return synthDriverHandler.getLastIndex()
 
 def processText(text):
