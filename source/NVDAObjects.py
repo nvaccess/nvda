@@ -499,6 +499,7 @@ class NVDAObject_edit(NVDAObject):
 			key("insert+f"):self.script_formatInfo,
 		}
 		self.mousePos=None
+
 	def getValue(self):
 		return self.getCurrentLine()
 
@@ -1164,6 +1165,7 @@ class NVDAObject_consoleWindowClassClient(NVDAObject_edit):
 		self.consoleHandle=res
 		self.consoleEventHookHandles=[]
 		self.oldLines=self.getVisibleLines()
+		self.reviewCursor=self.getCaretPosition()
 
 	def __del__(self):
 		try:
@@ -1345,6 +1347,7 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 			[self.msgUnderline,["documentFormatting","reportFontAttributes"],None,None],
 			[self.msgParagraphAlignment,["documentFormatting","reportAlignment"],None,None],
 		]
+		self.reviewCursor=self.getCaretPosition()
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)

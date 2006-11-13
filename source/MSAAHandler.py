@@ -258,7 +258,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			objectID=OBJID_CLIENT
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
 			eventName="caret"
-		if winUser.isWindow(window) and (objectID>=-4) and (eventName not in ["locationChange",None]):
+		if (objectID>=-4) and (eventName not in ["locationChange",None]):
 			NVDAThreads.executeFunction(api.executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("MSAAHandler.objectEventCallback")
