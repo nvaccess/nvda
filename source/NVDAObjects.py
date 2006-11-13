@@ -1324,7 +1324,7 @@ class NVDAObject_tooltip(NVDAObject):
 		else:
 			return ""
 
-	def event_showObject(self):
+	def event_show(self):
 		if conf["presentation"]["reportTooltips"]:
 			self.speakObject()
 
@@ -1633,7 +1633,8 @@ class NVDAObject_internetExplorerServer(NVDAObject_virtualBuffer):
  
 staticMap={
 ("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd,
-("tooltips_class32",None):NVDAObject_tooltip,
+("tooltips_class32",ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
+("tooltips_class32",ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
 ("Progman",ROLE_SYSTEM_CLIENT):NVDAObject_Progman,
 ("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
@@ -1644,11 +1645,9 @@ staticMap={
 (None,ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
-#("MozillaContentWindowClass",None):NVDAObject_virtualBuffer,
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 ("Internet Explorer_Server",None):NVDAObject_internetExplorerServer,
-("HSEditor",ROLE_SYSTEM_CLIENT):NVDAObject_ITextDocument,
 }
 
 dynamicMap={}

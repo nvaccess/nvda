@@ -178,9 +178,8 @@ def executeEvent(name,window,objectID,childID):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("gainFocus",window,objectID,childID)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
-	v=virtualBuffer.getVirtualBuffer(window)
-	if v and (v.getWindowHandle()==window) and hasattr(v,"event_%s"%name):
-		event=getattr(v,"event_%s"%name)
+	if virtualBuffer.isVirtualBufferWindow(window) and hasattr(virtualBuffer.getVirtualBuffer(window),"event_%s"%name):
+		event=getattr(virtualBuffer.getVirtualBuffer(window),"event_%s"%name)
 		try:
 			event(objectID,childID)
 		except:
