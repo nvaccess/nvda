@@ -227,7 +227,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 	def msgTableColumn(self,pos):
 		columnNum=self.getColumnNumber(pos)
 		if columnNum>0:
-			return NVDAObjects.getRoleName(ROLE_SYSTEM_COLUM)+" %s"%columnNum
+			return NVDAObjects.getRoleName(ROLE_SYSTEM_COLUMN)+" %s"%columnNum
 
 	def getColumnCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
