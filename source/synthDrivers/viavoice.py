@@ -1,12 +1,14 @@
 import time
 import thread
-import ctypes
 import os
+import _winreg
 import ctypes
 import debug
 
-description="IBM ViaVoice, ibmeci50.dll"
+description="IBM ViaVoice Outloud (ibmeci50.dll)"
+
 curVoice=1
+#'SOFTWARE\\IBM\\ViaVoice\\Outloud Runtime\\En_US'
 
 #Constants
 
@@ -31,15 +33,27 @@ eciDataNotProcessed=0
 eciDataProcessed=1
 eciDataAbort=2
 
-viavoicePath=r'C:\Program Files\ViaVoiceTTS'
+def getInstallPath():
+	try:
+		key_outloudRuntime=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,'SOFTWARE\\IBM\\ViaVoice\\Outloud Runtime')
+		lang=_winreg.EnumKey(key_outloudRuntime,0)
+		key_lang=_winreg.OpenKey(key_outloudRuntime,lang)
+		(path,t)=_winreg.QueryValueEx(key_lang,'path')
+		return path
+	except:
+		debug.writeException("viavoice install path")
+		return None
+
+def check():
+	if getInstallPath() is not None:
+		return True
+	else:
+		return False
 
 class synthDriver(object):
 
 	def __init__(self):
-		oldDir=os.getcwd()
-		os.chdir(viavoicePath)
-		self.dll=ctypes.windll.LoadLibrary('ibmeci50.dll')
-		os.chdir(oldDir)
+		self.dll=ctypes.windll.LoadLibrary(os.path.join(getInstallPath(),'ibmeci50.dll'))
 		self.handle=self.dll.eciNew()
 		self.dll.eciSetParam(self.handle,eciSynthMode,1)
 		self.dll.eciSetParam(self.handle,eciDictionary,1)

@@ -1,8 +1,17 @@
 import time
 import comtypesClient
+import _winreg
 
 name="sapi4"
-description="Microsoft Speech API Engine, version 4, com interface speech.voiceText"
+description="Microsoft Speech API Engine version 4 (speech.voiceText)"
+
+def check():
+	try:
+		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"Speech.VoiceText")
+		r.Close()
+		return True
+	except:
+		return False
 
 class synthDriver(object):
 

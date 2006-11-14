@@ -19,9 +19,26 @@ def getDriverList():
 	l=os.listdir(__path__[0])
 	l=filter((lambda x: x.endswith(".py") or x.endswith(".pyc") or x.endswith(".pyo") or (os.path.isdir(os.path.join(__path__[0],x)) and not x.startswith("."))),l)
 	l=map((lambda x: os.path.splitext(x)[0]),l)
-	l=set(l)
-	l=list(l)
+	l=list(set(l))
+	l=filter(lambda x: isDriverAvailable(x),l)
 	return l
+
+def isDriverAvailable(name):
+	try:
+		mod=__import__(name,globals(),None,[])
+		if mod.check():
+			return True
+		else:
+			return False
+	except:
+		return False
+
+def getDriverDescription(name):
+	try:
+		mod=__import__(name,globals(),None,[])
+		return mod.description
+	except:
+		return ""
 
 def setDriver(name):
 	global driverObject, driverName, driverVoiceNames

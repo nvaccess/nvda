@@ -79,7 +79,10 @@ class MainFrame(wx.Frame):
 
 	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()
-		d=wx.SingleChoiceDialog(self,lang.gui["messageSynthesizer"],lang.gui["titleSynthesizer"],synthList)
+		choices=[]
+		for item in synthList:
+			choices.append("%s: %s"%(item,synthDriverHandler.getDriverDescription(item)))
+		d=wx.SingleChoiceDialog(self,lang.gui["messageSynthesizer"],lang.gui["titleSynthesizer"],choices)
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
 		if d.ShowModal()==wx.ID_OK:
 			NVDAThreads.executeFunction(synthDriverHandler.setDriver,synthList[d.GetSelection()])

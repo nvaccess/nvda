@@ -41,4 +41,20 @@ try:
 except:
 	print "not found"
 
+#Sapi5
+try:
+	print "Sapi5"
+	comtypesClient.CreateObject("Sapi.SPVoice")
+	print "done"
+except:
+	print "not found"
+
+#Sapi4
+try:
+	print "Sapi4"
+	comtypesClient.CreateObject("speech.voiceText")
+	print "done"
+except:
+	print "not found"
+
 

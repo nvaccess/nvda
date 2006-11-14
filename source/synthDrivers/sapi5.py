@@ -1,9 +1,18 @@
 import os
 import comtypesClient
 import debug
+import _winreg
 
 name="sapi5"
-description="Microsoft Speech API Engine, version 5, com interface sapi.SPVoice"
+description="Microsoft Speech API version 5 (sapi.SPVoice)"
+
+def check():
+	try:
+		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"SAPI.SPVoice")
+		r.Close()
+		return True
+	except:
+		return False
 
 class constants:
 	SVSFlagsAsync = 1
