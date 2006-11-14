@@ -167,7 +167,7 @@ def executeEvent(name,window,objectID,childID):
 		processID=winUser.getWindowThreadProcessID(window)
 		if processID!=globalVars.foregroundProcessID:
 			appName=getAppName(processID)
-			appModuleHandler.load(appName)
+			appModuleHandler.load(appName,window,processID)
 			globalVars.foregroundProcessID=processID
 		setForegroundObjectByLocator(window,objectID,childID)
 	#If focus event then update the focus global variables

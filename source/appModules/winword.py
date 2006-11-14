@@ -46,12 +46,12 @@ wdGoToLine=3
 
 class appModule(_MSOffice.appModule):
 
-	def __init__(self):
-		_MSOffice.appModule.__init__(self)
-		NVDAObjects.registerNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
+	def __init__(self,*args):
+		_MSOffice.appModule.__init__(self,*args)
+		NVDAObjects.registerNVDAObjectClass(self.processID,"_WwG",ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
 
 	def __del__(self):
-		NVDAObjects.unregisterNVDAObjectClass("_WwG",ROLE_SYSTEM_CLIENT)
+		NVDAObjects.unregisterNVDAObjectClass(self.processID,"_WwG",ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
 class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):

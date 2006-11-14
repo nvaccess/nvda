@@ -15,12 +15,12 @@ __path__=['.\\appModules']
 #Holds the current appModule object
 current=None
 
-def load(name):
+def load(name,hwnd,processID):
 	global current
 	if os.path.isfile(r'%s\appModules\%s.py'%(os.getcwd(),name)):
 		debug.writeMessage("Found appModule %s"%name)
 		try:
-			current=__import__(name,globals(),locals(),[]).appModule()
+			current=__import__(name,globals(),locals(),[]).appModule(hwnd,processID)
 			debug.writeMessage("Loaded appModule %s"%name)
 			return True
 		except:
@@ -29,7 +29,7 @@ def load(name):
 	else:
 		debug.writeMessage("appModule %s does not exist"%name)
 	if name!='_default':
-		load('_default')
+		load('_default',hwnd,processID)
 	else:
 		raise ImportError('appModules\\_default')
 

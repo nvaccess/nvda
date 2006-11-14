@@ -16,10 +16,10 @@ re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
 class appModule(_MSOffice.appModule):
 
-	def __init__(self):
-		_MSOffice.appModule.__init__(self)
-		NVDAObjects.registerNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
-		NVDAObjects.registerNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
+	def __init__(self,*args):
+		_MSOffice.appModule.__init__(self,*args)
+		NVDAObjects.registerNVDAObjectClass(self.processID,"EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
+		NVDAObjects.registerNVDAObjectClass(self.processID,"EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
 		NVDAObjects.unregisterNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT)

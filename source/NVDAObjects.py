@@ -22,13 +22,13 @@ import globalVars
 
 #Some api functions specific to NVDAObjects
 
-def getNVDAObjectClass(windowClass,objectRole):
-	if dynamicMap.has_key((windowClass,objectRole)):
-		return dynamicMap[(windowClass,objectRole)]
-	elif dynamicMap.has_key((windowClass,None)):
-		return dynamicMap[(windowClass,None)]
-	elif dynamicMap.has_key((None,objectRole)):
-		return dynamicMap[(None,objectRole)]
+def getNVDAObjectClass(processID,windowClass,objectRole):
+	if dynamicMap.has_key((processID,windowClass,objectRole)):
+		return dynamicMap[(processID,windowClass,objectRole)]
+	elif dynamicMap.has_key((processID,windowClass,None)):
+		return dynamicMap[(processID,windowClass,None)]
+	elif dynamicMap.has_key((processID,None,objectRole)):
+		return dynamicMap[(processID,None,objectRole)]
 	elif staticMap.has_key((windowClass,objectRole)):
 		return staticMap[(windowClass,objectRole)]
 	elif staticMap.has_key((windowClass,None)):
@@ -39,7 +39,11 @@ def getNVDAObjectClass(windowClass,objectRole):
 		return NVDAObject
 
 def getNVDAObjectByAccessibleObject(ia,child):
-	return getNVDAObjectClass(winUser.getClassName(MSAAHandler.windowFromAccessibleObject(ia)),MSAAHandler.accRole(ia,child))(ia,child)
+	window=MSAAHandler.windowFromAccessibleObject(ia)
+	windowClass=winUser.getClassName(window)
+	processID=winUser.getWindowThreadProcessID(window)
+	role=MSAAHandler.accRole(ia,child)
+	return getNVDAObjectClass(processID,windowClass,role)(ia,child)
 
 def getNVDAObjectByLocator(window,objectID,childID):
 	res=MSAAHandler.accessibleObjectFromEvent(window,objectID,childID)
@@ -51,11 +55,11 @@ def getNVDAObjectByPoint(x,y):
 	if res:
 		return getNVDAObjectByAccessibleObject(res[0],res[1])
 
-def registerNVDAObjectClass(windowClass,objectRole,cls):
-	dynamicMap[(windowClass,objectRole)]=cls
+def registerNVDAObjectClass(processID,windowClass,objectRole,cls):
+	dynamicMap[(processID,windowClass,objectRole)]=cls
 
 def unregisterNVDAObjectClass(windowClass,objectRole):
-	del dynamicMap[(windowClass,objectRole)]
+	del dynamicMap[(processID,windowClass,objectRole)]
 
 def getRoleName(role):
 	dictRole=lang.roleNames.get(role,None)
@@ -1338,6 +1342,7 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 
 	def __init__(self,*args):
 		NVDAObject_edit.__init__(self,*args)
+		time.sleep(0.01) #Some rich edit controls need time to initialize
 		self.dom=self.getDocumentObjectModel()
 		self.presentationTable+=[
 			[self.msgFontName,["documentFormatting","reportFontName"],None,None],
@@ -1354,12 +1359,12 @@ class NVDAObject_ITextDocument(NVDAObject_edit):
 		NVDAObject_edit.__del__(self)
 
 	def getDocumentObjectModel(self):
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		ITextDocument=comtypesClient.GetModule('riched20.dll').ITextDocument
+		domPointer=ctypes.POINTER(ITextDocument)()
 		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
 		if res==0:
-			dom=comtypesClient.wrap(domPointer)
-			debug.writeMessage("ITextDocument dom: %s"%dom)
-			return comtypesClient.wrap(domPointer)
+			debug.writeMessage("ITextDocument dom: %s"%domPointer)
+			return domPointer
 		else:
 			raise OSError("No ITextDocument interface")
 

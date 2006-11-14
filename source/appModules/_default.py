@@ -10,7 +10,9 @@ import lang
 
 class appModule(object):
 
-	def __init__(self):
+	def __init__(self,hwnd,processID):
+		self.hwnd=hwnd
+		self.processID=processID
 		self.keyMap={
 			key("insert+n"):self.script_showGui,
 			key("insert+q"):self.script_quit,
