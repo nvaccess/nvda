@@ -18,7 +18,7 @@ confspec = StringIO("""# NVDA Configuration File
 # Speech settings
 [speech]
 	# The synthesiser to use
-	synth = string(default=sapi5)
+	synth = string(default=auto)
 
 	[[__many__]]
 		rate = integer(default=60)

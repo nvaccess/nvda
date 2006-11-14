@@ -11,6 +11,7 @@ from config import conf, checkSynth
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
 
+autoTrySynthList=["sapi5","sapi4","viavoice"]
 driverObject=None
 driverName=None
 driverVoiceNames=[]
@@ -42,6 +43,14 @@ def getDriverDescription(name):
 
 def setDriver(name):
 	global driverObject, driverName, driverVoiceNames
+	if name=="auto":
+		for synth in autoTrySynthList:
+			if isDriverAvailable(synth):
+				setDriver(synth)
+				conf["speech"]["synth"]="auto"
+				return True
+		else: #none of the auto synths are available
+			raise OSError("Cannot find a synthesizer")
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
 		checkSynth(name)
@@ -55,6 +64,7 @@ def setDriver(name):
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
+		setDriver("auto")
 		debug.writeException("Error in synthDriver %s"%name)
 		return False
 
