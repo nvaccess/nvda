@@ -1,12 +1,8 @@
-import time
-import thread
-import Queue
 import winsound
 import debug
 from textProcessing import *
 from config import conf, getSynthConfig
 import synthDriverHandler
-import NVDAThreads
 
 allowSpeech=True
 

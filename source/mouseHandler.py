@@ -5,15 +5,17 @@
 #See the file COPYING for more details.
 
 import pyHook
-import NVDAThreads
+import core
 import api
+import debug
+from constants import *
 
 #Internal mouse event
 
 def internal_mouseEvent(event):
 	try:
 		if event.MessageName=="mouse move":
-			NVDAThreads.executeFunction(api.notifyMouseMoved,event.Position[0],event.Position[1])
+			core.executeFunction(EXEC_MOUSE,api.notifyMouseMoved,event.Position[0],event.Position[1])
 		return True
 	except:
 		debug.writeException("mouseHandler.internal_mouseEvent")

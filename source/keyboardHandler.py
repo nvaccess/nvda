@@ -13,7 +13,7 @@ import audio
 import api
 import globalVars
 from constants import *
-import NVDAThreads
+import core
 from config import conf
 
 keyUpIgnoreSet=set()
@@ -105,7 +105,7 @@ def internal_keyDownEvent(event):
 		if event.Injected:
 			return True
 		globalVars.keyCounter+=1
-		NVDAThreads.executeFunction(audio.cancel)
+		core.executeFunction(EXEC_SPEECH,audio.cancel)
 		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
 			return True
 		if (event.Key=="Insert") and (event.Extended==0):
@@ -139,11 +139,11 @@ def internal_keyDownEvent(event):
 		debug.writeMessage("key press: %s"%str(keyPress))
 		if ((modifiers is None) or (modifiers==frozenset(['Shift']))) and (event.Ascii in range(33,128)):
 			if conf["keyboard"]["speakTypedCharacters"]:
-				NVDAThreads.executeFunction(audio.speakSymbol,chr(event.Ascii))
+				core.executeFunction(EXEC_SPEECH,audio.speakSymbol,chr(event.Ascii))
 			if conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
 				word+=chr(event.Ascii)
 			elif conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				NVDAThreads.executeFunction(audio.speakText,word)
+				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
 				word=""
 		else:
 			if conf["keyboard"]["speakCommandKeys"]:
@@ -156,12 +156,12 @@ def internal_keyDownEvent(event):
 					if item is not None:
 						label+="+%s"%item
 				debug.writeMessage("speaking key: %s"%label)
-				NVDAThreads.executeFunction(audio.speakMessage,label[1:])
+				core.executeFunction(EXEC_SPEECH,audio.speakMessage,label[1:])
 			if conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				NVDAThreads.executeFunction(audio.speakText,word)
+				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
 				word=""
 		if api.keyHasScript(keyPress):
-			NVDAThreads.executeFunction(api.executeScript,keyPress)
+			core.executeFunction(EXEC_KEYBOARD,api.executeScript,keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return False
 		else:

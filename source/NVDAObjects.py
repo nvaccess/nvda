@@ -7,7 +7,7 @@ import difflib
 import struct
 import re
 import debug
-import NVDAThreads
+import core
 import winUser
 import winKernel
 import audio
@@ -800,7 +800,7 @@ class NVDAObject_edit(NVDAObject):
 				self.presentationTable[ruleNum][3]=message
 
 	def script_sayAll(self,keyPress):
-		NVDAThreads.addGenerator(self.sayAllGenerator())
+		core.newThread(self.sayAllGenerator())
 
 
 	def script_moveByLine(self,keyPress):

@@ -13,7 +13,7 @@ import winUser
 import audio
 from constants import *
 import api
-import NVDAThreads
+import core
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -50,6 +50,8 @@ class screenPointType(ctypes.Structure):
 	]
 
 def accessibleObjectFromWindow(window,objectID):
+	if not winUser.isWindow(window):
+		return None
 	ptr=ctypes.POINTER(IAccessible)()
 	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
 	if res==0:
@@ -58,6 +60,8 @@ def accessibleObjectFromWindow(window,objectID):
 		return None
 
 def accessibleObjectFromEvent(window,objectID,childID):
+	if not winUser.isWindow(window):
+		return None
 	pacc=ctypes.POINTER(IAccessible)()
 	varChild=comtypes.automation.VARIANT()
 	res=ctypes.windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
@@ -259,7 +263,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
 			eventName="caret"
 		if (objectID>=-4) and (eventName not in ["locationChange",None]):
-			NVDAThreads.executeFunction(api.executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("MSAAHandler.objectEventCallback")
 

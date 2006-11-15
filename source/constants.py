@@ -4,6 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+#Core executer types
+EXEC_SPEECH=0
+EXEC_KEYBOARD=1
+EXEC_MOUSE=2
+EXEC_USERINTERFACE=3
+EXEC_CONFIG=4
+EXEC_LAST=4
+
 #IAccessible interface clsID
 iid_IAccessible="{618736E0-3C3D-11CF-810C-00AA00389B71}"
 

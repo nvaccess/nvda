@@ -10,8 +10,9 @@ import config
 import versionInfo
 import audio
 import lang
+from constants import *
 
-import NVDAThreads
+import core
 
 ### Constants
 appTitle = versionInfo.longName
@@ -28,7 +29,6 @@ class MainFrame(wx.Frame):
 		style=wx.DEFAULT_FRAME_STYLE
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
-		style=style&wx.CENTER_ON_SCREEN
 		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(300,300), style)
 		self.id_onAbortCommand=wx.NewId()
 		wx.EVT_COMMAND(self,self.id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
@@ -65,16 +65,18 @@ class MainFrame(wx.Frame):
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
+		self.Center()
 		self.Show(True)
 		self.Raise()
 
 	def onHideGuiCommand(self,evt):
+		time.sleep(0.01)
 		self.Show(False)
 
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
-		NVDAThreads.executeFunction(audio.speakMessage,lang.messages["savedConfiguration"])
+		core.executeFunction(EXEC_SPEECH,audio.speakMessage,lang.messages["savedConfiguration"])
 
 	def onExitCommand(self, evt):
 		self.Raise()
@@ -92,13 +94,13 @@ class MainFrame(wx.Frame):
 		d=wx.SingleChoiceDialog(self,lang.gui["messageSynthesizer"],lang.gui["titleSynthesizer"],choices)
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
 		if d.ShowModal()==wx.ID_OK:
-			NVDAThreads.executeFunction(synthDriverHandler.setDriver,synthList[d.GetSelection()])
+			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
 		d=wx.SingleChoiceDialog(self,lang.gui["messageVoice"],lang.gui["titleVoice"],synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.getSynthConfig()["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
-			NVDAThreads.executeFunction(synthDriverHandler.setVoice,d.GetSelection()+1)
+			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
 
 	def onAboutCommand(self,evt):
 		try:
