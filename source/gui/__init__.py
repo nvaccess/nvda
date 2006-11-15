@@ -16,7 +16,7 @@ import core
 
 ### Constants
 appTitle = versionInfo.longName
-iconPath="images\\NVDAIcon.bmp"
+#iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
 
 ### Globals
@@ -57,8 +57,8 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		self.menuBar.Append(self.menu_help,lang.gui["menuHelp"])
 		self.SetMenuBar(self.menuBar)
-		self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
-		self.SetIcon(self.icon)
+		#self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
+		#self.SetIcon(self.icon)
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False

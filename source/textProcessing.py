@@ -19,7 +19,7 @@ re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
 re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
 
-def processTextSymbols(text,keepInflection=False):
+def processTextSymbols(text,expandPunctuation=False):
 	#breaks up words that use a capital letter to denote another word
 	text=re_capAfterNoCapsInWord.sub(r"\1 \2",text)
 	#Like the last one, but this breaks away the last capital letter from an entire group of capital letters imbedded in a word (e.g. NVDAObject) 
@@ -29,6 +29,8 @@ def processTextSymbols(text,keepInflection=False):
 	#expands ^ and ~ so they can be used as protector symbols
 	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
 	#Expands any other symbols and removes ^ and ~ protectors
+	if expandPunctuation==False:
+		return text 
 	protector=False
 	str=""
 	for char in text:
@@ -37,14 +39,13 @@ def processTextSymbols(text,keepInflection=False):
 		else:
 			str+=char
 	text=str
-	if keepInflection:
-		text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%lang.textSymbols["."],text)
-		text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%lang.textSymbols[","],text)
-		text=re_sentence_question.sub(r"\1 ^%s?~ \2"%lang.textSymbols["?"],text)
-		text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%lang.textSymbols[":"],text)
-		text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%lang.textSymbols[";"],text)
-		text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%lang.textSymbols["!"],text)
-		#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%lang.textSymbols["'"],text)
+	text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%lang.textSymbols["."],text)
+	text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%lang.textSymbols[","],text)
+	text=re_sentence_question.sub(r"\1 ^%s?~ \2"%lang.textSymbols["?"],text)
+	text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%lang.textSymbols[":"],text)
+	text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%lang.textSymbols[";"],text)
+	text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%lang.textSymbols["!"],text)
+	#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%lang.textSymbols["'"],text)
 	str=""
 	for char in text:
 		if char=="^":

@@ -13,7 +13,7 @@ def getLastIndex():
 	return synthDriverHandler.getLastIndex()
 
 def processText(text):
-	text=processTextSymbols(text,keepInflection=True)
+	text=processTextSymbols(text,expandPunctuation=conf["speech"][synthDriverHandler.driverName]["speakPunctuation"])
 	return text
 
 def playSound(fileName,wait=False):
@@ -41,7 +41,7 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 	if name is not None:
 		text="%s %s"%(text,name)
 	if typeString is not None:
-		text="%s %s"%(text,typeString)
+		text+=" %s"%typeString
 	if stateText is not None:
 		text="%s %s"%(text,stateText)
 	if value is not None:

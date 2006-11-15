@@ -1,7 +1,8 @@
 Nonvisual Desktop Access (NVDA)
 Access to Windows through free, open source, and nonvisual means.
 
-Created by Michael Curran and James Teh.
+Created and maintained by Michael Curran, with help from  James Teh and others.
+
 
 Introduction
 

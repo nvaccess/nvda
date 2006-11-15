@@ -1,3 +1,5 @@
+import re
+import codecs
 import os
 import debug
 from constants import *
@@ -8,9 +10,11 @@ def load(language,merge=True):
 	l=filter(lambda x: os.path.splitext(x)[1]==".%s"%language,l)
 	debug.writeMessage("lang.load: dirList %s"%l)
 	for item in l:    
-		f=open("lang\\%s"%item)
+		f=codecs.open("lang/%s"%item,'r','utf-8')
 		try:
-			langDict=eval(f.read())
+			text=f.read()
+			text=re.sub(r'\r\n','\n',text)
+			langDict=eval(text)
 			entryName=os.path.splitext(item)[0]
 			if merge:
 				globals()[entryName]=globals().get(entryName,{})
@@ -19,6 +23,7 @@ def load(language,merge=True):
 				globals()[entryName]=langDict
 		except:
 			debug.writeException("lang.load: exception loading %s data"%item)
+		f.close()
 
 load("enu")
 userLang=conf["language"]["language"]

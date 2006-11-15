@@ -23,6 +23,7 @@ class appModule(object):
 			key("insert+2"):self.script_toggleSpeakTypedCharacters,
 			key("insert+3"):self.script_toggleSpeakTypedWords,
 			key("insert+4"):self.script_toggleSpeakCommandKeys,
+			key("insert+p"):self.script_toggleSpeakPunctuation,
 			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
 			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
 			key("Insert+Clear"):self.script_navigator_object_current,
@@ -77,7 +78,7 @@ class appModule(object):
 		else:
 			onOff=lang.messages["on"]
 			conf["keyboard"]["speakTypedCharacters"]=True
-		audio.speakMessage(lang.messages["speakTypedCharacters"]+" "+lang.messages[onOff])
+		audio.speakMessage(lang.messages["speakTypedCharacters"]+" "+onOff)
 
 	def script_toggleSpeakTypedWords(self,keyPress):
 		if conf["keyboard"]["speakTypedWords"]:
@@ -86,7 +87,7 @@ class appModule(object):
 		else:
 			onOff=lang.messages["on"]
 			conf["keyboard"]["speakTypedWords"]=True
-		audio.speakMessage(lang.messages["speakTypedWords"]+" "+lang.messages[onOff])
+		audio.speakMessage(lang.messages["speakTypedWords"]+" "+onOff)
 
 	def script_toggleSpeakCommandKeys(self,keyPress):
 		if conf["keyboard"]["speakCommandKeys"]:
@@ -95,7 +96,18 @@ class appModule(object):
 		else:
 			onOff=lang.messages["on"]
 			conf["keyboard"]["speakCommandKeys"]=True
-		audio.speakMessage(lang.messages["speakCommandKeys"]+" "+lang.messages[onOff])
+		audio.speakMessage(lang.messages["speakCommandKeys"]+" "+onOff)
+
+	def script_toggleSpeakPunctuation(self,keyPress):
+		if conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]:
+			onOff=lang.messages["off"]
+			conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=False
+		else:
+			onOff=lang.messages["on"]
+			conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=True
+		audio.speakMessage(lang.messages["speakPunctuation"]+" "+onOff)
+
+
 
 	def script_moveMouseToNavigatorObject(self,keyPress):
 		"""Moves the mouse pointer to the current navigator object"""

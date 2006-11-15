@@ -25,6 +25,7 @@ confspec = StringIO("""# NVDA Configuration File
 		pitch = integer(default=50)
 		volume = integer(default=100)
 		voice = integer(default=1)
+		speakPunctuation = boolean(default=False)
 		relativeUppercasePitch = integer(default=20)
 
 # Presentation settings
