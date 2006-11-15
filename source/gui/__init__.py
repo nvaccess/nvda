@@ -15,6 +15,7 @@ import NVDAThreads
 
 ### Constants
 appTitle = versionInfo.longName
+iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
 
 ### Globals
@@ -24,7 +25,11 @@ mainFrame = None
 class MainFrame(wx.Frame):
 
 	def __init__(self):
-		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,wx.DefaultSize, wx.DEFAULT_FRAME_STYLE)
+		style=wx.DEFAULT_FRAME_STYLE
+		style-=(style&wx.MAXIMIZE_BOX)
+		style-=(style&wx.MINIMIZE_BOX)
+		style=style&wx.CENTER_ON_SCREEN
+		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(300,300), style)
 		self.id_onAbortCommand=wx.NewId()
 		wx.EVT_COMMAND(self,self.id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
@@ -52,6 +57,8 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		self.menuBar.Append(self.menu_help,lang.gui["menuHelp"])
 		self.SetMenuBar(self.menuBar)
+		self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
+		self.SetIcon(self.icon)
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False

@@ -23,6 +23,8 @@ class appModule(object):
 			key("insert+2"):self.script_toggleSpeakTypedCharacters,
 			key("insert+3"):self.script_toggleSpeakTypedWords,
 			key("insert+4"):self.script_toggleSpeakCommandKeys,
+			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
+			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
 			key("Insert+Clear"):self.script_navigator_object_current,
 			key("insert+Subtract"):self.script_navigator_object_toFocus,
 			key("Insert+Up"):self.script_navigator_object_parent,
@@ -94,6 +96,21 @@ class appModule(object):
 			onOff=lang.messages["on"]
 			conf["keyboard"]["speakCommandKeys"]=True
 		audio.speakMessage(lang.messages["speakCommandKeys"]+" "+lang.messages[onOff])
+
+	def script_moveMouseToNavigatorObject(self,keyPress):
+		"""Moves the mouse pointer to the current navigator object"""
+		audio.speakMessage("Move mouse to navigator")
+		location=getNavigatorObject().getLocation()
+		if location and (len(location)==4):
+			winUser.setCursorPos(location[0],location[1])
+
+	def script_moveNavigatorObjectToMouse(self,keyPress):
+		audio.speakMessage("Move navigator object to mouse")
+		(x,y)=winUser.getCursorPos()
+		obj=NVDAObjects.getNVDAObjectByPoint(x,y)
+		if obj:
+			setNavigatorObject(obj)
+			obj.speakObject()
 
 	def script_navigator_object_current(self,keyPress):
 		"""Reports the object the navigator is currently on""" 

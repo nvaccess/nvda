@@ -1,4 +1,5 @@
 import ctypes
+import ctypes.wintypes
 
 user32=ctypes.windll.user32
 
@@ -111,5 +112,13 @@ def keybd_event(*args):
 
 def getAncestor(hwnd,flags):
 	return user32.GetAncestor(hwnd,flags)
+
+def setCursorPos(x,y):
+	user32.SetCursorPos(x,y)
+
+def getCursorPos():
+	point=ctypes.wintypes.POINT()
+	user32.GetCursorPos(ctypes.byref(point))
+	return [point.x,point.y]
 
 

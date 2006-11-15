@@ -3,6 +3,7 @@ Changes since revision 164:
 *Fixed some crashes in MS Office applications
 *If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
 *Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
+*You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
 *Fixed a bug that stopped internet explorer reading when pressing tab
 *Got rid of dictionaries in NVDA and replaced them with a lang directory of files with file extentions that match a given language code.
 *Replaced all messages and labels etc in NVDA with references to entries in the lang files. This now means you can create language files for your choice of language, and then set language (under the language section of nvda.ini) to your chosen 3 letter language code.
