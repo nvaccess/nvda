@@ -79,7 +79,6 @@ class MainFrame(wx.Frame):
 		core.executeFunction(EXEC_SPEECH,audio.speakMessage,lang.messages["savedConfiguration"])
 
 	def onExitCommand(self, evt):
-		self.Raise()
 		d = wx.MessageDialog(None, lang.gui["messageExit"], lang.gui["titleExit"], wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
