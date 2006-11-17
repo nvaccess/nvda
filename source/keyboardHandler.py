@@ -95,7 +95,7 @@ def sendKey(keyPress):
 	keyList.reverse()
 	for key in keyList:
 		winUser.keybd_event(key[0],0,key[1]+2,0)
-	time.sleep(0.1)
+	time.sleep(0.001)
 
 #Internal functions for key presses
 

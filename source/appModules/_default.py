@@ -10,10 +10,12 @@ import lang
 
 class appModule(object):
 
+	_keyMap={}
+
 	def __init__(self,hwnd,processID):
 		self.hwnd=hwnd
 		self.processID=processID
-		self.keyMap={
+		self.registerScriptKeys({
 			key("insert+n"):self.script_showGui,
 			key("insert+q"):self.script_quit,
 			key("insert+s"):self.script_speech_toggleMute,
@@ -48,7 +50,17 @@ class appModule(object):
 			key("up"):self.script_navigator_review_currentLine,
 			key("prior"):self.script_navigator_review_nextLine,
 			key("shift+prior"):self.script_navigator_review_bottom,
-		}
+		})
+
+	def getScript(self,keyPress):
+		if self._keyMap.has_key(keyPress):
+			return self._keyMap[keyPress]
+
+	def registerScriptKey(self,keyPress,methodName):
+		self._keyMap[keyPress]=methodName
+
+	def registerScriptKeys(self,keyDict):
+		self._keyMap.update(keyDict)
 
 	def event_switchStart(self,window,objectID,childID):
 		audio.speakMessage(lang.messages["taskSwitcher"])

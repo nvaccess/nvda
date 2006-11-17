@@ -7,7 +7,7 @@ class appModule(_default.appModule):
 
 	def __init__(self,*args):
 		_default.appModule.__init__(self,*args)
-		NVDAObjects.registerNVDAObjectClass(self.processID,"RichEdit20W",ROLE_SYSTEM_TEXT,NVDAObjects.NVDAObject_edit)
+		NVDAObjects.registerNVDAObjectClass(self.processID,"RichEdit20W",ROLE_SYSTEM_TEXT,NVDAObjects.MSAA.NVDAObject_edit)
 
 	def __del__(self):
 		NVDAObjects.unregisterNVDAObjectClass(self.processID,"RichEdit20W",ROLE_SYSTEM_TEXT)

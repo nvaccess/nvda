@@ -8,6 +8,7 @@ import api
 import audio
 import NVDAObjects
 import lang
+from constants import *
 
 runningTable={}
 
@@ -42,9 +43,9 @@ def unregisterVirtualBufferClass(windowClass):
 class virtualBuffer(object):
 
 	def __init__(self,window):
-		self.window=window
+		self.hwnd=window
 		self.text=""
-		self.caret=0
+		self.caretPosition=0
 		self.keyMap={
 			key("extendedLeft"):self.caret_previousCharacter,
 			key("extendedRight"):self.caret_nextCharacter,
@@ -58,27 +59,21 @@ class virtualBuffer(object):
 			key("control+extendedEnd"):self.caret_bottom,
 		}
 
-	def getWindowHandle(self):
-		return self.window
-
-	def getCaretPosition(self):
-		return self.caret
-
-	def setCaretPosition(self,pos):
-		self.caret=pos
-
 	def processKey(self,keyPress):
 		if self.keyMap.has_key(keyPress):
 			self.keyMap.get(keyPress)(keyPress)
 
 	def getStartPosition(self):
 		return 0
+	startPosition=property(fget=getStartPosition)
 
 	def getEndPosition(self):
 		return len(self.text)
+	endPosition=property(fget=getEndPosition)
 
 	def getLineCount(self):
 		return -1
+	lineCount=property(fget=getLineCount)
 
 	def getLineNumber(self,pos):
 		return -1
@@ -94,7 +89,7 @@ class virtualBuffer(object):
 	def getLineLength(self,pos):
 		startPos=self.getLineStart(pos)
 		endPos=startPos
-		while (endPos<=self.getTextLength()) and (self.text[endPos]!='\n'):
+		while (endPos<=len(self.text)) and (self.text[endPos]!='\n'):
 			endPos+=1
 		return (endPos-startPos)
 
@@ -117,12 +112,6 @@ class virtualBuffer(object):
 		if (start>=end) or (end>len(self.text)):
 			return None
 		return self.text[start:end]
-
-	def getTextLength(self):
-		return len(self.text)
-
-	def getText(self):
-		return self.text
 
 	def nextCharacter(self,pos):
 		if pos<self.getEndPosition():
@@ -204,52 +193,52 @@ class virtualBuffer(object):
 			return None
 
 	def caret_top(self,keyPress):
-		self.setCaretPosition(0)
+		self.caretPosition=0
 
 	def caret_bottom(self,keyPress):
-		self.setCaretPosition(len(self.text)-1)
+		self.caretPosition=len(self.text)-1
 
 	def caret_nextLine(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		nextPos=self.nextLine(pos)
 		if (pos<len(self.text)) and (nextPos is not None):
-			self.setCaretPosition(nextPos)
+			self.caretPosition=nextPos
 
 	def caret_previousLine(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		prevPos=self.previousLine(pos)
 		if (pos>0) and (prevPos is not None):
-			self.setCaretPosition(prevPos)
+			self.caretPosition=prevPos
 
 	def caret_startOfLine(self,keyPress):
-		self.setCaretPosition(self.getLineStart(self.getCaretPosition()))
+		self.caretPosition=self.getLineStart(self.caretPosition)
 
 	def caret_endOfLine(self,keyPress):
-		self.setCaretPosition(self.getLineStart(self.getCaretPosition())+self.getLineLength(self.getCaretPosition())-1)
+		self.caretPosition=(self.getLineStart(self.caretPosition)+self.getLineLength(self.caretPosition)-1)
 
 	def caret_nextWord(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		nextPos=self.nextWord(pos)
 		if (pos<len(self.text)) and (nextPos is not None):
-			self.setCaretPosition(nextPos)
+			self.caretPosition=(nextPos)
 
 	def caret_previousWord(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		prevPos=self.previousWord(pos)
 		if (prevPos is not None) and (prevPos>=0):
-			self.setCaretPosition(prevPos)
+			self.caretPosition=(prevPos)
 
 	def caret_nextCharacter(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		nextPos=self.nextCharacter(pos)
 		if (nextPos<len(self.text)) and (nextPos is not None):
-			self.setCaretPosition(nextPos)
+			self.caretPosition=(nextPos)
 
 	def caret_previousCharacter(self,keyPress):
-		pos=self.getCaretPosition()
+		pos=self.caretPosition
 		prevPos=self.previousCharacter(pos)
 		if (prevPos<len(self.text)) and (prevPos is not None):
-			self.setCaretPosition(prevPos)
+			self.caretPosition=prevPos
 
 class virtualBuffer_internetExplorerServer(virtualBuffer):
 
@@ -303,16 +292,17 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		index=self.getNodesIndexByUniqueID(uniqueID)
 		if index==-1:
 			return
-		self.caret=self.nodes[index][2]
+		self.caretPosition=self.nodes[index][2]
 
 	def loadDocument(self):
-		if self.getWindowHandle()==api.getFocusLocator()[0]:
-			audio.speakMessage(lang.messages["loadingDocument"]+"...")
-		self.addNode(self.dom.body)
-		self.caret=0
-		if self.getWindowHandle()==api.getFocusLocator()[0]:
+		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
-			audio.speakText(self.getText())
+			audio.speakMessage(lang.messages["loadingDocument"]+" "+self.dom.title+"...")
+		self.addNode(self.dom.body)
+		self.caretPosition=0
+		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():
+			audio.cancel()
+			audio.speakText(self.text)
 
 	def activatePosition(self,pos):
 		index=self.getNodesIndexByPosition(pos)
@@ -357,7 +347,7 @@ class virtualBuffer_internetExplorerServer(virtualBuffer):
 		self.nodes=preNodes+newNodes+postNodes
 
 	def getDomNodeByMSAA(self,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(self.getWindowHandle(),objectID,childID)
+		obj=NVDAObjects.getNVDAObjectByLocator(self.hwnd,objectID,childID)
 		if not obj:
 			return None
 		(left,top,right,bottom)=obj.getLocation()

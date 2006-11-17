@@ -19,20 +19,20 @@ class msgType(ctypes.Structure):
 	('pt',pointType),
 	]
 
-def LOWORD(bytes):
-	return bytes&0xFF
+def LOBYTE(word):
+	return word&0xFF
  
-def HIWORD(bytes):
-	return bytes>>8
+def HIBYTE(word):
+	return word>>8
 
 def MAKEWORD(lo,hi):
 	return (hi<<8)+lo
 
-def LOLONG(bytes):
-	return bytes&0xFFFF
+def LOWORD(long):
+	return long&0xFFFF
  
-def HILONG(bytes):
-	return bytes>>16
+def HIWORD(long):
+	return long>>16
 
 def MAKELONG(lo,hi):
 	return (hi<<16)+lo

@@ -26,20 +26,21 @@ class appModule(_MSOffice.appModule):
 		NVDAObjects.unregisterNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
-class NVDAObject_excelEditableCell(NVDAObjects.NVDAObject_edit):
+class NVDAObject_excelEditableCell(NVDAObjects.MSAA.NVDAObject_edit):
 
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT
+	role=property(fget=getRole)
 
-class NVDAObject_excelTable(NVDAObjects.NVDAObject):
+class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 
 	def __init__(self,*args):
-		NVDAObjects.NVDAObject.__init__(self,*args)
+		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args)
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.hwnd,OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		self.excelObject=comtypesClient.wrap(ptr)
-		self.keyMap.update({
+		self.registerScriptKeys({
 			key("Insert+f"):self.script_formatInfo,
 			key("ExtendedUp"):self.script_moveByCell,
 			key("ExtendedDown"):self.script_moveByCell,
@@ -69,13 +70,16 @@ class NVDAObject_excelTable(NVDAObjects.NVDAObject):
 
 	def getRole(self):
 		return ROLE_SYSTEM_TABLE
+	role=property(fget=getRole)
 
 	def getSelectedRange(self):
 		return self.excelObject.Selection
+	selectedRange=property(fget=getSelectedRange)
 
 	def getActiveCell(self):
 		time.sleep(0.01)
 		return self.excelObject.ActiveCell
+	activeCell=property(fget=getActiveCell)
 
 	def getCellAddress(self,cell):
 		return re_dollaredAddress.sub(r"\1\2",cell.Address())

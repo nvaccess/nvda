@@ -1,6 +1,7 @@
 import ctypes
 import comtypesClient
 import comtypes.automation
+import MSAAHandler
 import audio
 import debug
 from constants import *
@@ -54,26 +55,26 @@ class appModule(_MSOffice.appModule):
 		NVDAObjects.unregisterNVDAObjectClass(self.processID,"_WwG",ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
-class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
+class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument,NVDAObjects.MSAA.NVDAObject_MSAA):
 
 	def __init__(self,*args):
-		NVDAObjects.NVDAObject_ITextDocument.__init__(self,*args)
-		self.presentationTable.insert(0,[self.msgStyle,["documentFormatting","reportStyle"],None,None])
-		self.presentationTable.insert(1,[self.msgPage,["documentFormatting","reportPage"],None,None])
-		self.presentationTable.insert(2,[self.msgTable,["documentFormatting","reportTables"],None,None])
-		self.presentationTable.insert(3,[self.msgTableRow,["documentFormatting","reportTables"],None,None])
-		self.presentationTable.insert(4,[self.msgTableColumn,["documentFormatting","reportTables"],None,None])
-		self.keyMap.update({
+		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args)
+		NVDAObjects.ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
+		self._presentationTable.insert(0,[self.msgStyle,["documentFormatting","reportStyle"],None,None])
+		self._presentationTable.insert(1,[self.msgPage,["documentFormatting","reportPage"],None,None])
+		self._presentationTable.insert(2,[self.msgTable,["documentFormatting","reportTables"],None,None])
+		self._presentationTable.insert(3,[self.msgTableRow,["documentFormatting","reportTables"],None,None])
+		self._presentationTable.insert(4,[self.msgTableColumn,["documentFormatting","reportTables"],None,None])
+		self.registerScriptKeys({
 			key("control+ExtendedUp"):self.script_moveByParagraph,
 			key("control+ExtendedDown"):self.script_moveByParagraph,
 		})
 
 	def getDocumentObjectModel(self):
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.getWindowHandle(),OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.hwnd,OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		return comtypesClient.wrap(ptr)
-
 
 	def destroyObjectModel(self,om):
 		pass
@@ -83,16 +84,14 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT
-
-	def event_caret(self):
-		pass #These scripts must move the selection to get lines etc
-
+	role=property(fget=getRole)
 
 	def getVisibleRange(self):
 		(left,top,right,bottom)=self.getLocation()
 		topRange=self.dom.Application.ActiveWindow.RangeFromPoint(left,top)
 		bottomRange=self.dom.Application.ActiveWindow.RangeFromPoint(right,bottom)
 		return (topRange.Start,bottomRange.Start)
+	visibleRange=property(fget=getVisibleRange)
 
 	def getLineNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -202,7 +201,7 @@ class NVDAObject_wordDocument(NVDAObjects.NVDAObject_ITextDocument):
 		if self.isTable(pos):
 			return (NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+lang.messages["columns"]+" and %s "+lang.messages["rows"])%(self.getColumnCount(pos),self.getRowCount(pos))
 		else:
-			return "not in %s"%NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)
+			return "not in %s"%MSAAHandler.getRoleName(ROLE_SYSTEM_TABLE)
 
 	def getRowNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

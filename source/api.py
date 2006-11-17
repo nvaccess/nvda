@@ -17,7 +17,7 @@ import appModuleHandler
 import gui
 from keyboardHandler import key 
 import NVDAObjects
-import virtualBuffer
+import virtualBuffers
 import lang
 
 # Initialise WMI; required for getProcessName.
@@ -70,7 +70,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
-	virtualBuffer.getVirtualBuffer(window)
+	virtualBuffers.getVirtualBuffer(window)
 	return True
 
 def getNavigatorObject():
@@ -78,15 +78,16 @@ def getNavigatorObject():
 
 def setNavigatorObject(obj):
 	globalVars.navigatorObject=obj
+
 def keyHasScript(keyPress):
 	#The keyboard help script is built in to hasScript and executeScript
 	if globalVars.keyboardHelp:
 		return True
 	if keyPress==key("insert+1"):
 		return True
-	if appModuleHandler.current.keyMap.has_key(keyPress):
+	if appModuleHandler.current.getScript(keyPress):
 		return True
-	if getFocusObject().keyMap.has_key(keyPress):
+	if getFocusObject().getScript(keyPress):
 		return True
 	return False
 
@@ -101,9 +102,10 @@ def executeScript(keyPress):
 			globalVars.keyboardHelp=False
 			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["off"])
 			return True
-	script=appModuleHandler.current.keyMap.get(keyPress,None)
+	script=appModuleHandler.current.getScript(keyPress)
 	if not script:
-		script=getFocusObject().keyMap.get(keyPress,None)
+		script=getFocusObject().getScript(keyPress)
+		debug.writeMessage("script: %s"%getFocusObject().__class__)
 	if globalVars.keyboardHelp:
 		if script:
 			name=script.__name__
@@ -178,16 +180,16 @@ def executeEvent(name,window,objectID,childID):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("gainFocus",window,objectID,childID)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
-	if virtualBuffer.isVirtualBufferWindow(window) and hasattr(virtualBuffer.getVirtualBuffer(window),"event_%s"%name):
-		event=getattr(virtualBuffer.getVirtualBuffer(window),"event_%s"%name)
+	if virtualBuffers.isVirtualBufferWindow(window) and hasattr(virtualBuffers.getVirtualBuffer(window),"event_%s"%name):
+		event=getattr(virtualBuffers.getVirtualBuffer(window),"event_%s"%name)
 		try:
 			event(objectID,childID)
 		except:
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
 	#and then continue 
-	if (name=="hide") and (objectID==0) and virtualBuffer.isVirtualBufferWindow(window): 
-		virtualBuffer.removeVirtualBuffer(window)
+	if (name=="hide") and (objectID==0) and virtualBuffers.isVirtualBufferWindow(window): 
+		virtualBuffers.removeVirtualBuffer(window)
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,
@@ -262,3 +264,10 @@ def setMenuMode(switch):
 def getMenuMode():
 	return globalVars.menuMode
 
+def createStateList(stateBits):
+	stateList=[]
+	for bitPos in range(32):
+		bitVal=1<<bitPos
+		if stateBits&bitVal:
+			stateList+=[bitVal]
+	return stateList

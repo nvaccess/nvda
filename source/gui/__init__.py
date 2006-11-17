@@ -83,7 +83,8 @@ class MainFrame(wx.Frame):
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
-
+		elif not shown:
+			self.onHideGui(None)
 
 	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()

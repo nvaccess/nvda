@@ -9,17 +9,54 @@ import ctypes
 import comtypesClient
 import comtypes.automation
 import debug
+import lang
 import winUser
 import audio
 from constants import *
 import api
 import core
+import virtualBuffers
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
 
 #Load IAccessible from oleacc.dll
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
+
+def getRoleName(role):
+	dictRole=lang.roleNames.get(role,None)
+	if dictRole:
+		return dictRole
+	elif isinstance(role,int):
+		return getRoleText(role)
+	else:
+		return role
+
+def createStateList(stateBits):
+	stateList=[]
+	for bitPos in range(32):
+		bitVal=1<<bitPos
+		if stateBits&bitVal:
+			stateList+=[bitVal]
+	return stateList
+
+def getStateNames(states,opposite=False):
+	str=""
+	for state in createStateList(states):
+		str="%s %s"%(str,getStateName(state,opposite=opposite))
+	return str
+
+def getStateName(state,opposite=False):
+	dictState=lang.stateNames.get(state,None)
+	if dictState:
+		newState=dictstate
+	elif isinstance(state,int):
+		newState=getStateText(state)
+	else:
+		newState=state
+	if opposite:
+		newState=lang.messages["not"]+" "+newState
+	return newState
 
 #A class to wrap an IAccessible object in to handle addRef and Release
 class IAccWrapper(object):
@@ -258,14 +295,25 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
-		if (objectID==OBJID_WINDOW) and (childID==0) and (eventID in [EVENT_OBJECT_FOCUS,EVENT_SYSTEM_FOREGROUND,EVENT_OBJECT_SHOW]):
+		if objectID==0:
 			objectID=OBJID_CLIENT
-		if (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
-			eventName="caret"
-		if (objectID>=-4) and (eventName not in ["locationChange",None]):
+		#Let tooltips through
+		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32"):
+			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"toolTip",window,objectID,childID)
+		#Let caret events through
+		elif ((eventID==EVENT_OBJECT_SHOW) or (eventID==EVENT_OBJECT_LOCATIONCHANGE)) and (objectID==OBJID_CARET):
+			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"caret",window,objectID,childID)
+		#Let menu events through
+		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPSTART,EVENT_SYSTEM_MENUPOPUPEND]:
+			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
+		#Let foreground and focus events through
+		elif (eventID==EVENT_SYSTEM_FOREGROUND) or (eventID==EVENT_OBJECT_FOCUS):
+			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
+		#Let events for the focus object through
+		elif (window,objectID,childID)==api.getFocusLocator():
 			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
 	except:
-		debug.writeException("MSAAHandler.objectEventCallback")
+		debug.writeException("objectEventCallback")
 
 #Register internal object event with MSAA
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
@@ -275,9 +323,9 @@ def initialize():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:
 			objectEventHandles.append(handle)
-			debug.writeMessage("MSAAHandler.Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
+			debug.writeMessage("Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
 		else:
-			debug.writeError("MSAAHandler.initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
+			debug.writeError("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
 
 def terminate():
 	for handle in objectEventHandles:
