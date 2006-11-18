@@ -17,7 +17,6 @@ import window
 import textBuffer
 import manager
 import ITextDocument
-import virtualBuffer
 
 class NVDAObject_MSAA(window.NVDAObject_window):
 
@@ -710,9 +709,9 @@ class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWin
 		return ""
 	value=property(fget=getValue)
 
-class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowClass):
+class NVDAObject_link(NVDAObject_MSAA):
 	"""
-	Based on NVDAObject_mozillaContentWindowClass, but:
+	Based on NVDAObject_MSAA, but:
 	*Value is always empty otherwise it would be the full url.
 	*typeString is link, visited link, or same page link depending on certain states.
 	*filterStates filters out linked and traversed since these don't need to be reported.
@@ -724,7 +723,7 @@ class NVDAObject_mozillaContentWindowClass_link(NVDAObject_mozillaContentWindowC
 	value=property(fget=getValue)
 
 	def filterStates(self,states):
-		states=NVDAObject_mozillaContentWindowClass.filterStates(self,states)
+		states=NVDAObject_MSAA.filterStates(self,states)
 		states-=(states&STATE_SYSTEM_LINKED)
 		states-=(states&STATE_SYSTEM_TRAVERSED)
 		return states
@@ -804,13 +803,7 @@ class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowC
 			return ""
 	value=property(fget=getValue)
 
-class NVDAObject_internetExplorerServer(virtualBuffer.NVDAObject_virtualBuffer,NVDAObject_MSAA):
+class NVDAObject_internetExplorerServer(NVDAObject_MSAA):
+	pass
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
-		virtualBuffer.NVDAObject_virtualBuffer.__init__(self,*args)
-
-	def event_gainFocus(self):
-		if self.role not in [ROLE_SYSTEM_DOCUMENT,ROLE_SYSTEM_PANE]:
-			NVDAObject_MSAA.event_gainFocus(self)
 

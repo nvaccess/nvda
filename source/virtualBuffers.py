@@ -12,27 +12,32 @@ from constants import *
 
 runningTable={}
 
-def isVirtualBufferWindow(window):
-	return runningTable.has_key(window)
+def getVirtualBuffer(hwnd):
+	while hwnd:
+		if runningTable.has_key(hwnd):
+			return runningTable[hwnd]
+		hwnd=winUser.getAncestor(hwnd,GA_PARENT)
+	return None
 
-def removeVirtualBuffer(window):
-	del runningTable[window]
+def removeVirtualBuffer(hwnd):
+	if runningTable.has_key(hwnd):
+		del runningTable[hwnd]
 
-def getVirtualBuffer(window):
-	if not runningTable.has_key(window):
-		className=winUser.getClassName(window)
-		if dynamicMap.has_key(className):
-			virtualBufferClass=dynamicMap[className]
-		elif staticMap.has_key(className):
-			virtualBufferClass=staticMap[className]
-		else:
-			virtualBufferClass=None
-		if virtualBufferClass:
-			virtualBufferObject=virtualBufferClass(window)
-			runningTable[window]=virtualBufferObject
-			return runningTable[window]
-	else:
-		return runningTable[window]
+def updateVirtualBuffers(hwnd):
+	while hwnd:
+		if not runningTable.has_key(hwnd):
+			className=winUser.getClassName(hwnd)
+			if dynamicMap.has_key(className):
+				virtualBufferClass=dynamicMap[className]
+			elif staticMap.has_key(className):
+				virtualBufferClass=staticMap[className]
+			else:
+				virtualBufferClass=None
+			if virtualBufferClass:
+				virtualBufferObject=virtualBufferClass(hwnd)
+				runningTable[hwnd]=virtualBufferObject
+			return 
+		hwnd=winUser.getAncestor(hwnd,GA_PARENT)
 
 def registerVirtualBufferClass(windowClass,cls):
 	dynamicMap[windowClass]=cls
@@ -43,25 +48,32 @@ def unregisterVirtualBufferClass(windowClass):
 class virtualBuffer(object):
 
 	def __init__(self,window):
+		self._keyMap={}
 		self.hwnd=window
 		self.text=""
 		self.caretPosition=0
-		self.keyMap={
-			key("extendedLeft"):self.caret_previousCharacter,
-			key("extendedRight"):self.caret_nextCharacter,
-			key("control+extendedLeft"):self.caret_previousWord,
-			key("control+extendedRight"):self.caret_nextWord,
-			key("extendedUp"):self.caret_previousLine,
-			key("extendedDown"):self.caret_nextLine,
-			key("extendedHome"):self.caret_startOfLine,
-			key("extendedEnd"):self.caret_endOfLine,
-			key("control+extendedHome"):self.caret_top,
-			key("control+extendedEnd"):self.caret_bottom,
-		}
+		self.registerScriptKeys({
+			key("extendedLeft"):self.script_previousCharacter,
+			key("extendedRight"):self.script_nextCharacter,
+			key("control+extendedLeft"):self.script_previousWord,
+			key("control+extendedRight"):self.script_nextWord,
+			key("extendedUp"):self.script_previousLine,
+			key("extendedDown"):self.script_nextLine,
+			key("extendedHome"):self.script_startOfLine,
+			key("extendedEnd"):self.script_endOfLine,
+			key("control+extendedHome"):self.script_top,
+			key("control+extendedEnd"):self.script_bottom,
+		})
 
-	def processKey(self,keyPress):
-		if self.keyMap.has_key(keyPress):
-			self.keyMap.get(keyPress)(keyPress)
+	def getScript(self,keyPress):
+		if self._keyMap.has_key(keyPress):
+			return self._keyMap[keyPress]
+
+	def registerScriptKey(self,keyPress,methodName):
+		self._keyMap[keyPress]=methodName
+
+	def registerScriptKeys(self,keyDict):
+		self._keyMap.update(keyDict)
 
 	def getStartPosition(self):
 		return 0
@@ -192,53 +204,63 @@ class virtualBuffer(object):
 		else:
 			return None
 
-	def caret_top(self,keyPress):
+	def script_top(self,keyPress):
 		self.caretPosition=0
+		audio.speakText(self.getLine(self.caretPosition))
 
-	def caret_bottom(self,keyPress):
+	def script_bottom(self,keyPress):
 		self.caretPosition=len(self.text)-1
+		audio.speakText(self.getLine(self.caretPosition))
 
-	def caret_nextLine(self,keyPress):
+	def script_nextLine(self,keyPress):
 		pos=self.caretPosition
 		nextPos=self.nextLine(pos)
 		if (pos<len(self.text)) and (nextPos is not None):
 			self.caretPosition=nextPos
+		audio.speakText(self.getLine(self.caretPosition))
 
-	def caret_previousLine(self,keyPress):
+	def script_previousLine(self,keyPress):
 		pos=self.caretPosition
 		prevPos=self.previousLine(pos)
 		if (pos>0) and (prevPos is not None):
 			self.caretPosition=prevPos
+		audio.speakText(self.getLine(self.caretPosition))
 
-	def caret_startOfLine(self,keyPress):
+	def script_startOfLine(self,keyPress):
 		self.caretPosition=self.getLineStart(self.caretPosition)
+		audio.speakText(self.getCharacter(self.caretPosition))
 
-	def caret_endOfLine(self,keyPress):
+	def script_endOfLine(self,keyPress):
 		self.caretPosition=(self.getLineStart(self.caretPosition)+self.getLineLength(self.caretPosition)-1)
+		audio.speakText(self.getCharacter(self.caretPosition))
 
-	def caret_nextWord(self,keyPress):
+	def script_nextWord(self,keyPress):
 		pos=self.caretPosition
 		nextPos=self.nextWord(pos)
 		if (pos<len(self.text)) and (nextPos is not None):
 			self.caretPosition=(nextPos)
+		audio.speakText(self.getWord(self.caretPosition))
 
-	def caret_previousWord(self,keyPress):
+	def script_previousWord(self,keyPress):
 		pos=self.caretPosition
 		prevPos=self.previousWord(pos)
 		if (prevPos is not None) and (prevPos>=0):
 			self.caretPosition=(prevPos)
+		audio.speakText(self.getWord(self.caretPosition))
 
-	def caret_nextCharacter(self,keyPress):
+	def script_nextCharacter(self,keyPress):
 		pos=self.caretPosition
 		nextPos=self.nextCharacter(pos)
 		if (nextPos<len(self.text)) and (nextPos is not None):
 			self.caretPosition=(nextPos)
+		audio.speakText(self.getCharacter(self.caretPosition))
 
-	def caret_previousCharacter(self,keyPress):
+	def script_previousCharacter(self,keyPress):
 		pos=self.caretPosition
 		prevPos=self.previousCharacter(pos)
 		if (prevPos<len(self.text)) and (prevPos is not None):
 			self.caretPosition=prevPos
+		audio.speakText(self.getCharacter(self.caretPosition))
 
 class virtualBuffer_internetExplorerServer(virtualBuffer):
 

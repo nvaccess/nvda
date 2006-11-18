@@ -15,7 +15,6 @@ import audio
 from constants import *
 import api
 import core
-import virtualBuffers
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]

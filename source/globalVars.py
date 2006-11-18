@@ -16,6 +16,6 @@ navigatorObject=None
 navigatorTracksFocus=True
 menuMode=False
 keyboardHelp=False
+virtualBufferPassThrough=False
 stayAlive=None
 keyCounter=0
-generators=[]

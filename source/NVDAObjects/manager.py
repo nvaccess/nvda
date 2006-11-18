@@ -57,9 +57,9 @@ _staticMap={
 ("RICHEDIT50W",ROLE_SYSTEM_TEXT):MSAA.NVDAObject_richEdit,
 (None,ROLE_SYSTEM_CHECKBUTTON):MSAA.NVDAObject_checkBox,
 (None,ROLE_SYSTEM_OUTLINEITEM):MSAA.NVDAObject_outlineItem,
+(None,ROLE_SYSTEM_LINK):MSAA.NVDAObject_link,
 ("MozillaUIWindowClass",None):MSAA.NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):MSAA.NVDAObject_mozillaUIWindowClass_application,
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):MSAA.NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_consoleWindowClassClient,
-("Internet Explorer_Server",None):MSAA.NVDAObject_internetExplorerServer,
 }

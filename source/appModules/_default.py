@@ -26,6 +26,7 @@ class appModule(object):
 			key("insert+3"):self.script_toggleSpeakTypedWords,
 			key("insert+4"):self.script_toggleSpeakCommandKeys,
 			key("insert+p"):self.script_toggleSpeakPunctuation,
+			key("insert+space"):self.script_toggleVirtualBufferPassThrough,
 			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
 			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
 			key("Insert+Clear"):self.script_navigator_object_current,
@@ -320,6 +321,14 @@ class appModule(object):
 		else:
 			audio.allowSpeech=True
 			audio.speakMessage(lang.messages["speech"]+" "+lang.messages["on"])
+
+	def script_toggleVirtualBufferPassThrough(self,keyPress):
+		if globalVars.virtualBufferPassThrough:
+			audio.speakMessage(lang.messages["virtualBufferPassThrough"]+" "+lang.messages["off"])
+			globalVars.virtualBufferPassThrough=False
+		else:
+			audio.speakMessage(lang.messages["virtualBufferPassThrough"]+" "+lang.messages["on"])
+			globalVars.virtualBufferPassThrough=True
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""

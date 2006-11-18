@@ -70,7 +70,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 	globalVars.focusObject=focusObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(focusObject)
-	virtualBuffers.getVirtualBuffer(window)
+	virtualBuffers.updateVirtualBuffers(window)
 	return True
 
 def getNavigatorObject():
@@ -87,6 +87,9 @@ def keyHasScript(keyPress):
 		return True
 	if appModuleHandler.current.getScript(keyPress):
 		return True
+	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+	if not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
+		return True
 	if getFocusObject().getScript(keyPress):
 		return True
 	return False
@@ -102,10 +105,15 @@ def executeScript(keyPress):
 			globalVars.keyboardHelp=False
 			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["off"])
 			return True
-	script=appModuleHandler.current.getScript(keyPress)
-	if not script:
+	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+	if appModuleHandler.current.getScript(keyPress):
+		script=appModuleHandler.current.getScript(keyPress)
+	elif not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
+		script=virtualBuffer.getScript(keyPress)
+	elif getFocusObject().getScript(keyPress):
 		script=getFocusObject().getScript(keyPress)
-		debug.writeMessage("script: %s"%getFocusObject().__class__)
+	else:
+		script=None
 	if globalVars.keyboardHelp:
 		if script:
 			name=script.__name__
@@ -180,15 +188,16 @@ def executeEvent(name,window,objectID,childID):
 		setFocusObjectByLocator(window,OBJID_CLIENT,0)
 		executeEvent("gainFocus",window,objectID,childID)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
-	if virtualBuffers.isVirtualBufferWindow(window) and hasattr(virtualBuffers.getVirtualBuffer(window),"event_%s"%name):
-		event=getattr(virtualBuffers.getVirtualBuffer(window),"event_%s"%name)
+	virtualBuffer=virtualBuffers.getVirtualBuffer(window)
+	if virtualBuffer and hasattr(virtualBuffer,"event_%s"%name):
+		event=getattr(virtualBuffer,"event_%s"%name)
 		try:
 			event(objectID,childID)
 		except:
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
 	#and then continue 
-	if (name=="hide") and (objectID==0) and virtualBuffers.isVirtualBufferWindow(window): 
+	if (name=="hide") and (objectID==0): 
 		virtualBuffers.removeVirtualBuffer(window)
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
