@@ -9,16 +9,71 @@ import globalVars
 
 class NVDAObject_textBuffer:
 
+	reviewPosition=0
+	_presentationTable={}
+	_lastReviewPresentationValues={}
+
 	def __init__(self,*args):
-		self._reviewCursor=0
-		self._presentationTable=[]
 		pass
+
+	def registerPresentationAttribute(self,name,func,config):
+		self._presentationTable[name]=(func,config)
+
+	def getPresentationValues(self,pos):
+		values={}
+		for name in self._presentationTable:
+			if self._presentationTable[name][1]():   
+				values[name]=self._presentationTable[name][0](pos)
+		return values
+
+	def getChangedPresentationValues(self,newValues,oldValues):
+		changedValues={}
+		for name in newValues.keys():
+			if (oldValues.has_key(name) and (newValues[name]!=oldValues[name])) or not oldValues.has_key(name):
+				changedValues[name]=newValues[name]
+		return changedValues
+
+	def speakPresentationValues(self,values):
+		for name in values.keys():
+			audio.speakMessage("%s"%values[name])
+
+	def nextFormat(self,pos):
+		return None
 
 	def getTextRange(self,start,end):
 		text=self.text
 		if (start>=end) or (end>len(text)):
 			return None
 		return text[start:end]
+
+	def speakTextRange(self,start,end):
+		if not conf["documentFormatting"]["trackWhileReading"]:
+			audio.speakText(self.getTextRange(start,end),index=start)
+			return
+		oldValues=self.getPresentationValues(start)
+		pos=start
+		textBuf=""
+		textBufPos=start
+		while pos<end:
+			nextFormatPos=self.nextFormat(pos)
+			if nextFormatPos and (nextFormatPos<end) and (nextFormatPos>pos):
+				textBuf+=self.getTextRange(pos,nextFormatPos)
+				textBufPos=pos
+				pos=nextFormatPos
+				values=self.getPresentationValues(pos)
+				if values!=oldValues:
+					if textBuf:
+						audio.speakText(textBuf,index=textBufPos)
+						textBuf=""
+					self.speakPresentationValues(self.getChangedPresentationValues(values,oldValues)) 
+					oldValues=values
+			else:
+				if textBuf:
+					audio.speakText(textBuf,index=textBufPos)
+					audio.speakText(self.getTextRange(textBufPos+len(textBuf),end),index=pos)
+				else:
+					audio.speakText(self.getTextRange(pos,end),index=pos)
+				break
 
 	def getStartPosition(self):
 		return 0
@@ -106,7 +161,7 @@ class NVDAObject_textBuffer:
 		else:
 			return False
 
-	def wordStart(self,pos):
+	def getWordStart(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
 		if self.inWord(pos):
 			while (pos is not None) and (self.getCharacter(pos) not in whitespace):
@@ -118,7 +173,7 @@ class NVDAObject_textBuffer:
 				pos=self.nextCharacter(pos)
 		return pos
 
-	def wordEnd(self,pos):
+	def getWordEnd(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
 		while (pos is not None) and (self.getCharacter(pos) not in whitespace):
 			oldPos=pos
@@ -131,7 +186,7 @@ class NVDAObject_textBuffer:
 	def nextWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
 		if self.inWord(pos):
-			pos=self.wordEnd(pos)
+			pos=self.getWordEnd(pos)
 		while (pos is not None) and (self.getCharacter(pos) in whitespace):
 			pos=self.nextCharacter(pos)
 		return pos
@@ -139,161 +194,172 @@ class NVDAObject_textBuffer:
 	def previousWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
 		if self.inWord(pos):
-			pos=self.wordStart(pos)
+			pos=self.getWordStart(pos)
 			pos=self.previousCharacter(pos)
 		while (pos is not None) and (self.getCharacter(pos) in whitespace):
 			pos=self.previousCharacter(pos)
 		if pos:
-			pos=self.wordStart(pos)
+			pos=self.getWordStart(pos)
 		return pos
 
 	def getWord(self,pos):
-		wordStart=self.wordStart(pos)
-		wordEnd=self.wordEnd(pos)
+		wordStart=self.getWordStart(pos)
+		wordEnd=self.getWordEnd(pos)
 		return self.getTextRange(wordStart,wordEnd)
 
-	def reportReviewPresentation(self):
-		#The old values are at index 2
-		pos=self._reviewCursor
-		for ruleNum in range(len(self._presentationTable)):
-			messageFunc=self._presentationTable[ruleNum][0]
-			reportWhen=conf
-			for item in self._presentationTable[ruleNum][1]:
-				reportWhen=reportWhen.get(item,{})
-			if reportWhen=="always":
-				message=messageFunc(pos)
-				if message is not None:
-					audio.speakMessage(messageFunc(pos))
-			elif reportWhen=="changes":
-				message=messageFunc(pos)
-				if (message is not None) and (message!=self._presentationTable[ruleNum][2]):
-					audio.speakMessage(message)
-				self._presentationTable[ruleNum][2]=message
+	def speakCharacter(self,pos):
+		audio.speakText(self.getCharacter(pos))
+
+	def speakWord(self,pos):
+		self.speakTextRange(self.getWordStart(pos),self.getWordEnd(pos))
+
+	def speakLine(self,pos):
+		self.speakTextRange(self.getLineStart(pos),self.getLineEnd(pos))
 
 	def review_top(self):
 		"""Move the review cursor to the top and read the line"""
-		self._reviewCursor=self.visibleRange[0]
-		self.reportReviewPresentation()
-		line=self.getLine(self._reviewCursor)
-		audio.speakText(line)
+		self.reviewPosition=self.visibleRange[0]
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakLine(self.reviewPosition)
 
 	def review_bottom(self):
 		"""Move the review cursor to the bottom and read the line"""
-		self._reviewCursor=self.visibleRange[1]-1
-		self.reportReviewPresentation()
-		line=self.getLine(self._reviewCursor)
-		audio.speakText(line)
+		self.reviewPosition=self.visibleRange[1]-1
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakLine(self.reviewPosition)
 
 	def review_currentLine(self):
 		"""Reads the line at the review cursor position""" 
-		self.reportReviewPresentation()
-		line=self.getLine(self._reviewCursor)
-		audio.speakText(line)
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakLine(self.reviewPosition)
 
 	def review_nextLine(self):
 		"""Moves the review cursor to the next line and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		nextPos=self.nextLine(pos)
 		if (pos<self.visibleRange[1]) and (nextPos is not None):
-			self._reviewCursor=nextPos
-			self.reportReviewPresentation()
+			self.reviewPosition=nextPos
 		else:
 			audio.speakMessage(lang.messages["bottom"])
-		audio.speakText(self.getLine(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakLine(self.reviewPosition)
 
 	def review_previousLine(self):
 		"""Moves the review cursor to the previous line and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		prevPos=self.previousLine(pos)
 		if (pos>self.visibleRange[0]) and (prevPos is not None):
-			self._reviewCursor=prevPos
-			self.reportReviewPresentation()
+			self.reviewPosition=prevPos
 		else:
 			audio.speakMessage(lang.messages["top"])
-		audio.speakText(self.getLine(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakLine(self.reviewPosition)
 
 	def review_startOfLine(self):
 		"""Move review cursor to start of line and read the current character"""
-		self._reviewCursor=self.getLineStart(self._reviewCursor)
-		self.reportReviewPresentation()
-		character=self.getCharacter(self._reviewCursor)
-		audio.speakText(character)
+		self.reviewPosition=self.getLineStart(self.reviewPosition)
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakCharacter(self.reviewPosition)
 
 	def review_endOfLine(self):
 		"""Move review cursor to start of line and read the current character"""
-		self._reviewCursor=self.getLineStart(self._reviewCursor)+self.getLineLength(self._reviewCursor)-1
-		self.reportReviewPresentation()
-		character=self.getCharacter(self._reviewCursor)
-		audio.speakText(character)
+		self.reviewPosition=self.getLineEnd(self.reviewPosition)
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakCharacter(self.reviewPosition)
 
 	def review_currentWord(self):
 		"""Reads the word at the review cursor position"""
-		self.reportReviewPresentation()
-		word=self.getWord(self._reviewCursor)
-		audio.speakText(word)
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakWord(self.reviewPosition)
 
 	def review_nextWord(self):
 		"""Moves the review cursor to the next word and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		nextPos=self.nextWord(pos)
 		if (pos<self.visibleRange[1]) and (nextPos is not None):
-			self._reviewCursor=nextPos
-			self.reportReviewPresentation()
+			self.reviewPosition=nextPos
 			if self.getLineNumber(nextPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
 			audio.speakMessage(lang.messages["bottom"])
-		audio.speakText(self.getWord(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakWord(self.reviewPosition)
 
 	def review_previousWord(self):
 		"""Moves the review cursor to the previous word and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		prevPos=self.previousWord(pos)
 		if (prevPos is not None) and (prevPos>=self.visibleRange[0]):
-			self._reviewCursor=prevPos
-			self.reportReviewPresentation()
+			self.reviewPosition=prevPos
 			if self.getLineNumber(prevPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
 			audio.speakMessage(lang.messages["top"])
-		audio.speakText(self.getWord(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakWord(self.reviewPosition)
 
 	def review_currentCharacter(self):
 		"""Reads the character at the review cursor position"""
-		self.reportReviewPresentation()
-		character=self.getCharacter(self._reviewCursor)
-		audio.speakText(character)
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakCharacter(self.reviewPosition)
 
 	def review_nextCharacter(self):
 		"""Moves the review cursor to the next character and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		nextPos=self.nextCharacter(pos)
 		lineStart=self.getLineStart(pos)
-		lineEnd=lineStart+self.getLineLength(pos)
-		if (nextPos<=lineEnd) and (nextPos is not None): 
-			self._reviewCursor=nextPos
-			self.reportReviewPresentation()
+		lineEnd=self.getLineEnd(pos)
+		if (nextPos<lineEnd) and (nextPos is not None): 
+			self.reviewPosition=nextPos
 		else:
 			audio.speakMessage(lang.messages["right"])
-		audio.speakText(self.getCharacter(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakCharacter(self.reviewPosition)
 
 	def review_previousCharacter(self):
 		"""Moves the review cursor to the previous character and reads it"""
-		pos=self._reviewCursor
+		pos=self.reviewPosition
 		prevPos=self.previousCharacter(pos)
 		lineStart=self.getLineStart(pos)
 		if (prevPos>=lineStart) and (prevPos is not None):
-			self._reviewCursor=prevPos
-			self.reportReviewPresentation()
+			self.reviewPosition=prevPos
 		else:
 			audio.speakMessage(lang.messages["left"])
-		audio.speakText(self.getCharacter(self._reviewCursor))
+		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
+		self._lastReviewPresentationValues=reviewPresentationValues
+		self.speakCharacter(self.reviewPosition)
 
 class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 
+	_lastCaretPresentationValues={}
+
 	def __init__(self,*args):
-		NVDAObject_textBuffer.__init__(self)
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 		self.registerScriptKeys({
 			key("insert+extendedDown"):self.script_sayAll,
 			key("ExtendedUp"):self.script_moveByLine,
@@ -342,26 +408,8 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 	def getCurrentLine(self):
 		return self.getLine(self.caretPosition)
 
-	def reportPresentation(self):
-		#The old values are at index 3
-		pos=self.caretPosition
-		for ruleNum in range(len(self._presentationTable)):
-			messageFunc=self._presentationTable[ruleNum][0]
-			reportWhen=conf
-			for item in self._presentationTable[ruleNum][1]:
-				reportWhen=reportWhen.get(item,{})
-			if reportWhen=="always":
-				message=messageFunc(pos)
-				if message is not None:
-					audio.speakMessage(messageFunc(pos))
-			elif reportWhen=="changes":
-				message=messageFunc(pos)
-				if (message is not None) and (message!=self._presentationTable[ruleNum][3]):
-					audio.speakMessage(message)
-				self._presentationTable[ruleNum][3]=message
-
 	def event_caret(self):
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 
 	def sayAllGenerator(self):
 		#Setup the initial info (count, caret position, index etc)
@@ -374,7 +422,7 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 			#Speak the current line (if its not blank) with an speech index of its position
 			text=self.getLine(curPos)
 			if text and (text not in ['\n','\r',""]):
-				audio.speakText(text,index=curPos)
+				self.speakLine(curPos)
 			#Move our current position down by one line
 				endPos=curPos
 			curPos=self.nextLine(curPos)
@@ -414,26 +462,32 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 	def script_sayAll(self,keyPress):
 		core.newThread(self.sayAllGenerator())
 
-
 	def script_moveByLine(self,keyPress):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
-		self.reportPresentation()
-		audio.speakText(self.getCurrentLine())
+		caretPresentationValues=self.getPresentationValues(self.caretPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(caretPresentationValues,self._lastCaretPresentationValues))
+		self._lastCaretPresentationValues=caretPresentationValues
+		self.speakLine(self.caretPosition)
+		self.reviewPosition=self.caretPosition
 
 	def script_moveByCharacter(self,keyPress):
 		"""Moves and reads the current character"""
 		sendKey(keyPress)
-		self.reportPresentation()
-		audio.speakSymbol(self.getCurrentCharacter())
-		self._reviewCursor=self.caretPosition
+		caretPresentationValues=self.getPresentationValues(self.caretPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(caretPresentationValues,self._lastCaretPresentationValues))
+		self._lastCaretPresentationValues=caretPresentationValues
+		self.speakCharacter(self.caretPosition)
+		self.reviewPosition=self.caretPosition
 
 	def script_moveByWord(self,keyPress):
 		"""Moves and reads the current word"""
 		sendKey(keyPress)
-		self.reportPresentation()
-		audio.speakText(self.getCurrentWord())
-		self._reviewCursor=self.caretPosition
+		caretPresentationValues=self.getPresentationValues(self.caretPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(caretPresentationValues,self._lastCaretPresentationValues))
+		self._lastCaretPresentationValues=caretPresentationValues
+		self.speakWord(self.caretPosition)
+		self.reviewPosition=self.caretPosition
 
 	def script_changeSelection(self,keyPress):
 		"""Moves and reads the current selection"""
@@ -453,14 +507,16 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 				audio.speakText("unselected %s"%self.getTextRange(newSelectionPoints[1],selectionPoints[1]))
 			elif newSelectionPoints[0]<selectionPoints[0]:
 				audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],selectionPoints[0]))
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 
 	def script_delete(self,keyPress):
 		"""Deletes the character and reads the new current character"""
 		sendKey(keyPress)
-		self.reportPresentation()
-		audio.speakSymbol(self.getCurrentCharacter())
-		self._reviewCursor=self.caretPosition
+		caretPresentationValues=self.getPresentationValues(self.caretPosition)
+		self.speakPresentationValues(self.getChangedPresentationValues(caretPresentationValues,self._lastCaretPresentationValues))
+		self._lastCaretPresentationValues=caretPresentationValues
+		self.speakCharacter(self.caretPosition)
+		self.reviewPosition=self.caretPosition
 
 	def script_backspace(self,keyPress):
 		"""Reads the character before the current character and then deletes it"""
@@ -473,14 +529,13 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 				audio.speakSymbol(delChar)
 		else:
 			sendKey(keyPress)
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 
 	def script_formatInfo(self,keyPress):
 		"""Reports the current formatting information"""
 		pos=self.caretPosition
-		for rule in self._presentationTable:
-			message=rule[0](pos)
+		for name in self._presentationTable.keys():
+			message=self._presentationTable[name][0](pos)
 			if message is not None:
 				audio.speakMessage(message)
-
 

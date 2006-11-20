@@ -300,7 +300,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32"):
 			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"toolTip",window,objectID,childID)
 		#Let caret events through
-		elif ((eventID==EVENT_OBJECT_SHOW) or (eventID==EVENT_OBJECT_LOCATIONCHANGE)) and (objectID==OBJID_CARET):
+		elif (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
 			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"caret",window,objectID,childID)
 		#Let menu events through
 		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPSTART,EVENT_SYSTEM_MENUPOPUPEND]:

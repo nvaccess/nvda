@@ -76,7 +76,9 @@ def speakSymbol(symbol,wait=False,index=None):
 def speakText(text,wait=False,index=None):
 	if not allowSpeech:
 		return
-	if (text is None) or (len(text)==1):
+	if text=='\r\n':
+		text='\n'
+	if (text is None) or (len(text)<=1):
 		speakSymbol(text,wait=wait,index=index)
 		return
 	text=processText(text)

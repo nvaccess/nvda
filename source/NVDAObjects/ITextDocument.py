@@ -1,4 +1,6 @@
+from config import conf
 import lang
+import audio
 import textBuffer
 
 class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
@@ -11,6 +13,8 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 		tomLine=5
 		tomStory=6
 		tomWindow=11
+		tomCharFormat=13
+		tomParaFormat=14
 		#Paragraph alignment
 		tomAlignLeft=0
 		tomAlignCenter=1
@@ -20,14 +24,12 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 	def __init__(self,*args):
 		self.dom=self.getDocumentObjectModel()
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
-		self._presentationTable+=[
-			[self.msgFontName,["documentFormatting","reportFontName"],None,None],
-			[self.msgFontSize,["documentFormatting","reportFontSize"],None,None],
-			[self.msgBold,["documentFormatting","reportFontAttributes"],None,None],
-			[self.msgItalic,["documentFormatting","reportFontAttributes"],None,None],
-			[self.msgUnderline,["documentFormatting","reportFontAttributes"],None,None],
-			[self.msgParagraphAlignment,["documentFormatting","reportAlignment"],None,None],
-		]
+		self.registerPresentationAttribute("fontName",self.msgFontName,lambda: conf["documentFormatting"]["reportFontName"])
+		self.registerPresentationAttribute("fontSize",self.msgFontSize,lambda: conf["documentFormatting"]["reportFontSize"])
+		self.registerPresentationAttribute("bold",self.msgBold,lambda: conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("italic",self.msgItalic,lambda: conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("underline",self.msgUnderline,lambda: conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("paragraphAlignment",self.msgParagraphAlignment,lambda: conf["documentFormatting"]["reportAlignment"])
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -41,6 +43,17 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 
 	def _duplicateDocumentRange(self,rangeObj):
 		abstract
+
+	def nextFormat(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomCharFormat)
+		charFormatPos=rangeObj.End+1
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomParaFormat)
+		paraFormatPos=rangeObj.End+1
+		minPos=min(charFormatPos,paraFormatPos)
+		return minPos
 
 
 	def getCaretRange(self):
@@ -88,6 +101,12 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 		rangeObj.Start=rangeObj.End=pos
 		rangeObj.Expand(self.constants.tomLine)
 		return rangeObj.Start
+
+	def getLineEnd(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomLine)
+		return rangeObj.End
 
 	def nextLine(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -140,6 +159,18 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 			return rangeObj.Start
 		else:
 			return None
+
+	def getWordStart(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomWord)
+		return rangeObj.Start
+
+	def getWordEnd(self,pos):
+		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(self.constants.tomWord)
+		return rangeObj.End
 
 	def getParagraph(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

@@ -36,6 +36,8 @@ wdColumn=9
 wdRow=10
 wdWindow=11
 wdCell=12
+wdCharFormat=13
+wdParaFormat=14
 wdTable=15
 #GoTo - direction
 wdGoToAbsolute=1
@@ -60,11 +62,11 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def __init__(self,*args):
 		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args)
 		NVDAObjects.ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
-		self._presentationTable.insert(0,[self.msgStyle,["documentFormatting","reportStyle"],None,None])
-		self._presentationTable.insert(1,[self.msgPage,["documentFormatting","reportPage"],None,None])
-		self._presentationTable.insert(2,[self.msgTable,["documentFormatting","reportTables"],None,None])
-		self._presentationTable.insert(3,[self.msgTableRow,["documentFormatting","reportTables"],None,None])
-		self._presentationTable.insert(4,[self.msgTableColumn,["documentFormatting","reportTables"],None,None])
+		self.registerPresentationAttribute("style",self.msgStyle,lambda: conf["documentFormatting"]["reportStyle"])
+		self.registerPresentationAttribute("page",self.msgPage,lambda: conf["documentFormatting"]["reportPage"])
+		self.registerPresentationAttribute("table",self.msgTable,lambda: conf["documentFormatting"]["reportTables"])
+		self.registerPresentationAttribute("tableRow",self.msgTableRow,lambda: conf["documentFormatting"]["reportTables"])
+		self.registerPresentationAttribute("tableColumn",self.msgTableColumn,lambda: conf["documentFormatting"]["reportTables"])
 		self.registerScriptKeys({
 			key("control+ExtendedUp"):self.script_moveByParagraph,
 			key("control+ExtendedDown"):self.script_moveByParagraph,
@@ -85,6 +87,9 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def getRole(self):
 		return ROLE_SYSTEM_TEXT
 	role=property(fget=getRole)
+
+	def nextFormat(self,pos):
+		return None #Have to find a way to jump to the next format change
 
 	def getVisibleRange(self):
 		(left,top,right,bottom)=self.getLocation()
@@ -118,6 +123,16 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		rangeObj.Start=saveSelection.Start
 		rangeObj.End=saveSelection.End
 		return lineEnd-lineStart
+
+	def getLineEnd(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Expand(wdLine)
+		end=rangeObj.End
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		return end
 
 	def getLine(self,pos):
 		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
@@ -182,6 +197,35 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 			return newPos
 		else:
 			return None
+
+	def nextCharacter(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdCharacter,1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
+
+	def previousCharacter(self,pos):
+		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
+		rangeObj=self.dom.Selection
+		rangeObj.Start=rangeObj.End=pos
+		rangeObj.Move(wdCharacter,-1)
+		newPos=rangeObj.Start
+		rangeObj.Start=saveSelection.Start
+		rangeObj.End=saveSelection.End
+		if newPos!=pos:
+			return newPos
+		else:
+			return None
+
+	def event_caret(self):
+		pass #We sometimes have to move the caret to compute other values
 
 	def getStyle(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

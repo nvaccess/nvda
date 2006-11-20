@@ -1,15 +1,18 @@
 Changes since revision 164:
+*NVDA can now read formatting changes in documents whilst reading (this includes both in say all, and when changes appear in the middle of a line or word that has been spoken).
 *If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4 and then Viavoice. the more likely found synthesizers are first.
 *Fixed some crashes in MS Office applications
 *If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
 *Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
 *You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
 *Fixed a bug that stopped internet explorer reading when pressing tab
+*Links no longer say the URL as their value. They also now say "visited link" for visited links.
 *Got rid of dictionaries in NVDA and replaced them with a lang directory of files with file extentions that match a given language code.
 *Replaced all messages and labels etc in NVDA with references to entries in the lang files. This now means you can create language files for your choice of language, and then set language (under the language section of nvda.ini) to your chosen 3 letter language code.
 *Added ptb language files.
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
+*Made NVDA over all much more responsive (especially in edit fields such as an address bar)
 *Fixed bug where tooltips and help balloons were not speaking
 *Fixed up some bugs in mouse tracking (NVDA should now report objects as the mouse moves over them).
 *Added key echo scripts:
