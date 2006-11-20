@@ -76,11 +76,6 @@ def speakSymbol(symbol,wait=False,index=None):
 def speakText(text,wait=False,index=None):
 	if not allowSpeech:
 		return
-	if text=='\r\n':
-		text='\n'
-	if (text is None) or (len(text)<=1):
-		speakSymbol(text,wait=wait,index=index)
-		return
 	text=processText(text)
 	if text and not text.isspace():
 		synthDriverHandler.speakText(text,wait=wait,index=index)

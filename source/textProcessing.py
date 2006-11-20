@@ -6,7 +6,7 @@
 
 import re
 import debug
-import lang
+import characterSymbols
 
 re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
 re_singleCapAfterCapsInWord=re.compile(r"([A-Z])([A-Z][a-z])")
@@ -20,6 +20,8 @@ re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
 
 def processTextSymbols(text,expandPunctuation=False):
+	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
+		return _("blank") 
 	#breaks up words that use a capital letter to denote another word
 	text=re_capAfterNoCapsInWord.sub(r"\1 \2",text)
 	#Like the last one, but this breaks away the last capital letter from an entire group of capital letters imbedded in a word (e.g. NVDAObject) 
@@ -35,17 +37,17 @@ def processTextSymbols(text,expandPunctuation=False):
 	str=""
 	for char in text:
 		if (char=="^") or (char=="~"):
-			str+=" %s "%lang.textSymbols[char]
+			str+=" %s "%characterSymbols.names[char]
 		else:
 			str+=char
 	text=str
-	text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%lang.textSymbols["."],text)
-	text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%lang.textSymbols[","],text)
-	text=re_sentence_question.sub(r"\1 ^%s?~ \2"%lang.textSymbols["?"],text)
-	text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%lang.textSymbols[":"],text)
-	text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%lang.textSymbols[";"],text)
-	text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%lang.textSymbols["!"],text)
-	#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%lang.textSymbols["'"],text)
+	text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%characterSymbols.names["."],text)
+	text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%characterSymbols.names[","],text)
+	text=re_sentence_question.sub(r"\1 ^%s?~ \2"%characterSymbols.names["?"],text)
+	text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%characterSymbols.names[":"],text)
+	text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%characterSymbols.names[";"],text)
+	text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%characterSymbols.names["!"],text)
+	#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%characterSymbols.names["'"],text)
 	str=""
 	for char in text:
 		if char=="^":
@@ -57,8 +59,8 @@ def processTextSymbols(text,expandPunctuation=False):
 			str+="~"
 			continue
 		if not protector:
-			if (char!=" ") and lang.textSymbols.has_key(char):
-				str+=" ^%s~ "%lang.textSymbols[char]
+			if (char not in characterSymbols.blankList) and characterSymbols.names.has_key(char):
+				str+=" ^%s~ "%characterSymbols.names[char]
 			else:
 				str+=char
 		else:
@@ -69,10 +71,7 @@ def processTextSymbols(text,expandPunctuation=False):
 	return text
 
 def processSymbol(symbol):
-	#if (symbol>='A') and (symbol<='Z'):
-	#	newSymbol="cap"+symbol[0]
-	#else:
-	newSymbol=lang.characterSymbols.get(symbol,symbol)
+	newSymbol=characterSymbols.names.get(symbol,symbol)
 	return newSymbol
 
 

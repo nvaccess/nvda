@@ -9,7 +9,6 @@ import synthDriverHandler
 import config
 import versionInfo
 import audio
-import lang
 from constants import *
 
 import core
@@ -39,23 +38,23 @@ class MainFrame(wx.Frame):
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
 		self.id_onSaveConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, lang.gui["menuSaveConfiguration"]+"\tctrl+s", lang.gui["menuDescSaveConfiguration"])
+		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, _("&Save configuration")+"\tctrl+s", _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
-		self.menu_NVDA.Append(wx.ID_EXIT, lang.gui["menuExit"],lang.gui["menuDescExit"])
+		self.menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
-		self.menuBar.Append(self.menu_NVDA,lang.gui["menuNVDA"])
+		self.menuBar.Append(self.menu_NVDA,_("&NVDA"))
 		self.menu_preferences=wx.Menu()
 		self.id_chooseSynthesizerCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,lang.gui["menuSynthesizer"]+"...\tctrl+shift+s",lang.gui["menuDescSynthesizer"])
+		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,_("&Synthesizer")+"...\tctrl+shift+s",_("Choose the synthesizer to use"))
 		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onSynthesizerCommand)
 		self.id_chooseVoiceCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseVoiceCommand,lang.gui["menuVoice"]+"...\tctrl+shift+v",lang.gui["menuDescVoice"])
+		self.menu_preferences.Append(self.id_chooseVoiceCommand,_("Voice")+"...\tctrl+shift+v",_("Choose the voice to use"))
 		wx.EVT_MENU(self,self.id_chooseVoiceCommand,self.onVoiceCommand)
-		self.menuBar.Append(self.menu_preferences,lang.gui["menuPreferences"])
+		self.menuBar.Append(self.menu_preferences,_("&Preferences"))
 		self.menu_help = wx.Menu()
-		self.menu_help.Append(wx.ID_ABOUT, lang.gui["menuAbout"]+"...", lang.gui["menuDescAbout"])
+		self.menu_help.Append(wx.ID_ABOUT, _("About")+"...", _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
-		self.menuBar.Append(self.menu_help,lang.gui["menuHelp"])
+		self.menuBar.Append(self.menu_help,_("&Help"))
 		self.SetMenuBar(self.menuBar)
 		#self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
 		#self.SetIcon(self.icon)
@@ -76,10 +75,10 @@ class MainFrame(wx.Frame):
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
-		core.executeFunction(EXEC_SPEECH,audio.speakMessage,lang.messages["savedConfiguration"])
+		core.executeFunction(EXEC_SPEECH,audio.speakMessage,_("configuration saved"))
 
 	def onExitCommand(self, evt):
-		d = wx.MessageDialog(None, lang.gui["messageExit"], lang.gui["titleExit"], wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+		d = wx.MessageDialog(None, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
@@ -91,13 +90,13 @@ class MainFrame(wx.Frame):
 		choices=[]
 		for item in synthList:
 			choices.append("%s: %s"%(item,synthDriverHandler.getDriverDescription(item)))
-		d=wx.SingleChoiceDialog(self,lang.gui["messageSynthesizer"],lang.gui["titleSynthesizer"],choices)
+		d=wx.SingleChoiceDialog(self,_("Choose the synthesizer to use"),_("Synthesizer"),choices)
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
-		d=wx.SingleChoiceDialog(self,lang.gui["messageVoice"],lang.gui["titleVoice"],synthDriverHandler.getVoiceNames())
+		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.getSynthConfig()["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
@@ -110,8 +109,8 @@ class MainFrame(wx.Frame):
 %s: %s
 %s: %s <%s>
 %s: %s
-"""%(versionInfo.longName,lang.gui["version"],versionInfo.version,lang.gui["url"],versionInfo.url,lang.gui["maintainer"],versionInfo.maintainer,versionInfo.maintainer_email,lang.gui["copyright"],versionInfo.copyright)
-			d = wx.MessageDialog(self, aboutInfo, lang.gui["titleAbout"], wx.OK)
+"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("maintainer"),versionInfo.maintainer,versionInfo.maintainer_email,_("copyright"),versionInfo.copyright)
+			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:
 			debug.writeException("gui.mainFrame.onAbout")

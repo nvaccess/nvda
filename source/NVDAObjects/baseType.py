@@ -1,4 +1,3 @@
-import lang
 import audio
 import api
 from config import conf
@@ -56,7 +55,7 @@ class NVDAObject(object):
 	def getStateName(self,state,opposite=False):
 		text=lang.stateNames.get(state,"state %s"%state)
 		if opposite:
-			text="%s %s"%(lang.messages["not"],text)
+			text="%s %s"%(_("not"),text)
 		return text
 
 	def getStateNames(self,states,opposite=False):

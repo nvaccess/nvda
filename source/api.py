@@ -18,7 +18,6 @@ import gui
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffers
-import lang
 
 # Initialise WMI; required for getProcessName.
 #_wmi = win32com.client.GetObject('winmgmts:')
@@ -99,11 +98,11 @@ def executeScript(keyPress):
 	if keyPress==key("insert+1"):
 		if not globalVars.keyboardHelp:
 			globalVars.keyboardHelp=True
-			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["on"])
+			audio.speakMessage(_("keyboard help")+" "+_("on"))
 			return True
 		else:
 			globalVars.keyboardHelp=False
-			audio.speakMessage(lang.messages["keyboardHelp"]+" "+lang.messages["off"])
+			audio.speakMessage(_("keyboard help")+" "+_("off"))
 			return True
 	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
 	if appModuleHandler.current.getScript(keyPress):
@@ -124,10 +123,10 @@ def executeScript(keyPress):
 				container+=" in module %s"%script.im_self.__class__.__module__
 			description=script.__doc__
 			if not description:
-				description=lang.messages["noDescription"]
+				description=_("no description")
 			audio.speakMessage("%s, from %s, %s"%(name,container,description))
 		else:
-			audio.speakMessage(lang.messages["noScript"])
+			audio.speakMessage(_("no script"))
 		return
 	if script:
 		try:

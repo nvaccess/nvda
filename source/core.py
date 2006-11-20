@@ -6,7 +6,6 @@
 
 import ctypes
 import time
-import lang
 import globalVars
 import winUser
 from api import *
@@ -61,7 +60,7 @@ def main():
 		for num in range(EXEC_LAST+1):
 			queueList.append(Queue.Queue(1000))
 		audio.initialize()
-		audio.speakMessage(lang.messages["startedNVDA"],wait=True)
+		audio.speakMessage(_("Nonvisual Desktop Access Started"),wait=True)
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()

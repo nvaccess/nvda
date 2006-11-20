@@ -9,7 +9,6 @@ import ctypes
 import comtypesClient
 import comtypes.automation
 import debug
-import lang
 import winUser
 import audio
 from constants import *
@@ -23,10 +22,7 @@ objectEventHandles=[]
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 
 def getRoleName(role):
-	dictRole=lang.roleNames.get(role,None)
-	if dictRole:
-		return dictRole
-	elif isinstance(role,int):
+	if isinstance(role,int):
 		return getRoleText(role)
 	else:
 		return role
@@ -46,15 +42,12 @@ def getStateNames(states,opposite=False):
 	return str
 
 def getStateName(state,opposite=False):
-	dictState=lang.stateNames.get(state,None)
-	if dictState:
-		newState=dictstate
-	elif isinstance(state,int):
+	if isinstance(state,int):
 		newState=getStateText(state)
 	else:
 		newState=state
 	if opposite:
-		newState=lang.messages["not"]+" "+newState
+		newState=_("not")+" "+newState
 	return newState
 
 #A class to wrap an IAccessible object in to handle addRef and Release

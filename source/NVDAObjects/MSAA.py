@@ -5,7 +5,6 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import debug
-import lang
 import MSAAHandler
 import winUser
 import winKernel
@@ -85,15 +84,12 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		return states
 
 	def getStateName(self,state,opposite=False):
-		dictState=lang.stateNames.get(state,None)
-		if dictState:
-			newState=dictstate
-		elif isinstance(state,int):
+		if isinstance(state,int):
 			newState=MSAAHandler.getStateText(state)
 		else:
 			newState=state
 		if opposite:
-			newState=lang.messages["not"]+" "+newState
+			newState=_("not")+" "+newState
 		return newState
 
 	def getDescription(self):

@@ -8,7 +8,6 @@ from constants import *
 from keyboardHandler import sendKey, key
 from config import conf
 import NVDAObjects
-import lang
 import _MSOffice
 
 #Word constants
@@ -233,7 +232,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		return rangeObj.Style.NameLocal
 
 	def msgStyle(self,pos):
-		return lang.messages["style"]+" %s"%self.getStyle(pos)
+		return _("style")+" %s"%self.getStyle(pos)
 
 
 	def isTable(self,pos):
@@ -243,7 +242,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 
 	def msgTable(self,pos):
 		if self.isTable(pos):
-			return (NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+lang.messages["columns"]+" and %s "+lang.messages["rows"])%(self.getColumnCount(pos),self.getRowCount(pos))
+			return (NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+_("columns")+" and %s "+_("rows"))%(self.getColumnCount(pos),self.getRowCount(pos))
 		else:
 			return "not in %s"%MSAAHandler.getRoleName(ROLE_SYSTEM_TABLE)
 
@@ -289,9 +288,9 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		pageNum=self.getPageNumber(pos)
 		pageCount=self.getPageCount()
 		if pageCount>0:
-			return lang.messages["page"]+" %s of %s"%(pageNum,pageCount)
+			return _("page")+" %s of %s"%(pageNum,pageCount)
 		else:
-			return lang.messages["page"]+" %s"%pageNum
+			return _("page")+" %s"%pageNum
 
 	def getPageCount(self):
 		return self.dom.Selection.Information(wdNumberOfPagesInDocument)
@@ -301,13 +300,13 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		rangeObj.Start=rangeObj.End=pos
 		align=rangeObj.ParagraphFormat.Alignment
 		if align==wdAlignParagraphLeft:
-			return lang.messages["left"]
+			return _("left")
 		elif align==wdAlignParagraphCenter:
-			return lang.messages["centered"]
+			return _("centered")
 		elif align==wdAlignParagraphRight:
-			return lang.messages["right"]
+			return _("right")
 		elif align>=wdAlignParagraphJustify:
-			return lang.messages["justified"]
+			return _("justified")
 
 	def script_moveByParagraph(self,keyPress):
 		sendKey(keyPress)

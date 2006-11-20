@@ -4,7 +4,6 @@ import comtypesClient
 import debug
 import winUser
 from constants import *
-import lang
 import audio
 import baseType
 
@@ -65,7 +64,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 	def loadDocument(self):
 		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
-			audio.speakMessage(lang.messages["loadingDocument"]+" "+self.dom.title+"...")
+			audio.speakMessage(_("Loading document")+" "+self.dom.title+"...")
 		self.addNode(self.dom.body)
 		self.caretPosition=0
 		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():

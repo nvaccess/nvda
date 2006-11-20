@@ -11,6 +11,8 @@ winsound.Beep(440,50)
 winsound.Beep((440*4)/3,50)
 winsound.Beep(660,50)
 winsound.Beep(880,50)
+import gettext
+gettext.install('nvda')
 import debug
 
 import debug

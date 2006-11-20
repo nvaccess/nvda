@@ -1,5 +1,4 @@
 from config import conf
-import lang
 import audio
 import textBuffer
 

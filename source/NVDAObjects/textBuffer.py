@@ -4,7 +4,6 @@ import core
 from keyboardHandler import key, sendKey
 import audio
 import debug
-import lang
 import globalVars
 
 class NVDAObject_textBuffer:
@@ -208,7 +207,7 @@ class NVDAObject_textBuffer:
 		return self.getTextRange(wordStart,wordEnd)
 
 	def speakCharacter(self,pos):
-		audio.speakText(self.getCharacter(pos))
+		audio.speakSymbol(self.getCharacter(pos))
 
 	def speakWord(self,pos):
 		self.speakTextRange(self.getWordStart(pos),self.getWordEnd(pos))
@@ -246,7 +245,7 @@ class NVDAObject_textBuffer:
 		if (pos<self.visibleRange[1]) and (nextPos is not None):
 			self.reviewPosition=nextPos
 		else:
-			audio.speakMessage(lang.messages["bottom"])
+			audio.speakMessage(_("bottom"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
@@ -259,7 +258,7 @@ class NVDAObject_textBuffer:
 		if (pos>self.visibleRange[0]) and (prevPos is not None):
 			self.reviewPosition=prevPos
 		else:
-			audio.speakMessage(lang.messages["top"])
+			audio.speakMessage(_("top"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
@@ -297,7 +296,7 @@ class NVDAObject_textBuffer:
 			if self.getLineNumber(nextPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
-			audio.speakMessage(lang.messages["bottom"])
+			audio.speakMessage(_("bottom"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
@@ -312,7 +311,7 @@ class NVDAObject_textBuffer:
 			if self.getLineNumber(prevPos)!=self.getLineNumber(pos):
 				winsound.Beep(440,20)
 		else:
-			audio.speakMessage(lang.messages["top"])
+			audio.speakMessage(_("top"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
@@ -334,7 +333,7 @@ class NVDAObject_textBuffer:
 		if (nextPos<lineEnd) and (nextPos is not None): 
 			self.reviewPosition=nextPos
 		else:
-			audio.speakMessage(lang.messages["right"])
+			audio.speakMessage(_("right"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
@@ -348,7 +347,7 @@ class NVDAObject_textBuffer:
 		if (prevPos>=lineStart) and (prevPos is not None):
 			self.reviewPosition=prevPos
 		else:
-			audio.speakMessage(lang.messages["left"])
+			audio.speakMessage(_("left"))
 		reviewPresentationValues=self.getPresentationValues(self.reviewPosition)
 		self.speakPresentationValues(self.getChangedPresentationValues(reviewPresentationValues,self._lastReviewPresentationValues))
 		self._lastReviewPresentationValues=reviewPresentationValues
