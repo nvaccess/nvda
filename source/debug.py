@@ -11,20 +11,24 @@ import winsound
 debugFile=None
 
 def writeMessage(message):
-	debugFile.write("%s\n"%datetime.datetime.now())
-	debugFile.write("Message: %s\n"%message)
+	debugFile.write("message %s\n"%datetime.datetime.now())
+	debugFile.write("%s\n"%message)
 	debugFile.flush()
 
 def writeError(message):
 	winsound.Beep(200,100)
-	debugFile.write("%s\n"%datetime.datetime.now())
-	debugFile.write("Error: %s\n"%message)
+	debugFile.write("Error %s\n"%datetime.datetime.now())
+	debugFile.write("%s\n"%message)
 	debugFile.flush()
 
 def writeException(message):
+	try:
+		trace=traceback.format_exc()
+	except:
+		trace="..."
 	winsound.Beep(200,100)
-	debugFile.write("%s\n"%datetime.datetime.now())
-	debugFile.write("Exception: %s\n----\n%s----\n"%(message,traceback.format_exc()))
+	debugFile.write("Exception %s\n"%datetime.datetime.now())
+	debugFile.write("%s: ----\n%s----\n"%(message,trace))
 	debugFile.flush()
 
 def start(fileName):
