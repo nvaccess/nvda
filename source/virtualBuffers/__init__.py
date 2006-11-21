@@ -4,7 +4,6 @@ from keyboardHandler import key
 import api
 import audio
 import NVDAObjects
-import lang
 from constants import *
 import MSHTML
 

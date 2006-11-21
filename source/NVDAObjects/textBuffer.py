@@ -8,12 +8,10 @@ import globalVars
 
 class NVDAObject_textBuffer:
 
-	reviewPosition=0
-	_presentationTable={}
-	_lastReviewPresentationValues={}
-
 	def __init__(self,*args):
-		pass
+		self.reviewPosition=0
+		self._presentationTable={}
+		self._lastReviewPresentationValues={}
 
 	def registerPresentationAttribute(self,name,func,config):
 		self._presentationTable[name]=(func,config)
@@ -355,9 +353,9 @@ class NVDAObject_textBuffer:
 
 class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 
-	_lastCaretPresentationValues={}
-
 	def __init__(self,*args):
+		NVDAObject_textBuffer.__init__(self,*args)
+		self._lastCaretPresentationValues={}
 		self.reviewPosition=self.caretPosition
 		self.registerScriptKeys({
 			key("insert+extendedDown"):self.script_sayAll,

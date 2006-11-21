@@ -646,7 +646,6 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA
 	def __init__(self,*args):
 		NVDAObject_MSAA.__init__(self,*args)
 		ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
