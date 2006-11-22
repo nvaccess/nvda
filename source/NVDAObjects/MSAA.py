@@ -23,7 +23,9 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		self.ia=args[0]
 		self.child=args[1]
 		window.NVDAObject_window.__init__(self,MSAAHandler.windowFromAccessibleObject(self.ia))
-		self._lastStates=self.states
+		self.allowedPositiveStates=STATE_SYSTEM_UNAVAILABLE|STATE_SYSTEM_SELECTED|STATE_SYSTEM_PRESSED|STATE_SYSTEM_CHECKED|STATE_SYSTEM_MIXED|STATE_SYSTEM_READONLY|STATE_SYSTEM_EXPANDED|STATE_SYSTEM_COLLAPSED|STATE_SYSTEM_BUSY|STATE_SYSTEM_HASPOPUP
+		self._lastPositiveStates=self.calculatePositiveStates()
+		self._lastNegativeStates=self.calculateNegativeStates()
 
 	def __hash__(self):
 		l=10000000
@@ -70,18 +72,6 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 	def getStates(self):
 		return MSAAHandler.accState(self.ia,self.child)
 	states=property(fget=getStates)
-
-	def filterStates(self,states):
-		states-=(states&STATE_SYSTEM_FOCUSED)
-		states-=(states&STATE_SYSTEM_FOCUSABLE)
-		states-=(states&STATE_SYSTEM_SELECTABLE)
-		states-=(states&STATE_SYSTEM_MULTISELECTABLE)
-		states-=(states&STATE_SYSTEM_READONLY)
-		states-=(states&STATE_SYSTEM_INVISIBLE)
-		states-=(states&STATE_SYSTEM_HOTTRACKED)
-		states-=(states&STATE_SYSTEM_OFFSCREEN)
-		states-=(states&STATE_SYSTEM_DEFAULT)
-		return states
 
 	def getStateName(self,state,opposite=False):
 		if isinstance(state,int):
@@ -291,14 +281,17 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			audio.speakObjectProperties(name=self.name)
 
 	def event_stateChange(self):
-		states=self.states
-		if states is None or not self.hasFocus():
-			return None
-		states_on=states-(states&self._lastStates)
-		audio.speakObjectProperties(stateText=MSAAHandler.getStateNames(self.filterStates(states_on)))
-		states_off=self._lastStates-(states&self._lastStates)
-		audio.speakObjectProperties(stateText=MSAAHandler.getStateNames(self.filterStates(states_off),opposite=True))
-		self._lastStates=states
+		positiveStates=self.calculatePositiveStates()
+		newPositiveStates=positiveStates-(positiveStates&self._lastPositiveStates)
+		negativeStates=self.calculateNegativeStates()
+		newNegativeStates=negativeStates-(negativeStates&self._lastNegativeStates)
+		if self.hasFocus():
+			if newPositiveStates:
+				audio.speakObjectProperties(stateText=self.getStateNames(newPositiveStates))
+			if newNegativeStates:
+				audio.speakObjectProperties(stateText=self.getStateNames(newNegativeStates,opposite=True))
+		self._lastPositiveStates=positiveStates
+		self._lastNegativeStates=negativeStates
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -323,11 +316,19 @@ class NVDAObject_dialog(NVDAObject_MSAA):
 			states=child.states
 			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
 				child.speakObject()
+				if child.states&STATE_SYSTEM_FOCUSED:
+					audio.speakObjectProperties(stateText=child.getStateName(STATE_SYSTEM_FOCUSED))
+				if child.states&STATE_SYSTEM_DEFAULT:
+					audio.speakObjectProperties(stateText=child.getStateName(STATE_SYSTEM_DEFAULT))
 			if child.role==ROLE_SYSTEM_PROPERTYPAGE:
 				for grandChild in child.children:
 					states=grandChild.states
 					if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
 						grandChild.speakObject()
+						if grandChild.states&STATE_SYSTEM_FOCUSED:
+							audio.speakObjectProperties(stateText=grandChild.getStateName(STATE_SYSTEM_FOCUSED))
+						if grandChild.states&STATE_SYSTEM_DEFAULT:
+							audio.speakObjectProperties(stateText=grandChild.getStateName(STATE_SYSTEM_DEFAULT))
 
 class NVDAObject_TrayClockWClass(NVDAObject_MSAA):
 	"""
@@ -449,10 +450,12 @@ class NVDAObject_checkBox(NVDAObject_MSAA):
 	Based on NVDAObject, but filterStates removes the pressed state for checkboxes.
 	"""
 
-	def filterStates(self,states):
-		states=NVDAObject_MSAA.filterStates(self,states)
-		states-=states&STATE_SYSTEM_PRESSED
-		return states
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.allowedPositiveStates=self.allowedPositiveStates-(self.allowedPositiveStates&STATE_SYSTEM_PRESSED)
+		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_CHECKED
+		self._lastPositiveStates=self.calculatePositiveStates()
+		self._lastNegativeStates=self.calculateNegativeStates()
 
 class NVDAObject_outlineItem(NVDAObject_MSAA):
 
@@ -709,7 +712,6 @@ class NVDAObject_link(NVDAObject_MSAA):
 	Based on NVDAObject_MSAA, but:
 	*Value is always empty otherwise it would be the full url.
 	*typeString is link, visited link, or same page link depending on certain states.
-	*filterStates filters out linked and traversed since these don't need to be reported.
 	*getChildren does not include any text objects, since text objects are where the name of the link comes from.
 	"""
 
@@ -717,18 +719,12 @@ class NVDAObject_link(NVDAObject_MSAA):
 		return ""
 	value=property(fget=getValue)
 
-	def filterStates(self,states):
-		states=NVDAObject_MSAA.filterStates(self,states)
-		states-=(states&STATE_SYSTEM_LINKED)
-		states-=(states&STATE_SYSTEM_TRAVERSED)
-		return states
-
 	def getTypeString(self):
 		states=self.states
 		typeString=""
 		if states&STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
-		if states&STATE_SYSTEM_SELECTED:
+		if states&STATE_SYSTEM_SELECTABLE:
 			typeString+="same page "
 		typeString+=NVDAObject_MSAA.getTypeString(self)
 		return typeString
@@ -800,5 +796,12 @@ class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowC
 
 class NVDAObject_internetExplorerServer(NVDAObject_MSAA):
 	pass
+
+class NVDAObject_listItem(NVDAObject_MSAA):
+
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_SELECTED
+		self._lastNegativeStates=self.calculateNegativeStates()
 
 

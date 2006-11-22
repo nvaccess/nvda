@@ -6,6 +6,8 @@ class NVDAObject(object):
 
 	def __init__(self,*args):
 		self._keyMap={}
+		self.allowedPositiveStates=0
+		self.allowedNegativeStates=0
 
 	def getScript(self,keyPress):
 		if self._keyMap.has_key(keyPress):
@@ -20,6 +22,22 @@ class NVDAObject(object):
 
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
+
+	def getAllowedPositiveStates(self):
+		return self._allowedPositiveStates
+
+	def setAllowedPositiveStates(self,states):
+		self._allowedPositiveStates=states
+
+	allowedPositiveStates=property(fget=getAllowedPositiveStates,fset=setAllowedPositiveStates)
+
+	def getAllowedNegativeStates(self):
+		return self._allowedNegativeStates
+
+	def setAllowedNegativeStates(self,states):
+		self._allowedNegativeStates=states
+
+	allowedNegativeStates=property(fget=getAllowedNegativeStates,fset=setAllowedNegativeStates)
 
 	def getName(self):
 		return ""
@@ -49,11 +67,14 @@ class NVDAObject(object):
 		return 0
 	states=property(fget=getStates)
 
-	def filterStates(self,states):
-		return states
+	def calculatePositiveStates(self):
+		return self.states&self.allowedPositiveStates
+
+	def calculateNegativeStates(self):
+		return (~self.states)&self.allowedNegativeStates
 
 	def getStateName(self,state,opposite=False):
-		text=lang.stateNames.get(state,"state %s"%state)
+		text=_("state")+" %s"%state
 		if opposite:
 			text="%s %s"%(_("not"),text)
 		return text
@@ -117,7 +138,9 @@ class NVDAObject(object):
 	def speakObject(self):
 		name=self.name
 		typeString=self.typeString
-		stateNames=self.getStateNames(self.filterStates(self.states))
+		positiveStateNames=self.getStateNames(self.calculatePositiveStates())
+		negativeStateNames=self.getStateNames(self.calculateNegativeStates(),opposite=True)
+		stateNames="%s %s"%(positiveStateNames,negativeStateNames)
 		value=self.value
 		description=self.description
 		if description==name:

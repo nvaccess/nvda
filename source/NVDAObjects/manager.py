@@ -62,4 +62,5 @@ _staticMap={
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):MSAA.NVDAObject_mozillaUIWindowClass_application,
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):MSAA.NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_consoleWindowClassClient,
+(None,ROLE_SYSTEM_LISTITEM):MSAA.NVDAObject_listItem,
 }
