@@ -29,14 +29,14 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		def __getattr__(self,name):
 			pass #debug.writeMessage("vb event getattr %s"%name)
 
-	def __init__(self,window):
-		baseType.virtualBuffer.__init__(self,window)
+	def __init__(self,NVDAObject):
+		baseType.virtualBuffer.__init__(self,NVDAObject)
 		MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
 		domPointer=ctypes.POINTER(MSHTMLLib.DispHTMLDocument)()
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
-		lresult=winUser.sendMessage(window,wm,0,0)
+		lresult=winUser.sendMessage(NVDAObject.hwnd,wm,0,0)
 		debug.writeMessage("vb internetExplorer_server: lresult %s"%lresult)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
@@ -51,7 +51,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		else:
 			self.loadDocument()
 
-	def event_gainFocus(self,objectID,childID):
+	def event_gainFocus(self,hwnd,objectID,childID):
 		if len(self.nodes)==0:
 			return
 		focusDomNode=self.getFocusDomNode()
@@ -62,12 +62,12 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		self.caretPosition=self.nodes[index][2]
 
 	def loadDocument(self):
-		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			audio.speakMessage(_("Loading document")+" "+self.dom.title+"...")
 		self.addNode(self.dom.body)
 		self.caretPosition=0
-		if winUser.getAncestor(self.hwnd,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			audio.speakText(self.text)
 
@@ -112,14 +112,6 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			postNodes[j][3]=postNodes[0][3]+len(preText)+len(newText)
 		self.text=preText+newText+postText
 		self.nodes=preNodes+newNodes+postNodes
-
-	def getDomNodeByMSAA(self,objectID,childID):
-		obj=NVDAObjects.getNVDAObjectByLocator(self.hwnd,objectID,childID)
-		if not obj:
-			return None
-		(left,top,right,bottom)=obj.getLocation()
-		domNode=self.dom.elementFromPoint(left,top)
-		return domNode
 
 	def getDomNodeByUniqueID(self,uniqueID):
 		return self.dom.getElementById(uniqueID)

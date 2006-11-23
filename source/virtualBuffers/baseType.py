@@ -3,9 +3,9 @@ import audio
 
 class virtualBuffer(object):
 
-	def __init__(self,window):
+	def __init__(self,NVDAObject):
 		self._keyMap={}
-		self.hwnd=window
+		self.NVDAObject=NVDAObject
 		self.text=""
 		self.caretPosition=0
 		self.registerScriptKeys({
@@ -57,7 +57,7 @@ class virtualBuffer(object):
 	def getLineLength(self,pos):
 		startPos=self.getLineStart(pos)
 		endPos=startPos
-		while (endPos<=len(self.text)) and (self.text[endPos]!='\n'):
+		while (endPos<len(self.text)) and (self.text[endPos]!='\n'):
 			endPos+=1
 		return (endPos-startPos)
 

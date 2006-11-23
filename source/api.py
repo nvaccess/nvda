@@ -46,6 +46,7 @@ def setForegroundObjectByLocator(window,objectID,childID):
 	globalVars.foregroundObject=foregroundObject
 	if globalVars.navigatorTracksFocus:
 		setNavigatorObject(foregroundObject)
+	virtualBuffers.updateVirtualBuffers(window)
 	return True
 
 def getFocusObject():
@@ -181,6 +182,7 @@ def executeEvent(name,window,objectID,childID):
 		setForegroundObjectByLocator(window,objectID,childID)
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
+		debug.writeMessage("focus: %s"%winUser.getClassName(window))
 		setFocusObjectByLocator(window,objectID,childID)
 	#If caret event is on object that has not got focus, then set focus and then continue
 	if (name=="caret") and (window!=getFocusLocator()[0]):
@@ -191,7 +193,7 @@ def executeEvent(name,window,objectID,childID):
 	if virtualBuffer and hasattr(virtualBuffer,"event_%s"%name):
 		event=getattr(virtualBuffer,"event_%s"%name)
 		try:
-			event(objectID,childID)
+			event(window,objectID,childID)
 		except:
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 

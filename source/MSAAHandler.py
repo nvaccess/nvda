@@ -84,7 +84,7 @@ def accessibleObjectFromWindow(window,objectID):
 	ptr=ctypes.POINTER(IAccessible)()
 	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
 	if res==0:
-		return IAccWrapper(ptr)
+		return ptr
 	else:
 		return None
 
@@ -99,7 +99,7 @@ def accessibleObjectFromEvent(window,objectID,childID):
 			child=0
 		else:
 			child=varChild.value
-		return (IAccWrapper(pacc),child)
+		return (pacc,child)
 	else:
 		return None
 
@@ -113,11 +113,14 @@ def accessibleObjectFromPoint(x,y):
 			child=0
 		else:
 			child=varChild.value
-		return (IAccWrapper(pacc),child)
+		return (pacc,child)
 
 def windowFromAccessibleObject(ia):
 	hwnd=ctypes.c_int()
-	res=ctypes.windll.oleacc.WindowFromAccessibleObject(getattr(ia,'__dict__')['ia'],ctypes.byref(hwnd))
+	try:
+		res=ctypes.windll.oleacc.WindowFromAccessibleObject(ia,ctypes.byref(hwnd))
+	except:
+		res=0
 	if res==0:
 		return hwnd.value
 	else:
@@ -193,7 +196,10 @@ def accFocus(ia,child):
 	try:
 		res=ia.accFocus(child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
-			new_ia=IAccWrapper(res)
+			new_ia=res
+			new_child=0
+		elif isinstance(res,comtypesClient._Dispatch):
+			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -206,7 +212,10 @@ def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
-			new_ia=IAccWrapper(res)
+			new_ia=res
+			new_child=0
+		elif isinstance(res,comtypesClient._Dispatch):
+			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -227,7 +236,10 @@ def accParent(ia,child):
 		if not child:
 			res=ia.accParent
 			if isinstance(res,ctypes.POINTER(IAccessible)):
-				new_ia=IAccWrapper(res)
+				new_ia=res
+				new_child=0
+			elif isinstance(res,comtypesClient._Dispatch):
+				new_ia=res.QueryInterface(IAccessible)
 				new_child=0
 			elif isinstance(res,int): 
 				new_ia=ia
@@ -243,11 +255,16 @@ def accNavigate(ia,child,direction):
 	try:
 		res=ia.accNavigate(direction,child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
-			new_ia=IAccWrapper(res)
+			new_ia=res
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
 			new_child=res
+		elif isinstance(res,comtypesClient._Dispatch):
+			new_ia=res.QueryInterface(IAccessible)
+			new_child=0
+		else:
+			return None
 		return (new_ia,new_child)
 	except:
 		return None

@@ -701,11 +701,26 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 class NVDAObject_mozillaContentWindowClass(NVDAObject_MSAA):
 	pass
 
-class NVDAObject_mozillaContentWindowClass_document(NVDAObject_mozillaContentWindowClass):
+class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 
 	def getValue(self):
 		return ""
 	value=property(fget=getValue)
+
+class NVDAObject_mozillaListItem(NVDAObject_MSAA):
+
+	def getName(self):
+		child=NVDAObject_MSAA.getFirstChild(self)
+		if child and child.Role==ROLE_SYSTEM_STATICTEXT:
+ 			return child.Name
+	name=property(fget=getName)
+
+	def getFirstChild(self):
+		child=NVDAObject_MSAA.getFirstChild(self)
+		if child and child.role==ROLE_SYSTEM_STATICTEXT:
+			child=child.next
+		return child
+	firstChild=property(fget=getFirstChild)
 
 class NVDAObject_link(NVDAObject_MSAA):
 	"""
@@ -730,39 +745,14 @@ class NVDAObject_link(NVDAObject_MSAA):
 		return typeString
 	typeString=property(fget=getTypeString)
 
-	def getChildren(self):
-		children=NVDAObject_MSAA.getChildren(self)
-		newChildren=[]
-		for child in children:
-			if child.getRole()!=ROLE_SYSTEM_STATICTEXT:
-				newChildren.append(child)
-		return newChildren
-	children=property(fget=getChildren)
+	def getFirstChild(self):
+		child=NVDAObject_MSAA.getFirstChild(self)
+		while child and (child.role in [ROLE_SYSTEM_STATICTEXT,ROLE_SYSTEM_TEXT]):
+			child=child.next
+		return child
+	firstChild=property(fget=getFirstChild)
 
-class NVDAObject_mozillaContentWindowClass_listItem(NVDAObject_mozillaContentWindowClass):
-	"""
-	Based on NVDAObject_mozillaContentWindowClass, but:
-	*Name is the bullet or counter for the list item which is found in the text object which is the first child of this object.
-	*getChildren ignores the first child wich is the text object that contains the bullet or counter for the list item.
-	"""
-
-	def getName(self):
-		child=self.getFirstChild()
-		if child and self.role==ROLE_SYSTEM_STATICTEXT:
-			name=child.getName()
-		else:
-			name=""
-		return name
-	name=property(fget=getName)
-
-	def getChildren(self):
-		children=NVDAObject_MSAA.getChildren(self)
-		if (len(children)>=1) and (NVDAObject_MSAA.getRole(children[0])==ROLE_SYSTEM_STATICTEXT):
-			del children[0]
-		return children
-	children=property(fget=getChildren)
-
-class NVDAObject_mozillaContentWindowClass_text(NVDAObject_mozillaContentWindowClass):
+class NVDAObject_mozillaText(NVDAObject_MSAA):
 	"""
 	Based on NVDAObject_mozillaContentWindowClass but:
 	*If the object has a name but no value, the name is used as the value and no name is provided.
