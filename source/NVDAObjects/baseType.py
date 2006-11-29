@@ -5,7 +5,7 @@ import api
 from config import conf
 
 class NVDAObject(object):
-"""
+	"""
 The baseType NVDA object. All other NVDA objects are based on this one.
 @ivar name: The objects name or label. (e.g. the text of a list item, label of a button)
 @type name: string
