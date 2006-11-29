@@ -83,19 +83,14 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def _duplicateDocumentRange(self,rangeObj):
 		return rangeObj.Range
 
-	def getRole(self):
+	def _get_role(self):
 		return ROLE_SYSTEM_TEXT
-	role=property(fget=getRole)
 
-	def nextFormat(self,pos):
-		return None #Have to find a way to jump to the next format change
-
-	def getVisibleRange(self):
+	def _get_visibleRange(self):
 		(left,top,right,bottom)=self.getLocation()
 		topRange=self.dom.Application.ActiveWindow.RangeFromPoint(left,top)
 		bottomRange=self.dom.Application.ActiveWindow.RangeFromPoint(right,bottom)
 		return (topRange.Start,bottomRange.Start)
-	visibleRange=property(fget=getVisibleRange)
 
 	def getLineNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -276,9 +271,6 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		rangeObj.Start=rangeObj.End=pos
 		return rangeObj.Information(wdMaximumNumberOfColumns)
 
-	def getCurrentColumnCount(self):
-		return self.getColumnCount(self.getCaretPosition())
-
 	def getPageNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=pos
@@ -286,13 +278,13 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 
 	def msgPage(self,pos):
 		pageNum=self.getPageNumber(pos)
-		pageCount=self.getPageCount()
+		pageCount=self.pageCount
 		if pageCount>0:
 			return _("page")+" %s of %s"%(pageNum,pageCount)
 		else:
 			return _("page")+" %s"%pageNum
 
-	def getPageCount(self):
+	def _get_pageCount(self):
 		return self.dom.Selection.Information(wdNumberOfPagesInDocument)
 
 	def getParagraphAlignment(self,pos):

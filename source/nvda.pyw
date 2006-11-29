@@ -14,8 +14,6 @@ winsound.Beep(880,50)
 import gettext
 gettext.install('nvda')
 import debug
-
-import debug
 debug.start("debug.log")
 try:
 	import core

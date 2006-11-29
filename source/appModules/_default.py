@@ -6,14 +6,14 @@ import audio
 import NVDAObjects
 import synthDriverHandler
 import gui
+import core
 
 class appModule(object):
-
-	_keyMap={}
 
 	def __init__(self,hwnd,processID):
 		self.hwnd=hwnd
 		self.processID=processID
+		self._keyMap={}
 		self.registerScriptKeys({
 			key("insert+n"):self.script_showGui,
 			key("insert+q"):self.script_quit,
@@ -50,6 +50,8 @@ class appModule(object):
 			key("up"):self.script_navigator_review_currentLine,
 			key("prior"):self.script_navigator_review_nextLine,
 			key("shift+prior"):self.script_navigator_review_bottom,
+			key("insert+extendedDown"):self.script_sayAll,
+			key("insert+f"):self.script_formatInfo,
 		})
 
 	def getScript(self,keyPress):
@@ -146,20 +148,19 @@ class appModule(object):
 		"""Reports the object that the navigator is currently on, plus any descendants of that object"""
 		if obj is None:
 			curObject=getNavigatorObject()
-			if curObject.getChildID()>0:
+			if curObject.childID>0:
 				audio.speakMessage(_("No children"))
 				return
 			curObject.speakObject()
-			childObject=curObject.getFirstChild()
+			childObject=curObject.firstChild
 			script_navigator_object_recursive(keyPress,obj=childObject)
 		else:
 			obj.speakObject()
-			if obj.getRole()!=ROLE_SYSTEM_LINK:
-				childObject=obj.getFirstChild()
-				if (childObject is not None) and (childObject.getParent().getLocation()==obj.getLocation()):
-					script_navigator_object_recursive(keyPress,obj=childObject)
-			nextObject=obj.getNext()
-			if (nextObject is not None) and (nextObject.getPrevious().getLocation()==obj.getLocation()):
+			childObject=obj.firstChild
+			if (childObject is not None) and (childObject.parent.getLocation()==obj.getLocation()):
+				script_navigator_object_recursive(keyPress,obj=childObject)
+			nextObject=obj.next
+			if (nextObject is not None) and (nextObject.previous.getLocation()==obj.getLocation()):
 				script_navigator_object_recursive(keyPress,obj=nextObject)
 
 	def script_navigator_object_toFocus(self,keyPress):
@@ -172,7 +173,7 @@ class appModule(object):
 	def script_navigator_object_parent(self,keyPress):
 		"""Moves the navigator to the parent of the object it is currently on"""
 		curObject=getNavigatorObject()
-		curObject=curObject.getParent()
+		curObject=curObject.parent
 		if curObject is not None:
 			setNavigatorObject(curObject)
 			curObject.speakObject()
@@ -182,7 +183,7 @@ class appModule(object):
 	def script_navigator_object_next(self,keyPress):
 		"""Moves the navigator to the next object of the one it is currently on"""
 		curObject=getNavigatorObject()
-		curObject=curObject.getNext()
+		curObject=curObject.next
 		if curObject is not None:
 			setNavigatorObject(curObject)
 			curObject.speakObject()
@@ -192,7 +193,7 @@ class appModule(object):
 	def script_navigator_object_previous(self,keyPress):
 		"""Moves the navigator to the previous object of the one it is currently on"""
 		curObject=getNavigatorObject()
-		curObject=curObject.getPrevious()
+		curObject=curObject.previous
 		if curObject is not None:
 			setNavigatorObject(curObject)
 			curObject.speakObject()
@@ -202,7 +203,7 @@ class appModule(object):
 	def script_navigator_object_firstChild(self,keyPress):
 		"""Moves the navigator to the first child object of the one it is currently on"""
 		curObject=getNavigatorObject()
-		curObject=curObject.getFirstChild()
+		curObject=curObject.firstChild
 		if curObject is not None:
 			setNavigatorObject(curObject)
 			curObject.speakObject()
@@ -219,7 +220,7 @@ class appModule(object):
 		curObject=getNavigatorObject()
 		while curObject is not None:
 			curObject.speakObject()
-			curObject=curObject.getParent()
+			curObject=curObject.parent
 
 	def script_navigator_review_top(self,keyPress):
 		obj=getNavigatorObject()
@@ -322,12 +323,7 @@ class appModule(object):
 			audio.speakMessage(_("speech")+" "+_("on"))
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
-		if globalVars.virtualBufferPassThrough:
-			audio.speakMessage(_("virtual buffer pass through")+" "+_("off"))
-			globalVars.virtualBufferPassThrough=False
-		else:
-			audio.speakMessage(_("virtual buffer pass through")+" "+_("on"))
-			globalVars.virtualBufferPassThrough=True
+		toggleVirtualBufferPassThrough()
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
@@ -335,4 +331,19 @@ class appModule(object):
 
 	def script_showGui(self,keyPress):
 		gui.showGui()
+
+	def script_sayAll(self,keyPress):
+		virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+		if virtualBuffer:
+			core.newThread(virtualBuffer.sayAllGenerator())
+		elif hasattr(getFocusObject(),"sayAllGenerator"):
+			core.newThread(getFocusObject().sayAllGenerator())
+		else:
+			audio.speakMessage(_("no sayAll functionality here"))
+
+	def script_formatInfo(self,keyPress):
+		if hasattr(getFocusObject(),"reportFormatInfo"):
+			getFocusObject().reportFormatInfo()
+		else:
+			audio.speakMessage(_("no format info"))
 

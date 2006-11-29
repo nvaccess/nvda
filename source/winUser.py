@@ -121,4 +121,9 @@ def getCursorPos():
 	user32.GetCursorPos(ctypes.byref(point))
 	return [point.x,point.y]
 
+def getWindowText(hwnd):
+	buf=ctypes.create_unicode_buffer(1024)
+	user32.InternalGetWindowText(hwnd,buf,1024)
+	return buf.value
+
 

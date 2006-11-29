@@ -24,35 +24,29 @@ class NVDAObject_window(baseType.NVDAObject):
 		else:
 			return False
 
-	def getName(self):
+	def _get_name(self):
 		return winUser.getWindowText(self.hwnd)
-	name=property(fget=getName)
 
-	role=ROLE_SYSTEM_WINDOW
+	def _get_role(self):
+		return ROLE_SYSTEM_WINDOW
 
-	def getClassName(self):
+	def _get_className(self):
 		return winUser.getClassName(self.hwnd)
-	className=property(fget=getClassName)
  
-	def getControlID(self):
+	def _get_controlID(self):
 		return winUser.getControlID()
-	controlID=property(fget=getControlID)
 
-	def getTypeString(self):
+	def _get_typeString(self):
 		return "%s %s"%(self.getClassName(),NVDAObjects.getRoleName(self.role))
-	typeString=property(fget=getTypeString)
 
-	def getLocation(self):
+	def _get_location(self):
 		return winUser.getClientRect(self.hwnd)
-	location=property(fget=getLocation)
 
-	def getText(self):
+	def _get_text(self):
 		textLength=winUser.sendMessage(self.hwnd,WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		winUser.sendMessage(self.hwnd,WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u"\0"
-	text=property(fget=getText)
 
-	def getProcessID(self):
+	def _get_processID(self):
 		return winUser.getWindowThreadProcessID(self.hwnd)
-	processID=property(fget=getProcessID)

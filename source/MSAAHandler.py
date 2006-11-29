@@ -50,27 +50,6 @@ def getStateName(state,opposite=False):
 		newState=_("not")+" "+newState
 	return newState
 
-#A class to wrap an IAccessible object in to handle addRef and Release
-class IAccWrapper(object):
-
-	def __init__(self,IAccPointer):
-		IAccPointer.AddRef()
-		getattr(self,'__dict__')['ia']=IAccPointer
-
-	def __del__(self):
-		getattr(self,'__dict__')['ia'].Release()
-
-	def __getattr__(self,attr):
-		ia=getattr(self,'__dict__')['ia']
-		return getattr(ia,attr)
-
-	def __setattr__(self,attr,value):
-		ia=getattr(self,'__dict__')['ia']
-		setattr(ia,attr,value)
-
-	def __repr__(self):
-		return "IAccWrapper object: ia %s"%getattr(self,'__dict__')['ia']
-
 #A c ctypes struct to hold the x and y of a point on the screen 
 class screenPointType(ctypes.Structure):
 	_fields_=[
@@ -310,7 +289,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32"):
 			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"toolTip",window,objectID,childID)
 		#Let caret events through
-		elif (eventID==EVENT_OBJECT_LOCATIONCHANGE) and (objectID==OBJID_CARET):
+		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
 			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"caret",window,objectID,childID)
 		#Let menu events through
 		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPSTART,EVENT_SYSTEM_MENUPOPUPEND]:

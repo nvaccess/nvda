@@ -48,30 +48,25 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			h=(h+(height*p))%l
 		return h
 
-	def getName(self):
+	def _get_name(self):
 		return MSAAHandler.accName(self.ia,self.child)
-	name=property(fget=getName)
 
-	def getValue(self):
+	def _get_value(self):
 		return MSAAHandler.accValue(self.ia,self.child)
-	value=property(fget=getValue)
 
-	def getRole(self):
+	def _get_role(self):
 		return MSAAHandler.accRole(self.ia,self.child)
-	role=property(fget=getRole)
 
-	def getTypeString(self):
+	def _get_typeString(self):
 		role=self.role
 		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
 			typeString=self.className
 		else:
 			typeString=""
 		return typeString+" %s"%MSAAHandler.getRoleName(self.role)
-	typeString=property(fget=getTypeString)
 
-	def getStates(self):
+	def _get_states(self):
 		return MSAAHandler.accState(self.ia,self.child)
-	states=property(fget=getStates)
 
 	def getStateName(self,state,opposite=False):
 		if isinstance(state,int):
@@ -82,14 +77,13 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			newState=_("not")+" "+newState
 		return newState
 
-	def getDescription(self):
+	def _get_description(self):
 		try:
 			return self.ia.accDescription(self.child)
 		except:
 			return ""
-	description=property(fget=getDescription)
 
-	def getKeyboardShortcut(self):
+	def _get_keyboardShortcut(self):
 		keyboardShortcut=None
 		try:
 			keyboardShortcut=self.ia.accKeyboardShortcut(self.child)
@@ -99,43 +93,38 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			return ""
 		else:
 			return keyboardShortcut
-	keyboardShortcut=property(fget=getKeyboardShortcut)
 
-	def getChildID(self):
+	def _get_childID(self):
 		try:
 			return self.child
 		except:
 			return None
-	childID=property(fget=getChildID)
 
-	def getChildCount(self):
+	def _get_childCount(self):
 		count=MSAAHandler.accChildCount(self.ia,self.child)
 		return count
-	childCount=property(fget=getChildCount)
 
-	def getLocation(self):
+	def _get_location(self):
 		location=MSAAHandler.accLocation(self.ia,self.child)
 		return location
-	location=property(fget=getLocation)
 
-	def getParent(self):
+	def _get_parent(self):
 		res=MSAAHandler.accParent(self.ia,self.child)
 		if res:
 			(ia,child)=res
 		else:
 			return None
 		obj=manager.getNVDAObjectByAccessibleObject(ia,child)
-		if obj and (obj.getRole()==ROLE_SYSTEM_WINDOW):
-			return obj.getParent()
+		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
+			return obj.parent
 		else:
 			return obj
-	parent=property(fget=getParent)
 
-	def getNext(self):
+	def _get_next(self):
 		res=MSAAHandler.accParent(self.ia,self.child)
 		if res:
 			parentObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
-			parentRole=parentObject.getRole()
+			parentRole=parentObject.role
 		else:
 			parentObject=None
 			parentRole=None
@@ -146,19 +135,18 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_NEXT)
 		if res:
 			nextObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
-			if nextObject and (nextObject.getRole()==ROLE_SYSTEM_WINDOW):
+			if nextObject and (nextObject.role==ROLE_SYSTEM_WINDOW):
 				nextObject=manager.getNVDAObjectByLocator(nextObject.hwnd,-4,0)
 			if nextObject!=self:
 				return nextObject
 			else:
 				return None
-	next=property(fget=getNext)
 
-	def getPrevious(self):
+	def _get_previous(self):
 		res=MSAAHandler.accParent(self.ia,self.child)
 		if res:
 			parentObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
-			parentRole=parentObject.getRole()
+			parentRole=parentObject.role
 		else:
 			parentObject=None
 			parentRole=None
@@ -169,43 +157,31 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_PREVIOUS)
 		if res:
 			previousObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
-			if previousObject and (previousObject.getRole()==ROLE_SYSTEM_WINDOW):
+			if previousObject and (previousObject.role==ROLE_SYSTEM_WINDOW):
 				previousObject=manager.getNVDAObjectByLocator(previousObject.hwnd,-4,0)
 			if previousObject!=self:
 				return previousObject
 			else:
 				return None
-	previous=property(fget=getPrevious)
 
-	def getFirstChild(self):
+	def _get_firstChild(self):
 		res=MSAAHandler.accNavigate(self.ia,self.child,NAVDIR_FIRSTCHILD)
 		if res:
 			obj=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
 		else:
 			return None
-		if obj and (obj.getRole()==ROLE_SYSTEM_WINDOW):
+		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
 			return manager.getNVDAObjectByLocator(obj.hwnd,OBJID_CLIENT,0)
 		else:
 			return obj
-	firstChild=property(fget=getFirstChild)
 
 	def doDefaultAction(self):
 		MSAAHandler.accDoDefaultAction(self.ia,self.child)
 
-	def getChildren(self):
-		children=[]
-		obj=self.getFirstChild()
-		while obj:
-			children.append(obj)
-			obj=obj.getNext()
-		return children
-	children=property(fget=getChildren)
-
-	def getActiveChild(self):
+	def _get_activeChild(self):
 		res=MSAAHandler.accFocus()
 		if res:
 			return manager.getNVDAObjectByAccessibleObject(res[0],res[1])
-	activeChild=property(fget=getActiveChild)
 
 	def hasFocus(self):
 		states=0
@@ -218,7 +194,7 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 	def setFocus(self):
 		self.ia.SetFocus()
 
-	def getPositionString(self):
+	def _get_positionString(self):
 		position=""
 		childID=self.childID
 		if childID>0:
@@ -228,7 +204,6 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 				if parentChildCount>=childID:
 					position="%s of %s"%(childID,parentChildCount)
 		return position
-	positionString=property(fget=getPositionString)
 
 	def event_foreground(self):
 		audio.cancel()
@@ -335,9 +310,8 @@ class NVDAObject_TrayClockWClass(NVDAObject_MSAA):
 	Based on NVDAObject but the role is changed to clock.
 	"""
 
-	def getRole(self):
+	def _get_role(self):
 		return ROLE_SYSTEM_CLOCK
-	role=property(fget=getRole)
 
 class NVDAObject_Shell_TrayWnd(NVDAObject_MSAA):
 	"""
@@ -375,28 +349,24 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 		NVDAObject_MSAA.__init__(self,*args)
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
-	def getValue(self):
-		return self.getCurrentLine()
-	value=property(fget=getValue)
+	def _get_value(self):
+		return self.currentLine
 
-	def getCaretRange(self):
+	def _get_caretRange(self):
 		long=winUser.sendMessage(self.hwnd,EM_GETSEL,0,0)
 		start=winUser.LOWORD(long)
 		end=winUser.HIWORD(long)
 		return (start,end)
-	caretRange=property(fget=getCaretRange)
 
-	def getCaretPosition(self):
+	def _get_caretPosition(self):
 		long=winUser.sendMessage(self.hwnd,EM_GETSEL,0,0)
 		pos=winUser.LOWORD(long)
 		return pos
 
-	def setCaretPosition(self,pos):
+	def _set_caretPosition(self,pos):
 		winUser.sendMessage(self.hwnd,EM_SETSEL,pos,pos)
 
-	caretPosition=property(fget=getCaretPosition,fset=setCaretPosition)
-
-	def getLineCount(self):
+	def _get_lineCount(self):
 		lineCount=winUser.sendMessage(self.hwnd,EM_GETLINECOUNT,0,0)
 		if lineCount<0:
 			return None
@@ -430,7 +400,7 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
 	def nextLine(self,pos):
 		lineNum=self.getLineNumber(pos)
-		if lineNum+1<self.getLineCount():
+		if lineNum+1<self.lineCount:
 			return self.getPositionFromLineNumber(lineNum+1)
 
 	def previousLine(self,pos):
@@ -459,29 +429,27 @@ class NVDAObject_checkBox(NVDAObject_MSAA):
 
 class NVDAObject_outlineItem(NVDAObject_MSAA):
 
-	def getValue(self):
-		return "level %s"%NVDAObject_MSAA.getValue(self)
-	value=property(fget=getValue)
+	def _get_value(self):
+		return "level %s"%super(NVDAObject_outlineItem,self).value
+
 
 class NVDAObject_tooltip(NVDAObject_MSAA):
 
-	def getName(self):
-		name=NVDAObject_MSAA.getName(self)
-		value=NVDAObject_MSAA.getValue(self)
+	def _get_name(self):
+		name=super(NVDAObject_tooltip,self).name
+		value=super(NVDAObject_tooltip,self).value
 		if name and not value:
 			return ""
 		else:
 			return name
-	name=property(fget=getName)
 
-	def getValue(self):
-		name=NVDAObject_MSAA.getName(self)
-		value=NVDAObject_MSAA.getValue(self)
+	def _get_value(self):
+		name=super(NVDAObject_tooltip,self).name
+		value=super(NVDAObject_tooltip,self).value
 		if name and not value:
 			return name
 		else:
 			return ""
-	value=property(fget=getValue)
 
 	def event_toolTip(self):
 		if conf["presentation"]["reportTooltips"]:
@@ -496,7 +464,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 
 	def __init__(self,*args):
 		NVDAObject_MSAA.__init__(self,*args)
-		processID=self.getProcessID()[0]
+		processID=self.processID[0]
 		try:
 			winKernel.freeConsole()
 		except:
@@ -508,7 +476,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
 		self.consoleEventHookHandles=[]
-		self.oldLines=self.getVisibleLines()
+		self.oldLines=self.visibleLines
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
 	def __del__(self):
@@ -520,7 +488,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		self._reviewCursor=self.caretPosition
-		newLines=self.getVisibleLines()
+		newLines=self.visibleLines
 		if eventID!=EVENT_CONSOLE_UPDATE_SIMPLE:
 			self.speakNewText(newLines,self.oldLines)
 		self.oldLines=newLines
@@ -538,23 +506,20 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
-	def getVisibleRange(self):
+	def _get_visibleRange(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		top=self.getPositionFromCoord(0,info.windowRect.top)
 		bottom=self.getPositionFromCoord(0,info.windowRect.bottom+1)
 		return (top,bottom)
-	visibleRange=property(fget=getVisibleRange)
 
-	def getCaretPosition(self):
+	def _get_caretPosition(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		y=info.cursorPosition.y
 		x=info.cursorPosition.x
 		return self.getPositionFromCoord(x,y)
-	caretPosition=property(fget=getCaretPosition)
 
-	def getEndPosition(self):
+	def _get_endPosition(self):
 		return self.getConsoleVerticalLength()*self.getConsoleHorizontalLength()
-	endPosition=property(fget=getEndPosition)
 
 	def getPositionFromCoord(self,x,y):
 		return (y*self.getConsoleHorizontalLength())+x
@@ -575,20 +540,19 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 			line=line.rstrip()
 		return line
 
-	def getLineCount(self):
+	def _get_lineCount(self):
 		return self.getConsoleVerticalLength()
 
 	def getLineLength(self,pos):
 		return self.getConsoleHorizontalLength()
 
-	def getText(self):
-		maxLen=self.getEndPosition()
+	def _get_text(self):
+		maxLen=self.endPosition
 		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,0)
 		return text
-	text=property(fget=getText)
 
-	def getVisibleLines(self):
-		visibleRange=self.getVisibleRange()
+	def _get_visibleLines(self):
+		visibleRange=self.visibleRange
 		visibleRange=(self.getLineNumber(visibleRange[0]),self.getLineNumber(visibleRange[1]))
 		lines=[]
 		for lineNum in range(visibleRange[0],visibleRange[1]+1):
@@ -597,9 +561,8 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 				lines.append(line)
 		return lines
 
-	def getValue(self):
+	def _get_value(self):
 		return ""
-	value=property(fget=getValue)
 
 	def event_gainFocus(self):
 		time.sleep(0.1)
@@ -612,7 +575,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 			else:
 				raise OSError('Could not register console event %s'%eventID)
 		audio.speakObjectProperties(typeString="console")
-		for line in self.getVisibleLines():
+		for line in self.visibleLines:
 			audio.speakText(line)
 
 	def event_looseFocus(self):
@@ -678,18 +641,17 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
 
-	def getValue(self):
+	def _get_value(self):
 		return ""
-	value=property(fget=getValue)
 
-	def getFirstChild(self):
+	def _get_firstChild(self):
 		try:
 			children=self.ia.accChildren()
 		except:
 			return None
 		for child in children:
 			try:
-				role=child.GetRole()
+				role=child.role
 				if role not in [ROLE_SYSTEM_TOOLTIP,ROLE_SYSTEM_MENUPOPUP]:
 					return getNVDAObjectByAccessibleObject(child)
 			except:
@@ -703,24 +665,26 @@ class NVDAObject_mozillaContentWindowClass(NVDAObject_MSAA):
 
 class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 
-	def getValue(self):
+	def _get_value(self):
 		return ""
-	value=property(fget=getValue)
+
+class NVDAObject_mozillaHeading(NVDAObject_MSAA):
+
+	def _get_typeString(self):
+		return _("heading")+" %s"%self.role[1]
 
 class NVDAObject_mozillaListItem(NVDAObject_MSAA):
 
-	def getName(self):
+	def _get_name(self):
 		child=NVDAObject_MSAA.getFirstChild(self)
 		if child and child.Role==ROLE_SYSTEM_STATICTEXT:
  			return child.Name
-	name=property(fget=getName)
 
-	def getFirstChild(self):
-		child=NVDAObject_MSAA.getFirstChild(self)
+	def _get_firstChild(self):
+		child=super(NVDAObject_mozillaListItem,self).firstChild
 		if child and child.role==ROLE_SYSTEM_STATICTEXT:
 			child=child.next
 		return child
-	firstChild=property(fget=getFirstChild)
 
 class NVDAObject_link(NVDAObject_MSAA):
 	"""
@@ -730,62 +694,60 @@ class NVDAObject_link(NVDAObject_MSAA):
 	*getChildren does not include any text objects, since text objects are where the name of the link comes from.
 	"""
 
-	def getValue(self):
+	def _get_value(self):
 		return ""
-	value=property(fget=getValue)
 
-	def getTypeString(self):
+	def _get_typeString(self):
 		states=self.states
 		typeString=""
 		if states&STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
 		if states&STATE_SYSTEM_SELECTABLE:
 			typeString+="same page "
-		typeString+=NVDAObject_MSAA.getTypeString(self)
+		typeString+=super(NVDAObject_link,self).typeString
 		return typeString
-	typeString=property(fget=getTypeString)
 
-	def getFirstChild(self):
-		child=NVDAObject_MSAA.getFirstChild(self)
+	def _get_firstChild(self):
+		child=super(NVDAObject_link,self).firstChild
 		while child and (child.role in [ROLE_SYSTEM_STATICTEXT,ROLE_SYSTEM_TEXT]):
 			child=child.next
 		return child
-	firstChild=property(fget=getFirstChild)
 
-class NVDAObject_mozillaText(NVDAObject_MSAA):
+class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 	"""
 	Based on NVDAObject_mozillaContentWindowClass but:
 	*If the object has a name but no value, the name is used as the value and no name is provided.
 	*the role is changed to static text if it has the read only state set.
 	"""
 
-	def getName(self):
-		name=NVDAObject_MSAA.getName(self)
-		value=NVDAObject_MSAA.getValue(self)
-		if name and not value:
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
+
+	def _get_name(self):
+		name=super(NVDAObject_mozillaText,self).name
+		value=super(NVDAObject_mozillaText,self).value
+		if (self.role==ROLE_SYSTEM_STATICTEXT) and name and not value:
 			return ""
 		else:
 			return name
-	name=property(fget=getName)
 
-	def getRole(self):
-		if NVDAObject_MSAA.getStates(self)&STATE_SYSTEM_READONLY:
+	def _get_role(self):
+		if super(NVDAObject_mozillaText,self).states&STATE_SYSTEM_READONLY:
 			return ROLE_SYSTEM_STATICTEXT
 		else:
-			return NVDAObject_MSAA.getRole(self)
-	role=property(fget=getRole)
-
-	def getValue(self):
-		name=NVDAObject_MSAA.getName(self)
-		value=NVDAObject_MSAA.getValue(self)
-		if name and not value:
+			return super(NVDAObject_mozillaText,self).role
+ 
+	def _get_value(self):
+		name=super(NVDAObject_mozillaText,self).name
+		value=super(NVDAObject_mozillaText,self).value
+		if (self.role==ROLE_SYSTEM_STATICTEXT) and name and not value:
 			return name
 		else:
 			return ""
-	value=property(fget=getValue)
 
-class NVDAObject_internetExplorerServer(NVDAObject_MSAA):
-	pass
+	def _get_text(self):
+		return self.value
 
 class NVDAObject_listItem(NVDAObject_MSAA):
 
@@ -794,4 +756,8 @@ class NVDAObject_listItem(NVDAObject_MSAA):
 		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_SELECTED
 		self._lastNegativeStates=self.calculateNegativeStates()
 
+class NVDAObject_internetExplorerPane(NVDAObject_MSAA):
+
+	def _get_value(self):
+		return ""
 

@@ -7,9 +7,6 @@ Changes since revision 164:
 *You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
 *Fixed a bug that stopped internet explorer reading when pressing tab
 *Links no longer say the URL as their value. They also now say "visited link" for visited links.
-*Got rid of dictionaries in NVDA and replaced them with a lang directory of files with file extentions that match a given language code.
-*Replaced all messages and labels etc in NVDA with references to entries in the lang files. This now means you can create language files for your choice of language, and then set language (under the language section of nvda.ini) to your chosen 3 letter language code.
-*Added ptb language files.
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
 *Made NVDA over all much more responsive (especially in edit fields such as an address bar)
@@ -19,6 +16,7 @@ Changes since revision 164:
 -insert+2 toggle speak typed characters
 -insert+3 toggle speak typed words
 -insert+4 toggle speak command keys
+These scripts also make sure they say * when typing in edit fields with the protected state set (e.g. password fields).
 *Fixed handling of crashes so that if the screen reader core dies, it should take the GUI down with it
 *Added a voice dialog on the preferences menu
 *The synthesizer dialog now only shows synthesizers currently found on your system. It also now has a longer description for each synth (including the name of the dll or com interface it uses)

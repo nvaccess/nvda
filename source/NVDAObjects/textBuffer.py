@@ -1,5 +1,6 @@
 import winsound
 from config import conf
+import autoPropertyType
 import core
 from keyboardHandler import key, sendKey
 import audio
@@ -8,8 +9,10 @@ import globalVars
 
 class NVDAObject_textBuffer:
 
+	__metaclass__=autoPropertyType.autoPropertyType
+
 	def __init__(self,*args):
-		self.reviewPosition=0
+		self._reviewPosition=0
 		self._presentationTable={}
 		self._lastReviewPresentationValues={}
 
@@ -34,8 +37,11 @@ class NVDAObject_textBuffer:
 		for name in values.keys():
 			audio.speakMessage("%s"%values[name])
 
-	def nextFormat(self,pos):
-		return None
+	def _get_reviewPosition(self):
+		return self._reviewPosition
+
+	def _set_reviewPosition(self,pos):
+		self._reviewPosition=pos
 
 	def getTextRange(self,start,end):
 		text=self.text
@@ -43,46 +49,14 @@ class NVDAObject_textBuffer:
 			return None
 		return text[start:end]
 
-	def speakTextRange(self,start,end):
-		if not conf["documentFormatting"]["trackWhileReading"]:
-			audio.speakText(self.getTextRange(start,end),index=start)
-			return
-		oldValues=self.getPresentationValues(start)
-		pos=start
-		textBuf=""
-		textBufPos=start
-		while pos<end:
-			nextFormatPos=self.nextFormat(pos)
-			if nextFormatPos and (nextFormatPos<end) and (nextFormatPos>pos):
-				textBuf+=self.getTextRange(pos,nextFormatPos)
-				textBufPos=pos
-				pos=nextFormatPos
-				values=self.getPresentationValues(pos)
-				if values!=oldValues:
-					if textBuf:
-						audio.speakText(textBuf,index=textBufPos)
-						textBuf=""
-					self.speakPresentationValues(self.getChangedPresentationValues(values,oldValues)) 
-					oldValues=values
-			else:
-				if textBuf:
-					audio.speakText(textBuf,index=textBufPos)
-					audio.speakText(self.getTextRange(textBufPos+len(textBuf),end),index=pos)
-				else:
-					audio.speakText(self.getTextRange(pos,end),index=pos)
-				break
-
-	def getStartPosition(self):
+	def _get_startPosition(self):
 		return 0
-	startPosition=property(fget=getStartPosition)
 
-	def getEndPosition(self):
+	def _get_endPosition(self):
 		return len(self.text)-1
-	endPosition=property(fget=getEndPosition)
 
-	def getVisibleRange(self):
+	def _get_visibleRange(self):
 		return (self.startPosition,self.endPosition)
-	visibleRange=property(fget=getVisibleRange)
 
 	def getPositionFromScreenCoords(self,x,y):
 		return 0
@@ -208,10 +182,10 @@ class NVDAObject_textBuffer:
 		audio.speakSymbol(self.getCharacter(pos))
 
 	def speakWord(self,pos):
-		self.speakTextRange(self.getWordStart(pos),self.getWordEnd(pos))
+		audio.speakText(self.getWord(pos),index=pos)
 
 	def speakLine(self,pos):
-		self.speakTextRange(self.getLineStart(pos),self.getLineEnd(pos))
+		audio.speakText(self.getLine(pos),index=pos)
 
 	def review_top(self):
 		"""Move the review cursor to the top and read the line"""
@@ -358,7 +332,6 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 		self._lastCaretPresentationValues={}
 		self.reviewPosition=self.caretPosition
 		self.registerScriptKeys({
-			key("insert+extendedDown"):self.script_sayAll,
 			key("ExtendedUp"):self.script_moveByLine,
 			key("ExtendedDown"):self.script_moveByLine,
 			key("ExtendedLeft"):self.script_moveByCharacter,
@@ -381,28 +354,24 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 			key("control+shift+extendedEnd"):self.script_changeSelection,
 			key("ExtendedDelete"):self.script_delete,
 			key("Back"):self.script_backspace,
-			key("insert+f"):self.script_formatInfo,
 		})
 
-	def getCaretRange(self):
+	def _get_caretRange(self):
 		return None
-	caretRange=property(fget=getCaretRange)
 
-	def getCaretPosition(self):
+	def _get_caretPosition(self):
 		return self.startPosition
 
-	def setCaretPosition(self,pos):
+	def _set_caretPosition(self,pos):
 		pass
 
-	caretPosition=property(fget=getCaretPosition,fset=setCaretPosition)
-
-	def getCurrentCharacter(self):
+	def _get_currentCharacter(self):
 		return self.getCharacter(self.caretPosition)
 
-	def getCurrentWord(self):
+	def _get_currentWord(self):
 		return self.getWord(self.caretPosition)
 
-	def getCurrentLine(self):
+	def _get_currentLine(self):
 		return self.getLine(self.caretPosition)
 
 	def event_caret(self):
@@ -412,10 +381,15 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 		#Setup the initial info (count, caret position, index etc)
 		count=0 #Used to see when we need to start yielding
 		startPos=endPos=curPos=self.caretPosition
+		lastPresentationValues=self.getPresentationValues(curPos)
 		index=lastIndex=None
 		lastKeyCount=globalVars.keyCounter
 		#A loop that runs while no key is pressed and while we are not at the end of the text
 		while (curPos is not None) and (curPos<self.endPosition):
+			#report any changed presentation values
+			curPresentationValues=self.getPresentationValues(curPos)
+			self.speakPresentationValues(self.getChangedPresentationValues(curPresentationValues,lastPresentationValues))
+			lastPresentationValues=curPresentationValues
 			#Speak the current line (if its not blank) with an speech index of its position
 			text=self.getLine(curPos)
 			if text and (text not in ['\n','\r',""]):
@@ -426,7 +400,7 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 			#Grab the current speech index from the synth, and if different to last, move the caret there
 			index=audio.getLastIndex()
 			if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-		 		self.setCaretPosition(index)
+		 		self.caretPosition=index
 			lastIndex=index
 			#We don't want to yield for the first 4 loops so the synth can get a good run up
 			if count>4:
@@ -440,7 +414,7 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 			while (index<endPos):
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.setCaretPosition(index)
+			 		self.caretPosition=index
 				lastIndex=index
 				if count>4:
 					yield None
@@ -453,11 +427,8 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 				yield None
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.setCaretPosition(index)
+			 		self.caretPosition=index
 			audio.cancel()
-
-	def script_sayAll(self,keyPress):
-		core.newThread(self.sayAllGenerator())
 
 	def script_moveByLine(self,keyPress):
 		"""Moves and then reads the current line"""
@@ -488,9 +459,9 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 
 	def script_changeSelection(self,keyPress):
 		"""Moves and reads the current selection"""
-		selectionPoints=self.getCaretRange()
+		selectionPoints=self.caretRange
 		sendKey(keyPress)
-		newSelectionPoints=self.getCaretRange()
+		newSelectionPoints=self.caretRange
 		if newSelectionPoints and not selectionPoints:
 			audio.speakText("selected %s"%self.getTextRange(newSelectionPoints[0],newSelectionPoints[1]))
 		elif not newSelectionPoints:
@@ -528,11 +499,13 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 			sendKey(keyPress)
 		self.reviewPosition=self.caretPosition
 
-	def script_formatInfo(self,keyPress):
+	def reportFormatInfo(self):
 		"""Reports the current formatting information"""
 		pos=self.caretPosition
-		for name in self._presentationTable.keys():
-			message=self._presentationTable[name][0](pos)
-			if message is not None:
-				audio.speakMessage(message)
-
+		if len(self._presentationTable)>0:
+			for name in self._presentationTable.keys():
+				message=self._presentationTable[name][0](pos)
+				if message is not None:
+					audio.speakMessage(message)
+		else:
+			audio.speakText(_("No format types to report"))

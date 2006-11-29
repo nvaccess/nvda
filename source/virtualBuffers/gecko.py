@@ -1,9 +1,13 @@
+import ctypes
+import comtypesClient
+import comtypes.automation
 from constants import *
 import debug
 import winUser
 import MSAAHandler
 import audio
 import NVDAObjects
+import manager
 import baseType
 
 NAVRELATION_EMBEDS=0x1009 
@@ -29,103 +33,56 @@ class virtualBuffer_gecko(baseType.virtualBuffer):
 		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			audio.speakMessage(_("Loading document")+" "+self.NVDAObject.name+"...")
-		self.addNode(self.NVDAObject)
+		self.fillBuffer(self.NVDAObject)
 		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			audio.speakText(self.text)
 
-	def addNode(self,NVDAObject):
-		(nodes,text)=self.generateNode(NVDAObject)
-		if len(text)>0 and (text[0]=='\n'):
-			text=text[1:]
-			for num in range(len(nodes)):
-				nodes[num][2]-=1
-				nodes[num][3]-=1
-		self.nodes=nodes
-		self.text=text
+	def getIDMessage(self,ID):
+		NVDAObject=NVDAObjects.getNVDAObjectByLocator(self.NVDAObject.hwnd,OBJID_CLIENT,ID)
+		return "%s %s"%(NVDAObject.typeString,NVDAObject.getStateNames(NVDAObject.states))
 
+	def getIDText(self,ID):
+		NVDAObject=NVDAObjects.getNVDAObjectByLocator(self.NVDAObject.hwnd,OBJID_CLIENT,ID)
+		return "%s %s\n"%(NVDAObject.name,NVDAObject.value)
 
-	def getNodesIndexByUniqueID(self,uniqueID):
-		for i in range(len(self.nodes)):
-			if self.nodes[i][0]==uniqueID:
-				return i
-		else:
-			return -1
-
-	def getNodesIndexByPosition(self,pos):
-		for i in range(len(self.nodes))[::-1]:
-			if (pos>=self.nodes[i][2]) and (pos<=self.nodes[i][3]):
-				return i
-		else:
-			return -1
-
-	def getStartTag(self,NVDAObject):
-		role=NVDAObject.role
-		if role==ROLE_SYSTEM_DOCUMENT:
-			return "%s %s\n"%(NVDAObject.typeString,NVDAObject.name)
-		if role==ROLE_SYSTEM_STATICTEXT:
-			return " %s "%NVDAObject.value
-		elif role==ROLE_SYSTEM_LIST:
-			return "\n%s wih %s items\n"%(NVDAObject.typeString,NVDAObject.childCount)
-		elif role==ROLE_SYSTEM_LISTITEM:
-			return "\n*"
-		elif role==ROLE_SYSTEM_LINK:
-			return " %s %s "%(NVDAObject.typeString,NVDAObject.name)
-		elif role in ["h1","h2","h3","h4","h5","h6"]:
-			return "\n%s "%NVDAObject.typeString
-		elif role==ROLE_SYSTEM_TABLE:
-			return "\n%s\n"%NVDAObject.typeString
-		elif role in ["tbody","thead","tfoot",ROLE_SYSTEM_CELL]:
-			return "\n"
-		elif role==ROLE_SYSTEM_GRAPHIC:
-			return "%s %s"%(NVDAObject.typeString,NVDAObject.name)
-		else:
-			return "\nunknown object %s %s"%(NVDAObject.typeString,NVDAObject.name)
-
-	def getEndTag(self,NVDAObject):
-		role=NVDAObject.role
-		if role==ROLE_SYSTEM_DOCUMENT:
-			return "\n%s end"%NVDAObject.typeString
-		if role==ROLE_SYSTEM_LIST:
-			return "\n%s end\n"%NVDAObject.typeString
-		elif role==ROLE_SYSTEM_TABLE:
-			return "\n%s end\n"%NVDAObject.typeString
-		elif role in ["tbody","thead","tfoot",ROLE_SYSTEM_CELL]:
-			return "\n"
-		elif role in ["h1","h2","h3","h4","h5","h6"]:
-			return "\n"
-		else:
-			return ""
-
-	def generateNode(self,NVDAObject):
-		uniqueID=NVDAObject.childID
-		text=""
-		nodes=[]
-		text+=self.getStartTag(NVDAObject)
-		childCount=0
+	def getIDAncestors(self,ID):
+		NVDAObject=NVDAObjects.getNVDAObjectByLocator(self.NVDAObject.hwnd,OBJID_CLIENT,ID)
+		l=[]
+		while NVDAObject and (ID<0):
+			l.append(ID)
+ 			NVDAObject=NVDAObject.parent
+		l.reverse()
+		return l
+ 
+	def getIDFromNVDAObject(self,NVDAObject):
+		guid=comtypes.GUID()
+		guid.Data1=0x0c539790
+		guid.Data2=0x12e4
+		guid.data3=0x11cf
+		guid.Data4=(ctypes.c_byte*8)(0xb6,0x61,0x00,0xaa,0x00,0x4c,0xd6,0xd8)
+		#guid=comtypes.GUID('{0c539790-12e4-11cf-b661-00aa004cd6d8}')
+		disp=NVDAObject.ia.QueryInterface(comtypesClient.GetModule('./servprov.tlb').IServiceProvider)
+		debug.writeMessage("IDFromNVDAObject: %s"%disp)
+		disp=disp.RemoteQueryService(guid,comtypes.GUID('{1814ceeb-49e2-407f-af99-fa755a7d2607}'))
+		debug.writeMessage("IDFromNVDAObject: %s"%disp)
+		disp=comtypesClient.wrap(disp)
+		debug.writeMessage("IDFromNVDAObject: %s"%disp)
 		try:
-			child=NVDAObject.firstChild
+			res=disp.nodeInfo
+			debug.writeMessage("IDFromNVDAObject: %s"%res)
+			return res
 		except:
-			child=None
+			debug.writeException("Not an ISimpleDomNode")
+			return None
+
+
+
+	def fillBuffer(self,NVDAObject):
+		ID=self.getIDFromNVDAObject(NVDAObject)
+		self.appendText(ID,self.getIDText(ID))
+		child=NVDAObject.firstChild
 		while child:
-			childCount+=1
-			(childNodes,childText)=self.generateNode(child)
-			if (len(text)>0) and (len(childText)>0) and (text[-1]=='\n') and (childText[0]=='\n'):
-				text=text[:-1]
-			for j in range(len(childNodes)):
-				childNodes[j][2]+=len(text)
-				childNodes[j][3]+=len(text)
-			text+=childText
-			nodes+=childNodes
-			try:
-				child=child.next
-			except:
-				child=None
-		text+=self.getEndTag(NVDAObject)
-		if (len(text)>0) and (text[0]=='\n'):
-			start=1
-		else:
-			start=0
-		nodes.insert(0,[uniqueID,childCount,start,len(text)])
-		return (nodes,text)
+			self.fillBuffer(child)
+			child=child.next

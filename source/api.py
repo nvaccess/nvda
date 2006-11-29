@@ -64,7 +64,7 @@ def setFocusObjectByLocator(window,objectID,childID):
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-	if not focusObject:
+	if not focusObject: #or (focusObject.role in [ROLE_SYSTEM_CARET,ROLE_SYSTEM_APPLICATION]):
 		return False
 	globalVars.focusLocator=(window,objectID,childID)
 	globalVars.focusObject=focusObject
@@ -78,6 +78,12 @@ def getNavigatorObject():
 
 def setNavigatorObject(obj):
 	globalVars.navigatorObject=obj
+
+def isTypingProtected():
+	if getFocusObject().states&STATE_SYSTEM_PROTECTED:
+		return True
+	else:
+		return False
 
 def keyHasScript(keyPress):
 	#The keyboard help script is built in to hasScript and executeScript
@@ -185,9 +191,9 @@ def executeEvent(name,window,objectID,childID):
 		debug.writeMessage("focus: %s"%winUser.getClassName(window))
 		setFocusObjectByLocator(window,objectID,childID)
 	#If caret event is on object that has not got focus, then set focus and then continue
-	if (name=="caret") and (window!=getFocusLocator()[0]):
-		setFocusObjectByLocator(window,OBJID_CLIENT,0)
-		executeEvent("gainFocus",window,objectID,childID)
+	#if (name=="caret") and (window!=getFocusLocator()[0]):
+	#	setFocusObjectByLocator(window,OBJID_CLIENT,0)
+	#	executeEvent("gainFocus",window,objectID,childID)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
 	virtualBuffer=virtualBuffers.getVirtualBuffer(window)
 	if virtualBuffer and hasattr(virtualBuffer,"event_%s"%name):
@@ -281,3 +287,14 @@ def createStateList(stateBits):
 		if stateBits&bitVal:
 			stateList+=[bitVal]
 	return stateList
+
+def toggleVirtualBufferPassThrough():
+		if globalVars.virtualBufferPassThrough:
+			audio.speakMessage(_("virtual buffer pass through")+" "+_("off"))
+			globalVars.virtualBufferPassThrough=False
+		else:
+			audio.speakMessage(_("virtual buffer pass through")+" "+_("on"))
+			globalVars.virtualBufferPassThrough=True
+
+def isVirtualBufferPassThrough():
+		return globalVars.virtualBufferPassThrough

@@ -43,51 +43,33 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 	def _duplicateDocumentRange(self,rangeObj):
 		abstract
 
-	def nextFormat(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomCharFormat)
-		charFormatPos=rangeObj.End+1
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomParaFormat)
-		paraFormatPos=rangeObj.End+1
-		minPos=min(charFormatPos,paraFormatPos)
-		return minPos
-
-
-	def getCaretRange(self):
+	def _get_caretRange(self):
 		start=self.dom.Selection.Start
 		end=self.dom.Selection.End
 		if start!=end:
 			return (start,end)
 		else:
 			return None
-	caretRange=property(fget=getCaretRange)
 
-	def getCaretPosition(self):
+	def _get_caretPosition(self):
 		return self.dom.Selection.Start
 
-	def setCaretPosition(self,pos):
+	def _set_caretPosition(self,pos):
 		self.dom.Selection.Start=pos
 		self.dom.Selection.End=pos
 
-	caretPosition=property(fget=getCaretPosition,fset=setCaretPosition)
-
-	def getVisibleRange(self):
+	def _get_visibleRange(self):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Expand(self.constants.tomWindow)
 		return (rangeObj.Start,rangeObj.End)
-	visibleRange=property(fget=getVisibleRange)
 
-	def getStartPosition(self):
+	def _get_startPosition(self):
 		return 0
-	startPosition=property(fget=getStartPosition)
 
-	def getEndPosition(self):
+	def _get_endPosition(self):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Expand(self.constants.tomStory)
 		return rangeObj.End
-	endPosition=property(fget=getEndPosition)
 
 	def getLineNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -135,7 +117,7 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 		else:
 			return None
 
-	def getLineCount(self):
+	def _get_lineCount(self):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj.Start=rangeObj.End=0
 		rangeObj.Expand(self.constants.tomStory)
@@ -177,7 +159,7 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 		rangeObj.Expand(self.constants.tomParagraph)
 		return self.getTextRange(rangeObj.Start,rangeObj.End)
 
-	def getCurrentParagraph(self):
+	def _get_currentParagraph(self):
 		return self.getParagraph(self.getCaretPosition())
 
 	def getTextRange(self,start,end):

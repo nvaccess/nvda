@@ -12,7 +12,10 @@ debugFile=None
 
 def writeMessage(message):
 	debugFile.write("message %s\n"%datetime.datetime.now())
-	debugFile.write("%s\n"%message)
+	try:
+		debugFile.write("%s\n"%message)
+	except:
+		debugFile.write("bad message\n")
 	debugFile.flush()
 
 def writeError(message):

@@ -10,6 +10,7 @@ import pyHook
 import debug
 import winUser
 import audio
+from constants import *
 import api
 import globalVars
 from constants import *
@@ -138,10 +139,14 @@ def internal_keyDownEvent(event):
 			return True
 		debug.writeMessage("key press: %s"%str(keyPress))
 		if ((modifiers is None) or (modifiers==frozenset(['Shift']))) and (event.Ascii in range(33,128)):
+			if api.isTypingProtected():
+				char="*"
+			else:
+				char=chr(event.Ascii)
 			if conf["keyboard"]["speakTypedCharacters"]:
-				core.executeFunction(EXEC_SPEECH,audio.speakSymbol,chr(event.Ascii))
+				core.executeFunction(EXEC_SPEECH,audio.speakSymbol,char)
 			if conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
-				word+=chr(event.Ascii)
+				word+=char
 			elif conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
 				word=""

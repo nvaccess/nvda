@@ -30,7 +30,7 @@ def speakMessage(text,wait=False,index=None):
 		return
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.speakText(text,wait=wait,index=index)
+		synthDriverHandler.speakText("\n"+text+"\n",wait=wait,index=index)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False,index=None):
 	if not allowSpeech:

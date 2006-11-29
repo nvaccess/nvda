@@ -1,9 +1,13 @@
 import time
 import ctypes
 import comtypesClient
+import comtypes.automation
+import core
+import MSAAHandler
 import debug
 import winUser
 from constants import *
+import api
 import audio
 import baseType
 
@@ -15,24 +19,28 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			self.virtualBufferObject=virtualBufferObject
 
 		def ondeactivate(self,arg,event):
-			debug.writeMessage("vb event ondeactive: %s"%event.srcElement)
-			#self.virtualBufferObject.refreshNode(event.srcElement.uniqueID)
+			domNode=event.srcElement
+			if domNode.tagName not in ["INPUT","SELECT","TEXTAREA"]:
+				return
+			ID=domNode.uniqueID
+			IDs=self.virtualBufferObject.getIDsFromID(ID)
+			if not IDs:
+				return
+			r=self.virtualBufferObject.getRangeFromID(ID)
+			self.virtualBufferObject.removeText(ID)
+			text=self.virtualBufferObject.getDomNodeText(domNode)
+			if text:
+				self.virtualBufferObject.insertText(r[0],IDs,text)
 
 		def onreadystatechange(self,arg,event):
 			readyState=self.virtualBufferObject.dom.readyState
-			if readyState!="complete":
-				self.virtualBufferObject.text="Loading...\n"
-				self.virtualBufferObject.nodes=[]
-			else:
+			if readyState=="complete":
 				self.virtualBufferObject.loadDocument()
-
-		def __getattr__(self,name):
-			pass #debug.writeMessage("vb event getattr %s"%name)
 
 	def __init__(self,NVDAObject):
 		baseType.virtualBuffer.__init__(self,NVDAObject)
-		MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
-		domPointer=ctypes.POINTER(MSHTMLLib.DispHTMLDocument)()
+		self.MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
+		domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
@@ -43,88 +51,204 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		self.dom=domPointer
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
 		self.domEventsObject=self.domEventsType(self)
-		self.eventConnection=comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=MSHTMLLib.HTMLDocumentEvents2)
-		self.nodes=[]
-		self.text=""
-		if self.dom.readyState!="complete":
-			self.text="Loading...\n"
-		else:
+		self.eventConnection=comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+		if self.dom.readyState=="complete":
 			self.loadDocument()
 
 	def event_gainFocus(self,hwnd,objectID,childID):
-		if len(self.nodes)==0:
+		if not self._allowCaretMovement:
 			return
-		focusDomNode=self.getFocusDomNode()
-		uniqueID=self.getUniqueID(focusDomNode)
-		index=self.getNodesIndexByUniqueID(uniqueID)
-		if index==-1:
-			return
-		self.caretPosition=self.nodes[index][2]
+		domNode=self.dom.activeElement
+		ID=domNode.uniqueID
+		r=self.getRangeFromID(ID)
+		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>r[1])):
+			self.caretPosition=r[0]
 
 	def loadDocument(self):
 		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
+			if api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
 			audio.speakMessage(_("Loading document")+" "+self.dom.title+"...")
-		self.addNode(self.dom.body)
+		self.resetBuffer()
+		self._text="%s\n \n"%self.dom.title
+		self.fillBuffer(self.dom.body,())
 		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
-			audio.speakText(self.text)
+			self.caretPosition=0
+			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
+			core.newThread(self.sayAllGenerator())
 
 	def activatePosition(self,pos):
-		index=self.getNodesIndexByPosition(pos)
-		if index==-1:
+		IDs=self.getIDsFromPosition(pos)
+		if (IDs is None) or (len(IDs)<1):
 			return
-		uniqueID=self.nodes[index][0]
-		domNode=self.getDomNodeByUniqueID(uniqueID)
-		if not domNode:
+		domNode=self.getDomNodeFromID(IDs[-1])
+		if domNode is None:
 			return
-		domNode.click()
+		try:
+			domNode.click()
+		except:
+			pass
+		if domNode.tagName in ["INPUT","SELECT","TEXTAREA"]:
+			domNode.focus()
+			if not api.isVirtualBufferPassThrough() and not ((domNode.tagName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
+				api.toggleVirtualBufferPassThrough()
+		elif domNode.tagName=="A":
+			domNode.focus()
 
-	def addNode(self,domNode):
-		(nodes,text)=self.generateNode(domNode)
-		if len(text)>0 and (text[0]=='\n'):
-			text=text[1:]
-			for num in range(len(nodes)):
-				nodes[num][2]-=1
-				nodes[num][3]-=1
-		self.nodes=nodes
-		self.text=text
+	def fillBuffer(self,domNode,IDAncestors):
+		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
+			return
+		try:
+			if domNode.tagName not in ["B","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]:
+				ID=domNode.uniqueID
+				if ID not in IDAncestors:
+					IDAncestors=tuple(list(IDAncestors)+[ID])
+			else:
+				ID=None
+		except:
+			pass
+		text=self.getDomNodeText(domNode)
+		if text:
+			self.appendText(IDAncestors,text)
+		child=domNode.firstChild
+		while child:
+			self.fillBuffer(child,IDAncestors)
+			child=child.nextSibling
 
-	def refreshNode(self,uniqueID):
-		debug.writeMessage("refresh node uniqueID %s"%uniqueID)
-		domNode=self.getDomNodeByUniqueID(uniqueID)
-		debug.writeMessage("refresh node domNode %s"%domNode)
-		index=self.getNodesIndexByUniqueID(uniqueID)
-		debug.writeMessage("refresh node index %s"%index)
-		preText=self.text[0:self.nodes[index][2]]
-		postText=self.text[self.nodes[index][3]:]
-		preNodes=self.nodes[0:index]
-		postNodes=self.nodes[index+self.nodes[index][1]:]
-		(newNodes,newText)=self.generateNode(domNode)
-		if (len(preText)>0) and (len(newText)>0) and (preText[-1]=='\n') and (newText[0]=='\n'):
-			preText=preText[:-1]
-		for j in range(len(newNodes)):
-			newNodes[j][2]+=len(preText)
-			newNodes[j][3]+=len(preText)
-		for j in range(len(postNodes)):
-			postNodes[j][2]=postNodes[0][2]+len(preText)+len(newText)
-			postNodes[j][3]=postNodes[0][3]+len(preText)+len(newText)
-		self.text=preText+newText+postText
-		self.nodes=preNodes+newNodes+postNodes
+	def updateBuffer(self,domNode,pos):
+		ID=domNode.uniqueID
+		self.removeText(ID)
+		(domNodeID,domNodeText)=self.getDomNodeTextAndID(domNode)
+		self.insertText(pos,domNodeID,domNodeText)
+		endPos=pos+len(domNodeText)
+		child=domNode.firstChild
+		while child:
+			endPos=self.updateBuffer(child,endPos)
+			child=child.nextSibling
+		return endPos
 
-	def getDomNodeByUniqueID(self,uniqueID):
-		return self.dom.getElementById(uniqueID)
-
-	def getNodesIndexByUniqueID(self,uniqueID):
-		for i in range(len(self.nodes)):
-			if self.nodes[i][0]==uniqueID:
-				return i
+	def getDomNodeFromID(self,ID):
+		if ID is not None:
+			domNode=self.dom.getElementById(ID)
+			domNode=comtypesClient.wrap(ctypes.cast(domNode,ctypes.POINTER(comtypes.automation.IDispatch)))
+			debug.writeMessage("domNodeFromID: %s"%domNode)
+			#if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.IHTMLElement)):
+			#	domNode=ctypes.cast(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLGenericElement))
+			debug.writeMessage("vb mshtml domNodeFromID: ID %s, domNode %s (%s)"%(ID,domNode.tagName,domNode))
 		else:
-			return -1
+			return None
+		return domNode
 
-	def getFocusDomNode(self):
-		return self.dom.activeElement
+	def getIDFromDomNode(self,domNode):
+		try:
+			ID=domNode.uniqueID
+			debug.writeMessage("vb mshtml IDFromDomNode %s from %s"%(ID,domNode.tagName))
+		except:
+			debug.writeMessage("vb mshtml IDFromDomNode failed on %s"%domNode)
+			ID=None
+		return ID
+
+	def getDomNodeText(self,domNode):
+		try:
+			data=domNode.data
+			parentNode=domNode.parentNode
+			parentTagName=parentNode.tagName
+			parentUniqueID=parentNode.uniqueID
+		except:
+			data=None
+			parentNode=None
+			parentTagName=None
+			parentUniqueID=None
+		try:
+			tagName=domNode.tagName
+			uniqueID=domNode.uniqueID
+		except:
+			tagName=None
+			uniqueID=None
+		if data and not data.isspace() and parentNode and (parentTagName not in ["OPTION"]):
+			return data
+		if tagName=="IMG":
+			label=domNode.getAttribute('alt')
+			if not label:
+				label=domNode.getAttribute('src')
+			return label
+		elif tagName=="SELECT":
+			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
+			return itemText
+		elif tagName=="INPUT":
+			inputType=domNode.getAttribute('type')
+			if inputType=="text":
+				return domNode.getAttribute('value')+" "
+			elif inputType in ["button","reset","submit"]:
+				return domNode.getAttribute('value')
+			elif inputType in ["checkbox","radio"]:
+				return " "
+
+	def getIDEnterMessage(self,ID):
+		domNode=self.getDomNodeFromID(ID)
+		if not domNode:
+			return ""
+		tagName=domNode.tagName
+		if tagName=="A":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_LINK)
+		elif tagName=="UL":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_LIST)+" with %s items"%domNode.children.length
+		elif tagName=="LI":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_LISTITEM)
+		elif tagName=="TEXTAREA":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+		elif tagName=="STRONG":
+			return _("strong")
+		elif tagName=="EM":
+			return _("emphisized")
+		elif tagName=="IMG":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_GRAPHIC)
+		elif tagName in ["H1","H2","H3","H4","H5","H6"]:
+			return _("heading")+" %s"%tagName[1]
+		elif tagName=="BLOCKQUOTE":
+			return _("block quote")
+		elif tagName=="INPUT":
+			inputType=domNode.getAttribute("type")
+			if inputType=="text":
+				return MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+			elif inputType in ["button","reset","submit"]:
+				return MSAAHandler.getRoleName(ROLE_SYSTEM_PUSHBUTTON)
+			elif inputType=="radio":
+				try:
+					if domNode.checked:
+						state=MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+					else:
+						state=_("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				except:
+					state=""
+				return MSAAHandler.getRoleName(ROLE_SYSTEM_RADIOBUTTON)+" "+state
+			elif inputType=="checkbox":
+				try:
+					if domNode.checked:
+						state=MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+					else:
+						state=_("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				except:
+					state=""
+				return MSAAHandler.getRoleName(ROLE_SYSTEM_CHECKBUTTON)+" "+state
+		elif tagName=="SELECT":
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_COMBOBOX)
+		else:
+			return ""
+
+	def getIDExitMessage(self,ID):
+		domNode=self.getDomNodeFromID(ID)
+		outOf=_("out of")
+		tagName=domNode.tagName
+		if tagName=="UL":
+			return outOf+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_LIST)
+		elif tagName=="BLOCKQUOTE":
+			return outOf+" "+_("block quote")
+		else:
+			return ""
 
 	def getStartTag(self,domNode):
 		tagName=self.getTagName(domNode)
