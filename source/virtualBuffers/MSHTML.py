@@ -33,13 +33,15 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				self.virtualBufferObject.insertText(r[0],IDs,text)
 
 		def onreadystatechange(self,arg,event):
-			readyState=self.virtualBufferObject.dom.readyState
-			if readyState=="complete":
+			audio.speakMessage("ready state changed")
+			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 
 	def __init__(self,NVDAObject):
 		baseType.virtualBuffer.__init__(self,NVDAObject)
+		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
 		self.MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
+		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
 		domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
@@ -50,9 +52,13 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
 		self.dom=domPointer
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
+		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
-		self.eventConnection=comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
-		if self.dom.readyState=="complete":
+		self._eventHolder=[]
+		self._eventHolder.append(comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2))
+		for frameNum in range(self.dom.frames.length):
+			self._eventHolder.append(comtypesClient.GetEvents(self.dom.frames.item(frameNum).document,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2))
+		if self.isDocumentComplete():
 			self.loadDocument()
 
 	def event_gainFocus(self,hwnd,objectID,childID):
@@ -72,7 +78,13 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			audio.speakMessage(_("Loading document")+" "+self.dom.title+"...")
 		self.resetBuffer()
 		self._text="%s\n \n"%self.dom.title
-		self.fillBuffer(self.dom.body,())
+		if self.dom.body.tagName=="FRAMESET":
+			for frameNum in range(self.dom.frames.length):
+				self._text+="%s frame\n"%self.dom.frames.item(frameNum).document.title
+				self.fillBuffer(self.dom.frames.item(frameNum).document.body,())
+				self._text+="%s frame end\n"%self.dom.frames.item(frameNum).document.title
+		else:
+			self.fillBuffer(self.dom.body,())
 		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
@@ -97,6 +109,15 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				api.toggleVirtualBufferPassThrough()
 		elif domNode.tagName=="A":
 			domNode.focus()
+
+	def isDocumentComplete(self):
+		documentComplete=True
+		if self.dom.readyState!="complete":
+			documentComplete=False
+		for frameNum in range(self.dom.frames.length):
+			if self.dom.frames.item(frameNum).document.readyState!="complete":
+				documentComplete=False
+		return documentComplete
 
 	def fillBuffer(self,domNode,IDAncestors):
 		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
@@ -131,15 +152,25 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		return endPos
 
 	def getDomNodeFromID(self,ID):
-		if ID is not None:
-			domNode=self.dom.getElementById(ID)
-			domNode=comtypesClient.wrap(ctypes.cast(domNode,ctypes.POINTER(comtypes.automation.IDispatch)))
-			debug.writeMessage("domNodeFromID: %s"%domNode)
-			#if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.IHTMLElement)):
-			#	domNode=ctypes.cast(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLGenericElement))
-			debug.writeMessage("vb mshtml domNodeFromID: ID %s, domNode %s (%s)"%(ID,domNode.tagName,domNode))
-		else:
+		if ID is None:
 			return None
+		domNode=None
+		if self.dom.body.tagName=="FRAMESET":
+			for frameNum in range(self.dom.frames.length):
+				try:
+					domNode=self.dom.frames.item(frameNum).document.getElementById(ID)
+					break
+				except:
+					pass
+		else:
+			try:
+				domNode=self.dom.getElementById(ID)
+			except:
+				domNode=None
+		if not domNode:
+			return None
+		#Usually we get back a generic IHTMLElement interface, which isn't specific to the element, we we have to let comtypes wrap it  with the correct interface
+		domNode=comtypesClient.wrap(ctypes.cast(domNode,ctypes.POINTER(comtypes.automation.IDispatch)))
 		return domNode
 
 	def getIDFromDomNode(self,domNode):
