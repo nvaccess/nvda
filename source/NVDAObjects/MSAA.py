@@ -394,7 +394,7 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 		if not lineLength:
 			return None
 		sizeData=struct.pack('h',lineLength)
-		buf=ctypes.create_unicode_buffer(sizeData,size=lineLength)
+		buf=ctypes.create_unicode_buffer(sizeData,size=lineLength+4)
 		res=winUser.sendMessage(self.hwnd,EM_GETLINE,lineNum,buf)
 		return buf.value
 
