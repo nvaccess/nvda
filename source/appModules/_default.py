@@ -28,6 +28,7 @@ class appModule(object):
 			key("insert+space"):self.script_toggleVirtualBufferPassThrough,
 			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
 			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
+			key("insert+extendedUp"):self.script_currentFocus,
 			key("Insert+Clear"):self.script_navigator_object_current,
 			key("insert+Subtract"):self.script_navigator_object_toFocus,
 			key("Insert+Up"):self.script_navigator_object_parent,
@@ -346,4 +347,7 @@ class appModule(object):
 			getFocusObject().reportFormatInfo()
 		else:
 			audio.speakMessage(_("no format info"))
+
+	def script_currentFocus(self,keyPress):
+		getFocusObject().speakObject()
 

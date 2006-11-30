@@ -37,6 +37,9 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 
+		def onload(self,arg,event):
+			audio.speakMessage("load")
+
 	def __init__(self,NVDAObject):
 		baseType.virtualBuffer.__init__(self,NVDAObject)
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib

@@ -179,7 +179,7 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		MSAAHandler.accDoDefaultAction(self.ia,self.child)
 
 	def _get_activeChild(self):
-		res=MSAAHandler.accFocus()
+		res=MSAAHandler.accFocus(self.ia)
 		if res:
 			return manager.getNVDAObjectByAccessibleObject(res[0],res[1])
 
@@ -205,10 +205,6 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 					position="%s of %s"%(childID,parentChildCount)
 		return position
 
-	def event_foreground(self):
-		audio.cancel()
-		self.speakObject()
-
 	def event_show(self):
 		if self.role==ROLE_SYSTEM_MENUPOPUP:
 			self.event_menuStart()
@@ -232,8 +228,8 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 
 	def event_gainFocus(self):
 		self.updateMenuMode()
-		if self.hasFocus() and not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.hwnd==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
-			self.speakObject()
+		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.hwnd==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
+			super(NVDAObject_MSAA,self).event_gainFocus()
 
 	def event_menuStart(self):
 		if self.role not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
@@ -286,7 +282,7 @@ class NVDAObject_dialog(NVDAObject_MSAA):
 	"""
 
 	def event_foreground(self):
-		self.speakObject()
+		super(NVDAObject_dialog,self).event_foreground()
 		for child in self.children:
 			states=child.states
 			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
@@ -313,29 +309,27 @@ class NVDAObject_TrayClockWClass(NVDAObject_MSAA):
 	def _get_role(self):
 		return ROLE_SYSTEM_CLOCK
 
-class NVDAObject_Shell_TrayWnd(NVDAObject_MSAA):
+class NVDAObject_Shell_TrayWnd_client(NVDAObject_MSAA):
 	"""
 	Based on NVDAObject but on foreground events nothing gets spoken.
 	This is the window which holds the windows start button and taskbar.
 	"""
  
-	def event_foreground(self):
-		pass
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.speakOnForeground=False
+		self.speakOnGainFocus=False
 
-	def event_gainFocus(self):
-		pass
-
-class NVDAObject_Progman(NVDAObject_MSAA):
+class NVDAObject_Progman_client(NVDAObject_MSAA):
 	"""
 	Based on NVDAObject but on foreground events nothing gets spoken.
 	This is the window which holds the windows desktop.
 	"""
 
-	def event_foreground(self):
-		pass
-
-	def event_gainFocus(self):
-		pass
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.speakOnForeground=False
+		self.speakOnGainFocus=False
 
 class NVDAObject_staticText(textBuffer.NVDAObject_textBuffer,NVDAObject_MSAA):
 
@@ -565,6 +559,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		return ""
 
 	def event_gainFocus(self):
+		NVDAObject_MSAA.event_gainFocus(self)
 		time.sleep(0.1)
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
@@ -574,7 +569,6 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 				self.consoleEventHookHandles.append(handle)
 			else:
 				raise OSError('Could not register console event %s'%eventID)
-		audio.speakObjectProperties(typeString="console")
 		for line in self.visibleLines:
 			audio.speakText(line)
 
@@ -630,8 +624,9 @@ class NVDAObject_mozillaUIWindowClass(NVDAObject_MSAA):
 	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
 	"""
 
-	def event_gainFocus(self):
-		self.speakObject()
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.needsFocusState=False
 
 class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
 	"""
@@ -640,6 +635,10 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 	*firstChild is the first child that is not a tooltip or a menu popup since these don't seem to allow getNext etc.
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
+
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.speakOnGainFocus=False
 
 	def _get_value(self):
 		return ""
@@ -656,12 +655,6 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 					return getNVDAObjectByAccessibleObject(child)
 			except:
 				pass
-
-	def event_gainFocus(self):
-		pass
-
-class NVDAObject_mozillaContentWindowClass(NVDAObject_MSAA):
-	pass
 
 class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 
@@ -761,3 +754,22 @@ class NVDAObject_internetExplorerPane(NVDAObject_MSAA):
 	def _get_value(self):
 		return ""
 
+class NVDAObject_SHELLDLL_DefView_client(NVDAObject_MSAA):
+
+	def __init__(self,*args):
+		NVDAObject_MSAA.__init__(self,*args)
+		self.speakOnGainFocus=False
+
+class NVDAObject_list(NVDAObject_MSAA):
+
+	def event_gainFocus(self):
+		NVDAObject_MSAA.event_gainFocus(self)
+		child=self.activeChild
+		if child and (child.role==ROLE_SYSTEM_LISTITEM):
+			childID=child.childID
+			hwnd=self.hwnd
+			objectID=api.getFocusLocator()[1]
+			api.setFocusObjectByLocator(hwnd,objectID,childID)
+			child.event_gainFocus()
+		else:
+			audio.speakMessage(_("0 items"))

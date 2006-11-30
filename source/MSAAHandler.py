@@ -171,9 +171,9 @@ def accDoDefaultAction(ia,child):
 	except:
 		pass
 
-def accFocus(ia,child):
+def accFocus(ia):
 	try:
-		res=ia.accFocus(child)
+		res=ia.accFocus
 		if isinstance(res,ctypes.POINTER(IAccessible)):
 			new_ia=res
 			new_child=0
@@ -183,6 +183,8 @@ def accFocus(ia,child):
 		elif isinstance(res,int):
 			new_ia=ia
 			new_child=res
+		else:
+			return None
 		return (new_ia,new_child)
 	except:
 		return None

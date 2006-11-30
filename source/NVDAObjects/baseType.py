@@ -39,6 +39,12 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type children: list of L{NVDAObject}
 @ivar childCount: The number of child NVDA objects under this one in the tree
 @type childCount: int
+@ivar speakOnGainFocus: If true, the object will speak when it gains focus, if false it will not.
+@type speakOnGainFocus: boolean
+@ivar needsFocusState: If true the object will only react to gainFocus events if its focus state is set at the time.
+@type needsFocusState: boolean
+@ivar speakOnForeground: if true, this object is spoken if it becomes the current foreground object
+@type speakOnForeground: boolean
 """
 
 	__metaclass__=autoPropertyType.autoPropertyType
@@ -47,6 +53,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._keyMap={}
 		self.allowedPositiveStates=0
 		self.allowedNegativeStates=0
+		self.speakOnGainFocus=True
+		self.needsFocusState=True
+		self.speakOnForeground=True
 
 	def getScript(self,keyPress):
 		"""
@@ -224,3 +233,17 @@ Speaks the properties of this object such as name, typeString,value, description
 			keyboardShortcut=None
 		position=self.positionString
 		audio.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position)
+
+	def event_gainFocus(self):
+		"""
+This code is executed if a gain focus event is received by this object.
+"""
+		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus())):
+			self.speakObject()
+
+	def event_foreground(self):
+		"""
+This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
+"""
+		if self.speakOnForeground:
+			self.speakObject()

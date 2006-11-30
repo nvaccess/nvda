@@ -180,6 +180,7 @@ def notifyMouseMoved(x,y):
 def executeEvent(name,window,objectID,childID):
 	#If foreground event, see if we should change appModules, and also update the foreground global variables
 	if name=="foreground":
+		audio.cancel()
 		processID=winUser.getWindowThreadProcessID(window)
 		if processID!=globalVars.foregroundProcessID:
 			appName=getAppName(processID)
@@ -188,7 +189,9 @@ def executeEvent(name,window,objectID,childID):
 		setForegroundObjectByLocator(window,objectID,childID)
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
-		debug.writeMessage("focus: %s"%winUser.getClassName(window))
+		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
+		if (window,objectID,childID)==getFocusLocator():
+			return
 		setFocusObjectByLocator(window,objectID,childID)
 	#If caret event is on object that has not got focus, then set focus and then continue
 	#if (name=="caret") and (window!=getFocusLocator()[0]):

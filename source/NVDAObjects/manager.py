@@ -45,10 +45,10 @@ def unregisterNVDAObjectClass(windowClass,objectRole):
 _dynamicMap={}
 
 _staticMap={
-("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_Shell_TrayWnd,
+("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_Shell_TrayWnd_client,
 ("tooltips_class32",ROLE_SYSTEM_TOOLTIP):MSAA.NVDAObject_tooltip,
 ("tooltips_class32",ROLE_SYSTEM_HELPBALLOON):MSAA.NVDAObject_tooltip,
-("Progman",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_Progman,
+("Progman",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_Progman_client,
 ("#32770",ROLE_SYSTEM_DIALOG):MSAA.NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):MSAA.NVDAObject_edit,
@@ -74,4 +74,6 @@ _staticMap={
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_consoleWindowClassClient,
 (None,ROLE_SYSTEM_LISTITEM):MSAA.NVDAObject_listItem,
 ("Internet Explorer_Server",ROLE_SYSTEM_PANE):MSAA.NVDAObject_internetExplorerPane,
+("SHELLDLL_DefView",ROLE_SYSTEM_CLIENT):MSAA.NVDAObject_SHELLDLL_DefView_client,
+(None,ROLE_SYSTEM_LIST):MSAA.NVDAObject_list,
 }
