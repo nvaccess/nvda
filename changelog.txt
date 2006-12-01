@@ -1,12 +1,14 @@
 Changes since revision 164:
-*NVDA can now read formatting changes in documents whilst reading (this includes both in say all, and when changes appear in the middle of a line or word that has been spoken).
+*NVDA can now read formatting changes in documents whilst reading with say all.
 *If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4 and then Viavoice. the more likely found synthesizers are first.
 *Fixed some crashes in MS Office applications
 *If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
 *Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
+*When moving focus to a list, the active list item now always gets spoken. (If there is no active list item, then it will say at least how many items are in the list, most of the time this is 0). Previously some lists spoke the active item, some didn't. 
 *You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
 *Fixed a bug that stopped internet explorer reading when pressing tab
 *Links no longer say the URL as their value. They also now say "visited link" for visited links.
+*Greatly improved the internet explorer virtualBuffer by having the type of object (link, heading, list) spoken as you arrow on to it, but not having it actually written physically in the buffer. So if you arrow to a link, you can straight away arrow through its name, rather than arrowing across l i n k first. Also improved focus tracking and the updating of form fields when you move away from them after interacting with them. 
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
 *Made NVDA over all much more responsive (especially in edit fields such as an address bar)
@@ -25,6 +27,8 @@ These scripts also make sure they say * when typing in edit fields with the prot
 *NVDA now starts with its window completely hidden (not even just minimized). You now need to press insert+n to bring it up, and press alt+f4 to make it go away. 
 *The NVDA window when shown should be now centered in the middle of the screen and is 300 by 300 pixels in size. 
 *Fixed several bugs to do with tracking the caret location
+*Improved the internal structure of NVDA objects and virtualBuffers and made NVDA less dependent on MSAA. (NVDA still needs MSAA for most things, but now it is much easier for support for other accessibility APIs to be designed).
+
 Changes since revision 82:
 *Added support for the automatic speaking of font, style, page number etc of documents.
 *Fixed many small bugs to do with navigating documents by character, word and line.
