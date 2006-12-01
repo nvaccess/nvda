@@ -24,6 +24,14 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	obj=NVDAObject_MSAA(pacc,child,origEventLocator=(hwnd,objectID,childID))
 	return obj
 
+def getNVDAObjectFromPoint(x,y):
+	accHandle=MSAAHandler.accessibleObjectFromPoint(x,y)
+	if not accHandle:
+		return None
+	(pacc,child)=accHandle
+	obj=NVDAObject_MSAA(pacc,child)
+	return obj
+
 def registerNVDAObjectClass(processID,windowClass,objectRole,cls):
 	_dynamicMap[(processID,windowClass,objectRole)]=cls
 

@@ -12,7 +12,7 @@ winsound.Beep((440*4)/3,50)
 winsound.Beep(660,50)
 winsound.Beep(880,50)
 import gettext
-gettext.install('nvda')
+gettext.install('nvda',localedir='locale',unicode=True)
 import debug
 debug.start("debug.log")
 try:

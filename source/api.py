@@ -140,26 +140,6 @@ def eventExists(name,window,objectID,childID):
 			return True
 	return False
 
-def notifyMouseMoved(x,y):
-	obj=NVDAObjects.getNVDAObjectByPoint(x,y)
-	if not obj:
-		return
-	if getFocusObject() and (obj.getLocation()==getFocusObject().getLocation()):
-		mouseObject=getFocusObject()
-		globalVars.mouseObject=None
-	elif globalVars.mouseObject and (obj.getLocation()==globalVars.mouseObject.getLocation()):
-		mouseObject=globalVars.mouseObject
-	else:
-		globalVars.mouseObject=mouseObject=obj
-	if hasattr(mouseObject,"event_mouseMove"):
-		try:
-			getattr(mouseObject,"event_mouseMove")(x,y,globalVars.mouseOldX,globalVars.mouseOldY)
-		except:
-			debug.writeException("api.notifyMouseMoved")
-	globalVars.mouseOldX=x
-	globalVars.mouseOldY=y
-
-
  
 def getObjectGroupName(accObject):
 	try:
