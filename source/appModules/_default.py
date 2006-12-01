@@ -142,6 +142,9 @@ class appModule(object):
 	def script_navigator_object_current(self,keyPress):
 		"""Reports the object the navigator is currently on""" 
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject.speakObject()
 		return False
 
@@ -149,6 +152,9 @@ class appModule(object):
 		"""Reports the object that the navigator is currently on, plus any descendants of that object"""
 		if obj is None:
 			curObject=getNavigatorObject()
+			if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+				audio.speakMessage(_("no navigator object"))
+				return
 			if curObject.childID>0:
 				audio.speakMessage(_("No children"))
 				return
@@ -167,6 +173,8 @@ class appModule(object):
 	def script_navigator_object_toFocus(self,keyPress):
 		"""Moves the navigator to the object with focus"""
 		obj=getFocusObject()
+		if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no focus"))
 		setNavigatorObject(obj)
 		audio.speakMessage(_("move to focus"))
 		obj.speakObject()
@@ -174,6 +182,9 @@ class appModule(object):
 	def script_navigator_object_parent(self,keyPress):
 		"""Moves the navigator to the parent of the object it is currently on"""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject=curObject.parent
 		if curObject is not None:
 			setNavigatorObject(curObject)
@@ -184,6 +195,9 @@ class appModule(object):
 	def script_navigator_object_next(self,keyPress):
 		"""Moves the navigator to the next object of the one it is currently on"""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject=curObject.next
 		if curObject is not None:
 			setNavigatorObject(curObject)
@@ -194,6 +208,9 @@ class appModule(object):
 	def script_navigator_object_previous(self,keyPress):
 		"""Moves the navigator to the previous object of the one it is currently on"""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject=curObject.previous
 		if curObject is not None:
 			setNavigatorObject(curObject)
@@ -204,6 +221,9 @@ class appModule(object):
 	def script_navigator_object_firstChild(self,keyPress):
 		"""Moves the navigator to the first child object of the one it is currently on"""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject=curObject.firstChild
 		if curObject is not None:
 			setNavigatorObject(curObject)
@@ -214,11 +234,17 @@ class appModule(object):
 	def script_navigator_object_doDefaultAction(self,keyPress):
 		"""Performs the default action on the object the navigator is currently on (example: presses it if it is a button)."""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		curObject.doDefaultAction()
 
 	def script_navigator_object_where(self,keyPress):
 		"""Reports where the navigator is, by starting at the object where the navigator is currently, and moves up the ansesters, speaking them as it goes."""
 		curObject=getNavigatorObject()
+		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("no navigator object"))
+			return
 		while curObject is not None:
 			curObject.speakObject()
 			curObject=curObject.parent
@@ -349,5 +375,10 @@ class appModule(object):
 			audio.speakMessage(_("no format info"))
 
 	def script_currentFocus(self,keyPress):
-		getFocusObject().speakObject()
+		focusObject=getFocusObject()
+		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
+			focusObject.speakObject()
+		else:
+			audio.speakMessage(_("no focus"))
+
 

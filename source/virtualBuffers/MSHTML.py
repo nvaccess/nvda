@@ -33,12 +33,8 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				self.virtualBufferObject.insertText(r[0],IDs,text)
 
 		def onreadystatechange(self,arg,event):
-			audio.speakMessage("ready state changed")
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
-
-		def onload(self,arg,event):
-			audio.speakMessage("load")
 
 	def __init__(self,NVDAObject):
 		baseType.virtualBuffer.__init__(self,NVDAObject)
@@ -49,7 +45,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
-		lresult=winUser.sendMessage(NVDAObject.hwnd,wm,0,0)
+		lresult=winUser.sendMessage(NVDAObject.windowHandle,wm,0,0)
 		debug.writeMessage("vb internetExplorer_server: lresult %s"%lresult)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
@@ -59,12 +55,10 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		self.domEventsObject=self.domEventsType(self)
 		self._eventHolder=[]
 		self._eventHolder.append(comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2))
-		for frameNum in range(self.dom.frames.length):
-			self._eventHolder.append(comtypesClient.GetEvents(self.dom.frames.item(frameNum).document,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_gainFocus(self,hwnd,objectID,childID):
+	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
 		if not self._allowCaretMovement:
 			return
 		domNode=self.dom.activeElement
@@ -74,7 +68,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			self.caretPosition=r[0]
 
 	def loadDocument(self):
-		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -89,7 +83,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		else:
 			self.fillBuffer(self.dom.body,())
 		self.caretPosition=0
-		if winUser.getAncestor(self.NVDAObject.hwnd,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done

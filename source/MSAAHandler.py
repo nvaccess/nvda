@@ -14,6 +14,10 @@ import audio
 from constants import *
 import api
 import core
+import virtualBuffers
+import NVDAObjects
+import globalVars
+import appModuleHandler
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -289,21 +293,82 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			objectID=OBJID_CLIENT
 		#Let tooltips through
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32"):
-			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"toolTip",window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
 		#Let caret events through
 		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
-			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,"caret",window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)
 		#Let menu events through
 		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPSTART,EVENT_SYSTEM_MENUPOPUPEND]:
-			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let foreground and focus events through
 		elif (eventID==EVENT_SYSTEM_FOREGROUND) or (eventID==EVENT_OBJECT_FOCUS):
-			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
-		elif (window,objectID,childID)==api.getFocusLocator():
-			core.executeFunction(EXEC_USERINTERFACE,api.executeEvent,eventName,window,objectID,childID)
+		elif isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and (window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator:
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
+
+def executeEvent(name,window,objectID,childID):
+	obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(window,objectID,childID)
+	#If foreground event, see if we should change appModules, and also update the foreground global variables
+	if name=="foreground":
+		audio.cancel()
+		processID=winUser.getWindowThreadProcessID(window)
+		if processID!=globalVars.foregroundProcessID:
+			appName=api.getAppName(processID)
+			appModuleHandler.load(appName,window,processID)
+			globalVars.foregroundProcessID=processID
+		api.setForegroundObject(obj)
+		virtualBuffers.MSAA.updateVirtualBuffers(obj)
+	#If focus event then update the focus global variables
+	if (name=="gainFocus"):
+		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
+		if isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator): 
+			return
+		api.setFocusObject(obj)
+		virtualBuffers.MSAA.updateVirtualBuffers(obj)
+	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
+	virtualBuffer=virtualBuffers.getVirtualBuffer(obj)
+	if virtualBuffer and hasattr(virtualBuffer,"event_MSAA_%s"%name):
+		event=getattr(virtualBuffer,"event_MSAA_%s"%name)
+		try:
+			event(window,objectID,childID)
+		except:
+			debug.writeException("virtualBuffer event")
+	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
+	#and then continue 
+	if (name=="hide") and (objectID==0): 
+		virtualBuffers.removeVirtualBuffer(window)
+	#This event is either for the current appModule if the appModule has an event handler,
+	#the foregroundObject if its a foreground event and the foreground object handles this event,
+	#the focus object if the focus object has a handler for this event,
+	#the specific object that this event describes if the object has a handler for this event.
+	if hasattr(appModuleHandler.current,"event_%s"%name):
+		event=getattr(appModuleHandler.current,"event_%s"%name)
+		try:
+			event(window,objectID,childID)
+		except:
+			debug.writeException("Error executing event %s from appModule"%event.__name__)
+		return
+	if (name=="foreground") and (api.getForegroundObject()==obj) and hasattr(api.getForegroundObject(),"event_%s"%name):
+		try:
+			getattr(api.getForegroundObject(),"event_%s"%name)()
+		except:
+			debug.writeException("foregroundObject: event_%s"%name)
+		return
+	if ((isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator)) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
+		try:
+			getattr(api.getFocusObject(),"event_%s"%name)()
+		except:
+			debug.writeException("Error executing event event_%s from focusObject"%name)
+		return
+	if obj and hasattr(obj,"event_%s"%name):
+		try:
+			getattr(obj,"event_%s"%name)()
+		except:
+			debug.writeException("Error executing event event_%s from object"%name)
+		return
 
 #Register internal object event with MSAA
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)

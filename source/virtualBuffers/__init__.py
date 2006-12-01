@@ -1,8 +1,6 @@
-import manager
+import NVDAObjects
+import MSAA
 
-getVirtualBuffer=manager.getVirtualBuffer
-insertVirtualBuffer=manager.insertVirtualBuffer
-removeVirtualBuffer=manager.removeVirtualBuffer
-updateVirtualBuffers=manager.updateVirtualBuffers
-registerVirtualBufferClass=manager.registerVirtualBufferClass
-unregisterVirtualBufferClass=manager.unregisterVirtualBufferClass
+def getVirtualBuffer(obj):
+		if isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA):
+			return MSAA.getVirtualBuffer(obj)

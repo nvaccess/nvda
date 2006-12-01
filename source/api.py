@@ -35,48 +35,32 @@ def getFocusObject():
 def getForegroundObject():
 	return globalVars.foregroundObject
 
-def getForegroundLocator():
-	return globalVars.foregroundLocator
-
-def setForegroundObjectByLocator(window,objectID,childID):
-	foregroundObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-	if not foregroundObject:
+def setForegroundObject(obj):
+	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
-	globalVars.foregroundLocator=(window,objectID,childID)
-	globalVars.foregroundObject=foregroundObject
-	if globalVars.navigatorTracksFocus:
-		setNavigatorObject(foregroundObject)
-	virtualBuffers.updateVirtualBuffers(window)
+	globalVars.foregroundObject=obj
 	return True
 
 def getFocusObject():
 	return globalVars.focusObject
 
-def getFocusLocator():
-	return globalVars.focusLocator
-
-def setFocusObjectByLocator(window,objectID,childID):
-	if (window,objectID,childID)==getFocusLocator():
+def setFocusObject(obj):
+	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		try:
 			globalVars.focusObject.event_looseFocus()
 		except:
 			debug.writeException("event_looseFocus in focusObject")
-	focusObject=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-	if not focusObject: #or (focusObject.role in [ROLE_SYSTEM_CARET,ROLE_SYSTEM_APPLICATION]):
-		return False
-	globalVars.focusLocator=(window,objectID,childID)
-	globalVars.focusObject=focusObject
-	if globalVars.navigatorTracksFocus:
-		setNavigatorObject(focusObject)
-	virtualBuffers.updateVirtualBuffers(window)
+	globalVars.focusObject=obj
 	return True
 
 def getNavigatorObject():
 	return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
+	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		return False
 	globalVars.navigatorObject=obj
 
 def isTypingProtected():
@@ -93,10 +77,10 @@ def keyHasScript(keyPress):
 		return True
 	if appModuleHandler.current.getScript(keyPress):
 		return True
-	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 	if not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
 		return True
-	if getFocusObject().getScript(keyPress):
+	if isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
 		return True
 	return False
 
@@ -111,12 +95,12 @@ def executeScript(keyPress):
 			globalVars.keyboardHelp=False
 			audio.speakMessage(_("keyboard help")+" "+_("off"))
 			return True
-	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 	if appModuleHandler.current.getScript(keyPress):
 		script=appModuleHandler.current.getScript(keyPress)
 	elif not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
 		script=virtualBuffer.getScript(keyPress)
-	elif getFocusObject().getScript(keyPress):
+	elif isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
 		script=getFocusObject().getScript(keyPress)
 	else:
 		script=None
@@ -177,69 +161,6 @@ def notifyMouseMoved(x,y):
 
 
  
-def executeEvent(name,window,objectID,childID):
-	#If foreground event, see if we should change appModules, and also update the foreground global variables
-	if name=="foreground":
-		audio.cancel()
-		processID=winUser.getWindowThreadProcessID(window)
-		if processID!=globalVars.foregroundProcessID:
-			appName=getAppName(processID)
-			appModuleHandler.load(appName,window,processID)
-			globalVars.foregroundProcessID=processID
-		setForegroundObjectByLocator(window,objectID,childID)
-	#If focus event then update the focus global variables
-	if (name=="gainFocus"):
-		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
-		if (window,objectID,childID)==getFocusLocator():
-			return
-		setFocusObjectByLocator(window,objectID,childID)
-	#If caret event is on object that has not got focus, then set focus and then continue
-	#if (name=="caret") and (window!=getFocusLocator()[0]):
-	#	setFocusObjectByLocator(window,OBJID_CLIENT,0)
-	#	executeEvent("gainFocus",window,objectID,childID)
-	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
-	virtualBuffer=virtualBuffers.getVirtualBuffer(window)
-	if virtualBuffer and hasattr(virtualBuffer,"event_%s"%name):
-		event=getattr(virtualBuffer,"event_%s"%name)
-		try:
-			event(window,objectID,childID)
-		except:
-			debug.writeException("virtualBuffer event")
-	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
-	#and then continue 
-	if (name=="hide") and (objectID==0): 
-		virtualBuffers.removeVirtualBuffer(window)
-	#This event is either for the current appModule if the appModule has an event handler,
-	#the foregroundObject if its a foreground event and the foreground object handles this event,
-	#the focus object if the focus object has a handler for this event,
-	#the specific object that this event describes if the object has a handler for this event.
-	if hasattr(appModuleHandler.current,"event_%s"%name):
-		event=getattr(appModuleHandler.current,"event_%s"%name)
-		try:
-			event(window,objectID,childID)
-		except:
-			debug.writeException("Error executing event %s from appModule"%event.__name__)
-		return
-	if (name=="foreground") and (getForegroundLocator()==(window,objectID,childID)) and hasattr(getForegroundObject(),"event_%s"%name):
-		try:
-			getattr(getForegroundObject(),"event_%s"%name)()
-		except:
-			debug.writeException("foregroundObject: event_%s"%name)
-		return
-	if ((getFocusLocator()==(window,objectID,childID)) or (name=="caret")) and hasattr(getFocusObject(),"event_%s"%name):
-		try:
-			getattr(getFocusObject(),"event_%s"%name)()
-		except:
-			debug.writeException("Error executing event event_%s from focusObject"%name)
-		return
-	thisObj=NVDAObjects.getNVDAObjectByLocator(window,objectID,childID)
-	if thisObj and hasattr(thisObj,"event_%s"%name):
-		try:
-			getattr(thisObj,"event_%s"%name)()
-		except:
-			debug.writeException("Error executing event event_%s from object"%name)
-		return
-
 def getObjectGroupName(accObject):
 	try:
 		(objectLeft,objectTop,objectRight,objectBottom)=accObject.GetLocation()

@@ -64,7 +64,7 @@ def getKeyState(v):
 def isWindow(hwnd):
 	return user32.IsWindow(hwnd)
 
-def isDecendantWindow(parentHwnd,childHwnd):
+def isDescendantWindow(parentHwnd,childHwnd):
 	if (parentHwnd==childHwnd) or user32.IsChild(parentHwnd,childHwnd):
 		return True
 	else:

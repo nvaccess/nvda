@@ -7,7 +7,6 @@ import winUser
 import MSAAHandler
 import audio
 import NVDAObjects
-import manager
 import baseType
 
 NAVRELATION_EMBEDS=0x1009 

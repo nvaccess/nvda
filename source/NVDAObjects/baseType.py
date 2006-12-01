@@ -7,6 +7,14 @@ from config import conf
 class NVDAObject(object):
 	"""
 The baseType NVDA object. All other NVDA objects are based on this one.
+@ivar _hashLimit: The limit in size for a hash of this object
+@type _hashLimit: int
+@ivar _hashPrime: the prime number used in calculating this object's hash
+@type _hashPrime: int
+@ivar _cachedHash: The stored hash value for this object. This is calculated in __init__, change the L{_makeHash} function to change the way hashes are generated.
+@type _cachedHash: int
+@ivar _keyMap: A dictionary that stores key:method  key to script mappings. Do not change this directly, use L{getScript}, L{executeScript}, L{registerScriptKey} or L{registerScriptKeys} instead.
+@type _keyMap: dict
 @ivar name: The objects name or label. (e.g. the text of a list item, label of a button)
 @type name: string
 @ivar value: the object's value. (e.g. content of an edit field, percentage on a progresss bar)
@@ -50,12 +58,38 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	__metaclass__=autoPropertyType.autoPropertyType
 
 	def __init__(self,*args):
+		self._hashLimit=10000000
+		self._hashPrime=17
 		self._keyMap={}
 		self.allowedPositiveStates=0
 		self.allowedNegativeStates=0
 		self.speakOnGainFocus=True
 		self.needsFocusState=True
 		self.speakOnForeground=True
+		#Calculate the hash
+		l=self._hashLimit
+		p=self._hashPrime
+		h=0
+		h=(h+(hash(self.__class__.__name__)*p))%l
+		h=(h+(hash(self.role)*p))%l
+		h=(h+(hash(self.description)*p))%l
+		h=(h+(hash(self.keyboardShortcut)*p))%l
+		self._cachedHash=h
+
+	def __hash__(self):
+		return self._cachedHash
+
+	def __eq__(self,other):
+		if hash(self)==hash(other):
+			return True
+		else:
+			return False
+
+	def __ne__(self,other):
+		if hash(self)!=hash(other):
+			return True
+		else:
+			return False
 
 	def getScript(self,keyPress):
 		"""
@@ -92,18 +126,6 @@ Registers a number of methods with their respective keys so that these methods c
 @type dict: dictionary
 """
 		self._keyMap.update(keyDict)
-
-	def _get_allowedPositiveStates(self):
-		return self._allowedPositiveStates
-
-	def _set_allowedPositiveStates(self,states):
-		self._allowedPositiveStates=states
-
-	def _get_allowedNegativeStates(self):
-		return self._allowedNegativeStates
-
-	def _set_allowedNegativeStates(self,states):
-		self._allowedNegativeStates=states
 
 	def _get_name(self):
 		return ""
@@ -239,6 +261,7 @@ Speaks the properties of this object such as name, typeString,value, description
 This code is executed if a gain focus event is received by this object.
 """
 		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus())):
+			api.setNavigatorObject(self)
 			self.speakObject()
 
 	def event_foreground(self):
@@ -246,4 +269,5 @@ This code is executed if a gain focus event is received by this object.
 This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
 """
 		if self.speakOnForeground:
+			api.setNavigatorObject(self)
 			self.speakObject()

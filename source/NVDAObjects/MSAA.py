@@ -14,48 +14,93 @@ from config import conf
 from constants import *
 import window
 import textBuffer
-import manager
 import ITextDocument
 
-class NVDAObject_MSAA(window.NVDAObject_window):
+def getNVDAObjectFromEvent(hwnd,objectID,childID):
+	accHandle=MSAAHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
+	if not accHandle:
+		return None
+	(pacc,child)=accHandle
+	obj=NVDAObject_MSAA(pacc,child,origEventLocator=(hwnd,objectID,childID))
+	return obj
 
-	def __init__(self,*args):
-		self.ia=args[0]
-		self.child=args[1]
-		window.NVDAObject_window.__init__(self,MSAAHandler.windowFromAccessibleObject(self.ia))
+def registerNVDAObjectClass(processID,windowClass,objectRole,cls):
+	_dynamicMap[(processID,windowClass,objectRole)]=cls
+
+def unregisterNVDAObjectClass(windowClass,objectRole):
+	del _dynamicMap[(processID,windowClass,objectRole)]
+
+class NVDAObject_MSAA(window.NVDAObject_window):
+	"""
+the NVDAObject for MSAA
+@ivar MSAAChildID: the MSAA object's child ID
+@type MSAAChildID: int
+@ivar MSAAOrigEventLocator: The origional window,objectID,childID from an MSAA event that caused this object to be created. If these are all None then the object was created by some form of navigation from another object.
+@type MSAAOrigEventLocator: tuple
+"""
+
+	def __new__(cls,pacc,child,origEventLocator=(None,None,None)):
+		"""
+Checks the window class and IAccessible role against a map of NVDAObject_MSAA sub-types, and if a match is found, returns that rather than just NVDAObject_MSAA.
+"""  
+		oldCls=cls
+		hwnd=MSAAHandler.windowFromAccessibleObject(pacc)
+		windowClass=winUser.getClassName(hwnd)
+		processID=winUser.getWindowThreadProcessID(hwnd)
+		objectRole=MSAAHandler.accRole(pacc,child)
+		if _dynamicMap.has_key((processID,windowClass,objectRole)):
+			cls=_dynamicMap[(processID,windowClass,objectRole)]
+		elif _dynamicMap.has_key((processID,windowClass,None)):
+			cls=_dynamicMap[(processID,windowClass,None)]
+		elif _dynamicMap.has_key((processID,None,objectRole)):
+			cls=_dynamicMap[(processID,None,objectRole)]
+		elif _staticMap.has_key((windowClass,objectRole)):
+			cls=_staticMap[(windowClass,objectRole)]
+		elif _staticMap.has_key((windowClass,None)):
+			cls=_staticMap[(windowClass,None)]
+		elif _staticMap.has_key((None,objectRole)):
+			cls=_staticMap[(None,objectRole)]
+		else:
+			cls=NVDAObject_MSAA
+		obj=window.NVDAObject_window.__new__(cls,pacc,child,origEventLocator)
+		#Python will not call __init__ on the object if the class given to __new__ is different from the actual class its instanciating from 
+		if cls!=oldCls:
+			obj.__init__(pacc,child,origEventLocator=origEventLocator)
+		return obj
+
+	def __init__(self,pacc,child,origEventLocator=(None,None,None)):
+		"""
+@param pacc: a pointer to an IAccessible object
+@type pacc: ctypes.POINTER(IAccessible)
+@param child: A child ID that will be used on all methods of the IAccessible pointer
+@type child: int
+@param origEventLocator: a tuple of the origional MSAA event locator values (window,objectID,childID).
+@type origEventLocator: tuple
+"""
+		self._pacc=pacc
+		self._accChild=child
+		self.MSAAOrigEventLocator=origEventLocator
+		window.NVDAObject_window.__init__(self,MSAAHandler.windowFromAccessibleObject(self._pacc))
 		self.allowedPositiveStates=STATE_SYSTEM_UNAVAILABLE|STATE_SYSTEM_SELECTED|STATE_SYSTEM_PRESSED|STATE_SYSTEM_CHECKED|STATE_SYSTEM_MIXED|STATE_SYSTEM_READONLY|STATE_SYSTEM_EXPANDED|STATE_SYSTEM_COLLAPSED|STATE_SYSTEM_BUSY|STATE_SYSTEM_HASPOPUP
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
+		#Calculate the hash
+		l=self._hashLimit
+		p=self._hashPrime
+		h=self._cachedHash
+		h=(h+(hash(self.MSAAOrigEventLocator)*p))%l
+		h=(h+(hash(self.MSAAChildID)*p))%l
+		self._cachedHash=h
 
-	def __hash__(self):
-		l=10000000
-		p=17
-		h=window.NVDAObject_window.__hash__(self)
-		role=self.role
-		if isinstance(role,basestring):
-			role=hash(role)
-		if isinstance(role,int):
-			h=(h+(role*p))%l
-		childID=self.childID
-		if isinstance(childID,int):
-			h=(h+(childID*p))%l
-		location=self.location
-		if location and (len(location)==4):
-			left,top,width,height=location
-			h=(h+(left*p))%l
-			h=(h+(top*p))%l
-			h=(h+(width*p))%l
-			h=(h+(height*p))%l
-		return h
 
 	def _get_name(self):
-		return MSAAHandler.accName(self.ia,self.child)
+		return MSAAHandler.accName(self._pacc,self._accChild)
 
 	def _get_value(self):
-		return MSAAHandler.accValue(self.ia,self.child)
+		return MSAAHandler.accValue(self._pacc,self._accChild)
 
 	def _get_role(self):
-		return MSAAHandler.accRole(self.ia,self.child)
+		return MSAAHandler.accRole(self._pacc,self._accChild)
 
 	def _get_typeString(self):
 		role=self.role
@@ -66,7 +111,7 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		return typeString+" %s"%MSAAHandler.getRoleName(self.role)
 
 	def _get_states(self):
-		return MSAAHandler.accState(self.ia,self.child)
+		return MSAAHandler.accState(self._pacc,self._accChild)
 
 	def getStateName(self,state,opposite=False):
 		if isinstance(state,int):
@@ -79,14 +124,14 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 
 	def _get_description(self):
 		try:
-			return self.ia.accDescription(self.child)
+			return self._pacc.accDescription(self._accChild)
 		except:
 			return ""
 
 	def _get_keyboardShortcut(self):
 		keyboardShortcut=None
 		try:
-			keyboardShortcut=self.ia.accKeyboardShortcut(self.child)
+			keyboardShortcut=self._pacc.accKeyboardShortcut(self._accChild)
 		except:
 			return ""
 		if not keyboardShortcut:
@@ -94,36 +139,33 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 		else:
 			return keyboardShortcut
 
-	def _get_childID(self):
-		try:
-			return self.child
-		except:
-			return None
+	def _get_MSAAChildID(self):
+		return self._accChild
 
 	def _get_childCount(self):
-		count=MSAAHandler.accChildCount(self.ia,self.child)
+		count=MSAAHandler.accChildCount(self._pacc,self._accChild)
 		return count
 
 	def _get_location(self):
-		location=MSAAHandler.accLocation(self.ia,self.child)
+		location=MSAAHandler.accLocation(self._pacc,self._accChild)
 		return location
 
 	def _get_parent(self):
-		res=MSAAHandler.accParent(self.ia,self.child)
+		res=MSAAHandler.accParent(self._pacc,self._accChild)
 		if res:
 			(ia,child)=res
 		else:
 			return None
-		obj=manager.getNVDAObjectByAccessibleObject(ia,child)
+		obj=NVDAObject_MSAA(ia,child)
 		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
 			return obj.parent
 		else:
 			return obj
 
 	def _get_next(self):
-		res=MSAAHandler.accParent(self.ia,self.child)
+		res=MSAAHandler.accParent(self._pacc,self._accChild)
 		if res:
-			parentObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			parentObject=NVDAObject_MSAA(res[0],res[1])
 			parentRole=parentObject.role
 		else:
 			parentObject=None
@@ -132,20 +174,20 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			obj=parentObject
 		else:
 			obj=self
-		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_NEXT)
+		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,NAVDIR_NEXT)
 		if res:
-			nextObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			nextObject=NVDAObject_MSAA(res[0],res[1])
 			if nextObject and (nextObject.role==ROLE_SYSTEM_WINDOW):
-				nextObject=manager.getNVDAObjectByLocator(nextObject.hwnd,-4,0)
+				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
 			if nextObject!=self:
 				return nextObject
 			else:
 				return None
 
 	def _get_previous(self):
-		res=MSAAHandler.accParent(self.ia,self.child)
+		res=MSAAHandler.accParent(self._pacc,self._accChild)
 		if res:
-			parentObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			parentObject=NVDAObject_MSAA(res[0],res[1])
 			parentRole=parentObject.role
 		else:
 			parentObject=None
@@ -154,34 +196,34 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			obj=parentObject
 		else:
 			obj=self
-		res=MSAAHandler.accNavigate(obj.ia,obj.child,NAVDIR_PREVIOUS)
+		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,NAVDIR_PREVIOUS)
 		if res:
-			previousObject=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			previousObject=NVDAObject_MSAA(res[0],res[1])
 			if previousObject and (previousObject.role==ROLE_SYSTEM_WINDOW):
-				previousObject=manager.getNVDAObjectByLocator(previousObject.hwnd,-4,0)
+				previousObject=getNVDAObjectFromEvent(previousObject.windowHandle,-4,0)
 			if previousObject!=self:
 				return previousObject
 			else:
 				return None
 
 	def _get_firstChild(self):
-		res=MSAAHandler.accNavigate(self.ia,self.child,NAVDIR_FIRSTCHILD)
+		res=MSAAHandler.accNavigate(self._pacc,self._accChild,NAVDIR_FIRSTCHILD)
 		if res:
-			obj=manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			obj=NVDAObject_MSAA(res[0],res[1])
 		else:
 			return None
 		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
-			return manager.getNVDAObjectByLocator(obj.hwnd,OBJID_CLIENT,0)
+			return getNVDAObjectFromEvent(obj.windowHandle,OBJID_CLIENT,0)
 		else:
 			return obj
 
 	def doDefaultAction(self):
-		MSAAHandler.accDoDefaultAction(self.ia,self.child)
+		MSAAHandler.accDoDefaultAction(self._pacc,self._accChild)
 
 	def _get_activeChild(self):
-		res=MSAAHandler.accFocus(self.ia)
+		res=MSAAHandler.accFocus(self._pacc)
 		if res:
-			return manager.getNVDAObjectByAccessibleObject(res[0],res[1])
+			return NVDAObject_MSAA(res[0],res[1])
 
 	def hasFocus(self):
 		states=0
@@ -192,11 +234,11 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 			return False
 
 	def setFocus(self):
-		self.ia.SetFocus()
+		self._pacc.SetFocus()
 
 	def _get_positionString(self):
 		position=""
-		childID=self.childID
+		childID=self.MSAAChildID
 		if childID>0:
 			parent=self.parent
 			if parent:
@@ -228,8 +270,8 @@ class NVDAObject_MSAA(window.NVDAObject_window):
 
 	def event_gainFocus(self):
 		self.updateMenuMode()
-		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.hwnd==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
-			super(NVDAObject_MSAA,self).event_gainFocus()
+		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.windowHandle==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
+			window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
 		if self.role not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
@@ -315,8 +357,8 @@ class NVDAObject_Shell_TrayWnd_client(NVDAObject_MSAA):
 	This is the window which holds the windows start button and taskbar.
 	"""
  
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.speakOnForeground=False
 		self.speakOnGainFocus=False
 
@@ -326,58 +368,64 @@ class NVDAObject_Progman_client(NVDAObject_MSAA):
 	This is the window which holds the windows desktop.
 	"""
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.speakOnForeground=False
 		self.speakOnGainFocus=False
 
 class NVDAObject_staticText(textBuffer.NVDAObject_textBuffer,NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		textBuffer.NVDAObject_textBuffer.__init__(self,*args)
+
+	def _get_text(self):
+		return self.windowText
 
 class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
+
+	def _get_text(self):
+		return self.windowText
 
 	def _get_value(self):
 		return self.currentLine
 
 	def _get_caretRange(self):
-		long=winUser.sendMessage(self.hwnd,EM_GETSEL,0,0)
+		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
 		start=winUser.LOWORD(long)
 		end=winUser.HIWORD(long)
 		return (start,end)
 
 	def _get_caretPosition(self):
-		long=winUser.sendMessage(self.hwnd,EM_GETSEL,0,0)
+		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
 		pos=winUser.LOWORD(long)
 		return pos
 
 	def _set_caretPosition(self,pos):
-		winUser.sendMessage(self.hwnd,EM_SETSEL,pos,pos)
+		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
 
 	def _get_lineCount(self):
-		lineCount=winUser.sendMessage(self.hwnd,EM_GETLINECOUNT,0,0)
+		lineCount=winUser.sendMessage(self.windowHandle,EM_GETLINECOUNT,0,0)
 		if lineCount<0:
 			return None
 		return lineCount
 
 	def getLineNumber(self,pos):
-		return winUser.sendMessage(self.hwnd,EM_LINEFROMCHAR,pos,0)
+		return winUser.sendMessage(self.windowHandle,EM_LINEFROMCHAR,pos,0)
 
 	def getPositionFromLineNumber(self,lineNum):
-		return winUser.sendMessage(self.hwnd,EM_LINEINDEX,lineNum,0)
+		return winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
 
 	def getLineStart(self,pos):
 		lineNum=self.getLineNumber(pos)
-		return winUser.sendMessage(self.hwnd,EM_LINEINDEX,lineNum,0)
+		return winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
 
 	def getLineLength(self,pos):
-		lineLength=winUser.sendMessage(self.hwnd,EM_LINELENGTH,pos,0)
+		lineLength=winUser.sendMessage(self.windowHandle,EM_LINELENGTH,pos,0)
 		if lineLength<0:
 			return None
 		return lineLength
@@ -389,7 +437,7 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 			return None
 		sizeData=struct.pack('h',lineLength)
 		buf=ctypes.create_unicode_buffer(sizeData,size=lineLength+4)
-		res=winUser.sendMessage(self.hwnd,EM_GETLINE,lineNum,buf)
+		res=winUser.sendMessage(self.windowHandle,EM_GETLINE,lineNum,buf)
 		return buf.value
 
 	def nextLine(self,pos):
@@ -414,8 +462,8 @@ class NVDAObject_checkBox(NVDAObject_MSAA):
 	Based on NVDAObject, but filterStates removes the pressed state for checkboxes.
 	"""
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.allowedPositiveStates=self.allowedPositiveStates-(self.allowedPositiveStates&STATE_SYSTEM_PRESSED)
 		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_CHECKED
 		self._lastPositiveStates=self.calculatePositiveStates()
@@ -456,9 +504,9 @@ class NVDAObject_consoleWindowClass(NVDAObject_MSAA):
 
 class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
-		processID=self.processID[0]
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
+		processID=self.windowProcessID[0]
 		try:
 			winKernel.freeConsole()
 		except:
@@ -603,13 +651,13 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 
 class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.hwnd,OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
+		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
 		if res==0:
 			return comtypesClient.wrap(domPointer)
 		else:
@@ -624,8 +672,8 @@ class NVDAObject_mozillaUIWindowClass(NVDAObject_MSAA):
 	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
 	"""
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.needsFocusState=False
 
 class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
@@ -636,8 +684,8 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.speakOnGainFocus=False
 
 	def _get_value(self):
@@ -645,7 +693,7 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 	def _get_firstChild(self):
 		try:
-			children=self.ia.accChildren()
+			children=self._pacc.accChildren()
 		except:
 			return None
 		for child in children:
@@ -713,8 +761,8 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 	*the role is changed to static text if it has the read only state set.
 	"""
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
 	def _get_name(self):
@@ -744,8 +792,8 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 
 class NVDAObject_listItem(NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_SELECTED
 		self._lastNegativeStates=self.calculateNegativeStates()
 
@@ -756,20 +804,65 @@ class NVDAObject_internetExplorerPane(NVDAObject_MSAA):
 
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
 		self.speakOnGainFocus=False
 
 class NVDAObject_list(NVDAObject_MSAA):
+
+	def _get_name(self):
+		name=super(NVDAObject_list,self).name
+		if not name:
+			name=super(NVDAObject_MSAA,self).name
+		return name
 
 	def event_gainFocus(self):
 		NVDAObject_MSAA.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.role==ROLE_SYSTEM_LISTITEM):
-			childID=child.childID
-			hwnd=self.hwnd
-			objectID=api.getFocusLocator()[1]
-			api.setFocusObjectByLocator(hwnd,objectID,childID)
+			childID=child.MSAAChildID
+			hwnd=self.windowHandle
+			objectID=self.MSAAOrigEventLocator[1]
+			child.MSAAOrigEventLocator=(hwnd,objectID,childID)
+			api.setFocusObject(child)
 			child.event_gainFocus()
 		else:
-			audio.speakMessage(_("0 items"))
+			audio.speakMessage("%s %s"%(self.childCount,_("items")))
+
+###class mappings
+
+_dynamicMap={}
+
+_staticMap={
+("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd_client,
+("tooltips_class32",ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
+("tooltips_class32",ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
+("Progman",ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
+("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
+("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("Static",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+(None,ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+(None,ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
+(None,ROLE_SYSTEM_LINK):NVDAObject_link,
+("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
+("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
+("MozillaWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
+("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
+("MozillaWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
+("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
+("MozillaWindowClass","h1"):NVDAObject_mozillaHeading,
+("MozillaWindowClass","h2"):NVDAObject_mozillaHeading,
+("MozillaWindowClass","h3"):NVDAObject_mozillaHeading,
+("MozillaWindowClass","h4"):NVDAObject_mozillaHeading,
+("MozillaWindowClass","h5"):NVDAObject_mozillaHeading,
+("MozillaWindowClass","h6"):NVDAObject_mozillaHeading,
+("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
+("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
+(None,ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
+("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
+("SHELLDLL_DefView",ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
+(None,ROLE_SYSTEM_LIST):NVDAObject_list,
+}

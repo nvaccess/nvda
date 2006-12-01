@@ -83,9 +83,7 @@ def main():
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
-		setForegroundObjectByLocator(foregroundWindow,-4,0)
-		setFocusObjectByLocator(foregroundWindow,-4,0)
-		executeEvent("foreground",foregroundWindow,-4,0)
+		MSAAHandler.executeEvent("foreground",foregroundWindow,-4,0)
 		MSAAHandler.initialize()
 		keyboardHandler.initialize()
 		mouseHandler.initialize()

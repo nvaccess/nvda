@@ -17,26 +17,25 @@ class appModule(_MSOffice.appModule):
 
 	def __init__(self,*args):
 		_MSOffice.appModule.__init__(self,*args)
-		NVDAObjects.registerNVDAObjectClass(self.processID,"EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
-		NVDAObjects.registerNVDAObjectClass(self.processID,"EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
+		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
+		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
-		NVDAObjects.unregisterNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT)
-		NVDAObjects.unregisterNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT)
+		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT)
+		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
 class NVDAObject_excelEditableCell(NVDAObjects.MSAA.NVDAObject_edit):
 
-	def getRole(self):
+	def _get_role(self):
 		return ROLE_SYSTEM_TEXT
-	role=property(fget=getRole)
 
 class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 
-	def __init__(self,*args):
-		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args)
+	def __init__(self,*args,**vars):
+		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args,**vars)
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.hwnd,OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		self.excelObject=comtypesClient.wrap(ptr)
 		self.registerScriptKeys({
@@ -67,9 +66,8 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 			key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
 		})
 
-	def getRole(self):
+	def _get_role(self):
 		return ROLE_SYSTEM_TABLE
-	role=property(fget=getRole)
 
 	def getSelectedRange(self):
 		return self.excelObject.Selection

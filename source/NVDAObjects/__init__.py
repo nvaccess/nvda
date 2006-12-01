@@ -1,8 +1,1 @@
-import manager
-
-getNVDAObjectClass=manager.getNVDAObjectClass
-getNVDAObjectByAccessibleObject=manager.getNVDAObjectByAccessibleObject
-getNVDAObjectByLocator=manager.getNVDAObjectByLocator
-getNVDAObjectByPoint=manager.getNVDAObjectByPoint
-registerNVDAObjectClass=manager.registerNVDAObjectClass
-unregisterNVDAObjectClass=manager.unregisterNVDAObjectClass
+import MSAA
