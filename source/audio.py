@@ -32,17 +32,18 @@ def speakMessage(text,wait=False,index=None):
 	if text and not text.isspace():
 		synthDriverHandler.speakText("\n"+text+"\n",wait=wait,index=index)
 
-def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,groupName=None,wait=False,index=None):
+def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,help=None,keyboardShortcut=None,position=None,wait=False,index=None):
 	if not allowSpeech:
 		return
 	text=""
-	if groupName is not None:
-		text="%s %s"%(text,groupName)
+	if conf["presentation"]["sayStateFirst"] and (stateText is not None):
+		text="%s %s"%(text,stateText)
+ 
 	if name is not None:
 		text="%s %s"%(text,name)
 	if typeString is not None:
 		text+=" %s"%typeString
-	if stateText is not None:
+	if not conf["presentation"]["sayStateFirst"] and (stateText is not None):
 		text="%s %s"%(text,stateText)
 	if value is not None:
 		text="%s %s"%(text,value)

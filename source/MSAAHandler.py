@@ -18,6 +18,7 @@ import virtualBuffers
 import NVDAObjects
 import globalVars
 import appModuleHandler
+from config import conf
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]

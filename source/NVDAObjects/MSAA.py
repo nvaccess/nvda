@@ -112,8 +112,8 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 
 	def _get_typeString(self):
 		role=self.role
-		if conf["presentation"]["reportClassOfAllObjects"] or (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
-			typeString=self.className
+		if (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
+			typeString=self.windowClassName
 		else:
 			typeString=""
 		return typeString+" %s"%MSAAHandler.getRoleName(self.role)
@@ -276,9 +276,24 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 			audio.cancel()
 			self.speakObject()
 
+	def _get_groupName(self):
+		curLocation=self.location
+		groupObj=self
+		while groupObj and (groupObj.role!=ROLE_SYSTEM_GROUPING):
+			groupObj=groupObj.previous
+		if groupObj and groupObj.role==ROLE_SYSTEM_GROUPING:
+			groupLocation=groupObj.location
+			if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
+				return groupObj.name
+		return ""
+
 	def event_gainFocus(self):
 		self.updateMenuMode()
 		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.windowHandle==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
+			if conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
+				groupName=self.groupName
+				if groupName:
+					audio.speakMessage("%s %s"%(groupName,MSAAHandler.getRoleName(ROLE_SYSTEM_GROUPING)))
 			window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
@@ -502,7 +517,7 @@ class NVDAObject_tooltip(NVDAObject_MSAA):
 			return ""
 
 	def event_toolTip(self):
-		if conf["presentation"]["reportTooltips"]:
+		if (conf["presentation"]["reportTooltips"] and (self.role==ROLE_SYSTEM_TOOLTIP)) or (conf["presentation"]["reportHelpBalloons"] and (self.role==ROLE_SYSTEM_HELPBALLOON)):
 			self.speakObject()
 
 class NVDAObject_consoleWindowClass(NVDAObject_MSAA):

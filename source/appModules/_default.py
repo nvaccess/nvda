@@ -127,14 +127,14 @@ class appModule(object):
 	def script_moveMouseToNavigatorObject(self,keyPress):
 		"""Moves the mouse pointer to the current navigator object"""
 		audio.speakMessage("Move mouse to navigator")
-		location=getNavigatorObject().getLocation()
+		location=getNavigatorObject().location
 		if location and (len(location)==4):
 			winUser.setCursorPos(location[0],location[1])
 
 	def script_moveNavigatorObjectToMouse(self,keyPress):
 		audio.speakMessage("Move navigator object to mouse")
 		(x,y)=winUser.getCursorPos()
-		obj=NVDAObjects.getNVDAObjectByPoint(x,y)
+		obj=NVDAObjects.MSAA.getNVDAObjectFromPoint(x,y)
 		if obj:
 			setNavigatorObject(obj)
 			obj.speakObject()
@@ -164,10 +164,10 @@ class appModule(object):
 		else:
 			obj.speakObject()
 			childObject=obj.firstChild
-			if (childObject is not None) and (childObject.parent.getLocation()==obj.getLocation()):
+			if (childObject is not None) and (childObject.parent.location==obj.location):
 				script_navigator_object_recursive(keyPress,obj=childObject)
 			nextObject=obj.next
-			if (nextObject is not None) and (nextObject.previous.getLocation()==obj.getLocation()):
+			if (nextObject is not None) and (nextObject.previous.location==obj.location):
 				script_navigator_object_recursive(keyPress,obj=nextObject)
 
 	def script_navigator_object_toFocus(self,keyPress):
@@ -360,7 +360,7 @@ class appModule(object):
 		gui.showGui()
 
 	def script_sayAll(self,keyPress):
-		virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusLocator()[0])
+		virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 		if virtualBuffer:
 			core.newThread(virtualBuffer.sayAllGenerator())
 		elif hasattr(getFocusObject(),"sayAllGenerator"):
