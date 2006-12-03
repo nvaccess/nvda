@@ -67,6 +67,7 @@ class MainFrame(wx.Frame):
 		self.Center()
 		self.Show(True)
 		self.Raise()
+		self.SetFocus()
 
 	def onHideGuiCommand(self,evt):
 		time.sleep(0.01)
@@ -78,13 +79,15 @@ class MainFrame(wx.Frame):
 		core.executeFunction(EXEC_SPEECH,audio.speakMessage,_("configuration saved"))
 
 	def onExitCommand(self, evt):
-		d = wx.MessageDialog(None, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
-		d.Raise()
+		wasShown=self.IsShown()
+		if not wasShown:
+			self.onShowGuiCommand(None)
+		d = wx.MessageDialog(self, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()
-		elif not shown:
-			self.onHideGui(None)
+		elif not wasShown:
+			self.onHideGuiCommand(None)
 
 	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()
