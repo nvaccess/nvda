@@ -1,4 +1,6 @@
 Changes since revision 164:
+*Objects that do not have a specific type (client objects) are now reported as "window".
+*The PC speaker is now used to communicate the percentage of a progress bar as it goes up (example: copying a large amount of data in windows explorer, or loading a large web page in internet explorer).
 *group box names are now reported when an object with the focus is in one. (Example: settings buttons, advanced tab, system properties dialog, control panel). 
 *NVDA can now read formatting changes in documents whilst reading with say all.
 *If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4 and then Viavoice. the more likely found synthesizers are first.

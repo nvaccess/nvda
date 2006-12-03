@@ -290,11 +290,14 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
-		if objectID==0:
+		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
 		#Let tooltips through
-		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32"):
+		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
+		#Let progress bar updates through
+		elif (eventID==EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT):
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"valueChange",window,objectID,childID)
 		#Let caret events through
 		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)

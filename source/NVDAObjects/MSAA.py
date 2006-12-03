@@ -1,3 +1,4 @@
+import winsound
 import time
 import struct
 import difflib
@@ -112,11 +113,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 
 	def _get_typeString(self):
 		role=self.role
-		if (conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_CLIENT)):
+		if role==ROLE_SYSTEM_CLIENT:
+			role=ROLE_SYSTEM_WINDOW
+		if conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_WINDOW):
 			typeString=self.windowClassName
 		else:
 			typeString=""
-		return typeString+" %s"%MSAAHandler.getRoleName(self.role)
+		return typeString+" %s"%MSAAHandler.getRoleName(role)
 
 	def _get_states(self):
 		return MSAAHandler.accState(self._pacc,self._accChild)
@@ -852,6 +855,13 @@ class NVDAObject_list(NVDAObject_MSAA):
 		else:
 			audio.speakMessage("%s %s"%(self.childCount,_("items")))
 
+class NVDAObject_progressBar(NVDAObject_MSAA):
+
+	def event_valueChange(self):
+		baseFreq=440
+		winsound.Beep(baseFreq*(1+(float(self.value[:-1])/100.0)),100)
+		super(NVDAObject_progressBar,self).event_valueChange()
+
 ###class mappings
 
 _dynamicMap={}
@@ -888,4 +898,5 @@ _staticMap={
 ("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
 ("SHELLDLL_DefView",ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
 (None,ROLE_SYSTEM_LIST):NVDAObject_list,
+("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 }

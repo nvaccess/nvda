@@ -40,7 +40,7 @@ An NVDAObject for a window
 		return winUser.getControlID()
 
 	def _get_typeString(self):
-		return "%s %s"%(self.getClassName(),NVDAObjects.getRoleName(self.role))
+		return self.windowClassName
 
 	def _get_location(self):
 		return winUser.getClientRect(self.windowHandle)
