@@ -79,6 +79,7 @@ class MainFrame(wx.Frame):
 
 	def onExitCommand(self, evt):
 		d = wx.MessageDialog(None, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+		d.Raise()
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False
 			self.Destroy()

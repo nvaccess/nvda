@@ -36,6 +36,7 @@ confspec = StringIO("""# NVDA Configuration File
 		reportHelpBalloons = boolean(default=true)
 		reportObjectGroupNames = boolean(default=True)
 		sayStateFirst = boolean(default=False)
+		beepOnProgressBarUpdates = boolean(default=true)
 
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)

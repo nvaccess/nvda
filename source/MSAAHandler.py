@@ -296,7 +296,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
 		#Let progress bar updates through
-		elif (eventID==EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT):
+		elif (eventID==EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT) and winUser.isDescendantWindow(winUser.getForegroundWindow(),window):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"valueChange",window,objectID,childID)
 		#Let caret events through
 		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
