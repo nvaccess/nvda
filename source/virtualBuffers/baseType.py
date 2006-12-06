@@ -3,6 +3,8 @@ from keyboardHandler import key
 import audio
 import globalVars
 import debug
+from constants import *
+import core
 
 class virtualBuffer(object):
 
@@ -12,8 +14,8 @@ class virtualBuffer(object):
 		self.NVDAObject=NVDAObject
 		self._keyMap={}
 		self._allowCaretMovement=True
-		self._IDsCollection={}
-		self._text=""
+		self._IDsToRanges={}
+		self.text=""
 		self.caretPosition=0
 		self._lastCaretIDs=[]
 		self.registerScriptKeys({
@@ -42,8 +44,8 @@ class virtualBuffer(object):
 		self._keyMap.update(keyDict)
 
 	def getIDsFromPosition(self,pos):
- 		for IDs in self._IDsCollection:
-			(startPos,endPos)=self._IDsCollection[IDs]
+ 		for IDs in self._IDsToRanges:
+			(startPos,endPos)=self._IDsToRanges[IDs]
 			if (pos>=startPos) and (pos<endPos):
 				return IDs
 		return []
@@ -51,8 +53,8 @@ class virtualBuffer(object):
 	def getRangeFromID(self,ID):
 		startPos=None
 		endPos=None
-		for key in filter(lambda x: ID in x,self._IDsCollection):
-			r=self._IDsCollection[key]
+		for key in filter(lambda x: ID in x,self._IDsToRanges):
+			r=self._IDsToRanges[key]
 			if (startPos is None) or (r[0]<startPos):
 				startPos=r[0]
 			if (endPos is None) or (r[1]>endPos):
@@ -63,55 +65,74 @@ class virtualBuffer(object):
 			return None
 
 	def getIDsFromID(self,ID):
-		for key in self._IDsCollection:
+		for key in self._IDsToRanges:
 			if ID in key:
  				index=list(key).index(ID)
 				return key[0:index+1]
 
-
-	def appendText(self,IDs,text):
-		if self.getIDsFromPosition(len(self._text)-1)==IDs:
-			(startPos,endPos)=self._IDsCollection[IDs]
-			self._text=self._text[0:-1]+" "+text+"\n"
-			self._IDsCollection[IDs]=(startPos,len(self._text))
+	def addText(self,IDs,text,position=None):
+		#If no position given, assume end of buffer
+		if position is None:
+			position=len(self.text)
+		#If this ID path already has a range, expand it to fit the new text
+		if self._IDsToRanges.has_key(IDs) and self._IDsToRanges[IDs][1]<=position:
+			(oldStart,oldEnd)=self._IDsToRanges[IDs]
+			if oldEnd==position:
+				position=position-1
+			self.text=self.text[0:position]+text+"\n"+self.text[position:]
+			extraLength=len(text)+1
+			self._IDsToRanges[IDs]=(oldStart,position+extraLength)
 		else:
-			startPos=len(self._text)
-			self._text+=text+"\n"
-			endPos=len(self._text)
-			self._IDsCollection[IDs]=(startPos,endPos)
+			self.text=self.text[0:position]+text+"\n"+self.text[position:]
+			extraLength=len(text)+1
+			self._IDsToRanges[IDs]=(position,position+extraLength)
+		for item in filter(lambda x: (self._IDsToRanges[x][0]>=position) and (x!=IDs),self._IDsToRanges):
+			(start,end)=self._IDsToRanges[item]
+			self._IDsToRanges[item]=(start+extraLength,end+extraLength)
+		return position+len(text)+1
+ 
 
-	def insertText(self,pos,IDs,text):
-		startPos=pos
-		endPos=startPos+len(text)
-		self._text="%s%s\n%s"%(self._text[0:startPos],text,self._text[startPos:])
-		for i in self._IDsCollection:
-			if self._IDsCollection[i][0]>=startPos:
-				self._IDsCollection[i]=(self._IDsCollection[i][0]+(endPos-startPos)+1,self._IDsCollection[i][1]+(endPos-startPos)+1)
-		self._IDsCollection[IDs]=(startPos,endPos+1)
-
-	def removeText(self,ID):
+	def removeID(self,ID):
 		r=self.getRangeFromID(ID)
-		if not r:
-			return
-		self._text=self._text[0:r[0]]+self._text[r[1]:]
-		for key in filter(lambda x: ID in x,self._IDsCollection):
-			del self._IDsCollection[key]
-			for i in self._IDsCollection:
-				if self._IDsCollection[i][0]>=r[1]:
-					self._IDsCollection[i]=(self._IDsCollection[i][0]-(r[1]-r[0]),self._IDsCollection[i][1]-(r[1]-r[0]))
+		if r:
+			(start,end)=r
+			self.text=self.text[0:start]+self.text[end:]
+		for IDs in filter(lambda x: ID in x,self._IDsToRanges):
+			del self._IDsToRanges[IDs]
+		del self._IDs[ID]
+		for IDs in filter(lambda x: self._IDsToRanges[x][0]>=start,self._IDsToRanges):
+			r=self._IDsToRanges[IDs]
+			self._IDsToRanges[IDs]=(r[0]-(end-start),r[1]-(end-start))
 
 	def resetBuffer(self):
-		self._text=""
-		self._IDsCollection={}
+		self.text=""
+		self._IDsToRanges={}
+		self._IDs={}
 		self.caretPosition=0
 		self._lastCaretIDs=[]
 
+	def addID(self,ID,**info):
+		self._IDs[ID]=info
+
 	def getIDEnterMessage(self,ID):
-		return ""
+		if not self._IDs.has_key(ID):
+			return ""
+		info=self._IDs[ID]
+		if info["reportOnEnter"]: 
+			msg=info["typeString"]
+			if callable(info["stateTextFunc"]):
+				msg+=" "+info["stateTextFunc"](info["node"])
+			if callable(info["descriptionFunc"]):
+				msg+=" "+info["descriptionFunc"](info["node"])
+			return msg
+		else:
+			return ""
 
 	def getIDExitMessage(self,ID):
-		return ""
-
+		if not self._IDs.has_key(ID):
+			return ""
+		if self._IDs[ID]["reportOnExit"]:
+			return _("out of")+" "+self._IDs[ID]["typeString"]
 
 	def reportIDMessages(self,newIDs,oldIDs):
 		for ID in filter(lambda x: x not in newIDs,oldIDs):
@@ -127,9 +148,6 @@ class virtualBuffer(object):
 		caretIDs=self.getIDsFromPosition(self.caretPosition)
 		self.reportIDMessages(caretIDs,self._lastCaretIDs)
 		self._lastCaretIDs=caretIDs
-
-	def _get_text(self):
-		return self._text
 
 	def _get_startPosition(self):
 		return 0
@@ -396,4 +414,17 @@ class virtualBuffer(object):
 
 	def script_activatePosition(self,keyPress):
 		self.activatePosition(self.caretPosition)
+
+	def reportFormatInfo(self):
+		IDs=self.getIDsFromPosition(self.caretPosition)
+		for ID in IDs[::-1]:
+			info=self._IDs[ID]
+			audio.speakMessage(info["typeString"])
+			debug.writeMessage("ID typeString: %s"%info["typeString"])
+			if callable(info["stateTextFunc"]):
+				audio.speakMessage(info["stateTextFunc"](info["node"]))
+			if callable(info["descriptionFunc"]):
+				audio.speakMessage(info["descriptionFunc"](info["node"]))
+
+
 

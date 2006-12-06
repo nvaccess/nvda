@@ -369,7 +369,10 @@ class appModule(object):
 			audio.speakMessage(_("no sayAll functionality here"))
 
 	def script_formatInfo(self,keyPress):
-		if hasattr(getFocusObject(),"reportFormatInfo"):
+		virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
+		if virtualBuffer and hasattr(virtualBuffer,"reportFormatInfo"):
+			virtualBuffer.reportFormatInfo()
+		elif hasattr(getFocusObject(),"reportFormatInfo"):
 			getFocusObject().reportFormatInfo()
 		else:
 			audio.speakMessage(_("no format info"))

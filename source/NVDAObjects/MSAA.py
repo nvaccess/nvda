@@ -860,7 +860,7 @@ class NVDAObject_progressBar(NVDAObject_MSAA):
 	def event_valueChange(self):
 		if conf["presentation"]["beepOnProgressBarUpdates"]:
 			baseFreq=440
-			winsound.Beep(baseFreq*(1+(float(self.value[:-1])/100.0)),100)
+			winsound.Beep(int(baseFreq*(1+(float(self.value[:-1])/100.0))),100)
 		super(NVDAObject_progressBar,self).event_valueChange()
 
 ###class mappings

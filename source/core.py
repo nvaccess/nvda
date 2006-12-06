@@ -106,7 +106,7 @@ def main():
 					except:
 						debug.writeException("core.main executing %s from queue %s"%(func.__name__,num))
 			delList=[]
-			for ID in threads:
+			for ID in threads.copy():
 				try:
 					lastThreadValues[ID]=threads[ID].next()
 				except StopIteration:
