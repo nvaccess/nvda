@@ -1,3 +1,4 @@
+from textwrap import TextWrapper
 import autoPropertyType
 from keyboardHandler import key
 import audio
@@ -5,6 +6,7 @@ import globalVars
 import debug
 from constants import *
 import core
+from config import conf
 
 class virtualBuffer(object):
 
@@ -31,6 +33,8 @@ class virtualBuffer(object):
 			key("control+extendedEnd"):self.script_bottom,
 			key("return"):self.script_activatePosition,
 			key("space"):self.script_activatePosition,
+			key("extendedPrior"):self.script_pageUp,
+			key("extendedNext"):self.script_pageDown,
 		})
 
 	def getScript(self,keyPress):
@@ -71,6 +75,8 @@ class virtualBuffer(object):
 				return key[0:index+1]
 
 	def addText(self,IDs,text,position=None):
+		wrapper = TextWrapper(width=conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
+		text=wrapper.fill(text)
 		#If no position given, assume end of buffer
 		if position is None:
 			position=len(self.text)
@@ -352,6 +358,28 @@ class virtualBuffer(object):
 	def script_bottom(self,keyPress):
 		self.caretPosition=len(self.text)-1
 		self.reportCaretIDMessages()
+		self.speakLine(self.caretPosition)
+
+	def script_pageUp(self,keyPress):
+		pageLength=conf["virtualBuffers"]["linesPerPage"]
+		curPos=self.caretPosition
+		lineCount=0
+		while (curPos>0) and (lineCount<=pageLength):
+			curPos=curPos-1
+			if self.text[curPos]=='\n':
+				lineCount+=1
+		self.caretPosition=curPos
+		self.speakLine(self.caretPosition)
+
+	def script_pageDown(self,keyPress):
+		pageLength=conf["virtualBuffers"]["linesPerPage"]
+		curPos=self.caretPosition
+		lineCount=0
+		while (curPos<len(self.text)-1) and (lineCount<=pageLength):
+			curPos=curPos+1
+			if self.text[curPos]=='\n':
+				lineCount+=1
+		self.caretPosition=curPos
 		self.speakLine(self.caretPosition)
 
 	def script_nextLine(self,keyPress):

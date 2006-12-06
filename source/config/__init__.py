@@ -47,6 +47,10 @@ confspec = StringIO("""# NVDA Configuration File
 	speakTypedWords = boolean(default=false)
 	speakCommandKeys = boolean(default=false)
 
+[virtualBuffers]
+	maxLineLength = integer(default=100)
+	linesPerPage = integer(default=25)
+
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
