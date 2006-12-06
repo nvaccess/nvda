@@ -7,15 +7,13 @@
 import datetime
 import traceback
 import winsound
+import codecs
 
 debugFile=None
 
 def writeMessage(message):
 	debugFile.write("message %s\n"%datetime.datetime.now())
-	try:
-		debugFile.write("%s\n"%message)
-	except:
-		debugFile.write("bad message\n")
+	debugFile.write("%s\n"%message)
 	debugFile.flush()
 
 def writeError(message):
@@ -36,7 +34,7 @@ def writeException(message):
 
 def start(fileName):
 	global debugFile
-	debugFile=open(fileName,"w")
+	debugFile=codecs.open(fileName,"w","utf-8")
 	writeMessage("Screen reader log file started")
 	debugFile.flush()
 

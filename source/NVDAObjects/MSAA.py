@@ -863,6 +863,58 @@ class NVDAObject_progressBar(NVDAObject_MSAA):
 			winsound.Beep(int(baseFreq*(1+(float(self.value[:-1])/100.0))),100)
 		super(NVDAObject_progressBar,self).event_valueChange()
 
+class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
+
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args)
+
+	def _get_text(self):
+		return self.value
+
+	def _get_caretRange(self):
+		if hasattr(self,"dom"):
+			bookmark=self.dom.selection.createRange().getBookmark()
+			if ord(bookmark[1])==3:
+				return (ord(bookmark[2])-2,ord(bookmark[40])-2)
+		return None
+
+	def _get_caretPosition(self):
+		if hasattr(self,"dom"):
+			bookmark=self.dom.selection.createRange().getBookmark()
+			l=map(lambda x: ord(x),bookmark)
+			if l[1]==3:
+				debug.writeMessage("bookmark selection: %s"%l)
+			else:
+				debug.writeMessage("bookmark single: %s"%l)
+			return ord(bookmark[2])-2
+		else:
+			return 0
+
+	def _get_value(self):
+		oldVal=super(NVDAObject_internetExplorerEdit,self).value
+		if oldVal is not None:
+			return oldVal
+		else:
+			return "\0"
+
+
+	def event_gainFocus(self):
+		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
+		#domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
+		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		self.dom=comtypesClient.wrap(domPointer)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
+		NVDAObject_MSAA.event_gainFocus(self)
+
+	def event_looseFocus(self):
+		if hasattr(self,"dom"):
+			del self.dom
+
 ###class mappings
 
 _dynamicMap={}
@@ -900,4 +952,5 @@ _staticMap={
 ("SHELLDLL_DefView",ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
 (None,ROLE_SYSTEM_LIST):NVDAObject_list,
 ("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
+("Internet Explorer_Server",ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
 }

@@ -89,9 +89,9 @@ class NVDAObject_textBuffer:
 		startPos=self.getLineStart(pos)
 		endPos=startPos
 		text=self.text
-		while (endPos<=len(text)) and (self.getCharacter(endPos) not in ['\n','\r']):
+		while (endPos<len(text)) and (self.getCharacter(endPos) not in ['\n','\r']):
 			endPos+=1
-		if (self.getCharacter(endPos)=='\r') and (endPos+1<=len(self.text)) and (self.getCharacter(endPos+1)=='\n'): 
+		if (self.getCharacter(endPos)=='\r') and (endPos<len(text)-1) and (endPos+1<=len(self.text)) and (self.getCharacter(endPos+1)=='\n'): 
 			endPos+=1
 		return (endPos-startPos)
 
