@@ -79,9 +79,10 @@ class NVDAObject_textBuffer:
 
 	def getLineStart(self,pos):
 		startPos=pos
-		if startPos>0 and (self.getCharacter(startPos)=='\n'):
+		text=self.text
+		if startPos>0 and startPos<len(text) and (text[startPos]=='\n'):
 			startPos=startPos-1
-		while (startPos>-1) and (self.getCharacter(startPos)!='\n'):
+		while (startPos>-1) and (startPos<len(text)) and (text[startPos] not in ['\r','\n']):
 			startPos-=1
 		return startPos+1
 
@@ -89,9 +90,9 @@ class NVDAObject_textBuffer:
 		startPos=self.getLineStart(pos)
 		endPos=startPos
 		text=self.text
-		while (endPos<len(text)) and (self.getCharacter(endPos) not in ['\n','\r']):
+		while (endPos<len(text)) and (text[endPos] not in ['\n','\r']):
 			endPos+=1
-		if (self.getCharacter(endPos)=='\r') and (endPos<len(text)-1) and (endPos+1<=len(self.text)) and (self.getCharacter(endPos+1)=='\n'): 
+		if (endPos<len(text)-1) and (text[endPos]=='\r') and (endPos+1<=len(text)) and (text[endPos+1]=='\n'): 
 			endPos+=1
 		return (endPos-startPos)
 
@@ -125,7 +126,10 @@ class NVDAObject_textBuffer:
 	def getLine(self,pos):
 		startPos=self.getLineStart(pos)
 		endPos=self.getLineEnd(pos)
-		return self.getTextRange(startPos,endPos)
+		if (pos<=endPos) and (pos>=startPos):
+			return self.getTextRange(startPos,endPos)
+		else:
+			return None
 
 	def inWord(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
@@ -136,8 +140,9 @@ class NVDAObject_textBuffer:
 
 	def getWordStart(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
+		text=self.text
 		if self.inWord(pos):
-			while (pos is not None) and (self.getCharacter(pos) not in whitespace):
+			while (pos is not None) and (text[pos] not in whitespace):
 				oldPos=pos
 				pos=self.previousCharacter(pos)
 			if pos is None:
@@ -148,7 +153,8 @@ class NVDAObject_textBuffer:
 
 	def getWordEnd(self,pos):
 		whitespace=['\n','\r','\t',' ','\0']
-		while (pos is not None) and (self.getCharacter(pos) not in whitespace):
+		text=self.text
+		while (pos is not None) and (text[pos] not in whitespace):
 			oldPos=pos
 			pos=self.nextCharacter(pos)
 		if pos is not None:

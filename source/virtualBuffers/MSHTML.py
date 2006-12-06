@@ -50,10 +50,14 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		self.dom=comtypesClient.wrap(domPointer)
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%self.dom)
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
+		baseType.virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
+		if self.dom.body.isTextEdit: #This is an editable document and will not be managed by this virtualBuffer
+			if not api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
+			return
 		self.domEventsObject=self.domEventsType(self)
 		#comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
-		baseType.virtualBuffer.__init__(self,NVDAObject)
 		if self.isDocumentComplete():
 			self.loadDocument()
 

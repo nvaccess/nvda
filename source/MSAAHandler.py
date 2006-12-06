@@ -328,7 +328,7 @@ def executeEvent(name,window,objectID,childID):
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
 		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
-		if isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator): 
+		if (isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator)) or (obj==api.getFocusObject()): 
 			return
 		api.setFocusObject(obj)
 		virtualBuffers.MSAA.updateVirtualBuffers(obj)

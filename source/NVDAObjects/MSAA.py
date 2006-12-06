@@ -6,6 +6,7 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import debug
+from keyboardHandler import sendKey
 import MSAAHandler
 import winUser
 import winKernel
@@ -71,7 +72,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 			cls=_staticMap[(None,objectRole)]
 		else:
 			cls=NVDAObject_MSAA
-		obj=window.NVDAObject_window.__new__(cls,pacc,child,origEventLocator)
+		obj=window.NVDAObject_window.__new__(cls,hwnd)
 		#Python will not call __init__ on the object if the class given to __new__ is different from the actual class its instanciating from 
 		if cls!=oldCls:
 			obj.__init__(pacc,child,origEventLocator=origEventLocator)
@@ -899,21 +900,56 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 
 
 	def event_gainFocus(self):
-		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
-		#domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
-		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
-		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		self.dom=comtypesClient.wrap(domPointer)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 		NVDAObject_MSAA.event_gainFocus(self)
 
 	def event_looseFocus(self):
 		if hasattr(self,"dom"):
 			del self.dom
+
+class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
+
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args)
+		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		self.dom=comtypesClient.wrap(domPointer)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
+		self.allowedPositiveStates-=(self.allowedPositiveStates&STATE_SYSTEM_READONLY)
+
+	def _get_typeString(self):
+		if self.dom.body.isTextEdit:
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+		else:
+			super(NVDAObject_internetExplorerPane,self).typeString
+
+	def _get_value(self):
+		return ""
+
+	def _get_text(self):
+
+		text=self.dom.body.createTextRange().text
+		if text is not None:
+			return text
+		else:
+			return "\0"
+
+	def _get_caretRange(self):
+		if hasattr(self,"dom"):
+			bookmark=self.dom.selection.createRange().getBookmark()
+			if ord(bookmark[1])==3:
+				return (ord(bookmark[2])-13,ord(bookmark[40])-13)
+		return None
+
+	def _get_caretPosition(self):
+		if hasattr(self,"dom"):
+			bookmark=self.dom.selection.createRange().getBookmark()
+			return ord(bookmark[2])-13
+
+		else:
+			return 0
 
 ###class mappings
 
@@ -953,4 +989,5 @@ _staticMap={
 (None,ROLE_SYSTEM_LIST):NVDAObject_list,
 ("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 ("Internet Explorer_Server",ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
+("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
 }
