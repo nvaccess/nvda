@@ -52,16 +52,18 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
 		baseType.virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
-		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
-			if not api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
-			return
 		self.domEventsObject=self.domEventsType(self)
-		#comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+		comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 		if self.isDocumentComplete():
 			self.loadDocument()
 
 	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
+		try:
+			tagName=self.dom.activeElement.tagName
+		except:
+			tagName=None
+		if (self.dom.body.isContentEditable is False) and (tagName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
+			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return
 		domNode=self.dom.activeElement
@@ -95,6 +97,8 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			domNode.focus()
 
 	def loadDocument(self):
+		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
+			return
 		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():

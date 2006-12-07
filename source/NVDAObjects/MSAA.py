@@ -964,9 +964,13 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		if hasattr(self,"dom"):
 			bookmark=self.dom.selection.createRange().getBookmark()
 			return ord(bookmark[2])-13
-
 		else:
 			return 0
+
+	def event_gainFocus(self):
+		if (self.dom.body.isContentEditable is True) and (not api.isVirtualBufferPassThrough()):
+			api.toggleVirtualBufferPassThrough()
+		NVDAObject_MSAA.event_gainFocus(self)
 
 ###class mappings
 
