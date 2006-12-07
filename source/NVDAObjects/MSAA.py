@@ -920,7 +920,7 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		self.allowedPositiveStates-=(self.allowedPositiveStates&STATE_SYSTEM_READONLY)
 
 	def _get_typeString(self):
-		if self.dom.body.isTextEdit:
+		if self.dom.body.isContentEditable is True:
 			return MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
 		else:
 			super(NVDAObject_internetExplorerPane,self).typeString

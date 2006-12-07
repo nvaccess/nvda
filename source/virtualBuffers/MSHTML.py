@@ -52,7 +52,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
 		baseType.virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
-		if self.dom.body.isTextEdit: #This is an editable document and will not be managed by this virtualBuffer
+		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			return
