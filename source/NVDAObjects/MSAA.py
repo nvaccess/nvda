@@ -293,7 +293,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 
 	def event_gainFocus(self):
 		self.updateMenuMode()
-		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)) and not ((self.windowHandle==winUser.getForegroundWindow()) and (self.role==ROLE_SYSTEM_CLIENT)):
+		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)):
 			if conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
 				groupName=self.groupName
 				if groupName:
@@ -478,7 +478,7 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 			return self.getPositionFromLineNumber(lineNum-1)
 
 	def event_caret(self):
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 
 	def event_valueChange(self):
 		pass
@@ -533,30 +533,10 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args,**vars)
-		processID=self.windowProcessID[0]
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-			pass
-		winKernel.attachConsole(processID)
-		res=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
-		if not res:
-			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
-		self.consoleHandle=res
-		self.consoleEventHookHandles=[]
-		self.oldLines=self.visibleLines
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
-	def __del__(self):
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-		NVDAObject_edit.__del__(self)
-
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
-		self._reviewCursor=self.caretPosition
+		self.reviewPosition=self.caretPosition
 		newLines=self.visibleLines
 		if eventID!=EVENT_CONSOLE_UPDATE_SIMPLE:
 			self.speakNewText(newLines,self.oldLines)
@@ -564,8 +544,6 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
 		if num<2:
 			winKernel.freeConsole()
-
-
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -576,30 +554,44 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		return info.consoleSize.x
 
 	def _get_visibleRange(self):
+		if not hasattr(self,"consoleHandle"):
+			return (0,0) 
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		top=self.getPositionFromCoord(0,info.windowRect.top)
 		bottom=self.getPositionFromCoord(0,info.windowRect.bottom+1)
 		return (top,bottom)
 
 	def _get_caretPosition(self):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		y=info.cursorPosition.y
 		x=info.cursorPosition.x
 		return self.getPositionFromCoord(x,y)
 
 	def _get_endPosition(self):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return self.getConsoleVerticalLength()*self.getConsoleHorizontalLength()
 
 	def getPositionFromCoord(self,x,y):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return (y*self.getConsoleHorizontalLength())+x
 
 	def getLineStart(self,pos):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return pos-(pos%self.getConsoleHorizontalLength())
 
 	def getLineNumber(self,pos):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return pos/self.getConsoleHorizontalLength()
 
 	def getLine(self,pos):
+		if not hasattr(self,"consoleHandle"):
+			return "\0"
 		maxLen=self.getConsoleHorizontalLength()
 		lineNum=self.getLineNumber(pos)
 		line=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,lineNum)
@@ -610,17 +602,25 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		return line
 
 	def _get_lineCount(self):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return self.getConsoleVerticalLength()
 
 	def getLineLength(self,pos):
+		if not hasattr(self,"consoleHandle"):
+			return 0
 		return self.getConsoleHorizontalLength()
 
 	def _get_text(self):
+		if not hasattr(self,"consoleHandle"):
+			return "\0"
 		maxLen=self.endPosition
 		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,0)
 		return text
 
 	def _get_visibleLines(self):
+		if not hasattr(self,"consoleHandle"):
+			return []
 		visibleRange=self.visibleRange
 		visibleRange=(self.getLineNumber(visibleRange[0]),self.getLineNumber(visibleRange[1]))
 		lines=[]
@@ -634,8 +634,20 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		return ""
 
 	def event_gainFocus(self):
+		processID=self.windowProcessID[0]
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
+			pass
+		winKernel.attachConsole(processID)
+		res=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		if not res:
+			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
+		self.consoleHandle=res
+		self.consoleEventHookHandles=[]
+		self.oldLines=self.visibleLines
 		NVDAObject_MSAA.event_gainFocus(self)
-		time.sleep(0.1)
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
@@ -650,6 +662,11 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 	def event_looseFocus(self):
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
+		del self.consoleHandle
+		try:
+			winKernel.freeConsole()
+		except:
+			pass
 
 	def event_nameChange(self):
 		pass

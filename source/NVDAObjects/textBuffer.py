@@ -12,7 +12,7 @@ class NVDAObject_textBuffer:
 	__metaclass__=autoPropertyType.autoPropertyType
 
 	def __init__(self,*args):
-		self._reviewPosition=0
+		self.reviewPosition=0
 		self._presentationTable={}
 		self._lastReviewPresentationValues={}
 
@@ -36,12 +36,6 @@ class NVDAObject_textBuffer:
 	def speakPresentationValues(self,values):
 		for name in values.keys():
 			audio.speakMessage("%s"%values[name])
-
-	def _get_reviewPosition(self):
-		return self._reviewPosition
-
-	def _set_reviewPosition(self,pos):
-		self._reviewPosition=pos
 
 	def getTextRange(self,start,end):
 		text=self.text
