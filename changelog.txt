@@ -11,7 +11,9 @@ Changes since revision 164:
 *You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
 *Fixed a bug that stopped internet explorer reading when pressing tab
 *Links no longer say the URL as their value. They also now say "visited link" for visited links.
-*Greatly improved the internet explorer virtualBuffer by having the type of object (link, heading, list) spoken as you arrow on to it, but not having it actually written physically in the buffer. So if you arrow to a link, you can straight away arrow through its name, rather than arrowing across l i n k first. Also improved focus tracking and the updating of form fields when you move away from them after interacting with them. 
+*Greatly improved the internet explorer virtualBuffer by having the type of object (link, heading, list) spoken as you arrow on to it, but not having it actually written physically in the buffer. So if you arrow to a link, you can straight away arrow through its name, rather than arrowing across l i n k first. 
+*Frames are now supported in Internet Explorer.
+*Edit fields in Internet Explorer forms are now able to be navigated properly with the cursor.
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
 *Made NVDA over all much more responsive (especially in edit fields such as an address bar)
@@ -29,7 +31,6 @@ These scripts also make sure they say * when typing in edit fields with the prot
 *Insert+q now properly activates the exit message dialog box, saying yes will exit NVDA completely.
 *NVDA now starts with its window completely hidden (not even just minimized). You now need to press insert+n to bring it up, and press alt+f4 to make it go away. 
 *The NVDA window when shown should be now centered in the middle of the screen and is 300 by 300 pixels in size. 
-*Fixed several bugs to do with tracking the caret location
 *Improved the internal structure of NVDA objects and virtualBuffers and made NVDA less dependent on MSAA. (NVDA still needs MSAA for most things, but now it is much easier for support for other accessibility APIs to be designed).
 
 Changes since revision 82:

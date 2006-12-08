@@ -49,8 +49,7 @@ def setDriver(name):
 				setDriver(synth)
 				conf["speech"]["synth"]="auto"
 				return True
-		else: #none of the auto synths are available
-			raise OSError("Cannot find a synthesizer")
+		raise OSError("Cannot find a synthesizer")
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
 		checkSynth(name)
