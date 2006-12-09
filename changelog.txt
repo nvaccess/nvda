@@ -14,7 +14,8 @@ Changes since revision 164:
 *Links no longer say the URL as their value. They also now say "visited link" for visited links.
 *Greatly improved the internet explorer virtualBuffer by having the type of object (link, heading, list) spoken as you arrow on to it, but not having it actually written physically in the buffer. So if you arrow to a link, you can straight away arrow through its name, rather than arrowing across l i n k first. 
 *Frames are now supported in Internet Explorer.
-*Edit fields in Internet Explorer forms are now able to be navigated properly with the cursor.
+*Edit fields in Internet Explorer forms are now able to be navigated with the cursor.
+*It is now possible to edit and navigate in editable internet explorer windows (example: Outlook Express new message window). A part from a few controls which may not properly report their names, this makes Outlook Express now usable for both reading and writing messages.
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
 *Made NVDA over all much more responsive (especially in edit fields such as an address bar)
@@ -28,7 +29,7 @@ These scripts also make sure they say * when typing in edit fields with the prot
 *Fixed handling of crashes so that if the screen reader core dies, it should take the GUI down with it
 *Added a voice dialog on the preferences menu
 *The synthesizer dialog now only shows synthesizers currently found on your system. It also now has a longer description for each synth (including the name of the dll or com interface it uses)
-*Added a save configuration to the NVDA menu. This writes the current config to nvda.ini, previously this was done automatically on exit.
+*Added a save configuration to the NVDA menu. This writes the current config to nvda.ini, previously this was done automatically on exit. However, nvda.in is written to disc also once NVDA has been started successfully.
 *Insert+q now properly activates the exit message dialog box, saying yes will exit NVDA completely.
 *NVDA now starts with its window completely hidden (not even just minimized). You now need to press insert+n to bring it up, and press alt+f4 to make it go away. 
 *The NVDA window when shown should be now centered in the middle of the screen and is 300 by 300 pixels in size. 

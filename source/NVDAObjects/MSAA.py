@@ -6,7 +6,7 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import debug
-from keyboardHandler import sendKey
+from keyboardHandler import sendKey, key 
 import MSAAHandler
 import winUser
 import winKernel
@@ -971,6 +971,19 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		if (self.dom.body.isContentEditable is True) and (not api.isVirtualBufferPassThrough()):
 			api.toggleVirtualBufferPassThrough()
 		NVDAObject_MSAA.event_gainFocus(self)
+
+	def script_moveByLine(self,keyPress):
+		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
+		sendKey(keyPress)
+		debug.writeMessage("IE edit move by line: first move %s"%self.caretPosition)
+		sendKey(key("ExtendedEnd"))
+		end=self.caretPosition
+		debug.writeMessage("ie edit moveByLine: end: %s"%end)
+		sendKey(key("extendedHome"))
+		start=self.caretPosition
+		debug.writeMessage("ie edit moveByLine: start: %s"%start)
+		text=self.getTextRange(start,end)
+		audio.speakText(text)
 
 ###class mappings
 
