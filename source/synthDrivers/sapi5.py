@@ -1,7 +1,10 @@
+import time
 import os
 import comtypesClient
-import debug
 import _winreg
+from autoPropertyType import autoPropertyType
+import debug
+import globalVars
 
 name="sapi5"
 description="Microsoft Speech API version 5 (sapi.SPVoice)"
@@ -21,69 +24,75 @@ class constants:
 
 class synthDriver(object):
 
-	def __init__(self):
-		self.lastIndex=0
-		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
-		self.tts.Speak("<sapi>",constants.SVSFIsXML)
-		self.curVoice=1
-		self.curPitch=50
+	__metaclass__=autoPropertyType
 
-	def getRate(self):
+	def __init__(self):
+		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
+		self._voice=1
+		self._pitch=50
+
+	def _get_rate(self):
 		rate=(self.tts.Rate*5)+50
 		return rate
 
-	def getPitch(self):
-		return self.curPitch
+	def _get_pitch(self):
+		return self._pitch
 
-	def getVolume(self):
+	def _get_volume(self):
 		return self.tts.Volume
 
-	def getVoice(self):
-		return self.curVoice
+	def _get_voice(self):
+		return self._voice
 
-	def getVoiceNames(self):
+	def _get_voiceNames(self):
 		voiceNames=[]
 		for num in range(self.tts.GetVoices().Count):
 			voiceNames.append(self.tts.GetVoices()[num].GetDescription())
 		return voiceNames
 
-	def getLastIndex(self):
-		return self.lastIndex
+	def _get_lastIndex(self):
+		debug.writeMessage("bookmark %s"%self.tts.status.LastBookmark)
+		bookmark=self.tts.status.LastBookmark
+		if bookmark!="" and bookmark is not None:
+			return int(bookmark)
+		else:
+			return -1
 
-	def setRate(self,rate):
+	def _set_rate(self,rate):
 		self.tts.Rate = (rate-50)/5
 
-	def setPitch(self,value):
+	def _set_pitch(self,value):
 		#pitch is really controled with xml around speak commands
-		self.curPitch=value
+		self._pitch=value
 
-	def setVolume(self,value):
+	def _set_volume(self,value):
 		self.tts.Volume = value
 
-	def setVoice(self,value):
+	def _set_voice(self,value):
 		self.tts.Voice(self.tts.GetVoices()[value-1])
-		self.curVoice=value
+		self._voice=value
 
 	def speakText(self,text,wait=False,index=None):
 		flags=constants.SVSFIsXML
-		if self.curPitch>=70:
+		if self._pitch>=70:
 			pitch=24
-		elif self.curPitch>50:
-			pitch=10
-		elif self.curPitch==50:
+		elif self._pitch>50:
+			pitch=(self._pitch-50)/2
+		elif self._pitch==50:
 			pitch=0
-		elif self.curPitch>=40:
-			pitch=-10
+		elif self._pitch>=30:
+			pitch=(self._pitch-30)/2
 		else:
 			pitch=-24
 		if isinstance(index,int):
-			wait=True
+			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
+		else:
+			bookmarkXML=""
+		flags=constants.SVSFIsXML
 		if wait is False:
-			flags=constants.SVSFlagsAsync
-		self.tts.Speak("<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text),flags)
-		if isinstance(index,int):
-			self.lastIndex=index
+			flags+=constants.SVSFlagsAsync
+		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
 
 	def cancel(self):
 		if self.tts.Status.RunningState == 2:
-			self.tts.Speak('', constants.SVSFlagsAsync | constants.SVSFPurgeBeforeSpeak)
+			self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)

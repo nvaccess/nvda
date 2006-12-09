@@ -38,7 +38,6 @@ def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,de
 	text=""
 	if conf["presentation"]["sayStateFirst"] and (stateText is not None):
 		text="%s %s"%(text,stateText)
- 
 	if name is not None:
 		text="%s %s"%(text,name)
 	if typeString is not None:

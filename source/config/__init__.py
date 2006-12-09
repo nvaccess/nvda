@@ -57,8 +57,6 @@ confspec = StringIO("""# NVDA Configuration File
 	reportStructureTables = boolean(default=false)
 	reportBlockQuotes = boolean(default=true)
 
-
-
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
@@ -86,7 +84,7 @@ def load():
 	conf.newlines = "\r\n"
 	conf.validate(val)
 
-def checkSynth(name):
+def updateSynthConfig(name):
 	"Validate the configuration for the selected synth."
 	speech = conf["speech"]
 	# If there are no settings for this synth, make sure there are defaults.
@@ -102,6 +100,7 @@ def save(force = False):
 	# Copy default settings and formatting.
 	conf.validate(val, copy = True)
 	conf.write()
+	mtime = os.path.getmtime(configFileName)
 
 def getSynthConfig():
 	"A convenience function to return the config for the current speech synth."

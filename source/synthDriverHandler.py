@@ -6,7 +6,7 @@
 
 import os
 import debug
-from config import conf, checkSynth
+from config import conf, updateSynthConfig
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
@@ -52,23 +52,22 @@ def setDriver(name):
 		raise OSError("Cannot find a synthesizer")
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
-		checkSynth(name)
-		newSynth.setVoice(conf["speech"][name]["voice"])
-		newSynth.setRate(conf["speech"][name]["rate"])
-		newSynth.setVolume(conf["speech"][name]["volume"])
+		updateSynthConfig(name)
+		newSynth.voice=conf["speech"][name]["voice"]
+		newSynth.rate=conf["speech"][name]["rate"]
+		newSynth.volume=conf["speech"][name]["volume"]
 		driverObject=newSynth
 		driverName=name
-		driverVoiceNames=driverObject.getVoiceNames()
+		driverVoiceNames=driverObject.voiceNames
 		conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
-		setDriver("auto")
 		debug.writeException("Error in synthDriver %s"%name)
 		return False
 
 def getRate():
-	value=driverObject.getRate()
+	value=driverObject.rate
 	if value<0:
 		value=0
 	if value>100:
@@ -80,11 +79,11 @@ def setRate(value):
 		value=0
 	if value>100:
 		value=100
-	driverObject.setRate(value)
+	driverObject.rate=value
 	conf["speech"][driverName]["rate"]=getRate()
 
 def getPitch():
-	value=driverObject.getPitch()
+	value=driverObject.pitch
 	if value<0:
 		value=0
 	if value>100:
@@ -96,11 +95,11 @@ def setPitch(value):
 		value=0
 	if value>100:
 		value=100
-	driverObject.setPitch(value)
+	driverObject.pitch=value
 	conf["speech"][driverName]["pitch"]=getPitch()
 
 def getVolume():
-	value=driverObject.getVolume()
+	value=driverObject.volume
 	if value<0:
 		value=0
 	if value>100:
@@ -112,16 +111,16 @@ def setVolume(value):
 		value=0
 	if value>100:
 		value=100
-	driverObject.setVolume(value)
+	driverObject.volume=value
 	conf["speech"][driverName]["volume"]=getVolume()
 
 def getVoice():
-	return driverObject.getVoice()
+	return driverObject.voice
 
 def setVoice(value):
-	driverObject.setVoice(value)
+	driverObject.voice=value
 	conf["speech"][driverName]["voice"]=getVoice()
-	driverObject.setRate(conf["speech"][driverName]["rate"])
+	driverObject.rate=conf["speech"][driverName]["rate"]
 
 def getVoiceNames():
 	return driverVoiceNames
@@ -133,14 +132,13 @@ def cancel():
 	driverObject.cancel()
 
 def getLastIndex():
-	index=driverObject.getLastIndex()
+	index=driverObject.lastIndex
 	if index is not None:
 		debug.writeMessage("synthDriverHandler.getLastIndex: %s"%index)
 		return index
 
 def getSupportedLanguages():
-	return driverObject.getSupportedLanguages()
+	return driverObject.supportedLanguages
 
 def setLanguage(value):
-	return driverObject.setLanguage(value)
- 
+	driverObject.language=value

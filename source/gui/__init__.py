@@ -102,7 +102,7 @@ class MainFrame(wx.Frame):
 
 	def onVoiceCommand(self,evt):
 		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
-		d.SetSelection(config.getSynthConfig()["voice"]-1)
+		d.SetSelection(config.conf["speech"][synthDriverHandler.driverName]["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
 

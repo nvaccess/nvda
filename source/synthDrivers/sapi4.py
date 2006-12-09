@@ -1,6 +1,7 @@
 import time
 import comtypesClient
 import _winreg
+from autoPropertyType import autoPropertyType
 
 name="sapi4"
 description="Microsoft Speech API Engine version 4 (speech.voiceText)"
@@ -15,41 +16,43 @@ def check():
 
 class synthDriver(object):
 
+	__metaclass__=autoPropertyType
+
 	def __init__(self):
 		self.lastIndex=None
 		self.tts=comtypesClient.CreateObject("speech.voiceText")
 		self.tts.Register("local_pc","nvda")
 
-	def getRate(self):
+	def _get_rate(self):
 		value=self.tts.Speed/4
 		return value
 
-	def getVolume(self):
+	def _get_pitch(self):
+		return 50
+
+	def _get_volume(self):
 		return 100
 
-
-	def getVoice(self):
+	def _get_voice(self):
 		return 1
 
-	def getVoiceNames(self):
+	def _get_voiceNames(self):
 		return ["default"]
 
-	def getLastIndex(self):
-		return self.lastIndex
-
-	def setRate(self,rate):
+	def _set_rate(self,rate):
 		rate=rate*4
 		self.tts.Speed=rate
 
-	def setVolume(self,value):
+	def _set_pitch(self,val):
 		pass
 
-	def setVoice(self,value):
+	def _set_volume(self,value):
+		pass
+
+	def _set_voice(self,value):
 		pass
 
 	def speakText(self,text,wait=False,index=None):
-		if isinstance(index,int):
-			wait=True
 		self.tts.Speak(text,0)
 		if wait is True:
 			while self.tts.IsSpeaking:

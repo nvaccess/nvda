@@ -88,6 +88,7 @@ def main():
 		keyboardHandler.initialize()
 		mouseHandler.initialize()
 		gui.initialize()
+		config.save()
 	except:
 		debug.writeException("core.py main init")
 		try:
