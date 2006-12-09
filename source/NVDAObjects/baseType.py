@@ -260,7 +260,7 @@ Speaks the properties of this object such as name, typeString,value, description
 		"""
 This code is executed if a gain focus event is received by this object.
 """
-		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus())):
+		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus())) and not ((self==api.getForegroundObject()) and self.speakOnForeground):
 			api.setNavigatorObject(self)
 			self.speakObject()
 

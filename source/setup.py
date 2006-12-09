@@ -27,7 +27,6 @@ setup(
 	data_files = [
 		("documentation", glob("../*.txt")),
 		("comInterfaces", glob("comInterfaces/*.py*")),
-		("lang", glob("lang/*.*")),
 		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
 	],

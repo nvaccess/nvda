@@ -23,13 +23,10 @@ def writeError(message):
 	debugFile.flush()
 
 def writeException(message):
-	try:
-		trace=traceback.format_exc()
-	except:
-		trace="..."
+	trace=traceback.format_exc()
 	winsound.Beep(200,100)
 	debugFile.write("Exception %s\n"%datetime.datetime.now())
-	debugFile.write("%s: ----\n%s----\n"%(message,trace))
+	debugFile.write("%s: ----\n%s\n----\n"%(message,trace))
 	debugFile.flush()
 
 def start(fileName):

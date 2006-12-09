@@ -67,6 +67,7 @@ class MainFrame(wx.Frame):
 		self.Center()
 		self.Show(True)
 		self.Raise()
+		time.sleep(0.01)
 		self.SetFocus()
 
 	def onHideGuiCommand(self,evt):
