@@ -140,7 +140,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 			text=None
 		return text
 
-	def nextWord(self,pos):
+	def oldnextWord(self,pos):
 		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj=self.dom.Selection
 		rangeObj.Start=rangeObj.End=pos
@@ -153,7 +153,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		else:
 			return None
 
-	def previousWord(self,pos):
+	def oldpreviousWord(self,pos):
 		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj=self.dom.Selection
 		rangeObj.Start=rangeObj.End=pos
@@ -192,7 +192,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		else:
 			return None
 
-	def nextCharacter(self,pos):
+	def oldnextCharacter(self,pos):
 		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj=self.dom.Selection
 		rangeObj.Start=rangeObj.End=pos
@@ -205,7 +205,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		else:
 			return None
 
-	def previousCharacter(self,pos):
+	def oldpreviousCharacter(self,pos):
 		saveSelection=self._duplicateDocumentRange(self.dom.Selection)
 		rangeObj=self.dom.Selection
 		rangeObj.Start=rangeObj.End=pos
@@ -237,7 +237,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 
 	def msgTable(self,pos):
 		if self.isTable(pos):
-			return (NVDAObjects.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+_("columns")+" and %s "+_("rows"))%(self.getColumnCount(pos),self.getRowCount(pos))
+			return (MSAAHandler.getRoleName(ROLE_SYSTEM_TABLE)+" with %s "+_("columns")+" and %s "+_("rows"))%(self.getColumnCount(pos),self.getRowCount(pos))
 		else:
 			return "not in %s"%MSAAHandler.getRoleName(ROLE_SYSTEM_TABLE)
 
@@ -249,7 +249,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def msgTableRow(self,pos):
 		rowNum=self.getRowNumber(pos)
 		if rowNum>0:
-			return NVDAObjects.getRoleName(ROLE_SYSTEM_ROW)+" %s"%rowNum
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_ROW)+" %s"%rowNum
 
 	def getRowCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -264,7 +264,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def msgTableColumn(self,pos):
 		columnNum=self.getColumnNumber(pos)
 		if columnNum>0:
-			return NVDAObjects.getRoleName(ROLE_SYSTEM_COLUMN)+" %s"%columnNum
+			return MSAAHandler.getRoleName(ROLE_SYSTEM_COLUMN)+" %s"%columnNum
 
 	def getColumnCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
