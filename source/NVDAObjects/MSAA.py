@@ -909,6 +909,13 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 			return "\0"
 
 	def event_gainFocus(self):
+		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		self.dom=comtypesClient.wrap(domPointer)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 		NVDAObject_MSAA.event_gainFocus(self)
 
 	def event_looseFocus(self):
