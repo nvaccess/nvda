@@ -34,6 +34,10 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 
+		def oncontextmenu(self,arg,event):
+			if not api.isVirtualBufferPassThroughMode():
+				api.toggleVirtualBufferPassThroughMode()
+
 	def __init__(self,NVDAObject):
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
 		self.MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
@@ -69,7 +73,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getRangeFromID(ID)
-		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>r[1])):
+		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
 
 	def activatePosition(self,pos):
@@ -80,11 +84,6 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		if domNode is None:
 			return
 		try:
-			if domNode.uniqueID!=self.dom.activeElement.uniqueID:
-				domNode.click()
-		except:
-			pass
-		try:
 			tagName=domNode.tagName
 		except:
 			tagName=None
@@ -94,6 +93,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if not api.isVirtualBufferPassThrough() and not ((tagName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 				api.toggleVirtualBufferPassThrough()
 		elif tagName=="A":
+			domNode.click()
 			domNode.focus()
 
 	def loadDocument(self):

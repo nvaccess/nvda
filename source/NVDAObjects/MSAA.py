@@ -246,7 +246,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 			return False
 
 	def setFocus(self):
-		self._pacc.SetFocus()
+		MSAAHandler.accFocus(self._pacc)
 
 	def _get_positionString(self):
 		position=""

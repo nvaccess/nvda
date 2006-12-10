@@ -192,6 +192,7 @@ def accFocus(ia):
 			return None
 		return (new_ia,new_child)
 	except:
+		debug.writeException("can't set focus")
 		return None
 
 def accChild(ia,child):
@@ -302,7 +303,10 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)
 		#Let menu events through
-		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPSTART,EVENT_SYSTEM_MENUPOPUPEND]:
+		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUPOPUPSTART]:
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"gainFocus",window,objectID,childID)
+		elif eventID in [EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPEND]:
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let foreground and focus events through
 		elif (eventID==EVENT_SYSTEM_FOREGROUND) or (eventID==EVENT_OBJECT_FOCUS):
