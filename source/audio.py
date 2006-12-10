@@ -6,7 +6,7 @@
 import winsound
 import debug
 from textProcessing import *
-from config import conf, getSynthConfig
+from config import conf
 import synthDriverHandler
 
 allowSpeech=True
@@ -99,8 +99,6 @@ This function will not speak if L{allowSpeech} is false.
 		text="%s %s"%(text,value)
 	if description is not None:
 		text="%s %s"%(text,description)
-	if help is not None:
-		text="%s %s"%(text,help)
 	if keyboardShortcut is not None:
 		text="%s %s"%(text,keyboardShortcut)
 	if position is not None:
@@ -130,7 +128,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		uppercase=False
 	if uppercase:
 		oldPitch=synthDriverHandler.getPitch()
-		synthDriverHandler.setPitch(oldPitch+getSynthConfig()["relativeUppercasePitch"])
+		synthDriverHandler.setPitch(oldPitch+conf["speech"]["synth"]["relativeUppercasePitch"])
 	synthDriverHandler.speakText(symbol,wait=wait,index=index)
 	if uppercase:
 		synthDriverHandler.setPitch(oldPitch)

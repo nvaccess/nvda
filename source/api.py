@@ -220,16 +220,16 @@ def toggleVirtualBufferPassThrough():
 	"""Toggles virtualBufferPassThroughMode on or off. This mode is so that virtualBuffers can either capture, or ignore, key presses.
 This function also speaks the state of the mode as it changes.
 """
-		if globalVars.virtualBufferPassThrough:
-			audio.speakMessage(_("virtual buffer pass through")+" "+_("off"))
-			globalVars.virtualBufferPassThrough=False
-		else:
-			audio.speakMessage(_("virtual buffer pass through")+" "+_("on"))
-			globalVars.virtualBufferPassThrough=True
+	if globalVars.virtualBufferPassThrough:
+		audio.speakMessage(_("virtual buffer pass through")+" "+_("off"))
+		globalVars.virtualBufferPassThrough=False
+	else:
+		audio.speakMessage(_("virtual buffer pass through")+" "+_("on"))
+		globalVars.virtualBufferPassThrough=True
 
 def isVirtualBufferPassThrough():
 	"""Gets the current state of the virtualBuffer pass through mode. This mode is so that virtualBuffers can either capture, or ignore, key presses.
 @returns: true if on or false if off.
 @rtype: boolean
  """
-		return globalVars.virtualBufferPassThrough
+	return globalVars.virtualBufferPassThrough
