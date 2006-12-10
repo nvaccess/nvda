@@ -35,7 +35,8 @@ class NVDAObject_textBuffer:
 
 	def speakPresentationValues(self,values):
 		for name in values.keys():
-			audio.speakMessage("%s"%values[name])
+			if values[name] is not None:
+				audio.speakMessage("%s"%values[name])
 
 	def getTextRange(self,start,end):
 		text=self.text

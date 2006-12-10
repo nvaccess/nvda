@@ -128,7 +128,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		uppercase=False
 	if uppercase:
 		oldPitch=synthDriverHandler.getPitch()
-		synthDriverHandler.setPitch(oldPitch+conf["speech"]["synth"]["relativeUppercasePitch"])
+		synthDriverHandler.setPitch(oldPitch+conf["speech"][synthDriverHandler.driverName]["relativeUppercasePitch"])
 	synthDriverHandler.speakText(symbol,wait=wait,index=index)
 	if uppercase:
 		synthDriverHandler.setPitch(oldPitch)
