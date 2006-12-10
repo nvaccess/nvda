@@ -1,3 +1,9 @@
+"""Maps for character symbols.
+@ivar characterSymbols: a dictionary of character-to-word mappings
+@type characterSymbols: dict
+@ivar blankList: a list of characters which should be treated as blank
+@type blankList: list
+"""
 #characterSymbols.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>

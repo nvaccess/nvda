@@ -1,3 +1,4 @@
+"""Keyboard support"""
 #keyboardHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
@@ -25,6 +26,11 @@ word=""
 ignoreNextKeyPress = False
 
 def key(name):
+	"""Converts a string representation of a keyPress in to a set of modifiers and a key (which is NVDA's internal key representation).
+@param name: keyPress name to convert
+@type name: string
+@returns: the internal key representation 
+"""
 	l = name.split("+")
 	for num in range(len(l)):
 		t=l[num]
@@ -43,6 +49,10 @@ def key(name):
 	return (modifiers, l[-1])
 
 def sendKey(keyPress):
+	"""Sends a key press through to the operating system.
+@param keyPress: the key to send
+@type keyPress: NVDA internal key
+"""
 	global keyPressIgnoreSet
 	keyList=[]
 	#Process modifier keys
@@ -101,6 +111,8 @@ def sendKey(keyPress):
 #Internal functions for key presses
 
 def internal_keyDownEvent(event):
+	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
+"""
 	global insertDown, ignoreNextKeyPress, word
 	try:
 		if event.Injected:
@@ -177,6 +189,7 @@ def internal_keyDownEvent(event):
 		return True
 
 def internal_keyUpEvent(event):
+	"""Event that pyHook calls when it receives keyUps"""
 	global insertDown, ignoreNextKeyPress
 	try:
 		if event.Injected:
@@ -199,6 +212,7 @@ def internal_keyUpEvent(event):
 #Register internal key press event with  operating system
 
 def initialize():
+	"""Initialises keyboard support."""
 	hookManager=pyHook.HookManager()
 	hookManager.KeyDown=internal_keyDownEvent
 	hookManager.KeyUp=internal_keyUpEvent

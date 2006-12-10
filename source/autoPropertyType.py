@@ -3,6 +3,7 @@
 #Added a check for the length of the _set_ and _get_ names to make sure they are 5 or more characters long or else we can't use them
 
 class autoPropertyType(type):
+	"""Creates properties for any _get_x or _set_x methods."""
 	def __init__(cls,name,bases,dict):
 		super(autoPropertyType,cls).__init__(cls,name,bases,dict)
 		properties={}

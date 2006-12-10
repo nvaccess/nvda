@@ -1,3 +1,7 @@
+"""Manages appModules.
+@ivar current: holds the currently loaded appModule
+@type current: appModule
+"""
 #appModules/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
@@ -16,6 +20,14 @@ __path__=['.\\appModules']
 current=None
 
 def load(name,hwnd,processID):
+	"""Loads an appModule. If this fails, and its not currently trying to load the default appModule, it will then try that.
+@param name: Name of the appModule
+@type name: string
+@param hwnd: the application's window handle
+@type hwnd: int 
+@param processID: the application's process ID
+@type processID: tuple
+"""
 	global current
 	if os.path.isfile(r'%s\appModules\%s.py'%(os.getcwd(),name)):
 		debug.writeMessage("Found appModule %s"%name)

@@ -1,3 +1,4 @@
+"""NVDA constants"""
 #constants.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>

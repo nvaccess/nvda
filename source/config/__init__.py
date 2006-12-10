@@ -1,3 +1,9 @@
+"""Manages NVDA configuration.
+@var configFileName: file where the configuration should be read from, and written to
+@type configFileName: string
+@var confspec: a template that defines all the sections and values for the configuration.
+@type confspec: string
+""" 
 # NVDA Configuration Support
 
 configFileName = "nvda.ini"
@@ -75,6 +81,8 @@ conf = None
 mtime = 0
 
 def load():
+	"""Loads the configuration from the configFile. It also takes note of the file's modification time so that L{save} won't loose any changes made to the file while NVDA is running. 
+"""
 	global conf, mtime
 	# If the config file exists, store its mtime.
 	if os.path.isfile(configFileName):
@@ -85,6 +93,10 @@ def load():
 	conf.validate(val)
 
 def updateSynthConfig(name):
+	"""Makes sure that the config contains a specific synth section for the given synth name.
+@param name: the synth name
+@type name: string
+""" 
 	"Validate the configuration for the selected synth."
 	speech = conf["speech"]
 	# If there are no settings for this synth, make sure there are defaults.
@@ -93,6 +105,10 @@ def updateSynthConfig(name):
 		conf.validate(val, copy = True, section = speech)
 
 def save(force = False):
+	"""Saves the configuration to the config file. However it does not if the file's modification time has changed and L{force} is not true.
+@param force: if true then the modification time of the file will be ignored.
+@type force: boolean
+"""
 	global conf, mtime
 	# If the file has changed since it was read, don't save over the top of it.
 	if not force and os.path.isfile(configFileName) and os.path.getmtime(configFileName) != mtime:
@@ -101,10 +117,6 @@ def save(force = False):
 	conf.validate(val, copy = True)
 	conf.write()
 	mtime = os.path.getmtime(configFileName)
-
-def getSynthConfig():
-	"A convenience function to return the config for the current speech synth."
-	return conf["speech"][conf["speech"]["synth"]]
 
 ### Main
 load()

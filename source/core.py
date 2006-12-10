@@ -1,3 +1,13 @@
+"""NVDA core.
+@var queueList: a list of queues that hold functions to be executed in NVDA's main thread
+@type queueList: list
+@var threads: dictionary that stores the currently running thread generators (by ID).
+@type threads: dict
+@var lastThreadValues: a dictionary of values (by thread ID)which are the last values each thread has yielded.
+@type lastThreadValues: dict
+@var lastThreadID: the last thread ID created, used when creating the next thread ID.
+@type lastThreadID: int
+"""
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
@@ -20,7 +30,6 @@ import config
 import gui
 import Queue
 
-msg=winUser.msgType()
 queueList=[]
 threads={}
 lastThreadValues={}
@@ -98,6 +107,7 @@ def main():
 		return False
 	try:
 		globalVars.stayAlive=True
+		msg=winUser.msgType()
 		while globalVars.stayAlive is True:
 			for num in range(len(queueList)):
 				if not queueList[num].empty():

@@ -4,10 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-foregroundLocator=(0,0,0)
 foregroundObject=None
 foregroundProcessID=None
-focusLocator=(0,0,0)
 focusObject=None
 mouseObject=None
 mouseOldX=None
