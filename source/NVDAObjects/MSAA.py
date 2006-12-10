@@ -699,6 +699,9 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA
 		NVDAObject_MSAA.__init__(self,*args,**vars)
 		ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
 
+	def _get_typeString(self):
+		return "rich "+super(NVDAObject_richEdit,self).typeString
+
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
@@ -841,11 +844,6 @@ class NVDAObject_listItem(NVDAObject_MSAA):
 		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_SELECTED
 		self._lastNegativeStates=self.calculateNegativeStates()
 
-class NVDAObject_internetExplorerPane(NVDAObject_MSAA):
-
-	def _get_value(self):
-		return ""
-
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_MSAA):
 
 	def __init__(self,*args,**vars):
@@ -899,11 +897,6 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 	def _get_caretPosition(self):
 		if hasattr(self,"dom"):
 			bookmark=self.dom.selection.createRange().getBookmark()
-			l=map(lambda x: ord(x),bookmark)
-			if l[1]==3:
-				debug.writeMessage("bookmark selection: %s"%l)
-			else:
-				debug.writeMessage("bookmark single: %s"%l)
 			return ord(bookmark[2])-2
 		else:
 			return 0
@@ -915,7 +908,6 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 		else:
 			return "\0"
 
-
 	def event_gainFocus(self):
 		NVDAObject_MSAA.event_gainFocus(self)
 
@@ -923,35 +915,39 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 		if hasattr(self,"dom"):
 			del self.dom
 
+class NVDAObject_internetExplorerClient(NVDAObject_MSAA):
+
+	def _get_name(self):
+		return ""
+
+	def _get_typeString(self):
+		return "HTML "+super(NVDAObject_internetExplorerClient,self).typeString
+
+	def _get_description(self):
+		return ""
+
 class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args)
-		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		self.dom=comtypesClient.wrap(domPointer)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 		self.allowedPositiveStates-=(self.allowedPositiveStates&STATE_SYSTEM_READONLY)
 
 	def _get_typeString(self):
-		if self.dom.body.isContentEditable is True:
-			return MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+		if hasattr(self,"dom") and self.dom.body.isContentEditable is True:
+			return "HTML "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
 		else:
-			super(NVDAObject_internetExplorerPane,self).typeString
+			return "HTML "+MSAAHandler.getRoleName(ROLE_SYSTEM_PANE)
 
 	def _get_value(self):
 		return ""
 
 	def _get_text(self):
-
-		text=self.dom.body.createTextRange().text
-		if text is not None:
-			return text
-		else:
-			return "\0"
+		if hasattr(self,"dom"):
+			text=self.dom.body.createTextRange().text
+			if text is not None:
+				return text
+			else:
+				return "\0"
 
 	def _get_caretRange(self):
 		if hasattr(self,"dom"):
@@ -968,9 +964,20 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 			return 0
 
 	def event_gainFocus(self):
+		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		self.dom=comtypesClient.wrap(domPointer)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 		if (self.dom.body.isContentEditable is True) and (not api.isVirtualBufferPassThrough()):
 			api.toggleVirtualBufferPassThrough()
 		NVDAObject_MSAA.event_gainFocus(self)
+
+	def event_looseFocus(self):
+		if hasattr(self,"dom"):
+			del self.dom
 
 	def script_moveByLine(self,keyPress):
 		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
@@ -1032,6 +1039,7 @@ _staticMap={
 (None,ROLE_SYSTEM_LIST):NVDAObject_list,
 ("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 ("Internet Explorer_Server",ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
+("Internet Explorer_Server",ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
 ("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
 ("msctls_statusbar32",ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 }
