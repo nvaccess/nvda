@@ -500,6 +500,7 @@ class NVDAObject_editableTextBuffer(NVDAObject_textBuffer):
 				audio.speakSymbol(delChar)
 		else:
 			sendKey(keyPress)
+			audio.speakText("")
 		self.reviewPosition=self.caretPosition
 
 	def reportFormatInfo(self):
