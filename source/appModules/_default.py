@@ -1,3 +1,4 @@
+import ctypes
 import datetime
 from keyboardHandler import key
 from constants import *
@@ -26,6 +27,7 @@ class appModule(object):
 			key("insert+4"):self.script_toggleSpeakCommandKeys,
 			key("insert+p"):self.script_toggleSpeakPunctuation,
 			key("insert+space"):self.script_toggleVirtualBufferPassThrough,
+			key("insert+extendedEnd"):self.script_reportStatusLine,
 			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
 			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
 			key("insert+extendedUp"):self.script_currentFocus,
@@ -384,4 +386,12 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("no focus"))
 
+	def script_reportStatusLine(self,keyPress):
+		fg=winUser.getForegroundWindow()
+		statusWindow=ctypes.windll.user32.FindWindowExW(fg,0,u'msctls_statusbar32',0)
+		statusObject=NVDAObjects.MSAA.getNVDAObjectFromEvent(statusWindow,OBJID_CLIENT,0)
+		if not isinstance(statusObject,NVDAObjects.baseType.NVDAObject):
+			audio.speakMessage(_("could not find status bar object"))
+			return 
+		statusObject.speakObject()
 

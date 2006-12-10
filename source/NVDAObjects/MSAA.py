@@ -985,6 +985,15 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		text=self.getTextRange(start,end)
 		audio.speakText(text)
 
+class NVDAObject_statusBar(NVDAObject_MSAA):
+
+	def _get_value(self):
+		value=""
+		for child in self.children:
+			if child.name is not None:
+				value+="  "+child.name
+		return value
+
 ###class mappings
 
 _dynamicMap={}
@@ -1024,4 +1033,5 @@ _staticMap={
 ("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 ("Internet Explorer_Server",ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
 ("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
+("msctls_statusbar32",ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 }
