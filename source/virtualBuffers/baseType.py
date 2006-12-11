@@ -48,11 +48,13 @@ class virtualBuffer(object):
 		self._keyMap.update(keyDict)
 
 	def getIDsFromPosition(self,pos):
- 		for IDs in self._IDsToRanges:
-			(startPos,endPos)=self._IDsToRanges[IDs]
-			if (pos>=startPos) and (pos<endPos):
-				return IDs
-		return []
+		shortList=filter(lambda x: pos>=self._IDsToRanges[x][0] and pos<self._IDsToRanges[x][1],self._IDsToRanges)
+		if shortList:
+			return min(shortList,key=lambda x: self._IDsToRanges[x][1]-self._IDsToRanges[x][0])
+		else:
+			return ()
+
+
 
 	def getRangeFromID(self,ID):
 		startPos=None
@@ -87,7 +89,7 @@ class virtualBuffer(object):
 			(oldStart,oldEnd)=self._IDsToRanges[IDs]
 			if oldEnd==position:
 				position=position-1
-			self.text=self.text[0:position]+text+"\n"+self.text[position:]
+			self.text=self.text[0:position]+text+"\n"+self.text[position+1:]
 			extraLength=len(text)+1
 			self._IDsToRanges[IDs]=(oldStart,position+extraLength)
 		else:
@@ -99,7 +101,6 @@ class virtualBuffer(object):
 			self._IDsToRanges[item]=(start+extraLength,end+extraLength)
 		return position+len(text)+1
  
-
 	def removeID(self,ID):
 		r=self.getRangeFromID(ID)
 		if r:
@@ -132,6 +133,8 @@ class virtualBuffer(object):
 				msg+=" "+info["stateTextFunc"](info["node"])
 			if callable(info["descriptionFunc"]):
 				msg+=" "+info["descriptionFunc"](info["node"])
+			if info["accessKey"]:
+				msg+=" "+info["accessKey"]
 			return msg
 		else:
 			return ""
@@ -355,11 +358,13 @@ class virtualBuffer(object):
 	def script_top(self,keyPress):
 		self.caretPosition=0
 		self.reportCaretIDMessages()
+		audio.speakMessage(_("top"))
 		self.speakLine(self.caretPosition)
 
 	def script_bottom(self,keyPress):
 		self.caretPosition=len(self.text)-1
 		self.reportCaretIDMessages()
+		audio.speakMessage(_("bottom"))
 		self.speakLine(self.caretPosition)
 
 	def script_pageUp(self,keyPress):
@@ -371,6 +376,8 @@ class virtualBuffer(object):
 			if self.text[curPos]=='\n':
 				lineCount+=1
 		self.caretPosition=curPos
+		if self.caretPosition==0:
+			audio.speakMessage(_("top"))
 		self.speakLine(self.caretPosition)
 
 	def script_pageDown(self,keyPress):
@@ -382,6 +389,8 @@ class virtualBuffer(object):
 			if self.text[curPos]=='\n':
 				lineCount+=1
 		self.caretPosition=curPos
+		if self.caretPosition>=len(self.text)-1:
+			audio.speakMessage(_("bottom"))
 		self.speakLine(self.caretPosition)
 
 	def script_nextLine(self,keyPress):
@@ -389,6 +398,8 @@ class virtualBuffer(object):
 		nextPos=self.nextLine(pos)
 		if (pos<len(self.text)) and (nextPos is not None):
 			self.caretPosition=nextPos
+		else:
+			audio.speakMessage(_("bottom"))
 		self.reportCaretIDMessages()
 		self.speakLine(self.caretPosition)
 
@@ -397,6 +408,8 @@ class virtualBuffer(object):
 		prevPos=self.previousLine(pos)
 		if (pos>0) and (prevPos is not None):
 			self.caretPosition=prevPos
+		else:
+			audio.speakMessage(_("top"))
 		self.reportCaretIDMessages()
 		self.speakLine(self.caretPosition)
 

@@ -87,7 +87,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if inputType in ["checkbox","radio"]:
 				domNode.click()
 				audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
-			elif inputType in ["text","password"]:
+			elif inputType in ["file","text","password"]:
 				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 					api.toggleVirtualBufferPassThrough()
 				domNode.focus()
@@ -223,7 +223,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			return " "
 		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute('type')
-			if inputType=="text":
+			if inputType in ["text","file"]:
 				return domNode.getAttribute('value')+" "
 			if inputType=="password":
 				return "*"*len(domNode.getAttribute('value'))+" "
@@ -233,7 +233,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				return " "
 
 	def getDomNodeInfo(self,domNode):
-		info={"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"reportOnEnter":False,"reportOnExit":False}
+		info={"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"accessKey":None,"reportOnEnter":False,"reportOnExit":False}
 		if not domNode:
 			return info
 		nodeName=domNode.nodeName
@@ -245,6 +245,8 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_DOCUMENT)
 		elif nodeName=="A":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LINK)
+			if domNode.getAttribute('href').startswith('#'):
+				info["typeString"]=_("same page")+" "+info["typeString"]
 			info["reportOnEnter"]=True
 		elif nodeName=="UL":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LIST)
@@ -273,7 +275,10 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if inputType=="text":
 				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
 				info["reportOnEnter"]=True
-			if inputType=="password":
+			elif inputType=="file":
+				info["typeString"]=_("file upload")+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+				info["reportOnEnter"]=True
+			elif inputType=="password":
 				info["typeString"]=_("protected")+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
 				info["reportOnEnter"]=True
 			elif inputType in ["button","image","reset","submit"]:
@@ -292,6 +297,12 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			info["reportOnEnter"]=True
 		else:
 			info["typeString"]=nodeName
+		try:
+			accessKey=domNode.accessKey
+			if accessKey:
+				info["accessKey"]="alt+%s"%accessKey
+		except:
+			pass
 		try:
 			if domNode.onclick and (nodeName not in ["INPUT","A"]):
 				info["typeString"]=_("clickable")+" "+info["typeString"]
