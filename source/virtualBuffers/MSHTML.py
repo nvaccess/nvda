@@ -21,7 +21,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 
 		def ondeactivate(self,arg,event):
 			domNode=event.srcElement
-			if domNode.tagName not in ["INPUT","SELECT","TEXTAREA"]:
+			if domNode.nodeName not in ["INPUT","SELECT","TEXTAREA"]:
 				return
 			ID=self.virtualBufferObject.getDomNodeID(domNode)
 			IDs=self.virtualBufferObject.getIDsFromID(ID)
@@ -33,10 +33,6 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		def onreadystatechange(self,arg,event):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
-
-		def oncontextmenu(self,arg,event):
-			if not api.isVirtualBufferPassThroughMode():
-				api.toggleVirtualBufferPassThroughMode()
 
 	def __init__(self,NVDAObject):
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
@@ -62,11 +58,8 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			self.loadDocument()
 
 	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
-		try:
-			tagName=self.dom.activeElement.tagName
-		except:
-			tagName=None
-		if (self.dom.body.isContentEditable is False) and (tagName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
+		nodeName=self.dom.activeElement.nodeName
+		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return
@@ -83,18 +76,29 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		domNode=self._IDs[IDs[-1]]["node"]
 		if domNode is None:
 			return
-		try:
-			tagName=domNode.tagName
-		except:
-			tagName=None
-		if (tagName in ["INPUT","SELECT","TEXTAREA"]):
-			if domNode.uniqueID!=self.dom.activeElement.uniqueID:
-				domNode.focus()
-			if not api.isVirtualBufferPassThrough() and not ((tagName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
+		nodeName=domNode.nodeName
+		nodeInfo=self.getDomNodeInfo(domNode)
+		if nodeName in ["SELECT","TEXTAREA"]:
+			if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 				api.toggleVirtualBufferPassThrough()
-		elif tagName=="A":
-			domNode.click()
 			domNode.focus()
+		elif nodeName =="INPUT":
+			inputType=domNode.getAttribute('type')
+			if inputType in ["checkbox","radio"]:
+				domNode.click()
+				audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
+			elif inputType in ["text","password"]:
+				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
+					api.toggleVirtualBufferPassThrough()
+				domNode.focus()
+			elif inputType in ["button","image","reset","submit"]:
+				domNode.click()
+		elif (nodeName in ["A","IMG"]) or domNode.onclick:
+			domNode.click()
+			try:
+				domNode.focus()
+			except:
+				pass
 
 	def loadDocument(self):
 		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
@@ -132,7 +136,18 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		return documentComplete
 
 	def fillBuffer(self,domNode,IDAncestors=(),position=None):
+		#We don't want comments in the buffer
 		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
+			return position
+		#We don't want non-displayed elements in the buffer 
+		try:
+			display=domNode.currentStyle.display
+		except:
+			display=None
+		if display==u'none':
+			return position
+		#We don't want option elements in the buffer
+		if domNode.nodeName=="OPTION":
 			return position
 		info=self.getDomNodeInfo(domNode)
 		ID=self.getDomNodeID(domNode)
@@ -158,18 +173,18 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		else:
 			child=domNode.firstChild
 			while child:
+				debug.writeMessage("node %s"%child)
 				position=self.fillBuffer(child,IDAncestors,position=position)
-				child=child.nextSibling
+				try:
+					child=child.nextSibling
+				except:
+					child=None
 		return position
 
 	def getDomNodeID(self,domNode):
 		#We don't want certain inline nodes like span, font etc to have their own IDs
 		while domNode:
-			try:
-				tagName=domNode.tagName
-			except:
-				tagName=None
-			if tagName not in ["B","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]:
+			if (domNode.nodeName not in ["B","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) or domNode.onclick:
 				break
 			domNode=domNode.parentNode
 		#document nodes have broken uniqueIDs so we use its html node's uniqueID
@@ -185,39 +200,34 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			return None
 
 	def getDomNodeText(self,domNode):
-		try:
+		nodeName=domNode.nodeName
+		if nodeName=="#text":
 			data=domNode.data
-			parentNode=domNode.parentNode
-			parentTagName=parentNode.tagName
-			parentUniqueID=self.getDomNodeID(parentNode)
-		except:
-			data=None
-			parentNode=None
-			parentTagName=None
-			parentUniqueID=None
-		try:
-			tagName=domNode.tagName
-			uniqueID=self.getDomNodeID(domNode)
-		except:
-			tagName=None
-			uniqueID=None
-		if data and not data.isspace() and parentNode and (parentTagName not in ["OPTION"]):
-			return data
+			if data and not data.isspace():
+				return "%s"%domNode.data
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
 			return domNode.title+"\n "
-		elif tagName=="IMG":
+		elif nodeName=="IMG":
 			label=domNode.getAttribute('alt')
+			if not label:
+				label=domNode.getAttribute('title')
+			if not label:
+				label=domNode.getAttribute('name')
 			if not label:
 				label=domNode.getAttribute('src')
 			return label
-		elif tagName=="SELECT":
+		elif nodeName=="SELECT":
 			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
 			return itemText
-		elif tagName=="INPUT":
+		elif (nodeName=="TEXTAREA") and (domNode.children.length==0):
+			return " "
+		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute('type')
 			if inputType=="text":
 				return domNode.getAttribute('value')+" "
-			elif inputType in ["button","reset","submit"]:
+			if inputType=="password":
+				return "*"*len(domNode.getAttribute('value'))+" "
+			elif inputType in ["button","image","reset","submit"]:
 				return domNode.getAttribute('value')
 			elif inputType in ["checkbox","radio"]:
 				return " "
@@ -226,47 +236,47 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		info={"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"reportOnEnter":False,"reportOnExit":False}
 		if not domNode:
 			return info
-		try:
-			tagName=domNode.tagName
-		except:
-			tagName=None
+		nodeName=domNode.nodeName
 		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
 			info["typeString"]=_("frame")
 			info["reportOnEnter"]=True
 			info["reportOnExit"]=True
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_DOCUMENT)
-		elif tagName=="A":
+		elif nodeName=="A":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LINK)
 			info["reportOnEnter"]=True
-		elif tagName=="UL":
+		elif nodeName=="UL":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LIST)
 			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
 			info["reportOnEnter"]=True
 			info["reportOnExit"]=True
-		elif tagName=="LI":
+		elif nodeName=="LI":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LISTITEM)
 			info["reportOnEnter"]=True
-		elif tagName=="TEXTAREA":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+		elif nodeName=="TEXTAREA":
+			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)+" "+_("area")
 			info["reportOnEnter"]=True
 			info["reportOnExit"]=True
-		elif tagName=="IMG":
+		elif nodeName=="IMG":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_GRAPHIC)
 			info["reportOnEnter"]=True
-		elif tagName in ["H1","H2","H3","H4","H5","H6"]:
-			info["typeString"]=_("heading")+" %s"%tagName[1]
+		elif nodeName in ["H1","H2","H3","H4","H5","H6"]:
+			info["typeString"]=_("heading")+" %s"%nodeName[1]
 			info["reportOnEnter"]=True
-		elif tagName=="BLOCKQUOTE":
+		elif nodeName=="BLOCKQUOTE":
 			info["typeString"]=_("block quote")
 			info["reportOnEnter"]=True
 			info["reportOnExit"]=True
-		elif tagName=="INPUT":
+		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute("type")
 			if inputType=="text":
 				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
 				info["reportOnEnter"]=True
-			elif inputType in ["button","reset","submit"]:
+			if inputType=="password":
+				info["typeString"]=_("protected")+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+				info["reportOnEnter"]=True
+			elif inputType in ["button","image","reset","submit"]:
 				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_PUSHBUTTON)
 				info["reportOnEnter"]=True
 			elif inputType=="radio":
@@ -277,9 +287,14 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				info["stateTextFunc"]=lambda x: x.checked and MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) or _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_CHECKBUTTON)
 				info["reportOnEnter"]=True
-		elif tagName=="SELECT":
+		elif nodeName=="SELECT":
 			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_COMBOBOX)
 			info["reportOnEnter"]=True
 		else:
-			info["typeString"]=tagName
+			info["typeString"]=nodeName
+		try:
+			if domNode.onclick and (nodeName not in ["INPUT","A"]):
+				info["typeString"]=_("clickable")+" "+info["typeString"]
+		except:
+			pass
 		return info

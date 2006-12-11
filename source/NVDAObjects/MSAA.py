@@ -418,6 +418,12 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 	def _get_text(self):
 		return self.windowText
 
+	def _get_typeString(self):
+		typeString=super(NVDAObject_edit,self).typeString
+		if self.states&STATE_SYSTEM_PROTECTED:
+			typeString=MSAAHandler.getStateName(STATE_SYSTEM_PROTECTED)+" "+typeString
+		return typeString
+
 	def _get_value(self):
 		return self.currentLine
 
@@ -884,43 +890,79 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args)
 
+	def _get_typeString(self):
+		typeString=super(NVDAObject_internetExplorerEdit,self).typeString
+		if self.states&STATE_SYSTEM_PROTECTED:
+			typeString=MSAAHandler.getStateName(STATE_SYSTEM_PROTECTED)+" "+typeString
+		return typeString
+
 	def _get_text(self):
-		return self.value
+		if hasattr(self,"dom"):
+			r=self.dom.activeElement.createTextRange()
+			text=r.text
+			if not text:
+				text=""
+			else:
+				text=text.replace('\r\n','\n')
+			return text+"\0"
+		else:
+			return self.value
 
 	def _get_caretRange(self):
 		if hasattr(self,"dom"):
 			bookmark=self.dom.selection.createRange().getBookmark()
 			if ord(bookmark[1])==3:
-				return (ord(bookmark[2])-2,ord(bookmark[40])-2)
+				return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
 		return None
 
 	def _get_caretPosition(self):
 		if hasattr(self,"dom"):
 			bookmark=self.dom.selection.createRange().getBookmark()
-			return ord(bookmark[2])-2
+			debug.writeMessage("bookmark %s"%[ord(x) for x in bookmark])
+			return ord(bookmark[2])-self.positionOffset
 		else:
 			return 0
 
 	def _get_value(self):
-		oldVal=super(NVDAObject_internetExplorerEdit,self).value
-		if oldVal is not None:
-			return oldVal
+		val=super(NVDAObject_internetExplorerEdit,self).value
+		if val is None:
+			return ""
+		elif self.states&STATE_SYSTEM_PROTECTED:
+			return "*"*len(val)
 		else:
-			return "\0"
+			return val
 
 	def event_gainFocus(self):
+		NVDAObject_MSAA.event_gainFocus(self)
 		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		self.dom=comtypesClient.wrap(domPointer)
+		#Find out position offset
+		sendKey(key("control+extendedHome"))
+		sendKey(key("extendedHome"))
+		bookmark=self.dom.selection.createRange().getBookmark()
+		self.positionOffset=ord(bookmark[2])
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
-		NVDAObject_MSAA.event_gainFocus(self)
 
 	def event_looseFocus(self):
 		if hasattr(self,"dom"):
 			del self.dom
+
+	def script_moveByLine(self,keyPress):
+		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
+		sendKey(keyPress)
+		debug.writeMessage("IE edit move by line: first move %s"%self.caretPosition)
+		sendKey(key("ExtendedEnd"))
+		end=self.caretPosition
+		debug.writeMessage("ie edit moveByLine: end: %s"%end)
+		sendKey(key("extendedHome"))
+		start=self.caretPosition
+		debug.writeMessage("ie edit moveByLine: start: %s"%start)
+		text=self.getTextRange(start,end)
+		audio.speakText(text)
 
 class NVDAObject_internetExplorerClient(NVDAObject_MSAA):
 
@@ -960,7 +1002,7 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		if hasattr(self,"dom"):
 			bookmark=self.dom.selection.createRange().getBookmark()
 			if ord(bookmark[1])==3:
-				return (ord(bookmark[2])-13,ord(bookmark[40])-13)
+				return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
 		return None
 
 	def _get_caretPosition(self):
@@ -977,10 +1019,17 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		self.dom=comtypesClient.wrap(domPointer)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
-		if (self.dom.body.isContentEditable is True) and (not api.isVirtualBufferPassThrough()):
-			api.toggleVirtualBufferPassThrough()
 		NVDAObject_MSAA.event_gainFocus(self)
+		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
+		if (self.dom.body.isContentEditable is True):
+			r=self.dom.selection.createRange()
+			r.moveToElementText(self.dom.activeElement)
+			bookmark=r.getBookmark()
+			self.positionOffset=ord(bookmark[2])
+			if (not api.isVirtualBufferPassThrough()):
+				api.toggleVirtualBufferPassThrough()
+		else:
+			del self.dom
 
 	def event_looseFocus(self):
 		if hasattr(self,"dom"):

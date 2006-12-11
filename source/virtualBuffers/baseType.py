@@ -75,8 +75,10 @@ class virtualBuffer(object):
 				return key[0:index+1]
 
 	def addText(self,IDs,text,position=None):
-		wrapper = TextWrapper(width=conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
-		text=wrapper.fill(text)
+		maxLineLength=conf["virtualBuffers"]["maxLineLength"]
+		if len(text)>maxLineLength:
+			wrapper = TextWrapper(width=conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
+			text=wrapper.fill(text)
 		#If no position given, assume end of buffer
 		if position is None:
 			position=len(self.text)
