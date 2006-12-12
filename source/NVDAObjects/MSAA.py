@@ -91,7 +91,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		self._accChild=child
 		self.MSAAOrigEventLocator=origEventLocator
 		window.NVDAObject_window.__init__(self,MSAAHandler.windowFromAccessibleObject(self._pacc))
-		self.allowedPositiveStates=STATE_SYSTEM_UNAVAILABLE|STATE_SYSTEM_SELECTED|STATE_SYSTEM_PRESSED|STATE_SYSTEM_CHECKED|STATE_SYSTEM_MIXED|STATE_SYSTEM_READONLY|STATE_SYSTEM_EXPANDED|STATE_SYSTEM_COLLAPSED|STATE_SYSTEM_BUSY|STATE_SYSTEM_HASPOPUP
+		self.allowedPositiveStates=STATE_SYSTEM_UNAVAILABLE|STATE_SYSTEM_SELECTED|STATE_SYSTEM_PRESSED|STATE_SYSTEM_CHECKED|STATE_SYSTEM_MIXED|STATE_SYSTEM_EXPANDED|STATE_SYSTEM_COLLAPSED|STATE_SYSTEM_BUSY|STATE_SYSTEM_HASPOPUP
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 		#Calculate the hash
@@ -104,10 +104,18 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 
 
 	def _get_name(self):
-		return MSAAHandler.accName(self._pacc,self._accChild)
+		res=MSAAHandler.accName(self._pacc,self._accChild)
+		if isinstance(res,basestring):
+			return res
+		else:
+			return ""
 
 	def _get_value(self):
-		return MSAAHandler.accValue(self._pacc,self._accChild)
+		res=MSAAHandler.accValue(self._pacc,self._accChild)
+		if isinstance(res,basestring):
+			return res
+		else:
+			return ""
 
 	def _get_role(self):
 		return MSAAHandler.accRole(self._pacc,self._accChild)
@@ -135,21 +143,18 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		return newState
 
 	def _get_description(self):
-		try:
-			return self._pacc.accDescription(self._accChild)
-		except:
+		res=MSAAHandler.accDescription(self._pacc,self._accChild)
+		if isinstance(res,basestring):
+			return res
+		else:
 			return ""
 
 	def _get_keyboardShortcut(self):
-		keyboardShortcut=None
-		try:
-			keyboardShortcut=self._pacc.accKeyboardShortcut(self._accChild)
-		except:
-			return ""
-		if not keyboardShortcut:
-			return ""
+		res=MSAAHandler.accKeyboardShortcut(self._pacc,self._accChild)
+		if isinstance(res,basestring):
+			return res
 		else:
-			return keyboardShortcut
+			return ""
 
 	def _get_MSAAChildID(self):
 		return self._accChild
@@ -350,6 +355,9 @@ class NVDAObject_dialog(NVDAObject_MSAA):
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
 	"""
 
+	def _get_value(self):
+		return ""
+
 	def event_foreground(self):
 		super(NVDAObject_dialog,self).event_foreground()
 		for child in self.children:
@@ -407,7 +415,14 @@ class NVDAObject_staticText(textBuffer.NVDAObject_textBuffer,NVDAObject_MSAA):
 		textBuffer.NVDAObject_textBuffer.__init__(self,*args)
 
 	def _get_text(self):
-		return self.windowText
+		#return self.windowText
+		return self.value
+
+	def _get_name(self):
+		return ""
+
+	def _get_value(self):
+		return super(NVDAObject_staticText,self).name
 
 class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
@@ -762,17 +777,12 @@ class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 	def _get_value(self):
 		return ""
 
-class NVDAObject_mozillaHeading(NVDAObject_MSAA):
-
-	def _get_typeString(self):
-		return _("heading")+" %s"%self.role[1]
-
 class NVDAObject_mozillaListItem(NVDAObject_MSAA):
 
 	def _get_name(self):
-		child=NVDAObject_MSAA.getFirstChild(self)
-		if child and child.Role==ROLE_SYSTEM_STATICTEXT:
- 			return child.Name
+		child=super(NVDAObject_mozillaListItem,self).firstChild
+		if child and child.role==ROLE_SYSTEM_STATICTEXT:
+ 			return child.name
 
 	def _get_firstChild(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
@@ -801,12 +811,6 @@ class NVDAObject_link(NVDAObject_MSAA):
 		typeString+=super(NVDAObject_link,self).typeString
 		return typeString
 
-	def _get_firstChild(self):
-		child=super(NVDAObject_link,self).firstChild
-		while child and (child.role in [ROLE_SYSTEM_STATICTEXT,ROLE_SYSTEM_TEXT]):
-			child=child.next
-		return child
-
 class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 	"""
 	Based on NVDAObject_mozillaContentWindowClass but:
@@ -821,7 +825,7 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 	def _get_name(self):
 		name=super(NVDAObject_mozillaText,self).name
 		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==ROLE_SYSTEM_STATICTEXT) and name and not value:
+		if (self.role==ROLE_SYSTEM_STATICTEXT):
 			return ""
 		else:
 			return name
@@ -835,10 +839,11 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 	def _get_value(self):
 		name=super(NVDAObject_mozillaText,self).name
 		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==ROLE_SYSTEM_STATICTEXT) and name and not value:
+		if (self.role==ROLE_SYSTEM_STATICTEXT):
 			return name
 		else:
-			return ""
+			return value
+
 
 	def _get_text(self):
 		return self.value
@@ -898,28 +903,37 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 
 	def _get_text(self):
 		if hasattr(self,"dom"):
-			r=self.dom.activeElement.createTextRange()
-			text=r.text
-			if not text:
-				text=""
-			else:
-				text=text.replace('\r\n','\n')
-			return text+"\0"
+			try:
+				r=self.dom.activeElement.createTextRange()
+				text=r.text
+				if not text:
+					text=""
+				else:
+					text=text.replace('\r\n','\n')
+				return text+"\0"
+			except:
+				return self.value
 		else:
 			return self.value
 
 	def _get_caretRange(self):
 		if hasattr(self,"dom"):
-			bookmark=self.dom.selection.createRange().getBookmark()
-			if ord(bookmark[1])==3:
-				return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
+			try:
+				bookmark=self.dom.selection.createRange().getBookmark()
+				if ord(bookmark[1])==3:
+					return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
+			except:
+				return None
 		return None
 
 	def _get_caretPosition(self):
 		if hasattr(self,"dom"):
-			bookmark=self.dom.selection.createRange().getBookmark()
-			debug.writeMessage("bookmark %s"%[ord(x) for x in bookmark])
-			return ord(bookmark[2])-self.positionOffset
+			try:
+				bookmark=self.dom.selection.createRange().getBookmark()
+				debug.writeMessage("bookmark %s"%[ord(x) for x in bookmark])
+				return ord(bookmark[2])-self.positionOffset
+			except:
+				return 0
 		else:
 			return 0
 
@@ -992,23 +1006,32 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 
 	def _get_text(self):
 		if hasattr(self,"dom"):
-			text=self.dom.body.createTextRange().text
-			if text is not None:
-				return text
-			else:
+			try:
+				text=self.dom.body.createTextRange().text
+				if text is not None:
+					return text
+				else:
+					return "\0"
+			except:
 				return "\0"
-
+ 
 	def _get_caretRange(self):
 		if hasattr(self,"dom"):
-			bookmark=self.dom.selection.createRange().getBookmark()
-			if ord(bookmark[1])==3:
-				return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
-		return None
+			try:
+				bookmark=self.dom.selection.createRange().getBookmark()
+				if ord(bookmark[1])==3:
+					return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
+				return None
+			except:
+				return None
 
 	def _get_caretPosition(self):
 		if hasattr(self,"dom"):
-			bookmark=self.dom.selection.createRange().getBookmark()
-			return ord(bookmark[2])-13
+			try:
+				bookmark=self.dom.selection.createRange().getBookmark()
+				return ord(bookmark[2])-13
+			except:
+				return 0
 		else:
 			return 0
 
@@ -1066,7 +1089,7 @@ _staticMap={
 ("tooltips_class32",ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
 ("tooltips_class32",ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
 ("Progman",ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
-("#32770",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+(None,ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
 ("Static",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
@@ -1077,16 +1100,17 @@ _staticMap={
 (None,ROLE_SYSTEM_LINK):NVDAObject_link,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
+("MozillaDialogClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaDialogClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("MozillaUIWindowClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaUIWindowClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("MozillaWindowClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaWindowClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("MozillaWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
+("MozillaDialogClass",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
 ("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
 ("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
-("MozillaWindowClass","h1"):NVDAObject_mozillaHeading,
-("MozillaWindowClass","h2"):NVDAObject_mozillaHeading,
-("MozillaWindowClass","h3"):NVDAObject_mozillaHeading,
-("MozillaWindowClass","h4"):NVDAObject_mozillaHeading,
-("MozillaWindowClass","h5"):NVDAObject_mozillaHeading,
-("MozillaWindowClass","h6"):NVDAObject_mozillaHeading,
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 (None,ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,

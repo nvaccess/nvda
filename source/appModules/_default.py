@@ -38,8 +38,7 @@ class appModule(object):
 			key("Insert+Left"):self.script_navigator_object_previous,
 			key("Insert+Right"):self.script_navigator_object_next,
 			key("Insert+ExtendedReturn"):self.script_navigator_object_doDefaultAction,
-			key("Insert+Add"):self.script_navigator_object_recursive,
-			key("Insert+Shift+Add"):self.script_navigator_object_where,
+			key("Insert+Add"):self.script_navigator_object_where,
 			key("end"):self.script_navigator_review_previousCharacter,
 			key("shift+end"):self.script_navigator_review_startOfLine,
 			key("down"):self.script_navigator_review_currentCharacter,
@@ -149,28 +148,6 @@ class appModule(object):
 			return
 		curObject.speakObject()
 		return False
-
-	def script_navigator_object_recursive(keyPress,obj=None):
-		"""Reports the object that the navigator is currently on, plus any descendants of that object"""
-		if obj is None:
-			curObject=getNavigatorObject()
-			if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
-				audio.speakMessage(_("no navigator object"))
-				return
-			if curObject.childID>0:
-				audio.speakMessage(_("No children"))
-				return
-			curObject.speakObject()
-			childObject=curObject.firstChild
-			script_navigator_object_recursive(keyPress,obj=childObject)
-		else:
-			obj.speakObject()
-			childObject=obj.firstChild
-			if (childObject is not None) and (childObject.parent.location==obj.location):
-				script_navigator_object_recursive(keyPress,obj=childObject)
-			nextObject=obj.next
-			if (nextObject is not None) and (nextObject.previous.location==obj.location):
-				script_navigator_object_recursive(keyPress,obj=nextObject)
 
 	def script_navigator_object_toFocus(self,keyPress):
 		"""Moves the navigator to the object with focus"""

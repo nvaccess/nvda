@@ -10,6 +10,8 @@ import winUser
 from constants import *
 import api
 import audio
+from config import conf
+import NVDAObjects
 from baseType import *
 
 class virtualBuffer_MSHTML(virtualBuffer):
@@ -61,16 +63,27 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			self.loadDocument()
 
 	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
-		nodeName=self.dom.activeElement.nodeName
+		try:
+			nodeName=self.dom.activeElement.nodeName
+		except:
+			return False
 		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
-			return
+			return False
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getRangeFromID(ID)
 		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
+			obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+			if obj and conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
+				self.reportCaretIDMessages()
+				audio.speakText(self.getTextRange(r[0],r[1]))
+				api.setFocusObject(obj)
+				api.setNavigatorObject(obj)
+				return True
+		return False
 
 	def activatePosition(self,pos):
 		IDs=self.getIDsFromPosition(pos)
@@ -82,7 +95,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		nodeName=domNode.nodeName
 		nodeInfo=self.getDomNodeInfo(domNode)
 		if nodeName in ["SELECT","TEXTAREA"]:
-			if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
+			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			domNode.focus()
 		elif nodeName =="INPUT":
@@ -119,7 +132,6 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
 			time.sleep(0.01)
-			self.dom.focus()
 			core.newThread(self.sayAllGenerator())
 
 	def isDocumentComplete(self):
@@ -207,7 +219,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if nodeName=="#text":
 			data=domNode.data
 			if data and not data.isspace():
-				return "%s"%domNode.data
+				return data
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
 			return domNode.title+"\n "
 		elif nodeName=="IMG":
@@ -236,7 +248,8 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				return " "
 
 	def getDomNodeInfo(self,domNode):
-		info={"fieldType":fieldType_other,"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"accessKey":None}
+		info=fieldInfo.copy()
+		info["node"]=domNode
 		if not domNode:
 			return info
 		nodeName=domNode.nodeName

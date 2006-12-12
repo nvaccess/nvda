@@ -1,5 +1,6 @@
 import ctypes
 import winUser
+import audio
 from constants import *
 import baseType
 
@@ -53,3 +54,4 @@ An NVDAObject for a window
 
 	def _get_windowProcessID(self):
 		return winUser.getWindowThreadProcessID(self.windowHandle)
+

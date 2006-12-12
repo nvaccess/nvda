@@ -74,6 +74,13 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		h=(h+(hash(self.role)*p))%l
 		h=(h+(hash(self.description)*p))%l
 		h=(h+(hash(self.keyboardShortcut)*p))%l
+		location=self.location
+		if location and (len(location)==4):
+			(left,top,width,height)=location
+			h=(h+(hash(left)*p))%l
+			h=(h+(hash(top)*p))%l
+			h=(h+(hash(width)*p))%l
+			h=(h+(hash(height)*p))%l
 		self._cachedHash=h
 
 	def __hash__(self):

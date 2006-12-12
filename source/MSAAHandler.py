@@ -192,7 +192,6 @@ def accFocus(ia):
 			return None
 		return (new_ia,new_child)
 	except:
-		debug.writeException("can't set focus")
 		return None
 
 def accChild(ia,child):
@@ -239,6 +238,7 @@ def accParent(ia,child):
 		return None
 
 def accNavigate(ia,child,direction):
+	res=None
 	try:
 		res=ia.accNavigate(direction,child)
 		if isinstance(res,ctypes.POINTER(IAccessible)):
@@ -251,9 +251,11 @@ def accNavigate(ia,child,direction):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		else:
+			debug.writeMessage("accNavigate: direction %s, res %s"%(direction,res))
 			return None
 		return (new_ia,new_child)
 	except:
+		#debug.writeException("accNavigate: exception, direction %s, res %s"%(direction,res))
 		return None
 
 def accLocation(ia,child):
@@ -291,7 +293,7 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
-		if (objectID==0) and (childID==0):
+		if (objectID==0) and (childID==0) and (eventID!=EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
 		#Let tooltips through
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
@@ -336,12 +338,15 @@ def executeEvent(name,window,objectID,childID):
 			return
 		api.setFocusObject(obj)
 		virtualBuffers.MSAA.updateVirtualBuffers(obj)
-	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue
+	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue if the result is False
 	virtualBuffer=virtualBuffers.getVirtualBuffer(obj)
 	if virtualBuffer and hasattr(virtualBuffer,"event_MSAA_%s"%name):
+		debug.writeMessage("vb event: %s"%name)
 		event=getattr(virtualBuffer,"event_MSAA_%s"%name)
 		try:
-			event(window,objectID,childID)
+			res=event(window,objectID,childID)
+			if res and (name!="hide"):
+				return
 		except:
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 

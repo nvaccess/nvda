@@ -60,10 +60,7 @@ def unregisterVirtualBufferClass(windowClass,role):
 
 _staticMap={
 ("Internet Explorer_Server",None):MSHTML.virtualBuffer_MSHTML,
-("MozillaWindowClass",ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
-#("MozillaWindowClass",ROLE_SYSTEM_PANE):gecko.virtualBuffer_gecko,
-#("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
-#("MozillaContentWindowClass",ROLE_SYSTEM_PANE):gecko.virtualBuffer_gecko,
+("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
 }
 
 _dynamicMap={}

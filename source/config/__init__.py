@@ -56,6 +56,7 @@ confspec = StringIO("""# NVDA Configuration File
 [virtualBuffers]
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
+	reportVirtualPresentationOnFocusChanges = boolean(default=true)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true) 
 	reportListItems = boolean(default=true)
@@ -66,6 +67,7 @@ confspec = StringIO("""# NVDA Configuration File
 	reportFormFields = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
 	reportParagraphs = boolean(default=false)
+	reportFrames = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]

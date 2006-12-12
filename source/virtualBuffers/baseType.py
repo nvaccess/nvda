@@ -52,6 +52,15 @@ fieldNames={
 	fieldType_editArea:_("edit area"),
 }
 
+fieldInfo={
+	"fieldType":fieldType_other,
+	"node":None,
+	"typeString":"",
+	"stateTextFunc":None,
+	"descriptionFunc":None,
+	"accessKey":None,
+}
+
 class virtualBuffer(object):
 
 	__metaclass__=autoPropertyType.autoPropertyType
