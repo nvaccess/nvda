@@ -10,9 +10,9 @@ import winUser
 from constants import *
 import api
 import audio
-import baseType
+from baseType import *
 
-class virtualBuffer_MSHTML(baseType.virtualBuffer):
+class virtualBuffer_MSHTML(virtualBuffer):
 
 	class domEventsType(object):
 
@@ -34,6 +34,9 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 
+		def onscroll(self,arg,event):
+			audio.speakMessage("scroll")
+
 	def __init__(self,NVDAObject):
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
 		self.MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
@@ -50,7 +53,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 		self.dom=comtypesClient.wrap(domPointer)
 		debug.writeMessage("vb internetExplorer_server: domPointer %s"%self.dom)
 		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
-		baseType.virtualBuffer.__init__(self,NVDAObject)
+		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
 		comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
@@ -214,7 +217,7 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 			if not label:
 				label=domNode.getAttribute('name')
 			if not label:
-				label=domNode.getAttribute('src')
+				label=domNode.getAttribute('src').split('/')[-1]
 			return label
 		elif nodeName=="SELECT":
 			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
@@ -233,68 +236,83 @@ class virtualBuffer_MSHTML(baseType.virtualBuffer):
 				return " "
 
 	def getDomNodeInfo(self,domNode):
-		info={"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"accessKey":None,"reportOnEnter":False,"reportOnExit":False}
+		info={"fieldType":fieldType_other,"node":domNode,"typeString":"","stateTextFunc":None,"descriptionFunc":None,"accessKey":None}
 		if not domNode:
 			return info
 		nodeName=domNode.nodeName
 		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
-			info["typeString"]=_("frame")
-			info["reportOnEnter"]=True
-			info["reportOnExit"]=True
+			info["fieldType"]=fieldType_frame
+			info["typeString"]=fieldNames[fieldType_frame]
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_DOCUMENT)
+			info["fieldType"]=fieldType_document
+			info["typeString"]=fieldNames[fieldType_document]
 		elif nodeName=="A":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LINK)
-			if domNode.getAttribute('href').startswith('#'):
-				info["typeString"]=_("same page")+" "+info["typeString"]
-			info["reportOnEnter"]=True
+			info["fieldType"]=fieldType_link
+			info["typeString"]=fieldNames[fieldType_link]
+		elif nodeName=="TABLE":
+			info["fieldType"]=fieldType_table
+			info["typeString"]=fieldNames[fieldType_table]
+		elif nodeName=="P":
+			info["fieldType"]=fieldType_paragraph
+			info["typeString"]=fieldNames[fieldType_paragraph]
 		elif nodeName=="UL":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LIST)
+			info["fieldType"]=fieldType_list
+			info["typeString"]=fieldNames[fieldType_list]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
-			info["reportOnEnter"]=True
-			info["reportOnExit"]=True
+		elif nodeName=="OL":
+			info["fieldType"]=fieldType_list
+			info["typeString"]=_("ordered")+" "+fieldNames[fieldType_list]
+			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
 		elif nodeName=="LI":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_LISTITEM)
-			info["reportOnEnter"]=True
+			info["fieldType"]=fieldType_listItem
+			info["typeString"]=_("bullit item")
+		elif nodeName=="DL":
+			info["fieldType"]=fieldType_list
+			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
+			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
+		elif nodeName=="DT":
+			info["fieldType"]=fieldType_listItem
+			info["typeString"]=_("bullit item")
+		elif nodeName=="DD":
+			info["fieldType"]=fieldType_listItem
+			info["typeString"]=_("definition")
 		elif nodeName=="TEXTAREA":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)+" "+_("area")
-			info["reportOnEnter"]=True
-			info["reportOnExit"]=True
+			info["fieldType"]=fieldType_editArea
+			info["typeString"]=fieldNames[fieldType_editArea]
 		elif nodeName=="IMG":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_GRAPHIC)
-			info["reportOnEnter"]=True
+			info["fieldType"]=fieldType_graphic
+			info["typeString"]=fieldNames[fieldType_graphic]
 		elif nodeName in ["H1","H2","H3","H4","H5","H6"]:
-			info["typeString"]=_("heading")+" %s"%nodeName[1]
-			info["reportOnEnter"]=True
+			info["fieldType"]=fieldType_heading
+			info["typeString"]=fieldNames[fieldType_heading]+" %s"%nodeName[1]
 		elif nodeName=="BLOCKQUOTE":
-			info["typeString"]=_("block quote")
-			info["reportOnEnter"]=True
-			info["reportOnExit"]=True
+			info["fieldType"]=fieldType_blockQuote
+			info["typeString"]=fieldNames[fieldType_blockQuote]
 		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute("type")
 			if inputType=="text":
-				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_edit
+				info["typeString"]=fieldNames[fieldType_edit]
 			elif inputType=="file":
-				info["typeString"]=_("file upload")+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_edit
+				info["typeString"]=_("file updload")+" "+fieldNames[fieldType_edit]
 			elif inputType=="password":
-				info["typeString"]=_("protected")+" "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_edit
+				info["typeString"]=_("protected")+" "+fieldNames[fieldType_edit]
 			elif inputType in ["button","image","reset","submit"]:
-				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_PUSHBUTTON)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_button
+				info["typeString"]=fieldNames[fieldType_button]
 			elif inputType=="radio":
-				info["stateTextFunc"]=lambda x: x.checked and MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) or _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
-				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_RADIOBUTTON)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_radioButton
+				info["typeString"]=fieldNames[fieldType_radioButton]
+				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 			elif inputType=="checkbox":
-				info["stateTextFunc"]=lambda x: x.checked and MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) or _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
-				info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_CHECKBUTTON)
-				info["reportOnEnter"]=True
+				info["fieldType"]=fieldType_checkBox
+				info["typeString"]=fieldNames[fieldType_checkBox]
+				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 		elif nodeName=="SELECT":
-			info["typeString"]=MSAAHandler.getRoleName(ROLE_SYSTEM_COMBOBOX)
-			info["reportOnEnter"]=True
+			info["fieldType"]=fieldType_comboBox
+			info["typeString"]=fieldNames[fieldType_comboBox]
 		else:
 			info["typeString"]=nodeName
 		try:

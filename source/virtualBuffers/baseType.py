@@ -8,6 +8,50 @@ from constants import *
 import core
 from config import conf
 
+fieldType_other=0
+fieldType_button=1
+fieldType_link=2
+fieldType_list=3
+fieldType_listItem=4
+fieldType_heading=5
+fieldType_table=6
+fieldType_row=7
+fieldType_column=8
+fieldType_edit=9
+fieldType_comboBox=10
+fieldType_graphic=11
+fieldType_frame=12
+fieldType_document=13
+fieldType_blockQuote=14
+fieldType_paragraph=15
+fieldType_form=16
+fieldType_checkBox=16
+fieldType_radioButton=18
+fieldType_editArea=19
+
+fieldNames={
+	fieldType_other:"",
+	fieldType_button:_("button"),
+	fieldType_link:_("link"),
+	fieldType_list:_("list"),
+	fieldType_listItem:_("list item"),
+	fieldType_heading:_("heading"),
+	fieldType_table:_("table"),
+	fieldType_row:_("row"),
+	fieldType_column:_("column"),
+	fieldType_edit:_("edit"),
+	fieldType_comboBox:_("combo box"),
+	fieldType_graphic:_("graphic"),
+	fieldType_frame:_("frame"),
+	fieldType_document:_("document"),
+	fieldType_blockQuote:_("block quote"),
+	fieldType_paragraph:_("paragraph"),
+	fieldType_form:_("form"),
+	fieldType_checkBox:_("check box"),
+	fieldType_radioButton:_("radio button"),
+	fieldType_editArea:_("edit area"),
+}
+
 class virtualBuffer(object):
 
 	__metaclass__=autoPropertyType.autoPropertyType
@@ -127,7 +171,9 @@ class virtualBuffer(object):
 		if not self._IDs.has_key(ID):
 			return ""
 		info=self._IDs[ID]
-		if info["reportOnEnter"]: 
+		fieldType=info["fieldType"]
+		vbc=conf["virtualBuffers"]
+		if (fieldType==fieldType_link and vbc["reportLinks"]) or (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_listItem and vbc["reportListItems"]) or (fieldType==fieldType_heading and vbc["reportHeadings"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_graphic and vbc["reportGraphics"]) or (fieldType==fieldType_form and vbc["reportForms"]) or ((fieldType in [fieldType_button,fieldType_edit,fieldType_editArea,fieldType_checkBox,fieldType_radioButton,fieldType_comboBox]) and vbc["reportFormFields"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
 			msg=info["typeString"]
 			if callable(info["stateTextFunc"]):
 				msg+=" "+info["stateTextFunc"](info["node"])
@@ -142,8 +188,11 @@ class virtualBuffer(object):
 	def getIDExitMessage(self,ID):
 		if not self._IDs.has_key(ID):
 			return ""
-		if self._IDs[ID]["reportOnExit"]:
-			return _("out of")+" "+self._IDs[ID]["typeString"]
+		info=self._IDs[ID]
+		fieldType=info["fieldType"]
+		vbc=conf["virtualBuffers"]
+		if (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_form and vbc["reportForms"]) or (fieldType==fieldType_editArea and vbc["reportFormFields"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
+			return _("out of")+" "+info["typeString"]
 
 	def reportIDMessages(self,newIDs,oldIDs):
 		for ID in filter(lambda x: x not in newIDs,oldIDs):

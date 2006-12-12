@@ -56,12 +56,16 @@ confspec = StringIO("""# NVDA Configuration File
 [virtualBuffers]
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
-	ignoreUnlinkedImagesWithNoAltAttribute = boolean(default=true)
-	reportHeadings = boolean(default=true)
 	reportLinks = boolean(default=true)
-	reportDataTables = boolean(default=true)
-	reportStructureTables = boolean(default=false)
+	reportLists = boolean(default=true) 
+	reportListItems = boolean(default=true)
+	reportHeadings = boolean(default=true)
+	reportTables = boolean(default=false)
+	reportGraphics = boolean(default=true)
+	reportForms = boolean(default=false)
+	reportFormFields = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportParagraphs = boolean(default=false)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
