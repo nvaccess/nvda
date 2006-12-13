@@ -270,6 +270,7 @@ EVENT_SYSTEM_MENUSTART:"menuStart",
 EVENT_SYSTEM_MENUEND:"menuEnd",
 EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
+EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
 EVENT_SYSTEM_SWITCHSTART:"switchStart",
 EVENT_SYSTEM_SWITCHEND:"switchEnd",
 EVENT_OBJECT_FOCUS:"gainFocus",
@@ -295,6 +296,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		eventName=eventMap[eventID]
 		if (objectID==0) and (childID==0) and (eventID!=EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
+		virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(window)
 		#Let tooltips through
 		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
@@ -315,6 +317,9 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
 		elif isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and (window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator:
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+		#Let through events for the current virtualBuffer
+		elif hasattr(virtualBuffer,"event_MSAA_%s"%eventName):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")

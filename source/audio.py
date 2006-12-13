@@ -62,7 +62,7 @@ This function will not speak if L{allowSpeech} is false.
 	if text and not text.isspace():
 		synthDriverHandler.speakText("\n"+text+"\n",wait=wait,index=index)
 
-def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,keyboardShortcut=None,position=None,wait=False,index=None):
+def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,keyboardShortcut=None,position=None,level=None,contains=None,wait=False,index=None):
 	"""Speaks some given object properties.
 This function will not speak if L{allowSpeech} is false.
 @param name: object name
@@ -88,23 +88,13 @@ This function will not speak if L{allowSpeech} is false.
 		return
 	text=""
 	if conf["presentation"]["sayStateFirst"] and (stateText is not None):
-		text="%s %s"%(text,stateText)
-	if name is not None:
-		text="%s %s"%(text,name)
-	if typeString is not None:
-		text+=" %s"%typeString
-	if not conf["presentation"]["sayStateFirst"] and (stateText is not None):
-		text="%s %s"%(text,stateText)
-	if value is not None:
-		text="%s %s"%(text,value)
-	if description is not None:
-		text="%s %s"%(text,description)
-	if keyboardShortcut is not None:
-		text="%s %s"%(text,keyboardShortcut)
-	if position is not None:
-		text="%s %s"%(text,position)
-	text=processText(text)
+		multiList=[stateText,name,typeString,value,description,position,level,contains]
+	else:
+		multiList=[name,typeString,value,stateText,description,position,level,contains]
+	for multi in filter(lambda x: isinstance(x,basestring) and (len(x)>0) and not x.isspace(),multiList):
+		text="%s %s"%(text,multi)
 	if text and not text.isspace():
+		text=processText(text)
 		synthDriverHandler.speakText(text,wait=wait,index=index)
 
 def speakSymbol(symbol,wait=False,index=None):

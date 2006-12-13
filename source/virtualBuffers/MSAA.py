@@ -14,7 +14,12 @@ runningTable={}
 def getVirtualBuffer(obj):
 	if len(runningTable)==0:
 		return None
-	hwnd=obj.windowHandle
+	if isinstance(obj,int):
+		hwnd=obj
+	elif isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA):
+		hwnd=obj.windowHandle
+	else:
+		return
 	for existingHwnd in runningTable:
 		if winUser.isDescendantWindow(existingHwnd,hwnd):
 			return runningTable[existingHwnd]

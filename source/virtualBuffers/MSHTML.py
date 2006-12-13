@@ -132,6 +132,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
 			time.sleep(0.01)
+			audio.speakMessage(_("done"))
 			core.newThread(self.sayAllGenerator())
 
 	def isDocumentComplete(self):

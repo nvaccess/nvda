@@ -19,12 +19,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		audio.speakMessage("gecko virtualBuffer")
 		virtualBuffer.__init__(self,NVDAObject)
 		debug.writeMessage("virtualBuffer gecko")
-		#obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(winUser.getForegroundWindow(),-4,0)
-		#if obj:
-		#	obj=MSAAHandler.accNavigate(obj._pacc,obj._accChild,NAVRELATION_EMBEDS)
-		#	if obj:
-		#		debug.writeMessage("embeds")
-		#		self.NVDAObject=NVDAObjects.MSAA.NVDAObject_MSAA(obj[0],obj[1])
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -34,7 +28,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			return False
 		role=obj.role
 		states=obj.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (self.NVDAObject.role!=ROLE_SYSTEM_DOCUMENT):
+		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY) and ((self.NVDAObject.role!=ROLE_SYSTEM_DOCUMENT) or self.neverLoaded):
 			self.NVDAObject=obj
 			self.loadDocument()
 			return False
@@ -54,15 +48,27 @@ class virtualBuffer_gecko(virtualBuffer):
 				return True
 		return False
 
-	def event_MSAA_stateChange(self,hwnd,objectID,childID):
-		audio.speakMessage("state")
+	def event_MSAA_scrollingStart(self,hwnd,objectID,childID):
+		audio.speakMessage("scroll")
 		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if obj.role==ROLE_SYSTEM_DOCUMENT:
-			self.NVDAObject=obj
-			if obj.states&STATE_SYSTEM_BUSY:
-				audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
-			else:
-				self.loadDocument()
+		if not obj:
+			return False
+		role=obj.role
+		states=obj.states
+		if not self._allowCaretMovement:
+			return False
+		ID=self.getNVDAObjectID(obj)
+		audio.speakMessage("ID: %s, obj: %s"%(ID,obj.role))
+		r=self.getRangeFromID(ID)
+		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
+			self.caretPosition=r[0]
+			self.reportCaretIDMessages()
+			audio.speakText(self.getTextRange(r[0],r[1]))
+
+	def event_MSAA_stateChange(self,hwnd,objectID,childID):
+		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+		if (obj.role==ROLE_SYSTEM_DOCUMENT) and (obj.states&STATE_SYSTEM_BUSY):
+			audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
 		return False
 
 	def event_MSAA_valueChange(self,hwnd,objectID,childID):
@@ -92,7 +98,9 @@ class virtualBuffer_gecko(virtualBuffer):
 			obj.doDefaultAction()
 
 	def isDocumentComplete(self):
-		if not self.NVDAObject.states&STATE_SYSTEM_BUSY:
+		role=self.NVDAObject.role
+		states=self.NVDAObject.states
+		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY):
 			return True
 		else:
 			return False
@@ -106,11 +114,13 @@ class virtualBuffer_gecko(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.NVDAObject)
 		self.caretPosition=0
+		self.neverLoaded=False
 		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
 			time.sleep(0.01)
+			audio.speakMessage(_("done"))
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):

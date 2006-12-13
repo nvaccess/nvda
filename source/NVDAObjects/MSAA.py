@@ -1,3 +1,4 @@
+import re
 import winsound
 import time
 import struct
@@ -519,9 +520,19 @@ class NVDAObject_checkBox(NVDAObject_MSAA):
 
 class NVDAObject_outlineItem(NVDAObject_MSAA):
 
-	def _get_value(self):
-		return "level %s"%super(NVDAObject_outlineItem,self).value
+	def _get_level(self):
+		val=super(NVDAObject_outlineItem,self).value
+		try:
+			return int(val)
+		except:
+			return None
 
+	def _get_value(self):
+		val=super(NVDAObject_outlineItem,self).value
+		try:
+			int(val)
+		except:
+			return val
 
 class NVDAObject_tooltip(NVDAObject_MSAA):
 
@@ -777,6 +788,12 @@ class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 	def _get_value(self):
 		return ""
 
+	def _get_typeString(self):
+		if self.states&STATE_SYSTEM_READONLY:
+			return "Mozilla "+MSAAHandler.getRoleName(ROLE_SYSTEM_DOCUMENT)
+		else:
+			return _("not supported")
+ 
 class NVDAObject_mozillaListItem(NVDAObject_MSAA):
 
 	def _get_name(self):
@@ -847,6 +864,45 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 
 	def _get_text(self):
 		return self.value
+
+class NVDAObject_mozillaOutlineItem(NVDAObject_MSAA):
+
+	_re_level=re.compile('.*L([0-9]+)')
+	_re_position=re.compile('.*([0-9]+) of ([0-9]+)')
+	_re_children=re.compile('.*with ([0-9]+)')
+
+	def _get_description(self):
+		desc=super(NVDAObject_mozillaOutlineItem,self).description
+		if desc.startswith('Description: '):
+			return desc[13:]
+		else:
+			return ""
+
+	def _get_level(self):
+		desc=super(NVDAObject_mozillaOutlineItem,self).description
+		m=self._re_level.match(desc)
+		try:
+			return int(m.groups()[0])
+		except:
+			return None
+
+	def _get_contains(self):
+		desc=super(NVDAObject_mozillaOutlineItem,self).description
+		m=self._re_children.match(desc)
+		if len(m.groups()[0])>0 and (m.groups()[0]!='0'):
+			return "%s %s"%(m.groups()[0],_("items"))
+		else:
+			return ""
+
+	def _get_positionString(self):
+		desc=super(NVDAObject_mozillaOutlineItem,self).description
+		m=self._re_position.match(desc)
+		if len(m.groups())==2:
+			return "%s of %s"%(m.groups()[0],m.groups()[1])
+		else:
+			return ""
+
+
 
 class NVDAObject_listItem(NVDAObject_MSAA):
 
@@ -1108,9 +1164,15 @@ _staticMap={
 ("MozillaWindowClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("MozillaWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaDialogClass",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("MozillaWindowClass",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
 ("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
 ("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
+("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
+("MozillaWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
+("MozillaUIWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
+("MozillaContentWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
+("MozillaWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaDocument,
 ("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 (None,ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,

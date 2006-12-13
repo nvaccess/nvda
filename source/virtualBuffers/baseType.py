@@ -66,6 +66,7 @@ class virtualBuffer(object):
 	__metaclass__=autoPropertyType.autoPropertyType
 
 	def __init__(self,NVDAObject):
+		self.neverLoaded=True
 		self.NVDAObject=NVDAObject
 		self._keyMap={}
 		self._allowCaretMovement=True
@@ -374,7 +375,7 @@ class virtualBuffer(object):
 			lastIDs=curIDs
 			#Speak the current line (if its not blank) with an speech index of its position
 			text=self.getLine(curPos)
-			if text and (text not in ['\n','\r',""]):
+			if text and not text.isspace() and (text not in ['\n','\r',""]):
 				self.speakLine(curPos)
 			#Move our current position down by one line
 				endPos=curPos
