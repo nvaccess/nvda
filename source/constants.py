@@ -316,5 +316,6 @@ READ_CONTROL=0x20000
 #getAncestor winuser function
 GA_PARENT=1
 GA_ROOT=2
+GA_ROOTOWNER=3
 
 

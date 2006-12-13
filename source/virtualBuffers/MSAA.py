@@ -25,17 +25,18 @@ def getVirtualBuffer(obj):
 			return runningTable[existingHwnd]
 	return None
 
-def removeVirtualBuffer(obj):
-	hwnd=obj.windowHandle
-	if runningTable.has_key(hwnd):
-		del runningTable[hwnd]
-
-def updateVirtualBuffers(obj):
-	if not isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA):
+def update(obj):
+	if isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA) :
+		hwnd=obj.windowHandle
+	elif isinstance(obj,int):
+		hwnd=obj
+	else:
 		return
+	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
+		debug.writeMessage("virtualBuffers.MSAA.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
+		del runningTable[w]
 	if getVirtualBuffer(obj):
 		return
-	hwnd=obj.windowHandle
 	while hwnd:
 		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,OBJID_CLIENT,0)
 		if obj:
@@ -52,6 +53,7 @@ def updateVirtualBuffers(obj):
 			else:
 				virtualBufferClass=None
 			if virtualBufferClass:
+				debug.writeMessage("virtualBuffers.MSAA.update: adding %s at %s"%(virtualBufferClass,hwnd))
 				virtualBufferObject=virtualBufferClass(obj)
 				runningTable[hwnd]=virtualBufferObject
 				return 

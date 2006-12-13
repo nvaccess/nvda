@@ -4,7 +4,7 @@ Changes since revision 164:
 *The PC speaker is now used to communicate the percentage of a progress bar as it goes up (example: copying a large amount of data in windows explorer, or loading a large web page in internet explorer).
 *group box names are now reported when an object with the focus is in one. (Example: settings buttons, advanced tab, system properties dialog, control panel). 
 *NVDA can now read formatting changes in documents whilst reading with say all.
-*If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4 and then Viavoice. the more likely found synthesizers are first.
+*If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4.
 *Fixed some crashes in MS Office applications
 *If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
 *Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
@@ -16,6 +16,7 @@ Changes since revision 164:
 *Frames are now supported in Internet Explorer.
 *Edit fields in Internet Explorer forms are now able to be navigated with the cursor.
 *It is now possible to edit and navigate in editable internet explorer windows (example: Outlook Express new message window). A part from a few controls which may not properly report their names, this makes Outlook Express now usable for both reading and writing messages.
+*It is now possible to read web pages in Mozilla Firefox and emails in Mozilla Thunderbird. However, editing emails and navigating edit fields is not yet supported.
 *Fixed bug where the default configuration had alignment=Always in the documentFormatting section. It is now Never. Please edit your nvda.ini to reflect this change if in deed your file was generated when this bug existed).
 *Made MS Word and MS Excel slightly more responsive by using pre-generated com interface python code rather than querying the com interfaces each time a property or method is accessed. 
 *Made NVDA over all much more responsive (especially in edit fields such as an address bar)

@@ -58,6 +58,7 @@ def setForegroundObject(obj):
 	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
+	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
 	return True
 
 def setFocusObject(obj):
@@ -74,6 +75,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 	globalVars.focusObject=obj
+	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
 	return True
 
 def getNavigatorObject():
@@ -115,7 +117,7 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 		return True
 	if keyPress==key("insert+1"):
 		return True
-	if appModuleHandler.current.getScript(keyPress):
+	if appModuleHandler.getActiveModule().getScript(keyPress):
 		return True
 	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 	if not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
@@ -141,8 +143,8 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 			audio.speakMessage(_("keyboard help")+" "+_("off"))
 			return True
 	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
-	if appModuleHandler.current.getScript(keyPress):
-		script=appModuleHandler.current.getScript(keyPress)
+	if appModuleHandler.getActiveModule().getScript(keyPress):
+		script=appModuleHandler.getActiveModule().getScript(keyPress)
 	elif not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
 		script=virtualBuffer.getScript(keyPress)
 	elif isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
@@ -151,7 +153,7 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 		script=None
 	if globalVars.keyboardHelp:
 		if script:
-			name=script.__name__
+			name=script.__name__[6:]
 			if script.im_self.__class__.__name__=="appModule":
 				container="module %s"%script.im_self.__class__.__module__
 			else:

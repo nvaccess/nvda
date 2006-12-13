@@ -566,6 +566,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args,**vars)
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
+		self.sayAllGenerator=None
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		self.reviewPosition=self.caretPosition
@@ -684,7 +685,6 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
-				debug.writeMessage("NVDAObject_consoleWindowClassClient: registered event: %s, handle %s"%(eventID,handle))
 				self.consoleEventHookHandles.append(handle)
 			else:
 				raise OSError('Could not register console event %s'%eventID)
@@ -733,6 +733,9 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA
 
 	def _get_typeString(self):
 		return "rich "+super(NVDAObject_richEdit,self).typeString
+
+	def _get_value(self):
+		return ""
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
@@ -986,7 +989,6 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 		if hasattr(self,"dom"):
 			try:
 				bookmark=self.dom.selection.createRange().getBookmark()
-				debug.writeMessage("bookmark %s"%[ord(x) for x in bookmark])
 				return ord(bookmark[2])-self.positionOffset
 			except:
 				return 0
@@ -1024,13 +1026,10 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 	def script_moveByLine(self,keyPress):
 		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
 		sendKey(keyPress)
-		debug.writeMessage("IE edit move by line: first move %s"%self.caretPosition)
 		sendKey(key("ExtendedEnd"))
 		end=self.caretPosition
-		debug.writeMessage("ie edit moveByLine: end: %s"%end)
 		sendKey(key("extendedHome"))
 		start=self.caretPosition
-		debug.writeMessage("ie edit moveByLine: start: %s"%start)
 		text=self.getTextRange(start,end)
 		audio.speakText(text)
 
@@ -1117,13 +1116,10 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 	def script_moveByLine(self,keyPress):
 		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
 		sendKey(keyPress)
-		debug.writeMessage("IE edit move by line: first move %s"%self.caretPosition)
 		sendKey(key("ExtendedEnd"))
 		end=self.caretPosition
-		debug.writeMessage("ie edit moveByLine: end: %s"%end)
 		sendKey(key("extendedHome"))
 		start=self.caretPosition
-		debug.writeMessage("ie edit moveByLine: start: %s"%start)
 		text=self.getTextRange(start,end)
 		audio.speakText(text)
 

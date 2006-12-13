@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 foregroundObject=None
-foregroundProcessID=None
 focusObject=None
 mouseObject=None
 mouseOldX=None

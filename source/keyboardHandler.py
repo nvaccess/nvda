@@ -48,6 +48,17 @@ def key(name):
 		modifiers = None
 	return (modifiers, l[-1])
 
+def keyName(keyPress):
+	"""Converts an internal key press to a printable name
+@param keyPress: a keyPress
+@type keyPress: key
+"""
+	keyName=""
+	for k in list(keyPress[0] if isinstance(keyPress[0],frozenset) else [])+[keyPress[1]]:
+		keyName+="+%s"%k
+	return keyName[1:]
+
+
 def sendKey(keyPress):
 	"""Sends a key press through to the operating system.
 @param keyPress: the key to send
@@ -121,7 +132,7 @@ def internal_keyDownEvent(event):
 		core.executeFunction(EXEC_SPEECH,audio.cancel)
 		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
 			return True
-		if (event.Key=="Insert") and (event.Extended==0):
+		if (event.Key=="Insert"): #and (event.Extended==0):
 			insertDown=True
 			return False
 		modifierList=[]
@@ -141,15 +152,15 @@ def internal_keyDownEvent(event):
 			modifiers=frozenset(modifierList)
 		else:
 			modifiers=None
-		keyName=event.Key
+		mainKey=event.Key
 		if event.Extended==1:
-			keyName="Extended%s"%keyName
-		keyPress=(modifiers,keyName)
+			mainKey="Extended%s"%mainKey
+		keyPress=(modifiers,mainKey)
 		if keyPress in keyPressIgnoreSet:
 			keyPressIgnoreSet.remove(keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
-		debug.writeMessage("key press: %s"%str(keyPress))
+		debug.writeMessage("key press: %s"%keyName(keyPress))
 		if ((modifiers is None) or (modifiers==frozenset(['Shift']))) and (event.Ascii in range(33,128)):
 			if api.isTypingProtected():
 				char="*"
@@ -196,7 +207,7 @@ def internal_keyUpEvent(event):
 			return True
 		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
 			return True
-		elif (event.Key=="Insert") and (event.Extended==0):
+		elif (event.Key=="Insert"): #and (event.Extended==0):
 			insertDown=False
 			return False
 		elif (event.Key,event.Extended) in keyUpIgnoreSet:

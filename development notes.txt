@@ -1,8 +1,9 @@
 NVDA notes for developers
 
+
 NVDA structure
 
-NVDA is extremely modularized to make it easier for development and for greater optimization depending on what the user is doing at the time. The system can be broken up in to theoretical parts: loader, core, api, audio, text processing, speech synths, appModules, gui, config, global variables, lang, keyboard, mouse, MSAA, NVDA objects, virtual buffer, debug. Following are explinations of each and how each one interacts with the others.
+NVDA is extremely modularized to make it easier for development and for greater optimization depending on what the user is doing at the time. The system can be broken up in to theoretical parts: loader, core, api, audio, text processing, speech synths, appModules, gui, config, global variables, keyboard, mouse, MSAA, NVDA objects, virtual buffers, debug. Following are explinations of each and how each one interacts with the others.
 
 Loader
 
@@ -22,14 +23,18 @@ The core, core.py, loads and inicializes all the other parts of the system:
 
 It finally then goes in to an endless loop until it is instructed to stop with a quit command.
 
-In the loop, core pumps window messages, and also pumps NVDA threads.
+In the loop, core pumps window messages, executes any functions in its queues, and continues to execute thread generators.
 
 When the loop finally ends, core stops gui and MSAA etc before exiting.
 
+Because there are some features of NVDA that need to be running along side others (in a sort of multi-threaded structure) and because some of these particular features are not able to use real threading because of dificulties with com objects etc, core implements a way of starting new threads, and executing functions, all with in NVDA's main thread.  
+
+Threads are implemented by python generator objects, and single executing functions are  simply stored in queues so they can pass over a thread boundary and be executed by core.
 
 api
 
-The api is where all general functions for NVDA can be found. Functions exist to help you create an NVDAObject from an MSAA event locator (window,objectID,childID), to set the current focus object, to get the current focus object, to execute a script found by its key, to execute an event by its MSAA event locator, to get and set the current virtualBuffer, to get and set the current virtualBuffer cursor, and lots more.
+In here is where all general functions for NVDA can be found.
+
 
 Audio
 

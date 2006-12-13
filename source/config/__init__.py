@@ -49,6 +49,7 @@ confspec = StringIO("""# NVDA Configuration File
 
 #Keyboard settings
 [keyboard]
+	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)
 	speakCommandKeys = boolean(default=false)

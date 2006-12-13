@@ -15,46 +15,6 @@ class appModule(object):
 		self.hwnd=hwnd
 		self.processID=processID
 		self._keyMap={}
-		self.registerScriptKeys({
-			key("insert+n"):self.script_showGui,
-			key("insert+q"):self.script_quit,
-			key("insert+s"):self.script_speech_toggleMute,
-			key("insert+F12"):self.script_dateTime,
-			key("insert+extendedPrior"):self.script_increaseRate,
-			key("insert+extendedNext"):self.script_decreaseRate,
-			key("insert+2"):self.script_toggleSpeakTypedCharacters,
-			key("insert+3"):self.script_toggleSpeakTypedWords,
-			key("insert+4"):self.script_toggleSpeakCommandKeys,
-			key("insert+p"):self.script_toggleSpeakPunctuation,
-			key("insert+space"):self.script_toggleVirtualBufferPassThrough,
-			key("insert+extendedEnd"):self.script_reportStatusLine,
-			key("insert+extendedDivide"):self.script_moveMouseToNavigatorObject,
-			key("insert+Multiply"):self.script_moveNavigatorObjectToMouse,
-			key("insert+extendedUp"):self.script_currentFocus,
-			key("Insert+Clear"):self.script_navigator_object_current,
-			key("insert+Subtract"):self.script_navigator_object_toFocus,
-			key("Insert+Up"):self.script_navigator_object_parent,
-			key("Insert+Down"):self.script_navigator_object_firstChild,
-			key("Insert+Left"):self.script_navigator_object_previous,
-			key("Insert+Right"):self.script_navigator_object_next,
-			key("Insert+ExtendedReturn"):self.script_navigator_object_doDefaultAction,
-			key("Insert+Add"):self.script_navigator_object_where,
-			key("end"):self.script_navigator_review_previousCharacter,
-			key("shift+end"):self.script_navigator_review_startOfLine,
-			key("down"):self.script_navigator_review_currentCharacter,
-			key("next"):self.script_navigator_review_nextCharacter,
-			key("shift+next"):self.script_navigator_review_endOfLine,
-			key("left"):self.script_navigator_review_previousWord,
-			key("clear"):self.script_navigator_review_currentWord,
-			key("right"):self.script_navigator_review_nextWord,
-			key("home"):self.script_navigator_review_previousLine,
-			key("shift+home"):self.script_navigator_review_top,
-			key("up"):self.script_navigator_review_currentLine,
-			key("prior"):self.script_navigator_review_nextLine,
-			key("shift+prior"):self.script_navigator_review_bottom,
-			key("insert+extendedDown"):self.script_sayAll,
-			key("insert+f"):self.script_formatInfo,
-		})
 
 	def getScript(self,keyPress):
 		if self._keyMap.has_key(keyPress):
@@ -66,10 +26,10 @@ class appModule(object):
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
 
-	def event_switchStart(self,window,objectID,childID):
-		audio.speakMessage(_("task switcher"))
+	def event_MSAA_switchStart(self,window,objectID,childID):
+		audio.cancel()
 
-	def event_switchEnd(self,window,objectID,childID):
+	def event_MSAA_switchEnd(self,window,objectID,childID):
 		audio.cancel()
 
 	def script_dateTime(self,keyPress):
@@ -319,7 +279,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("not supported"))
 
-	def script_speech_toggleMute(self,keyPress):
+	def script_speechOnOff(self,keyPress):
 		"""Toggles speech on and off"""
 		if audio.allowSpeech:
 			audio.speakMessage(_("speech")+" "+_("off"))
@@ -342,7 +302,7 @@ class appModule(object):
 		virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 		if virtualBuffer:
 			core.newThread(virtualBuffer.sayAllGenerator())
-		elif hasattr(getFocusObject(),"sayAllGenerator"):
+		elif hasattr(getFocusObject(),"sayAllGenerator") and callable(getattr(getFocusObject(),'sayAllGenerator')):
 			core.newThread(getFocusObject().sayAllGenerator())
 		else:
 			audio.speakMessage(_("no sayAll functionality here"))
@@ -356,7 +316,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("no format info"))
 
-	def script_currentFocus(self,keyPress):
+	def script_reportCurrentFocus(self,keyPress):
 		focusObject=getFocusObject()
 		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
 			focusObject.speakObject()

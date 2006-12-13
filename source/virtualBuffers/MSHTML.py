@@ -45,16 +45,10 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
 		#domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		debug.writeMessage("vb internetExplorer_server: domPointer %s"%domPointer)
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		debug.writeMessage("vb internetExplorer_server: window message %s"%wm)
 		lresult=winUser.sendMessage(NVDAObject.windowHandle,wm,0,0)
-		debug.writeMessage("vb internetExplorer_server: lresult %s"%lresult)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		debug.writeMessage("vb internetExplorer_server: res %s, domPointer %s"%(res,domPointer))
 		self.dom=comtypesClient.wrap(domPointer)
-		debug.writeMessage("vb internetExplorer_server: domPointer %s"%self.dom)
-		debug.writeMessage("vb internetExplorer_server: body %s"%self.dom.body)
 		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
@@ -189,7 +183,6 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		else:
 			child=domNode.firstChild
 			while child:
-				debug.writeMessage("node %s"%child)
 				position=self.fillBuffer(child,IDAncestors,position=position)
 				try:
 					child=child.nextSibling

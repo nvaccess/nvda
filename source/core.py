@@ -89,6 +89,7 @@ def main():
 			queueList.append(Queue.Queue(1000))
 		audio.initialize()
 		audio.speakMessage(_("Nonvisual Desktop Access Started"),wait=True)
+		appModuleHandler.initialize()
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()

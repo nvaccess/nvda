@@ -51,7 +51,6 @@ class synthDriver(object):
 		return voiceNames
 
 	def _get_lastIndex(self):
-		debug.writeMessage("bookmark %s"%self.tts.status.LastBookmark)
 		bookmark=self.tts.status.LastBookmark
 		if bookmark!="" and bookmark is not None:
 			return int(bookmark)

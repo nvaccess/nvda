@@ -39,7 +39,6 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 			raise OSError("No native object model")
 		self.excelObject=comtypesClient.wrap(ptr)
 		self.registerScriptKeys({
-			key("Insert+f"):self.script_formatInfo,
 			key("ExtendedUp"):self.script_moveByCell,
 			key("ExtendedDown"):self.script_moveByCell,
 			key("ExtendedLeft"):self.script_moveByCell,
@@ -124,7 +123,7 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 		sendKey(keyPress)
 		self.speakSelection()
 
-	def script_formatInfo(self,keyPress):
+	def reportFormatInfo(self,keyPress):
 		"""Reports the current font name, font size, font attributes of the active cell"""
 		audio.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
 		audio.speakMessage("%s %s"%(self.getFontSize(self.getActiveCell()),_("point")))

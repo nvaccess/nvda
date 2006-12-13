@@ -1,0 +1,43 @@
+#Default desktop keyboard layout for NVDA
+#Format is key=script
+#where key is a combination of optional modifier keys, plus one normal key, all joined by a + (plus) symbol.
+#and script is the name of an instance method from this module's appModule class (with the 'script_' removed)
+  
+insert+n=showGui
+insert+q=quit
+insert+s=speechOnOff
+insert+F12=dateTime
+insert+extendedPrior=increaseRate
+insert+extendedNext=decreaseRate
+insert+2=toggleSpeakTypedCharacters
+insert+3=toggleSpeakTypedWords
+insert+4=toggleSpeakCommandKeys
+insert+p=toggleSpeakPunctuation
+insert+space=toggleVirtualBufferPassThrough
+insert+extendedEnd=reportStatusLine
+insert+extendedDivide=moveMouseToNavigatorObject
+insert+Multiply=moveNavigatorObjectToMouse
+insert+extendedUp=reportCurrentFocus
+Insert+Clear=navigator_object_current
+insert+Subtract=navigator_object_toFocus
+Insert+Up=navigator_object_parent
+Insert+Down=navigator_object_firstChild
+Insert+Left=navigator_object_previous
+Insert+Right=navigator_object_next
+Insert+ExtendedReturn=navigator_object_doDefaultAction
+Insert+Add=navigator_object_where
+end=navigator_review_previousCharacter
+shift+end=navigator_review_startOfLine
+down=navigator_review_currentCharacter
+next=navigator_review_nextCharacter
+shift+next=navigator_review_endOfLine
+left=navigator_review_previousWord
+clear=navigator_review_currentWord
+right=navigator_review_nextWord
+home=navigator_review_previousLine
+shift+home=navigator_review_top
+up=navigator_review_currentLine
+prior=navigator_review_nextLine
+shift+prior=navigator_review_bottom
+insert+extendedDown=sayAll
+insert+f=formatInfo

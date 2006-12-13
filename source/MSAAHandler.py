@@ -251,7 +251,6 @@ def accNavigate(ia,child,direction):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		else:
-			debug.writeMessage("accNavigate: direction %s, res %s"%(direction,res))
 			return None
 		return (new_ia,new_child)
 	except:
@@ -297,8 +296,11 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if (objectID==0) and (childID==0) and (eventID!=EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
 		virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(window)
+		#let swichStart and switchEnd through
+		if eventID in [EVENT_SYSTEM_SWITCHSTART,EVENT_SYSTEM_SWITCHEND]:
+			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let tooltips through
-		if (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
+		elif (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
 			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
 		#Let progress bar updates through
 		elif (eventID==EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT) and winUser.isDescendantWindow(winUser.getForegroundWindow(),window):
@@ -329,22 +331,19 @@ def executeEvent(name,window,objectID,childID):
 	#If foreground event, see if we should change appModules, and also update the foreground global variables
 	if name=="foreground":
 		audio.cancel()
-		processID=winUser.getWindowThreadProcessID(window)
-		if processID!=globalVars.foregroundProcessID:
-			appName=api.getAppName(processID)
-			appModuleHandler.load(appName,window,processID)
-			globalVars.foregroundProcessID=processID
+		appModuleHandler.update()
+		virtualBuffers.MSAA.update(window)
 		api.setForegroundObject(obj)
-		virtualBuffers.MSAA.updateVirtualBuffers(obj)
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
 		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
 		if (isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator)) or (obj==api.getFocusObject()): 
 			return
+		appModuleHandler.update()
+		virtualBuffers.MSAA.update(window)
 		api.setFocusObject(obj)
-		virtualBuffers.MSAA.updateVirtualBuffers(obj)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue if the result is False
-	virtualBuffer=virtualBuffers.getVirtualBuffer(obj)
+	virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(obj)
 	if virtualBuffer and hasattr(virtualBuffer,"event_MSAA_%s"%name):
 		debug.writeMessage("vb event: %s"%name)
 		event=getattr(virtualBuffer,"event_MSAA_%s"%name)
@@ -356,14 +355,12 @@ def executeEvent(name,window,objectID,childID):
 			debug.writeException("virtualBuffer event")
 	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
 	#and then continue 
-	if (name=="hide") and (objectID==0): 
-		virtualBuffers.removeVirtualBuffer(window)
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,
 	#the specific object that this event describes if the object has a handler for this event.
-	if hasattr(appModuleHandler.current,"event_%s"%name):
-		event=getattr(appModuleHandler.current,"event_%s"%name)
+	if hasattr(appModuleHandler.getActiveModule(),"event_MSAA_%s"%name):
+		event=getattr(appModuleHandler.getActiveModule(),"event_MSAA_%s"%name)
 		try:
 			event(window,objectID,childID)
 		except:
@@ -396,7 +393,6 @@ def initialize():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:
 			objectEventHandles.append(handle)
-			debug.writeMessage("Initialize: registered 0x%x (%s) as handle %s"%(eventType,eventMap[eventType],handle))
 		else:
 			debug.writeError("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
 

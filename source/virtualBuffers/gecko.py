@@ -16,9 +16,7 @@ NAVRELATION_EMBEDS=0x1009
 class virtualBuffer_gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
-		audio.speakMessage("gecko virtualBuffer")
 		virtualBuffer.__init__(self,NVDAObject)
-		debug.writeMessage("virtualBuffer gecko")
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -124,17 +122,13 @@ class virtualBuffer_gecko(virtualBuffer):
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):
-		debug.writeMessage("gecko walk: %s, %s, %s, %s"%(obj.name,MSAAHandler.getRoleName(obj.role),obj.value,obj.description))
 		info=self.getNVDAObjectInfo(obj)
-		debug.writeMessage("gecko walk info: %s"%info)
 		ID=self.getNVDAObjectID(obj)
-		debug.writeMessage("gecko walk ID: %s"%ID)
 		if ID and ID not in IDAncestors:
 			IDAncestors=tuple(list(IDAncestors)+[ID])
 		if ID and not self._IDs.has_key(ID):
 			self.addID(ID,**info)
 		text=self.getNVDAObjectText(obj)
-		debug.writeMessage("gecko walk text: %s"%text)
 		if text:
 			position=self.addText(IDAncestors,text,position=position)
 		#We don't want to render objects inside comboboxes

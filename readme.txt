@@ -5,7 +5,7 @@ Created and maintained by Michael Curran, with help from  James Teh and others.
 
 Introduction
 
-NVDA was started because of a lack of affordable, or free, Windows access solutions for blind and vision impaired users. Currently people can be paying up to $2000 to use a Windows screen reader, yet on other platforms such as Linux, screen readers are already existing that are free.
+NVDA was started because of a lack of affordable, or free, Windows access solutions for blind and vision impaired users. Currently people can be paying up to $1000 to use a Windows screen reader, yet on other platforms such as Linux, screen readers are already existing that are free.
 
 NVDA is so far written entirely in the Python programming language, which is itself a free language, and is very quick to learn. Because Python can be also looked at as a scripting language, this also allows NVDA to be added to, and changed to suit user specific needs very easily.
 

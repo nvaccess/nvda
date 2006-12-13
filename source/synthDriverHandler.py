@@ -134,7 +134,6 @@ def cancel():
 def getLastIndex():
 	index=driverObject.lastIndex
 	if index is not None:
-		debug.writeMessage("synthDriverHandler.getLastIndex: %s"%index)
 		return index
 
 def getSupportedLanguages():
