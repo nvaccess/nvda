@@ -254,7 +254,6 @@ def accNavigate(ia,child,direction):
 			return None
 		return (new_ia,new_child)
 	except:
-		#debug.writeException("accNavigate: exception, direction %s, res %s"%(direction,res))
 		return None
 
 def accLocation(ia,child):

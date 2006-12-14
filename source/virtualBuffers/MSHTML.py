@@ -193,7 +193,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 	def getDomNodeID(self,domNode):
 		#We don't want certain inline nodes like span, font etc to have their own IDs
 		while domNode:
-			if (domNode.nodeName not in ["B","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) or domNode.onclick:
+			if (domNode.nodeName not in ["B","BR","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) or domNode.onclick:
 				break
 			domNode=domNode.parentNode
 		#document nodes have broken uniqueIDs so we use its html node's uniqueID
@@ -240,6 +240,8 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				return domNode.getAttribute('value')
 			elif inputType in ["checkbox","radio"]:
 				return " "
+		elif nodeName=="BR":
+			return "\n"
 
 	def getDomNodeInfo(self,domNode):
 		info=fieldInfo.copy()

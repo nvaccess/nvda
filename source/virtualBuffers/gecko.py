@@ -17,6 +17,11 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
+		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
+		#(pacc,child)=MSAAHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
+		#(pacc,child)=MSAAHandler.accNavigate(pacc,child,NAVRELATION_EMBEDS)
+		#self.NVDAObject=NVDAObjects.MSAA.NVDAObject_MSAA(pacc,child)
+		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -26,7 +31,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			return False
 		role=obj.role
 		states=obj.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY) and ((self.NVDAObject.role!=ROLE_SYSTEM_DOCUMENT) or self.neverLoaded):
+		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY) and ((self.NVDAObject.role !=ROLE_SYSTEM_DOCUMENT) or self.neverLoaded):
 			self.NVDAObject=obj
 			self.loadDocument()
 			return False
@@ -122,6 +127,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s"%(obj.name,MSAAHandler.getRoleName(obj.role),obj.value,obj.description))
 		info=self.getNVDAObjectInfo(obj)
 		ID=self.getNVDAObjectID(obj)
 		if ID and ID not in IDAncestors:
@@ -167,6 +173,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			return obj.value+"\0"
 		elif role==ROLE_SYSTEM_PUSHBUTTON:
 			return obj.name+" "
+		elif role=="white space":
+			return obj.name.replace('\r\n','\n')
 
 	def getNVDAObjectInfo(self,obj):
 		info=fieldInfo.copy()
@@ -182,6 +190,9 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role==ROLE_SYSTEM_LINK:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=fieldNames[fieldType_link]
+		elif role=="p":
+			info["fieldType"]=fieldType_paragraph
+			info["typeString"]=fieldNames[fieldType_paragraph]
 		elif role==ROLE_SYSTEM_TABLE:
 			info["fieldType"]=fieldType_table
 			info["typeString"]=fieldNames[fieldType_table]

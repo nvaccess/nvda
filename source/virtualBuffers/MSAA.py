@@ -26,15 +26,16 @@ def getVirtualBuffer(obj):
 	return None
 
 def update(obj):
+	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
+		debug.writeMessage("virtualBuffers.MSAA.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
+		del runningTable[w]
 	if isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA) :
 		hwnd=obj.windowHandle
 	elif isinstance(obj,int):
 		hwnd=obj
 	else:
 		return
-	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
-		debug.writeMessage("virtualBuffers.MSAA.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
-		del runningTable[w]
+	debug.writeMessage("virtualBuffers.MSAA.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
 	if getVirtualBuffer(obj):
 		return
 	while hwnd:
@@ -53,9 +54,9 @@ def update(obj):
 			else:
 				virtualBufferClass=None
 			if virtualBufferClass:
-				debug.writeMessage("virtualBuffers.MSAA.update: adding %s at %s"%(virtualBufferClass,hwnd))
+				debug.writeMessage("virtualBuffers.MSAA.update: adding %s at %s (%s)"%(virtualBufferClass,obj.windowHandle,className))
 				virtualBufferObject=virtualBufferClass(obj)
-				runningTable[hwnd]=virtualBufferObject
+				runningTable[obj.windowHandle]=virtualBufferObject
 				return 
 		hwnd=winUser.getAncestor(hwnd,GA_PARENT)
 

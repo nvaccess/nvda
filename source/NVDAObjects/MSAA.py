@@ -788,6 +788,11 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 
+	def __init__(self,*args,**vars):
+		NVDAObject_MSAA.__init__(self,*args,**vars)
+		self.needsFocusState=False
+
+
 	def _get_value(self):
 		return ""
 
