@@ -94,7 +94,6 @@ class virtualBuffer_gecko(virtualBuffer):
 			obj.doDefaultAction()
 		if role in [ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON]:
 			obj.doDefaultAction()
-			audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if obj.states&STATE_SYSTEM_CHECKED else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
 		elif role==ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
 		elif role in [ROLE_SYSTEM_LINK,ROLE_SYSTEM_GRAPHIC]:
@@ -146,6 +145,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			while child:
 				position=self.fillBuffer(child,IDAncestors,position=position)
 				child=child.next
+			if obj.role==ROLE_SYSTEM_DOCUMENT:
+				position=self.addText(IDAncestors," ",position)
 			return position
 
 	def getNVDAObjectID(self,obj):
@@ -184,18 +185,36 @@ class virtualBuffer_gecko(virtualBuffer):
 		if role=="frame":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
+		if role=="iframe":
+			info["fieldType"]=fieldType_frame
+			info["typeString"]=_("i frame")
 		elif role==ROLE_SYSTEM_DOCUMENT:
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
 		elif role==ROLE_SYSTEM_LINK:
 			info["fieldType"]=fieldType_link
-			info["typeString"]=fieldNames[fieldType_link]
+			info["typeString"]=obj.typeString
 		elif role=="p":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]
+		elif role==ROLE_SYSTEM_CELL:
+			info["fieldType"]=fieldType_cell
+			info["typeString"]=fieldNames[fieldType_cell]
 		elif role==ROLE_SYSTEM_TABLE:
 			info["fieldType"]=fieldType_table
 			info["typeString"]=fieldNames[fieldType_table]
+		elif role==ROLE_SYSTEM_ROW:
+			info["fieldType"]=fieldType_row
+			info["typeString"]=fieldNames[fieldType_row]
+		elif role=="thead":
+			info["fieldType"]=fieldType_tableHeader
+			info["typeString"]=fieldNames[fieldType_tableHeader]
+		elif role=="tfoot":
+			info["fieldType"]=fieldType_tableFooter
+			info["typeString"]=fieldNames[fieldType_tableFooter]
+		elif role=="tbody":
+			info["fieldType"]=fieldType_tableBody
+			info["typeString"]=fieldNames[fieldType_tableBody]
 		elif role==ROLE_SYSTEM_LIST:
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
@@ -219,12 +238,18 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
 			info["fieldType"]=fieldType_heading
 			info["typeString"]=fieldNames[fieldType_heading]+" %s"%role[1]
-		elif role=="blockQuote":
+		elif role=="blockquote":
+			info["fieldType"]=fieldType_blockQuote
+			info["typeString"]=fieldNames[fieldType_blockQuote]
+		elif role=="q":
 			info["fieldType"]=fieldType_blockQuote
 			info["typeString"]=fieldNames[fieldType_blockQuote]
 		elif role==ROLE_SYSTEM_PUSHBUTTON:
 			info["fieldType"]=fieldType_button
 			info["typeString"]=fieldNames[fieldType_button]
+		elif role=="form":
+			info["fieldType"]=fieldType_form
+			info["typeString"]=fieldNames[fieldType_form]
 		elif role==ROLE_SYSTEM_RADIOBUTTON:
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]

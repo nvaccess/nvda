@@ -735,7 +735,7 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA
 		return "rich "+super(NVDAObject_richEdit,self).typeString
 
 	def _get_value(self):
-		return ""
+		return self.getLine(self.caretPosition)
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()

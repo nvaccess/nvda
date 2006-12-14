@@ -25,9 +25,13 @@ fieldType_document=13
 fieldType_blockQuote=14
 fieldType_paragraph=15
 fieldType_form=16
-fieldType_checkBox=16
+fieldType_checkBox=17
 fieldType_radioButton=18
 fieldType_editArea=19
+fieldType_cell=20
+fieldType_tableHeader=21
+fieldType_tableFooter=22
+fieldType_tableBody=23
 
 fieldNames={
 	fieldType_other:"",
@@ -50,6 +54,10 @@ fieldNames={
 	fieldType_checkBox:_("check box"),
 	fieldType_radioButton:_("radio button"),
 	fieldType_editArea:_("edit area"),
+	fieldType_cell:_("cell"),
+	fieldType_tableHeader:_("table header"),
+	fieldType_tableFooter:_("table footer"),
+	fieldType_tableBody:_("table body"),
 }
 
 fieldInfo={
@@ -183,7 +191,7 @@ class virtualBuffer(object):
 		info=self._IDs[ID]
 		fieldType=info["fieldType"]
 		vbc=conf["virtualBuffers"]
-		if (fieldType==fieldType_link and vbc["reportLinks"]) or (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_listItem and vbc["reportListItems"]) or (fieldType==fieldType_heading and vbc["reportHeadings"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_graphic and vbc["reportGraphics"]) or (fieldType==fieldType_form and vbc["reportForms"]) or ((fieldType in [fieldType_button,fieldType_edit,fieldType_editArea,fieldType_checkBox,fieldType_radioButton,fieldType_comboBox]) and vbc["reportFormFields"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
+		if (fieldType==fieldType_link and vbc["reportLinks"]) or (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_listItem and vbc["reportListItems"]) or (fieldType==fieldType_heading and vbc["reportHeadings"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_tableHeader and vbc["reportTables"]) or (fieldType==fieldType_tableFooter and vbc["reportTables"]) or (fieldType==fieldType_row and vbc["reportTables"]) or (fieldType==fieldType_cell and vbc["reportTables"]) or (fieldType==fieldType_graphic and vbc["reportGraphics"]) or (fieldType==fieldType_form and vbc["reportForms"]) or ((fieldType in [fieldType_button,fieldType_edit,fieldType_editArea,fieldType_checkBox,fieldType_radioButton,fieldType_comboBox]) and vbc["reportFormFields"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
 			msg=info["typeString"]
 			if callable(info["stateTextFunc"]):
 				msg+=" "+info["stateTextFunc"](info["node"])
@@ -201,7 +209,7 @@ class virtualBuffer(object):
 		info=self._IDs[ID]
 		fieldType=info["fieldType"]
 		vbc=conf["virtualBuffers"]
-		if (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_form and vbc["reportForms"]) or (fieldType==fieldType_editArea and vbc["reportFormFields"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
+		if (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_form and vbc["reportForms"]) or (fieldType==fieldType_editArea and vbc["reportFormFields"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
 			return _("out of")+" "+info["typeString"]
 
 	def reportIDMessages(self,newIDs,oldIDs):

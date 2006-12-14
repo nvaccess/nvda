@@ -180,6 +180,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				passs
 			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			position=self.fillBuffer(domNode.body,IDAncestors,position=position)
+			position=self.addText(IDAncestors," ",position)
 		else:
 			child=domNode.firstChild
 			while child:
@@ -240,7 +241,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				return domNode.getAttribute('value')
 			elif inputType in ["checkbox","radio"]:
 				return " "
-		elif nodeName=="BR":
+		elif (nodeName=="BR") and (domNode.previousSibling and domNode.previousSibling.nodeName=="#text"):
 			return "\n"
 
 	def getDomNodeInfo(self,domNode):
@@ -261,6 +262,21 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		elif nodeName=="TABLE":
 			info["fieldType"]=fieldType_table
 			info["typeString"]=fieldNames[fieldType_table]
+		elif nodeName=="THEAD":
+			info["fieldType"]=fieldType_tableHeader
+			info["typeString"]=fieldNames[fieldType_tableHeader]
+		elif nodeName=="TBODY":
+			info["fieldType"]=fieldType_tableBody
+			info["typeString"]=fieldNames[fieldType_tableBody]
+		elif nodeName=="TFOOT":
+			info["fieldType"]=fieldType_tableFooter
+			info["typeString"]=fieldNames[fieldType_tableFooter]
+		elif nodeName=="TR":
+			info["fieldType"]=fieldType_row
+			info["typeString"]=fieldNames[fieldType_row]
+		elif nodeName=="TD":
+			info["fieldType"]=fieldType_cell
+			info["typeString"]=fieldNames[fieldType_cell]
 		elif nodeName=="P":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]
@@ -297,6 +313,9 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		elif nodeName=="BLOCKQUOTE":
 			info["fieldType"]=fieldType_blockQuote
 			info["typeString"]=fieldNames[fieldType_blockQuote]
+		elif nodeName=="FORM":
+			info["fieldType"]=fieldType_form
+			info["typeString"]=fieldNames[fieldType_form]
 		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute("type")
 			if inputType=="text":
