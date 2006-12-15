@@ -31,10 +31,13 @@ class virtualBuffer_gecko(virtualBuffer):
 			return False
 		role=obj.role
 		states=obj.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY) and ((self.NVDAObject.role !=ROLE_SYSTEM_DOCUMENT) or self.neverLoaded):
-			self.NVDAObject=obj
-			self.loadDocument()
-			return False
+		if (role==ROLE_SYSTEM_DOCUMENT) and (states&STATE_SYSTEM_READONLY):
+			if (states&STATE_SYSTEM_BUSY):
+				audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
+				self.NVDAObject=obj
+				self.loadDocument()
+			return True
 		if (role not in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON,ROLE_SYSTEM_COMBOBOX]) and api.isVirtualBufferPassThrough():
   			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
@@ -70,8 +73,16 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def event_MSAA_stateChange(self,hwnd,objectID,childID):
 		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if (obj.role==ROLE_SYSTEM_DOCUMENT) and (obj.states&STATE_SYSTEM_BUSY):
-			audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
+		role=obj.role
+		states=obj.states
+		if (role==ROLE_SYSTEM_DOCUMENT) and (states&STATE_SYSTEM_READONLY):
+			if states&STATE_SYSTEM_BUSY:
+				audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
+				return True
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
+				self.NVDAObject=obj
+				self.loadDocument()
+				return True
 		return False
 
 	def event_MSAA_valueChange(self,hwnd,objectID,childID):
@@ -116,7 +127,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.NVDAObject)
 		self.caretPosition=0
-		self.neverLoaded=False
 		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
@@ -221,14 +231,24 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
 		elif role==ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
-			info["typeString"]=_("bullit item")
+			bullet=obj.name.rstrip()
+			if not bullet:
+				bullet=_("bullet")
+			elif bullet.endswith('.'):
+				bullet=bullet[0:-1]
+			info["typeString"]=bullet
 		elif role=="dl":
 			info["fieldType"]=fieldType_list
 			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
 		elif role=="dt":
 			info["fieldType"]=fieldType_listItem
-			info["typeString"]=_("bullit item")
+			bullet=obj.name.rstrip()
+			if not bullet:
+				bullet=_("bullet")
+			elif bullet.endswith('.'):
+				bullet=bullet[0:-1]
+			info["typeString"]=bullet
 		elif role=="dd":
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")

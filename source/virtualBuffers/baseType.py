@@ -74,7 +74,7 @@ class virtualBuffer(object):
 	__metaclass__=autoPropertyType.autoPropertyType
 
 	def __init__(self,NVDAObject):
-		self.neverLoaded=True
+		self.needsLoad=True
 		self.NVDAObject=NVDAObject
 		self._keyMap={}
 		self._allowCaretMovement=True
