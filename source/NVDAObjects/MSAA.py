@@ -806,12 +806,14 @@ class NVDAObject_mozillaListItem(NVDAObject_MSAA):
 
 	def _get_name(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and child.role==ROLE_SYSTEM_STATICTEXT:
+		if child and (child.role in [ROLE_SYSTEM_STATICTEXT,"bullet"]):
  			return child.name
+		else:
+			return ""
 
 	def _get_firstChild(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and child.role==ROLE_SYSTEM_STATICTEXT:
+		if child and (child.role in [ROLE_SYSTEM_STATICTEXT,"bullet"]):
 			child=child.next
 		return child
 
@@ -1018,9 +1020,11 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		self.dom=comtypesClient.wrap(domPointer)
 		#Find out position offset
+		oldBookmark=self.dom.selection.createRange().getBookmark()
 		sendKey(key("control+extendedHome"))
 		sendKey(key("extendedHome"))
 		bookmark=self.dom.selection.createRange().getBookmark()
+		self.dom.selection.createRange().moveToBookmark(oldBookmark)
 		self.positionOffset=ord(bookmark[2])
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 
@@ -1029,13 +1033,18 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 			del self.dom
 
 	def script_moveByLine(self,keyPress):
-		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
+		if not hasattr(self,'dom'):
+			return
 		sendKey(keyPress)
+		bookmark=self.dom.selection.createRange().getBookmark()
 		sendKey(key("ExtendedEnd"))
-		end=self.caretPosition
-		sendKey(key("extendedHome"))
-		start=self.caretPosition
-		text=self.getTextRange(start,end)
+		endRange=self.dom.selection.createRange()
+		sendKey(key("ExtendedHome"))
+		startRange=self.dom.selection.createRange()
+		startRange.setEndPoint("EndToStart",endRange)
+		del endRange
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
 		audio.speakText(text)
 
 class NVDAObject_internetExplorerClient(NVDAObject_MSAA):
@@ -1105,9 +1114,11 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		NVDAObject_MSAA.event_gainFocus(self)
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
 		if (self.dom.body.isContentEditable is True):
-			r=self.dom.selection.createRange()
-			r.moveToElementText(self.dom.activeElement)
-			bookmark=r.getBookmark()
+			oldBookmark=self.dom.selection.createRange().getBookmark()
+			sendKey(key("control+extendedHome"))
+			sendKey(key("extendedHome"))
+			bookmark=self.dom.selection.createRange().getBookmark()
+			self.dom.selection.createRange().moveToBookmark(oldBookmark)
 			self.positionOffset=ord(bookmark[2])
 			if (not api.isVirtualBufferPassThrough()):
 				api.toggleVirtualBufferPassThrough()
@@ -1119,13 +1130,18 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 			del self.dom
 
 	def script_moveByLine(self,keyPress):
-		#The debug calls in this function seem that they need to be hear to get the syncronicity between IE and NVDA right.
+		if not hasattr(self,'dom'):
+			return
 		sendKey(keyPress)
+		bookmark=self.dom.selection.createRange().getBookmark()
 		sendKey(key("ExtendedEnd"))
-		end=self.caretPosition
-		sendKey(key("extendedHome"))
-		start=self.caretPosition
-		text=self.getTextRange(start,end)
+		endRange=self.dom.selection.createRange()
+		sendKey(key("ExtendedHome"))
+		startRange=self.dom.selection.createRange()
+		startRange.setEndPoint("EndToStart",endRange)
+		del endRange
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
 		audio.speakText(text)
 
 class NVDAObject_statusBar(NVDAObject_MSAA):
