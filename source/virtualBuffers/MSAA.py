@@ -35,7 +35,7 @@ def update(obj):
 		hwnd=obj
 	else:
 		return
-	debug.writeMessage("virtualBuffers.MSAA.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
+	#debug.writeMessage("virtualBuffers.MSAA.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
 	if getVirtualBuffer(obj):
 		return
 	while hwnd:

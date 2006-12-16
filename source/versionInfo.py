@@ -1,5 +1,5 @@
 name="NVDA"
-longName="Nonvisual Desktop Access"
+longName="NonVisual Desktop Access"
 version="0.1.0"
 description="A free and open-source screen reader for MS Windows"
 maintainer="Michael Curran"

@@ -1144,6 +1144,56 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 		startRange.moveToBookmark(bookmark)
 		audio.speakText(text)
 
+	def script_moveByWord(self,keyPress):
+		if not hasattr(self,'dom'):
+			return
+		sendKey(keyPress)
+		startRange=self.dom.selection.createRange()
+		bookmark=startRange.getBookmark()
+		startRange.expand("word")
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
+		audio.speakText(text)
+
+	def script_moveByCharacter(self,keyPress):
+		if not hasattr(self,'dom'):
+			return
+		sendKey(keyPress)
+		startRange=self.dom.selection.createRange()
+		bookmark=startRange.getBookmark()
+		startRange.expand("character")
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
+		audio.speakSymbol(text)
+
+	def script_delete(self,keyPress):
+		if not hasattr(self,'dom'):
+			return
+		sendKey(keyPress)
+		startRange=self.dom.selection.createRange()
+		bookmark=startRange.getBookmark()
+		startRange.expand("character")
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
+		audio.speakSymbol(text)
+
+	def script_backspace(self,keyPress):
+		if not hasattr(self,'dom'):
+			return
+		startRange=self.dom.selection.createRange()
+		bookmark=startRange.getBookmark()
+		startPos=ord(bookmark[2])
+		startRange.move("character",-1)
+		startRange.expand("character")
+		text=startRange.text
+		startRange.moveToBookmark(bookmark)
+		sendKey(keyPress)
+		if ord(self.dom.selection.createRange().getBookmark()[2])!=startPos:
+			audio.speakSymbol(text)
+		else:
+			audio.speakText("")
+
+
 class NVDAObject_statusBar(NVDAObject_MSAA):
 
 	def _get_value(self):
