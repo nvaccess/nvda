@@ -140,7 +140,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		else:
 			newState=state
 		if opposite:
-			newState=_("not")+" "+newState
+			newState=_("not %s")%newState
 		return newState
 
 	def _get_description(self):
@@ -161,7 +161,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		return self._accChild
 
 	def _get_childCount(self):
-		count=MSAAHandler.accChildCount(self._pacc,self._accChild)
+		count=MSAAHandler.accChildCount(self._pacc)
 		return count
 
 	def _get_location(self):
@@ -235,6 +235,22 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		else:
 			return obj
 
+	def _get_children(self):
+		childCount=self.childCount
+		if childCount>0:
+			children=MSAAHandler.accessibleChildren(self._pacc,0,childCount)
+			children=map(lambda x: NVDAObject_MSAA(x[0],x[1]),children)
+			children=map(lambda x: getNVDAObjectFromEvent(x.windowHandle,OBJID_CLIENT,0) if x.role==ROLE_SYSTEM_WINDOW else x,children)
+			return children
+		else:
+			child=self.firstChild
+			children=[]
+			while child:
+				children.append(child)
+				child.next
+			return children
+
+
 	def doDefaultAction(self):
 		MSAAHandler.accDoDefaultAction(self._pacc,self._accChild)
 
@@ -252,7 +268,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 			return False
 
 	def setFocus(self):
-		MSAAHandler.accFocus(self._pacc)
+		MSAAHandler.accSelect(self._pacc,self._accChild,1)
 
 	def _get_positionString(self):
 		position=""
@@ -262,7 +278,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 			if parent:
 				parentChildCount=parent.childCount
 				if parentChildCount>=childID:
-					position="%s of %s"%(childID,parentChildCount)
+					position=_("%s of %s")%(childID,parentChildCount)
 		return position
 
 	def event_show(self):
@@ -900,7 +916,7 @@ class NVDAObject_mozillaOutlineItem(NVDAObject_MSAA):
 		desc=super(NVDAObject_mozillaOutlineItem,self).description
 		m=self._re_children.match(desc)
 		if len(m.groups()[0])>0 and (m.groups()[0]!='0'):
-			return "%s %s"%(m.groups()[0],_("items"))
+			return _("%s items")%m.groups()[0]
 		else:
 			return ""
 
@@ -908,7 +924,7 @@ class NVDAObject_mozillaOutlineItem(NVDAObject_MSAA):
 		desc=super(NVDAObject_mozillaOutlineItem,self).description
 		m=self._re_position.match(desc)
 		if len(m.groups())==2:
-			return "%s of %s"%(m.groups()[0],m.groups()[1])
+			return _("%s of %s")%(m.groups()[0],m.groups()[1])
 		else:
 			return ""
 
@@ -946,7 +962,7 @@ class NVDAObject_list(NVDAObject_MSAA):
 			api.setFocusObject(child)
 			child.event_gainFocus()
 		else:
-			audio.speakMessage("%s %s"%(self.childCount,_("items")))
+			audio.speakMessage(_("%s items")%self.childCount)
 
 class NVDAObject_progressBar(NVDAObject_MSAA):
 

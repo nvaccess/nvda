@@ -110,6 +110,20 @@ def windowFromAccessibleObject(ia):
 	else:
 		return 0
 
+def accessibleChildren(ia,startIndex,numChildren):
+	children=(comtypes.automation.VARIANT*numChildren)()
+	realCount=ctypes.c_int()
+	ctypes.windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
+	children=map(lambda x: x.value,list(children)[0:realCount.value])
+	for childNum in range(len(children)):
+		if isinstance(children[childNum],ctypes.POINTER(IAccessible)):
+			children[childNum]=(children[childNum],0)
+		elif isinstance(children[childNum],comtypesClient._Dispatch):
+			children[childNum]=(children[childNum].QueryInterface(IAccessible),0)
+		elif isinstance(children[childNum],int):
+			children[childNum]=(ia,children[childNum])
+	return children
+
 def getRoleText(role):
 	len=ctypes.windll.oleacc.GetRoleTextW(role,0,0)
 	if len:
@@ -176,6 +190,9 @@ def accDoDefaultAction(ia,child):
 	except:
 		pass
 
+def accSelect(ia,child,flags):
+		ia.accSelect(flags,child)
+
 def accFocus(ia):
 	try:
 		res=ia.accFocus
@@ -210,10 +227,10 @@ def accChild(ia,child):
 	except:
 		return None
 
-def accChildCount(ia,child):
-	if child==0:
+def accChildCount(ia):
+	try:
 		count=ia.accChildCount
-	else:
+	except:
 		count=0
 	return count
 

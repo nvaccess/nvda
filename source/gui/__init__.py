@@ -14,7 +14,7 @@ from constants import *
 import core
 
 ### Constants
-appTitle = versionInfo.longName
+appTitle = _("NonVisual Desktop Access")
 #iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
 
@@ -102,7 +102,7 @@ class MainFrame(wx.Frame):
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
-		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
+		d=wx.MultiChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.conf["speech"][synthDriverHandler.driverName]["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)

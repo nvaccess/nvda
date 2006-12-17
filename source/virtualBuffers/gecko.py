@@ -17,7 +17,6 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
-		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
 		#(pacc,child)=MSAAHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
 		#(pacc,child)=MSAAHandler.accNavigate(pacc,child,NAVRELATION_EMBEDS)
 		#self.NVDAObject=NVDAObjects.MSAA.NVDAObject_MSAA(pacc,child)
@@ -38,7 +37,7 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.NVDAObject=obj
 				self.loadDocument()
 			return True
-		if (role not in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON,ROLE_SYSTEM_COMBOBOX]) and api.isVirtualBufferPassThrough():
+		if (role not in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON,ROLE_SYSTEM_COMBOBOX,ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
   			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return False
@@ -102,13 +101,14 @@ class virtualBuffer_gecko(virtualBuffer):
 		if role in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_COMBOBOX]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			obj.doDefaultAction()
+			obj.setFocus()
 		if role in [ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON]:
 			obj.doDefaultAction()
 		elif role==ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
 		elif role in [ROLE_SYSTEM_LINK,ROLE_SYSTEM_GRAPHIC]:
 			obj.doDefaultAction()
+			obj.setFocus()
 
 	def isDocumentComplete(self):
 		role=self.NVDAObject.role
@@ -123,7 +123,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			audio.speakMessage(_("Loading document")+" "+self.NVDAObject.name+"...")
+			audio.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.NVDAObject)
 		self.caretPosition=0
@@ -136,7 +136,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s"%(obj.name,MSAAHandler.getRoleName(obj.role),obj.value,obj.description))
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s with %s children"%(obj.name,MSAAHandler.getRoleName(obj.role),obj.value,obj.description,obj.childCount))
 		info=self.getNVDAObjectInfo(obj)
 		ID=self.getNVDAObjectID(obj)
 		if ID and ID not in IDAncestors:
@@ -151,10 +151,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			return position
 		#For everything else we keep walking the tree
 		else:
-			child=obj.firstChild
-			while child:
+			for child in obj.children:
 				position=self.fillBuffer(child,IDAncestors,position=position)
-				child=child.next
 			if obj.role==ROLE_SYSTEM_DOCUMENT:
 				position=self.addText(IDAncestors," ",position)
 			return position
@@ -197,7 +195,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["typeString"]=fieldNames[fieldType_frame]
 		if role=="iframe":
 			info["fieldType"]=fieldType_frame
-			info["typeString"]=_("i frame")
+			info["typeString"]=fieldNames[fieldType_frame]
 		elif role==ROLE_SYSTEM_DOCUMENT:
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
@@ -240,7 +238,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="dl":
 			info["fieldType"]=fieldType_list
 			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
-			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.childCount
 		elif role=="dt":
 			info["fieldType"]=fieldType_listItem
 			bullet=obj.name.rstrip()
@@ -273,11 +271,11 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role==ROLE_SYSTEM_RADIOBUTTON:
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 		elif role==ROLE_SYSTEM_CHECKBUTTON:
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 		elif role==ROLE_SYSTEM_TEXT:
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]

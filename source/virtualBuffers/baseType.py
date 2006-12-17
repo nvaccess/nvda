@@ -97,6 +97,20 @@ class virtualBuffer(object):
 			key("space"):self.script_activatePosition,
 			key("extendedPrior"):self.script_pageUp,
 			key("extendedNext"):self.script_pageDown,
+			key("h"):self.script_nextHeading,
+			key("Shift+h"):self.script_previousHeading,
+			key("f"):self.script_nextFormField,
+			key("Shift+f"):self.script_previousFormField,
+			key("p"):self.script_nextParagraph,
+			key("Shift+p"):self.script_previousParagraph,
+			key("t"):self.script_nextTable,
+			key("Shift+t"):self.script_previousTable,
+			key("k"):self.script_nextLink,
+			key("Shift+k"):self.script_previousLink,
+			key("l"):self.script_nextList,
+			key("Shift+l"):self.script_previousList,
+			key("i"):self.script_nextListItem,
+			key("Shift+i"):self.script_previousListItem,
 		})
 
 	def getScript(self,keyPress):
@@ -210,17 +224,35 @@ class virtualBuffer(object):
 		fieldType=info["fieldType"]
 		vbc=conf["virtualBuffers"]
 		if (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_form and vbc["reportForms"]) or (fieldType==fieldType_editArea and vbc["reportFormFields"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
-			return _("out of")+" "+info["typeString"]
+			return _("out of %s")%info["typeString"]
+		else:
+			return ""
+
+	def nextField(self,pos,*fieldTypes):
+		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[0]>pos,map(lambda x: self.getRangeFromID(x),filter(lambda x: self._IDs[x]["fieldType"] in fieldTypes,self._IDs))))
+		if len(posList)>0:
+			return min(posList)
+		else:
+			return None
+
+	def previousField(self,pos,*fieldTypes):
+		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[1]<=pos,map(lambda x: self.getRangeFromID(x),filter(lambda x: self._IDs[x]["fieldType"] in fieldTypes,self._IDs))))
+		if len(posList)>0:
+			return max(posList)
+		else:
+			return None
 
 	def reportIDMessages(self,newIDs,oldIDs):
+		msg=""
 		for ID in filter(lambda x: x not in newIDs,oldIDs):
-			msg=self.getIDExitMessage(ID)
-			if msg:
-				audio.speakMessage(msg)
+			msg+=" "+self.getIDExitMessage(ID)
+		if msg and not msg.isspace():
+			audio.speakMessage(msg)
+			msg=""
 		for ID in filter(lambda x: x not in oldIDs,newIDs):
-			msg=self.getIDEnterMessage(ID)
-			if msg:
-				audio.speakMessage(msg)
+			msg+=" "+self.getIDEnterMessage(ID)
+		if msg and not msg.isspace():
+			audio.speakMessage(msg)
 
 	def reportCaretIDMessages(self):
 		caretIDs=self.getIDsFromPosition(self.caretPosition)
@@ -536,5 +568,129 @@ class virtualBuffer(object):
 			if callable(info["descriptionFunc"]):
 				audio.speakMessage(info["descriptionFunc"](info["node"]))
 
+	def script_nextHeading(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_heading)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more headings"))
 
+	def script_previousHeading(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_heading)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more headings"))
+
+	def script_nextParagraph(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_paragraph)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more paragraphs"))
+
+	def script_previousParagraph(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_paragraph)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more paragraphs"))
+
+	def script_nextTable(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_table)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more tables"))
+
+	def script_previousTable(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_table)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more tables"))
+
+	def script_nextLink(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_link)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more links"))
+
+	def script_previousLink(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_link)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more links"))
+
+	def script_nextList(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_list)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more lists"))
+
+	def script_previousList(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_list)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more lists"))
+
+	def script_nextListItem(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_listItem)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more list items"))
+
+	def script_previousListItem(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_listItem)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more list items"))
+
+	def script_nextFormField(self,keyPress):
+		pos=self.nextField(self.caretPosition,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more form fields"))
+
+	def script_previousFormField(self,keyPress):
+		pos=self.previousField(self.caretPosition,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
+		if isinstance(pos,int):
+			self.caretPosition=pos
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
+		else:
+			audio.speakMessage(_("no more form fields"))
 
