@@ -2,7 +2,8 @@
 import autoPropertyType
 import audio
 import api
-from config import conf
+import config
+
 
 class NVDAObject(object):
 	"""
@@ -179,9 +180,9 @@ Returns a name for a given state. Takes in to account if opposite is true or not
 @param opposite: True if the state is negative, or false if the state is positive, default is False
 @type opposite: boolean
 """
-		text=_("state")+" %s"%state
+		text=_("state %s")%state
 		if opposite:
-			text="%s %s"%(_("not"),text)
+			text=_("not %s")%text
 		return text
 
 	def getStateNames(self,states,opposite=False):
@@ -266,14 +267,14 @@ Speaks the properties of this object such as name, typeString,value, description
 		description=self.description
 		if description==name:
 			description=None
-		if conf["presentation"]["reportKeyboardShortcuts"]:
+		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			keyboardShortcut=self.keyboardShortcut
 		else:
 			keyboardShortcut=None
 		position=self.positionString
 		level=self.level
 		if isinstance(level,int):
-			level=_("level")+" %d"%level 
+			level=_("level %d")%level 
 		contains=self.contains
 		audio.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position,level=level,contains=contains)
 

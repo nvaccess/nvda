@@ -13,7 +13,7 @@ import winUser
 import winKernel
 import audio
 import api
-from config import conf
+import config
 from constants import *
 import window
 import textBuffer
@@ -125,7 +125,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		role=self.role
 		if role==ROLE_SYSTEM_CLIENT:
 			role=ROLE_SYSTEM_WINDOW
-		if conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_WINDOW):
+		if config.conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_WINDOW):
 			typeString=self.windowClassName
 		else:
 			typeString=""
@@ -316,7 +316,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 	def event_gainFocus(self):
 		self.updateMenuMode()
 		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)):
-			if conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
+			if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
 				groupName=self.groupName
 				if groupName:
 					audio.speakMessage("%s %s"%(groupName,MSAAHandler.getRoleName(ROLE_SYSTEM_GROUPING)))
@@ -569,7 +569,7 @@ class NVDAObject_tooltip(NVDAObject_MSAA):
 			return ""
 
 	def event_toolTip(self):
-		if (conf["presentation"]["reportTooltips"] and (self.role==ROLE_SYSTEM_TOOLTIP)) or (conf["presentation"]["reportHelpBalloons"] and (self.role==ROLE_SYSTEM_HELPBALLOON)):
+		if (config.conf["presentation"]["reportTooltips"] and (self.role==ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.role==ROLE_SYSTEM_HELPBALLOON)):
 			self.speakObject()
 
 class NVDAObject_consoleWindowClass(NVDAObject_MSAA):
@@ -967,7 +967,7 @@ class NVDAObject_list(NVDAObject_MSAA):
 class NVDAObject_progressBar(NVDAObject_MSAA):
 
 	def event_valueChange(self):
-		if conf["presentation"]["beepOnProgressBarUpdates"]:
+		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
 			baseFreq=440
 			winsound.Beep(int(baseFreq*(1+(float(self.value[:-1])/100.0))),100)
 		super(NVDAObject_progressBar,self).event_valueChange()

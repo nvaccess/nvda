@@ -96,7 +96,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			inputType=domNode.getAttribute('type')
 			if inputType in ["checkbox","radio"]:
 				domNode.click()
-				audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
+				audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
 				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 					api.toggleVirtualBufferPassThrough()
@@ -117,7 +117,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			audio.speakMessage(_("Loading document")+" "+self.dom.title+"...")
+			audio.speakMessage(_("loading document %s")%self.dom.title+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
 		self.caretPosition=0
@@ -283,21 +283,21 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		elif nodeName=="UL":
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
-			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="OL":
 			info["fieldType"]=fieldType_list
-			info["typeString"]=_("ordered")+" "+fieldNames[fieldType_list]
-			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
+			info["typeString"]=fieldNames[fieldType_list]
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="LI":
 			info["fieldType"]=fieldType_listItem
-			info["typeString"]=_("bullit item")
+			info["typeString"]=_("bullet")
 		elif nodeName=="DL":
 			info["fieldType"]=fieldType_list
 			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
-			info["descriptionFunc"]=lambda x: "with %s items"%x.children.length
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="DT":
 			info["fieldType"]=fieldType_listItem
-			info["typeString"]=_("bullit item")
+			info["typeString"]=_("bullet")
 		elif nodeName=="DD":
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")
@@ -333,11 +333,11 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			elif inputType=="radio":
 				info["fieldType"]=fieldType_radioButton
 				info["typeString"]=fieldNames[fieldType_radioButton]
-				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 			elif inputType=="checkbox":
 				info["fieldType"]=fieldType_checkBox
 				info["typeString"]=fieldNames[fieldType_checkBox]
-				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not")+" "+MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
 		elif nodeName=="SELECT":
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]

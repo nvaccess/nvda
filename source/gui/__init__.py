@@ -37,6 +37,9 @@ class MainFrame(wx.Frame):
 		wx.EVT_CLOSE(self,self.onHideGuiCommand)
 		self.menuBar=wx.MenuBar()
 		self.menu_NVDA = wx.Menu()
+		self.id_onRevertToSavedConfigurationCommand=wx.NewId()
+		self.menu_NVDA.Append(self.id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
+		wx.EVT_MENU(self,self.id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
 		self.id_onSaveConfigurationCommand=wx.NewId()
 		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, _("&Save configuration")+"\tctrl+s", _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
@@ -67,13 +70,15 @@ class MainFrame(wx.Frame):
 		self.Center()
 		self.Show(True)
 		self.Raise()
-		time.sleep(0.01)
+		self.SetFocus()
 		self.SetFocus()
 
 	def onHideGuiCommand(self,evt):
 		time.sleep(0.01)
 		self.Show(False)
 
+	def onRevertToSavedConfigurationCommand(self,evt):
+		core.executeFunction(EXEC_CONFIG,core.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
@@ -102,7 +107,7 @@ class MainFrame(wx.Frame):
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
-		d=wx.MultiChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
+		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.conf["speech"][synthDriverHandler.driverName]["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)

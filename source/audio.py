@@ -6,14 +6,14 @@
 import winsound
 import debug
 from textProcessing import *
-from config import conf
+import config
 import synthDriverHandler
 
 allowSpeech=True
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
-	synthDriverHandler.setDriver(conf["speech"]["synth"])
+	synthDriverHandler.setDriver(config.conf["speech"]["synth"])
 
 def getLastIndex():
 	"""Gets the last index passed by the synthesizer. Indexing is used so that its possible to find out when a certain peace of text has been spoken yet. Usually the character position of the text is passed to speak functions as the index.
@@ -27,7 +27,7 @@ def processText(text):
 @param text: the text to be processed
 @type text: string
 """
-	text=processTextSymbols(text,expandPunctuation=conf["speech"][synthDriverHandler.driverName]["speakPunctuation"])
+	text=processTextSymbols(text,expandPunctuation=config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"])
 	return text
 
 def playSound(fileName,wait=False):
@@ -87,7 +87,7 @@ This function will not speak if L{allowSpeech} is false.
 	if not allowSpeech:
 		return
 	text=""
-	if conf["presentation"]["sayStateFirst"] and (stateText is not None):
+	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
 		multiList=[stateText,name,typeString,value,description,position,level,contains]
 	else:
 		multiList=[name,typeString,value,stateText,description,position,level,contains]
@@ -118,7 +118,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		uppercase=False
 	if uppercase:
 		oldPitch=synthDriverHandler.getPitch()
-		synthDriverHandler.setPitch(oldPitch+conf["speech"][synthDriverHandler.driverName]["relativeUppercasePitch"])
+		synthDriverHandler.setPitch(oldPitch+config.conf["speech"][synthDriverHandler.driverName]["relativeUppercasePitch"])
 	synthDriverHandler.speakText(symbol,wait=wait,index=index)
 	if uppercase:
 		synthDriverHandler.setPitch(oldPitch)

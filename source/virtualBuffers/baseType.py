@@ -6,7 +6,7 @@ import globalVars
 import debug
 from constants import *
 import core
-from config import conf
+import config
 
 fieldType_other=0
 fieldType_button=1
@@ -153,9 +153,9 @@ class virtualBuffer(object):
 				return key[0:index+1]
 
 	def addText(self,IDs,text,position=None):
-		maxLineLength=conf["virtualBuffers"]["maxLineLength"]
+		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		if len(text)>maxLineLength:
-			wrapper = TextWrapper(width=conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
+			wrapper = TextWrapper(width=config.conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
 			text=wrapper.fill(text)
 		#If no position given, assume end of buffer
 		if position is None:
@@ -204,7 +204,7 @@ class virtualBuffer(object):
 			return ""
 		info=self._IDs[ID]
 		fieldType=info["fieldType"]
-		vbc=conf["virtualBuffers"]
+		vbc=config.conf["virtualBuffers"]
 		if (fieldType==fieldType_link and vbc["reportLinks"]) or (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_listItem and vbc["reportListItems"]) or (fieldType==fieldType_heading and vbc["reportHeadings"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_tableHeader and vbc["reportTables"]) or (fieldType==fieldType_tableFooter and vbc["reportTables"]) or (fieldType==fieldType_row and vbc["reportTables"]) or (fieldType==fieldType_cell and vbc["reportTables"]) or (fieldType==fieldType_graphic and vbc["reportGraphics"]) or (fieldType==fieldType_form and vbc["reportForms"]) or ((fieldType in [fieldType_button,fieldType_edit,fieldType_editArea,fieldType_checkBox,fieldType_radioButton,fieldType_comboBox]) and vbc["reportFormFields"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
 			msg=info["typeString"]
 			if callable(info["stateTextFunc"]):
@@ -222,7 +222,7 @@ class virtualBuffer(object):
 			return ""
 		info=self._IDs[ID]
 		fieldType=info["fieldType"]
-		vbc=conf["virtualBuffers"]
+		vbc=config.conf["virtualBuffers"]
 		if (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_form and vbc["reportForms"]) or (fieldType==fieldType_editArea and vbc["reportFormFields"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
 			return _("out of %s")%info["typeString"]
 		else:
@@ -467,7 +467,7 @@ class virtualBuffer(object):
 		self.speakLine(self.caretPosition)
 
 	def script_pageUp(self,keyPress):
-		pageLength=conf["virtualBuffers"]["linesPerPage"]
+		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.caretPosition
 		lineCount=0
 		while (curPos>0) and (lineCount<=pageLength):
@@ -480,7 +480,7 @@ class virtualBuffer(object):
 		self.speakLine(self.caretPosition)
 
 	def script_pageDown(self,keyPress):
-		pageLength=conf["virtualBuffers"]["linesPerPage"]
+		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.caretPosition
 		lineCount=0
 		while (curPos<len(self.text)-1) and (lineCount<=pageLength):

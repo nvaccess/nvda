@@ -94,6 +94,7 @@ def load():
 	# If the config file exists, store its mtime.
 	if os.path.isfile(configFileName):
 		mtime = os.path.getmtime(configFileName)
+	confspec.seek(0)
 	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t")
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
@@ -109,7 +110,7 @@ def updateSynthConfig(name):
 	# If there are no settings for this synth, make sure there are defaults.
 	if not speech.has_key(name):
 		speech[name] = {}
-		conf.validate(val, copy = True, section = speech)
+		conf.validate(val, copy = True)
 
 def save(force = False):
 	"""Saves the configuration to the config file. However it does not if the file's modification time has changed and L{force} is not true.
@@ -126,4 +127,4 @@ def save(force = False):
 	mtime = os.path.getmtime(configFileName)
 
 ### Main
-load()
+#load()

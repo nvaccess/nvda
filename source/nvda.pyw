@@ -14,15 +14,8 @@ winsound.Beep(880,50)
 
 import debug
 debug.start("debug.log")
-
 import gettext
-import config
-lang = config.conf["language"]["language"]
-try:
-	gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
-except IOError:
-	gettext.install("nvda", unicode=True)
-
+gettext.install("nvda", unicode=True)
 try:
 	import core
 	res=core.main()

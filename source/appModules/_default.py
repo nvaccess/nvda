@@ -41,11 +41,11 @@ class appModule(object):
 
 	def script_increaseRate(self,keyPress):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()+5)
-		audio.speakMessage(_("rate")+" %s%%"%synthDriverHandler.getRate())
+		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
 
 	def script_decreaseRate(self,keyPress):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()-5)
-		audio.speakMessage(_("rate")+" %s%%"%synthDriverHandler.getRate())
+		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
 
 	def script_toggleSpeakTypedCharacters(self,keyPress):
 		if conf["keyboard"]["speakTypedCharacters"]:

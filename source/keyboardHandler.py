@@ -16,7 +16,8 @@ import api
 import globalVars
 from constants import *
 import core
-from config import conf
+import config
+
 
 keyUpIgnoreSet=set()
 keyPressIgnoreSet=set()
@@ -166,15 +167,15 @@ def internal_keyDownEvent(event):
 				char="*"
 			else:
 				char=chr(event.Ascii)
-			if conf["keyboard"]["speakTypedCharacters"]:
+			if config.conf["keyboard"]["speakTypedCharacters"]:
 				core.executeFunction(EXEC_SPEECH,audio.speakSymbol,char)
-			if conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
+			if config.conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
 				word+=char
-			elif conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+			elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
 				word=""
 		else:
-			if conf["keyboard"]["speakCommandKeys"]:
+			if config.conf["keyboard"]["speakCommandKeys"]:
 				keyList=[]
 				if (modifiers is not None) and (len(modifiers)>0):
 					keyList+=modifiers
@@ -185,7 +186,7 @@ def internal_keyDownEvent(event):
 						label+="+%s"%item
 				debug.writeMessage("speaking key: %s"%label)
 				core.executeFunction(EXEC_SPEECH,audio.speakMessage,label[1:])
-			if conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+			if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
 				word=""
 		if api.keyHasScript(keyPress):

@@ -17,7 +17,7 @@ import audio
 import winUser
 import winKernel
 from constants import *
-from config import conf
+import config
 from keyboardHandler import key
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
@@ -81,7 +81,7 @@ def update():
 			debug.writeMessage("appModuleHandler.update: loaded module %s"%appName)
 
 def loadKeyMap(appName,mod):
-	layout=conf["keyboard"]["keyboardLayout"]
+	layout=config.conf["keyboard"]["keyboardLayout"]
 	keyMapFileName=getKeyMapFileName(appName,layout)
 	if not keyMapFileName:
 		return False

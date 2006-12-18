@@ -15,6 +15,7 @@
 #See the file COPYING for more details.
 
 import ctypes
+import gettext
 import time
 import globalVars
 import winUser
@@ -81,13 +82,32 @@ def executeFunction(execType,func,*args,**vars):
 		time.sleep(0.001)
 	queueList[execType].put((func,args,vars))
 
+def applyConfiguration(reportDone=False):
+	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
+@param reportDone: if true then this function will speak when done, if else it won't.
+@type reportDone: boolean
+"""
+	config.load()
+	#Language
+	lang = config.conf["language"]["language"]
+	try:
+		gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
+	except IOError:
+		gettext.install("nvda", unicode=True)
+	#Speech
+	audio.initialize()
+	config.save()
+	debug.writeMessage("core.applyConfiguration: configuration applyed")
+	if reportDone:
+		audio.speakMessage(_("configuration applyed"))
+
 def main():
 	"""NVDA's core main loop. This initializes all queues and modules such as audio, MSAA, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.
 """
 	try:
 		for num in range(EXEC_LAST+1):
 			queueList.append(Queue.Queue(1000))
-		audio.initialize()
+		applyConfiguration()
 		audio.speakMessage(_("NonVisual Desktop Access Started"),wait=True)
 		appModuleHandler.initialize()
 		foregroundWindow=winUser.getForegroundWindow()
@@ -98,7 +118,6 @@ def main():
 		keyboardHandler.initialize()
 		mouseHandler.initialize()
 		gui.initialize()
-		config.save()
 	except:
 		debug.writeException("core.py main init")
 		try:

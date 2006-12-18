@@ -6,7 +6,7 @@
 
 import os
 import debug
-from config import conf, updateSynthConfig
+import config
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
@@ -47,19 +47,20 @@ def setDriver(name):
 		for synth in autoTrySynthList:
 			if isDriverAvailable(synth):
 				setDriver(synth)
-				conf["speech"]["synth"]="auto"
+				config.conf["speech"]["synth"]="auto"
 				return True
 		raise OSError("Cannot find a synthesizer")
 	try:
 		newSynth=__import__(name,globals(),None,[]).synthDriver()
-		updateSynthConfig(name)
-		newSynth.voice=conf["speech"][name]["voice"]
-		newSynth.rate=conf["speech"][name]["rate"]
-		newSynth.volume=conf["speech"][name]["volume"]
+		config.updateSynthConfig(name)
+		debug.writeMessage("synth config: %s"%config.conf["speech"][name])
+		newSynth.voice=config.conf["speech"][name]["voice"]
+		newSynth.rate=config.conf["speech"][name]["rate"]
+		newSynth.volume=config.conf["speech"][name]["volume"]
 		driverObject=newSynth
 		driverName=name
 		driverVoiceNames=driverObject.voiceNames
-		conf["speech"]["synth"]=name
+		config.conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
@@ -80,7 +81,7 @@ def setRate(value):
 	if value>100:
 		value=100
 	driverObject.rate=value
-	conf["speech"][driverName]["rate"]=getRate()
+	config.conf["speech"][driverName]["rate"]=getRate()
 
 def getPitch():
 	value=driverObject.pitch
@@ -96,7 +97,7 @@ def setPitch(value):
 	if value>100:
 		value=100
 	driverObject.pitch=value
-	conf["speech"][driverName]["pitch"]=getPitch()
+	config.conf["speech"][driverName]["pitch"]=getPitch()
 
 def getVolume():
 	value=driverObject.volume
@@ -112,15 +113,15 @@ def setVolume(value):
 	if value>100:
 		value=100
 	driverObject.volume=value
-	conf["speech"][driverName]["volume"]=getVolume()
+	config.conf["speech"][driverName]["volume"]=getVolume()
 
 def getVoice():
 	return driverObject.voice
 
 def setVoice(value):
 	driverObject.voice=value
-	conf["speech"][driverName]["voice"]=getVoice()
-	driverObject.rate=conf["speech"][driverName]["rate"]
+	config.conf["speech"][driverName]["voice"]=getVoice()
+	driverObject.rate=config.conf["speech"][driverName]["rate"]
 
 def getVoiceNames():
 	return driverVoiceNames
