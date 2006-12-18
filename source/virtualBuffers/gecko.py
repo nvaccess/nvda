@@ -7,6 +7,7 @@ import winUser
 import IAccessibleHandler
 import audio
 import api
+import config
 import NVDAObjects
 from baseType import *
 
@@ -44,7 +45,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		r=self.getRangeFromID(ID)
 		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
-			if conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
+			if config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 				self.reportCaretIDMessages()
 				audio.speakText(self.getTextRange(r[0],r[1]))
 				api.setFocusObject(obj)
