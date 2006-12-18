@@ -1,4 +1,4 @@
-from config import conf
+import config
 import audio
 import textBuffer
 
@@ -23,12 +23,12 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 	def __init__(self,*args):
 		self.dom=self.getDocumentObjectModel()
 		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
-		self.registerPresentationAttribute("fontName",self.msgFontName,lambda: conf["documentFormatting"]["reportFontName"])
-		self.registerPresentationAttribute("fontSize",self.msgFontSize,lambda: conf["documentFormatting"]["reportFontSize"])
-		self.registerPresentationAttribute("bold",self.msgBold,lambda: conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("italic",self.msgItalic,lambda: conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("underline",self.msgUnderline,lambda: conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("paragraphAlignment",self.msgParagraphAlignment,lambda: conf["documentFormatting"]["reportAlignment"])
+		self.registerPresentationAttribute("fontName",self.msgFontName,lambda: config.conf["documentFormatting"]["reportFontName"])
+		self.registerPresentationAttribute("fontSize",self.msgFontSize,lambda: config.conf["documentFormatting"]["reportFontSize"])
+		self.registerPresentationAttribute("bold",self.msgBold,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("italic",self.msgItalic,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("underline",self.msgUnderline,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
+		self.registerPresentationAttribute("paragraphAlignment",self.msgParagraphAlignment,lambda: config.conf["documentFormatting"]["reportAlignment"])
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)

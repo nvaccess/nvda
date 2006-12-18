@@ -8,6 +8,7 @@ import NVDAObjects
 import synthDriverHandler
 import gui
 import core
+import config
 
 class appModule(object):
 
@@ -48,39 +49,39 @@ class appModule(object):
 		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
 
 	def script_toggleSpeakTypedCharacters(self,keyPress):
-		if conf["keyboard"]["speakTypedCharacters"]:
+		if config.conf["keyboard"]["speakTypedCharacters"]:
 			onOff=_("off")
-			conf["keyboard"]["speakTypedCharacters"]=False
+			config.conf["keyboard"]["speakTypedCharacters"]=False
 		else:
 			onOff=_("on")
-			conf["keyboard"]["speakTypedCharacters"]=True
+			config.conf["keyboard"]["speakTypedCharacters"]=True
 		audio.speakMessage(_("speak typed characters")+" "+onOff)
 
 	def script_toggleSpeakTypedWords(self,keyPress):
-		if conf["keyboard"]["speakTypedWords"]:
+		if config.conf["keyboard"]["speakTypedWords"]:
 			onOff=_("off")
-			conf["keyboard"]["speakTypedWords"]=False
+			config.conf["keyboard"]["speakTypedWords"]=False
 		else:
 			onOff=_("on")
-			conf["keyboard"]["speakTypedWords"]=True
+			config.conf["keyboard"]["speakTypedWords"]=True
 		audio.speakMessage(_("speak typed words")+" "+onOff)
 
 	def script_toggleSpeakCommandKeys(self,keyPress):
-		if conf["keyboard"]["speakCommandKeys"]:
+		if config.conf["keyboard"]["speakCommandKeys"]:
 			onOff=_("off")
-			conf["keyboard"]["speakCommandKeys"]=False
+			config.conf["keyboard"]["speakCommandKeys"]=False
 		else:
 			onOff=_("on")
-			conf["keyboard"]["speakCommandKeys"]=True
+			config.conf["keyboard"]["speakCommandKeys"]=True
 		audio.speakMessage(_("speak command keys")+" "+onOff)
 
 	def script_toggleSpeakPunctuation(self,keyPress):
-		if conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]:
+		if config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]:
 			onOff=_("off")
-			conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=False
+			config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=False
 		else:
 			onOff=_("on")
-			conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=True
+			config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=True
 		audio.speakMessage(_("speak punctuation")+" "+onOff)
 
 

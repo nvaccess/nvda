@@ -6,7 +6,7 @@ import audio
 import debug
 from constants import *
 from keyboardHandler import sendKey, key
-from config import conf
+import config
 import NVDAObjects
 import _MSOffice
 
@@ -61,11 +61,11 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def __init__(self,*args,**vars):
 		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args,**vars)
 		NVDAObjects.ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
-		self.registerPresentationAttribute("style",self.msgStyle,lambda: conf["documentFormatting"]["reportStyle"])
-		self.registerPresentationAttribute("page",self.msgPage,lambda: conf["documentFormatting"]["reportPage"])
-		self.registerPresentationAttribute("table",self.msgTable,lambda: conf["documentFormatting"]["reportTables"])
-		self.registerPresentationAttribute("tableRow",self.msgTableRow,lambda: conf["documentFormatting"]["reportTables"])
-		self.registerPresentationAttribute("tableColumn",self.msgTableColumn,lambda: conf["documentFormatting"]["reportTables"])
+		self.registerPresentationAttribute("style",self.msgStyle,lambda: config.conf["documentFormatting"]["reportStyle"])
+		self.registerPresentationAttribute("page",self.msgPage,lambda: config.conf["documentFormatting"]["reportPage"])
+		self.registerPresentationAttribute("table",self.msgTable,lambda: config.conf["documentFormatting"]["reportTables"])
+		self.registerPresentationAttribute("tableRow",self.msgTableRow,lambda: config.conf["documentFormatting"]["reportTables"])
+		self.registerPresentationAttribute("tableColumn",self.msgTableColumn,lambda: config.conf["documentFormatting"]["reportTables"])
 		self.registerScriptKeys({
 			key("control+ExtendedUp"):self.script_moveByParagraph,
 			key("control+ExtendedDown"):self.script_moveByParagraph,

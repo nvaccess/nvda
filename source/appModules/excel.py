@@ -7,7 +7,6 @@ import audio
 import debug
 from constants import *
 from keyboardHandler import sendKey, key
-from config import conf
 import NVDAObjects
 import _MSOffice
 

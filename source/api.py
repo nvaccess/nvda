@@ -99,7 +99,7 @@ def isTypingProtected():
 @returns: True if it should be suppressed, False otherwise.
 @rtype: boolean
 """
-	if getFocusObject().states&STATE_SYSTEM_PROTECTED:
+	if getFocusObject() and getFocusObject().states&STATE_SYSTEM_PROTECTED:
 		return True
 	else:
 		return False
