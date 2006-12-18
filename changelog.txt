@@ -31,6 +31,7 @@ These scripts also make sure they say * when typing in edit fields with the prot
 *Added a voice dialog on the preferences menu
 *The synthesizer dialog now only shows synthesizers currently found on your system. It also now has a longer description for each synth (including the name of the dll or com interface it uses)
 *Added a save configuration to the NVDA menu. This writes the current config to nvda.ini, previously this was done automatically on exit. However, nvda.in is written to disc also once NVDA has been started successfully.
+*Added a 'revert to saved configuration' command to the NVDA menu. This reloads the configuration from nvda.ini and sets up the speech etc to reflect the configuration. 
 *Insert+q now properly activates the exit message dialog box, saying yes will exit NVDA completely.
 *NVDA now starts with its window completely hidden (not even just minimized). You now need to press insert+n to bring it up, and press alt+f4 to make it go away. 
 *The NVDA window when shown should be now centered in the middle of the screen and is 300 by 300 pixels in size. 
