@@ -1,6 +1,6 @@
 import NVDAObjects
-import MSAA
+import IAccessible
 
 def getVirtualBuffer(obj):
-		if isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA):
-			return MSAA.getVirtualBuffer(obj)
+		if isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+			return IAccessible.getVirtualBuffer(obj)

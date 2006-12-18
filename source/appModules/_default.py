@@ -27,10 +27,10 @@ class appModule(object):
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
 
-	def event_MSAA_switchStart(self,window,objectID,childID):
+	def event_IAccessible_switchStart(self,window,objectID,childID):
 		audio.cancel()
 
-	def event_MSAA_switchEnd(self,window,objectID,childID):
+	def event_IAccessible_switchEnd(self,window,objectID,childID):
 		audio.cancel()
 
 	def script_dateTime(self,keyPress):
@@ -96,7 +96,7 @@ class appModule(object):
 	def script_moveNavigatorObjectToMouse(self,keyPress):
 		audio.speakMessage("Move navigator object to mouse")
 		(x,y)=winUser.getCursorPos()
-		obj=NVDAObjects.MSAA.getNVDAObjectFromPoint(x,y)
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 		if obj:
 			api.setNavigatorObject(obj)
 			obj.speakObject()
@@ -327,7 +327,7 @@ class appModule(object):
 	def script_reportStatusLine(self,keyPress):
 		fg=winUser.getForegroundWindow()
 		statusWindow=ctypes.windll.user32.FindWindowExW(fg,0,u'msctls_statusbar32',0)
-		statusObject=NVDAObjects.MSAA.getNVDAObjectFromEvent(statusWindow,OBJID_CLIENT,0)
+		statusObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(statusWindow,OBJID_CLIENT,0)
 		if not isinstance(statusObject,NVDAObjects.baseType.NVDAObject):
 			audio.speakMessage(_("could not find status bar object"))
 			return 

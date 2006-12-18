@@ -25,7 +25,7 @@ def internal_mouseEvent(event):
 		debug.writeException("mouseHandler.internal_mouseEvent")
 
 def executeMouseMoveEvent(x,y):
-	obj=NVDAObjects.MSAA.getNVDAObjectFromPoint(x,y)
+	obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 	if not obj:
 		return
 	if obj==api.getFocusObject():

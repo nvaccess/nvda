@@ -1,11 +1,11 @@
-#MSAAHandler.py
+#IAccessibleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 #Constants
-#MSAA Object IDs
+#IAccessible Object IDs
 OBJID_WINDOW=0
 OBJID_SYSMENU=-1
 OBJID_TITLEBAR=-2
@@ -19,7 +19,7 @@ OBJID_CURSOR=-9
 OBJID_ALERT=-10
 OBJID_SOUND=-11
 OBJID_NATIVEOM=-16
-#MSAA navigation
+#IAccessible navigation
 NAVDIR_DOWN=2
 NAVDIR_FIRSTCHILD=7
 NAVDIR_LASTCHILD=8
@@ -28,7 +28,7 @@ NAVDIR_NEXT=5
 NAVDIR_PREVIOUS=6
 NAVDIR_RIGHT=4
 NAVDIR_UP=1
-#MSAA roles
+#IAccessible roles
 ROLE_SYSTEM_ALERT=8
 ROLE_SYSTEM_ANIMATION=54
 ROLE_SYSTEM_APPLICATION=14
@@ -92,7 +92,7 @@ ROLE_SYSTEM_WHITESPACE=59
 ROLE_SYSTEM_WINDOW=9
 ROLE_SYSTEM_SPLITBUTTON=62
 ROLE_SYSTEM_OUTLINEBUTTON=64
-#MSAA states
+#IAccessible states
 STATE_SYSTEM_UNAVAILABLE=0x1
 STATE_SYSTEM_SELECTED=0x2
 STATE_SYSTEM_FOCUSED=0x4
@@ -432,7 +432,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		eventName=eventMap[eventID]
 		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
-		virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(window)
+		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
 		#let swichStart and switchEnd through
 		if eventID in [winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND]:
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
@@ -455,35 +455,35 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif (eventID==winUser.EVENT_SYSTEM_FOREGROUND) or (eventID==winUser.EVENT_OBJECT_FOCUS):
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
-		elif isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and (window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator:
+		elif isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator:
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let through events for the current virtualBuffer
-		elif hasattr(virtualBuffer,"event_MSAA_%s"%eventName):
+		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 
 def executeEvent(name,window,objectID,childID):
-	obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(window,objectID,childID)
+	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	#If foreground event, see if we should change appModules, and also update the foreground global variables
 	if name=="foreground":
 		audio.cancel()
 		appModuleHandler.update()
-		virtualBuffers.MSAA.update(window)
+		virtualBuffers.IAccessible.update(window)
 		api.setForegroundObject(obj)
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
 		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
-		if (isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator)) or (obj==api.getFocusObject()): 
+		if (isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and ((window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator)) or (obj==api.getFocusObject()): 
 			return
 		appModuleHandler.update()
-		virtualBuffers.MSAA.update(window)
+		virtualBuffers.IAccessible.update(window)
 		api.setFocusObject(obj)
 	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue if the result is False
-	virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(obj)
-	if virtualBuffer and hasattr(virtualBuffer,"event_MSAA_%s"%name):
+	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(obj)
+	if virtualBuffer and hasattr(virtualBuffer,"event_IAccessible_%s"%name):
 		debug.writeMessage("vb event: %s"%name)
-		event=getattr(virtualBuffer,"event_MSAA_%s"%name)
+		event=getattr(virtualBuffer,"event_IAccessible_%s"%name)
 		try:
 			res=event(window,objectID,childID)
 			if res and (name!="hide"):
@@ -496,8 +496,8 @@ def executeEvent(name,window,objectID,childID):
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,
 	#the specific object that this event describes if the object has a handler for this event.
-	if hasattr(appModuleHandler.getActiveModule(),"event_MSAA_%s"%name):
-		event=getattr(appModuleHandler.getActiveModule(),"event_MSAA_%s"%name)
+	if hasattr(appModuleHandler.getActiveModule(),"event_IAccessible_%s"%name):
+		event=getattr(appModuleHandler.getActiveModule(),"event_IAccessible_%s"%name)
 		try:
 			event(window,objectID,childID)
 		except:
@@ -509,7 +509,7 @@ def executeEvent(name,window,objectID,childID):
 		except:
 			debug.writeException("foregroundObject: event_%s"%name)
 		return
-	if ((isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and ((window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator)) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
+	if ((isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and ((window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator)) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
 		try:
 			getattr(api.getFocusObject(),"event_%s"%name)()
 		except:
@@ -522,7 +522,7 @@ def executeEvent(name,window,objectID,childID):
 			debug.writeException("Error executing event event_%s from object"%name)
 		return
 
-#Register internal object event with MSAA
+#Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
 
 def initialize():

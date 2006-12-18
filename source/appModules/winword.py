@@ -1,7 +1,7 @@
 import ctypes
 import comtypesClient
 import comtypes.automation
-import MSAAHandler
+import IAccessibleHandler
 import audio
 import debug
 from keyboardHandler import sendKey, key
@@ -49,16 +49,16 @@ class appModule(_MSOffice.appModule):
 
 	def __init__(self,*args):
 		_MSOffice.appModule.__init__(self,*args)
-		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"_WwG",MSAAHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
 
 	def __del__(self):
-		NVDAObjects.MSAA.unregisterNVDAObjectClass(self.processID,"_WwG",MSAAHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
-class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument,NVDAObjects.MSAA.NVDAObject_MSAA):
+class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument,NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
-		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args,**vars)
+		NVDAObjects.IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
 		NVDAObjects.ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
 		self.registerPresentationAttribute("style",self.msgStyle,lambda: config.conf["documentFormatting"]["reportStyle"])
 		self.registerPresentationAttribute("page",self.msgPage,lambda: config.conf["documentFormatting"]["reportPage"])
@@ -72,7 +72,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 
 	def getDocumentObjectModel(self):
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,MSAAHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		return comtypesClient.wrap(ptr)
 
@@ -83,7 +83,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 		return rangeObj.Range
 
 	def _get_role(self):
-		return MSAAHandler.ROLE_SYSTEM_TEXT
+		return IAccessibleHandler.ROLE_SYSTEM_TEXT
 
 	def _get_visibleRange(self):
 		(left,top,right,bottom)=self.getLocation()
@@ -236,9 +236,9 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 
 	def msgTable(self,pos):
 		if self.isTable(pos):
-			return (MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_TABLE)+" with %s "+_("columns")+" and %s "+_("rows"))%(self.getColumnCount(pos),self.getRowCount(pos))
+			return (IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TABLE)+" with %s "+_("columns")+" and %s "+_("rows"))%(self.getColumnCount(pos),self.getRowCount(pos))
 		else:
-			return "not in %s"%MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_TABLE)
+			return "not in %s"%IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TABLE)
 
 	def getRowNumber(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -248,7 +248,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def msgTableRow(self,pos):
 		rowNum=self.getRowNumber(pos)
 		if rowNum>0:
-			return MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_ROW)+" %s"%rowNum
+			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_ROW)+" %s"%rowNum
 
 	def getRowCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
@@ -263,7 +263,7 @@ class NVDAObject_wordDocument(NVDAObjects.ITextDocument.NVDAObject_ITextDocument
 	def msgTableColumn(self,pos):
 		columnNum=self.getColumnNumber(pos)
 		if columnNum>0:
-			return MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_COLUMN)+" %s"%columnNum
+			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_COLUMN)+" %s"%columnNum
 
 	def getColumnCount(self,pos):
 		rangeObj=self._duplicateDocumentRange(self.dom.Selection)

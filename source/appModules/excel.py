@@ -3,7 +3,7 @@ import re
 import ctypes
 import comtypesClient
 import comtypes.automation
-import MSAAHandler
+import IAccessibleHandler
 import audio
 import debug
 from keyboardHandler import sendKey, key
@@ -16,25 +16,25 @@ class appModule(_MSOffice.appModule):
 
 	def __init__(self,*args):
 		_MSOffice.appModule.__init__(self,*args)
-		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL6",MSAAHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
-		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL7",MSAAHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
-		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL6",MSAAHandler.ROLE_SYSTEM_CLIENT)
-		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL7",MSAAHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
-class NVDAObject_excelEditableCell(NVDAObjects.MSAA.NVDAObject_edit):
+class NVDAObject_excelEditableCell(NVDAObjects.IAccessible.NVDAObject_edit):
 
 	def _get_role(self):
-		return MSAAHandler.ROLE_SYSTEM_TEXT
+		return IAccessibleHandler.ROLE_SYSTEM_TEXT
 
-class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
+class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
-		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args,**vars)
+		NVDAObjects.IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,MSAAHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		self.excelObject=comtypesClient.wrap(ptr)
 		self.registerScriptKeys({
@@ -65,7 +65,7 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 		})
 
 	def _get_role(self):
-		return MSAAHandler.ROLE_SYSTEM_TABLE
+		return IAccessibleHandler.ROLE_SYSTEM_TABLE
 
 	def getSelectedRange(self):
 		return self.excelObject.Selection

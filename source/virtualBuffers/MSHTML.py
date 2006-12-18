@@ -4,7 +4,7 @@ import ctypes
 import comtypesClient
 import comtypes.automation
 import core
-import MSAAHandler
+import IAccessibleHandler
 import debug
 import winUser
 import api
@@ -55,7 +55,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
+	def event_IAccessible_gainFocus(self,hwnd,objectID,childID):
 		try:
 			nodeName=self.dom.activeElement.nodeName
 		except:
@@ -69,7 +69,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		r=self.getRangeFromID(ID)
 		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
-			obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 				self.reportCaretIDMessages()
 				audio.speakText(self.getTextRange(r[0],r[1]))
@@ -95,7 +95,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			inputType=domNode.getAttribute('type')
 			if inputType in ["checkbox","radio"]:
 				domNode.click()
-				audio.speakMessage("%s"%(MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)))
+				audio.speakMessage("%s"%(IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
 				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 					api.toggleVirtualBufferPassThrough()
@@ -332,11 +332,11 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			elif inputType=="radio":
 				info["fieldType"]=fieldType_radioButton
 				info["typeString"]=fieldNames[fieldType_radioButton]
-				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)
 			elif inputType=="checkbox":
 				info["fieldType"]=fieldType_checkBox
 				info["typeString"]=fieldNames[fieldType_checkBox]
-				info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)
 		elif nodeName=="SELECT":
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]

@@ -4,7 +4,7 @@ import comtypesClient
 import comtypes.automation
 import debug
 import winUser
-import MSAAHandler
+import IAccessibleHandler
 import audio
 import api
 import NVDAObjects
@@ -16,27 +16,27 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
-		#(pacc,child)=MSAAHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
-		#(pacc,child)=MSAAHandler.accNavigate(pacc,child,NAVRELATION_EMBEDS)
-		#self.NVDAObject=NVDAObjects.MSAA.NVDAObject_MSAA(pacc,child)
+		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
+		#(pacc,child)=IAccessibleHandler.accNavigate(pacc,child,NAVRELATION_EMBEDS)
+		#self.NVDAObject=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
 		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_MSAA_gainFocus(self,hwnd,objectID,childID):
-		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+	def event_IAccessible_gainFocus(self,hwnd,objectID,childID):
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return False
 		role=obj.role
 		states=obj.states
-		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
-			if (states&MSAAHandler.STATE_SYSTEM_BUSY):
-				audio.speakMessage(MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_BUSY))
+		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
+			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
+				audio.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
 				self.loadDocument()
 			return True
-		if (role not in [MSAAHandler.ROLE_SYSTEM_TEXT,MSAAHandler.ROLE_SYSTEM_CHECKBUTTON,MSAAHandler.ROLE_SYSTEM_RADIOBUTTON,MSAAHandler.ROLE_SYSTEM_COMBOBOX,MSAAHandler.ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
+		if (role not in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
   			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return False
@@ -52,9 +52,9 @@ class virtualBuffer_gecko(virtualBuffer):
 				return True
 		return False
 
-	def event_MSAA_scrollingStart(self,hwnd,objectID,childID):
+	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID):
 		audio.speakMessage("scroll")
-		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return False
 		role=obj.role
@@ -69,13 +69,13 @@ class virtualBuffer_gecko(virtualBuffer):
 			self.reportCaretIDMessages()
 			audio.speakText(self.getTextRange(r[0],r[1]))
 
-	def event_MSAA_stateChange(self,hwnd,objectID,childID):
-		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
+	def event_IAccessible_stateChange(self,hwnd,objectID,childID):
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		role=obj.role
 		states=obj.states
-		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
-			if states&MSAAHandler.STATE_SYSTEM_BUSY:
-				audio.speakMessage(MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_BUSY))
+		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
+			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
+				audio.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 				return True
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
 				self.NVDAObject=obj
@@ -83,7 +83,7 @@ class virtualBuffer_gecko(virtualBuffer):
 				return True
 		return False
 
-	def event_MSAA_valueChange(self,hwnd,objectID,childID):
+	def event_IAccessible_valueChange(self,hwnd,objectID,childID):
 		audio.speakMessage('value')
 		return False
 
@@ -97,22 +97,22 @@ class virtualBuffer_gecko(virtualBuffer):
 		role=obj.role
 		states=obj.states
 		nodeInfo=self.getNVDAObjectInfo(obj)
-		if role in [MSAAHandler.ROLE_SYSTEM_TEXT,MSAAHandler.ROLE_SYSTEM_COMBOBOX]:
+		if role in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			obj.setFocus()
-		if role in [MSAAHandler.ROLE_SYSTEM_CHECKBUTTON,MSAAHandler.ROLE_SYSTEM_RADIOBUTTON]:
+		if role in [IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON]:
 			obj.doDefaultAction()
-		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
-		elif role in [MSAAHandler.ROLE_SYSTEM_LINK,MSAAHandler.ROLE_SYSTEM_GRAPHIC]:
+		elif role in [IAccessibleHandler.ROLE_SYSTEM_LINK,IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]:
 			obj.doDefaultAction()
 			obj.setFocus()
 
 	def isDocumentComplete(self):
 		role=self.NVDAObject.role
 		states=self.NVDAObject.states
-		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and not (states&MSAAHandler.STATE_SYSTEM_BUSY) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
+		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			return True
 		else:
 			return False
@@ -135,7 +135,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s with %s children"%(obj.name,MSAAHandler.getRoleName(obj.role),obj.value,obj.description,obj.childCount))
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s with %s children"%(obj.name,IAccessibleHandler.getRoleName(obj.role),obj.value,obj.description,obj.childCount))
 		info=self.getNVDAObjectInfo(obj)
 		ID=self.getNVDAObjectID(obj)
 		if ID and ID not in IDAncestors:
@@ -146,40 +146,40 @@ class virtualBuffer_gecko(virtualBuffer):
 		if text:
 			position=self.addText(IDAncestors,text,position=position)
 		#We don't want to render objects inside comboboxes
-		if obj.role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
+		if obj.role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			return position
 		#For everything else we keep walking the tree
 		else:
 			for child in obj.children:
 				position=self.fillBuffer(child,IDAncestors,position=position)
-			if obj.role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
+			if obj.role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 				position=self.addText(IDAncestors," ",position)
 			return position
 
 	def getNVDAObjectID(self,obj):
-		if obj.role!=MSAAHandler.ROLE_SYSTEM_STATICTEXT:
+		if obj.role!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
 
 	def getNVDAObjectText(self,obj):
 		role=obj.role
 		states=obj.states
-		if role==MSAAHandler.ROLE_SYSTEM_STATICTEXT:
+		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():
 				return "%s "%data
-		if role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
+		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			return "%s\n "%obj.name
-		elif role==MSAAHandler.ROLE_SYSTEM_GRAPHIC:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
 			return obj.name+" " 
-		elif role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			return obj.value+" "
-		elif role==MSAAHandler.ROLE_SYSTEM_CHECKBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			return obj.name+" "
-		elif role==MSAAHandler.ROLE_SYSTEM_RADIOBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
 			return obj.name+" "
-		elif role==MSAAHandler.ROLE_SYSTEM_TEXT:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 			return obj.value+"\0"
-		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			return obj.name+" "
 		elif role=="white space":
 			return obj.name.replace('\r\n','\n')
@@ -195,22 +195,22 @@ class virtualBuffer_gecko(virtualBuffer):
 		if role=="iframe":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
-		elif role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
-		elif role==MSAAHandler.ROLE_SYSTEM_LINK:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
 		elif role=="p":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]
-		elif role==MSAAHandler.ROLE_SYSTEM_CELL:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_CELL:
 			info["fieldType"]=fieldType_cell
 			info["typeString"]=fieldNames[fieldType_cell]
-		elif role==MSAAHandler.ROLE_SYSTEM_TABLE:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_TABLE:
 			info["fieldType"]=fieldType_table
 			info["typeString"]=fieldNames[fieldType_table]
-		elif role==MSAAHandler.ROLE_SYSTEM_ROW:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_ROW:
 			info["fieldType"]=fieldType_row
 			info["typeString"]=fieldNames[fieldType_row]
 		elif role=="thead":
@@ -222,11 +222,11 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="tbody":
 			info["fieldType"]=fieldType_tableBody
 			info["typeString"]=fieldNames[fieldType_tableBody]
-		elif role==MSAAHandler.ROLE_SYSTEM_LIST:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LIST:
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
-		elif role==MSAAHandler.ROLE_SYSTEM_LISTITEM:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
 			bullet=obj.name.rstrip()
 			if not bullet:
@@ -249,7 +249,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="dd":
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")
-		elif role==MSAAHandler.ROLE_SYSTEM_GRAPHIC:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
@@ -261,28 +261,28 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="q":
 			info["fieldType"]=fieldType_blockQuote
 			info["typeString"]=fieldNames[fieldType_blockQuote]
-		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			info["fieldType"]=fieldType_button
 			info["typeString"]=fieldNames[fieldType_button]
 		elif role=="form":
 			info["fieldType"]=fieldType_form
 			info["typeString"]=fieldNames[fieldType_form]
-		elif role==MSAAHandler.ROLE_SYSTEM_RADIOBUTTON:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED) if x.states&MSAAHandler.STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED)
-		elif role==MSAAHandler.ROLE_SYSTEM_CHECKBUTTON:
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED) if x.states&MSAAHandler.STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED)
-		elif role==MSAAHandler.ROLE_SYSTEM_TEXT:
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
-		elif role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]
 		else:
-			info["typeString"]=MSAAHandler.getRoleName(role) if isinstance(role,int) else role
+			info["typeString"]=IAccessibleHandler.getRoleName(role) if isinstance(role,int) else role
 		accessKey=obj.keyboardShortcut
 		if accessKey:
 			info["accessKey"]=accessKey

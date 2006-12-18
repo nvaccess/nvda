@@ -31,7 +31,7 @@ import winUser
 from api import *
 import keyboardHandler
 import mouseHandler
-import MSAAHandler
+import IAccessibleHandler
 import appModuleHandler
 import audio
 import config
@@ -109,7 +109,7 @@ def applyConfiguration(reportDone=False):
 		audio.speakMessage(_("configuration applyed"))
 
 def main():
-	"""NVDA's core main loop. This initializes all queues and modules such as audio, MSAA, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.
+	"""NVDA's core main loop. This initializes all queues and modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.
 """
 	try:
 		for num in range(EXEC_LAST+1):
@@ -120,8 +120,8 @@ def main():
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
-		MSAAHandler.executeEvent("foreground",foregroundWindow,-4,0)
-		MSAAHandler.initialize()
+		IAccessibleHandler.executeEvent("foreground",foregroundWindow,-4,0)
+		IAccessibleHandler.initialize()
 		keyboardHandler.initialize()
 		mouseHandler.initialize()
 		gui.initialize()
@@ -165,5 +165,5 @@ def main():
 		return False
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
-	MSAAHandler.terminate()
+	IAccessibleHandler.terminate()
 	return True

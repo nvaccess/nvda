@@ -13,7 +13,7 @@ import globalVars
 import audio
 import appModuleHandler
 import gui
-import MSAAHandler
+import IAccessibleHandler
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffers

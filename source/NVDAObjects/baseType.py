@@ -20,11 +20,11 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type name: string
 @ivar value: the object's value. (e.g. content of an edit field, percentage on a progresss bar)
 @type value: string
-@ivar role: The object's chosen role. (NVDA uses the set of MSAA role constants for roles, however sometimes if there is no suitable role, this can be a string)
+@ivar role: The object's chosen role. (NVDA uses the set of IAccessible role constants for roles, however sometimes if there is no suitable role, this can be a string)
 @type role: int or string
 @ivar typeString: The object's friendly type. (e.g. a link will have a link role, but its typeString may be 'visited link' depending on its states etc). This type can be anything, it is only communicated to the user, never used programatically.
 @type typeString: string 
-@ivar states: The object's states. (NVDA uses MSAA state constants for its states, bitwised grouped together)
+@ivar states: The object's states. (NVDA uses IAccessible state constants for its states, bitwised grouped together)
 @type states: int
 @ivar allowedPositiveStates: a bitwise group of states that are allowed to be reported when on
 @type allowedPositiveStates: int
@@ -179,7 +179,7 @@ Filters the states property, only allowing certain positive states.
 	def getStateName(self,state,opposite=False):
 		"""
 Returns a name for a given state. Takes in to account if opposite is true or not.
-@param state: MSAA state constant
+@param state: IAccessible state constant
 @type state: int
 @param opposite: True if the state is negative, or false if the state is positive, default is False
 @type opposite: boolean
@@ -192,7 +192,7 @@ Returns a name for a given state. Takes in to account if opposite is true or not
 	def getStateNames(self,states,opposite=False):
 		"""
 Returns a string of names for a given bitwise group of states. Takes in to account if opposite is true or not.
-@param states: bitwise group of MSAA state constants
+@param states: bitwise group of IAccessible state constants
 @type state: int
 @param opposite: True if the states are negative, or false if the states are positive, default is False
 @type opposite: boolean

@@ -2,7 +2,7 @@ import debug
 import winUser
 from keyboardHandler import key
 import NVDAObjects
-import MSAAHandler
+import IAccessibleHandler
 import MSHTML
 import gecko
 
@@ -13,7 +13,7 @@ def getVirtualBuffer(obj):
 		return None
 	if isinstance(obj,int):
 		hwnd=obj
-	elif isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA):
+	elif isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		hwnd=obj.windowHandle
 	else:
 		return
@@ -24,19 +24,19 @@ def getVirtualBuffer(obj):
 
 def update(obj):
 	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
-		debug.writeMessage("virtualBuffers.MSAA.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
+		debug.writeMessage("virtualBuffers.IAccessible.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
 		del runningTable[w]
-	if isinstance(obj,NVDAObjects.MSAA.NVDAObject_MSAA) :
+	if isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible) :
 		hwnd=obj.windowHandle
 	elif isinstance(obj,int):
 		hwnd=obj
 	else:
 		return
-	#debug.writeMessage("virtualBuffers.MSAA.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
+	#debug.writeMessage("virtualBuffers.IAccessible.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
 	if getVirtualBuffer(obj):
 		return
 	while hwnd:
-		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,MSAAHandler.OBJID_CLIENT,0)
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,IAccessibleHandler.OBJID_CLIENT,0)
 		if obj:
 			className=obj.windowClassName
 			role=obj.role
@@ -51,7 +51,7 @@ def update(obj):
 			else:
 				virtualBufferClass=None
 			if virtualBufferClass:
-				debug.writeMessage("virtualBuffers.MSAA.update: adding %s at %s (%s)"%(virtualBufferClass,obj.windowHandle,className))
+				debug.writeMessage("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(virtualBufferClass,obj.windowHandle,className))
 				virtualBufferObject=virtualBufferClass(obj)
 				runningTable[obj.windowHandle]=virtualBufferObject
 				return 
@@ -65,7 +65,7 @@ def unregisterVirtualBufferClass(windowClass,role):
 
 _staticMap={
 ("Internet Explorer_Server",None):MSHTML.virtualBuffer_MSHTML,
-("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
+("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
 }
 
 _dynamicMap={}
