@@ -3,9 +3,9 @@ import re
 import ctypes
 import comtypesClient
 import comtypes.automation
+import MSAAHandler
 import audio
 import debug
-from constants import *
 from keyboardHandler import sendKey, key
 import NVDAObjects
 import _MSOffice
@@ -16,25 +16,25 @@ class appModule(_MSOffice.appModule):
 
 	def __init__(self,*args):
 		_MSOffice.appModule.__init__(self,*args)
-		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL6",ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
-		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL7",ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
+		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL6",MSAAHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
+		NVDAObjects.MSAA.registerNVDAObjectClass(self.processID,"EXCEL7",MSAAHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
-		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL6",ROLE_SYSTEM_CLIENT)
-		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL7",ROLE_SYSTEM_CLIENT)
+		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL6",MSAAHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.MSAA.unregisterNVDAObjectClass("EXCEL7",MSAAHandler.ROLE_SYSTEM_CLIENT)
 		_MSOffice.appModule.__del__(self)
 
 class NVDAObject_excelEditableCell(NVDAObjects.MSAA.NVDAObject_edit):
 
 	def _get_role(self):
-		return ROLE_SYSTEM_TEXT
+		return MSAAHandler.ROLE_SYSTEM_TEXT
 
 class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 
 	def __init__(self,*args,**vars):
 		NVDAObjects.MSAA.NVDAObject_MSAA.__init__(self,*args,**vars)
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,MSAAHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		self.excelObject=comtypesClient.wrap(ptr)
 		self.registerScriptKeys({
@@ -65,7 +65,7 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 		})
 
 	def _get_role(self):
-		return ROLE_SYSTEM_TABLE
+		return MSAAHandler.ROLE_SYSTEM_TABLE
 
 	def getSelectedRange(self):
 		return self.excelObject.Selection
@@ -122,7 +122,7 @@ class NVDAObject_excelTable(NVDAObjects.MSAA.NVDAObject_MSAA):
 		sendKey(keyPress)
 		self.speakSelection()
 
-	def reportFormatInfo(self,keyPress):
+	def reportFormatInfo(self):
 		"""Reports the current font name, font size, font attributes of the active cell"""
 		audio.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
 		audio.speakMessage("%s %s"%(self.getFontSize(self.getActiveCell()),_("point")))

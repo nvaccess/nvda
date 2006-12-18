@@ -14,14 +14,21 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+#Constants
+#executer types
+EXEC_SPEECH=0
+EXEC_KEYBOARD=1
+EXEC_MOUSE=2
+EXEC_USERINTERFACE=3
+EXEC_CONFIG=4
+EXEC_LAST=4
+
 import ctypes
 import gettext
 import time
 import globalVars
 import winUser
 from api import *
-from constants import *
-import NVDAObjects
 import keyboardHandler
 import mouseHandler
 import MSAAHandler
@@ -127,7 +134,7 @@ def main():
 		return False
 	try:
 		globalVars.stayAlive=True
-		msg=winUser.msgType()
+		msg=winUser.MSG()
 		while globalVars.stayAlive is True:
 			for num in range(len(queueList)):
 				if not queueList[num].empty():

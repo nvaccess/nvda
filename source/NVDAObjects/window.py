@@ -1,7 +1,6 @@
 import ctypes
 import winUser
 import audio
-from constants import *
 import baseType
 
 class NVDAObject_window(baseType.NVDAObject):
@@ -13,7 +12,7 @@ An NVDAObject for a window
 @type windowClassName: string
 @ivar windowControlID: the window's control ID
 @type windowControlID: int
-@ivar windowText: The window's text (using WM_GETTEXT) 
+@ivar windowText: The window's text (using winUser.WM_GETTEXT) 
 @type windowText: string
 @ivar windowProcessID: The window's [processID,threadID]
 @type windowProcessID: list of two ints
@@ -47,9 +46,9 @@ An NVDAObject for a window
 		return winUser.getClientRect(self.windowHandle)
 
 	def _get_windowText(self):
-		textLength=winUser.sendMessage(self.windowHandle,WM_GETTEXTLENGTH,0,0)
+		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
-		winUser.sendMessage(self.windowHandle,WM_GETTEXT,textLength+1,textBuf)
+		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u"\0"
 
 	def _get_windowProcessID(self):

@@ -1,6 +1,16 @@
 import ctypes
+import ctypes.wintypes
 
 kernel32=ctypes.windll.kernel32
+
+#Constants
+#Process control
+PROCESS_ALL_ACCESS=0x1F0FFF
+READ_CONTROL=0x20000
+#Console handles
+STD_INPUT_HANDLE=-10
+STD_OUTPUT_HANDLE=-11
+STD_ERROR_HANDLE=-12
 
 class coordType(ctypes.Structure):
 	_fields_=[

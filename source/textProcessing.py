@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import re
-import debug
 import characterSymbols
 
 re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
@@ -31,16 +30,16 @@ def processTextSymbols(text,expandPunctuation=False):
 	#expands ^ and ~ so they can be used as protector symbols
 	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
 	#Expands any other symbols and removes ^ and ~ protectors
-	if expandPunctuation==False:
+	if expandPunctuation is False:
 		return text 
 	protector=False
-	str=""
+	buf=""
 	for char in text:
 		if (char=="^") or (char=="~"):
-			str+=" %s "%characterSymbols.names[char]
+			buf+=" %s "%characterSymbols.names[char]
 		else:
-			str+=char
-	text=str
+			buf+=char
+	text=buf
 	text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%characterSymbols.names["."],text)
 	text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%characterSymbols.names[","],text)
 	text=re_sentence_question.sub(r"\1 ^%s?~ \2"%characterSymbols.names["?"],text)
@@ -48,24 +47,24 @@ def processTextSymbols(text,expandPunctuation=False):
 	text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%characterSymbols.names[";"],text)
 	text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%characterSymbols.names["!"],text)
 	#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%characterSymbols.names["'"],text)
-	str=""
+	buf=""
 	for char in text:
 		if char=="^":
 			protector=True
-			str+="^"
+			buf+="^"
 			continue
 		if char=="~":
 			protector=False
-			str+="~"
+			buf+="~"
 			continue
 		if not protector:
 			if (char not in characterSymbols.blankList) and characterSymbols.names.has_key(char):
-				str+=" ^%s~ "%characterSymbols.names[char]
+				buf+=" ^%s~ "%characterSymbols.names[char]
 			else:
-				str+=char
+				buf+=char
 		else:
-			str+=char
-	text=str
+			buf+=char
+	text=buf
 	text=text.replace("^","")
 	text=text.replace("~","")
 	return text

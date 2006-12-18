@@ -4,6 +4,129 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+#Constants
+#MSAA Object IDs
+OBJID_WINDOW=0
+OBJID_SYSMENU=-1
+OBJID_TITLEBAR=-2
+OBJID_MENU=-3
+OBJID_CLIENT=-4
+OBJID_VSCROLL=-5
+OBJID_HSCROLL=-6
+OBJID_SIZEGRIP=-7
+OBJID_CARET=-8
+OBJID_CURSOR=-9
+OBJID_ALERT=-10
+OBJID_SOUND=-11
+OBJID_NATIVEOM=-16
+#MSAA navigation
+NAVDIR_DOWN=2
+NAVDIR_FIRSTCHILD=7
+NAVDIR_LASTCHILD=8
+NAVDIR_LEFT=3
+NAVDIR_NEXT=5
+NAVDIR_PREVIOUS=6
+NAVDIR_RIGHT=4
+NAVDIR_UP=1
+#MSAA roles
+ROLE_SYSTEM_ALERT=8
+ROLE_SYSTEM_ANIMATION=54
+ROLE_SYSTEM_APPLICATION=14
+ROLE_SYSTEM_BORDER=19
+ROLE_SYSTEM_BUTTONDROPDOWN=56
+ROLE_SYSTEM_BUTTONDROPDOWNGRID=58
+ROLE_SYSTEM_BUTTONMENU=57
+ROLE_SYSTEM_CARET=7
+ROLE_SYSTEM_CELL=29
+ROLE_SYSTEM_CHARACTER=32
+ROLE_SYSTEM_CHART=17
+ROLE_SYSTEM_CHECKBUTTON=44
+ROLE_SYSTEM_CLIENT=10
+ROLE_SYSTEM_CLOCK=61
+ROLE_SYSTEM_COLUMN=27
+ROLE_SYSTEM_COLUMNHEADER=25
+ROLE_SYSTEM_COMBOBOX=46
+ROLE_SYSTEM_CURSOR=6
+ROLE_SYSTEM_DIAGRAM=53
+ROLE_SYSTEM_DIAL=49
+ROLE_SYSTEM_DIALOG=18
+ROLE_SYSTEM_DOCUMENT=15
+ROLE_SYSTEM_DROPLIST=47
+ROLE_SYSTEM_EQUATION=55
+ROLE_SYSTEM_GRAPHIC=40
+ROLE_SYSTEM_GRIP=4
+ROLE_SYSTEM_GROUPING=20
+ROLE_SYSTEM_HELPBALLOON=31
+ROLE_SYSTEM_HOTKEYFIELD=50
+ROLE_SYSTEM_INDICATOR=39
+ROLE_SYSTEM_LINK=30
+ROLE_SYSTEM_LIST=33
+ROLE_SYSTEM_LISTITEM=34
+ROLE_SYSTEM_MENUBAR=2
+ROLE_SYSTEM_MENUITEM=12
+ROLE_SYSTEM_MENUPOPUP=11
+ROLE_SYSTEM_OUTLINE=35
+ROLE_SYSTEM_OUTLINEITEM=36
+ROLE_SYSTEM_PAGETAB=37
+ROLE_SYSTEM_PAGETABLIST=60
+ROLE_SYSTEM_PANE=16
+ROLE_SYSTEM_PROGRESSBAR=48
+ROLE_SYSTEM_PROPERTYPAGE=38
+ROLE_SYSTEM_PUSHBUTTON=43
+ROLE_SYSTEM_RADIOBUTTON=45
+ROLE_SYSTEM_ROW=28
+ROLE_SYSTEM_ROWHEADER=26
+ROLE_SYSTEM_SCROLLBAR=3
+ROLE_SYSTEM_SEPARATOR=21
+ROLE_SYSTEM_SLIDER=51
+ROLE_SYSTEM_SOUND=5
+ROLE_SYSTEM_SPINBUTTON=52
+ROLE_SYSTEM_STATICTEXT=41
+ROLE_SYSTEM_STATUSBAR=23
+ROLE_SYSTEM_TABLE=24
+ROLE_SYSTEM_TEXT=42
+ROLE_SYSTEM_TITLEBAR=1
+ROLE_SYSTEM_TOOLBAR=22
+ROLE_SYSTEM_TOOLTIP=13
+ROLE_SYSTEM_WHITESPACE=59
+ROLE_SYSTEM_WINDOW=9
+ROLE_SYSTEM_SPLITBUTTON=62
+ROLE_SYSTEM_OUTLINEBUTTON=64
+#MSAA states
+STATE_SYSTEM_UNAVAILABLE=0x1
+STATE_SYSTEM_SELECTED=0x2
+STATE_SYSTEM_FOCUSED=0x4
+STATE_SYSTEM_PRESSED=0x8
+STATE_SYSTEM_CHECKED=0x10
+STATE_SYSTEM_MIXED=0x20
+STATE_SYSTEM_READONLY=0x40
+STATE_SYSTEM_HOTTRACKED=0x80
+STATE_SYSTEM_DEFAULT=0x100
+STATE_SYSTEM_EXPANDED=0x200
+STATE_SYSTEM_COLLAPSED=0x400
+STATE_SYSTEM_BUSY=0x800
+STATE_SYSTEM_FLOATING=0x1000
+STATE_SYSTEM_MARQUEED=0x2000
+STATE_SYSTEM_ANIMATED=0x4000
+STATE_SYSTEM_INVISIBLE=0x8000
+STATE_SYSTEM_OFFSCREEN=0x10000
+STATE_SYSTEM_SIZEABLE=0x20000
+STATE_SYSTEM_MOVEABLE=0x40000
+STATE_SYSTEM_SELFVOICING=0x80000
+STATE_SYSTEM_FOCUSABLE=0x100000
+STATE_SYSTEM_SELECTABLE=0x200000
+STATE_SYSTEM_LINKED=0x400000
+STATE_SYSTEM_TRAVERSED=0x800000
+STATE_SYSTEM_MULTISELECTABLE=0x1000000
+STATE_SYSTEM_EXTSELECTABLE=0x2000000
+STATE_SYSTEM_HASSUBMENU=0x4000000
+STATE_SYSTEM_ALERT_LOW=0x4000000
+STATE_SYSTEM_ALERT_MEDIUM=0x8000000
+STATE_SYSTEM_ALERT_HIGH=0x10000000
+STATE_SYSTEM_PROTECTED=0x20000000
+STATE_SYSTEM_HASPOPUP=0x40000000
+STATE_SYSTEM_VALID=0x1fffffff
+
 import time
 import ctypes
 import comtypesClient
@@ -11,7 +134,6 @@ import comtypes.automation
 import debug
 import winUser
 import audio
-from constants import *
 import api
 import core
 import virtualBuffers
@@ -279,28 +401,28 @@ def accLocation(ia,child):
 		return None
 
 eventMap={
-EVENT_SYSTEM_FOREGROUND:"foreground",
-EVENT_SYSTEM_MENUSTART:"menuStart",
-EVENT_SYSTEM_MENUEND:"menuEnd",
-EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
-EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
-EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
-EVENT_SYSTEM_SWITCHSTART:"switchStart",
-EVENT_SYSTEM_SWITCHEND:"switchEnd",
-EVENT_OBJECT_FOCUS:"gainFocus",
-EVENT_OBJECT_SHOW:"show",
-EVENT_OBJECT_HIDE:"hide",
-EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
-EVENT_OBJECT_HELPCHANGE:"helpChange",
-EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
-EVENT_OBJECT_NAMECHANGE:"nameChange",
-EVENT_OBJECT_REORDER:"reorder",
-EVENT_OBJECT_SELECTION:"selection",
-EVENT_OBJECT_SELECTIONADD:"selectionAdd",
-EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
-EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
-EVENT_OBJECT_STATECHANGE:"stateChange",
-EVENT_OBJECT_VALUECHANGE:"valueChange"
+winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
+winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
+winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
+winUser.EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
+winUser.EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
+winUser.EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
+winUser.EVENT_SYSTEM_SWITCHSTART:"switchStart",
+winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
+winUser.EVENT_OBJECT_FOCUS:"gainFocus",
+winUser.EVENT_OBJECT_SHOW:"show",
+winUser.EVENT_OBJECT_HIDE:"hide",
+winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
+winUser.EVENT_OBJECT_HELPCHANGE:"helpChange",
+winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
+winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
+winUser.EVENT_OBJECT_REORDER:"reorder",
+winUser.EVENT_OBJECT_SELECTION:"selection",
+winUser.EVENT_OBJECT_SELECTIONADD:"selectionAdd",
+winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
+winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
+winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
+winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 }
 
 #Internal function for object events
@@ -308,36 +430,36 @@ EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
-		if (objectID==0) and (childID==0) and (eventID!=EVENT_OBJECT_HIDE):
+		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
 		virtualBuffer=virtualBuffers.MSAA.getVirtualBuffer(window)
 		#let swichStart and switchEnd through
-		if eventID in [EVENT_SYSTEM_SWITCHSTART,EVENT_SYSTEM_SWITCHEND]:
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+		if eventID in [winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND]:
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let tooltips through
-		elif (eventID==EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
+		elif (eventID==winUser.EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
 		#Let progress bar updates through
-		elif (eventID==EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT) and winUser.isDescendantWindow(winUser.getForegroundWindow(),window):
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"valueChange",window,objectID,childID)
+		elif (eventID==winUser.EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT) and winUser.isDescendantWindow(winUser.getForegroundWindow(),window):
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"valueChange",window,objectID,childID)
 		#Let caret events through
-		elif (eventID in [EVENT_OBJECT_LOCATIONCHANGE,EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)
+		elif (eventID in [winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)
 		#Let menu events through
-		elif eventID in [EVENT_SYSTEM_MENUSTART,EVENT_SYSTEM_MENUPOPUPSTART]:
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,"gainFocus",window,objectID,childID)
-		elif eventID in [EVENT_SYSTEM_MENUEND,EVENT_SYSTEM_MENUPOPUPEND]:
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+		elif eventID in [winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUPOPUPSTART]:
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"gainFocus",window,objectID,childID)
+		elif eventID in [winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND]:
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let foreground and focus events through
-		elif (eventID==EVENT_SYSTEM_FOREGROUND) or (eventID==EVENT_OBJECT_FOCUS):
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+		elif (eventID==winUser.EVENT_SYSTEM_FOREGROUND) or (eventID==winUser.EVENT_OBJECT_FOCUS):
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
 		elif isinstance(api.getFocusObject(),NVDAObjects.MSAA.NVDAObject_MSAA) and (window,objectID,childID)==api.getFocusObject().MSAAOrigEventLocator:
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let through events for the current virtualBuffer
 		elif hasattr(virtualBuffer,"event_MSAA_%s"%eventName):
-			core.executeFunction(EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 

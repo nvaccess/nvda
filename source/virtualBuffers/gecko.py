@@ -2,7 +2,6 @@ import time
 import ctypes
 import comtypesClient
 import comtypes.automation
-from constants import *
 import debug
 import winUser
 import MSAAHandler
@@ -30,14 +29,14 @@ class virtualBuffer_gecko(virtualBuffer):
 			return False
 		role=obj.role
 		states=obj.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and (states&STATE_SYSTEM_READONLY):
-			if (states&STATE_SYSTEM_BUSY):
-				audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
+		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
+			if (states&MSAAHandler.STATE_SYSTEM_BUSY):
+				audio.speakMessage(MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
 				self.loadDocument()
 			return True
-		if (role not in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON,ROLE_SYSTEM_COMBOBOX,ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
+		if (role not in [MSAAHandler.ROLE_SYSTEM_TEXT,MSAAHandler.ROLE_SYSTEM_CHECKBUTTON,MSAAHandler.ROLE_SYSTEM_RADIOBUTTON,MSAAHandler.ROLE_SYSTEM_COMBOBOX,MSAAHandler.ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
   			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return False
@@ -74,9 +73,9 @@ class virtualBuffer_gecko(virtualBuffer):
 		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		role=obj.role
 		states=obj.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and (states&STATE_SYSTEM_READONLY):
-			if states&STATE_SYSTEM_BUSY:
-				audio.speakMessage(MSAAHandler.getStateName(STATE_SYSTEM_BUSY))
+		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
+			if states&MSAAHandler.STATE_SYSTEM_BUSY:
+				audio.speakMessage(MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_BUSY))
 				return True
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
 				self.NVDAObject=obj
@@ -98,28 +97,28 @@ class virtualBuffer_gecko(virtualBuffer):
 		role=obj.role
 		states=obj.states
 		nodeInfo=self.getNVDAObjectInfo(obj)
-		if role in [ROLE_SYSTEM_TEXT,ROLE_SYSTEM_COMBOBOX]:
+		if role in [MSAAHandler.ROLE_SYSTEM_TEXT,MSAAHandler.ROLE_SYSTEM_COMBOBOX]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			obj.setFocus()
-		if role in [ROLE_SYSTEM_CHECKBUTTON,ROLE_SYSTEM_RADIOBUTTON]:
+		if role in [MSAAHandler.ROLE_SYSTEM_CHECKBUTTON,MSAAHandler.ROLE_SYSTEM_RADIOBUTTON]:
 			obj.doDefaultAction()
-		elif role==ROLE_SYSTEM_PUSHBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
-		elif role in [ROLE_SYSTEM_LINK,ROLE_SYSTEM_GRAPHIC]:
+		elif role in [MSAAHandler.ROLE_SYSTEM_LINK,MSAAHandler.ROLE_SYSTEM_GRAPHIC]:
 			obj.doDefaultAction()
 			obj.setFocus()
 
 	def isDocumentComplete(self):
 		role=self.NVDAObject.role
 		states=self.NVDAObject.states
-		if (role==ROLE_SYSTEM_DOCUMENT) and not (states&STATE_SYSTEM_BUSY) and (states&STATE_SYSTEM_READONLY):
+		if (role==MSAAHandler.ROLE_SYSTEM_DOCUMENT) and not (states&MSAAHandler.STATE_SYSTEM_BUSY) and (states&MSAAHandler.STATE_SYSTEM_READONLY):
 			return True
 		else:
 			return False
 
 	def loadDocument(self):
-		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -127,7 +126,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.NVDAObject)
 		self.caretPosition=0
-		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
@@ -147,40 +146,40 @@ class virtualBuffer_gecko(virtualBuffer):
 		if text:
 			position=self.addText(IDAncestors,text,position=position)
 		#We don't want to render objects inside comboboxes
-		if obj.role==ROLE_SYSTEM_COMBOBOX:
+		if obj.role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
 			return position
 		#For everything else we keep walking the tree
 		else:
 			for child in obj.children:
 				position=self.fillBuffer(child,IDAncestors,position=position)
-			if obj.role==ROLE_SYSTEM_DOCUMENT:
+			if obj.role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
 				position=self.addText(IDAncestors," ",position)
 			return position
 
 	def getNVDAObjectID(self,obj):
-		if obj.role!=ROLE_SYSTEM_STATICTEXT:
+		if obj.role!=MSAAHandler.ROLE_SYSTEM_STATICTEXT:
 			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
 
 	def getNVDAObjectText(self,obj):
 		role=obj.role
 		states=obj.states
-		if role==ROLE_SYSTEM_STATICTEXT:
+		if role==MSAAHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():
 				return "%s "%data
-		if role==ROLE_SYSTEM_DOCUMENT:
+		if role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
 			return "%s\n "%obj.name
-		elif role==ROLE_SYSTEM_GRAPHIC:
+		elif role==MSAAHandler.ROLE_SYSTEM_GRAPHIC:
 			return obj.name+" " 
-		elif role==ROLE_SYSTEM_COMBOBOX:
+		elif role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
 			return obj.value+" "
-		elif role==ROLE_SYSTEM_CHECKBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_CHECKBUTTON:
 			return obj.name+" "
-		elif role==ROLE_SYSTEM_RADIOBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_RADIOBUTTON:
 			return obj.name+" "
-		elif role==ROLE_SYSTEM_TEXT:
+		elif role==MSAAHandler.ROLE_SYSTEM_TEXT:
 			return obj.value+"\0"
-		elif role==ROLE_SYSTEM_PUSHBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
 			return obj.name+" "
 		elif role=="white space":
 			return obj.name.replace('\r\n','\n')
@@ -196,22 +195,22 @@ class virtualBuffer_gecko(virtualBuffer):
 		if role=="iframe":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
-		elif role==ROLE_SYSTEM_DOCUMENT:
+		elif role==MSAAHandler.ROLE_SYSTEM_DOCUMENT:
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
-		elif role==ROLE_SYSTEM_LINK:
+		elif role==MSAAHandler.ROLE_SYSTEM_LINK:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
 		elif role=="p":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]
-		elif role==ROLE_SYSTEM_CELL:
+		elif role==MSAAHandler.ROLE_SYSTEM_CELL:
 			info["fieldType"]=fieldType_cell
 			info["typeString"]=fieldNames[fieldType_cell]
-		elif role==ROLE_SYSTEM_TABLE:
+		elif role==MSAAHandler.ROLE_SYSTEM_TABLE:
 			info["fieldType"]=fieldType_table
 			info["typeString"]=fieldNames[fieldType_table]
-		elif role==ROLE_SYSTEM_ROW:
+		elif role==MSAAHandler.ROLE_SYSTEM_ROW:
 			info["fieldType"]=fieldType_row
 			info["typeString"]=fieldNames[fieldType_row]
 		elif role=="thead":
@@ -223,11 +222,11 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="tbody":
 			info["fieldType"]=fieldType_tableBody
 			info["typeString"]=fieldNames[fieldType_tableBody]
-		elif role==ROLE_SYSTEM_LIST:
+		elif role==MSAAHandler.ROLE_SYSTEM_LIST:
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
-		elif role==ROLE_SYSTEM_LISTITEM:
+		elif role==MSAAHandler.ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
 			bullet=obj.name.rstrip()
 			if not bullet:
@@ -250,7 +249,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="dd":
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")
-		elif role==ROLE_SYSTEM_GRAPHIC:
+		elif role==MSAAHandler.ROLE_SYSTEM_GRAPHIC:
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
@@ -262,24 +261,24 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="q":
 			info["fieldType"]=fieldType_blockQuote
 			info["typeString"]=fieldNames[fieldType_blockQuote]
-		elif role==ROLE_SYSTEM_PUSHBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_PUSHBUTTON:
 			info["fieldType"]=fieldType_button
 			info["typeString"]=fieldNames[fieldType_button]
 		elif role=="form":
 			info["fieldType"]=fieldType_form
 			info["typeString"]=fieldNames[fieldType_form]
-		elif role==ROLE_SYSTEM_RADIOBUTTON:
+		elif role==MSAAHandler.ROLE_SYSTEM_RADIOBUTTON:
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
-		elif role==ROLE_SYSTEM_CHECKBUTTON:
+			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED) if x.states&MSAAHandler.STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED)
+		elif role==MSAAHandler.ROLE_SYSTEM_CHECKBUTTON:
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
-			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(STATE_SYSTEM_CHECKED) if x.states&STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(STATE_SYSTEM_CHECKED)
-		elif role==ROLE_SYSTEM_TEXT:
+			info["stateTextFunc"]=lambda x: MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED) if x.states&MSAAHandler.STATE_SYSTEM_CHECKED else _("not %s")%MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_CHECKED)
+		elif role==MSAAHandler.ROLE_SYSTEM_TEXT:
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
-		elif role==ROLE_SYSTEM_COMBOBOX:
+		elif role==MSAAHandler.ROLE_SYSTEM_COMBOBOX:
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]
 		else:

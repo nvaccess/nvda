@@ -1,11 +1,8 @@
 import debug
-from constants import *
 import winUser
 from keyboardHandler import key
-import api
-import audio
 import NVDAObjects
-from constants import *
+import MSAAHandler
 import MSHTML
 import gecko
 
@@ -39,7 +36,7 @@ def update(obj):
 	if getVirtualBuffer(obj):
 		return
 	while hwnd:
-		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,OBJID_CLIENT,0)
+		obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,MSAAHandler.OBJID_CLIENT,0)
 		if obj:
 			className=obj.windowClassName
 			role=obj.role
@@ -58,7 +55,7 @@ def update(obj):
 				virtualBufferObject=virtualBufferClass(obj)
 				runningTable[obj.windowHandle]=virtualBufferObject
 				return 
-		hwnd=winUser.getAncestor(hwnd,GA_PARENT)
+		hwnd=winUser.getAncestor(hwnd,winUser.GA_PARENT)
 
 def registerVirtualBufferClass(windowClass,role,cls):
 	_dynamicMap[(windowClass,role)]=cls
@@ -68,7 +65,7 @@ def unregisterVirtualBufferClass(windowClass,role):
 
 _staticMap={
 ("Internet Explorer_Server",None):MSHTML.virtualBuffer_MSHTML,
-("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
+("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
 }
 
 _dynamicMap={}

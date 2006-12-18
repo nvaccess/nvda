@@ -4,7 +4,6 @@
 """ 
 
 import winsound
-import debug
 from textProcessing import *
 import config
 import synthDriverHandler

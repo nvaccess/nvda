@@ -7,10 +7,9 @@ import core
 import MSAAHandler
 import debug
 import winUser
-from constants import *
 import api
 import audio
-from config import conf
+import config
 import NVDAObjects
 from baseType import *
 
@@ -71,7 +70,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
 			obj=NVDAObjects.MSAA.getNVDAObjectFromEvent(hwnd,objectID,childID)
-			if obj and conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
+			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 				self.reportCaretIDMessages()
 				audio.speakText(self.getTextRange(r[0],r[1]))
 				api.setFocusObject(obj)
@@ -113,7 +112,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 	def loadDocument(self):
 		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
 			return
-		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -121,7 +120,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
 		self.caretPosition=0
-		if winUser.getAncestor(self.NVDAObject.windowHandle,GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
 			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
@@ -177,7 +176,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			try:
 				comtypesClient.ReleaseEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			except:
-				passs
+				pass
 			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			position=self.fillBuffer(domNode.body,IDAncestors,position=position)
 			position=self.addText(IDAncestors," ",position)

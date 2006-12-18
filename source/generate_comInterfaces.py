@@ -1,5 +1,4 @@
 """Script to generate needed com interfaces"""
-import os
 import comtypesClient
 
 #MS Word

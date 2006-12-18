@@ -58,6 +58,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type needsFocusState: boolean
 @ivar speakOnForeground: if true, this object is spoken if it becomes the current foreground object
 @type speakOnForeground: boolean
+@ivar hasFocus: if true then the object believes it has focus
+@type hasFocus: boolean 
+@ivar isProtected: if true then this object should be treeted like a password field.
+@type isProtected: boolean 
 """
 
 	__metaclass__=autoPropertyType.autoPropertyType
@@ -239,7 +243,7 @@ Performs the default action on this object. (e.g. clicks a button)
 	def _get_activeChild(self):
 		return None
 
-	def hasFocus(self):
+	def _get_hasFocus(self):
 		"""
 Returns true of this object has focus, false otherwise.
 """
@@ -253,6 +257,9 @@ Tries to force this object to take the focus.
 
 	def _get_positionString(self):
 		return ""
+
+	def _get_isProtected(self):
+		return False
 
 	def speakObject(self):
 		"""
@@ -282,7 +289,7 @@ Speaks the properties of this object such as name, typeString,value, description
 		"""
 This code is executed if a gain focus event is received by this object.
 """
-		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus())):
+		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus)):
 			api.setNavigatorObject(self)
 			if not ((self==api.getForegroundObject()) and self.speakOnForeground):
 				self.speakObject()

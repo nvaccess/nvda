@@ -11,12 +11,10 @@
 import re
 import ctypes
 import os
-import sys
 import debug
 import audio
 import winUser
 import winKernel
-from constants import *
 import config
 from keyboardHandler import key
 
@@ -35,10 +33,10 @@ def getAppName(window):
 	"""Finds out the application name of the given window.
 """
 	try:
-		processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,GA_ROOTOWNER))
-		procHandle=winKernel.openProcess(PROCESS_ALL_ACCESS,False,processID[0])
+		processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))
+		procHandle=winKernel.openProcess(winKernel.PROCESS_ALL_ACCESS,False,processID[0])
 		buf=ctypes.create_unicode_buffer(1024)
-		res=ctypes.windll.psapi.GetProcessImageFileNameW(procHandle,buf,1024)
+		ctypes.windll.psapi.GetProcessImageFileNameW(procHandle,buf,1024)
 		winKernel.closeHandle(procHandle)
 		return os.path.splitext(buf.value.split('\\')[-1])[0].lower()
 	except:
@@ -56,7 +54,7 @@ def getKeyMapFileName(appName,layout):
 		return None
 
 def getActiveModule():
-	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),GA_ROOTOWNER)
+	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if runningTable.has_key(appWindow):
 		return runningTable[appWindow]
 	else:
@@ -66,7 +64,7 @@ def update():
 	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
 		debug.writeMessage("appModuleHandler.update: removing module %s at %s"%(runningTable[w].__module__,w))
 		del runningTable[w]
-	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),GA_ROOTOWNER)
+	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if not appWindow:
 		return
 	if not runningTable.has_key(appWindow):

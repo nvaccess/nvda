@@ -9,7 +9,6 @@ import synthDriverHandler
 import config
 import versionInfo
 import audio
-from constants import *
 
 import core
 
@@ -78,11 +77,11 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		core.executeFunction(EXEC_CONFIG,core.applyConfiguration,reportDone=True)
+		core.executeFunction(core.EXEC_CONFIG,core.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
-		core.executeFunction(EXEC_SPEECH,audio.speakMessage,_("configuration saved"))
+		core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,_("configuration saved"))
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()
@@ -104,13 +103,13 @@ class MainFrame(wx.Frame):
 		debug.writeMessage("onSynthesizerCommand: current: %s, list: %s"%(synthDriverHandler.driverName,choices))
 		d.SetSelection(synthList.index(synthDriverHandler.driverName))
 		if d.ShowModal()==wx.ID_OK:
-			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
+			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
 		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
 		d.SetSelection(config.conf["speech"][synthDriverHandler.driverName]["voice"]-1)
 		if d.ShowModal()==wx.ID_OK:
-			core.executeFunction(EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
+			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
 
 	def onAboutCommand(self,evt):
 		try:
@@ -120,7 +119,7 @@ class MainFrame(wx.Frame):
 %s: %s
 %s: %s <%s>
 %s: %s
-"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("maintainer"),versionInfo.maintainer,versionInfo.maintainer_email,_("copyright"),versionInfo.copyright)
+"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("maintainer"),versionInfo.maintainer,versionInfo.maintainer_email,_("copyright"),versionInfo.copyrightInfo)
 			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:

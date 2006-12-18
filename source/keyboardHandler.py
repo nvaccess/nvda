@@ -9,12 +9,9 @@ import winUser
 import time
 import pyHook
 import debug
-import winUser
 import audio
-from constants import *
 import api
 import globalVars
-from constants import *
 import core
 import config
 
@@ -59,24 +56,24 @@ def keyName(keyPress):
 		keyName+="+%s"%k
 	return keyName[1:]
 
-
 def sendKey(keyPress):
 	"""Sends a key press through to the operating system.
 @param keyPress: the key to send
 @type keyPress: NVDA internal key
 """
+	debug.writeMessage("keyboardHandler.sendKey: %s"%keyName(keyPress))
 	global keyPressIgnoreSet
 	keyList=[]
 	#Process modifier keys
 	if keyPress[0] is not None:
 		for modifier in keyPress[0]:
-			if (modifier=="Alt") and (winUser.getKeyState(VK_MENU)&32768):
+			if (modifier=="Alt") and (winUser.getKeyState(winUser.VK_MENU)&32768):
 				continue
-			elif (modifier=="Control") and (winUser.getKeyState(VK_CONTROL)&32768):
+			elif (modifier=="Control") and (winUser.getKeyState(winUser.VK_CONTROL)&32768):
 				continue
-			elif (modifier=="Shift") and (winUser.getKeyState(VK_SHIFT)&32768):
+			elif (modifier=="Shift") and (winUser.getKeyState(winUser.VK_SHIFT)&32768):
 				continue
-			elif (modifier=="Win") and ((winUser.getKeyState(VK_LWIN)&32768) or (winUser.getKeyState(VK_RWIN)&32768)):
+			elif (modifier=="Win") and ((winUser.getKeyState(winUser.VK_LWIN)&32768) or (winUser.getKeyState(winUser.VK_RWIN)&32768)):
 				continue
 			elif (modifier=="Insert") and insertDown:
 				continue
@@ -94,30 +91,33 @@ def sendKey(keyPress):
 			keyList.append((keyID,extended))
 	#Process normal key
 	if keyPress[1] is not None:
-		key=keyPress[1]
-		if key[0:8]=="Extended":
+		k=keyPress[1]
+		if k[0:8]=="Extended":
 			extended=1
-			key=key[8:]
+			k=k[8:]
 		else:
 			extended=0
-		key=key.upper()
-		if len(key)==1:
-			keyID=ord(key)
+		k=k.upper()
+		if len(k)==1:
+			keyID=ord(k)
 		else:
-			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%key)
+			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%k)
 		keyList.append((keyID,extended))
 	if (keyList is None) or (len(keyList)==0):
 		return
 	#Send key up for any keys that are already down
-	for key in filter(lambda x: winUser.getKeyState(x[0])&32768,keyList):
-		winUser.keybd_event(key[0],0,key[1]+2,0)
+	for k in filter(lambda x: winUser.getKeyState(x[0])&32768,keyList):
+		debug.writeMessage("up mod keys: %s"%str(k))
+		winUser.keybd_event(k[0],0,k[1]+2,0)
 	#Send key down events for these keys
-	for key in keyList:
-		winUser.keybd_event(key[0],0,key[1],0)
+	for k in keyList:
+		debug.writeMessage("down keys: %s"%str(k))
+		winUser.keybd_event(k[0],0,k[1],0)
 	#Send key up events for the keys in reverse order
 	keyList.reverse()
-	for key in keyList:
-		winUser.keybd_event(key[0],0,key[1]+2,0)
+	for k in keyList:
+		debug.writeMessage("up keys: %s"%str(k))
+		winUser.keybd_event(k[0],0,k[1]+2,0)
 	time.sleep(0.001)
 
 #Internal functions for key presses
@@ -130,8 +130,8 @@ def internal_keyDownEvent(event):
 		if event.Injected:
 			return True
 		globalVars.keyCounter+=1
-		core.executeFunction(EXEC_SPEECH,audio.cancel)
-		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
+		core.executeFunction(core.EXEC_SPEECH,audio.cancel)
+		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		if (event.Key=="Insert"): #and (event.Extended==0):
 			insertDown=True
@@ -139,15 +139,15 @@ def internal_keyDownEvent(event):
 		modifierList=[]
 		if insertDown:
 			modifierList.append("Insert")
-		if winUser.getKeyState(VK_CONTROL)&32768:
+		if winUser.getKeyState(winUser.VK_CONTROL)&32768:
 			modifierList.append("Control")
-		if winUser.getKeyState(VK_SHIFT)&32768:
+		if winUser.getKeyState(winUser.VK_SHIFT)&32768:
 			modifierList.append("Shift")
-		if winUser.getKeyState(VK_MENU)&32768:
+		if winUser.getKeyState(winUser.VK_MENU)&32768:
 			modifierList.append("Alt")
-		if winUser.getKeyState(VK_LWIN)&32768:
+		if winUser.getKeyState(winUser.VK_LWIN)&32768:
 			modifierList.append("Win")
-		if winUser.getKeyState(VK_RWIN)&32768:
+		if winUser.getKeyState(winUser.VK_RWIN)&32768:
 			modifierList.append("Win")
 		if len(modifierList) > 0:
 			modifiers=frozenset(modifierList)
@@ -168,11 +168,11 @@ def internal_keyDownEvent(event):
 			else:
 				char=chr(event.Ascii)
 			if config.conf["keyboard"]["speakTypedCharacters"]:
-				core.executeFunction(EXEC_SPEECH,audio.speakSymbol,char)
+				core.executeFunction(core.EXEC_SPEECH,audio.speakSymbol,char)
 			if config.conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
 				word+=char
 			elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
+				core.executeFunction(core.EXEC_SPEECH,audio.speakText,word)
 				word=""
 		else:
 			if config.conf["keyboard"]["speakCommandKeys"]:
@@ -185,12 +185,12 @@ def internal_keyDownEvent(event):
 					if item is not None:
 						label+="+%s"%item
 				debug.writeMessage("speaking key: %s"%label)
-				core.executeFunction(EXEC_SPEECH,audio.speakMessage,label[1:])
+				core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,label[1:])
 			if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				core.executeFunction(EXEC_SPEECH,audio.speakText,word)
+				core.executeFunction(core.EXEC_SPEECH,audio.speakText,word)
 				word=""
 		if api.keyHasScript(keyPress):
-			core.executeFunction(EXEC_KEYBOARD,api.executeScript,keyPress)
+			core.executeFunction(core.EXEC_KEYBOARD,api.executeScript,keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return False
 		else:
@@ -206,7 +206,7 @@ def internal_keyUpEvent(event):
 	try:
 		if event.Injected:
 			return True
-		if event.KeyID in [VK_CONTROL,VK_LCONTROL,VK_RCONTROL,VK_SHIFT,VK_LSHIFT,VK_RSHIFT,VK_MENU,VK_LMENU,VK_RMENU,VK_LWIN,VK_RWIN]:
+		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		elif (event.Key=="Insert"): #and (event.Extended==0):
 			insertDown=False

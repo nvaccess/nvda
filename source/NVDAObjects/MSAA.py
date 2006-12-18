@@ -14,7 +14,6 @@ import winKernel
 import audio
 import api
 import config
-from constants import *
 import window
 import textBuffer
 import ITextDocument
@@ -92,7 +91,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		self._accChild=child
 		self.MSAAOrigEventLocator=origEventLocator
 		window.NVDAObject_window.__init__(self,MSAAHandler.windowFromAccessibleObject(self._pacc))
-		self.allowedPositiveStates=STATE_SYSTEM_UNAVAILABLE|STATE_SYSTEM_SELECTED|STATE_SYSTEM_PRESSED|STATE_SYSTEM_CHECKED|STATE_SYSTEM_MIXED|STATE_SYSTEM_EXPANDED|STATE_SYSTEM_COLLAPSED|STATE_SYSTEM_BUSY|STATE_SYSTEM_HASPOPUP
+		self.allowedPositiveStates=MSAAHandler.STATE_SYSTEM_UNAVAILABLE|MSAAHandler.STATE_SYSTEM_SELECTED|MSAAHandler.STATE_SYSTEM_PRESSED|MSAAHandler.STATE_SYSTEM_CHECKED|MSAAHandler.STATE_SYSTEM_MIXED|MSAAHandler.STATE_SYSTEM_EXPANDED|MSAAHandler.STATE_SYSTEM_COLLAPSED|MSAAHandler.STATE_SYSTEM_BUSY|MSAAHandler.STATE_SYSTEM_HASPOPUP
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 		#Calculate the hash
@@ -123,9 +122,9 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 
 	def _get_typeString(self):
 		role=self.role
-		if role==ROLE_SYSTEM_CLIENT:
-			role=ROLE_SYSTEM_WINDOW
-		if config.conf["presentation"]["reportClassOfClientObjects"] and (role==ROLE_SYSTEM_WINDOW):
+		if role==MSAAHandler.ROLE_SYSTEM_CLIENT:
+			role=MSAAHandler.ROLE_SYSTEM_WINDOW
+		if config.conf["presentation"]["reportClassOfClientObjects"] and (role==MSAAHandler.ROLE_SYSTEM_WINDOW):
 			typeString=self.windowClassName
 		else:
 			typeString=""
@@ -175,7 +174,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		else:
 			return None
 		obj=NVDAObject_MSAA(ia,child)
-		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
+		if obj and (obj.role==MSAAHandler.ROLE_SYSTEM_WINDOW):
 			return obj.parent
 		else:
 			return obj
@@ -188,14 +187,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		else:
 			parentObject=None
 			parentRole=None
-		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
+		if parentObject and (parentRole==MSAAHandler.ROLE_SYSTEM_WINDOW):
 			obj=parentObject
 		else:
 			obj=self
-		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,NAVDIR_NEXT)
+		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,MSAAHandler.NAVDIR_NEXT)
 		if res:
 			nextObject=NVDAObject_MSAA(res[0],res[1])
-			if nextObject and (nextObject.role==ROLE_SYSTEM_WINDOW):
+			if nextObject and (nextObject.role==MSAAHandler.ROLE_SYSTEM_WINDOW):
 				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
 			if nextObject!=self:
 				return nextObject
@@ -210,14 +209,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		else:
 			parentObject=None
 			parentRole=None
-		if parentObject and (parentRole==ROLE_SYSTEM_WINDOW):
+		if parentObject and (parentRole==MSAAHandler.ROLE_SYSTEM_WINDOW):
 			obj=parentObject
 		else:
 			obj=self
-		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,NAVDIR_PREVIOUS)
+		res=MSAAHandler.accNavigate(obj._pacc,obj._accChild,MSAAHandler.NAVDIR_PREVIOUS)
 		if res:
 			previousObject=NVDAObject_MSAA(res[0],res[1])
-			if previousObject and (previousObject.role==ROLE_SYSTEM_WINDOW):
+			if previousObject and (previousObject.role==MSAAHandler.ROLE_SYSTEM_WINDOW):
 				previousObject=getNVDAObjectFromEvent(previousObject.windowHandle,-4,0)
 			if previousObject!=self:
 				return previousObject
@@ -225,13 +224,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 				return None
 
 	def _get_firstChild(self):
-		res=MSAAHandler.accNavigate(self._pacc,self._accChild,NAVDIR_FIRSTCHILD)
+		res=MSAAHandler.accNavigate(self._pacc,self._accChild,MSAAHandler.NAVDIR_FIRSTCHILD)
 		if res:
 			obj=NVDAObject_MSAA(res[0],res[1])
 		else:
 			return None
-		if obj and (obj.role==ROLE_SYSTEM_WINDOW):
-			return getNVDAObjectFromEvent(obj.windowHandle,OBJID_CLIENT,0)
+		if obj and (obj.role==MSAAHandler.ROLE_SYSTEM_WINDOW):
+			return getNVDAObjectFromEvent(obj.windowHandle,MSAAHandler.OBJID_CLIENT,0)
 		else:
 			return obj
 
@@ -240,7 +239,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		if childCount>0:
 			children=MSAAHandler.accessibleChildren(self._pacc,0,childCount)
 			children=map(lambda x: NVDAObject_MSAA(x[0],x[1]),children)
-			children=map(lambda x: getNVDAObjectFromEvent(x.windowHandle,OBJID_CLIENT,0) if x.role==ROLE_SYSTEM_WINDOW else x,children)
+			children=map(lambda x: getNVDAObjectFromEvent(x.windowHandle,MSAAHandler.OBJID_CLIENT,0) if x.role==MSAAHandler.ROLE_SYSTEM_WINDOW else x,children)
 			return children
 		else:
 			child=self.firstChild
@@ -259,10 +258,10 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		if res:
 			return NVDAObject_MSAA(res[0],res[1])
 
-	def hasFocus(self):
+	def _get_hasFocus(self):
 		states=0
 		states=self.states
-		if (states&STATE_SYSTEM_FOCUSED):
+		if (states&MSAAHandler.STATE_SYSTEM_FOCUSED):
 			return True
 		else:
 			return False
@@ -282,13 +281,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		return position
 
 	def event_show(self):
-		if self.role==ROLE_SYSTEM_MENUPOPUP:
+		if self.role==MSAAHandler.ROLE_SYSTEM_MENUPOPUP:
 			self.event_menuStart()
 
 	def updateMenuMode(self):
-		if self.role not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
+		if self.role not in [MSAAHandler.ROLE_SYSTEM_MENUBAR,MSAAHandler.ROLE_SYSTEM_MENUPOPUP,MSAAHandler.ROLE_SYSTEM_MENUITEM]:
 			api.setMenuMode(False)
-		if self.role==ROLE_SYSTEM_MENUITEM:
+		if self.role==MSAAHandler.ROLE_SYSTEM_MENUITEM:
 			audio.cancel()
 
 	def event_mouseMove(self,x,y,oldX,oldY):
@@ -305,41 +304,44 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 	def _get_groupName(self):
 		curLocation=self.location
 		groupObj=self
-		while groupObj and (groupObj.role!=ROLE_SYSTEM_GROUPING):
+		while groupObj and (groupObj.role!=MSAAHandler.ROLE_SYSTEM_GROUPING):
 			groupObj=groupObj.previous
-		if groupObj and groupObj.role==ROLE_SYSTEM_GROUPING:
+		if groupObj and groupObj.role==MSAAHandler.ROLE_SYSTEM_GROUPING:
 			groupLocation=groupObj.location
 			if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
 				return groupObj.name
 		return ""
 
+	def _get_isProtected(self):
+		return self.states&MSAAHandler.STATE_SYSTEM_PROTECTED
+
 	def event_gainFocus(self):
 		self.updateMenuMode()
-		if not (not api.getMenuMode() and (self.role==ROLE_SYSTEM_MENUITEM)):
-			if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
+		if not (not api.getMenuMode() and (self.role==MSAAHandler.ROLE_SYSTEM_MENUITEM)):
+			if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==MSAAHandler.ROLE_SYSTEM_DIALOG) and (self.MSAAChildID==0): 
 				groupName=self.groupName
 				if groupName:
-					audio.speakMessage("%s %s"%(groupName,MSAAHandler.getRoleName(ROLE_SYSTEM_GROUPING)))
+					audio.speakMessage("%s %s"%(groupName,MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_GROUPING)))
 			window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
-		if self.role not in [ROLE_SYSTEM_MENUBAR,ROLE_SYSTEM_MENUPOPUP,ROLE_SYSTEM_MENUITEM]:
+		if self.role not in [MSAAHandler.ROLE_SYSTEM_MENUBAR,MSAAHandler.ROLE_SYSTEM_MENUPOPUP,MSAAHandler.ROLE_SYSTEM_MENUITEM]:
 			return
 		if not api.getMenuMode():
 			audio.cancel()
 			api.setMenuMode(True)
 			self.speakObject()
 			for child in self.children:
-				if child.hasFocus():
+				if child.hasFocus:
 					child.speakObject()
 					break
 
 	def event_valueChange(self):
-		if self.hasFocus():
+		if self.hasFocus:
 			audio.speakObjectProperties(value=self.value)
 
 	def event_nameChange(self):
-		if self.hasFocus():
+		if self.hasFocus:
 			audio.speakObjectProperties(name=self.name)
 
 	def event_stateChange(self):
@@ -347,7 +349,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_MSAA su
 		newPositiveStates=positiveStates-(positiveStates&self._lastPositiveStates)
 		negativeStates=self.calculateNegativeStates()
 		newNegativeStates=negativeStates-(negativeStates&self._lastNegativeStates)
-		if self.hasFocus():
+		if self.hasFocus:
 			if newPositiveStates:
 				audio.speakObjectProperties(stateText=self.getStateNames(newPositiveStates))
 			if newNegativeStates:
@@ -379,21 +381,21 @@ class NVDAObject_dialog(NVDAObject_MSAA):
 		super(NVDAObject_dialog,self).event_foreground()
 		for child in self.children:
 			states=child.states
-			if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
+			if (not states&MSAAHandler.STATE_SYSTEM_OFFSCREEN) and (not states&MSAAHandler.STATE_SYSTEM_INVISIBLE) and (not states&MSAAHandler.STATE_SYSTEM_UNAVAILABLE):
 				child.speakObject()
-				if child.states&STATE_SYSTEM_FOCUSED:
-					audio.speakObjectProperties(stateText=child.getStateName(STATE_SYSTEM_FOCUSED))
-				if child.states&STATE_SYSTEM_DEFAULT:
-					audio.speakObjectProperties(stateText=child.getStateName(STATE_SYSTEM_DEFAULT))
-			if child.role==ROLE_SYSTEM_PROPERTYPAGE:
+				if child.states&MSAAHandler.STATE_SYSTEM_FOCUSED:
+					audio.speakObjectProperties(stateText=child.getStateName(MSAAHandler.STATE_SYSTEM_FOCUSED))
+				if child.states&MSAAHandler.STATE_SYSTEM_DEFAULT:
+					audio.speakObjectProperties(stateText=child.getStateName(MSAAHandler.STATE_SYSTEM_DEFAULT))
+			if child.role==MSAAHandler.ROLE_SYSTEM_PROPERTYPAGE:
 				for grandChild in child.children:
 					states=grandChild.states
-					if (not states&STATE_SYSTEM_OFFSCREEN) and (not states&STATE_SYSTEM_INVISIBLE) and (not states&STATE_SYSTEM_UNAVAILABLE):
+					if (not states&MSAAHandler.STATE_SYSTEM_OFFSCREEN) and (not states&MSAAHandler.STATE_SYSTEM_INVISIBLE) and (not states&MSAAHandler.STATE_SYSTEM_UNAVAILABLE):
 						grandChild.speakObject()
-						if grandChild.states&STATE_SYSTEM_FOCUSED:
-							audio.speakObjectProperties(stateText=grandChild.getStateName(STATE_SYSTEM_FOCUSED))
-						if grandChild.states&STATE_SYSTEM_DEFAULT:
-							audio.speakObjectProperties(stateText=grandChild.getStateName(STATE_SYSTEM_DEFAULT))
+						if grandChild.states&MSAAHandler.STATE_SYSTEM_FOCUSED:
+							audio.speakObjectProperties(stateText=grandChild.getStateName(MSAAHandler.STATE_SYSTEM_FOCUSED))
+						if grandChild.states&MSAAHandler.STATE_SYSTEM_DEFAULT:
+							audio.speakObjectProperties(stateText=grandChild.getStateName(MSAAHandler.STATE_SYSTEM_DEFAULT))
 
 class NVDAObject_TrayClockWClass(NVDAObject_MSAA):
 	"""
@@ -401,7 +403,7 @@ class NVDAObject_TrayClockWClass(NVDAObject_MSAA):
 	"""
 
 	def _get_role(self):
-		return ROLE_SYSTEM_CLOCK
+		return MSAAHandler.ROLE_SYSTEM_CLOCK
 
 class NVDAObject_Shell_TrayWnd_client(NVDAObject_MSAA):
 	"""
@@ -452,45 +454,45 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 
 	def _get_typeString(self):
 		typeString=super(NVDAObject_edit,self).typeString
-		if self.states&STATE_SYSTEM_PROTECTED:
-			typeString=MSAAHandler.getStateName(STATE_SYSTEM_PROTECTED)+" "+typeString
+		if self.states&MSAAHandler.STATE_SYSTEM_PROTECTED:
+			typeString=MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_PROTECTED)+" "+typeString
 		return typeString
 
 	def _get_value(self):
 		return self.currentLine
 
 	def _get_caretRange(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
+		long=winUser.sendMessage(self.windowHandle,winUser.EM_GETSEL,0,0)
 		start=winUser.LOWORD(long)
 		end=winUser.HIWORD(long)
 		return (start,end)
 
 	def _get_caretPosition(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
+		long=winUser.sendMessage(self.windowHandle,winUser.EM_GETSEL,0,0)
 		pos=winUser.LOWORD(long)
 		return pos
 
 	def _set_caretPosition(self,pos):
-		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
+		winUser.sendMessage(self.windowHandle,winUser.EM_SETSEL,pos,pos)
 
 	def _get_lineCount(self):
-		lineCount=winUser.sendMessage(self.windowHandle,EM_GETLINECOUNT,0,0)
+		lineCount=winUser.sendMessage(self.windowHandle,winUser.EM_GETLINECOUNT,0,0)
 		if lineCount<0:
 			return None
 		return lineCount
 
 	def getLineNumber(self,pos):
-		return winUser.sendMessage(self.windowHandle,EM_LINEFROMCHAR,pos,0)
+		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEFROMCHAR,pos,0)
 
 	def getPositionFromLineNumber(self,lineNum):
-		return winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
+		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
 
 	def getLineStart(self,pos):
 		lineNum=self.getLineNumber(pos)
-		return winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
+		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
 
 	def getLineLength(self,pos):
-		lineLength=winUser.sendMessage(self.windowHandle,EM_LINELENGTH,pos,0)
+		lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,pos,0)
 		if lineLength<0:
 			return None
 		return lineLength
@@ -502,7 +504,7 @@ class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_MSAA):
 			return None
 		sizeData=struct.pack('h',lineLength)
 		buf=ctypes.create_unicode_buffer(sizeData,size=lineLength+4)
-		res=winUser.sendMessage(self.windowHandle,EM_GETLINE,lineNum,buf)
+		res=winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
 		return buf.value
 
 	def nextLine(self,pos):
@@ -529,8 +531,8 @@ class NVDAObject_checkBox(NVDAObject_MSAA):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args,**vars)
-		self.allowedPositiveStates=self.allowedPositiveStates-(self.allowedPositiveStates&STATE_SYSTEM_PRESSED)
-		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_CHECKED
+		self.allowedPositiveStates=self.allowedPositiveStates-(self.allowedPositiveStates&MSAAHandler.STATE_SYSTEM_PRESSED)
+		self.allowedNegativeStates=self.allowedNegativeStates|MSAAHandler.STATE_SYSTEM_CHECKED
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 
@@ -569,7 +571,7 @@ class NVDAObject_tooltip(NVDAObject_MSAA):
 			return ""
 
 	def event_toolTip(self):
-		if (config.conf["presentation"]["reportTooltips"] and (self.role==ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.role==ROLE_SYSTEM_HELPBALLOON)):
+		if (config.conf["presentation"]["reportTooltips"] and (self.role==MSAAHandler.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.role==MSAAHandler.ROLE_SYSTEM_HELPBALLOON)):
 			self.speakObject()
 
 class NVDAObject_consoleWindowClass(NVDAObject_MSAA):
@@ -587,7 +589,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		self.reviewPosition=self.caretPosition
 		newLines=self.visibleLines
-		if eventID!=EVENT_CONSOLE_UPDATE_SIMPLE:
+		if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
 			self.speakNewText(newLines,self.oldLines)
 		self.oldLines=newLines
 		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
@@ -690,7 +692,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 			debug.writeException("freeConsole")
 			pass
 		winKernel.attachConsole(processID)
-		res=winKernel.getStdHandle(STD_OUTPUT_HANDLE)
+		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
 		if not res:
 			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
@@ -698,7 +700,7 @@ class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuff
 		self.oldLines=self.visibleLines
 		NVDAObject_MSAA.event_gainFocus(self)
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		for eventID in [EVENT_CONSOLE_CARET,EVENT_CONSOLE_UPDATE_REGION,EVENT_CONSOLE_UPDATE_SIMPLE,EVENT_CONSOLE_UPDATE_SCROLL]:
+		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
 				self.consoleEventHookHandles.append(handle)
@@ -755,7 +757,7 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_MSAA
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
+		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,MSAAHandler.OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
 		if res==0:
 			return comtypesClient.wrap(domPointer)
 		else:
@@ -797,7 +799,7 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 		for child in children:
 			try:
 				role=child.role
-				if role not in [ROLE_SYSTEM_TOOLTIP,ROLE_SYSTEM_MENUPOPUP]:
+				if role not in [MSAAHandler.ROLE_SYSTEM_TOOLTIP,MSAAHandler.ROLE_SYSTEM_MENUPOPUP]:
 					return getNVDAObjectByAccessibleObject(child)
 			except:
 				pass
@@ -813,8 +815,8 @@ class NVDAObject_mozillaDocument(NVDAObject_MSAA):
 		return ""
 
 	def _get_typeString(self):
-		if self.states&STATE_SYSTEM_READONLY:
-			return "Mozilla "+MSAAHandler.getRoleName(ROLE_SYSTEM_DOCUMENT)
+		if self.states&MSAAHandler.STATE_SYSTEM_READONLY:
+			return "Mozilla "+MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_DOCUMENT)
 		else:
 			return _("not supported")
  
@@ -822,14 +824,14 @@ class NVDAObject_mozillaListItem(NVDAObject_MSAA):
 
 	def _get_name(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and (child.role in [ROLE_SYSTEM_STATICTEXT,"bullet"]):
+		if child and (child.role in [MSAAHandler.ROLE_SYSTEM_STATICTEXT,"bullet"]):
  			return child.name
 		else:
 			return ""
 
 	def _get_firstChild(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and (child.role in [ROLE_SYSTEM_STATICTEXT,"bullet"]):
+		if child and (child.role in [MSAAHandler.ROLE_SYSTEM_STATICTEXT,"bullet"]):
 			child=child.next
 		return child
 
@@ -847,9 +849,9 @@ class NVDAObject_link(NVDAObject_MSAA):
 	def _get_typeString(self):
 		states=self.states
 		typeString=""
-		if states&STATE_SYSTEM_TRAVERSED:
+		if states&MSAAHandler.STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
-		if states&STATE_SYSTEM_SELECTABLE:
+		if states&MSAAHandler.STATE_SYSTEM_SELECTABLE:
 			typeString+="same page "
 		typeString+=super(NVDAObject_link,self).typeString
 		return typeString
@@ -868,21 +870,21 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 	def _get_name(self):
 		name=super(NVDAObject_mozillaText,self).name
 		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==ROLE_SYSTEM_STATICTEXT):
+		if (self.role==MSAAHandler.ROLE_SYSTEM_STATICTEXT):
 			return ""
 		else:
 			return name
 
 	def _get_role(self):
-		if super(NVDAObject_mozillaText,self).states&STATE_SYSTEM_READONLY:
-			return ROLE_SYSTEM_STATICTEXT
+		if super(NVDAObject_mozillaText,self).states&MSAAHandler.STATE_SYSTEM_READONLY:
+			return MSAAHandler.ROLE_SYSTEM_STATICTEXT
 		else:
 			return super(NVDAObject_mozillaText,self).role
  
 	def _get_value(self):
 		name=super(NVDAObject_mozillaText,self).name
 		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==ROLE_SYSTEM_STATICTEXT):
+		if (self.role==MSAAHandler.ROLE_SYSTEM_STATICTEXT):
 			return name
 		else:
 			return value
@@ -934,7 +936,7 @@ class NVDAObject_listItem(NVDAObject_MSAA):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args,**vars)
-		self.allowedNegativeStates=self.allowedNegativeStates|STATE_SYSTEM_SELECTED
+		self.allowedNegativeStates=self.allowedNegativeStates|MSAAHandler.STATE_SYSTEM_SELECTED
 		self._lastNegativeStates=self.calculateNegativeStates()
 
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_MSAA):
@@ -954,7 +956,7 @@ class NVDAObject_list(NVDAObject_MSAA):
 	def event_gainFocus(self):
 		NVDAObject_MSAA.event_gainFocus(self)
 		child=self.activeChild
-		if child and (child.role==ROLE_SYSTEM_LISTITEM):
+		if child and (child.role==MSAAHandler.ROLE_SYSTEM_LISTITEM):
 			childID=child.MSAAChildID
 			hwnd=self.windowHandle
 			objectID=self.MSAAOrigEventLocator[1]
@@ -979,8 +981,8 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 
 	def _get_typeString(self):
 		typeString=super(NVDAObject_internetExplorerEdit,self).typeString
-		if self.states&STATE_SYSTEM_PROTECTED:
-			typeString=MSAAHandler.getStateName(STATE_SYSTEM_PROTECTED)+" "+typeString
+		if self.states&MSAAHandler.STATE_SYSTEM_PROTECTED:
+			typeString=MSAAHandler.getStateName(MSAAHandler.STATE_SYSTEM_PROTECTED)+" "+typeString
 		return typeString
 
 	def _get_text(self):
@@ -1022,7 +1024,7 @@ class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,N
 		val=super(NVDAObject_internetExplorerEdit,self).value
 		if val is None:
 			return ""
-		elif self.states&STATE_SYSTEM_PROTECTED:
+		elif self.states&MSAAHandler.STATE_SYSTEM_PROTECTED:
 			return "*"*len(val)
 		else:
 			return val
@@ -1078,13 +1080,13 @@ class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,N
 
 	def __init__(self,*args,**vars):
 		NVDAObject_MSAA.__init__(self,*args)
-		self.allowedPositiveStates-=(self.allowedPositiveStates&STATE_SYSTEM_READONLY)
+		self.allowedPositiveStates-=(self.allowedPositiveStates&MSAAHandler.STATE_SYSTEM_READONLY)
 
 	def _get_typeString(self):
 		if hasattr(self,"dom") and self.dom.body.isContentEditable is True:
-			return "HTML "+MSAAHandler.getRoleName(ROLE_SYSTEM_TEXT)
+			return "HTML "+MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_TEXT)
 		else:
-			return "HTML "+MSAAHandler.getRoleName(ROLE_SYSTEM_PANE)
+			return "HTML "+MSAAHandler.getRoleName(MSAAHandler.ROLE_SYSTEM_PANE)
 
 	def _get_value(self):
 		return ""
@@ -1224,47 +1226,47 @@ class NVDAObject_statusBar(NVDAObject_MSAA):
 _dynamicMap={}
 
 _staticMap={
-("Shell_TrayWnd",ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd_client,
-("tooltips_class32",ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
-("tooltips_class32",ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
-("Progman",ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
-(None,ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("TrayClockWClass",ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
-("Edit",ROLE_SYSTEM_TEXT):NVDAObject_edit,
-("Static",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("RichEdit20W",ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
-("RICHEDIT50W",ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
-(None,ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
-(None,ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
-(None,ROLE_SYSTEM_LINK):NVDAObject_link,
+("Shell_TrayWnd",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd_client,
+("tooltips_class32",MSAAHandler.ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
+("tooltips_class32",MSAAHandler.ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
+("Progman",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
+(None,MSAAHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("TrayClockWClass",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
+("Edit",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("Static",MSAAHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("RichEdit20W",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+("RICHEDIT50W",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+(None,MSAAHandler.ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+(None,MSAAHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
+(None,MSAAHandler.ROLE_SYSTEM_LINK):NVDAObject_link,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
-("MozillaUIWindowClass",ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
-("MozillaDialogClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaDialogClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaUIWindowClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaUIWindowClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaWindowClass",ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaWindowClass",ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
-("MozillaDialogClass",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("MozillaWindowClass",ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("MozillaContentWindowClass",ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
-("MozillaWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
-("MozillaContentWindowClass",ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
-("MozillaContentWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
-("MozillaWindowClass",ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
-("MozillaUIWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
-("MozillaContentWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
-("MozillaWindowClass",ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaDocument,
-("ConsoleWindowClass",ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
-("ConsoleWindowClass",ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
-(None,ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
-("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
-("SHELLDLL_DefView",ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
-(None,ROLE_SYSTEM_LIST):NVDAObject_list,
-("msctls_progress32",ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
-("Internet Explorer_Server",ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
-("Internet Explorer_Server",ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
-("Internet Explorer_Server",ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
-("msctls_statusbar32",ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
+("MozillaUIWindowClass",MSAAHandler.ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
+("MozillaDialogClass",MSAAHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaDialogClass",MSAAHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("MozillaUIWindowClass",MSAAHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaUIWindowClass",MSAAHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
+("MozillaDialogClass",MSAAHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
+("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
+("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
+("MozillaUIWindowClass",MSAAHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
+("MozillaContentWindowClass",MSAAHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
+("MozillaWindowClass",MSAAHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaDocument,
+("ConsoleWindowClass",MSAAHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
+("ConsoleWindowClass",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
+(None,MSAAHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
+("Internet Explorer_Server",MSAAHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
+("SHELLDLL_DefView",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
+(None,MSAAHandler.ROLE_SYSTEM_LIST):NVDAObject_list,
+("msctls_progress32",MSAAHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
+("Internet Explorer_Server",MSAAHandler.ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
+("Internet Explorer_Server",MSAAHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
+("Internet Explorer_Server",MSAAHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
+("msctls_statusbar32",MSAAHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 }

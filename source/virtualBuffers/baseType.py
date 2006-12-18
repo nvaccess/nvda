@@ -4,7 +4,6 @@ from keyboardHandler import key
 import audio
 import globalVars
 import debug
-from constants import *
 import core
 import config
 
@@ -258,6 +257,9 @@ class virtualBuffer(object):
 		caretIDs=self.getIDsFromPosition(self.caretPosition)
 		self.reportIDMessages(caretIDs,self._lastCaretIDs)
 		self._lastCaretIDs=caretIDs
+
+	def activatePosition(self,pos):
+		pass
 
 	def _get_startPosition(self):
 		return 0

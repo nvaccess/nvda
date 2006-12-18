@@ -9,13 +9,11 @@ import ctypes
 import os.path
 import debug
 import winKernel
-import winUser
 import globalVars
-from constants import *
 import audio
-from config import conf
 import appModuleHandler
 import gui
+import MSAAHandler
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffers
@@ -99,7 +97,7 @@ def isTypingProtected():
 @returns: True if it should be suppressed, False otherwise.
 @rtype: boolean
 """
-	if getFocusObject() and getFocusObject().states&STATE_SYSTEM_PROTECTED:
+	if getFocusObject() and getFocusObject().isProtected:
 		return True
 	else:
 		return False
