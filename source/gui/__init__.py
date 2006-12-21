@@ -60,6 +60,8 @@ class MainFrame(wx.Frame):
 		self.SetMenuBar(self.menuBar)
 		#self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
 		#self.SetIcon(self.icon)
+		self.Show(True)
+		self.Show(False)
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False
@@ -69,8 +71,6 @@ class MainFrame(wx.Frame):
 		self.Center()
 		self.Show(True)
 		self.Raise()
-		self.SetFocus()
-		self.SetFocus()
 
 	def onHideGuiCommand(self,evt):
 		time.sleep(0.01)
