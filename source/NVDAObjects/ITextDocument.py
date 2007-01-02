@@ -1,38 +1,68 @@
 import config
 import audio
-import textBuffer
+from autoPropertyType import autoPropertyType
+from keyboardHandler import key
 
-class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
+class NVDAObjectExt_ITextDocument:
+
+	__metaclass__=autoPropertyType
 
 	class constants:
 		#Units
 		tomCharacter=1
 		tomWord=2
+		tomSentence=3
 		tomParagraph=4
 		tomLine=5
 		tomStory=6
+		tomScreen=7
+		tomSection=8
+		tomColumn=9
+		tomRow=10
 		tomWindow=11
+		tomCell=12
 		tomCharFormat=13
 		tomParaFormat=14
+		tomTable=15
+		tomObject=16
+		tomPage=17
 		#Paragraph alignment
 		tomAlignLeft=0
 		tomAlignCenter=1
 		tomAlignRight=2
 		tomAlignJustify=3
 
-	def __init__(self,*args):
+	def __init__(self,*args,**vars):
 		self.dom=self.getDocumentObjectModel()
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
-		self.registerPresentationAttribute("fontName",self.msgFontName,lambda: config.conf["documentFormatting"]["reportFontName"])
-		self.registerPresentationAttribute("fontSize",self.msgFontSize,lambda: config.conf["documentFormatting"]["reportFontSize"])
-		self.registerPresentationAttribute("bold",self.msgBold,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("italic",self.msgItalic,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("underline",self.msgUnderline,lambda: config.conf["documentFormatting"]["reportFontAttributes"])
-		self.registerPresentationAttribute("paragraphAlignment",self.msgParagraphAlignment,lambda: config.conf["documentFormatting"]["reportAlignment"])
+		self.registerScriptKeys({
+			key("ExtendedUp"):self.script_text_moveByLine,
+			key("ExtendedDown"):self.script_text_moveByLine,
+			key("ExtendedLeft"):self.script_text_moveByCharacter,
+			key("ExtendedRight"):self.script_text_moveByCharacter,
+			key("Control+ExtendedUp"):self.script_text_prevParagraph,
+			key("Control+ExtendedDown"):self.script_text_nextParagraph,
+			key("Control+ExtendedLeft"):self.script_text_moveByWord,
+			key("Control+ExtendedRight"):self.script_text_moveByWord,
+			key("Shift+ExtendedRight"):self.script_text_changeSelection,
+			key("Shift+ExtendedLeft"):self.script_text_changeSelection,
+			key("Shift+ExtendedHome"):self.script_text_changeSelection,
+			key("Shift+ExtendedEnd"):self.script_text_changeSelection,
+			key("Shift+ExtendedUp"):self.script_text_changeSelection,
+			key("Shift+ExtendedDown"):self.script_text_changeSelection,
+			key("Control+Shift+ExtendedLeft"):self.script_text_changeSelection,
+			key("Control+Shift+ExtendedRight"):self.script_text_changeSelection,
+			key("ExtendedHome"):self.script_text_moveByCharacter,
+			key("ExtendedEnd"):self.script_text_moveByCharacter,
+			key("control+extendedHome"):self.script_text_moveByLine,
+			key("control+extendedEnd"):self.script_text_moveByLine,
+			key("control+shift+extendedHome"):self.script_text_changeSelection,
+			key("control+shift+extendedEnd"):self.script_text_changeSelection,
+			key("ExtendedDelete"):self.script_text_delete,
+			key("Back"):self.script_text_backspace,
+		})
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
-		NVDAObject_edit.__del__(self)
 
 	def getDocumentObjectModel(self):
 		abstract
@@ -40,10 +70,26 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 	def destroyObjectModel(self,om):
 		pass
 
-	def _duplicateDocumentRange(self,rangeObj):
-		abstract
+	def _get_text_characterCount(self):
+		r=self.dom.Range(0,0)
+		r.Expand(self.constants.tomStory)
+		return r.End
 
-	def _get_caretRange(self):
+	def text_getText(self,start=None,end=None):
+		start=start if isinstance(start,int) else 0
+		end=end if isinstance(end,int) else self.text_characterCount
+		r=self.dom.Range(start,end)
+		return r.text
+
+	def _get_text_selectionCount(self):
+		if self.dom.Selection.Start!=self.dom.Selection.End:
+			return 1
+		else:
+			return 0
+
+	def text_getSelectionOffsets(self,index):
+		if index!=0:
+			return None
 		start=self.dom.Selection.Start
 		end=self.dom.Selection.End
 		if start!=end:
@@ -51,193 +97,166 @@ class NVDAObject_ITextDocument(textBuffer.NVDAObject_editableTextBuffer):
 		else:
 			return None
 
-	def _get_caretPosition(self):
+	def _get_text_caretOffset(self):
 		return self.dom.Selection.Start
 
-	def _set_caretPosition(self,pos):
-		self.dom.Selection.Start=pos
-		self.dom.Selection.End=pos
+	def _set_text_caretOffset(self,offset):
+		self.dom.Selection.Start=offset
+		self.dom.Selection.End=offset
 
-	def _get_visibleRange(self):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Expand(self.constants.tomWindow)
-		return (rangeObj.Start,rangeObj.End)
+	def text_getLineNumber(self,offset):
+		return self.dom.Range(offset,offset).GetIndex(self.constants.tomLine)
 
-	def _get_startPosition(self):
-		return 0
-
-	def _get_endPosition(self):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Expand(self.constants.tomStory)
-		return rangeObj.End
-
-	def getLineNumber(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=0
-		rangeObj.Move(self.constants.tomCharacter,pos)
-		return rangeObj.GetIndex(self.constants.tomLine)-1
-
-	def getLineStart(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomLine)
-		return rangeObj.Start
-
-	def getLineEnd(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomLine)
-		return rangeObj.End
-
-	def nextLine(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		delta=rangeObj.Move(self.constants.tomLine,1)
-		if delta:
-			return rangeObj.Start
+	def text_getPageNumber(self,offset):
+		pageNum=self.dom.Range(offset,offset).GetIndex(self.constants.tomPage)
+		if pageNum>0:
+			return pageNum
 		else:
 			return None
 
-	def previousLine(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		delta=rangeObj.Move(self.constants.tomLine,-1)
-		if delta:
-			return rangeObj.Start
+	def text_getLineOffsets(self,offset):
+		r=self.dom.Range(offset,offset)
+		r.Expand(self.constants.tomLine)
+		return (r.Start,r.End)
+
+	def text_getNextLineOffsets(self,offset):
+		(start,end)=self.text_getLineOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomLine,1)
+		if res!=0:
+			return self.text_getLineOffsets(r.Start)
 		else:
 			return None
 
-	def getLine(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomLine)
-		text=rangeObj.Text
-		if text!='\r':
-			return text
+	def text_getPrevLineOffsets(self,offset):
+		(start,end)=self.text_getLineOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomLine,-1)
+		if res!=0:
+			return self.text_getLineOffsets(r.Start)
 		else:
 			return None
 
-	def _get_lineCount(self):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=0
-		rangeObj.Expand(self.constants.tomStory)
-		return self.getLineNumber(rangeObj.End)
+	def text_getWordOffsets(self,offset):
+		r=self.dom.Range(offset,offset)
+		r.Expand(self.constants.tomWord)
+		return (r.Start,r.End)
 
-	def nextWord(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		delta=rangeObj.Move(self.constants.tomWord,1)
-		if delta:
-			return rangeObj.Start
+	def text_getNextWordOffsets(self,offset):
+		(start,end)=self.text_getWordOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomWord,1)
+		if res:
+			return self.text_getWordOffsets(r.Start)
 		else:
 			return None
 
-	def previousWord(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		delta=rangeObj.Move(self.constants.tomWord,-1)
-		if delta:
-			return rangeObj.Start
+	def text_getPrevWordOffsets(self,offset):
+		(start,end)=self.text_getWordOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomWord,-1)
+		if res:
+			return self.text_getWordOffsets(r.Start)
 		else:
 			return None
 
-	def getWordStart(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomWord)
-		return rangeObj.Start
+	def text_getSentenceOffsets(self,offset):
+		r=self.dom.Range(offset,offset)
+		r.Expand(self.constants.tomSentence)
+		return (r.Start,r.End)
 
-	def getWordEnd(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomWord)
-		return rangeObj.End
+	def text_getNextSentenceOffsets(self,offset):
+		(start,end)=self.text_getSentenceOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomSentence,1)
+		if res:
+			return self.text_getSentenceOffsets(r.Start)
+		else:
+			return None
 
-	def getParagraph(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomParagraph)
-		return self.getTextRange(rangeObj.Start,rangeObj.End)
+	def text_getPrevSentenceOffsets(self,offset):
+		(start,end)=self.text_getSentenceOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomSentence,-1)
+		if res:
+			return self.text_getSentenceOffsets(r.Start)
+		else:
+			return None
 
-	def _get_currentParagraph(self):
-		return self.getParagraph(self.getCaretPosition())
+	def text_getParagraphOffsets(self,offset):
+		r=self.dom.Range(offset,offset)
+		r.Expand(self.constants.tomParagraph)
+		return (r.Start,r.End)
 
-	def getTextRange(self,start,end):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=start
-		rangeObj.End=end
-		return rangeObj.Text
+	def text_getNextParagraphOffsets(self,offset):
+		(start,end)=self.text_getParagraphOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomParagraph,1)
+		if res:
+			return self.text_getParagraphOffsets(r.Start)
+		else:
+			return None
 
-	def getWord(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		rangeObj.Expand(self.constants.tomWord)
-		return self.getTextRange(rangeObj.Start,rangeObj.End)
+	def text_getPrevParagraphOffsets(self,offset):
+		(start,end)=self.text_getParagraphOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomParagraph,-1)
+		if res:
+			return self.text_getParagraphOffsets(r.Start)
+		else:
+			return None
 
-	def getFontName(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		return rangeObj.Font.Name
+	def text_getFieldOffsets(self,offset):
+		r=self.dom.Range(offset,offset)
+		r.Expand(self.constants.tomCharFormat)
+		return (r.Start,r.End)
 
-	def msgFontName(self,pos):
-		return "font %s"%self.getFontName(pos)
+	def text_getNextFieldOffsets(self,offset):
+		(start,end)=self.text_getFieldOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomCharFormat,1)
+		if res:
+			return self.text_getFieldOffsets(r.Start)
+		else:
+			return None
 
-	def getFontSize(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		return int(rangeObj.Font.Size)
+	def text_getPrevFieldOffsets(self,offset):
+		(start,end)=self.text_getFieldOffsets(offset)
+		r=self.dom.Range(start,start)
+		res=r.Move(self.constants.tomCharFormat,-1)
+		if res:
+			return self.text_getFieldOffsets(r.Start)
+		else:
+			return None
 
-	def msgFontSize(self,pos):
-		return "%s point"%self.getFontSize(pos)
+	def text_getFontName(self,offset):
+		return self.dom.Range(offset,offset).Font.Name
 
-	def getParagraphAlignment(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		align=rangeObj.Para.Alignment
-		if align==self.constants.tomAlignLeft:
+	def text_getFontSize(self,offset):
+		return int(self.dom.Range(offset,offset).Font.Size)
+
+	def text_getAlignment(self,offset):
+		alignment=self.dom.Range(offset,offset).Para.Alignment
+		if alignment==self.constants.tomAlignLeft:
 			return "left"
-		elif align==self.constants.tomAlignCenter:
+		elif alignment==self.constants.tomAlignCenter:
 			return "centered"
-		elif align==self.constants.tomAlignRight:
+		elif alignment==self.constants.tomAlignRight:
 			return "right"
-		elif align>=self.constants.tomAlignJustify:
+		elif alignment==self.constants.tomAlignJustify:
 			return "justified"
 
-	def msgParagraphAlignment(self,pos):
-		return "alignment %s"%self.getParagraphAlignment(pos)
+	def text_isBold(self,offset):
+		return bool(self.dom.Range(offset,offset).Font.Bold)
 
-	def isBold(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		return rangeObj.Font.Bold
+	def text_isItalic(self,offset):
+		return bool(self.dom.Range(offset,offset).Font.Italic)
 
-	def msgBold(self,pos):
-		if self.isBold(pos):
-			bold="on"
-		else:
-			bold="off"
-		return "bold %s"%bold
+	def text_isUnderline(self,offset):
+		return bool(self.dom.Range(offset,offset).Font.Underline)
 
-	def isItalic(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		return rangeObj.Font.Italic
+	def text_isSuperscript(self,offset):
+		return bool(self.dom.Range(offset,offset).Font.Superscript)
 
-	def msgItalic(self,pos):
-		if self.isItalic(pos):
-			italic="on"
-		else:
-			italic="off"
-		return "italic %s"%italic
-
-	def isUnderline(self,pos):
-		rangeObj=self._duplicateDocumentRange(self.dom.Selection)
-		rangeObj.Start=rangeObj.End=pos
-		return rangeObj.Font.Underline
-
-	def msgUnderline(self,pos):
-		if self.isUnderline(pos):
-			underline="on"
-		else:
-			underline="off"
-		return "underline %s"%underline
+	def text_isSubscript(self,offset):
+		return bool(self.dom.Range(offset,offset).Font.Subscript)

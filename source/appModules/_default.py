@@ -9,6 +9,7 @@ import synthDriverHandler
 import gui
 import core
 import config
+import winUser
 
 class appModule(object):
 
@@ -191,94 +192,101 @@ class appModule(object):
 
 	def script_navigator_review_top(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_top"):
-			getattr(obj,"review_top")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_top()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_bottom(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_bottom"):
-			getattr(obj,"review_bottom")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_bottom()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousLine(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_previousLine"):
-			getattr(obj,"review_previousLine")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_prevLine()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentLine(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_currentLine"):
-			getattr(obj,"review_currentLine")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_currentLine()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextLine(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_nextLine"):
-			getattr(obj,"review_nextLine")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_nextLine()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousWord(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_previousWord"):
-			getattr(obj,"review_previousWord")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_prevWord()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentWord(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_currentWord"):
-			getattr(obj,"review_currentWord")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_currentWord()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextWord(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_nextWord"):
-			getattr(obj,"review_nextWord")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_nextWord()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_previousCharacter"):
-			getattr(obj,"review_previousCharacter")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_prevCharacter()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_currentCharacter"):
-			getattr(obj,"review_currentCharacter")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_currentCharacter()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_nextCharacter"):
-			getattr(obj,"review_nextCharacter")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_nextCharacter()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_startOfLine(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_startOfLine"):
-			getattr(obj,"review_startOfLine")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_startOfLine()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_endOfLine(self,keyPress):
 		obj=api.getNavigatorObject()
-		if hasattr(obj,"review_endOfLine"):
-			getattr(obj,"review_endOfLine")()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_endOfLine()
 		else:
-			audio.speakMessage(_("not supported"))
+			audio.speakMessage(_("no navigator object"))
+
+	def script_navigator_review_sayAll(self,keyPress):
+		obj=api.getNavigatorObject()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			core.newThread(obj.text_reviewSayAllGenerator())
+		else:
+			audio.speakMessage(_("no navigator object"))
 
 	def script_speechOnOff(self,keyPress):
 		"""Toggles speech on and off"""
@@ -290,7 +298,7 @@ class appModule(object):
 			audio.speakMessage(_("speech")+" "+_("on"))
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
-		toggleVirtualBufferPassThrough()
+		api.toggleVirtualBufferPassThrough()
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
@@ -299,21 +307,25 @@ class appModule(object):
 	def script_showGui(self,keyPress):
 		gui.showGui()
 
-	def script_sayAll(self,keyPress):
+	def script_caretSayAll(self,keyPress):
 		virtualBuffer=virtualBuffers.getVirtualBuffer(api.getFocusObject())
 		if virtualBuffer:
 			core.newThread(virtualBuffer.sayAllGenerator())
-		elif hasattr(api.getFocusObject(),"sayAllGenerator") and callable(getattr(api.getFocusObject(),'sayAllGenerator')):
-			core.newThread(api.getFocusObject().sayAllGenerator())
+		elif hasattr(api.getFocusObject(),"text_caretSayAllGenerator") and callable(getattr(api.getFocusObject(),'text_caretSayAllGenerator')):
+			core.newThread(api.getFocusObject().text_caretSayAllGenerator())
 		else:
 			audio.speakMessage(_("no sayAll functionality here"))
+
+	def script_reviewSayAll(self,keyPress):
+		if isinstance(api.getFocusObject(),NVDAObjects.baseType.NVDAObject): 
+			core.newThread(api.getFocusObject().text_reviewSayAllGenerator())
 
 	def script_formatInfo(self,keyPress):
 		virtualBuffer=virtualBuffers.getVirtualBuffer(api.getFocusObject())
 		if virtualBuffer and hasattr(virtualBuffer,"reportFormatInfo"):
 			virtualBuffer.reportFormatInfo()
-		elif hasattr(api.getFocusObject(),"reportFormatInfo"):
-			api.getFocusObject().reportFormatInfo()
+		elif hasattr(api.getFocusObject(),"text_reportFormatting"):
+			api.getFocusObject().text_reportFormatting(api.getFocusObject().text_caretOffset)
 		else:
 			audio.speakMessage(_("no format info"))
 
@@ -325,11 +337,14 @@ class appModule(object):
 			audio.speakMessage(_("no focus"))
 
 	def script_reportStatusLine(self,keyPress):
-		fg=winUser.getForegroundWindow()
-		statusWindow=ctypes.windll.user32.FindWindowExW(fg,0,u'msctls_statusbar32',0)
-		statusObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(statusWindow,OBJID_CLIENT,0)
-		if not isinstance(statusObject,NVDAObjects.baseType.NVDAObject):
-			audio.speakMessage(_("could not find status bar object"))
-			return 
-		statusObject.speakObject()
+		foregroundObject=api.getForegroundObject()
+		if not foregroundObject:
+			audio.speakMessage(_("no foreground object"))
+			return
+		statusBarObject=foregroundObject.statusBar
+		if not statusBarObject:
+			audio.speakMessage(_("no stats bar found"))
+			return
+		statusBarObject.speakObject()
+		api.setNavigatorObject(statusBarObject)
 

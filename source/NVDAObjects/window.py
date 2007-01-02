@@ -53,4 +53,3 @@ An NVDAObject for a window
 
 	def _get_windowProcessID(self):
 		return winUser.getWindowThreadProcessID(self.windowHandle)
-

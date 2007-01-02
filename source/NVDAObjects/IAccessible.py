@@ -11,12 +11,16 @@ from keyboardHandler import sendKey, key
 import IAccessibleHandler
 import winUser
 import winKernel
+import globalVars
 import audio
 import api
 import config
+import baseType
 import window
-import textBuffer
+import winEdit
+import winConsole
 import ITextDocument
+import MSHTML
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -247,7 +251,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			while child:
 				children.append(child)
 				child.next
-			return children
+			return filter(lambda x: x,children)
 
 
 	def doDefaultAction(self):
@@ -268,6 +272,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 
 	def setFocus(self):
 		IAccessibleHandler.accSelect(self._pacc,self._accChild,1)
+
+	def _get_statusBar(self):
+		statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'msctls_statusbar32',0)
+		statusObject=getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
+		if not isinstance(statusObject,baseType.NVDAObject):
+			return None 
+		return statusObject
+
 
 	def _get_positionString(self):
 		position=""
@@ -427,15 +439,13 @@ class NVDAObject_Progman_client(NVDAObject_IAccessible):
 		self.speakOnForeground=False
 		self.speakOnGainFocus=False
 
-class NVDAObject_staticText(textBuffer.NVDAObject_textBuffer,NVDAObject_IAccessible):
+class NVDAObject_staticText(NVDAObject_IAccessible):
 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		textBuffer.NVDAObject_textBuffer.__init__(self,*args)
-
-	def _get_text(self):
-		#return self.windowText
-		return self.value
+	def text_getText(self,start=None,end=None):
+		text=self.value
+		start=start if isinstance(start,int) else 0
+		end=end if isinstance(end,int) else len(self.value)
+		return text[start:end]
 
 	def _get_name(self):
 		return ""
@@ -443,86 +453,11 @@ class NVDAObject_staticText(textBuffer.NVDAObject_textBuffer,NVDAObject_IAccessi
 	def _get_value(self):
 		return super(NVDAObject_staticText,self).name
 
-class NVDAObject_edit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_IAccessible):
+class NVDAObject_edit(winEdit.NVDAObjectExt_edit,NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
-
-	def _get_text(self):
-		return self.windowText
-
-	def _get_typeString(self):
-		typeString=super(NVDAObject_edit,self).typeString
-		if self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
-			typeString=IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_PROTECTED)+" "+typeString
-		return typeString
-
-	def _get_value(self):
-		return self.currentLine
-
-	def _get_caretRange(self):
-		long=winUser.sendMessage(self.windowHandle,winUser.EM_GETSEL,0,0)
-		start=winUser.LOWORD(long)
-		end=winUser.HIWORD(long)
-		return (start,end)
-
-	def _get_caretPosition(self):
-		long=winUser.sendMessage(self.windowHandle,winUser.EM_GETSEL,0,0)
-		pos=winUser.LOWORD(long)
-		return pos
-
-	def _set_caretPosition(self,pos):
-		winUser.sendMessage(self.windowHandle,winUser.EM_SETSEL,pos,pos)
-
-	def _get_lineCount(self):
-		lineCount=winUser.sendMessage(self.windowHandle,winUser.EM_GETLINECOUNT,0,0)
-		if lineCount<0:
-			return None
-		return lineCount
-
-	def getLineNumber(self,pos):
-		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEFROMCHAR,pos,0)
-
-	def getPositionFromLineNumber(self,lineNum):
-		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
-
-	def getLineStart(self,pos):
-		lineNum=self.getLineNumber(pos)
-		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
-
-	def getLineLength(self,pos):
-		lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,pos,0)
-		if lineLength<0:
-			return None
-		return lineLength
-
-	def getLine(self,pos):
-		lineNum=self.getLineNumber(pos)
-		lineLength=self.getLineLength(pos)
-		if not lineLength:
-			return None
-		sizeData=struct.pack('h',lineLength)
-		buf=ctypes.create_unicode_buffer(sizeData,size=lineLength+4)
-		res=winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
-		return buf.value
-
-	def nextLine(self,pos):
-		lineNum=self.getLineNumber(pos)
-		if lineNum+1<self.lineCount:
-			return self.getPositionFromLineNumber(lineNum+1)
-
-	def previousLine(self,pos):
-		lineNum=self.getLineNumber(pos)
-		if lineNum-1>=0:
-			return self.getPositionFromLineNumber(lineNum-1)
-
-	def event_caret(self):
-		self.reviewPosition=self.caretPosition
-
-	def event_valueChange(self):
-		pass
-
+		winEdit.NVDAObjectExt_edit.__init__(self,*args,**vars)
 
 class NVDAObject_checkBox(NVDAObject_IAccessible):
 	"""
@@ -579,181 +514,37 @@ class NVDAObject_consoleWindowClass(NVDAObject_IAccessible):
 	def event_nameChange(self):
 		pass
 
-class NVDAObject_consoleWindowClassClient(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_IAccessible):
+class NVDAObject_consoleWindowClassClient(winConsole.NVDAObjectExt_console,NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
-		self.sayAllGenerator=None
+		self.registerScriptKeys({
+			key("ExtendedUp"):self.script_text_moveByLine,
+			key("ExtendedDown"):self.script_text_moveByLine,
+			key("ExtendedLeft"):self.script_text_moveByCharacter,
+			key("ExtendedRight"):self.script_text_moveByCharacter,
+			key("Control+ExtendedLeft"):self.script_text_moveByWord,
+			key("Control+ExtendedRight"):self.script_text_moveByWord,
+			key("ExtendedHome"):self.script_text_moveByCharacter,
+			key("ExtendedEnd"):self.script_text_moveByCharacter,
+			key("control+extendedHome"):self.script_text_moveByLine,
+			key("control+extendedEnd"):self.script_text_moveByLine,
+			key("ExtendedDelete"):self.script_text_delete,
+			key("Back"):self.script_text_backspace,
+		})
 
-	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
-		self.reviewPosition=self.caretPosition
-		newLines=self.visibleLines
-		if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-			self.speakNewText(newLines,self.oldLines)
-		self.oldLines=newLines
-		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
-		if num<2:
-			winKernel.freeConsole()
-
-	def getConsoleVerticalLength(self):
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		return info.consoleSize.y
-
-	def getConsoleHorizontalLength(self):
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		return info.consoleSize.x
-
-	def _get_visibleRange(self):
-		if not hasattr(self,"consoleHandle"):
-			return (0,0) 
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		top=self.getPositionFromCoord(0,info.windowRect.top)
-		bottom=self.getPositionFromCoord(0,info.windowRect.bottom+1)
-		return (top,bottom)
-
-	def _get_caretPosition(self):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		y=info.cursorPosition.y
-		x=info.cursorPosition.x
-		return self.getPositionFromCoord(x,y)
-
-	def _get_endPosition(self):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return self.getConsoleVerticalLength()*self.getConsoleHorizontalLength()
-
-	def getPositionFromCoord(self,x,y):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return (y*self.getConsoleHorizontalLength())+x
-
-	def getLineStart(self,pos):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return pos-(pos%self.getConsoleHorizontalLength())
-
-	def getLineNumber(self,pos):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return pos/self.getConsoleHorizontalLength()
-
-	def getLine(self,pos):
-		if not hasattr(self,"consoleHandle"):
-			return "\0"
-		maxLen=self.getConsoleHorizontalLength()
-		lineNum=self.getLineNumber(pos)
-		line=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,lineNum)
-		if line.isspace():
-			line=None
-		else:
-			line=line.rstrip()
-		return line
-
-	def _get_lineCount(self):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return self.getConsoleVerticalLength()
-
-	def getLineLength(self,pos):
-		if not hasattr(self,"consoleHandle"):
-			return 0
-		return self.getConsoleHorizontalLength()
-
-	def _get_text(self):
-		if not hasattr(self,"consoleHandle"):
-			return "\0"
-		maxLen=self.endPosition
-		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,0,0)
-		return text
-
-	def _get_visibleLines(self):
-		if not hasattr(self,"consoleHandle"):
-			return []
-		visibleRange=self.visibleRange
-		visibleRange=(self.getLineNumber(visibleRange[0]),self.getLineNumber(visibleRange[1]))
-		lines=[]
-		for lineNum in range(visibleRange[0],visibleRange[1]+1):
-			line=self.getLine(self.getPositionFromCoord(0,lineNum))
-			if line:
-				lines.append(line)
-		return lines
-
-	def _get_value(self):
-		return ""
-
-	def event_gainFocus(self):
-		processID=self.windowProcessID[0]
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-			pass
-		winKernel.attachConsole(processID)
-		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
-		if not res:
-			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
-		self.consoleHandle=res
-		self.consoleEventHookHandles=[]
-		self.oldLines=self.visibleLines
-		NVDAObject_IAccessible.event_gainFocus(self)
-		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
-			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
-			if handle:
-				self.consoleEventHookHandles.append(handle)
-			else:
-				raise OSError('Could not register console event %s'%eventID)
-		for line in self.visibleLines:
-			audio.speakText(line)
-
-	def event_looseFocus(self):
-		for handle in self.consoleEventHookHandles:
-			winUser.unhookWinEvent(handle)
-		del self.consoleHandle
-		try:
-			winKernel.freeConsole()
-		except:
-			pass
-
-	def event_nameChange(self):
-		pass
-
-	def event_valueChange(self):
-		pass
-
-	def speakNewText(self,newLines,oldLines):
-		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
-		for lineNum in range(len(diffLines)):
-			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
-				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-					newText=""
-					block=""
-					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
-					for charNum in range(len(diffChars)):
-						if (diffChars[charNum][0]=="+"):
-							block+=diffChars[charNum][2]
-						elif block:
-							audio.speakText(block)
-							block=""
-					if block:
-						audio.speakText(block)
-				else:
-					audio.speakText(diffLines[lineNum][2:])
-
-class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_IAccessible):
+class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		ITextDocument.NVDAObject_ITextDocument.__init__(self,*args)
+		ITextDocument.NVDAObjectExt_ITextDocument.__init__(self,*args,**vars)
 
 	def _get_typeString(self):
 		return "rich "+super(NVDAObject_richEdit,self).typeString
 
 	def _get_value(self):
-		return self.getLine(self.caretPosition)
+		r=self.text_getLineOffsets(self.text_caretOffset)
+		return self.text_getText(r[0],r[1])
 
 	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
@@ -762,9 +553,6 @@ class NVDAObject_richEdit(ITextDocument.NVDAObject_ITextDocument,NVDAObject_IAcc
 			return comtypesClient.wrap(domPointer)
 		else:
 			raise OSError("No ITextDocument interface")
-
-	def _duplicateDocumentRange(self,rangeObj):
-		return rangeObj.Duplicate
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
 	"""
@@ -856,16 +644,12 @@ class NVDAObject_link(NVDAObject_IAccessible):
 		typeString+=super(NVDAObject_link,self).typeString
 		return typeString
 
-class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_IAccessible):
+class NVDAObject_mozillaText(NVDAObject_IAccessible):
 	"""
 	Based on NVDAObject_mozillaContentWindowClass but:
 	*If the object has a name but no value, the name is used as the value and no name is provided.
 	*the role is changed to static text if it has the read only state set.
 	"""
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self,*args)
 
 	def _get_name(self):
 		name=super(NVDAObject_mozillaText,self).name
@@ -890,7 +674,7 @@ class NVDAObject_mozillaText(textBuffer.NVDAObject_editableTextBuffer,NVDAObject
 			return value
 
 
-	def _get_text(self):
+	def text_getText(self,start=None,end=None):
 		return self.value
 
 class NVDAObject_mozillaOutlineItem(NVDAObject_IAccessible):
@@ -970,100 +754,12 @@ class NVDAObject_progressBar(NVDAObject_IAccessible):
 
 	def event_valueChange(self):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
-			baseFreq=440
-			winsound.Beep(int(baseFreq*(1+(float(self.value[:-1])/100.0))),100)
+			val=self.value
+			if val!=globalVars.lastProgressValue:
+				baseFreq=440
+				winsound.Beep(int(baseFreq*(1+(float(val[:-1])/100.0))),100)
+				globalVars.lastProgressValue=val
 		super(NVDAObject_progressBar,self).event_valueChange()
-
-class NVDAObject_internetExplorerEdit(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_IAccessible):
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args)
-
-	def _get_typeString(self):
-		typeString=super(NVDAObject_internetExplorerEdit,self).typeString
-		if self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
-			typeString=IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_PROTECTED)+" "+typeString
-		return typeString
-
-	def _get_text(self):
-		if hasattr(self,"dom"):
-			try:
-				r=self.dom.activeElement.createTextRange()
-				text=r.text
-				if not text:
-					text=""
-				else:
-					text=text.replace('\r\n','\n')
-				return text+"\0"
-			except:
-				return self.value
-		else:
-			return self.value
-
-	def _get_caretRange(self):
-		if hasattr(self,"dom"):
-			try:
-				bookmark=self.dom.selection.createRange().getBookmark()
-				if ord(bookmark[1])==3:
-					return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
-			except:
-				return None
-		return None
-
-	def _get_caretPosition(self):
-		if hasattr(self,"dom"):
-			try:
-				bookmark=self.dom.selection.createRange().getBookmark()
-				return ord(bookmark[2])-self.positionOffset
-			except:
-				return 0
-		else:
-			return 0
-
-	def _get_value(self):
-		val=super(NVDAObject_internetExplorerEdit,self).value
-		if val is None:
-			return ""
-		elif self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
-			return "*"*len(val)
-		else:
-			return val
-
-	def event_gainFocus(self):
-		NVDAObject_IAccessible.event_gainFocus(self)
-		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		self.dom=comtypesClient.wrap(domPointer)
-		#Find out position offset
-		oldBookmark=self.dom.selection.createRange().getBookmark()
-		sendKey(key("control+extendedHome"))
-		sendKey(key("extendedHome"))
-		bookmark=self.dom.selection.createRange().getBookmark()
-		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		self.positionOffset=ord(bookmark[2])
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
-
-	def event_looseFocus(self):
-		if hasattr(self,"dom"):
-			del self.dom
-
-	def script_moveByLine(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		bookmark=self.dom.selection.createRange().getBookmark()
-		sendKey(key("ExtendedEnd"))
-		endRange=self.dom.selection.createRange()
-		sendKey(key("ExtendedHome"))
-		startRange=self.dom.selection.createRange()
-		startRange.setEndPoint("EndToStart",endRange)
-		del endRange
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		audio.speakText(text)
 
 class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 
@@ -1076,141 +772,39 @@ class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 	def _get_description(self):
 		return ""
 
-class NVDAObject_internetExplorerPane(textBuffer.NVDAObject_editableTextBuffer,NVDAObject_IAccessible):
+class NVDAObject_internetExplorerEdit(MSHTML.NVDAObjectExt_MSHTMLEdit,NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args)
-		self.allowedPositiveStates-=(self.allowedPositiveStates&IAccessibleHandler.STATE_SYSTEM_READONLY)
+		NVDAObject_IAccessible.__init__(self,*args,**vars)
+		MSHTML.NVDAObjectExt_MSHTMLEdit.__init__(self,*args,**vars)
 
-	def _get_typeString(self):
-		if hasattr(self,"dom") and self.dom.body.isContentEditable is True:
-			return "HTML "+IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
-		else:
-			return "HTML "+IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_PANE)
-
-	def _get_value(self):
-		return ""
-
-	def _get_text(self):
-		if hasattr(self,"dom"):
-			try:
-				text=self.dom.body.createTextRange().text
-				if text is not None:
-					return text
-				else:
-					return "\0"
-			except:
-				return "\0"
- 
-	def _get_caretRange(self):
-		if hasattr(self,"dom"):
-			try:
-				bookmark=self.dom.selection.createRange().getBookmark()
-				if ord(bookmark[1])==3:
-					return (ord(bookmark[2])-self.positionOffset,ord(bookmark[40])-self.positionOffset)
-				return None
-			except:
-				return None
-
-	def _get_caretPosition(self):
-		if hasattr(self,"dom"):
-			try:
-				bookmark=self.dom.selection.createRange().getBookmark()
-				return ord(bookmark[2])-13
-			except:
-				return 0
-		else:
-			return 0
-
-	def event_gainFocus(self):
-		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
+	def getDocumentObjectModel(self):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
 		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		self.dom=comtypesClient.wrap(domPointer)
-		NVDAObject_IAccessible.event_gainFocus(self)
-		textBuffer.NVDAObject_editableTextBuffer.__init__(self)
-		if (self.dom.body.isContentEditable is True):
-			oldBookmark=self.dom.selection.createRange().getBookmark()
-			sendKey(key("control+extendedHome"))
-			sendKey(key("extendedHome"))
-			bookmark=self.dom.selection.createRange().getBookmark()
-			self.dom.selection.createRange().moveToBookmark(oldBookmark)
-			self.positionOffset=ord(bookmark[2])
-			if (not api.isVirtualBufferPassThrough()):
-				api.toggleVirtualBufferPassThrough()
+		return comtypesClient.wrap(domPointer)
+
+	def _get_typeString(self):
+		if self.isContentEditable:
+			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
 		else:
-			del self.dom
+			return IAccessibleHandler.getRoleName(self.role)
+
+	def _get_value(self):
+		if self.isContentEditable:
+			r=self.text_getLineOffsets(self.text_caretOffset)
+			if r:
+				return self.text_getText(r[0],r[1])
+		return ""
+ 
+	def event_gainFocus(self):
+		MSHTML.NVDAObjectExt_MSHTMLEdit.event_gainFocus(self)
+		self.text_reviewOffset=self.text_caretOffset
+		NVDAObject_IAccessible.event_gainFocus(self)
 
 	def event_looseFocus(self):
-		if hasattr(self,"dom"):
-			del self.dom
-
-	def script_moveByLine(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		bookmark=self.dom.selection.createRange().getBookmark()
-		sendKey(key("ExtendedEnd"))
-		endRange=self.dom.selection.createRange()
-		sendKey(key("ExtendedHome"))
-		startRange=self.dom.selection.createRange()
-		startRange.setEndPoint("EndToStart",endRange)
-		del endRange
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		audio.speakText(text)
-
-	def script_moveByWord(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange()
-		bookmark=startRange.getBookmark()
-		startRange.expand("word")
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		audio.speakText(text)
-
-	def script_moveByCharacter(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange()
-		bookmark=startRange.getBookmark()
-		startRange.expand("character")
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		audio.speakSymbol(text)
-
-	def script_delete(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange()
-		bookmark=startRange.getBookmark()
-		startRange.expand("character")
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		audio.speakSymbol(text)
-
-	def script_backspace(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		startRange=self.dom.selection.createRange()
-		bookmark=startRange.getBookmark()
-		startPos=ord(bookmark[2])
-		startRange.move("character",-1)
-		startRange.expand("character")
-		text=startRange.text
-		startRange.moveToBookmark(bookmark)
-		sendKey(keyPress)
-		if ord(self.dom.selection.createRange().getBookmark()[2])!=startPos:
-			audio.speakSymbol(text)
-		else:
-			audio.speakText("")
-
+		MSHTML.NVDAObjectExt_MSHTMLEdit.event_looseFocus(self)
 
 class NVDAObject_statusBar(NVDAObject_IAccessible):
 
@@ -1261,12 +855,11 @@ _staticMap={
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 (None,IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
 ("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
 (None,IAccessibleHandler.ROLE_SYSTEM_LIST):NVDAObject_list,
 ("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
+("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerEdit,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerPane,
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 }

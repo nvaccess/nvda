@@ -28,6 +28,8 @@
 @type stayAlive: boolean
 @var keyCounter: gets incrimented each time a key is pressed.
 @type keycounter: boolean
+@var lastProgresssValue: Stores the last value from a progress bar
+@type lastProgressValue: int
 """
  
 foregroundObject=None
@@ -42,3 +44,4 @@ keyboardHelp=False
 virtualBufferPassThrough=False
 stayAlive=None
 keyCounter=0
+lastProgressValue=0

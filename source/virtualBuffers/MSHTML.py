@@ -95,7 +95,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			inputType=domNode.getAttribute('type')
 			if inputType in ["checkbox","radio"]:
 				domNode.click()
-				audio.speakMessage("%s"%(IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)))
+				audio.speakMessage("%s"%(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
 				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 					api.toggleVirtualBufferPassThrough()
@@ -332,11 +332,11 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			elif inputType=="radio":
 				info["fieldType"]=fieldType_radioButton
 				info["typeString"]=fieldNames[fieldType_radioButton]
-				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 			elif inputType=="checkbox":
 				info["fieldType"]=fieldType_checkBox
 				info["typeString"]=fieldNames[fieldType_checkBox]
-				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(STATE_SYSTEM_CHECKED)
+				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif nodeName=="SELECT":
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]

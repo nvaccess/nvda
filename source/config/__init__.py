@@ -78,6 +78,7 @@ confspec = StringIO("""# NVDA Configuration File
 	reportFontAttributes = boolean(default=false)
 	reportStyle = boolean(default=false)
 	reportPage = boolean(default=true)
+	reportLineNumber = boolean(default=True)
 	reportTables = boolean(default=true)
 	reportAlignment = boolean(default=false)
 
