@@ -1,5 +1,5 @@
 import gettext
-gettext.install()
+gettext.install("nvda", unicode=True)
 from distutils.core import setup
 import py2exe
 from glob import glob
@@ -31,5 +31,6 @@ setup(
 		("comInterfaces", glob("comInterfaces/*.py*")),
 		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
+		("appModules", glob("appModules/*.kbd")),
 	],
 )

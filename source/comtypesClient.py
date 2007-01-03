@@ -40,7 +40,7 @@ __verbose__ = __debug__
 ################################################################
 # Determine the directory where generated modules live.
 gen_dir = ".\\comInterfaces"
-comInterfaces=__import__('comInterfaces',globals(),locals(),[])
+#comInterfaces=__import__('comInterfaces',globals(),locals(),[])
 
 
 ### for testing

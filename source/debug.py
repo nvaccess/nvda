@@ -20,30 +20,39 @@ def writeMessage(message):
 @param message: the message to write
 @type message: string
 """
-	debugFile.write("message %s\n"%datetime.datetime.now())
-	debugFile.write("%s\n"%message)
-	debugFile.flush()
+	try:
+		debugFile.write("message %s\n"%datetime.datetime.now())
+		debugFile.write("%s\n"%message)
+		debugFile.flush()
+	except:
+		pass
 
 def writeError(message):
 	"""Writes an error message to the debug file.
 @param message: the message to write
 @type message: string
 """
-	winsound.Beep(200,100)
-	debugFile.write("Error %s\n"%datetime.datetime.now())
-	debugFile.write("%s\n"%message)
-	debugFile.flush()
+	try:
+		winsound.Beep(200,100)
+		debugFile.write("Error %s\n"%datetime.datetime.now())
+		debugFile.write("%s\n"%message)
+		debugFile.flush()
+	except:
+		pass
 
 def writeException(message):
 	"""Writes the current traceback, and a message, to the debug file.
 @param message: the message to write
 @type message: string
 """
-	trace=traceback.format_exc()
-	winsound.Beep(200,100)
-	debugFile.write("Exception %s\n"%datetime.datetime.now())
-	debugFile.write("%s: ----\n%s\n----\n"%(message,trace))
-	debugFile.flush()
+	try:
+		trace=traceback.format_exc()
+		winsound.Beep(200,100)
+		debugFile.write("Exception %s\n"%datetime.datetime.now())
+		debugFile.write("%s: ----\n%s\n----\n"%(message,trace))
+		debugFile.flush()
+	except:
+		pass
 
 def start(fileName):
 	"""Starts debugging support.

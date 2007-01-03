@@ -4,9 +4,12 @@ Changes since revision 164:
 *The PC speaker is now used to communicate the percentage of a progress bar as it goes up (example: copying a large amount of data in windows explorer, or loading a large web page in internet explorer).
 *group box names are now reported when an object with the focus is in one. (Example: settings buttons, advanced tab, system properties dialog, control panel). 
 *NVDA can now read formatting changes in documents whilst reading with say all.
+*A review say all, that doesn't use the system caret, but only the NVDA review cursor, can be started with the numpad Plus key. This sayAll is useful in dos consoles and other places that may not have a system caret.
 *If your synthesizer is set to "auto" in nvda.ini (which it now is by default), NVDA will search for the first available synthesizer. Currently it looks for sapi5 and then sapi4.
 *Fixed some crashes in MS Office applications
+*In Microsoft Word, the row and column numbers of the current cell are spoken after the entering table message. Previously they were spoken before.
 *If an object supports it, you can now review it with the numpad by line, word or character when you navigate to it with the insert numpad commands. Previously you could only review the object with focus.
+*All objects now let their name, value and description be reviewed with the numberpad keys if the object doesn't have a specific text buffer. Example: arrowing to a list item in windows explorer and then using the numpad keys lets you review the spelling of the file name.
 *Static text objects are now reviewable. This means it is now possible to review dialog text such as in the NBDA About dialog box. Just Navigate to the static text with the insert numpad commands and use the numpad keys to read it. 
 *When moving focus to a list, the active list item now always gets spoken. (If there is no active list item, then it will say at least how many items are in the list, most of the time this is 0). Previously some lists spoke the active item, some didn't. 
 *You can now move the mouse pointer to the current navigator object position with insert+numpadDivide. Also you can move the current Navigator object to the mouse pointer with insert+numpadMultiply.
