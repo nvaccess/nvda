@@ -11,10 +11,13 @@ import debug
 import audio
 import NVDAObjects
 import globalVars
+import config
 
 #Internal mouse event
 
 def internal_mouseEvent(event):
+	if not config.conf["mouse"]["reportObjectUnderMouse"]:
+		return True
 	try:
 		if event.MessageName=="mouse move":
 			core.executeFunction(core.EXEC_MOUSE,executeMouseMoveEvent,event.Position[0],event.Position[1])

@@ -348,3 +348,9 @@ class appModule(object):
 		statusBarObject.speakObject()
 		api.setNavigatorObject(statusBarObject)
 
+	def script_toggleReportObjectUnderMouse(self,keyPress):
+		config.conf["mouse"]["reportObjectUnderMouse"]=not config.conf["mouse"]["reportObjectUnderMouse"]
+		if config.conf["mouse"]["reportObjectUnderMouse"]:
+			audio.speakMessage(_("speak object under mouse"))
+		else:
+			audio.speakMessage(_("don't speak object under mouse"))
