@@ -1,4 +1,3 @@
-import ctypes
 import datetime
 from keyboardHandler import key
 import api
@@ -302,7 +301,7 @@ class appModule(object):
 
 	def script_quit(self,keyPress):
 		"""Quits NVDA!"""
-		gui.exit()
+		gui.quit()
 
 	def script_showGui(self,keyPress):
 		gui.showGui()

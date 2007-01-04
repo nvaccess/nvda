@@ -133,7 +133,7 @@ executes a script (instance method) if one is assigned to the keyPress given.
 @param keyPress: The key you wish to execute the script for
 @type keyPress: key
 """ 
-		script=self.getScript(self,keyPress)
+		script=self.getScript(keyPress)
 		script(keyPress)
 
 	def registerScriptKey(self,keyPress,func):
@@ -161,7 +161,7 @@ Registers a number of methods with their respective keys so that these methods c
 		return "NVDA object"
 
 	def _get_typeString(self):
-		return lang.roleNames.get(self.role,"role %s"%self.role)
+		return _("role %s")%self.role
 
 	def _get_value(self):
 		return ""
@@ -499,13 +499,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return None
 
 	def text_getFieldOffsets(self,offset):
-		return self.text_getLineOffsets(self,offset)
+		return self.text_getLineOffsets(offset)
 
 	def text_getNextFieldOffsets(self,offset):
-		return self.text_getNextLineOffsets(self,offset)
+		return self.text_getNextLineOffsets(offset)
 
 	def text_getPrevFieldOffsets(self,offset):
-		return self.text_getPrevLineOffsets(self,offset)
+		return self.text_getPrevLineOffsets(offset)
 
 	def text_reportNewFormatting(self,offset):
 		if config.conf["documentFormatting"]["reportPage"]:

@@ -1,8 +1,7 @@
 import time
 import ctypes
-import comtypesClient
-import comtypes.automation
 import debug
+import core
 import winUser
 import IAccessibleHandler
 import audio
@@ -58,8 +57,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return False
-		role=obj.role
-		states=obj.states
 		if not self._allowCaretMovement:
 			return False
 		ID=self.getNVDAObjectID(obj)
@@ -96,8 +93,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		if obj is None:
 			return
 		role=obj.role
-		states=obj.states
-		nodeInfo=self.getNVDAObjectInfo(obj)
 		if role in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -151,7 +146,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			return position
 		#For everything else we keep walking the tree
 		else:
-			for child in obj.children:
+			children=obj.children
+			for child in children:
 				position=self.fillBuffer(child,IDAncestors,position=position)
 			if obj.role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 				position=self.addText(IDAncestors," ",position)
@@ -163,7 +159,6 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def getNVDAObjectText(self,obj):
 		role=obj.role
-		states=obj.states
 		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():

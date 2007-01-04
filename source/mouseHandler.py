@@ -40,7 +40,7 @@ def executeMouseMoveEvent(x,y):
 		globalVars.mouseObject=mouseObject=obj
 	if hasattr(mouseObject,"event_mouseMove"):
 		try:
-			getattr(mouseObject,"event_mouseMove")(x,y,globalVars.mouseOldX,globalVars.mouseOldY)
+			mouseObject.event_mouseMove(x,y,globalVars.mouseOldX,globalVars.mouseOldY)
 		except:
 			debug.writeException("api.notifyMouseMoved")
 	globalVars.mouseOldX=x

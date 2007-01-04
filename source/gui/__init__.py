@@ -1,9 +1,7 @@
 import time
 import threading
 import wx
-import winUser
 import globalVars
-import api
 import debug
 import synthDriverHandler
 import config
@@ -142,7 +140,7 @@ def initialize():
 def showGui():
  	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, mainFrame.id_onShowGuiCommand))
 
-def exit():
+def quit():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
 
 def abort():

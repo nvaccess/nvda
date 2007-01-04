@@ -1,5 +1,3 @@
-import config
-import audio
 from autoPropertyType import autoPropertyType
 from keyboardHandler import key
 

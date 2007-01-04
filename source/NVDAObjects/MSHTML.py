@@ -38,7 +38,7 @@ class NVDAObjectExt_MSHTMLEdit:
 	def getDocumentObjectModel(self):
 		abstract
 
-	def isContentEditable(self):
+	def _get_isContentEditable(self):
 		if hasattr(self,'dom') and self.dom.activeElement.isContentEditable:
 			return True
 		else:

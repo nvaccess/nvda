@@ -90,6 +90,8 @@ This function will not speak if L{allowSpeech} is false.
 		multiList=[stateText,name,typeString,value,description,position,level,contains]
 	else:
 		multiList=[name,typeString,value,stateText,description,position,level,contains]
+	if config.conf["presentation"]["reportKeyboardShortcuts"]:
+		multiList.append(keyboardShortcut)
 	for multi in filter(lambda x: isinstance(x,basestring) and (len(x)>0) and not x.isspace(),multiList):
 		text="%s %s"%(text,multi)
 	if text and not text.isspace():

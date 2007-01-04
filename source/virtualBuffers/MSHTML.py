@@ -1,5 +1,4 @@
 import time
-import thread
 import ctypes
 import comtypesClient
 import comtypes.automation
@@ -46,7 +45,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		lresult=winUser.sendMessage(NVDAObject.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 		self.dom=comtypesClient.wrap(domPointer)
 		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
@@ -86,7 +85,6 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if domNode is None:
 			return
 		nodeName=domNode.nodeName
-		nodeInfo=self.getDomNodeInfo(domNode)
 		if nodeName in ["SELECT","TEXTAREA"]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()

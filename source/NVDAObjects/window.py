@@ -30,14 +30,11 @@ An NVDAObject for a window
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
 
-	def _get_role(self):
-		return ROLE_SYSTEM_WINDOW
-
 	def _get_windowClassName(self):
 		return winUser.getClassName(self.windowHandle)
  
 	def _get_windowControlID(self):
-		return winUser.getControlID()
+		return winUser.getControlID(self.windowHandle)
 
 	def _get_typeString(self):
 		return self.windowClassName

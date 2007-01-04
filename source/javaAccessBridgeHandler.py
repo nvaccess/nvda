@@ -6,12 +6,20 @@ bridgeDll=None
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
 
+class NVDAJavaContext(ctypes.Structure):
+	_fields_=[
+		('hwnd',ctypes.c_int),
+		('VM',ctypes.c_int),
+		('accessibleContext',ctypes.c_int),
+	]
+
+
 class AccessBridgeVersionInfo(ctypes.Structure):
 	_fields_=[
 		('VMVersion',ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
-		(bridgeJavaClassVersion,ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
-		(bridgeJavaDLLVersion,ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
-		(bridgeWinDLLVersion,ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
+		('bridgeJavaClassVersion',ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
+		('bridgeJavaDLLVersion',ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
+		('bridgeWinDLLVersion',ctypes.wintypes.WCHAR*SHORT_STRING_SIZE),
 	]
 
 class AccessibleContextInfo(ctypes.Structure):
@@ -84,6 +92,37 @@ class AccessibleTextAttributesInfo(ctypes.Structure):
 		('spaceBelow',ctypes.c_float),
 		('fullAttributesString',ctypes.wintypes.WCHAR*MAX_STRING_SIZE),
 	]
+
+def releaseJavaObject(vm,javaObject):
+	bridgeDll.releaseJavaObject(vm,javaObject)
+
+def getVersionInfo(vm):
+	info=AccessBridgeVersionInfo()
+	bridgeDll.getVersionInfo(vm,ctypes.byref(info))
+	return info
+
+def isJavaWindow(hwnd):
+	if bridgeDll.isJavaWindow(hwnd):
+		return True
+	else:
+		return False
+
+def isSameObject(vm,a,b):
+	if bridgeDll.isSameObject(vm,a,b):
+		return True
+	else:
+		return False
+
+def getAccessibleContextWithFocus(hwnd):
+	VM=ctypes.c_int()
+	context=ctypes.c_int()
+	bridgeDll.getAccessibleContextWithFocus(hwnd,ctypes.byref(VM),ctypes.byref(context))
+	return NVDAJavaContext(hwnd,VM,context)
+
+def getAccessibleContextInfo(NVDAJavaContextObject):
+	info=AccessibleContextInfo()
+	bridgeDll.getAccessibleContextInfo(NVDAJavaContextObject.VM,NVDAJavaContextObject.accessibleContext,ctypes.byref(info))
+	return info
 
 def initialize():
 	global bridgeDll

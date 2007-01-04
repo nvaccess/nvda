@@ -1,5 +1,7 @@
+import time
 import ctypes
 import difflib
+import debug
 import winKernel
 import winUser
 import audio
@@ -12,6 +14,7 @@ class NVDAObjectExt_console:
 	text_caretSayAllGenerator=None
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
+		time.sleep(0.01)
 		self.text_reviewOffset=self.text_caretOffset
 		newLines=self.consoleVisibleLines
 		if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
@@ -110,7 +113,7 @@ class NVDAObjectExt_console:
 		lines=[]
 		for lineNum in range(top,bottom+1):
 			line=winKernel.readConsoleOutputCharacter(self.consoleHandle,self.getConsoleHorizontalLength(),0,lineNum)
-			if line and not line.isspace():
+			if True or (line and not line.isspace()):
 				lines.append(line)
 		return lines
 
@@ -137,7 +140,7 @@ class NVDAObjectExt_console:
 			else:
 				raise OSError('Could not register console event %s'%eventID)
 		self.text_reviewOffset=self.text_caretOffset
-		for line in self.consoleVisibleLines:
+		for line in filter(lambda x: not x.isspace(),self.consoleVisibleLines):
 			audio.speakText(line)
 
 	def event_looseFocus(self):
@@ -154,16 +157,16 @@ class NVDAObjectExt_console:
 		for lineNum in range(len(diffLines)):
 			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
 				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-					newText=""
 					block=""
 					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
 					for charNum in range(len(diffChars)):
 						if (diffChars[charNum][0]=="+"):
 							block+=diffChars[charNum][2]
 						elif block:
-							audio.speakText(block)
+							if not block.isspace():
+								audio.speakText(block)
 							block=""
-					if block:
+					if block and not block.isspace():
 						audio.speakText(block)
-				else:
+				elif not diffLines[lineNum][2:].isspace():
 					audio.speakText(diffLines[lineNum][2:])

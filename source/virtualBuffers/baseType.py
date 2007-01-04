@@ -4,7 +4,6 @@ from keyboardHandler import key
 import audio
 import globalVars
 import debug
-import core
 import config
 
 fieldType_other=0

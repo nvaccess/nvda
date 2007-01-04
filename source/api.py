@@ -13,7 +13,6 @@ import globalVars
 import audio
 import appModuleHandler
 import gui
-import IAccessibleHandler
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffers
@@ -27,7 +26,7 @@ def quit():
 	"""
 Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
 """
-	gui.exit()
+	gui.quit()
 
 def showGui():
 	"""Instructs the GUI to become visible and move in to focus."""
@@ -171,21 +170,6 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 		except:
 			debug.writeException("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
 			return False
-
-def getAppName(processID):
-	"""Finds out the application name of the given process ID.
-Currently this function will return a "default_app" string in Windows 2000 or on operating systems with out a psapi.dll.
-@param processID: a (processID,threadID) tuple
-@type processID: tuple
-"""
-	try:
-		procHandle=winKernel.openProcess(PROCESS_ALL_ACCESS,False,processID[0])
-		buf=ctypes.create_unicode_buffer(1024)
-		res=ctypes.windll.psapi.GetProcessImageFileNameW(procHandle,buf,1024)
-		winKernel.closeHandle(procHandle)
-		return os.path.splitext(buf.value.split('\\')[-1])[0].lower()
-	except:
-		return "default_app"
 
 def setMenuMode(switch):
 	"""Turns on or off menu mode according to the given parameter. Menu mode is used for some objects to work out whether or not menu items should be spoken at a certain time.

@@ -127,7 +127,6 @@ STATE_SYSTEM_PROTECTED=0x20000000
 STATE_SYSTEM_HASPOPUP=0x40000000
 STATE_SYSTEM_VALID=0x1fffffff
 
-import time
 import ctypes
 import comtypesClient
 import comtypes.automation
@@ -138,7 +137,6 @@ import api
 import core
 import virtualBuffers
 import NVDAObjects
-import globalVars
 import appModuleHandler
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
@@ -146,6 +144,8 @@ objectEventHandles=[]
 
 #Load IAccessible from oleacc.dll
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
+pointer_IAccessible=ctypes.POINTER(IAccessible)
+oleAcc=ctypes.oledll.oleacc
 
 def getRoleName(role):
 	if isinstance(role,int):
@@ -162,10 +162,10 @@ def createStateList(stateBits):
 	return stateList
 
 def getStateNames(states,opposite=False):
-	str=""
+	stateNames=""
 	for state in createStateList(states):
-		str="%s %s"%(str,getStateName(state,opposite=opposite))
-	return str
+		stateNames="%s %s"%(stateNames,getStateName(state,opposite=opposite))
+	return stateNames
 
 def getStateName(state,opposite=False):
 	if isinstance(state,int):
@@ -186,8 +186,8 @@ class screenPointType(ctypes.Structure):
 def accessibleObjectFromWindow(window,objectID):
 	if not winUser.isWindow(window):
 		return None
-	ptr=ctypes.POINTER(IAccessible)()
-	res=ctypes.windll.oleacc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
+	ptr=pointer_IAccessible()
+	res=oleAcc.AccessibleObjectFromWindow(window,objectID,ctypes.byref(IAccessible._iid_),ctypes.byref(ptr))
 	if res==0:
 		return ptr
 	else:
@@ -196,9 +196,9 @@ def accessibleObjectFromWindow(window,objectID):
 def accessibleObjectFromEvent(window,objectID,childID):
 	if not winUser.isWindow(window):
 		return None
-	pacc=ctypes.POINTER(IAccessible)()
+	pacc=pointer_IAccessible()
 	varChild=comtypes.automation.VARIANT()
-	res=ctypes.windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
+	res=oleAcc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
 		if not isinstance(varChild.value,int):
 			child=0
@@ -210,9 +210,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 
 def accessibleObjectFromPoint(x,y):
 	point=screenPointType(x,y)
-	pacc=ctypes.POINTER(IAccessible)()
+	pacc=pointer_IAccessible()
 	varChild=comtypes.automation.VARIANT()
-	res=ctypes.windll.oleacc.AccessibleObjectFromPoint(point,ctypes.byref(pacc),ctypes.byref(varChild))
+	res=oleAcc.AccessibleObjectFromPoint(point,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
 		if not isinstance(varChild.value,int):
 			child=0
@@ -223,7 +223,7 @@ def accessibleObjectFromPoint(x,y):
 def windowFromAccessibleObject(ia):
 	hwnd=ctypes.c_int()
 	try:
-		res=ctypes.windll.oleacc.WindowFromAccessibleObject(ia,ctypes.byref(hwnd))
+		res=oleAcc.WindowFromAccessibleObject(ia,ctypes.byref(hwnd))
 	except:
 		res=0
 	if res==0:
@@ -234,10 +234,10 @@ def windowFromAccessibleObject(ia):
 def accessibleChildren(ia,startIndex,numChildren):
 	children=(comtypes.automation.VARIANT*numChildren)()
 	realCount=ctypes.c_int()
-	ctypes.windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
+	oleAcc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
 	children=map(lambda x: x.value,list(children)[0:realCount.value])
 	for childNum in range(len(children)):
-		if isinstance(children[childNum],ctypes.POINTER(IAccessible)):
+		if isinstance(children[childNum],pointer_IAccessible):
 			children[childNum]=(children[childNum],0)
 		elif isinstance(children[childNum],comtypesClient._Dispatch):
 			children[childNum]=(children[childNum].QueryInterface(IAccessible),0)
@@ -246,19 +246,19 @@ def accessibleChildren(ia,startIndex,numChildren):
 	return children
 
 def getRoleText(role):
-	len=ctypes.windll.oleacc.GetRoleTextW(role,0,0)
-	if len:
-		buf=ctypes.create_unicode_buffer(len+2)
-		ctypes.windll.oleacc.GetRoleTextW(role,buf,len+1)
+	textLen=oleAcc.GetRoleTextW(role,0,0)
+	if textLen:
+		buf=ctypes.create_unicode_buffer(textLen+2)
+		oleAcc.GetRoleTextW(role,buf,textLen+1)
 		return buf.value
 	else:
 		return None
 
 def getStateText(state):
-	len=ctypes.windll.oleacc.GetStateTextW(state,0,0)
-	if len:
-		buf=ctypes.create_unicode_buffer(len+2)
-		ctypes.windll.oleacc.GetStateTextW(state,buf,len+1)
+	textLen=oleAcc.GetStateTextW(state,0,0)
+	if textLen:
+		buf=ctypes.create_unicode_buffer(textLen+2)
+		oleAcc.GetStateTextW(state,buf,textLen+1)
 		return buf.value
 	else:
 		return None
@@ -317,7 +317,7 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,ctypes.POINTER(IAccessible)):
+		if isinstance(res,pointer_IAccessible):
 			new_ia=res
 			new_child=0
 		elif isinstance(res,comtypesClient._Dispatch):
@@ -335,7 +335,7 @@ def accFocus(ia):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,ctypes.POINTER(IAccessible)):
+		if isinstance(res,pointer_IAccessible):
 			new_ia=res
 			new_child=0
 		elif isinstance(res,comtypesClient._Dispatch):
@@ -359,7 +359,7 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,ctypes.POINTER(IAccessible)):
+			if isinstance(res,pointer_IAccessible):
 				new_ia=res
 				new_child=0
 			elif isinstance(res,comtypesClient._Dispatch):
@@ -379,7 +379,7 @@ def accNavigate(ia,child,direction):
 	res=None
 	try:
 		res=ia.accNavigate(direction,child)
-		if isinstance(res,ctypes.POINTER(IAccessible)):
+		if isinstance(res,pointer_IAccessible):
 			new_ia=res
 			new_child=0
 		elif isinstance(res,int):

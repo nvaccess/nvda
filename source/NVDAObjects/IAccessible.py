@@ -1,7 +1,6 @@
 import re
 import winsound
 import time
-import struct
 import difflib
 import ctypes
 import comtypes.automation
@@ -41,7 +40,7 @@ def getNVDAObjectFromPoint(x,y):
 def registerNVDAObjectClass(processID,windowClass,objectRole,cls):
 	_dynamicMap[(processID,windowClass,objectRole)]=cls
 
-def unregisterNVDAObjectClass(windowClass,objectRole):
+def unregisterNVDAObjectClass(processID,windowClass,objectRole):
 	del _dynamicMap[(processID,windowClass,objectRole)]
 
 class NVDAObject_IAccessible(window.NVDAObject_window):
@@ -243,15 +242,17 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		if childCount>0:
 			children=IAccessibleHandler.accessibleChildren(self._pacc,0,childCount)
 			children=map(lambda x: NVDAObject_IAccessible(x[0],x[1]),children)
-			children=map(lambda x: getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x,children)
-			return filter(lambda x: x,children)
+			for childNum in range(len(children)):
+				if children[childNum].role==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+					children[childNum]=getNVDAObjectFromEvent(children[childNum].windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+			return children
 		else:
 			child=self.firstChild
 			children=[]
 			while child:
 				children.append(child)
-				child.next
-			return filter(lambda x: x,children)
+				child=child.next
+			return children
 
 
 	def doDefaultAction(self):
@@ -581,14 +582,14 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 
 	def _get_firstChild(self):
 		try:
-			children=self._pacc.accChildren()
+			children=self.children
 		except:
 			return None
 		for child in children:
 			try:
 				role=child.role
 				if role not in [IAccessibleHandler.ROLE_SYSTEM_TOOLTIP,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
-					return getNVDAObjectByAccessibleObject(child)
+					return child
 			except:
 				pass
 
