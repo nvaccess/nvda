@@ -145,7 +145,7 @@ objectEventHandles=[]
 #Load IAccessible from oleacc.dll
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 pointer_IAccessible=ctypes.POINTER(IAccessible)
-oleAcc=ctypes.oledll.oleacc
+oleAcc=ctypes.windll.oleacc
 
 def getRoleName(role):
 	if isinstance(role,int):
@@ -153,19 +153,8 @@ def getRoleName(role):
 	else:
 		return role
 
-def createStateList(stateBits):
-	stateList=[]
-	for bitPos in range(32):
-		bitVal=1<<bitPos
-		if stateBits&bitVal:
-			stateList+=[bitVal]
-	return stateList
-
 def getStateNames(states,opposite=False):
-	stateNames=""
-	for state in createStateList(states):
-		stateNames="%s %s"%(stateNames,getStateName(state,opposite=opposite))
-	return stateNames
+	return " ".join([getStateName(state,opposite) for state in api.createStateList(states)])
 
 def getStateName(state,opposite=False):
 	if isinstance(state,int):
@@ -173,7 +162,7 @@ def getStateName(state,opposite=False):
 	else:
 		newState=state
 	if opposite:
-		newState=_("not")+" "+newState
+		newState=_("not %s")%newState
 	return newState
 
 #A c ctypes struct to hold the x and y of a point on the screen 
@@ -236,7 +225,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	realCount=ctypes.c_int()
 	oleAcc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
 	children=map(lambda x: x.value,list(children)[0:realCount.value])
-	for childNum in range(len(children)):
+	for childNum in xrange(len(children)):
 		if isinstance(children[childNum],pointer_IAccessible):
 			children[childNum]=(children[childNum],0)
 		elif isinstance(children[childNum],comtypesClient._Dispatch):

@@ -145,10 +145,8 @@ class virtualBuffer(object):
 			return None
 
 	def getIDsFromID(self,ID):
-		for key in self._IDsToRanges:
-			if ID in key:
- 				index=list(key).index(ID)
-				return key[0:index+1]
+		l=filter(lambda x: ID in x,self._IDsToRanges)
+		return l[0:l.index(ID)+1] if len(l)>0 else None
 
 	def addText(self,IDs,text,position=None):
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
@@ -163,11 +161,11 @@ class virtualBuffer(object):
 			(oldStart,oldEnd)=self._IDsToRanges[IDs]
 			if oldEnd==position:
 				position=position-1
-			self.text=self.text[0:position]+text+"\n"+self.text[position+1:]
+			self.text= "".join([self.text[0:position],text,'\n',self.text[position+1:]])
 			extraLength=len(text)+1
 			self._IDsToRanges[IDs]=(oldStart,position+extraLength)
 		else:
-			self.text=self.text[0:position]+text+"\n"+self.text[position:]
+			self.text="".join([self.text[0:position],text,"\n",self.text[position:]])
 			extraLength=len(text)+1
 			self._IDsToRanges[IDs]=(position,position+extraLength)
 		for item in filter(lambda x: (self._IDsToRanges[x][0]>=position) and (x!=IDs),self._IDsToRanges):

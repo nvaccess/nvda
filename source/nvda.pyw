@@ -1,4 +1,5 @@
 import os
+import sys
 os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code

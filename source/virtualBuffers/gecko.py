@@ -120,7 +120,9 @@ class virtualBuffer_gecko(virtualBuffer):
 				api.toggleVirtualBufferPassThrough()
 			audio.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
 		self.resetBuffer()
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: load start") 
 		self.fillBuffer(self.NVDAObject)
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: load end")
 		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
@@ -131,67 +133,26 @@ class virtualBuffer_gecko(virtualBuffer):
 			core.newThread(self.sayAllGenerator())
 
 	def fillBuffer(self,obj,IDAncestors=(),position=None):
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: %s %s %s %s with %s children"%(obj.name,IAccessibleHandler.getRoleName(obj.role),obj.value,obj.description,obj.childCount))
-		info=self.getNVDAObjectInfo(obj)
-		ID=self.getNVDAObjectID(obj)
-		if ID and ID not in IDAncestors:
-			IDAncestors=tuple(list(IDAncestors)+[ID])
-		if ID and not self._IDs.has_key(ID):
-			self.addID(ID,**info)
-		text=self.getNVDAObjectText(obj)
-		if text:
-			position=self.addText(IDAncestors,text,position=position)
-		#We don't want to render objects inside comboboxes
-		if obj.role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			return position
-		#For everything else we keep walking the tree
-		else:
-			children=obj.children
-			for child in children:
-				position=self.fillBuffer(child,IDAncestors,position=position)
-			if obj.role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
-				position=self.addText(IDAncestors," ",position)
-			return position
-
-	def getNVDAObjectID(self,obj):
-		if obj.role!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
-			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
-
-	def getNVDAObjectText(self,obj):
 		role=obj.role
+		states=obj.states
+		text=""
+		#Get the info and text depending on the node type
+		info=fieldInfo.copy()
+		info["node"]=obj
 		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():
-				return "%s "%data
-		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
-			return "%s\n "%obj.name
-		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
-			return obj.name+" " 
-		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			return obj.value+" "
-		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
-			return obj.name+" "
-		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
-			return obj.name+" "
-		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT:
-			return obj.value+"\0"
-		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
-			return obj.name+" "
+				text="%s "%data
 		elif role=="white space":
-			return obj.name.replace('\r\n','\n')
-
-	def getNVDAObjectInfo(self,obj):
-		info=fieldInfo.copy()
-		info["node"]=obj
-		role=obj.role
-		states=obj.states
-		if role=="frame":
+			text=obj.name.replace('\r\n','\n')
+		elif role=="frame":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
 		if role=="iframe":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
+			text="%s\n "%obj.name
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK:
@@ -246,6 +207,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")
 		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
+			text="%s "%obj.name
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
@@ -258,23 +220,28 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["fieldType"]=fieldType_blockQuote
 			info["typeString"]=fieldNames[fieldType_blockQuote]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
+			text="%s "%obj.name
 			info["fieldType"]=fieldType_button
 			info["typeString"]=fieldNames[fieldType_button]
 		elif role=="form":
 			info["fieldType"]=fieldType_form
 			info["typeString"]=fieldNames[fieldType_form]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
+			text="%s "%obj.name
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
+			text="%s "%obj.name
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT:
+			text="%s "%obj.value
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
+			text="%s "%obj.value
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]
 		else:
@@ -282,5 +249,25 @@ class virtualBuffer_gecko(virtualBuffer):
 		accessKey=obj.keyboardShortcut
 		if accessKey:
 			info["accessKey"]=accessKey
-		return info
- 
+		ID=self.getNVDAObjectID(obj)
+		if ID and ID not in IDAncestors:
+			IDAncestors=tuple(list(IDAncestors)+[ID])
+		if ID and not self._IDs.has_key(ID):
+			self.addID(ID,**info)
+		if text:
+			position=self.addText(IDAncestors,text,position=position)
+		#We don't want to render objects inside comboboxes
+		if role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
+			return position
+		#For everything else we keep walking the tree
+		func=self.fillBuffer
+		for child in obj.children:
+			position=func(child,IDAncestors,position=position)
+		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
+			position=self.addText(IDAncestors," ",position)
+		return position
+
+	def getNVDAObjectID(self,obj):
+		if obj.role!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
+			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
+

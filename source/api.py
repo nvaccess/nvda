@@ -185,21 +185,6 @@ def getMenuMode():
 """
 	return globalVars.menuMode
 
-def createStateList(stateBits):
-	"""Creates a list of state integers, given one integer that contains state values bitwised together.
-This is useful if you have some states you wish to use in something like a for loop. 
-@param stateBits: a bitwised integer of state values
-@type stateBits: int
-@returns: the list of separate states
-@rtype: list
-"""
-	stateList=[]
-	for bitPos in range(32):
-		bitVal=1<<bitPos
-		if stateBits&bitVal:
-			stateList+=[bitVal]
-	return stateList
-
 def toggleVirtualBufferPassThrough():
 	"""Toggles virtualBufferPassThroughMode on or off. This mode is so that virtualBuffers can either capture, or ignore, key presses.
 This function also speaks the state of the mode as it changes.
@@ -217,3 +202,7 @@ def isVirtualBufferPassThrough():
 @rtype: boolean
  """
 	return globalVars.virtualBufferPassThrough
+
+def createStateList(states):
+	return filter(lambda x: x&states,[1<<bitVal for bitVal in xrange(32)])
+ 

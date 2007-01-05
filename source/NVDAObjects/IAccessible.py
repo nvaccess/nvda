@@ -240,12 +240,8 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_children(self):
 		childCount=self.childCount
 		if childCount>0:
-			children=IAccessibleHandler.accessibleChildren(self._pacc,0,childCount)
-			children=map(lambda x: NVDAObject_IAccessible(x[0],x[1]),children)
-			for childNum in range(len(children)):
-				if children[childNum].role==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-					children[childNum]=getNVDAObjectFromEvent(children[childNum].windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-			return children
+			children=map(lambda x: NVDAObject_IAccessible(x[0],x[1]),IAccessibleHandler.accessibleChildren(self._pacc,0,childCount))
+			return map(lambda x: getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x,children)
 		else:
 			child=self.firstChild
 			children=[]

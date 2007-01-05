@@ -208,10 +208,7 @@ Returns a string of names for a given bitwise group of states. Takes in to accou
 @param opposite: True if the states are negative, or false if the states are positive, default is False
 @type opposite: boolean
 """
-		stateNames=""
-		for state in api.createStateList(states):
-			stateNames+=" %s"%self.getStateName(state,opposite=opposite)
-		return stateNames
+		return " ".join([_("state%s")%state for state in api.createStateList(states)])
 
 	def _get_level(self):
 		return ""
@@ -792,7 +789,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 					break
 		#If we did see a keyPress, then we still have to give the speech index a chance to catch up to our current location
 		if lastKeyCount!=globalVars.keyCounter:
-			for num in range(2):
+			for num in xrange(2):
 				yield None
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
@@ -847,7 +844,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 					break
 		#If we did see a keyPress, then we still have to give the speech index a chance to catch up to our current location
 		if lastKeyCount!=globalVars.keyCounter:
-			for num in range(2):
+			for num in xrange(2):
 				yield None
 				index=audio.getLastIndex()
 				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
@@ -906,20 +903,20 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def script_text_changeSelection(self,keyPress):
 		"""Moves and reads the current selection"""
 		oldSelections=[]
-		for selNum in range(self.text_selectionCount):
+		for selNum in xrange(self.text_selectionCount):
 			oldSelections.append(self.text_getSelectionOffsets(selNum))
 		sendKey(keyPress)
 		newSelections=[]
-		for selNum in range(self.text_selectionCount):
+		for selNum in xrange(self.text_selectionCount):
 			newSelections.append(self.text_getSelectionOffsets(selNum))
 		if len(oldSelections)>0 and len(newSelections)==0:
 			self.text_speakCharacter(self.text_caretOffset)
 			audio.speakMessage(_("no selections"))
 		elif len(newSelections)>0 and len(oldSelections)==0:
-			for selNum in range(len(newSelections)):
+			for selNum in xrange(len(newSelections)):
 					audio.speakMessage(_("selected %s")%self.text_getText(newSelections[selNum][0],newSelections[selNum][1]))
 		elif len(newSelections)>0 and len(oldSelections)>0:
-			for selNum in range(max(len(newSelections),len(oldSelections))):
+			for selNum in xrange(max(len(newSelections),len(oldSelections))):
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][1]>oldSelections[selNum][1]:
    					audio.speakMessage(_("selected %s")%self.text_getText(oldSelections[selNum][1],newSelections[selNum][1]))
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][0]>oldSelections[selNum][0]:
