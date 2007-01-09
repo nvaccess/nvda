@@ -132,6 +132,8 @@ class virtualBuffer(object):
 
 	def getFullRangeFromID(self,ID):
 		IDs=self._IDs
+		if not IDs.has_key(ID):
+			return None
 		children=IDs[ID]['children']
 		#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, children %s"%(ID,children))
 		if len(children)==0:

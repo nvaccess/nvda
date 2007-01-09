@@ -89,9 +89,7 @@ class appModule(object):
 	def script_moveMouseToNavigatorObject(self,keyPress):
 		"""Moves the mouse pointer to the current navigator object"""
 		audio.speakMessage("Move mouse to navigator")
-		location=api.getNavigatorObject().location
-		if location and (len(location)==4):
-			winUser.setCursorPos(location[0],location[1])
+		api.moveMouseToNVDAObject(api.getNavigatorObject())
 
 	def script_moveNavigatorObjectToMouse(self,keyPress):
 		audio.speakMessage("Move navigator object to mouse")

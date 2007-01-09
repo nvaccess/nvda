@@ -43,8 +43,6 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.NVDAObject=obj
 				self.loadDocument()
 			return True
-		if not self._allowCaretMovement:
-			return False
 		ID=self.getNVDAObjectID(obj)
 		r=self.getFullRangeFromID(ID)
 		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
@@ -62,8 +60,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		audio.speakMessage("scroll")
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
-			return False
-		if not self._allowCaretMovement:
 			return False
 		ID=self.getNVDAObjectID(obj)
 		audio.speakMessage("ID: %s, obj: %s"%(ID,getMozillaRole(obj.role)))
@@ -104,6 +100,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
 		#audio.speakMessage(str(r))
 		self.removeID(ID)
+		time.sleep(0.001)
 		if obj.role>0:
 			self.fillBuffer(obj,parentID,position=r[0])
 
@@ -143,14 +140,12 @@ class virtualBuffer_gecko(virtualBuffer):
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load start") 
 		self.fillBuffer(self.NVDAObject)
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load end")
-		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
-			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
-			time.sleep(0.01)
 			audio.speakMessage(_("done"))
-			core.newThread(self.sayAllGenerator())
+			time.sleep(0.001)
+			self.speakLine(0)
 
 	def fillBuffer(self,obj,parentID=None,position=None):
 		role=getMozillaRole(obj.role)

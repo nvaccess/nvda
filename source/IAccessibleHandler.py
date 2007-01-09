@@ -142,6 +142,7 @@ import core
 import virtualBuffers
 import NVDAObjects
 import appModuleHandler
+import config
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -150,6 +151,8 @@ objectEventHandles=[]
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 pointer_IAccessible=ctypes.POINTER(IAccessible)
 oleAcc=ctypes.windll.oleacc
+
+lastMouseShape=""
 
 def getRoleName(role):
 	if isinstance(role,int):
@@ -429,6 +432,9 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#let swichStart and switchEnd through
 		if eventID in [winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND]:
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+		#Let mouse name changes (shape changes) through
+		if (eventID==winUser.EVENT_OBJECT_NAMECHANGE) and (objectID==OBJID_CURSOR):
+			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"mouseShapeChange",window,objectID,childID)
 		#Let tooltips through
 		elif (eventID==winUser.EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
@@ -483,8 +489,12 @@ def executeEvent(name,window,objectID,childID):
 				return
 		except:
 			debug.writeException("virtualBuffer event")
-	#If this is a hide event and it it is specifically for a window and there is a virtualBuffer for this window, remove the virtualBuffer 
-	#and then continue 
+	if name=="mouseShapeChange" and config.conf["mouse"]["reportMouseShapeChanges"]:
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
+		if obj and obj.name!=lastMouseShape:
+			obj.speakObject()
+			globals()["lastMouseShape"]=obj.name
+		return
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,

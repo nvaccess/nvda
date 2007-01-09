@@ -38,7 +38,7 @@ confspec = StringIO("""# NVDA Configuration File
 [presentation]
 		reportClassOfClientObjects = boolean(default=false)
 		reportKeyboardShortcuts = boolean(default=true)
-		reportTooltips = boolean(default=true)
+		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectGroupNames = boolean(default=True)
 		sayStateFirst = boolean(default=False)
@@ -46,6 +46,7 @@ confspec = StringIO("""# NVDA Configuration File
 
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)
+	reportMouseShapeChanges = boolean(default=true)
 
 #Keyboard settings
 [keyboard]

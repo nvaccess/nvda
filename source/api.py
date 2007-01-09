@@ -16,6 +16,8 @@ import gui
 from keyboardHandler import key 
 import NVDAObjects
 import virtualBuffers
+import config
+import winUser
 
 # Initialise WMI; required for getProcessName.
 #_wmi = win32com.client.GetObject('winmgmts:')
@@ -90,6 +92,8 @@ def setNavigatorObject(obj):
 	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
+	if config.conf["mouse"]["mouseFollowsNavigator"]:
+		moveMouseToNVDAObject(obj)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -205,4 +209,12 @@ def isVirtualBufferPassThrough():
 
 def createStateList(states):
 	return filter(lambda x: x&states,[1<<bitVal for bitVal in xrange(32)])
+
+def moveMouseToNVDAObject(obj):
+	location=obj.location
+	if location and (len(location)==4):
+		(left,top,width,height)=location
+		x=(left+left+width)/2
+		y=(top+top+height)/2
+		winUser.setCursorPos(x,y)
  
