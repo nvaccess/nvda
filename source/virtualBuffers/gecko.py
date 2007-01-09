@@ -12,6 +12,13 @@ from baseType import *
 
 NAVRELATION_EMBEDS=0x1009 
 
+def getMozillaRole(role):
+	if isinstance(role,basestring):
+		split=role.split(', ')
+		return split[0]
+	else:
+		return role
+
 class virtualBuffer_gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
@@ -27,7 +34,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return False
-		role=obj.role
+		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
@@ -36,20 +43,19 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.NVDAObject=obj
 				self.loadDocument()
 			return True
-		if (role not in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]) and api.isVirtualBufferPassThrough():
-  			api.toggleVirtualBufferPassThrough()
 		if not self._allowCaretMovement:
 			return False
 		ID=self.getNVDAObjectID(obj)
-		r=self.getRangeFromID(ID)
-		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
+		r=self.getFullRangeFromID(ID)
+		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
-			if config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
-				self.reportCaretIDMessages()
-				audio.speakText(self.getTextRange(r[0],r[1]))
-				api.setFocusObject(obj)
-				api.setNavigatorObject(obj)
-				return True
+		if not api.isVirtualBufferPassThrough() and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
+			self.reportCaretIDMessages()
+			audio.speakText(self.getTextRange(r[0],r[1]))
+			api.setFocusObject(obj)
+			api.setNavigatorObject(obj)
+			return True
 		return False
 
 	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID):
@@ -60,16 +66,16 @@ class virtualBuffer_gecko(virtualBuffer):
 		if not self._allowCaretMovement:
 			return False
 		ID=self.getNVDAObjectID(obj)
-		audio.speakMessage("ID: %s, obj: %s"%(ID,obj.role))
-		r=self.getRangeFromID(ID)
-		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
+		audio.speakMessage("ID: %s, obj: %s"%(ID,getMozillaRole(obj.role)))
+		r=self._IDs[ID]
+		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
 			self.reportCaretIDMessages()
 			audio.speakText(self.getTextRange(r[0],r[1]))
 
 	def event_IAccessible_stateChange(self,hwnd,objectID,childID):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		role=obj.role
+		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
@@ -81,18 +87,32 @@ class virtualBuffer_gecko(virtualBuffer):
 				return True
 		return False
 
-	def event_IAccessible_valueChange(self,hwnd,objectID,childID):
-		audio.speakMessage('value')
-		return False
+	def event_IAccessible_reorder(self,hwnd,objectID,childID):
+		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
+			return 
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
+		if not obj:
+			return
+		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
+		#obj.speakObject()
+		ID=self.getNVDAObjectID(obj)
+		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
+		if ID not in self._IDs:
+			return
+		parentID=self._IDs[ID]['parent']
+		r=self._IDs[ID]['range']
+		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
+		#audio.speakMessage(str(r))
+		self.removeID(ID)
+		if obj.role>0:
+			self.fillBuffer(obj,parentID,position=r[0])
 
 	def activatePosition(self,pos):
-		IDs=self.getIDsFromPosition(pos)
-		if (IDs is None) or (len(IDs)<1):
-			return
-		obj=self._IDs[IDs[-1]]["node"]
+		ID=self.getIDFromPosition(pos)
+		obj=self._IDs[ID]["node"]
 		if obj is None:
 			return
-		role=obj.role
+		role=getMozillaRole(obj.role)
 		if role in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -120,9 +140,9 @@ class virtualBuffer_gecko(virtualBuffer):
 				api.toggleVirtualBufferPassThrough()
 			audio.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
 		self.resetBuffer()
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: load start") 
+		debug.writeMessage("virtualBuffers.gecko.loadDocument: load start") 
 		self.fillBuffer(self.NVDAObject)
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: load end")
+		debug.writeMessage("virtualBuffers.gecko.loadDocument: load end")
 		self.caretPosition=0
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
@@ -132,13 +152,28 @@ class virtualBuffer_gecko(virtualBuffer):
 			audio.speakMessage(_("done"))
 			core.newThread(self.sayAllGenerator())
 
-	def fillBuffer(self,obj,IDAncestors=(),position=None):
-		role=obj.role
+	def fillBuffer(self,obj,parentID=None,position=None):
+		role=getMozillaRole(obj.role)
 		states=obj.states
 		text=""
+		if position is None:
+			position=len(self.text)
+		ID=self.getNVDAObjectID(obj)
+		debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
+		if ID is None:
+			ID=parentID
+		if role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
+			children=obj.children
+		else:
+			children=[]
 		#Get the info and text depending on the node type
 		info=fieldInfo.copy()
 		info["node"]=obj
+		info['range']=[position,position]
+		info['parent']=parentID
+		info['children']=filter(lambda x: x is not None,[self.getNVDAObjectID(x) for x in children])
+		info['labeledBy']=self.getNVDAObjectID(obj.labeledBy)
+		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: obj %s %s %s %s, ID %s, range %s, children %s"%(obj.name,obj.typeString,obj.value,obj.description,ID,info['range'],info['children']))
 		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():
@@ -179,7 +214,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="tbody":
 			info["fieldType"]=fieldType_tableBody
 			info["typeString"]=fieldNames[fieldType_tableBody]
-		elif role==IAccessibleHandler.ROLE_SYSTEM_LIST:
+		elif role in [IAccessibleHandler.ROLE_SYSTEM_LIST,"ul"]:
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
@@ -249,25 +284,21 @@ class virtualBuffer_gecko(virtualBuffer):
 		accessKey=obj.keyboardShortcut
 		if accessKey:
 			info["accessKey"]=accessKey
-		ID=self.getNVDAObjectID(obj)
-		if ID and ID not in IDAncestors:
-			IDAncestors=tuple(list(IDAncestors)+[ID])
-		if ID and not self._IDs.has_key(ID):
-			self.addID(ID,**info)
+		if ID not in self._IDs:
+			self.addID(ID,info)
 		if text:
-			position=self.addText(IDAncestors,text,position=position)
+			position=self.addText(ID,text,position)
 		#We don't want to render objects inside comboboxes
-		if role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			return position
-		#For everything else we keep walking the tree
 		func=self.fillBuffer
-		for child in obj.children:
-			position=func(child,IDAncestors,position=position)
-		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
-			position=self.addText(IDAncestors," ",position)
+		for child in children:
+			position=func(child,ID,position)
+		#if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
+		#	position=self.addText(ID," ",position)
 		return position
 
 	def getNVDAObjectID(self,obj):
-		if obj.role!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
+		if not obj:
+			return None
+		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
 

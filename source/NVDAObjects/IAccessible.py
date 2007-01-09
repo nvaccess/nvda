@@ -170,6 +170,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		location=IAccessibleHandler.accLocation(self._pacc,self._accChild)
 		return location
 
+	def _get_labeledBy(self):
+		try:
+			(pacc,accChild)=IAccessibleHandler.accNavigate(self._pacc,self._accChild,IAccessibleHandler.NAVRELATION_LABELLED_BY)
+			obj=NVDAObject_IAccessible(pacc,accChild)
+			return obj
+		except:
+			return None
+
 	def _get_parent(self):
 		res=IAccessibleHandler.accParent(self._pacc,self._accChild)
 		if res:
@@ -199,10 +207,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			nextObject=NVDAObject_IAccessible(res[0],res[1])
 			if nextObject and (nextObject.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
-			if nextObject!=self:
-				return nextObject
-			else:
-				return None
+			return nextObject
 
 	def _get_previous(self):
 		res=IAccessibleHandler.accParent(self._pacc,self._accChild)
@@ -221,10 +226,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			previousObject=NVDAObject_IAccessible(res[0],res[1])
 			if previousObject and (previousObject.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				previousObject=getNVDAObjectFromEvent(previousObject.windowHandle,-4,0)
-			if previousObject!=self:
-				return previousObject
-			else:
-				return None
+			return previousObject
 
 	def _get_firstChild(self):
 		res=IAccessibleHandler.accNavigate(self._pacc,self._accChild,IAccessibleHandler.NAVDIR_FIRSTCHILD)
@@ -607,12 +609,13 @@ class NVDAObject_mozillaDocument(NVDAObject_IAccessible):
  
 class NVDAObject_mozillaListItem(NVDAObject_IAccessible):
 
-	def _get_name(self):
+	def old_get_name(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild
 		if child and (child.role in [IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,"bullet"]):
  			return child.name
 		else:
-			return ""
+			return super(NVDAObject_mozillaListItem,self).name
+
 
 	def _get_firstChild(self):
 		child=super(NVDAObject_mozillaListItem,self).firstChild

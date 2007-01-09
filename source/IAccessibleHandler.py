@@ -127,6 +127,10 @@ STATE_SYSTEM_PROTECTED=0x20000000
 STATE_SYSTEM_HASPOPUP=0x40000000
 STATE_SYSTEM_VALID=0x1fffffff
 
+#Special Mozilla gecko MSAA constant additions
+NAVRELATION_LABELLED_BY=0x1002
+NAVRELATION_LABELLED_BY=0x1003
+
 import ctypes
 import comtypesClient
 import comtypes.automation

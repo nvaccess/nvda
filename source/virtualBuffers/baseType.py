@@ -61,6 +61,10 @@ fieldNames={
 fieldInfo={
 	"fieldType":fieldType_other,
 	"node":None,
+	"range":[0,0],
+	"parent":None,
+	"children":[],
+	"labeledBy":None,
 	"typeString":"",
 	"stateTextFunc":None,
 	"descriptionFunc":None,
@@ -121,78 +125,91 @@ class virtualBuffer(object):
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
 
-	def getIDsFromPosition(self,pos):
-		shortList=filter(lambda x: pos>=self._IDsToRanges[x][0] and pos<self._IDsToRanges[x][1],self._IDsToRanges)
-		if shortList:
-			return min(shortList,key=lambda x: self._IDsToRanges[x][1]-self._IDsToRanges[x][0])
+	def getIDFromPosition(self,pos):
+		IDs=self._IDs
+		shortList=filter(lambda x: pos>=IDs[x]['range'][0] and pos<IDs[x]['range'][1],IDs)
+		return min(shortList,key=lambda x: IDs[x]['range'][1]-IDs[x]['range'][0]) if shortList else None
+
+	def getFullRangeFromID(self,ID):
+		IDs=self._IDs
+		children=IDs[ID]['children']
+		#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, children %s"%(ID,children))
+		if len(children)==0:
+			#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, range %s"%(ID,IDs[ID]['range']))
+			return IDs[ID]['range']
 		else:
-			return ()
+			return [IDs[ID]['range'][0],max([self.getFullRangeFromID(x)[1] for x in children]+[IDs[ID]['range'][1]])]
 
+	def getIDAncestors(self,ID):
+		IDs=self._IDs
+		if not IDs.has_key(ID):
+			return []
+		curID=ID
+		ancestors=[]
+		ancestors_append=ancestors.append
+		while IDs[curID]['parent']:
+			curID=IDs[curID]['parent']
+			ancestors_append(curID)
+		ancestors.reverse()
+		return ancestors
 
-
-	def getRangeFromID(self,ID):
-		startPos=None
-		endPos=None
-		for key in filter(lambda x: ID in x,self._IDsToRanges):
-			r=self._IDsToRanges[key]
-			if (startPos is None) or (r[0]<startPos):
-				startPos=r[0]
-			if (endPos is None) or (r[1]>endPos):
-				endPos=r[1]
-		if (startPos is not None) and (endPos is not None):
-			return (startPos,endPos)
-		else:
-			return None
-
-	def getIDsFromID(self,ID):
-		l=filter(lambda x: ID in x,self._IDsToRanges)
-		return l[0:l.index(ID)+1] if len(l)>0 else None
-
-	def addText(self,IDs,text,position=None):
+	def addText(self,ID,text,position=None):
+		text=text.replace('\r\n','\n')
+		text=text.replace('\r','\n')
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		if len(text)>maxLineLength:
 			wrapper = TextWrapper(width=config.conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
-			text=wrapper.fill(text)
+		 	text=wrapper.fill(text)
 		#If no position given, assume end of buffer
 		if position is None:
 			position=len(self.text)
+		IDs=self._IDs
 		#If this ID path already has a range, expand it to fit the new text
-		if self._IDsToRanges.has_key(IDs) and self._IDsToRanges[IDs][1]<=position:
-			(oldStart,oldEnd)=self._IDsToRanges[IDs]
-			if oldEnd==position:
-				position=position-1
-			self.text= "".join([self.text[0:position],text,'\n',self.text[position+1:]])
-			extraLength=len(text)+1
-			self._IDsToRanges[IDs]=(oldStart,position+extraLength)
-		else:
-			self.text="".join([self.text[0:position],text,"\n",self.text[position:]])
-			extraLength=len(text)+1
-			self._IDsToRanges[IDs]=(position,position+extraLength)
-		for item in filter(lambda x: (self._IDsToRanges[x][0]>=position) and (x!=IDs),self._IDsToRanges):
-			(start,end)=self._IDsToRanges[item]
-			self._IDsToRanges[item]=(start+extraLength,end+extraLength)
-		return position+len(text)+1
+		#if (IDs[ID]['range'][1]==position) and (IDs[ID]['range'][1]>IDs[ID]['range'][0]):
+		#	position=position-1
+		self.text= "".join([self.text[0:position],text,'\n',self.text[position:]])
+		extraLength=len(text)+1
+		IDs[ID]['range'][1]=position+extraLength
+		for item in filter(lambda x: (IDs[x]['range'][0]>=position) and (x not in (self.getIDAncestors(ID)+[ID])),IDs):
+			(start,end)=IDs[item]['range']
+			IDs[item]['range']=[start+extraLength,end+extraLength]
+		for item in filter(lambda x: IDs[x]['range'][1]>position,self.getIDAncestors(ID)):
+			(start,end)=IDs[item]['range']
+			IDs[item]['range']=[start,end+extraLength]
+		return position+extraLength
+
+	def destroyIDDescendants(self,ID):
+		if ID is None:
+			return
+		for item in self._IDs[ID]['children']:
+			self.destroyIDDescendants(item)
+		parent=self._IDs[ID]['parent']
+		if parent is not None:
+			self._IDs[parent]['children']=filter(lambda x: x!=ID,self._IDs[parent]['children'])
+		del self._IDs[ID]
  
 	def removeID(self,ID):
-		r=self.getRangeFromID(ID)
-		if r:
-			(start,end)=r
-			self.text=self.text[0:start]+self.text[end:]
-		for IDs in filter(lambda x: ID in x,self._IDsToRanges):
-			del self._IDsToRanges[IDs]
-		del self._IDs[ID]
-		for IDs in filter(lambda x: self._IDsToRanges[x][0]>=start,self._IDsToRanges):
-			r=self._IDsToRanges[IDs]
-			self._IDsToRanges[IDs]=(r[0]-(end-start),r[1]-(end-start))
+		IDs=self._IDs
+		if not IDs.has_key(ID):
+			return
+		(start,end)=self.getFullRangeFromID(ID)
+		self.destroyIDDescendants(ID)
+		if end>start:
+			self.text="".join([self.text[0:start],self.text[end:]])
+			for item in filter(lambda x: IDs[x]['range'][0]>=end,IDs):
+				r=IDs[item]['range']
+				IDs[item]['range']=[r[0]-(end-start),r[1]-(end-start)]
+			for item in filter(lambda x: IDs[x]['range'][1]>=end,self.getIDAncestors(ID)):
+				r=IDs[item]['range']
+				IDs[item]['range']=[r[0],r[1]-(end-start)]
 
 	def resetBuffer(self):
 		self.text=""
-		self._IDsToRanges={}
 		self._IDs={}
 		self.caretPosition=0
 		self._lastCaretIDs=[]
 
-	def addID(self,ID,**info):
+	def addID(self,ID,info):
 		self._IDs[ID]=info
 
 	def getIDEnterMessage(self,ID):
@@ -225,18 +242,36 @@ class virtualBuffer(object):
 			return ""
 
 	def nextField(self,pos,*fieldTypes):
-		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[0]>pos,map(lambda x: self.getRangeFromID(x),filter(lambda x: self._IDs[x]["fieldType"] in fieldTypes,self._IDs))))
+		if len(fieldTypes)==0:
+			fieldTypes=fieldNames.keys()
+		IDs=self._IDs
+		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[0]>pos,map(lambda x: IDs[x]['range'],filter(lambda x: IDs[x]["fieldType"] in fieldTypes,IDs))))
 		if len(posList)>0:
 			return min(posList)
 		else:
 			return None
 
 	def previousField(self,pos,*fieldTypes):
-		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[1]<=pos,map(lambda x: self.getRangeFromID(x),filter(lambda x: self._IDs[x]["fieldType"] in fieldTypes,self._IDs))))
+		if len(fieldTypes)==0:
+			fieldTypes=fieldNames.keys()
+		IDs=self._IDs
+		posList=map(lambda x: x[0],filter(lambda x: (x is not None) and x[0]<pos,map(lambda x: IDs[x]['range'],filter(lambda x: IDs[x]["fieldType"] in fieldTypes,IDs))))
 		if len(posList)>0:
 			return max(posList)
 		else:
 			return None
+
+	def reportLabel(self,ID):
+		if not self._IDs.has_key(ID):
+			return
+		labelID=self._IDs[ID]['labeledBy']
+		if labelID is not None:
+			r=self.getFullRangeFromID(labelID)
+			oldCaret=self.caretPosition
+			self.caretPosition=r[0]
+			self.reportCaretIDMessages()
+			audio.speakText(self.getTextRange(r[0],r[1]))
+			self.caretPosition=oldCaret
 
 	def reportIDMessages(self,newIDs,oldIDs):
 		msg=""
@@ -251,7 +286,9 @@ class virtualBuffer(object):
 			audio.speakMessage(msg)
 
 	def reportCaretIDMessages(self):
-		caretIDs=self.getIDsFromPosition(self.caretPosition)
+		ID=self.getIDFromPosition(self.caretPosition)
+		caretIDs=self.getIDAncestors(ID)
+		caretIDs.append(ID)
 		self.reportIDMessages(caretIDs,self._lastCaretIDs)
 		self._lastCaretIDs=caretIDs
 
@@ -403,13 +440,15 @@ class virtualBuffer(object):
 		self._allowCaretMovement=False
 		count=0 #Used to see when we need to start yielding
 		startPos=endPos=curPos=self.caretPosition
-		lastIDs=()
+		lastIDs=[]
 		index=lastIndex=None
 		lastKeyCount=globalVars.keyCounter
 		#A loop that runs while no key is pressed and while we are not at the end of the text
 		while (curPos is not None) and (curPos<self.endPosition):
 			#Report any ID messages
-			curIDs=self.getIDsFromPosition(curPos)
+			curID=self.getIDFromPosition(curPos)
+			curIDs=self.getIDAncestors(curID)
+			curIDs.append(curID)
 			self.reportIDMessages(curIDs,lastIDs)
 			lastIDs=curIDs
 			#Speak the current line (if its not blank) with an speech index of its position
@@ -455,12 +494,14 @@ class virtualBuffer(object):
 
 	def script_top(self,keyPress):
 		self.caretPosition=0
+		self.reportLabel(self.getIDFromPosition(self.caretPosition))
 		self.reportCaretIDMessages()
 		audio.speakMessage(_("top"))
 		self.speakLine(self.caretPosition)
 
 	def script_bottom(self,keyPress):
 		self.caretPosition=len(self.text)-1
+		self.reportLabel(self.getIDFromPosition(self.caretPosition))
 		self.reportCaretIDMessages()
 		audio.speakMessage(_("bottom"))
 		self.speakLine(self.caretPosition)
@@ -557,8 +598,9 @@ class virtualBuffer(object):
 		self.activatePosition(self.caretPosition)
 
 	def reportFormatInfo(self):
-		IDs=self.getIDsFromPosition(self.caretPosition)
-		for ID in IDs[::-1]:
+		ID=self.getIDFromPosition(self.caretPosition)
+		IDs=self.getIDAncestors(ID)+[ID]
+		for ID in IDs:
 			info=self._IDs[ID]
 			audio.speakMessage(info["typeString"])
 			debug.writeMessage("ID typeString: %s"%info["typeString"])
@@ -566,11 +608,14 @@ class virtualBuffer(object):
 				audio.speakMessage(info["stateTextFunc"](info["node"]))
 			if callable(info["descriptionFunc"]):
 				audio.speakMessage(info["descriptionFunc"](info["node"]))
+			audio.speakMessage("range %s"%str(self._IDs[ID]['range']))
+			audio.speakMessage("full range %s"%str(self.getFullRangeFromID(ID)))
 
 	def script_nextHeading(self,keyPress):
 		pos=self.nextField(self.caretPosition,fieldType_heading)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -580,6 +625,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_heading)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -589,6 +635,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_paragraph)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -598,6 +645,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_paragraph)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -607,6 +655,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_table)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -616,6 +665,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_table)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -625,6 +675,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_link)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -634,6 +685,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_link)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -643,6 +695,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_list)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -652,6 +705,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_list)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -661,6 +715,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_listItem)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -670,6 +725,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_listItem)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -679,6 +735,7 @@ class virtualBuffer(object):
 		pos=self.nextField(self.caretPosition,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:
@@ -688,6 +745,7 @@ class virtualBuffer(object):
 		pos=self.previousField(self.caretPosition,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
 		if isinstance(pos,int):
 			self.caretPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.caretPosition))
 			self.reportCaretIDMessages()
 			self.speakLine(self.caretPosition)
 		else:

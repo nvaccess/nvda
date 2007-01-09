@@ -20,22 +20,23 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			self.virtualBufferObject=virtualBufferObject
 
 		def ondeactivate(self,arg,event):
-			domNode=event.srcElement
-			if domNode.nodeName not in ["INPUT","SELECT","TEXTAREA"]:
-				return
-			ID=self.virtualBufferObject.getDomNodeID(domNode)
-			IDs=self.virtualBufferObject.getIDsFromID(ID)
-			(start,end)=self.virtualBufferObject.getRangeFromID(ID)
-			self.virtualBufferObject.removeID(ID)
-			self.virtualBufferObject.fillBuffer(domNode,IDs,position=start)
-
+			try:
+				domNode=event.srcElement
+				if domNode.nodeName not in ["INPUT","SELECT","TEXTAREA"]:
+					return
+				ID=self.virtualBufferObject.getDomNodeID(domNode)
+				if not self.virtualBufferObject._IDs.has_key(ID):
+					return
+				parentID=self.virtualBufferObject._IDs[ID]['parent']
+				(start,end)=self.virtualBufferObject.getFullRangeFromID(ID)
+				self.virtualBufferObject.removeID(ID)
+				self.virtualBufferObject.fillBuffer(domNode,parentID,position=start)
+			except:
+				debug.writeException("onchange")
 
 		def onreadystatechange(self,arg,event):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
-
-		def onscroll(self,arg,event):
-			audio.speakMessage("scroll")
 
 	def __init__(self,NVDAObject):
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
@@ -65,8 +66,8 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			return False
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
-		r=self.getRangeFromID(ID)
-		if (r is not None) and (len(r)==2) and ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
+		r=self.getFullRangeFromID(ID)
+		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
@@ -78,10 +79,10 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		return False
 
 	def activatePosition(self,pos):
-		IDs=self.getIDsFromPosition(pos)
-		if (IDs is None) or (len(IDs)<1):
+		ID=self.getIDFromPosition(pos)
+		if ID is None:
 			return
-		domNode=self._IDs[IDs[-1]]["node"]
+		domNode=self._IDs[ID]["node"]
 		if domNode is None:
 			return
 		nodeName=domNode.nodeName
@@ -142,7 +143,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				pass
 		return documentComplete
 
-	def fillBuffer(self,domNode,IDAncestors=(),position=None):
+	def fillBuffer(self,domNode,parentID=None,position=None):
 		#We don't want comments in the buffer
 		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
 			return position
@@ -156,18 +157,20 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		#We don't want option elements in the buffer
 		if domNode.nodeName=="OPTION":
 			return position
+		#Register proper events
+		if domNode.nodeName=='INPUT' and domNode.getAttribute('type')=="text":
+			debug.writeMessage("virtualBuffer.MSHTML.fillBuffer: adding events for text control")
+			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLInputTextElementEvents2)
+		if position is None:
+			position=len(self.text)
 		info=self.getDomNodeInfo(domNode)
 		ID=self.getDomNodeID(domNode)
-		if ID and ID not in IDAncestors:
-			IDAncestors=tuple(list(IDAncestors)+[ID])
-		if ID and not self._IDs.has_key(ID):
-			self.addID(ID,**info)
-		text=self.getDomNodeText(domNode)
-		if text:
-			position=self.addText(IDAncestors,text,position=position)
+		info['parent']=parentID
+		info['range']=[position,position]
+		children=[]
 		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
 			try:
-				position=self.fillBuffer(domNode.contentWindow.document,IDAncestors,position=position)
+				children.append(domNode.contentWindow.document)
 			except:
 				pass
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
@@ -176,16 +179,25 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			except:
 				pass
 			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
-			position=self.fillBuffer(domNode.body,IDAncestors,position=position)
-			position=self.addText(IDAncestors," ",position)
+			children.append(domNode.body)
 		else:
 			child=domNode.firstChild
 			while child:
-				position=self.fillBuffer(child,IDAncestors,position=position)
+				children.append(child)
 				try:
 					child=child.nextSibling
 				except:
 					child=None
+		info['children']=filter(lambda x: x,[self.getDomNodeID(x) for x in children])
+		if ID and not self._IDs.has_key(ID):
+			self.addID(ID,info)
+		if not ID:
+			ID=parentID
+		text=self.getDomNodeText(domNode)
+		if text:
+			position=self.addText(ID,text,position=position)
+		for child in children:
+			position=self.fillBuffer(child,ID,position=position)
 		return position
 
 	def getDomNodeID(self,domNode):

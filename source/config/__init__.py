@@ -58,6 +58,7 @@ confspec = StringIO("""# NVDA Configuration File
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
 	reportVirtualPresentationOnFocusChanges = boolean(default=true)
+	updateContentDynamically = boolean(default=false)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true) 
 	reportListItems = boolean(default=true)

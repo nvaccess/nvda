@@ -208,7 +208,7 @@ Returns a string of names for a given bitwise group of states. Takes in to accou
 @param opposite: True if the states are negative, or false if the states are positive, default is False
 @type opposite: boolean
 """
-		return " ".join([_("state%s")%state for state in api.createStateList(states)])
+		return " ".join([self.getStateName(state) for state in api.createStateList(states)])
 
 	def _get_level(self):
 		return ""
@@ -262,6 +262,9 @@ Returns true of this object has focus, false otherwise.
 Tries to force this object to take the focus.
 """
 		pass
+
+	def _get_labeledBy(self):
+		return None
 
 	def _get_positionString(self):
 		return ""
