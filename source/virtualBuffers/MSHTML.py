@@ -62,11 +62,11 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			return False
 		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
-		if not self._allowCaretMovement:
-			return False
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getFullRangeFromID(ID)
+		if r is None:
+			return False
 		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
@@ -122,10 +122,10 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
-			self._allowCaretMovement=False #sayAllGenerator will set this back to true when done
 			time.sleep(0.01)
 			audio.speakMessage(_("done"))
-			core.newThread(self.sayAllGenerator())
+			self.reportCaretIDMessages()
+			self.speakLine(self.caretPosition)
 
 	def isDocumentComplete(self):
 		documentComplete=True

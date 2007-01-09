@@ -79,8 +79,7 @@ class virtualBuffer(object):
 		self.needsLoad=True
 		self.NVDAObject=NVDAObject
 		self._keyMap={}
-		self._allowCaretMovement=True
-		self._IDsToRanges={}
+		self._IDs={}
 		self.text=""
 		self.caretPosition=0
 		self._lastCaretIDs=[]
