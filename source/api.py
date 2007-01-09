@@ -92,8 +92,6 @@ def setNavigatorObject(obj):
 	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
-	if config.conf["mouse"]["mouseFollowsNavigator"]:
-		moveMouseToNVDAObject(obj)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
