@@ -32,5 +32,6 @@ setup(
 		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
 		("appModules", glob("appModules/*.kbd")),
+		("waves", glob("waves/*.wav")),
 	],
 )
