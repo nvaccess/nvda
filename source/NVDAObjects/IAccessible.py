@@ -747,8 +747,8 @@ class NVDAObject_list(NVDAObject_IAccessible):
 			child.IAccessibleOrigEventLocator=(hwnd,objectID,childID)
 			api.setFocusObject(child)
 			child.event_gainFocus()
-		else:
-			audio.speakMessage(_("%s items")%self.childCount)
+		elif not self.firstChild:
+			audio.speakMessage(_("%d items")%0)
 
 class NVDAObject_progressBar(NVDAObject_IAccessible):
 
