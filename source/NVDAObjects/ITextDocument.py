@@ -106,7 +106,10 @@ class NVDAObjectExt_ITextDocument:
 		return self.dom.Range(offset,offset).GetIndex(self.constants.tomLine)
 
 	def text_getPageNumber(self,offset):
-		pageNum=self.dom.Range(offset,offset).GetIndex(self.constants.tomPage)
+		try:
+			pageNum=self.dom.Range(offset,offset).GetIndex(self.constants.tomPage)
+		except:
+			pageNum=0
 		if pageNum>0:
 			return pageNum
 		else:
