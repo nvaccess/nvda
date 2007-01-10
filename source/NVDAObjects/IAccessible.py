@@ -1,5 +1,5 @@
 import re
-import winsound
+import tones
 import time
 import difflib
 import ctypes
@@ -756,8 +756,8 @@ class NVDAObject_progressBar(NVDAObject_IAccessible):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
 			val=self.value
 			if val!=globalVars.lastProgressValue:
-				baseFreq=440
-				winsound.Beep(int(baseFreq*(1+(float(val[:-1])/100.0))),100)
+				baseFreq=110
+				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),100)
 				globalVars.lastProgressValue=val
 		super(NVDAObject_progressBar,self).event_valueChange()
 

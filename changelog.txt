@@ -1,8 +1,9 @@
 Changes since revision 164:
+*Sound files are used instead of PC speaker beeps to denote events in NVDA such as startup, exit, error and crash.
 *Mouse shape changes are now reported.
 *Fixed some bugs in the sapi5 driver, making it more responsive, and less likely to not stop speaking when asked to.
 *Objects that do not have a specific type (client objects) are now reported as "window".
-*The PC speaker is now used to communicate the percentage of a progress bar as it goes up (example: copying a large amount of data in windows explorer, or loading a large web page in internet explorer).
+*beeps are now used to communicate the percentage of a progress bar as it goes up (example: copying a large amount of data in windows explorer, or loading a large web page in internet explorer).
 *group box names are now reported when an object with the focus is in one. (Example: settings buttons, advanced tab, system properties dialog, control panel). 
 *NVDA can now read formatting changes in documents whilst reading with say all.
 *A review say all, that doesn't use the system caret, but only the NVDA review cursor, can be started with the numpad Plus key. This sayAll is useful in dos consoles and other places that may not have a system caret.

@@ -29,18 +29,6 @@ def processText(text):
 	text=processTextSymbols(text,expandPunctuation=config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"])
 	return text
 
-def playSound(fileName,wait=False):
-	"""Plays a given sound file.
-@param fileName: the file path of the sound
-@type fileName: string 
-@param wait: if true, the function will not return until the sound has finished playing, if false, the function will return straight away.
-@type wait: boolean
-"""
-	flags=0
-	if wait is False:
-		flags=winsound.SND_ASYNC
-	winsound.PlaySound(fileName,flags)
-
 def cancel():
 	"""Interupts the synthesizer from currently speaking"""
 	synthDriverHandler.cancel()
