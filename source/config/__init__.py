@@ -31,7 +31,7 @@ confspec = StringIO("""# NVDA Configuration File
 		pitch = integer(default=50)
 		volume = integer(default=100)
 		voice = integer(default=1)
-		speakPunctuation = boolean(default=False)
+		speakPunctuation = boolean(default=True)
 		relativeUppercasePitch = integer(default=20)
 
 # Presentation settings
@@ -80,7 +80,7 @@ confspec = StringIO("""# NVDA Configuration File
 	reportFontAttributes = boolean(default=false)
 	reportStyle = boolean(default=false)
 	reportPage = boolean(default=true)
-	reportLineNumber = boolean(default=True)
+	reportLineNumber = boolean(default=False)
 	reportTables = boolean(default=true)
 	reportAlignment = boolean(default=false)
 

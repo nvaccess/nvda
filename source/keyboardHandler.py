@@ -179,7 +179,7 @@ def internal_keyDownEvent(event):
 				keyList=[]
 				if (modifiers is not None) and (len(modifiers)>0):
 					keyList+=modifiers
-				keyList.append(keyName)
+				keyList.append(mainKey)
 				label=""
 				for item in keyList:
 					if item is not None:
