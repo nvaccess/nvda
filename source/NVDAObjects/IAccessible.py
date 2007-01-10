@@ -759,7 +759,8 @@ class NVDAObject_progressBar(NVDAObject_IAccessible):
 				baseFreq=110
 				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),100)
 				globalVars.lastProgressValue=val
-		super(NVDAObject_progressBar,self).event_valueChange()
+		else:
+			super(NVDAObject_progressBar,self).event_valueChange()
 
 class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 

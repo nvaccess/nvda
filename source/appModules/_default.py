@@ -278,6 +278,13 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("no navigator object"))
 
+	def script_navigator_review_moveToCaret(self,keyPress):
+		obj=api.getNavigatorObject()
+		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+			obj.text_review_moveToCaret()
+		else:
+			audio.speakMessage(_("no navigator object"))
+
 	def script_navigator_review_sayAll(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):

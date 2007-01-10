@@ -661,6 +661,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_text_reviewOffsetLimits(self):
 		return (0,self.text_characterCount-1)
 
+	def text_review_moveToCaret(self):
+		self.text_reviewOffset=self.text_caretOffset
+		self.text_speakLine(self.text_reviewOffset)
+
 	def text_review_top(self):
 		audio.speakMessage(_("top"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[0]

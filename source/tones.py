@@ -7,7 +7,7 @@ import math
 
 sampleRate=11025
 slopeRatio=0.01
-amplitude=15000
+amplitude=10000
 
 def beep(hz,length):
 	fileName=tempfile.mktemp('.wav')
