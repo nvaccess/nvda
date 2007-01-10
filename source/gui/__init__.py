@@ -12,7 +12,7 @@ import audio
 import core
 
 ### Constants
-appTitle = _("NonVisual Desktop Access")
+appTitle = _("NVDA Interface")
 #iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
 

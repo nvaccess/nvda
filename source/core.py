@@ -115,7 +115,7 @@ def main():
 		for num in range(EXEC_LAST+1):
 			queueList.append(Queue.Queue(1000))
 		applyConfiguration()
-		audio.speakMessage(_("NonVisual Desktop Access Started"),wait=True)
+		audio.speakMessage(_("NVDA started"),wait=True)
 		appModuleHandler.initialize()
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
