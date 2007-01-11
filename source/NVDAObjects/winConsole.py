@@ -14,15 +14,19 @@ class NVDAObjectExt_console:
 	text_caretSayAllGenerator=None
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
-		time.sleep(0.01)
-		self.text_reviewOffset=self.text_caretOffset
-		newLines=self.consoleVisibleLines
-		if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-			self.speakNewText(newLines,self.oldLines)
-		self.oldLines=newLines
-		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
-		if num<2:
-			winKernel.freeConsole()
+		try:
+			time.sleep(0.01)
+			self.text_reviewOffset=self.text_caretOffset
+			newLines=self.consoleVisibleLines
+			if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
+			#if eventID in [winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
+				self.speakNewText(newLines,self.oldLines)
+			self.oldLines=newLines
+			num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
+			if num<2:
+				winKernel.freeConsole()
+		except:
+			debug.writeException("NVDAObjects.winConsole.consoleEventHook")
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -154,19 +158,16 @@ class NVDAObjectExt_console:
 
 	def speakNewText(self,newLines,oldLines):
 		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
+		text=""
 		for lineNum in range(len(diffLines)):
 			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
 				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-					block=""
 					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
 					for charNum in range(len(diffChars)):
 						if (diffChars[charNum][0]=="+"):
-							block+=diffChars[charNum][2]
-						elif block:
-							if not block.isspace():
-								audio.speakText(block)
-							block=""
-					if block and not block.isspace():
-						audio.speakText(block)
+							text="".join([text,diffChars[charNum][2]])
 				elif not diffLines[lineNum][2:].isspace():
-					audio.speakText(diffLines[lineNum][2:])
+					text="".join([text,diffLines[lineNum][2:]])
+			text="".join([text," "])
+		if text and not text.isspace():
+			audio.speakText(text)

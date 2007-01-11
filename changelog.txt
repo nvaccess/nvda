@@ -1,3 +1,7 @@
+Changes since revision 287:
+*insert+s used to turn speech on and off, but now it toggles between 3 speech modes: talk, beeps and off.
+Talk is just normal speech, off is off, but beeps, is an idea that came from the Dos screen reader, ASAP. This mode plays a 5ms 10000HZ tone (very high and very short) each time an item of speech is supposed to happen. It is very responsive, and it allows you to deal with the situation when you are doing something that is constantly changing the screen, as in millions of files are scrolling up a dos console, or perhaps you are running a setup program that is constantly telling you what file it is copying etc. If you switch to the  beeps speech mode, you only have to wait until the flood of beeps stop and you know the task is finished. This is much faster than having to keep pressing control, or waiting for all the speech to finish.
+
 Changes since revision 164:
 *Sound files are used instead of PC speaker beeps to denote events in NVDA such as startup, exit, error and crash.
 *Mouse shape changes are now reported if set to do so.

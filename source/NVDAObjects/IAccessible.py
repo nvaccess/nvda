@@ -757,7 +757,7 @@ class NVDAObject_progressBar(NVDAObject_IAccessible):
 			val=self.value
 			if val!=globalVars.lastProgressValue:
 				baseFreq=110
-				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),100)
+				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
 				globalVars.lastProgressValue=val
 		else:
 			super(NVDAObject_progressBar,self).event_valueChange()

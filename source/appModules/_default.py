@@ -292,14 +292,19 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_speechOnOff(self,keyPress):
+	def script_speechMode(self,keyPress):
 		"""Toggles speech on and off"""
-		if audio.allowSpeech:
-			audio.speakMessage(_("speech")+" "+_("off"))
-			audio.allowSpeech=False
-		else:
-			audio.allowSpeech=True
-			audio.speakMessage(_("speech")+" "+_("on"))
+		curMode=audio.speechMode
+		audio.speechMode=audio.speechMode_talk
+		newMode=(curMode+1)%3
+		if newMode==audio.speechMode_off:
+			name=_("off")
+		elif newMode==audio.speechMode_beeps:
+			name=_("beeps")
+		elif newMode==audio.speechMode_talk:
+			name=_("talk")
+		audio.speakMessage(_("speech mode %s")%name)
+		audio.speechMode=newMode
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		api.toggleVirtualBufferPassThrough()

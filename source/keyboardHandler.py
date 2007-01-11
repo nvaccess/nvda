@@ -107,16 +107,13 @@ def sendKey(keyPress):
 		return
 	#Send key up for any keys that are already down
 	for k in filter(lambda x: winUser.getKeyState(x[0])&32768,keyList):
-		debug.writeMessage("up mod keys: %s"%str(k))
 		winUser.keybd_event(k[0],0,k[1]+2,0)
 	#Send key down events for these keys
 	for k in keyList:
-		debug.writeMessage("down keys: %s"%str(k))
 		winUser.keybd_event(k[0],0,k[1],0)
 	#Send key up events for the keys in reverse order
 	keyList.reverse()
 	for k in keyList:
-		debug.writeMessage("up keys: %s"%str(k))
 		winUser.keybd_event(k[0],0,k[1]+2,0)
 	time.sleep(0.001)
 

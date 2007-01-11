@@ -1,14 +1,20 @@
 """High-level functions to speak information.
-@var allowSpeech: allows speech if true
-@type allowSpeech: boolean
+@var speechMode: allows speech if true
+@type speechMode: boolean
 """ 
 
-import winsound
 from textProcessing import *
 import config
+import tones
 import synthDriverHandler
 
-allowSpeech=True
+speechMode_off=0
+speechMode_beeps=1
+speechMode_talk=2
+speechMode=2
+speechMode_beeps_hz=10000
+speechMode_beeps_ms=5
+
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -35,7 +41,7 @@ def cancel():
 
 def speakMessage(text,wait=False,index=None):
 	"""Speaks a given message.
-This function will not speak if L{allowSpeech} is false.
+This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
@@ -43,7 +49,10 @@ This function will not speak if L{allowSpeech} is false.
 @param index: the index to mark this current text with 
 @type index: int
 """
-	if not allowSpeech:
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
 		return
 	text=processText(text)
 	if text and not text.isspace():
@@ -51,7 +60,7 @@ This function will not speak if L{allowSpeech} is false.
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,keyboardShortcut=None,position=None,level=None,contains=None,wait=False,index=None):
 	"""Speaks some given object properties.
-This function will not speak if L{allowSpeech} is false.
+This function will not speak if L{speechMode} is false.
 @param name: object name
 @type name: string
 @param typeString: object type string
@@ -71,7 +80,10 @@ This function will not speak if L{allowSpeech} is false.
 @param index: the index to mark this current text with 
 @type index: int
 """
-	if not allowSpeech:
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
 		return
 	text=""
 	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
@@ -88,7 +100,7 @@ This function will not speak if L{allowSpeech} is false.
 
 def speakSymbol(symbol,wait=False,index=None):
 	"""Speaks a given single character.
-This function will not speak if L{allowSpeech} is false.
+This function will not speak if L{speechMode} is false.
 If the character is uppercase, then the pitch of the synthesizer will be altered by a value in nvda.ini and then set back to its origional value. This is to audibly denote capital letters.
 Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} is used to expand the symbol to a  speakable word.
 @param symbol: the symbol to speak
@@ -98,7 +110,10 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 @param index: the index to mark this current text with 
 @type index: int
 """
-	if not allowSpeech:
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
 		return
 	symbol=processSymbol(symbol)
 	if (symbol[0]>='A') and (symbol[0]<='Z'):
@@ -114,7 +129,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 
 def speakText(text,wait=False,index=None):
 	"""Speaks some given text.
-This function will not speak if L{allowSpeech} is false.
+This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
@@ -122,7 +137,10 @@ This function will not speak if L{allowSpeech} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
-	if not allowSpeech:
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
 		return
 	text=processText(text)
 	if text and not text.isspace():
