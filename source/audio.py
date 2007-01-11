@@ -12,8 +12,7 @@ speechMode_off=0
 speechMode_beeps=1
 speechMode_talk=2
 speechMode=2
-speechMode_beeps_hz=10000
-speechMode_beeps_ms=5
+speechMode_beeps_ms=15
 
 
 def initialize():
@@ -52,7 +51,7 @@ This function will not speak if L{speechMode} is false.
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
-		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	text=processText(text)
 	if text and not text.isspace():
@@ -83,7 +82,7 @@ This function will not speak if L{speechMode} is false.
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
-		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	text=""
 	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
@@ -113,7 +112,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
-		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	symbol=processSymbol(symbol)
 	if (symbol[0]>='A') and (symbol[0]<='Z'):
@@ -140,7 +139,7 @@ This function will not speak if L{speechMode} is false.
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
-		tones.beep(speechMode_beeps_hz,speechMode_beeps_ms)
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	text=processText(text)
 	if text and not text.isspace():
