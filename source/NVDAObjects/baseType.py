@@ -13,8 +13,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _hashLimit: int
 @ivar _hashPrime: the prime number used in calculating this object's hash
 @type _hashPrime: int
-@ivar _cachedHash: The stored hash value for this object. This is calculated in __init__, change the L{_makeHash} function to change the way hashes are generated.
-@type _cachedHash: int
 @ivar _keyMap: A dictionary that stores key:method  key to script mappings. Do not change this directly, use L{getScript}, L{executeScript}, L{registerScriptKey} or L{registerScriptKeys} instead.
 @type _keyMap: dict
 @ivar name: The objects name or label. (e.g. the text of a list item, label of a button)
@@ -75,18 +73,20 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 
 	__metaclass__=autoPropertyType.autoPropertyType
 
+	allowedPositiveStates=0
+	allowedNegativeStates=0
+
 	def __init__(self,*args):
-		self._hashLimit=10000000
-		self._hashPrime=17
 		self._keyMap={}
-		self.allowedPositiveStates=0
-		self.allowedNegativeStates=0
 		self.speakOnGainFocus=True
 		self.needsFocusState=True
 		self.speakOnForeground=True
 		self._text_lastReportedFormatting={}
 		self.text_reviewOffset=0
-		#Calculate the hash
+		self._hashLimit=10000000
+		self._hashPrime=17
+
+	def __hash__(self):
 		l=self._hashLimit
 		p=self._hashPrime
 		h=0
@@ -101,10 +101,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 			h=(h+(hash(top)*p))%l
 			h=(h+(hash(width)*p))%l
 			h=(h+(hash(height)*p))%l
-		self._cachedHash=h
-
-	def __hash__(self):
-		return self._cachedHash
+		return h
 
 	def __eq__(self,other):
 		if hash(self)==hash(other):

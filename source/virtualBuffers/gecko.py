@@ -148,17 +148,20 @@ class virtualBuffer_gecko(virtualBuffer):
 			self.speakLine(0)
 
 	def fillBuffer(self,obj,parentID=None,position=None):
+		getNVDAObjectID=self.getNVDAObjectID
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		text=""
 		if position is None:
 			position=len(self.text)
-		ID=self.getNVDAObjectID(obj)
-		debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
+		ID=getNVDAObjectID(obj)
+		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		if ID is None:
 			ID=parentID
 		if role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			children=obj.children
+			hwnd=obj.windowHandle
+			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
+			children=[NVDAObject_IAccessible(x[0],x[1],hwnd=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
 		else:
 			children=[]
 		#Get the info and text depending on the node type
@@ -166,9 +169,8 @@ class virtualBuffer_gecko(virtualBuffer):
 		info["node"]=obj
 		info['range']=[position,position]
 		info['parent']=parentID
-		info['children']=filter(lambda x: x is not None,[self.getNVDAObjectID(x) for x in children])
-		info['labeledBy']=self.getNVDAObjectID(obj.labeledBy)
-		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: obj %s %s %s %s, ID %s, range %s, children %s"%(obj.name,obj.typeString,obj.value,obj.description,ID,info['range'],info['children']))
+		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x]
+		info['labeledBy']=getNVDAObjectID(obj.labeledBy)
 		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
 			if data and not data.isspace():

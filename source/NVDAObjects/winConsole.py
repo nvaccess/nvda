@@ -2,6 +2,7 @@ import time
 import ctypes
 import difflib
 import debug
+from keyboardHandler import sendKey
 import winKernel
 import winUser
 import audio
@@ -12,6 +13,36 @@ class NVDAObjectExt_console:
 	__metaclass__=autoPropertyType
 
 	text_caretSayAllGenerator=None
+
+	def connectConsole(self):
+		processID=self.windowProcessID[0]
+		try:
+			winKernel.freeConsole()
+		except:
+			debug.writeException("freeConsole")
+			pass
+		winKernel.attachConsole(processID)
+		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
+		if not res:
+			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
+		self.consoleHandle=res
+		self.consoleEventHookHandles=[]
+		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
+		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
+			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
+			if handle:
+				self.consoleEventHookHandles.append(handle)
+			else:
+				raise OSError('Could not register console event %s'%eventID)
+
+	def disconnectConsole(self):
+		for handle in self.consoleEventHookHandles:
+			winUser.unhookWinEvent(handle)
+		del self.consoleHandle
+		try:
+			winKernel.freeConsole()
+		except:
+			pass
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		try:
@@ -122,39 +153,15 @@ class NVDAObjectExt_console:
 		return lines
 
 	def event_gainFocus(self):
-		processID=self.windowProcessID[0]
-		try:
-			winKernel.freeConsole()
-		except:
-			debug.writeException("freeConsole")
-			pass
-		winKernel.attachConsole(processID)
-		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
-		if not res:
-			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
-		self.consoleHandle=res
-		self.consoleEventHookHandles=[]
 		self.oldLines=self.consoleVisibleLines
+		self.connectConsole()
 		super(NVDAObjectExt_console,self).event_gainFocus()
-		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
-			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
-			if handle:
-				self.consoleEventHookHandles.append(handle)
-			else:
-				raise OSError('Could not register console event %s'%eventID)
 		self.text_reviewOffset=self.text_caretOffset
 		for line in filter(lambda x: not x.isspace(),self.consoleVisibleLines):
 			audio.speakText(line)
 
 	def event_looseFocus(self):
-		for handle in self.consoleEventHookHandles:
-			winUser.unhookWinEvent(handle)
-		del self.consoleHandle
-		try:
-			winKernel.freeConsole()
-		except:
-			pass
+		self.disconnectConsole()
 
 	def speakNewText(self,newLines,oldLines):
 		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
@@ -171,3 +178,9 @@ class NVDAObjectExt_console:
 			text="".join([text," "])
 		if text and not text.isspace():
 			audio.speakText(text)
+
+	def script_protectConsoleKillKey(self,keyPress):
+		self.disconnectConsole()
+		sendKey(keyPress)
+		time.sleep(0.01)
+		self.connectConsole()

@@ -18,14 +18,12 @@ An NVDAObject for a window
 @type windowProcessID: list of two ints
 """
 
-	def __init__(self,hwnd):
+	def __init__(self,hwnd=0):
 		baseType.NVDAObject.__init__(self)
 		self.windowHandle=hwnd
-		l=self._hashLimit
-		p=self._hashPrime
-		h=self._cachedHash
-		h=(h+(hash(self.windowHandle)*p))%l
-		self._cachedHash=h
+
+	def __hash__(self):
+		return self.windowHandle
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)

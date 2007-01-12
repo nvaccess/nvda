@@ -26,7 +26,7 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	if not accHandle:
 		return None
 	(pacc,child)=accHandle
-	obj=NVDAObject_IAccessible(pacc,child,origEventLocator=(hwnd,objectID,childID))
+	obj=NVDAObject_IAccessible(pacc,child,hwnd=hwnd,objectID=objectID)
 	return obj
 
 def getNVDAObjectFromPoint(x,y):
@@ -48,19 +48,23 @@ class NVDAObject_IAccessible(window.NVDAObject_window):
 the NVDAObject for IAccessible
 @ivar IAccessibleChildID: the IAccessible object's child ID
 @type IAccessibleChildID: int
-@ivar IAccessibleOrigEventLocator: The origional window,objectID,childID from an IAccessible event that caused this object to be created. If these are all None then the object was created by some form of navigation from another object.
-@type IAccessibleOrigEventLocator: tuple
 """
 
-	def __new__(cls,pacc,child,origEventLocator=(None,None,None)):
+	allowedPositiveStates=IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE|IAccessibleHandler.STATE_SYSTEM_SELECTED|IAccessibleHandler.STATE_SYSTEM_PRESSED|IAccessibleHandler.STATE_SYSTEM_CHECKED|IAccessibleHandler.STATE_SYSTEM_MIXED|IAccessibleHandler.STATE_SYSTEM_EXPANDED|IAccessibleHandler.STATE_SYSTEM_COLLAPSED|IAccessibleHandler.STATE_SYSTEM_BUSY|IAccessibleHandler.STATE_SYSTEM_HASPOPUP
+
+	def __new__(cls,pacc,child,hwnd=None,objectID=None):
 		"""
 Checks the window class and IAccessible role against a map of NVDAObject_IAccessible sub-types, and if a match is found, returns that rather than just NVDAObject_IAccessible.
 """  
 		oldCls=cls
-		hwnd=IAccessibleHandler.windowFromAccessibleObject(pacc)
+		if not hwnd:
+			hwnd=IAccessibleHandler.windowFromAccessibleObject(pacc)
 		windowClass=winUser.getClassName(hwnd)
 		processID=winUser.getWindowThreadProcessID(hwnd)
-		objectRole=IAccessibleHandler.accRole(pacc,child)
+		try:
+			objectRole=pacc.accRole(child)
+		except:
+			objectRole=0
 		if _dynamicMap.has_key((processID,windowClass,objectRole)):
 			cls=_dynamicMap[(processID,windowClass,objectRole)]
 		elif _dynamicMap.has_key((processID,windowClass,None)):
@@ -76,52 +80,56 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		else:
 			cls=NVDAObject_IAccessible
 		obj=window.NVDAObject_window.__new__(cls,hwnd)
-		#Python will not call __init__ on the object if the class given to __new__ is different from the actual class its instanciating from 
-		if cls!=oldCls:
-			obj.__init__(pacc,child,origEventLocator=origEventLocator)
+		obj._cachedRole=objectRole
+		obj.__init__(pacc,child,hwnd=hwnd,objectID=objectID)
 		return obj
 
-	def __init__(self,pacc,child,origEventLocator=(None,None,None)):
+	def __init__(self,pacc,child,hwnd=None,objectID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
 @param child: A child ID that will be used on all methods of the IAccessible pointer
 @type child: int
-@param origEventLocator: a tuple of the origional IAccessible event locator values (window,objectID,childID).
-@type origEventLocator: tuple
+@param hwnd: the window handle, if known
+@type hwnd: int
+@param objectID: the objectID for the IAccessible Object, if known
+@type objectID: int
 """
+		if hasattr(self,"_doneInit"):
+			return
+		window.NVDAObject_window.__init__(self,hwnd)
 		self._pacc=pacc
 		self._accChild=child
-		self.IAccessibleOrigEventLocator=origEventLocator
-		window.NVDAObject_window.__init__(self,IAccessibleHandler.windowFromAccessibleObject(self._pacc))
-		self.allowedPositiveStates=IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE|IAccessibleHandler.STATE_SYSTEM_SELECTED|IAccessibleHandler.STATE_SYSTEM_PRESSED|IAccessibleHandler.STATE_SYSTEM_CHECKED|IAccessibleHandler.STATE_SYSTEM_MIXED|IAccessibleHandler.STATE_SYSTEM_EXPANDED|IAccessibleHandler.STATE_SYSTEM_COLLAPSED|IAccessibleHandler.STATE_SYSTEM_BUSY|IAccessibleHandler.STATE_SYSTEM_HASPOPUP
+		self._accObjectID=objectID
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
-		#Calculate the hash
+		self._doneInit=True
+
+
+	def __hash__(self):
 		l=self._hashLimit
 		p=self._hashPrime
-		h=self._cachedHash
-		h=(h+(hash(self.IAccessibleOrigEventLocator)*p))%l
+		h=baseType.NVDAObject.__hash__(self)
+		h=(h+(hash(self._accObjectID)*p))%l
 		h=(h+(hash(self.IAccessibleChildID)*p))%l
-		self._cachedHash=h
-
+		return h
 
 	def _get_name(self):
-		res=IAccessibleHandler.accName(self._pacc,self._accChild)
-		if isinstance(res,basestring):
-			return res
-		else:
+		try:
+			res=self._pacc.accName(self._accChild)
+		except:
 			return ""
+		return res if isinstance(res,basestring) else ""
 
 	def _get_value(self):
-		res=IAccessibleHandler.accValue(self._pacc,self._accChild)
-		if isinstance(res,basestring):
-			return res
-		else:
+		try:
+			res=self._pacc.accValue(self._accChild)
+		except:
 			return ""
+		return res
 
 	def _get_role(self):
-		return IAccessibleHandler.accRole(self._pacc,self._accChild)
+		return self._cachedRole
 
 	def _get_typeString(self):
 		role=self.role
@@ -131,10 +139,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			typeString=self.windowClassName
 		else:
 			typeString=""
-		return typeString+" %s"%IAccessibleHandler.getRoleName(role)
+		return "%s %s"%(typeString,IAccessibleHandler.getRoleName(role))
 
 	def _get_states(self):
-		return IAccessibleHandler.accState(self._pacc,self._accChild)
+		try:
+			res=self._pacc.accState(self._accChild)
+		except:
+			return 0
+		return res if isinstance(res,int) else 0
 
 	def getStateName(self,state,opposite=False):
 		if isinstance(state,int):
@@ -146,18 +158,18 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		return newState
 
 	def _get_description(self):
-		res=IAccessibleHandler.accDescription(self._pacc,self._accChild)
-		if isinstance(res,basestring):
-			return res
-		else:
+		try:
+			res=self._pacc.accDescription(self._accChild)
+		except:
 			return ""
+		return res
 
 	def _get_keyboardShortcut(self):
-		res=IAccessibleHandler.accKeyboardShortcut(self._pacc,self._accChild)
-		if isinstance(res,basestring):
-			return res
-		else:
+		try:
+			res=self._pacc.accKeyboardShortcut(self._accChild)
+		except:
 			return ""
+		return res
 
 	def _get_IAccessibleChildID(self):
 		return self._accChild
@@ -242,8 +254,10 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_children(self):
 		childCount=self.childCount
 		if childCount>0:
-			children=map(lambda x: NVDAObject_IAccessible(x[0],x[1]),IAccessibleHandler.accessibleChildren(self._pacc,0,childCount))
-			return map(lambda x: getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x,children)
+			children=[NVDAObject_IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self._pacc,0,childCount)]
+			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
+			children=[x for x in children if x]
+			return children
 		else:
 			child=self.firstChild
 			children=[]
@@ -313,15 +327,18 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			self.speakObject()
 
 	def _get_groupName(self):
-		curLocation=self.location
-		groupObj=self
-		while groupObj and (groupObj.role!=IAccessibleHandler.ROLE_SYSTEM_GROUPING):
-			groupObj=groupObj.previous
-		if groupObj and groupObj.role==IAccessibleHandler.ROLE_SYSTEM_GROUPING:
-			groupLocation=groupObj.location
-			if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
-				return groupObj.name
-		return ""
+		try:
+			curLocation=self.location
+			groupObj=self
+			while groupObj and (groupObj.role!=IAccessibleHandler.ROLE_SYSTEM_GROUPING):
+				groupObj=groupObj.previous
+			if groupObj and groupObj.role==IAccessibleHandler.ROLE_SYSTEM_GROUPING:
+				groupLocation=groupObj.location
+				if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
+					return groupObj.name
+			return ""
+		except:
+			return ""
 
 	def _get_isProtected(self):
 		return self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED
@@ -463,10 +480,11 @@ class NVDAObject_checkBox(NVDAObject_IAccessible):
 	Based on NVDAObject, but filterStates removes the pressed state for checkboxes.
 	"""
 
+	allowedPositiveStates=NVDAObject_IAccessible.allowedPositiveStates-(NVDAObject_IAccessible.allowedPositiveStates&IAccessibleHandler.STATE_SYSTEM_PRESSED)
+	allowedNegativeStates=NVDAObject_IAccessible.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_CHECKED
+
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.allowedPositiveStates=self.allowedPositiveStates-(self.allowedPositiveStates&IAccessibleHandler.STATE_SYSTEM_PRESSED)
-		self.allowedNegativeStates=self.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_CHECKED
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 
@@ -518,6 +536,7 @@ class NVDAObject_consoleWindowClassClient(winConsole.NVDAObjectExt_console,NVDAO
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
 		self.registerScriptKeys({
+			key("control+c"):self.script_protectConsoleKillKey,
 			key("ExtendedUp"):self.script_text_moveByLine,
 			key("ExtendedDown"):self.script_text_moveByLine,
 			key("ExtendedLeft"):self.script_text_moveByCharacter,
@@ -718,9 +737,10 @@ class NVDAObject_mozillaOutlineItem(NVDAObject_IAccessible):
 
 class NVDAObject_listItem(NVDAObject_IAccessible):
 
+	allowedNegativeStates=NVDAObject_IAccessible.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_SELECTED
+
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.allowedNegativeStates=self.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_SELECTED
 		self._lastNegativeStates=self.calculateNegativeStates()
 
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
@@ -741,10 +761,7 @@ class NVDAObject_list(NVDAObject_IAccessible):
 		NVDAObject_IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			childID=child.IAccessibleChildID
-			hwnd=self.windowHandle
-			objectID=self.IAccessibleOrigEventLocator[1]
-			child.IAccessibleOrigEventLocator=(hwnd,objectID,childID)
+			child._accObjectID=self._accObjectID
 			api.setFocusObject(child)
 			child.event_gainFocus()
 		elif not self.firstChild:

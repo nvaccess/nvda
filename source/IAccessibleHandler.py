@@ -231,7 +231,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	children=(comtypes.automation.VARIANT*numChildren)()
 	realCount=ctypes.c_int()
 	oleAcc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
-	children=map(lambda x: x.value,list(children)[0:realCount.value])
+	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
 		if isinstance(children[childNum],pointer_IAccessible):
 			children[childNum]=(children[childNum],0)
@@ -426,6 +426,7 @@ winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
+		focusObject=api.getFocusObject()
 		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
 		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
@@ -454,7 +455,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif (eventID==winUser.EVENT_SYSTEM_FOREGROUND) or (eventID==winUser.EVENT_OBJECT_FOCUS):
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
-		elif isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator:
+		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject.IAccessibleChildID:
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let through events for the current virtualBuffer
 		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
@@ -473,7 +474,7 @@ def executeEvent(name,window,objectID,childID):
 	#If focus event then update the focus global variables
 	if (name=="gainFocus"):
 		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
-		if (isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and ((window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator)) or (obj==api.getFocusObject()): 
+		if obj==api.getFocusObject():
 			return
 		appModuleHandler.update()
 		virtualBuffers.IAccessible.update(window)
@@ -512,7 +513,7 @@ def executeEvent(name,window,objectID,childID):
 		except:
 			debug.writeException("foregroundObject: event_%s"%name)
 		return
-	if ((isinstance(api.getFocusObject(),NVDAObjects.IAccessible.NVDAObject_IAccessible) and ((window,objectID,childID)==api.getFocusObject().IAccessibleOrigEventLocator)) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
+	if ((obj==api.getFocusObject()) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
 		try:
 			getattr(api.getFocusObject(),"event_%s"%name)()
 		except:

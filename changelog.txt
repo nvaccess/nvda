@@ -1,6 +1,10 @@
 Changes since revision 287:
+*NVDA no longer crashes when pressing control+c in dos console windows.
+*the speed in which NVDA Loads documents in mozilla gecko windows (such as in Firefox) is now more than doubled.
+Example: it used to take around 8 seconds to load www.anz.com but now it takes only 3.
 *insert+s used to turn speech on and off, but now it toggles between 3 speech modes: talk, beeps and off.
 Talk is just normal speech, off is off, but beeps, is an idea that came from the Dos screen reader, ASAP. This mode plays a 5ms 10000HZ tone (very high and very short) each time an item of speech is supposed to happen. It is very responsive, and it allows you to deal with the situation when you are doing something that is constantly changing the screen, as in millions of files are scrolling up a dos console, or perhaps you are running a setup program that is constantly telling you what file it is copying etc. If you switch to the  beeps speech mode, you only have to wait until the flood of beeps stop and you know the task is finished. This is much faster than having to keep pressing control, or waiting for all the speech to finish.
+*Made the pitch of the beeps speech mode configurable through beepsSpeechModePitch, in the speech section of nvda.ini.
 
 Changes since revision 164:
 *Sound files are used instead of PC speaker beeps to denote events in NVDA such as startup, exit, error and crash.
