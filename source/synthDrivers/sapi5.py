@@ -93,5 +93,5 @@ class synthDriver(object):
 		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
 
 	def cancel(self):
-		if self.tts.Status.RunningState == 2:
-			self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
+		#if self.tts.Status.RunningState == 2:
+		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)

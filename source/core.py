@@ -134,7 +134,6 @@ def main():
 		return False
 	try:
 		globalVars.stayAlive=True
-		msg=winUser.MSG()
 		while globalVars.stayAlive is True:
 			for num in range(len(queueList)):
 				if not queueList[num].empty():
@@ -151,6 +150,7 @@ def main():
 					delList.append(ID)
 			for ID in delList:
 				del threads[ID]
+			msg=winUser.MSG()
 			if winUser.peekMessage(ctypes.byref(msg),0,0,0,1):
 				winUser.translateMessage(ctypes.byref(msg))
 				winUser.dispatchMessage(ctypes.byref(msg))

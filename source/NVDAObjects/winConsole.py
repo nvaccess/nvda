@@ -1,7 +1,9 @@
+import thread
 import time
 import ctypes
 import difflib
 import debug
+import tones
 from keyboardHandler import sendKey
 import winKernel
 import winUser
@@ -28,36 +30,67 @@ class NVDAObjectExt_console:
 		self.consoleHandle=res
 		self.consoleEventHookHandles=[]
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
+		for eventID in [winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
 				self.consoleEventHookHandles.append(handle)
 			else:
 				raise OSError('Could not register console event %s'%eventID)
+		self.keepMonitoring=True
+		self.lastConsoleEvent=None
+		thread.start_new_thread(self.monitorThread,())
 
 	def disconnectConsole(self):
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
-		del self.consoleHandle
+		self.consoleEventHookHandles=[]
+		self.keepMonitoring=False
+		time.sleep(0.001)
+		if hasattr(self,'consoleHandle'):
+			del self.consoleHandle
 		try:
 			winKernel.freeConsole()
 		except:
 			pass
 
+	def isConsoleDead(self):
+		num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
+		if num<2:
+			return True
+		else:
+			return False
+
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
+		self.text_reviewOffset=self.text_caretOffset
+		self.lastConsoleEvent=eventID
+
+	def monitorThread(self):
 		try:
-			time.sleep(0.01)
-			self.text_reviewOffset=self.text_caretOffset
-			newLines=self.consoleVisibleLines
-			if eventID!=winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-			#if eventID in [winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
-				self.speakNewText(newLines,self.oldLines)
-			self.oldLines=newLines
-			num=winKernel.getConsoleProcessList((ctypes.c_int*2)(),2)
-			if num<2:
-				winKernel.freeConsole()
+			#tones.beep(440,200)
+			update_timer=0
+			checkDead_timer=0
+			while self.keepMonitoring:
+				if self.lastConsoleEvent:
+					consoleEvent=self.lastConsoleEvent
+					self.lastConsoleEvent=None
+					update_timer=1
+				if update_timer>0:
+					update_timer+=1
+				if update_timer>=5:
+					update_timer=0
+					newLines=self.consoleVisibleLines
+					if not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or self.lastConsoleEvent:
+						self.speakNewText(newLines,self.prevConsoleVisibleLines)
+					self.prevConsoleVisibleLines=newLines
+				if checkDead_timer>=10:
+					checkDead_timer=0
+					if self.isConsoleDead():
+						self.disconnectConsole()
+				checkDead_timer+=1
+				time.sleep(0.01)
+			#tones.beep(880,200)
 		except:
-			debug.writeException("NVDAObjects.winConsole.consoleEventHook")
+			debug.writeException("console monitorThread")
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -146,38 +179,41 @@ class NVDAObjectExt_console:
 		top=info.windowRect.top
 		bottom=info.windowRect.bottom
 		lines=[]
-		for lineNum in range(top,bottom+1):
-			line=winKernel.readConsoleOutputCharacter(self.consoleHandle,self.getConsoleHorizontalLength(),0,lineNum)
-			if True or (line and not line.isspace()):
-				lines.append(line)
-		return lines
+		consoleHorizontalLength=self.getConsoleHorizontalLength()
+		consoleHandle=self.consoleHandle
+		func=winKernel.readConsoleOutputCharacter
+		return [func(consoleHandle,consoleHorizontalLength,0,lineNum) for lineNum in xrange(top,bottom+1)]
 
 	def event_gainFocus(self):
-		self.oldLines=self.consoleVisibleLines
-		self.connectConsole()
 		super(NVDAObjectExt_console,self).event_gainFocus()
+		self.connectConsole()
 		self.text_reviewOffset=self.text_caretOffset
-		for line in filter(lambda x: not x.isspace(),self.consoleVisibleLines):
+		for line in (x for x in self.consoleVisibleLines if not x.isspace()):
 			audio.speakText(line)
+		self.prevConsoleVisibleLines=self.consoleVisibleLines
 
 	def event_looseFocus(self):
 		self.disconnectConsole()
 
 	def speakNewText(self,newLines,oldLines):
-		diffLines=filter(lambda x: x[0]!="?",list(difflib.ndiff(oldLines,newLines)))
-		text=""
-		for lineNum in range(len(diffLines)):
-			if (diffLines[lineNum][0]=="+") and (len(diffLines[lineNum])>=3):
-				if (lineNum>0) and (diffLines[lineNum-1][0]=="-") and (len(diffLines[lineNum-1])>=3):
-					diffChars=list(difflib.ndiff(diffLines[lineNum-1][2:],diffLines[lineNum][2:]))
-					for charNum in range(len(diffChars)):
-						if (diffChars[charNum][0]=="+"):
-							text="".join([text,diffChars[charNum][2]])
-				elif not diffLines[lineNum][2:].isspace():
-					text="".join([text,diffLines[lineNum][2:]])
-			text="".join([text," "])
-		if text and not text.isspace():
-			audio.speakText(text)
+		diffLines=[x for x in list(difflib.ndiff(oldLines,newLines)) if (x[0] in ['+','-'])] 
+		for lineNum in xrange(len(diffLines)):
+			if diffLines[lineNum][0]=="+":
+				text=diffLines[lineNum][2:]
+				if not diffLines[lineNum][2:].isspace() and (lineNum>0) and (diffLines[lineNum-1][0]=="-"):
+					start=0
+					end=len(text)
+					for pos in xrange(len(text)):
+						if diffLines[lineNum][2:][pos]!=diffLines[lineNum-1][2:][pos]:
+							start=pos
+							break
+					for pos in xrange(len(text)-1,0,-1):
+						if diffLines[lineNum][2:][pos]!=diffLines[lineNum-1][2:][pos]:
+							end=pos+1
+							break
+					text=text[start:end]
+				if not text.isspace():
+					audio.speakText(text)
 
 	def script_protectConsoleKillKey(self,keyPress):
 		self.disconnectConsole()

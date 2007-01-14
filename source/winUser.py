@@ -200,7 +200,11 @@ def dispatchMessage(*args):
 	return user32.DispatchMessageW(*args)
 
 def peekMessage(*args):
-	return user32.PeekMessageW(*args)
+	try:
+		res=user32.PeekMessageW(*args)
+	except:
+		res=0
+	return res
 
 def registerWindowMessage(name):
 	return user32.RegisterWindowMessageW(name)
