@@ -30,7 +30,7 @@ class NVDAObjectExt_console:
 		self.consoleHandle=res
 		self.consoleEventHookHandles=[]
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
-		for eventID in [winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL]:
+		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
 			if handle:
 				self.consoleEventHookHandles.append(handle)
@@ -62,7 +62,9 @@ class NVDAObjectExt_console:
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
 		self.text_reviewOffset=self.text_caretOffset
-		self.lastConsoleEvent=eventID
+		if eventID!=winUser.EVENT_CONSOLE_CARET:
+			self.lastConsoleEvent=eventID
+		#audio.speakMessage("event %d"%eventID)
 
 	def monitorThread(self):
 		try:
@@ -76,11 +78,12 @@ class NVDAObjectExt_console:
 					update_timer=1
 				if update_timer>0:
 					update_timer+=1
-				if update_timer>=5:
+				if update_timer>=4:
 					update_timer=0
 					newLines=self.consoleVisibleLines
-					if not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or self.lastConsoleEvent:
-						self.speakNewText(newLines,self.prevConsoleVisibleLines)
+					newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
+					if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
+						audio.speakText(newText)
 					self.prevConsoleVisibleLines=newLines
 				if checkDead_timer>=10:
 					checkDead_timer=0
@@ -195,7 +198,8 @@ class NVDAObjectExt_console:
 	def event_looseFocus(self):
 		self.disconnectConsole()
 
-	def speakNewText(self,newLines,oldLines):
+	def calculateNewText(self,newLines,oldLines):
+		newText=""
 		diffLines=[x for x in list(difflib.ndiff(oldLines,newLines)) if (x[0] in ['+','-'])] 
 		for lineNum in xrange(len(diffLines)):
 			if diffLines[lineNum][0]=="+":
@@ -212,8 +216,10 @@ class NVDAObjectExt_console:
 							end=pos+1
 							break
 					text=text[start:end]
-				if not text.isspace():
-					audio.speakText(text)
+				if len(text)>0 and not text.isspace():
+					newText=" ".join([newText,text])
+			time.sleep(0.001)
+		return newText
 
 	def script_protectConsoleKillKey(self,keyPress):
 		self.disconnectConsole()
