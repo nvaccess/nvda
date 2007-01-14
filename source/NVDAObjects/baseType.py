@@ -205,7 +205,7 @@ Returns a string of names for a given bitwise group of states. Takes in to accou
 @param opposite: True if the states are negative, or false if the states are positive, default is False
 @type opposite: boolean
 """
-		return " ".join([self.getStateName(state) for state in api.createStateList(states)])
+		return " ".join([self.getStateName(state,opposite) for state in api.createStateList(states)])
 
 	def _get_level(self):
 		return ""

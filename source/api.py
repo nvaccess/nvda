@@ -83,6 +83,20 @@ def getDesktopObject():
 def setDesktopObject(obj):
 	globalVars.desktopObject=obj
 
+def correctFocusObject():
+	foregroundObject=getForegroundObject()
+	desktopObject=getDesktopObject()
+	if foregroundObject:
+		setFocusObject(foregroundObject)
+	elif desktopObject:
+		setFocusObject(desktopObject)
+	getFocusObject().event_gainFocus()
+
+def correctForegroundObject():
+	desktopObject=getDesktopObject()
+	setFocusObject(desktopObject)
+	getFocusObject().event_gainFocus()
+
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
 @returns: the current navigator object
