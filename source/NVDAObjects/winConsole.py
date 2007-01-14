@@ -226,3 +226,4 @@ class NVDAObjectExt_console:
 		sendKey(keyPress)
 		time.sleep(0.01)
 		self.connectConsole()
+		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION

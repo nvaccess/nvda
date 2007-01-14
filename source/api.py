@@ -77,6 +77,12 @@ Before overriding the last object, this function calls event_looseFocus on the o
 	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
 	return True
 
+def getDesktopObject():
+	return globalVars.desktopObject
+
+def setDesktopObject(obj):
+	globalVars.desktopObject=obj
+
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
 @returns: the current navigator object

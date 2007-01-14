@@ -126,7 +126,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			res=self._pacc.accValue(self._accChild)
 		except:
 			return ""
-		return res
+		return res if isinstance(res,basestring) else ""
 
 	def _get_role(self):
 		return self._cachedRole
@@ -162,14 +162,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			res=self._pacc.accDescription(self._accChild)
 		except:
 			return ""
-		return res
+		return res if isinstance(res,basestring) else ""
 
 	def _get_keyboardShortcut(self):
 		try:
 			res=self._pacc.accKeyboardShortcut(self._accChild)
 		except:
 			return ""
-		return res
+		return res if isinstance(res,basestring) else ""
 
 	def _get_IAccessibleChildID(self):
 		return self._accChild
