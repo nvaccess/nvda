@@ -18,9 +18,23 @@ re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
 re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
 
+
 def processTextSymbols(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
+	#Limit groups of the same character to 5 or less.
+	trunkatedText=""
+	lastChar=""
+	sameCharCount=0
+	for char in text:
+		if char==lastChar:
+			sameCharCount+=1
+		else:
+			sameCharCount=1
+		if sameCharCount<6:
+			trunkatedText="".join([trunkatedText,char])
+		lastChar=char
+	text=trunkatedText
 	#breaks up words that use a capital letter to denote another word
 	text=re_capAfterNoCapsInWord.sub(r"\1 \2",text)
 	#Like the last one, but this breaks away the last capital letter from an entire group of capital letters imbedded in a word (e.g. NVDAObject) 

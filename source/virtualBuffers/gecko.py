@@ -2,6 +2,7 @@ import time
 import ctypes
 import debug
 import core
+import tones
 import winUser
 import IAccessibleHandler
 import audio
@@ -11,6 +12,8 @@ import NVDAObjects
 from baseType import *
 
 NAVRELATION_EMBEDS=0x1009 
+
+lastLoadTime=0
 
 def getMozillaRole(role):
 	if isinstance(role,basestring):
@@ -86,6 +89,8 @@ class virtualBuffer_gecko(virtualBuffer):
 	def event_IAccessible_reorder(self,hwnd,objectID,childID):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
 			return 
+		if time.time()<(lastLoadTime+2):
+			return
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return
@@ -100,9 +105,9 @@ class virtualBuffer_gecko(virtualBuffer):
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
 		#audio.speakMessage(str(r))
 		self.removeID(ID)
-		time.sleep(0.001)
-		if obj.role>0:
-			self.fillBuffer(obj,parentID,position=r[0])
+		self.fillBuffer(obj,parentID,position=r[0])
+		tones.beep(440,100)
+		tones.beep(880,100)
 
 	def activatePosition(self,pos):
 		ID=self.getIDFromPosition(pos)
@@ -131,6 +136,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			return False
 
 	def loadDocument(self):
+		global lastLoadTime
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
@@ -140,6 +146,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load start") 
 		self.fillBuffer(self.NVDAObject)
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load end")
+		lastLoadTime=time.time()
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
 			self.caretPosition=0
