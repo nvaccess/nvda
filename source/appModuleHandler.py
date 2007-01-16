@@ -70,7 +70,8 @@ def update():
 	if not runningTable.has_key(appWindow):
 		appName=getAppName(appWindow)
 		if not appName:
-			debug.writeError("appModuleHandler.loadModule: could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
+			debug.writeMessage("appModuleHandler.update: could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
+			return
 		mod=fetchModule(appName,appWindow)
 		if mod:
 			mod._keyMap=default._keyMap.copy()

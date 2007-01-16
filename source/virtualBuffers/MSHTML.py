@@ -24,13 +24,24 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				domNode=event.srcElement
 				if domNode.nodeName not in ["INPUT","SELECT","TEXTAREA"]:
 					return
-				ID=self.virtualBufferObject.getDomNodeID(domNode)
-				if not self.virtualBufferObject._IDs.has_key(ID):
+				vObj=self.virtualBufferObject
+				ID=vObj.getDomNodeID(domNode)
+				if not vObj._IDs.has_key(ID):
 					return
-				parentID=self.virtualBufferObject._IDs[ID]['parent']
-				(start,end)=self.virtualBufferObject.getFullRangeFromID(ID)
-				self.virtualBufferObject.removeID(ID)
-				self.virtualBufferObject.fillBuffer(domNode,parentID,position=start)
+				parentID=vObj._IDs[ID]['parent']
+				(start,end)=vObj.getFullRangeFromID(ID)
+				zOrder=vObj.getIDZOrder(ID)
+				if len(zOrder)>0:
+					childNum=zOrder[-1]
+				else:
+					childNum=0
+				vObj.removeID(ID)
+				if parentID is not None:
+					vObj._IDs[parentID]['children'].insert(childNum,ID)
+				vObj.fillBuffer(domNode,parentID,position=start)
+				textLen=len(vObj.text)
+				if vObj.caretPosition>=textLen:
+					vObj.caretPosition=textLen-1
 			except:
 				debug.writeException("onchange")
 
@@ -154,17 +165,15 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			display=None
 		if display==u'none':
 			return position
+		nodeName=domNode.nodeName
+		ID=self.getDomNodeID(domNode)
 		#We don't want option elements in the buffer
-		if domNode.nodeName=="OPTION":
+		if nodeName=="OPTION":
 			return position
-		#Register proper events
-		if domNode.nodeName=='INPUT' and domNode.getAttribute('type')=="text":
-			debug.writeMessage("virtualBuffer.MSHTML.fillBuffer: adding events for text control")
-			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLInputTextElementEvents2)
 		if position is None:
 			position=len(self.text)
-		info=self.getDomNodeInfo(domNode)
-		ID=self.getDomNodeID(domNode)
+		info=fieldInfo.copy()
+		info["node"]=domNode
 		info['parent']=parentID
 		info['range']=[position,position]
 		children=[]
@@ -189,82 +198,18 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				except:
 					child=None
 		info['children']=filter(lambda x: x,[self.getDomNodeID(x) for x in children])
-		if ID and not self._IDs.has_key(ID):
-			self.addID(ID,info)
-		if not ID:
-			ID=parentID
-		text=self.getDomNodeText(domNode)
-		if text:
-			position=self.addText(ID,text,position=position)
-		for child in children:
-			position=self.fillBuffer(child,ID,position=position)
-		return position
-
-	def getDomNodeID(self,domNode):
-		#We don't want certain inline nodes like span, font etc to have their own IDs
-		while domNode:
-			if (domNode.nodeName not in ["B","BR","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) or domNode.onclick:
-				break
-			domNode=domNode.parentNode
-		#document nodes have broken uniqueIDs so we use its html node's uniqueID
-		if isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
-			try:
-				domNode=domNode.firstChild
-			except:
-				pass
-		#We return the uniqueID for the node if it has one
-		try:
-			return domNode.uniqueID
-		except:
-			return None
-
-	def getDomNodeText(self,domNode):
-		nodeName=domNode.nodeName
+		text=""
 		if nodeName=="#text":
 			data=domNode.data
 			if data and not data.isspace():
-				return data
-		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
-			return domNode.title+"\n "
-		elif nodeName=="IMG":
-			label=domNode.getAttribute('alt')
-			if not label:
-				label=domNode.getAttribute('title')
-			if not label:
-				label=domNode.getAttribute('name')
-			if not label:
-				label=domNode.getAttribute('src').split('/')[-1]
-			return label
-		elif nodeName=="SELECT":
-			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
-			return itemText
-		elif (nodeName=="TEXTAREA") and (domNode.children.length==0):
-			return " "
-		elif nodeName=="INPUT":
-			inputType=domNode.getAttribute('type')
-			if inputType in ["text","file"]:
-				return domNode.getAttribute('value')+" "
-			if inputType=="password":
-				return "*"*len(domNode.getAttribute('value'))+" "
-			elif inputType in ["button","image","reset","submit"]:
-				return domNode.getAttribute('value')
-			elif inputType in ["checkbox","radio"]:
-				return " "
-		elif (nodeName=="BR") and (domNode.previousSibling and domNode.previousSibling.nodeName=="#text"):
-			return "\n"
-
-	def getDomNodeInfo(self,domNode):
-		info=fieldInfo.copy()
-		info["node"]=domNode
-		if not domNode:
-			return info
-		nodeName=domNode.nodeName
-		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
+				text=data
+		elif isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
+			text=domNode.title+"\n "
 		elif nodeName=="A":
 			info["fieldType"]=fieldType_link
 			info["typeString"]=fieldNames[fieldType_link]
@@ -313,9 +258,19 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		elif nodeName=="TEXTAREA":
 			info["fieldType"]=fieldType_editArea
 			info["typeString"]=fieldNames[fieldType_editArea]
+			if domNode.children.length==0:
+				text=" "
 		elif nodeName=="IMG":
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
+			label=domNode.getAttribute('alt')
+			if not label:
+				label=domNode.getAttribute('title')
+			if not label:
+				label=domNode.getAttribute('name')
+			if not label:
+				label=domNode.getAttribute('src').split('/')[-1]
+			text=label
 		elif nodeName in ["H1","H2","H3","H4","H5","H6"]:
 			info["fieldType"]=fieldType_heading
 			info["typeString"]=fieldNames[fieldType_heading]+" %s"%nodeName[1]
@@ -330,26 +285,36 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			if inputType=="text":
 				info["fieldType"]=fieldType_edit
 				info["typeString"]=fieldNames[fieldType_edit]
+				text=domNode.getAttribute('value')+" "
 			elif inputType=="file":
 				info["fieldType"]=fieldType_edit
 				info["typeString"]=_("file updload")+" "+fieldNames[fieldType_edit]
+				text=domNode.getAttribute('value')+" "
 			elif inputType=="password":
 				info["fieldType"]=fieldType_edit
 				info["typeString"]=_("protected")+" "+fieldNames[fieldType_edit]
+				text="*"*len(domNode.getAttribute('value'))+" "
 			elif inputType in ["button","image","reset","submit"]:
 				info["fieldType"]=fieldType_button
 				info["typeString"]=fieldNames[fieldType_button]
+				text=domNode.getAttribute('value')
 			elif inputType=="radio":
 				info["fieldType"]=fieldType_radioButton
 				info["typeString"]=fieldNames[fieldType_radioButton]
 				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+				text=" "
 			elif inputType=="checkbox":
 				info["fieldType"]=fieldType_checkBox
 				info["typeString"]=fieldNames[fieldType_checkBox]
 				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+				text=" "
 		elif nodeName=="SELECT":
 			info["fieldType"]=fieldType_comboBox
 			info["typeString"]=fieldNames[fieldType_comboBox]
+			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
+			text=itemText
+		elif (nodeName=="BR") and (domNode.previousSibling and domNode.previousSibling.nodeName=="#text"):
+			text="\n"
 		else:
 			info["typeString"]=nodeName
 		try:
@@ -363,4 +328,28 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				info["typeString"]=_("clickable")+" "+info["typeString"]
 		except:
 			pass
-		return info
+		if ID and not self._IDs.has_key(ID):
+			self.addID(ID,info)
+		if not ID:
+			ID=parentID
+		if text:
+			position=self.addText(ID,text,position=position)
+		for child in children:
+			position=self.fillBuffer(child,ID,position=position)
+		return position
+
+	def getDomNodeID(self,domNode):
+		#We don't want certain inline nodes like span, font etc to have their own IDs
+		if (domNode.nodeName in ["B","BR","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) and not domNode.onclick and domNode.children.length==0:
+			return None
+		#document nodes have broken uniqueIDs so we use its html node's uniqueID
+		if isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
+			try:
+				domNode=domNode.firstChild
+			except:
+				pass
+		#We return the uniqueID for the node if it has one
+		try:
+			return domNode.uniqueID
+		except:
+			return None

@@ -31,7 +31,7 @@ def processTextSymbols(text,expandPunctuation=False):
 			sameCharCount+=1
 		else:
 			sameCharCount=1
-		if sameCharCount<6:
+		if sameCharCount<11:
 			trunkatedText="".join([trunkatedText,char])
 		lastChar=char
 	text=trunkatedText

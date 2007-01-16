@@ -1,4 +1,6 @@
 Changes since revision 287:
+*Support for pages with dynamic content in Mozilla Gekco applications is now complete. Make sure that updateContentDynamically (in the virtualBuffers section of nvda.ini) is set to true for this all to work.
+NVDA does not yet automaticlaly read changes, but it does beep when things are being updated. you can arrow around to see what has changed.
 *Reading of new text in dos console windows is again much improved.
 *NVDA no longer crashes when pressing control+c in dos console windows.
 *the speed in which NVDA Loads documents in mozilla gecko windows (such as in Firefox) is now more than doubled.

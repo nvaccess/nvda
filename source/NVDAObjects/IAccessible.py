@@ -284,7 +284,11 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			return False
 
 	def setFocus(self):
-		IAccessibleHandler.accSelect(self._pacc,self._accChild,1)
+		try:
+			self._pacc.accSelect(1,self._accChild)
+		except:
+			pass
+
 
 	def _get_statusBar(self):
 		statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'msctls_statusbar32',0)

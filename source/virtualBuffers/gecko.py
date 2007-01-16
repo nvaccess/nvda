@@ -47,6 +47,8 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.loadDocument()
 			return True
 		ID=self.getNVDAObjectID(obj)
+		if not self._IDs.has_key(ID):
+			return False
 		r=self.getFullRangeFromID(ID)
 		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
@@ -65,7 +67,8 @@ class virtualBuffer_gecko(virtualBuffer):
 		if not obj:
 			return False
 		ID=self.getNVDAObjectID(obj)
-		audio.speakMessage("ID: %s, obj: %s"%(ID,getMozillaRole(obj.role)))
+		if not self._IDs.has_key(ID):
+			return
 		r=self._IDs[ID]
 		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
 			self.caretPosition=r[0]
@@ -94,6 +97,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return
+		tones.beep(440,100)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
@@ -102,11 +106,19 @@ class virtualBuffer_gecko(virtualBuffer):
 			return
 		parentID=self._IDs[ID]['parent']
 		r=self._IDs[ID]['range']
+		zOrder=self.getIDZOrder(ID)
+		if len(zOrder)>0:
+			childNum=zOrder[-1]
+		else:
+			childNum=0
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
-		#audio.speakMessage(str(r))
 		self.removeID(ID)
+		if parentID is not None:
+			self._IDs[parentID]['children'].insert(childNum,ID)
 		self.fillBuffer(obj,parentID,position=r[0])
-		tones.beep(440,100)
+		textLen=len(self.text)
+		if self.caretPosition>=textLen:
+			self.caretPosition=textLen-1
 		tones.beep(880,100)
 
 	def activatePosition(self,pos):
@@ -176,7 +188,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		info["node"]=obj
 		info['range']=[position,position]
 		info['parent']=parentID
-		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x]
+		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x is not None]
 		info['labeledBy']=getNVDAObjectID(obj.labeledBy)
 		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
 			data=obj.value
@@ -303,6 +315,6 @@ class virtualBuffer_gecko(virtualBuffer):
 	def getNVDAObjectID(self,obj):
 		if not obj:
 			return None
-		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
+		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT or obj.childCount>0:
 			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
 

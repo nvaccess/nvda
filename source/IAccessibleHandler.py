@@ -455,7 +455,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif (eventID==winUser.EVENT_SYSTEM_FOREGROUND) or (eventID==winUser.EVENT_OBJECT_FOCUS):
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let events for the focus object through
-		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject.IAccessibleChildID:
+		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accChild:
 			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
 		#Let through events for the current virtualBuffer
 		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):

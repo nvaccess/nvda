@@ -218,7 +218,7 @@ class NVDAObjectExt_console:
 					text=text[start:end]
 				if len(text)>0 and not text.isspace():
 					newText=" ".join([newText,text])
-			time.sleep(0.001)
+			#time.sleep(0.001)
 		return newText
 
 	def script_protectConsoleKillKey(self,keyPress):

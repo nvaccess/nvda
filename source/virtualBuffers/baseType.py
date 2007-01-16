@@ -133,7 +133,7 @@ class virtualBuffer(object):
 		IDs=self._IDs
 		if not IDs.has_key(ID):
 			return None
-		children=IDs[ID]['children']
+		children=filter(lambda x: x is not None and IDs.has_key(x),IDs[ID]['children'])
 		#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, children %s"%(ID,children))
 		if len(children)==0:
 			#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, range %s"%(ID,IDs[ID]['range']))
@@ -154,6 +154,17 @@ class virtualBuffer(object):
 		ancestors.reverse()
 		return ancestors
 
+	def getIDZOrder(self,ID):
+		IDs=self._IDs
+		zOrder=[]
+		ancestors=self.getIDAncestors(ID)
+		ancestors.reverse()
+		for parentID in ancestors:
+			childNum=IDs[parentID]['children'].index(ID)
+			zOrder.insert(0,childNum)
+			ID=parentID
+		return zOrder
+
 	def addText(self,ID,text,position=None):
 		text=text.replace('\r\n','\n')
 		text=text.replace('\r','\n')
@@ -161,22 +172,24 @@ class virtualBuffer(object):
 		if len(text)>maxLineLength:
 			wrapper = TextWrapper(width=config.conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
 		 	text=wrapper.fill(text)
+		IDs=self._IDs
+		IDZOrder=self.getIDZOrder(ID)
 		#If no position given, assume end of buffer
 		if position is None:
 			position=len(self.text)
-		IDs=self._IDs
 		#If this ID path already has a range, expand it to fit the new text
-		#if (IDs[ID]['range'][1]==position) and (IDs[ID]['range'][1]>IDs[ID]['range'][0]):
-		#	position=position-1
+		if (IDs[ID]['range'][1]==position) and (IDs[ID]['range'][1]>IDs[ID]['range'][0]):
+			position=position-1
 		self.text= "".join([self.text[0:position],text,'\n',self.text[position:]])
 		extraLength=len(text)+1
 		IDs[ID]['range'][1]=position+extraLength
-		for item in filter(lambda x: (IDs[x]['range'][0]>=position) and (x not in (self.getIDAncestors(ID)+[ID])),IDs):
-			(start,end)=IDs[item]['range']
-			IDs[item]['range']=[start+extraLength,end+extraLength]
-		for item in filter(lambda x: IDs[x]['range'][1]>position,self.getIDAncestors(ID)):
-			(start,end)=IDs[item]['range']
-			IDs[item]['range']=[start,end+extraLength]
+		#Recalculate the ranges of IDs that are before and after this ID in its family tree Z order
+		for i in IDs: 
+			r=IDs[i]['range']
+			if r[1]>position and r[0]<=position and self.getIDZOrder(i)<IDZOrder:
+				r[1]=r[1]+extraLength
+			elif r[0]>=position and self.getIDZOrder(i)>IDZOrder:
+				(r[0],r[1])=(r[0]+extraLength,r[1]+extraLength)
 		return position+extraLength
 
 	def destroyIDDescendants(self,ID):
@@ -193,16 +206,17 @@ class virtualBuffer(object):
 		IDs=self._IDs
 		if not IDs.has_key(ID):
 			return
+		IDZOrder=self.getIDZOrder(ID)
 		(start,end)=self.getFullRangeFromID(ID)
-		self.destroyIDDescendants(ID)
 		if end>start:
 			self.text="".join([self.text[0:start],self.text[end:]])
-			for item in filter(lambda x: IDs[x]['range'][0]>=end,IDs):
-				r=IDs[item]['range']
-				IDs[item]['range']=[r[0]-(end-start),r[1]-(end-start)]
-			for item in filter(lambda x: IDs[x]['range'][1]>=end,self.getIDAncestors(ID)):
-				r=IDs[item]['range']
-				IDs[item]['range']=[r[0],r[1]-(end-start)]
+			for i in IDs:
+				r=IDs[i]['range']
+				if r[1]>=end and r[0]<=start and self.getIDZOrder(i)<IDZOrder:
+					r[1]=r[1]-(end-start)
+				elif r[0]>=end and self.getIDZOrder(i)>IDZOrder:
+					(r[0],r[1])=(r[0]-(end-start),r[1]-(end-start))
+		self.destroyIDDescendants(ID)
 
 	def resetBuffer(self):
 		self.text=""

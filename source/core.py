@@ -117,7 +117,7 @@ def main():
 		applyConfiguration()
 		audio.speakMessage(_("NVDA started"),wait=True)
 		appModuleHandler.initialize()
-		globalVars.desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0)
+		#globalVars.desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0)
 		foregroundWindow=winUser.getForegroundWindow()
 		if foregroundWindow==0:
 			foregroundWindow=winUser.getDesktopWindow()
