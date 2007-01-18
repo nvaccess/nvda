@@ -237,10 +237,8 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
 			bullet=obj.name.rstrip()
-			if not bullet:
+			if not bullet or (len(bullet)>0 and ord(bullet[0])>127):
 				bullet=_("bullet")
-			elif bullet.endswith('.'):
-				bullet=bullet[0:-1]
 			info["typeString"]=bullet
 		elif role=="dl":
 			info["fieldType"]=fieldType_list

@@ -496,6 +496,8 @@ def executeEvent(name,window,objectID,childID):
 			obj.speakObject()
 			globals()["lastMouseShape"]=obj.name
 		return
+	if name=="hide" and obj==api.getFocusObject():
+		audio.speakMessage("focus hidden")
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,

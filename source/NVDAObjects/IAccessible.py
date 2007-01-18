@@ -632,19 +632,19 @@ class NVDAObject_mozillaDocument(NVDAObject_IAccessible):
  
 class NVDAObject_mozillaListItem(NVDAObject_IAccessible):
 
-	def old_get_name(self):
-		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and (child.role in [IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,"bullet"]):
- 			return child.name
-		else:
-			return super(NVDAObject_mozillaListItem,self).name
+	def _get_name(self):
+		name=super(NVDAObject_mozillaListItem,self).name
+		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
+			children=super(NVDAObject_mozillaListItem,self).children
+			if len(children)>0 and (children[0].role in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
+				name=children[0].name
+		return name
 
-
-	def _get_firstChild(self):
-		child=super(NVDAObject_mozillaListItem,self).firstChild
-		if child and (child.role in [IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,"bullet"]):
-			child=child.next
-		return child
+	def _get_children(self):
+		children=super(NVDAObject_mozillaListItem,self).children
+		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].role in ["bullet",IAccesssibleHandler.ROLE_SYSTEM_STATICTEXT]):
+			del children[0]
+		return children
 
 class NVDAObject_link(NVDAObject_IAccessible):
 	"""
