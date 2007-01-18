@@ -1,6 +1,5 @@
-*When arrowing up and down in mozilla gecko combo boxes, NVDA reloads the document, even if there is no javascript instructing gecko to do so.
+*When setting the value of a combobox in Mozilla Gecko virtualBuffers, NVDA believes it should reload the document.
 *Some pages in internet explorer seem to have elements with duplicated unique IDs, therefore creating an inifit depth page for NVDA to load. Usually this only cause an exception that doesn't seem to stuff things up too much.
-*Pressing control+c in dos consoles crashes NVDA. I think this is because NVDA makes the dos console with focus its own process console (so it can interact with it) however, Windows handles control+c so that if a control+c isn't trapped, it will automatically kill the process who is connected to the console. Perhaps there is a setting for this for each process?
 
 
 

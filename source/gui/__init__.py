@@ -86,7 +86,9 @@ class MainFrame(wx.Frame):
 		wasShown=self.IsShown()
 		if not wasShown:
 			self.onShowGuiCommand(None)
-		#winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
+		winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
+		self.Raise()
+		self.SetFocus()
 		d = wx.MessageDialog(self, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
 			globalVars.stayAlive=False

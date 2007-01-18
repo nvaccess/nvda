@@ -258,7 +258,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["fieldType"]=fieldType_listItem
 			info["typeString"]=_("definition")
 		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
-			text="%s "%obj.name
+			text="%s"%obj.name
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:

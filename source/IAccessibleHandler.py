@@ -466,7 +466,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 def executeEvent(name,window,objectID,childID):
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	#If foreground event, see if we should change appModules, and also update the foreground global variables
-	if name=="foreground":
+	if (name=="foreground") and (winUser.getForegroundWindow()==window):
 		audio.cancel()
 		appModuleHandler.update()
 		virtualBuffers.IAccessible.update(window)

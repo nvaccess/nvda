@@ -57,6 +57,8 @@ class NVDAObjectExt_ITextDocument:
 			key("control+shift+extendedEnd"):self.script_text_changeSelection,
 			key("ExtendedDelete"):self.script_text_delete,
 			key("Back"):self.script_text_backspace,
+			key("extendedNext"):self.script_text_moveByLine,
+			key("extendedPrior"):self.script_text_moveByLine,
 		})
 
 	def __del__(self):
