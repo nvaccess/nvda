@@ -38,7 +38,7 @@ class MainFrame(wx.Frame):
 		id_onRevertToSavedConfigurationCommand=wx.NewId()
 		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
 		wx.EVT_MENU(self,id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
-		menu_NVDA.Append(wx.ID_EXIT, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
+		menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, wx.ID_SAVE, self.onSaveConfigurationCommand)
 		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
