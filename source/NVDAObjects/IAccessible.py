@@ -105,11 +105,11 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		self._lastNegativeStates=self.calculateNegativeStates()
 		self._doneInit=True
 
-
 	def __hash__(self):
 		l=self._hashLimit
 		p=self._hashPrime
 		h=baseType.NVDAObject.__hash__(self)
+		h=(h+(hash(self.windowHandle)*p))%l
 		h=(h+(hash(self._accObjectID)*p))%l
 		h=(h+(hash(self.IAccessibleChildID)*p))%l
 		return h
@@ -575,6 +575,9 @@ class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_I
 			return comtypesClient.wrap(domPointer)
 		else:
 			raise OSError("No ITextDocument interface")
+
+	def destroyObjectModel(self,dom):
+		dom.Release()
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
 	"""

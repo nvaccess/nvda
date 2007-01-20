@@ -25,6 +25,7 @@ confspec = StringIO("""# NVDA Configuration File
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
+	speakPunctuation = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 
 	[[__many__]]
@@ -32,7 +33,6 @@ confspec = StringIO("""# NVDA Configuration File
 		pitch = integer(default=50,min=0,max=100)
 		volume = integer(default=100,min=0,max=100)
 		voice = integer(default=1,min=1)
-		speakPunctuation = boolean(default=True)
 		relativeUppercasePitch = integer(default=20)
 
 # Presentation settings

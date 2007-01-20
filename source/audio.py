@@ -31,7 +31,7 @@ def processText(text):
 @param text: the text to be processed
 @type text: string
 """
-	text=processTextSymbols(text,expandPunctuation=config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"])
+	text=processTextSymbols(text,expandPunctuation=config.conf["speech"]["speakPunctuation"])
 	return text
 
 def cancel():

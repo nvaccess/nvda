@@ -73,16 +73,7 @@ class synthDriver(object):
 
 	def speakText(self,text,wait=False,index=None):
 		flags=constants.SVSFIsXML
-		if self._pitch>=70:
-			pitch=24
-		elif self._pitch>50:
-			pitch=(self._pitch-50)/2
-		elif self._pitch==50:
-			pitch=0
-		elif self._pitch>=30:
-			pitch=(self._pitch-30)/2
-		else:
-			pitch=-24
+		pitch=(self._pitch/2)-25
 		if isinstance(index,int):
 			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
 		else:

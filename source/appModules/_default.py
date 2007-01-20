@@ -76,12 +76,12 @@ class appModule(object):
 		audio.speakMessage(_("speak command keys")+" "+onOff)
 
 	def script_toggleSpeakPunctuation(self,keyPress):
-		if config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]:
+		if config.conf["speech"]["speakPunctuation"]:
 			onOff=_("off")
-			config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=False
+			config.conf["speech"]["speakPunctuation"]=False
 		else:
 			onOff=_("on")
-			config.conf["speech"][synthDriverHandler.driverName]["speakPunctuation"]=True
+			config.conf["speech"]["speakPunctuation"]=True
 		audio.speakMessage(_("speak punctuation")+" "+onOff)
 
 

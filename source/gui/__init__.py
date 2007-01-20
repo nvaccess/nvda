@@ -8,8 +8,9 @@ import synthDriverHandler
 import config
 import versionInfo
 import audio
-
 import core
+from settingsDialogs import *
+
 
 ### Constants
 appTitle = _("NVDA Interface")
@@ -39,21 +40,21 @@ class MainFrame(wx.Frame):
 		self.menu_NVDA.Append(self.id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
 		wx.EVT_MENU(self,self.id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
 		self.id_onSaveConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, _("&Save configuration")+"\tctrl+s", _("Write the current configuration to nvda.ini"))
+		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
 		self.menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		self.menuBar.Append(self.menu_NVDA,_("&NVDA"))
-		self.menu_preferences=wx.Menu()
-		self.id_chooseSynthesizerCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseSynthesizerCommand,_("&Synthesizer")+"...\tctrl+shift+s",_("Choose the synthesizer to use"))
-		wx.EVT_MENU(self,self.id_chooseSynthesizerCommand,self.onSynthesizerCommand)
-		self.id_chooseVoiceCommand=wx.NewId()
-		self.menu_preferences.Append(self.id_chooseVoiceCommand,_("Voice")+"...\tctrl+shift+v",_("Choose the voice to use"))
-		wx.EVT_MENU(self,self.id_chooseVoiceCommand,self.onVoiceCommand)
-		self.menuBar.Append(self.menu_preferences,_("&Preferences"))
+		self.menu_speech=wx.Menu()
+		self.id_SynthesizerCommand=wx.NewId()
+		self.menu_speech.Append(self.id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
+		wx.EVT_MENU(self,self.id_SynthesizerCommand,self.onSynthesizerCommand)
+		self.id_VoiceCommand=wx.NewId()
+		self.menu_speech.Append(self.id_VoiceCommand,_("Voice settings...\tctrl+shift+v"),_("Choose the voice, rate, pitch and volume  to use"))
+		wx.EVT_MENU(self,self.id_VoiceCommand,self.onVoiceCommand)
+		self.menuBar.Append(self.menu_speech,_("&Speech"))
 		self.menu_help = wx.Menu()
-		self.menu_help.Append(wx.ID_ABOUT, _("About")+"...", _("About NVDA"))
+		self.menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		self.menuBar.Append(self.menu_help,_("&Help"))
 		self.SetMenuBar(self.menuBar)
@@ -108,10 +109,19 @@ class MainFrame(wx.Frame):
 			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 
 	def onVoiceCommand(self,evt):
-		d=wx.SingleChoiceDialog(self,_("Choose the voice to use"),_("Voice"),synthDriverHandler.getVoiceNames())
-		d.SetSelection(config.conf["speech"][synthDriverHandler.driverName]["voice"]-1)
-		if d.ShowModal()==wx.ID_OK:
-			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setVoice,d.GetSelection()+1)
+		oldVoice=synthDriverHandler.getVoice()
+		oldRate=synthDriverHandler.getRate()
+		oldPitch=synthDriverHandler.getPitch()
+		oldVolume=synthDriverHandler.getVolume()
+		oldPunctuation=config.conf["speech"]["speakPunctuation"]
+		d=voiceSettingsDialog(self,-1,"Voice settings")
+		if d.ShowModal()!=wx.ID_OK:
+			synthDriverHandler.setVoice(oldVoice)
+			synthDriverHandler.setRate(oldRate)
+			synthDriverHandler.setPitch(oldPitch)
+			synthDriverHandler.setVolume(oldVolume)
+			config.conf["speech"]["speakPunctuation"]=oldPunctuation
+
 
 	def onAboutCommand(self,evt):
 		try:
