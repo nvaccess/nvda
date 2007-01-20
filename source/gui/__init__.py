@@ -114,6 +114,7 @@ class MainFrame(wx.Frame):
 		oldPitch=synthDriverHandler.getPitch()
 		oldVolume=synthDriverHandler.getVolume()
 		oldPunctuation=config.conf["speech"]["speakPunctuation"]
+		oldCaps=config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]
 		d=voiceSettingsDialog(self,-1,"Voice settings")
 		if d.ShowModal()!=wx.ID_OK:
 			synthDriverHandler.setVoice(oldVoice)
@@ -121,7 +122,7 @@ class MainFrame(wx.Frame):
 			synthDriverHandler.setPitch(oldPitch)
 			synthDriverHandler.setVolume(oldVolume)
 			config.conf["speech"]["speakPunctuation"]=oldPunctuation
-
+			config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=oldCaps
 
 	def onAboutCommand(self,evt):
 		try:

@@ -49,6 +49,11 @@ class voiceSettingsDialog(wx.Dialog):
 		punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		wx.EVT_CHECKBOX(self,punctuationCheckBoxID,self.onPunctuationChange)
 		settingsSizer.Add(punctuationCheckBox)
+		capsCheckBoxID=wx.NewId()
+		capsCheckBox=wx.CheckBox(self,capsCheckBoxID,label=_("Say cap before capitals"))
+		capsCheckBox.SetValue(config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"])
+		wx.EVT_CHECKBOX(self,capsCheckBoxID,self.onCapsChange)
+		settingsSizer.Add(capsCheckBox)
 		mainSizer.Add(settingsSizer)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer)
@@ -68,3 +73,6 @@ class voiceSettingsDialog(wx.Dialog):
 	def onPunctuationChange(self,evt):
 		config.conf["speech"]["speakPunctuation"]=evt.IsChecked()
 		debug.writeMessage("checK %s"%evt.IsChecked())
+
+	def onCapsChange(self,evt):
+		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=evt.IsChecked()

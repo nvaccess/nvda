@@ -33,7 +33,7 @@ confspec = StringIO("""# NVDA Configuration File
 		pitch = integer(default=50,min=0,max=100)
 		volume = integer(default=100,min=0,max=100)
 		voice = integer(default=1,min=1)
-		relativeUppercasePitch = integer(default=20)
+		sayCapForCapitals = boolean(default=false)
 
 # Presentation settings
 [presentation]
