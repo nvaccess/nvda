@@ -57,6 +57,7 @@ class voiceSettingsDialog(wx.Dialog):
 		mainSizer.Add(settingsSizer)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer)
+		self.SetSizer(mainSizer)
 
 	def onVoiceChange(self,evt):
 		synthDriverHandler.setVoice(evt.GetSelection()+1)
@@ -103,6 +104,7 @@ class keyboardEchoDialog(wx.Dialog):
 		mainSizer.Add(settingsSizer)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer)
+		self.SetSizer(mainSizer)
 
 	def onCharsChange(self,evt):
 		config.conf["keyboard"]["speakTypedCharacters"]=evt.IsChecked()
@@ -134,9 +136,71 @@ class mouseSettingsDialog(wx.Dialog):
 		mainSizer.Add(settingsSizer)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer)
+		self.SetSizer(mainSizer)
 
 	def onShapeChange(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=evt.IsChecked()
 
 	def onObjectChange(self,evt):
 		config.conf["mouse"]["reportObjectUnderMouse"]=evt.IsChecked()
+
+class objectPresentationDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.HORIZONTAL)
+		message=wx.StaticText(self,-1,label=_("Choose what information objects should report, and whether to be notified of things such as tooltips and help balloons."))
+		mainSizer.Add(message)
+		settingsSizer=wx.GridSizer()
+		tooltipCheckBoxID=wx.NewId()
+		tooltipCheckBox=wx.CheckBox(self,tooltipCheckBoxID,label=_("Report tooltips"))
+		tooltipCheckBox.SetValue(config.conf["presentation"]["reportTooltips"])
+		wx.EVT_CHECKBOX(self,tooltipCheckBoxID,self.onTooltipChange)
+		settingsSizer.Add(tooltipCheckBox)
+		balloonCheckBoxID=wx.NewId()
+		balloonCheckBox=wx.CheckBox(self,balloonCheckBoxID,label=_("Report help balloons"))
+		balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
+		wx.EVT_CHECKBOX(self,balloonCheckBoxID,self.onBalloonChange)
+		settingsSizer.Add(balloonCheckBox)
+		shortcutCheckBoxID=wx.NewId()
+		shortcutCheckBox=wx.CheckBox(self,shortcutCheckBoxID,label=_("Report object shortcut keys"))
+		shortcutCheckBox.SetValue(config.conf["presentation"]["reportKeyboardShortcuts"])
+		wx.EVT_CHECKBOX(self,shortcutCheckBoxID,self.onShortcutChange)
+		settingsSizer.Add(shortcutCheckBox)
+		groupCheckBoxID=wx.NewId()
+		groupCheckBox=wx.CheckBox(self,groupCheckBoxID,label=_("Report object group names"))
+		groupCheckBox.SetValue(config.conf["presentation"]["reportObjectGroupNames"])
+		wx.EVT_CHECKBOX(self,groupCheckBoxID,self.onGroupChange)
+		settingsSizer.Add(groupCheckBox)
+		stateFirstCheckBoxID=wx.NewId()
+		stateFirstCheckBox=wx.CheckBox(self,stateFirstCheckBoxID,label=_("Say object state first"))
+		stateFirstCheckBox.SetValue(config.conf["presentation"]["sayStateFirst"])
+		wx.EVT_CHECKBOX(self,stateFirstCheckBoxID,self.onStateFirstChange)
+		settingsSizer.Add(stateFirstCheckBox)
+		progressBeepCheckBoxID=wx.NewId()
+		progressBeepCheckBox=wx.CheckBox(self,progressBeepCheckBoxID,label=_("Beep on progress bar updates"))
+		progressBeepCheckBox.SetValue(config.conf["presentation"]["beepOnProgressBarUpdates"])
+		wx.EVT_CHECKBOX(self,progressBeepCheckBoxID,self.onProgressBeepChange)
+		settingsSizer.Add(progressBeepCheckBox)
+		mainSizer.Add(settingsSizer)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer)
+		self.SetSizer(mainSizer)
+
+	def onTooltipChange(self,evt):
+		config.conf["presentation"]["reportTooltips"]=evt.IsChecked()
+
+	def onBalloonChange(self,evt):
+		config.conf["presentation"]["reportHelpBalloons"]=evt.IsChecked()
+
+	def onShortcutChange(self,evt):
+		config.conf["presentation"]["reportKeyboardShortcuts"]=evt.IsChecked()
+
+	def onGroupChange(self,evt):
+		config.conf["presentation"]["reportObjectGroupNames"]=evt.IsChecked()
+
+	def onStateFirstChange(self,evt):
+		config.conf["presentation"]["sayStateFirst"]=evt.IsChecked()
+
+	def onProgressBeepChange(self,evt):
+		config.conf["presentation"]["beepOnProgressBarUpdates"]=evt.IsChecked()

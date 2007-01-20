@@ -56,6 +56,9 @@ class MainFrame(wx.Frame):
 		id_mouseSettingsCommand=wx.NewId()
 		menu_preferences.Append(id_mouseSettingsCommand,_("&Mouse settings...\tctrl+m"),_("Change reporting of mouse sape, object under mouse"))
 		wx.EVT_MENU(self,id_mouseSettingsCommand,self.onMouseSettingsCommand)
+		id_objectPresentationCommand=wx.NewId()
+		menu_preferences.Append(id_objectPresentationCommand,_("&Object presentation...\tctrl+shift+o"),_("Change reporting of objects")) 
+		wx.EVT_MENU(self,id_objectPresentationCommand,self.onObjectPresentationCommand)
 		menuBar.Append(menu_preferences,_("&Preferences"))
 		menu_help = wx.Menu()
 		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
@@ -145,6 +148,22 @@ class MainFrame(wx.Frame):
 		if d.ShowModal()!=wx.ID_OK:
 			config.conf["mouse"]["reportMouseShapeChanges"]=oldShape
 			config.conf["mouse"]["reportObjectUnderMouse"]=oldObject
+
+	def onObjectPresentationCommand(self,evt):
+		oldTooltip=config.conf["presentation"]["reportTooltips"]
+		oldBalloon=config.conf["presentation"]["reportHelpBalloons"]
+		oldShortcut=config.conf["presentation"]["reportKeyboardShortcuts"]
+		oldGroup=config.conf["presentation"]["reportObjectGroupNames"]
+		oldStateFirst=config.conf["presentation"]["sayStateFirst"]
+		oldProgressBeep=config.conf["presentation"]["beepOnProgressBarUpdates"]
+		d=objectPresentationDialog(self,-1,_("Object presentation"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["presentation"]["reportTooltips"]=oldTooltip
+			config.conf["presentation"]["reportHelpBalloons"]=oldBalloon
+			config.conf["presentation"]["reportKeyboardShortcuts"]=oldShortcut
+			config.conf["presentation"]["reportObjectGroupNames"]=oldGroup
+			config.conf["presentation"]["sayStateFirst"]=oldStateFirst
+			config.conf["presentation"]["beepOnProgressBarUpdates"]=oldProgressBeep
 
 	def onAboutCommand(self,evt):
 		try:
