@@ -112,3 +112,31 @@ class keyboardEchoDialog(wx.Dialog):
 
 	def onCommandKeysChange(self,evt):
 		config.conf["keyboard"]["speakCommandKeys"]=evt.IsChecked()
+
+class mouseSettingsDialog(wx.Dialog):
+
+ 	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.HORIZONTAL)
+		message=wx.StaticText(self,-1,label=_("Choose what information about the mouse should be reported"))
+		mainSizer.Add(message)
+		settingsSizer=wx.GridSizer()
+		shapeCheckBoxID=wx.NewId()
+		shapeCheckBox=wx.CheckBox(self,shapeCheckBoxID,label=_("Report mouse shape changes"))
+		shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
+		wx.EVT_CHECKBOX(self,shapeCheckBoxID,self.onShapeChange)
+		settingsSizer.Add(shapeCheckBox)
+		objectCheckBoxID=wx.NewId()
+		objectCheckBox=wx.CheckBox(self,objectCheckBoxID,label=_("Report object under mouse"))
+		objectCheckBox.SetValue(config.conf["mouse"]["reportObjectUnderMouse"])
+		wx.EVT_CHECKBOX(self,objectCheckBoxID,self.onObjectChange)
+		settingsSizer.Add(objectCheckBox)
+		mainSizer.Add(settingsSizer)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer)
+
+	def onShapeChange(self,evt):
+		config.conf["mouse"]["reportMouseShapeChanges"]=evt.IsChecked()
+
+	def onObjectChange(self,evt):
+		config.conf["mouse"]["reportObjectUnderMouse"]=evt.IsChecked()

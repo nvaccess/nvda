@@ -36,24 +36,27 @@ class MainFrame(wx.Frame):
 		menuBar=wx.MenuBar()
 		menu_NVDA = wx.Menu()
 		id_onRevertToSavedConfigurationCommand=wx.NewId()
-		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
+		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration\tctrl+r"),_("Reset all setting back to nvda.ini"))
 		wx.EVT_MENU(self,id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
 		menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, wx.ID_SAVE, self.onSaveConfigurationCommand)
 		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		menuBar.Append(menu_NVDA,_("&NVDA"))
-		menu_speech=wx.Menu()
+		menu_preferences=wx.Menu()
 		id_SynthesizerCommand=wx.NewId()
-		menu_speech.Append(id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
+		menu_preferences.Append(id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
 		wx.EVT_MENU(self,id_SynthesizerCommand,self.onSynthesizerCommand)
 		id_VoiceCommand=wx.NewId()
-		menu_speech.Append(id_VoiceCommand,_("Voice settings...\tctrl+shift+v"),_("Choose the voice, rate, pitch and volume  to use"))
+		menu_preferences.Append(id_VoiceCommand,_("Voice settings...\tctrl+shift+v"),_("Choose the voice, rate, pitch and volume  to use"))
 		wx.EVT_MENU(self,id_VoiceCommand,self.onVoiceCommand)
 		id_onKeyboardEchoCommand=wx.NewId()
-		menu_speech.Append(id_onKeyboardEchoCommand,_("&Keyboard echo...\tctrl+e"),_("Configure speaking of typed characters, words or command keys"))
+		menu_preferences.Append(id_onKeyboardEchoCommand,_("&Keyboard echo...\tctrl+e"),_("Configure speaking of typed characters, words or command keys"))
 		wx.EVT_MENU(self,id_onKeyboardEchoCommand,self.onKeyboardEchoCommand)
-		menuBar.Append(menu_speech,_("&Speech"))
+		id_mouseSettingsCommand=wx.NewId()
+		menu_preferences.Append(id_mouseSettingsCommand,_("&Mouse settings...\tctrl+m"),_("Change reporting of mouse sape, object under mouse"))
+		wx.EVT_MENU(self,id_mouseSettingsCommand,self.onMouseSettingsCommand)
+		menuBar.Append(menu_preferences,_("&Preferences"))
 		menu_help = wx.Menu()
 		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
@@ -134,6 +137,14 @@ class MainFrame(wx.Frame):
 			config.conf["keyboard"]["speakTypedCharacters"]=oldChars
 			config.conf["keyboard"]["speakTypedWords"]=oldWords
 			config.conf["keyboard"]["speakCommandKeys"]=oldCommandKeys
+
+	def onMouseSettingsCommand(self,evt):
+		oldShape=config.conf["mouse"]["reportMouseShapeChanges"]
+		oldObject=config.conf["mouse"]["reportObjectUnderMouse"]
+		d=mouseSettingsDialog(self,-1,_("Mouse settings"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["mouse"]["reportMouseShapeChanges"]=oldShape
+			config.conf["mouse"]["reportObjectUnderMouse"]=oldObject
 
 	def onAboutCommand(self,evt):
 		try:
