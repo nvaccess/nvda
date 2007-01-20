@@ -11,11 +11,12 @@ import audio
 import core
 from settingsDialogs import *
 
-
 ### Constants
 appTitle = _("NVDA Interface")
 #iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
+id_onShowGuiCommand=wx.NewId()
+id_onAbortCommand=wx.NewId()
 
 ### Globals
 guiThread = None
@@ -28,38 +29,38 @@ class MainFrame(wx.Frame):
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
 		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(300,300), style)
-		self.id_onAbortCommand=wx.NewId()
-		wx.EVT_COMMAND(self,self.id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
+		wx.EVT_COMMAND(self,id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
-		self.id_onShowGuiCommand=wx.NewId()
-		wx.EVT_COMMAND(self,self.id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
+		wx.EVT_COMMAND(self,id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
 		wx.EVT_CLOSE(self,self.onHideGuiCommand)
-		self.menuBar=wx.MenuBar()
-		self.menu_NVDA = wx.Menu()
-		self.id_onRevertToSavedConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
-		wx.EVT_MENU(self,self.id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
-		self.id_onSaveConfigurationCommand=wx.NewId()
-		self.menu_NVDA.Append(self.id_onSaveConfigurationCommand, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
-		wx.EVT_MENU(self, self.id_onSaveConfigurationCommand, self.onSaveConfigurationCommand)
-		self.menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
+		menuBar=wx.MenuBar()
+		menu_NVDA = wx.Menu()
+		id_onRevertToSavedConfigurationCommand=wx.NewId()
+		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration"),_("Reset all setting back to nvda.ini"))
+		wx.EVT_MENU(self,id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
+		menu_NVDA.Append(wx.ID_EXIT, _("&Save configuration\tctrl+s"), _("Write the current configuration to nvda.ini"))
+		wx.EVT_MENU(self, wx.ID_SAVE, self.onSaveConfigurationCommand)
+		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
-		self.menuBar.Append(self.menu_NVDA,_("&NVDA"))
-		self.menu_speech=wx.Menu()
-		self.id_SynthesizerCommand=wx.NewId()
-		self.menu_speech.Append(self.id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
-		wx.EVT_MENU(self,self.id_SynthesizerCommand,self.onSynthesizerCommand)
-		self.id_VoiceCommand=wx.NewId()
-		self.menu_speech.Append(self.id_VoiceCommand,_("Voice settings...\tctrl+shift+v"),_("Choose the voice, rate, pitch and volume  to use"))
-		wx.EVT_MENU(self,self.id_VoiceCommand,self.onVoiceCommand)
-		self.menuBar.Append(self.menu_speech,_("&Speech"))
-		self.menu_help = wx.Menu()
-		self.menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
+		menuBar.Append(menu_NVDA,_("&NVDA"))
+		menu_speech=wx.Menu()
+		id_SynthesizerCommand=wx.NewId()
+		menu_speech.Append(id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
+		wx.EVT_MENU(self,id_SynthesizerCommand,self.onSynthesizerCommand)
+		id_VoiceCommand=wx.NewId()
+		menu_speech.Append(id_VoiceCommand,_("Voice settings...\tctrl+shift+v"),_("Choose the voice, rate, pitch and volume  to use"))
+		wx.EVT_MENU(self,id_VoiceCommand,self.onVoiceCommand)
+		id_onKeyboardEchoCommand=wx.NewId()
+		menu_speech.Append(id_onKeyboardEchoCommand,_("&Keyboard echo...\tctrl+e"),_("Configure speaking of typed characters, words or command keys"))
+		wx.EVT_MENU(self,id_onKeyboardEchoCommand,self.onKeyboardEchoCommand)
+		menuBar.Append(menu_speech,_("&Speech"))
+		menu_help = wx.Menu()
+		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
-		self.menuBar.Append(self.menu_help,_("&Help"))
-		self.SetMenuBar(self.menuBar)
-		#self.icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
-		#self.SetIcon(self.icon)
+		menuBar.Append(menu_help,_("&Help"))
+		self.SetMenuBar(menuBar)
+		#icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
+		#self.SetIcon(icon)
 		self.Show(True)
 		self.Show(False)
 
@@ -124,6 +125,16 @@ class MainFrame(wx.Frame):
 			config.conf["speech"]["speakPunctuation"]=oldPunctuation
 			config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=oldCaps
 
+	def onKeyboardEchoCommand(self,evt):
+		oldChars=config.conf["keyboard"]["speakTypedCharacters"]
+		oldWords=config.conf["keyboard"]["speakTypedWords"]
+		oldCommandKeys=config.conf["keyboard"]["speakCommandKeys"]
+		d=keyboardEchoDialog(self,-1,_("Keyboard echo settings"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["keyboard"]["speakTypedCharacters"]=oldChars
+			config.conf["keyboard"]["speakTypedWords"]=oldWords
+			config.conf["keyboard"]["speakCommandKeys"]=oldCommandKeys
+
 	def onAboutCommand(self,evt):
 		try:
 			aboutInfo="""%s
@@ -153,10 +164,10 @@ def initialize():
 	guiThread.start()
 
 def showGui():
- 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, mainFrame.id_onShowGuiCommand))
+ 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onShowGuiCommand))
 
 def quit():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
 
 def abort():
-	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, mainFrame.id_onAbortCommand))
+	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))

@@ -76,3 +76,39 @@ class voiceSettingsDialog(wx.Dialog):
 
 	def onCapsChange(self,evt):
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=evt.IsChecked()
+
+class keyboardEchoDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.HORIZONTAL)
+		message=wx.StaticText(self,-1,label=_("Choose whether to echo any of typed characters, words, or command keys."))
+		mainSizer.Add(message)
+		settingsSizer=wx.GridSizer()
+		charsCheckBoxID=wx.NewId()
+		charsCheckBox=wx.CheckBox(self,charsCheckBoxID,label=_("Speak typed characters"))
+		charsCheckBox.SetValue(config.conf["keyboard"]["speakTypedCharacters"])
+		wx.EVT_CHECKBOX(self,charsCheckBoxID,self.onCharsChange)
+		settingsSizer.Add(charsCheckBox)
+		wordsCheckBoxID=wx.NewId()
+		wordsCheckBox=wx.CheckBox(self,wordsCheckBoxID,label=_("Speak typed words"))
+		wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
+		wx.EVT_CHECKBOX(self,wordsCheckBoxID,self.onWordsChange)
+		settingsSizer.Add(wordsCheckBox)
+		commandKeysCheckBoxID=wx.NewId()
+		commandKeysCheckBox=wx.CheckBox(self,commandKeysCheckBoxID,label=_("Speak command keys"))
+		commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
+		wx.EVT_CHECKBOX(self,commandKeysCheckBoxID,self.onCommandKeysChange)
+		settingsSizer.Add(commandKeysCheckBox)
+		mainSizer.Add(settingsSizer)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer)
+
+	def onCharsChange(self,evt):
+		config.conf["keyboard"]["speakTypedCharacters"]=evt.IsChecked()
+
+	def onWordsChange(self,evt):
+		config.conf["keyboard"]["speakTypedWords"]=evt.IsChecked()
+
+	def onCommandKeysChange(self,evt):
+		config.conf["keyboard"]["speakCommandKeys"]=evt.IsChecked()
