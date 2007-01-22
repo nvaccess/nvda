@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import pyHook
+import winUser
 import core
 import api
 import debug
@@ -12,6 +13,11 @@ import audio
 import NVDAObjects
 import globalVars
 import config
+import IAccessibleHandler
+
+mouseOldX=None
+mouseOldY=None
+
 
 #Internal mouse event
 
@@ -28,23 +34,37 @@ def internal_mouseEvent(event):
 		debug.writeException("mouseHandler.internal_mouseEvent")
 
 def executeMouseMoveEvent(x,y):
-	obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
-	if not obj:
+	global mouseOldX, mouseOldY
+	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return
-	if obj==api.getFocusObject():
-		mouseObject=api.getFocusObject()
-		globalVars.mouseObject=None
-	elif obj==globalVars.mouseObject: 
-		mouseObject=globalVars.mouseObject
-	else:
-		globalVars.mouseObject=mouseObject=obj
+	isEntering=False
+
+	res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+	if not res:
+		return
+	(newPacc,newChild)=res
+	newLocation=IAccessibleHandler.accLocation(newPacc,newChild)
+	if not newLocation:
+		return
+	(newLeft,newTop,newWidth,newHeight)=newLocation
+	mouseObject=api.getMouseObject()
+	location=mouseObject.location
+	if not location:
+		return
+	(left,top,width,height)=location
+	if (newLeft!=left) or (newTop!=top) or (newWidth!=width) or (newHeight!=height):
+		obj=NVDAObjects.IAccessible.NVDAObject_IAccessible(newPacc,newChild)
+		if obj:
+			mouseObject=obj
+			isEntering=True
+			api.setMouseObject(obj)
 	if hasattr(mouseObject,"event_mouseMove"):
 		try:
-			mouseObject.event_mouseMove(x,y,globalVars.mouseOldX,globalVars.mouseOldY)
+			mouseObject.event_mouseMove(isEntering,x,y,mouseOldX,mouseOldY)
 		except:
 			debug.writeException("api.notifyMouseMoved")
-	globalVars.mouseOldX=x
-	globalVars.mouseOldY=y
+	mouseOldX=x
+	mouseOldY=y
 
 #Register internal mouse event
 

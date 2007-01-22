@@ -319,14 +319,8 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		if self.role==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
 			audio.cancel()
 
-	def event_mouseMove(self,x,y,oldX,oldY):
-		location=self.location
-		if not location or (len(location)!=4):
-			return
-		(left,top,width,height)=location
-		right=left+width
-		bottom=top+height
-		if (oldX<left) or (oldX>right) or (oldY<top) or (oldY>bottom):
+	def event_mouseMove(self,isEntering,x,y,oldX,oldY):
+		if isEntering:
 			audio.cancel()
 			self.speakObject()
 

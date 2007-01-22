@@ -1,5 +1,7 @@
 *When setting the value of a combobox in Mozilla Gecko virtualBuffers, NVDA believes it should reload the document.
 *Some pages in internet explorer seem to have elements with duplicated unique IDs, therefore creating an inifit depth page for NVDA to load. Usually this only cause an exception that doesn't seem to stuff things up too much.
+*Sapi4 driver either has to be wrapped by queues, or we get rid of it. It seems we can't talk to it from another thread, and executeFunction isn't enough since we now need to get settings from it for the voice settings dialog. Though, I fear it will get quite slow, and I think people should just try and use sapi5 with something like espeak.
+
 
 
 

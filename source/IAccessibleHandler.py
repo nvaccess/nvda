@@ -328,6 +328,26 @@ def accFocus(ia):
 	except:
 		return None
 
+def accHitTest(ia,child,x,y):
+	try:
+		res=ia.accHitTest(x,y)
+		audio.speakMessage("%s"%res)
+		if isinstance(res,pointer_IAccessible):
+			new_ia=res
+			new_child=0
+		elif isinstance(res,comtypesClient._Dispatch):
+			new_ia=res.QueryInterface(IAccessible)
+			new_child=0
+		elif isinstance(res,int) and res!=child:
+			new_ia=ia
+			new_child=res
+		else:
+			return None
+		return (new_ia,new_child)
+	except:
+		debug.writeException("hit test")
+		return None
+
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
@@ -407,6 +427,7 @@ winUser.EVENT_SYSTEM_SWITCHSTART:"switchStart",
 winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
+winUser.EVENT_OBJECT_DESTROY:"destroy",
 winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_HELPCHANGE:"helpChange",
@@ -464,6 +485,25 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		debug.writeException("objectEventCallback")
 
 def executeEvent(name,window,objectID,childID):
+	focusObject=api.getFocusObject()
+	foregroundObject=api.getForegroundObject()
+	desktopObject=api.getDesktopObject()
+	#Remove any objects that are being hidden or destroyed
+	if name in ["hide","destroy"]:
+		if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accChild):
+			api.setFocusObject(desktopObject)
+			api.setMouseObject(desktopObject)
+			api.setNavigatorObject(desktopObject)
+			return
+		elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accChild):
+			api.setForegroundObject(desktopObject)
+			api.setMouseObject(desktopObject)
+			api.setNavigatorObject(desktopObject)
+			return
+	#Any other destory events must be ignored since the object won't exist
+	if name=="destroy":
+		return
+
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	#If foreground event, see if we should change appModules, and also update the foreground global variables
 	if (name=="foreground") and (winUser.getForegroundWindow()==window):
@@ -496,8 +536,6 @@ def executeEvent(name,window,objectID,childID):
 			obj.speakObject()
 			globals()["lastMouseShape"]=obj.name
 		return
-	if name=="hide" and obj==api.getFocusObject():
-		audio.speakMessage("focus hidden")
 	#This event is either for the current appModule if the appModule has an event handler,
 	#the foregroundObject if its a foreground event and the foreground object handles this event,
 	#the focus object if the focus object has a handler for this event,

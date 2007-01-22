@@ -185,6 +185,8 @@ class appModule(object):
 			return
 		while curObject is not None:
 			curObject.speakObject()
+			l=curObject.location
+			audio.speakMessage("%d wide and %d high, located at %d from left and %d from top"%(l[2],l[3],l[0],l[1]))
 			curObject=curObject.parent
 
 	def script_navigator_review_top(self,keyPress):

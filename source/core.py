@@ -28,7 +28,8 @@ import gettext
 import time
 import globalVars
 import winUser
-from api import *
+import debug
+import api
 import keyboardHandler
 import mouseHandler
 import IAccessibleHandler
@@ -37,6 +38,7 @@ import audio
 import config
 import gui
 import Queue
+import NVDAObjects
 
 queueList=[]
 threads={}
@@ -117,11 +119,12 @@ def main():
 		applyConfiguration()
 		audio.speakMessage(_("NVDA started"),wait=True)
 		appModuleHandler.initialize()
-		#globalVars.desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0)
-		foregroundWindow=winUser.getForegroundWindow()
-		if foregroundWindow==0:
-			foregroundWindow=winUser.getDesktopWindow()
-		IAccessibleHandler.executeEvent("foreground",foregroundWindow,-4,0)
+		api.setDesktopObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0))
+		api.setForegroundObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),IAccessibleHandler.OBJID_CLIENT,0))
+		api.setFocusObject(api.getForegroundObject())
+		api.setNavigatorObject(api.getFocusObject())
+		(x,y)=winUser.getCursorPos()
+		api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
 		IAccessibleHandler.initialize()
 		keyboardHandler.initialize()
 		mouseHandler.initialize()
