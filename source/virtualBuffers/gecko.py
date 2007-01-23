@@ -218,7 +218,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			text="%s\n "%obj.name
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
-		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and not states&IAccessibleHandler.STATE_SYSTEM_SELECTABLE:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
 		elif role=="p":
@@ -327,6 +327,6 @@ class virtualBuffer_gecko(virtualBuffer):
 	def getNVDAObjectID(self,obj):
 		if not obj:
 			return None
-		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_STATICTEXT or obj.childCount>0:
+		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
 

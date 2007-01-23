@@ -685,6 +685,12 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 		else:
 			return value
 
+	def _get_typeString(self):
+		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
+			return IAccessibleHandler.getRoleText(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
+		else:
+			super(NVDAObject_mozillaText,self).typeString
+
 	def text_getText(self,start=None,end=None):
 		return self.value
 
