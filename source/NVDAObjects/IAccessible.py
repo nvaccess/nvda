@@ -339,7 +339,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			return ""
 
 	def _get_isProtected(self):
-		return self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED
+		return bool(self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED)
 
 	def event_gainFocus(self):
 		self.updateMenuMode()
@@ -572,6 +572,7 @@ class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_I
 
 	def destroyObjectModel(self,dom):
 		dom.Release()
+		del dom
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
 	"""
@@ -634,7 +635,7 @@ class NVDAObject_mozillaListItem(NVDAObject_IAccessible):
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			children=super(NVDAObject_mozillaListItem,self).children
 			if len(children)>0 and (children[0].role in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
-				name=children[0].name
+				name=children[0].value
 		return name
 
 	def _get_children(self):
@@ -666,33 +667,23 @@ class NVDAObject_link(NVDAObject_IAccessible):
 
 class NVDAObject_mozillaText(NVDAObject_IAccessible):
 	"""
-	Based on NVDAObject_mozillaContentWindowClass but:
-	*If the object has a name but no value, the name is used as the value and no name is provided.
-	*the role is changed to static text if it has the read only state set.
+*The name property is used as the value, the name is left blank.
 	"""
 
 	def _get_name(self):
 		name=super(NVDAObject_mozillaText,self).name
-		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):
+		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return ""
 		else:
 			return name
 
-	def _get_role(self):
-		if super(NVDAObject_mozillaText,self).states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return IAccessibleHandler.ROLE_SYSTEM_STATICTEXT
-		else:
-			return super(NVDAObject_mozillaText,self).role
- 
 	def _get_value(self):
 		name=super(NVDAObject_mozillaText,self).name
 		value=super(NVDAObject_mozillaText,self).value
-		if (self.role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):
+		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return name
 		else:
 			return value
-
 
 	def text_getText(self,start=None,end=None):
 		return self.value
@@ -733,8 +724,6 @@ class NVDAObject_mozillaOutlineItem(NVDAObject_IAccessible):
 			return _("%s of %s")%(m.groups()[0],m.groups()[1])
 		else:
 			return ""
-
-
 
 class NVDAObject_listItem(NVDAObject_IAccessible):
 
@@ -860,9 +849,10 @@ _staticMap={
 ("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,

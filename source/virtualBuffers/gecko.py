@@ -127,12 +127,18 @@ class virtualBuffer_gecko(virtualBuffer):
 		if obj is None:
 			return
 		role=getMozillaRole(obj.role)
-		if role in [IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]:
+		states=obj.states
+		if (role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY) or role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			obj.setFocus()
+		else:
+			obj.doDefaultAction()
+			obj.setFocus()
+			return
 		if role in [IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON]:
 			obj.doDefaultAction()
+			obj.setFocus()
 		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LINK,IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]:
@@ -177,12 +183,18 @@ class virtualBuffer_gecko(virtualBuffer):
 		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		if ID is None:
 			ID=parentID
-		if role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
+		#Collect the children
+		#Use IAccessible directly to save time
+		#Don't get children of combo boxes or text objects
+		if role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,IAccessibleHandler.ROLE_SYSTEM_TEXT]:
 			hwnd=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
 			children=[NVDAObject_IAccessible(x[0],x[1],hwnd=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
 		else:
 			children=[]
+		#Get rid of the bullet object if this was a list item's children (its in the name)
+		if (role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM) and (len(children)>0) and (children[0].role in [IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,'bullet']):
+			del children[0]
 		#Get the info and text depending on the node type
 		info=fieldInfo.copy()
 		info["node"]=obj
@@ -190,7 +202,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		info['parent']=parentID
 		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x is not None]
 		info['labeledBy']=getNVDAObjectID(obj.labeledBy)
-		if role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT:
+		if (role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT) or ((role==IAccessibleHandler.ROLE_SYSTEM_TEXT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY)):
 			data=obj.value
 			if data and not data.isspace():
 				text="%s "%data
@@ -285,10 +297,12 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
-		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			text="%s "%obj.value
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
+			if obj.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
+				info["typeString"]=_("protected %s")%info["typeString"]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			text="%s "%obj.value
 			info["fieldType"]=fieldType_comboBox
