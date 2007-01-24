@@ -27,6 +27,7 @@ class appModule(object):
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
 
+
 	def event_IAccessible_switchStart(self,window,objectID,childID):
 		audio.cancel()
 

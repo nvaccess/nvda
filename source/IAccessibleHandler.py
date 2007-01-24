@@ -153,6 +153,7 @@ pointer_IAccessible=ctypes.POINTER(IAccessible)
 oleAcc=ctypes.windll.oleacc
 
 lastMouseShape=""
+lastEvent=None
 
 def getRoleName(role):
 	if isinstance(role,int):
@@ -430,7 +431,6 @@ winUser.EVENT_OBJECT_SHOW:"show",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
 winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
-winUser.EVENT_OBJECT_HELPCHANGE:"helpChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
 winUser.EVENT_OBJECT_REORDER:"reorder",
@@ -448,123 +448,107 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 	try:
 		eventName=eventMap[eventID]
 		focusObject=api.getFocusObject()
+		foregroundObject=api.getForegroundObject()
+		desktopObject=api.getDesktopObject()
+		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
+		appModule=appModuleHandler.getActiveModule()
+		lastRes=False
+		#Remove any objects that are being hidden or destroyed
+		if eventName in ["hide","destroy"]:
+			if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accChild):
+				api.setFocusObject(desktopObject)
+				api.setMouseObject(desktopObject)
+				api.setNavigatorObject(desktopObject)
+				return
+			elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accChild):
+				api.setForegroundObject(desktopObject)
+				api.setMouseObject(desktopObject)
+				api.setNavigatorObject(desktopObject)
+				return
+		#Ignore any other destroy events since the object does not exist
+		if eventName=="destroy":
+			return
+		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
 			objectID=OBJID_CLIENT
-		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
-		#let swichStart and switchEnd through
-		if eventID in [winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND]:
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
-		#Let mouse name changes (shape changes) through
+		#Report mouse shape changes
 		if (eventID==winUser.EVENT_OBJECT_NAMECHANGE) and (objectID==OBJID_CURSOR):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"mouseShapeChange",window,objectID,childID)
-		#Let tooltips through
-		elif (eventID==winUser.EVENT_OBJECT_SHOW) and (winUser.getClassName(window)=="tooltips_class32") and (objectID==OBJID_CLIENT):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"toolTip",window,objectID,childID)
-		#Let progress bar updates through
-		elif (eventID==winUser.EVENT_OBJECT_VALUECHANGE) and (winUser.getClassName(window)=="msctls_progress32") and (objectID==OBJID_CLIENT) and winUser.isDescendantWindow(winUser.getForegroundWindow(),window):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"valueChange",window,objectID,childID)
-		#Let caret events through
-		elif (eventID in [winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_FOCUS]) and (objectID==OBJID_CARET):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"caret",window,objectID,childID)
-		#Let menu events through
-		elif eventID in [winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUPOPUPSTART]:
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,"gainFocus",window,objectID,childID)
-		elif eventID in [winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND]:
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
-		#Let foreground and focus events through
-		elif (eventID==winUser.EVENT_SYSTEM_FOREGROUND) or (eventID==winUser.EVENT_OBJECT_FOCUS):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
-		#Let events for the focus object through
-		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accChild:
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			if not config.conf["mouse"]["reportMouseShapeChanges"]:
+				return
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
+			if obj and obj.name!=lastMouseShape:
+				core.executeFunction(core.EXEC_MOUSE,obj.speakObject)
+				globals()["lastMouseShape"]=obj.name
+			return
+		#Process foreground events
+		if eventName=="foreground":
+			core.executeFunction(core.EXEC_USERINTERFACE,foregroundEvent,window,objectID,childID)
+		#Process focus events
+		elif eventName=="gainFocus":
+			core.executeFunction(core.EXEC_USERINTERFACE,focusEvent,window,objectID,childID)
+		#Give this event to the current appModule if it supports it
+		elif hasattr(appModule,"event_IAccessible_%s"%eventName):
+			core.executeFunction(core.EXEC_USERINTERFACE,getattr(appModule,"event_IAccessible_%s"%eventName),window,objectID,childID) 
 		#Let through events for the current virtualBuffer
 		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
-			core.executeFunction(core.EXEC_USERINTERFACE,executeEvent,eventName,window,objectID,childID)
+			core.executeFunction(core.EXEC_USERINTERFACE,getattr(virtualBuffer,"event_IAccessible_%s"%eventName),window,objectID,childID)
+		#Let events for the focus object through
+		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accChild and hasattr(focusObject,"event_%s"%eventName):
+			core.executeFunction(core.EXEC_USERINTERFACE,getattr(focusObject,"event_%s"%eventName))
+		#Notify the focus object if this is a caret location change or show
+		elif eventName=="locationChange" and objectID==OBJID_CARET:
+			core.executeFunction(core.EXEC_USERINTERFACE,focusObject.event_caret)
+		#Ignore any other caret events
+		elif objectID==OBJID_CARET:
+			return
+		#Ignore any other hide or locationChange events
+		if eventName in ["hide","locationChange"]:
+			return
+		#Any other events now should be passed straight to their own objects
+		else:
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+			if obj and hasattr(obj,"event_%s"%eventName):
+				core.executeFunction(core.EXEC_USERINTERFACE,getattr(obj,"event_%s"%eventName))
 	except:
 		debug.writeException("objectEventCallback")
 
-def executeEvent(name,window,objectID,childID):
-	focusObject=api.getFocusObject()
-	foregroundObject=api.getForegroundObject()
-	desktopObject=api.getDesktopObject()
-	#Remove any objects that are being hidden or destroyed
-	if name in ["hide","destroy"]:
-		if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accChild):
-			api.setFocusObject(desktopObject)
-			api.setMouseObject(desktopObject)
-			api.setNavigatorObject(desktopObject)
-			return
-		elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accChild):
-			api.setForegroundObject(desktopObject)
-			api.setMouseObject(desktopObject)
-			api.setNavigatorObject(desktopObject)
-			return
-	#Any other destory events must be ignored since the object won't exist
-	if name=="destroy":
-		return
-
+def foregroundEvent(window,objectID,childID):
+	appModuleHandler.update()
+	appModule=appModuleHandler.getActiveModule()
+	virtualBuffers.IAccessible.update(window)
+	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	#If foreground event, see if we should change appModules, and also update the foreground global variables
-	if (name=="foreground") and (winUser.getForegroundWindow()==window):
-		audio.cancel()
-		appModuleHandler.update()
-		virtualBuffers.IAccessible.update(window)
-		api.setForegroundObject(obj)
-	#If focus event then update the focus global variables
-	if (name=="gainFocus"):
-		#If this event is the same as the current focus object, just return, we don't need to set focus or use the event, its bad
-		if obj==api.getFocusObject():
-			return
-		appModuleHandler.update()
-		virtualBuffers.IAccessible.update(window)
-		api.setFocusObject(obj)
-	#If this event is for the same window as a virtualBuffer, then give it to the virtualBuffer and then continue if the result is False
-	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(obj)
-	if virtualBuffer and hasattr(virtualBuffer,"event_IAccessible_%s"%name):
-		debug.writeMessage("vb event: %s"%name)
-		event=getattr(virtualBuffer,"event_IAccessible_%s"%name)
-		try:
-			res=event(window,objectID,childID)
-			if res and (name!="hide"):
-				return
-		except:
-			debug.writeException("virtualBuffer event")
-	if name=="mouseShapeChange" and config.conf["mouse"]["reportMouseShapeChanges"]:
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
-		if obj and obj.name!=lastMouseShape:
-			obj.speakObject()
-			globals()["lastMouseShape"]=obj.name
+	if not obj:
 		return
-	#This event is either for the current appModule if the appModule has an event handler,
-	#the foregroundObject if its a foreground event and the foreground object handles this event,
-	#the focus object if the focus object has a handler for this event,
-	#the specific object that this event describes if the object has a handler for this event.
-	if hasattr(appModuleHandler.getActiveModule(),"event_IAccessible_%s"%name):
-		event=getattr(appModuleHandler.getActiveModule(),"event_IAccessible_%s"%name)
-		try:
-			event(window,objectID,childID)
-		except:
-			debug.writeException("Error executing event %s from appModule"%event.__name__)
+	api.setForegroundObject(obj)
+	if hasattr(appModule,"event_IAccessible_foreground"):
+		appModule.event_IAccessible_foreground(window,objectID,childID)
+	elif hasattr(virtualBuffer,"event_IAccessible_foreground"):
+		virtualBuffer.event_IAccessible_foreground(window,objectID,childID)
+	elif hasattr(obj,"event_foreground"):
+		obj.event_foreground()
+
+def focusEvent(window,objectID,childID):
+	oldFocus=api.getFocusObject()
+	#If the object already is the focus object then ignore it
+	if window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accChild:
+		return 
+	appModuleHandler.update()
+	appModule=appModuleHandler.getActiveModule()
+	virtualBuffers.IAccessible.update(window)
+	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
+	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	if not obj:
 		return
-	if (name=="foreground") and (api.getForegroundObject()==obj) and hasattr(api.getForegroundObject(),"event_%s"%name):
-		try:
-			getattr(api.getForegroundObject(),"event_%s"%name)()
-		except:
-			debug.writeException("foregroundObject: event_%s"%name)
-		return
-	if ((obj==api.getFocusObject()) or (name=="caret")) and hasattr(api.getFocusObject(),"event_%s"%name):
-		try:
-			getattr(api.getFocusObject(),"event_%s"%name)()
-		except:
-			debug.writeException("Error executing event event_%s from focusObject"%name)
-		return
-	if obj and hasattr(obj,"event_%s"%name):
-		try:
-			getattr(obj,"event_%s"%name)()
-		except:
-			debug.writeException("Error executing event event_%s from object"%name)
-		return
+	api.setFocusObject(obj)
+	if hasattr(appModule,"event_IAccessible_gainFocus"):
+		appModule.event_IAccessible_gainFocus(window,objectID,childID)
+	elif hasattr(virtualBuffer,"event_IAccessible_gainFocus"):
+		res=virtualBuffer.event_IAccessible_gainFocus(window,objectID,childID)
+	else:
+		res=False
+	if not res and hasattr(obj,"event_gainFocus"):
+		obj.event_gainFocus()
 
 #Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)

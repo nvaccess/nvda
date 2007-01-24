@@ -310,6 +310,7 @@ This code is executed if a gain focus event is received by this object.
 		"""
 This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
 """
+		audio.cancel()
 		if self.speakOnForeground:
 			api.setNavigatorObject(self)
 			self.speakObject()

@@ -126,7 +126,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			res=self._pacc.accValue(self._accChild)
 		except:
 			return ""
-		return res if isinstance(res,basestring) else ""
+		return res if (isinstance(res,basestring) or isinstance(res,int) or isinstance(res,float)) else ""
 
 	def _get_role(self):
 		return self._cachedRole
@@ -520,7 +520,7 @@ class NVDAObject_tooltip(NVDAObject_IAccessible):
 		else:
 			return ""
 
-	def event_toolTip(self):
+	def event_show(self):
 		if (config.conf["presentation"]["reportTooltips"] and (self.role==IAccessibleHandler.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.role==IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON)):
 			self.speakObject()
 
@@ -573,6 +573,20 @@ class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_I
 	def destroyObjectModel(self,dom):
 		dom.Release()
 		del dom
+
+class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
+
+	def event_valueChange(self):
+		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
+			val=self.value
+			if val=="" or val is None:
+				return
+			if val!=globalVars.lastProgressValue:
+				baseFreq=110
+				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
+				globalVars.lastProgressValue=val
+		else:
+			super(NVDAObject_progressBar,self).event_valueChange()
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
 	"""
@@ -867,6 +881,9 @@ _staticMap={
 ("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaDocument,
+("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
+("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
+
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
 (None,IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
