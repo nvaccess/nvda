@@ -1,6 +1,5 @@
 *When setting the value of a combobox in Mozilla Gecko virtualBuffers, NVDA believes it should reload the document.
 *Some pages in internet explorer seem to have elements with duplicated unique IDs, therefore creating an inifit depth page for NVDA to load. Usually this only cause an exception that doesn't seem to stuff things up too much.
-*MSAA objects can not be talked to correctly by another thread than the one that created it. This causes a problem for getting the state of mozilla edit fields to see if it is protected, when working out whether to echo a typed character or not.
 
 
 

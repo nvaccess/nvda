@@ -3,108 +3,52 @@ NVDA notes for developers
 
 NVDA structure
 
-NVDA is extremely modularized to make it easier for development and for greater optimization depending on what the user is doing at the time. The system can be broken up in to theoretical parts: loader, core, api, audio, text processing, speech synths, appModules, gui, config, global variables, keyboard, mouse, MSAA, NVDA objects, virtual buffers, debug. Following are explinations of each and how each one interacts with the others.
+NVDA is very modular; it can be broken down in to clear parts.
 
-Loader
+NVDA is executed by nvda.pyw, which firstly redirects its stdout and stderr to the file stderr.log, starts debugging to the file debug.log and then executes core.main().
 
-The loader, nvda.pyw, is the file that needs to be executed to start NVDA. This sets up debugging (in to debug.log) and it then executes the main function in the core. It also makes the PC speaker do some beeps before, and after (though different sounding for start, quit, and error) to act as notification of when it really starts and completes.
+If core.main() returns True, then NVDA is exiting perfectly, if not, then this is a crash. nvda.pyw also plays startup, exit and crash sounds.
 
-It is expected that all major peaces of code are nested in try except statements and depending on the context, exceptions when caught are sent to debug. However if there is an exception that raises all the way up to the execution of core.main, the PC speaker will signal its an error and then the loader will exit.
-
-Core
-
-The core, core.py, loads and inicializes all the other parts of the system:
-*It loads the audio support to manage speech synths
-*At this point it also speaks a welcome message and fires its own foreground changed event to notify the user of where they are for the first time.
-*It loads and initializes MSAA support for listening for MSAA events
-*It loads and initializes keyboard support for listening for keyboard events
-*It loads and initializes mouse support for announcing what is under the mouse as it moves around the screen
-*It loads and initializes the gui which can be accessed with insert+n.
-
-It finally then goes in to an endless loop until it is instructed to stop with a quit command.
-
-In the loop, core pumps window messages, executes any functions in its queues, and continues to execute thread generators.
-
-When the loop finally ends, core stops gui and MSAA etc before exiting.
-
-Because there are some features of NVDA that need to be running along side others (in a sort of multi-threaded structure) and because some of these particular features are not able to use real threading because of dificulties with com objects etc, core implements a way of starting new threads, and executing functions, all with in NVDA's main thread.  
-
-Threads are implemented by python generator objects, and single executing functions are  simply stored in queues so they can pass over a thread boundary and be executed by core.
-
-api
-
-In here is where all general functions for NVDA can be found.
-
-
-Audio
-
-audio.py provides functions to speak messages and text via the chosen speech synth. The speech synth can be chosen and configured by nvda.ini  managed by the config module. Text is first passed through a function in textProcessing.py before its sent to the synth so that punctuation can be expanded if needed.
-
-Speech synths
-
-There are currently two synth drivers, one for sapi4 and one for sapi5. drivers for any synth can be written, as long as they are named synth_*.py and they have the required functions. Please refer to the sapi4 and sapi5 drivers for examples.
-
-appModules
-
-appModules.py is used to load a file in the appModules directory named app.py (where app is the name of the application file excluding the file extention). The actual app module its self is loaded in to appModules.current, though you can use the api function getCurrentAppModule to get access to the current app module.
-
-Each app module can have event functions, and script functions. script functions must be named script_name.py (where name is the name of the script) and they take one parameter which is the key used to execute the script. event functions are named event_name.py (where name is the name of an MSAA event, please find the names in MSAAEventHandler.py. They take three parameters: window, object ID and child ID.
-
-Config
-
-the config directory is a module that manages configuration. Settings are read from nvda.ini if it exists, and are written back if changed. The actual config file template is stored in config/__init__.py and to use the config module for checking settings, you can import conf from config (from config import conf).
-
-Global variables
-
-Global variables are stored in globalVars.py
-
-Dictionaries
-
-The dictionaries/ directory contains characterSymbols.py, roleNames.py, stateNames.py and textSymbols.py. You can modify these to your liking to change how punctuation and control types etc are presented.
-
-the load function in dictionaries.py can load a dictionary and make it accessible from dictionaries.name (where name is the name of the dictionary).
-
-GUI
-
----Must write this---
-
-MSAA
-
-MSAAEventHandler.py registers to receive MSAA events from the operating system. When it does receive them, it stores them in its own queue which can be accessed by other parts of the system. Each item in the queue is a tuple of name, window,objectID,childID (where name is an event name found in eventMap).
-
-Mouse
-
-mouseEventHandler.py listens for mouse events from the operating system and stores them in its own queue which can be accessed by other parts of the system.
-
-Keyboard
-
-keyboardEventHandler.py listens for key down events and key up events and processes them so that they are just key press events, and if they have a script atached to them, it places the key press in its own queue which can be accessed by other parts of the system. It only makes a key opress with non-modifier keys but watches for modifiers and stores them until a non-modifier. For instance it might see insert down, control down and then j down, it will only make the key press when it sees the j.
-
-keyboardEventHandler.py also has a sendKey function that can decode a keyPress and send it back through to the operating system.
-
-NVDAObjects
-
-NVDAObjects are classes that wrap around MSAA objects and allow you to find out things like name, value, role, state etc. Some objects have extra functions to find out the position of the cursor or to get a line or a character etc.
-  
-NVDAObjects.py is where all the classes are stored. NVDAObject is the default type, but there is a classMap dictionary at the bottom of the file which has a windowClass[_objectRole] to NVDAObject class mapping.
-
-custom NVDAObjects can be derived from other NVDAObject types. for instance NVDAObject_edit (which handles edit windows) has a base class of NVDAObject and then it overrides some of the methods.
-
-NVDAObjects are used to access all controls in the operating system (to report the focus, to navigate around the system by object, etc).
-
-an NVDAObject can have event methods and script methods also. Its very much like appModules but event methods don't take any extra parameters other than the object itself.
+Debugging allows NVDA to write messages, errors or exceptions to the debug file from anywhere in its code. Messages are things like reporting that a key has been pressed, or that the focus has changed. Errors are things like something un expected happened, but it does not hinder the running of NVDA in any way. (NVDA does play an error sound if an error is written). Exceptions are written from the except part of a try  except block, and they will print the full traceback of the exception to the debug file, plus it will play an error sound.
  
-VirtualBuffer
+core.main is what starts all the subsystems such as audio, gui, IAccessible etc, and then goes in to a while loop until a certain variable becomes false, which means something is telling NVDA to exit.
 
-virtualBuffers work pretty much the same as NVDAObjects how ever they all have methods for getting lines, characters and words, and for moving around them.  The default virtualBuffer generates a buffer of the objects in the current window, and whatches for MSAA events and refreshes the parts of the buffer that have changed.  This style of virtualBuffer is good for browser windows etc, but for windows such as dos console windows and edit windows, then there is a cursorBuffer virtualBuffer type that can be used which pretty much uses the NVDAObject directly to get the information, however it does limit navigation to the lines that are currently on screen.
+Inside the while loop, NVDA executes any functions found in the core queues, executes the next part of any generator objects found in the generators core queue, and then peaks, translates and dispatches the next window message received (to keep win events going).
 
+The generator core queue and function core queues are used for functions that need to be executed in the main thread, but come from a user interface event (such as a focus change). These functions can only conain code that performs an action, but no return values can be collected by the origional event.
 
+Use core.executeFunction to add a function to one of the queues. If you have a task that needs to loop, you should write it as a generator object, yielding when you would normally sleep, and then add it using core.newThread.
 
+NVDA uses objects to represent the operating system. These objects (called NVDAObjects) have a particular set of methods and properties, yet they can be extended and replaced depending what type of Accessibility API is actually being represented by the object. This means that NVDA can talk to many different APIs, but to the user it seems to have the same look and feel over all.
 
+There are a few important objects in NVDA:
+The Desktop object - a reference to the Desktop window/object (the highest object, or root object, in the Operating system)
+The focus object - This is a reference to What NVDA regards as the object currently with focus.
+The foreground object - this is a reference to what NVDA currently regards as the object that is the foreground window/object (this could be an application's main window, or a dialog box etc).
+The navigator object - This object is used to move around the operating system by object (with its next, previous, parent and first child properties).
+The mouse object - the current object under the mouse
 
+The reason NVDA keeps these objects is so that they can have their own memory. For example, if the focus is on a checkbox, NVDA can find out that it is unchecked, but when it receives a state change  event to become checked , because it new it was previously unchecked, now it can report that it is checked. Also, new objects do not have to be made all the time if for instance the focus object gets a whole lot of events at one time.
 
+NVDA can have support for particular applications through what are called appModules. AppModules are special objects that stay around for the life of an application, and they can contain  particular code that should be executed on different user interface events for that application. Also, appModules can register specific NVDAObject types for that application, so that control-based logic can still be kept in objects, yet not have to live in the normal NVDA object code. For example, support for the MS Word _Wwg document view control is registered by the winword appModule, so when ever this control is found with in the winword application, NVDA will have the proper support for it in the NVDAObject it uses.
 
+NVDA also has virtualBuffers, which are mostly used for web browser controls (such as in Internet Explorer or Firefox). These are used to render a flat document version of a web document that origionally was made up of hyerachical nodes. 
+
+VirtualBuffers can have code for particular user interface events, they are dynamic, so they can be easily changed when new information is inserted or removed, and they can announce field types such as headings, paragraphs, form fields, lists and tables etc. Although a flat representation is rendered so that it can be arrowed up and down, the field types can still be hyerarchical (for example: list with 4 items bullet link heading level 1 My Favorite thins). This means that "my favorite things" is text that is with in a heading, inside a link, inside a list item, inside a list. Although these field types are announced when moving around, they arn't actually physically written in to the buffer, only the text exists.
+
+NVDA responds to key presses via the keyboardHandler module, and also user interface events from different Accessibility APIs. Currently only IAccessible (or MSAA) is supported. However, it shouldn't be that hard to hook in any other API if an appropriate module is written for NVDA.
+
+When a user interface event module receives an event (such as focus change, foreground change, name change, value change, reorder, state change, show, hide...), It should make sure that NVDA has a correct reference to the object with focus and the foreground object.
  
+It should also see if the current appModule supports this event, if so, it should execute the appModule event in the main thread. If not, it should see if the current virtualBuffer supports the event and if so execute it in the main thread, and if not, finally instanciate an object refering to this event, and execute the event of this object.
 
 
-    
+
+
+
+
+
+
+
+
+

@@ -1,8 +1,13 @@
 Changes since revision 297:
 *Documents in Mozilla Gecko now handle bullets and numbering of list items better. Previously a bullet would force a list item to sometimes be over two lines.
-*Configuration dialog boxes have been added for voice settings, mouse settings, keyboard echo and object presentation.
+*Configuration dialog boxes have been added for voice settings, mouse settings, keyboard echo and object presentation. All of these settings can be changed in realtime, but if the dialog box is canceled, they go back to their origional values.
 *Improved the reading of objects under the mouse more so that hopefully NVDA will not freeze if using the mouse to close a window.
-
+*Improved responsiveness and memory management in some parts of NVDA. Most noticeably NVDA no longer will sometimes freeze up for a second or two when closing some applications.
+*Progress bars in Mozilla Gecko windows now have the ability to beep on updating their values (like standard Windows progress bars)
+*When leaving the menu bar or context menu of an application, NVDA now moves back to the correct place of focus and reports it.
+*Removed the sapi4 driver because it was causing trouble on a lot of systems, plus it has to be rewritten to solve some problems to do with threading. Now NVDA only supports sapi5.
+*Added a say 'cap' before capitals option to NVDA. When on (check the checkbox in voice settings) the word 'cap' will be prepended to any single capital letter spoken. This means either when typing a capital letter with sayTypedCharacters on, or when arrowing on to a capital letter. This was added because some synthesizers may not support pitch and therefore have no way of denoting capital letters.
+ 
 Changes since revision 293:
 *Graphics in Mozilla Gecko virtualBuffers are now ignored if they do not have a title / alt attribute.
 *Page up and page down in rich edit documents now speak the line that they move to.
