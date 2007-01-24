@@ -362,6 +362,14 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 					child.speakObject()
 					break
 
+	def event_menuEnd(self):
+		audio.cancel()
+		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
+			api.setMenuMode(False)
+			obj=api.findObjectWithFocus()
+			api.setFocusObject(obj)
+			obj.event_gainFocus()
+
 	def event_valueChange(self):
 		if self.hasFocus:
 			audio.speakObjectProperties(value=self.value)

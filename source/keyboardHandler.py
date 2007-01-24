@@ -159,33 +159,7 @@ def internal_keyDownEvent(event):
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
 		debug.writeMessage("key press: %s"%keyName(keyPress))
-		if ((modifiers is None) or (modifiers==frozenset(['Shift']))) and (event.Ascii in range(33,128)):
-			if api.isTypingProtected():
-				char="*"
-			else:
-				char=chr(event.Ascii)
-			if config.conf["keyboard"]["speakTypedCharacters"]:
-				core.executeFunction(core.EXEC_SPEECH,audio.speakSymbol,char)
-			if config.conf["keyboard"]["speakTypedWords"] and (((event.Ascii>=ord('a')) and (event.Ascii<=ord('z'))) or ((event.Ascii>=ord('A')) and (event.Ascii<=ord('Z')))):
-				word+=char
-			elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				core.executeFunction(core.EXEC_SPEECH,audio.speakText,word)
-				word=""
-		else:
-			if config.conf["keyboard"]["speakCommandKeys"]:
-				keyList=[]
-				if (modifiers is not None) and (len(modifiers)>0):
-					keyList+=modifiers
-				keyList.append(mainKey)
-				label=""
-				for item in keyList:
-					if item is not None:
-						label+="+%s"%item
-				debug.writeMessage("speaking key: %s"%label)
-				core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,label[1:])
-			if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-				core.executeFunction(core.EXEC_SPEECH,audio.speakText,word)
-				word=""
+		core.executeFunction(core.EXEC_KEYBOARD,speakKey,keyPress,event.Ascii)
 		if api.keyHasScript(keyPress):
 			core.executeFunction(core.EXEC_KEYBOARD,api.executeScript,keyPress)
 			keyUpIgnoreSet.add((event.Key,event.Extended))
@@ -196,6 +170,36 @@ def internal_keyDownEvent(event):
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
 		audio.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
 		return True
+
+def speakKey(keyPress,ascii):
+	global word
+	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift']))) and (ascii in range(33,128)):
+		if api.isTypingProtected():
+			char="*"
+		else:
+			char=chr(ascii)
+		if config.conf["keyboard"]["speakTypedCharacters"]:
+			audio.speakSymbol(char)
+		if config.conf["keyboard"]["speakTypedWords"] and (((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
+			word+=char
+		elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+			audio.speakText(word)
+			word=""
+	else:
+		if config.conf["keyboard"]["speakCommandKeys"]:
+			keyList=[]
+			if (keyPress[0] is not None) and (len(keyPress[0])>0):
+				keyList+=keyPress[0]
+			audio.speakMessage("%s"%ascii)
+			if ascii in range(33,128):
+				keyList.append(chr(ascii))
+			else:
+				keyList.append(keyPress[1])
+			label="+".join(keyList)
+			audio.speakMessage(keyList)
+		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
+			audio.speakMessage(word)
+			word=""
 
 def internal_keyUpEvent(event):
 	"""Event that pyHook calls when it receives keyUps"""

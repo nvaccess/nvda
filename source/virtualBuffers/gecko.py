@@ -77,6 +77,8 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def event_IAccessible_stateChange(self,hwnd,objectID,childID):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
+		if not obj:
+			return
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):

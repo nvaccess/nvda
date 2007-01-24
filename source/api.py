@@ -34,6 +34,14 @@ def showGui():
 	"""Instructs the GUI to become visible and move in to focus."""
 	gui.showGui()
 
+def findObjectWithFocus():
+	prevObj=getDesktopObject()
+	obj=prevObj.activeChild
+	while obj and obj!=prevObj:
+		prevObj=obj
+		obj=obj.activeChild
+	return prevObj
+
 def getFocusObject():
 	"""
 Gets the current object with focus.
@@ -145,7 +153,7 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 	if appModuleHandler.getActiveModule().getScript(keyPress):
 		return True
 	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
-	if not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
+	if not getMenuMode() and not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
 		return True
 	if isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
 		return True
@@ -170,7 +178,7 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
 	if appModuleHandler.getActiveModule().getScript(keyPress):
 		script=appModuleHandler.getActiveModule().getScript(keyPress)
-	elif not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
+	elif not getMenuMode() and not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
 		script=virtualBuffer.getScript(keyPress)
 	elif isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
 		script=getFocusObject().getScript(keyPress)

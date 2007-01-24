@@ -366,3 +366,12 @@ class appModule(object):
 			audio.speakMessage(_("speak object under mouse"))
 		else:
 			audio.speakMessage(_("don't speak object under mouse"))
+
+	def script_test(self,keyPress):
+		audio.speakMessage("test")
+		prevObj=api.getDesktopObject()
+		obj=prevObj.activeChild
+		while obj and obj!=prevObj:
+			prevObj=obj
+			obj=obj.activeChild
+		prevObj.speakObject()
