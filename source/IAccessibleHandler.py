@@ -483,9 +483,11 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#Process foreground events
 		if eventName=="foreground":
 			core.executeFunction(core.EXEC_USERINTERFACE,foregroundEvent,window,objectID,childID)
+			return
 		#Process focus events
 		elif eventName=="gainFocus":
 			core.executeFunction(core.EXEC_USERINTERFACE,focusEvent,window,objectID,childID)
+			return
 		#Give this event to the current appModule if it supports it
 		elif hasattr(appModule,"event_IAccessible_%s"%eventName):
 			core.executeFunction(core.EXEC_USERINTERFACE,getattr(appModule,"event_IAccessible_%s"%eventName),window,objectID,childID) 
@@ -513,6 +515,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		debug.writeException("objectEventCallback")
 
 def foregroundEvent(window,objectID,childID):
+	res=False
 	appModuleHandler.update()
 	appModule=appModuleHandler.getActiveModule()
 	virtualBuffers.IAccessible.update(window)
@@ -522,14 +525,15 @@ def foregroundEvent(window,objectID,childID):
 		return
 	api.setForegroundObject(obj)
 	if hasattr(appModule,"event_IAccessible_foreground"):
-		appModule.event_IAccessible_foreground(window,objectID,childID)
-	elif hasattr(virtualBuffer,"event_IAccessible_foreground"):
-		virtualBuffer.event_IAccessible_foreground(window,objectID,childID)
-	elif hasattr(obj,"event_foreground"):
+		res=appModule.event_IAccessible_foreground(window,objectID,childID)
+	if not res and hasattr(virtualBuffer,"event_IAccessible_foreground"):
+		res=virtualBuffer.event_IAccessible_foreground(window,objectID,childID)
+	if not res and hasattr(obj,"event_foreground"):
 		obj.event_foreground()
 
 def focusEvent(window,objectID,childID):
 	oldFocus=api.getFocusObject()
+	res=False
 	#If the object already is the focus object then ignore it
 	if window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accChild:
 		return 
@@ -542,11 +546,9 @@ def focusEvent(window,objectID,childID):
 		return
 	api.setFocusObject(obj)
 	if hasattr(appModule,"event_IAccessible_gainFocus"):
-		appModule.event_IAccessible_gainFocus(window,objectID,childID)
-	elif hasattr(virtualBuffer,"event_IAccessible_gainFocus"):
+		res=appModule.event_IAccessible_gainFocus(window,objectID,childID)
+	if not res and hasattr(virtualBuffer,"event_IAccessible_gainFocus"):
 		res=virtualBuffer.event_IAccessible_gainFocus(window,objectID,childID)
-	else:
-		res=False
 	if not res and hasattr(obj,"event_gainFocus"):
 		obj.event_gainFocus()
 
