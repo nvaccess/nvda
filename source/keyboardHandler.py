@@ -159,6 +159,13 @@ def internal_keyDownEvent(event):
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return True
 		debug.writeMessage("key press: %s"%keyName(keyPress))
+		if mainKey=="Capital":
+			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
+			core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
+		elif mainKey=="ExtendedNumlock":
+			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
+			core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
+
 		core.executeFunction(core.EXEC_KEYBOARD,speakKey,keyPress,event.Ascii)
 		if api.keyHasScript(keyPress):
 			core.executeFunction(core.EXEC_KEYBOARD,api.executeScript,keyPress)
@@ -190,7 +197,6 @@ def speakKey(keyPress,ascii):
 			keyList=[]
 			if (keyPress[0] is not None) and (len(keyPress[0])>0):
 				keyList+=keyPress[0]
-			audio.speakMessage("%s"%ascii)
 			if ascii in range(33,128):
 				keyList.append(chr(ascii))
 			else:

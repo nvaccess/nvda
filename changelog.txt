@@ -7,7 +7,11 @@ Changes since revision 297:
 *When leaving the menu bar or context menu of an application, NVDA now moves back to the correct place of focus and reports it.
 *Removed the sapi4 driver because it was causing trouble on a lot of systems, plus it has to be rewritten to solve some problems to do with threading. Now NVDA only supports sapi5.
 *Added a say 'cap' before capitals option to NVDA. When on (check the checkbox in voice settings) the word 'cap' will be prepended to any single capital letter spoken. This means either when typing a capital letter with sayTypedCharacters on, or when arrowing on to a capital letter. This was added because some synthesizers may not support pitch and therefore have no way of denoting capital letters.
- 
+*Caps lock and Num lock now speak when being turned on and off.
+*NVDA no longer hides its user interface on startup by default. If you want it to hide by default, check the "Hide user interface on startup" checkbox in the User Interface settings dialog on the preferences menu.
+*Added an option to automatically save the current configuration on exit. (Found in the User Interface settings dialog)
+*The NVDA interface now contains a navigatable text control in the main part of its window, which contains a quick-start document explaining how the User interface works, and also documents many useful NVDA key strokes.
+
 Changes since revision 293:
 *Graphics in Mozilla Gecko virtualBuffers are now ignored if they do not have a title / alt attribute.
 *Page up and page down in rich edit documents now speak the line that they move to.

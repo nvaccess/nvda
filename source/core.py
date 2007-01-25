@@ -98,7 +98,7 @@ def applyConfiguration(reportDone=False):
 """
 	config.load()
 	#Language
-	lang = config.conf["language"]["language"]
+	lang = config.conf["general"]["language"]
 	try:
 		gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
 	except IOError:
@@ -117,11 +117,12 @@ def main():
 		for num in range(EXEC_LAST+1):
 			queueList.append(Queue.Queue(1000))
 		applyConfiguration()
+		config.save()
 		audio.speakMessage(_("NVDA started"),wait=True)
 		appModuleHandler.initialize()
 		api.setDesktopObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0))
 		api.setForegroundObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),IAccessibleHandler.OBJID_CLIENT,0))
-		api.setFocusObject(api.getForegroundObject())
+		api.setFocusObject(api.findObjectWithFocus())
 		api.setNavigatorObject(api.getFocusObject())
 		(x,y)=winUser.getCursorPos()
 		api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
@@ -170,4 +171,5 @@ def main():
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
 	IAccessibleHandler.terminate()
+	audio.cancel()
 	return True

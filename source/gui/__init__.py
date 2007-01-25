@@ -13,6 +13,62 @@ from settingsDialogs import *
 
 ### Constants
 appTitle = _("NVDA Interface")
+quickStartMessage=_("""NVDA Quick-Start
+
+This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.
+
+To bring this window up at any time, press insert+n. To close this window with out exiting NVDA, press alt+f4 when on this window.
+
+To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menu in this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
+
+To set the preferences (such as voice settings, key echo, reading of tooltips etc),
+Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. 
+
+By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.
+
+Some usefull key commands when using NVDA are:
+
+General key strokes:
+control - interupt speech
+insert+1 - turns keyboard help on and off
+insert+upArrow - reports the object with focus
+insert+downArrow - starts sayAll (press control or any other key to stop)
+insert+f12 - report time and date
+insert+2 - turn speaking of typed characters on and off
+insert+3 turn speaking of typed words on and off
+insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off
+insert+pageUp - increase rate of speech
+insert+pageDown - decrease rate of speech
+insert+p - turn reading of punctuation on and off
+insert+s - toggle speech modes (off, talk and beeps)
+insert+m - turn  reading of objects under the mouse on and off
+insert+f - report current font (when in a document)
+
+Object navigation:
+insert+numpadAdd - Where am I
+insert+numpad5 - current object
+insert+numpad8 - parent object
+insert+numpad4 - previous object
+insert+numpad6 - next object
+insert+numpad2 - first child object
+insert+numpadMinus - move to focus object
+ 
+Reviewing the current object:
+shift+numpad7 - move to top line
+numpad7 - previous line
+numpad8 - current line
+numpad9 - next line
+shift+numpad9 - bottom line
+numpad4 - previous word
+numpad5 - current word
+numpad6 - next word
+shift+numpad1 - start of line
+numpad1 - previous character
+numpad2 - current character
+numpad3 - next character
+shift+numpad3 - end of line
+""")
+ 
 #iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
 id_onShowGuiCommand=wx.NewId()
@@ -44,6 +100,9 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		menuBar.Append(menu_NVDA,_("&NVDA"))
 		menu_preferences=wx.Menu()
+		id_interfaceSettingsCommand=wx.NewId()
+		menu_preferences.Append(id_interfaceSettingsCommand,_("&User interface...\tctrl+shift+u"),_("Change user interface settings"))
+		wx.EVT_MENU(self,id_interfaceSettingsCommand,self.onInterfaceSettingsCommand)
 		id_SynthesizerCommand=wx.NewId()
 		menu_preferences.Append(id_SynthesizerCommand,_("&Synthesizer...\tctrl+shift+s"),_(" the synthesizer to use"))
 		wx.EVT_MENU(self,id_SynthesizerCommand,self.onSynthesizerCommand)
@@ -65,10 +124,19 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		menuBar.Append(menu_help,_("&Help"))
 		self.SetMenuBar(menuBar)
+		sizer=wx.BoxSizer(wx.VERTICAL)
+		textCtrl=wx.TextCtrl(self,-1,size=(300,300),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
+		sizer.Add(textCtrl)
+		sizer.Fit(self)
+		self.SetSizer(sizer)
+		textCtrl.AppendText(quickStartMessage)
+		textCtrl.SetSelection(0,0)
 		#icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
 		#self.SetIcon(icon)
+		self.Center()
 		self.Show(True)
-		self.Show(False)
+		if config.conf["general"]["hideInterfaceOnStartup"]:
+			self.Show(False)
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False
@@ -99,10 +167,19 @@ class MainFrame(wx.Frame):
 		self.SetFocus()
 		d = wx.MessageDialog(self, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if d.ShowModal() == wx.ID_YES:
+			if config.conf["general"]["saveConfigurationOnExit"]:
+				config.save()
 			globalVars.stayAlive=False
 			self.Destroy()
 		elif not wasShown:
 			self.onHideGuiCommand(None)
+
+	def onInterfaceSettingsCommand(self,evt):
+		oldHide=config.conf["general"]["hideInterfaceOnStartup"]
+		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["general"]["hideInterfaceOnStartup"]=oldHide
+
 
 	def onSynthesizerCommand(self,evt):
 		synthList=synthDriverHandler.getDriverList()

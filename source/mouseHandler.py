@@ -38,7 +38,6 @@ def executeMouseMoveEvent(x,y):
 	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return
 	isEntering=False
-
 	res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
 	if not res:
 		return

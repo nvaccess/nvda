@@ -18,8 +18,10 @@ val = Validator()
 confspec = StringIO("""# NVDA Configuration File
 
 #Language settings
-[language]
+[general]
 	language = string(default="enu")
+	hideInterfaceOnStartup = boolean(default=False)
+	saveConfigurationOnExit = boolean(default=False)
 
 # Speech settings
 [speech]

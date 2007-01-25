@@ -367,8 +367,9 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
 			api.setMenuMode(False)
 			obj=api.findObjectWithFocus()
-			api.setFocusObject(obj)
-			obj.event_gainFocus()
+			if obj!=api.getFocusObject():
+				api.setFocusObject(obj)
+				obj.event_gainFocus()
 
 	def event_valueChange(self):
 		if self.hasFocus:

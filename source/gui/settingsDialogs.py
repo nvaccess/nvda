@@ -3,6 +3,34 @@ import synthDriverHandler
 import debug
 import config
 
+class interfaceSettingsDialog(wx.Dialog):
+
+ 	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		hideInterfaceCheckBoxID=wx.NewId()
+		hideInterfaceCheckBox=wx.CheckBox(self,hideInterfaceCheckBoxID,label=_("Hide user interface on startup"))
+		hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
+		wx.EVT_CHECKBOX(self,hideInterfaceCheckBoxID,self.onHideInterfaceChange)
+		settingsSizer.Add(hideInterfaceCheckBox,border=10,flag=wx.BOTTOM)
+		saveOnExitCheckBoxID=wx.NewId()
+		saveOnExitCheckBox=wx.CheckBox(self,saveOnExitCheckBoxID,label=_("Save configuration on exit"))
+		saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
+		wx.EVT_CHECKBOX(self,saveOnExitCheckBoxID,self.onSaveOnExitChange)
+		settingsSizer.Add(saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+
+	def onHideInterfaceChange(self,evt):
+		config.conf["general"]["hideInterfaceOnStartup"]=evt.IsChecked()
+
+	def onSaveOnExitChange(self,evt):
+		config.conf["general"]["saveConfigurationOnExit"]=evt.IsChecked()
+
 class voiceSettingsDialog(wx.Dialog):
 
 	def __init__(self,parent,ID,title):
