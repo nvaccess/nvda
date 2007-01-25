@@ -109,6 +109,16 @@ class appModule(object):
 		curObject.speakObject()
 		return False
 
+	def script_navigator_object_currentDimensions(self,keyPress):
+		obj=api.getNavigatorObject()
+		if not obj:
+			audio.speakMessage(_("no navigator object"))
+		location=obj.location
+		if not location:
+			audio.speakMessage(_("No location information for navigator object"))
+		(left,top,width,height)=location
+		audio.speakMessage("%d wide by %d high, located %d from left and %d from top"%(width,height,left,top))
+   
 	def script_navigator_object_toFocus(self,keyPress):
 		"""Moves the navigator to the object with focus"""
 		obj=api.getFocusObject()
@@ -184,10 +194,10 @@ class appModule(object):
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
 			audio.speakMessage(_("no navigator object"))
 			return
+		curObject=curObject.parent
 		while curObject is not None:
+			audio.speakMessage("in")
 			curObject.speakObject()
-			l=curObject.location
-			audio.speakMessage("%d wide and %d high, located at %d from left and %d from top"%(l[2],l[3],l[0],l[1]))
 			curObject=curObject.parent
 
 	def script_navigator_review_top(self,keyPress):
@@ -367,11 +377,8 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("don't speak object under mouse"))
 
-	def script_test(self,keyPress):
-		audio.speakMessage("test")
-		prevObj=api.getDesktopObject()
-		obj=prevObj.activeChild
-		while obj and obj!=prevObj:
-			prevObj=obj
-			obj=obj.activeChild
-		prevObj.speakObject()
+	def script_title(self,keyPress):
+		"""Reports the title of the current application or foreground window"""
+		obj=api.getForegroundObject()
+		if obj:
+			obj.speakObject()

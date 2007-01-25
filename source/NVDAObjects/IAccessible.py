@@ -586,7 +586,7 @@ class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_I
 class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
 
 	def event_valueChange(self):
-		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
+		if config.conf["presentation"]["beepOnProgressBarUpdates"] and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			val=self.value
 			if val=="" or val is None:
 				return

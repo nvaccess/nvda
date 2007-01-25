@@ -3,7 +3,7 @@
 #where key is a combination of optional modifier keys, plus one normal key, all joined by a + (plus) symbol.
 #and script is the name of an instance method from this module's appModule class (with the 'script_' removed)
   
-insert+t=test
+insert+t=title
 insert+n=showGui
 insert+q=quit
 insert+s=speechMode
@@ -20,6 +20,7 @@ insert+extendedDivide=moveMouseToNavigatorObject
 insert+Multiply=moveNavigatorObjectToMouse
 insert+extendedUp=reportCurrentFocus
 Insert+Clear=navigator_object_current
+Shift+Insert+Clear=navigator_object_currentDimensions
 insert+Subtract=navigator_object_toFocus
 Insert+Up=navigator_object_parent
 Insert+Down=navigator_object_firstChild

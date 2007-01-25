@@ -11,6 +11,9 @@ Changes since revision 297:
 *NVDA no longer hides its user interface on startup by default. If you want it to hide by default, check the "Hide user interface on startup" checkbox in the User Interface settings dialog on the preferences menu.
 *Added an option to automatically save the current configuration on exit. (Found in the User Interface settings dialog)
 *The NVDA interface now contains a navigatable text control in the main part of its window, which contains a quick-start document explaining how the User interface works, and also documents many useful NVDA key strokes.
+*Added a script to report the title of the active window (insert+t). Like speak title in many other screen readers.
+*The navigator where am I script (insert+numpadAdd) now starts from the object that is a parent to the current navigator object, rather than starting from the actual current navigator object. This is to make it quicker to find out where you are since you can already report the current navigator object with insert+numpad5. The script now also says the word 'in' before each object to separate the objects more clearly.
+*Added a script to report the dimentions and location (in pixles)of the current navigator object (shift+insert+numpad5) 
 
 Changes since revision 293:
 *Graphics in Mozilla Gecko virtualBuffers are now ignored if they do not have a title / alt attribute.

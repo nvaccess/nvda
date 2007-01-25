@@ -239,7 +239,9 @@ def getDesktopWindow():
 		return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
-	return user32.GetWindowLong(hwnd)
+	return 0 
+	#Need value of GWL_ID
+	#return user32.GetWindowLong(hwnd,GWL_ID)
 
 def getClientRect(hwnd):
 	return user32.GetClientRect(hwnd)

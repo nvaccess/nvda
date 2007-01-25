@@ -33,6 +33,7 @@ control - interupt speech
 insert+1 - turns keyboard help on and off
 insert+upArrow - reports the object with focus
 insert+downArrow - starts sayAll (press control or any other key to stop)
+insert+t speak title
 insert+f12 - report time and date
 insert+2 - turn speaking of typed characters on and off
 insert+3 turn speaking of typed words on and off
@@ -47,12 +48,17 @@ insert+f - report current font (when in a document)
 Object navigation:
 insert+numpadAdd - Where am I
 insert+numpad5 - current object
+shift+insert+numpad5 - dimensions and location of current object
 insert+numpad8 - parent object
 insert+numpad4 - previous object
 insert+numpad6 - next object
 insert+numpad2 - first child object
 insert+numpadMinus - move to focus object
- 
+ insert+end - move to statusbar
+insert+numpadDivide - Move mouse to current navigator object
+insert+numpadMultiply - move to mouse
+insert+numpadEnter - activate current object
+
 Reviewing the current object:
 shift+numpad7 - move to top line
 numpad7 - previous line
@@ -162,7 +168,7 @@ class MainFrame(wx.Frame):
 		wasShown=self.IsShown()
 		if not wasShown:
 			self.onShowGuiCommand(None)
-		winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
+		#winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
 		self.Raise()
 		self.SetFocus()
 		d = wx.MessageDialog(self, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
