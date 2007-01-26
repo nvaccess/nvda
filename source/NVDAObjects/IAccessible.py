@@ -219,7 +219,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			nextObject=NVDAObject_IAccessible(res[0],res[1])
 			if nextObject and (nextObject.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
-			return nextObject
+			return nextObject if nextObject.role!=0 else None
 
 	def _get_previous(self):
 		res=IAccessibleHandler.accParent(self._pacc,self._accChild)
@@ -254,7 +254,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_children(self):
 		childCount=self.childCount
 		if childCount>0:
-			children=[NVDAObject_IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self._pacc,0,childCount)]
+			children=[NVDAObject_IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self._pacc,0,childCount) if x]
 			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
 			children=[x for x in children if x]
 			return children
@@ -363,12 +363,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 					break
 
 	def event_menuEnd(self):
-		audio.cancel()
+		#audio.cancel()
 		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
 			api.setMenuMode(False)
 			obj=api.findObjectWithFocus()
 			if obj!=api.getFocusObject():
 				api.setFocusObject(obj)
+				audio.cancel()
 				obj.event_gainFocus()
 
 	def event_valueChange(self):
@@ -414,23 +415,7 @@ class NVDAObject_dialog(NVDAObject_IAccessible):
 
 	def event_foreground(self):
 		super(NVDAObject_dialog,self).event_foreground()
-		for child in self.children:
-			states=child.states
-			if (not states&IAccessibleHandler.STATE_SYSTEM_OFFSCREEN) and (not states&IAccessibleHandler.STATE_SYSTEM_INVISIBLE) and (not states&IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE):
-				child.speakObject()
-				if child.states&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
-					audio.speakObjectProperties(stateText=child.getStateName(IAccessibleHandler.STATE_SYSTEM_FOCUSED))
-				if child.states&IAccessibleHandler.STATE_SYSTEM_DEFAULT:
-					audio.speakObjectProperties(stateText=child.getStateName(IAccessibleHandler.STATE_SYSTEM_DEFAULT))
-			if child.role==IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE:
-				for grandChild in child.children:
-					states=grandChild.states
-					if (not states&IAccessibleHandler.STATE_SYSTEM_OFFSCREEN) and (not states&IAccessibleHandler.STATE_SYSTEM_INVISIBLE) and (not states&IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE):
-						grandChild.speakObject()
-						if grandChild.states&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
-							audio.speakObjectProperties(stateText=grandChild.getStateName(IAccessibleHandler.STATE_SYSTEM_FOCUSED))
-						if grandChild.states&IAccessibleHandler.STATE_SYSTEM_DEFAULT:
-							audio.speakObjectProperties(stateText=grandChild.getStateName(IAccessibleHandler.STATE_SYSTEM_DEFAULT))
+		self.speakDescendantObjects()
 
 class NVDAObject_TrayClockWClass(NVDAObject_IAccessible):
 	"""
@@ -776,6 +761,11 @@ class NVDAObject_list(NVDAObject_IAccessible):
 			name=super(NVDAObject_IAccessible,self).name
 		return name
 
+	def speakDescendantObjects(self,hashList=None):
+		child=self.activeChild
+		if child:
+			child.speakObject()
+
 	def event_gainFocus(self):
 		NVDAObject_IAccessible.event_gainFocus(self)
 		child=self.activeChild
@@ -785,6 +775,20 @@ class NVDAObject_list(NVDAObject_IAccessible):
 			child.event_gainFocus()
 		elif not self.firstChild:
 			audio.speakMessage(_("%d items")%0)
+
+class NVDAObject_comboBox(NVDAObject_IAccessible):
+
+	def speakDescendantObjects(self,hashList=None):
+		child=self.activeChild
+		if child:
+			child.speakObject()
+
+class NVDAObject_outline(NVDAObject_IAccessible):
+
+	def speakDescendantObjects(self,hashList=None):
+		child=self.activeChild
+		if child:
+			child.speakObject()
 
 class NVDAObject_progressBar(NVDAObject_IAccessible):
 
@@ -898,6 +902,8 @@ _staticMap={
 (None,IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
 ("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
 (None,IAccessibleHandler.ROLE_SYSTEM_LIST):NVDAObject_list,
+(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):NVDAObject_comboBox,
+(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):NVDAObject_outline,
 ("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerEdit,

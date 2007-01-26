@@ -188,7 +188,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		#Collect the children
 		#Use IAccessible directly to save time
 		#Don't get children of combo boxes or text objects
-		if role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,IAccessibleHandler.ROLE_SYSTEM_TEXT]:
+		if role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,IAccessibleHandler.ROLE_SYSTEM_TEXT,"embed"]:
 			hwnd=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
 			children=[NVDAObject_IAccessible(x[0],x[1],hwnd=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]

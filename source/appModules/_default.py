@@ -382,3 +382,9 @@ class appModule(object):
 		obj=api.getForegroundObject()
 		if obj:
 			obj.speakObject()
+
+	def script_speakForeground(self,keyPress):
+		obj=api.getForegroundObject()
+		if obj:
+			obj.speakObject()
+			obj.speakDescendantObjects()

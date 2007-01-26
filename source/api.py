@@ -186,7 +186,7 @@ The order of checking is keyboardHelp (if keyboard help is on), appModule, virtu
 		script=None
 	if globalVars.keyboardHelp:
 		if script:
-			name=script.__name__[6:]
+			name=script.__name__[7:]
 			if script.im_self.__class__.__name__=="appModule":
 				container="module %s"%script.im_self.__class__.__module__
 			else:

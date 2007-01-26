@@ -297,6 +297,18 @@ Speaks the properties of this object such as name, typeString,value, description
 		contains=self.contains
 		audio.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position,level=level,contains=contains)
 
+	def speakDescendantObjects(self,hashList=None):
+		if hashList is None:
+			hashList=[]
+		child=self.firstChild
+		while child:
+			h=hash(child)
+			if h not in hashList:
+				hashList.append(h)
+				child.speakObject()
+				child.speakDescendantObjects(hashList=hashList)
+			child=child.next
+
 	def event_gainFocus(self):
 		"""
 This code is executed if a gain focus event is received by this object.
