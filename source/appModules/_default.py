@@ -388,3 +388,13 @@ class appModule(object):
 		if obj:
 			obj.speakObject()
 			obj.speakDescendantObjects()
+
+	def script_navigator_object_currentTechnicalInfo(self,keyPress):
+		obj=api.getNavigatorObject()
+		if not obj:
+			return
+		audio.speakMessage("type: %s"%obj.__class__.__name__)
+		for key in filter(lambda x: x.startswith('_get_'),dir(obj)):
+			audio.speakMessage("property %s: %s"%(key[5:],str(getattr(obj,key)())))
+		for key in filter(lambda x: not x.startswith('__') or not x.startswith('_get_') or not x.startswith('_set_') or not callable(getattr(obj,x)),dir(obj)):
+			audio.speakMessage("property %s: %s"%(key,getattr(obj,key)))

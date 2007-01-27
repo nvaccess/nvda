@@ -131,6 +131,7 @@ STATE_SYSTEM_VALID=0x1fffffff
 NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 
+import tones
 import ctypes
 import comtypesClient
 import comtypes.automation
@@ -447,6 +448,9 @@ winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
+		#Change window objIDs to client objIDs for better reporting of objects
+		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
+			objectID=OBJID_CLIENT
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
@@ -468,9 +472,6 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#Ignore any other destroy events since the object does not exist
 		if eventName=="destroy":
 			return
-		#Change window objIDs to client objIDs for better reporting of objects
-		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
-			objectID=OBJID_CLIENT
 		#Report mouse shape changes
 		if (eventID==winUser.EVENT_OBJECT_NAMECHANGE) and (objectID==OBJID_CURSOR):
 			if not config.conf["mouse"]["reportMouseShapeChanges"]:
@@ -489,7 +490,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			core.executeFunction(core.EXEC_USERINTERFACE,focusEvent,window,objectID,childID)
 			return
 		#Give this event to the current appModule if it supports it
-		elif hasattr(appModule,"event_IAccessible_%s"%eventName):
+		if hasattr(appModule,"event_IAccessible_%s"%eventName):
 			core.executeFunction(core.EXEC_USERINTERFACE,getattr(appModule,"event_IAccessible_%s"%eventName),window,objectID,childID) 
 		#Let through events for the current virtualBuffer
 		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
@@ -504,7 +505,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif objectID==OBJID_CARET:
 			return
 		#Ignore any other hide or locationChange events
-		if eventName in ["hide","locationChange"]:
+		elif eventName in ["hide","locationChange"]:
 			return
 		#Any other events now should be passed straight to their own objects
 		else:

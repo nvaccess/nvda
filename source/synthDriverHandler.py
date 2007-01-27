@@ -68,77 +68,107 @@ def setDriver(name):
 		return False
 
 def getRate():
-	value=driverObject.rate
-	if value<0:
-		value=0
-	if value>100:
-		value=100
+	try:
+		value=driverObject.rate
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+	except:
+		value=50
 	return value
 
 def setRate(value):
-	if value<0:
-		value=0
-	if value>100:
-		value=100
-	driverObject.rate=value
-	config.conf["speech"][driverName]["rate"]=getRate()
+	try:
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+		driverObject.rate=value
+		config.conf["speech"][driverName]["rate"]=getRate()
+	except:
+		pass
 
 def getPitch():
-	value=driverObject.pitch
-	if value<0:
+	try:
+		value=driverObject.pitch
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+	except:
 		value=0
-	if value>100:
-		value=100
 	return value
 
 def setPitch(value):
-	if value<0:
-		value=0
-	if value>100:
-		value=100
-	driverObject.pitch=value
-	config.conf["speech"][driverName]["pitch"]=getPitch()
+	try:
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+		driverObject.pitch=value
+		config.conf["speech"][driverName]["pitch"]=getPitch()
+	except:
+		pass
 
 def getVolume():
-	value=driverObject.volume
-	if value<0:
+	try:
+		value=driverObject.volume
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+	except:
 		value=0
-	if value>100:
-		value=100
 	return value
 
 def setVolume(value):
-	if value<0:
-		value=0
-	if value>100:
-		value=100
-	driverObject.volume=value
-	config.conf["speech"][driverName]["volume"]=getVolume()
+	try:
+		if value<0:
+			value=0
+		if value>100:
+			value=100
+		driverObject.volume=value
+		config.conf["speech"][driverName]["volume"]=getVolume()
+	except:
+		pass
 
 def getVoice():
-	return driverObject.voice
+	try:
+		return driverObject.voice
+	except:
+		return 1
 
 def setVoice(value):
-	driverObject.voice=value
-	config.conf["speech"][driverName]["voice"]=getVoice()
-	driverObject.rate=config.conf["speech"][driverName]["rate"]
+	try:
+		driverObject.voice=value
+		config.conf["speech"][driverName]["voice"]=getVoice()
+		driverObject.rate=config.conf["speech"][driverName]["rate"]
+	except:
+		pass
 
 def getVoiceNames():
-	return driverVoiceNames
+	try:
+		return driverVoiceNames
+	except:
+		return []
 
 def speakText(text,wait=False,index=None):
-	driverObject.speakText(text,wait=wait,index=index)
+	try:
+		driverObject.speakText(text,wait=wait,index=index)
+	except:
+		pass
 
 def cancel():
-	driverObject.cancel()
+	try:
+		driverObject.cancel()
+	except:
+		pass
 
 def getLastIndex():
-	index=driverObject.lastIndex
-	if index is not None:
-		return index
-
-def getSupportedLanguages():
-	return driverObject.supportedLanguages
-
-def setLanguage(value):
-	driverObject.language=value
+	try:
+		index=driverObject.lastIndex
+		if index is not None:
+			return index
+	except:
+		return None

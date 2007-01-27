@@ -166,30 +166,38 @@ class virtualBuffer(object):
 		return zOrder
 
 	def addText(self,ID,text,position=None):
+		isAppending=False
+		isMurging=False
 		text=text.replace('\r\n','\n')
 		text=text.replace('\r','\n')
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		if len(text)>maxLineLength:
 			wrapper = TextWrapper(width=config.conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
 		 	text=wrapper.fill(text)
+		bufLen=len(self.text)
+		textLen=len(text)
 		IDs=self._IDs
-		IDZOrder=self.getIDZOrder(ID)
 		#If no position given, assume end of buffer
 		if position is None:
-			position=len(self.text)
+			position=bufLen
+			isAppending=True
 		#If this ID path already has a range, expand it to fit the new text
-		if (IDs[ID]['range'][1]==position) and (IDs[ID]['range'][1]>IDs[ID]['range'][0]):
+		r=IDs[ID]['range']
+		if (r[1]==position) and (r[1]>r[0]):
 			position=position-1
+			isMurging=True
 		self.text= "".join([self.text[0:position],text,'\n',self.text[position:]])
-		extraLength=len(text)+1
-		IDs[ID]['range'][1]=position+extraLength
+		extraLength=textLen+1
+		r[1]=position+extraLength
 		#Recalculate the ranges of IDs that are before and after this ID in its family tree Z order
-		for i in IDs: 
-			r=IDs[i]['range']
-			if r[1]>position and r[0]<=position and self.getIDZOrder(i)<IDZOrder:
-				r[1]=r[1]+extraLength
-			elif r[0]>=position and self.getIDZOrder(i)>IDZOrder:
-				(r[0],r[1])=(r[0]+extraLength,r[1]+extraLength)
+		if not isAppending:
+			IDZOrder=self.getIDZOrder(ID)
+			for i in IDs: 
+				r=IDs[i]['range']
+				if r[1]>position and r[0]<=position and self.getIDZOrder(i)<IDZOrder:
+					r[1]=r[1]+extraLength
+				elif r[0]>=position and self.getIDZOrder(i)>IDZOrder:
+					(r[0],r[1])=(r[0]+extraLength,r[1]+extraLength)
 		return position+extraLength
 
 	def destroyIDDescendants(self,ID):

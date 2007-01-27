@@ -188,13 +188,19 @@ class MainFrame(wx.Frame):
 
 
 	def onSynthesizerCommand(self,evt):
-		synthList=synthDriverHandler.getDriverList()
+		try:
+			synthList=synthDriverHandler.getDriverList()
+		except:
+			synthList=[]
 		choices=[]
 		for item in synthList:
 			choices.append("%s: %s"%(item,synthDriverHandler.getDriverDescription(item)))
 		d=wx.SingleChoiceDialog(self,_("Choose the synthesizer to use"),_("Synthesizer"),choices)
-		debug.writeMessage("onSynthesizerCommand: current: %s, list: %s"%(synthDriverHandler.driverName,choices))
-		d.SetSelection(synthList.index(synthDriverHandler.driverName))
+		try:
+			index=synthList.index(synthDriverHandler.driverName)
+			d.SetSelection(index)
+		except:
+			pass
 		if d.ShowModal()==wx.ID_OK:
 			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
 

@@ -77,6 +77,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	allowedNegativeStates=0
 
 	def __init__(self,*args):
+		self._oldValue=None
+		self._oldName=None
+		self._oldDescription=None
 		self._keyMap={}
 		self.speakOnGainFocus=True
 		self.needsFocusState=True
@@ -967,3 +970,21 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			sendKey(keyPress)
 			audio.speakText("")
 		self.text_reviewOffset=self.text_caretOffset
+
+	def event_valueChange(self):
+		value=self.value
+		if self.hasFocus and value!=self._oldValue:
+			audio.speakObjectProperties(value=self.value)
+			self._oldValue=value
+
+	def event_nameChange(self):
+		name=self.name
+		if self.hasFocus and name!=self._oldName:
+			audio.speakObjectProperties(name=self.name)
+			self._oldName=name
+
+	def event_descriptionChange(self):
+		description=self.description
+		if self.hasFocus and description!=self._oldDescription:
+			audio.speakObjectProperties(description=self.description)
+			self._oldDescription=description

@@ -187,8 +187,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			ID=parentID
 		#Collect the children
 		#Use IAccessible directly to save time
-		#Don't get children of combo boxes or text objects
-		if role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,IAccessibleHandler.ROLE_SYSTEM_TEXT,"embed"]:
+		#Don't get children of combo boxes or embed objects
+		if obj.childCount>0 and role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,"embed"]:
 			hwnd=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
 			children=[NVDAObject_IAccessible(x[0],x[1],hwnd=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
@@ -204,7 +204,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		info['parent']=parentID
 		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x is not None]
 		info['labeledBy']=getNVDAObjectID(obj.labeledBy)
-		if (role==IAccessibleHandler.ROLE_SYSTEM_STATICTEXT) or ((role==IAccessibleHandler.ROLE_SYSTEM_TEXT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY)):
+		if role==IAccessibleHandler.ROLE_SYSTEM_TEXT and states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			data=obj.value
 			if data and not data.isspace():
 				text="%s "%data

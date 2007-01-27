@@ -372,14 +372,6 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 				audio.cancel()
 				obj.event_gainFocus()
 
-	def event_valueChange(self):
-		if self.hasFocus:
-			audio.speakObjectProperties(value=self.value)
-
-	def event_nameChange(self):
-		if self.hasFocus:
-			audio.speakObjectProperties(name=self.name)
-
 	def event_stateChange(self):
 		positiveStates=self.calculatePositiveStates()
 		newPositiveStates=positiveStates-(positiveStates&self._lastPositiveStates)
@@ -697,7 +689,7 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return IAccessibleHandler.getRoleText(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
 		else:
-			super(NVDAObject_mozillaText,self).typeString
+			return super(NVDAObject_mozillaText,self).typeString
 
 	def text_getText(self,start=None,end=None):
 		return self.value
@@ -869,6 +861,8 @@ _staticMap={
 ("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
 ("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_edit,
 ("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
+("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
 ("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
 ("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
 (None,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
