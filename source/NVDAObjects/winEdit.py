@@ -1,3 +1,4 @@
+import audio
 from autoPropertyType import autoPropertyType
 import winUser
 from keyboardHandler import key
@@ -83,8 +84,13 @@ class NVDAObjectExt_edit:
 
 	def text_getLineNumber(self,offset):
 		return winUser.sendMessage(self.windowHandle,winUser.EM_LINEFROMCHAR,offset,0)+1
-	
+
+	def _get_text_lineCount(self):
+		return winUser.sendMessage(self.windowHandle,winUser.EM_GETLINECOUNT,0,0)
+
 	def text_getLineOffsets(self,offset):
+		if self.text_lineCount<1:
+			return (0,self.text_characterCount)
 		lineNum=self.text_getLineNumber(offset)-1
 		lineStart=winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
 		lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,lineStart,0)

@@ -112,6 +112,12 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		h=(h+(hash(self.windowHandle)*p))%l
 		h=(h+(hash(self._accObjectID)*p))%l
 		h=(h+(hash(self.IAccessibleChildID)*p))%l
+		location=self.location
+		if location is not None:
+			for d in location:
+				h=(h+(d*p))%l
+		return h
+
 		return h
 
 	def _get_name(self):
@@ -441,6 +447,24 @@ class NVDAObject_Progman_client(NVDAObject_IAccessible):
 
 class NVDAObject_staticText(NVDAObject_IAccessible):
 
+	def __init__(self,*args,**vars):
+		NVDAObject_IAccessible.__init__(self,*args,**vars)
+		self.registerScriptKeys({
+			key("extendedDown"):self.script_text_review_nextLine,
+			key("extendedUp"):self.script_text_review_prevLine,
+			key("extendedLeft"):self.script_text_review_prevCharacter,
+			key("extendedRight"):self.script_text_review_nextCharacter,
+			key("extendedHome"):self.script_text_review_startOfLine,
+			key("extendedEnd"):self.script_text_review_endOfLine,
+			key("control+extendedLeft"):self.script_text_review_prevWord,
+			key("control+extendedRight"):self.script_text_review_nextWord,
+			key("control+extendedHome"):self.script_text_review_top,
+			key("control+extendedEnd"):self.script_text_review_bottom,
+		})
+
+	def _get_typeString(self):
+		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
+
 	def text_getText(self,start=None,end=None):
 		text=self.value
 		start=start if isinstance(start,int) else 0
@@ -458,6 +482,14 @@ class NVDAObject_edit(winEdit.NVDAObjectExt_edit,NVDAObject_IAccessible):
 	def __init__(self,*args,**vars):
 		NVDAObject_IAccessible.__init__(self,*args,**vars)
 		winEdit.NVDAObjectExt_edit.__init__(self,*args,**vars)
+
+	def _get_typeString(self):
+		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
+
+	def _get_name(self):
+		name=super(NVDAObject_edit,self).name
+		if self.text_getText()!=name:
+			return name
 
 class NVDAObject_checkBox(NVDAObject_IAccessible):
 	"""
@@ -572,7 +604,7 @@ class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
 				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
 				globalVars.lastProgressValue=val
 		else:
-			super(NVDAObject_progressBar,self).event_valueChange()
+			super(NVDAObject_mozillaProgressBar,self).event_valueChange()
 
 class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
 	"""
@@ -753,6 +785,9 @@ class NVDAObject_list(NVDAObject_IAccessible):
 			name=super(NVDAObject_IAccessible,self).name
 		return name
 
+	def _get_typeString(self):
+		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_LIST)
+
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
@@ -903,4 +938,7 @@ _staticMap={
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerEdit,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
+("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_edit,
+("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
+("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
 }

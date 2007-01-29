@@ -155,6 +155,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		return documentComplete
 
 	def fillBuffer(self,domNode,parentID=None,position=None):
+		debug.writeMessage("MSHTML fillBuffer: %s"%domNode.nodeName)
 		#We don't want comments in the buffer
 		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
 			return position
@@ -177,7 +178,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		info['parent']=parentID
 		info['range']=[position,position]
 		children=[]
-		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
+		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement) or nodeName=="IFRAME":
 			try:
 				children.append(domNode.contentWindow.document)
 			except:
@@ -203,7 +204,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			data=domNode.data
 			if data and not data.isspace():
 				text=data
-		elif isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement):
+		elif isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement) or nodeName=="IFRAME":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):

@@ -42,7 +42,9 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceListID=wx.NewId()
 		voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=synthDriverHandler.driverVoiceNames)
 		try:
-			voiceList.SetSelection(synthDriverHandler.getVoice()-1)
+			voiceIndex=synthDriverHandler.getVoice()-1
+			if voiceIndex>=0 and voiceIndex<len(synthDriverHandler.driverVoiceNames):
+				voiceList.SetSelection(voiceIndex)
 		except:
 			pass
 		wx.EVT_CHOICE(self,voiceListID,self.onVoiceChange)

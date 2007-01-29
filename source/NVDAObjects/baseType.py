@@ -374,6 +374,9 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 """
 		return None
 
+	def _get_text_lineCount(self):
+		return None
+
 	def text_getLineOffsets(self,offset):
 		"""Gets the start and end offsets for the line at given offset.
 @param offset: the ofset where the line is located
@@ -674,24 +677,24 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_text_reviewOffsetLimits(self):
 		return (0,self.text_characterCount-1)
 
-	def text_review_moveToCaret(self):
+	def script_text_review_moveToCaret(self,keyPress):
 		self.text_reviewOffset=self.text_caretOffset
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_top(self):
+	def script_text_review_top(self,keyPress):
 		audio.speakMessage(_("top"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[0]
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_bottom(self):
+	def script_text_review_bottom(self,keyPress):
 		audio.speakMessage(_("bottom"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[1]
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_currentLine(self):
+	def script_text_review_currentLine(self,keyPress):
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_nextLine(self):
+	def script_text_review_nextLine(self,keyPress):
 		r=self.text_getNextLineOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -700,7 +703,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_prevLine(self):
+	def script_text_review_prevLine(self,keyPress):
 		r=self.text_getPrevLineOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -709,10 +712,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def text_review_currentWord(self):
+	def script_text_review_currentWord(self,keyPress):
 		self.text_speakWord(self.text_reviewOffset)
 
-	def text_review_nextWord(self):
+	def script_text_review_nextWord(self,keyPress):
 		r=self.text_getNextWordOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -721,7 +724,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakWord(self.text_reviewOffset)
 
-	def text_review_prevWord(self):
+	def script_text_review_prevWord(self,keyPress):
 		r=self.text_getPrevWordOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -730,10 +733,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakWord(self.text_reviewOffset)
 
-	def text_review_currentCharacter(self):
+	def script_text_review_currentCharacter(self,keyPress):
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def text_review_nextCharacter(self):
+	def script_text_review_nextCharacter(self,keyPress):
 		newOffset=self.text_reviewOffset+1
 		limits=self.text_reviewOffsetLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -742,7 +745,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def text_review_prevCharacter(self):
+	def script_text_review_prevCharacter(self,keyPress):
 		newOffset=self.text_reviewOffset-1
 		limits=self.text_reviewOffsetLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -751,12 +754,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def text_review_startOfLine(self):
+	def script_text_review_startOfLine(self,keyPress):
 		r=self.text_getLineOffsets(self.text_reviewOffset)
 		self.text_reviewOffset=r[0]
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def text_review_endOfLine(self):
+	def script_text_review_endOfLine(self,keyPress):
 		r=self.text_getLineOffsets(self.text_reviewOffset)
 		self.text_reviewOffset=r[1]-1
 		self.text_speakCharacter(self.text_reviewOffset)

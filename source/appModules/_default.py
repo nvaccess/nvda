@@ -203,98 +203,98 @@ class appModule(object):
 	def script_navigator_review_top(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_top()
+			obj.script_text_review_top(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_bottom(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_bottom()
+			obj.script_text_review_bottom(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousLine(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_prevLine()
+			obj.script_text_review_prevLine(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentLine(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_currentLine()
+			obj.script_text_review_currentLine(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextLine(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_nextLine()
+			obj.script_text_review_nextLine(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousWord(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_prevWord()
+			obj.script_text_review_prevWord(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentWord(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_currentWord()
+			obj.script_text_review_currentWord(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextWord(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_nextWord()
+			obj.script_text_review_nextWord(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_previousCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_prevCharacter()
+			obj.script_text_review_prevCharacter(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_currentCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_currentCharacter()
+			obj.script_text_review_currentCharacter(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_nextCharacter(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_nextCharacter()
+			obj.script_text_review_nextCharacter(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_startOfLine(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_startOfLine()
+			obj.script_text_review_startOfLine(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_endOfLine(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_endOfLine()
+			obj.script_text_review_endOfLine(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
 	def script_navigator_review_moveToCaret(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.text_review_moveToCaret()
+			obj.script_text_review_moveToCaret(keyPress)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
@@ -389,12 +389,9 @@ class appModule(object):
 			obj.speakObject()
 			obj.speakDescendantObjects()
 
-	def script_navigator_object_currentTechnicalInfo(self,keyPress):
+	def script_test(self,keyPress):
 		obj=api.getNavigatorObject()
-		if not obj:
-			return
-		audio.speakMessage("type: %s"%obj.__class__.__name__)
-		for key in filter(lambda x: x.startswith('_get_'),dir(obj)):
-			audio.speakMessage("property %s: %s"%(key[5:],str(getattr(obj,key)())))
-		for key in filter(lambda x: not x.startswith('__') or not x.startswith('_get_') or not x.startswith('_set_') or not callable(getattr(obj,x)),dir(obj)):
-			audio.speakMessage("property %s: %s"%(key,getattr(obj,key)))
+		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
+			audio.speakMessage("Class: %s"%obj.windowClassName)
+			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
+			audio.speakMessage("text: %s"%obj.windowText)
