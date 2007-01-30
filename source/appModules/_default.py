@@ -1,3 +1,10 @@
+#appModules/_default.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
+import ctypes
 import datetime
 from keyboardHandler import key
 import api
@@ -395,3 +402,7 @@ class appModule(object):
 			audio.speakMessage("Class: %s"%obj.windowClassName)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
+			textLen=winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXTLEN,1,0)
+			buf=ctypes.create_unicode_buffer(textLen+20)
+			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,1,buf)
+			audio.speakMessage("list text: %s"%buf.value)

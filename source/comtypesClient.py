@@ -1,4 +1,5 @@
 #Origionally from comtypes
+#http://www.sourceforge.net/projects/comtypes/
 #Patched to generate com interfaces in the comInterfaces directory even if it is an executable.
 
 '''High level client level COM support module.

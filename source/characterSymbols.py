@@ -1,14 +1,15 @@
+#characterSymbols.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """Maps for character symbols.
 @ivar characterSymbols: a dictionary of character-to-word mappings
 @type characterSymbols: dict
 @ivar blankList: a list of characters which should be treated as blank
 @type blankList: list
 """
-#characterSymbols.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006 Michael Curran <mick@kulgan.net>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
 
 blankList=[' ','\n','\r','\0','',None]
 

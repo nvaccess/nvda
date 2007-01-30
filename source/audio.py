@@ -1,7 +1,14 @@
+#audio.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """High-level functions to speak information.
 @var speechMode: allows speech if true
 @type speechMode: boolean
 """ 
+
 
 from textProcessing import *
 import config

@@ -1,3 +1,9 @@
+#gui/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import time
 import winsound
 import threading
@@ -13,13 +19,22 @@ from settingsDialogs import *
 
 ### Constants
 appTitle = _("NVDA Interface")
-quickStartMessage=_("""NVDA Quick-Start
+quickStartMessage=_("""NVDA - Quick Start document
+
+NVDA (%(description)s)
+Version: %(version)s
+URL: %(url)s
+Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.
+
+--- Copyright Info ---
+%(copyrightInfo)s
+----------------------
 
 This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.
 
-To bring this window up at any time, press insert+n. To close this window with out exiting NVDA, press alt+f4 when on this window.
+To bring this window up at any time, press insert+n. To close this window with out exiting NVDA, press alt+f4.
 
-To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menu in this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
+To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
 
 To set the preferences (such as voice settings, key echo, reading of tooltips etc),
 Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. 
@@ -73,7 +88,8 @@ numpad1 - previous character
 numpad2 - current character
 numpad3 - next character
 shift+numpad3 - end of line
-""")
+""")%vars(versionInfo)
+
  
 #iconPath="images\\NVDAIcon.bmp"
 evt_externalCommand = wx.NewEventType()
@@ -90,7 +106,7 @@ class MainFrame(wx.Frame):
 		style=wx.DEFAULT_FRAME_STYLE
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
-		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(300,300), style)
+		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(500,500), style)
 		wx.EVT_COMMAND(self,id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
 		wx.EVT_COMMAND(self,id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
@@ -131,7 +147,7 @@ class MainFrame(wx.Frame):
 		menuBar.Append(menu_help,_("&Help"))
 		self.SetMenuBar(menuBar)
 		sizer=wx.BoxSizer(wx.VERTICAL)
-		textCtrl=wx.TextCtrl(self,-1,size=(300,300),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
+		textCtrl=wx.TextCtrl(self,-1,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
 		sizer.Add(textCtrl)
 		sizer.Fit(self)
 		self.SetSizer(sizer)

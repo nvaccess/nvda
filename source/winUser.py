@@ -1,3 +1,9 @@
+#winUser.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """Functions that wrap Windows API functions from user32.dll"""
 
 import ctypes
@@ -11,6 +17,12 @@ POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
 #constants
+#ListBox
+LB_GETCARETINDEX=415
+LB_GETCOUNT=395
+LB_GETTEXT=393
+LB_GETTEXTLEN=394
+
 #getAncestor
 GA_PARENT=1
 GA_ROOT=2

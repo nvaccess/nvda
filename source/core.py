@@ -1,3 +1,9 @@
+#core.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """NVDA core.
 @var queueList: a list of queues that hold functions to be executed in NVDA's main thread
 @type queueList: list
@@ -8,11 +14,6 @@
 @var lastThreadID: the last thread ID created, used when creating the next thread ID.
 @type lastThreadID: int
 """
-#core.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006 Michael Curran <mick@kulgan.net>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
 
 #Constants
 #executer types
@@ -39,6 +40,7 @@ import config
 import gui
 import Queue
 import NVDAObjects
+import versionInfo
 
 queueList=[]
 threads={}

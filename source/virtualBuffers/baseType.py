@@ -1,3 +1,9 @@
+#virtualBuffers/baseType.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from textwrap import TextWrapper
 import autoPropertyType
 from keyboardHandler import key

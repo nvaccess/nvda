@@ -1,3 +1,15 @@
+Changes since revision 316:
+*Support for edit fields and text chat log in Skype.
+*Internet Explorer (MSHTML) virtualBuffers now render IFrames (which means that user accounts in control panel now shows more of its content).
+*Some more work to stop dialogs crashing (possibly)
+ *Fixed bug where combo boxes and sliders etc were speaking their value twice when it changed.
+
+Changes since revision 315:
+*Fixed bug where NVDA would not notify of a foreground change sometimes after leaving a menu (example: shutdown or control pannel in the start menu).
+*Added a script to read the foreground window and its descendants (useful for reading the contents of dialog boxes). This is bound to the key insert+b.
+*Fixed a bug where some web pages in Mozilla Gecko windows would freeze NVDA when being loaded (example: www.expedia.com/). 
+*Made sure that the old Viavoice driver was not being included in the packaging of the binary distribution. This hopefully will stop the Synthesizer dialog crashing NVDA on some systems.
+ 
 Changes since revision 297:
 *Documents in Mozilla Gecko now handle bullets and numbering of list items better. Previously a bullet would force a list item to sometimes be over two lines.
 *Configuration dialog boxes have been added for voice settings, mouse settings, keyboard echo and object presentation. All of these settings can be changed in realtime, but if the dialog box is canceled, they go back to their origional values.

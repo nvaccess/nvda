@@ -1,12 +1,12 @@
+#debug.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 """NVDA debugging functions.
 @var debugFile: holds the open file object of the debug file.
 @type debugFile: file 
 """
-#debug.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006 Michael Curran <mick@kulgan.net>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
 
 import datetime
 import traceback
