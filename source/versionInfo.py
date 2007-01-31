@@ -6,7 +6,7 @@
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="svn-r320"
+version="svn-trunk"
 description=_("A free and open-source screen reader for MS Windows")
 maintainer="Michael Curran"
 maintainer_email="mick@kulgan.net"
