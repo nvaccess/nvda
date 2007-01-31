@@ -55,12 +55,3 @@ try:
 except:
 	print "not found"
 
-#Sapi4
-try:
-	print "Sapi4"
-	comtypesClient.CreateObject("speech.voiceText")
-	print "done"
-except:
-	print "not found"
-
-
