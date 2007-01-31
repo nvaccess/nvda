@@ -22,7 +22,6 @@ import api
 import config
 import baseType
 import window
-import winConsole
 import MSHTML
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
@@ -537,26 +536,6 @@ class NVDAObject_consoleWindowClass(NVDAObject_IAccessible):
 	def event_nameChange(self):
 		pass
 
-class NVDAObject_consoleWindowClassClient(winConsole.NVDAObjectExt_console,NVDAObject_IAccessible):
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.registerScriptKeys({
-			key("control+c"):self.script_protectConsoleKillKey,
-			key("ExtendedUp"):self.script_text_moveByLine,
-			key("ExtendedDown"):self.script_text_moveByLine,
-			key("ExtendedLeft"):self.script_text_moveByCharacter,
-			key("ExtendedRight"):self.script_text_moveByCharacter,
-			key("Control+ExtendedLeft"):self.script_text_moveByWord,
-			key("Control+ExtendedRight"):self.script_text_moveByWord,
-			key("ExtendedHome"):self.script_text_moveByCharacter,
-			key("ExtendedEnd"):self.script_text_moveByCharacter,
-			key("control+extendedHome"):self.script_text_moveByLine,
-			key("control+extendedEnd"):self.script_text_moveByLine,
-			key("ExtendedDelete"):self.script_text_delete,
-			key("Back"):self.script_text_backspace,
-		})
-
 class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
 
 	def event_valueChange(self):
@@ -852,6 +831,7 @@ class NVDAObject_statusBar(NVDAObject_IAccessible):
 
 import winEdit
 import richEdit
+import winConsole
 
 _dynamicMap={}
 
@@ -895,7 +875,7 @@ _staticMap={
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
 
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
-("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_consoleWindowClassClient,
+("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winConsole.NVDAObject_winConsole,
 (None,IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
 ("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
 (None,IAccessibleHandler.ROLE_SYSTEM_LIST):NVDAObject_list,

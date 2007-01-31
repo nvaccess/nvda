@@ -10,15 +10,31 @@ import ctypes
 import difflib
 import debug
 import tones
-from keyboardHandler import sendKey
+from keyboardHandler import sendKey, key
 import winKernel
 import winUser
 import audio
-from autoPropertyType import autoPropertyType
+import IAccessible
 
-class NVDAObjectExt_console:
+class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 
-	__metaclass__=autoPropertyType
+	def __init__(self,*args,**vars):
+		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
+		self.registerScriptKeys({
+			key("control+c"):self.script_protectConsoleKillKey,
+			key("ExtendedUp"):self.script_text_moveByLine,
+			key("ExtendedDown"):self.script_text_moveByLine,
+			key("ExtendedLeft"):self.script_text_moveByCharacter,
+			key("ExtendedRight"):self.script_text_moveByCharacter,
+			key("Control+ExtendedLeft"):self.script_text_moveByWord,
+			key("Control+ExtendedRight"):self.script_text_moveByWord,
+			key("ExtendedHome"):self.script_text_moveByCharacter,
+			key("ExtendedEnd"):self.script_text_moveByCharacter,
+			key("control+extendedHome"):self.script_text_moveByLine,
+			key("control+extendedEnd"):self.script_text_moveByLine,
+			key("ExtendedDelete"):self.script_text_delete,
+			key("Back"):self.script_text_backspace,
+		})
 
 	text_caretSayAllGenerator=None
 
@@ -194,7 +210,7 @@ class NVDAObjectExt_console:
 		return [func(consoleHandle,consoleHorizontalLength,0,lineNum) for lineNum in xrange(top,bottom+1)]
 
 	def event_gainFocus(self):
-		super(NVDAObjectExt_console,self).event_gainFocus()
+		super(NVDAObject_winConsole,self).event_gainFocus()
 		self.connectConsole()
 		self.text_reviewOffset=self.text_caretOffset
 		for line in (x for x in self.consoleVisibleLines if not x.isspace()):
