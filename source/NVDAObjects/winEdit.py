@@ -4,18 +4,18 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import struct
+import ctypes
 import audio
-from autoPropertyType import autoPropertyType
 import winUser
 from keyboardHandler import key
+import IAccessibleHandler
+import IAccessible
 
-class NVDAObjectExt_edit:
-
-	__metaclass__=autoPropertyType
-
-
+class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
+		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
 		self.registerScriptKeys({
 			key("ExtendedUp"):self.script_text_moveByLine,
 			key("ExtendedDown"):self.script_text_moveByLine,
@@ -41,6 +41,11 @@ class NVDAObjectExt_edit:
 			key("Back"):self.script_text_backspace,
 		})
 
+	def _get_name(self):
+		name=super(NVDAObject_winEdit,self).name
+		if self.text_getText()!=name:
+			return name
+
 	def text_getText(self,start=None,end=None):
 		text=self.windowText
 		start=start if isinstance(start,int) else 0
@@ -51,7 +56,7 @@ class NVDAObjectExt_edit:
 		return winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
  
 	def _get_typeString(self):
-		typeString=super(NVDAObjectExt_edit,self).typeString
+		typeString=IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
 		if self.isProtected:
 			typeString=_("protected %s ")%typeString
 		return typeString

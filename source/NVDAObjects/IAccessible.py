@@ -22,9 +22,7 @@ import api
 import config
 import baseType
 import window
-import winEdit
 import winConsole
-import ITextDocument
 import MSHTML
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
@@ -483,20 +481,6 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 	def _get_value(self):
 		return super(NVDAObject_staticText,self).name
 
-class NVDAObject_edit(winEdit.NVDAObjectExt_edit,NVDAObject_IAccessible):
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		winEdit.NVDAObjectExt_edit.__init__(self,*args,**vars)
-
-	def _get_typeString(self):
-		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
-
-	def _get_name(self):
-		name=super(NVDAObject_edit,self).name
-		if self.text_getText()!=name:
-			return name
-
 class NVDAObject_checkBox(NVDAObject_IAccessible):
 	"""
 	Based on NVDAObject, but filterStates removes the pressed state for checkboxes.
@@ -572,31 +556,6 @@ class NVDAObject_consoleWindowClassClient(winConsole.NVDAObjectExt_console,NVDAO
 			key("ExtendedDelete"):self.script_text_delete,
 			key("Back"):self.script_text_backspace,
 		})
-
-class NVDAObject_richEdit(ITextDocument.NVDAObjectExt_ITextDocument,NVDAObject_IAccessible):
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		ITextDocument.NVDAObjectExt_ITextDocument.__init__(self,*args,**vars)
-
-	def _get_typeString(self):
-		return "rich "+super(NVDAObject_richEdit,self).typeString
-
-	def _get_value(self):
-		r=self.text_getLineOffsets(self.text_caretOffset)
-		return self.text_getText(r[0],r[1])
-
-	def getDocumentObjectModel(self):
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
-		if res==0:
-			return comtypesClient.wrap(domPointer)
-		else:
-			raise OSError("No ITextDocument interface")
-
-	def destroyObjectModel(self,dom):
-		dom.Release()
-		del dom
 
 class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
 
@@ -891,6 +850,9 @@ class NVDAObject_statusBar(NVDAObject_IAccessible):
 
 ###class mappings
 
+import winEdit
+import richEdit
+
 _dynamicMap={}
 
 _staticMap={
@@ -900,12 +862,12 @@ _staticMap={
 ("Progman",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
 (None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
 ("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
-("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_edit,
+("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
 ("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
-("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
-("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
-("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_richEdit,
+("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
+("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
+("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
+("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
 (None,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
 (None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
 (None,IAccessibleHandler.ROLE_SYSTEM_LINK):NVDAObject_link,
@@ -944,7 +906,7 @@ _staticMap={
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerEdit,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
-("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_edit,
+("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
 ("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
 ("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
 }
