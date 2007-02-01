@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import ctypes
+import comtypesClient
 import datetime
 from keyboardHandler import key
 import api
@@ -396,7 +397,7 @@ class appModule(object):
 			obj.speakObject()
 			obj.speakDescendantObjects()
 
-	def script_test(self,keyPress):
+	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("Class: %s"%obj.windowClassName)
@@ -406,3 +407,11 @@ class appModule(object):
 			buf=ctypes.create_unicode_buffer(textLen+20)
 			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,1,buf)
 			audio.speakMessage("list text: %s"%buf.value)
+
+	def script_test_navigatorIsIaccessible2(self,keyPress):
+		obj=api.getNavigatorObject()
+		if not obj:
+			return
+		ia2lib=comtypesClient.GetModule('.\\ia2.tlb')
+		newPacc=obj._pacc.QueryInterface(ia2lib.IAccessible2)
+		audio.speakMessage("%s"%newPacc)

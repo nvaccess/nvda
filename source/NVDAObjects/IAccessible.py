@@ -635,8 +635,6 @@ class NVDAObject_link(NVDAObject_IAccessible):
 		typeString=""
 		if states&IAccessibleHandler.STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
-		if states&IAccessibleHandler.STATE_SYSTEM_SELECTABLE:
-			typeString+="same page "
 		typeString+=super(NVDAObject_link,self).typeString
 		return typeString
 

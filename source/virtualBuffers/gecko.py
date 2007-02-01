@@ -226,7 +226,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			text="%s\n "%obj.name
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
-		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and not states&IAccessibleHandler.STATE_SYSTEM_SELECTABLE:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
 		elif role=="p":
@@ -277,6 +277,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["typeString"]=_("definition")
 		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
 			text="%s"%obj.name
+			if not text and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
+				text=" "
 			info["fieldType"]=fieldType_graphic
 			info["typeString"]=fieldNames[fieldType_graphic]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:

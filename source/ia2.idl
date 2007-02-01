@@ -1,0 +1,2818 @@
+/*************************************************************************
+ *
+ *  File Name (AccessibleRelation.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+[uuid(76e18af2-d3e6-4538-86d6-9a60a642bf48),]
+library ia2 {
+
+/** @defgroup grpRelations Relations 
+  Use the following constants to compare against the BSTRs returned by 
+  IAccessibleRelation::relationType.
+*/ 
+///@{
+
+/** Some attribute of this object is affected by a target object. */
+const WCHAR *const IA2_RELATION_CONTROLLED_BY = L"controlledBy";
+
+/** This object is interactive and controls some attribute of a target object. */
+const WCHAR *const IA2_RELATION_CONTROLLER_FOR = L"controllerFor";
+
+/** This object is described by the target object. */
+const WCHAR *const IA2_RELATION_DESCRIBED_BY = L"describedBy";
+
+/** This object is describes the target object. */
+const WCHAR *const IA2_RELATION_DESCRIPTION_FOR = L"descriptionFor";
+
+/** This object is embedded by a target object. */
+const WCHAR *const IA2_RELATION_EMBEDDED_BY = L"embeddedBy";
+
+/** This object embeds a target object. This relation can be used on the
+ OBJID_CLIENT accessible for a top level window to show where the content 
+ areas are.
+*/
+const WCHAR *const IA2_RELATION_EMBEDS = L"embeds";
+
+/** Content flows to this object from a target object. */
+const WCHAR *const IA2_RELATION_FLOWS_FROM = L"flowsFrom";
+
+/** Content flows from this object to a target object. */
+const WCHAR *const IA2_RELATION_FLOWS_TO = L"flowsTo";
+
+/** This object is label for a target object. */
+const WCHAR *const IA2_RELATION_LABEL_FOR = L"labelFor";
+
+/** This object is labelled by a target object. */
+const WCHAR *const IA2_RELATION_LABELED_BY = L"labelledBy";
+
+/** This object is a member of a group of one or more objects. When 
+ there is more than one object in the group each member may have one and the 
+ same target, e.g. a grouping object.  It is also possible that each member has 
+ multiple additional targets, e.g. one for every other member in the group.
+*/
+const WCHAR *const IA2_RELATION_MEMBER_OF = L"memberOf";
+
+/** This object is a child of a target object. */
+const WCHAR *const IA2_RELATION_NODE_CHILD_OF = L"nodeChildOf";
+
+/** This object is a parent window of the target object. */
+const WCHAR *const IA2_RELATION_PARENT_WINDOW_OF = L"parentWindowOf";
+
+/** This object is a transient component related to the target object. 
+ When this object is activated the target object doesn't loose focus.
+*/
+const WCHAR *const IA2_RELATION_POPUP_FOR = L"popupFor";
+
+/** This object is a sub window of a target object. */
+const WCHAR *const IA2_RELATION_SUBWINDOW_OF = L"subwindowOf";
+
+///@}
+
+/// This interface gives access to an object's set of relations.
+[object, uuid(7CDF86EE-C3DA-496a-BDA4-281B336E1FDC)]
+interface IAccessibleRelation : IUnknown
+{
+  /** @brief Returns the type of the relation.
+   @param [out] relationType
+  */
+  [propget] HRESULT relationType
+    (
+     [out, retval] BSTR *relationType
+    );
+
+  /** @brief Returns a localized version of the relation type.
+   @param [out] localizedRelationType
+  */
+  [propget] HRESULT localizedRelationType
+    (
+     [out, retval] BSTR *localizedRelationType
+    );
+
+  /** @brief Returns the number of targets for this relation.
+   @param [out] nTargets
+  */
+  [propget] HRESULT nTargets
+    (
+     [out, retval] long *nTargets
+    );
+
+  /** @brief Returns one accessible relation target.
+   @param [in] targetIndex
+    0 based index
+   @param [out] target
+    Note: Use QueryInterface to get IAccessible2.
+  */
+  [propget] HRESULT target
+    (
+     [in] long targetIndex,
+     [out, retval] IUnknown **target 
+    );
+
+  /** @brief Returns multiple accessible relation targets
+   @param [in] maxTargets
+    Maximum number of targets to get.
+   @param [out] target
+    Array of accessible targets. Use QueryInterface to get IAccessible2.
+   @param [out] nTargets
+    length of array (not more than maxTargets)
+  */
+  [propget] HRESULT targets
+    (
+     [in] long maxTargets, 
+     [out, size_is(maxTargets), length_is(*nTargets)]
+       IUnknown **target, 
+     [out, retval] long *nTargets 
+    );
+
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleAction.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+        
+/** @brief This interface gives access to actions that can be executed
+  for accessible objects.
+        
+ Every accessible object that can be manipulated beyond its methods
+  exported over the accessibility API should support this interface to
+  expose all actions that it can perform.  Each action can be performed
+  or queried for a name, description or associated key bindings.  Actions
+  are needed more for ATs that assist the mobility impaired.  By providing 
+  actions directly, the AT can present them to the user without the user having
+  to perform the extra steps to navigate a context menu.
+*/
+[object, uuid(B70D9F59-3B5A-4dba-AB9E-22012F607DF5)]
+interface IAccessibleAction : IUnknown
+{
+
+  /** @brief Returns the number of accessible actions available in this object.
+    
+   If there are more than one, the first one is considered the
+    "default" action of the object.
+   @param [out] nActions
+    The returned value of the number of actions is zero if there are
+    no actions.
+  */
+  HRESULT nActions
+    (
+     [out,retval] long* nActions
+    );
+
+  /** @brief Performs the specified Action on the object.
+   @param [in] actionIndex
+    This index specifies the action to perform.  If it lies outside
+    the valid range no action is performed.
+    */
+  HRESULT doAction
+    (
+     [in] long actionIndex
+    );
+
+  /** @brief Returns a description of the specified action of the object.
+   @param [in] actionIndex
+    This index specifies the action of which to return a
+    description.  If it lies outside the valid range an empty string
+    is returned.
+   @param [out] description
+    The returned value is a localized string of the specified action.
+    */
+  [propget] HRESULT description
+    (
+     [in] long actionIndex,
+     [out, retval] BSTR *description
+    );
+
+  /** @brief Returns an array of BSTRs describing one or more key bindings, if there
+   are any, associated with the specified action.
+
+   Note: the client allocates and passes in an array of pointers.  The server
+   allocates the BSTRs and passes back one or more pointers to these BSTRs into
+   the array of pointers allocated by the client.  The client is responsible 
+   for deallocating the BSTRs.
+
+   @param [in] actionIndex
+    This index specifies the action of which to return the key bindings.
+   @param [in] nMaxBinding
+    The maximum number of keybindings requested, i.e. the size of the array 
+	allocated to hold the results.
+   @param [out] keyBinding
+    An array of BSTRs, one for each key binding.
+   @param [out] nBinding
+    The actual number of key bindings returned.
+  */
+  [propget] HRESULT keyBinding
+    (
+     [in] long actionIndex,
+     [in] long nMaxBinding,
+     [out, size_is(,nMaxBinding), length_is(,*nBinding)] BSTR **keyBinding,
+	 [out, retval] long *nBinding
+    );
+
+  /** @brief Returns the non-localized name of specified action.
+   @param [in] actionIndex
+   @param [out] name
+  */
+  [propget] HRESULT name
+    (
+     [in] long actionIndex,
+     [out, retval] BSTR *name
+    );
+
+  /** @brief Returns the localized name of specified action.
+   @param [in] actionIndex
+   @param [out] localizedName
+  */
+  [propget] HRESULT localizedName
+    (
+     [in] long actionIndex,
+     [out, retval] BSTR *localizedName
+    );
+
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleRole.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+
+/** Collection of roles.
+
+  This enumerator defines the set of possible roles of objects implementing the
+  IAccessible2 interface. The role of an object describes its generic function
+  like 'button', 'menu', or 'text'. You can obtain an object's role by calling
+  the get_accRole method of the IAccessible interface.
+*/
+enum IA2Role {
+
+  /** Unknown role. The object contains some Accessible information, but its 
+   role is not known.
+  */
+  IA2_ROLE_UNKNOWN = 0,
+
+  /// A caption describing another object.
+  IA2_ROLE_CAPTION = 0x401,
+
+  /// Used for check buttons that are menu items.
+  IA2_ROLE_CHECK_MENU_ITEM,
+
+  /// A specialized dialog that lets the user choose a color.
+  IA2_ROLE_COLOR_CHOOSER,
+
+  /// A date editor.
+  IA2_ROLE_DATE_EDITOR,
+
+  /** An iconified internal frame in an ::IA2_ROLE_DESKTOP_PANE. 
+   Also refer to ::IA2_ROLE_INTERNAL_FRAME.
+  */
+  IA2_ROLE_DESKTOP_ICON,
+
+  /** A desktop pane. A pane that supports internal frames and iconified 
+   versions of those internal frames.
+  */
+  IA2_ROLE_DESKTOP_PANE,
+
+  /** A directory pane. A pane that allows the user to navigate through 
+   and select the contents of a directory. May be used by a file chooser.   
+   Also refer to ::IA2_ROLE_FILE_CHOOSER.
+  */
+  IA2_ROLE_DIRECTORY_PANE,
+
+  /// An editable text object in a toolbar.
+  IA2_ROLE_EDITBAR,
+
+  /// Embeded (OLE) object.
+  IA2_ROLE_EMBEDDED_OBJECT,
+
+  /// Text that is used as an endnote (footnote at the end of a chapter or section).
+  IA2_ROLE_ENDNOTE,
+
+  /** A file chooser. A specialized dialog that displays the files in the 
+   directory and lets the user select a file, browse a different directory, 
+   or specify a filename. May use the directory pane to show the contents of 
+   a directory.  
+   Also refer to ::IA2_ROLE_DIRECTORY_PANE.
+  */
+  IA2_ROLE_FILE_CHOOSER,
+
+  /** A font chooser. A font chooser is a component that lets the user pick 
+   various attributes for fonts.
+  */
+  IA2_ROLE_FONT_CHOOSER,
+
+  /** Footer of a document page.
+   Also refer to ::IA2_ROLE_HEADER.
+  */
+  IA2_ROLE_FOOTER,
+
+  /// Text that is used as a footnote.  Also refer to ::IA2_ROLE_ENDNOTE.
+  IA2_ROLE_FOOTNOTE,
+
+  /** Frame role. A top level window with a title bar, border, menu bar, etc.  
+   It is often used as the primary window for an application.  Also refer to 
+   the MSAA roles of dialog, canvas, and window.
+  */
+  IA2_ROLE_FRAME,
+
+  /** A glass pane. A pane that is guaranteed to be painted on top of all 
+   panes beneath it.  
+   Also refer to ::IA2_ROLE_ROOT_PANE and MSAA's canvas role.
+  */
+  IA2_ROLE_GLASS_PANE,
+
+  /** Header of a document page.
+   Also refer to ::IA2_ROLE_FOOTER.
+  */
+  IA2_ROLE_HEADER,
+
+  /// Level 1 Heading.
+  IA2_ROLE_HEADING1,
+
+  /// Level 2 Heading.
+  IA2_ROLE_HEADING2,
+
+  /// Level 3 Heading.
+  IA2_ROLE_HEADING3,
+
+  /// Level 4 Heading.
+  IA2_ROLE_HEADING4,
+
+  /// Level 5 Heading.
+  IA2_ROLE_HEADING5,
+
+  /// Level 6 Heading.
+  IA2_ROLE_HEADING6,
+
+  /// Level 7 Heading.
+  IA2_ROLE_HEADING7,
+
+  /// Level 8 Heading.
+  IA2_ROLE_HEADING8,
+
+  /// Level 9 Heading.
+  IA2_ROLE_HEADING9,
+
+  /// Level l0 Heading.
+  IA2_ROLE_HEADING10,
+
+  /// A small fixed size picture, typically used to decorate components.
+  IA2_ROLE_ICON,
+
+  /** An image map object.  Usually a graphic with multiple hotspots, where 
+   each hotspot can be activated resulting in the loading of another document
+   or section of a document.
+  */
+  IA2_ROLE_IMAGE_MAP,
+
+  /** An internal frame. A frame-like object that is clipped by a desktop pane.  
+   The desktop pane, internal frame, and desktop icon objects are often used to 
+   create multiple document interfaces within an application.
+   Also refer to ::IA2_ROLE_DESKTOP_ICON, ::IA2_ROLE_DESKTOP_PANE, and ::IA2_ROLE_FRAME
+  */
+  IA2_ROLE_INTERNAL_FRAME,
+
+  /// An object used to present an icon or short string in an interface.
+  IA2_ROLE_LABEL,
+
+  /** A layered pane. A specialized pane that allows its children to be drawn 
+   in layers, providing a form of stacking order. This is usually the pane that 
+   holds the menu bar as  well as the pane that contains most of the visual 
+   components in a window.
+   Also refer to ::IA2_ROLE_GLASS_PANE and ::IA2_ROLE_ROOT_PANE.
+  */
+  IA2_ROLE_LAYERED_PANE,
+
+  /// An embedded note which is not visible until activated.
+  IA2_ROLE_NOTE,
+
+ /** A specialized pane whose primary use is inside a DIALOG.
+   Also refer to MSAA's dialog role.
+  */
+  IA2_ROLE_OPTION_PANE,
+
+  /// A paragraph of text.
+  IA2_ROLE_PARAGRAPH,
+
+  /** A radio button that is a menu item.
+   Also refer to MSAA's button and menu item roles.
+  */
+  IA2_ROLE_RADIO_MENU_ITEM,
+
+  /** A root pane. A specialized pane that has a glass pane and a layered pane 
+   as its children.
+   Also refer to ::IA2_ROLE_GLASS_PANE and ::IA2_ROLE_LAYERED_PANE
+  */
+  IA2_ROLE_ROOT_PANE,
+
+  /** A ruler such as those used in word processors.
+  */
+  IA2_ROLE_RULER,
+
+  /** A scroll pane. An object that allows a user to incrementally view a large 
+   amount of information.  Its children can include scroll bars and a viewport.
+   Also refer to ::IA2_ROLE_VIEW_PORT and MSAA's scroll bar role.
+  */
+  IA2_ROLE_SCROLL_PANE,
+
+  /// Object with graphical representation used to represent content on draw pages.
+  IA2_ROLE_SHAPE,
+
+  /** A split pane. A specialized panel that presents two other panels at the 
+   same time. Between the two panels is a divider the user can manipulate to make 
+   one panel larger and the other panel smaller.
+  */
+  IA2_ROLE_SPLIT_PANE,
+
+  /// Collection of objects that constitute a logical text entity.
+  IA2_ROLE_TEXT_FRAME,
+
+  /** A toggle button. A specialized push button that can be checked or unchecked, 
+   but does not provide a separate indicator for the current state.
+   Also refer to MSAA's roles of push button, check box, and radio button.
+   <BR><B>Note:</B> IA2_ROLE_TOGGLE_BUTTON should not be used.  Instead, use MSAA's 
+   ROLE_SYSTEM_PUSHBUTTON and STATE_SYSTEM_PRESSED.
+  */
+  IA2_ROLE_TOGGLE_BUTTON,
+
+  /** A viewport. An object usually used in a scroll pane. It represents the 
+   portion of the entire data that the user can see. As the user manipulates 
+   the scroll bars, the contents of the viewport can change.
+   Also refer to ::IA2_ROLE_SCROLL_PANE.
+  */
+  IA2_ROLE_VIEW_PORT,
+
+// The following is not in alpha order.  It was added after code depending on 
+// the above order was released.
+
+  /** A container of form controls.  An example of the use of this role is to
+   represent an HTML FORM tag.
+  */
+  IA2_ROLE_FORM,
+
+  /** An object which is used to allow input of characters not found on a keyboard,
+   such as the input of Chinese characters on a Western keyboard.
+  */
+  IA2_ROLE_INPUT_METHOD_WINDOW,
+
+  /** An object representing a page of document content.  It is used in documents
+   which are accessed by the user on a page by page basis.
+  */
+  IA2_ROLE_PAGE,
+
+  /** An object which is redundant with another object in the accessible hierarchy.
+   ATs typically ignore objects with this role.
+  */
+  IA2_ROLE_REDUNDANT_OBJECT,
+
+  /** A container of document content.  An example of the use of this role is to
+   represent an HTML DIV tag.
+
+   A section may be used as a region.  A region is a group of elements that 
+   together form a perceivable unit.  A region does not necessarily follow the 
+   logical structure of the content, but follows the perceivable structure of 
+   the page.  A region may have an attribute in the set of 
+   IAccessible2::attributes which indicates that it is "live".  A live region 
+   is content that is likely to change in response to a timed change, a user 
+   event, or some other programmed logic or event.
+  */
+  IA2_ROLE_SECTION
+  
+};
+/*************************************************************************
+ *
+ *  File Name (AccessibleStates.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+
+typedef long AccessibleStates;
+
+/** @defgroup grpStates States
+ IAccessible2 state constants.
+*/
+///@{
+
+/** Indicates a window is currently the active window. */
+const long IA2_STATE_ACTIVE =					0x1;
+
+/** Indicates that the object is armed. */
+const long IA2_STATE_ARMED =					0x2;
+
+/** Indicates the user interface object corresponding to this object no longer exists. */
+const long IA2_STATE_DEFUNCT =					0x4;
+
+/** Indicates the user can change the contents of this object. */
+const long IA2_STATE_EDITABLE =					0x8;
+
+/** Indicates the orientation of this object is horizontal. */
+const long IA2_STATE_HORIZONTAL =				0x10;
+
+/** Indicates this object is minimized and is represented only by an icon. */
+const long IA2_STATE_ICONIFIED =				0x20;
+
+/** Indicates an invalid state. */
+const long IA2_STATE_INVALID =					0x40;
+
+/** Indicates an input validation failure. */
+const long IA2_STATE_INVALID_ENTRY =			0x80;
+
+/** Indicates that this object manages its children.
+
+ Used when children are transient.  In this case it is not necessary to add
+  listeners to the children.
+
+ The state is added to improve performance in the case of large containers such 
+  as tables. When an object manages its children it is not necessary to iterate 
+  over all the children and add listeners.  The parent object will provide state 
+  notifications regarding the state of its children.
+*/
+const long IA2_STATE_MANAGES_DESCENDANTS =		0x100;
+
+/** Indicates that an object is modal.
+
+ Modal objects have the behavior that something must be done with the object 
+  before the user can interact with an object in a different window.
+*/
+const long IA2_STATE_MODAL =					0x200;
+
+/** Indicates this text object can contain multiple lines of text. */
+const long IA2_STATE_MULTI_LINE =				0x400;
+
+/** Indicates this object paints every pixel within its rectangular region. */
+const long IA2_STATE_OPAQUE =					0x800;
+
+/** Indicates that user interaction is required.
+
+ An example of when this state is used is when a field in a form must be filled 
+  before a form can be processed.
+*/
+const long IA2_STATE_REQUIRED =					0x1000;
+
+/** Indicates an object which supports text selection.
+
+ Note: This is different than MSAA STATE_SYSTEM_SELECTABLE.
+*/
+const long IA2_STATE_SELECTABLE_TEXT =			0x2000;
+
+/** Indicates that this text object can contain only a single line of text. */
+const long IA2_STATE_SINGLE_LINE =				0x4000;
+
+/** Indicates that the accessible object is stale.
+
+ This state is used when the accessible object no longer accurately 
+  represents the state of the object which it is representing such as when an
+  object is transient or when an object has been or is in the process of being
+  destroyed.
+*/
+const long IA2_STATE_STALE =					0x8000;
+
+/** Indicates that the object implements autocompletion.
+
+ This state indicates that that a text control will respond to the input of 
+ one ore more characters and cause a sub-item to become selected.  The 
+ selection may also result in events fired on the parent object.
+*/
+const long IA2_STATE_SUPPORTS_AUTOCOMPLETION =	0x10000;
+
+/** Indicates this object is transient. */
+const long IA2_STATE_TRANSIENT =				0x20000;
+
+/** Indicates the orientation of this object is vertical. */
+const long IA2_STATE_VERTICAL =					0x40000;
+
+///@}
+/*************************************************************************
+ *
+ *  File Name (Accessible2.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+/** @mainpage
+ 
+ @section _interfaces Interfaces
+  IAccessible2\n
+  IAccessibleAction\n
+  IAccessibleApplication\n
+  IAccessibleComponent\n
+  IAccessibleHypertext\n
+  IAccessibleHyperlink\n
+  IAccessibleImage\n
+  IAccessibleRelation\n
+  IAccessibleTable\n
+  IAccessibleText\n
+  IAccessibleEditableText\n
+  IAccessibleValue
+
+ @section _structs Structs
+  IA2Point\n
+  IA2Locale\n
+  IA2TableModelChange\n
+  IA2TextSegment
+
+ @section _enums Enums
+  ::IA2EventID values identify events.\n
+  ::IA2Role values define roles.\n
+  ::IA2TableModelChangeType values describe the kinds of changes made to a table (insert, delete, update).\n
+  ::IA2TextBoundaryType values define the requested text unit (character, word, sentence, line, paragraph).\n
+  ::IA2TextCoordinateType values define the requested coordinate type (screen or parent window).
+
+ @section _constants Constants
+  @ref grpIAccessibleApplication\n
+  @ref grpRelations\n
+  @ref grpStates\n
+
+ @section _license License
+  @ref _licensePage "LGPL"
+
+ @page _licensePage License
+  IAccessible2 IDL Specification
+
+  Copyright (c) IBM Corp. 2006\n
+  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License version 2.1, as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+
+  You may also refer to http://www.gnu.org/licenses/lgpl.html.
+
+**/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+
+/// A structure defining the locale of an accessible object.
+typedef struct {
+  BSTR language; ///< ISO 639-1 Alpha-2 two character language code
+  BSTR country;  ///< ISO 3166-1 Alpha-2 two character country code
+  BSTR variant;  ///< Application specific variant of the locale
+} IA2Locale;
+
+/** This interface must always be provided for objects that support some
+ portion of the collection of the IAccessible2 interfaces.
+ 
+ IAccessible2 is a subclass of MSAA's IAccessible.  This is a matter of 
+ convenience, i.e. an IAccessible2 is an IAccessible so MSAA methods can be 
+ easily accessed. None of MSAA's IAccessible methods are overridden or extended.
+ */
+[object, uuid(E89F726E-C4F4-4c19-BB19-B647D7FA8478)]
+interface IAccessible2 : IAccessible
+{
+
+  /** @brief Returns the number of accessible relations for this object.
+   @param [out] nRelations
+  */
+  [propget] HRESULT nRelations
+    (
+     [out, retval] long *nRelations
+    );
+
+  /** @brief Returns one accessible relation for this object.
+   @param [in] relationIndex
+     0-based
+   @param [out] relation
+  */
+  [propget] HRESULT relation
+    (
+     [in] long relationIndex,
+     [out, retval] IAccessibleRelation **relation
+    );
+
+  /** @brief Returns multiple accessible relations for this object.
+   @param [in] maxRelations
+    maximum number of relations to get
+   @param [out] relation
+    array of accessible relation objects
+   @param [out] nRelations 
+    length of array (not more than maxRelations)
+  */
+  [propget] HRESULT relations
+    (
+     [in] long maxRelations, 
+     [out, size_is(maxRelations), length_is(*nRelations)]
+       IAccessibleRelation **relation, 
+     [out, retval] long *nRelations 
+    );
+
+  /** @brief Makes an object visible on screen.
+   @param [in] topLeft
+    If false then it will scroll the shortest distance it needs to put
+    the element on-screen.  
+  */
+  HRESULT scrollTo
+    (
+     [in] boolean topLeft 
+    );
+
+  /** @brief Returns grouping information.
+   
+   Used for tree items, list items, tab panel labels, radio buttons, etc.
+   Also used for collectons of non-text objects.
+
+   @param [out] groupLevel
+    0-based
+   @param [out] similarItemsInGroup
+    1-based
+   @param [out] positionInGroup
+    0-based
+  */
+  [propget] HRESULT groupPosition
+    (
+     [out] long *groupLevel,
+     [out] long *similarItemsInGroup,
+     [out, retval] long *positionInGroup 
+    );
+
+  /** @brief Returns the localized role name.
+
+   Valid if the role is an IAccessible2 role; not to be used for MSAA roles.
+
+   @param [out] localizedRoleName
+  */
+  [propget] HRESULT localizedRoleName
+    (
+	 [out, retval] BSTR *localizedRoleName
+    );
+
+  /** @brief Returns the bit strip containing any IAccessible2 states.
+   @param [out] states
+  */
+  [propget] HRESULT states
+    (
+	 [out, retval] AccessibleStates *states
+    );
+
+  /** @brief Returns localized state names (array of strings).
+   @param [in] maxLocalizedStateNames
+   @param [out] localizedStateNames
+   @param [out] nLocalizedStateNames
+  */
+  [propget] HRESULT localizedStateNames
+    (
+     [in] long maxLocalizedStateNames,
+     [out, size_is(,maxLocalizedStateNames), length_is(,*nLocalizedStateNames)] BSTR **localizedStateNames,
+     [out, retval] long *nLocalizedStateNames
+    );
+
+  /** @brief Returns the extended role.
+   
+   An extended role is a role which is dynamically generated by the application.
+   It is not predefined by the IAccessible2 specification.
+   
+   @param [out] extendedRole
+  */
+  [propget] HRESULT extendedRole
+    (
+	 [out, retval] BSTR *extendedRole
+    );
+
+  /** @brief Returns the localized extended role.
+   @param [out] localizedExtendedRole
+  */
+  [propget] HRESULT localizedExtendedRole
+    (
+	 [out, retval] BSTR *localizedExtendedRole
+    );
+
+  /** @brief Returns the number of extended states.
+   @param [out] nExtendedStates
+  */
+  [propget] HRESULT nExtendedStates
+    (
+     [out, retval] long *nExtendedStates
+    );
+
+  /** @brief Returns the extended states (array of strings).
+
+   An extended state is a state which is dynamically generated by the application.
+   It is not predefined by the IAccessible2 specification.
+
+   @param [in] maxExtendedStates
+   @param [out] extendedStates
+   @param [out] nExtendedStates
+  */
+  [propget] HRESULT extendedStates
+    (
+     [in] long maxExtendedStates,
+     [out, size_is(,maxExtendedStates), length_is(,*nExtendedStates)] BSTR **extendedStates,
+     [out, retval] long *nExtendedStates
+    );
+
+  /** @brief Returns the localized extended states (array of strings).
+   @param [in] maxLocalizedExtendedStates
+   @param [out] localizedExtendedStates
+   @param [out] nLocalizedExtendedStates
+  */
+  [propget] HRESULT localizedExtendedStates
+    (
+     [in] long maxLocalizedExtendedStates,
+     [out, size_is(,maxLocalizedExtendedStates), length_is(,*nLocalizedExtendedStates)] BSTR **localizedExtendedStates,
+     [out, retval] long *nLocalizedExtendedStates
+    );
+
+  /** @brief Returns the unique ID.
+   
+   The uniqueID is an identifier for this object, is unique within the
+   current window, and remains the same for the lifetime of the accessible
+   object. This is the same value that is passed in the idChild parameter of 
+   the WinEventProc callback function for any events that occur on the object, 
+   and is typically a negative number. Using negative numbers prevents the ID 
+   from conflicting with the use of positive numbers that might possibly be 
+   used to indicate a direct child N of the window's root accessible object,
+   and thus the implementation of get_accChild() can differentiate between 
+   requests for direct child N vs. a descendant lower in the hierarchy with a 
+   given uniqueID.  This is important because get_accChild() is used by 
+   AccessibleObjectFromEvent() to retrieve the accessible object which fired 
+   the event by starting from the window's root accessible object.
+
+   This value is provided so the AT can have access to it even when not 
+   handling an event for the object.
+   
+   An example of when this value is useful if the AT wants to build a cache. 
+   The AT could cache the uniqueIDs in addition to other data being cached. 
+   When an event is fired the AT could map that to its internal model.  Thus, 
+   if there's a REORDER/SHOW/HIDE event the AT knows which part of the internal 
+   structure has been invalidated and can refetch just that part.
+
+   This value can also be used by and AT to determine when the current control
+   has changed. If the role is the same for two controls that are adjacent in 
+   the tab order, this can be used to detect the new control.
+
+   Another use of this value by an AT is to identify when a grouping object has 
+   changed, e.g. when moving from a radio button in one group to a radio button in a 
+   different group.
+
+   @param [out] uniqueID
+  */
+  [propget] HRESULT uniqueID
+    (
+     [out, retval] long *uniqueID
+    );
+
+  /** @brief Returns the window handle for the parent window which contains this object.
+
+   This is the same window handle which will be passed for any events that occur on the 
+   object, but is cached in the accessible object for use when it would be helpful to 
+   access the window handle in cases where an event isn't fired on this object.
+
+   A use case is when a screen reader is grabbing an entire web page on a page load. 
+   Without the availability of windowHandle, the AT would have to get the window handle
+   by using WindowFromAccessibleObject on each IAccessible, which is slow because it's 
+   implemented by oleacc.dll as a loop which crawls up the ancestor chain and looks for 
+   a ROLE_WINDOW object, mapping that back to a window handle.
+   
+   @param [out] windowHandle
+  */
+  [propget] HRESULT windowHandle
+    (
+     [out, retval] HWND *windowHandle
+    );
+ 
+  /** @brief Returns the index of this object in its parent object.
+   @param [out] indexInParent
+  */
+  [propget] HRESULT indexInParent
+    (
+     [out, retval] long *indexInParent
+    );
+
+  /** @brief Returns the IA2Locale of the accessible object. 
+   @param [out] locale
+  */
+  [propget] HRESULT locale
+    (
+     [out, retval] IA2Locale *locale
+    );
+
+  /** @brief Returns the attributes specific to this IAccessible2 object, such as a cell's formula.
+   @param [out] attributes
+  */
+  [propget] HRESULT attributes
+    (
+     [out, retval] BSTR *attributes
+    );
+
+}
+
+/*************************************************************************
+ *
+ *  File Name (AccessibleComponent.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+typedef long IA2Color;
+
+/// A structure containing an x and y value.
+typedef struct {
+  long x;  ///< x coordinate
+  long y;  ///< y corrdinate
+} IA2Point;
+
+/** @brief This interface is implemented by any object that can be rendered 
+ on the screen.
+
+ This interface provides the standard mechanism for an assistive technology
+  to retrieve information concerning the graphical representation of an object. 
+  Coordinates used by the functions of this interface are specified in
+  different coordinate systems.  Their scale is the same and is equal to
+  that of the screen coordiante system.  In other words all coordinates
+  are measured in pixels.  They differ in their respective origin:
+  <ul>
+   <li>The screen coordinate system has its origin in the upper left
+    corner of the current screen.</li>
+   <li>The origin of the parent coordinate system is the upper left corner
+    of the parent's bounding box.  With no parent the screen coordinate
+    system is used instead.</li>
+  </ul>
+*/
+[object, uuid(1546D4B0-4C98-4bda-89AE-9A64748BDDE4)]
+interface IAccessibleComponent : IUnknown
+{
+
+  /** @brief Returns the location of the upper left corner of the object's
+    bounding box relative to the parent.
+	
+	The coordinates of the bounding box are given relative to the parent's 
+	coordinate system. The coordinates of the returned position are relative 
+	to this object's parent or relative to the screen on which this object
+    is rendered if it has no parent. If the object is not on any screen
+    the returned position is (0,0).
+   
+   @param [out] locationInParent
+  */
+  [propget] HRESULT locationInParent
+    (
+     [out, retval] IA2Point *locationInParent
+    );
+
+  /** @brief Returns the foreground color of this object.
+   @param [out] foreground
+    The returned color is the foreground color of this object or, if
+    that is not supported, the default foreground color.
+  */ 
+  [propget] HRESULT foreground
+    (
+     [out, retval] IA2Color *foreground
+    );
+
+   /** @brief Returns the background color of this object.
+    @param [out] background
+     The returned color is the background color of this object or, if
+     that is not supported, the default background color.
+   */ 
+  [propget] HRESULT background
+    (
+     [out, retval] IA2Color *background
+    );
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleValue)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+/** @brief This interface gives access to a single numerical value.
+
+ The IAccessibleValue interface represents a single numerical value and should 
+  be implemented by any class that supports numerical value like progress bars 
+  and spin boxes.  This interface lets you access the value and its upper and 
+  lower bounds.
+*/
+[object, uuid(35855B5B-C566-4fd0-A7B1-E65465600394)]
+interface IAccessibleValue : IUnknown
+{
+
+  /** @brief Returns the value of this object as a number.
+        
+   The exact return type is implementation dependent.  Typical types are long and 
+    double.
+   @param [out] currentValue
+    Returns the current value represented by this object.
+  */
+  [propget] HRESULT currentValue
+    (
+     [out, retval] VARIANT *currentValue
+    );
+
+  /** @brief Sets the value of this object to the given number.
+        
+   The argument is clipped to the valid interval whose upper and lower 
+    bounds are returned by the methods IAccessibleValue::maximumValue and 
+	IAccessibleValue::minimumValue, i.e. if it is 	lower than the minimum 
+	value the new value will be the minimum and if it is greater than the 
+	maximum then the new value will be the maximum.
+
+   @param [out] value
+    The new value represented by this object.  The set of admissible types for 
+    this argument is implementation dependent.
+  */
+  HRESULT setCurrentValue
+    (
+     [in] VARIANT value
+    );
+
+  /** @brief Returns the maximal value that can be represented by this object.
+        
+   The type of the returned value is implementation dependent.  It does not have 
+    to be the same type as that returned by method IAccessibleValue::currentValue.
+
+   @param [out] maximumValue
+    Returns the maximal value in an implementation dependent type. If this object 
+    has no upper bound then an empty object is returned.
+  */
+  [propget] HRESULT maximumValue
+    (
+     [out, retval] VARIANT *maximumValue
+    );
+
+  /** @brief Returns the minimal value that can be represented by this object.
+        
+   The type of the returned value is implementation dependent.  It does not have 
+    to be the same type as that returned by method IAccessibleValue::currentValue.
+   
+   @param [out] minimumValue
+    Returns the minimal value in an implementation dependent type. If this object 
+    has no upper bound then an empty object is returned.
+  */
+  [propget] HRESULT minimumValue
+    (
+     [out, retval] VARIANT *minimumValue
+    );
+
+};
+/*************************************************************************
+ *
+ *  File Name (AccessibleText.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+/// A structure containing a substring and the start and end offsets in the enclosing string.
+typedef struct {
+  BSTR text;	///< A copy of a segment of text taken from an enclosing paragraph.
+  long start;	///< Index of the first character of the segment in the enclosing text.  
+  long end;		///< Index of the character following the last character of the segment in the enclosing text. 
+} IA2TextSegment;
+
+enum IA2TextCoordinateType {
+  /// The returned coordinates are relative to the screen.
+  IA2_COORDTYPE_SCREEN_RELATIVE, 
+  /// The returned coordinates are relative to the upper left corner of parent's bounding box.
+  IA2_COORDTYPE_PARENT_RELATIVE  
+};
+
+/// Defines values to specify a text boundary type
+enum IA2TextBoundaryType {
+  IA2_TEXT_BOUNDARY_CHAR,		///< =0, 
+  IA2_TEXT_BOUNDARY_WORD,		///< Range is from start of one word to the start of another word.
+  IA2_TEXT_BOUNDARY_SENTENCE,	///< Range is from start of one sentence to the start of another sentence.
+  IA2_TEXT_BOUNDARY_PARAGRAPH,	///< Range is from start of one paragraph to the start of another paragraph.
+  IA2_TEXT_BOUNDARY_LINE,		/**< Range is from start of one line to the start of another line. This
+                                 often means that an end-of-line character will appear at the  end of 
+								 the range. However in the case of some apps an end-of-line character
+								 indicates the end of a paragraph and the lines composing the paragraph,
+								 other than the last line, do not contain an end of line character. */
+  IA2_TEXT_BOUNDARY_ALL			///< Using this value will cause all text to be returned.
+};
+
+/** @brief This interface gives read-only access to text.
+
+ The IAccessibleText interface should be implemented by all components 
+  that present textual information on the display like  buttons, 
+  text entry fields, or text portions of the document window.  The interface 
+  provides access to the text's content, attributes, and spatial location.  
+  However, text can not be modified with this interface.  That is the task 
+  of the IAccessibleEditableText interface.
+        
+ The text length, i.e. the number of characters in the text, is
+  returned by IAccessibleText::nCharacters. All methods that operate 
+  on particular characters (e.g. IAccessibleText::textAtOffset) use character 
+  indices from 0 to length-1. All methods that operate on character positions 
+  (e.g. IAccessibleText::text) use indices from 0 to length.
+
+ Please note that accessible text does not necessarily support selection.  
+  In this case it should behave as if there where no selection.  An empty 
+  selection is used for example to express the current cursor position.
+*/
+[object, uuid(24FD2FFB-3AAD-4a08-8335-A3AD89C0FB4B)]
+interface IAccessibleText : IUnknown
+{
+
+  /** @brief Adds a text selection
+   @param [in] startOffset
+    Starting offset ( 0-based).
+   @param [in] endOffset
+    Offset of first character after new selection (0-based).
+  */
+  HRESULT addSelection
+    (
+     [in] long startOffset,
+     [in] long endOffset
+    );
+
+  /** @brief Returns text attributes.
+   @param [in] offset
+    Text offset (0-based).
+   @param [out] startOffset    
+    Start of requested text range (0-based)
+   @param [out] endOffset    
+    First character after requested text range (0-based)
+   @param [out] textAttributes  
+    A string of attributes describing the text.  
+  */
+  [propget] HRESULT attributes
+    (
+     [in] long offset,	
+     [out] long *startOffset,
+     [out] long *endOffset,	
+     [out, retval] BSTR *textAttributes
+    );
+
+  /** @brief Returns the position of the caret.
+    
+   The caret is the position between two characters. Its position/offset 
+    is that of the character to the right of it.
+   @param [out] offset
+    The returned offset is relative to the text represented by this object.
+  */
+  [propget] HRESULT caretOffset
+    (
+     [out, retval] long *offset
+    );
+
+
+  /** @brief Returns the bounding box of the specified position.
+        
+   The virtual character after the last character of the represented
+    text, i.e. the one at position length is a special case. It represents the 
+    current input position and will therefore typically be queried by AT more 
+    often than other positions.  Because it does not represent an existing character 
+    its bounding box is defined in relation to preceding characters.  It should be 
+    roughly equivalent to the bounding box of some character when inserted at the 
+    end of the text.  Its height typically being the maximal height of all the
+    characters in the text or the height of the preceding character, its width being 
+    at least one pixel so that the bounding box is not degenerate.
+
+   Note that the index 'length' is not always valid.  Whether it is or not is 
+    implementation dependent.  It typically is when text is editable or otherwise 
+    when on the screen the caret can be placed behind the text.  You can be sure 
+    that the index is valid after you have received a ::IA2_EVENT_TEXT_CARET_MOVED
+    event for this index.
+   @param [in] offset
+    Index of the character for which to return its bounding box. The valid range 
+    is 0..length.
+   @param [in] coordType
+    Specifies if the coordinates are relative to the screen or to the parent window.
+   @param [out] x
+    X coordinate of the bounding box of the referenced character. 
+   @param [out] y
+    Y coordinate of the bounding box of the referenced character. 
+   @param [out] width
+    Width of the bounding box of the referenced character. 
+   @param [out] height
+    Height of the bounding box of the referenced character. 
+  */
+  [propget] HRESULT characterExtents
+    (
+     [in] long offset,
+     [in] enum IA2TextCoordinateType coordType,
+     [out] long *x,
+     [out] long *y,
+     [out] long *width,
+     [out, retval] long *height
+    );
+
+
+  /** @brief Returns the number of active non-contiguous selections
+   @param [out] nSelections
+  */
+  [propget] HRESULT nSelections
+    (
+     [out, retval] long *nSelections
+    );
+
+  /** @brief Returns the text position for the specified screen position.
+    
+   Given a point return the zero-based index of the character under that
+   point.  The same functionality could be achieved by using the bounding
+   boxes for each character as returned by IAccessibleText::characterExtents.
+   The method IAccessibleText::offsetAtPoint, however, can be implemented 
+   more efficiently.
+            
+   @param [in] x
+    The position's x value for which to look up the index of the character that
+	is rendered on to the display at that point.
+   @param [in] y
+    The position's y value for which to look up the index of the character that
+	is rendered on to the display at that point.            
+   @param [in] coordType
+    Screen coordinates or window coordinates.
+   @param [out] offset
+    Index of the character under the given point or -1 if the point
+    is invalid or there is no character under the point.
+    */
+  [propget] HRESULT offsetAtPoint
+    (
+     [in] long x,
+     [in] long y,
+     [in] enum IA2TextCoordinateType coordType,
+     [out, retval] long *offset
+    );
+
+  /** @brief Returns the character offsets of N-th active text selection
+   @param [in] selectionIndex
+    Index of selection (0-based).
+   @param [out] startOffset
+    0 based offset of first selected character
+   @param [out] endOffset
+    0 based offset of one past the last selected character.
+  */
+  [propget] HRESULT selection
+    (
+     [in] long selectionIndex, ///< index of selection (0-based)
+     [out] long *startOffset,
+     [out, retval] long *endOffset
+    );
+
+  /** @brief Returns the substring between the two given indices.
+
+   The substring starts with the character at startOffset (inclusive) and up to 
+    the character at endOffset (exclusive), if startOffset is less or equal 
+    endOffste.  If endOffset is lower than startOffset, the result is the same 
+    as a call with the two arguments being exchanged.
+
+   The whole text can be requested by passing the indices zero and 
+    IAccessibleText::nCharacters. If both indices have the same value, an empty 
+	string is returned.
+   @param [in] startOffset
+    Index of the first character to include in the returned string. The valid range 
+    is 0..length.
+   @param [in] endOffset
+    Index of the last character to exclude in the returned string. The valid range 
+    is 0..length.
+   @param [out] text
+    Returns the substring starting with the character at startOffset (inclusive) 
+    and up to the character at endOffset (exclusive), if startOffset is less than 
+    or equal to endOffset.
+
+   NOTE: returned string may be longer than endOffset-startOffset bytes if text 
+   contains multi-byte characters.
+  */
+  [propget] HRESULT text
+    (
+     [in] long startOffset,
+     [in] long endOffset,
+     [out, retval] BSTR *text
+    );
+
+  /** @brief Returns a text portion before the given position.
+    
+   Returns the substring of the specified text type that is located before the 
+    given character and does not include it. The result of this method should be 
+    same as a result for IAccessibleText::textAtOffset with a suitably decreased 
+    index value.
+
+   For example, if text type is ::IA2_TEXT_BOUNDARY_WORD, then the complete 
+    word that is closest to and located before offset is returned.
+
+   If the index is valid, but no suitable word (or other text type) is found, an 
+    empty text segment is returned.
+   @param [in] offset
+    Index of the character for which to return the text part before it.  The index 
+    character will not be part of the returned string. The valid range is 0..length.
+   @param [in] boundaryType
+    The type of the text portion to return.  See ::IA2TextBoundaryType for the 
+	complete list.
+   @param [out] startOffset
+    0 based offset of first character.
+   @param [out] endOffset
+    0 based offset of one past the last character.
+   @param [out] text
+    Returns the requested text portion.  This portion may be empty or invalid when 
+    no appropriate text portion is found or text type is invalid.
+  */
+  [propget] HRESULT textBeforeOffset
+    (
+     [in] long offset,
+     [in] enum IA2TextBoundaryType boundaryType,
+     [out] long *startOffset,
+     [out] long *endOffset,
+     [out, retval] BSTR *text
+    );
+
+  /** @brief Returns a text portion after the given position.
+    
+   Returns the substring of the specified text type that is located after the 
+    given character and does not include it. The result of this method should be 
+    same as a result for IAccessibleText::textAtOffset with a suitably decreased 
+    index value.
+
+   For example, if text type is ::IA2_TEXT_BOUNDARY_WORD, then the complete 
+    word that is closest to and located before offset is returned.
+
+   If the index is valid, but no suitable word (or other text type) is found, an 
+    empty text segment is returned.
+   @param [in] offset
+    Index of the character for which to return the text part before it.  The index 
+    character will not be part of the returned string. The valid range is 0..length.
+   @param [in] boundaryType
+    The type of the text portion to return.  See ::IA2TextBoundaryType for the complete 
+    list.
+   @param [out] startOffset
+    0 based offset of first character.
+   @param [out] endOffset
+    0 based offset of one past the last character.
+   @param [out] text
+    Returns the requested text portion.  This portion may be empty or invalid when 
+    no appropriate text portion is found or text type is invalid.
+  */
+  [propget] HRESULT textAfterOffset
+    (
+     [in] long offset,
+     [in] enum IA2TextBoundaryType boundaryType,
+     [out] long *startOffset,
+     [out] long *endOffset,
+     [out, retval] BSTR *text
+    );
+
+  /** @brief Returns a text portion that spans the given position.
+    
+   Returns the substring of the specified text type that the specified offset. The 
+    result of this method should be same as a result for 
+    IAccessibleText::textAtOffset with a suitably decreased index value.
+
+   For example, if text type is ::IA2_TEXT_BOUNDARY_WORD, then the complete 
+    word that is closest to and located before offset is returned.
+
+   If the index is valid, but no suitable word (or other text type) is found, an 
+    empty text segment is returned.
+   @param [in] offset
+    Index of the character for which to return the text part before it.  The index 
+    character will not be part of the returned string. The valid range is 0..length.
+   @param [in] boundaryType
+    The type of the text portion to return.  See ::IA2TextBoundaryType for the complete 
+    list.
+   @param [out] startOffset
+    0 based offset of first character.
+   @param [out] endOffset
+    0 based offset of one past the last character.
+   @param [out] text
+    Returns the requested text portion.  This portion may be empty or invalid when 
+    no appropriate text portion is found or text type is invalid.
+  */
+  [propget] HRESULT textAtOffset
+    (
+     [in] long offset,
+     [in] enum IA2TextBoundaryType boundaryType,
+     [out] long *startOffset,
+     [out] long *endOffset,
+     [out, retval] BSTR *text
+    );
+
+  /** @brief Unselects a range of text.
+   @param [in] selectionIndex
+    Index of selection to remove (0-based).
+  */
+  HRESULT removeSelection
+    (
+     [in] long selectionIndex
+    );
+
+  /** @brief Sets the position of the caret.
+
+   The caret is the position between two characters.  Its position/offset 
+    is that of the character to the right of it.
+
+   Setting the caret position may or may not alter the current selection.  A 
+    change of the selection is notified to the accessibility event listeners with 
+    an ::IA2_EVENT_TEXT_SELECTION_CHANGED event.
+
+   When the new caret position differs from the old one (which, of course, is the 
+    standard case) this is notified to the accessibility event listeners with an
+    ::IA2_EVENT_TEXT_CARET_MOVED event.
+   @param [in] offset
+    The new index of the caret.  This caret is actually placed to the left side of 
+    the character with that index.  An index of 0 places the caret so that the next 
+    insertion goes before the first character.  An index of IAccessibleText::nCharacters 
+	leads to insertion after the last character.
+  */
+  HRESULT setCaretOffset
+    (
+     [in] long offset
+    );
+
+  /** @brief Changes the bounds of an existing selection.
+   @param [in] selectionIndex
+    Index of selection to change (0-based)
+   @param [in] startOffset
+    New starting offset (0-based)
+   @param [in] endOffset
+    New ending offset (0-based) - the offset of the character just past the last character of the selection.
+  */
+  HRESULT setSelection
+    (
+     [in] long selectionIndex,
+     [in] long startOffset,
+     [in] long endOffset
+    );
+
+  /** @brief Returns total number of characters.
+
+   NOTE: this may be different than the total number of bytes required to store the 
+    text, if the text contains multi-byte characters.
+   @param [out] nCharacters
+  */
+  [propget] HRESULT nCharacters
+    (
+     [out, retval] long *nCharacters
+    );
+
+  /** @brief Makes a specific part of string visible on screen.
+   @param [in] startIndex
+    0-based character offset.
+   @param [in] endIndex
+    0-based character offset - the offset of the character just past the last character of the string.
+
+  */
+  HRESULT scrollToSubstring
+    (
+     [in] long startIndex,
+     [in] long endIndex
+    );
+
+  /** @brief Returns any inserted text.
+
+   Provided for use by the ::IA2_EVENT_TEXT_INSERTED and ::IA2_EVENT_TEXT_UPDATED 
+    event handlers.
+   @param [out] newText
+    The text that was just inserted.
+  */
+  [propget] HRESULT newText
+    (
+	 [out, retval] IA2TextSegment *newText
+	);
+
+  /** @brief Returns any removed text.
+
+   Provided for use by the IA2_EVENT_TEXT_REMOVED/UPDATED event handlers.
+   @param [out] oldText
+    The text that was just removed.
+  */
+  [propget] HRESULT oldText
+    (
+	 [out, retval] IA2TextSegment *oldText
+	);
+
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleEditableText.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+        
+/** @brief This interface gives write access to a text representation.
+
+ This interface is typically used in conjunction with the IAccessibleText 
+  interface and complements that interface with the additional ability to 
+  modify text.
+
+ The substrings used with this interface are specified as follows:
+  If startOffset is less than endOffset, the substring starts with the 
+  character at startOffset and ends with the character just before endOffset.
+  If endOffset is lower than startOffset,  the result is the same as a call 
+  with the two arguments exchanged. The whole text can be defined by passing 
+  the indices zero and IAccessibleText::nCharacters. If both indices have the 
+  same value, an empty string is defined. 
+*/
+[object, uuid(A59AA09A-7011-4b65-939D-32B1FB5547E3)]
+interface IAccessibleEditableText : IUnknown
+{
+
+  /** @brief Copies the text range into the clipboard.
+    
+   The specified text between the two given indices is copied into the
+    system clipboard.  
+        
+   @param [in] startOffset
+    Start index of the text to moved into the clipboard.
+    The valid range is 0..length.
+   @param [in] endOffset
+    End index of the text to moved into the clipboard.
+    The valid range is 0..length.
+  */
+  HRESULT copyText
+    (
+     [in] long startOffset, 
+     [in] long endOffset 
+    );
+
+  /** @brief Deletes a range of text.
+    
+   The text between and including the two given indices is deleted
+    from the text represented by this object.
+
+   @param [in] startOffset
+    Start index of the text to be deleted.
+    The valid range is 0..length.
+   @param [in] endOffset
+    End index of the text to be deleted.
+    The valid range is 0..length.
+  */
+  HRESULT deleteText
+    (
+     [in] long startOffset, 
+     [in] long endOffset 
+    );
+  
+  /** @brief Inserts text at the specified position.
+    
+   The specified string is inserted at the given index into the text
+    represented by this object.
+
+   @param [in] offset
+    Index at which to insert the text.
+    The valid range is 0..length.
+   @param [in] text
+    Text that is inserted.
+  */
+  HRESULT insertText
+    (
+     [in] long offset,
+     [in] BSTR *text
+    );
+  
+  /** @brief Deletes a range of text and copies it to the clipboard.
+    
+   The text between the two given indices is deleted from the text
+    represented by this object and copied to the clipboard.
+
+   @param [in] startOffset
+    Start index of the text to be deleted.
+    The valid range is 0..length.
+   @param [in] endOffset 	
+    End index of the text to be deleted.
+    The valid range is 0..length.
+  */
+  HRESULT cutText
+    (
+     [in] long startOffset,
+     [in] long endOffset
+    );
+
+  /** @brief Pastes text from the clipboard.
+    
+   The text in the system clipboard is pasted into the text represented
+    by this object at the given index.  This method is similar to the 
+	IAccessibleEditableText::insertText method. If the index is not valid 
+	the system clipboard text is not inserted.
+   
+   @param [in] offset
+    Index at which to insert the text from the system clipboard into
+    the text represented by this object.
+    The valid range is 0..length.
+  */
+  HRESULT pasteText
+    (
+     [in] long offset
+    );
+
+  /** @brief Replaces text.
+    
+   The text between the two given indices is replaced by the specified 
+    replacement string. This method is equivalent to calling first
+    IAccessibleEditableText::deleteText with the two indices and then 
+    calling IAccessibleEditableText::insertText with the replacement text
+	at the start index.
+       
+   @param [in] startOffset
+    Start index of the text to be replaced.
+    The valid range is 0..length.
+   @param [in] endOffset
+    Start index of the text to be replaced.
+    The valid range is 0..length.
+   @param [in] text
+    The Text that replaces the text between the given indices.
+  */
+  HRESULT replaceText
+    (
+     [in] long startOffset,
+     [in] long endOffset,
+     [in] BSTR *text
+    );
+
+  /** @brief Replaces the attributes of a text range by the given set of attributes.
+    
+   Sets the attributes for the text between the two given indices. The old
+    attributes are replaced by the new list of attributes.
+        
+   @param [in] startOffset
+    Start index of the text whose attributes are modified.
+    The valid range is 0..length.
+   @param [in] endOffset
+    Start index of the text whose attributes are modified.
+    The valid range is 0..length.
+   @param [in] attributes
+    Set of attributes that replaces the old list of attributes of
+    the specified text portion.
+  */
+  HRESULT setAttributes
+    (
+     [in] long startOffset,
+     [in] long endOffset,
+     [in] BSTR *attributes
+    );
+}
+
+/*************************************************************************
+ *
+ *  File Name (AccessibleHyperlink.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+/** @brief This interface represents hyperlinks.
+
+ This interface represents a hyperlink associated with a single substring 
+  of text or single non-text object.  Non-text objects can have either a 
+  single link or a collection of links such as when the non-text object is 
+  an image map.
+
+ Linked objects and anchors are implementation dependent. This interface is 
+  derived from IAccessibleAction.  IAccessibleAction::nActions indicates the 
+  maximum value for the indices used with the methods of this interface.
+        
+ Furthermore, the object that implements this interface has to be connected 
+  implicitly or explicitly with an object that implements IAccessibleText.
+  IAccessibleHyperlink::startIndex and IAccessibleHyperlink::endIndex are
+  indices with respect to the text exposed by IAccessibleText.
+*/
+[object, uuid(01C20F2B-3DD2-400f-949F-AD00BDAB1D41)]
+interface IAccessibleHyperlink : IAccessibleAction
+{
+
+  /** @brief Returns an object that represents the link anchor, as appropriate
+   for the link at the specified index.       
+   @param [in] index
+    A 0 based index identifies the anchor when, as in the case of an image map,
+    there is more than one link represented by this object.  The valid maximal
+    index is indicated by IAccessibleAction::nActions.
+   @param [out] anchor
+    This is an implementation dependent value.  For example, for a text link this 
+	method could return the substring of the containing string where the subsgtring
+	is overridden with link behavior, and for an image link this method could return 
+	an IUnknown VARIANT for IAccessibleImage.
+  */
+  [propget] HRESULT anchor
+    (
+     [in] long index,
+     [out, retval] VARIANT *anchor
+    );
+
+  /** @brief Returns an object representing the target of the link, as appropriate
+   for the link at the specified index.       
+   @param [in] index
+    A 0 based index identifies the anchor when, as in the case of an image map,
+    there is more than one link represented by this object.  The valid maximal
+    index is indicated by IAccessibleAction::nActions.
+   @param [out] anchorTarget
+    This is an implementation dependent value.  For example this method could
+	return a BSTR VARIANT of the URI.  Alternatively this method could return an
+	IUnknown VARIANT of a COM interface representing a target object to be 
+	activated when the link is activated.
+  */
+  [propget] HRESULT anchorTarget
+    (
+     [in] long index,
+     [out, retval] VARIANT *anchorTarget
+    );
+
+  /** @brief Returns the index at which the textual representation of the hyperlink starts.
+
+   The returned value is related to the IAccessibleText interface of the object that 
+   owns this hyperlink. 
+   @param [out] index
+  */
+  [propget] HRESULT startIndex
+    (
+     [out, retval] long *index
+    );
+
+  /** @brief Returns the index at which the textual rerpesentation of the hyperlink ends.
+    
+   The returned value is related to the IAccessibleText interface of the object that 
+   owns this hyperlink. The character at the index is not part of the hypertext.  
+   @param [out] index
+  */
+  [propget] HRESULT endIndex
+    (
+     [out, retval] long *index
+    );
+
+  /** @brief Returns whether the target object referenced by this link is still valid.
+        
+   This is a volatile state that may change without sending an appropriate event.
+   Returns TRUE if the referenced target is still valid and FALSE otherwise.
+
+   @param [out] valid
+  */
+  [propget] HRESULT valid
+    (
+     [out, retval] boolean *valid
+    );
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleHypertext.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+
+/** @brief This interface exposes information about hypertext in a document.
+
+ The IAccessibleHypertext interface is the main interface to expose
+  hyperlinks in a document, typically a text document, that are used 
+  to reference other documents.  A typical implementation is to implement 
+  this interface the smallest text object such as a paragraph of text.
+*/
+[object, uuid(6B4F8BBF-F1F2-418a-B35E-A195BC4103B9)]
+interface IAccessibleHypertext : IAccessibleText
+{
+
+  /** @brief Returns the number of links and link groups contained within this hypertext 
+    paragraph.
+   @param [out] hyperlinkCount
+    The number of links and link groups within this hypertext paragraph.  
+    Returns 0 if there is no link.
+  */
+  [propget] HRESULT nHyperlinks
+    (
+     [out, retval] long *hyperlinkCount
+    );
+
+  /** @brief Returns the specified link.
+    
+   The returned IAccessibleHyperlink object encapsulates the hyperlink and 
+    provides several kinds of information describing it.
+   @param [in] index
+    This 0 based index specifies the hyperlink to return.
+   @param [out] hyperlink
+    If the given index is valid, i.e. lies in the interval from 0 to the number 
+    of links minus one, a reference to the specified hyperlink object is returned.  
+    If the index is invalid then a NULL pointer is returned.
+  */
+  [propget] HRESULT hyperlink
+    (
+     [in] long index,
+     [out, retval] IAccessibleHyperlink **hyperlink
+    );
+
+  /** @brief Returns the index of the hyperlink that is associated with this character index.
+        
+   This is the case when a link spans the given character index.
+   @param [in] charIndex
+    A 0 based index of the character for which to return the link index.  If 
+	IAccessibleText is used to represent the text containing the link, then the 
+	character index is only  valid if it is greater than or equal to zero and 
+	lower than the number of characters in the text.
+   @param [out] hyperlinkIndex
+    Returns the 0 based index of the hyperlink that is associated with this 
+	character index, or -1 if charIndex is not on a link.
+  */
+  [propget] HRESULT hyperlinkIndex
+    (
+     [in] long charIndex,
+     [out, retval] long *hyperlinkIndex
+    );
+
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleTable.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+/// Defines values which specify the kind of change made to a table
+enum IA2TableModelChangeType {
+  IA2_TABLE_MODEL_CHANGE_INSERT,  // = 0;
+  IA2_TABLE_MODEL_CHANGE_DELETE,
+  IA2_TABLE_MODEL_CHANGE_UPDATE
+};
+
+/// A structure defining the type of and extents of changes made to a table
+typedef struct {
+  enum IA2TableModelChangeType type;	// insert, delete, update
+  long firstRow;
+  long lastRow;
+  long firstColumn;
+  long lastColumn;
+} IA2TableModelChange;
+
+/** @brief This interface gives access to a two-dimensional table. 
+       
+ All accessible objects that represent cells or cell-clusters of a table have 
+  to be at the same time children of the table.  This is necessary to be able 
+  to convert row and column indices into child indices and vice versa with the 
+  methods IAccessibleTable::childIndex, IAccessibleTable::rowIndex, and
+  IAccessibleTable::columnIndex.
+              
+ The range of valid coordinates for this interface are implementation dependent.  
+  However, that range includes at least the intervals from the from the first row 
+  or column with the index 0 up to the last (but not including) used row or column 
+  as returned by IAccessibleTable::nRows and IAccessibleTable::nColumns.
+*/
+[object, uuid(35AD8070-C20C-4fb4-B094-F4F7275DD469)]
+interface IAccessibleTable : IUnknown
+{
+
+  /** @brief Returns the IAccessible2 object at the specified row and column in 
+    the table.
+   @param [in] row
+    The row index for which to retrieve the cell.
+   @param [in] column
+    The column index for which to retrieve the cell.
+   @param [out] accessible
+    If both row and column index are valid then the corresponding accessible 
+    object is returned that represents the requested cell regardless of whether 
+    the cell is currently  visible (on the screen).
+  */
+  [propget] HRESULT accessibleAt
+    (
+     [in] long row, 
+     [in] long column,
+     [out, retval] IAccessible2 **accessible 
+    );
+
+  /** @brief Returns the caption for the table.
+   @param [out] accessible
+    If the table has a caption then a reference to it is returned, else a NULL 
+    pointer is returned.
+  */
+  [propget] HRESULT caption
+    (
+     [out, retval] IAccessible2 **accessible 
+    );
+	  
+  /** @brief Translates the given row and column indices into the corresponding child index.
+   @param [in] rowIndex
+    Index of the child of the table for which to return the row index.
+   @param [in] columnIndex
+    Index of the child of the table for which to return the column index.
+   @param [out] childIndex
+    Returns the row index of the cell of the specified child or the index of 
+    the first row if the child spans multiple rows.
+  */
+  [propget] HRESULT childIndex
+	(
+	 [in] long rowIndex,
+	 [in] long columnIndex,
+	 [out, retval] long *childIndex
+	);
+
+  /** @brief Returns the description text of the specified column in the table.
+   @param [in] column
+    The index of the column for which to retrieve the description.
+   @param [out] description
+    Returns the description text of the specified row in the table if such a 
+    description exists.  Otherwise a NULL pointer is returned.
+  */
+  [propget] HRESULT columnDescription
+    (
+     [in] long column,
+     [out, retval] BSTR *description
+    );
+
+  /** @brief Returns the number of columns occupied by the accessible object 
+    at the specified row and column in the table.
+        
+   The result differs from 1 if the specified cell spans multiple columns.
+   @param [in] row
+    Row index of the accessible for which to return the column extent.
+   @param [in] column
+    Column index of the accessible for which to return the column extent.
+   @param [out] nColumnsSpanned
+    Returns the column extent of the specified cell.
+  */
+  [propget] HRESULT columnExtentAt
+    (
+     [in] long row,
+     [in] long column,
+     [out, retval] long *nColumnsSpanned 
+    );
+
+  /** @brief Returns the column headers as an IAccessibleTable object.
+        
+   Content and size of the returned table are implementation dependent.
+   @param [out] accessibleTable
+    The column header
+   @param [out] startingRowIndex
+    The row index where the header starts, usually 0.
+  */
+  [propget] HRESULT columnHeader
+    (
+     [out] IAccessibleTable **accessibleTable,
+	 [out, retval] long *startingRowIndex
+    );
+
+  /** @brief Translates the given child index into the corresponding column index.
+   @param [in] childIndex
+    Index of the child of the table for which to return the column index.
+   @param [out] columnIndex
+    Returns the column index of the cell of the specified child or the index of 
+    the first column if the child spans multiple columns.
+  */
+  [propget] HRESULT columnIndex
+    (
+	 [in] long childIndex,
+	 [out, retval] long *columnIndex
+	);
+
+  /** @brief Returns the total number of columns in table
+   @param [out] columnCount
+    Number of columns in table (including columns outside the current viewport)
+  */
+  [propget] HRESULT nColumns
+    (
+     [out, retval] long *columnCount 
+    );
+
+  /** @brief Returns the total number of rows in table
+   @param [out] rowCount
+    Number of rows in table (including rows outside the current viewport)
+  */
+  [propget] HRESULT nRows
+    (
+     [out, retval] long *rowCount 
+    );
+
+  /** @brief Returns the total number of selected columns
+   @param [out] columnCount
+    Number of columns currently selected
+  */
+  [propget] HRESULT nSelectedColumns
+    (
+     [out, retval] long *columnCount 
+    );
+
+  /** @brief Returns the total number of selected rows
+   @param [out] rowCount
+    Number of rows currently selected
+  */
+  [propget] HRESULT nSelectedRows
+    (
+     [out, retval] long *rowCount 
+    );
+
+  /** @brief Returns the description text of the specified row in the table.
+   @param [in] row
+    The index of the row for which to retrieve the description.
+   @param [out] description
+    Returns the description text of the specified row in the table if such a 
+    description exists.  Otherwise a NULL pointer is returned.
+  */
+  [propget] HRESULT rowDescription
+    (
+     [in] long row, 
+     [out, retval] BSTR *description
+    );
+
+  /** @brief Returns the number of rows occupied by the accessible oject 
+    at the specified row and column in the table.
+        
+   The result differs from 1 if the specified cell spans multiple rows.
+   @param [in] row
+    Row index of the accessible for which to return the column extent.
+   @param [in] column
+    Column index of the accessible for which to return the column extent.
+   @param [out] nRowsSpanned
+    Returns the row extent of the specified cell.
+  */
+  [propget] HRESULT rowExtentAt
+    (
+     [in] long row,
+     [in] long column,
+     [out, retval] long *nRowsSpanned
+    );
+
+  /** @brief Returns the row headers as an IAccessibleTable object.
+        
+   Content and size of the returned table are implementation dependent.
+   @param [out] accessibleTable
+    The row header.
+   @param [out] startingColumnIndex
+    The column index where the header starts, usually 0.
+  */
+  [propget] HRESULT rowHeader
+    (
+     [out] IAccessibleTable **accessibleTable,
+	 [out, retval] long *startingColumnIndex
+    );
+
+  /** @brief Translates the given child index into a row index.
+   @param [in] childIndex
+    Index in parent (0 based)
+   @param [out] rowIndex
+    Row index (0 based)
+  */
+  [propget] HRESULT rowIndex
+    (
+	 [in] long childIndex,
+	 [out, retval] long *rowIndex 
+	);
+
+  /** @brief Returns a list of row indexes currently selected (0-based).
+   @param [in] maxRows
+    Max rows requested (possibly from IAccessibleTable::nSelectedRows)
+   @param [out] rows
+    array of indexes of selected rows (each index is 0-based)
+   @param [out] nRows
+    Length of array (not more than maxRows)
+  */
+  [propget] HRESULT selectedRows
+    (
+     [in] long maxRows, 
+     [out, size_is(,maxRows), length_is(,*nRows)] long **rows, 
+     [out, retval] long *nRows 
+    );
+
+  /** @brief Returns a list of column indexes currently selected (0-based).
+   @param [in] maxColumns
+    Max rows requested (possibly from IAccessibleTable::nSelectedColumns)
+   @param [out] columns
+    array of indexes of selected columns (each index is 0-based)
+   @param [out] nColumns
+    Length of array (not more than maxColumns)
+  */
+  [propget] HRESULT selectedColumns
+    (
+     [in] long maxColumns,
+     [out, size_is(,maxColumns), length_is(,*nColumns)] long **columns,
+     [out, retval] long *nColumns
+    );
+
+  /** @brief Returns the summary description of the table.
+   @param [out] accessible
+    Returns a reference to an implementation dependent accessible object 
+    representing the table's summary or a NULL pointer if the table 
+    does not support a summary.
+  */
+  [propget] HRESULT summary
+    (
+     [out, retval] IAccessible2 **accessible 
+    );
+
+  /** @brief Returns a boolean value indicating whether the specified column is 
+    completely selected.
+   @param [in] column
+    Index of the column for which to determine whether it is selected.
+   @param [out] isSelected
+    Returns TRUE if the specified column is selected completely and FALSE otherwise.
+  */
+  [propget] HRESULT isColumnSelected
+    (
+     [in] long column,
+     [out, retval] boolean *isSelected
+    );
+
+  /** @brief Returns a boolean value indicating whether the specified row is completely 
+    selected.
+   @param [in] row
+    Index of the row for which to determine whether it is selected.
+   @param [out] isSelected
+    Returns TRUE if the specified row is selected completely and FALSE otherwise.
+  */
+  [propget] HRESULT isRowSelected
+    (
+     [in] long row,
+     [out, retval] boolean *isSelected
+    );
+
+  /** @brief Returns a boolean value indicating whether the specified cell is selected.
+   @param [in] row
+    Index of the row for the cell to determine whether it is selected.
+   @param [in] column
+    Index of the column for the cell to determine whether it is selected.
+   @param [out] isSelected
+    Returns TRUE if the specified cell is selected and FALSE otherwise.
+  */
+  [propget] HRESULT isSelected
+    (
+     [in] long row,
+     [in] long column,
+     [out, retval] boolean *isSelected 
+    );
+
+  /** @brief Selects a row and unselects all previously selected rows.
+   @param [in] row
+    Index of the row to be selected.
+  */
+  HRESULT selectRow
+    (
+     [in] long row 
+    );
+
+  /** @brief Selects a column and unselects all previously selected columns.
+   @param [in] column
+    Index of the column to be selected.
+  */
+  HRESULT selectColumn
+    (
+     [in] long column
+    );
+
+  /** @brief Unselects one row, leaving other selected rows selected (if any).
+   @param [in] row
+    Index of the row to be selected.
+  */
+  HRESULT unselectRow
+    (
+     [in] long row
+    );
+
+  /** @brief Unselects one column, leaving other selected columns selected (if any).
+   @param [in] column
+    Index of the column to be selected.
+  */
+  HRESULT unselectColumn
+    (
+     [in] long column
+    );
+  
+  /** @brief Given a child index, gets the row and column indexes and extents of a cell 
+    and whether or not it is selected.
+
+   This is a convenience function.  It is not mandatory to implement it.
+   @param [in] index
+    Index of this child in the parent.
+   @param [out] row
+    Row index.
+   @param [out] column
+    Column index.
+   @param [out] rowExtents
+    Number of cells spanned by this cell in this row.
+   @param [out] columnExtents
+    Number of cells spanned by this cell in this column.
+   @param [out] isSelected
+    Indicates if the specified cell is selected.
+  */
+  [propget] HRESULT rowColumnExtentsAtIndex
+    (
+	 [in] long index, 
+	 [out] long *row,  
+	 [out] long *column,
+	 [out] long *rowExtents,
+	 [out] long *columnExtents,
+	 [out, retval] boolean *isSelected
+	);
+
+  /** @brief Returns the type and extents describing how a table changed.
+  
+    Provided for use by the IA2_EVENT_TABLE_MODEL_CHANGED event handler.
+   @param [out] modelChange
+    A struct of (type(insert, delete, update), firstRow, lastRow, firstColumn, lastColumn).
+  */
+  [propget] HRESULT modelChange
+    (
+	 [out, retval] IA2TableModelChange *modelChange
+    );
+
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleImage)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+       
+enum IA2ImageCoordinateType {
+  /// The returned coordinates are relative to the screen.
+  IA2_IMAGE_COORDTYPE_SCREEN_RELATIVE, 
+  /// The returned coordinates are relative to the upper left corner of parent's bounding box.
+  IA2_IMAGE_COORDTYPE_PARENT_RELATIVE  
+};
+
+/** @brief This interface represents images and icons.
+
+ This interface is used for a representation of images like icons on buttons.
+  IAccessibleImage only needs to be implemented in certain situations.  Some
+  examples are:
+  <ol>
+   <li>The accessible name and description are not enough to fully
+    describe the image, e.g. when the accessible description is used to define the
+    behavior of an actionable image and the image itself conveys semantically
+    significant information.
+   <li>The user can edit the content that includes an
+    image and therefore the user needs to be able to review the image's position.
+  </ol>
+*/
+[object, uuid(FE5ABB3D-615E-4f7b-909F-5F0EDA9E8DDE)]
+interface IAccessibleImage : IUnknown
+{
+  /** @brief Returns the localized description of the image.          
+   @param [out] description
+  */
+  [propget] HRESULT description
+    (
+     [out, retval] BSTR *description
+    );
+
+  /** @brief Returns the coordinates of the image.
+   @param [in] coordinateType
+    Specifies whether the returned coordinates should be relative to the screen or the parent object.
+   @param [out] x
+   @param [out] y
+  */
+  [propget] HRESULT imagePosition
+    (
+	 [in] enum IA2ImageCoordinateType coordinateType,
+	 [out] long *x,
+     [out, retval] long *y
+    );
+
+  /** @brief Returns the size of the image in units specified by parent's coordinate system.
+   @param [out] height
+   @param [out] width
+  */
+
+  [propget] HRESULT imageSize
+    (
+     [out] long *height,
+	 [out, retval] long *width
+    );
+}
+/*************************************************************************
+ *
+ *  File Name (AccessibleEventID.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+/// These constants identify the event IDs fired by IAccessible2 objects.
+enum IA2EventID {
+
+  /** The change of the number or attributes of actions of an accessible
+    object is signaled by events of this type. 
+  */
+  IA2_EVENT_ACTION_CHANGED = 0x101,
+
+  /** The active descendant of a component has changed.  The active descendant 
+    is used in objects with transient children.
+  */
+  IA2_EVENT_ACTIVE_DECENDENT_CHANGED,
+
+  /** The document wide attributes of the document object have changed.
+  */
+  IA2_EVENT_DOCUMENT_ATTRIBUTE_CHANGED,
+
+  /** The contents of the document have changed.
+  */
+  IA2_EVENT_DOCUMENT_CONTENT_CHANGED,
+
+  /** The loading of the document has completed.
+  */
+  IA2_EVENT_DOCUMENT_LOAD_COMPLETE,
+
+  /** The loading of the document was interrupted.
+  */
+  IA2_EVENT_DOCUMENT_LOAD_STOPPED,
+
+  /** The document contents are being reloaded.
+  */
+  IA2_EVENT_DOCUMENT_RELOAD,
+
+  /** The ending index of this link within the containing string has changed.
+  */
+  IA2_EVENT_HYPERLINK_END_INDEX_CHANGED,
+
+  /** The number of anchors assoicated with this hyperlink object has changed.
+  */
+  IA2_EVENT_HYPERLINK_NUMBER_OF_ANCHORS_CHANGED,
+
+  /** The hyperlink selected state changed from selected to unselected or
+    from unselected to selected.
+  */
+  IA2_EVENT_HYPERLINK_SELECTED_LINK_CHANGED,
+
+  /** One of the links associated with the hypertext object has been activated.
+  */
+  IA2_EVENT_HYPERTEXT_LINK_ACTIVATED,
+
+  /** One of the links associated with the hypertext object has been selected.
+  */
+  IA2_EVENT_HYPERTEXT_LINK_SELECTED,
+
+  /** The starting index of this link within the containing string has changed.
+  */
+  IA2_EVENT_HYPERLINK_START_INDEX_CHANGED,
+
+  /** Focus has changed from one hypertext object to another, or focus moved
+   from a non-hypertext object to a hypertext object, or focus moved from a
+   hypertext object to a non-hypertext object.
+  */
+  IA2_EVENT_HYPERTEXT_CHANGED,
+
+  /** The number of hyperlinks associated with a hypertext object changed
+  */
+  IA2_EVENT_HYPERTEXT_NLINKS_CHANGED,
+
+  /** An object's attributes changed.
+  Also see ::IA2_EVENT_TEXT_ATTRIBUTE_CHANGED.
+  */
+  IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED,
+
+  /** A slide changed in a presentation document or a page boundary was 
+   crossed in a word processing document.
+  */
+  IA2_EVENT_PAGE_CHANGED,  
+
+  /** An object's role changed.
+  */
+  IA2_EVENT_ROLE_CHANGED,
+
+  /** A table caption changed.
+  */
+  IA2_EVENT_TABLE_CAPTION_CHANGED,
+
+  /** A table's column description changed.
+  */
+  IA2_EVENT_TABLE_COLUMN_DESCRIPTION_CHANGED,
+
+  /** A table's column header changed.
+  */
+  IA2_EVENT_TABLE_COLUMN_HEADER_CHANGED,
+
+  /** A table's data changed.
+  */
+  IA2_EVENT_TABLE_MODEL_CHANGED,
+
+  /** A table's row description changed.
+  */
+  IA2_EVENT_TABLE_ROW_DESCRIPTION_CHANGED,
+
+  /** A table's row header changed.
+  */
+  IA2_EVENT_TABLE_ROW_HEADER_CHANGED,
+
+  /** A table's summary changed.
+  */
+  IA2_EVENT_TABLE_SUMMARY_CHANGED,
+
+  /** A text object's attributes changed.
+  Also see ::IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED.
+  */
+  IA2_EVENT_TEXT_ATTRIBUTE_CHANGED,
+
+  /** The caret has moved to a new position.
+  */
+  IA2_EVENT_TEXT_CARET_MOVED,
+
+  /** This event indicates general text changes, i.e. changes to text that is 
+    exposed through the IAccessibleText and IAccessibleEditableText interfaces.
+  */
+  IA2_EVENT_TEXT_CHANGED,
+
+  /** Text was inserted.
+  */
+  IA2_EVENT_TEXT_INSERTED,
+
+  /** Text was removed.
+  */
+  IA2_EVENT_TEXT_REMOVED,
+
+  /** Text was updated.
+  */
+  IA2_EVENT_TEXT_UPDATED,
+
+  /** The text selection changed.
+  */
+  IA2_EVENT_TEXT_SELECTION_CHANGED,
+
+  /** A visibile data event indicates the change of the visual appearance
+    of an accessible object.  This includes for example most of the
+    attributes available via the IAccessibleComponent interface.
+  */
+  IA2_EVENT_VISIBLE_DATA_CHANGED
+};
+/*************************************************************************
+ *
+ *  File Name (AccessibleApplication.idl)
+ *
+ *  IAccessible2 IDL Specification
+ *
+ *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License version 2.1, as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
+ *
+ ************************************************************************/
+
+import "objidl.idl";
+import "oaidl.idl";
+import "oleacc.idl";
+
+
+/** @defgroup grpIAccessibleApplication Constants used with IAccessibleApplication */
+///@{
+/** This constant is used when requesting the IAccessibleApplication interface
+  via a call to AccessibleObjectFromWindow.
+
+  The following describes how an MSAA/IA2 server will provide an object 
+  implementing the IAccessibleApplication interface.  For any and all 
+  windows in an application, the server will respond to the WM_GETOBJECT 
+  message by returning an IAccessible pointer to an object which implements the
+  IAccessibleApplication interface, provided that OBJID_IAAPPLICATION is the 
+  DWORD value received in the dwObjId parameter of the message handler. 
+
+  The WM_GETOBJECT message handler is expected to increment the reference count 
+  for the returned object by 1. 
+
+  The client may use AccessibleObjectFromWindow to get the IAccessibleApplication 
+  interface at any time during the life of a window, by specifying idObject as
+  OBJID_IAAPPLICATION.
+
+  The riid parameter on the call to AccessibleObjectFromWindow should be 
+  IID_IAccessibleApplication.
+*/ 
+const long OBJID_IAAPPLICATION = 0xffffff00;
+///@}
+
+/** @brief This interface gives access to the application's name and version information.
+        
+ This interface provides the AT with the information it needs to differentiate 
+ this application from other applications, from other versions of this 
+ application, or from other versions of this application running on different 
+ versions of an accessibility bridge or accessbility toolkit.
+*/
+[object, uuid(D49DED83-5B25-43F4-9B95-93B44595979E)]
+interface IAccessibleApplication : IUnknown
+{
+  
+  /** @brief Returns the application name.
+   @param [out] name
+  */
+  [propget] HRESULT appName
+    (
+     [out, retval] BSTR *name
+    );
+
+  /** @brief Returns the application version.
+   @param [out] version
+  */
+  [propget] HRESULT appVersion
+    (
+     [out, retval] BSTR *version
+    );
+
+  /** @brief Returns the toolkit/bridge name.
+   @param [out] name
+  */
+  [propget] HRESULT toolkitName
+    (
+     [out, retval] BSTR *name
+    );
+
+  /** @brief Returns the toolkit/bridge version.
+   @param [out] version
+  */
+  [propget] HRESULT toolkitVersion
+    (
+     [out, retval] BSTR *version
+    );  
+
+}
+}
+
