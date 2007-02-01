@@ -5,17 +5,33 @@
 #See the file COPYING for more details.
 
 import time
+import ctypes
+import comtypesClient
+import comtypes.automation
 import debug
+import winUser
+import IAccessibleHandler
+import virtualBuffers
 from keyboardHandler import key, sendKey
 import api
-from autoPropertyType import autoPropertyType
 import audio
+import IAccessible
 
-class NVDAObjectExt_MSHTMLEdit:
+class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 
-	__metaclass__=autoPropertyType
+	def getDocumentObjectModel(self):
+		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(self)
+		if virtualBuffer and hasattr(virtualBuffer,'dom'):
+			return virtualBuffer.dom
+		else:
+			domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+			wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+			lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+			res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+			return comtypesClient.wrap(domPointer)
 
 	def __init__(self,*args,**vars):
+		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
 		self.registerScriptKeys({
 			key("ExtendedUp"):self.script_text_moveByLine,
 			key("ExtendedDown"):self.script_text_moveByLine,
@@ -41,8 +57,16 @@ class NVDAObjectExt_MSHTMLEdit:
 			key("Back"):self.script_text_backspace,
 		})
 
-	def getDocumentObjectModel(self):
-		abstract
+	def _get_typeString(self):
+		if self.isContentEditable:
+			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
+
+	def _get_value(self):
+		if self.isContentEditable:
+			r=self.text_getLineOffsets(self.text_caretOffset)
+			if r:
+				return self.text_getText(r[0],r[1])
+		return ""
 
 	def _get_isContentEditable(self):
 		if hasattr(self,'dom') and self.dom.activeElement.isContentEditable:
@@ -63,7 +87,6 @@ class NVDAObjectExt_MSHTMLEdit:
 			return (ord(bookmark[2])-self.getOffsetBias(),ord(bookmark[40])-self.getOffsetBias())
 		else:
 			return (ord(bookmark[2])-self.getOffsetBias(),ord(bookmark[2])-self.getOffsetBias())
-
 
 	def _get_text_characterCount(self):
 		if not hasattr(self,'dom'):
@@ -112,6 +135,7 @@ class NVDAObjectExt_MSHTMLEdit:
 		self.dom=self.getDocumentObjectModel()
 		if self.dom.body.isContentEditable and not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
+		IAccessible.NVDAObject_IAccessible.event_gainFocus(self)
 
 	def event_looseFocus(self):
 		if hasattr(self,'dom'):

@@ -22,7 +22,6 @@ import api
 import config
 import baseType
 import window
-import MSHTML
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -784,40 +783,6 @@ class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 	def _get_description(self):
 		return ""
 
-class NVDAObject_internetExplorerEdit(MSHTML.NVDAObjectExt_MSHTMLEdit,NVDAObject_IAccessible):
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		MSHTML.NVDAObjectExt_MSHTMLEdit.__init__(self,*args,**vars)
-
-	def getDocumentObjectModel(self):
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		return comtypesClient.wrap(domPointer)
-
-	def _get_typeString(self):
-		if self.isContentEditable:
-			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
-		else:
-			return IAccessibleHandler.getRoleName(self.role)
-
-	def _get_value(self):
-		if self.isContentEditable:
-			r=self.text_getLineOffsets(self.text_caretOffset)
-			if r:
-				return self.text_getText(r[0],r[1])
-		return ""
- 
-	def event_gainFocus(self):
-		MSHTML.NVDAObjectExt_MSHTMLEdit.event_gainFocus(self)
-		self.text_reviewOffset=self.text_caretOffset
-		NVDAObject_IAccessible.event_gainFocus(self)
-
-	def event_looseFocus(self):
-		MSHTML.NVDAObjectExt_MSHTMLEdit.event_looseFocus(self)
-
 class NVDAObject_statusBar(NVDAObject_IAccessible):
 
 	def _get_value(self):
@@ -832,6 +797,7 @@ class NVDAObject_statusBar(NVDAObject_IAccessible):
 import winEdit
 import richEdit
 import winConsole
+import MSHTML
 
 _dynamicMap={}
 
@@ -882,8 +848,8 @@ _staticMap={
 (None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):NVDAObject_comboBox,
 (None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):NVDAObject_outline,
 ("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_internetExplorerEdit,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):NVDAObject_internetExplorerEdit,
+("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):MSHTML.NVDAObject_MSHTML,
+("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):MSHTML.NVDAObject_MSHTML,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 ("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
