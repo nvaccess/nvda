@@ -14,23 +14,23 @@ import audio
 import debug
 from keyboardHandler import sendKey, key
 import NVDAObjects
-import _MSOffice
+import _default
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
-class appModule(_MSOffice.appModule):
+class appModule(_default.appModule):
 
 	def __init__(self,*args):
-		_MSOffice.appModule.__init__(self,*args)
+		_default.appModule.__init__(self,*args)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		_MSOffice.appModule.__del__(self)
+		_default.appModule.__del__(self)
 
-class NVDAObject_excelEditableCell(NVDAObjects.IAccessible.NVDAObject_edit):
+class NVDAObject_excelEditableCell(NVDAObjects.winEdit.NVDAObject_winEdit):
 
 	def _get_role(self):
 		return IAccessibleHandler.ROLE_SYSTEM_TEXT

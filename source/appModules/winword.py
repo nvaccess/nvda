@@ -14,7 +14,7 @@ import debug
 from keyboardHandler import sendKey, key
 import config
 import NVDAObjects
-import _MSOffice
+import _default
 
 #Word constants
 
@@ -54,15 +54,15 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class appModule(_MSOffice.appModule):
+class appModule(_default.appModule):
 
 	def __init__(self,*args):
-		_MSOffice.appModule.__init__(self,*args)
+		_default.appModule.__init__(self,*args)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
 
 	def __del__(self):
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		_MSOffice.appModule.__del__(self)
+		_default.appModule.__del__(self)
 
 class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 

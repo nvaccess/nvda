@@ -121,6 +121,19 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		self.dom.Selection.Start=offset
 		self.dom.Selection.End=offset
 
+	def text_getPageNumber(self,offset):
+		if not hasattr(self,'dom'):
+			return super(NVDAObject_richEdit,self).text_getLineNumber(offset)
+		try:
+			pageNum=self.dom.Range(offset,offset).GetIndex(self.constants.tomPage)
+		except:
+			pageNum=0
+		if pageNum>=1:
+			return pageNum
+		else:
+			return None
+
+
 	def text_getLineNumber(self,offset):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getLineNumber(offset)
