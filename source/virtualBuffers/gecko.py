@@ -226,7 +226,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			text="%s\n "%obj.name
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
-		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK:
+		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
 		elif role=="p":
