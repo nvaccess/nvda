@@ -1,6 +1,5 @@
 NVDA notes for developers
 
-
 NVDA structure
 
 NVDA is very modular; it can be broken down in to clear parts.
@@ -41,14 +40,4 @@ NVDA responds to key presses via the keyboardHandler module, and also user inter
 When a user interface event module receives an event (such as focus change, foreground change, name change, value change, reorder, state change, show, hide...), It should make sure that NVDA has a correct reference to the object with focus and the foreground object.
  
 It should also see if the current appModule supports this event, if so, it should execute the appModule event in the main thread. If not, it should see if the current virtualBuffer supports the event and if so execute it in the main thread, and if not, finally instanciate an object refering to this event, and execute the event of this object.
-
-
-
-
-
-
-
-
-
-
 
