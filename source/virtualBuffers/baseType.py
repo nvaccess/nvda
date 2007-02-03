@@ -284,11 +284,11 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		labelID=self._IDs[ID]['labeledBy']
 		if labelID is not None:
 			r=self.getFullRangeFromID(labelID)
-			oldCaret=self.text_reviewOffset
+			oldReview=self.text_reviewOffset
 			self.text_reviewOffset=r[0]
 			self.text_reportNewPresentation(self.text_reviewOffset)
-			audio.speakText(self.getTextRange(r[0],r[1]))
-			self.text_reviewOffset=oldCaret
+			audio.speakText(self.text_getText(r[0],r[1]))
+			self.text_reviewOffset=oldReview
 
 	def reportIDMessages(self,newIDs,oldIDs):
 		msg=""

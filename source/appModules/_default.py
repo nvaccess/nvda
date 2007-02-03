@@ -391,13 +391,14 @@ class appModule(object):
 	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
+			audio.speakMessage("handle: %s"%obj.windowHandle)
 			audio.speakMessage("Class: %s"%obj.windowClassName)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
 			textLen=winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXTLEN,1,0)
-			buf=ctypes.create_unicode_buffer(textLen+20)
-			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,1,buf)
-			audio.speakMessage("list text: %s"%buf.value)
+			buf=ctypes.create_unicode_buffer(1024)
+			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,0,buf)
+			audio.speakMessage("list item count: %s"%winUser.sendMessage(obj.windowHandle,0x1004,0,0))
 
 	def script_test_navigatorIsIaccessible2(self,keyPress):
 		obj=api.getNavigatorObject()
