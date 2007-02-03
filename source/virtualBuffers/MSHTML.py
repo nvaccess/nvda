@@ -45,9 +45,9 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				if parentID is not None:
 					vObj._IDs[parentID]['children'].insert(childNum,ID)
 				vObj.fillBuffer(domNode,parentID,position=start)
-				textLen=len(vObj.text)
-				if vObj.caretPosition>=textLen:
-					vObj.caretPosition=textLen-1
+				textLen=vObj.text_characterCount
+				if vObj.text_reviewOffset>=textLen:
+					vObj.text_reviewOffset=textLen-1
 			except:
 				debug.writeException("onchange")
 
