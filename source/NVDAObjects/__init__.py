@@ -5,4 +5,5 @@
 #See the file COPYING for more details.
 
 
+import baseType
 import IAccessible

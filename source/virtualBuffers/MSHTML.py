@@ -84,12 +84,12 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		r=self.getFullRangeFromID(ID)
 		if r is None:
 			return False
-		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
-			self.caretPosition=r[0]
+		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
+			self.text_reviewOffset=r[0]
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
-				self.reportCaretIDMessages()
-				audio.speakText(self.getTextRange(r[0],r[1]))
+				self.text_reportNewPresentation(self.text_reviewOffset)
+				audio.speakText(self.text_getText(r[0],r[1]))
 				api.setFocusObject(obj)
 				api.setNavigatorObject(obj)
 				return True
@@ -135,14 +135,14 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			audio.speakMessage(_("loading document %s")%self.dom.title+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
-		self.caretPosition=0
+		self.text_reviewOffset=0
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
-			self.caretPosition=0
+			self.text_reviewOffset=0
 			time.sleep(0.01)
 			audio.speakMessage(_("done"))
-			self.reportCaretIDMessages()
-			self.speakLine(self.caretPosition)
+			self.text_reportNewPresentation(self.text_reviewOffset)
+			self.text_speakLine(self.text_reviewOffset)
 
 	def isDocumentComplete(self):
 		documentComplete=True
@@ -178,7 +178,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if nodeName=="OPTION":
 			return position
 		if position is None:
-			position=len(self.text)
+			position=self.text_characterCount
 		info=fieldInfo.copy()
 		info["node"]=domNode
 		info['parent']=parentID

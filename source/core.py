@@ -162,7 +162,7 @@ def main():
 				winUser.translateMessage(ctypes.byref(msg))
 				winUser.dispatchMessage(ctypes.byref(msg))
 			if queueList[EXEC_KEYBOARD].empty() and queueList[EXEC_MOUSE].empty() and queueList[EXEC_USERINTERFACE].empty() and queueList[EXEC_SPEECH].empty() and queueList[EXEC_CONFIG].empty():
-				time.sleep(0.001)
+				time.sleep(0.01)
 	except:
 		debug.writeException("core.py main loop")
 		try:

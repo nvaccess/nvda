@@ -73,8 +73,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type text_reviewOffset: int
 @ivar text_characterCount: the number of characters in this object's text
 @type text_characterCount: int
-@ivar _text_lastReportedFormatting: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
-@type _text_lastReportedFormatting: dict
+@ivar _text_lastReportedPresentation: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
+@type _text_lastReportedPresentation: dict
 """
 
 	__metaclass__=autoPropertyType.autoPropertyType
@@ -86,11 +86,12 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldValue=None
 		self._oldName=None
 		self._oldDescription=None
+		self._reviewOffset=0
 		self._keyMap={}
 		self.speakOnGainFocus=True
 		self.needsFocusState=True
 		self.speakOnForeground=True
-		self._text_lastReportedFormatting={}
+		self._text_lastReportedPresentation={}
 		self.text_reviewOffset=0
 		self._hashLimit=10000000
 		self._hashPrime=17
@@ -368,6 +369,15 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_text_caretOffset(self):
 		return 0
 
+	def _set_text_caretOffset(self,offset):
+		pass
+
+	def _get_text_reviewOffset(self):
+		return self._reviewOffset
+
+	def _set_text_reviewOffset(self,offset):
+		self._reviewOffset=offset
+
 	def _get_text_selectionCount(self):
 		return 0
 
@@ -451,22 +461,22 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return None
 
 	def text_getSentenceOffsets(self,offset):
-		return None
+		return self.text_getLineOffsets(offset)
 
 	def text_getNextSentenceOffsets(self,offset):
-		return None
+		return self.text_getNextLineOffsets(offset)
 
 	def text_getPrevSentenceOffsets(self,offset):
-		return None
+		return self.text_getPrevLineOffsets(offset)
 
 	def text_getParagraphOffsets(self,offset):
-		return None
+		return self.text_getLineOffsets(offset)
 
 	def text_getNextParagraphOffsets(self,offset):
-		return None
+		return self.text_getNextLineOffsets(offset)
 
 	def text_getPrevParagraphOffsets(self,offset):
-		return None
+		return self.text_getPrevLineOffsets(offset)
 
 	def text_getPageNumber(self,offset):
 		return None
@@ -479,7 +489,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def text_getAlignment(self,offset):
 		return None
-
 
 	def text_getFontName(self,offset):
 		return None
@@ -529,101 +538,101 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def text_getPrevFieldOffsets(self,offset):
 		return self.text_getPrevLineOffsets(offset)
 
-	def text_reportNewFormatting(self,offset):
+	def text_reportNewPresentation(self,offset):
 		if config.conf["documentFormatting"]["reportPage"]:
 			pageNumber=self.text_getPageNumber(offset)
-			lastPageNumber=self._text_lastReportedFormatting.get('pageNumber',None)
+			lastPageNumber=self._text_lastReportedPresentation.get('pageNumber',None)
 			if isinstance(pageNumber,int) and pageNumber!=lastPageNumber:
 				audio.speakMessage(_("page %d")%pageNumber)
-			self._text_lastReportedFormatting["pageNumber"]=pageNumber
+			self._text_lastReportedPresentation["pageNumber"]=pageNumber
 		if config.conf["documentFormatting"]["reportLineNumber"]:
 			lineNumber=self.text_getLineNumber(offset)
-			lastLineNumber=self._text_lastReportedFormatting.get('lineNumber',None)
+			lastLineNumber=self._text_lastReportedPresentation.get('lineNumber',None)
 			if isinstance(lineNumber,int) and lineNumber!=lastLineNumber:
 				audio.speakMessage(_("line %d")%lineNumber)
-			self._text_lastReportedFormatting["lineNumber"]=lineNumber
+			self._text_lastReportedPresentation["lineNumber"]=lineNumber
 		if config.conf["documentFormatting"]["reportTables"]:
 			inTable=self.text_inTable(offset)
-			wasInTable=self._text_lastReportedFormatting.get('inTable',None)
-			rowCount=self.text_getTableRowCount(offset)
-			columnCount=self.text_getTableColumnCount(offset)
+			wasInTable=self._text_lastReportedPresentation.get('inTable',None)
 			if not inTable and wasInTable:
 				audio.speakMessage(_("out of table"))
 			elif inTable and not wasInTable:
+				rowCount=self.text_getTableRowCount(offset)
+				columnCount=self.text_getTableColumnCount(offset)
 				audio.speakMessage(_("table with %d columns and %d rows")%(columnCount,rowCount))
-			self._text_lastReportedFormatting["inTable"]=inTable
+			self._text_lastReportedPresentation["inTable"]=inTable
 			rowNumber=self.text_getTableRowNumber(offset)
-			lastRowNumber=self._text_lastReportedFormatting.get('tableRowNumber',None)
+			lastRowNumber=self._text_lastReportedPresentation.get('tableRowNumber',None)
 			if isinstance(rowNumber,int) and rowNumber!=lastRowNumber:
 				audio.speakMessage(_("row %d")%rowNumber)
-			self._text_lastReportedFormatting["tableRowNumber"]=rowNumber
+			self._text_lastReportedPresentation["tableRowNumber"]=rowNumber
 			columnNumber=self.text_getTableColumnNumber(offset)
-			lastColumnNumber=self._text_lastReportedFormatting.get('tableColumnNumber',None)
+			lastColumnNumber=self._text_lastReportedPresentation.get('tableColumnNumber',None)
 			if isinstance(columnNumber,int) and columnNumber!=lastColumnNumber:
 				audio.speakMessage(_("column %d")%columnNumber)
-			self._text_lastReportedFormatting["tableColumnNumber"]=columnNumber
+			self._text_lastReportedPresentation["tableColumnNumber"]=columnNumber
 		if config.conf["documentFormatting"]["reportStyle"]:
 			style=self.text_getStyle(offset)
-			lastStyle=self._text_lastReportedFormatting.get('style',None)
+			lastStyle=self._text_lastReportedPresentation.get('style',None)
 			if isinstance(style,basestring) and style!=lastStyle:
 				audio.speakMessage(_("style %s")%style)
-			self._text_lastReportedFormatting["style"]=style
+			self._text_lastReportedPresentation["style"]=style
 		if config.conf["documentFormatting"]["reportAlignment"]:
 			alignment=self.text_getAlignment(offset)
-			lastAlignment=self._text_lastReportedFormatting.get('alignment',None)
+			lastAlignment=self._text_lastReportedPresentation.get('alignment',None)
 			if isinstance(alignment,basestring) and alignment!=lastAlignment:
 				audio.speakMessage(_("alignment %s")%alignment)
-			self._text_lastReportedFormatting["alignment"]=alignment
+			self._text_lastReportedPresentation["alignment"]=alignment
 		if config.conf["documentFormatting"]["reportFontName"]:
 			fontName=self.text_getFontName(offset)
-			lastFontName=self._text_lastReportedFormatting.get('fontName',None)
+			lastFontName=self._text_lastReportedPresentation.get('fontName',None)
 			if isinstance(fontName,basestring) and fontName!=lastFontName:
 				audio.speakMessage(_("font name %s")%fontName)
-			self._text_lastReportedFormatting["fontName"]=fontName
+			self._text_lastReportedPresentation["fontName"]=fontName
 		if config.conf["documentFormatting"]["reportFontSize"]:
 			fontSize=self.text_getFontSize(offset)
-			lastFontSize=self._text_lastReportedFormatting.get('fontSize',None)
+			lastFontSize=self._text_lastReportedPresentation.get('fontSize',None)
 			if isinstance(fontSize,int) and fontSize!=lastFontSize:
 				audio.speakMessage(_("font size %d")%fontSize)
-			self._text_lastReportedFormatting["fontSize"]=fontSize
+			self._text_lastReportedPresentation["fontSize"]=fontSize
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			isBold=self.text_isBold(offset)
-			wasBold=self._text_lastReportedFormatting.get('isBold',None)
+			wasBold=self._text_lastReportedPresentation.get('isBold',None)
 			if isinstance(isBold,bool) and isBold and not wasBold:
 				audio.speakMessage(_("bold"))
 			elif isinstance(isBold,bool) and not isBold and wasBold:
 				audio.speakMessage(_("not bold"))
-			self._text_lastReportedFormatting["isBold"]=isBold
+			self._text_lastReportedPresentation["isBold"]=isBold
 			isItalic=self.text_isItalic(offset)
-			wasItalic=self._text_lastReportedFormatting.get('isItalic',None)
+			wasItalic=self._text_lastReportedPresentation.get('isItalic',None)
 			if isinstance(isItalic,bool) and isItalic and not wasItalic:
 				audio.speakMessage(_("italic"))
 			elif isinstance(isItalic,bool) and not isItalic and wasItalic:
 				audio.speakMessage(_("not italic"))
-			self._text_lastReportedFormatting["isItalic"]=isItalic
+			self._text_lastReportedPresentation["isItalic"]=isItalic
 			isUnderline=self.text_isUnderline(offset)
-			wasUnderline=self._text_lastReportedFormatting.get('isUnderline',None)
+			wasUnderline=self._text_lastReportedPresentation.get('isUnderline',None)
 			if isinstance(isUnderline,bool) and isUnderline and not wasUnderline:
 				audio.speakMessage(_("underline"))
 			elif isinstance(isUnderline,bool) and not isUnderline and wasUnderline:
 				audio.speakMessage(_("not underline"))
-			self._text_lastReportedFormatting["isUnderline"]=isUnderline
+			self._text_lastReportedPresentation["isUnderline"]=isUnderline
 			isSuperscript=self.text_isSuperscript(offset)
-			wasSuperscript=self._text_lastReportedFormatting.get('isSuperscript',None)
+			wasSuperscript=self._text_lastReportedPresentation.get('isSuperscript',None)
 			if isinstance(isSuperscript,bool) and isSuperscript and not wasSuperscript:
 				audio.speakMessage(_("superscript"))
 			elif isinstance(isSuperscript,bool) and not isSuperscript and wasSuperscript:
 				audio.speakMessage(_("not superscript"))
-			self._text_lastReportedFormatting["isSuperscript"]=isSuperscript
+			self._text_lastReportedPresentation["isSuperscript"]=isSuperscript
 			isSubscript=self.text_isSubscript(offset)
-			wasSubscript=self._text_lastReportedFormatting.get('isSubscript',None)
+			wasSubscript=self._text_lastReportedPresentation.get('isSubscript',None)
 			if isinstance(isSubscript,bool) and isSubscript and not wasSubscript:
 				audio.speakMessage(_("superscript"))
 			elif isinstance(isSubscript,bool) and not isSubscript and wasSubscript:
 				audio.speakMessage(_("not subscript"))
-			self._text_lastReportedFormatting["isSubscript"]=isSubscript
+			self._text_lastReportedPresentation["isSubscript"]=isSubscript
 
-	def text_reportFormatting(self,offset):
+	def text_reportPresentation(self,offset):
 		style=self.text_getStyle(offset)
 		alignment=self.text_getAlignment(offset)
 		fontName=self.text_getFontName(offset)
@@ -653,29 +662,29 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("subscript"))
 
 	def text_speakLine(self,offset):
-		self.text_reportNewFormatting(offset)
+		self.text_reportNewPresentation(offset)
 		r=self.text_getLineOffsets(offset)
 		if r is not None:
 			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakWord(self,offset):
-		self.text_reportNewFormatting(offset)
+		self.text_reportNewPresentation(offset)
 		r=self.text_getWordOffsets(offset)
 		if r is not None:
 			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakCharacter(self,offset):
-		self.text_reportNewFormatting(offset)
+		self.text_reportNewPresentation(offset)
 		audio.speakSymbol(self.text_getText(offset,offset+1),index=offset)
 
 	def text_speakSentence(self,offset):
-		self.text_reportNewFormatting(offset)
+		self.text_reportNewPresentation(offset)
 		r=self.text_getSentenceOffsets(offset)
 		if r is not None:
 			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakParagraph(self,offset):
-		self.text_reportNewFormatting(offset)
+		self.text_reportNewPresentation(offset)
 		r=self.text_getParagraphOffsets(offset)
 		if r is not None:
 			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
@@ -770,115 +779,23 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.text_reviewOffset=r[1]-1
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def text_caretSayAllGenerator(self):
-		#Setup the initial info (count, caret position, index etc)
-		count=0 #Used to see when we need to start yielding
-		startPos=endPos=curPos=self.text_caretOffset
-		index=lastIndex=None
+	def text_sayAll_generator(self,offset):
+		curPos=offset
+		chunkOffsetsFunc=self.text_getLineOffsets
+		nextChunkOffsetsFunc=self.text_getNextLineOffsets
 		lastKeyCount=globalVars.keyCounter
-		#A loop that runs while no key is pressed and while we are not at the end of the text
-		while (curPos is not None) and (curPos<self.text_characterCount):
-			#report any changed presentation values
-			self.text_reportNewFormatting(curPos)
-			#Speak the current line (if its not blank) with an speech index of its position
-			r=self.text_getLineOffsets(curPos)
-			text=self.text_getText(r[0],r[1])
-			if text and (text not in ['\n','\r',""]):
-				self.text_speakLine(curPos)
-			#Move our current position down by one line
-				endPos=curPos
-			nextR=self.text_getNextLineOffsets(curPos)
-			if nextR is not None:
-				curPos=nextR[0]
-			else:
-				curPos=None
-			#Grab the current speech index from the synth, and if different to last, move the caret there
-			index=audio.getLastIndex()
-			if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-		 		self.text_caretOffset=index
-			lastIndex=index
-			#We don't want to yield for the first 4 loops so the synth can get a good run up
-			if count>4:
-				yield None
-			count+=1
-			#If the current keyPress count has changed, we need to stop
-			if lastKeyCount!=globalVars.keyCounter:
+		while (curPos<self.text_characterCount) and (lastKeyCount==globalVars.keyCounter):
+			r=chunkOffsetsFunc(curPos)
+			if r is None:
 				break
-		else: #We fell off the end of the loop (keyPress count didn't change)
-			#We are at the end of the document, but the speech most likely isn't yet, so loop so it can catch up
-			while (index<endPos):
-				index=audio.getLastIndex()
-				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.text_caretOffset=index
-				lastIndex=index
-				if count>4:
-					yield None
-				count+=1
-				if lastKeyCount!=globalVars.keyCounter:
-					break
-		#If we did see a keyPress, then we still have to give the speech index a chance to catch up to our current location
-		if lastKeyCount!=globalVars.keyCounter:
-			for num in xrange(2):
-				yield None
-				index=audio.getLastIndex()
-				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.text_caretOffset=index
-			audio.cancel()
-
-	def text_reviewSayAllGenerator(self):
-		#Setup the initial info (count, caret position, index etc)
-		count=0 #Used to see when we need to start yielding
-		startPos=endPos=curPos=self.text_reviewOffset
-		index=lastIndex=None
-		lastKeyCount=globalVars.keyCounter
-		#A loop that runs while no key is pressed and while we are not at the end of the text
-		while (curPos is not None) and (curPos<=self.text_reviewOffsetLimits[1]):
-			#report any changed presentation values
-			self.text_reportNewFormatting(curPos)
-			#Speak the current line (if its not blank) with an speech index of its position
-			r=self.text_getLineOffsets(curPos)
 			text=self.text_getText(r[0],r[1])
-			if text and (text not in ['\n','\r',""]):
-				self.text_speakLine(curPos)
-			#Move our current position down by one line
-				endPos=curPos
-			nextR=self.text_getNextLineOffsets(curPos)
-			if nextR is not None:
-				curPos=nextR[0]
-			else:
-				curPos=None
-			#Grab the current speech index from the synth, and if different to last, move the caret there
-			index=audio.getLastIndex()
-			if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-		 		self.text_reviewOffset=index
-			lastIndex=index
-			#We don't want to yield for the first 4 loops so the synth can get a good run up
-			if count>4:
-				yield None
-			count+=1
-			#If the current keyPress count has changed, we need to stop
-			if lastKeyCount!=globalVars.keyCounter:
+			if text and not text.isspace():
+				audio.speakText(text,index=r[0])
+			r=nextChunkOffsetsFunc(curPos)
+			if r is None:
 				break
-		else: #We fell off the end of the loop (keyPress count didn't change)
-			#We are at the end of the document, but the speech most likely isn't yet, so loop so it can catch up
-			while (index<endPos):
-				index=audio.getLastIndex()
-				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.text_reviewOffset=index
-				lastIndex=index
-				if count>4:
-					yield None
-				count+=1
-				if lastKeyCount!=globalVars.keyCounter:
-					break
-		#If we did see a keyPress, then we still have to give the speech index a chance to catch up to our current location
-		if lastKeyCount!=globalVars.keyCounter:
-			for num in xrange(2):
-				yield None
-				index=audio.getLastIndex()
-				if (index!=lastIndex) and (index>=startPos) and (index<=endPos):
-			 		self.text_reviewOffset=index
-			audio.cancel()
+			curPos=r[0]
+			yield
 
 	def event_caret(self):
 		self.text_reviewOffset=self.text_caretOffset

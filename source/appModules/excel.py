@@ -128,7 +128,7 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		sendKey(keyPress)
 		self.speakSelection()
 
-	def reportFormatInfo(self):
+	def text_reportPresentation(self,offset):
 		"""Reports the current font name, font size, font attributes of the active cell"""
 		audio.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
 		audio.speakMessage("%s %s"%(self.getFontSize(self.getActiveCell()),_("point")))

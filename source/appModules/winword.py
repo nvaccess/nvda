@@ -150,8 +150,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return self.dom.Selection.Start
 
 	def _set_text_caretOffset(self,offset):
-		self.dom.Selection.Start=offset
-		self.dom.Selection.End=offset
+		self.dom.Selection.SetRange(offset,offset)
 
 	def text_getLineNumber(self,offset):
 		return self.dom.selection.Document.range(offset,offset).Information(wdFirstCharacterLineNumber)
@@ -278,27 +277,22 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 			return None
 
 	def text_getFieldOffsets(self,offset):
-		r=self.dom.selection.Document.range(offset,offset)
-		r.Expand(wdCharFormat)
-		return (r.Start,r.End)
+		r=self.text_getSentenceOffsets(offset)
+		if r is None:
+			r=self.text_getLineOffsets(offset)
+		return r
 
 	def text_getNextFieldOffsets(self,offset):
-		(start,end)=self.text_getFieldOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
-		res=r.Move(wdCharFormat,1)
-		if res:
-			return self.text_getFieldOffsets(r.Start)
-		else:
-			return None
+		r=self.text_getNextSentenceOffsets(offset)
+		if (r is None) or (r[0]<=offset):
+			r=self.text_getNextLineOffsets(offset)
+		return r
 
 	def text_getPrevFieldOffsets(self,offset):
-		(start,end)=self.text_getFieldOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
-		res=r.Move(wdCharFormat,-1)
-		if res:
-			return self.text_getFieldOffsets(r.Start)
-		else:
-			return None
+		r=self.text_getPrevSentenceOffsets(offset)
+		if (r is None) or (r[0]>=offset):
+			r=self.text_getPrevLineOffsets(offset)
+		return r
 
 	def text_getStyle(self,offset):
 		return self.dom.selection.Document.range(offset,offset).Style.NameLocal
@@ -337,6 +331,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_inTable(self,offset):
 		return self.dom.selection.Document.range(offset,offset).Information(wdWithInTable)
+ 
 
 	def text_getTableRowNumber(self,offset):
 		rowNum=self.dom.selection.Document.range(offset,offset).Information(wdStartOfRangeRowNumber)

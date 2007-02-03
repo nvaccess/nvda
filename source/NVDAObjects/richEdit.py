@@ -255,35 +255,6 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		else:
 			return None
 
-	def text_getFieldOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getFieldOffsets(offset)
-		r=self.dom.Range(offset,offset)
-		r.Expand(self.constants.tomCharFormat)
-		return (r.Start,r.End)
-
-	def text_getNextFieldOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getNextFieldOffsets(offset)
-		(start,end)=self.text_getFieldOffsets(offset)
-		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomCharFormat,1)
-		if res:
-			return self.text_getFieldOffsets(r.Start)
-		else:
-			return None
-
-	def text_getPrevFieldOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getPrevFieldOffsets(offset)
-		(start,end)=self.text_getFieldOffsets(offset)
-		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomCharFormat,-1)
-		if res:
-			return self.text_getFieldOffsets(r.Start)
-		else:
-			return None
-
 	def text_getFontName(self,offset):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getFontName(offset)

@@ -56,12 +56,12 @@ class virtualBuffer_gecko(virtualBuffer):
 		if not self._IDs.has_key(ID):
 			return False
 		r=self.getFullRangeFromID(ID)
-		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
-			self.caretPosition=r[0]
+		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
+			self.text_reviewOffset=r[0]
 		if not api.isVirtualBufferPassThrough() and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
-			self.reportLabel(self.getIDFromPosition(self.caretPosition))
-			self.reportCaretIDMessages()
-			audio.speakText(self.getTextRange(r[0],r[1]))
+			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
+			self.text_reportNewPresentation(self.text_reviewOffset)
+			audio.speakText(self.text_getText(r[0],r[1]))
 			api.setFocusObject(obj)
 			api.setNavigatorObject(obj)
 			return True
@@ -76,10 +76,10 @@ class virtualBuffer_gecko(virtualBuffer):
 		if not self._IDs.has_key(ID):
 			return
 		r=self._IDs[ID]
-		if ((self.caretPosition<r[0]) or (self.caretPosition>=r[1])):
-			self.caretPosition=r[0]
-			self.reportCaretIDMessages()
-			audio.speakText(self.getTextRange(r[0],r[1]))
+		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
+			self.text_reviewOffset=r[0]
+			self.text_reportNewPresentation(self.text_reviewOffset)
+			audio.speakText(self.text_getText(r[0],r[1]))
 
 	def event_IAccessible_stateChange(self,hwnd,objectID,childID):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
@@ -124,9 +124,9 @@ class virtualBuffer_gecko(virtualBuffer):
 		if parentID is not None:
 			self._IDs[parentID]['children'].insert(childNum,ID)
 		self.fillBuffer(obj,parentID,position=r[0])
-		textLen=len(self.text)
-		if self.caretPosition>=textLen:
-			self.caretPosition=textLen-1
+		textLen=self.text_characterCount
+		if self.text_reviewOffset>=textLen:
+			self.text_reviewOffset=textLen-1
 		tones.beep(880,100)
 
 	def activatePosition(self,pos):
@@ -175,10 +175,10 @@ class virtualBuffer_gecko(virtualBuffer):
 		lastLoadTime=time.time()
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			audio.cancel()
-			self.caretPosition=0
+			self.text_reviewOffset=0
 			audio.speakMessage(_("done"))
 			time.sleep(0.001)
-			self.speakLine(0)
+			self.text_speakLine(0)
 
 	def fillBuffer(self,obj,parentID=None,position=None):
 		getNVDAObjectID=self.getNVDAObjectID
@@ -186,7 +186,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		states=obj.states
 		text=""
 		if position is None:
-			position=len(self.text)
+			position=self.text_characterCount
 		ID=getNVDAObjectID(obj)
 		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		if ID is None:
