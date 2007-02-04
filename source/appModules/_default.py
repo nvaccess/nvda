@@ -351,7 +351,8 @@ class appModule(object):
 		o.text_reportPresentation(o.text_reviewOffset)
 
 	def script_reportCurrentFocus(self,keyPress):
-		focusObject=api.getFocusObject()
+		#focusObject=api.getFocusObject()
+		focusObject=api.findObjectWithFocus()
 		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
 			focusObject.speakObject()
 		else:
@@ -393,6 +394,8 @@ class appModule(object):
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("handle: %s"%obj.windowHandle)
 			audio.speakMessage("Class: %s"%obj.windowClassName)
+			for char in obj.windowClassName:
+				audio.speakSymbol("%s"%char)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
 			textLen=winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXTLEN,1,0)
