@@ -1,4 +1,6 @@
 #appModules/winword.py
+#$Rev$
+#$Date$
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
