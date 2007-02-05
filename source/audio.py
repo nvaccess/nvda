@@ -128,7 +128,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		uppercase=False
 	if uppercase:
 		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
-			symbol=_("cap %s"%symbol)
+			symbol=_("cap %s")%symbol
 		oldPitch=synthDriverHandler.getPitch()
 		synthDriverHandler.setPitch(oldPitch+25)
 	synthDriverHandler.speakText(symbol,wait=wait,index=index)

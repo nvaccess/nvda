@@ -321,12 +321,6 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		if self.role==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP:
 			self.event_menuStart()
 
-	def updateMenuMode(self):
-		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUBAR,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUITEM]:
-			api.setMenuMode(False)
-		if self.role==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
-			audio.cancel()
-
 	def event_mouseMove(self,isEntering,x,y,oldX,oldY):
 		if isEntering:
 			audio.cancel()
@@ -350,34 +344,28 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		return bool(self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED)
 
 	def event_gainFocus(self):
-		self.updateMenuMode()
-		if not (not api.getMenuMode() and (self.role==IAccessibleHandler.ROLE_SYSTEM_MENUITEM)):
-			if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
-				groupName=self.groupName
-				if groupName:
-					audio.speakMessage("%s %s"%(groupName,IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_GROUPING)))
-			window.NVDAObject_window.event_gainFocus(self)
+		if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
+			groupName=self.groupName
+			if groupName:
+				audio.speakMessage("%s %s"%(groupName,IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_GROUPING)))
+		window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
-		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUBAR,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUITEM]:
-			return
-		if not api.getMenuMode():
-			audio.cancel()
-			api.setMenuMode(True)
+		if api.getFocusObject().role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM] and self!=api.getFocusObject() and self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
+			api.setFocusObject(self)
 			self.speakObject()
-			for child in self.children:
-				if child.hasFocus:
-					child.speakObject()
-					break
+			child=self.activeChild
+			if child:
+				child.speakObject()
 
 	def event_menuEnd(self):
-		#audio.cancel()
-		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
-			api.setMenuMode(False)
+		audio.cancel()
+		audio.speakMessage(_("menu closed"))
+		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
 			obj=api.findObjectWithFocus()
 			if obj!=api.getFocusObject():
 				api.setFocusObject(obj)
-				audio.cancel()
+				obj.speakOnGainFocus=False
 				obj.event_gainFocus()
 
 	def event_stateChange(self):

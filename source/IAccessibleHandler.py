@@ -198,8 +198,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	varChild=comtypes.automation.VARIANT()
 	res=oleAcc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
-		if not isinstance(varChild.value,int):
-			child=0
+		#audio.speakMessage("%s %s"%(childID,varChild.value))
+		if childID<0:
+			child=childID
 		else:
 			child=varChild.value
 		return (pacc,child)
@@ -449,7 +450,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 	try:
 		eventName=eventMap[eventID]
 		#Change window objIDs to client objIDs for better reporting of objects
-		if (objectID==0) and (childID==0) and (eventID!=winUser.EVENT_OBJECT_HIDE):
+		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
@@ -534,10 +535,9 @@ def foregroundEvent(window,objectID,childID):
 
 def focusEvent(window,objectID,childID):
 	oldFocus=api.getFocusObject()
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accChild:
+		return
 	res=False
-	#If the object already is the focus object then ignore it
-	if window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accChild:
-		return 
 	appModuleHandler.update()
 	appModule=appModuleHandler.getActiveModule()
 	virtualBuffers.IAccessible.update(window)
