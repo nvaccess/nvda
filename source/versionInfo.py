@@ -1,6 +1,4 @@
 #versionInfo.py
-#$Rev$
-#$Date$
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -8,8 +6,7 @@
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-svnRevision="$Rev$".split(' ')[1]
-version="svn rev %s"%svnRevision
+version="svn-trunk"
 description=_("A free and open-source screen reader for MS Windows")
 maintainer="Michael Curran"
 maintainer_email="mick@kulgan.net"
