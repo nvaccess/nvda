@@ -201,10 +201,10 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	res=oleAcc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
 		#audio.speakMessage("%s %s"%(childID,varChild.value))
-		if childID<0:
-			child=childID
-		else:
-			child=varChild.value
+		#if False or childID<0:
+		#child=childID
+		#else:
+		child=varChild.value
 		return (pacc,child)
 	else:
 		return None
@@ -462,12 +462,12 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		lastRes=False
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
-			if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accChild):
+			if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
 				api.setFocusObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				return
-			elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accChild):
+			elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
 				api.setForegroundObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
@@ -499,7 +499,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
 			core.executeFunction(core.EXEC_USERINTERFACE,getattr(virtualBuffer,"event_IAccessible_%s"%eventName),window,objectID,childID)
 		#Let events for the focus object through
-		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accChild and hasattr(focusObject,"event_%s"%eventName):
+		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accOrigChildID and hasattr(focusObject,"event_%s"%eventName):
 			core.executeFunction(core.EXEC_USERINTERFACE,getattr(focusObject,"event_%s"%eventName))
 		#Notify the focus object if this is a caret location change or show
 		elif eventName=="locationChange" and objectID==OBJID_CARET:
@@ -537,7 +537,7 @@ def foregroundEvent(window,objectID,childID):
 
 def focusEvent(window,objectID,childID):
 	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accChild:
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accOrigChildID:
 		return
 	res=False
 	appModuleHandler.update()

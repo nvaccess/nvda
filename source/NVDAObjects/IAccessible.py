@@ -28,7 +28,7 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	if not accHandle:
 		return None
 	(pacc,child)=accHandle
-	obj=NVDAObject_IAccessible(pacc,child,hwnd=hwnd,objectID=objectID)
+	obj=NVDAObject_IAccessible(pacc,child,hwnd=hwnd,objectID=objectID,origChildID=childID)
 	return obj
 
 def getNVDAObjectFromPoint(x,y):
@@ -54,7 +54,7 @@ the NVDAObject for IAccessible
 
 	allowedPositiveStates=IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE|IAccessibleHandler.STATE_SYSTEM_SELECTED|IAccessibleHandler.STATE_SYSTEM_PRESSED|IAccessibleHandler.STATE_SYSTEM_CHECKED|IAccessibleHandler.STATE_SYSTEM_MIXED|IAccessibleHandler.STATE_SYSTEM_EXPANDED|IAccessibleHandler.STATE_SYSTEM_COLLAPSED|IAccessibleHandler.STATE_SYSTEM_BUSY|IAccessibleHandler.STATE_SYSTEM_HASPOPUP
 
-	def __new__(cls,pacc,child,hwnd=None,objectID=None):
+	def __new__(cls,pacc,child,hwnd=None,objectID=None,origChildID=None):
 		"""
 Checks the window class and IAccessible role against a map of NVDAObject_IAccessible sub-types, and if a match is found, returns that rather than just NVDAObject_IAccessible.
 """  
@@ -83,10 +83,10 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			cls=NVDAObject_IAccessible
 		obj=window.NVDAObject_window.__new__(cls,hwnd)
 		obj._cachedRole=objectRole
-		obj.__init__(pacc,child,hwnd=hwnd,objectID=objectID)
+		obj.__init__(pacc,child,hwnd=hwnd,objectID=objectID,origChildID=origChildID)
 		return obj
 
-	def __init__(self,pacc,child,hwnd=None,objectID=None):
+	def __init__(self,pacc,child,hwnd=None,objectID=None,origChildID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
@@ -103,6 +103,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		self._pacc=pacc
 		self._accChild=child
 		self._accObjectID=objectID
+		self._accOrigChildID=origChildID
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 		self._doneInit=True
@@ -696,10 +697,6 @@ class NVDAObject_listItem(NVDAObject_IAccessible):
 
 	allowedNegativeStates=NVDAObject_IAccessible.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_SELECTED
 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self._lastNegativeStates=self.calculateNegativeStates()
-
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
@@ -784,6 +781,7 @@ import winEdit
 import richEdit
 import winConsole
 import MSHTML
+import sysListView32
 
 _dynamicMap={}
 
@@ -841,4 +839,6 @@ _staticMap={
 ("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
 ("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
 ("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
+("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
+("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
 }
