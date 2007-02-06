@@ -561,16 +561,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 				columnCount=self.text_getTableColumnCount(offset)
 				audio.speakMessage(_("table with %d columns and %d rows")%(columnCount,rowCount))
 			self._text_lastReportedPresentation["inTable"]=inTable
-			rowNumber=self.text_getTableRowNumber(offset)
-			lastRowNumber=self._text_lastReportedPresentation.get('tableRowNumber',None)
-			if isinstance(rowNumber,int) and rowNumber!=lastRowNumber:
-				audio.speakMessage(_("row %d")%rowNumber)
-			self._text_lastReportedPresentation["tableRowNumber"]=rowNumber
-			columnNumber=self.text_getTableColumnNumber(offset)
-			lastColumnNumber=self._text_lastReportedPresentation.get('tableColumnNumber',None)
-			if isinstance(columnNumber,int) and columnNumber!=lastColumnNumber:
-				audio.speakMessage(_("column %d")%columnNumber)
-			self._text_lastReportedPresentation["tableColumnNumber"]=columnNumber
+			if inTable:
+				rowNumber=self.text_getTableRowNumber(offset)
+				lastRowNumber=self._text_lastReportedPresentation.get('tableRowNumber',None)
+				if isinstance(rowNumber,int) and rowNumber!=lastRowNumber:
+					audio.speakMessage(_("row %d")%rowNumber)
+				self._text_lastReportedPresentation["tableRowNumber"]=rowNumber
+				columnNumber=self.text_getTableColumnNumber(offset)
+				lastColumnNumber=self._text_lastReportedPresentation.get('tableColumnNumber',None)
+				if isinstance(columnNumber,int) and columnNumber!=lastColumnNumber:
+					audio.speakMessage(_("column %d")%columnNumber)
+				self._text_lastReportedPresentation["tableColumnNumber"]=columnNumber
 		if config.conf["documentFormatting"]["reportStyle"]:
 			style=self.text_getStyle(offset)
 			lastStyle=self._text_lastReportedPresentation.get('style',None)

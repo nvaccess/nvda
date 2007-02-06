@@ -83,6 +83,8 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 			return False
 
 	def consoleEventHook(self,handle,eventID,window,objectID,childID,threadID,timestamp):
+		if window!=self.windowHandle:
+			return
 		self.text_reviewOffset=self.text_caretOffset
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID

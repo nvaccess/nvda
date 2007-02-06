@@ -121,7 +121,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		self.dom.Selection.Start=offset
 		self.dom.Selection.End=offset
 
-	def text_getPageNumber(self,offset):
+	def old_text_getPageNumber(self,offset):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getLineNumber(offset)
 		try:
@@ -132,7 +132,6 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return pageNum
 		else:
 			return None
-
 
 	def text_getLineNumber(self,offset):
 		if not hasattr(self,'dom'):
@@ -254,6 +253,24 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return self.text_getParagraphOffsets(r.Start)
 		else:
 			return None
+
+	def text_getFieldOffsets(self,offset):
+		r=self.text_getSentenceOffsets(offset)
+		if r is None:
+			r=self.text_getLineOffsets(offset)
+		return r
+
+	def text_getNextFieldOffsets(self,offset):
+		r=self.text_getNextSentenceOffsets(offset)
+		if (r is None) or (r[0]<=offset):
+			r=self.text_getNextLineOffsets(offset)
+		return r
+
+	def text_getPrevFieldOffsets(self,offset):
+		r=self.text_getPrevSentenceOffsets(offset)
+		if (r is None) or (r[0]>=offset):
+			r=self.text_getPrevLineOffsets(offset)
+		return r
 
 	def text_getFontName(self,offset):
 		if not hasattr(self,'dom'):

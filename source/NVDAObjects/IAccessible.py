@@ -256,24 +256,25 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		else:
 			return None
 		if obj and (obj.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-			return getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		else:
+			obj=getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle):
 			return obj
+		else:
+			return None
 
 	def _get_children(self):
-		childCount=self.childCount
+		childCount= self.childCount
 		if childCount>0:
 			children=[NVDAObject_IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self._pacc,0,childCount) if x]
 			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
-			children=[x for x in children if x]
-			return children
 		else:
 			child=self.firstChild
 			children=[]
 			while child:
 				children.append(child)
 				child=child.next
-			return children
+		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
+		return children
 
 
 	def doDefaultAction(self):
@@ -344,6 +345,18 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_isProtected(self):
 		return bool(self.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED)
 
+	def speakDescendantObjects(self,hashList=None):
+		if hashList is None:
+			hashList=[]
+		child=self.firstChild
+		while child and winUser.isDescendantWindow(self.windowHandle,child.windowHandle):
+			h=hash(child)
+			if h not in hashList:
+				hashList.append(h)
+				child.speakObject()
+				child.speakDescendantObjects(hashList=hashList)
+			child=child.next
+
 	def event_gainFocus(self):
 		if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
 			groupName=self.groupName
@@ -352,12 +365,16 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
-		if api.getFocusObject().role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM] and self!=api.getFocusObject() and self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
+		focusObject=api.getFocusObject()
+		parentObject=focusObject.parent if focusObject else None
+		if self!=focusObject and self!=parentObject  and self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
 			api.setFocusObject(self)
-			self.speakObject()
-			child=self.activeChild
-			if child:
-				child.speakObject()
+			audio.cancel()
+			if self.role==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP and focusObject.role==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
+				audio.speakObjectProperties(name=focusObject.name,typeString=self.typeString)
+			else:
+				self.speakObject()
+
 
 	def event_menuEnd(self):
 		audio.cancel()

@@ -330,9 +330,8 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return bool(self.dom.selection.Document.range(offset,offset).Font.Subscript)
 
 	def text_inTable(self,offset):
-		return self.dom.selection.Document.range(offset,offset).Information(wdWithInTable)
+		return False #self.dom.selection.Document.range(offset,offset).Information(wdWithInTable)
  
-
 	def text_getTableRowNumber(self,offset):
 		rowNum=self.dom.selection.Document.range(offset,offset).Information(wdStartOfRangeRowNumber)
 		if rowNum>0:

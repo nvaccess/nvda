@@ -60,10 +60,10 @@ def executeMouseMoveEvent(x,y):
 	if hasattr(mouseObject,"event_mouseMove"):
 		try:
 			mouseObject.event_mouseMove(isEntering,x,y,mouseOldX,mouseOldY)
+			mouseOldX=x
+			mouseOldY=y
 		except:
 			debug.writeException("api.notifyMouseMoved")
-	mouseOldX=x
-	mouseOldY=y
 
 #Register internal mouse event
 
