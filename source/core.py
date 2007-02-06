@@ -93,6 +93,15 @@ def executeFunction(execType,func,*args,**vars):
 		time.sleep(0.001)
 	queueList[execType].put((func,args,vars))
 
+def setLanguage(lang):
+	try:
+		gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
+		config.conf["general"]["language"]=lang
+		return True
+	except IOError:
+		gettext.install("nvda", unicode=True)
+		return False
+
 def applyConfiguration(reportDone=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 @param reportDone: if true then this function will speak when done, if else it won't.
@@ -101,10 +110,7 @@ def applyConfiguration(reportDone=False):
 	config.load()
 	#Language
 	lang = config.conf["general"]["language"]
-	try:
-		gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
-	except IOError:
-		gettext.install("nvda", unicode=True)
+	setLanguage(lang)
 	#Speech
 	audio.initialize()
 	config.save()

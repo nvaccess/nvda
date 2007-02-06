@@ -197,10 +197,14 @@ class MainFrame(wx.Frame):
 			self.onHideGuiCommand(None)
 
 	def onInterfaceSettingsCommand(self,evt):
+		oldLang=config.conf["general"]["language"]
 		oldHide=config.conf["general"]["hideInterfaceOnStartup"]
+		oldSave=config.conf["general"]["saveConfigurationOnExit"]
 		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
 		if d.ShowModal()!=wx.ID_OK:
+			core.setLanguage(oldLang)
 			config.conf["general"]["hideInterfaceOnStartup"]=oldHide
+			config.conf["general"]["saveConfigurationOnExit"]=oldSave
 
 
 	def onSynthesizerCommand(self,evt):

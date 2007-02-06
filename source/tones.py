@@ -6,7 +6,6 @@
 
 import wave
 import winsound
-import tempfile
 import os
 import struct
 import math

@@ -4,10 +4,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import os
 import wx
 import synthDriverHandler
 import debug
 import config
+import core
+import audio
 
 class interfaceSettingsDialog(wx.Dialog):
 
@@ -15,6 +18,20 @@ class interfaceSettingsDialog(wx.Dialog):
 		wx.Dialog.__init__(self,parent,ID,title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
+		languageLabel=wx.StaticText(self,-1,label=_("Language (requires restart to fully take affect)"))
+		languageSizer.Add(languageLabel)
+		languageListID=wx.NewId()
+		languages=[x for x in os.listdir('locale') if not x.startswith('.')]
+		languageList=wx.Choice(self,languageListID,name=_("Language"),choices=languages)
+		try:
+			index=languages.index(config.conf["general"]["language"])
+			languageList.SetSelection(index)
+		except:
+			pass
+		wx.EVT_CHOICE(self,languageListID,self.onLanguageChange)
+		languageSizer.Add(languageList)
+		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		hideInterfaceCheckBoxID=wx.NewId()
 		hideInterfaceCheckBox=wx.CheckBox(self,hideInterfaceCheckBoxID,label=_("Hide user interface on startup"))
 		hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
@@ -30,6 +47,11 @@ class interfaceSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+
+	def onLanguageChange(self,evt):
+		lang=evt.GetString()
+		core.setLanguage(lang)
+		config.conf["general"]["language"]=lang
 
 	def onHideInterfaceChange(self,evt):
 		config.conf["general"]["hideInterfaceOnStartup"]=evt.IsChecked()
