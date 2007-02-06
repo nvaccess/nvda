@@ -1,12 +1,16 @@
-#generate_comInterfaces.py
+#generate.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""Script to generate needed com interfaces"""
+"""Script to generate needed com interfaces and language files"""
+import os
+import sys
+from glob import glob
 import comtypesClient
 
+print "Com interfaces"
 #MS Word
 try:
 	print "MS Word"
@@ -54,4 +58,10 @@ try:
 	print "done"
 except:
 	print "not found"
+
+print "Language files"
+poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
+for f in poFiles:
+	print f
+	os.spawnv(os.P_WAIT,"%s\\python.exe"%sys.exec_prefix,['python',"%s\\Tools\\i18n\\msgfmt.py"%sys.exec_prefix,f])
 
