@@ -24,6 +24,7 @@ EXEC_USERINTERFACE=3
 EXEC_CONFIG=4
 EXEC_LAST=4
 
+import os
 import ctypes
 import gettext
 import time
@@ -92,6 +93,14 @@ def executeFunction(execType,func,*args,**vars):
 	while queueList[execType].full():
 		time.sleep(0.001)
 	queueList[execType].put((func,args,vars))
+
+def getAvailableLanguages():
+	l=[x for x in os.listdir('locale') if not x.startswith('.')]
+	l=[x for x in l if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	if 'enu' not in l:
+		l.append('enu')
+	return l
+
 
 def setLanguage(lang):
 	try:
