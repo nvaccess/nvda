@@ -76,18 +76,23 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 
 	def getOffsetBias(self):
 		r=self.dom.selection.createRange().duplicate()
-		r.expand("textedit")
+		r.move("textedit",-1)
 		return ord(r.getBookmark()[2])
 
+	def getLineNumBias(self):
+		r=self.dom.selection.createRange().duplicate()
+		r.move("textedit",-1)
+		return ord(r.getBookmark()[8])
+
 	def getBookmarkOffset(self,bookmark):
-		lineNum=(ord(bookmark[8])/2)-2
-		return ord(bookmark[2])-self.offsetBias-lineNum
+		lineNum=(ord(bookmark[8])-self.getLineNumBias())/2
+		return ord(bookmark[2])-self.getOffsetBias()-lineNum
 
 	def getBookmarkOffsets(self,bookmark):
 		start=self.getBookmarkOffset(bookmark)
 		if ord(bookmark[1])==3:
-			lineNum=self.text_getLineNumber(ord(bookmark[40])-self.offsetBias)-1
-			end=ord(bookmark[40])-self.offsetBias-lineNum
+			lineNum=(ord(bookmark[8])-self.getLineNumBias())/2
+			end=ord(bookmark[40])-self.getOffsetBias()-lineNum
 		else:
 			end=start
 		return (start,end)
@@ -146,7 +151,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 
 	def text_getLineNumber(self,offset):
 		r=self.getDomRange(offset,offset)
-		return (ord(r.getBookmark()[8])/2)-1
+		return (ord(r.getBookmark()[8])-self.lineNumBias)/2
 
 	def text_getLineOffsets(self,offset):
 		if not hasattr(self,'dom'):
@@ -265,6 +270,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 
 	def event_gainFocus(self):
 		self.dom=self.getDocumentObjectModel()
+		self.lineNumBias=self.getLineNumBias()
 		self.offsetBias=self.getOffsetBias()
 		if self.dom.body.isContentEditable and not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()

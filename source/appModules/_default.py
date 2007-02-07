@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import ctypes
 import comtypesClient
 import datetime
 from keyboardHandler import key
@@ -402,11 +401,3 @@ class appModule(object):
 			buf=ctypes.create_unicode_buffer(1024)
 			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,0,buf)
 			audio.speakMessage("list item count: %s"%winUser.sendMessage(obj.windowHandle,0x1004,0,0))
-
-	def script_test_navigatorIsIaccessible2(self,keyPress):
-		obj=api.getNavigatorObject()
-		if not obj:
-			return
-		ia2lib=comtypesClient.GetModule('.\\ia2.tlb')
-		newPacc=obj._pacc.QueryInterface(ia2lib.IAccessible2)
-		audio.speakMessage("%s"%newPacc)
