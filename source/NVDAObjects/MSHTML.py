@@ -80,13 +80,25 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		return ord(r.getBookmark()[2])
 
 	def getBookmarkOffset(self,bookmark):
-		return ord(bookmark[2])-self.getOffsetBias()
+		lineNum=(ord(bookmark[8])/2)-2
+		return ord(bookmark[2])-self.offsetBias-lineNum
 
 	def getBookmarkOffsets(self,bookmark):
+		start=self.getBookmarkOffset(bookmark)
 		if ord(bookmark[1])==3:
-			return (ord(bookmark[2])-self.getOffsetBias(),ord(bookmark[40])-self.getOffsetBias())
+			lineNum=self.text_getLineNumber(ord(bookmark[40])-self.offsetBias)-1
+			end=ord(bookmark[40])-self.offsetBias-lineNum
 		else:
-			return (ord(bookmark[2])-self.getOffsetBias(),ord(bookmark[2])-self.getOffsetBias())
+			end=start
+		return (start,end)
+
+	def getDomRange(self,start,end):
+		r=self.dom.selection.createRange().duplicate()
+		r.move("textedit",-1)
+		r.move("character",start)
+		if end!=start:
+			r.moveEnd("character",end-start)
+		return r
 
 	def _get_text_characterCount(self):
 		if not hasattr(self,'dom'):
@@ -101,14 +113,8 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			return "\0"
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else self.text_characterCount
-		#audio.speakMessage("get text: %s, %s"%(start,end))
-		r=self.dom.selection.createRange().duplicate()
-		r.expand("textedit")
-		text=r.text
-		if text:
-			return text[start:end]
-		else:
-			return ""
+		r=self.getDomRange(start,end)
+		return r.text
 
 	def _get_text_selectionCount(self):
 		if not hasattr(self,'dom'):
@@ -119,7 +125,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		else:
 			return 0
 
-	def text_getSelection(self,index):
+	def text_getSelectionOffsets(self,index):
 		if not hasattr(self,'dom') or (index!=0) or (self.text_selectionCount!=1):
 			return None
 		bookmark=self.dom.selection.createRange().getBookmark()
@@ -131,8 +137,135 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		bookmark=self.dom.selection.createRange().getBookmark()
 		return self.getBookmarkOffset(bookmark)
 
+	def _set_text_caretOffset(self,offset):
+		if not hasattr(self,'dom'):
+			return
+		r=self.getDomRange(offset,offset)
+		bookmark=r.getBookmark()
+		self.dom.selection.createRange().moveToBookmark(bookmark)
+
+	def text_getLineNumber(self,offset):
+		r=self.getDomRange(offset,offset)
+		return (ord(r.getBookmark()[8])/2)-1
+
+	def text_getLineOffsets(self,offset):
+		if not hasattr(self,'dom'):
+			return
+		oldBookmark=self.dom.selection.createRange().getBookmark()
+		r=self.getDomRange(offset,offset)
+		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
+		sendKey(key("ExtendedEnd"))
+		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		sendKey(key("ExtendedHome"))
+		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		self.dom.selection.createRange().moveToBookmark(oldBookmark)
+		return (start,end)
+
+	def text_getNextLineOffsets(self,offset):
+		if not hasattr(self,'dom'):
+			return
+		oldBookmark=self.dom.selection.createRange().getBookmark()
+		r=self.getDomRange(offset,offset)
+		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
+		sendKey(key("extendedDown"))
+		sendKey(key("ExtendedEnd"))
+		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		sendKey(key("ExtendedHome"))
+		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		self.dom.selection.createRange().moveToBookmark(oldBookmark)
+		if start>offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getPrevLineOffsets(self,offset):
+		if not hasattr(self,'dom'):
+			return
+		oldBookmark=self.dom.selection.createRange().getBookmark()
+		r=self.getDomRange(offset,offset)
+		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
+		sendKey(key("extendedUp"))
+		sendKey(key("ExtendedEnd"))
+		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		sendKey(key("ExtendedHome"))
+		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
+		self.dom.selection.createRange().moveToBookmark(oldBookmark)
+		if end<=offset and start<offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getWordOffsets(self,offset):
+		r=self.getDomRange(offset,offset+1)
+		r.expand("word")
+		return self.getBookmarkOffsets(r.getBookmark())
+
+	def text_getNextWordOffsets(self,offset):
+		r=self.getDomRange(offset,offset)
+		r.move("word",1)
+		r.expand("word")
+		(start,end)=self.getBookmarkOffsets(r.getBookmark())
+		if start>offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getPrevWordOffsets(self,offset):
+		r=self.getDomRange(offset,offset)
+		r.move("word",-1)
+		r.expand("word")
+		(start,end)=self.getBookmarkOffsets(r.getBookmark())
+		if end<=offset and start<offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getSentenceOffsets(self,offset):
+		r=self.getDomRange(offset,offset)
+		r.expand("sentence")
+		return self.getBookmarkOffsets(r.getBookmark())
+
+	def text_getNextSentenceOffsets(self,offset):
+		r=self.getDomRange(offset,offset)
+		r.move("sentence",1)
+		r.expand("sentence")
+		(start,end)=self.getBookmarkOffsets(r.getBookmark())
+		if start>offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getPrevSentenceOffsets(self,offset):
+		r=self.getDomRange(offset,offset)
+		r.move("sentence",-1)
+		r.expand("sentence")
+		(start,end)=self.getBookmarkOffsets(r.getBookmark())
+		if end<=offset and start<offset:
+			return (start,end)
+		else:
+			return None
+
+	def text_getFieldOffsets(self,offset):
+		r=self.text_getSentenceOffsets(offset)
+		if r is None:
+			r=self.text_getLineOffsets(offset)
+		return r
+
+	def text_getNextFieldOffsets(self,offset):
+		r=self.text_getNextSentenceOffsets(offset)
+		if r is None:
+			r=self.text_getNextLineOffsets(offset)
+		return r
+
+	def text_getPrevFieldOffsets(self,offset):
+		r=self.text_getPrevSentenceOffsets(offset)
+		if r is None:
+			r=self.text_getPrevLineOffsets(offset)
+		return r
+
 	def event_gainFocus(self):
 		self.dom=self.getDocumentObjectModel()
+		self.offsetBias=self.getOffsetBias()
 		if self.dom.body.isContentEditable and not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		IAccessible.NVDAObject_IAccessible.event_gainFocus(self)
@@ -140,46 +273,4 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 	def event_looseFocus(self):
 		if hasattr(self,'dom'):
 			del self.dom
-
-	def script_text_moveByLine(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		bookmark=self.dom.selection.createRange().getBookmark()
-		sendKey(key("ExtendedEnd"))
-		endRange=self.dom.selection.createRange().Duplicate()
-		sendKey(key("ExtendedHome"))
-		startRange=self.dom.selection.createRange().Duplicate()
-		startRange.setEndPoint("EndToStart",endRange)
-		del endRange
-		text=startRange.text
-		self.dom.selection.createRange().moveToBookmark(bookmark)
-		audio.speakText(text)
-
-	def script_text_moveByWord(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange().Duplicate()
-		startRange.expand("word")
-		text=startRange.text
-		audio.speakText(text)
-
-	def script_text_moveByCharacter(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange().Duplicate()
-		startRange.expand("character")
-		text=startRange.text
-		audio.speakSymbol(text)
-
-	def script_text_delete(self,keyPress):
-		if not hasattr(self,'dom'):
-			return
-		sendKey(keyPress)
-		startRange=self.dom.selection.createRange().Duplicate()
-		startRange.expand("character")
-		text=startRange.text
-		audio.speakSymbol(text)
 

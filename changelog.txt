@@ -1,12 +1,24 @@
 Changes since revision 316:
 *Support for edit fields and text chat log in Skype.
 *Internet Explorer (MSHTML) virtualBuffers now render IFrames (which means that user accounts in control panel now shows more of its content).
-*Some more work to stop dialogs crashing (possibly)
+*Some more work to stop dialogs crashing (possibly) and protected against synths giving bad values, or complaining about bad values.
  *Fixed bug where combo boxes and sliders etc were speaking their value twice when it changed.
 *Support for NVDA to fall back to using normal edit control support on a rich edit control that fails to work properly (example: log in fileZilla).
+*Made sure that graphics with no label, but that are part of a link, are rendered in Mozilla Gecko virtualBuffers.
+*Now use a different way of telling the difference between a link and an anchor tag in Mozilla Gecko virtualBuffers. Now anchor tags are not rendered if they are not supposed to be, but all normal links definitly are now.
+*Renamed some of the scripts for better readability with in keyboard help mode (insert+1)
 *Increased the size of the NVDA interface window so that more text can fit on a line.
 *Added version and copyright info to the top of the built-in quick-start document.
 *Improved sayAll for MS Word tables.
+*Added support for the Miranda IM contact list. The code is a little dojy, but it seems to work ok on the systems tested so far. 
+*Fixed the bug where listViews sometimes were reporting the wrong number of items (example: windows explorer details view, and Outlook Express message list)
+*Included Ptb language translations from Cleverson Casarin Uliana  
+*Added a language combo box to the user interface settings dialog on the preferences menu. Here you can choose between the available languages that NVDA will use to represent the interface, and screen reader messages. For all changes to take affect, you will need to restart NVDA.
+*Hopefully stopped all freezes and crashes when doing sayAll in MS Word.
+*Fixed freezes and crashes when reading some dialogs in MS Word such as Find and Replace, and Spelling and Gramma.
+*SayAll now reads by sentence in Rich edit controls, and MS Word documents, which should make reading a little more fluent with some synths.
+*Fix bugs in Outlook express and internet explorer edit controls where selecting text would not speak, or sayAll would fail to work. Although now arrowing by line may be a touch slower, all the standard text navigation functions have now been implemented properly, rather than just overiding some of the high-level scripts.
+*Fixed up the support for entering and exiting menus. Now the name of a menu is spoken when entering it, and when leaving a menu the focus is placed properly back where it should be. NVDA also reports "menu closed" when leaving a menu.
 
 Changes since revision 315:
 *Fixed bug where NVDA would not notify of a foreground change sometimes after leaving a menu (example: shutdown or control pannel in the start menu).
