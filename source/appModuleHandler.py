@@ -9,9 +9,11 @@
 @type current: appModule
 """
 
+import datetime
 import re
 import ctypes
 import os
+import sayAllHandler
 import debug
 import audio
 import winUser
