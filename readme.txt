@@ -35,7 +35,7 @@ Please send bugs and suggestions to:
 mick@kulgan.net
 
 NVDA website:
-http://www.kulgan.net/nvda/
+http://www.nvaccess.org/nvda/
 
 We are always looking for testers, and we are always needing people who are interested in writing support for various applications.
 
