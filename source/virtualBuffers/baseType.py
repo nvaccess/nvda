@@ -342,7 +342,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		lineCount=0
 		while (curPos<self.text_characterCount-1) and (lineCount<=pageLength):
 			curPos=curPos+1
-			if self.text_getText(curPos)=='\n':
+			if self.text_getText(curPos,curPos+1)=='\n':
 				lineCount+=1
 		self.text_reviewOffset=curPos
 		if self.text_reviewOffset>=self.text_characterCount-1:
