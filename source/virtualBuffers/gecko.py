@@ -68,14 +68,13 @@ class virtualBuffer_gecko(virtualBuffer):
 		return False
 
 	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID):
-		audio.speakMessage("scroll")
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
 			return False
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
 			return
-		r=self._IDs[ID]
+		r=self._IDs[ID]['range']
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
 			self.text_reportNewPresentation(self.text_reviewOffset)

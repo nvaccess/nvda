@@ -358,6 +358,8 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			child=child.next
 
 	def event_gainFocus(self):
+		if self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
+			audio.cancel()
 		if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
 			groupName=self.groupName
 			if groupName:
@@ -375,15 +377,12 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			else:
 				self.speakObject()
 
-
 	def event_menuEnd(self):
-		audio.cancel()
-		audio.speakMessage(_("menu closed"))
 		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
 			obj=api.findObjectWithFocus()
 			if obj!=api.getFocusObject():
 				api.setFocusObject(obj)
-				obj.speakOnGainFocus=False
+				audio.cancel()
 				obj.event_gainFocus()
 
 	def event_stateChange(self):
