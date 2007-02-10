@@ -257,7 +257,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			return None
 		if obj and (obj.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 			obj=getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle):
+		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
 			return obj
 		else:
 			return None
@@ -415,6 +415,9 @@ class NVDAObject_dialog(NVDAObject_IAccessible):
 	"""
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
 	"""
+
+	def _get_typeString(self):
+		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_DIALOG)
 
 	def _get_value(self):
 		return ""
@@ -858,4 +861,5 @@ _staticMap={
 ("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
 ("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
 ("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
+("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_dialog,
 }
