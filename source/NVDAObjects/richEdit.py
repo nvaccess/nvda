@@ -9,8 +9,9 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import winUser
+import audio			
 import IAccessibleHandler
-import winEdit
+import winEdit		
 
 class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 
@@ -63,31 +64,15 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self)._get_text_characterCount()
 		r=self.dom.Range(0,0)
-		r.Expand(self.constants.tomStory)
-		return r.End
+		return r.StoryLength
 
 	def text_getText(self,start=None,end=None):
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else self.text_characterCount
 		if not hasattr(self,'dom'):
-			#rich edit controls have bad line indexing if treeted as a plain edit control
-			if self.text_lineCount>1:
-				startLineNum=self.text_getLineNumber(start)-1
-				startOffset=start-self.text_getLineOffsets(start)[0]
-				endLineNum=self.text_getLineNumber(end-1)-1
-				lines=[]
-				for lineNum in xrange(startLineNum,endLineNum+1):
-					lineStart=winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
-					lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,lineStart,0)
-					buf=ctypes.create_unicode_buffer(lineLength+1)
-					buf.value=struct.pack('h',lineLength+1)
-					winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
-					lines.append(buf.value)
-				text="".join(lines)
-				return text[startOffset:][:end-start]
-			else:
-				return super(NVDAObject_richEdit,self).text_getText(start,end)
+			return super(NVDAObject_richEdit,self).text_getText(start,end)
 		r=self.dom.Range(start,end)
+		return r.Text
 		return r.text
 
 	def _get_text_selectionCount(self):

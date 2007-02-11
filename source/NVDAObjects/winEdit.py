@@ -47,10 +47,28 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 			return name
 
 	def text_getText(self,start=None,end=None):
-		text=self.windowText
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else len(self.value)
-		return text[start:end]
+		if self.text_lineCount>1:
+			startLineNum=self.text_getLineNumber(start)-1
+			startOffset=start-self.text_getLineOffsets(start)[0]
+			endLineNum=self.text_getLineNumber(end-1)-1
+			lines=[]
+			for lineNum in xrange(startLineNum,endLineNum+1):
+				lineStart=winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+				lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,lineStart,0)
+				buf=ctypes.create_unicode_buffer(lineLength+2)
+				buf.value=struct.pack('h',lineLength+1)
+				winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
+				lines.append(buf.value[0:lineLength])
+			text="".join(lines)
+			text=text[startOffset:][:end-start]
+			if text=="":
+				text='\r'
+			return text
+		else:
+			text=self.windowText
+			return text[start:end]
 
 	def _get_text_characterCount(self):
 		return winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
