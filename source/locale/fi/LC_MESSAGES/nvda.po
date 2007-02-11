@@ -1,50 +1,60 @@
-# Suomenkielinen käännös NVDA:han
+# Suomenkielinen käännös NVDA:lle
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-02-06 14:21+0200\n"
-"PO-Revision-Date: 2007-02-06 14:36+0200\n"
+"POT-Creation-Date: 2007-02-11 09:35+Normaaliaika\n"
+"PO-Revision-Date: 2007-02-11 09:37+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
-"Language-Team: fin <LL@li.org>\n"
+"Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:174 NVDAObjects\IAccessible.py:166
+#: IAccessibleHandler.py:176 NVDAObjects\IAccessible.py:166
 #: NVDAObjects\baseType.py:207 virtualBuffers\MSHTML.py:114
 #: virtualBuffers\MSHTML.py:311 virtualBuffers\MSHTML.py:316
-#: virtualBuffers\gecko.py:304 virtualBuffers\gecko.py:309
+#: virtualBuffers\gecko.py:303 virtualBuffers\gecko.py:308
 #, possible-python-format
 msgid "not %s"
 msgstr "ei %s"
 
-#: NVDAObjects\IAccessible.py:319 NVDAObjects\IAccessible.py:709
+#: NVDAObjects\IAccessible.py:319 NVDAObjects\IAccessible.py:711
 #: NVDAObjects\sysListView32.py:14
 #, possible-python-format
 msgid "%s of %s"
 msgstr "%s kautta %s"
 
-#: NVDAObjects\IAccessible.py:381
-msgid "menu closed"
-msgstr "valikko suljettu"
-
-#: NVDAObjects\IAccessible.py:610
+#: NVDAObjects\IAccessible.py:612
 msgid "not supported"
 msgstr "ei tueta"
 
-#: NVDAObjects\IAccessible.py:701
+#: NVDAObjects\IAccessible.py:703
 #, possible-python-format
 msgid "%s items"
 msgstr "%s osaa"
 
-#: NVDAObjects\IAccessible.py:747
+#: NVDAObjects\IAccessible.py:749
 #, possible-python-format
 msgid "%d items"
 msgstr "%d osaa"
+
+#: NVDAObjects\MSHTML.py:338 NVDAObjects\MSHTML.py:344
+#: NVDAObjects\baseType.py:872 NVDAObjects\baseType.py:874
+#: NVDAObjects\baseType.py:878
+#, possible-python-format
+msgid "unselected %s"
+msgstr "ei valittu %s"
+
+#: NVDAObjects\MSHTML.py:341 NVDAObjects\MSHTML.py:347
+#: NVDAObjects\baseType.py:864 NVDAObjects\baseType.py:868
+#: NVDAObjects\baseType.py:870 NVDAObjects\baseType.py:876
+#, possible-python-format
+msgid "selected %s"
+msgstr "valittu %s"
 
 #: NVDAObjects\baseType.py:171
 #, possible-python-format
@@ -169,18 +179,6 @@ msgstr "alareuna"
 #: NVDAObjects\baseType.py:861
 msgid "no selections"
 msgstr "ei valintoja"
-
-#: NVDAObjects\baseType.py:864 NVDAObjects\baseType.py:868
-#: NVDAObjects\baseType.py:870 NVDAObjects\baseType.py:876
-#, possible-python-format
-msgid "selected %s"
-msgstr "valittu %s"
-
-#: NVDAObjects\baseType.py:872 NVDAObjects\baseType.py:874
-#: NVDAObjects\baseType.py:878
-#, possible-python-format
-msgid "unselected %s"
-msgstr "ei valittu %s"
 
 #: NVDAObjects\richEdit.py:58
 #, possible-python-format
@@ -331,6 +329,34 @@ msgstr "fontti"
 #: appModules\excel.py:134
 msgid "point"
 msgstr "piste"
+
+#: appModules\msimn.py:19
+msgid "To:"
+msgstr "Vastaanottaja:"
+
+#: appModules\msimn.py:21
+msgid "CC:"
+msgstr "Kopio:"
+
+#: appModules\msimn.py:23
+msgid "BCC:"
+msgstr "Piilokopio:"
+
+#: appModules\msimn.py:25
+msgid "Subject:"
+msgstr "Aihe:"
+
+#: appModules\msimn.py:27 appModules\msimn.py:29
+msgid "From:"
+msgstr "Lähettäjä:"
+
+#: appModules\msimn.py:31
+msgid "Date:"
+msgstr "Päivämäärä:"
+
+#: appModules\msimn.py:33
+msgid "Attachments"
+msgstr "Liitteet"
 
 #: appModules\winword.py:309
 msgid "left"
@@ -504,11 +530,11 @@ msgstr "loppuaalto"
 msgid "tilda"
 msgstr "mato"
 
-#: core.py:119
+#: core.py:128
 msgid "configuration applyed"
 msgstr "asetukset käytössä"
 
-#: core.py:129
+#: core.py:138
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -618,34 +644,34 @@ msgstr ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"Tämä on NVDA:n käyttöliittymä. Tällä voit hallita NVDA:n asetuksia ja myös "
-"sulkea sen kokonaan.\n"
+"Tämä on NVDA:n käyttöliittymä. Tällä voit hallita NVDA:n asetuksia ja "
+"myös sulkea sen kokonaan.\n"
 "\n"
 "Voit tuoda tämän ikkunan näkyviin milloin tahansa painamalla insert+n. "
 "Sulkeaksesi ikkunan sulkematta NVDA:ta, paina alt+f4 ollessasi tässä "
 "ikkunassa.\n"
 "\n"
 "Sulkeaksesi NVDA:n kokonaan, paina joko insert+q missä tahansa ikkunassa, "
-"tai valitse 'sulje' tämän ikkunan NVDA-valikosta. NVDA tuo tällöin näkyviin "
-"keskusteluruudun, jossa kysytään, haluatko sulkea. Voit painaa joko Kyllä "
-"tai Ei -painiketta.\n"
+"tai valitse 'sulje' tämän ikkunan NVDA-valikosta. NVDA tuo tällöin nä"
+"kyviin keskusteluruudun, jossa kysytään, haluatko sulkea. Voit painaa joko "
+"Kyllä tai Ei -painiketta.\n"
 "\n"
-"Muuttaaksesi asetuksia (kuten puheasetuksia, näppäinkaiutusta, "
-"työkaluvihjeiden lukemista jne),\n"
-"siirry alt-näppäimellä valikkoriville ja käytä nuolinäppäimiä valikoissa "
-"liikkumiseen ja niiden asetusten etsimiseen, joita haluat muuttaa. Monissa "
-"valikon kohdissa Enterin painaminen tuo näkyviin keskusteluruudun, jossa "
-"voit muuttaa yksittäisiä asetuksia. Useimmat asetukset tulevat voimaan heti "
-"(kuten puheen nopeuden tai korkeuden muutokset), joten voit löytää helposti "
-"itsellesi sopivimmat asetukset. Jos kuitenkin suljet keskusteluruudun "
-"Peruuta-painikkeella, asetukset muuttuvat takaisin niiksi, joita ne olivat "
-"ennen tekemiäsi muutoksia. \n"
+"Muuttaaksesi asetuksia (kuten puheasetuksia, näppäinkaiutusta, työ"
+"kaluvihjeiden lukemista jne),\n"
+"siirry alt-näppäimellä valikkoriville ja käytä nuolinäppäimiä "
+"valikoissa liikkumiseen ja niiden asetusten etsimiseen, joita haluat "
+"muuttaa. Monissa valikon kohdissa Enterin painaminen tuo näkyviin "
+"keskusteluruudun, jossa voit muuttaa yksittäisiä asetuksia. Useimmat "
+"asetukset tulevat voimaan heti (kuten puheen nopeuden tai korkeuden "
+"muutokset), joten voit löytää helposti itsellesi sopivimmat asetukset. "
+"Jos kuitenkin suljet keskusteluruudun Peruuta-painikkeella, asetukset "
+"muuttuvat takaisin niiksi, joita ne olivat ennen tekemiäsi muutoksia. \n"
 "\n"
-"Asetuksia ei oletuksena säilytetä seuraavalle NVDA:n käyttökerralle, ellet "
-"paina ctrl+s tai valitse NVDA-valikosta 'Tallenna asetukset'. Voit asettaa "
-"NVDA:n tallentamaan asetukset automaattisesti suljettaessa menemällä "
-"Asetukset-valikossa 'Käyttöliittymä...'-kohtaan, valitsemalla 'Tallenna "
-"asetukset suljettaessa' -valintaruudun ja painamalla OK.\n"
+"Asetuksia ei oletuksena säilytetä seuraavalle NVDA:n käyttökerralle, "
+"ellet paina ctrl+s tai valitse NVDA-valikosta 'Tallenna asetukset'. Voit "
+"asettaa NVDA:n tallentamaan asetukset automaattisesti suljettaessa "
+"menemällä Asetukset-valikossa 'Käyttöliittymä...'-kohtaan, valitsemalla "
+"'Tallenna asetukset suljettaessa' -valintaruudun ja painamalla OK.\n"
 "\n"
 "Muutamia hyödyllisiä NVDA:n näppäinkomentoja:\n"
 "\n"
@@ -653,19 +679,20 @@ msgstr ""
 "Control - keskeytä puhe\n"
 "Insert+1 - näppäinohje päälle ja pois\n"
 "Insert+nuoli ylös - lukee aktiivisen objektin\n"
-"Insert+nuoli alas - käynnistää Sano kaikki -toiminnon (keskeytä painamalla "
-"Ctrl ttai mitä tahansa muuta näppäintä)\n"
+"Insert+nuoli alas - käynnistää Sano kaikki -toiminnon (keskeytä "
+"painamalla Ctrl ttai mitä tahansa muuta näppäintä)\n"
 "Insert+t - lue ikkunan otsikko\n"
 "Insert+F12 - lue kellonaika ja päiväys\n"
 "Insert+2 - kirjoitettujen merkkien lukeminen päälle ja pois\n"
 "Insert+3 - kirjoitettujen sanojen lukeminen päälle ja pois\n"
-"Insert+4 - komentonäppäinten (kuten välilyönti-, nuolinäppäin-, Control- ja "
-"Shift-yhdistelmien) lukeminen päälle ja pois\n"
+"Insert+4 - komentonäppäinten (kuten välilyönti-, nuolinäppäin-, "
+"Control- ja Shift-yhdistelmien) lukeminen päälle ja pois\n"
 "Insert+Page Up - lisää puhenopeutta\n"
 "Insert+Page Down - vähennä puhenopeutta\n"
 "Insert+p - välimerkkien lukeminen päälle ja pois\n"
 "Insert+s - Vaihda puhetilaa (pois, puhe ja äänimerkit)\n"
-"Insert+m - hiirikohdistimen alla olevien objektien lukeminen päälle ja pois\n"
+"Insert+m - hiirikohdistimen alla olevien objektien lukeminen päälle ja "
+"pois\n"
 "Insert+f - ilmoita nykyinen fontti (kun ollaan avoimessa dokumentissa)\n"
 "\n"
 "Navigointikomennot:\n"
@@ -963,28 +990,28 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "Tai katso tämän ohjelmiston mukana tullutta Copying.txt-tiedostoa."
 
-#: virtualBuffers\MSHTML.py:135 virtualBuffers\gecko.py:170
+#: virtualBuffers\MSHTML.py:135 virtualBuffers\gecko.py:169
 #, possible-python-format
 msgid "loading document %s"
 msgstr "ladataan dokumenttia %s"
 
-#: virtualBuffers\MSHTML.py:143 virtualBuffers\gecko.py:179
+#: virtualBuffers\MSHTML.py:143 virtualBuffers\gecko.py:178
 msgid "done"
 msgstr "valmis"
 
 #: virtualBuffers\MSHTML.py:247 virtualBuffers\MSHTML.py:251
-#: virtualBuffers\MSHTML.py:258 virtualBuffers\gecko.py:266
+#: virtualBuffers\MSHTML.py:258 virtualBuffers\gecko.py:265
 #, possible-python-format
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
 #: virtualBuffers\MSHTML.py:254 virtualBuffers\MSHTML.py:261
-#: virtualBuffers\gecko.py:261 virtualBuffers\gecko.py:271
+#: virtualBuffers\gecko.py:260 virtualBuffers\gecko.py:270
 msgid "bullet"
 msgstr "nuoli"
 
 #: virtualBuffers\MSHTML.py:257 virtualBuffers\MSHTML.py:264
-#: virtualBuffers\gecko.py:265 virtualBuffers\gecko.py:277
+#: virtualBuffers\gecko.py:264 virtualBuffers\gecko.py:276
 msgid "definition"
 msgstr "määritys"
 
@@ -1153,13 +1180,7 @@ msgstr "ei enempää luettelon osia"
 msgid "no more form fields"
 msgstr "ei enempää lomakekenttiä"
 
-#: virtualBuffers\gecko.py:315
+#: virtualBuffers\gecko.py:314
 #, possible-python-format
 msgid "protected %s"
 msgstr "suojattu %s"
-
-msgid "no sayAll functionality here"
-msgstr "sano kaikki toiminto ei käytettävissä"
-
-msgid "no format info"
-msgstr "ei muotoilutietoja"
