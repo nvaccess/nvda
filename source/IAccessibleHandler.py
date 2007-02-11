@@ -152,6 +152,8 @@ objectEventHandles=[]
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 pointer_IAccessible=ctypes.POINTER(IAccessible)
 oleAcc=ctypes.windll.oleacc
+IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
+IA2Lib=comtypesClient.GetModule('lib/ia2.tlb')
 
 lastMouseShape=""
 lastEvent=None
@@ -261,6 +263,13 @@ def getStateText(state):
 		return buf.value
 	else:
 		return None
+
+def IA2FromMSAA(pacc):
+	s=pacc.QueryInterface(IServiceProvider)
+	newPacc=s.QueryService(ctypes.byref(IAccessible._iid_),ctypes.byref(IA2Lib.IAccessible2._iid_))
+
+	return newPacc
+
 
 def accName(ia,child):
 	try:

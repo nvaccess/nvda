@@ -7,6 +7,7 @@
 import comtypesClient
 import datetime
 from keyboardHandler import key
+import IAccessibleHandler
 import api
 import audio
 import sayAllHandler
@@ -397,7 +398,5 @@ class appModule(object):
 				audio.speakSymbol("%s"%char)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
-			textLen=winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXTLEN,1,0)
-			buf=ctypes.create_unicode_buffer(1024)
-			winUser.sendMessage(obj.windowHandle,winUser.LB_GETTEXT,0,buf)
-			audio.speakMessage("list item count: %s"%winUser.sendMessage(obj.windowHandle,0x1004,0,0))
+		pacc=IAccessibleHandler.IA2FromMSAA(obj._pacc)
+		audio.speakMessage(str(pacc))

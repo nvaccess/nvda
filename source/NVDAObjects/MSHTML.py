@@ -53,7 +53,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			key("control+extendedEnd"):self.script_text_moveByLine,
 			key("control+shift+extendedHome"):self.script_text_changeSelection,
 			key("control+shift+extendedEnd"):self.script_text_changeSelection,
-			key("ExtendedDelete"):self.script_text_delete,
+			key("ExtendedDelete"):self.script_text_moveByCharacter,
 			key("Back"):self.script_text_backspace,
 		})
 
@@ -280,3 +280,68 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		if hasattr(self,'dom'):
 			del self.dom
 
+	def script_text_moveByLine(self,keyPress):
+		sendKey(keyPress)
+		oldBookmark=self.dom.selection.createRange().getBookmark()
+		sendKey(key("extendedEnd"))
+		end=self.dom.selection.createRange().duplicate()
+		sendKey(key("extendedHome"))
+		start=self.dom.selection.createRange().duplicate()
+		start.setEndPoint("endToStart",end)
+		self.dom.selection.createRange().moveToBookmark(oldBookmark)
+		audio.speakText(start.text)
+
+
+	def script_text_moveByCharacter(self,keyPress):
+		sendKey(keyPress)
+		if not hasattr(self,'dom'):
+			return 
+		r=self.dom.selection.createRange().duplicate()
+		r.expand("character")
+		audio.speakSymbol(r.text)
+
+	def script_text_moveByWord(self,keyPress):
+		sendKey(keyPress)
+		if not hasattr(self,'dom'):
+			return 
+		r=self.dom.selection.createRange().duplicate()
+		r.expand("word")
+		audio.speakText(r.text)
+
+	def script_text_backspace(self,keyPress):
+		if not hasattr(self,'dom'):
+			return 
+		r=self.dom.selection.createRange().duplicate()
+		delta=r.move("character",-1)
+		if delta<0:
+			r.expand("character")
+			delChar=r.text
+		else:
+			delChar=""
+		sendKey(keyPress)
+		audio.speakSymbol(delChar)
+
+	def script_text_changeSelection(self,keyPress):
+		if not hasattr(self,'dom'):
+			return 
+		before=self.dom.selection.createRange().duplicate()
+		sendKey(keyPress)
+		after=self.dom.selection.createRange().duplicate()
+		leftDelta=before.compareEndPoints("startToStart",after)
+		rightDelta=before.compareEndPoints("endToEnd",after)
+		afterLen=after.compareEndPoints("startToEnd",after)
+		if afterLen==0:
+			after.expand("character")
+			audio.speakSymbol(after.text)
+		elif leftDelta<0:
+ 			before.setEndPoint("endToStart",after)
+			audio.speakMessage(_("unselected %s")%before.text)
+		elif leftDelta>0:
+ 			after.setEndPoint("endToStart",before)
+			audio.speakMessage(_("selected %s")%after.text)
+		elif rightDelta>0:
+ 			before.setEndPoint("startToEnd",after)
+			audio.speakMessage(_("unselected %s")%before.text)
+		elif rightDelta<0:
+ 			after.setEndPoint("startToEnd",before)
+			audio.speakMessage(_("selected %s")%after.text)
