@@ -17,16 +17,12 @@ POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
 #constants
-#ListBox
-LB_GETCARETINDEX=415
-LB_GETCOUNT=395
-LB_GETTEXT=393
-LB_GETTEXTLEN=394
-
 #getAncestor
 GA_PARENT=1
 GA_ROOT=2
 GA_ROOTOWNER=3
+#getWindowLong
+GWL_ID=-12
 #Window messages
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
@@ -251,9 +247,7 @@ def getDesktopWindow():
 		return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
-	return 0 
-	#Need value of GWL_ID
-	#return user32.GetWindowLong(hwnd,GWL_ID)
+	return user32.GetWindowLongW(hwnd,GWL_ID)
 
 def getClientRect(hwnd):
 	return user32.GetClientRect(hwnd)

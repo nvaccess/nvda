@@ -393,6 +393,7 @@ class appModule(object):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("handle: %s"%obj.windowHandle)
+			audio.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
 			audio.speakMessage("Class: %s"%obj.windowClassName)
 			for char in obj.windowClassName:
 				audio.speakSymbol("%s"%char)
