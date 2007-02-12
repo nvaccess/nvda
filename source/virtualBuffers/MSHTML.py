@@ -72,18 +72,18 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_IAccessible_gainFocus(self,hwnd,objectID,childID):
+	def event_IAccessible_gainFocus(self,hwnd,objectID,childID,nextHandler):
 		try:
 			nodeName=self.dom.activeElement.nodeName
 		except:
-			return False
+			return nextHandler(hwnd,objectID,childID)
 		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getFullRangeFromID(ID)
 		if r is None:
-			return False
+			return nextHandler(hwnd,objectID,childID)
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
@@ -93,7 +93,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				api.setFocusObject(obj)
 				api.setNavigatorObject(obj)
 				return True
-		return False
+		return nextHandler(hwnd,objectID,childID)
 
 	def activatePosition(self,pos):
 		ID=self.getIDFromPosition(pos)

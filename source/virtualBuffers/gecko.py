@@ -39,10 +39,10 @@ class virtualBuffer_gecko(virtualBuffer):
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_IAccessible_gainFocus(self,hwnd,objectID,childID):
+	def event_IAccessible_gainFocus(self,hwnd,objectID,childID,nextHandler):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
-			return False
+			return nextHandler(hwnd,objectID,childID)
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
@@ -54,7 +54,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			return True
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
-			return False
+			return nextHandler(hwnd,objectID,childID)
 		r=self.getFullRangeFromID(ID)
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
@@ -65,25 +65,25 @@ class virtualBuffer_gecko(virtualBuffer):
 			api.setFocusObject(obj)
 			api.setNavigatorObject(obj)
 			return True
-		return False
+		return nextHandler(hwnd,objectID,childID)
 
-	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID):
+	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID,nextHandler):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
-			return False
+			return NextHandler(hwnd,objectID,childID)
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
-			return
+			return nextHandler(hwnd,objectID,childID)
 		r=self._IDs[ID]['range']
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
 			self.text_reportNewPresentation(self.text_reviewOffset)
 			audio.speakText(self.text_getText(r[0],r[1]))
 
-	def event_IAccessible_stateChange(self,hwnd,objectID,childID):
+	def event_IAccessible_stateChange(self,hwnd,objectID,childID,nextHandler):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
-			return
+			return nextHandler(hwnd,objectID,childID)
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
@@ -94,23 +94,25 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.NVDAObject=obj
 				self.loadDocument()
 				return True
-		return False
+		return nextHandler(hwnd,objectID,childID)
 
-	def event_IAccessible_reorder(self,hwnd,objectID,childID):
+	def event_IAccessible_reorder(self,hwnd,objectID,childID,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
-			return 
+			return nextHandler(hwnd,objectID,childID) 
 		if time.time()<(lastLoadTime+2):
-			return
+			return nextHandler(hwnd,objectID,childID)
+		if self.NVDAObject.states&IAccessibleHandler.STATE_SYSTEM_BUSY:
+			return nextHandler(hwnd,objectID,childID)
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 		if not obj:
-			return
+			return nextHandler(hwnd,objectID,childID)
 		tones.beep(440,100)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
 		if ID not in self._IDs:
-			return
+			return nextHandler(hwnd,objectID,childID)
 		parentID=self._IDs[ID]['parent']
 		r=self._IDs[ID]['range']
 		zOrder=self.getIDZOrder(ID)

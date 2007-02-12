@@ -358,8 +358,11 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			child=child.next
 
 	def event_gainFocus(self):
-		if self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
+		if self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
+			api.setMenuMode(True)
 			audio.cancel()
+		else:
+			api.setMenuMode(False)
 		if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
 			groupName=self.groupName
 			if groupName:
@@ -367,6 +370,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
+		api.setMenuMode(True)
 		focusObject=api.getFocusObject()
 		parentObject=focusObject.parent if focusObject else None
 		if self!=focusObject and self!=parentObject  and self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:

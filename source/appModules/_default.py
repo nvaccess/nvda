@@ -36,11 +36,10 @@ class appModule(object):
 	def registerScriptKeys(self,keyDict):
 		self._keyMap.update(keyDict)
 
-
-	def event_IAccessible_switchStart(self,window,objectID,childID):
+	def event_IAccessible_switchStart(self,window,objectID,childID,nextHandler):
 		audio.cancel()
 
-	def event_IAccessible_switchEnd(self,window,objectID,childID):
+	def event_IAccessible_switchEnd(self,window,objectID,childID,nextHandler):
 		audio.cancel()
 
 	def script_dateTime(self,keyPress):

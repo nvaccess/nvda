@@ -10,7 +10,7 @@ import _default
 
 class appModule(_default.appModule):
 
-	def event_IAccessible_gainFocus(self,window,objectID,childID):
+	def event_IAccessible_gainFocus(self,window,objectID,childID,nextHandler):
 		controlID=winUser.getControlID(window)
 		parent=winUser.getAncestor(window,winUser.GA_PARENT)
 		parentClassName=winUser.getClassName(parent)
@@ -31,4 +31,4 @@ class appModule(_default.appModule):
 				audio.speakText(_("Date:"))
 			elif controlID==1000:
 				audio.speakText(_("Attachments"))
-		return False
+		nextHandler(window,objectID,childID)

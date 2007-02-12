@@ -455,18 +455,45 @@ winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 
 #Internal function for object events
 
+def manageEvent_NVDAObjectLevel(name,window,objectID,childID):
+	desktopObject=api.getDesktopObject()
+	foregroundObject=api.getForegroundObject()
+	focusObject=api.getFocusObject()
+	obj=None
+	for testObject in [desktopObject,foregroundObject,focusObject]:
+		if isinstance(testObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==testObject.windowHandle and objectID==testObject._accObjectID and childID==testObject._accOrigChildID:
+			obj=testObject
+			break
+	if obj is None and name not in ["hide","locationChange"]:
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	if hasattr(obj,"event_%s"%name):
+		getattr(obj,"event_%s"%name)()
+
+def manageEvent_virtualBufferLevel(name,window,objectID,childID):
+	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
+	if hasattr(virtualBuffer,"event_IAccessible_%s"%name) and not api.isVirtualBufferPassThrough() and not api.getMenuMode():
+		getattr(virtualBuffer,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_NVDAObjectLevel(name,window,objectID,childID))
+	else:
+		manageEvent_NVDAObjectLevel(name,window,objectID,childID)
+
+def manageEvent_appModuleLevel(name,window,objectID,childID):
+	appModule=appModuleHandler.getActiveModule()
+	if hasattr(appModule,"event_IAccessible_%s"%name):
+		getattr(appModule,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_virtualBufferLevel(name,window,objectID,childID)) 
+	else:
+		manageEvent_virtualBufferLevel(name,window,objectID,childID)
+
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		eventName=eventMap[eventID]
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
+		if objectID==OBJID_CARET and eventName in ["locationChange","show"]:
+			eventName="caret"
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
-		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
-		appModule=appModuleHandler.getActiveModule()
-		lastRes=False
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
@@ -493,74 +520,34 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			core.executeFunction(core.EXEC_USERINTERFACE,foregroundEvent,window,objectID,childID)
-			return
+			core.executeFunction(core.EXEC_USERINTERFACE,updateForegroundFromEvent,window,objectID,childID)
 		#Process focus events
 		elif eventName=="gainFocus":
-			core.executeFunction(core.EXEC_USERINTERFACE,focusEvent,window,objectID,childID)
-			return
-		#Give this event to the current appModule if it supports it
-		if hasattr(appModule,"event_IAccessible_%s"%eventName):
-			core.executeFunction(core.EXEC_USERINTERFACE,getattr(appModule,"event_IAccessible_%s"%eventName),window,objectID,childID) 
-		#Let through events for the current virtualBuffer
-		elif hasattr(virtualBuffer,"event_IAccessible_%s"%eventName):
-			core.executeFunction(core.EXEC_USERINTERFACE,getattr(virtualBuffer,"event_IAccessible_%s"%eventName),window,objectID,childID)
-		#Let events for the focus object through
-		elif isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==focusObject.windowHandle and objectID==focusObject._accObjectID and childID==focusObject._accOrigChildID and hasattr(focusObject,"event_%s"%eventName):
-			core.executeFunction(core.EXEC_USERINTERFACE,getattr(focusObject,"event_%s"%eventName))
-		#Notify the focus object if this is a caret location change or show
-		elif eventName=="locationChange" and objectID==OBJID_CARET:
-			core.executeFunction(core.EXEC_USERINTERFACE,focusObject.event_caret)
-		#Ignore any other caret events
-		elif objectID==OBJID_CARET:
-			return
-		#Ignore any other hide or locationChange events
-		elif eventName in ["hide","locationChange"]:
-			return
-		#Any other events now should be passed straight to their own objects
-		else:
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-			if obj and hasattr(obj,"event_%s"%eventName):
-				core.executeFunction(core.EXEC_USERINTERFACE,getattr(obj,"event_%s"%eventName))
+			core.executeFunction(core.EXEC_USERINTERFACE,updateFocusFromEvent,window,objectID,childID)
+		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
+		core.executeFunction(core.EXEC_USERINTERFACE,manageEvent_appModuleLevel,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 
-def foregroundEvent(window,objectID,childID):
-	res=False
+def updateForegroundFromEvent(window,objectID,childID):
 	appModuleHandler.update()
-	appModule=appModuleHandler.getActiveModule()
 	virtualBuffers.IAccessible.update(window)
-	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
 	api.setForegroundObject(obj)
-	if hasattr(appModule,"event_IAccessible_foreground"):
-		res=appModule.event_IAccessible_foreground(window,objectID,childID)
-	if not res and hasattr(virtualBuffer,"event_IAccessible_foreground"):
-		res=virtualBuffer.event_IAccessible_foreground(window,objectID,childID)
-	if not res and hasattr(obj,"event_foreground"):
-		obj.event_foreground()
 
-def focusEvent(window,objectID,childID):
+def updateFocusFromEvent(window,objectID,childID):
 	oldFocus=api.getFocusObject()
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accOrigChildID:
 		return
-	res=False
+	manageEvent_appModuleLevel("looseFocus",window,objectID,childID)
 	appModuleHandler.update()
-	appModule=appModuleHandler.getActiveModule()
 	virtualBuffers.IAccessible.update(window)
-	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
 	api.setFocusObject(obj)
-	if hasattr(appModule,"event_IAccessible_gainFocus"):
-		res=appModule.event_IAccessible_gainFocus(window,objectID,childID)
-	if not res and hasattr(virtualBuffer,"event_IAccessible_gainFocus"):
-		res=virtualBuffer.event_IAccessible_gainFocus(window,objectID,childID)
-	if not res and hasattr(obj,"event_gainFocus"):
-		obj.event_gainFocus()
 
 #Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
