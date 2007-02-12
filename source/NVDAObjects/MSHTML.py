@@ -282,6 +282,8 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 
 	def script_text_moveByLine(self,keyPress):
 		sendKey(keyPress)
+		if not hasattr(self,'dom'):
+			return 
 		oldBookmark=self.dom.selection.createRange().getBookmark()
 		sendKey(key("extendedEnd"))
 		end=self.dom.selection.createRange().duplicate()
@@ -290,7 +292,6 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		start.setEndPoint("endToStart",end)
 		self.dom.selection.createRange().moveToBookmark(oldBookmark)
 		audio.speakText(start.text)
-
 
 	def script_text_moveByCharacter(self,keyPress):
 		sendKey(keyPress)
