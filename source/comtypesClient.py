@@ -41,8 +41,12 @@ __verbose__ = __debug__
 
 ################################################################
 # Determine the directory where generated modules live.
-gen_dir = ".\\comInterfaces"
-#comInterfaces=__import__('comInterfaces',globals(),locals(),[])
+#gen_dir = ".\\comInterfaces"
+import comInterfaces
+if os.path.isdir(".\\comInterfaces"):
+	gen_dir=".\\comInterfaces"
+else:
+	gen_dir=None
 
 
 ### for testing
@@ -127,7 +131,7 @@ def GetModule(tlib):
     # determine the Python module name
     fullname = _name_module(tlib)
     # create and import the module
-    mod = _CreateWrapper(tlib, fullname)
+    return _CreateWrapper(tlib, fullname)
     modulename = tlib.GetDocumentation(-1)[0]
     if modulename is None:
         return mod
