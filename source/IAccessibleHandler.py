@@ -460,7 +460,7 @@ def manageEvent_NVDAObjectLevel(name,window,objectID,childID):
 	foregroundObject=api.getForegroundObject()
 	focusObject=api.getFocusObject()
 	obj=None
-	for testObject in [desktopObject,foregroundObject,focusObject]:
+	for testObject in [focusObject,foregroundObject,desktopObject]:
 		if isinstance(testObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==testObject.windowHandle and objectID==testObject._accObjectID and childID==testObject._accOrigChildID:
 			obj=testObject
 			break
@@ -471,7 +471,7 @@ def manageEvent_NVDAObjectLevel(name,window,objectID,childID):
 
 def manageEvent_virtualBufferLevel(name,window,objectID,childID):
 	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
-	if hasattr(virtualBuffer,"event_IAccessible_%s"%name) and not api.isVirtualBufferPassThrough() and not api.getMenuMode():
+	if hasattr(virtualBuffer,"event_IAccessible_%s"%name) and not api.getMenuMode():
 		getattr(virtualBuffer,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_NVDAObjectLevel(name,window,objectID,childID))
 	else:
 		manageEvent_NVDAObjectLevel(name,window,objectID,childID)
@@ -496,12 +496,12 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		desktopObject=api.getDesktopObject()
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
-			if (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
+			if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
 				api.setFocusObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				return
-			elif (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
+			elif isinstance(foregroundObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
 				api.setForegroundObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)

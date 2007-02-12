@@ -20,6 +20,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
 		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
+		self.consoleEventHookHandles=[]
 		self.registerScriptKeys({
 			key("control+c"):self.script_protectConsoleKillKey,
 			key("ExtendedUp"):self.script_text_moveByLine,
@@ -50,7 +51,6 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		if not res:
 			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
-		self.consoleEventHookHandles=[]
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)

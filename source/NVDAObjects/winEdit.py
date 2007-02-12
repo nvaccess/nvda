@@ -57,8 +57,8 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 			for lineNum in xrange(startLineNum,endLineNum+1):
 				lineStart=winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
 				lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,lineStart,0)
-				buf=ctypes.create_unicode_buffer(lineLength+2)
-				buf.value=struct.pack('h',lineLength+1)
+				buf=ctypes.create_unicode_buffer(lineLength+10)
+				buf.value=struct.pack('h',lineLength+2)
 				winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
 				lines.append(buf.value[0:lineLength])
 			text="".join(lines)
