@@ -5,16 +5,17 @@
 #See the file COPYING for more details.
 
 import ctypes
-import comtypesClient
 import comtypes.automation
+import win32com.client
+import pythoncom
 from autoPropertyType import autoPropertyType
 import IAccessibleHandler
 import audio
 import debug
-from keyboardHandler import sendKey, key
+from keyUtils import sendKey, key
 import config
 import NVDAObjects
-import _default
+import appModuleHandler
 
 #Word constants
 
@@ -54,15 +55,15 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class appModule(_default.appModule):
+class appModule(appModuleHandler.appModule):
 
 	def __init__(self,*args):
-		_default.appModule.__init__(self,*args)
+		appModuleHandler.appModule.__init__(self,*args)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
 
 	def __del__(self):
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		_default.appModule.__del__(self)
+		appModuleHandler.appModule.__del__(self)
 
 class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
@@ -111,23 +112,28 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return IAccessibleHandler.ROLE_SYSTEM_TEXT
 
 	def getDocumentObjectModel(self):
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		ptr=ctypes.c_void_p()
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
-		return comtypesClient.wrap(ptr)
-
+		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
+		o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
+		t=o.GetTypeInfo()
+		a=t.GetTypeAttr()
+		oleRepr=win32com.client.build.DispatchItem(attr=a)
+		return win32com.client.CDispatch(o,oleRepr)
+ 
 	def destroyObjectModel(self,om):
 		pass
 
 	def _get_text_characterCount(self):
-		r=self.dom.selection.Document.range(0,0)
+		r=self.dom.selection.Document.Range(0,0)
 		r.Expand(wdStory)
 		return r.End
 
 	def text_getText(self,start=None,end=None):
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else self.text_characterCount
-		r=self.dom.selection.Document.range(start,end)
+		r=self.dom.selection.Document.Range(start,end)
 		return r.text
 
 	def _get_text_selectionCount(self):
@@ -153,17 +159,17 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		self.dom.Selection.SetRange(offset,offset)
 
 	def text_getLineNumber(self,offset):
-		return self.dom.selection.Document.range(offset,offset).Information(wdFirstCharacterLineNumber)
+		return self.dom.selection.Document.Range(offset,offset).Information(wdFirstCharacterLineNumber)
 
 	def text_getPageNumber(self,offset):
-		pageNum=self.dom.selection.Document.range(offset,offset).Information(wdActiveEndPageNumber)
+		pageNum=self.dom.selection.Document.Range(offset,offset).Information(wdActiveEndPageNumber)
 		if pageNum>0:
 			return pageNum
 		else:
 			return None
 
 	def text_getLineOffsets(self,offset):
-		oldSel=self.dom.selection.range
+		oldSel=self.dom.selection.Range
 		oldReview=self.text_reviewOffset
 		sel=self.dom.selection
 		sel.Start=offset
@@ -177,7 +183,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_getNextLineOffsets(self,offset):
 		(start,end)=self.text_getLineOffsets(offset)
-		oldSel=self.dom.selection.range
+		oldSel=self.dom.selection.Range
 		oldReview=self.text_reviewOffset
 		sel=self.dom.selection
 		sel.Start=sel.End=start
@@ -193,7 +199,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_getPrevLineOffsets(self,offset):
 		(start,end)=self.text_getLineOffsets(offset)
-		oldSel=self.dom.selection.range
+		oldSel=self.dom.selection.Range
 		oldReview=self.text_reviewOffset
 		sel=self.dom.selection
 		sel.Start=sel.End=start
@@ -208,13 +214,13 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return lineOffsets
 
 	def text_getWordOffsets(self,offset):
-		r=self.dom.selection.Document.range(offset,offset)
+		r=self.dom.selection.Document.Range(offset,offset)
 		r.Expand(wdWord)
 		return (r.Start,r.End)
 
 	def text_getNextWordOffsets(self,offset):
 		(start,end)=self.text_getWordOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdWord,1)
 		if res:
 			return self.text_getWordOffsets(r.Start)
@@ -223,7 +229,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_getPrevWordOffsets(self,offset):
 		(start,end)=self.text_getWordOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdWord,-1)
 		if res:
 			return self.text_getWordOffsets(r.Start)
@@ -231,13 +237,13 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 			return None
 
 	def text_getSentenceOffsets(self,offset):
-		r=self.dom.selection.Document.range(offset,offset)
+		r=self.dom.selection.Document.Range(offset,offset)
 		r.Expand(wdSentence)
 		return (r.Start,r.End)
 
 	def text_getNextSentenceOffsets(self,offset):
 		(start,end)=self.text_getSentenceOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdSentence,1)
 		if res:
 			return self.text_getSentenceOffsets(r.Start)
@@ -246,7 +252,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_getPrevSentenceOffsets(self,offset):
 		(start,end)=self.text_getSentenceOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdSentence,-1)
 		if res:
 			return self.text_getSentenceOffsets(r.Start)
@@ -254,13 +260,13 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 			return None
 
 	def text_getParagraphOffsets(self,offset):
-		r=self.dom.selection.Document.range(offset,offset)
+		r=self.dom.selection.Document.Range(offset,offset)
 		r.Expand(wdParagraph)
 		return (r.Start,r.End)
 
 	def text_getNextParagraphOffsets(self,offset):
 		(start,end)=self.text_getParagraphOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdParagraph,1)
 		if res:
 			return self.text_getParagraphOffsets(r.Start)
@@ -269,7 +275,7 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def text_getPrevParagraphOffsets(self,offset):
 		(start,end)=self.text_getParagraphOffsets(offset)
-		r=self.dom.selection.Document.range(start,start)
+		r=self.dom.selection.Document.Range(start,start)
 		res=r.Move(wdParagraph,-1)
 		if res:
 			return self.text_getParagraphOffsets(r.Start)
@@ -295,16 +301,16 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return r
 
 	def text_getStyle(self,offset):
-		return self.dom.selection.Document.range(offset,offset).Style.NameLocal
+		return self.dom.selection.Document.Range(offset,offset).Style.NameLocal
 
 	def text_getFontName(self,offset):
-		return self.dom.selection.Document.range(offset,offset).Font.Name
+		return self.dom.selection.Document.Range(offset,offset).Font.Name
 
 	def text_getFontSize(self,offset):
-		return int(self.dom.selection.Document.range(offset,offset).Font.Size)
+		return int(self.dom.selection.Document.Range(offset,offset).Font.Size)
 
 	def text_getAlignment(self,offset):
-		alignment=self.dom.selection.Document.range(offset,offset).ParagraphFormat.Alignment
+		alignment=self.dom.selection.Document.Range(offset,offset).ParagraphFormat.Alignment
 		if alignment==wdAlignParagraphLeft:
 			return _("left")
 		elif alignment==wdAlignParagraphCenter:
@@ -315,46 +321,46 @@ class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 			return _("justified")
 
 	def text_isBold(self,offset):
-		return bool(self.dom.selection.Document.range(offset,offset).Font.Bold)
+		return bool(self.dom.selection.Document.Range(offset,offset).Font.Bold)
 
 	def text_isItalic(self,offset):
-		return bool(self.dom.selection.Document.range(offset,offset).Font.Italic)
+		return bool(self.dom.selection.Document.Range(offset,offset).Font.Italic)
 
 	def text_isUnderline(self,offset):
-		return bool(self.dom.selection.Document.range(offset,offset).Font.Underline)
+		return bool(self.dom.selection.Document.Range(offset,offset).Font.Underline)
 
 	def text_isSuperscript(self,offset):
-		return bool(self.dom.selection.Document.range(offset,offset).Font.Superscript)
+		return bool(self.dom.selection.Document.Range(offset,offset).Font.Superscript)
 
 	def text_isSubscript(self,offset):
-		return bool(self.dom.selection.Document.range(offset,offset).Font.Subscript)
+		return bool(self.dom.selection.Document.Range(offset,offset).Font.Subscript)
 
 	def text_inTable(self,offset):
-		return False #self.dom.selection.Document.range(offset,offset).Information(wdWithInTable)
+		return self.dom.selection.Document.Range(offset,offset).Information(wdWithInTable)
  
 	def text_getTableRowNumber(self,offset):
-		rowNum=self.dom.selection.Document.range(offset,offset).Information(wdStartOfRangeRowNumber)
+		rowNum=self.dom.selection.Document.Range(offset,offset).Information(wdStartOfRangeRowNumber)
 		if rowNum>0:
 			return rowNum
 		else:
 			return None
 
 	def text_getTableColumnNumber(self,offset):
-		columnNum=self.dom.selection.Document.range(offset,offset).Information(wdStartOfRangeColumnNumber)
+		columnNum=self.dom.selection.Document.Range(offset,offset).Information(wdStartOfRangeColumnNumber)
 		if columnNum>0:
 			return columnNum
 		else:
 			return None
 
 	def text_getTableRowCount(self,offset):
-		rowCount=self.dom.selection.Document.range(offset,offset).Information(wdMaximumNumberOfRows)
+		rowCount=self.dom.selection.Document.Range(offset,offset).Information(wdMaximumNumberOfRows)
 		if rowCount>0:
 			return rowCount
 		else:
 			return None
 
 	def text_getTableColumnCount(self,offset):
-		columnCount=self.dom.selection.Document.range(offset,offset).Information(wdMaximumNumberOfColumns)
+		columnCount=self.dom.selection.Document.Range(offset,offset).Information(wdMaximumNumberOfColumns)
 		if columnCount>0:
 			return columnCount
 		else:

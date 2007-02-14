@@ -8,7 +8,7 @@ import struct
 import ctypes
 import audio
 import winUser
-from keyboardHandler import key
+from keyUtils import key
 import IAccessibleHandler
 import IAccessible
 

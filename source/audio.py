@@ -43,6 +43,10 @@ def processText(text):
 
 def cancel():
 	"""Interupts the synthesizer from currently speaking"""
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		return
 	synthDriverHandler.cancel()
 
 def speakMessage(text,wait=False,index=None):

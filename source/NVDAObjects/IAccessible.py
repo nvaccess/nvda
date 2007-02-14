@@ -12,7 +12,7 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import debug
-from keyboardHandler import sendKey, key 
+from keyUtils import sendKey, key 
 import IAccessibleHandler
 import winUser
 import winKernel

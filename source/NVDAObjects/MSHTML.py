@@ -12,7 +12,7 @@ import debug
 import winUser
 import IAccessibleHandler
 import virtualBuffers
-from keyboardHandler import key, sendKey
+from keyUtils import key, sendKey
 import api
 import audio
 import IAccessible
@@ -280,7 +280,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		if hasattr(self,'dom'):
 			del self.dom
 
-	def script_text_moveByLine(self,keyPress):
+	def script_text_moveByLine(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not hasattr(self,'dom'):
 			return 
@@ -293,7 +293,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		self.dom.selection.createRange().moveToBookmark(oldBookmark)
 		audio.speakText(start.text)
 
-	def script_text_moveByCharacter(self,keyPress):
+	def script_text_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not hasattr(self,'dom'):
 			return 
@@ -301,7 +301,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		r.expand("character")
 		audio.speakSymbol(r.text)
 
-	def script_text_moveByWord(self,keyPress):
+	def script_text_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not hasattr(self,'dom'):
 			return 
@@ -309,7 +309,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		r.expand("word")
 		audio.speakText(r.text)
 
-	def script_text_backspace(self,keyPress):
+	def script_text_backspace(self,keyPress,nextScript):
 		if not hasattr(self,'dom'):
 			return 
 		r=self.dom.selection.createRange().duplicate()
@@ -322,7 +322,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		sendKey(keyPress)
 		audio.speakSymbol(delChar)
 
-	def script_text_changeSelection(self,keyPress):
+	def script_text_changeSelection(self,keyPress,nextScript):
 		if not hasattr(self,'dom'):
 			return 
 		before=self.dom.selection.createRange().duplicate()

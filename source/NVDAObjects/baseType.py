@@ -6,8 +6,8 @@
 
 """Module that contains the base NVDA object type"""
 import autoPropertyType
-from keyboardHandler import key, keyName, sendKey
 import audio
+from keyUtils import key, sendKey
 import globalVars
 import api
 import config
@@ -134,7 +134,7 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 		if self._keyMap.has_key(keyPress):
 			return self._keyMap[keyPress]
 
-	def executeScript(self,keyPress):
+	def executeScript(self,keyPress,nextScript):
 		"""
 executes a script (instance method) if one is assigned to the keyPress given.
 @param keyPress: The key you wish to execute the script for
@@ -693,24 +693,24 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_text_reviewOffsetLimits(self):
 		return (0,self.text_characterCount-1)
 
-	def script_text_review_moveToCaret(self,keyPress):
+	def script_text_review_moveToCaret(self,keyPress,nextScript):
 		self.text_reviewOffset=self.text_caretOffset
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_top(self,keyPress):
+	def script_text_review_top(self,keyPress,nextScript):
 		audio.speakMessage(_("top"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[0]
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_bottom(self,keyPress):
+	def script_text_review_bottom(self,keyPress,nextScript):
 		audio.speakMessage(_("bottom"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[1]
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_currentLine(self,keyPress):
+	def script_text_review_currentLine(self,keyPress,nextScript):
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_nextLine(self,keyPress):
+	def script_text_review_nextLine(self,keyPress,nextScript):
 		r=self.text_getNextLineOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -719,7 +719,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_prevLine(self,keyPress):
+	def script_text_review_prevLine(self,keyPress,nextScript):
 		r=self.text_getPrevLineOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -728,10 +728,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_text_review_currentWord(self,keyPress):
+	def script_text_review_currentWord(self,keyPress,nextScript):
 		self.text_speakWord(self.text_reviewOffset)
 
-	def script_text_review_nextWord(self,keyPress):
+	def script_text_review_nextWord(self,keyPress,nextScript):
 		r=self.text_getNextWordOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -740,7 +740,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakWord(self.text_reviewOffset)
 
-	def script_text_review_prevWord(self,keyPress):
+	def script_text_review_prevWord(self,keyPress,nextScript):
 		r=self.text_getPrevWordOffsets(self.text_reviewOffset)
 		limits=self.text_reviewOffsetLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -749,10 +749,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakWord(self.text_reviewOffset)
 
-	def script_text_review_currentCharacter(self,keyPress):
+	def script_text_review_currentCharacter(self,keyPress,nextScript):
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def script_text_review_nextCharacter(self,keyPress):
+	def script_text_review_nextCharacter(self,keyPress,nextScript):
 		newOffset=self.text_reviewOffset+1
 		limits=self.text_reviewOffsetLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -761,7 +761,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("bottom"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def script_text_review_prevCharacter(self,keyPress):
+	def script_text_review_prevCharacter(self,keyPress,nextScript):
 		newOffset=self.text_reviewOffset-1
 		limits=self.text_reviewOffsetLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -770,12 +770,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			audio.speakMessage(_("top"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def script_text_review_startOfLine(self,keyPress):
+	def script_text_review_startOfLine(self,keyPress,nextScript):
 		r=self.text_getLineOffsets(self.text_reviewOffset)
 		self.text_reviewOffset=r[0]
 		self.text_speakCharacter(self.text_reviewOffset)
 
-	def script_text_review_endOfLine(self,keyPress):
+	def script_text_review_endOfLine(self,keyPress,nextScript):
 		r=self.text_getLineOffsets(self.text_reviewOffset)
 		self.text_reviewOffset=r[1]-1
 		self.text_speakCharacter(self.text_reviewOffset)
@@ -801,37 +801,37 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_caret(self):
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_moveByLine(self,keyPress):
+	def script_text_moveByLine(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		self.text_speakLine(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_moveByCharacter(self,keyPress):
+	def script_text_moveByCharacter(self,keyPress,nextScript):
 		"""Moves and reads the current character"""
 		sendKey(keyPress)
 		self.text_speakCharacter(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_moveByWord(self,keyPress):
+	def script_text_moveByWord(self,keyPress,nextScript):
 		"""Moves and reads the current word"""
 		sendKey(keyPress)
 		self.text_speakWord(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_moveBySentence(self,keyPress):
+	def script_text_moveBySentence(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		self.text_speakSentence(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_moveByParagraph(self,keyPress):
+	def script_text_moveByParagraph(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_nextParagraph(self,keyPress):
+	def script_text_nextParagraph(self,keyPress,nextScript):
 		"""Manually moves to the next paragraph and then speaks it"""
 		r=self.text_getNextParagraphOffsets(self.text_caretOffset)
 		if r:
@@ -839,7 +839,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_prevParagraph(self,keyPress):
+	def script_text_prevParagraph(self,keyPress,nextScript):
 		"""Manually moves to the previous paragraph and then speaks it"""
 		r=self.text_getPrevParagraphOffsets(self.text_caretOffset)
 		if r:
@@ -847,7 +847,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_changeSelection(self,keyPress):
+	def script_text_changeSelection(self,keyPress,nextScript):
 		"""Moves and reads the current selection"""
 		oldSelections=[]
 		for selNum in xrange(self.text_selectionCount):
@@ -878,13 +878,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
    					audio.speakMessage(_("unselected %s")%self.text_getText(oldSelections[selNum][0],oldSelections[selNum][1]))
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_delete(self,keyPress):
+	def script_text_delete(self,keyPress,nextScript):
 		"""Deletes the character and reads the new current character"""
 		sendKey(keyPress)
 		self.text_speakCharacter(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
-	def script_text_backspace(self,keyPress):
+	def script_text_backspace(self,keyPress,nextScript):
 		"""Reads the character before the current character and then deletes it"""
 		point=self.text_caretOffset
 		if point>0:

@@ -6,22 +6,10 @@
 
 """General functions for NVDA"""
 
-import ctypes
-import os.path
 import debug
-import winKernel
 import globalVars
 import audio
-import appModuleHandler
-import gui
-from keyboardHandler import key 
 import NVDAObjects
-import virtualBuffers
-import config
-import winUser
-
-# Initialise WMI; required for getProcessName.
-#_wmi = win32com.client.GetObject('winmgmts:')
 
 #User functions
 
@@ -30,10 +18,6 @@ def quit():
 Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
 """
 	gui.quit()
-
-def showGui():
-	"""Instructs the GUI to become visible and move in to focus."""
-	gui.showGui()
 
 def findObjectWithFocus():
 	prevObj=getDesktopObject()
@@ -98,20 +82,6 @@ def getDesktopObject():
 def setDesktopObject(obj):
 	globalVars.desktopObject=obj
 
-def correctFocusObject():
-	foregroundObject=getForegroundObject()
-	desktopObject=getDesktopObject()
-	if foregroundObject:
-		setFocusObject(foregroundObject)
-	elif desktopObject:
-		setFocusObject(desktopObject)
-	getFocusObject().event_gainFocus()
-
-def correctForegroundObject():
-	desktopObject=getDesktopObject()
-	setFocusObject(desktopObject)
-	getFocusObject().event_gainFocus()
-
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
 @returns: the current navigator object
@@ -127,86 +97,6 @@ def setNavigatorObject(obj):
 	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
-
-def isTypingProtected():
-	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
-@returns: True if it should be suppressed, False otherwise.
-@rtype: boolean
-"""
-	if getFocusObject() and getFocusObject().isProtected:
-		return True
-	else:
-		return False
-
-def keyHasScript(keyPress):
-	"""Checks to see if a given keyPress has a script associated with it.
-The order of checking is keyboardHelp (if keyboard help is on), appModule, virtualBuffer (if virtualBufferPassThrough mode is not on), focus object.
-@param keyPress: The key that will be checked
-@type keyPress: key
-@returns: True if there is a script, False otherwise.
-@rtype: boolean
-"""
-	#The keyboard help script is built in to hasScript and executeScript
-	if globalVars.keyboardHelp:
-		return True
-	if keyPress==key("insert+1"):
-		return True
-	if appModuleHandler.getActiveModule().getScript(keyPress):
-		return True
-	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
-	if not getMenuMode() and not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
-		return True
-	if isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
-		return True
-	return False
-
-def executeScript(keyPress):
-	"""executes the script that is associated with a given key. 
-The order of checking is keyboardHelp (if keyboard help is on), appModule, virtualBuffer (if virtualBufferPassThrough mode is not on), focus object.
-@param keyPress: The key that will be checked
-@type keyPress: key
-"""
-	#The keyboard help script is built in to hasScript and executeScript
-	if keyPress==key("insert+1"):
-		if not globalVars.keyboardHelp:
-			globalVars.keyboardHelp=True
-			audio.speakMessage(_("keyboard help")+" "+_("on"))
-			return True
-		else:
-			globalVars.keyboardHelp=False
-			audio.speakMessage(_("keyboard help")+" "+_("off"))
-			return True
-	virtualBuffer=virtualBuffers.getVirtualBuffer(getFocusObject())
-	if appModuleHandler.getActiveModule().getScript(keyPress):
-		script=appModuleHandler.getActiveModule().getScript(keyPress)
-	elif not getMenuMode() and not globalVars.virtualBufferPassThrough and virtualBuffer and virtualBuffer.getScript(keyPress):
-		script=virtualBuffer.getScript(keyPress)
-	elif isinstance(getFocusObject(),NVDAObjects.baseType.NVDAObject) and getFocusObject().getScript(keyPress):
-		script=getFocusObject().getScript(keyPress)
-	else:
-		script=None
-	if globalVars.keyboardHelp:
-		if script:
-			name=script.__name__[7:]
-			if script.im_self.__class__.__name__=="appModule":
-				container="module %s"%script.im_self.__class__.__module__
-			else:
-				container=script.im_self.__class__.__name__
-				container+=" in module %s"%script.im_self.__class__.__module__
-			description=script.__doc__
-			if not description:
-				description=_("no description")
-			audio.speakMessage("%s, from %s, %s"%(name,container,description))
-		else:
-			audio.speakMessage(_("no script"))
-		return
-	if script:
-		try:
-			script(keyPress)
-			return True
-		except:
-			debug.writeException("Error executing script %s bound to key %s"%(script.__name__,str(keyPress)))
-			return False
 
 def setMenuMode(switch):
 	"""Turns on or off menu mode according to the given parameter. Menu mode is used for some objects to work out whether or not menu items should be spoken at a certain time.

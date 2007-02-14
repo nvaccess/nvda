@@ -99,10 +99,12 @@ id_onAbortCommand=wx.NewId()
 ### Globals
 guiThread = None
 mainFrame = None
+guiInitialized=False
 
 class MainFrame(wx.Frame):
 
 	def __init__(self):
+		global guiInitialized
 		style=wx.DEFAULT_FRAME_STYLE
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
@@ -159,6 +161,8 @@ class MainFrame(wx.Frame):
 		self.Show(True)
 		if config.conf["general"]["hideInterfaceOnStartup"]:
 			self.Show(False)
+		guiInitialized=True
+
 
 	def onAbortCommand(self,evt):
 		globalVars.stayAlive=False
@@ -231,7 +235,7 @@ class MainFrame(wx.Frame):
 		oldVolume=synthDriverHandler.getVolume()
 		oldPunctuation=config.conf["speech"]["speakPunctuation"]
 		oldCaps=config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]
-		d=voiceSettingsDialog(self,-1,"Voice settings")
+		d=voiceSettingsDialog(self,-1,_("Voice settings"))
 		if d.ShowModal()!=wx.ID_OK:
 			synthDriverHandler.setVoice(oldVoice)
 			synthDriverHandler.setRate(oldRate)
@@ -301,6 +305,8 @@ def initialize():
 	global guiThread
 	guiThread = threading.Thread(target = guiMainLoop)
 	guiThread.start()
+	while not guiInitialized:
+		time.sleep(0.01)
 
 def showGui():
  	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onShowGuiCommand))

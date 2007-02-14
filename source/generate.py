@@ -10,23 +10,6 @@ import sys
 from glob import glob
 import comtypesClient
 
-print "Com interfaces"
-#MS Word
-try:
-	print "MS Word"
-	comtypesClient.CreateObject('Word.Application')
-	print "done"
-except:
-	print "not found"
-
-#MS Excel
-try:
-	print "MS Excel"
-	comtypesClient.CreateObject('Excel.Application')
-	print "done"
-except:
-	print "not found"
-
 #MS HTML
 try:
 	print "MS HTML"
@@ -35,18 +18,26 @@ try:
 except:
 	print "not found"
 
-#MS Active Accessibility
+#IAccessible2
 try:
-	print "MS Active Accessibility"
-	comtypesClient.GetModule('oleacc.dll')
+	print "IAccessible2"
+	comtypesClient.GetModule('lib/ia2.tlb')
 	print "done"
 except:
 	print "not found"
 
-#Rich edit
+#IServiceProvider library
 try:
-	print "Rich edit"
-	comtypesClient.GetModule('msftedit.dll')
+	print "IServiceProvider library"
+	comtypesClient.GetModule('lib/servprov.tlb')
+	print "done"
+except:
+	print "not found"
+
+#MS Active Accessibility
+try:
+	print "MS Active Accessibility"
+	comtypesClient.GetModule('oleacc.dll')
 	print "done"
 except:
 	print "not found"

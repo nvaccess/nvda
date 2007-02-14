@@ -7,7 +7,8 @@
 import struct
 import ctypes
 import comtypes.automation
-import comtypesClient
+import win32com.client
+import pythoncom
 import winUser
 import audio			
 import IAccessibleHandler
@@ -43,10 +44,15 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 	def __init__(self,*args,**vars):
 		winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
 		try:
-			domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-			res=ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(domPointer._iid_),ctypes.byref(domPointer))
-			if res==0:
-				self.dom=comtypesClient.wrap(domPointer)
+			ptr=ctypes.c_void_p()
+			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
+				raise OSError("No native object model")
+			#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
+			o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
+			t=o.GetTypeInfo()
+			a=t.GetTypeAttr()
+			oleRepr=win32com.client.build.DispatchItem(attr=a)
+			self.dom=win32com.client.CDispatch(o,oleRepr)
 		except:
 			pass
 

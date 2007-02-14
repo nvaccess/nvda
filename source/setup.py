@@ -34,7 +34,7 @@ setup(
 	zipfile = None,
 	data_files = [
 		("documentation", glob("../*.txt")),
-		("comInterfaces", glob("comInterfaces/*.py*")),
+		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
 		("appModules", glob("appModules/*.kbd")),

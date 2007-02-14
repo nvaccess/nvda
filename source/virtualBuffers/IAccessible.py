@@ -6,7 +6,6 @@
 
 import debug
 import winUser
-from keyboardHandler import key
 import NVDAObjects
 import IAccessibleHandler
 import MSHTML

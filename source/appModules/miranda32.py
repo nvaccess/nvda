@@ -8,12 +8,12 @@ from keyboardHandler import key, sendKey
 import audio
 import IAccessibleHandler
 import NVDAObjects
-import _default
+import appModuleHandler
 
-class appModule(_default.appModule):
+class appModule(appModuleHandler.appModule):
 
 	def __init__(self,*args):
-		_default.appModule.__init__(self,*args)
+		appModuleHandler.appModule.__init__(self,*args)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_mirandaContactList)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_WINDOW,NVDAObject_mirandaContactList)
 

@@ -29,24 +29,25 @@ class interfaceSettingsDialog(wx.Dialog):
 			languageList.SetSelection(index)
 		except:
 			pass
-		wx.EVT_CHOICE(self,languageListID,self.onLanguageChange)
+		languageList.Bind(wx.EVT_CHOICE,self.onLanguageChange)
 		languageSizer.Add(languageList)
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		hideInterfaceCheckBoxID=wx.NewId()
 		hideInterfaceCheckBox=wx.CheckBox(self,hideInterfaceCheckBoxID,label=_("Hide user interface on startup"))
 		hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
-		wx.EVT_CHECKBOX(self,hideInterfaceCheckBoxID,self.onHideInterfaceChange)
+		hideInterfaceCheckBox.Bind(wx.EVT_CHECKBOX,self.onHideInterfaceChange)
 		settingsSizer.Add(hideInterfaceCheckBox,border=10,flag=wx.BOTTOM)
 		saveOnExitCheckBoxID=wx.NewId()
 		saveOnExitCheckBox=wx.CheckBox(self,saveOnExitCheckBoxID,label=_("Save configuration on exit"))
 		saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
-		wx.EVT_CHECKBOX(self,saveOnExitCheckBoxID,self.onSaveOnExitChange)
+		saveOnExitCheckBox.Bind(wx.EVT_CHECKBOX,self.onSaveOnExitChange)
 		settingsSizer.Add(saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		languageList.SetFocus()
 
 	def onLanguageChange(self,evt):
 		lang=evt.GetString()
@@ -75,7 +76,7 @@ class voiceSettingsDialog(wx.Dialog):
 				voiceList.SetSelection(voiceIndex)
 		except:
 			pass
-		wx.EVT_CHOICE(self,voiceListID,self.onVoiceChange)
+		voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
 		voiceListSizer.Add(voiceListLabel)
 		voiceListSizer.Add(voiceList)
 		settingsSizer.Add(voiceListSizer,border=10,flag=wx.BOTTOM)
@@ -83,7 +84,7 @@ class voiceSettingsDialog(wx.Dialog):
 		rateSliderLabel=wx.StaticText(self,-1,label=_("Rate"))
 		rateSliderID=wx.NewId()
 		rateSlider=wx.Slider(self,rateSliderID,value=synthDriverHandler.getRate(),minValue=0,maxValue=100,name="Rate:")
-		wx.EVT_SLIDER(self,rateSliderID,self.onRateChange)
+		rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
 		rateSliderSizer.Add(rateSliderLabel)
 		rateSliderSizer.Add(rateSlider)
 		settingsSizer.Add(rateSliderSizer,border=10,flag=wx.BOTTOM)
@@ -91,7 +92,7 @@ class voiceSettingsDialog(wx.Dialog):
 		pitchSliderLabel=wx.StaticText(self,-1,label=_("Pitch"))
 		pitchSliderID=wx.NewId()
 		pitchSlider=wx.Slider(self,pitchSliderID,value=synthDriverHandler.getPitch(),minValue=0,maxValue=100)
-		wx.EVT_SLIDER(self,pitchSliderID,self.onPitchChange)
+		pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
 		pitchSliderSizer.Add(pitchSliderLabel)
 		pitchSliderSizer.Add(pitchSlider)
 		settingsSizer.Add(pitchSliderSizer,border=10,flag=wx.BOTTOM)
@@ -99,19 +100,19 @@ class voiceSettingsDialog(wx.Dialog):
 		volumeSliderLabel=wx.StaticText(self,-1,label=_("Volume"))
 		volumeSliderID=wx.NewId()
 		volumeSlider=wx.Slider(self,volumeSliderID,value=synthDriverHandler.getVolume(),minValue=0,maxValue=100)
-		wx.EVT_SLIDER(self,volumeSliderID,self.onVolumeChange)
+		volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
 		volumeSliderSizer.Add(volumeSliderLabel)
 		volumeSliderSizer.Add(volumeSlider)
 		settingsSizer.Add(volumeSliderSizer,border=10,flag=wx.BOTTOM)
 		punctuationCheckBoxID=wx.NewId()
 		punctuationCheckBox=wx.CheckBox(self,punctuationCheckBoxID,label=_("Speak all punctuation"))
 		punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
-		wx.EVT_CHECKBOX(self,punctuationCheckBoxID,self.onPunctuationChange)
+		punctuationCheckBox.Bind(wx.EVT_CHECKBOX,self.onPunctuationChange)
 		settingsSizer.Add(punctuationCheckBox,border=10,flag=wx.BOTTOM)
 		capsCheckBoxID=wx.NewId()
 		capsCheckBox=wx.CheckBox(self,capsCheckBoxID,label=_("Say cap before capitals"))
 		capsCheckBox.SetValue(config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"])
-		wx.EVT_CHECKBOX(self,capsCheckBoxID,self.onCapsChange)
+		capsCheckBox.Bind(wx.EVT_CHECKBOX,self.onCapsChange)
 		settingsSizer.Add(capsCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -119,18 +120,19 @@ class voiceSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		synthDriverHandler.setVoice(evt.GetSelection()+1)
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,evt.GetSelection()+1)
 
 	def onRateChange(self,evt):
-		synthDriverHandler.setRate(evt.GetSelection())
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setRate,evt.GetSelection())
 
 	def onPitchChange(self,evt):
-		synthDriverHandler.setPitch(evt.GetSelection())
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setPitch,evt.GetSelection())
 
 	def onVolumeChange(self,evt):
-		synthDriverHandler.setVolume(evt.GetSelection())
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVolume,evt.GetSelection())
 
 	def onPunctuationChange(self,evt):
 		config.conf["speech"]["speakPunctuation"]=evt.IsChecked()
@@ -165,6 +167,7 @@ class keyboardEchoDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		charsCheckBox.SetFocus()
 
 	def onCharsChange(self,evt):
 		config.conf["keyboard"]["speakTypedCharacters"]=evt.IsChecked()
@@ -196,6 +199,7 @@ class mouseSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		shapeCheckBox.SetFocus()
 
 	def onShapeChange(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=evt.IsChecked()
@@ -244,6 +248,7 @@ class objectPresentationDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		tooltipCheckBox.SetFocus()
 
 	def onTooltipChange(self,evt):
 		config.conf["presentation"]["reportTooltips"]=evt.IsChecked()

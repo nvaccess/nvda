@@ -56,6 +56,7 @@ def setDriver(name):
 		debug.writeMessage("synth config: %s"%config.conf["speech"][name])
 		newSynth.voice=config.conf["speech"][name]["voice"]
 		newSynth.rate=config.conf["speech"][name]["rate"]
+		newSynth.pitch=config.conf["speech"][name]["pitch"]
 		newSynth.volume=config.conf["speech"][name]["volume"]
 		driverObject=newSynth
 		driverName=name
@@ -145,6 +146,7 @@ def setVoice(value):
 		config.conf["speech"][driverName]["voice"]=getVoice()
 		driverObject.rate=config.conf["speech"][driverName]["rate"]
 	except:
+		debug.writeException("setVoice")
 		pass
 
 def getVoiceNames():

@@ -1,4 +1,4 @@
-#IAccessibleHandler.py
+#py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -476,12 +476,19 @@ def manageEvent_virtualBufferLevel(name,window,objectID,childID):
 	else:
 		manageEvent_NVDAObjectLevel(name,window,objectID,childID)
 
+def manageEvent_defaultAppModuleLevel(name,window,objectID,childID):
+	default=appModuleHandler.default
+	if hasattr(default,"event_IAccessible_%s"%name):
+		getattr(default,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_virtualBufferLevel(name,window,objectID,childID)) 
+	else:
+		manageEvent_virtualBufferLevel(name,window,objectID,childID)
+
 def manageEvent_appModuleLevel(name,window,objectID,childID):
 	appModule=appModuleHandler.getActiveModule()
 	if hasattr(appModule,"event_IAccessible_%s"%name):
-		getattr(appModule,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_virtualBufferLevel(name,window,objectID,childID)) 
+		getattr(appModule,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_defaultAppModuleLevel(name,window,objectID,childID)) 
 	else:
-		manageEvent_virtualBufferLevel(name,window,objectID,childID)
+		manageEvent_defaultAppModuleLevel(name,window,objectID,childID)
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
@@ -553,6 +560,14 @@ def updateFocusFromEvent(window,objectID,childID):
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
 
 def initialize():
+	api.setDesktopObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0))
+	objectEventCallback(0,winUser.EVENT_SYSTEM_FOREGROUND,winUser.getForegroundWindow(),OBJID_CLIENT,0,0,0)
+	focusObject=api.findObjectWithFocus()
+	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+		objectEventCallback(0,winUser.EVENT_OBJECT_FOCUS,focusObject.windowHandle,OBJID_CLIENT,0,0,0)
+	else:
+		api.setFocusObject(api.getForegroundObject())
+	api.setNavigatorObject(api.getFocusObject())
 	for eventType in eventMap.keys():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:

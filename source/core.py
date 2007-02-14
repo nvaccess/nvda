@@ -24,29 +24,25 @@ EXEC_USERINTERFACE=3
 EXEC_CONFIG=4
 EXEC_LAST=4
 
-import os
-import ctypes
 import gettext
+import ctypes
 import time
+import debug
 import globalVars
 import winUser
-import debug
-import api
-import keyboardHandler
-import mouseHandler
-import IAccessibleHandler
-import appModuleHandler
 import audio
 import config
-import gui
-import Queue
-import NVDAObjects
-import versionInfo
 
 queueList=[]
 threads={}
 lastThreadValues={}
 lastThreadID=0
+
+def quit():
+	"""
+Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
+"""
+	gui.quit()
 
 def newThreadID():
 	"""Creates a new ID for a thread by finding out the last ID and adding 1"""
@@ -101,7 +97,6 @@ def getAvailableLanguages():
 		l.append('enu')
 	return l
 
-
 def setLanguage(lang):
 	try:
 		gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
@@ -131,22 +126,26 @@ def main():
 	"""NVDA's core main loop. This initializes all queues and modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.
 """
 	try:
+		applyConfiguration()
+		audio.initialize()
+		if (time.time()-globalVars.startTime)>2:
+			audio.speakMessage(_("Loading subsystems, please wait..."))
+		import Queue
 		for num in range(EXEC_LAST+1):
 			queueList.append(Queue.Queue(1000))
-		applyConfiguration()
+		import gui
+		gui.initialize()
+		import appModuleHandler
+		appModuleHandler.initialize()
+		import IAccessibleHandler
+		IAccessibleHandler.initialize()
+		import keyboardHandler
+		keyboardHandler.initialize()
+		import mouseHandler
+		mouseHandler.initialize()
+		audio.cancel()
 		config.save()
 		audio.speakMessage(_("NVDA started"),wait=True)
-		appModuleHandler.initialize()
-		api.setDesktopObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),IAccessibleHandler.OBJID_CLIENT,0))
-		api.setForegroundObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),IAccessibleHandler.OBJID_CLIENT,0))
-		api.setFocusObject(api.findObjectWithFocus())
-		api.setNavigatorObject(api.getFocusObject())
-		(x,y)=winUser.getCursorPos()
-		api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
-		IAccessibleHandler.initialize()
-		keyboardHandler.initialize()
-		mouseHandler.initialize()
-		gui.initialize()
 	except:
 		debug.writeException("core.py main init")
 		try:

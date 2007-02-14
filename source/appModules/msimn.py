@@ -6,9 +6,9 @@
 
 import audio
 import winUser
-import _default
+import appModuleHandler
 
-class appModule(_default.appModule):
+class appModule(appModuleHandler.appModule):
 
 	def event_IAccessible_gainFocus(self,window,objectID,childID,nextHandler):
 		controlID=winUser.getControlID(window)

@@ -68,6 +68,8 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
+	(x,y)=winUser.getCursorPos()
+	api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
 	hookManager=pyHook.HookManager()
 	hookManager.MouseAll=internal_mouseEvent
 	hookManager.HookMouse()

@@ -11,7 +11,9 @@ import time
 import pyHook
 import debug
 import audio
+from keyUtils import key, keyName
 import api
+import scriptHandler
 import globalVars
 import core
 import config
@@ -24,99 +26,17 @@ word=""
 
 ignoreNextKeyPress = False
 
-def key(name):
-	"""Converts a string representation of a keyPress in to a set of modifiers and a key (which is NVDA's internal key representation).
-@param name: keyPress name to convert
-@type name: string
-@returns: the internal key representation 
+def isTypingProtected():
+	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
+@returns: True if it should be suppressed, False otherwise.
+@rtype: boolean
 """
-	l = name.split("+")
-	for num in range(len(l)):
-		t=l[num]
-		if len(t)>1:
-			t="%s%s"%(t[0].upper(),t[1:])
-		elif len(t)==1:
-			t=t[0].upper()
-		l[num]=t
-	if len(l) >= 2:
-		s=set()
-		for m in l[0:-1]:
-			s.add(m)
-		modifiers = frozenset(s)
+	focusObject=api.getFocusObject()
+	if focusObject and focusObject.isProtected:
+		return True
 	else:
-		modifiers = None
-	return (modifiers, l[-1])
+		return False
 
-def keyName(keyPress):
-	"""Converts an internal key press to a printable name
-@param keyPress: a keyPress
-@type keyPress: key
-"""
-	keyName=""
-	for k in list(keyPress[0] if isinstance(keyPress[0],frozenset) else [])+[keyPress[1]]:
-		keyName+="+%s"%k
-	return keyName[1:]
-
-def sendKey(keyPress):
-	"""Sends a key press through to the operating system.
-@param keyPress: the key to send
-@type keyPress: NVDA internal key
-"""
-	debug.writeMessage("keyboardHandler.sendKey: %s"%keyName(keyPress))
-	global keyPressIgnoreSet
-	keyList=[]
-	#Process modifier keys
-	if keyPress[0] is not None:
-		for modifier in keyPress[0]:
-			if (modifier=="Alt") and (winUser.getKeyState(winUser.VK_MENU)&32768):
-				continue
-			elif (modifier=="Control") and (winUser.getKeyState(winUser.VK_CONTROL)&32768):
-				continue
-			elif (modifier=="Shift") and (winUser.getKeyState(winUser.VK_SHIFT)&32768):
-				continue
-			elif (modifier=="Win") and ((winUser.getKeyState(winUser.VK_LWIN)&32768) or (winUser.getKeyState(winUser.VK_RWIN)&32768)):
-				continue
-			elif (modifier=="Insert") and insertDown:
-				continue
-			if modifier[0:8]=="Extended":
-				extended=1
-				modifier=modifier[8:]
-			else:
-				extended=0
-			if modifier=="Alt":
-				modifier="Menu"
-			if modifier=="Win":
-				modifier="Lwin"
-			modifier=modifier.upper()
-			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%modifier)
-			keyList.append((keyID,extended))
-	#Process normal key
-	if keyPress[1] is not None:
-		k=keyPress[1]
-		if k[0:8]=="Extended":
-			extended=1
-			k=k[8:]
-		else:
-			extended=0
-		k=k.upper()
-		if len(k)==1:
-			keyID=ord(k)
-		else:
-			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%k)
-		keyList.append((keyID,extended))
-	if (keyList is None) or (len(keyList)==0):
-		return
-	#Send key up for any keys that are already down
-	for k in filter(lambda x: winUser.getKeyState(x[0])&32768,keyList):
-		winUser.keybd_event(k[0],0,k[1]+2,0)
-	#Send key down events for these keys
-	for k in keyList:
-		winUser.keybd_event(k[0],0,k[1],0)
-	#Send key up events for the keys in reverse order
-	keyList.reverse()
-	for k in keyList:
-		winUser.keybd_event(k[0],0,k[1]+2,0)
-	time.sleep(0.001)
 
 #Internal functions for key presses
 
@@ -166,10 +86,17 @@ def internal_keyDownEvent(event):
 		elif mainKey=="ExtendedNumlock":
 			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
 			core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
-
 		core.executeFunction(core.EXEC_KEYBOARD,speakKey,keyPress,event.Ascii)
-		if api.keyHasScript(keyPress):
-			core.executeFunction(core.EXEC_KEYBOARD,api.executeScript,keyPress)
+		script=scriptHandler.findScript(keyPress)
+		if script:
+			scriptName=scriptHandler.getScriptName(script)
+			scriptLocation=scriptHandler.getScriptLocation(script)
+			scriptDescription=scriptHandler.getScriptDescription(script)
+			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
+				core.executeFunction(core.EXEC_KEYBOARD,audio.speakMessage,"%s from %s, %s"%(scriptName,scriptLocation,scriptDescription))
+			else:
+				core.executeFunction(core.EXEC_KEYBOARD,script,keyPress)
+		if script or globalVars.keyboardHelp:
 			keyUpIgnoreSet.add((event.Key,event.Extended))
 			return False
 		else:
@@ -182,7 +109,7 @@ def internal_keyDownEvent(event):
 def speakKey(keyPress,ascii):
 	global word
 	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift']))) and (ascii in range(33,128)):
-		if api.isTypingProtected():
+		if isTypingProtected():
 			char="*"
 		else:
 			char=chr(ascii)

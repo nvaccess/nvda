@@ -41,12 +41,8 @@ __verbose__ = __debug__
 
 ################################################################
 # Determine the directory where generated modules live.
-#gen_dir = ".\\comInterfaces"
-import comInterfaces
-if os.path.isdir(".\\comInterfaces"):
-	gen_dir=".\\comInterfaces"
-else:
-	gen_dir=None
+gen_dir = ".\\comInterfaces"
+comInterfaces=__import__("comInterfaces",globals(),locals(),[])
 
 
 ### for testing
@@ -72,15 +68,17 @@ def _my_findmodule(fullname):
         if file_:
             file_.close()
 
-def _name_module(tlib):
-    # Determine the name of a typelib wrapper module.
-    libattr = tlib.GetLibAttr()
-    modname = "_%s_%s_%s_%s" % \
-              (str(libattr.guid)[1:-1].replace("-", "_"),
-               libattr.lcid,
-               libattr.wMajorVerNum,
-               libattr.wMinorVerNum)
-    return "comInterfaces." + modname
+def _name_module(tlib): 
+	# Determine the name of a typelib wrapper module.
+	libattr = tlib.GetLibAttr()
+	guid=str(libattr.guid)[1:-1].replace("-", "_")
+	majorVerNum=libattr.wMajorVerNum
+	minorVerNum=libattr.wMinorVerNum
+	lcid=libattr.lcid
+	friendlyName = tlib.GetDocumentation(-1)[0]
+	friendlyName = friendlyName if isinstance(friendlyName,basestring) else "unknown"
+	modName="%s_%s_%s__%s__%s"%(friendlyName,majorVerNum,minorVerNum,guid,lcid)
+	return "comInterfaces." + modName
 
 def GetModule(tlib):
     """Create a module wrapping a COM typelibrary on demand.
@@ -211,7 +209,7 @@ def wrap_outparam(punk):
     return punk
 
 # XXX rename this!
-def wrap(punk):
+def wrap(punk,preferDispatch=False):
     """Try to QueryInterface a COM pointer to the 'most useful'
     interface.
     
@@ -220,6 +218,8 @@ def wrap(punk):
     Generate a wrapper module for the typelib, and QI for the
     interface found.
     """
+    if preferDispatch and isinstance(punk,ctypes.POINTER(comtypes.automation.IDispatch)):
+      return Dispatch(punk)
     if not punk: # NULL COM pointer
         return punk # or should we return None?
     # find the typelib and the interface name
@@ -563,8 +563,7 @@ class _Dispatch(object):
 ##        dispid = tc.Bind(name)[1].memid
         dispid = self._comobj.GetIDsOfNames(name)[0]
         flags = comtypes.automation.DISPATCH_PROPERTYGET
-        return self._comobj.Invoke(dispid,
-                                   _invkind=flags)
+        return self._comobj.Invoke(dispid,                                   _invkind=flags)
 
     def __iter__(self):
         return _Collection(self.__enum())

@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 from textwrap import TextWrapper
-from keyboardHandler import key
+from keyUtils import key
 import audio
 import globalVars
 import debug
@@ -323,7 +323,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 			end=self.text_characterCount
 		return self._textBuf[start:end]
 
-	def script_pageUp(self,keyPress):
+	def script_pageUp(self,keyPress,nextScript):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.text_reviewOffset
 		lineCount=0
@@ -336,7 +336,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 			audio.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_pageDown(self,keyPress):
+	def script_pageDown(self,keyPress,nextScript):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.text_reviewOffset
 		lineCount=0
@@ -349,7 +349,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 			audio.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewOffset)
 
-	def script_activatePosition(self,keyPress):
+	def script_activatePosition(self,keyPress,nextScript):
 		self.activatePosition(self.text_reviewOffset)
 
 	def text_reportPresentation(self,offset):
@@ -365,7 +365,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 				audio.speakMessage(info["descriptionFunc"](info["node"]))
 		super(virtualBuffer,self).text_reportPresentation(offset)
 
-	def script_nextHeading(self,keyPress):
+	def script_nextHeading(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_heading)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -375,7 +375,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more headings"))
 
-	def script_previousHeading(self,keyPress):
+	def script_previousHeading(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_heading)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -385,7 +385,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more headings"))
 
-	def script_nextParagraph(self,keyPress):
+	def script_nextParagraph(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_paragraph)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -395,7 +395,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more paragraphs"))
 
-	def script_previousParagraph(self,keyPress):
+	def script_previousParagraph(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_paragraph)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -405,7 +405,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more paragraphs"))
 
-	def script_nextTable(self,keyPress):
+	def script_nextTable(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_table)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -415,7 +415,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more tables"))
 
-	def script_previousTable(self,keyPress):
+	def script_previousTable(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_table)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -425,7 +425,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more tables"))
 
-	def script_nextLink(self,keyPress):
+	def script_nextLink(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_link)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -435,7 +435,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more links"))
 
-	def script_previousLink(self,keyPress):
+	def script_previousLink(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_link)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -445,7 +445,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more links"))
 
-	def script_nextList(self,keyPress):
+	def script_nextList(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_list)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -455,7 +455,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more lists"))
 
-	def script_previousList(self,keyPress):
+	def script_previousList(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_list)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -465,7 +465,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more lists"))
 
-	def script_nextListItem(self,keyPress):
+	def script_nextListItem(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_listItem)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -475,7 +475,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more list items"))
 
-	def script_previousListItem(self,keyPress):
+	def script_previousListItem(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_listItem)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -485,7 +485,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more list items"))
 
-	def script_nextFormField(self,keyPress):
+	def script_nextFormField(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
@@ -495,7 +495,7 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more form fields"))
 
-	def script_previousFormField(self,keyPress):
+	def script_previousFormField(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos

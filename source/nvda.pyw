@@ -4,6 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
+import globalVars
+globalVars.startTime=time.time()
+
 import os
 import sys
 sys.setcheckinterval(100)

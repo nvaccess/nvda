@@ -9,17 +9,19 @@
 @type current: appModule
 """
 
+import pythoncom
+import win32com.client
 import datetime
 import re
 import ctypes
 import os
 import sayAllHandler
+from keyUtils import key
 import debug
 import audio
 import winUser
 import winKernel
 import config
-from keyboardHandler import key
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
@@ -29,19 +31,34 @@ runningTable={}
 #variable to hold the default appModule instance
 default=None
 
+#base class for appModules
+class appModule(object):
+
+	def __init__(self,hwnd,processID):
+		self.appWindow=hwnd
+		self.processID=processID
+		self.appName=self.__class__.__module__
+		self._keyMap={}
+
+
 #regexp to collect the key and script from a line in a keyMap file 
 re_keyScript=re.compile(r'^\s*(?P<key>[\w+]+)\s*=\s*(?P<script>[\w]+)\s*$')
+
+# Initialise WMI; required for getAppName.
+_wmi = win32com.client.GetObject('winmgmts:')
 
 def getAppName(window):
 	"""Finds out the application name of the given window.
 """
 	try:
 		processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))
-		procHandle=winKernel.openProcess(winKernel.PROCESS_ALL_ACCESS,False,processID[0])
-		buf=ctypes.create_unicode_buffer(1024)
-		ctypes.windll.psapi.GetProcessImageFileNameW(procHandle,buf,1024)
-		winKernel.closeHandle(procHandle)
-		return os.path.splitext(buf.value.split('\\')[-1])[0].lower()
+		result  =  _wmi.ExecQuery("select * from Win32_Process where ProcessId=%d" % processID[0])
+		if len(result) > 0:
+			appName=result[0].Properties_('Name').Value
+			appName=os.path.splitext(appName)[0].lower()
+			return appName
+		else:
+			return None
 	except:
 		return None
 
@@ -59,13 +76,17 @@ def getKeyMapFileName(appName,layout):
 def getActiveModule():
 	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if runningTable.has_key(appWindow):
-		return runningTable[appWindow]
+		mod=runningTable[appWindow]
 	else:
-		return default
+		mod=None
+	if mod is None:
+		mod=default
+	return mod
 
 def update():
-	for w in filter(lambda x: not winUser.isWindow(x),runningTable):
-		debug.writeMessage("appModuleHandler.update: removing module %s at %s"%(runningTable[w].__module__,w))
+	for w in [x for x in runningTable if not winUser.isWindow(x)]:
+		if runningTable[w]:
+			debug.writeMessage("appModuleHandler.update: removing module %s at %s"%(runningTable[w].__module__,w))
 		del runningTable[w]
 	appWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if not appWindow:
@@ -79,8 +100,11 @@ def update():
 		if mod:
 			mod._keyMap=default._keyMap.copy()
 			loadKeyMap(appName,mod)
-			runningTable[appWindow]=mod
+		runningTable[appWindow]=mod
+		if mod:
 			debug.writeMessage("appModuleHandler.update: loaded module %s"%appName)
+		else:
+			debug.writeMessage("appModuleHandler.update: No module for %s"%appName)
 
 def loadKeyMap(appName,mod):
 	layout=config.conf["keyboard"]["keyboardLayout"]
@@ -102,7 +126,7 @@ def loadKeyMap(appName,mod):
 
 def fetchModule(appName,appWindow):
 	if not moduleExists(appName):
-		return False
+		return None
 	try:
 		mod=__import__(appName,globals(),locals(),[]).appModule(appWindow,winUser.getWindowThreadProcessID(appWindow))
 	except:
@@ -123,3 +147,22 @@ def initialize():
 	else:
 		audio.speakMessage("Could not load default module ",wait=True)
 		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
+
+#base class for appModules
+class appModule(object):
+
+	def __init__(self,hwnd,processID):
+		self.appWindow=hwnd
+		self.processID=processID
+		self.appName=self.__class__.__module__
+		self._keyMap={}
+
+	def getScript(self,keyPress):
+		if self._keyMap.has_key(keyPress):
+			return self._keyMap[keyPress]
+
+	def registerScriptKey(self,keyPress,methodName):
+		self._keyMap[keyPress]=methodName
+
+	def registerScriptKeys(self,keyDict):
+		self._keyMap.update(keyDict)

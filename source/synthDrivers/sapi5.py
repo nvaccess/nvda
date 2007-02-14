@@ -34,30 +34,28 @@ class synthDriver(object):
 
 	def __init__(self):
 		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
+		self._rate=(self.tts.rate*5)+50
 		self._voice=1
 		self._pitch=50
+		self._volume=self.tts.volume
+		self.voiceNames=[]
+		try:
+			for num in range(self.tts.GetVoices().Count):
+				self.voiceNames.append(self.tts.GetVoices()[num].GetDescription())
+		except:
+			pass
 
 	def _get_rate(self):
-		rate=(self.tts.Rate*5)+50
-		return rate
+		return self._rate
 
 	def _get_pitch(self):
 		return self._pitch
 
 	def _get_volume(self):
-		return self.tts.Volume
+		return self._volume
 
 	def _get_voice(self):
 		return self._voice
-
-	def _get_voiceNames(self):
-		voiceNames=[]
-		try:
-			for num in range(self.tts.GetVoices().Count):
-				voiceNames.append(self.tts.GetVoices()[num].GetDescription())
-		except:
-			pass
-		return voiceNames
 
 	def _get_lastIndex(self):
 		bookmark=self.tts.status.LastBookmark
@@ -68,6 +66,7 @@ class synthDriver(object):
 
 	def _set_rate(self,rate):
 		self.tts.Rate = (rate-50)/5
+		self._rate=rate
 
 	def _set_pitch(self,value):
 		#pitch is really controled with xml around speak commands
@@ -75,6 +74,7 @@ class synthDriver(object):
 
 	def _set_volume(self,value):
 		self.tts.Volume = value
+		self._volume=value
 
 	def _set_voice(self,value):
 		self.tts.Voice(self.tts.GetVoices()[value-1])

@@ -10,7 +10,7 @@ import ctypes
 import difflib
 import debug
 import tones
-from keyboardHandler import sendKey, key
+from keyUtils import sendKey, key
 import winKernel
 import winUser
 import audio
@@ -245,7 +245,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 			#time.sleep(0.001)
 		return newText
 
-	def script_protectConsoleKillKey(self,keyPress):
+	def script_protectConsoleKillKey(self,keyPress,nextScript):
 		self.disconnectConsole()
 		sendKey(keyPress)
 		time.sleep(0.01)

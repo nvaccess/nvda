@@ -6,35 +6,22 @@
 
 import comtypesClient
 import datetime
-from keyboardHandler import key
+from keyUtils import key
 import IAccessibleHandler
 import api
 import audio
 import sayAllHandler
 import virtualBuffers
 import NVDAObjects
+import globalVars
 import synthDriverHandler
 import gui
 import core
 import config
 import winUser
+import appModuleHandler
 
-class appModule(object):
-
-	def __init__(self,hwnd,processID):
-		self.hwnd=hwnd
-		self.processID=processID
-		self._keyMap={}
-
-	def getScript(self,keyPress):
-		if self._keyMap.has_key(keyPress):
-			return self._keyMap[keyPress]
-
-	def registerScriptKey(self,keyPress,methodName):
-		self._keyMap[keyPress]=methodName
-
-	def registerScriptKeys(self,keyDict):
-		self._keyMap.update(keyDict)
+class appModule(appModuleHandler.appModule):
 
 	def event_IAccessible_switchStart(self,window,objectID,childID,nextHandler):
 		audio.cancel()
@@ -42,22 +29,32 @@ class appModule(object):
 	def event_IAccessible_switchEnd(self,window,objectID,childID,nextHandler):
 		audio.cancel()
 
-	def script_dateTime(self,keyPress):
+	def script_keyboardHelp(self,keyPress,nextScript):
+		if not globalVars.keyboardHelp:
+ 			state=_("on")
+			globalVars.keyboardHelp=True
+		else:
+			state=_("off")
+			globalVars.keyboardHelp=False
+		audio.speakMessage(_("keyboard help %s")%state)
+
+
+	def script_dateTime(self,keyPress,nextScript):
 		"""Reports the current date and time"""
 		text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")
 		if text[0]=='0':
 			text=text[1:]
 		audio.speakMessage(text)
 
-	def script_increaseRate(self,keyPress):
+	def script_increaseRate(self,keyPress,nextScript):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()+5)
 		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
 
-	def script_decreaseRate(self,keyPress):
+	def script_decreaseRate(self,keyPress,nextScript):
 		synthDriverHandler.setRate(synthDriverHandler.getRate()-5)
 		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
 
-	def script_toggleSpeakTypedCharacters(self,keyPress):
+	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
@@ -66,7 +63,7 @@ class appModule(object):
 			config.conf["keyboard"]["speakTypedCharacters"]=True
 		audio.speakMessage(_("speak typed characters")+" "+onOff)
 
-	def script_toggleSpeakTypedWords(self,keyPress):
+	def script_toggleSpeakTypedWords(self,keyPress,nextScript):
 		if config.conf["keyboard"]["speakTypedWords"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedWords"]=False
@@ -75,7 +72,7 @@ class appModule(object):
 			config.conf["keyboard"]["speakTypedWords"]=True
 		audio.speakMessage(_("speak typed words")+" "+onOff)
 
-	def script_toggleSpeakCommandKeys(self,keyPress):
+	def script_toggleSpeakCommandKeys(self,keyPress,nextScript):
 		if config.conf["keyboard"]["speakCommandKeys"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
@@ -84,7 +81,7 @@ class appModule(object):
 			config.conf["keyboard"]["speakCommandKeys"]=True
 		audio.speakMessage(_("speak command keys")+" "+onOff)
 
-	def script_toggleSpeakPunctuation(self,keyPress):
+	def script_toggleSpeakPunctuation(self,keyPress,nextScript):
 		if config.conf["speech"]["speakPunctuation"]:
 			onOff=_("off")
 			config.conf["speech"]["speakPunctuation"]=False
@@ -95,12 +92,12 @@ class appModule(object):
 
 
 
-	def script_moveMouseToNavigatorObject(self,keyPress):
+	def script_moveMouseToNavigatorObject(self,keyPress,nextScript):
 		"""Moves the mouse pointer to the current navigator object"""
 		audio.speakMessage("Move mouse to navigator")
 		api.moveMouseToNVDAObject(api.getNavigatorObject())
 
-	def script_moveNavigatorObjectToMouse(self,keyPress):
+	def script_moveNavigatorObjectToMouse(self,keyPress,nextScript):
 		audio.speakMessage("Move navigator object to mouse")
 		(x,y)=winUser.getCursorPos()
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
@@ -108,7 +105,7 @@ class appModule(object):
 			api.setNavigatorObject(obj)
 			obj.speakObject()
 
-	def script_navigatorObject_current(self,keyPress):
+	def script_navigatorObject_current(self,keyPress,nextScript):
 		"""Reports the object the navigator is currently on""" 
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -117,7 +114,7 @@ class appModule(object):
 		curObject.speakObject()
 		return False
 
-	def script_navigatorObject_currentDimensions(self,keyPress):
+	def script_navigatorObject_currentDimensions(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if not obj:
 			audio.speakMessage(_("no navigator object"))
@@ -127,7 +124,7 @@ class appModule(object):
 		(left,top,width,height)=location
 		audio.speakMessage("%d wide by %d high, located %d from left and %d from top"%(width,height,left,top))
    
-	def script_navigatorObject_toFocus(self,keyPress):
+	def script_navigatorObject_toFocus(self,keyPress,nextScript):
 		"""Moves the navigator to the object with focus"""
 		obj=api.getFocusObject()
 		if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
@@ -136,7 +133,7 @@ class appModule(object):
 		audio.speakMessage(_("move to focus"))
 		obj.speakObject()
 
-	def script_navigatorObject_parent(self,keyPress):
+	def script_navigatorObject_parent(self,keyPress,nextScript):
 		"""Moves the navigator to the parent of the object it is currently on"""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -149,7 +146,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("No parents"))
 
-	def script_navigatorObject_next(self,keyPress):
+	def script_navigatorObject_next(self,keyPress,nextScript):
 		"""Moves the navigator to the next object of the one it is currently on"""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -162,7 +159,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("No next"))
 
-	def script_navigatorObject_previous(self,keyPress):
+	def script_navigatorObject_previous(self,keyPress,nextScript):
 		"""Moves the navigator to the previous object of the one it is currently on"""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -175,7 +172,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("No previous"))
 
-	def script_navigatorObject_firstChild(self,keyPress):
+	def script_navigatorObject_firstChild(self,keyPress,nextScript):
 		"""Moves the navigator to the first child object of the one it is currently on"""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -188,7 +185,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("No children"))
 
-	def script_navigatorObject_doDefaultAction(self,keyPress):
+	def script_navigatorObject_doDefaultAction(self,keyPress,nextScript):
 		"""Performs the default action on the object the navigator is currently on (example: presses it if it is a button)."""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -196,7 +193,7 @@ class appModule(object):
 			return
 		curObject.doDefaultAction()
 
-	def script_navigatorObject_where(self,keyPress):
+	def script_navigatorObject_where(self,keyPress,nextScript):
 		"""Reports where the navigator is, by starting at the object where the navigator is currently, and moves up the ansesters, speaking them as it goes."""
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
@@ -208,105 +205,105 @@ class appModule(object):
 			curObject.speakObject()
 			curObject=curObject.parent
 
-	def script_review_top(self,keyPress):
+	def script_review_top(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_top(keyPress)
+			obj.script_text_review_top(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_bottom(self,keyPress):
+	def script_review_bottom(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_bottom(keyPress)
+			obj.script_text_review_bottom(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_previousLine(self,keyPress):
+	def script_review_previousLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevLine(keyPress)
+			obj.script_text_review_prevLine(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_currentLine(self,keyPress):
+	def script_review_currentLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentLine(keyPress)
+			obj.script_text_review_currentLine(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_nextLine(self,keyPress):
+	def script_review_nextLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextLine(keyPress)
+			obj.script_text_review_nextLine(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_previousWord(self,keyPress):
+	def script_review_previousWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevWord(keyPress)
+			obj.script_text_review_prevWord(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_currentWord(self,keyPress):
+	def script_review_currentWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentWord(keyPress)
+			obj.script_text_review_currentWord(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_nextWord(self,keyPress):
+	def script_review_nextWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextWord(keyPress)
+			obj.script_text_review_nextWord(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_previousCharacter(self,keyPress):
+	def script_review_previousCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevCharacter(keyPress)
+			obj.script_text_review_prevCharacter(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_currentCharacter(self,keyPress):
+	def script_review_currentCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentCharacter(keyPress)
+			obj.script_text_review_currentCharacter(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_nextCharacter(self,keyPress):
+	def script_review_nextCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextCharacter(keyPress)
+			obj.script_text_review_nextCharacter(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_startOfLine(self,keyPress):
+	def script_review_startOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_startOfLine(keyPress)
+			obj.script_text_review_startOfLine(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_endOfLine(self,keyPress):
+	def script_review_endOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_endOfLine(keyPress)
+			obj.script_text_review_endOfLine(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_review_moveToCaret(self,keyPress):
+	def script_review_moveToCaret(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_moveToCaret(keyPress)
+			obj.script_text_review_moveToCaret(keyPress,None)
 		else:
 			audio.speakMessage(_("no navigator object"))
 
-	def script_speechMode(self,keyPress):
+	def script_speechMode(self,keyPress,nextScript):
 		"""Toggles speech on and off"""
 		curMode=audio.speechMode
 		audio.speechMode=audio.speechMode_talk
@@ -320,21 +317,21 @@ class appModule(object):
 		audio.speakMessage(_("speech mode %s")%name)
 		audio.speechMode=newMode
 
-	def script_toggleVirtualBufferPassThrough(self,keyPress):
+	def script_toggleVirtualBufferPassThrough(self,keyPress,nextScript):
 		api.toggleVirtualBufferPassThrough()
 
-	def script_quit(self,keyPress):
+	def script_quit(self,keyPress,nextScript):
 		"""Quits NVDA!"""
 		gui.quit()
 
-	def script_showGui(self,keyPress):
+	def script_showGui(self,keyPress,nextScript):
 		gui.showGui()
 
-	def script_sayAll_review(self,keyPress):
+	def script_sayAll_review(self,keyPress,nextScript):
 		o=api.getNavigatorObject()
 		sayAllHandler.sayAll(o.text_reviewOffset,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_reviewOffset)
 
-	def script_sayAll_caret(self,keyPress):
+	def script_sayAll_caret(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=virtualBuffers.getVirtualBuffer(o)
 		if v and not api.isVirtualBufferPassThrough():
@@ -342,14 +339,14 @@ class appModule(object):
 		else:
 			sayAllHandler.sayAll(o.text_caretOffset,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_caretOffset)
 
-	def script_review_reportPresentation(self,keyPress):
+	def script_review_reportPresentation(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=virtualBuffers.getVirtualBuffer(o)
 		if v and not api.isVirtualBufferPassThrough():
 			o=v
 		o.text_reportPresentation(o.text_reviewOffset)
 
-	def script_reportCurrentFocus(self,keyPress):
+	def script_reportCurrentFocus(self,keyPress,nextScript):
 		#focusObject=api.getFocusObject()
 		focusObject=api.findObjectWithFocus()
 		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
@@ -357,7 +354,7 @@ class appModule(object):
 		else:
 			audio.speakMessage(_("no focus"))
 
-	def script_reportStatusLine(self,keyPress):
+	def script_reportStatusLine(self,keyPress,nextScript):
 		foregroundObject=api.getForegroundObject()
 		if not foregroundObject:
 			audio.speakMessage(_("no foreground object"))
@@ -369,26 +366,26 @@ class appModule(object):
 		statusBarObject.speakObject()
 		api.setNavigatorObject(statusBarObject)
 
-	def script_toggleReportObjectUnderMouse(self,keyPress):
+	def script_toggleReportObjectUnderMouse(self,keyPress,nextScript):
 		config.conf["mouse"]["reportObjectUnderMouse"]=not config.conf["mouse"]["reportObjectUnderMouse"]
 		if config.conf["mouse"]["reportObjectUnderMouse"]:
 			audio.speakMessage(_("speak object under mouse"))
 		else:
 			audio.speakMessage(_("don't speak object under mouse"))
 
-	def script_title(self,keyPress):
+	def script_title(self,keyPress,nextScript):
 		"""Reports the title of the current application or foreground window"""
 		obj=api.getForegroundObject()
 		if obj:
 			obj.speakObject()
 
-	def script_speakForeground(self,keyPress):
+	def script_speakForeground(self,keyPress,nextScript):
 		obj=api.getForegroundObject()
 		if obj:
 			obj.speakObject()
 			obj.speakDescendantObjects()
 
-	def script_test_navigatorWindowInfo(self,keyPress):
+	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("handle: %s"%obj.windowHandle)

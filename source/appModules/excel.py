@@ -7,28 +7,29 @@
 import time
 import re
 import ctypes
-import comtypesClient
+import pythoncom
+import win32com.client
 import comtypes.automation
 import IAccessibleHandler
 import audio
 import debug
-from keyboardHandler import sendKey, key
+from keyUtils import sendKey, key
 import NVDAObjects
-import _default
+import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
-class appModule(_default.appModule):
+class appModule(appModuleHandler.appModule):
 
 	def __init__(self,*args):
-		_default.appModule.__init__(self,*args)
+		appModuleHandler.appModule.__init__(self,*args)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
 		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		_default.appModule.__del__(self)
+		appModuleHandler.appModule.__del__(self)
 
 class NVDAObject_excelEditableCell(NVDAObjects.winEdit.NVDAObject_winEdit):
 
@@ -39,10 +40,15 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
 	def __init__(self,*args,**vars):
 		NVDAObjects.IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(ptr._iid_),ctypes.byref(ptr))!=0:
+		ptr=ctypes.c_void_p()
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
-		self.excelObject=comtypesClient.wrap(ptr)
+		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
+		o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
+		t=o.GetTypeInfo()
+		a=t.GetTypeAttr()
+		oleRepr=win32com.client.build.DispatchItem(attr=a)
+		self.excelObject=win32com.client.CDispatch(o,oleRepr)
 		self.registerScriptKeys({
 			key("ExtendedUp"):self.script_moveByCell,
 			key("ExtendedDown"):self.script_moveByCell,
@@ -83,7 +89,7 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 	activeCell=property(fget=getActiveCell)
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+		return re_dollaredAddress.sub(r"\1\2",cell.Address)
 
 	def getCellText(self,cell):
 		return cell.Text
@@ -123,7 +129,7 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		self.speakObject()
 		self.speakSelection()
 
-	def script_moveByCell(self,keyPress):
+	def script_moveByCell(self,keyPress,nextScript):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
 		self.speakSelection()
