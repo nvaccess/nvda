@@ -384,7 +384,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def event_menuEnd(self):
 		if self.role not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
 			obj=api.findObjectWithFocus()
-			if obj!=api.getFocusObject():
+			if isinstance(obj,baseType.NVDAObject) and obj!=api.getFocusObject():
 				api.setFocusObject(obj)
 				audio.cancel()
 				obj.event_gainFocus()

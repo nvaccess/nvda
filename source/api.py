@@ -25,7 +25,10 @@ def findObjectWithFocus():
 	while obj and obj!=prevObj:
 		prevObj=obj
 		obj=obj.activeChild
-	return prevObj
+	if isinstance(prevObj,NVDAObjects.baseType.NVDAObject) and prevObj.hasFocus:
+		return prevObj
+	else:
+		return None
 
 def getFocusObject():
 	"""

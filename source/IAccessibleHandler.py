@@ -1,4 +1,4 @@
-#py
+#IAccessibleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -501,12 +501,14 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
+		navigatorObject=api.getNavigatorObject()
+		mouseObject=api.getMouseObject()
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
-				api.setFocusObject(desktopObject)
-				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
+				api.setMouseObject(desktopObject)
+				core.executeFunction(core.EXEC_USERINTERFACE,correctFocus)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
 				api.setForegroundObject(desktopObject)
@@ -555,6 +557,16 @@ def updateFocusFromEvent(window,objectID,childID):
 	if not obj:
 		return
 	api.setFocusObject(obj)
+
+def correctFocus():
+	focusObject=api.findObjectWithFocus()
+	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and not focusObject.states&STATE_SYSTEM_INVISIBLE and not focusObject.states&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
+		updateFocusFromEvent(focusObject.windowHandle,OBJID_CLIENT,0)
+		manageEvent_appModuleLevel("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
+	else:
+		audio.speakMessage(_("lost focus"))
+		api.setFocusObject(api.getDesktopObject())
+
 
 #Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
