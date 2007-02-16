@@ -237,7 +237,7 @@ class MainFrame(wx.Frame):
 		oldCaps=config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]
 		d=voiceSettingsDialog(self,-1,_("Voice settings"))
 		if d.ShowModal()!=wx.ID_OK:
-			synthDriverHandler.setVoice(oldVoice)
+			core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,oldVoice)
 			synthDriverHandler.setRate(oldRate)
 			synthDriverHandler.setPitch(oldPitch)
 			synthDriverHandler.setVolume(oldVolume)
