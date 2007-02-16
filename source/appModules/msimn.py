@@ -6,6 +6,7 @@
 
 import audio
 import winUser
+import IAccessibleHandler
 import appModuleHandler
 
 class appModule(appModuleHandler.appModule):
@@ -29,6 +30,6 @@ class appModule(appModuleHandler.appModule):
 				audio.speakText(_("From:"))
 			elif controlID==1016:
 				audio.speakText(_("Date:"))
-			elif controlID==1000:
+			elif controlID==1000 and objectID==IAccessibleHandler.OBJID_CLIENT and childID==0:
 				audio.speakText(_("Attachments"))
 		nextHandler(window,objectID,childID)
