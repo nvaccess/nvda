@@ -54,5 +54,5 @@ print "Language files"
 poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
 for f in poFiles:
 	print f
-	os.spawnv(os.P_WAIT,"%s\\python.exe"%sys.exec_prefix,['python',"%s\\Tools\\i18n\\msgfmt.py"%sys.exec_prefix,f])
+	os.spawnv(os.P_WAIT,r"%s\python.exe"%sys.exec_prefix,['python',r'"%s\Tools\i18n\msgfmt.py"'%sys.exec_prefix,f])
 
