@@ -211,6 +211,9 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		func=winKernel.readConsoleOutputCharacter
 		return [func(consoleHandle,consoleHorizontalLength,0,lineNum) for lineNum in xrange(top,bottom+1)]
 
+	def event_nameChange(self):
+		pass
+
 	def event_gainFocus(self):
 		super(NVDAObject_winConsole,self).event_gainFocus()
 		self.connectConsole()
