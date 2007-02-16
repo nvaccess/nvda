@@ -1,7 +1,20 @@
 Changes since revision 348:
 *Improved responsiveness and accuracy of navigating around Outlook Express message edit controls and Internet Explorer edit controls.
-*Added an Outlook Express appModule which makes sure that email fields like To, CC, subject are all reported correctly when moving between them.
- 
+*The names of email fields in Outlook Express like To, CC, subject are all reported correctly when moving between them.
+ *Page down in internet Explorer and Mozilla virtualBuffers now works properly, rather than moving to the bottom of the document.
+*Some dialog box windows, which weren't being announced as dialogs are now announcing properly. Namely ones that use the TWizardForm class (such as Free Ino setup).
+*More improvements to reading menus plus making sure that the focus is properly announced when leaving them. The new XP start menu seems to read ok now, previously some things wouldn't read unless you went in and out of one of the sub-menus.
+*Fixed a bug with edit controls where lines could appear garbled or they could also just cause NVDA to freeze.
+*Improved the loading of NVDA when run off a USB key. It now should start talking much earlier, while loading what it has to.
+  *AppModules (for MS Word, Excel, Miranda, Outlook Express etc) now should load properly in Windows 2000.
+*Support for MS Word and MS Excel should load much more quicker. previously there was a possibility  that it could take up to a minute to generate needed files.
+*Some unneeded files are no longer included in the binary package.
+*Added basic support for the display on the Windows calculator. If its value changes it will be announced.
+*If the control which has focus suddenly hides or disappears, NVDA will either try to correct the focus or announce that it has lost focus. An example of where this happens is in the repare dialog for a network connection.
+*The title of a dos window is no longer announced each time the user runs a command with in the window.
+
+
+
 Changes since revision 316:
 *Support for edit fields and text chat log in Skype.
 *Internet Explorer (MSHTML) virtualBuffers now render IFrames (which means that user accounts in control panel now shows more of its content).
