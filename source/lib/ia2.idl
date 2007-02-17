@@ -27,9 +27,6 @@ import "objidl.idl";
 import "oaidl.idl";
 import "oleacc.idl";
 
-[uuid(76e18af2-d3e6-4538-86d6-9a60a642bf48),]
-library ia2 {
-
 /** @defgroup grpRelations Relations 
   Use the following constants to compare against the BSTRs returned by 
   IAccessibleRelation::relationType.
@@ -675,7 +672,7 @@ const long IA2_STATE_VERTICAL =					0x40000;
  *
  *  IAccessible2 IDL Specification
  *
- *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) IBM Corp. 2007
  *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
  *
  *  This library is free software; you can redistribute it and/or
@@ -751,7 +748,7 @@ const long IA2_STATE_VERTICAL =					0x40000;
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02110-1301  USA
 
-  You may also refer to http://www.gnu.org/licenses/lgpl.html.
+  You may also refer to http://www.gnu.org/licenses/lgpl.html
 
 **/
 
@@ -2550,7 +2547,7 @@ interface IAccessibleImage : IUnknown
  *
  *  IAccessible2 IDL Specification
  *
- *  Copyright (c) IBM Corp. 2006
+ *  Copyright (c) IBM Corp. 2007
  *  Copyright (c) Sun Microsystems, Inc. 2000, 2006
  *
  *  This library is free software; you can redistribute it and/or
@@ -2713,7 +2710,16 @@ enum IA2EventID {
     of an accessible object.  This includes for example most of the
     attributes available via the IAccessibleComponent interface.
   */
-  IA2_EVENT_VISIBLE_DATA_CHANGED
+  IA2_EVENT_VISIBLE_DATA_CHANGED,
+
+  /** The caret moved from one column to the next.
+  */
+  IA2_EVENT_COLUMN_CHANGED,
+
+  /** The caret moved from one section to the next.
+  */
+  IA2_EVENT_SECTION_CHANGED
+
 };
 /*************************************************************************
  *
@@ -2814,5 +2820,34 @@ interface IAccessibleApplication : IUnknown
     );  
 
 }
-}
 
+cpp_quote("")
+cpp_quote("// Type Library Definitions")
+cpp_quote("")
+
+[
+    uuid(21955A1E-5C3A-4E52-8CCB-CE587E75133E),
+	helpstring("IAccessible2 Type Library"),
+    version(1.0),
+    hidden
+]
+
+library IAccessible2Lib
+{
+	importlib ("stdole2.tlb");
+	interface Accessible2;
+    interface IAccessibleAction;
+    interface IAccessibleApplication;
+    interface IAccessibleComponent;
+    interface IAccessibleEditableText;
+    interface IAccessibleEventId;
+    interface IAccessibleHyperlink;
+    interface IAccessibleHypertext;
+    interface IAccessibleImage;
+    interface IAccessibleRelation;
+    interface IAccessibleRole;
+    interface IAccessibleStates;
+    interface IAccessibleTable;
+    interface IAccessibleText;
+    interface IAccessibleValue;
+}

@@ -7,6 +7,7 @@
 import struct
 import ctypes
 import audio
+import debug
 import winUser
 from keyUtils import key
 import IAccessibleHandler
@@ -43,7 +44,7 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 
 	def _get_name(self):
 		name=super(NVDAObject_winEdit,self).name
-		if self.text_getText()!=name:
+		if self.text_getText().strip()!=name.strip():
 			return name
 
 	def text_getText(self,start=None,end=None):

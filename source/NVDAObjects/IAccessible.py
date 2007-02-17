@@ -861,6 +861,7 @@ _staticMap={
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
 ("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
 ("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
+("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):richEdit.NVDAObject_richEdit,
 ("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
 ("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
 ("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
