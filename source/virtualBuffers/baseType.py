@@ -80,11 +80,10 @@ fieldInfo={
 class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 
 	def __init__(self,NVDAObject):
+		NVDAObjects.baseType.NVDAObject.__init__(self)
 		self.needsLoad=True
 		self.NVDAObject=NVDAObject
-		self._keyMap={}
 		self._IDs={}
-		self._text_lastReportedPresentation={}
 		self._textBuf=""
 		self._lastReportedIDList=[]
 		self.registerScriptKeys({
