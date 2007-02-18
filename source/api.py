@@ -10,6 +10,7 @@ import debug
 import globalVars
 import audio
 import NVDAObjects
+import winUser
 
 #User functions
 
