@@ -30,33 +30,6 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
 			return comtypesClient.wrap(domPointer)
 
-	def __init__(self,*args,**vars):
-		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.registerScriptKeys({
-			key("ExtendedUp"):self.script_text_moveByLine,
-			key("ExtendedDown"):self.script_text_moveByLine,
-			key("ExtendedLeft"):self.script_text_moveByCharacter,
-			key("ExtendedRight"):self.script_text_moveByCharacter,
-			key("Control+ExtendedLeft"):self.script_text_moveByWord,
-			key("Control+ExtendedRight"):self.script_text_moveByWord,
-			key("Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Shift+ExtendedHome"):self.script_text_changeSelection,
-			key("Shift+ExtendedEnd"):self.script_text_changeSelection,
-			key("Shift+ExtendedUp"):self.script_text_changeSelection,
-			key("Shift+ExtendedDown"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("ExtendedHome"):self.script_text_moveByCharacter,
-			key("ExtendedEnd"):self.script_text_moveByCharacter,
-			key("control+extendedHome"):self.script_text_moveByLine,
-			key("control+extendedEnd"):self.script_text_moveByLine,
-			key("control+shift+extendedHome"):self.script_text_changeSelection,
-			key("control+shift+extendedEnd"):self.script_text_changeSelection,
-			key("ExtendedDelete"):self.script_text_moveByCharacter,
-			key("Back"):self.script_text_backspace,
-		})
-
 	def _get_typeString(self):
 		if self.isContentEditable:
 			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
@@ -346,3 +319,28 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		elif rightDelta<0:
  			after.setEndPoint("startToEnd",before)
 			audio.speakMessage(_("selected %s")%after.text)
+
+[NVDAObject_MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","text_moveByLine"),
+	("ExtendedDown","text_moveByLine"),
+	("ExtendedLeft","text_moveByCharacter"),
+	("ExtendedRight","text_moveByCharacter"),
+	("Control+ExtendedLeft","text_moveByWord"),
+	("Control+ExtendedRight","text_moveByWord"),
+	("Shift+ExtendedRight","text_changeSelection"),
+	("Shift+ExtendedLeft","text_changeSelection"),
+	("Shift+ExtendedHome","text_changeSelection"),
+	("Shift+ExtendedEnd","text_changeSelection"),
+	("Shift+ExtendedUp","text_changeSelection"),
+	("Shift+ExtendedDown","text_changeSelection"),
+	("Control+Shift+ExtendedLeft","text_changeSelection"),
+	("Control+Shift+ExtendedRight","text_changeSelection"),
+	("ExtendedHome","text_moveByCharacter"),
+	("ExtendedEnd","text_moveByCharacter"),
+	("control+extendedHome","text_moveByLine"),
+	("control+extendedEnd","text_moveByLine"),
+	("control+shift+extendedHome","text_changeSelection"),
+	("control+shift+extendedEnd","text_changeSelection"),
+	("ExtendedDelete","text_delete"),
+	("Back","text_backspace"),
+]]

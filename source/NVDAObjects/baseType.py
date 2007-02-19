@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 """Module that contains the base NVDA object type"""
+from new import instancemethod
 import autoPropertyType
 import audio
 from keyUtils import key, sendKey
@@ -19,7 +20,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _hashLimit: int
 @ivar _hashPrime: the prime number used in calculating this object's hash
 @type _hashPrime: int
-@ivar _keyMap: A dictionary that stores key:method  key to script mappings. Do not change this directly, use L{getScript}, L{executeScript}, L{registerScriptKey} or L{registerScriptKeys} instead.
+@ivar _keyMap: A dictionary that stores key:method  key to script mappings. 
 @type _keyMap: dict
 @ivar name: The objects name or label. (e.g. the text of a list item, label of a button)
 @type name: string
@@ -79,6 +80,17 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 
 	__metaclass__=autoPropertyType.autoPropertyType
 
+	@classmethod
+	def bindKey(cls,keyName,scriptName):
+		scriptName="script_%s"%scriptName
+		if not hasattr(cls,scriptName):
+			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
+		if not cls.__dict__.has_key('_keyMap'):
+			cls._keyMap=getattr(cls,'_keyMap',{}).copy()
+		cls._keyMap[key(keyName)]=getattr(cls,scriptName)
+
+	_keyMap={}
+
 	allowedPositiveStates=0
 	allowedNegativeStates=0
 
@@ -87,7 +99,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldName=None
 		self._oldDescription=None
 		self._reviewOffset=0
-		self._keyMap={}
 		self.speakOnGainFocus=True
 		self.needsFocusState=True
 		self.speakOnForeground=True
@@ -132,34 +143,7 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 @type keyPress: key
 """ 
 		if self._keyMap.has_key(keyPress):
-			return self._keyMap[keyPress]
-
-	def executeScript(self,keyPress,nextScript):
-		"""
-executes a script (instance method) if one is assigned to the keyPress given.
-@param keyPress: The key you wish to execute the script for
-@type keyPress: key
-""" 
-		script=self.getScript(keyPress)
-		script(keyPress)
-
-	def registerScriptKey(self,keyPress,func):
-		"""
-Registers the given script (instance method) along with the given keyPress internally so that this method can be executed by the keyPress.
-@param keyPress: The chosen key to link the method with
-@type keyPress: key
-@param func: The method you want to register
-@type func: instance method
-"""
-		self._keyMap[keyPress]=func
-
-	def registerScriptKeys(self,keyDict):
-		"""
-Registers a number of methods with their respective keys so that these methods can be later executed by the keys.
-@param dict: A dictionary of keyPress:method paires.
-@type dict: dictionary
-"""
-		self._keyMap.update(keyDict)
+			return instancemethod(self._keyMap[keyPress],self,self.__class__)
 
 	def _get_name(self):
 		return ""
@@ -915,3 +899,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if self.hasFocus and description!=self._oldDescription:
 			audio.speakObjectProperties(description=self.description)
 			self._oldDescription=description
+
+	def setProperty(self,prop,value):
+		pass

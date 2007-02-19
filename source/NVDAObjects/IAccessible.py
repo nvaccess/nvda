@@ -461,21 +461,6 @@ class NVDAObject_Progman_client(NVDAObject_IAccessible):
 
 class NVDAObject_staticText(NVDAObject_IAccessible):
 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.registerScriptKeys({
-			key("extendedDown"):self.script_text_review_nextLine,
-			key("extendedUp"):self.script_text_review_prevLine,
-			key("extendedLeft"):self.script_text_review_prevCharacter,
-			key("extendedRight"):self.script_text_review_nextCharacter,
-			key("extendedHome"):self.script_text_review_startOfLine,
-			key("extendedEnd"):self.script_text_review_endOfLine,
-			key("control+extendedLeft"):self.script_text_review_prevWord,
-			key("control+extendedRight"):self.script_text_review_nextWord,
-			key("control+extendedHome"):self.script_text_review_top,
-			key("control+extendedEnd"):self.script_text_review_bottom,
-		})
-
 	def _get_typeString(self):
 		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
 
@@ -490,6 +475,19 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 
 	def _get_value(self):
 		return super(NVDAObject_staticText,self).name
+
+[NVDAObject_staticText.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("extendedDown","text_review_nextLine"),
+	("extendedUp","text_review_prevLine"),
+	("extendedLeft","text_review_prevCharacter"),
+	("extendedRight","text_review_nextCharacter"),
+	("extendedHome","text_review_startOfLine"),
+	("extendedEnd","text_review_endOfLine"),
+	("control+extendedLeft","text_review_prevWord"),
+	("control+extendedRight","text_review_nextWord"),
+	("control+extendedHome","text_review_top"),
+	("control+extendedEnd","text_review_bottom"),
+]]
 
 class NVDAObject_checkBox(NVDAObject_IAccessible):
 	"""

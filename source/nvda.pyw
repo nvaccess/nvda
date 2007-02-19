@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+#import gc
+#gc.set_debug(gc.DEBUG_LEAK)
 import time
 import globalVars
 globalVars.startTime=time.time()

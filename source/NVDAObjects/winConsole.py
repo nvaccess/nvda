@@ -21,21 +21,6 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 	def __init__(self,*args,**vars):
 		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
 		self.consoleEventHookHandles=[]
-		self.registerScriptKeys({
-			key("control+c"):self.script_protectConsoleKillKey,
-			key("ExtendedUp"):self.script_text_moveByLine,
-			key("ExtendedDown"):self.script_text_moveByLine,
-			key("ExtendedLeft"):self.script_text_moveByCharacter,
-			key("ExtendedRight"):self.script_text_moveByCharacter,
-			key("Control+ExtendedLeft"):self.script_text_moveByWord,
-			key("Control+ExtendedRight"):self.script_text_moveByWord,
-			key("ExtendedHome"):self.script_text_moveByCharacter,
-			key("ExtendedEnd"):self.script_text_moveByCharacter,
-			key("control+extendedHome"):self.script_text_moveByLine,
-			key("control+extendedEnd"):self.script_text_moveByLine,
-			key("ExtendedDelete"):self.script_text_delete,
-			key("Back"):self.script_text_backspace,
-		})
 
 	text_caretSayAllGenerator=None
 
@@ -254,3 +239,28 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		time.sleep(0.01)
 		self.connectConsole()
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
+
+[NVDAObject_winConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","text_moveByLine"),
+	("ExtendedDown","text_moveByLine"),
+	("ExtendedLeft","text_moveByCharacter"),
+	("ExtendedRight","text_moveByCharacter"),
+	("Control+ExtendedLeft","text_moveByWord"),
+	("Control+ExtendedRight","text_moveByWord"),
+	("Shift+ExtendedRight","text_changeSelection"),
+	("Shift+ExtendedLeft","text_changeSelection"),
+	("Shift+ExtendedHome","text_changeSelection"),
+	("Shift+ExtendedEnd","text_changeSelection"),
+	("Shift+ExtendedUp","text_changeSelection"),
+	("Shift+ExtendedDown","text_changeSelection"),
+	("Control+Shift+ExtendedLeft","text_changeSelection"),
+	("Control+Shift+ExtendedRight","text_changeSelection"),
+	("ExtendedHome","text_moveByCharacter"),
+	("ExtendedEnd","text_moveByCharacter"),
+	("control+extendedHome","text_moveByLine"),
+	("control+extendedEnd","text_moveByLine"),
+	("control+shift+extendedHome","text_changeSelection"),
+	("control+shift+extendedEnd","text_changeSelection"),
+	("ExtendedDelete","text_delete"),
+	("Back","text_backspace"),
+]]

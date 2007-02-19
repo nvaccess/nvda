@@ -86,36 +86,6 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		self._IDs={}
 		self._textBuf=""
 		self._lastReportedIDList=[]
-		self.registerScriptKeys({
-			key("extendedDown"):self.script_text_review_nextLine,
-			key("extendedUp"):self.script_text_review_prevLine,
-			key("extendedLeft"):self.script_text_review_prevCharacter,
-			key("extendedRight"):self.script_text_review_nextCharacter,
-			key("extendedHome"):self.script_text_review_startOfLine,
-			key("extendedEnd"):self.script_text_review_endOfLine,
-			key("control+extendedLeft"):self.script_text_review_prevWord,
-			key("control+extendedRight"):self.script_text_review_nextWord,
-			key("control+extendedHome"):self.script_text_review_top,
-			key("control+extendedEnd"):self.script_text_review_bottom,
-			key("return"):self.script_activatePosition,
-			key("space"):self.script_activatePosition,
-			key("extendedPrior"):self.script_pageUp,
-			key("extendedNext"):self.script_pageDown,
-			key("%s"%_("h=headingQuickKey")[0]):self.script_nextHeading,
-			key("Shift+%s"%_("h=headingQuickKey")[0]):self.script_previousHeading,
-			key("%s"%_("f=formFieldQuickKey")[0]):self.script_nextFormField,
-			key("Shift+%s"%_("f=formFieldQuickKey")[0]):self.script_previousFormField,
-			key("%s"%_("p=paragraphQuickKey")[0]):self.script_nextParagraph,
-			key("Shift+%s"%_("p=paragraphQuickKey")[0]):self.script_previousParagraph,
-			key("%s"%_("t=tableQuickKey")[0]):self.script_nextTable,
-			key("Shift+%s"%_("t=tableQuickKey")[0]):self.script_previousTable,
-			key("%s"%_("k=linkQuickKey")[0]):self.script_nextLink,
-			key("Shift+%s"%_("k=linkQuickKey")[0]):self.script_previousLink,
-			key("%s"%_("l=listQuickKey")[0]):self.script_nextList,
-			key("Shift+%s"%_("l=listQuickKey")[0]):self.script_previousList,
-			key("%s"%_("i=listItemQuickKey")[0]):self.script_nextListItem,
-			key("Shift+%s"%_("i=listItemQuickKey")[0]):self.script_previousListItem,
-		})
 
 	def getIDFromPosition(self,pos):
 		IDs=self._IDs
@@ -504,3 +474,33 @@ class virtualBuffer(NVDAObjects.baseType.NVDAObject):
 		else:
 			audio.speakMessage(_("no more form fields"))
 
+[virtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("extendedDown","text_review_nextLine"),
+	("extendedUp","text_review_prevLine"),
+	("extendedLeft","text_review_prevCharacter"),
+	("extendedRight","text_review_nextCharacter"),
+	("extendedHome","text_review_startOfLine"),
+	("extendedEnd","text_review_endOfLine"),
+	("control+extendedLeft","text_review_prevWord"),
+	("control+extendedRight","text_review_nextWord"),
+	("control+extendedHome","text_review_top"),
+	("control+extendedEnd","text_review_bottom"),
+	("return","activatePosition"),
+	("space","activatePosition"),
+	("extendedPrior","pageUp"),
+	("extendedNext","pageDown"),
+	("%s"%_("h=headingQuickKey")[0],"nextHeading"),
+	("Shift+%s"%_("h=headingQuickKey")[0],"previousHeading"),
+	("%s"%_("f=formFieldQuickKey")[0],"nextFormField"),
+	("Shift+%s"%_("f=formFieldQuickKey")[0],"previousFormField"),
+	("%s"%_("p=paragraphQuickKey")[0],"nextParagraph"),
+	("Shift+%s"%_("p=paragraphQuickKey")[0],"previousParagraph"),
+	("%s"%_("t=tableQuickKey")[0],"nextTable"),
+	("Shift+%s"%_("t=tableQuickKey")[0],"previousTable"),
+	("%s"%_("k=linkQuickKey")[0],"nextLink"),
+	("Shift+%s"%_("k=linkQuickKey")[0],"previousLink"),
+	("%s"%_("l=listQuickKey")[0],"nextList"),
+	("Shift+%s"%_("l=listQuickKey")[0],"previousList"),
+	("%s"%_("i=listItemQuickKey")[0],"nextListItem"),
+	("Shift+%s"%_("i=listItemQuickKey")[0],"previousListItem"),
+]]

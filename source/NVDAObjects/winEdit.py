@@ -15,33 +15,6 @@ import IAccessible
 
 class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 
-	def __init__(self,*args,**vars):
-		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.registerScriptKeys({
-			key("ExtendedUp"):self.script_text_moveByLine,
-			key("ExtendedDown"):self.script_text_moveByLine,
-			key("ExtendedLeft"):self.script_text_moveByCharacter,
-			key("ExtendedRight"):self.script_text_moveByCharacter,
-			key("Control+ExtendedLeft"):self.script_text_moveByWord,
-			key("Control+ExtendedRight"):self.script_text_moveByWord,
-			key("Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Shift+ExtendedHome"):self.script_text_changeSelection,
-			key("Shift+ExtendedEnd"):self.script_text_changeSelection,
-			key("Shift+ExtendedUp"):self.script_text_changeSelection,
-			key("Shift+ExtendedDown"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("ExtendedHome"):self.script_text_moveByCharacter,
-			key("ExtendedEnd"):self.script_text_moveByCharacter,
-			key("control+extendedHome"):self.script_text_moveByLine,
-			key("control+extendedEnd"):self.script_text_moveByLine,
-			key("control+shift+extendedHome"):self.script_text_changeSelection,
-			key("control+shift+extendedEnd"):self.script_text_changeSelection,
-			key("ExtendedDelete"):self.script_text_delete,
-			key("Back"):self.script_text_backspace,
-		})
-
 	def _get_name(self):
 		name=super(NVDAObject_winEdit,self).name
 		if self.text_getText().strip()!=name.strip():
@@ -139,8 +112,30 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 				return self.text_getLineOffsets(end)
 		return None
 
-
 	def event_valueChange(self):
 		pass
 
-
+[NVDAObject_winEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","text_moveByLine"),
+	("ExtendedDown","text_moveByLine"),
+	("ExtendedLeft","text_moveByCharacter"),
+	("ExtendedRight","text_moveByCharacter"),
+	("Control+ExtendedLeft","text_moveByWord"),
+	("Control+ExtendedRight","text_moveByWord"),
+	("Shift+ExtendedRight","text_changeSelection"),
+	("Shift+ExtendedLeft","text_changeSelection"),
+	("Shift+ExtendedHome","text_changeSelection"),
+	("Shift+ExtendedEnd","text_changeSelection"),
+	("Shift+ExtendedUp","text_changeSelection"),
+	("Shift+ExtendedDown","text_changeSelection"),
+	("Control+Shift+ExtendedLeft","text_changeSelection"),
+	("Control+Shift+ExtendedRight","text_changeSelection"),
+	("ExtendedHome","text_moveByCharacter"),
+	("ExtendedEnd","text_moveByCharacter"),
+	("control+extendedHome","text_moveByLine"),
+	("control+extendedEnd","text_moveByLine"),
+	("control+shift+extendedHome","text_changeSelection"),
+	("control+shift+extendedEnd","text_changeSelection"),
+	("ExtendedDelete","text_delete"),
+	("Back","text_backspace"),
+]]

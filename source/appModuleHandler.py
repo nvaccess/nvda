@@ -9,6 +9,7 @@
 @type current: appModule
 """
 
+from new import instancemethod
 import pythoncom
 import win32com.client
 import datetime
@@ -117,7 +118,7 @@ def loadKeyMap(appName,mod):
 		m=re_keyScript.match(line)
 		if m:
 			try:
-				mod._keyMap[key(m.group('key'))]=getattr(mod,"script_"+m.group('script'))
+				mod.bindKey(m.group('key'),m.group('script'))
 				bindCount+=1
 			except:
 				debug.writeException("appModuleHandler.loadKeyMap: error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
@@ -151,18 +152,27 @@ def initialize():
 #base class for appModules
 class appModule(object):
 
+	@classmethod
+	def bindKey(cls,keyName,scriptName):
+		scriptName="script_%s"%scriptName
+		if not hasattr(cls,scriptName):
+			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
+		if not cls.__dict__.has_key('_keyMap'):
+			cls._keyMap=getattr(cls,'_keyMap',{}).copy()
+		cls._keyMap[key(keyName)]=getattr(cls,scriptName)
+
+	_keyMap={}
+
 	def __init__(self,hwnd,processID):
 		self.appWindow=hwnd
 		self.processID=processID
 		self.appName=self.__class__.__module__
-		self._keyMap={}
 
 	def getScript(self,keyPress):
+		"""
+Returns a script (instance method) if one is assigned to the keyPress given.
+@param keyPress: The key you wish to retreave the script for
+@type keyPress: key
+""" 
 		if self._keyMap.has_key(keyPress):
-			return self._keyMap[keyPress]
-
-	def registerScriptKey(self,keyPress,methodName):
-		self._keyMap[keyPress]=methodName
-
-	def registerScriptKeys(self,keyDict):
-		self._keyMap.update(keyDict)
+			return instancemethod(self._keyMap[keyPress],self,self.__class__)

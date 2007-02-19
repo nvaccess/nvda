@@ -4,32 +4,29 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import audio
 import winUser
+import api
 import IAccessibleHandler
 import appModuleHandler
+
+envelopeNames={
+	1000:_("Attachments"),
+	1001:_("To:"),
+	1003:_("CC:"),
+	1004:_("Subject:"),
+	1005:_("From:"),
+	1016:_("Date:"),
+	1026:_("BCC:"),
+	1037:_("From:"),
+}
 
 class appModule(appModuleHandler.appModule):
 
 	def event_IAccessible_gainFocus(self,window,objectID,childID,nextHandler):
+		focusObject=api.getFocusObject()
 		controlID=winUser.getControlID(window)
-		parent=winUser.getAncestor(window,winUser.GA_PARENT)
-		parentClassName=winUser.getClassName(parent)
-		if parentClassName=="OE_Envelope":
-			if controlID==1001:
-				audio.speakText(_("To:"))
-			elif controlID==1003:
-				audio.speakText(_("CC:"))
-			elif controlID==1026:
-				audio.speakText(_("BCC:"))
-			elif controlID==1004:
-				audio.speakText(_("Subject:"))
-			elif controlID==1005:
-				audio.speakText(_("From:"))
-			elif controlID==1037:
-				audio.speakText(_("From:"))
-			elif controlID==1016:
-				audio.speakText(_("Date:"))
-			elif controlID==1000 and objectID==IAccessibleHandler.OBJID_CLIENT and childID==0:
-				audio.speakText(_("Attachments"))
+		parentWindow=winUser.getAncestor(window,winUser.GA_PARENT)
+		parentClassName=winUser.getClassName(parentWindow)
+		if parentClassName=="OE_Envelope" and objectID==IAccessibleHandler.OBJID_CLIENT and envelopeNames.has_key(controlID):
+			focusObject.setProperty('typeString',envelopeNames[controlID])
 		nextHandler(window,objectID,childID)
