@@ -230,6 +230,8 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
+			if len(children)==0:
+				text=obj.name
 		elif role=="p":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]
