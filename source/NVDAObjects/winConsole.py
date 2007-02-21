@@ -241,6 +241,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
 
 [NVDAObject_winConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("control+c","protectConsoleKillKey"),
 	("ExtendedUp","text_moveByLine"),
 	("ExtendedDown","text_moveByLine"),
 	("ExtendedLeft","text_moveByCharacter"),
