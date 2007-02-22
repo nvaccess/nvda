@@ -17,7 +17,8 @@ os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
 import sys
-stderrFile=open("stderr.log","w")
+import codecs
+stderrFile=codecs.open("stderr.log","w","utf-8","ignore")
 if stderrFile is None:
 	sys.exit()
 sys.stderr=stderrFile

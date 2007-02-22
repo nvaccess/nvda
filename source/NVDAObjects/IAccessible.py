@@ -438,26 +438,12 @@ class NVDAObject_TrayClockWClass(NVDAObject_IAccessible):
 		return IAccessibleHandler.ROLE_SYSTEM_CLOCK
 
 class NVDAObject_Shell_TrayWnd_client(NVDAObject_IAccessible):
-	"""
-	Based on NVDAObject but on foreground events nothing gets spoken.
-	This is the window which holds the windows start button and taskbar.
-	"""
- 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.speakOnForeground=False
-		self.speakOnGainFocus=False
+	speakOnForeground=False
+	speakOnGainFocus=False
 
 class NVDAObject_Progman_client(NVDAObject_IAccessible):
-	"""
-	Based on NVDAObject but on foreground events nothing gets spoken.
-	This is the window which holds the windows desktop.
-	"""
-
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.speakOnForeground=False
-		self.speakOnGainFocus=False
+	speakOnForeground=False
+	speakOnGainFocus=False
 
 class NVDAObject_staticText(NVDAObject_IAccessible):
 
@@ -577,9 +563,7 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.speakOnGainFocus=False
+	speakOnGainFocus=False
 
 	def _get_value(self):
 		return ""
@@ -720,9 +704,7 @@ class NVDAObject_listItem(NVDAObject_IAccessible):
 
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
 
-	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
-		self.speakOnGainFocus=False
+	speakOnGainFocus=False
 
 class NVDAObject_list(NVDAObject_IAccessible):
 
@@ -796,6 +778,10 @@ class NVDAObject_statusBar(NVDAObject_IAccessible):
 				value+="  "+child.name
 		return value
 
+class NVDAObject_sysLink(NVDAObject_IAccessible):
+
+	speakOnGainFocus=False
+
 ###class mappings
 
 import winEdit
@@ -864,4 +850,5 @@ _staticMap={
 ("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
 ("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
 ("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_dialog,
+("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_sysLink,
 }

@@ -93,15 +93,15 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 
 	allowedPositiveStates=0
 	allowedNegativeStates=0
+	speakOnGainFocus=True
+	needsFocusState=True
+	speakOnForeground=True
 
 	def __init__(self,*args):
 		self._oldValue=None
 		self._oldName=None
 		self._oldDescription=None
 		self._reviewOffset=0
-		self.speakOnGainFocus=True
-		self.needsFocusState=True
-		self.speakOnForeground=True
 		self._text_lastReportedPresentation={}
 		self.text_reviewOffset=0
 		self._hashLimit=10000000

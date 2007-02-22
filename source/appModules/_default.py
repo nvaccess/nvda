@@ -4,11 +4,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import gc
 import comtypesClient
 import datetime
 from keyUtils import key
 import IAccessibleHandler
 import api
+import debug
 import audio
 import sayAllHandler
 import virtualBuffers
@@ -386,6 +388,19 @@ class appModule(appModuleHandler.appModule):
 			obj.speakDescendantObjects()
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
+		NVDAObjectCount=0
+		virtualBufferCount=0
+		accessibleObjectCount=0
+		for o in gc.get_objects():
+			if isinstance(o,NVDAObjects.baseType.NVDAObject):
+				NVDAObjectCount+=1
+			elif isinstance(o,virtualBuffers.baseType.virtualBuffer):
+				virtualBufferCount+=1
+			elif isinstance(o,IAccessibleHandler.pointer_IAccessible):
+				accessibleObjectCount+=1
+		audio.speakMessage("NVDAObject count: %s"%NVDAObjectCount)
+		audio.speakMessage("virtualBuffer count: %s"%virtualBufferCount)
+		audio.speakMessage("accessible object count: %s"%accessibleObjectCount)
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("handle: %s"%obj.windowHandle)
@@ -395,5 +410,3 @@ class appModule(appModuleHandler.appModule):
 				audio.speakSymbol("%s"%char)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
-		pacc=IAccessibleHandler.IA2FromMSAA(obj._pacc)
-		audio.speakMessage(str(pacc))
