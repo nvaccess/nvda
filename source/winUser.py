@@ -18,6 +18,7 @@ POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
 #constants
+WM_USER=1024
 #PeekMessage
 PM_REMOVE=1
 PM_NOYIELD=2

@@ -10,36 +10,45 @@ import comtypes.automation
 import win32com.client
 import pythoncom
 import winUser
-import audio			
+import audio
 import IAccessibleHandler
-import winEdit		
+import winEdit
+
+#structures
+class charRange(ctypes.Structure):
+	_fields_=[
+		('cpMin',ctypes.c_long),
+		('cpMax',ctypes.c_long),
+	]
+
+#window messages
+EM_EXGETSEL=winUser.WM_USER+52
+
+#ITextDocument constants
+tomCharacter=1
+tomWord=2
+tomSentence=3
+tomParagraph=4
+tomLine=5
+tomStory=6
+tomScreen=7
+tomSection=8
+tomColumn=9
+tomRow=10
+tomWindow=11
+tomCell=12
+tomCharFormat=13
+tomParaFormat=14
+tomTable=15
+tomObject=16
+tomPage=17
+#Paragraph alignment
+tomAlignLeft=0
+tomAlignCenter=1
+tomAlignRight=2
+tomAlignJustify=3
 
 class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
-
-	class constants:
-		#Units
-		tomCharacter=1
-		tomWord=2
-		tomSentence=3
-		tomParagraph=4
-		tomLine=5
-		tomStory=6
-		tomScreen=7
-		tomSection=8
-		tomColumn=9
-		tomRow=10
-		tomWindow=11
-		tomCell=12
-		tomCharFormat=13
-		tomParaFormat=14
-		tomTable=15
-		tomObject=16
-		tomPage=17
-		#Paragraph alignment
-		tomAlignLeft=0
-		tomAlignCenter=1
-		tomAlignRight=2
-		tomAlignJustify=3
 
 	def __init__(self,*args,**vars):
 		winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
@@ -66,31 +75,36 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		else:
 			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
 
-	def get_text_selectionCount(self):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self)._get_text_selectionCount()
-		if self.dom.Selection.Start!=self.dom.Selection.End:
-			return 1
-		else:
-			return 0
-
 	def text_getSelectionOffsets(self,index):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getSelectionOffsets(index)
 		if index!=0:
 			return None
-		start=self.dom.Selection.Start
-		end=self.dom.Selection.End
-		if start!=end:
-			return (start,end)
+		offsets=super(NVDAObject_richEdit,self).text_getSelectionOffsets(index)
+		if offsets is not None and (offsets[0]>=65535 or offsets[1]>=65535) and hasattr(self,'dom'):
+ 			start=self.dom.Selection.Start
+			end=self.dom.Selection.End
+			if start>=0 and end>=0 and end>start:
+				offsets=(start,end)
+			else:
+				offsets=None
+		return offsets
+
+	def _get_text_caretOffset(self):
+		offset=super(NVDAObject_richEdit,self)._get_text_caretOffset()
+		if offset>=65535 and hasattr(self,'dom'):
+			offset=self.dom.Selection.Start
+		return offset
+
+	def _set_text_caretOffset(self,offset):
+		if offset>=65535 and hasattr(self,'dom'):
+			self.dom.Selection.SetRange(offset,offset)
 		else:
-			return None
+			super(NVDAObject_richEdit,self)._set_text_caretOffset(offset)
 
 	def text_getWordOffsets(self,offset):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getWordOffsets(offset)
 		r=self.dom.Range(offset,offset)
-		r.Expand(self.constants.tomWord)
+		r.Expand(tomWord)
 		return (r.Start,r.End)
 
 	def text_getNextWordOffsets(self,offset):
@@ -98,7 +112,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getNextWordOffsets(offset)
 		(start,end)=self.text_getWordOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomWord,1)
+		res=r.Move(tomWord,1)
 		if res:
 			return self.text_getWordOffsets(r.Start)
 		else:
@@ -109,7 +123,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getPrevWordOffsets(offset)
 		(start,end)=self.text_getWordOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomWord,-1)
+		res=r.Move(tomWord,-1)
 		if res:
 			return self.text_getWordOffsets(r.Start)
 		else:
@@ -119,7 +133,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getSentenceOffsets(offset)
 		r=self.dom.Range(offset,offset)
-		r.Expand(self.constants.tomSentence)
+		r.Expand(tomSentence)
 		return (r.Start,r.End)
 
 	def text_getNextSentenceOffsets(self,offset):
@@ -127,7 +141,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getNextSentenceOffsets(offset)
 		(start,end)=self.text_getSentenceOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomSentence,1)
+		res=r.Move(tomSentence,1)
 		if res:
 			return self.text_getSentenceOffsets(r.Start)
 		else:
@@ -138,7 +152,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getPrevSentenceOffsets(offset)
 		(start,end)=self.text_getSentenceOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomSentence,-1)
+		res=r.Move(tomSentence,-1)
 		if res:
 			return self.text_getSentenceOffsets(r.Start)
 		else:
@@ -148,7 +162,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getParagraphOffsets(offset)
 		r=self.dom.Range(offset,offset)
-		r.Expand(self.constants.tomParagraph)
+		r.Expand(tomParagraph)
 		return (r.Start,r.End)
 
 	def text_getNextParagraphOffsets(self,offset):
@@ -156,7 +170,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getNextParagraphOffsets(offset)
 		(start,end)=self.text_getParagraphOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomParagraph,1)
+		res=r.Move(tomParagraph,1)
 		if res:
 			return self.text_getParagraphOffsets(r.Start)
 		else:
@@ -167,7 +181,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return super(NVDAObject_richEdit,self).text_getPrevParagraphOffsets(offset)
 		(start,end)=self.text_getParagraphOffsets(offset)
 		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomParagraph,-1)
+		res=r.Move(tomParagraph,-1)
 		if res:
 			return self.text_getParagraphOffsets(r.Start)
 		else:
@@ -199,13 +213,13 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self).text_getAlignment(offset)
 		alignment=self.dom.Range(offset,offset).Para.Alignment
-		if alignment==self.constants.tomAlignLeft:
+		if alignment==tomAlignLeft:
 			return "left"
-		elif alignment==self.constants.tomAlignCenter:
+		elif alignment==tomAlignCenter:
 			return "centered"
-		elif alignment==self.constants.tomAlignRight:
+		elif alignment==tomAlignRight:
 			return "right"
-		elif alignment==self.constants.tomAlignJustify:
+		elif alignment==tomAlignJustify:
 			return "justified"
 
 	def text_isBold(self,offset):

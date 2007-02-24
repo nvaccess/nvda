@@ -60,7 +60,7 @@ def update(obj):
 			for w in windows:
 				runningTable[w]=virtualBufferObject
 			return
-		curWindow=winUser.getAncestor(curWindow,winUser.GA_PARENT)
+		curWindow=None #winUser.getAncestor(curWindow,winUser.GA_PARENT)
 
 _staticMap={
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):MSHTML.virtualBuffer_MSHTML,

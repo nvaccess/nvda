@@ -62,10 +62,7 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 		return self.text_getText(r[0],r[1])
 
 	def _get_text_selectionCount(self):
-		long=winUser.sendMessage(self.windowHandle,winUser.EM_GETSEL,0,0)
-		start=winUser.LOWORD(long)
-		end=winUser.HIWORD(long)
-		if start!=end:
+		if self.text_getSelectionOffsets(0) is not None:
 			return 1
 		else:
 			return 0
