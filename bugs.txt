@@ -1,6 +1,6 @@
 *In rich edit controls and MS Word documents, sayAll seems to skip the last line if it is not blank.
 *NVDA freezes during a sayAll in Wordpad if the current document is an rtf. 
 *SayAll does not update the cursor position in Internet Explorer edit controls and Outlook Express message edit controls.
-*Outlook Express edit control line positions get stuffed up at the point of reply text in a reply. It seems that from the last line to this line, the bookmark string line field only jumps by one value, as opposed to two. Either that, or the whole ratio just gets mangled. The only real fix for this is display hooks / video intercept, I think we have milked the most accessibility out of this weird API.
-*NVDA can not be started from outside its directory. Need to find out a way of getting the full file path to the current NVDA executable, and then changing to that directory.
+*VirtualBuffers cause a memory leak because they will not let go of IAccessible objects
+
 

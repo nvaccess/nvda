@@ -66,22 +66,7 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		else:
 			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
 
-	def _get_text_characterCount(self):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self)._get_text_characterCount()
-		r=self.dom.Range(0,0)
-		return r.StoryLength
-
-	def text_getText(self,start=None,end=None):
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else self.text_characterCount
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getText(start,end)
-		r=self.dom.Range(start,end)
-		return r.Text
-		return r.text
-
-	def _get_text_selectionCount(self):
+	def get_text_selectionCount(self):
 		if not hasattr(self,'dom'):
 			return super(NVDAObject_richEdit,self)._get_text_selectionCount()
 		if self.dom.Selection.Start!=self.dom.Selection.End:
@@ -98,63 +83,6 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 		end=self.dom.Selection.End
 		if start!=end:
 			return (start,end)
-		else:
-			return None
-
-	def _get_text_caretOffset(self):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self)._get_text_caretOffset()
-		return self.dom.Selection.Start
-
-	def _set_text_caretOffset(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self)._set_text_caretOffset(index)
-		self.dom.Selection.Start=offset
-		self.dom.Selection.End=offset
-
-	def old_text_getPageNumber(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getLineNumber(offset)
-		try:
-			pageNum=self.dom.Range(offset,offset).GetIndex(self.constants.tomPage)
-		except:
-			pageNum=0
-		if pageNum>=1:
-			return pageNum
-		else:
-			return None
-
-	def text_getLineNumber(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getLineNumber(offset)
-		return self.dom.Range(offset,offset).GetIndex(self.constants.tomLine)
-
-	def text_getLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getLineOffsets(offset)
-		r=self.dom.Range(offset,offset)
-		r.Expand(self.constants.tomLine)
-		return (r.Start,r.End)
-
-	def text_getNextLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getNextLineOffsets(offset)
-		(start,end)=self.text_getLineOffsets(offset)
-		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomLine,1)
-		if res!=0:
-			return self.text_getLineOffsets(r.Start)
-		else:
-			return None
-
-	def text_getPrevLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return super(NVDAObject_richEdit,self).text_getPrevLineOffsets(offset)
-		(start,end)=self.text_getLineOffsets(offset)
-		r=self.dom.Range(start,start)
-		res=r.Move(self.constants.tomLine,-1)
-		if res!=0:
-			return self.text_getLineOffsets(r.Start)
 		else:
 			return None
 
@@ -246,21 +174,15 @@ class NVDAObject_richEdit(winEdit.NVDAObject_winEdit):
 			return None
 
 	def text_getFieldOffsets(self,offset):
-		r=self.text_getSentenceOffsets(offset)
-		if r is None:
-			r=self.text_getLineOffsets(offset)
+		r=self.text_getLineOffsets(offset)
 		return r
 
 	def text_getNextFieldOffsets(self,offset):
-		r=self.text_getNextSentenceOffsets(offset)
-		if (r is None) or (r[0]<=offset):
-			r=self.text_getNextLineOffsets(offset)
+		r=self.text_getNextLineOffsets(offset)
 		return r
 
 	def text_getPrevFieldOffsets(self,offset):
-		r=self.text_getPrevSentenceOffsets(offset)
-		if (r is None) or (r[0]>=offset):
-			r=self.text_getPrevLineOffsets(offset)
+		r=self.text_getPrevLineOffsets(offset)
 		return r
 
 	def text_getFontName(self,offset):

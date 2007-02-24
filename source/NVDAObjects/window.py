@@ -4,7 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import weakref
 import ctypes
+import virtualBuffers
+import appModuleHandler
 import winUser
 import audio
 import baseType
@@ -24,9 +27,18 @@ An NVDAObject for a window
 @type windowProcessID: list of two ints
 """
 
-	def __init__(self,hwnd=0):
+	def __init__(self,windowHandle):
 		baseType.NVDAObject.__init__(self)
-		self.windowHandle=hwnd
+		self.windowHandle=windowHandle
+		if not hasattr(self,'appModule'):
+			self.appModule=weakref.ref(appModuleHandler.getAppModuleFromWindow(windowHandle))
+		virtualBuffer=virtualBuffers.getVirtualBuffer(self)
+		if virtualBuffer is not None:
+			self.virtualBuffer=weakref.ref(virtualBuffer)
+		else:
+			self.virtualBuffer=lambda: None
+		if hasattr(self.appModule(),'event_NVDAObject_init'):
+			self.appModule().event_NVDAObject_init(self)
 
 	def __hash__(self):
 		return self.windowHandle

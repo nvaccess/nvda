@@ -11,8 +11,6 @@ import globalVars
 globalVars.startTime=time.time()
 
 import os
-import sys
-sys.setcheckinterval(100)
 os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code

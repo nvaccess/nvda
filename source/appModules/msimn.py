@@ -8,6 +8,7 @@ import winUser
 import api
 import IAccessibleHandler
 import appModuleHandler
+import audio
 
 envelopeNames={
 	1000:_("Attachments"),
@@ -22,11 +23,10 @@ envelopeNames={
 
 class appModule(appModuleHandler.appModule):
 
-	def event_IAccessible_gainFocus(self,window,objectID,childID,nextHandler):
-		focusObject=api.getFocusObject()
-		controlID=winUser.getControlID(window)
-		parentWindow=winUser.getAncestor(window,winUser.GA_PARENT)
+	def event_NVDAObject_init(self,obj):
+		controlID=obj.windowControlID
+		windowHandle=obj.windowHandle
+		parentWindow=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		parentClassName=winUser.getClassName(parentWindow)
-		if parentClassName=="OE_Envelope" and objectID==IAccessibleHandler.OBJID_CLIENT and envelopeNames.has_key(controlID):
-			focusObject.setProperty('typeString',envelopeNames[controlID])
-		nextHandler(window,objectID,childID)
+		if parentClassName=="OE_Envelope" and envelopeNames.has_key(controlID):
+			obj.name=envelopeNames[controlID]

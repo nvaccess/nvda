@@ -8,7 +8,7 @@ import time
 import os
 import comtypesClient
 import _winreg
-from autoPropertyType import autoPropertyType
+import baseObject
 import debug
 import globalVars
 
@@ -28,9 +28,7 @@ class constants:
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
 
-class synthDriver(object):
-
-	__metaclass__=autoPropertyType
+class synthDriver(baseObject.autoPropertyObject):
 
 	def __init__(self):
 		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
@@ -77,6 +75,8 @@ class synthDriver(object):
 		self._volume=value
 
 	def _set_voice(self,value):
+		if value>len(self.voiceNames):
+			value=1
 		self.tts.Voice(self.tts.GetVoices()[value-1])
 		self._voice=value
 

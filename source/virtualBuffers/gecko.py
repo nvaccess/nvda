@@ -33,16 +33,15 @@ class virtualBuffer_gecko(virtualBuffer):
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
 		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
-		#(pacc,child)=IAccessibleHandler.accNavigate(pacc,child,NAVRELATION_EMBEDS)
-		#self.NVDAObject=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
+		#(pacc,child)=IAccessibleHandler.accNavigate(NVDAObject._pacc,NVDAObject._accChild,NAVRELATION_EMBEDS)
+		#newObj=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
+		#if newObj:
+		#	self.NVDAObject=newObj
 		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_IAccessible_gainFocus(self,hwnd,objectID,childID,nextHandler):
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if not obj:
-			return nextHandler(hwnd,objectID,childID)
+	def event_gainFocus(self,obj,nextHandler):
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
@@ -54,7 +53,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			return True
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		r=self.getFullRangeFromID(ID)
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
@@ -65,25 +64,19 @@ class virtualBuffer_gecko(virtualBuffer):
 			api.setFocusObject(obj)
 			api.setNavigatorObject(obj)
 			return True
-		return nextHandler(hwnd,objectID,childID)
+		return nextHandler()
 
-	def event_IAccessible_scrollingStart(self,hwnd,objectID,childID,nextHandler):
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if not obj:
-			return NextHandler(hwnd,objectID,childID)
+	def event_scrollingStart(self,obj,nextHandler):
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		r=self._IDs[ID]['range']
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
 			self.text_reportNewPresentation(self.text_reviewOffset)
 			audio.speakText(self.text_getText(r[0],r[1]))
 
-	def event_IAccessible_stateChange(self,hwnd,objectID,childID,nextHandler):
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if not obj:
-			return nextHandler(hwnd,objectID,childID)
+	def event_stateChange(self,obj,nextHandler):
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
@@ -94,25 +87,22 @@ class virtualBuffer_gecko(virtualBuffer):
 				self.NVDAObject=obj
 				self.loadDocument()
 				return True
-		return nextHandler(hwnd,objectID,childID)
+		return nextHandler()
 
-	def event_IAccessible_reorder(self,hwnd,objectID,childID,nextHandler):
+	def event_reorder(self,obj,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
-			return nextHandler(hwnd,objectID,childID) 
+			return nextHandler() 
 		if time.time()<(lastLoadTime+2):
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		if self.NVDAObject.states&IAccessibleHandler.STATE_SYSTEM_BUSY:
-			return nextHandler(hwnd,objectID,childID)
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
-		if not obj:
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		tones.beep(440,100)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
 		if ID not in self._IDs:
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		parentID=self._IDs[ID]['parent']
 		r=self._IDs[ID]['range']
 		zOrder=self.getIDZOrder(ID)
@@ -196,9 +186,10 @@ class virtualBuffer_gecko(virtualBuffer):
 		#Use IAccessible directly to save time
 		#Don't get children of combo boxes or embed objects
 		if obj.childCount>0 and role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,"embed"]:
-			hwnd=obj.windowHandle
+			windowHandle=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
-			children=[NVDAObject_IAccessible(x[0],x[1],hwnd=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
+			hwnd=obj.windowHandle
+			children=[NVDAObject_IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
 		else:
 			children=[]
 		#Get rid of the bullet object if this was a list item's children (its in the name)

@@ -15,6 +15,7 @@ import config
 import versionInfo
 import audio
 import core
+import pythoncom
 from settingsDialogs import *
 
 ### Constants
@@ -191,8 +192,8 @@ class MainFrame(wx.Frame):
 		#winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
 		self.Raise()
 		self.SetFocus()
-		d = wx.MessageDialog(self, _("Do you really want to exit NVDA?"), _("Exit NVDA"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
-		if d.ShowModal() == wx.ID_YES:
+		d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL)
+		if d.ShowModal() == wx.ID_OK:
 			if config.conf["general"]["saveConfigurationOnExit"]:
 				config.save()
 			globalVars.stayAlive=False
@@ -201,48 +202,16 @@ class MainFrame(wx.Frame):
 			self.onHideGuiCommand(None)
 
 	def onInterfaceSettingsCommand(self,evt):
-		oldLang=config.conf["general"]["language"]
-		oldHide=config.conf["general"]["hideInterfaceOnStartup"]
-		oldSave=config.conf["general"]["saveConfigurationOnExit"]
 		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
-		if d.ShowModal()!=wx.ID_OK:
-			core.setLanguage(oldLang)
-			config.conf["general"]["hideInterfaceOnStartup"]=oldHide
-			config.conf["general"]["saveConfigurationOnExit"]=oldSave
-
+		d.Show(True)
 
 	def onSynthesizerCommand(self,evt):
-		try:
-			synthList=synthDriverHandler.getDriverList()
-		except:
-			synthList=[]
-		choices=[]
-		for item in synthList:
-			choices.append("%s: %s"%(item,synthDriverHandler.getDriverDescription(item)))
-		d=wx.SingleChoiceDialog(self,_("Choose the synthesizer to use"),_("Synthesizer"),choices)
-		try:
-			index=synthList.index(synthDriverHandler.driverName)
-			d.SetSelection(index)
-		except:
-			pass
-		if d.ShowModal()==wx.ID_OK:
-			core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,synthList[d.GetSelection()])
+		d=synthesizerDialog(self,-1,_("Synthesizer"))
+		d.Show(True)
 
 	def onVoiceCommand(self,evt):
-		oldVoice=synthDriverHandler.getVoice()
-		oldRate=synthDriverHandler.getRate()
-		oldPitch=synthDriverHandler.getPitch()
-		oldVolume=synthDriverHandler.getVolume()
-		oldPunctuation=config.conf["speech"]["speakPunctuation"]
-		oldCaps=config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]
 		d=voiceSettingsDialog(self,-1,_("Voice settings"))
-		if d.ShowModal()!=wx.ID_OK:
-			core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,oldVoice)
-			synthDriverHandler.setRate(oldRate)
-			synthDriverHandler.setPitch(oldPitch)
-			synthDriverHandler.setVolume(oldVolume)
-			config.conf["speech"]["speakPunctuation"]=oldPunctuation
-			config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=oldCaps
+		d.Show(True)
 
 	def onKeyboardEchoCommand(self,evt):
 		oldChars=config.conf["keyboard"]["speakTypedCharacters"]

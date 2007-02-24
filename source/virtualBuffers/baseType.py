@@ -4,13 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from new import instancemethod
 from textwrap import TextWrapper
 from keyUtils import key
 import audio
 import globalVars
 import debug
 import config
-import NVDAObjects
+import textBuffer
 
 fieldType_other=0
 fieldType_button=1
@@ -77,10 +78,10 @@ fieldInfo={
 	"accessKey":None,
 }
 
-class virtualBuffer(NVDAObjects.baseType.NVDAObject):
+class virtualBuffer(textBuffer.textBufferObject):
 
 	def __init__(self,NVDAObject):
-		NVDAObjects.baseType.NVDAObject.__init__(self)
+		textBuffer.textBufferObject.__init__(self)
 		self.needsLoad=True
 		self.NVDAObject=NVDAObject
 		self._IDs={}

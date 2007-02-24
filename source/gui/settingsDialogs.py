@@ -25,7 +25,8 @@ class interfaceSettingsDialog(wx.Dialog):
 		languages=[x for x in os.listdir('locale') if not x.startswith('.')]
 		languageList=wx.Choice(self,languageListID,name=_("Language"),choices=languages)
 		try:
-			index=languages.index(config.conf["general"]["language"])
+			self.oldLanguage=config.conf["general"]["language"]
+			index=languages.index(self.oldLanguage)
 			languageList.SetSelection(index)
 		except:
 			pass
@@ -34,12 +35,14 @@ class interfaceSettingsDialog(wx.Dialog):
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		hideInterfaceCheckBoxID=wx.NewId()
 		hideInterfaceCheckBox=wx.CheckBox(self,hideInterfaceCheckBoxID,label=_("Hide user interface on startup"))
-		hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
+		self.oldHideInterface=config.conf["general"]["hideInterfaceOnStartup"]
+		hideInterfaceCheckBox.SetValue(self.oldHideInterface)
 		hideInterfaceCheckBox.Bind(wx.EVT_CHECKBOX,self.onHideInterfaceChange)
 		settingsSizer.Add(hideInterfaceCheckBox,border=10,flag=wx.BOTTOM)
 		saveOnExitCheckBoxID=wx.NewId()
 		saveOnExitCheckBox=wx.CheckBox(self,saveOnExitCheckBoxID,label=_("Save configuration on exit"))
-		saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
+		self.oldSaveOnExit=config.conf["general"]["saveConfigurationOnExit"]
+		saveOnExitCheckBox.SetValue(self.oldSaveOnExit)
 		saveOnExitCheckBox.Bind(wx.EVT_CHECKBOX,self.onSaveOnExitChange)
 		settingsSizer.Add(saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
@@ -47,6 +50,7 @@ class interfaceSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		languageList.SetFocus()
 
 	def onLanguageChange(self,evt):
@@ -60,6 +64,46 @@ class interfaceSettingsDialog(wx.Dialog):
 	def onSaveOnExitChange(self,evt):
 		config.conf["general"]["saveConfigurationOnExit"]=evt.IsChecked()
 
+	def onCancel(self,evt):
+		core.setLanguage(self.oldLanguage)
+		config.conf["general"]["hideInterfaceOnStartup"]=self.oldHideInterface
+		config.conf["general"]["saveConfigurationOnExit"]=self.oldSaveOnExit
+		self.Destroy()
+
+class synthesizerDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		synthListLabel=wx.StaticText(self,-1,label=_("Synthesizer"))
+		synthListID=wx.NewId()
+		driverList=synthDriverHandler.getDriverList()
+		self.synthNames=[x[0] for x in driverList]
+		options=['%s, %s'%x for x in driverList]
+		self.synthList=wx.Choice(self,synthListID,choices=options)
+		try:
+			index=self.synthNames.index(synthDriverHandler.driverName)
+			self.synthList.SetSelection(index)
+		except:
+			pass
+		synthListSizer.Add(synthListLabel)
+		synthListSizer.Add(self.synthList)
+		settingsSizer.Add(synthListSizer,border=10,flag=wx.BOTTOM)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.synthList.SetFocus()
+
+	def onOk(self,evt):
+		core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
+		self.Destroy()
+
 class voiceSettingsDialog(wx.Dialog):
 
 	def __init__(self,parent,ID,title):
@@ -71,7 +115,8 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceListID=wx.NewId()
 		voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=synthDriverHandler.driverVoiceNames)
 		try:
-			voiceIndex=synthDriverHandler.getVoice()-1
+			voiceIndex=self.oldVoice=synthDriverHandler.getVoice()
+			voiceIndex-=1
 			if voiceIndex>=0 and voiceIndex<len(synthDriverHandler.driverVoiceNames):
 				voiceList.SetSelection(voiceIndex)
 		except:
@@ -83,7 +128,8 @@ class voiceSettingsDialog(wx.Dialog):
 		rateSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		rateSliderLabel=wx.StaticText(self,-1,label=_("Rate"))
 		rateSliderID=wx.NewId()
-		rateSlider=wx.Slider(self,rateSliderID,value=synthDriverHandler.getRate(),minValue=0,maxValue=100,name="Rate:")
+		self.oldRate=synthDriverHandler.getRate()
+		rateSlider=wx.Slider(self,rateSliderID,value=self.oldRate,minValue=0,maxValue=100,name="Rate:")
 		rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
 		rateSliderSizer.Add(rateSliderLabel)
 		rateSliderSizer.Add(rateSlider)
@@ -91,7 +137,8 @@ class voiceSettingsDialog(wx.Dialog):
 		pitchSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		pitchSliderLabel=wx.StaticText(self,-1,label=_("Pitch"))
 		pitchSliderID=wx.NewId()
-		pitchSlider=wx.Slider(self,pitchSliderID,value=synthDriverHandler.getPitch(),minValue=0,maxValue=100)
+		self.oldPitch=synthDriverHandler.getPitch()
+		pitchSlider=wx.Slider(self,pitchSliderID,value=self.oldPitch,minValue=0,maxValue=100)
 		pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
 		pitchSliderSizer.Add(pitchSliderLabel)
 		pitchSliderSizer.Add(pitchSlider)
@@ -99,19 +146,22 @@ class voiceSettingsDialog(wx.Dialog):
 		volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		volumeSliderLabel=wx.StaticText(self,-1,label=_("Volume"))
 		volumeSliderID=wx.NewId()
-		volumeSlider=wx.Slider(self,volumeSliderID,value=synthDriverHandler.getVolume(),minValue=0,maxValue=100)
+		self.oldVolume=synthDriverHandler.getVolume()
+		volumeSlider=wx.Slider(self,volumeSliderID,value=self.oldVolume,minValue=0,maxValue=100)
 		volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
 		volumeSliderSizer.Add(volumeSliderLabel)
 		volumeSliderSizer.Add(volumeSlider)
 		settingsSizer.Add(volumeSliderSizer,border=10,flag=wx.BOTTOM)
 		punctuationCheckBoxID=wx.NewId()
 		punctuationCheckBox=wx.CheckBox(self,punctuationCheckBoxID,label=_("Speak all punctuation"))
-		punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
+		self.oldPunctuation=config.conf["speech"]["speakPunctuation"]
+		punctuationCheckBox.SetValue(self.oldPunctuation)
 		punctuationCheckBox.Bind(wx.EVT_CHECKBOX,self.onPunctuationChange)
 		settingsSizer.Add(punctuationCheckBox,border=10,flag=wx.BOTTOM)
 		capsCheckBoxID=wx.NewId()
 		capsCheckBox=wx.CheckBox(self,capsCheckBoxID,label=_("Say cap before capitals"))
-		capsCheckBox.SetValue(config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"])
+		self.oldCaps=config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]
+		capsCheckBox.SetValue(self.oldCaps)
 		capsCheckBox.Bind(wx.EVT_CHECKBOX,self.onCapsChange)
 		settingsSizer.Add(capsCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
@@ -120,6 +170,7 @@ class voiceSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
@@ -140,6 +191,15 @@ class voiceSettingsDialog(wx.Dialog):
 
 	def onCapsChange(self,evt):
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=evt.IsChecked()
+
+	def onCancel(self,evt):
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,self.oldVoice)
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setRate,self.oldRate)
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setPitch,self.oldPitch)
+		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVolume,self.oldVolume)
+		config.conf["speech"]["speakPunctuation"]=self.oldPunctuation
+		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=self.oldCaps
+		self.Destroy()
 
 class keyboardEchoDialog(wx.Dialog):
 

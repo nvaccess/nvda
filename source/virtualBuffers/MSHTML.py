@@ -72,28 +72,27 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if self.isDocumentComplete():
 			self.loadDocument()
 
-	def event_IAccessible_gainFocus(self,hwnd,objectID,childID,nextHandler):
+	def event_gainFocus(self,obj,nextHandler):
 		try:
 			nodeName=self.dom.activeElement.nodeName
 		except:
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getFullRangeFromID(ID)
 		if r is None:
-			return nextHandler(hwnd,objectID,childID)
+			return nextHandler()
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(hwnd,objectID,childID)
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 				self.text_reportNewPresentation(self.text_reviewOffset)
 				audio.speakText(self.text_getText(r[0],r[1]))
 				api.setFocusObject(obj)
 				api.setNavigatorObject(obj)
 				return True
-		return nextHandler(hwnd,objectID,childID)
+		return nextHandler()
 
 	def activatePosition(self,pos):
 		ID=self.getIDFromPosition(pos)

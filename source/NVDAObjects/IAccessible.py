@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import weakref
 import re
 import tones
 import time
@@ -12,6 +13,7 @@ import ctypes
 import comtypes.automation
 import comtypesClient
 import debug
+import appModuleHandler
 from keyUtils import sendKey, key 
 import IAccessibleHandler
 import winUser
@@ -28,7 +30,7 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	if not accHandle:
 		return None
 	(pacc,child)=accHandle
-	obj=NVDAObject_IAccessible(pacc,child,hwnd=hwnd,objectID=objectID,origChildID=childID)
+	obj=NVDAObject_IAccessible(pacc,child,hwnd,objectID=objectID,origChildID=childID)
 	return obj
 
 def getNVDAObjectFromPoint(x,y):
@@ -39,11 +41,11 @@ def getNVDAObjectFromPoint(x,y):
 	obj=NVDAObject_IAccessible(pacc,child)
 	return obj
 
-def registerNVDAObjectClass(processID,windowClass,objectRole,cls):
-	_dynamicMap[(processID,windowClass,objectRole)]=cls
+def registerNVDAObjectClass(appModule,windowClass,objectRole,cls):
+	_dynamicMap[(id(appModule),windowClass,objectRole)]=cls
 
-def unregisterNVDAObjectClass(processID,windowClass,objectRole):
-	del _dynamicMap[(processID,windowClass,objectRole)]
+def unregisterNVDAObjectClass(appModule,windowClass,objectRole):
+	del _dynamicMap[(id(appModule),windowClass,objectRole)]
 
 class NVDAObject_IAccessible(window.NVDAObject_window):
 	"""
@@ -54,39 +56,45 @@ the NVDAObject for IAccessible
 
 	allowedPositiveStates=IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE|IAccessibleHandler.STATE_SYSTEM_SELECTED|IAccessibleHandler.STATE_SYSTEM_PRESSED|IAccessibleHandler.STATE_SYSTEM_CHECKED|IAccessibleHandler.STATE_SYSTEM_MIXED|IAccessibleHandler.STATE_SYSTEM_EXPANDED|IAccessibleHandler.STATE_SYSTEM_COLLAPSED|IAccessibleHandler.STATE_SYSTEM_BUSY|IAccessibleHandler.STATE_SYSTEM_HASPOPUP
 
-	def __new__(cls,pacc,child,hwnd=None,objectID=None,origChildID=None):
+	def __new__(cls,pacc,childID,windowHandle=None,origChildID=None,objectID=None):
 		"""
 Checks the window class and IAccessible role against a map of NVDAObject_IAccessible sub-types, and if a match is found, returns that rather than just NVDAObject_IAccessible.
 """  
-		oldCls=cls
-		if not hwnd:
-			hwnd=IAccessibleHandler.windowFromAccessibleObject(pacc)
-		windowClass=winUser.getClassName(hwnd)
-		processID=winUser.getWindowThreadProcessID(hwnd)
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(pacc)
+		windowClass=winUser.getClassName(windowHandle)
 		try:
-			objectRole=pacc.accRole(child)
+			objectRole=pacc.accRole(childID)
 		except:
 			objectRole=0
-		if _dynamicMap.has_key((processID,windowClass,objectRole)):
-			cls=_dynamicMap[(processID,windowClass,objectRole)]
-		elif _dynamicMap.has_key((processID,windowClass,None)):
-			cls=_dynamicMap[(processID,windowClass,None)]
-		elif _dynamicMap.has_key((processID,None,objectRole)):
-			cls=_dynamicMap[(processID,None,objectRole)]
-		elif _staticMap.has_key((windowClass,objectRole)):
-			cls=_staticMap[(windowClass,objectRole)]
-		elif _staticMap.has_key((windowClass,None)):
-			cls=_staticMap[(windowClass,None)]
-		elif _staticMap.has_key((None,objectRole)):
-			cls=_staticMap[(None,objectRole)]
+		newCls=None
+		appModule=appModuleHandler.getAppModuleFromWindow(windowHandle)
+		if appModule:
+			appModuleRef=id(appModule)
+			if _dynamicMap.has_key((appModuleRef,windowClass,objectRole)):
+				newCls=_dynamicMap[(appModuleRef,windowClass,objectRole)]
+			elif _dynamicMap.has_key((appModuleRef,windowClass,None)):
+				newCls=_dynamicMap[(appModuleRef,windowClass,None)]
+			elif _dynamicMap.has_key((appModuleRef,None,objectRole)):
+				newCls=_dynamicMap[(appModuleRef,None,objectRole)]
+		if newCls is None:
+			if _staticMap.has_key((windowClass,objectRole)):
+				newCls=_staticMap[(windowClass,objectRole)]
+			elif _staticMap.has_key((windowClass,None)):
+				newCls=_staticMap[(windowClass,None)]
+			elif _staticMap.has_key((None,objectRole)):
+				newCls=_staticMap[(None,objectRole)]
+		if newCls is None:
+			newCls=NVDAObject_IAccessible
+		obj=window.NVDAObject_window.__new__(newCls,windowHandle)
+		if appModule is not None:
+			obj.appModule=weakref.ref(appModule)
 		else:
-			cls=NVDAObject_IAccessible
-		obj=window.NVDAObject_window.__new__(cls,hwnd)
-		obj._cachedRole=objectRole
-		obj.__init__(pacc,child,hwnd=hwnd,objectID=objectID,origChildID=origChildID)
+			obj.appModule=lambda: None
+		obj.__init__(pacc,childID,windowHandle=windowHandle,origChildID=origChildID,objectID=objectID)
 		return obj
 
-	def __init__(self,pacc,child,hwnd=None,objectID=None,origChildID=None):
+	def __init__(self,pacc,childID,windowHandle=None,origChildID=None,objectID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
@@ -99,9 +107,9 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 """
 		if hasattr(self,"_doneInit"):
 			return
-		window.NVDAObject_window.__init__(self,hwnd)
+		window.NVDAObject_window.__init__(self,windowHandle)
 		self._pacc=pacc
-		self._accChild=child
+		self._accChild=childID
 		self._accObjectID=objectID
 		self._accOrigChildID=origChildID
 		self._lastPositiveStates=self.calculatePositiveStates()
@@ -138,7 +146,11 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		return res if (isinstance(res,basestring) or isinstance(res,int) or isinstance(res,float)) else ""
 
 	def _get_role(self):
-		return self._cachedRole
+		try:
+			res=self._pacc.accRole(self._accChild)
+		except:
+			return 0
+		return res if (isinstance(res,basestring) or isinstance(res,int) or isinstance(res,float)) else ""
 
 	def _get_typeString(self):
 		role=self.role
@@ -228,7 +240,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			nextObject=NVDAObject_IAccessible(res[0],res[1])
 			if nextObject and (nextObject.role==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
-			return nextObject if nextObject.role!=0 else None
+			return nextObject if nextObject and nextObject.role!=0 else None
 
 	def _get_previous(self):
 		res=IAccessibleHandler.accParent(self._pacc,self._accChild)
@@ -460,7 +472,7 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 		return ""
 
 	def _get_value(self):
-		return super(NVDAObject_staticText,self).name
+		return super(NVDAObject_staticText,self)._get_name()
 
 [NVDAObject_staticText.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","text_review_nextLine"),
@@ -491,14 +503,14 @@ class NVDAObject_checkBox(NVDAObject_IAccessible):
 class NVDAObject_outlineItem(NVDAObject_IAccessible):
 
 	def _get_level(self):
-		val=super(NVDAObject_outlineItem,self).value
+		val=super(NVDAObject_outlineItem,self)._get_value()
 		try:
 			return int(val)
 		except:
 			return None
 
 	def _get_value(self):
-		val=super(NVDAObject_outlineItem,self).value
+		val=super(NVDAObject_outlineItem,self)._get_value()
 		try:
 			int(val)
 		except:
@@ -507,16 +519,16 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 class NVDAObject_tooltip(NVDAObject_IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_tooltip,self).name
-		value=super(NVDAObject_tooltip,self).value
+		name=super(NVDAObject_tooltip,self)._get_name()
+		value=super(NVDAObject_tooltip,self)._get_value()
 		if name and not value:
 			return ""
 		else:
 			return name
 
 	def _get_value(self):
-		name=super(NVDAObject_tooltip,self).name
-		value=super(NVDAObject_tooltip,self).value
+		name=super(NVDAObject_tooltip,self)._get_name()
+		value=super(NVDAObject_tooltip,self)._get_value()
 		if name and not value:
 			return name
 		else:
@@ -600,15 +612,15 @@ class NVDAObject_mozillaDocument(NVDAObject_IAccessible):
 class NVDAObject_mozillaListItem(NVDAObject_IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_mozillaListItem,self).name
+		name=super(NVDAObject_mozillaListItem,self)._get_name()
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			children=super(NVDAObject_mozillaListItem,self).children
+			children=super(NVDAObject_mozillaListItem,self)._get_children()
 			if len(children)>0 and (children[0].role in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
 				name=children[0].value
 		return name
 
 	def _get_children(self):
-		children=super(NVDAObject_mozillaListItem,self).children
+		children=super(NVDAObject_mozillaListItem,self)._get_children()
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].role in ["bullet",IAccesssibleHandler.ROLE_SYSTEM_STATICTEXT]):
 			del children[0]
 		return children
@@ -629,7 +641,7 @@ class NVDAObject_link(NVDAObject_IAccessible):
 		typeString=""
 		if states&IAccessibleHandler.STATE_SYSTEM_TRAVERSED:
 			typeString+="visited "
-		typeString+=super(NVDAObject_link,self).typeString
+		typeString+=super(NVDAObject_link,self)._get_typeString()
 		return typeString
 
 class NVDAObject_mozillaText(NVDAObject_IAccessible):
@@ -638,15 +650,15 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 	"""
 
 	def _get_name(self):
-		name=super(NVDAObject_mozillaText,self).name
+		name=super(NVDAObject_mozillaText,self)._get_name()
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return ""
 		else:
 			return name
 
 	def _get_value(self):
-		name=super(NVDAObject_mozillaText,self).name
-		value=super(NVDAObject_mozillaText,self).value
+		name=super(NVDAObject_mozillaText,self)._get_name()
+		value=super(NVDAObject_mozillaText,self)._get_value()
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return name
 		else:
@@ -656,7 +668,7 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return IAccessibleHandler.getRoleText(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
 		else:
-			return super(NVDAObject_mozillaText,self).typeString
+			return super(NVDAObject_mozillaText,self)._get_typeString()
 
 	def text_getText(self,start=None,end=None):
 		return self.value
@@ -709,9 +721,9 @@ class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
 class NVDAObject_list(NVDAObject_IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_list,self).name
+		name=super(NVDAObject_list,self)._get_name()
 		if not name:
-			name=super(NVDAObject_IAccessible,self).name
+			name=super(NVDAObject_IAccessible,self)._get_name()
 		return name
 
 	def _get_typeString(self):
@@ -764,7 +776,7 @@ class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 		return ""
 
 	def _get_typeString(self):
-		return "HTML "+super(NVDAObject_internetExplorerClient,self).typeString
+		return "HTML "+super(NVDAObject_internetExplorerClient,self)._get_typeString()
 
 	def _get_description(self):
 		return ""

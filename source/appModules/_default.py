@@ -25,10 +25,10 @@ import appModuleHandler
 
 class appModule(appModuleHandler.appModule):
 
-	def event_IAccessible_switchStart(self,window,objectID,childID,nextHandler):
+	def event_switchStart(self,obj,nextHandler):
 		audio.cancel()
 
-	def event_IAccessible_switchEnd(self,window,objectID,childID,nextHandler):
+	def event_switchEnd(self,obj,nextHandler):
 		audio.cancel()
 
 	def script_keyboardHelp(self,keyPress,nextScript):
@@ -363,7 +363,7 @@ class appModule(appModuleHandler.appModule):
 			return
 		statusBarObject=foregroundObject.statusBar
 		if not statusBarObject:
-			audio.speakMessage(_("no stats bar found"))
+			audio.speakMessage(_("no status bar found"))
 			return
 		statusBarObject.speakObject()
 		api.setNavigatorObject(statusBarObject)
@@ -390,20 +390,25 @@ class appModule(appModuleHandler.appModule):
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		NVDAObjectCount=0
 		virtualBufferCount=0
+		appModuleCount=0
 		accessibleObjectCount=0
 		for o in gc.get_objects():
 			if isinstance(o,NVDAObjects.baseType.NVDAObject):
 				NVDAObjectCount+=1
 			elif isinstance(o,virtualBuffers.baseType.virtualBuffer):
 				virtualBufferCount+=1
+			elif isinstance(o,appModuleHandler.appModule):
+				appModuleCount+=1
 			elif isinstance(o,IAccessibleHandler.pointer_IAccessible):
 				accessibleObjectCount+=1
 		audio.speakMessage("NVDAObject count: %s"%NVDAObjectCount)
 		audio.speakMessage("virtualBuffer count: %s"%virtualBufferCount)
+		audio.speakMessage("appModule count: %s"%appModuleCount)
 		audio.speakMessage("accessible object count: %s"%accessibleObjectCount)
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
 			audio.speakMessage("handle: %s"%obj.windowHandle)
+			audio.speakMessage("Owner: %s"%winUser.getAncestor(obj.windowHandle,winUser.GA_ROOTOWNER))
 			audio.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
 			audio.speakMessage("Class: %s"%obj.windowClassName)
 			for char in obj.windowClassName:

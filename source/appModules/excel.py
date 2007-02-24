@@ -21,14 +21,14 @@ re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
 class appModule(appModuleHandler.appModule):
 
-	def __init__(self,*args):
-		appModuleHandler.appModule.__init__(self,*args)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
+	def __init__(self,appName,appWindow):
+		appModuleHandler.appModule.__init__(self,appName,appWindow)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelEditableCell)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_excelTable)
 
 	def __del__(self):
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"EXCEL6",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		appModuleHandler.appModule.__del__(self)
 
 class NVDAObject_excelEditableCell(NVDAObjects.winEdit.NVDAObject_winEdit):
@@ -49,32 +49,6 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		a=t.GetTypeAttr()
 		oleRepr=win32com.client.build.DispatchItem(attr=a)
 		self.excelObject=win32com.client.CDispatch(o,oleRepr)
-		self.registerScriptKeys({
-			key("ExtendedUp"):self.script_moveByCell,
-			key("ExtendedDown"):self.script_moveByCell,
-			key("ExtendedLeft"):self.script_moveByCell,
-			key("ExtendedRight"):self.script_moveByCell,
-			key("Control+ExtendedUp"):self.script_moveByCell,
-			key("Control+ExtendedDown"):self.script_moveByCell,
-			key("Control+ExtendedLeft"):self.script_moveByCell,
-			key("Control+ExtendedRight"):self.script_moveByCell,
-			key("ExtendedHome"):self.script_moveByCell,
-			key("ExtendedEnd"):self.script_moveByCell,
-			key("Control+ExtendedHome"):self.script_moveByCell,
-			key("Control+ExtendedEnd"):self.script_moveByCell,
-			key("Shift+ExtendedUp"):self.script_moveByCell,
-			key("Shift+ExtendedDown"):self.script_moveByCell,
-			key("Shift+ExtendedLeft"):self.script_moveByCell,
-			key("Shift+ExtendedRight"):self.script_moveByCell,
-			key("Shift+Control+ExtendedUp"):self.script_moveByCell,
-			key("Shift+Control+ExtendedDown"):self.script_moveByCell,
-			key("Shift+Control+ExtendedLeft"):self.script_moveByCell,
-			key("Shift+Control+ExtendedRight"):self.script_moveByCell,
-			key("Shift+ExtendedHome"):self.script_moveByCell,
-			key("Shift+ExtendedEnd"):self.script_moveByCell,
-			key("Shift+Control+ExtendedHome"):self.script_moveByCell,
-			key("Shift+Control+ExtendedEnd"):self.script_moveByCell,
-		})
 
 	def _get_role(self):
 		return IAccessibleHandler.ROLE_SYSTEM_TABLE
@@ -98,17 +72,20 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		return cell.HasFormula
 
 	def speakSelection(self):
-		cells=self.getSelectedRange()
-		if cells.Count>1:
-			first=cells.Item(1)
-			last=cells.Item(cells.Count)
-			audio.speakMessage((_("selected")+" %s %s "+_("through")+" %s %s")%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
-		else:
-			text=self.getCellAddress(self.getActiveCell())
-			if self.cellHasFormula(self.getActiveCell()):
-				text+=" "+_("has formula")
-			text+=" %s"%self.getCellText(self.getActiveCell())
-			audio.speakMessage(text)
+		try:
+			cells=self.getSelectedRange()
+			if cells.Count>1:
+				first=cells.Item(1)
+				last=cells.Item(cells.Count)
+				audio.speakMessage((_("selected")+" %s %s "+_("through")+" %s %s")%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
+			else:
+				text=self.getCellAddress(self.getActiveCell())
+				if self.cellHasFormula(self.getActiveCell()):
+					text+=" "+_("has formula")
+				text+=" %s"%self.getCellText(self.getActiveCell())
+				audio.speakMessage(text)
+		except:
+			pass
 
 	def getFontName(self,cell):
 		return cell.Font.Name
@@ -144,3 +121,30 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 			audio.speakMessage(_("italic"))
 		if self.isUnderline(self.getActiveCell()):
 			audio.speakMessage(_("underline"))
+
+[NVDAObject_excelTable.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","moveByCell"),
+	("ExtendedDown","moveByCell"),
+	("ExtendedLeft","moveByCell"),
+	("ExtendedRight","moveByCell"),
+	("Control+ExtendedUp","moveByCell"),
+	("Control+ExtendedDown","moveByCell"),
+	("Control+ExtendedLeft","moveByCell"),
+	("Control+ExtendedRight","moveByCell"),
+	("ExtendedHome","moveByCell"),
+	("ExtendedEnd","moveByCell"),
+	("Control+ExtendedHome","moveByCell"),
+	("Control+ExtendedEnd","moveByCell"),
+	("Shift+ExtendedUp","moveByCell"),
+	("Shift+ExtendedDown","moveByCell"),
+	("Shift+ExtendedLeft","moveByCell"),
+	("Shift+ExtendedRight","moveByCell"),
+	("Shift+Control+ExtendedUp","moveByCell"),
+	("Shift+Control+ExtendedDown","moveByCell"),
+	("Shift+Control+ExtendedLeft","moveByCell"),
+	("Shift+Control+ExtendedRight","moveByCell"),
+	("Shift+ExtendedHome","moveByCell"),
+	("Shift+ExtendedEnd","moveByCell"),
+	("Shift+Control+ExtendedHome","moveByCell"),
+	("Shift+Control+ExtendedEnd","moveByCell"),
+]]

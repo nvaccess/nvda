@@ -16,7 +16,7 @@ import IAccessible
 class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_winEdit,self).name
+		name=super(NVDAObject_winEdit,self)._get_name()
 		if self.text_getText().strip()!=name.strip():
 			return name
 
@@ -31,10 +31,14 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 			for lineNum in xrange(startLineNum,endLineNum+1):
 				lineStart=winUser.sendMessage(self.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
 				lineLength=winUser.sendMessage(self.windowHandle,winUser.EM_LINELENGTH,lineStart,0)
-				buf=ctypes.create_unicode_buffer(lineLength+10)
-				buf.value=struct.pack('h',lineLength+2)
+				#em_getline needs a buffer in which to place a unicode string.
+				#However it must already contain the length of the line as its first word.
+				#We use a char array to hold the word, plus receive the line, then we cast to unicode 
+				buf=(ctypes.c_char*((lineLength*2)+2))()
+				buf.value=struct.pack('h',lineLength+1)
 				winUser.sendMessage(self.windowHandle,winUser.EM_GETLINE,lineNum,buf)
-				lines.append(buf.value[0:lineLength])
+				bufPtr=ctypes.cast(buf,ctypes.POINTER(ctypes.c_wchar*(lineLength+1)))
+				lines.append(bufPtr.contents.value[0:lineLength])
 			text="".join(lines)
 			text=text[startOffset:][:end-start]
 			if text=="":

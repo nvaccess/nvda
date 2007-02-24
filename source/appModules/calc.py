@@ -8,8 +8,10 @@ class appModule(appModuleHandler.appModule):
 		appModuleHandler.appModule.__init__(self,*args)
 		self._lastValue=None
 
-	def event_IAccessible_valueChange(self,window,objectID,childID,nextHandler):
-		obj=NVDAObjects.window.NVDAObject_window(window)
+	def event_NVDAObject_init(self,obj):
+		if obj.windowClassName=="Edit" and obj.windowControlID==403:
+			obj.name="Display"
+	def event_valueChange(self,obj,nextHandler):
 		if obj.windowClassName=="Edit" and obj.windowControlID==403:
 			text=obj.windowText[0:-1]
 			text=text.rstrip()[0:-1]
@@ -17,5 +19,4 @@ class appModule(appModuleHandler.appModule):
 				audio.speakText(text)
 				self._lastValue=text
 		else:
-			nextHandler(window,objectID,childID)
-
+			nextHandler()

@@ -136,6 +136,7 @@ import ctypes
 import comtypesClient
 import comtypes.automation
 import debug
+import eventHandler
 import winUser
 import audio
 import api
@@ -453,42 +454,23 @@ winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 }
 
-#Internal function for object events
-
-def manageEvent_NVDAObjectLevel(name,window,objectID,childID):
+def manageEvent(name,window,objectID,childID):
+	virtualBuffers.IAccessible.update(window)
 	desktopObject=api.getDesktopObject()
 	foregroundObject=api.getForegroundObject()
 	focusObject=api.getFocusObject()
 	obj=None
-	for testObject in [focusObject,foregroundObject,desktopObject]:
+	for testObject in [o for o in [focusObject,foregroundObject,desktopObject] if o]:
 		if isinstance(testObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==testObject.windowHandle and objectID==testObject._accObjectID and childID==testObject._accOrigChildID:
 			obj=testObject
 			break
 	if obj is None and name not in ["hide","locationChange"]:
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if hasattr(obj,"event_%s"%name):
-		getattr(obj,"event_%s"%name)()
-
-def manageEvent_virtualBufferLevel(name,window,objectID,childID):
-	virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(window)
-	if hasattr(virtualBuffer,"event_IAccessible_%s"%name) and not api.getMenuMode():
-		getattr(virtualBuffer,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_NVDAObjectLevel(name,window,objectID,childID))
-	else:
-		manageEvent_NVDAObjectLevel(name,window,objectID,childID)
-
-def manageEvent_defaultAppModuleLevel(name,window,objectID,childID):
-	default=appModuleHandler.default
-	if hasattr(default,"event_IAccessible_%s"%name):
-		getattr(default,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_virtualBufferLevel(name,window,objectID,childID)) 
-	else:
-		manageEvent_virtualBufferLevel(name,window,objectID,childID)
-
-def manageEvent_appModuleLevel(name,window,objectID,childID):
-	appModule=appModuleHandler.getActiveModule()
-	if hasattr(appModule,"event_IAccessible_%s"%name):
-		getattr(appModule,"event_IAccessible_%s"%name)(window,objectID,childID,lambda window,objectID,childID: manageEvent_defaultAppModuleLevel(name,window,objectID,childID)) 
-	else:
-		manageEvent_defaultAppModuleLevel(name,window,objectID,childID)
+		if not obj:
+			return
+		virtualBuffers.IAccessible.update(window)
+	if obj:
+		eventHandler.manageEvent(name,obj)
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
@@ -534,12 +516,12 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		elif eventName=="gainFocus":
 			core.executeFunction(core.EXEC_USERINTERFACE,updateFocusFromEvent,window,objectID,childID)
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
-		core.executeFunction(core.EXEC_USERINTERFACE,manageEvent_appModuleLevel,eventName,window,objectID,childID)
+		core.executeFunction(core.EXEC_USERINTERFACE,manageEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 
 def updateForegroundFromEvent(window,objectID,childID):
-	appModuleHandler.update()
+	appModuleHandler.update(window)
 	virtualBuffers.IAccessible.update(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
@@ -547,12 +529,11 @@ def updateForegroundFromEvent(window,objectID,childID):
 	api.setForegroundObject(obj)
 
 def updateFocusFromEvent(window,objectID,childID):
+	appModuleHandler.update(window)
+	virtualBuffers.IAccessible.update(window)
 	oldFocus=api.getFocusObject()
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accOrigChildID:
 		return
-	manageEvent_appModuleLevel("looseFocus",window,objectID,childID)
-	appModuleHandler.update()
-	virtualBuffers.IAccessible.update(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
@@ -562,11 +543,10 @@ def correctFocus():
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and not focusObject.states&STATE_SYSTEM_INVISIBLE and not focusObject.states&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
 		updateFocusFromEvent(focusObject.windowHandle,OBJID_CLIENT,0)
-		manageEvent_appModuleLevel("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
+		manageEvent("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
 	else:
 		audio.speakMessage(_("lost focus"))
 		api.setFocusObject(api.getDesktopObject())
-
 
 #Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)

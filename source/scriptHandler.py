@@ -12,10 +12,10 @@ def findScript(keyPress):
 		return findScript_appModuleLevel(keyPress)
 
 def findScript_appModuleLevel(keyPress):
-	appModule=appModuleHandler.getActiveModule()
-	func=appModule.getScript(keyPress)
+	appModule=api.getFocusObject().appModule()
+	func=appModule.getScript(keyPress) if appModule else None
 	if func:
-		nextFunc=lambda k: findScript_defaultAppModuleLevel(k)
+		nextFunc=lambda keyPress=keyPress: findScript_defaultAppModuleLevel(keyPress)
 		script=lambda k: func(k,nextFunc)
 		script.__name__=func.__name__
 		script.__doc__=func.__doc__
@@ -27,7 +27,7 @@ def findScript_defaultAppModuleLevel(keyPress):
 	default=appModuleHandler.default
 	func=default.getScript(keyPress)
 	if func:
-		nextFunc=lambda k: findScript_virtualBufferLevel(k)
+		nextFunc=lambda keyPress=keyPress: findScript_virtualBufferLevel(keyPress)
 		script=lambda k: func(k,nextFunc)
 		script.__name__=func.__name__
 		script.__doc__=func.__doc__
@@ -36,12 +36,11 @@ def findScript_defaultAppModuleLevel(keyPress):
 	return findScript_virtualBufferLevel(keyPress)
 
 def findScript_virtualBufferLevel(keyPress):
-	focusObject=api.getFocusObject()
-	virtualBuffer=virtualBuffers.getVirtualBuffer(focusObject)
+	virtualBuffer=api.getFocusObject().virtualBuffer()
 	if virtualBuffer and not api.isVirtualBufferPassThrough():
 		func=virtualBuffer.getScript(keyPress)
 		if func:
-			nextFunc=lambda k: findScript_NVDAObjectLevel(k)
+			nextFunc=lambda keyPress=keyPress: findScript_NVDAObjectLevel(keyPress)
 			script=lambda k: func(k,nextFunc)
 			script.__name__=func.__name__
 			script.__doc__=func.__doc__

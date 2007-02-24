@@ -17,12 +17,15 @@ driverName=None
 driverVoiceNames=[]
 
 def getDriverList():
-	l=os.listdir(__path__[0])
-	l=filter(lambda x: x.endswith(".py") or x.endswith(".pyc") or x.endswith(".pyo") or (os.path.isdir(os.path.join(__path__[0],x)) and not x.startswith(".")),l)
-	l=map(lambda x: os.path.splitext(x)[0],l)
-	l=list(set(l))
-	l=filter(lambda x: isDriverAvailable(x),l)
-	return l
+	driverList=[]
+	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if x.endswith('.py')]:
+		try:
+			mod=__import__(name,globals(),locals(),[])
+			if mod.check():
+				driverList.append((name,mod.description))
+		except:
+			pass
+	return driverList
 
 def isDriverAvailable(name):
 	try:

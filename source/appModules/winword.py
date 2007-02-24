@@ -8,7 +8,6 @@ import ctypes
 import comtypes.automation
 import win32com.client
 import pythoncom
-from autoPropertyType import autoPropertyType
 import IAccessibleHandler
 import audio
 import debug
@@ -57,49 +56,19 @@ wdGoToLine=3
 
 class appModule(appModuleHandler.appModule):
 
-	def __init__(self,*args):
-		appModuleHandler.appModule.__init__(self,*args)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
+	def __init__(self,appName,appWindow):
+		appModuleHandler.appModule.__init__(self,appName,appWindow)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
 
 	def __del__(self):
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
 		appModuleHandler.appModule.__del__(self)
 
-class NVDAObject_wordDocument(NVDAObjects.IAccessible.NVDAObject_IAccessible):
-
-	__metaclass__=autoPropertyType
+class NVDAObject_wordDocument(NVDAObjects.winEdit.NVDAObject_winEdit):
 
 	def __init__(self,*args,**vars):
-		NVDAObjects.IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
+		NVDAObjects.winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
 		self.dom=self.getDocumentObjectModel()
-		self.registerScriptKeys({
-			key("ExtendedUp"):self.script_text_moveByLine,
-			key("ExtendedDown"):self.script_text_moveByLine,
-			key("ExtendedLeft"):self.script_text_moveByCharacter,
-			key("ExtendedRight"):self.script_text_moveByCharacter,
-			key("Control+ExtendedUp"):self.script_text_prevParagraph,
-			key("Control+ExtendedDown"):self.script_text_nextParagraph,
-			key("Control+ExtendedLeft"):self.script_text_moveByWord,
-			key("Control+ExtendedRight"):self.script_text_moveByWord,
-			key("Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Shift+ExtendedHome"):self.script_text_changeSelection,
-			key("Shift+ExtendedEnd"):self.script_text_changeSelection,
-			key("Shift+ExtendedUp"):self.script_text_changeSelection,
-			key("Shift+ExtendedDown"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedLeft"):self.script_text_changeSelection,
-			key("Control+Shift+ExtendedRight"):self.script_text_changeSelection,
-			key("ExtendedHome"):self.script_text_moveByCharacter,
-			key("ExtendedEnd"):self.script_text_moveByCharacter,
-			key("control+extendedHome"):self.script_text_moveByLine,
-			key("control+extendedEnd"):self.script_text_moveByLine,
-			key("control+shift+extendedHome"):self.script_text_changeSelection,
-			key("control+shift+extendedEnd"):self.script_text_changeSelection,
-			key("ExtendedDelete"):self.script_text_delete,
-			key("Back"):self.script_text_backspace,
-			key("control+ExtendedUp"):self.script_text_moveByParagraph,
-			key("control+ExtendedDown"):self.script_text_moveByParagraph,
-		})
 		self.text_reviewOffset=self.text_caretOffset
 
 	def event_caret(self):

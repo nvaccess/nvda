@@ -1,3 +1,4 @@
+import debug
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
@@ -17,12 +18,19 @@ POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
 #constants
+#PeekMessage
+PM_REMOVE=1
+PM_NOYIELD=2
+#sendMessageTimeout
+SMTO_ABORTIFHUNG=0x0002
 #getAncestor
 GA_PARENT=1
 GA_ROOT=2
 GA_ROOTOWNER=3
 #getWindowLong
 GWL_ID=-12
+#getWindow
+GW_OWNER=4
 #Window messages
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
@@ -258,8 +266,18 @@ def setWinEventHook(*args):
 def unhookWinEvent(*args):
 	return user32.UnhookWinEvent(*args)
 
-def sendMessage(*args):
-	return user32.SendMessageW(*args)
+def sendMessage(hwnd,msg,param1,param2):
+	return user32.SendMessageW(hwnd,msg,param1,param2)
+
+def sendMessage2(hwnd,msg,param1,param2):
+	res=ctypes.c_int()
+	debug.writeMessage("winUser.sendMessage: %s, %s, %s, %s"%(hwnd,msg,param1,param2))
+	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,ctypes.byref(res))
+	debug.writeMessage("winUser.sendMessage: done (%s"%ret)
+	if ret:
+		return res.value
+	else:
+		raise OSError("sendMessage failed")
 
 def getWindowThreadProcessID(hwnd):
 	processID=ctypes.c_int()
@@ -294,3 +312,12 @@ def getWindowText(hwnd):
 	buf=ctypes.create_unicode_buffer(1024)
 	user32.InternalGetWindowText(hwnd,buf,1024)
 	return buf.value
+
+def getWindow(window,relation):
+	return user32.GetWindow(window,relation)
+
+def isWindowVisible(window):
+	return bool(user32.IsWindowVisible(window))
+
+def isWindowEnabled(window):
+	return bool(user32.IsWindowEnabled(window))

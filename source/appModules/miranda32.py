@@ -14,12 +14,12 @@ class appModule(appModuleHandler.appModule):
 
 	def __init__(self,*args):
 		appModuleHandler.appModule.__init__(self,*args)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_mirandaContactList)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_WINDOW,NVDAObject_mirandaContactList)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"CListControl",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_mirandaContactList)
+		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"CListControl",IAccessibleHandler.ROLE_SYSTEM_WINDOW,NVDAObject_mirandaContactList)
 
 	def __del__(self):
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self.processID,"CListControl",IAccessibleHandler.ROLE_SYSTEM_WINDOW)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"CListControl",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
+		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"CListControl",IAccessibleHandler.ROLE_SYSTEM_WINDOW)
 
 class NVDAObject_mirandaContactList(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 
