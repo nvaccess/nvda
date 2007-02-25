@@ -93,7 +93,7 @@ shift+numpad3 - end of line
 """)%vars(versionInfo)
 
  
-iconPath="%s/images/icon.gif"%os.getcwd()
+iconPath="%s/images/icon.png"%os.getcwd()
 evt_externalCommand = wx.NewEventType()
 id_onShowGuiCommand=wx.NewId()
 id_onAbortCommand=wx.NewId()
@@ -161,10 +161,7 @@ class MainFrame(wx.Frame):
 		self.SetSizer(sizer)
 		textCtrl.AppendText(quickStartMessage)
 		textCtrl.SetSelection(0,0)
-		image=wx.Image(iconPath,wx.BITMAP_TYPE_GIF)
-		image=image.Scale(32,32)
-		bitmap=wx.BitmapFromImage(image)
-		icon=wx.IconFromBitmap(bitmap)
+		icon=wx.Icon(iconPath,wx.BITMAP_TYPE_PNG)
 		self.SetIcon(icon)
 		self.sysTrayButton=wx.TaskBarIcon()
 		self.sysTrayButton.SetIcon(icon,_("NVDA"))

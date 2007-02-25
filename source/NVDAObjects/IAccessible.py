@@ -107,13 +107,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 """
 		if hasattr(self,"_doneInit"):
 			return
-		window.NVDAObject_window.__init__(self,windowHandle)
 		self._pacc=pacc
 		self._accChild=childID
 		self._accObjectID=objectID
 		self._accOrigChildID=origChildID
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
+		window.NVDAObject_window.__init__(self,windowHandle)
 		self._doneInit=True
 
 	def __hash__(self):
