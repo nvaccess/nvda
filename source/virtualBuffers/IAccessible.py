@@ -40,9 +40,10 @@ def update(obj):
 		return
 	if any((winUser.isDescendantWindow(w,windowHandle) for w in runningTable)):
 		return
-	curWindow=windowHandle
 	virtualBufferClass=None
-	while curWindow:
+	for curWindow in [windowHandle,winUser.getAncestor(windowHandle,winUser.GA_PARENT)]:
+		if not curWindow:
+			return 
 		className=winUser.getClassName(curWindow)
 		possibles=[x for x in _staticMap if x[0]==className]
 		if len(possibles)>0:
@@ -60,7 +61,6 @@ def update(obj):
 			for w in windows:
 				runningTable[w]=virtualBufferObject
 			return
-		curWindow=None #winUser.getAncestor(curWindow,winUser.GA_PARENT)
 
 _staticMap={
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):MSHTML.virtualBuffer_MSHTML,

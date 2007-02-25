@@ -7,6 +7,7 @@
 import time
 import winsound
 import threading
+import os
 import wx
 import globalVars
 import debug
@@ -92,7 +93,7 @@ shift+numpad3 - end of line
 """)%vars(versionInfo)
 
  
-#iconPath="images\\NVDAIcon.bmp"
+iconPath="%s/images/icon.gif"%os.getcwd()
 evt_externalCommand = wx.NewEventType()
 id_onShowGuiCommand=wx.NewId()
 id_onAbortCommand=wx.NewId()
@@ -115,6 +116,7 @@ class MainFrame(wx.Frame):
 		wx.EVT_COMMAND(self,id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
 		wx.EVT_CLOSE(self,self.onHideGuiCommand)
 		menuBar=wx.MenuBar()
+		self.sysTrayMenu=wx.Menu()
 		menu_NVDA = wx.Menu()
 		id_onRevertToSavedConfigurationCommand=wx.NewId()
 		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration\tctrl+r"),_("Reset all setting back to nvda.ini"))
@@ -124,6 +126,7 @@ class MainFrame(wx.Frame):
 		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		menuBar.Append(menu_NVDA,_("&NVDA"))
+		self.sysTrayMenu.AppendMenu(-1,_("&NVDA"),menu_NVDA)
 		menu_preferences=wx.Menu()
 		id_interfaceSettingsCommand=wx.NewId()
 		menu_preferences.Append(id_interfaceSettingsCommand,_("&User interface...\tctrl+shift+u"),_("Change user interface settings"))
@@ -144,10 +147,12 @@ class MainFrame(wx.Frame):
 		menu_preferences.Append(id_objectPresentationCommand,_("&Object presentation...\tctrl+shift+o"),_("Change reporting of objects")) 
 		wx.EVT_MENU(self,id_objectPresentationCommand,self.onObjectPresentationCommand)
 		menuBar.Append(menu_preferences,_("&Preferences"))
+		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
 		menu_help = wx.Menu()
 		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		menuBar.Append(menu_help,_("&Help"))
+		self.sysTrayMenu.AppendMenu(-1,_("&Help"),menu_help)
 		self.SetMenuBar(menuBar)
 		sizer=wx.BoxSizer(wx.VERTICAL)
 		textCtrl=wx.TextCtrl(self,-1,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
@@ -156,8 +161,13 @@ class MainFrame(wx.Frame):
 		self.SetSizer(sizer)
 		textCtrl.AppendText(quickStartMessage)
 		textCtrl.SetSelection(0,0)
-		#icon=wx.Icon(iconPath,wx.BITMAP_TYPE_BMP)
-		#self.SetIcon(icon)
+		image=wx.Image(iconPath,wx.BITMAP_TYPE_GIF)
+		image=image.Scale(32,32)
+		bitmap=wx.BitmapFromImage(image)
+		icon=wx.IconFromBitmap(bitmap)
+		self.SetIcon(icon)
+		self.sysTrayButton=wx.TaskBarIcon()
+		self.sysTrayButton.SetIcon(icon,_("NVDA"))
 		self.Center()
 		self.Show(True)
 		if config.conf["general"]["hideInterfaceOnStartup"]:
@@ -173,6 +183,7 @@ class MainFrame(wx.Frame):
 		self.Center()
 		self.Show(True)
 		self.Raise()
+		#self.sysTrayButton.PopupMenu(self.sysTrayMenu)
 
 	def onHideGuiCommand(self,evt):
 		time.sleep(0.01)
@@ -189,10 +200,9 @@ class MainFrame(wx.Frame):
 		wasShown=self.IsShown()
 		if not wasShown:
 			self.onShowGuiCommand(None)
-		#winsound.PlaySound("SystemExclamation",winsound.SND_ALIAS|winsound.SND_ASYNC)
 		self.Raise()
 		self.SetFocus()
-		d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL)
+		d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL|wx.ICON_WARNING)
 		if d.ShowModal() == wx.ID_OK:
 			if config.conf["general"]["saveConfigurationOnExit"]:
 				config.save()
