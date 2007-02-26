@@ -21,6 +21,10 @@ Instructs the GUI that you want to quit. The GUI responds by bringing up a dialo
 	gui.quit()
 
 def findObjectWithFocus():
+	"""Walks the object hyerarchy starting at the desktop Window (root object) and follows the activeChild property of each object until it can not go any further - this will be the object with focus.
+@returns: object with focus
+@rtype: NVDAObject
+"""
 	prevObj=getDesktopObject()
 	obj=prevObj.activeChild
 	while obj and obj!=prevObj:
@@ -75,15 +79,19 @@ Before overriding the last object, this function calls event_looseFocus on the o
 	return True
 
 def getMouseObject():
+	"""Returns the object that is directly under the mouse"""
 	return globalVars.mouseObject
 
 def setMouseObject(obj):
+	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
 	globalVars.mouseObject=obj
 
 def getDesktopObject():
+	"""Get the desktop object"""
 	return globalVars.desktopObject
 
 def setDesktopObject(obj):
+	"""Tells NVDA to remember the given object as the desktop object"""
 	globalVars.desktopObject=obj
 
 def getNavigatorObject():
@@ -135,9 +143,11 @@ def isVirtualBufferPassThrough():
 	return globalVars.virtualBufferPassThrough
 
 def createStateList(states):
+	"""Breaks down the given integer in to a list of numbers that are 2 to the power of their position.""" 
 	return filter(lambda x: x&states,[1<<bitVal for bitVal in xrange(32)])
 
 def moveMouseToNVDAObject(obj):
+	"""Moves the mouse to the given NVDA object's position""" 
 	location=obj.location
 	if location and (len(location)==4):
 		(left,top,width,height)=location

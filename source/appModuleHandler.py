@@ -91,7 +91,7 @@ def getActiveModule():
 @returns: the active appModule
 @rtype: appModule
 """
-		return getAppModuleFromWindow(winUser.getForegroundWindow())
+	return getAppModuleFromWindow(winUser.getForegroundWindow())
 
 def getAppModuleFromWindow(windowHandle):
 	"""Finds the appModule that is for the given window handle. This window handle can be any window with in an application, not just the app main window.
@@ -165,12 +165,12 @@ def fetchModule(appName):
 	mod=None
 	if moduleExists(appName):
 		try:
-			mod=__import__(appName,globals(),locals(),[]).appModule(appName,appWindow)
+			mod=__import__(appName,globals(),locals(),[]).appModule
 		except:
 			debug.writeException("appModuleHandler.loadModule: Error in appModule %s"%appName)
 			audio.speakMessage("Error in appModule %s"%appName,wait=True)
 	if mod is None:
-		mod=appModule(appName,appWindow)
+		return appModule
 	return mod
 
 def initialize():
