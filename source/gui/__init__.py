@@ -110,6 +110,7 @@ class MainFrame(wx.Frame):
 		style=wx.DEFAULT_FRAME_STYLE
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
+		style+=wx.FRAME_NO_TASKBAR
 		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(500,500), style)
 		wx.EVT_COMMAND(self,id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
@@ -165,6 +166,7 @@ class MainFrame(wx.Frame):
 		self.SetIcon(icon)
 		self.sysTrayButton=wx.TaskBarIcon()
 		self.sysTrayButton.SetIcon(icon,_("NVDA"))
+		self.sysTrayButton.Bind(wx.EVT_TASKBAR_LEFT_DCLICK,self.onShowGuiCommand)
 		self.Center()
 		self.Show(True)
 		if config.conf["general"]["hideInterfaceOnStartup"]:
