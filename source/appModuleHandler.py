@@ -5,8 +5,12 @@
 #See the file COPYING for more details.
 
 """Manages appModules.
-@ivar current: holds the currently loaded appModule
-@type current: appModule
+@var default: holds the default appModule.
+@type: default: appModule
+@var runningTable: a dctionary of the currently running appModules, using their application's main window handle as a key value.
+@type runningTable: dict
+@var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
+@type re_keyScript: regular expression
 """
 
 from new import instancemethod
@@ -42,6 +46,10 @@ _wmi = win32com.client.GetObject('winmgmts:')
 
 def getAppName(window):
 	"""Finds out the application name of the given window.
+@param window: the window handle of the application you wish to get the name of.
+@type window: int
+@returns: application name
+@rtype: string
 """
 	try:
 		processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))
@@ -56,9 +64,21 @@ def getAppName(window):
 		return None
 
 def moduleExists(name):
+	"""Checks if an appModule by the given application name exists.
+@param name: the application name
+@type name: string
+@returns: True if it exists, false otherwise.
+@rtype: bool
+"""
 	return os.path.isfile('appModules/%s.py'%name)
 
 def getKeyMapFileName(appName,layout):
+	"""Finds the file path for the key map file, given the application name and keyboard layout.
+@param appName: name of application
+@type appName: string
+@returns: file path of key map file (.kbd file)
+@rtype: string 
+"""
 	if os.path.isfile('appModules/%s_%s.kbd'%(appName,layout)):
 		return 'appModules/%s_%s.kbd'%(appName,layout)
 	elif layout!='desktop':
@@ -67,9 +87,19 @@ def getKeyMapFileName(appName,layout):
 		return None
 
 def getActiveModule():
+	"""Finds the appModule that is for the current foreground window.
+@returns: the active appModule
+@rtype: appModule
+"""
 		return getAppModuleFromWindow(winUser.getForegroundWindow())
 
 def getAppModuleFromWindow(windowHandle):
+	"""Finds the appModule that is for the given window handle. This window handle can be any window with in an application, not just the app main window.
+@param windowHandle: window who's appModule you want to find
+@type windowHandle: int
+@returns: the appModule, or None if there isn't one
+@rtype: appModule 
+"""
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
 	if runningTable.has_key(appWindow):
 		mod=runningTable[appWindow]
@@ -78,6 +108,10 @@ def getAppModuleFromWindow(windowHandle):
 	return mod
 
 def update(windowHandle):
+	"""Removes any appModules connected with windows that no longer exist, and uses the given window handle to try and load a new appModule if need be.
+@param windowHandle: any window in an application
+@type windowHandle: int
+"""
 	for w in [x for x in runningTable if not winUser.isWindow(x)]:
 		debug.writeMessage("appModuleHandler.update: application %s closed, window %s"%(runningTable[w].appName,w))
 		del runningTable[w]
@@ -90,13 +124,20 @@ def update(windowHandle):
 			debug.writeMessage("appModuleHandler.update: could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
 			return
 		debug.writeMessage("appModuleHandler.update: Application %s registered, window %s (%s)"%(appName,appWindow,winUser.getClassName(appWindow)))
-		mod=fetchModule(appName,appWindow)
-		if mod and mod.__class__!=appModule:
+		mod=fetchModule(appName)
+		if mod: 
+			mod=mod(appName,appWindow)
 			debug.writeMessage("Loaded appModule %s"%mod.appName) 
 			loadKeyMap(appName,mod)
 		runningTable[appWindow]=mod
 
 def loadKeyMap(appName,mod):
+	"""Loads a key map in to the given appModule, with the given name. if the key map exists. It takes in to account what layout NVDA is currently set to.
+@param appName: the application name
+@type appName: string
+@param mod: athe appModule
+@type mod: appModule
+"""  
 	layout=config.conf["keyboard"]["keyboardLayout"]
 	keyMapFileName=getKeyMapFileName(appName,layout)
 	if not keyMapFileName:
@@ -114,7 +155,13 @@ def loadKeyMap(appName,mod):
 	debug.writeMessage("appModuleHandler.loadKeyMap: added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
   	return True
 
-def fetchModule(appName,appWindow):
+def fetchModule(appName):
+	"""Returns an appModule found in the appModules directory, for the given application name. It only returns the class, it must be initialized with a name and a window to actually be used.
+@param appName: the application name who's appModule to find
+@type appName: string
+@returns: the appModule, or None if not found
+@rtype: appModule
+"""  
 	mod=None
 	if moduleExists(appName):
 		try:
@@ -127,8 +174,12 @@ def fetchModule(appName,appWindow):
 	return mod
 
 def initialize():
+	"""Initializes the appModule subsystem. 
+"""
 	global default
-	default=fetchModule('_default',winUser.getDesktopWindow())
+	defaultModClass=fetchModule('_default')
+	if defaultModClass:
+		default=defaultModClass('_default',winUser.getDesktopWindow())
 	if default:
 		if loadKeyMap('_default',default):
 			debug.writeMessage("appModuleHandler.initialize: loaded default module")
@@ -141,6 +192,12 @@ def initialize():
 
 #base class for appModules
 class appModule(baseObject.scriptableObject):
+	"""AppModule base class
+@var appName: the application name
+@type appName: string
+@var appWindow: the application main window
+@type appWindow: int
+"""
 
 	def __init__(self,appName,appWindow):
 		self.appName=appName
