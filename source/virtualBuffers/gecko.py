@@ -205,7 +205,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		if role==IAccessibleHandler.ROLE_SYSTEM_TEXT and states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			data=obj.value
 			if data and not data.isspace():
-				text="%s "%data
+				text="%s"%data
 		elif role=="white space":
 			text=obj.name.replace('\r\n','\n')
 		elif role=="frame":
@@ -302,7 +302,10 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["typeString"]=fieldNames[fieldType_checkBox]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			text="%s "%obj.value
+			val=obj.value
+			if val=="":
+				val="\0"
+			text=val
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
 			if obj.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:

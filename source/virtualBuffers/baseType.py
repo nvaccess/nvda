@@ -134,12 +134,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		isMurging=False
 		text=text.replace('\r\n','\n')
 		text=text.replace('\r','\n')
-		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
-		if len(text)>maxLineLength:
-			wrapper = TextWrapper(width=config.conf["virtualBuffers"]["maxLineLength"], expand_tabs=False, replace_whitespace=False, break_long_words=False)
-		 	text=wrapper.fill(text)
 		bufLen=self.text_characterCount
-		textLen=len(text)
 		IDs=self._IDs
 		#If no position given, assume end of buffer
 		if position is None:
@@ -148,8 +143,18 @@ class virtualBuffer(textBuffer.textBufferObject):
 		#If this ID path already has a range, expand it to fit the new text
 		r=IDs[ID]['range']
 		if (r[1]==position) and (r[1]>r[0]):
-			position=position-1
+			#Grab the old text in this range and prepend it to the new text, dropping the newline 
+			text="".join([self._textBuf[r[0]:r[1]-1],text])
+			#Remove the old text from the buffer as it will be added later along with the new text
+			self._textBuf="".join([self._textBuf[0:r[0]],self._textBuf[r[1]:]])
+			position=r[0]
 			isMurging=True
+		textLen=len(text)
+		#Force the text being added to wrap at a configurable length
+		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
+		if len(text)>maxLineLength:
+			wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
+			text=wrapper.fill(text)
 		self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
 		extraLength=textLen+1
 		r[1]=position+extraLength
