@@ -40,5 +40,6 @@ setup(
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
+		("images", glob("images/*.png")),
 	],
 )

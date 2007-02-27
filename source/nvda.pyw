@@ -4,17 +4,25 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import os
+import sys
+if hasattr(sys, "frozen") and sys.frozen:
+	# We are running as an executable.
+	# Append the path of the executable to sys so we can import modules from the dist dir.
+	sys.path.append(sys.prefix)
+	os.chdir(sys.prefix)
+else:
+	os.chdir(os.path.dirname(__file__))
+
 #import gc
 #gc.set_debug(gc.DEBUG_LEAK)
 import time
 import globalVars
 globalVars.startTime=time.time()
 
-import os
 os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
-import sys
 import codecs
 stderrFile=codecs.open("stderr.log","w","utf-8","ignore")
 if stderrFile is None:
