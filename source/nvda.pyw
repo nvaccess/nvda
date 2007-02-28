@@ -12,7 +12,7 @@ if hasattr(sys, "frozen") and sys.frozen:
 	sys.path.append(sys.prefix)
 	os.chdir(sys.prefix)
 else:
-	os.chdir(os.path.dirname(__file__))
+	os.chdir(sys.path[0])
 
 #import gc
 #gc.set_debug(gc.DEBUG_LEAK)

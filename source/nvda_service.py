@@ -15,7 +15,7 @@ if os.path.basename(sys.argv[0]).lower() == "pythonservice.exe":
 	# We are running as a service.
 	os.chdir(sys.path[-1])
 else:
-	os.chdir(os.path.dirname(__file__))
+	os.chdir(sys.path[0])
 
 gettext.install('nvda',localedir='locale',unicode=True)
 globalVars.startTime=time.time()
