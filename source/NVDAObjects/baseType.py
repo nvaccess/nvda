@@ -89,11 +89,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldValue=None
 		self._oldName=None
 		self._oldDescription=None
-		self._reviewOffset=0
-		self._text_lastReportedPresentation={}
-		self.text_reviewOffset=0
 		self._hashLimit=10000000
-		self._hashPrime=17
+		self._hashPrime=23
 
 	def __hash__(self):
 		l=self._hashLimit

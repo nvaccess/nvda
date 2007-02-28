@@ -172,11 +172,7 @@ def main():
 					delList.append(ID)
 			for ID in delList:
 				del threads[ID]
-			msg=winUser.MSG()
 			pythoncom.PumpWaitingMessages()
-			#if winUser.peekMessage(ctypes.byref(msg),0,0,0,winUser.PM_REMOVE|winUser.PM_NOYIELD):
-			#	winUser.translateMessage(ctypes.byref(msg))
-			#	winUser.dispatchMessage(ctypes.byref(msg))
 			if queueList[EXEC_KEYBOARD].empty() and queueList[EXEC_MOUSE].empty() and queueList[EXEC_USERINTERFACE].empty() and queueList[EXEC_SPEECH].empty() and queueList[EXEC_CONFIG].empty():
 				time.sleep(0.001)
 	except:

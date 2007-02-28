@@ -311,7 +311,7 @@ def getCaretPos():
 
 def getWindowText(hwnd):
 	buf=ctypes.create_unicode_buffer(1024)
-	user32.InternalGetWindowText(hwnd,buf,1024)
+	user32.InternalGetWindowText(hwnd,buf,1023)
 	return buf.value
 
 def getWindow(window,relation):
