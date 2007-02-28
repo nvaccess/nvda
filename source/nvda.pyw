@@ -6,7 +6,7 @@
 
 import os
 import sys
-if hasattr(sys, "frozen") and sys.frozen:
+if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)

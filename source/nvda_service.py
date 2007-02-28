@@ -10,9 +10,13 @@ import os
 import debug
 import globalVars
 
-# This won't work if running as a py2exe service.
-if os.path.basename(sys.argv[0]).lower() == "pythonservice.exe":
-	# We are running as a service.
+if getattr(sys, "frozen", None):
+	# We are running as an executable.
+	# Append the path of the executable to sys so we can import modules from the dist dir.
+	sys.path.append(sys.prefix)
+	os.chdir(sys.prefix)
+elif os.path.basename(sys.argv[0]).lower() == "pythonservice.exe":
+	# We are running as a service, but not an executable.
 	os.chdir(sys.path[-1])
 else:
 	os.chdir(sys.path[0])
