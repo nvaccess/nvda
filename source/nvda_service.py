@@ -10,7 +10,13 @@ import os
 import debug
 import globalVars
 
-os.chdir('c:\\work\\nvda-trunk\\source')
+# This won't work if running as a py2exe service.
+if os.path.basename(sys.argv[0]).lower() == "pythonservice.exe":
+	# We are running as a service.
+	os.chdir(sys.path[-1])
+else:
+	os.chdir(os.path.dirname(__file__))
+
 gettext.install('nvda',localedir='locale',unicode=True)
 globalVars.startTime=time.time()
 

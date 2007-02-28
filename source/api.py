@@ -11,6 +11,7 @@ import globalVars
 import audio
 import NVDAObjects
 import winUser
+import core
 
 #User functions
 
@@ -154,4 +155,5 @@ def moveMouseToNVDAObject(obj):
 		x=(left+left+width)/2
 		y=(top+top+height)/2
 		winUser.setCursorPos(x,y)
- 
+def isKeyWaiting():
+	return not core.queueList[core.EXEC_KEYBOARD].empty()

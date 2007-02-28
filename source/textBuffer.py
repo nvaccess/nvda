@@ -1,3 +1,4 @@
+import time
 import baseObject
 import config
 import audio
@@ -549,6 +550,11 @@ class textBufferObject(baseObject.scriptableObject):
 			newPoint=self.text_caretOffset
 			if newPoint<point:
 				audio.speakSymbol(delChar)
+			else:
+				time.sleep(0.01)
+				newPoint=self.text_caretOffset
+				if newPoint<point:
+					audio.speakSymbol(delChar)
 		else:
 			sendKey(keyPress)
 			audio.speakText("")
