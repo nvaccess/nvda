@@ -30,6 +30,7 @@ setup(
 'Operating System :: Microsoft :: Windows',
 ],
 	windows = ["nvda.pyw"],
+	service=['nvda_service'],
 	options = {"py2exe": {"bundle_files": 3}},
 	zipfile = None,
 	data_files = [
