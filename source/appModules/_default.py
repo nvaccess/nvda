@@ -349,8 +349,7 @@ class appModule(appModuleHandler.appModule):
 		o.text_reportPresentation(o.text_reviewOffset)
 
 	def script_reportCurrentFocus(self,keyPress,nextScript):
-		#focusObject=api.getFocusObject()
-		focusObject=api.findObjectWithFocus()
+		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
 			focusObject.speakObject()
 		else:
