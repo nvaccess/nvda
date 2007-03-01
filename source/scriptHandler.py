@@ -12,7 +12,10 @@ def findScript(keyPress):
 		return findScript_appModuleLevel(keyPress)
 
 def findScript_appModuleLevel(keyPress):
-	appModule=api.getFocusObject().appModule()
+	focusObject=api.getFocusObject()
+	if not focusObject:
+		return None
+	appModule=focusObject.appModule()
 	func=appModule.getScript(keyPress) if appModule else None
 	if func:
 		nextFunc=lambda keyPress=keyPress: findScript_defaultAppModuleLevel(keyPress)

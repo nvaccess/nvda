@@ -488,6 +488,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
+				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				core.executeFunction(core.EXEC_USERINTERFACE,correctFocus)
@@ -552,14 +553,18 @@ def correctFocus():
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
 
 def initialize():
-	api.setDesktopObject(NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0))
+	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
+	if not isinstance(desktopObject,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+		raise OSError("can not get desktop object")
+	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
 	objectEventCallback(0,winUser.EVENT_SYSTEM_FOREGROUND,winUser.getForegroundWindow(),OBJID_CLIENT,0,0,0)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		objectEventCallback(0,winUser.EVENT_OBJECT_FOCUS,focusObject.windowHandle,OBJID_CLIENT,0,0,0)
-	else:
-		api.setFocusObject(api.getForegroundObject())
-	api.setNavigatorObject(api.getFocusObject())
 	for eventType in eventMap.keys():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
 		if handle:
