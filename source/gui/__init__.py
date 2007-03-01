@@ -101,6 +101,7 @@ id_onAbortCommand=wx.NewId()
 ### Globals
 guiThread = None
 mainFrame = None
+pumpLock = None
 guiInitialized=False
 
 class MainFrame(wx.Frame):
@@ -215,12 +216,16 @@ class MainFrame(wx.Frame):
 		d.Show(True)
 
 	def onSynthesizerCommand(self,evt):
+		pumpLock.acquire()
 		d=synthesizerDialog(self,-1,_("Synthesizer"))
 		d.Show(True)
+		pumpLock.release()
 
 	def onVoiceCommand(self,evt):
+		pumpLock.acquire()
 		d=voiceSettingsDialog(self,-1,_("Voice settings"))
 		d.Show(True)
+		pumpLock.release()
 
 	def onKeyboardEchoCommand(self,evt):
 		oldChars=config.conf["keyboard"]["speakTypedCharacters"]
@@ -280,8 +285,9 @@ def guiMainLoop():
 		globalVars.stayAlive=False
 
 def initialize():
-	global guiThread
+	global guiThread, pumpLock
 	guiThread = threading.Thread(target = guiMainLoop)
+	pumpLock = threading.RLock()
 	guiThread.start()
 	while not guiInitialized:
 		time.sleep(0.01)

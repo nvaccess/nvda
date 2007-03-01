@@ -172,7 +172,9 @@ def main():
 					delList.append(ID)
 			for ID in delList:
 				del threads[ID]
+			gui.pumpLock.acquire()
 			pythoncom.PumpWaitingMessages()
+			gui.pumpLock.release()
 			if queueList[EXEC_KEYBOARD].empty() and queueList[EXEC_MOUSE].empty() and queueList[EXEC_USERINTERFACE].empty() and queueList[EXEC_SPEECH].empty() and queueList[EXEC_CONFIG].empty():
 				time.sleep(0.001)
 	except:
