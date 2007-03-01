@@ -855,6 +855,7 @@ _staticMap={
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):MSHTML.NVDAObject_MSHTML,
 ("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
 ("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
+("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
 ("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
 ("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
 ("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):richEdit.NVDAObject_richEdit,
