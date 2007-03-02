@@ -15,8 +15,8 @@ ID_MOUSE=2
 ID_EVENT=3
 ID_CONFIG=4
 queueOrder=list(range(5))
+queueList=[Queue(MAX_ITEMS) for x in queueOrder]
 
-queueList=[Queue(MAX_ITEMS)]*5
 generators={}
 lastGeneratorObjID=0
 
@@ -33,8 +33,9 @@ def queueFunction(queueID,func,*args,**vars):
 	else:
 		raise RuntimeError('Queue full')
 
-def isPendingItems(queueIDs=[]):
-	queueIDs=queueOrder if len(queueIDs)<1 else queueIDs
+def isPendingItems(queueIDs=None):
+	if queueIDs==None:
+		queueIDs=queueOrder
 	res=any((not queueList[x].empty() for x in queueIDs))
 	return res
 
@@ -47,8 +48,7 @@ def pumpAll():
 			generators[ID].next()
 		except:
 			del generators[ID]
-	for queueID in queueOrder:
-		queue=queueList[queueID]
+	for queue in queueList:
 		if queue.empty():
 			continue
 		func=queue.get_nowait()
