@@ -2,7 +2,7 @@ import baseObject
 import config
 import audio
 import debug
-from keyUtils import sendKey, key
+from keyUtils import sendKey, key, isKeyWaiting
 import api
 
 class textBufferObject(baseObject.scriptableObject):
@@ -461,35 +461,35 @@ class textBufferObject(baseObject.scriptableObject):
 	def script_text_moveByLine(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
-		if not api.isKeyWaiting():
+		if not isKeyWaiting():
 			self.text_speakLine(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
 	def script_text_moveByCharacter(self,keyPress,nextScript):
 		"""Moves and reads the current character"""
 		sendKey(keyPress)
-		if not api.isKeyWaiting():
+		if not isKeyWaiting():
 			self.text_speakCharacter(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
 	def script_text_moveByWord(self,keyPress,nextScript):
 		"""Moves and reads the current word"""
 		sendKey(keyPress)
-		if not api.isKeyWaiting():
+		if not isKeyWaiting():
 			self.text_speakWord(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
 	def script_text_moveBySentence(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
-		if not api.isKeyWaiting():
+		if not isKeyWaiting():
 			self.text_speakSentence(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 
 	def script_text_moveByParagraph(self,keyPress,nextScript):
 		"""Moves and then reads the current line"""
 		sendKey(keyPress)
-		if not api.isKeyWaiting():
+		if not isKeyWaiting():
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
 

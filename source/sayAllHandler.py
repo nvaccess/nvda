@@ -4,12 +4,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import core
+import queueHandler
 import audio
 import globalVars
 
 def sayAll(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor):
-	core.newThread(sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor))
+	queueHandler.registerGeneratorObject(sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor))
 
 def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor):
 	curPos=fromOffset

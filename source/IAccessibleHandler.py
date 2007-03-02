@@ -140,7 +140,7 @@ import eventHandler
 import winUser
 import audio
 import api
-import core
+import queueHandler
 import virtualBuffers
 import NVDAObjects
 import appModuleHandler
@@ -491,7 +491,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
-				core.executeFunction(core.EXEC_USERINTERFACE,correctFocus)
+				queueHandler.queueFunction(queueHandler.ID_EVENT,correctFocus)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
 				api.setForegroundObject(desktopObject)
@@ -507,17 +507,17 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
 			if obj and obj.name!=lastMouseShape:
-				core.executeFunction(core.EXEC_MOUSE,obj.speakObject)
+				queueHandler.queueFunction(queueHandler.EXEC_MOUSE,obj.speakObject)
 				globals()["lastMouseShape"]=obj.name
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			core.executeFunction(core.EXEC_USERINTERFACE,updateForegroundFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.ID_EVENT,updateForegroundFromEvent,window,objectID,childID)
 		#Process focus events
 		elif eventName=="gainFocus":
-			core.executeFunction(core.EXEC_USERINTERFACE,updateFocusFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.ID_EVENT,updateFocusFromEvent,window,objectID,childID)
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
-		core.executeFunction(core.EXEC_USERINTERFACE,manageEvent,eventName,window,objectID,childID)
+		queueHandler.queueFunction(queueHandler.ID_EVENT,manageEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 

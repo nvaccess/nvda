@@ -8,6 +8,7 @@ import time
 import pyHook
 import debug
 import winUser
+import queueHandler
 
 def key(name):
 	"""Converts a string representation of a keyPress in to a set of modifiers and a key (which is NVDA's internal key representation).
@@ -100,4 +101,12 @@ def sendKey(keyPress):
 	keyList.reverse()
 	for k in keyList:
 		winUser.keybd_event(k[0],0,k[1]+2,0)
-	time.sleep(0.01)
+	if not isKeyWaiting():
+		time.sleep(0.01)
+
+def isKeyWaiting():
+	"""Determines whether a script key is waiting to be handled.
+	@returns: C{True} if a script key is waiting to be handled, C{False} otherwise.
+	@rtype: boolean
+"""
+	return queueHandler.isPendingItems([queueHandler.ID_SCRIPT])

@@ -9,7 +9,8 @@ import wx
 import synthDriverHandler
 import debug
 import config
-import core
+import queueHandler
+import languageHandler
 import audio
 
 class interfaceSettingsDialog(wx.Dialog):
@@ -22,7 +23,7 @@ class interfaceSettingsDialog(wx.Dialog):
 		languageLabel=wx.StaticText(self,-1,label=_("Language (requires restart to fully take affect)"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
-		languages=[x for x in os.listdir('locale') if not x.startswith('.')]
+		languages=languageHandler.getAvailableLanguages()
 		languageList=wx.Choice(self,languageListID,name=_("Language"),choices=languages)
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
@@ -55,7 +56,7 @@ class interfaceSettingsDialog(wx.Dialog):
 
 	def onLanguageChange(self,evt):
 		lang=evt.GetString()
-		core.setLanguage(lang)
+		languageHandler.setLanguage(lang)
 		config.conf["general"]["language"]=lang
 
 	def onHideInterfaceChange(self,evt):
@@ -65,7 +66,7 @@ class interfaceSettingsDialog(wx.Dialog):
 		config.conf["general"]["saveConfigurationOnExit"]=evt.IsChecked()
 
 	def onCancel(self,evt):
-		core.setLanguage(self.oldLanguage)
+		queueHandler.setLanguage(self.oldLanguage)
 		config.conf["general"]["hideInterfaceOnStartup"]=self.oldHideInterface
 		config.conf["general"]["saveConfigurationOnExit"]=self.oldSaveOnExit
 		self.Destroy()
@@ -101,7 +102,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		core.executeFunction(core.EXEC_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
+		queueHandler.queueFunction(queueHandler.id_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):
@@ -174,16 +175,16 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,evt.GetSelection()+1)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVoice,evt.GetSelection()+1)
 
 	def onRateChange(self,evt):
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setRate,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setRate,evt.GetSelection())
 
 	def onPitchChange(self,evt):
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setPitch,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setPitch,evt.GetSelection())
 
 	def onVolumeChange(self,evt):
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVolume,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVolume,evt.GetSelection())
 
 	def onPunctuationChange(self,evt):
 		config.conf["speech"]["speakPunctuation"]=evt.IsChecked()
@@ -193,10 +194,10 @@ class voiceSettingsDialog(wx.Dialog):
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=evt.IsChecked()
 
 	def onCancel(self,evt):
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVoice,self.oldVoice)
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setRate,self.oldRate)
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setPitch,self.oldPitch)
-		core.executeFunction(core.EXEC_SPEECH,synthDriverHandler.setVolume,self.oldVolume)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVoice,self.oldVoice)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setRate,self.oldRate)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setPitch,self.oldPitch)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVolume,self.oldVolume)
 		config.conf["speech"]["speakPunctuation"]=self.oldPunctuation
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=self.oldCaps
 		self.Destroy()

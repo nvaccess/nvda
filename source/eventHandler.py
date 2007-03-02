@@ -21,7 +21,6 @@ def manageEvent_defaultAppModuleLevel(name,obj):
 
 def manageEvent_virtualBufferLevel(name,obj):
 	virtualBuffer=obj.virtualBuffer()
-	debug.writeMessage("virtualBuffer: %s, %s %s"%(name,virtualBuffer,virtualBuffer.__class__))
 	if hasattr(virtualBuffer,'event_%s'%name):
 		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: manageEvent_NVDAObjectLevel(name,obj))
 	else:

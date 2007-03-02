@@ -155,10 +155,3 @@ def moveMouseToNVDAObject(obj):
 		x=(left+left+width)/2
 		y=(top+top+height)/2
 		winUser.setCursorPos(x,y)
-
-def isKeyWaiting():
-	"""Determines whether a script key is waiting to be handled.
-	@returns: C{True} if a script key is waiting to be handled, C{False} otherwise.
-	@rtype: boolean
-"""
-	return not core.queueList[core.EXEC_KEYBOARD].empty()

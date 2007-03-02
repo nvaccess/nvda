@@ -15,7 +15,7 @@ import synthDriverHandler
 import config
 import versionInfo
 import audio
-import core
+import queueHandler
 import pythoncom
 from settingsDialogs import *
 
@@ -190,11 +190,11 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		core.executeFunction(core.EXEC_CONFIG,core.applyConfiguration,reportDone=True)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,queueHandler.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		config.save()
-		core.executeFunction(core.EXEC_SPEECH,audio.speakMessage,_("configuration saved"))
+		queueHandler.queueFunction(queueHandler.id_speech,audio.speakMessage,_("configuration saved"))
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()
