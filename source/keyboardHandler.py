@@ -93,7 +93,9 @@ def internal_keyDownEvent(event):
 			scriptLocation=scriptHandler.getScriptLocation(script)
 			scriptDescription=scriptHandler.getScriptDescription(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
-				core.executeFunction(core.EXEC_KEYBOARD,audio.speakMessage,"%s from %s, %s"%(scriptName,scriptLocation,scriptDescription))
+				core.executeFunction(core.EXEC_KEYBOARD,audio.speakMessage,"%s"%scriptName.replace('_',' '))
+				core.executeFunction(core.EXEC_KEYBOARD,audio.speakMessage,_("Description: %s")%scriptDescription)
+				core.executeFunction(core.EXEC_KEYBOARD,audio.speakMessage,_("Location: %s")%scriptLocation)
 			else:
 				core.executeFunction(core.EXEC_KEYBOARD,script,keyPress)
 		if script or globalVars.keyboardHelp:
