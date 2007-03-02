@@ -66,7 +66,7 @@ class interfaceSettingsDialog(wx.Dialog):
 		config.conf["general"]["saveConfigurationOnExit"]=evt.IsChecked()
 
 	def onCancel(self,evt):
-		queueHandler.setLanguage(self.oldLanguage)
+		languageHandler.setLanguage(self.oldLanguage)
 		config.conf["general"]["hideInterfaceOnStartup"]=self.oldHideInterface
 		config.conf["general"]["saveConfigurationOnExit"]=self.oldSaveOnExit
 		self.Destroy()
