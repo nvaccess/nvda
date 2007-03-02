@@ -507,7 +507,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
 			if obj and obj.name!=lastMouseShape:
-				queueHandler.queueFunction(queueHandler.EXEC_MOUSE,obj.speakObject)
+				queueHandler.queueFunction(queueHandler.ID_MOUSE,obj.speakObject)
 				globals()["lastMouseShape"]=obj.name
 			return
 		#Process foreground events

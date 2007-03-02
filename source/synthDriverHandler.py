@@ -11,7 +11,7 @@ import config
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
 
-autoTrySynthList=["sapi5","sapi4","viavoice"]
+autoTrySynthList=["sapi5"]
 driverObject=None
 driverName=None
 driverVoiceNames=[]

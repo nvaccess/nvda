@@ -6,7 +6,7 @@
 
 import pyHook
 import winUser
-import core
+import queueHandler
 import api
 import debug
 import audio
@@ -26,9 +26,9 @@ def internal_mouseEvent(event):
 		return True
 	try:
 		if event.MessageName=="mouse move":
-			core.executeFunction(core.EXEC_MOUSE,executeMouseMoveEvent,event.Position[0],event.Position[1])
+			queueHandler.executeFunction(queueHandler.ID_MOUSE,executeMouseMoveEvent,event.Position[0],event.Position[1])
 		elif event.MessageName.endswith("down"):
-			core.executeFunction(core.EXEC_SPEECH,audio.cancel)
+			queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.cancel)
 		return True
 	except:
 		debug.writeException("mouseHandler.internal_mouseEvent")
