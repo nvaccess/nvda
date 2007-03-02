@@ -77,8 +77,12 @@ class synthDriver(baseObject.autoPropertyObject):
 	def _set_voice(self,value):
 		if value>len(self.voiceNames):
 			value=1
+		self.tts=comtypesClient.CreateObject('sapi.SPVoice')
 		self.tts.Voice(self.tts.GetVoices()[value-1])
 		self._voice=value
+		self.rate=self._rate
+		self.volume=self._volume
+
 
 	def speakText(self,text,wait=False,index=None):
 		flags=constants.SVSFIsXML
