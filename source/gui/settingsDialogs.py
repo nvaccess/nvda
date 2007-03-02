@@ -102,7 +102,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		queueHandler.queueFunction(queueHandler.id_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):
