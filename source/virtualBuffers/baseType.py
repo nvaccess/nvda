@@ -149,12 +149,12 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self._textBuf="".join([self._textBuf[0:r[0]],self._textBuf[r[1]:]])
 			position=r[0]
 			isMurging=True
-		textLen=len(text)
 		#Force the text being added to wrap at a configurable length
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		if len(text)>maxLineLength:
 			wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
 			text=wrapper.fill(text)
+		textLen=len(text)
 		self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
 		extraLength=textLen+1
 		r[1]=position+extraLength
