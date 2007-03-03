@@ -20,7 +20,7 @@ speechMode_beeps=1
 speechMode_talk=2
 speechMode=2
 speechMode_beeps_ms=15
-
+beenCanceled=True
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -43,11 +43,15 @@ def processText(text):
 
 def cancel():
 	"""Interupts the synthesizer from currently speaking"""
-	if speechMode==speechMode_off:
+	global beenCanceled
+	if beenCanceled:
+		return
+	elif speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		return
 	synthDriverHandler.cancel()
+	beenCanceled=True
 
 def speakMessage(text,wait=False,index=None):
 	"""Speaks a given message.
@@ -59,11 +63,13 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with 
 @type index: int
 """
+	global beenCanceled
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
 		synthDriverHandler.speakText("\n"+text+"\n",wait=wait,index=index)
@@ -90,11 +96,13 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with 
 @type index: int
 """
+	global beenCanceled
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	beenCanceled=False
 	text=""
 	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
 		multiList=[stateText,name,typeString,value,description,position,level,contains]
@@ -120,11 +128,13 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 @param index: the index to mark this current text with 
 @type index: int
 """
+	global beenCanceled
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	beenCanceled=False
 	symbol=processSymbol(symbol)
 	if (symbol[0]>='A') and (symbol[0]<='Z'):
 		uppercase=True
@@ -149,11 +159,13 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
+	global beenCanceled
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
 		synthDriverHandler.speakText(text,wait=wait,index=index)

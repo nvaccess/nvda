@@ -29,7 +29,7 @@ def registerGeneratorObject(generatorObj):
 
 def queueFunction(queueID,func,*args,**vars):
 	if not queueList[queueID].full():
-		queueList[queueID].put_nowait(lambda: func(*args,**vars))
+		queueList[queueID].put_nowait((func,args,vars))
 	else:
 		raise RuntimeError('Queue full')
 
@@ -48,11 +48,15 @@ def pumpAll():
 			generators[ID].next()
 		except:
 			del generators[ID]
-	for queue in queueList:
+	for queueID,queue in enumerate(queueList):
 		if queue.empty():
 			continue
-		func=queue.get_nowait()
+		(func,args,vars)=queue.get_nowait()
+		if queueID==ID_SPEECH:
+			debug.writeMessage("speech queue: %s%s"%(func,str(args)))
+		elif queueID==ID_SCRIPT:
+			debug.writeMessage("speech queue: %s%s"%(func,str(args)))
 		try:
-			func()
+			func(*args,**vars)
 		except:
 			debug.writeException("function from queue %s"%queueID)

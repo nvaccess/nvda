@@ -72,9 +72,7 @@ def main():
 			gui.pumpLock.acquire()
 			pythoncom.PumpWaitingMessages()
 			gui.pumpLock.release()
-			debug.writeMessage("queue start")
 			queueHandler.pumpAll()
-			debug.writeMessage("queue end")
 			if not queueHandler.isPendingItems(): 
 				time.sleep(0.001)
 	except:

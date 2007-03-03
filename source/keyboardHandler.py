@@ -43,13 +43,13 @@ def isTypingProtected():
 def internal_keyDownEvent(event):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
-	debug.writeMessage("key")
 	global insertDown, ignoreNextKeyPress, word
 	try:
 		if event.Injected:
 			return True
 		globalVars.keyCounter+=1
-		queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.cancel)
+		if not audio.beenCanceled:
+			queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.cancel)
 		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		if (event.Key=="Insert"): #and (event.Extended==0):
@@ -87,7 +87,7 @@ def internal_keyDownEvent(event):
 		elif mainKey=="ExtendedNumlock":
 			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
 			queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
-		queueHandler.queueFunction(queueHandler.ID_SPEECH,speakKey,keyPress,event.Ascii)
+		queueHandler.queueFunction(queueHandler.ID_SCRIPT,speakKey,keyPress,event.Ascii)
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
