@@ -9,16 +9,19 @@ import winsound
 import os
 import struct
 import math
+import tempfile
+from glob import glob
 
 sampleRate=22050.0
 slopeRatio=0.01
 amplitude=5000.0
+tempdir=tempfile.gettempdir()
 
 #Remove old tones
-[os.remove("waves/%s"%x) for x in filter(lambda x: x.startswith("_tone"),os.listdir("waves"))]
+[os.remove(x) for x in glob("%s\\nvda_tone_*"%tempdir)]  
 
 def beep(hz,length):
-	fileName="waves\\_tone%sHZ%sMS.wav"%(hz,length)
+	fileName="%s\\nvda_tone_%sHZ%sMS.wav"%(tempdir,hz,length)
 	if not os.path.isfile(fileName):
 		waveFile=wave.open(fileName,'w')
 		waveFile.setsampwidth(2)
