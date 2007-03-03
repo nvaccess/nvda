@@ -17,6 +17,7 @@ import versionInfo
 import audio
 import queueHandler
 import pythoncom
+import core
 from settingsDialogs import *
 
 ### Constants
@@ -190,11 +191,14 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,queueHandler.applyConfiguration,reportDone=True)
+		queueHandler.queueFunction(queueHandler.ID_CONFIG,core.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
-		config.save()
-		queueHandler.queueFunction(queueHandler.id_speech,audio.speakMessage,_("configuration saved"))
+		try:
+			config.save()
+			queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.speakMessage,_("configuration saved"))
+		except:
+			queueHandler.queueFunction(queueHandler.ID_SPEECH,audio.speakMessage,_("Could not save configuration - probably read only file system"))
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()

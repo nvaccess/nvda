@@ -32,7 +32,10 @@ def applyConfiguration(reportDone=False):
 	languageHandler.setLanguage(lang)
 	#Speech
 	audio.initialize()
-	config.save()
+	try:
+		config.save()
+	except:
+		pass
 	debug.writeMessage("core.applyConfiguration: configuration applyed")
 	if reportDone:
 		audio.speakMessage(_("configuration applyed"))
@@ -57,7 +60,10 @@ def main():
 		mouseHandler.initialize()
 		import queueHandler
 		audio.cancel()
-		config.save()
+		try:
+			config.save()
+		except:
+			pass
 		audio.speakMessage(_("NVDA started"),wait=True)
 	except:
 		debug.writeException("core.py main init")

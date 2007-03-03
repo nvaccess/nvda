@@ -6,25 +6,28 @@
 
 import os
 import sys
+import tempfile
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
 	os.chdir(sys.prefix)
+	debugFileName='%s\\nvda_debug.log'%tempfile.gettempdir()
+	stderrFileName='%s\\nvda_stderr.log'%tempfile.gettempdir()
 else:
 	os.chdir(sys.path[0])
+	debugFileName='debug.log'
+	stderrFileName='stderr.log'
 
-#import gc
-#gc.set_debug(gc.DEBUG_LEAK)
 import time
 import globalVars
 globalVars.startTime=time.time()
 
-os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
+#os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
 import codecs
-stderrFile=codecs.open("stderr.log","w","utf-8","ignore")
+stderrFile=codecs.open(stderrFileName,"w","utf-8","ignore")
 if stderrFile is None:
 	sys.exit()
 sys.stderr=stderrFile
@@ -32,7 +35,7 @@ sys.stdout=stderrFile
 import winsound
 winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 import debug
-debug.start("debug.log")
+debug.start(debugFileName)
 import gettext
 gettext.install("nvda", unicode=True)
 try:
