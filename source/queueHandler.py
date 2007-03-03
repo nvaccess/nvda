@@ -52,10 +52,6 @@ def pumpAll():
 		if queue.empty():
 			continue
 		(func,args,vars)=queue.get_nowait()
-		if queueID==ID_SPEECH:
-			debug.writeMessage("speech queue: %s%s"%(func,str(args)))
-		elif queueID==ID_SCRIPT:
-			debug.writeMessage("speech queue: %s%s"%(func,str(args)))
 		try:
 			func(*args,**vars)
 		except:
