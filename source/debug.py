@@ -45,14 +45,14 @@ def writeException(message):
 @param message: the message to write
 @type message: string
 """
+	winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
 	try:
-		trace=traceback.format_exc()
-		winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
-		debugFile.write("Exception %s\n"%datetime.datetime.now())
-		debugFile.write("%s: ----\n%s\n----\n"%(message,trace))
-		debugFile.flush()
+		info=traceback.format_exc()
 	except:
-		pass
+		info='unknown'
+	debugFile.write("Exception %s\n"%datetime.datetime.now())
+	debugFile.write("%s: ----\n%s\n----\n"%(message,info))
+	debugFile.flush()
 
 def start(fileName):
 	"""Starts debugging support.
