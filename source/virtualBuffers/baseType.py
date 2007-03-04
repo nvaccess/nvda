@@ -132,8 +132,6 @@ class virtualBuffer(textBuffer.textBufferObject):
 	def addText(self,ID,text,position=None):
 		isAppending=False
 		isMurging=False
-		text=text.replace('\r\n','\n')
-		text=text.replace('\r','\n')
 		bufLen=self.text_characterCount
 		IDs=self._IDs
 		#If no position given, assume end of buffer
@@ -144,11 +142,14 @@ class virtualBuffer(textBuffer.textBufferObject):
 		r=IDs[ID]['range']
 		if (r[1]==position) and (r[1]>r[0]):
 			#Grab the old text in this range and prepend it to the new text, dropping the newline 
-			text="".join([self._textBuf[r[0]:r[1]-1],text])
+			#text="".join([self._textBuf[r[0]:r[1]-1],text])
 			#Remove the old text from the buffer as it will be added later along with the new text
-			self._textBuf="".join([self._textBuf[0:r[0]],self._textBuf[r[1]:]])
-			position=r[0]
+			#self._textBuf="".join([self._textBuf[0:r[0]],self._textBuf[r[1]:]])
+			position=position-1 #r[0]
 			isMurging=True
+		#clean up newLine characters  a bit
+		text=text.replace('\r\n','\n')
+		text=text.replace('\r','\n')
 		#Force the text being added to wrap at a configurable length
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		if len(text)>maxLineLength:
