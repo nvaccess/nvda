@@ -49,7 +49,7 @@ confspec = StringIO("""# NVDA Configuration File
 
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)
-	reportMouseShapeChanges = boolean(default=true)
+	reportMouseShapeChanges = boolean(default=false)
 
 #Keyboard settings
 [keyboard]

@@ -1,3 +1,23 @@
+Changes since revision 380:
+*Added German language translation thanks to Ali Savas <ali-savas@gmx.de>.
+*Make the NVDA exit dialog act more like a standard warning dialog with icon and sound.
+*NVDA now has its own icon, which appears in the top left corner of the NVDA interface window, and also now on the system tray.
+*When the NVDA interface window is visible, it no longer has a taskbar icon, only a system tray icon. Pressing enter or double clicking on the system tray icon will bring up the NVDA interface window, just like insert+n.
+*Outlook express: When arrowing through an attachment list for an email, NVDA no longer reports each one as being called attachment.
+*Fixed some bugs in Mozilla application virtualBuffers where spaces were being inserted where they shouldn't be. Also some lines were still longer than the max line length configuration option.
+*Fixed a bug where NVDA would not be able to be started from any directory but its own.
+*Fixed bug where NVDA would not report the proper focus when in a menu, when pressing insert+upArrow
+*Possibly fixed a bug where NVDA would sometimes crash when a dos console window gained focus.
+*Fixed a bug where NVDA would report an error in keyboardHandler on startup.
+*Added support for the edit fields in Skype's add contact wizard.
+*Slightly improved cursor tracking and speaking of the right character when arrowing by character in some windows such as dos consoles.
+ *A possible fix for the bug where opening dialogs in the preferences menu would cause NVDA to crash.
+*Improved the speaking of script names and descriptions when in keyboard help mode (insert+1). Script names are now spoken with out the underlines, and the description is spoken before the location, rather than after.
+*When changing the voice of a sapi5 synthesizer, NVDA now reloads sapi5 each time. This fixes a problem where some voices would sound aliased or scratchy.
+*Improved performance when holding down arrow keys etc in edit fields and Word documents etc. Now NVDA only tries to speak the line or character if there is nothing else that has been already requested (i.e. it will only speak when finally letting go of the arrow keys).
+*NVDA should now be able to be run on read-only file systems (such as CDs) and should have slightly better performance when running off a USB key. This is because NVDA now creates all beep wave files and debugging logs etc in the user's temp directory, rather than its own. This does mean though now that if you wish to look at a debug file, they are now in the temp directory named as nvda_debug.log and nvda_stderr.log. Also NVDA now better handles the situation where the configuration file (nvda.ini) can not be saved because of a read-only file system.
+
+
 Changes since revision 348:
 *Improved responsiveness and accuracy of navigating around Outlook Express message edit controls and Internet Explorer edit controls.
 *The names of email fields in Outlook Express like To, CC, subject are all reported correctly when moving between them.
