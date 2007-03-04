@@ -1,43 +1,31 @@
-Nonvisual Desktop Access (NVDA)
-Access to Windows through free, open source, and nonvisual means.
+NVDA Readme file
 
-Created and maintained by Michael Curran, with help from  James Teh and others.
+An open-source (and free) Screen Reader for the Windows Operating System.
 
-Introduction
+Created by Michael Curran, with help from James Teh and others.
 
-NVDA was started because of a lack of affordable, or free, Windows access solutions for blind and vision impaired users. Currently people can be paying up to $1000 to use a Windows screen reader, yet on other platforms such as Linux, screen readers are already existing that are free.
+NonVisual Desktop Access (NVDA) is an open-source screen reader for the Windows Operating System, enabling blind and vision impaired people to use their computers for no more cost than that of the computer and Operating System itself. Started in April 2006, it has grown to become quite usable as a day-to-day screen reader, enabling the user to do most tasks they would need to. It is not as stable or as bug-free as some of the commercial screen readers. But since December 2006 the creator of NVDA has been able to use NVDA full-time as his primary screen reader, finally giving up his original commercial product. 
 
-NVDA is so far written entirely in the Python programming language, which is itself a free language, and is very quick to learn. Because Python can be also looked at as a scripting language, this also allows NVDA to be added to, and changed to suit user specific needs very easily.
+Providing feedback by synthetic speech, NVDA allows the user to access and interact with all parts of the Windows operating system, such as: 
 
-All source code is included with NVDA, and anyone is free to change it to suit their own needs.
+Browsing the web (with Internet Explorer and Firefox)
+Reading and writing documents with programs such as WordPad or Microsoft Word
+Sending and receiving email with Outlook Express 
+Using command-line programs in Dos windows
+Producing basic spreadsheets in Microsoft Excel
+General computer management through My Computer / Windows Explorer, Control Panel applets, and other generic Windows tasks
 
-NVDA works pretty much like any screen reader you would be used to.  Its main features are:
-*Uses MSAA to find out a control's name, role, state, value, description, help and index.
-*Uses the windows API to be able to read characters, selection and full text, of windows such as edit fields.
-*Uses OLE/com to access documents 
-*Responds to many MSAA events such as focus change, active item change, object creation, object destruction etc, and also when ever any of a control's MSAA attributes change.
-*Can access html pages through internet Explorer_server windows.
-*Responds to key press events.
-*Is modular-based (synth drivers and support for specific applications can be written as modules).
-*Has the ability to navigate the MSAA object tree with out moving the focus.
-*Can read dos console windows.
+NVDA is not restricted by a need to follow market trends and demands. Commercial screen readers implement really good features, but sometimes this is biased by what the market wants, rather than what will be really useful for the user. NVDA may not be always as stable as other screen readers, but it can certainly act as an experimental and testing tool. It can easily and quickly test new ideas and features perhaps not seen in other screen readers for the Windows Operating System. An example of this is NVDA's ability to use beeps to communicate to the user that a progress bar is moving. The higher the beep, the closer the progress bar is to the end. People have added this feature in to other screen readers through custom scripts and the like, but it has never been officially adapted completely in to the core of any other Windows screen reader. 
 
-Running NVDA
+You can help the development of NVDA by notifying them of bugs as you encounter them. The instructions for reporting bugs, and a number of useful articles, can be found in the wiki at: www.nvaccess.org/nvda/wiki. Or, if you would like more general information about NVDA you can visit the website at: www.nvaccess.org/nvda. There, you can also find information on joining the NVDA mailing lists. There are currently two lists: one for general user related discussions and a development list for anyone who runs and tests NVDA from source. 
 
-If you have the standallone version, you can just run nvda.exe and off you go.
+--- Copyright Info ---
+Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+NVDA is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both original and modified copies of the software, plus any software that uses code taken from this software.
+For further details, you can view the licence online at:
+http://www.gnu.org/licenses/gpl.html
+Or see the file Copying.txt that came with this software.
+----------------------
 
-For the python source version: As long as you have installed all dependency packages (python, pyAA, pyTTS, pyHook etc) you should be able to simply press enter on nvda.pyw in the source directory.
-Or in a cmd prompt, move to the source directory and execute nvda.pyw.
-
-NVDA is covered by the GNU General Public Licence. More details can be found in the file COPYING in this directory.
-
-Please send bugs and suggestions to:
-mick@kulgan.net
-
-NVDA website:
-http://www.nvaccess.org/nvda/
-
-We are always looking for testers, and we are always needing people who are interested in writing support for various applications.
-
-If interested, please email
+To contact the creater, please send an email to:
 Michael Curran <mick@kulgan.net>
