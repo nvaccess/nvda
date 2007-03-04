@@ -9,12 +9,10 @@ from Queue import Queue
 import debug
 
 MAX_ITEMS=500
-ID_SPEECH=0
-ID_SCRIPT=1
-ID_MOUSE=2
-ID_EVENT=3
-ID_CONFIG=4
-queueOrder=list(range(5))
+ID_INTERACTIVE=0
+ID_MOUSE=1
+ID_EVENT=2
+queueOrder=list(range(3))
 queueList=[Queue(MAX_ITEMS) for x in queueOrder]
 
 generators={}

@@ -38,7 +38,7 @@ def applyConfiguration(reportDone=False):
 		pass
 	debug.writeMessage("core.applyConfiguration: configuration applyed")
 	if reportDone:
-		audio.speakMessage(_("configuration applyed"))
+		audio.speakMessage(_("configuration applyed"),wait=True)
 
 def main():
 	"""NVDA's core main loop. This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.

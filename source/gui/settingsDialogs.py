@@ -102,7 +102,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):
@@ -175,16 +175,16 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVoice,evt.GetSelection()+1)
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVoice,evt.GetSelection()+1)
 
 	def onRateChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setRate,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setRate,evt.GetSelection())
 
 	def onPitchChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setPitch,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setPitch,evt.GetSelection())
 
 	def onVolumeChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVolume,evt.GetSelection())
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVolume,evt.GetSelection())
 
 	def onPunctuationChange(self,evt):
 		config.conf["speech"]["speakPunctuation"]=evt.IsChecked()
@@ -194,10 +194,10 @@ class voiceSettingsDialog(wx.Dialog):
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=evt.IsChecked()
 
 	def onCancel(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVoice,self.oldVoice)
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setRate,self.oldRate)
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setPitch,self.oldPitch)
-		queueHandler.queueFunction(queueHandler.ID_CONFIG,synthDriverHandler.setVolume,self.oldVolume)
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVoice,self.oldVoice)
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setRate,self.oldRate)
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setPitch,self.oldPitch)
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVolume,self.oldVolume)
 		config.conf["speech"]["speakPunctuation"]=self.oldPunctuation
 		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=self.oldCaps
 		self.Destroy()
