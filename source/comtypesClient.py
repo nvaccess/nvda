@@ -41,9 +41,12 @@ __verbose__ = __debug__
 
 ################################################################
 # Determine the directory where generated modules live.
-gen_dir = ".\\comInterfaces"
-#comInterfaces=__import__("comInterfaces",globals(),locals(),[])
+if getattr(sys, "frozen", None):
+	gen_dir=None
+else:
+	gen_dir = ".\\comInterfaces"
 
+comInterfaces=__import__("comInterfaces",globals(),locals(),[])
 
 ### for testing
 ##gen_dir = None
@@ -130,38 +133,6 @@ def GetModule(tlib):
     fullname = _name_module(tlib)
     # create and import the module
     return _CreateWrapper(tlib, fullname)
-    modulename = tlib.GetDocumentation(-1)[0]
-    if modulename is None:
-        return mod
-    modulename = modulename.encode("mbcs")
-
-    # create and import the friendly-named module
-    try:
-        return _my_import("comInterfaces." + modulename)
-    except:
-        # this way, the module is always regenerated if importing it
-        # fails.  It would probably be better to check for the
-        # existance of the module first with imp.find_module (but
-        # beware of dotted names), and only regenerate if if not
-        # found.  Other errors while importing should probably make
-        # this function fail.
-        if __verbose__:
-            print "# Generating comInterfaces.%s" % modulename
-        modname = fullname.split(".")[-1]
-        code = "from comInterfaces import %s\nglobals().update(%s.__dict__)\n" % (modname, modname)
-        code += "__name__ = 'comInterfaces.%s'" % modulename
-        if gen_dir is None:
-            mod = new.module("comInterfaces." + modulename)
-            exec code in mod.__dict__
-            sys.modules["comInterfaces." + modulename] = mod
-            setattr(comInterfaces, modulename, mod)
-            return mod
-        # create in file system, and import it
-        fileName=os.path.join(gen_dir, modulename + ".py")
-        ofi = open(fileName,"w")
-        ofi.write(code)
-        ofi.close()
-        return _my_import("comInterfaces." + modulename)
         
 def _CreateWrapper(tlib, fullname):
     # helper which creates and imports the real typelib wrapper module.
@@ -192,7 +163,7 @@ def _CreateWrapper(tlib, fullname):
 
         if gen_dir is None:
             code = ofi.getvalue()
-            mod = new.module(fullname)
+            mod = new.module(str(fullname))
             exec code in mod.__dict__
             sys.modules[fullname] = mod
             setattr(comInterfaces, modname, mod)
