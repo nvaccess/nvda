@@ -29,7 +29,7 @@ def queueFunction(queueID,func,*args,**vars):
 	if not queueList[queueID].full():
 		queueList[queueID].put_nowait((func,args,vars))
 	else:
-		raise RuntimeError('Queue full')
+		pass #raise RuntimeError('Queue full')
 
 def isPendingItems(queueIDs=None):
 	if queueIDs==None:
