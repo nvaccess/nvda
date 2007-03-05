@@ -127,7 +127,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 	def loadDocument(self):
 		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
 			return
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			audio.cancel()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -135,7 +135,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
 		self.text_reviewOffset=0
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			audio.cancel()
 			self.text_reviewOffset=0
 			time.sleep(0.01)
@@ -146,14 +146,16 @@ class virtualBuffer_MSHTML(virtualBuffer):
 	def isDocumentComplete(self):
 		documentComplete=True
 		if self.dom.readyState!="complete":
-			audio.cancel()
-			audio.speakMessage(str(self.dom.readyState))
+			if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+				audio.cancel()
+				audio.speakMessage(str(self.dom.readyState))
 			documentComplete=False
 		for frameNum in range(self.dom.frames.length):
 			try:
 				if self.dom.frames.item(frameNum).document.readyState!="complete":
-					audio.cancel()
-					audio.speakMessage(str(self.dom.frames.item(frameNum).document.readyState))
+					if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+						audio.cancel()
+						audio.speakMessage(str(self.dom.frames.item(frameNum).document.readyState))
 					documentComplete=False
 			except:
 				pass
