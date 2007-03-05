@@ -341,6 +341,6 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 	("control+extendedEnd","text_moveByLine"),
 	("control+shift+extendedHome","text_changeSelection"),
 	("control+shift+extendedEnd","text_changeSelection"),
-	("ExtendedDelete","text_delete"),
+	("ExtendedDelete","text_moveByCharacter"),
 	("Back","text_backspace"),
 ]]
