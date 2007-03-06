@@ -171,7 +171,7 @@ class MainFrame(wx.Frame):
 		self.sysTrayButton.Bind(wx.EVT_TASKBAR_LEFT_DCLICK,self.onShowGuiCommand)
 		self.Center()
 		self.Show(True)
-		if config.conf["general"]["hideInterfaceOnStartup"]:
+		if globalVars.appArgs.minimal or config.conf["general"]["hideInterfaceOnStartup"]:
 			self.Show(False)
 		guiInitialized=True
 

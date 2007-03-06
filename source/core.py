@@ -46,7 +46,7 @@ def main():
 	try:
 		applyConfiguration()
 		audio.initialize()
-		if (time.time()-globalVars.startTime)>2:
+		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			audio.speakMessage(_("Loading subsystems, please wait..."))
 		import gui
 		gui.initialize()
@@ -64,7 +64,8 @@ def main():
 			config.save()
 		except:
 			pass
-		audio.speakMessage(_("NVDA started"),wait=True)
+		if not globalVars.appArgs.minimal:
+			audio.speakMessage(_("NVDA started"),wait=True)
 	except:
 		debug.writeException("core.py main init")
 		try:

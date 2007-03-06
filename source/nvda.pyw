@@ -22,20 +22,27 @@ else:
 import time
 import globalVars
 globalVars.startTime=time.time()
-
+#Process option arguments
+from optparse import OptionParser
+parser=OptionParser()
+parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName,help="The file where debug messages should be written to")
+parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
+parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
+(globalVars.appArgs,extraArgs)=parser.parse_args()
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
 import codecs
-stderrFile=codecs.open(stderrFileName,"w","utf-8","ignore")
+stderrFile=codecs.open(globalVars.appArgs.stderrFileName,"w","utf-8","ignore")
 if stderrFile is None:
 	sys.exit()
 sys.stderr=stderrFile
 sys.stdout=stderrFile
 import winsound
-winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
+if not globalVars.appArgs.minimal:
+	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 import debug
-debug.start(debugFileName)
+debug.start(globalVars.appArgs.debugFileName)
 import gettext
 gettext.install("nvda", unicode=True)
 try:
@@ -47,4 +54,5 @@ try:
 except:
 	debug.writeException("nvda.pyw executing core.main")
 debug.stop()
-winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+if not globalVars.appArgs.minimal:
+	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
