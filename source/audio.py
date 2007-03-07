@@ -136,7 +136,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		return
 	beenCanceled=False
 	text=processSymbol(symbol)
-	if (symbol[0]>='A') and (symbol[0]<='Z'):
+	if symbol is not None and (symbol[0]>='A') and (symbol[0]<='Z'):
 		uppercase=True
 	else:
 		uppercase=False
