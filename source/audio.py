@@ -135,17 +135,17 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	beenCanceled=False
-	symbol=processSymbol(symbol)
+	text=processSymbol(symbol)
 	if (symbol[0]>='A') and (symbol[0]<='Z'):
 		uppercase=True
 	else:
 		uppercase=False
 	if uppercase:
 		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
-			symbol=_("cap %s")%symbol
+			text=_("cap %s")%text
 		oldPitch=synthDriverHandler.getPitch()
 		synthDriverHandler.setPitch(oldPitch+25)
-	synthDriverHandler.speakText(symbol,wait=wait,index=index)
+	synthDriverHandler.speakText(text,wait=wait,index=index)
 	if uppercase:
 		synthDriverHandler.setPitch(oldPitch)
 
