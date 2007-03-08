@@ -29,6 +29,11 @@ parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName
 parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
+import winKernel
+try:
+	winKernel.freeConsole()
+except:
+	pass
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
