@@ -185,7 +185,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		#Collect the children
 		#Use IAccessible directly to save time
 		#Don't get children of combo boxes or embed objects
-		if obj.childCount>0 and role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,"embed"]:
+		if obj.childCount>0 and role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,"embed",IAccessibleHandler.ROLE_SYSTEM_LINK]:
 			windowHandle=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
 			hwnd=obj.windowHandle
@@ -203,7 +203,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		info['children']=[x for x in [getNVDAObjectID(y) for y in children ] if x is not None]
 		info['labeledBy']=getNVDAObjectID(obj.labeledBy)
 		if role==IAccessibleHandler.ROLE_SYSTEM_TEXT and states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			data=obj.value
+			data=obj.name
 			if data and not data.isspace():
 				text="%s"%data
 		elif role=="white space":
@@ -215,14 +215,20 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
-			text="%s\n "%obj.name
+			text="%s \n "%obj.name
 			info["fieldType"]=fieldType_document
 			info["typeString"]=fieldNames[fieldType_document]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 			info["fieldType"]=fieldType_link
 			info["typeString"]=obj.typeString
-			if len(children)==0:
+			if True:
 				text=obj.name
+				if not text or text.isspace():
+					text=obj.description
+				if not text or text.isspace():
+					text=obj.value
+				if text:
+					text=text.strip()
 		elif role=="p":
 			info["fieldType"]=fieldType_paragraph
 			info["typeString"]=fieldNames[fieldType_paragraph]

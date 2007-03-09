@@ -156,7 +156,10 @@ class virtualBuffer(textBuffer.textBufferObject):
 			wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
 			text=wrapper.fill(text)
 		textLen=len(text)
-		self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
+		if not isMurging:
+			self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
+		else:
+			self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position+1:]])
 		extraLength=textLen+1
 		r[1]=position+extraLength
 		#Recalculate the ranges of IDs that are before and after this ID in its family tree Z order

@@ -463,16 +463,10 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
 
 	def text_getText(self,start=None,end=None):
-		text=self.value
+		text=self.name
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else len(self.value)
 		return text[start:end]
-
-	def _get_name(self):
-		return ""
-
-	def _get_value(self):
-		return super(NVDAObject_staticText,self)._get_name()
 
 [NVDAObject_staticText.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","text_review_nextLine"),
@@ -517,22 +511,6 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 			return val
 
 class NVDAObject_tooltip(NVDAObject_IAccessible):
-
-	def _get_name(self):
-		name=super(NVDAObject_tooltip,self)._get_name()
-		value=super(NVDAObject_tooltip,self)._get_value()
-		if name and not value:
-			return ""
-		else:
-			return name
-
-	def _get_value(self):
-		name=super(NVDAObject_tooltip,self)._get_name()
-		value=super(NVDAObject_tooltip,self)._get_value()
-		if name and not value:
-			return name
-		else:
-			return ""
 
 	def event_show(self):
 		if (config.conf["presentation"]["reportTooltips"] and (self.role==IAccessibleHandler.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.role==IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON)):
@@ -633,9 +611,6 @@ class NVDAObject_link(NVDAObject_IAccessible):
 	*getChildren does not include any text objects, since text objects are where the name of the link comes from.
 	"""
 
-	def _get_value(self):
-		return ""
-
 	def _get_typeString(self):
 		states=self.states
 		typeString=""
@@ -645,24 +620,6 @@ class NVDAObject_link(NVDAObject_IAccessible):
 		return typeString
 
 class NVDAObject_mozillaText(NVDAObject_IAccessible):
-	"""
-*The name property is used as the value, the name is left blank.
-	"""
-
-	def _get_name(self):
-		name=super(NVDAObject_mozillaText,self)._get_name()
-		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return ""
-		else:
-			return name
-
-	def _get_value(self):
-		name=super(NVDAObject_mozillaText,self)._get_name()
-		value=super(NVDAObject_mozillaText,self)._get_value()
-		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return name
-		else:
-			return value
 
 	def _get_typeString(self):
 		if self.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
@@ -671,7 +628,7 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 			return super(NVDAObject_mozillaText,self)._get_typeString()
 
 	def text_getText(self,start=None,end=None):
-		return self.value
+		return self.name
 
 class NVDAObject_mozillaOutlineItem(NVDAObject_IAccessible):
 
