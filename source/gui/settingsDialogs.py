@@ -12,6 +12,7 @@ import config
 import queueHandler
 import languageHandler
 import audio
+from wx.lib.masked import textctrl
 
 class interfaceSettingsDialog(wx.Dialog):
 
@@ -328,3 +329,120 @@ class objectPresentationDialog(wx.Dialog):
 
 	def onProgressBeepChange(self,evt):
 		config.conf["presentation"]["beepOnProgressBarUpdates"]=evt.IsChecked()
+
+class virtualBuffersDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		presentationfocusCheckBoxID=wx.NewId()
+		presentationfocusCheckBox=wx.CheckBox(self,presentationfocusCheckBoxID,label=_("Report virtual presentation on focus changes"))
+		presentationfocusCheckBox.SetValue(config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"])
+#		wx.EVT_CHECKBOX(self,presentationfocusCheckBoxID,self.onPresentationfocusChange)
+#		settingsSizer.Add(presentationfocusCheckBox,border=10,flag=wx.BOTTOM)
+		updateCheckBoxID=wx.NewId()
+		updateCheckBox=wx.CheckBox(self,updateCheckBoxID,label=_("Update the content dynamically"))
+		updateCheckBox.SetValue(config.conf["virtualBuffers"]["updateContentDynamically"])
+		wx.EVT_CHECKBOX(self,updateCheckBoxID,self.onUpdateChange)
+		settingsSizer.Add(updateCheckBox,border=10,flag=wx.BOTTOM)
+		linksCheckBoxID=wx.NewId()
+		linksCheckBox=wx.CheckBox(self,linksCheckBoxID,label=_("Report links"))
+		linksCheckBox.SetValue(config.conf["virtualBuffers"]["reportLinks"])
+		wx.EVT_CHECKBOX(self,linksCheckBoxID,self.onLinksChange)
+		settingsSizer.Add(linksCheckBox,border=10,flag=wx.BOTTOM)
+		listsCheckBoxID=wx.NewId()
+		listsCheckBox=wx.CheckBox(self,listsCheckBoxID,label=_("Report lists"))
+		listsCheckBox.SetValue(config.conf["virtualBuffers"]["reportLists"])
+		wx.EVT_CHECKBOX(self,listsCheckBoxID,self.onListsChange)
+		settingsSizer.Add(listsCheckBox,border=10,flag=wx.BOTTOM)
+		listItemsCheckBoxID=wx.NewId()
+		listItemsCheckBox=wx.CheckBox(self,listItemsCheckBoxID,label=_("Report list items"))
+		listItemsCheckBox.SetValue(config.conf["virtualBuffers"]["reportListItems"])
+		wx.EVT_CHECKBOX(self,listItemsCheckBoxID,self.onListItemsChange)
+		settingsSizer.Add(listItemsCheckBox,border=10,flag=wx.BOTTOM)
+		headingsCheckBoxID=wx.NewId()
+		headingsCheckBox=wx.CheckBox(self,headingsCheckBoxID,label=_("Report headings"))
+		headingsCheckBox.SetValue(config.conf["virtualBuffers"]["reportHeadings"])
+		wx.EVT_CHECKBOX(self,headingsCheckBoxID,self.onHeadingsChange)
+		settingsSizer.Add(headingsCheckBox,border=10,flag=wx.BOTTOM)
+		tablesCheckBoxID=wx.NewId()
+		tablesCheckBox=wx.CheckBox(self,tablesCheckBoxID,label=_("Report tables"))
+		tablesCheckBox.SetValue(config.conf["virtualBuffers"]["reportTables"])
+		wx.EVT_CHECKBOX(self,tablesCheckBoxID,self.onTablesChange)
+		settingsSizer.Add(tablesCheckBox,border=10,flag=wx.BOTTOM)
+		graphicsCheckBoxID=wx.NewId()
+		graphicsCheckBox=wx.CheckBox(self,graphicsCheckBoxID,label=_("Report graphics"))
+		graphicsCheckBox.SetValue(config.conf["virtualBuffers"]["reportGraphics"])
+		wx.EVT_CHECKBOX(self,graphicsCheckBoxID,self.onGraphicsChange)
+		settingsSizer.Add(graphicsCheckBox,border=10,flag=wx.BOTTOM)
+		formsCheckBoxID=wx.NewId()
+		formsCheckBox=wx.CheckBox(self,formsCheckBoxID,label=_("Report forms"))
+		formsCheckBox.SetValue(config.conf["virtualBuffers"]["reportForms"])
+		wx.EVT_CHECKBOX(self,formsCheckBoxID,self.onFormsChange)
+		settingsSizer.Add(formsCheckBox,border=10,flag=wx.BOTTOM)
+		formFieldsCheckBoxID=wx.NewId()
+		formFieldsCheckBox=wx.CheckBox(self,formFieldsCheckBoxID,label=_("Report form fields"))
+		formFieldsCheckBox.SetValue(config.conf["virtualBuffers"]["reportFormFields"])
+		wx.EVT_CHECKBOX(self,formFieldsCheckBoxID,self.onFormFieldsChange)
+		settingsSizer.Add(formFieldsCheckBox,border=10,flag=wx.BOTTOM)
+		blockQuotesCheckBoxID=wx.NewId()
+		blockQuotesCheckBox=wx.CheckBox(self,blockQuotesCheckBoxID,label=_("Report block quotes"))
+		blockQuotesCheckBox.SetValue(config.conf["virtualBuffers"]["reportBlockQuotes"])
+		wx.EVT_CHECKBOX(self,blockQuotesCheckBoxID,self.onBlockQuotesChange)
+		settingsSizer.Add(blockQuotesCheckBox,border=10,flag=wx.BOTTOM)
+		paragraphsCheckBoxID=wx.NewId()
+		paragraphsCheckBox=wx.CheckBox(self,paragraphsCheckBoxID,label=_("Report paragraphs"))
+		paragraphsCheckBox.SetValue(config.conf["virtualBuffers"]["reportParagraphs"])
+		wx.EVT_CHECKBOX(self,paragraphsCheckBoxID,self.onParagraphsChange)
+		settingsSizer.Add(paragraphsCheckBox,border=10,flag=wx.BOTTOM)
+		framesCheckBoxID=wx.NewId()
+		framesCheckBox=wx.CheckBox(self,framesCheckBoxID,label=_("Report frames"))
+		framesCheckBox.SetValue(config.conf["virtualBuffers"]["reportFrames"])
+		wx.EVT_CHECKBOX(self,framesCheckBoxID,self.onFramesChange)
+		settingsSizer.Add(framesCheckBox,border=10,flag=wx.BOTTOM)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		presentationfocusCheckBox.SetFocus()
+
+	def onPresentationfocusChange(self,evt):
+		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=evt.IsChecked()
+
+	def onUpdateChange(self,evt):
+		config.conf["virtualBuffers"]["updateContentDynamically"]=evt.IsChecked()
+
+	def onLinksChange(self,evt):
+		config.conf["virtualBuffers"]["reportLinks"]=evt.IsChecked()
+
+	def onListsChange(self,evt):
+		config.conf["virtualBuffers"]["reportLists"]=evt.IsChecked()
+
+	def onListItemsChange(self,evt):
+		config.conf["virtualBuffers"]["reportListItems"]=evt.IsChecked()
+
+	def onHeadingsChange(self,evt):
+		config.conf["virtualBuffers"]["reportHeadings"]=evt.IsChecked()
+
+	def onTablesChange(self,evt):
+		config.conf["virtualBuffers"]["reportTables"]=evt.IsChecked()
+
+	def onGraphicsChange(self,evt):
+		config.conf["virtualBuffers"]["reportGraphics"]=evt.IsChecked()
+
+	def onFormsChange(self,evt):
+		config.conf["virtualBuffers"]["reportForms"]=evt.IsChecked()
+
+	def onFormFieldsChange(self,evt):
+		config.conf["virtualBuffers"]["reportFormFields"]=evt.IsChecked()
+
+	def onBlockQuotesChange(self,evt):
+		config.conf["virtualBuffers"]["reportBlockQuotes"]=evt.IsChecked()
+
+	def onParagraphsChange(self,evt):
+		config.conf["virtualBuffers"]["reportParagraphs"]=evt.IsChecked()
+
+	def onFramesChange(self,evt):
+		config.conf["virtualBuffers"]["reportFrames"]=evt.IsChecked()

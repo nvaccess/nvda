@@ -149,6 +149,9 @@ class MainFrame(wx.Frame):
 		id_objectPresentationCommand=wx.NewId()
 		menu_preferences.Append(id_objectPresentationCommand,_("&Object presentation...\tctrl+shift+o"),_("Change reporting of objects")) 
 		wx.EVT_MENU(self,id_objectPresentationCommand,self.onObjectPresentationCommand)
+		id_virtualBuffersCommand=wx.NewId()
+		menu_preferences.Append(id_virtualBuffersCommand,_("Virtual &buffers...\tctrl+shift+b"),_("Change virtual buffers specific settings")) 
+		wx.EVT_MENU(self,id_virtualBuffersCommand,self.onVirtualBuffersCommand)
 		menuBar.Append(menu_preferences,_("&Preferences"))
 		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
 		menu_help = wx.Menu()
@@ -264,6 +267,36 @@ class MainFrame(wx.Frame):
 			config.conf["presentation"]["reportObjectGroupNames"]=oldGroup
 			config.conf["presentation"]["sayStateFirst"]=oldStateFirst
 			config.conf["presentation"]["beepOnProgressBarUpdates"]=oldProgressBeep
+
+	def onVirtualBuffersCommand(self,evt):
+		oldPresentationfocus=config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]
+		oldUpdate=config.conf["virtualBuffers"]["updateContentDynamically"]
+		oldLinks=config.conf["virtualBuffers"]["reportLinks"]
+		oldLists=config.conf["virtualBuffers"]["reportLists"]
+		oldListItems=config.conf["virtualBuffers"]["reportListItems"]
+		oldHeadings=config.conf["virtualBuffers"]["reportHeadings"]
+		oldTables=config.conf["virtualBuffers"]["reportTables"]
+		oldGraphics=config.conf["virtualBuffers"]["reportGraphics"]
+		oldForms=config.conf["virtualBuffers"]["reportForms"]
+		oldFormFields=config.conf["virtualBuffers"]["reportFormFields"]
+		oldBlockQuotes=config.conf["virtualBuffers"]["reportBlockQuotes"]
+		oldParagraphs=config.conf["virtualBuffers"]["reportParagraphs"]
+		oldFrames=config.conf["virtualBuffers"]["reportFrames"]
+		d=virtualBuffersDialog(self,-1,_("virtual buffers"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=oldPresentationfocus
+			config.conf["virtualBuffers"]["updateContentDynamically"]=oldUpdate
+			config.conf["virtualBuffers"]["reportLinks"]=oldLinks
+			config.conf["virtualBuffers"]["reportLists"]=oldLists
+			config.conf["virtualBuffers"]["reportListItems"]=oldListItems
+			config.conf["virtualBuffers"]["reportHeadings"]=oldHeadings
+			config.conf["virtualBuffers"]["reportTables"]=oldTables
+			config.conf["virtualBuffers"]["reportGraphics"]=oldGraphics
+			config.conf["virtualBuffers"]["reportForms"]=oldForms
+			config.conf["virtualBuffers"]["reportFormFields"]=oldFormFields
+			config.conf["virtualBuffers"]["reportBlockQuotes"]=oldBlockQuotes
+			config.conf["virtualBuffers"]["reportParagraphs"]=oldParagraphs
+			config.conf["virtualBuffers"]["reportFrames"]=oldFrames
 
 	def onAboutCommand(self,evt):
 		try:

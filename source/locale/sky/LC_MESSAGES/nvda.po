@@ -53,7 +53,7 @@ msgstr "%d položiek"
 #: textBuffer.py:534 textBuffer.py:536
 #: textBuffer.py:540
 msgid "unselected %s"
-msgstr "nevybraté %s"
+msgstr "nevybrané %s"
 
 #: NVDAObjects\MSHTML.py:315
 #: NVDAObjects\MSHTML.py:321
@@ -118,11 +118,11 @@ msgstr "rýchlosť %d"
 
 #: appModules\_default.py:69
 msgid "speak typed characters"
-msgstr "odozva napísaných znakov"
+msgstr "hovoriť napísané znaky"
 
 #: appModules\_default.py:79
 msgid "speak typed words"
-msgstr "odozva napísaných slov"
+msgstr "hovoriť napísané slová"
 
 #: appModules\_default.py:89
 msgid "speak command keys"
@@ -284,7 +284,7 @@ msgstr "do ľava"
 
 #: appModules\winword.py:286
 msgid "centered"
-msgstr "do stredu"
+msgstr "na stred"
 
 #: appModules\winword.py:288
 msgid "right"
@@ -555,7 +555,7 @@ msgstr ""
 "\n"
 "Toto okno môžete kedykoľvek vyvolať do popredia stlačením inzert+n. Zatvoriť (bez toho, že by ste ukončili NVDA) ho môžete stlačením alt+f4.\n"
 "\n"
-"Ak chcete komplentne ukončiť NVDA môžete stlačiť inzert+q nech ste kde koľvek, alebo zvolte 'skončiť' z NVDA menu v tomto okne. NVDA potom zobrazí dialóg z otázkou či chcete naozaj skončiť a vy sa môžete rozhodnúť z tlačidiel ok alebo zrušiť.\n"
+"Ak chcete kompletne ukončiť NVDA môžete stlačiť inzert+q nech ste kde koľvek, alebo zvolte 'skončiť' z NVDA menu v tomto okne. NVDA potom zobrazí dialóg z otázkou či chcete naozaj skončiť a vy sa môžete rozhodnúť z tlačidiel ok alebo zrušiť.\n"
 "\n"
 "Na nastavenie volieb (ako napríklad nastavenia hlasu, odozvu klávesnice, automatické čítanie tooltipov atď),\n"
 "použite kláves alt na vstup do panela ponúk a potom pomocu kurzorových klávesov nájdite nastavenia, ktoré chcete zmeniť. Stlačenie klávesu enter na mväčšine položiek otvorí dialóg, kde môžete zmeniť kontrétne nastavenia. Zmena nastavení sa obvykle prejaví okamžite (napr. pri zmene výšky alebo rýchlosti hlasu) teda môžete ľahko zistiť aké nastavenia vám najviacej vyhovujú. Ak ale ukončíte niektorý dialóg tlačidlom zrušiť, nastavenia sa vrátia na také, aké boli nastavené pred vyvolaním daného dialógu. \n"
@@ -633,7 +633,7 @@ msgstr "U&končiť"
 #: gui\__init__.py:129
 #: gui\__init__.py:209
 msgid "Exit NVDA"
-msgstr "skončí nvda"
+msgstr "ukončiť nvda"
 
 #: gui\__init__.py:131
 #: gui\__init__.py:132
@@ -642,7 +642,7 @@ msgstr "&NVDA"
 
 #: gui\__init__.py:135
 msgid "&User interface...\tctrl+shift+u"
-msgstr "&Užívateľske rozhranie...\tctrl+shift+u"
+msgstr "&Užívateľské rozhranie...\tctrl+shift+u"
 
 #: gui\__init__.py:135
 msgid "Change user interface settings"
@@ -688,6 +688,14 @@ msgstr "nastavenia čítania &objektov...\tctrl+shift+o"
 msgid "Change reporting of objects"
 msgstr "mení oznamovanie objektov"
 
+#: gui\__init__.py:153
+msgid "Change virtual buffers specific settings"
+msgstr "zmení nastavenia špecifické pre vyrtuálne buffery"
+
+#: gui\__init__.py:153
+msgid "Virtual &buffers...\tctrl+shift+b"
+msgstr "Virtuálne buffery...\tctrl+shift+b"
+
 #: gui\__init__.py:152
 #: gui\__init__.py:153
 msgid "&Preferences"
@@ -717,11 +725,11 @@ msgstr "nastavenia uložené"
 
 #: gui\__init__.py:201
 msgid "Could not save configuration - probably read only file system"
-msgstr "Nemôžem uložiť nastavenia. Možno NVDA beží z systému len na čítanie"
+msgstr "Nemôžem uložiť nastavenia. Pravdepodobne je NVDA spustený z systému len na čítanie"
 
 #: gui\__init__.py:209
 msgid "Press OK to quit NVDA"
-msgstr "Stlačte tlačidlo OK na okončenie NVDA"
+msgstr "Stlačte tlačidlo OK na ukončenie NVDA"
 
 #: gui\__init__.py:219
 msgid "User interface settings"
@@ -747,6 +755,10 @@ msgstr "Nastavenia myši"
 #: gui\__init__.py:259
 msgid "Object presentation"
 msgstr "Čítanie objektov"
+
+#: gui\__init__.py:285
+msgid "virtual buffers"
+msgstr "Virtuálne buffery"
 
 #: gui\__init__.py:274
 msgid "copyright"
@@ -847,6 +859,58 @@ msgstr "Povedať najprv stav objektu"
 #: gui\settingsDialogs.py:303
 msgid "Beep on progress bar updates"
 msgstr "Pípať pri aktualizácii priebehu"
+
+#: gui\settingsDialogs.py:340
+msgid "Report virtual presentation on focus changes"
+msgstr "Oznamovať virtuálny buffer pri zmene fokusu"
+
+#: gui\settingsDialogs.py:345
+msgid "Update the content dynamically"
+msgstr "Dynamicky aktualizovať obsah"
+
+#: gui\settingsDialogs.py:350
+msgid "Report links"
+msgstr "Oznamovať odkazy"
+
+#: gui\settingsDialogs.py:355
+msgid "Report lists"
+msgstr "Oznamovať zoznamy"
+
+#: gui\settingsDialogs.py:360
+msgid "Report list items"
+msgstr "Oznamovať položky zoznamu"
+
+#: gui\settingsDialogs.py:365
+msgid "Report headings"
+msgstr "Oznamovať nadpisy"
+
+#: gui\settingsDialogs.py:370
+msgid "Report tables"
+msgstr "Oznamovať tabuľky"
+
+#: gui\settingsDialogs.py:375
+msgid "Report graphics"
+msgstr "Oznamovať grafiku"
+
+#: gui\settingsDialogs.py:380
+msgid "Report forms"
+msgstr "Oznamovať formuláare"
+
+#: gui\settingsDialogs.py:385
+msgid "Report form fields"
+msgstr "Oznamovať prvky formulára"
+
+#: gui\settingsDialogs.py:390
+msgid "Report block quotes"
+msgstr "Oznamovať citácie"
+
+#: gui\settingsDialogs.py:395
+msgid "Report paragraphs"
+msgstr "Oznamovať odseky"
+
+#: gui\settingsDialogs.py:400
+msgid "Report frames"
+msgstr "Oznamovať rámce"
 
 #: keyboardHandler.py:86
 msgid "caps lock %s"
