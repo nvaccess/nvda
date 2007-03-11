@@ -98,12 +98,31 @@ iconPath="%s/images/icon.png"%os.getcwd()
 evt_externalCommand = wx.NewEventType()
 id_onShowGuiCommand=wx.NewId()
 id_onAbortCommand=wx.NewId()
+evt_externalExecute = wx.NewEventType()
 
 ### Globals
 guiThread = None
 mainFrame = None
 pumpLock = None
 guiInitialized=False
+
+class ExternalExecuteEvent(wx.PyCommandEvent):
+	def __init__(self, func, args, kwargs, callback):
+		wx.PyCommandEvent.__init__(self, evt_externalExecute, -1)
+		self._func = func
+		self._args = args
+		self._kwargs = kwargs
+		self._callback = callback
+
+	def run(self):
+		ret = self._func(*self._args, **self._kwargs)
+		if self._callback:
+			queueHandler.registerGeneratorObject(self._callback_gen(ret))
+
+	def _callback_gen(self, ret):
+		for n in xrange(10):
+			yield None
+		self._callback(ret)
 
 class MainFrame(wx.Frame):
 
@@ -117,6 +136,7 @@ class MainFrame(wx.Frame):
 		wx.EVT_COMMAND(self,id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
 		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
 		wx.EVT_COMMAND(self,id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
+		wx.EVT_COMMAND(self,-1,evt_externalExecute,lambda evt: evt.run())
 		wx.EVT_CLOSE(self,self.onHideGuiCommand)
 		menuBar=wx.MenuBar()
 		self.sysTrayMenu=wx.Menu()
@@ -337,3 +357,16 @@ def quit():
 
 def abort():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))
+
+def execute(func, callback=None, *args, **kwargs):
+	"""Execute a function in the GUI thread.
+	This should be used when scripts need to interact with the user via the GUI.
+	For example, a frame or dialog can be created and this function can then be used to execute its Show method.
+	@param func: The function to execute.
+	@type func: callable
+	@param callback: A function to call in the main thread when C{func} returns. The function will be passed the return value as its only argument.
+	@type callback: callable
+	@param args: Arguments for the function.
+	@param kwargs: Keyword arguments for the function.
+"""
+	mainFrame.GetEventHandler().AddPendingEvent(ExternalExecuteEvent(func, args, kwargs, callback))
