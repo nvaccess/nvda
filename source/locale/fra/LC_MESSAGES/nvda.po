@@ -75,7 +75,7 @@ msgstr "protégé %s"
 
 #: api.py:133 api.py:136
 msgid "virtual buffer pass through"
-msgstr "tampon virtual désactivé"
+msgstr "mode formulaire"
 
 #: api.py:133 appModules\_default.py:40 appModules\_default.py:64
 #: appModules\_default.py:74 appModules\_default.py:84
@@ -262,7 +262,7 @@ msgstr "justifié"
 
 #: audio.py:145
 msgid "cap %s"
-msgstr "maj %s"
+msgstr "mage %s"
 
 #: characterSymbols.py:17 characterSymbols.py:18 textProcessing.py:24
 msgid "blank"
@@ -744,7 +744,7 @@ msgstr "Langue"
 
 #: gui\settingsDialogs.py:39
 msgid "Hide user interface on startup"
-msgstr "Cacner l'interface utilisateur au démarrage"
+msgstr "Cacher l'interface utilisateur au démarrage"
 
 #: gui\settingsDialogs.py:45
 msgid "Save configuration on exit"
@@ -772,15 +772,15 @@ msgstr "Dire toutes les ponctuations"
 
 #: gui\settingsDialogs.py:164
 msgid "Say cap before capitals"
-msgstr "Dire maj avant les majuscules"
+msgstr "Dire mage avant les majuscules"
 
 #: gui\settingsDialogs.py:213
 msgid "Speak typed characters"
-msgstr "Echo clavier: caractères"
+msgstr "Echo clavier par caractères"
 
 #: gui\settingsDialogs.py:218
 msgid "Speak typed words"
-msgstr "Echo clavier: mots"
+msgstr "Echo clavier par mots"
 
 #: gui\settingsDialogs.py:223
 msgid "Speak command keys"
@@ -800,7 +800,7 @@ msgstr "Annoncer les suggestions"
 
 #: gui\settingsDialogs.py:284
 msgid "Report help balloons"
-msgstr "Annoncer les bulles d'aide"
+msgstr "Annoncer les infobulles"
 
 #: gui\settingsDialogs.py:289
 msgid "Report object shortcut keys"
@@ -844,7 +844,7 @@ msgstr "Annoncer les titres"
 
 #: gui\settingsDialogs.py:370
 msgid "Report tables"
-msgstr "Annoncer les tables"
+msgstr "Annoncer les tableaux"
 
 #: gui\settingsDialogs.py:375
 msgid "Report graphics"
@@ -1119,7 +1119,7 @@ msgstr "corps de tableau"
 
 #: virtualBuffers\baseType.py:236
 msgid "out of %s"
-msgstr "nors de %s"
+msgstr "hors de %s"
 
 #: virtualBuffers\baseType.py:355 virtualBuffers\baseType.py:365
 msgid "no more headings"
@@ -1180,4 +1180,44 @@ msgstr "i=accès rapide aux éléments de liste"
 #: virtualBuffers\gecko.py:318
 msgid "protected %s"
 msgstr "%s protégé"
+
+#: gui\__init__.py:176
+msgid "Change echo of document properties"
+msgstr "modifier l'annonce des propriétés d'un document"
+
+#: gui\__init__.py:176
+msgid "Document &formatting...\tctrl+shift+f"
+msgstr "&Format du document...\tctrl+shift+f"
+
+#: gui\__init__.py:333
+msgid "Document formatting"
+msgstr "format du document"
+
+#: gui\settingsDialogs.py:485
+msgid "Report font name"
+msgstr "annoncer le nom de la police"
+
+#: gui\settingsDialogs.py:490
+msgid "Report font size"
+msgstr "annoncer la taille de la police"
+
+#: gui\settingsDialogs.py:495
+msgid "Report font attributes"
+msgstr "annoncer les attributs de la police"
+
+#: gui\settingsDialogs.py:500
+msgid "Report style"
+msgstr "annoncer le style"
+
+#: gui\settingsDialogs.py:505
+msgid "Report pages"
+msgstr "annoncer la page"
+
+#: gui\settingsDialogs.py:510
+msgid "Report line numbers"
+msgstr "annoncer le numéro de ligne"
+
+#: gui\settingsDialogs.py:520
+msgid "Report alignment"
+msgstr "annoncer l'alignement"
 
