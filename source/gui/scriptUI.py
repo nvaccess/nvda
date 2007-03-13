@@ -5,47 +5,75 @@ import wx
 import gui
 
 class ModalDialog:
+	"""Base class for modal script dialogs.
+	Subclasses should override L{__init__}, L{makeDialog} and L{getResponse}.
+	@ivar selfIsDialog: C{True} if the instance itself is the dialog, C{False} if the dialog is contained in self.dialog.
+	@type selfIsDialog: bool
+	@ivar dialog: The dialog if L{selfIsDialog} is C{False}.
+	@type dialog: wx.Dialog
+"""
+
+	selfIsDialog = False
+
 	def __init__(self, callback):
+		"""Constructor.
+		Subclasses should override this, but they must call C{ModalDialog.__init__(self, callback)}.
+		@param callback: A function which takes the response from the dialog as its only argument.
+		@type callback: callable
+	"""
 		self._callback = callback
 
-	def run_gui(self):
-		raise NotImplementedError
+	def getResponse(self, response):
+		"""Obtain the response to supply to the callback.
+		@param response: The response from the dialog's C{ShowModal} method.
+		@return: The response to supply to the callback.
+	"""
+		return response
+
+	def _run_gui(self):
+		if self.selfIsDialog:
+			self.makeDialog()
+			dialog = self
+		else:
+			dialog = self.dialog = self.makeDialog()
+		dialog.Raise()
+		ret = self.getResponse(dialog.ShowModal())
+		dialog.Destroy()
+		return ret
 
 	def run(self):
-		gui.execute(self.run_gui, callback=self._callback)
+		"""Run this dialog.
+		This displays the dialog and calls the callback with the relevant response once the user has dismissed the dialog.
+	"""
+		gui.execute(self._run_gui, callback=self._callback)
 
 class MessageDialog(ModalDialog):
 
 	def __init__(self, message, title = _("NVDA"), style=wx.OK, callback=None):
 		ModalDialog.__init__(self, callback)
-		self._window = wx.MessageDialog(None, message, title, style)
+		self.makeDialog = lambda: wx.MessageDialog(None, message, title, style)
 
-	def run_gui(self):
-		ret = self._window.ShowModal()
-		self._window.Destroy()
-		return ret in (wx.ID_OK, wx.ID_YES)
+	def getResponse(self, response):
+		return response in (wx.ID_OK, wx.ID_YES)
 
 class TextEntryDialog(ModalDialog):
 
 	def __init__(self, message, title=_("NVDA"), default="", style=wx.OK | wx.CANCEL, callback=None):
 		ModalDialog.__init__(self, callback)
-		self._makeDialog = lambda: wx.TextEntryDialog(None, message, title, defaultValue=default, style=style)
+		self.makeDialog = lambda: wx.TextEntryDialog(None, message, title, defaultValue=default, style=style)
 
-	def run_gui(self):
-		dialog = self._makeDialog()
-		dialog.Raise()
-		ret = dialog.ShowModal()
-		dialog.Destroy()
-		if ret == wx.ID_OK:
-			return dialog.GetValue()
+	def getResponse(self, response):
+		if response == wx.ID_OK:
+			return self.dialog.GetValue()
 		else:
 			return None
 
 class SingleChoiceDialog(wx.Dialog, ModalDialog):
 
+	selfIsDialog = True
 	def __init__(self, message, title=_("NVDA"), choices=(), default=0, style=wx.OK|wx.CANCEL, callback=None):
 		ModalDialog.__init__(self, callback)
-		def initDialog():
+		def makeDialog():
 			wx.Dialog.__init__(self, None, -1, title)
 			mainSizer = wx.BoxSizer(wx.VERTICAL)
 			mainSizer.Add(wx.StaticText(self, -1, label=message))
@@ -60,14 +88,10 @@ class SingleChoiceDialog(wx.Dialog, ModalDialog):
 			mainSizer.Fit(self)
 			self.SetSizer(mainSizer)
 			self.list.SetFocus()
-		self._initDialog = initDialog
+		self.makeDialog = makeDialog
 
-	def run_gui(self):
-		self._initDialog()
-		self.Raise()
-		ret = self.ShowModal()
-		self.Destroy()
-		if ret == wx.ID_OK:
+	def getResponse(self, response):
+		if response == wx.ID_OK:
 			sel = self.list.GetFirstSelected()
 			if sel == -1: return None
 			return sel, self.list.GetItemText(sel)
