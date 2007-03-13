@@ -336,11 +336,23 @@ class virtualBuffersDialog(wx.Dialog):
 		wx.Dialog.__init__(self,parent,ID,title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		maxLengthLabel=wx.StaticText(self,-1,label=_("Maximum number of characters on one line"))
+		settingsSizer.Add(maxLengthLabel)
+		maxLengthEditID=wx.NewId()
+		self.maxLengthEdit=wx.TextCtrl(self,maxLengthEditID)
+		self.maxLengthEdit.SetValue(str(config.conf["virtualBuffers"]["maxLineLength"]))
+		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
+		pageLinesLabel=wx.StaticText(self,-1,label=_("Number of lines per page"))
+		settingsSizer.Add(pageLinesLabel)
+		pageLinesEditID=wx.NewId()
+		self.pageLinesEdit=wx.TextCtrl(self,pageLinesEditID)
+		self.pageLinesEdit.SetValue(str(config.conf["virtualBuffers"]["linesPerPage"]))
+		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
 		presentationfocusCheckBoxID=wx.NewId()
 		presentationfocusCheckBox=wx.CheckBox(self,presentationfocusCheckBoxID,label=_("Report virtual presentation on focus changes"))
 		presentationfocusCheckBox.SetValue(config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"])
-#		wx.EVT_CHECKBOX(self,presentationfocusCheckBoxID,self.onPresentationfocusChange)
-#		settingsSizer.Add(presentationfocusCheckBox,border=10,flag=wx.BOTTOM)
+		wx.EVT_CHECKBOX(self,presentationfocusCheckBoxID,self.onPresentationfocusChange)
+		settingsSizer.Add(presentationfocusCheckBox,border=10,flag=wx.BOTTOM)
 		updateCheckBoxID=wx.NewId()
 		updateCheckBox=wx.CheckBox(self,updateCheckBoxID,label=_("Update the content dynamically"))
 		updateCheckBox.SetValue(config.conf["virtualBuffers"]["updateContentDynamically"])
@@ -406,7 +418,8 @@ class virtualBuffersDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		presentationfocusCheckBox.SetFocus()
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.maxLengthEdit.SetFocus()
 
 	def onPresentationfocusChange(self,evt):
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=evt.IsChecked()
@@ -446,3 +459,97 @@ class virtualBuffersDialog(wx.Dialog):
 
 	def onFramesChange(self,evt):
 		config.conf["virtualBuffers"]["reportFrames"]=evt.IsChecked()
+		
+	def onOk(self,evt):
+		try:
+			newMaxLength=int(self.maxLengthEdit.GetValue())
+		except:
+			newMaxLength=0
+		if newMaxLength >=10 and newMaxLength <=250:
+			config.conf["virtualBuffers"]["maxLineLength"]=newMaxLength
+		try:
+			newPageLines=int(self.pageLinesEdit.GetValue())
+		except:
+			newPageLines=0
+		if newPageLines >=5 and newPageLines <=150:
+			config.conf["virtualBuffers"]["linesPerPage"]=newPageLines
+		self.Destroy()
+
+class documentFormattingDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		fontNameCheckBoxID=wx.NewId()
+		fontNameCheckBox=wx.CheckBox(self,fontNameCheckBoxID,label=_("Report font name"))
+		fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
+		wx.EVT_CHECKBOX(self,fontNameCheckBoxID,self.onFontNameChange)
+		settingsSizer.Add(fontNameCheckBox,border=10,flag=wx.BOTTOM)
+		fontSizeCheckBoxID=wx.NewId()
+		fontSizeCheckBox=wx.CheckBox(self,fontSizeCheckBoxID,label=_("Report font size"))
+		fontSizeCheckBox.SetValue(config.conf["documentFormatting"]["reportFontSize"])
+		wx.EVT_CHECKBOX(self,fontSizeCheckBoxID,self.onFontSizeChange)
+		settingsSizer.Add(fontSizeCheckBox,border=10,flag=wx.BOTTOM)
+		fontAttrsCheckBoxID=wx.NewId()
+		fontAttrsCheckBox=wx.CheckBox(self,fontAttrsCheckBoxID,label=_("Report font attributes"))
+		fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
+		wx.EVT_CHECKBOX(self,fontAttrsCheckBoxID,self.onFontAttrsChange)
+		settingsSizer.Add(fontAttrsCheckBox,border=10,flag=wx.BOTTOM)
+		styleCheckBoxID=wx.NewId()
+		styleCheckBox=wx.CheckBox(self,styleCheckBoxID,label=_("Report style"))
+		styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
+		wx.EVT_CHECKBOX(self,styleCheckBoxID,self.onStyleChange)
+		settingsSizer.Add(styleCheckBox,border=10,flag=wx.BOTTOM)
+		pageCheckBoxID=wx.NewId()
+		pageCheckBox=wx.CheckBox(self,pageCheckBoxID,label=_("Report pages"))
+		pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
+		wx.EVT_CHECKBOX(self,pageCheckBoxID,self.onPageChange)
+		settingsSizer.Add(pageCheckBox,border=10,flag=wx.BOTTOM)
+		lineNumberCheckBoxID=wx.NewId()
+		lineNumberCheckBox=wx.CheckBox(self,lineNumberCheckBoxID,label=_("Report line numbers"))
+		lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
+		wx.EVT_CHECKBOX(self,lineNumberCheckBoxID,self.onLineNumberChange)
+		settingsSizer.Add(lineNumberCheckBox,border=10,flag=wx.BOTTOM)
+		tablesCheckBoxID=wx.NewId()
+		tablesCheckBox=wx.CheckBox(self,tablesCheckBoxID,label=_("Report tables"))
+		tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
+		wx.EVT_CHECKBOX(self,tablesCheckBoxID,self.onTablesChange)
+		settingsSizer.Add(tablesCheckBox,border=10,flag=wx.BOTTOM)
+		alignmentCheckBoxID=wx.NewId()
+		alignmentCheckBox=wx.CheckBox(self,alignmentCheckBoxID,label=_("Report alignment"))
+		alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
+		wx.EVT_CHECKBOX(self,alignmentCheckBoxID,self.onAlignmentChange)
+		settingsSizer.Add(alignmentCheckBox,border=10,flag=wx.BOTTOM)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		fontNameCheckBox.SetFocus()
+
+	def onFontNameChange(self,evt):
+		config.conf["documentFormatting"]["reportFontName"]=evt.IsChecked()
+
+	def onFontSizeChange(self,evt):
+		config.conf["documentFormatting"]["reportFontSize"]=evt.IsChecked()
+
+	def onFontAttrsChange(self,evt):
+		config.conf["documentFormatting"]["reportFontAttributes"]=evt.IsChecked()
+
+	def onStyleChange(self,evt):
+		config.conf["documentFormatting"]["reportStyle"]=evt.IsChecked()
+
+	def onPageChange(self,evt):
+		config.conf["documentFormatting"]["reportPage"]=evt.IsChecked()
+
+	def onLineNumberChange(self,evt):
+		config.conf["documentFormatting"]["reportLineNumber"]=evt.IsChecked()
+
+	def onTablesChange(self,evt):
+		config.conf["documentFormatting"]["reportTables"]=evt.IsChecked()
+
+	def onAlignmentChange(self,evt):
+		config.conf["documentFormatting"]["reportAlignment"]=evt.IsChecked()
+
+

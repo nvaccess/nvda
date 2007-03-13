@@ -172,6 +172,9 @@ class MainFrame(wx.Frame):
 		id_virtualBuffersCommand=wx.NewId()
 		menu_preferences.Append(id_virtualBuffersCommand,_("Virtual &buffers...\tctrl+shift+b"),_("Change virtual buffers specific settings")) 
 		wx.EVT_MENU(self,id_virtualBuffersCommand,self.onVirtualBuffersCommand)
+		id_documentFormattingCommand=wx.NewId()
+		menu_preferences.Append(id_documentFormattingCommand,_("Document &formatting...\tctrl+shift+f"),_("Change echo of document properties")) 
+		wx.EVT_MENU(self,id_documentFormattingCommand,self.onDocumentFormattingCommand)
 		menuBar.Append(menu_preferences,_("&Preferences"))
 		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
 		menu_help = wx.Menu()
@@ -303,7 +306,7 @@ class MainFrame(wx.Frame):
 		oldParagraphs=config.conf["virtualBuffers"]["reportParagraphs"]
 		oldFrames=config.conf["virtualBuffers"]["reportFrames"]
 		d=virtualBuffersDialog(self,-1,_("virtual buffers"))
-		if d.ShowModal()!=wx.ID_OK:
+		if d.ShowModal()==wx.ID_CANCEL:
 			config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=oldPresentationfocus
 			config.conf["virtualBuffers"]["updateContentDynamically"]=oldUpdate
 			config.conf["virtualBuffers"]["reportLinks"]=oldLinks
@@ -317,6 +320,26 @@ class MainFrame(wx.Frame):
 			config.conf["virtualBuffers"]["reportBlockQuotes"]=oldBlockQuotes
 			config.conf["virtualBuffers"]["reportParagraphs"]=oldParagraphs
 			config.conf["virtualBuffers"]["reportFrames"]=oldFrames
+
+	def onDocumentFormattingCommand(self,evt):
+		oldFontName=config.conf["documentFormatting"]["reportFontName"]
+		oldFontSize=config.conf["documentFormatting"]["reportFontSize"]
+		oldFontAttrs=config.conf["documentFormatting"]["reportFontAttributes"]
+		oldStyle=config.conf["documentFormatting"]["reportStyle"]
+		oldPage=config.conf["documentFormatting"]["reportPage"]
+		oldLineNumber=config.conf["documentFormatting"]["reportLineNumber"]
+		oldTables=config.conf["documentFormatting"]["reportTables"]
+		oldAlignment=config.conf["documentFormatting"]["reportAlignment"]
+		d=documentFormattingDialog(self,-1,_("Document formatting"))
+		if d.ShowModal()!=wx.ID_OK:
+			config.conf["documentFormatting"]["reportFontName"]=oldFontName
+			config.conf["documentFormatting"]["reportFontSize"]=oldFontSize
+			config.conf["documentFormatting"]["reportFontAttributes"]=oldFontAttrs
+			config.conf["documentFormatting"]["reportStyle"]=oldStyle
+			config.conf["documentFormatting"]["reportPage"]=oldPage
+			config.conf["documentFormatting"]["reportLineNumber"]=oldLineNumber
+			config.conf["documentFormatting"]["reportTables"]=oldTables
+			config.conf["documentFormatting"]["reportAlignment"]=oldAlignment
 
 	def onAboutCommand(self,evt):
 		try:

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r433\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2007-03-07 12:32+Central Europe Standard Time\n"
+"PO-Revision-Date: 2007-03-13 15:47+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@djmarkus.sk>\n"
 "Language-Team: sk <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -696,6 +696,14 @@ msgstr "zmení nastavenia špecifické pre vyrtuálne buffery"
 msgid "Virtual &buffers...\tctrl+shift+b"
 msgstr "Virtuálne buffery...\tctrl+shift+b"
 
+#: gui\__init__.py:176
+msgid "Change echo of document properties"
+msgstr "zmení oznamovanie vlastností dokumentu"
+
+#: gui\__init__.py:176
+msgid "Document formatting...\tctrl+shift+f"
+msgstr "&Formátovanie dokumentov...\tctrl+shift+f"
+
 #: gui\__init__.py:152
 #: gui\__init__.py:153
 msgid "&Preferences"
@@ -759,6 +767,10 @@ msgstr "Čítanie objektov"
 #: gui\__init__.py:285
 msgid "virtual buffers"
 msgstr "Virtuálne buffery"
+
+#: gui\__init__.py:333
+msgid "Document formatting"
+msgstr "formátovanie dokumentov"
 
 #: gui\__init__.py:274
 msgid "copyright"
@@ -911,6 +923,34 @@ msgstr "Oznamovať odseky"
 #: gui\settingsDialogs.py:400
 msgid "Report frames"
 msgstr "Oznamovať rámce"
+
+#: gui\settingsDialogs.py:485
+msgid "Report font name"
+msgstr "Čítať názov písma"
+
+#: gui\settingsDialogs.py:490
+msgid "Report font size"
+msgstr "Oznamovať veľkosť písma"
+
+#: gui\settingsDialogs.py:495
+msgid "Report font attributes"
+msgstr "Čítať parametre písma"
+
+#: gui\settingsDialogs.py:500
+msgid "Report style"
+msgstr "Oznamovať štýl"
+
+#: gui\settingsDialogs.py:505
+msgid "Report pages"
+msgstr "Oznamovať strany"
+
+#: gui\settingsDialogs.py:510
+msgid "Report line numbers"
+msgstr "Hovoriť čísla riadkov"
+
+#: gui\settingsDialogs.py:520
+msgid "Report alignment"
+msgstr "Čítať zarovnanie"
 
 #: keyboardHandler.py:86
 msgid "caps lock %s"
