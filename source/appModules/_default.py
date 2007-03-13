@@ -130,7 +130,7 @@ class appModule(appModuleHandler.appModule):
 		if not location:
 			audio.speakMessage(_("No location information for navigator object"))
 		(left,top,width,height)=location
-		audio.speakMessage("%d wide by %d high, located %d from left and %d from top"%(width,height,left,top))
+		audio.speakMessage(_("%d wide by %d high, located %d from left and %d from top")%(width,height,left,top))
    
 	def script_navigatorObject_toFocus(self,keyPress,nextScript):
 		"""Sets the navigator object to the current focus"""
