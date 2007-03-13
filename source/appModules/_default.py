@@ -436,3 +436,13 @@ class appModule(appModuleHandler.appModule):
 				audio.speakSymbol("%s"%char)
 			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 			audio.speakMessage("text: %s"%obj.windowText)
+
+	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
+		"""Toggles on and off the beeping on progress bar updates"""
+		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
+			onOff=_("off")
+			config.conf["presentation"]["beepOnProgressBarUpdates"]=False
+		else:
+			onOff=_("on")
+			config.conf["presentation"]["beepOnProgressBarUpdates"]=True
+		audio.speakMessage(_("Beep on progress bar updates")+" "+onOff)
