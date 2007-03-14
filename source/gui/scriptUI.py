@@ -69,8 +69,8 @@ class TextEntryDialog(ModalDialog):
 			return None
 
 class SingleChoiceDialog(wx.Dialog, ModalDialog):
-
 	selfIsDialog = True
+
 	def __init__(self, message, title=_("NVDA"), choices=(), default=0, style=wx.OK|wx.CANCEL, callback=None):
 		ModalDialog.__init__(self, callback)
 		def makeDialog():
@@ -95,5 +95,43 @@ class SingleChoiceDialog(wx.Dialog, ModalDialog):
 			sel = self.list.GetFirstSelected()
 			if sel == -1: return None
 			return sel, self.list.GetItemText(sel)
+		else:
+			return None
+
+class LinksListDialog(wx.Dialog, ModalDialog):
+	selfIsDialog = True
+	ID_MOVETO = 1000
+	ID_ACTIVATE = wx.ID_OK
+
+	def __init__(self, choices, default=0, callback=None):
+		ModalDialog.__init__(self, callback)
+		def makeDialog():
+			wx.Dialog.__init__(self, None, -1, _("Links List"))
+			mainSizer = wx.BoxSizer(wx.VERTICAL)
+			self.list = wx.ListView(self, -1, style=wx.LC_LIST | wx.LC_SINGLE_SEL)
+			self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, lambda evt: self.EndModal(wx.ID_OK))
+			for index, choice in enumerate(choices):
+				self.list.InsertStringItem(index, choice)
+			self.list.Focus(default)
+			self.list.Select(default)
+			mainSizer.Add(self.list)
+			buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
+			# Activate is our OK button, so need for an event.
+			buttonSizer.Add(wx.Button(self, self.ID_ACTIVATE, _("&Activate Link")))
+			movetoButton = wx.Button(self, self.ID_MOVETO, _("&Move to link"))
+			movetoButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(self.ID_MOVETO))
+			buttonSizer.Add(movetoButton)
+			buttonSizer.Add(wx.Button(self, wx.ID_CANCEL))
+			mainSizer.Add(buttonSizer)
+			mainSizer.Fit(self)
+			self.SetSizer(mainSizer)
+			self.list.SetFocus()
+		self.makeDialog = makeDialog
+
+	def getResponse(self, response):
+		if response != wx.ID_CANCEL:
+			sel = self.list.GetFirstSelected()
+			if sel == -1: return None
+			return response == self.ID_ACTIVATE, sel, self.list.GetItemText(sel)
 		else:
 			return None
