@@ -120,7 +120,7 @@ class ExternalExecuteEvent(wx.PyCommandEvent):
 			queueHandler.registerGeneratorObject(self._callback_gen(ret))
 
 	def _callback_gen(self, ret):
-		for n in xrange(10):
+		for n in xrange(20):
 			yield None
 		self._callback(ret)
 

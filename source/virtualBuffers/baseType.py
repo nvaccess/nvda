@@ -12,6 +12,7 @@ import globalVars
 import debug
 import config
 import textBuffer
+import gui.scriptUI
 
 fieldType_other=0
 fieldType_button=1
@@ -87,6 +88,9 @@ class virtualBuffer(textBuffer.textBufferObject):
 		self._IDs={}
 		self._textBuf=""
 		self._lastReportedIDList=[]
+		self._lastFindText=""
+		self._findInProgress=False
+
 
 	def getIDFromPosition(self,pos):
 		IDs=self._IDs
@@ -484,7 +488,30 @@ class virtualBuffer(textBuffer.textBufferObject):
 		else:
 			audio.speakMessage(_("no more form fields"))
 
+	def doFindTextDialog(self):
+		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindTextDialogHelper)
+		findDialog.run()
+
+	def doFindTextDialogHelper(self,text):
+	 	res=self._textBuf.find(text,self.text_reviewOffset+1)
+		if res>=0:
+			self.text_reviewOffset=res
+			audio.cancel()
+			self.text_speakLine(res)
+		else:
+			errorDialog=gui.scriptUI.MessageDialog(_("text: \"%s\" not found")%text,title=_("Find Error"))
+			errorDialog.run()
+		self._lastFindText=text
+
+	def script_findText(self,keyPress,nextScript): 
+		self.doFindTextDialog()
+
+	def script_findNext(self,keyPress,nextScript):
+		self.doFindTextDialogHelper(self._lastFindText)
+
 [virtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("control+f","findText"),
+	("F3","findNext"),
 	("extendedDown","text_review_nextLine"),
 	("extendedUp","text_review_prevLine"),
 	("extendedLeft","text_review_prevCharacter"),
