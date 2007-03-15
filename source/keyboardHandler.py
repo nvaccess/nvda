@@ -111,7 +111,7 @@ def internal_keyDownEvent(event):
 
 def speakKey(keyPress,ascii):
 	global word
-	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift']))) and (ascii in range(33,128)):
+	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift']))) and (ascii in range(32,255)):
 		if isTypingProtected():
 			char="*"
 		else:
