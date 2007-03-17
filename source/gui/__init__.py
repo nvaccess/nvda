@@ -242,8 +242,10 @@ class MainFrame(wx.Frame):
 			self.onHideGuiCommand(None)
 
 	def onInterfaceSettingsCommand(self,evt):
+		pumpLock.acquire()
 		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
 		d.Show(True)
+		pumpLock.release()
 
 	def onSynthesizerCommand(self,evt):
 		pumpLock.acquire()
