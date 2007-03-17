@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r433\n"
+"Project-Id-Version: r458\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2007-03-13 15:47+Central Europe Standard Time\n"
+"PO-Revision-Date: 2007-03-17 13:30+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@djmarkus.sk>\n"
 "Language-Team: sk <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,18 @@ msgstr ""
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
+
+#: IAccessibleHandler.py:135
+msgid "window"
+msgstr "okno"
+
+#: IAccessibleHandler.py:139
+msgid "Tree view"
+msgstr "stromové zobrazenie"
+
+#: IAccessibleHandler.py:143
+msgid "sub menu"
+msgstr "podmenu"
 
 #: IAccessibleHandler.py:177
 #: NVDAObjects\IAccessible.py:178
@@ -160,6 +172,10 @@ msgstr "žiadny navigačný objekt"
 #: appModules\_default.py:131
 msgid "No location information for navigator object"
 msgstr "nie je informácia o pozícii navigačného objektu"
+
+#: appModules\_default.py:133
+msgid "%d wide by %d high, located %d from left and %d from top"
+msgstr "šírka %d výška %d, vzdialenosť od ľavého okraja %d a vzdialenosť od vrchu %d"
 
 #: appModules\_default.py:139
 #: appModules\_default.py:378
@@ -314,11 +330,11 @@ msgstr "tab"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "line feed"
+msgstr "koniec riadka"
 
 #: characterSymbols.py:22
 msgid "carage return"
-msgstr "carriage return"
+msgstr "koniec riadka"
 
 #: characterSymbols.py:23
 msgid "space"
@@ -362,7 +378,7 @@ msgstr "zatvoriť"
 
 #: characterSymbols.py:33
 msgid "star"
-msgstr "hviezdička"
+msgstr "hviezda"
 
 #: characterSymbols.py:34
 msgid "plus"
@@ -434,7 +450,7 @@ msgstr "podčiarknutie"
 
 #: characterSymbols.py:51
 msgid "graav"
-msgstr "graav"
+msgstr "akcent"
 
 #: characterSymbols.py:52
 msgid "left brace"
@@ -701,7 +717,7 @@ msgid "Change echo of document properties"
 msgstr "zmení oznamovanie vlastností dokumentu"
 
 #: gui\__init__.py:176
-msgid "Document formatting...\tctrl+shift+f"
+msgid "Document &formatting...\tctrl+shift+f"
 msgstr "&Formátovanie dokumentov...\tctrl+shift+f"
 
 #: gui\__init__.py:152
@@ -788,6 +804,18 @@ msgstr "url"
 msgid "version"
 msgstr "verzia"
 
+#: gui\scriptUI.py:109
+msgid "Links List"
+msgstr "zoznam odkazov"
+
+#: gui\scriptUI.py:120
+msgid "&Activate Link"
+msgstr "&Aaktivovať odkaz"
+
+#: gui\scriptUI.py:121
+msgid "&Move to link"
+msgstr "&Prejsť na odkaz"
+
 #: gui\settingsDialogs.py:23
 msgid "Language (requires restart to fully take affect)"
 msgstr "Jazyk (vyžaduje reštart)"
@@ -871,6 +899,14 @@ msgstr "Povedať najprv stav objektu"
 #: gui\settingsDialogs.py:303
 msgid "Beep on progress bar updates"
 msgstr "Pípať pri aktualizácii priebehu"
+
+#: gui\settingsDialogs.py:290
+msgid "Maximum number of characters on one line"
+msgstr "maximálny počet znakov na riadku"
+
+#: gui\settingsDialogs.py:295
+msgid "Number of lines per page"
+msgstr "počet riadkov na stranu"
 
 #: gui\settingsDialogs.py:340
 msgid "Report virtual presentation on focus changes"
@@ -1248,6 +1284,22 @@ msgstr "žiadne ďalšie položky zoznamu"
 #: virtualBuffers\baseType.py:482
 msgid "no more form fields"
 msgstr "žiadne ďalšie prvky formulára"
+
+#: virtualBuffers\baseType.py:492
+msgid "Find"
+msgstr "Hľadať"
+
+#: virtualBuffers\baseType.py:492
+msgid "Type the text you wish to find"
+msgstr "napíšte text, ktorý si želáte vyhľadať"
+
+#: virtualBuffers\baseType.py:502
+msgid "Find Error"
+msgstr "Chyba vyhľadávania"
+
+#: virtualBuffers\baseType.py:502
+msgid "text: \"%s\" not found"
+msgstr "text: \"%s\" nebol nájdený"
 
 #: virtualBuffers\baseType.py:499
 #: virtualBuffers\baseType.py:500
