@@ -133,9 +133,14 @@ NAVRELATION_LABELLED_BY=0x1003
 
 roleNames={
 	ROLE_SYSTEM_CLIENT:_("window"),
+	ROLE_SYSTEM_PAGETAB:_("tab"),
 	ROLE_SYSTEM_TEXT:_("edit"),
 	ROLE_SYSTEM_PUSHBUTTON:_("button"),
 	ROLE_SYSTEM_OUTLINE:_("Tree view"),
+}
+
+stateNames={
+	STATE_SYSTEM_HASPOPUP:_("sub menu"),
 }
 
 import tones
@@ -266,6 +271,8 @@ def getRoleText(role):
 		return None
 
 def getStateText(state):
+	if stateNames.has_key(state):
+		return stateNames[state]
 	textLen=oleAcc.GetStateTextW(state,0,0)
 	if textLen:
 		buf=ctypes.create_unicode_buffer(textLen+2)

@@ -494,6 +494,15 @@ class NVDAObject_checkBox(NVDAObject_IAccessible):
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 
+class NVDAObject_menuItem(NVDAObject_IAccessible):
+
+	def reportFocus(self):
+		positiveStates=self.calculatePositiveStates()
+		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
+		negativeStates=self.calculateNegativeStates()
+		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
+		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+
 class NVDAObject_outlineItem(NVDAObject_IAccessible):
 
 	def _get_level(self):
@@ -509,6 +518,22 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 			int(val)
 		except:
 			return val
+
+	def reportFocus(self):
+		positiveStates=self.calculatePositiveStates()
+		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
+		negativeStates=self.calculateNegativeStates()
+		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
+		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+
+class NVDAObject_tab(NVDAObject_IAccessible):
+
+	def reportFocus(self):
+		positiveStates=self.calculatePositiveStates()
+		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
+		negativeStates=self.calculateNegativeStates()
+		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
+		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
 
 class NVDAObject_tooltip(NVDAObject_IAccessible):
 
@@ -671,6 +696,13 @@ class NVDAObject_listItem(NVDAObject_IAccessible):
 
 	allowedNegativeStates=NVDAObject_IAccessible.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_SELECTED
 
+	def reportFocus(self):
+		positiveStates=self.calculatePositiveStates()
+		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
+		negativeStates=self.calculateNegativeStates()
+		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
+		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
 
 	speakOnGainFocus=False
@@ -695,9 +727,7 @@ class NVDAObject_list(NVDAObject_IAccessible):
 		NVDAObject_IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			child._accObjectID=self._accObjectID
-			api.setFocusObject(child)
-			child.event_gainFocus()
+			IAccessibleHandler.updateFocusFromEvent(self.windowHandle,self._accObjectID,child.IAccessibleChildID)
 		elif not self.firstChild:
 			audio.speakMessage(_("%d items")%0)
 
@@ -775,7 +805,9 @@ _staticMap={
 ("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
 ("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
 (None,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON):NVDAObject_checkBox,
+(None,IAccessibleHandler.ROLE_SYSTEM_MENUITEM):NVDAObject_menuItem,
 (None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
+(None,IAccessibleHandler.ROLE_SYSTEM_PAGETAB):NVDAObject_tab,
 (None,IAccessibleHandler.ROLE_SYSTEM_LINK):NVDAObject_link,
 ("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
 ("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,

@@ -103,6 +103,8 @@ This function will not speak if L{speechMode} is false.
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	beenCanceled=False
+	if description and name==description:
+		description=None
 	text=""
 	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
 		multiList=[stateText,name,typeString,value,description,position,level,contains]
