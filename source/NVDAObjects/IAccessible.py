@@ -524,7 +524,7 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
 		negativeStates=self.calculateNegativeStates()
 		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
-		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,level=_("level %d")%self.level)
 
 class NVDAObject_tab(NVDAObject_IAccessible):
 

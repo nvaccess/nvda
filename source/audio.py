@@ -107,9 +107,9 @@ This function will not speak if L{speechMode} is false.
 		description=None
 	text=""
 	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
-		multiList=[stateText,name,typeString,value,description,position,level,contains]
+		multiList=[stateText,name,typeString,value,description,level,contains,position]
 	else:
-		multiList=[name,typeString,value,stateText,description,position,level,contains]
+		multiList=[name,typeString,value,stateText,description,level,contains,position]
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
 		multiList.append(keyboardShortcut)
 	for multi in filter(lambda x: isinstance(x,basestring) and (len(x)>0) and not x.isspace(),multiList):
