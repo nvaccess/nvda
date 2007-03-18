@@ -462,10 +462,13 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 	def _get_typeString(self):
 		return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)
 
+	def _get_text_characterCount(self):
+		return len(self.name)
+
 	def text_getText(self,start=None,end=None):
 		text=self.name
 		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else len(self.value)
+		end=end if isinstance(end,int) else len(self.name)
 		return text[start:end]
 
 [NVDAObject_staticText.bindKey(keyName,scriptName) for keyName,scriptName in [
