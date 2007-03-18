@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r440\n"
+"Project-Id-Version: r458\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2007-03-12 09:41+0200\n"
+"PO-Revision-Date: 2007-03-17 16:20+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -131,6 +131,10 @@ msgstr "pas d'objet navigateur"
 #: appModules\_default.py:131
 msgid "No location information for navigator object"
 msgstr "pas d'information de position pour l'objet navigateur"
+
+#: appModules\_default.py:133
+msgid "%d wide by %d high, located %d from left and %d from top"
+msgstr "largeur %d, auteur %d, positionné à %d de la gauche et %d du haut"
 
 #: appModules\_default.py:139 appModules\_default.py:378
 msgid "no focus"
@@ -814,6 +818,13 @@ msgstr "Annoncer le nom des groupes d'objets"
 msgid "Say object state first"
 msgstr "Dire l'état de l'objet en premier"
 
+#: gui\settingsDialogs.py:339
+msgid "Maximum number of characters on one line"
+msgstr "Nombre maximum de caractères par ligne"
+
+#: gui\settingsDialogs.py:345
+msgid "Number of lines per page"
+msgstr "Nombre de lignes par page"
 #: gui\settingsDialogs.py:304
 msgid "Beep on progress bar updates"
 msgstr "Indiquer la mise à jour des barres de progression par des bips"
@@ -1148,6 +1159,27 @@ msgstr "plus d'élément de liste"
 #: virtualBuffers\baseType.py:475 virtualBuffers\baseType.py:485
 msgid "no more form fields"
 msgstr "plus de champ de formulaire"
+
+
+#: virtualBuffers\baseType.py:492
+msgid "Find"
+msgstr "Recherche"
+
+#: virtualBuffers\baseType.py:492
+msgid "Type the text you wish to find"
+msgstr "Entrez le texte à rechercher"
+
+#: virtualBuffers\baseType.py:502
+msgid "Find Error"
+msgstr "Erreur de recherche"
+
+#: virtualBuffers\baseType.py:502
+msgid "text: \"%s\" not found"
+msgstr "Texte: %s non trouvé"
+
+#: appModules\_default.py:133
+msgid "%d wide by %d high, located %d from left and %d from top"
+msgstr "largeur %d, auteur %d, positionné à %d de la gauche et %d du haut"
 
 #: virtualBuffers\baseType.py:502 virtualBuffers\baseType.py:503
 msgid "h=headingQuickKey"
