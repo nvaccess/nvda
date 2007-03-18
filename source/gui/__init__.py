@@ -260,88 +260,34 @@ class MainFrame(wx.Frame):
 		pumpLock.release()
 
 	def onKeyboardEchoCommand(self,evt):
-		oldChars=config.conf["keyboard"]["speakTypedCharacters"]
-		oldWords=config.conf["keyboard"]["speakTypedWords"]
-		oldCommandKeys=config.conf["keyboard"]["speakCommandKeys"]
+		pumpLock.acquire()
 		d=keyboardEchoDialog(self,-1,_("Keyboard echo settings"))
-		if d.ShowModal()!=wx.ID_OK:
-			config.conf["keyboard"]["speakTypedCharacters"]=oldChars
-			config.conf["keyboard"]["speakTypedWords"]=oldWords
-			config.conf["keyboard"]["speakCommandKeys"]=oldCommandKeys
+		d.Show(True)
+		pumpLock.release()
 
 	def onMouseSettingsCommand(self,evt):
-		oldShape=config.conf["mouse"]["reportMouseShapeChanges"]
-		oldObject=config.conf["mouse"]["reportObjectUnderMouse"]
+		pumpLock.acquire()
 		d=mouseSettingsDialog(self,-1,_("Mouse settings"))
-		if d.ShowModal()!=wx.ID_OK:
-			config.conf["mouse"]["reportMouseShapeChanges"]=oldShape
-			config.conf["mouse"]["reportObjectUnderMouse"]=oldObject
+		d.Show(True)
+		pumpLock.release()
 
 	def onObjectPresentationCommand(self,evt):
-		oldTooltip=config.conf["presentation"]["reportTooltips"]
-		oldBalloon=config.conf["presentation"]["reportHelpBalloons"]
-		oldShortcut=config.conf["presentation"]["reportKeyboardShortcuts"]
-		oldGroup=config.conf["presentation"]["reportObjectGroupNames"]
-		oldStateFirst=config.conf["presentation"]["sayStateFirst"]
-		oldProgressBeep=config.conf["presentation"]["beepOnProgressBarUpdates"]
+		pumpLock.acquire()
 		d=objectPresentationDialog(self,-1,_("Object presentation"))
-		if d.ShowModal()!=wx.ID_OK:
-			config.conf["presentation"]["reportTooltips"]=oldTooltip
-			config.conf["presentation"]["reportHelpBalloons"]=oldBalloon
-			config.conf["presentation"]["reportKeyboardShortcuts"]=oldShortcut
-			config.conf["presentation"]["reportObjectGroupNames"]=oldGroup
-			config.conf["presentation"]["sayStateFirst"]=oldStateFirst
-			config.conf["presentation"]["beepOnProgressBarUpdates"]=oldProgressBeep
+		d.Show(True)
+		pumpLock.release()
 
 	def onVirtualBuffersCommand(self,evt):
-		oldPresentationfocus=config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]
-		oldUpdate=config.conf["virtualBuffers"]["updateContentDynamically"]
-		oldLinks=config.conf["virtualBuffers"]["reportLinks"]
-		oldLists=config.conf["virtualBuffers"]["reportLists"]
-		oldListItems=config.conf["virtualBuffers"]["reportListItems"]
-		oldHeadings=config.conf["virtualBuffers"]["reportHeadings"]
-		oldTables=config.conf["virtualBuffers"]["reportTables"]
-		oldGraphics=config.conf["virtualBuffers"]["reportGraphics"]
-		oldForms=config.conf["virtualBuffers"]["reportForms"]
-		oldFormFields=config.conf["virtualBuffers"]["reportFormFields"]
-		oldBlockQuotes=config.conf["virtualBuffers"]["reportBlockQuotes"]
-		oldParagraphs=config.conf["virtualBuffers"]["reportParagraphs"]
-		oldFrames=config.conf["virtualBuffers"]["reportFrames"]
+		pumpLock.acquire()
 		d=virtualBuffersDialog(self,-1,_("virtual buffers"))
-		if d.ShowModal()==wx.ID_CANCEL:
-			config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=oldPresentationfocus
-			config.conf["virtualBuffers"]["updateContentDynamically"]=oldUpdate
-			config.conf["virtualBuffers"]["reportLinks"]=oldLinks
-			config.conf["virtualBuffers"]["reportLists"]=oldLists
-			config.conf["virtualBuffers"]["reportListItems"]=oldListItems
-			config.conf["virtualBuffers"]["reportHeadings"]=oldHeadings
-			config.conf["virtualBuffers"]["reportTables"]=oldTables
-			config.conf["virtualBuffers"]["reportGraphics"]=oldGraphics
-			config.conf["virtualBuffers"]["reportForms"]=oldForms
-			config.conf["virtualBuffers"]["reportFormFields"]=oldFormFields
-			config.conf["virtualBuffers"]["reportBlockQuotes"]=oldBlockQuotes
-			config.conf["virtualBuffers"]["reportParagraphs"]=oldParagraphs
-			config.conf["virtualBuffers"]["reportFrames"]=oldFrames
+		d.Show(True)
+		pumpLock.release()
 
 	def onDocumentFormattingCommand(self,evt):
-		oldFontName=config.conf["documentFormatting"]["reportFontName"]
-		oldFontSize=config.conf["documentFormatting"]["reportFontSize"]
-		oldFontAttrs=config.conf["documentFormatting"]["reportFontAttributes"]
-		oldStyle=config.conf["documentFormatting"]["reportStyle"]
-		oldPage=config.conf["documentFormatting"]["reportPage"]
-		oldLineNumber=config.conf["documentFormatting"]["reportLineNumber"]
-		oldTables=config.conf["documentFormatting"]["reportTables"]
-		oldAlignment=config.conf["documentFormatting"]["reportAlignment"]
+		pumpLock.acquire()
 		d=documentFormattingDialog(self,-1,_("Document formatting"))
-		if d.ShowModal()!=wx.ID_OK:
-			config.conf["documentFormatting"]["reportFontName"]=oldFontName
-			config.conf["documentFormatting"]["reportFontSize"]=oldFontSize
-			config.conf["documentFormatting"]["reportFontAttributes"]=oldFontAttrs
-			config.conf["documentFormatting"]["reportStyle"]=oldStyle
-			config.conf["documentFormatting"]["reportPage"]=oldPage
-			config.conf["documentFormatting"]["reportLineNumber"]=oldLineNumber
-			config.conf["documentFormatting"]["reportTables"]=oldTables
-			config.conf["documentFormatting"]["reportAlignment"]=oldAlignment
+		d.Show(True)
+		pumpLock.release()
 
 	def onAboutCommand(self,evt):
 		try:

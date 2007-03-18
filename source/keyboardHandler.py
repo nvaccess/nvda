@@ -111,7 +111,7 @@ def internal_keyDownEvent(event):
 
 def speakKey(keyPress,ascii):
 	global word
-	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift']))) and (ascii in range(32,255)):
+	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift'])) or (keyPress[0]==frozenset(['Control','Alt']))) and (ascii in range(33,255)):
 		if isTypingProtected():
 			char="*"
 		else:
@@ -137,6 +137,8 @@ def speakKey(keyPress,ascii):
 		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 			audio.speakMessage(word)
 			word=""
+	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
+		audio.speakSymbol(chr(ascii))
 
 def internal_keyUpEvent(event):
 	"""Event that pyHook calls when it receives keyUps"""
