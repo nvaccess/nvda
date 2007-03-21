@@ -220,11 +220,13 @@ class MainFrame(wx.Frame):
 		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,core.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
+		pumpLock.acquire()
 		try:
 			config.save()
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("configuration saved"),wait=True)
 		except:
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Could not save configuration - probably read only file system"),wait=True)
+		pumpLock.release()
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()
