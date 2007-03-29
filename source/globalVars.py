@@ -24,8 +24,6 @@
 @type keyboardHelp: boolean
 @var virtualBufferPassThrough: If true, scripts in the current virtualBuffer will be ignored and key presses will go through to the focus object.
 @type virtualBufferPassThrough: boolean
-@var stayAlive: the core main loop keeps running while this is true.
-@type stayAlive: boolean
 @var keyCounter: gets incrimented each time a key is pressed.
 @type keycounter: boolean
 @var lastProgresssValue: Stores the last value from a progress bar
@@ -43,6 +41,5 @@ navigatorTracksFocus=True
 menuMode=False
 keyboardHelp=False
 virtualBufferPassThrough=False
-stayAlive=None
 keyCounter=0
 lastProgressValue=0

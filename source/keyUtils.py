@@ -9,6 +9,7 @@ import pyHook
 import debug
 import winUser
 import queueHandler
+import wx
 
 def key(name):
 	"""Converts a string representation of a keyPress in to a set of modifiers and a key (which is NVDA's internal key representation).
@@ -103,6 +104,7 @@ def sendKey(keyPress):
 		winUser.keybd_event(k[0],0,k[1]+2,0)
 	if not isKeyWaiting():
 		time.sleep(0.01)
+		wx.Yield()
 
 def isKeyWaiting():
 	"""Determines whether a script key is waiting to be handled.

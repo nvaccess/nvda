@@ -6,13 +6,14 @@
 
 """NVDA core"""
 
-import pythoncom
+import wx
 import time
 import debug
 import globalVars
 import winUser
 import audio
 import config
+import queueHandler
 import languageHandler
 
 def quit():
@@ -41,7 +42,8 @@ def applyConfiguration(reportDone=False):
 		audio.speakMessage(_("configuration applyed"),wait=True)
 
 def main():
-	"""NVDA's core main loop. This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it loops continuously, checking the queues and executing functions, plus pumping window messages, and sleeping when possible.
+	"""NVDA's core main loop.
+This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	try:
 		applyConfiguration()
@@ -49,7 +51,6 @@ def main():
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			audio.speakMessage(_("Loading subsystems, please wait..."))
 		import gui
-		gui.initialize()
 		import appModuleHandler
 		appModuleHandler.initialize()
 		import IAccessibleHandler
@@ -58,7 +59,6 @@ def main():
 		keyboardHandler.initialize()
 		import mouseHandler
 		mouseHandler.initialize()
-		import queueHandler
 		audio.cancel()
 		try:
 			config.save()
@@ -68,29 +68,27 @@ def main():
 			audio.speakMessage(_("NVDA started"),wait=True)
 	except:
 		debug.writeException("core.py main init")
-		try:
-			gui.abort()
-		except:
-			pass
 		return False
+	app = wx.PySimpleApp()
+	gui.initialize(app)
+	pump = CorePump()
+	pump.Start(1)
 	try:
-		globalVars.stayAlive=True
-		while globalVars.stayAlive is True:
-			gui.pumpLock.acquire()
-			pythoncom.PumpWaitingMessages()
-			gui.pumpLock.release()
-			queueHandler.pumpAll()
-			if not queueHandler.isPendingItems(): 
-				time.sleep(0.001)
+		app.MainLoop()
 	except:
 		debug.writeException("core.py main loop")
-		try:
-			gui.abort()
-		except:
-			pass
 		return False
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
 	IAccessibleHandler.terminate()
 	audio.cancel()
 	return True
+
+class CorePump(wx.Timer):
+	"Checks the queues and executes functions."
+
+	def Notify(self):
+		while True:
+			queueHandler.pumpAll()
+			if not queueHandler.isPendingItems():
+				break

@@ -6,7 +6,6 @@
 
 import time
 import winsound
-import threading
 import os
 import wx
 import globalVars
@@ -101,10 +100,7 @@ id_onAbortCommand=wx.NewId()
 evt_externalExecute = wx.NewEventType()
 
 ### Globals
-guiThread = None
 mainFrame = None
-pumpLock = None
-guiInitialized=False
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
@@ -127,7 +123,6 @@ class ExternalExecuteEvent(wx.PyCommandEvent):
 class MainFrame(wx.Frame):
 
 	def __init__(self):
-		global guiInitialized
 		style=wx.DEFAULT_FRAME_STYLE
 		style-=(style&wx.MAXIMIZE_BOX)
 		style-=(style&wx.MINIMIZE_BOX)
@@ -199,11 +194,9 @@ class MainFrame(wx.Frame):
 		self.Show(True)
 		if globalVars.appArgs.minimal or config.conf["general"]["hideInterfaceOnStartup"]:
 			self.Show(False)
-		guiInitialized=True
 
 
 	def onAbortCommand(self,evt):
-		globalVars.stayAlive=False
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
@@ -220,13 +213,11 @@ class MainFrame(wx.Frame):
 		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,core.applyConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
-		pumpLock.acquire()
 		try:
 			config.save()
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("configuration saved"),wait=True)
 		except:
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Could not save configuration - probably read only file system"),wait=True)
-		pumpLock.release()
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()
@@ -238,58 +229,41 @@ class MainFrame(wx.Frame):
 		if d.ShowModal() == wx.ID_OK:
 			if config.conf["general"]["saveConfigurationOnExit"]:
 				config.save()
-			globalVars.stayAlive=False
 			self.Destroy()
 		elif not wasShown:
 			self.onHideGuiCommand(None)
 
 	def onInterfaceSettingsCommand(self,evt):
-		pumpLock.acquire()
 		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onSynthesizerCommand(self,evt):
-		pumpLock.acquire()
 		d=synthesizerDialog(self,-1,_("Synthesizer"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onVoiceCommand(self,evt):
-		pumpLock.acquire()
 		d=voiceSettingsDialog(self,-1,_("Voice settings"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onKeyboardEchoCommand(self,evt):
-		pumpLock.acquire()
 		d=keyboardEchoDialog(self,-1,_("Keyboard echo settings"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onMouseSettingsCommand(self,evt):
-		pumpLock.acquire()
 		d=mouseSettingsDialog(self,-1,_("Mouse settings"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onObjectPresentationCommand(self,evt):
-		pumpLock.acquire()
 		d=objectPresentationDialog(self,-1,_("Object presentation"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onVirtualBuffersCommand(self,evt):
-		pumpLock.acquire()
 		d=virtualBuffersDialog(self,-1,_("virtual buffers"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onDocumentFormattingCommand(self,evt):
-		pumpLock.acquire()
 		d=documentFormattingDialog(self,-1,_("Document formatting"))
 		d.Show(True)
-		pumpLock.release()
 
 	def onAboutCommand(self,evt):
 		try:
@@ -303,24 +277,10 @@ class MainFrame(wx.Frame):
 		except:
 			debug.writeException("gui.mainFrame.onAbout")
 
-def guiMainLoop():
+def initialize(app):
 	global mainFrame
-	try:
-		app = wx.PySimpleApp()
-		mainFrame = MainFrame()
-		app.SetTopWindow(mainFrame)
-		app.MainLoop()
-	except:
-		debug.writeException("guiMainLoop")
-		globalVars.stayAlive=False
-
-def initialize():
-	global guiThread, pumpLock
-	guiThread = threading.Thread(target = guiMainLoop)
-	pumpLock = threading.RLock()
-	guiThread.start()
-	while not guiInitialized:
-		time.sleep(0.01)
+	mainFrame = MainFrame()
+	app.SetTopWindow(mainFrame)
 
 def showGui():
  	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onShowGuiCommand))
