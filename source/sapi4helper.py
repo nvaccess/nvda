@@ -331,18 +331,10 @@ class SAPI4(object):
             self.text = ""
 
     def stop(self):
-        self.text = ""
         self.indexMarks.clear()
         del self._doneCallbacks[:]
-        self._sink = None
-        if self._sinkID:
-            self._tts.UnRegister(self._sinkID)
-            self._sinkID = None
-        self._bufSink = None
         self._noticeAudioStop = False
         self._tts.AudioReset()
-        mode = self.voiceModes[self.voice]
-        self._selectMode(mode)
 
     def addText(self, text, raw=False):
         if text:
