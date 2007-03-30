@@ -9,7 +9,6 @@ import wx
 import synthDriverHandler
 import debug
 import config
-import queueHandler
 import languageHandler
 import audio
 from wx.lib.masked import textctrl
@@ -95,7 +94,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setDriver,self.synthNames[self.synthList.GetSelection()])
+		synthDriverHandler.setDriver(self.synthNames[self.synthList.GetSelection()])
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):
@@ -163,22 +162,22 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVoice,evt.GetSelection()+1)
+		synthDriverHandler.setVoice(evt.GetSelection()+1)
 
 	def onRateChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setRate,evt.GetSelection())
+		synthDriverHandler.setRate(evt.GetSelection())
 
 	def onPitchChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setPitch,evt.GetSelection())
+		synthDriverHandler.setPitch(evt.GetSelection())
 
 	def onVolumeChange(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVolume,evt.GetSelection())
+		synthDriverHandler.setVolume(evt.GetSelection())
 
 	def onCancel(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVoice,self.oldVoice)
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setRate,self.oldRate)
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setPitch,self.oldPitch)
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,synthDriverHandler.setVolume,self.oldVolume)
+		synthDriverHandler.setVoice(self.oldVoice)
+		synthDriverHandler.setRate(self.oldRate)
+		synthDriverHandler.setPitch(self.oldPitch)
+		synthDriverHandler.setVolume(self.oldVolume)
 		self.Destroy()
 
 	def onOk(self,evt):

@@ -210,14 +210,14 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,core.applyConfiguration,reportDone=True)
+		core.applyConfiguration(reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("configuration saved"))
+			audio.speakMessage(_("configuration saved"))
 		except:
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Could not save configuration - probably read only file system"),wait=True)
+			audio.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()
