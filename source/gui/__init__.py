@@ -215,7 +215,7 @@ class MainFrame(wx.Frame):
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("configuration saved"),wait=True)
+			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("configuration saved"))
 		except:
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Could not save configuration - probably read only file system"),wait=True)
 

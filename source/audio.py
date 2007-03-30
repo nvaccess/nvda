@@ -9,7 +9,7 @@
 @type speechMode: boolean
 """ 
 
-
+import time
 from textProcessing import *
 import config
 import tones
@@ -146,7 +146,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
 			text=_("cap %s")%text
 		oldPitch=synthDriverHandler.getPitch()
-		synthDriverHandler.setPitch(oldPitch+25)
+		synthDriverHandler.setPitch(99)
 	synthDriverHandler.speakText(text,wait=wait,index=index)
 	if uppercase:
 		synthDriverHandler.setPitch(oldPitch)
