@@ -20,7 +20,7 @@ import core
 from settingsDialogs import *
 
 ### Constants
-appTitle = _("NVDA Interface")
+appTitle = "NVDA"
 quickStartMessage=_("""NVDA - Quick Start document
 
 NVDA (%(description)s)

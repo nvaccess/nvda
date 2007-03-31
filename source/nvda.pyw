@@ -34,7 +34,7 @@ parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=Fa
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 #Handle running multiple instances of NVDA
 try:
-	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA Interface')
+	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA')
 except:
 	oldAppWindowHandle=0
 if win32gui.IsWindow(oldAppWindowHandle): 
