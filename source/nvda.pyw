@@ -42,11 +42,6 @@ if win32gui.IsWindow(oldAppWindowHandle):
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
 	sys.exit(1)
 
-import winKernel
-try:
-	winKernel.freeConsole()
-except:
-	pass
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and debugging code
