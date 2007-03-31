@@ -1,100 +1,102 @@
-#synthDrivers/sapi4.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-
-import winsound
+import os
 import time
-import _winreg
 import pythoncom
+import comtypesClient
+import win32com.client
+import _winreg
+import debug
+import queueHandler
 import baseObject
-import core
-import sapi4helper
 
 name="sapi4"
-description="Microsoft Sapi4 speech engine "
+description="Microsoft Speech API 4 (ActiveVoice.ActiveVoice)"
+
+COM_CLASS = "ActiveVoice.ActiveVoice"
 
 def check():
-	return True
 	try:
-		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"Speech.VoiceText")
+		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
 		r.Close()
 		return True
 	except:
+		pass
+	return registerDll()
+
+def registerDll():
+	try:
+		ret = os.system(r"regsvr32 /s %SystemRoot%\speech\xvoice.dll")
+		return ret == 0
+	except:
+		pass
 		return False
 
 class synthDriver(baseObject.autoPropertyObject):
 
 	def __init__(self):
-		self.tts=sapi4helper.SAPI4()
-		self.tts.say('')
+		registerDll()
+		self.tts=comtypesClient.CreateObject(COM_CLASS,sink=self)
+		self.tts.Speak("")
+		self.tts.CallBacksEnabled=1
+		self.tts.Tagged=1
 		self._lastIndex=None
-		self.tts.callWhenDone(self.onDoneSpeaking)
-		self._waitFlag=False
-
-	def onIndexMark(self,index):
-		winsound.Beep(440,20)
-		self._lastIndex=index
-
-	def onDoneSpeaking(self):
-		self.waitFlag=False
-
-	def _get_rateRatio(self):
-		return (self.tts.rateMax-self.tts.rateMin)/100.0
+		self.voiceNames=[]
+		try:
+			for num in xrange(1,self.tts.CountEngines+1):
+				self.voiceNames.append(self.tts.modeName(num))
+		except:
+			pass
  
-	def _get_rateOffset(self):
-		return self.tts.rateMin
+	def _paramToPercent(self, current, min, max):
+		return float(current - min) / (max - min) * 100
+
+	def _percentToParam(self, percent, min, max):
+		return int(float(percent) / 100 * (max - min) + min)
+
+	#Events
+
+	def BookMark(self,x,y,z,markNum):
+		self._lastIndex=markNum-1
 
 	def _get_rate(self):
-		return int((self.tts.rate-self.rateOffset)/self.rateRatio)
-
-	def _get_pitchRatio(self):
-		return (self.tts.averagePitchMax-self.tts.averagePitchMin)/100.0
-
-	def _get_pitchOffset(self):
-		return self.tts.averagePitchMin
+		return self._paramToPercent(self.tts.speed,self.tts.minSpeed,self.tts.maxSpeed)
 
 	def _get_pitch(self):
-		return int((self.tts.averagePitch-self.pitchOffset)/self.pitchRatio)
+		return self._paramToPercent(self.tts.pitch,self.tts.minPitch,self.tts.maxPitch)
 
 	def _get_volume(self):
-		return 100
+		return self._paramToPercent(self.tts.volumeLeft,self.tts.minVolumeLeft,self.tts.maxVolumeLeft)
 
 	def _get_voice(self):
-		curVoiceID=self.tts.voice
-		for voiceNum in range(len(self.tts.voices)):
-			if self.tts.voices[voiceNum][0]==curVoiceID:
-				return voiceNum+1
-		return -1
- 
+		return self.tts.currentMode
+
 	def _get_lastIndex(self):
 		return self._lastIndex
 
-	def _get_voiceNames(self):
-		return [x[1] for x in self.tts.voices]
-
 	def _set_rate(self,rate):
-		self.tts.rate = int(rate*self.rateRatio)+self.rateOffset
+		# ViaVoice doesn't seem to like the speed being set to maximum.
+		self.tts.speed=min(self._percentToParam(rate, self.tts.minSpeed, self.tts.maxSpeed), self.tts.maxSpeed - 1)
+		self.tts.speak("")
 
 	def _set_pitch(self,value):
-		self.tts.averagePitch=int(value*self.pitchRatio)+self.pitchOffset
+		self.tts.pitch=self._percentToParam(value, self.tts.minPitch, self.tts.maxPitch)
 
 	def _set_volume(self,value):
-		pass
+		self.tts.volumeLeft = self.tts.VolumeRight = self._percentToParam(value, self.tts.minVolumeLeft, self.tts.maxVolumeLeft)
+		self.tts.speak("")
 
 	def _set_voice(self,value):
-		self.tts.voice=self.tts.voices[value-1][0]
+		self.tts.select(value)
+		self.tts.speak("")
 
 	def speakText(self,text,wait=False,index=None):
-		self.waitFlag=wait
-		self.tts.say(text)
-		if index is not None:
-			self.addIndexMark(self.onIndexMark,[index],{})
-			self.tts.speak()
-		while self.waitFlag:
-			pythoncom.PumpWaitingMessages()
-			time.sleep(0.001)
+		text=text.replace("\\","\\\\")
+		if isinstance(index,int) and index>=0:
+			text="".join(["\\mrk=%d\\"%(index+1),text])
+		self.tts.speak(text)
+		if wait:
+			while self.tts.speaking:
+				pythoncom.PumpWaitingMessages()
+				time.sleep(0.01)
 
 	def cancel(self):
-		self.tts.stop()
+		self.tts.audioReset()
