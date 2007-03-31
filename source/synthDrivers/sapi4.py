@@ -85,7 +85,10 @@ class synthDriver(baseObject.autoPropertyObject):
 		self.tts.speak("")
 
 	def _set_voice(self,value):
-		self.tts.select(value)
+		try:
+			self.tts.select(value)
+		except:
+			pass
 		self.tts.speak("")
 
 	def speakText(self,text,wait=False,index=None):
