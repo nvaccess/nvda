@@ -29,7 +29,7 @@ setup(
 'Programming Language :: Python',
 'Operating System :: Microsoft :: Windows',
 ],
-	windows = ["nvda.py"],
+	windows = ["nvda.pyw"],
 	service=['nvda_service'],
 	options = {"py2exe": {"bundle_files": 3}},
 	zipfile = None,
