@@ -11,6 +11,7 @@
 
 import time
 from textProcessing import *
+import debug
 import config
 import tones
 import synthDriverHandler
@@ -138,7 +139,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		return
 	beenCanceled=False
 	text=processSymbol(symbol)
-	if symbol is not None and (symbol[0]>='A') and (symbol[0]<='Z'):
+	if symbol is not None and len(symbol)==1 and symbol.isupper(): 
 		uppercase=True
 	else:
 		uppercase=False
