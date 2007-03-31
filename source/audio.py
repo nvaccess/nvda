@@ -145,7 +145,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	if uppercase:
 		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
 			text=_("cap %s")%text
-		oldPitch=synthDriverHandler.getPitch()
+		oldPitch=config.conf["speech"][synthDriverHandler.driverName]["pitch"]
 		synthDriverHandler.setPitch(99)
 	synthDriverHandler.speakText(text,wait=wait,index=index)
 	if uppercase:

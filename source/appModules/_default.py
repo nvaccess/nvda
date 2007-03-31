@@ -409,33 +409,13 @@ class appModule(appModuleHandler.appModule):
 			obj.speakDescendantObjects()
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
-		NVDAObjectCount=0
-		virtualBufferCount=0
-		appModuleCount=0
-		accessibleObjectCount=0
-		for o in gc.get_objects():
-			if isinstance(o,NVDAObjects.baseType.NVDAObject):
-				NVDAObjectCount+=1
-			elif isinstance(o,virtualBuffers.baseType.virtualBuffer):
-				virtualBufferCount+=1
-			elif isinstance(o,appModuleHandler.appModule):
-				appModuleCount+=1
-			elif isinstance(o,IAccessibleHandler.pointer_IAccessible):
-				accessibleObjectCount+=1
-		audio.speakMessage("NVDAObject count: %s"%NVDAObjectCount)
-		audio.speakMessage("virtualBuffer count: %s"%virtualBufferCount)
-		audio.speakMessage("appModule count: %s"%appModuleCount)
-		audio.speakMessage("accessible object count: %s"%accessibleObjectCount)
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.window.NVDAObject_window):
-			audio.speakMessage("handle: %s"%obj.windowHandle)
-			audio.speakMessage("Owner: %s"%winUser.getAncestor(obj.windowHandle,winUser.GA_ROOTOWNER))
-			audio.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
-			audio.speakMessage("Class: %s"%obj.windowClassName)
-			for char in obj.windowClassName:
-				audio.speakSymbol("%s"%char)
-			audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
-			audio.speakMessage("text: %s"%obj.windowText)
+		audio.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
+		audio.speakMessage("Class: %s"%obj.windowClassName)
+		for char in obj.windowClassName:
+			audio.speakSymbol("%s"%char)
+		audio.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
+		audio.speakMessage("text: %s"%obj.windowText)
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
 		"""Toggles on and off the beeping on progress bar updates"""

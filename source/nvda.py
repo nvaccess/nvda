@@ -21,14 +21,27 @@ else:
 
 import time
 import globalVars
+import win32gui
+import win32con
 globalVars.startTime=time.time()
 #Process option arguments
 from optparse import OptionParser
 parser=OptionParser()
+parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName,help="The file where debug messages should be written to")
 parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
+#Handle running multiple instances of NVDA
+try:
+	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA Interface')
+except:
+	oldAppWindowHandle=0
+if win32gui.IsWindow(oldAppWindowHandle): 
+	if globalVars.appArgs.quit:
+		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
+	sys.exit(1)
+
 import winKernel
 try:
 	winKernel.freeConsole()
