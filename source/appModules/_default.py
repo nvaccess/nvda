@@ -32,7 +32,6 @@ class appModule(appModuleHandler.appModule):
 		audio.cancel()
 
 	def script_keyboardHelp(self,keyPress,nextScript):
-		"""Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."""
 		if not globalVars.keyboardHelp:
  			state=_("on")
 			globalVars.keyboardHelp=True
@@ -40,26 +39,26 @@ class appModule(appModuleHandler.appModule):
 			state=_("off")
 			globalVars.keyboardHelp=False
 		audio.speakMessage(_("keyboard help %s")%state)
+	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
 	def script_dateTime(self,keyPress,nextScript):
-		"""Reports the current date and time"""
 		text=datetime.datetime.today().strftime("%I:%M %p on %A %B %d, %Y")
 		if text[0]=='0':
 			text=text[1:]
 		audio.speakMessage(text)
+	script_dateTime.__doc__=_("Reports the current date and time")
 
 	def script_increaseRate(self,keyPress,nextScript):
-		"""Increases the speech rate by 5 percent"""
 		synthDriverHandler.setRate(synthDriverHandler.getRate()+5)
 		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
+	script_increaseRate.__doc__=_("Increases the speech rate by 5 percent")
 
 	def script_decreaseRate(self,keyPress,nextScript):
-		"""Decreases the speech rate by 5 percent"""
 		synthDriverHandler.setRate(synthDriverHandler.getRate()-5)
 		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
+	script_decreaseRate.__doc__=_("decreases the speech rate by 5 percent")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
-		"""Toggles on and off the speaking of typed characters"""
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
@@ -67,9 +66,9 @@ class appModule(appModuleHandler.appModule):
 			onOff=_("on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
 		audio.speakMessage(_("speak typed characters")+" "+onOff)
+	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
 	def script_toggleSpeakTypedWords(self,keyPress,nextScript):
-		"""Toggles on and off the speaking of typed words"""
 		if config.conf["keyboard"]["speakTypedWords"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedWords"]=False
@@ -77,9 +76,9 @@ class appModule(appModuleHandler.appModule):
 			onOff=_("on")
 			config.conf["keyboard"]["speakTypedWords"]=True
 		audio.speakMessage(_("speak typed words")+" "+onOff)
+	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
 
 	def script_toggleSpeakCommandKeys(self,keyPress,nextScript):
-		"""Toggles on and off the speaking of other keys that are not specifically characters. This Also includes key combinations that use control and alt and shift."""
 		if config.conf["keyboard"]["speakCommandKeys"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
@@ -87,9 +86,9 @@ class appModule(appModuleHandler.appModule):
 			onOff=_("on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
 		audio.speakMessage(_("speak command keys")+" "+onOff)
+	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
 	def script_toggleSpeakPunctuation(self,keyPress,nextScript):
-		"""Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"""
 		if config.conf["speech"]["speakPunctuation"]:
 			onOff=_("off")
 			config.conf["speech"]["speakPunctuation"]=False
@@ -97,6 +96,7 @@ class appModule(appModuleHandler.appModule):
 			onOff=_("on")
 			config.conf["speech"]["speakPunctuation"]=True
 		audio.speakMessage(_("speak punctuation")+" "+onOff)
+	script_speakPunctuation=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
 	def script_moveMouseToNavigatorObject(self,keyPress,nextScript):
 		"""Moves the mouse pointer to the current navigator object."""
