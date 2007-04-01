@@ -9,7 +9,7 @@ import queueHandler
 import baseObject
 
 name="sapi4"
-description="Microsoft Speech API 4 (ActiveVoice.ActiveVoice)"
+description="Microsoft Speech API version 4 (ActiveVoice.ActiveVoice)"
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 

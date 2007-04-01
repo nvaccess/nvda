@@ -10,10 +10,10 @@ import _winreg
 import pythoncom
 import baseObject
 import core
-import sapi4serotekHelper
+import _sapi4serotekHelper
 
 name="sapi4"
-description="Microsoft Sapi4 speech engine "
+description="Microsoft Speech API version 4 (Serotek driver)"
 
 def check():
 	return True
@@ -27,7 +27,7 @@ def check():
 class synthDriver(baseObject.autoPropertyObject):
 
 	def __init__(self):
-		self.tts=sapi4serotekHelper.SAPI4()
+		self.tts=_sapi4serotekHelper.SAPI4()
 		self.tts.say('')
 		self._lastIndex=None
 		self.tts.callWhenDone(self.onDoneSpeaking)
