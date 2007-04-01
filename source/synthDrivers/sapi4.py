@@ -35,14 +35,13 @@ class synthDriver(baseObject.autoPropertyObject):
 	def __init__(self):
 		registerDll()
 		self.tts=comtypesClient.CreateObject(COM_CLASS,sink=self)
-		self.tts.Speak("")
 		self.tts.CallBacksEnabled=1
 		self.tts.Tagged=1
+		self.tts.initialized=1
 		self._lastIndex=None
 		self.voiceNames=[]
 		try:
-			for num in xrange(1,self.tts.CountEngines+1):
-				self.voiceNames.append(self.tts.modeName(num))
+			self.voiceNames=[self.tts.modeName(num) for num in range(1,self.tts.CountEngines+1)]
 		except:
 			pass
  
@@ -85,11 +84,16 @@ class synthDriver(baseObject.autoPropertyObject):
 		self.tts.speak("")
 
 	def _set_voice(self,value):
+		self.tts.initialized=0
 		try:
 			self.tts.select(value)
 		except:
 			pass
-		self.tts.speak("")
+		self.tts.initialized=1
+		try:
+			self.tts.select(value)
+		except:
+			pass
 
 	def speakText(self,text,wait=False,index=None):
 		text=text.replace("\\","\\\\")
