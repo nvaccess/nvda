@@ -18,7 +18,7 @@ driverVoiceNames=[]
 
 def getDriverList():
 	driverList=[]
-	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if x.endswith('.py')]:
+	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if (x.endswith('.py') and not x.startswith('_'))]:
 		try:
 			mod=__import__(name,globals(),locals(),[])
 			if mod.check():
