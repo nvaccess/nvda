@@ -47,7 +47,7 @@ class synthDriver(baseObject.autoPropertyObject):
 		return self.tts.rateMin
 
 	def _get_rate(self):
-		return int((self.tts.rate-self.rateOffset)/self.rateRatio)
+		return int(round((self.tts.rate-self.rateOffset)/self.rateRatio))
 
 	def _get_pitchRatio(self):
 		return (self.tts.averagePitchMax-self.tts.averagePitchMin)/100.0
@@ -56,7 +56,7 @@ class synthDriver(baseObject.autoPropertyObject):
 		return self.tts.averagePitchMin
 
 	def _get_pitch(self):
-		return int((self.tts.averagePitch-self.pitchOffset)/self.pitchRatio)
+		return int(round((self.tts.averagePitch-self.pitchOffset)/self.pitchRatio))
 
 	def _get_volume(self):
 		return 100
@@ -75,10 +75,10 @@ class synthDriver(baseObject.autoPropertyObject):
 		return [x[1] for x in self.tts.voices]
 
 	def _set_rate(self,rate):
-		self.tts.rate = int(rate*self.rateRatio)+self.rateOffset
+		self.tts.rate = int(round(rate*self.rateRatio))+self.rateOffset
 
 	def _set_pitch(self,value):
-		self.tts.averagePitch=int(value*self.pitchRatio)+self.pitchOffset
+		self.tts.averagePitch=int(round(value*self.pitchRatio))+self.pitchOffset
 
 	def _set_volume(self,value):
 		pass

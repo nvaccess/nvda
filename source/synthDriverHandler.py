@@ -46,6 +46,8 @@ def getDriverDescription(name):
 
 def setDriver(name):
 	global driverObject, driverName, driverVoiceNames
+	if driverObject:
+		cancel()
 	if name=="auto":
 		for synth in autoTrySynthList:
 			if isDriverAvailable(synth):
