@@ -25,6 +25,10 @@ import config
 import baseType
 import window
 
+re_gecko_level=re.compile('.*L([0-9]+)')
+re_gecko_position=re.compile('.*([0-9]+) of ([0-9]+)')
+re_gecko_contains=re.compile('.*with ([0-9]+)')
+
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
 	if not accHandle:
@@ -46,6 +50,27 @@ def registerNVDAObjectClass(appModule,windowClass,objectRole,cls):
 
 def unregisterNVDAObjectClass(appModule,windowClass,objectRole):
 	del _dynamicMap[(id(appModule),windowClass,objectRole)]
+
+def processGeckoDescription(obj):
+	if obj.windowClassName not in ["MozillaWindowClass","MozillaContentWindowClass","MozillaUIWindowClass","MozillaDialogClass"]:
+		return
+	rawDescription=obj.description
+	if rawDescription.startswith('Description: '):
+		obj.description=rawDescription[13:]
+		return
+	m=re_gecko_level.match(rawDescription)
+	groups=m.groups() if m else []
+	if len(groups)>=1:
+		obj.level=int(groups[0])
+	m=re_gecko_position.match(rawDescription)
+	groups=m.groups() if m else []
+	if len(groups)==2:
+		obj.positionString=_("%s of %s")%(groups[0],groups[1])
+	m=re_gecko_contains.match(rawDescription)
+	groups=m.groups() if m else []
+	if len(groups)>=1:
+		obj.contains=_("%s items")%groups[0]
+	obj.description=""
 
 class NVDAObject_IAccessible(window.NVDAObject_window):
 	"""
@@ -114,6 +139,8 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		self._lastPositiveStates=self.calculatePositiveStates()
 		self._lastNegativeStates=self.calculateNegativeStates()
 		window.NVDAObject_window.__init__(self,windowHandle)
+		#Mozilla Gecko objects use the description property to report other info
+		processGeckoDescription(self)
 		self._doneInit=True
 
 	def __hash__(self):
@@ -658,43 +685,6 @@ class NVDAObject_mozillaText(NVDAObject_IAccessible):
 	def text_getText(self,start=None,end=None):
 		return self.name
 
-class NVDAObject_mozillaOutlineItem(NVDAObject_IAccessible):
-
-	_re_level=re.compile('.*L([0-9]+)')
-	_re_position=re.compile('.*([0-9]+) of ([0-9]+)')
-	_re_children=re.compile('.*with ([0-9]+)')
-
-	def _get_description(self):
-		desc=super(NVDAObject_mozillaOutlineItem,self).description
-		if desc.startswith('Description: '):
-			return desc[13:]
-		else:
-			return ""
-
-	def _get_level(self):
-		desc=super(NVDAObject_mozillaOutlineItem,self).description
-		m=self._re_level.match(desc)
-		try:
-			return int(m.groups()[0])
-		except:
-			return None
-
-	def _get_contains(self):
-		desc=super(NVDAObject_mozillaOutlineItem,self).description
-		m=self._re_children.match(desc)
-		if len(m.groups()[0])>0 and (m.groups()[0]!='0'):
-			return _("%s items")%m.groups()[0]
-		else:
-			return ""
-
-	def _get_positionString(self):
-		desc=super(NVDAObject_mozillaOutlineItem,self).description
-		m=self._re_position.match(desc)
-		if len(m.groups())==2:
-			return _("%s of %s")%(m.groups()[0],m.groups()[1])
-		else:
-			return ""
-
 class NVDAObject_listItem(NVDAObject_IAccessible):
 
 	allowedNegativeStates=NVDAObject_IAccessible.allowedNegativeStates|IAccessibleHandler.STATE_SYSTEM_SELECTED
@@ -829,9 +819,6 @@ _staticMap={
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
-("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaOutlineItem,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_mozillaDocument,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
 
