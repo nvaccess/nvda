@@ -730,7 +730,7 @@ class NVDAObject_list(NVDAObject_IAccessible):
 		NVDAObject_IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			IAccessibleHandler.updateFocusFromEvent(self.windowHandle,self._accObjectID,child.IAccessibleChildID)
+			IAccessibleHandler.objectEventCallback(-1,winUser.EVENT_OBJECT_FOCUS,self.windowHandle,self._accObjectID,child.IAccessibleChildID,0,0)
 		elif not self.firstChild:
 			audio.speakMessage(_("%d items")%0)
 
