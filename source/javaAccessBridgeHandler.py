@@ -133,7 +133,7 @@ def getAccessibleContextInfo(NVDAJavaContextObject):
 def initialize():
 	global bridgeDll
 	try:
-		bridgeDll=ctypes.cdll.WINDOWSACCESSBRIDGE
+		bridgeDll=ctypes.windll.WINDOWSACCESSBRIDGE
 		bridgeDll.Windows_run()
 	except:
 		pass

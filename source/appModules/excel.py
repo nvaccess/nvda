@@ -110,6 +110,7 @@ class NVDAObject_excelTable(NVDAObjects.IAccessible.NVDAObject_IAccessible):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
 		self.speakSelection()
+	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 
 	def text_reportPresentation(self,offset):
 		"""Reports the current font name, font size, font attributes of the active cell"""
