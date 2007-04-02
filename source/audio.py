@@ -147,10 +147,10 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
 			text=_("cap %s")%text
 		oldPitch=config.conf["speech"][synthDriverHandler.driverName]["pitch"]
-		synthDriverHandler.setPitch(99)
+		synthDriverHandler.driverObject.pitch=99
 	synthDriverHandler.speakText(text,wait=wait,index=index)
 	if uppercase:
-		synthDriverHandler.setPitch(oldPitch)
+		synthDriverHandler.driverObject.pitch=oldPitch
 
 def speakText(text,wait=False,index=None):
 	"""Speaks some given text.
