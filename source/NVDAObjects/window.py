@@ -31,7 +31,10 @@ An NVDAObject for a window
 		baseType.NVDAObject.__init__(self)
 		self.windowHandle=windowHandle
 		if not hasattr(self,'appModule'):
-			self.appModule=weakref.ref(appModuleHandler.getAppModuleFromWindow(windowHandle))
+			try:
+				self.appModule=weakref.ref(appModuleHandler.getAppModuleFromWindow(windowHandle))
+			except:
+				self.appModule=lambda: None
 		virtualBuffer=virtualBuffers.getVirtualBuffer(self)
 		if virtualBuffer is not None:
 			self.virtualBuffer=weakref.ref(virtualBuffer)

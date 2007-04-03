@@ -53,6 +53,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import gui
 		import appModuleHandler
 		appModuleHandler.initialize()
+		import JABHandler
+		JABHandler.initialize()
 		import IAccessibleHandler
 		IAccessibleHandler.initialize()
 		import keyboardHandler

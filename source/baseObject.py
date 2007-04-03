@@ -13,7 +13,8 @@ class autoPropertyObject(object):
 		if not name.startswith('_get_') and hasattr(self,'_get_%s'%name):
 			return getattr(self,'_get_%s'%name)()
 		else:
-			return super(autoPropertyObject,self).__getattr__(name)
+			raise AttributeError("object has no attribute '%s'"%name)
+ 
 
 	def __setattr__(self,name,value):
 		if not name.startswith('_set_') and hasattr(self,'_set_%s'%name):
