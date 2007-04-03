@@ -24,9 +24,23 @@ import globalVars
 import win32gui
 import win32con
 globalVars.startTime=time.time()
+
 #Process option arguments
-from optparse import OptionParser
-parser=OptionParser()
+import optparse
+class NoConsoleOptionParser(optparse.OptionParser):
+
+	def print_help(self, file=None):
+		win32gui.MessageBox(0, self.format_help(), "Help", 0)
+
+	def error(self, msg):
+		out = ""
+		if self.usage:
+			out = self.get_usage()
+		out += "\nerror: %s" % msg
+		win32gui.MessageBox(0, out, "Error", 0)
+		sys.exit(2)
+
+parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName,help="The file where debug messages should be written to")
 parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
