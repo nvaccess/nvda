@@ -72,3 +72,13 @@ def openProcess(*args):
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
 
+
+
+#added by Rui Batista to use on Say_battery_status script 
+#copied from platform sdk documentation (with required changes to work in python) 
+class SYSTEM_POWER_STATUS(ctypes.Structure):
+	_fields_ = [("ACLineStatus", ctypes.c_byte), ("BatteryFlag", ctypes.c_byte), ("BatteryLifePercent", ctypes.c_byte), ("Reserved1", ctypes.c_byte), ("BatteryLifeTime", ctypes.wintypes.DWORD), ("BatteryFullLiveTime", ctypes.wintypes.DWORD)]
+
+
+def GetSystemPowerStatus(sps):
+	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))

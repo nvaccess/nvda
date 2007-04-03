@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+NO_SYSTEM_BATTERY = 0X80
+
 import gc
 import comtypesClient
 import datetime
@@ -22,6 +24,7 @@ import core
 import config
 import winUser
 import appModuleHandler
+import winKernel
 
 class appModule(appModuleHandler.appModule):
 
@@ -427,3 +430,21 @@ class appModule(appModuleHandler.appModule):
 			config.conf["presentation"]["beepOnProgressBarUpdates"]=True
 		audio.speakMessage(_("Beep on progress bar updates")+" "+onOff)
 	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles on and off the beeping on progress bar updates")
+
+	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
+	def script_say_battery_status(self, keyPress, nextScript):
+		UNKNOWN_BATTERY_STATUS = 0xFF
+		AC_ONLINE = 0X1
+		NO_SYSTEM_BATTERY = 0X80
+		sps = winKernel.SYSTEM_POWER_STATUS()
+		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
+			debug.writeError("error accessing system power status")
+			return
+		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
+			audio.speakMessage("no system battery")
+			return
+		text = _("%d percent") % sps.BatteryLifePercent + " "
+		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
+		else: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
+		audio.speakMessage(text)
+	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
