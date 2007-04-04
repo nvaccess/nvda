@@ -62,7 +62,7 @@ class textBufferObject(baseObject.scriptableObject):
 """
 		text=self.text_getText()
 		start=offset
-		while (text is not None) and (len(text)>=start) and (start>0) and not (text[start-1] in ['\r','\n']): 
+		while (text is not None) and (len(text)>=start) and (start>0) and not (text[start-1] in ['\r','\n']):
   			start-=1
 		end=offset+1
 		while (end<self.text_characterCount) and (text[end] not in ['\r','\n']):
@@ -459,58 +459,57 @@ class textBufferObject(baseObject.scriptableObject):
 			yield
 
 	def script_text_moveByLine(self,keyPress,nextScript):
-		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakLine(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_moveByLine.__doc__=_("Moves and then reads the current line")
 
 	def script_text_moveByCharacter(self,keyPress,nextScript):
-		"""Moves and reads the current character"""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakCharacter(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_moveByCharacter.__doc__=_("Moves and reads the current character")
 
 	def script_text_moveByWord(self,keyPress,nextScript):
-		"""Moves and reads the current word"""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakWord(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_moveByWord.__doc__=_("Moves and reads the current word")
 
 	def script_text_moveBySentence(self,keyPress,nextScript):
-		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakSentence(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_moveBySentence.__doc__=_("Moves and then reads the current line")
 
 	def script_text_moveByParagraph(self,keyPress,nextScript):
-		"""Moves and then reads the current line"""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_moveByParagraph.__doc__=_("Moves and then reads the current line")
 
 	def script_text_nextParagraph(self,keyPress,nextScript):
-		"""Manually moves to the next paragraph and then speaks it"""
 		r=self.text_getNextParagraphOffsets(self.text_caretOffset)
 		if r:
 			self.text_caretOffset=r[0]
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_nextParagraph.__doc__=_("Manually moves to the next paragraph and then speaks it")
 
 	def script_text_prevParagraph(self,keyPress,nextScript):
-		"""Manually moves to the previous paragraph and then speaks it"""
 		r=self.text_getPrevParagraphOffsets(self.text_caretOffset)
 		if r:
 			self.text_caretOffset=r[0]
 			self.text_speakParagraph(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_prevParagraph.__doc__=_("Manually moves to the previous paragraph and then speaks it")
 
 	def script_text_changeSelection(self,keyPress,nextScript):
-		"""Moves and reads the current selection"""
 		oldSelections=[]
 		for selNum in xrange(self.text_selectionCount):
 			oldSelections.append(self.text_getSelectionOffsets(selNum))
@@ -539,15 +538,15 @@ class textBufferObject(baseObject.scriptableObject):
 				if selNum>=len(newSelections) and selNum<len(oldSelections):
    					speech.speakMessage(_("unselected %s")%self.text_getText(oldSelections[selNum][0],oldSelections[selNum][1]))
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_changeSelection.__doc__=_("Moves and reads the current selection")
 
 	def script_text_delete(self,keyPress,nextScript):
-		"""Deletes the character and reads the new current character"""
 		sendKey(keyPress)
 		self.text_speakCharacter(self.text_caretOffset)
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_delete.__doc__=_("Deletes the character and reads the new current character")
 
 	def script_text_backspace(self,keyPress,nextScript):
-		"""Reads the character before the current character and then deletes it"""
 		point=self.text_caretOffset
 		if point>0:
 			delChar=self.text_getText(point-1,point)
@@ -559,4 +558,5 @@ class textBufferObject(baseObject.scriptableObject):
 			sendKey(keyPress)
 			speech.speakText("")
 		self.text_reviewOffset=self.text_caretOffset
+	script_text_backspace.__doc__=_("Reads the character before the current character and then deletes it")
 
