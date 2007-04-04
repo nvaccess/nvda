@@ -82,7 +82,7 @@ class SynthDriver(silence.SynthDriver):
 		return len(self.tts.voices)
 
 	def getVoiceName(self,num):
-		return self.tts.voices[num-1]
+		return self.tts.voices[num-1][1]
  
 	def _set_rate(self,rate):
 		self.tts.rate = int(round(rate*self.rateRatio))+self.rateOffset
