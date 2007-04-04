@@ -150,7 +150,7 @@ import comtypes.automation
 import debug
 import eventHandler
 import winUser
-import audio
+import speech
 import api
 import queueHandler
 import virtualBuffers
@@ -213,7 +213,7 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	varChild=comtypes.automation.VARIANT()
 	res=oleAcc.AccessibleObjectFromEvent(window,objectID,childID,ctypes.byref(pacc),ctypes.byref(varChild))
 	if res==0:
-		#audio.speakMessage("%s %s"%(childID,varChild.value))
+		#speech.speakMessage("%s %s"%(childID,varChild.value))
 		#if False or childID<0:
 		#child=childID
 		#else:
@@ -360,7 +360,7 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		audio.speakMessage("%s"%res)
+		speech.speakMessage("%s"%res)
 		if isinstance(res,pointer_IAccessible):
 			new_ia=res
 			new_child=0
@@ -562,7 +562,7 @@ def correctFocus():
 		updateFocusFromEvent(focusObject.windowHandle,OBJID_CLIENT,0)
 		manageEvent("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
 	else:
-		audio.speakMessage(_("lost focus"))
+		speech.speakMessage(_("lost focus"))
 		api.setFocusObject(api.getDesktopObject())
 
 #Register internal object event with IAccessible

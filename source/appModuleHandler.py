@@ -24,7 +24,7 @@ import baseObject
 import sayAllHandler
 from keyUtils import key
 import debug
-import audio
+import speech
 import winUser
 import winKernel
 import config
@@ -168,7 +168,7 @@ def fetchModule(appName):
 			mod=__import__(appName,globals(),locals(),[]).appModule
 		except:
 			debug.writeException("appModuleHandler.loadModule: Error in appModule %s"%appName)
-			audio.speakMessage("Error in appModule %s"%appName,wait=True)
+			speech.speakMessage("Error in appModule %s"%appName,wait=True)
 	if mod is None:
 		return appModule
 	return mod
@@ -184,10 +184,10 @@ def initialize():
 		if loadKeyMap('_default',default):
 			debug.writeMessage("appModuleHandler.initialize: loaded default module")
 		else:
-			audio.speakMessage("Could not load default module keyMap",wait=True)
+			speech.speakMessage("Could not load default module keyMap",wait=True)
 			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
 	else:
-		audio.speakMessage("Could not load default module ",wait=True)
+		speech.speakMessage("Could not load default module ",wait=True)
 		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
 
 #base class for appModules

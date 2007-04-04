@@ -9,7 +9,7 @@ import comtypes.automation
 import win32com.client
 import pythoncom
 import IAccessibleHandler
-import audio
+import speech
 import debug
 from keyUtils import sendKey, key
 import config

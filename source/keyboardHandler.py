@@ -10,7 +10,7 @@ import winUser
 import time
 import pyHook
 import debug
-import audio
+import speech
 from keyUtils import key, keyName
 import api
 import scriptHandler
@@ -48,8 +48,8 @@ def internal_keyDownEvent(event):
 		if event.Injected:
 			return True
 		globalVars.keyCounter+=1
-		if not audio.beenCanceled:
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.cancel)
+		if not speech.beenCanceled:
+			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.cancelSpeech)
 		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		if (event.Key=="Insert"): #and (event.Extended==0):
@@ -83,10 +83,10 @@ def internal_keyDownEvent(event):
 		debug.writeMessage("key press: %s"%keyName(keyPress))
 		if mainKey=="Capital":
 			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
+			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
 		elif mainKey=="ExtendedNumlock":
 			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
+			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
 		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speakKey,keyPress,event.Ascii)
 		script=scriptHandler.findScript(keyPress)
 		if script:
@@ -94,9 +94,9 @@ def internal_keyDownEvent(event):
 			scriptLocation=scriptHandler.getScriptLocation(script)
 			scriptDescription=scriptHandler.getScriptDescription(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,"%s"%scriptName.replace('_',' '))
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Description: %s")%scriptDescription)
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,audio.speakMessage,_("Location: %s")%scriptLocation)
+				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,"%s"%scriptName.replace('_',' '))
+				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Description: %s")%scriptDescription)
+				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Location: %s")%scriptLocation)
 			else:
 				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,script,keyPress)
 		if script or globalVars.keyboardHelp:
@@ -106,7 +106,7 @@ def internal_keyDownEvent(event):
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
-		audio.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
+		speech.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
 		return True
 
 def speakKey(keyPress,ascii):
@@ -117,11 +117,11 @@ def speakKey(keyPress,ascii):
 		else:
 			char=chr(ascii)
 		if config.conf["keyboard"]["speakTypedCharacters"]:
-			audio.speakSymbol(char)
+			speech.speakSymbol(char)
 		if config.conf["keyboard"]["speakTypedWords"] and (((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
 			word+=char
 		elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-			audio.speakText(word)
+			speech.speakText(word)
 			word=""
 	else:
 		if config.conf["keyboard"]["speakCommandKeys"]:
@@ -133,12 +133,12 @@ def speakKey(keyPress,ascii):
 			else:
 				keyList.append(keyPress[1])
 			label="+".join(keyList)
-			audio.speakMessage(keyList)
+			speech.speakMessage(keyList)
 		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-			audio.speakMessage(word)
+			speech.speakMessage(word)
 			word=""
 	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
-		audio.speakSymbol(chr(ascii))
+		speech.speakSymbol(chr(ascii))
 
 def internal_keyUpEvent(event):
 	"""Event that pyHook calls when it receives keyUps"""
@@ -158,7 +158,7 @@ def internal_keyUpEvent(event):
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyUpEvent")
-		audio.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
+		speech.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
 		return True
 
 #Register internal key press event with  operating system

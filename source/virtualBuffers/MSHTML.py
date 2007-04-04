@@ -13,7 +13,7 @@ import IAccessibleHandler
 import debug
 import winUser
 import api
-import audio
+import speech
 import config
 import NVDAObjects
 from baseType import *
@@ -88,7 +88,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			self.text_reviewOffset=r[0]
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 				self.text_reportNewPresentation(self.text_reviewOffset)
-				audio.speakText(self.text_getText(r[0],r[1]))
+				speech.speakText(self.text_getText(r[0],r[1]))
 				api.setFocusObject(obj)
 				api.setNavigatorObject(obj)
 				return True
@@ -110,7 +110,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			inputType=domNode.getAttribute('type')
 			if inputType in ["checkbox","radio"]:
 				domNode.click()
-				audio.speakMessage("%s"%(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)))
+				speech.speakMessage("%s"%(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
 				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
 					api.toggleVirtualBufferPassThrough()
@@ -128,18 +128,18 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
 			return
 		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
-			audio.cancel()
+			speech.cancelSpeech()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			audio.speakMessage(_("loading document %s")%self.dom.title+"...")
+			speech.speakMessage(_("loading document %s")%self.dom.title+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
 		self.text_reviewOffset=0
 		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
-			audio.cancel()
+			speech.cancelSpeech()
 			self.text_reviewOffset=0
 			time.sleep(0.01)
-			audio.speakMessage(_("done"))
+			speech.speakMessage(_("done"))
 			self.text_reportNewPresentation(self.text_reviewOffset)
 			self.text_speakLine(self.text_reviewOffset)
 
@@ -147,15 +147,15 @@ class virtualBuffer_MSHTML(virtualBuffer):
 		documentComplete=True
 		if self.dom.readyState!="complete":
 			if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
-				audio.cancel()
-				audio.speakMessage(str(self.dom.readyState))
+				speech.cancelSpeech()
+				speech.speakMessage(str(self.dom.readyState))
 			documentComplete=False
 		for frameNum in range(self.dom.frames.length):
 			try:
 				if self.dom.frames.item(frameNum).document.readyState!="complete":
 					if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
-						audio.cancel()
-						audio.speakMessage(str(self.dom.frames.item(frameNum).document.readyState))
+						speech.cancelSpeech()
+						speech.speakMessage(str(self.dom.frames.item(frameNum).document.readyState))
 					documentComplete=False
 			except:
 				pass

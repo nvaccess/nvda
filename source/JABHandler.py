@@ -7,7 +7,7 @@
 from ctypes import *
 from ctypes.wintypes import *
 import queueHandler
-import audio
+import speech
 import debug
 import api
 import eventHandler

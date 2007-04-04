@@ -14,7 +14,7 @@ import IAccessibleHandler
 import virtualBuffers
 from keyUtils import key, sendKey
 import api
-import audio
+import speech
 import IAccessible
 
 class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
@@ -264,7 +264,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		start=self.dom.selection.createRange().duplicate()
 		start.setEndPoint("endToStart",end)
 		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		audio.speakText(start.text)
+		speech.speakText(start.text)
 
 	def script_text_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -272,7 +272,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			return 
 		r=self.dom.selection.createRange().duplicate()
 		r.expand("character")
-		audio.speakSymbol(r.text)
+		speech.speakSymbol(r.text)
 
 	def script_text_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -280,7 +280,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			return 
 		r=self.dom.selection.createRange().duplicate()
 		r.expand("word")
-		audio.speakText(r.text)
+		speech.speakText(r.text)
 
 	def script_text_backspace(self,keyPress,nextScript):
 		if not hasattr(self,'dom'):
@@ -293,7 +293,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		else:
 			delChar=""
 		sendKey(keyPress)
-		audio.speakSymbol(delChar)
+		speech.speakSymbol(delChar)
 
 	def script_text_changeSelection(self,keyPress,nextScript):
 		if not hasattr(self,'dom'):
@@ -306,19 +306,19 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		afterLen=after.compareEndPoints("startToEnd",after)
 		if afterLen==0:
 			after.expand("character")
-			audio.speakSymbol(after.text)
+			speech.speakSymbol(after.text)
 		elif leftDelta<0:
  			before.setEndPoint("endToStart",after)
-			audio.speakMessage(_("unselected %s")%before.text)
+			speech.speakMessage(_("unselected %s")%before.text)
 		elif leftDelta>0:
  			after.setEndPoint("endToStart",before)
-			audio.speakMessage(_("selected %s")%after.text)
+			speech.speakMessage(_("selected %s")%after.text)
 		elif rightDelta>0:
  			before.setEndPoint("startToEnd",after)
-			audio.speakMessage(_("unselected %s")%before.text)
+			speech.speakMessage(_("unselected %s")%before.text)
 		elif rightDelta<0:
  			after.setEndPoint("startToEnd",before)
-			audio.speakMessage(_("selected %s")%after.text)
+			speech.speakMessage(_("selected %s")%after.text)
 
 [NVDAObject_MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","text_moveByLine"),

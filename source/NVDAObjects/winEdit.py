@@ -6,7 +6,7 @@
 
 import struct
 import ctypes
-import audio
+import speech
 import debug
 import winUser
 from keyUtils import key

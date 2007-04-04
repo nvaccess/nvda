@@ -1,6 +1,6 @@
 import baseObject
 import config
-import audio
+import speech
 import debug
 from keyUtils import sendKey, key, isKeyWaiting
 import api
@@ -203,94 +203,94 @@ class textBufferObject(baseObject.scriptableObject):
 			pageNumber=self.text_getPageNumber(offset)
 			lastPageNumber=self._text_lastReportedPresentation.get('pageNumber',None)
 			if isinstance(pageNumber,int) and pageNumber!=lastPageNumber:
-				audio.speakMessage(_("page %d")%pageNumber)
+				speech.speakMessage(_("page %d")%pageNumber)
 			self._text_lastReportedPresentation["pageNumber"]=pageNumber
 		if config.conf["documentFormatting"]["reportLineNumber"]:
 			lineNumber=self.text_getLineNumber(offset)
 			lastLineNumber=self._text_lastReportedPresentation.get('lineNumber',None)
 			if isinstance(lineNumber,int) and lineNumber!=lastLineNumber:
-				audio.speakMessage(_("line %d")%lineNumber)
+				speech.speakMessage(_("line %d")%lineNumber)
 			self._text_lastReportedPresentation["lineNumber"]=lineNumber
 		if config.conf["documentFormatting"]["reportTables"]:
 			inTable=self.text_inTable(offset)
 			wasInTable=self._text_lastReportedPresentation.get('inTable',None)
 			if not inTable and wasInTable:
-				audio.speakMessage(_("out of table"))
+				speech.speakMessage(_("out of table"))
 			elif inTable and not wasInTable:
 				rowCount=self.text_getTableRowCount(offset)
 				columnCount=self.text_getTableColumnCount(offset)
-				audio.speakMessage(_("table with %d columns and %d rows")%(columnCount,rowCount))
+				speech.speakMessage(_("table with %d columns and %d rows")%(columnCount,rowCount))
 			self._text_lastReportedPresentation["inTable"]=inTable
 			if inTable:
 				rowNumber=self.text_getTableRowNumber(offset)
 				lastRowNumber=self._text_lastReportedPresentation.get('tableRowNumber',None)
 				if isinstance(rowNumber,int) and rowNumber!=lastRowNumber:
-					audio.speakMessage(_("row %d")%rowNumber)
+					speech.speakMessage(_("row %d")%rowNumber)
 				self._text_lastReportedPresentation["tableRowNumber"]=rowNumber
 				columnNumber=self.text_getTableColumnNumber(offset)
 				lastColumnNumber=self._text_lastReportedPresentation.get('tableColumnNumber',None)
 				if isinstance(columnNumber,int) and columnNumber!=lastColumnNumber:
-					audio.speakMessage(_("column %d")%columnNumber)
+					speech.speakMessage(_("column %d")%columnNumber)
 				self._text_lastReportedPresentation["tableColumnNumber"]=columnNumber
 		if config.conf["documentFormatting"]["reportStyle"]:
 			style=self.text_getStyle(offset)
 			lastStyle=self._text_lastReportedPresentation.get('style',None)
 			if isinstance(style,basestring) and style!=lastStyle:
-				audio.speakMessage(_("style %s")%style)
+				speech.speakMessage(_("style %s")%style)
 			self._text_lastReportedPresentation["style"]=style
 		if config.conf["documentFormatting"]["reportAlignment"]:
 			alignment=self.text_getAlignment(offset)
 			lastAlignment=self._text_lastReportedPresentation.get('alignment',None)
 			if isinstance(alignment,basestring) and alignment!=lastAlignment:
-				audio.speakMessage(_("alignment %s")%alignment)
+				speech.speakMessage(_("alignment %s")%alignment)
 			self._text_lastReportedPresentation["alignment"]=alignment
 		if config.conf["documentFormatting"]["reportFontName"]:
 			fontName=self.text_getFontName(offset)
 			lastFontName=self._text_lastReportedPresentation.get('fontName',None)
 			if isinstance(fontName,basestring) and fontName!=lastFontName:
-				audio.speakMessage(_("font name %s")%fontName)
+				speech.speakMessage(_("font name %s")%fontName)
 			self._text_lastReportedPresentation["fontName"]=fontName
 		if config.conf["documentFormatting"]["reportFontSize"]:
 			fontSize=self.text_getFontSize(offset)
 			lastFontSize=self._text_lastReportedPresentation.get('fontSize',None)
 			if isinstance(fontSize,int) and fontSize!=lastFontSize:
-				audio.speakMessage(_("font size %d")%fontSize)
+				speech.speakMessage(_("font size %d")%fontSize)
 			self._text_lastReportedPresentation["fontSize"]=fontSize
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			isBold=self.text_isBold(offset)
 			wasBold=self._text_lastReportedPresentation.get('isBold',None)
 			if isinstance(isBold,bool) and isBold and not wasBold:
-				audio.speakMessage(_("bold"))
+				speech.speakMessage(_("bold"))
 			elif isinstance(isBold,bool) and not isBold and wasBold:
-				audio.speakMessage(_("not bold"))
+				speech.speakMessage(_("not bold"))
 			self._text_lastReportedPresentation["isBold"]=isBold
 			isItalic=self.text_isItalic(offset)
 			wasItalic=self._text_lastReportedPresentation.get('isItalic',None)
 			if isinstance(isItalic,bool) and isItalic and not wasItalic:
-				audio.speakMessage(_("italic"))
+				speech.speakMessage(_("italic"))
 			elif isinstance(isItalic,bool) and not isItalic and wasItalic:
-				audio.speakMessage(_("not italic"))
+				speech.speakMessage(_("not italic"))
 			self._text_lastReportedPresentation["isItalic"]=isItalic
 			isUnderline=self.text_isUnderline(offset)
 			wasUnderline=self._text_lastReportedPresentation.get('isUnderline',None)
 			if isinstance(isUnderline,bool) and isUnderline and not wasUnderline:
-				audio.speakMessage(_("underline"))
+				speech.speakMessage(_("underline"))
 			elif isinstance(isUnderline,bool) and not isUnderline and wasUnderline:
-				audio.speakMessage(_("not underline"))
+				speech.speakMessage(_("not underline"))
 			self._text_lastReportedPresentation["isUnderline"]=isUnderline
 			isSuperscript=self.text_isSuperscript(offset)
 			wasSuperscript=self._text_lastReportedPresentation.get('isSuperscript',None)
 			if isinstance(isSuperscript,bool) and isSuperscript and not wasSuperscript:
-				audio.speakMessage(_("superscript"))
+				speech.speakMessage(_("superscript"))
 			elif isinstance(isSuperscript,bool) and not isSuperscript and wasSuperscript:
-				audio.speakMessage(_("not superscript"))
+				speech.speakMessage(_("not superscript"))
 			self._text_lastReportedPresentation["isSuperscript"]=isSuperscript
 			isSubscript=self.text_isSubscript(offset)
 			wasSubscript=self._text_lastReportedPresentation.get('isSubscript',None)
 			if isinstance(isSubscript,bool) and isSubscript and not wasSubscript:
-				audio.speakMessage(_("superscript"))
+				speech.speakMessage(_("superscript"))
 			elif isinstance(isSubscript,bool) and not isSubscript and wasSubscript:
-				audio.speakMessage(_("not subscript"))
+				speech.speakMessage(_("not subscript"))
 			self._text_lastReportedPresentation["isSubscript"]=isSubscript
 
 	def text_reportPresentation(self,offset):
@@ -304,51 +304,51 @@ class textBufferObject(baseObject.scriptableObject):
 		isSuperscript=self.text_isSuperscript(offset)
 		isSubscript=self.text_isSubscript(offset)
 		if isinstance(style,basestring):
-			audio.speakMessage(_("style %s")%style)
+			speech.speakMessage(_("style %s")%style)
 		if isinstance(alignment,basestring):
-			audio.speakMessage(_("alignment %s")%alignment)
+			speech.speakMessage(_("alignment %s")%alignment)
 		if isinstance(fontName,basestring):
-			audio.speakMessage(_("font name %s")%fontName)
+			speech.speakMessage(_("font name %s")%fontName)
 		if isinstance(fontSize,int):
-			audio.speakMessage(_("font size %d")%fontSize)
+			speech.speakMessage(_("font size %d")%fontSize)
 		if isinstance(isBold,bool) and isBold:
-			audio.speakMessage(_("bold"))
+			speech.speakMessage(_("bold"))
 		if isinstance(isItalic,bool) and isItalic:
-			audio.speakMessage(_("italic"))
+			speech.speakMessage(_("italic"))
 		if isinstance(isUnderline,bool) and isUnderline:
-			audio.speakMessage(_("underline"))
+			speech.speakMessage(_("underline"))
 		if isinstance(isSuperscript,bool) and isSuperscript:
-			audio.speakMessage(_("superscript"))
+			speech.speakMessage(_("superscript"))
 		if isinstance(isSubscript,bool) and isSubscript:
-			audio.speakMessage(_("subscript"))
+			speech.speakMessage(_("subscript"))
 
 	def text_speakLine(self,offset):
 		self.text_reportNewPresentation(offset)
 		r=self.text_getLineOffsets(offset)
 		if r is not None:
-			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
+			speech.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakWord(self,offset):
 		self.text_reportNewPresentation(offset)
 		r=self.text_getWordOffsets(offset)
 		if r is not None:
-			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
+			speech.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakCharacter(self,offset):
 		self.text_reportNewPresentation(offset)
-		audio.speakSymbol(self.text_getText(offset,offset+1),index=offset)
+		speech.speakSymbol(self.text_getText(offset,offset+1),index=offset)
 
 	def text_speakSentence(self,offset):
 		self.text_reportNewPresentation(offset)
 		r=self.text_getSentenceOffsets(offset)
 		if r is not None:
-			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
+			speech.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def text_speakParagraph(self,offset):
 		self.text_reportNewPresentation(offset)
 		r=self.text_getParagraphOffsets(offset)
 		if r is not None:
-			audio.speakText(self.text_getText(r[0],r[1]),index=r[0])
+			speech.speakText(self.text_getText(r[0],r[1]),index=r[0])
 
 	def _get_text_reviewOffsetLimits(self):
 		return (0,self.text_characterCount-1)
@@ -358,12 +358,12 @@ class textBufferObject(baseObject.scriptableObject):
 		self.text_speakLine(self.text_reviewOffset)
 
 	def script_text_review_top(self,keyPress,nextScript):
-		audio.speakMessage(_("top"))
+		speech.speakMessage(_("top"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[0]
 		self.text_speakLine(self.text_reviewOffset)
 
 	def script_text_review_bottom(self,keyPress,nextScript):
-		audio.speakMessage(_("bottom"))
+		speech.speakMessage(_("bottom"))
 		self.text_reviewOffset=self.text_reviewOffsetLimits[1]
 		self.text_speakLine(self.text_reviewOffset)
 
@@ -376,7 +376,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
 			self.text_reviewOffset=r[0]
 		else:
-			audio.speakMessage(_("bottom"))
+			speech.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewOffset)
 
 	def script_text_review_prevLine(self,keyPress,nextScript):
@@ -385,7 +385,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
 			self.text_reviewOffset=r[0]
 		else:
-			audio.speakMessage(_("top"))
+			speech.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewOffset)
 
 	def script_text_review_currentWord(self,keyPress,nextScript):
@@ -397,7 +397,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
 			self.text_reviewOffset=r[0]
 		else:
-			audio.speakMessage(_("bottom"))
+			speech.speakMessage(_("bottom"))
 		self.text_speakWord(self.text_reviewOffset)
 
 	def script_text_review_prevWord(self,keyPress,nextScript):
@@ -406,7 +406,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
 			self.text_reviewOffset=r[0]
 		else:
-			audio.speakMessage(_("top"))
+			speech.speakMessage(_("top"))
 		self.text_speakWord(self.text_reviewOffset)
 
 	def script_text_review_currentCharacter(self,keyPress,nextScript):
@@ -418,7 +418,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if newOffset>=limits[0] and newOffset<=limits[1]:
 			self.text_reviewOffset=newOffset
 		else:
-			audio.speakMessage(_("bottom"))
+			speech.speakMessage(_("bottom"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
 	def script_text_review_prevCharacter(self,keyPress,nextScript):
@@ -427,7 +427,7 @@ class textBufferObject(baseObject.scriptableObject):
 		if newOffset>=limits[0] and newOffset<=limits[1]:
 			self.text_reviewOffset=newOffset
 		else:
-			audio.speakMessage(_("top"))
+			speech.speakMessage(_("top"))
 		self.text_speakCharacter(self.text_reviewOffset)
 
 	def script_text_review_startOfLine(self,keyPress,nextScript):
@@ -451,7 +451,7 @@ class textBufferObject(baseObject.scriptableObject):
 				break
 			text=self.text_getText(r[0],r[1])
 			if text and not text.isspace():
-				audio.speakText(text,index=r[0])
+				speech.speakText(text,index=r[0])
 			r=nextChunkOffsetsFunc(curPos)
 			if r is None:
 				break
@@ -520,24 +520,24 @@ class textBufferObject(baseObject.scriptableObject):
 			newSelections.append(self.text_getSelectionOffsets(selNum))
 		if len(oldSelections)>0 and len(newSelections)==0:
 			self.text_speakCharacter(self.text_caretOffset)
-			audio.speakMessage(_("no selections"))
+			speech.speakMessage(_("no selections"))
 		elif len(newSelections)>0 and len(oldSelections)==0:
 			for selNum in xrange(len(newSelections)):
-					audio.speakMessage(_("selected %s")%self.text_getText(newSelections[selNum][0],newSelections[selNum][1]))
+					speech.speakMessage(_("selected %s")%self.text_getText(newSelections[selNum][0],newSelections[selNum][1]))
 		elif len(newSelections)>0 and len(oldSelections)>0:
 			for selNum in xrange(max(len(newSelections),len(oldSelections))):
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][1]>oldSelections[selNum][1]:
-   					audio.speakMessage(_("selected %s")%self.text_getText(oldSelections[selNum][1],newSelections[selNum][1]))
+   					speech.speakMessage(_("selected %s")%self.text_getText(oldSelections[selNum][1],newSelections[selNum][1]))
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][0]>oldSelections[selNum][0]:
-   					audio.speakMessage(_("selected %s")%self.text_getText(oldSelections[selNum][0],newSelections[selNum][0]))
+   					speech.speakMessage(_("selected %s")%self.text_getText(oldSelections[selNum][0],newSelections[selNum][0]))
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][1]<oldSelections[selNum][1]:
-   					audio.speakMessage(_("unselected %s")%self.text_getText(newSelections[selNum][1],oldSelections[selNum][1]))
+   					speech.speakMessage(_("unselected %s")%self.text_getText(newSelections[selNum][1],oldSelections[selNum][1]))
 				if selNum<len(oldSelections) and selNum<len(newSelections) and newSelections[selNum][0]<oldSelections[selNum][0]:
-   					audio.speakMessage(_("unselected %s")%self.text_getText(newSelections[selNum][0],oldSelections[selNum][0]))
+   					speech.speakMessage(_("unselected %s")%self.text_getText(newSelections[selNum][0],oldSelections[selNum][0]))
 				if selNum<len(newSelections) and selNum>=len(oldSelections):
-   					audio.speakMessage(_("selected %s")%self.text_getText(newSelections[selNum][0],newSelections[selNum][1]))
+   					speech.speakMessage(_("selected %s")%self.text_getText(newSelections[selNum][0],newSelections[selNum][1]))
 				if selNum>=len(newSelections) and selNum<len(oldSelections):
-   					audio.speakMessage(_("unselected %s")%self.text_getText(oldSelections[selNum][0],oldSelections[selNum][1]))
+   					speech.speakMessage(_("unselected %s")%self.text_getText(oldSelections[selNum][0],oldSelections[selNum][1]))
 		self.text_reviewOffset=self.text_caretOffset
 
 	def script_text_delete(self,keyPress,nextScript):
@@ -554,9 +554,9 @@ class textBufferObject(baseObject.scriptableObject):
 			sendKey(keyPress)
 			newPoint=self.text_caretOffset
 			if newPoint<point:
-				audio.speakSymbol(delChar)
+				speech.speakSymbol(delChar)
 		else:
 			sendKey(keyPress)
-			audio.speakText("")
+			speech.speakText("")
 		self.text_reviewOffset=self.text_caretOffset
 

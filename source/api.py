@@ -8,7 +8,7 @@
 
 import debug
 import globalVars
-import audio
+import speech
 import NVDAObjects
 import winUser
 import core
@@ -130,10 +130,10 @@ def toggleVirtualBufferPassThrough():
 This function also speaks the state of the mode as it changes.
 """
 	if globalVars.virtualBufferPassThrough:
-		audio.speakMessage(_("virtual buffer pass through")+" "+_("off"))
+		speech.speakMessage(_("virtual buffer pass through")+" "+_("off"))
 		globalVars.virtualBufferPassThrough=False
 	else:
-		audio.speakMessage(_("virtual buffer pass through")+" "+_("on"))
+		speech.speakMessage(_("virtual buffer pass through")+" "+_("on"))
 		globalVars.virtualBufferPassThrough=True
 
 def isVirtualBufferPassThrough():

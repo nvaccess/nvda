@@ -1,6 +1,6 @@
 import appModuleHandler
 import NVDAObjects
-import audio
+import speech
 
 class appModule(appModuleHandler.appModule):
 
@@ -16,7 +16,7 @@ class appModule(appModuleHandler.appModule):
 			text=obj.windowText[0:-1]
 			text=text.rstrip()[0:-1]
 			if text!=self._lastValue:
-				audio.speakText(text)
+				speech.speakText(text)
 				self._lastValue=text
 		else:
 			nextHandler()

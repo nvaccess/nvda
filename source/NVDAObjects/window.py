@@ -9,7 +9,7 @@ import ctypes
 import virtualBuffers
 import appModuleHandler
 import winUser
-import audio
+import speech
 import baseType
 
 class NVDAObject_window(baseType.NVDAObject):

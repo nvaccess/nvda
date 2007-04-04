@@ -11,7 +11,7 @@ import time
 import debug
 import globalVars
 import winUser
-import audio
+import speech
 import config
 import queueHandler
 import languageHandler
@@ -32,14 +32,14 @@ def applyConfiguration(reportDone=False):
 	lang = config.conf["general"]["language"]
 	languageHandler.setLanguage(lang)
 	#Speech
-	audio.initialize()
+	speech.initialize()
 	try:
 		config.save()
 	except:
 		pass
 	debug.writeMessage("core.applyConfiguration: configuration applyed")
 	if reportDone:
-		audio.speakMessage(_("configuration applyed"),wait=True)
+		speech.speakMessage(_("configuration applyed"),wait=True)
 
 def main():
 	"""NVDA's core main loop.
@@ -47,9 +47,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	try:
 		applyConfiguration()
-		audio.initialize()
+		speech.initialize()
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
-			audio.speakMessage(_("Loading subsystems, please wait..."))
+			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import gui
 		import appModuleHandler
 		appModuleHandler.initialize()
@@ -61,13 +61,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		keyboardHandler.initialize()
 		import mouseHandler
 		mouseHandler.initialize()
-		audio.cancel()
+		speech.cancelSpeech()
 		try:
 			config.save()
 		except:
 			pass
 		if not globalVars.appArgs.minimal:
-			audio.speakMessage(_("NVDA started"),wait=True)
+			speech.speakMessage(_("NVDA started"),wait=True)
 	except:
 		debug.writeException("core.py main init")
 		return False
@@ -83,7 +83,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		globalVars.focusObject.event_looseFocus()
 	IAccessibleHandler.terminate()
-	audio.cancel()
+	speech.cancelSpeech()
 	return True
 
 class CorePump(wx.Timer):

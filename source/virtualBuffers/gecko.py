@@ -11,7 +11,7 @@ import core
 import tones
 import winUser
 import IAccessibleHandler
-import audio
+import speech
 import api
 import config
 import NVDAObjects
@@ -37,7 +37,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		#newObj=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
 		#if newObj:
 		#	self.NVDAObject=newObj
-		audio.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
+		speech.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -46,7 +46,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
-				audio.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
+				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
 				self.loadDocument()
@@ -60,7 +60,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		if not api.isVirtualBufferPassThrough() and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
 			self.text_reportNewPresentation(self.text_reviewOffset)
-			audio.speakText(self.text_getText(r[0],r[1]))
+			speech.speakText(self.text_getText(r[0],r[1]))
 			api.setFocusObject(obj)
 			api.setNavigatorObject(obj)
 			return True
@@ -74,14 +74,14 @@ class virtualBuffer_gecko(virtualBuffer):
 		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
 			self.text_reviewOffset=r[0]
 			self.text_reportNewPresentation(self.text_reviewOffset)
-			audio.speakText(self.text_getText(r[0],r[1]))
+			speech.speakText(self.text_getText(r[0],r[1]))
 
 	def event_stateChange(self,obj,nextHandler):
 		role=getMozillaRole(obj.role)
 		states=obj.states
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
-				audio.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
+				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 				return True
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
 				self.NVDAObject=obj
@@ -155,19 +155,19 @@ class virtualBuffer_gecko(virtualBuffer):
 	def loadDocument(self):
 		global lastLoadTime
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
-			audio.cancel()
+			speech.cancelSpeech()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			audio.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
+			speech.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
 		self.resetBuffer()
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load start") 
 		self.fillBuffer(self.NVDAObject)
 		debug.writeMessage("virtualBuffers.gecko.loadDocument: load end")
 		lastLoadTime=time.time()
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
-			audio.cancel()
+			speech.cancelSpeech()
 			self.text_reviewOffset=0
-			audio.speakMessage(_("done"))
+			speech.speakMessage(_("done"))
 			time.sleep(0.001)
 			self.text_speakLine(0)
 

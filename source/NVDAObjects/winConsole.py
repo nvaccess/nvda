@@ -13,7 +13,7 @@ import tones
 from keyUtils import sendKey, key
 import winKernel
 import winUser
-import audio
+import speech
 import IAccessible
 
 class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
@@ -104,7 +104,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 					newLines=self.consoleVisibleLines
 					newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
 					if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
-						audio.speakText(newText)
+						speech.speakText(newText)
 					self.prevConsoleVisibleLines=newLines
 				#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
 				if checkDead_timer>=10:
@@ -217,7 +217,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		self.connectConsole()
 		self.text_reviewOffset=self.text_caretOffset
 		for line in (x for x in self.consoleVisibleLines if not x.isspace()):
-			audio.speakText(line)
+			speech.speakText(line)
 		self.prevConsoleVisibleLines=self.consoleVisibleLines
 
 	def event_looseFocus(self):

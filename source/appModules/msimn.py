@@ -8,7 +8,7 @@ import winUser
 import api
 import IAccessibleHandler
 import appModuleHandler
-import audio
+import speech
 
 envelopeNames={
 	1000:_("Attachments"),

@@ -12,7 +12,7 @@ import globalVars
 import debug
 import config
 import versionInfo
-import audio
+import speech
 import queueHandler
 import pythoncom
 import core
@@ -214,9 +214,9 @@ class MainFrame(wx.Frame):
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			audio.speakMessage(_("configuration saved"))
+			speech.speakMessage(_("configuration saved"))
 		except:
-			audio.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
+			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onExitCommand(self, evt):
 		wasShown=self.IsShown()

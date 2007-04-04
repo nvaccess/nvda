@@ -10,7 +10,7 @@ import comtypes.automation
 import win32com.client
 import pythoncom
 import winUser
-import audio
+import speech
 import IAccessibleHandler
 import winEdit
 

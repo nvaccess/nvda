@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import queueHandler
-import audio
+import speech
 import globalVars
 
 def sayAll(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor):
@@ -26,9 +26,9 @@ def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getTex
 			func_beforeSpeakChunk(curPos)
 			text=func_getText(curRange[0],curRange[1])
 			if text and not text.isspace():
-				audio.speakText(text,index=curPos)
+				speech.speakText(text,index=curPos)
 			if (nextRange is None) or (nextRange[0]>=toOffset) or (nextRange[0]<=curPos):
-				audio.speakMessage("end of text",index=toOffset)
+				speech.speakMessage("end of text",index=toOffset)
 				curPos=None
 			else:
 				curPos=nextRange[0]
@@ -44,7 +44,7 @@ def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getTex
 def updateCursor_generator(fromOffset,toOffset,func_updateCursor):
 	lastIndex=fromOffset-1
 	while True:
-		index=audio.getLastIndex()
+		index=speech.getLastIndex()
 		if (index is not None) and (index>lastIndex) and (index<=toOffset):
 			func_updateCursor(index)
 			lastIndex=index

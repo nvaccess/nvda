@@ -10,7 +10,7 @@ from synthDriverHandler import *
 import debug
 import config
 import languageHandler
-import audio
+import speech
 from wx.lib.masked import textctrl
 
 class interfaceSettingsDialog(wx.Dialog):

@@ -7,7 +7,7 @@
 """Module that contains the base NVDA object type"""
 from new import instancemethod
 import textBuffer
-import audio
+import speech
 from keyUtils import key, sendKey
 import globalVars
 import api
@@ -274,7 +274,7 @@ Speaks the properties of this object such as name, typeString,value, description
 		if isinstance(level,int):
 			level=_("level %d")%level 
 		contains=self.contains
-		audio.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position,level=level,contains=contains)
+		speech.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position,level=level,contains=contains)
 
 	def speakDescendantObjects(self,hashList=None):
 		if hashList is None:
@@ -304,7 +304,7 @@ This code is executed if a gain focus event is received by this object.
 		"""
 This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
 """
-		audio.cancel()
+		speech.cancelSpeech()
 		if self.speakOnForeground:
 			api.setNavigatorObject(self)
 			self.speakObject()
@@ -341,17 +341,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_valueChange(self):
 		value=self.value
 		if self.hasFocus and value!=self._oldValue:
-			audio.speakObjectProperties(value=self.value)
+			speech.speakObjectProperties(value=self.value)
 			self._oldValue=value
 
 	def event_nameChange(self):
 		name=self.name
 		if self.hasFocus and name!=self._oldName:
-			audio.speakObjectProperties(name=self.name)
+			speech.speakObjectProperties(name=self.name)
 			self._oldName=name
 
 	def event_descriptionChange(self):
 		description=self.description
 		if self.hasFocus and description!=self._oldDescription:
-			audio.speakObjectProperties(description=self.description)
+			speech.speakObjectProperties(description=self.description)
 			self._oldDescription=description

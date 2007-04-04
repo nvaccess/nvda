@@ -19,7 +19,7 @@ import IAccessibleHandler
 import winUser
 import winKernel
 import globalVars
-import audio
+import speech
 import api
 import config
 import baseType
@@ -364,7 +364,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 
 	def event_mouseMove(self,isEntering,x,y,oldX,oldY):
 		if isEntering:
-			audio.cancel()
+			speech.cancelSpeech()
 			self.speakObject()
 
 	def _get_groupName(self):
@@ -399,13 +399,13 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def event_gainFocus(self):
 		if self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
 			api.setMenuMode(True)
-			audio.cancel()
+			speech.cancelSpeech()
 		else:
 			api.setMenuMode(False)
 		if config.conf["presentation"]["reportObjectGroupNames"] and api.getForegroundObject() and (api.getForegroundObject().role==IAccessibleHandler.ROLE_SYSTEM_DIALOG) and (self.IAccessibleChildID==0): 
 			groupName=self.groupName
 			if groupName:
-				audio.speakMessage("%s %s"%(groupName,IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_GROUPING)))
+				speech.speakMessage("%s %s"%(groupName,IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_GROUPING)))
 		window.NVDAObject_window.event_gainFocus(self)
 
 	def event_menuStart(self):
@@ -414,9 +414,9 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		parentObject=focusObject.parent if focusObject else None
 		if self!=focusObject and self!=parentObject  and self.role in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
 			api.setFocusObject(self)
-			audio.cancel()
+			speech.cancelSpeech()
 			if self.role==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP and focusObject.role==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
-				audio.speakObjectProperties(name=focusObject.name,typeString=self.typeString)
+				speech.speakObjectProperties(name=focusObject.name,typeString=self.typeString)
 			else:
 				self.speakObject()
 
@@ -425,7 +425,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			obj=api.findObjectWithFocus()
 			if isinstance(obj,baseType.NVDAObject) and obj!=api.getFocusObject():
 				api.setFocusObject(obj)
-				audio.cancel()
+				speech.cancelSpeech()
 				obj.event_gainFocus()
 
 	def event_stateChange(self):
@@ -435,9 +435,9 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		newNegativeStates=negativeStates-(negativeStates&self._lastNegativeStates)
 		if self.hasFocus:
 			if newPositiveStates:
-				audio.speakObjectProperties(stateText=self.getStateNames(newPositiveStates))
+				speech.speakObjectProperties(stateText=self.getStateNames(newPositiveStates))
 			if newNegativeStates:
-				audio.speakObjectProperties(stateText=self.getStateNames(newNegativeStates,opposite=True))
+				speech.speakObjectProperties(stateText=self.getStateNames(newNegativeStates,opposite=True))
 		self._lastPositiveStates=positiveStates
 		self._lastNegativeStates=negativeStates
 
@@ -531,7 +531,7 @@ class NVDAObject_menuItem(NVDAObject_IAccessible):
 		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
 		negativeStates=self.calculateNegativeStates()
 		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
-		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+		speech.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
 
 class NVDAObject_outlineItem(NVDAObject_IAccessible):
 
@@ -554,7 +554,7 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
 		negativeStates=self.calculateNegativeStates()
 		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
-		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,level=_("level %d")%self.level)
+		speech.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,level=_("level %d")%self.level)
 
 class NVDAObject_tab(NVDAObject_IAccessible):
 
@@ -563,7 +563,7 @@ class NVDAObject_tab(NVDAObject_IAccessible):
 		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
 		negativeStates=self.calculateNegativeStates()
 		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
-		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+		speech.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
 
 class NVDAObject_tooltip(NVDAObject_IAccessible):
 
@@ -694,7 +694,7 @@ class NVDAObject_listItem(NVDAObject_IAccessible):
 		positiveStates=positiveStates-(positiveStates&IAccessibleHandler.STATE_SYSTEM_SELECTED)
 		negativeStates=self.calculateNegativeStates()
 		stateText=" ".join([self.getStateNames(positiveStates),self.getStateNames(negativeStates,opposite=True)])
-		audio.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
+		speech.speakObjectProperties(name=self.name,stateText=stateText,value=self.value,description=self.description,keyboardShortcut=self.keyboardShortcut,position=self.positionString)
 
 class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
 
@@ -722,7 +722,7 @@ class NVDAObject_list(NVDAObject_IAccessible):
 		if child and (child.role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
 			IAccessibleHandler.objectEventCallback(-1,winUser.EVENT_OBJECT_FOCUS,self.windowHandle,self._accObjectID,child.IAccessibleChildID,0,0)
 		elif not self.firstChild:
-			audio.speakMessage(_("%d items")%0)
+			speech.speakMessage(_("%d items")%0)
 
 class NVDAObject_comboBox(NVDAObject_IAccessible):
 
