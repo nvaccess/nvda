@@ -44,7 +44,7 @@ def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getTex
 def updateCursor_generator(fromOffset,toOffset,func_updateCursor):
 	lastIndex=fromOffset-1
 	while True:
-		index=speech.getLastIndex()
+		index=speech.getLastSpeechIndex()
 		if (index is not None) and (index>lastIndex) and (index<=toOffset):
 			func_updateCursor(index)
 			lastIndex=index

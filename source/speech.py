@@ -106,7 +106,7 @@ def processSymbol(symbol):
 	newSymbol=characterSymbols.names.get(symbol,symbol)
 	return newSymbol
 
-def getLastIndex():
+def getLastSpeechIndex():
 	"""Gets the last index passed by the synthesizer. Indexing is used so that its possible to find out when a certain peace of text has been spoken yet. Usually the character position of the text is passed to speak functions as the index.
 @returns: the last index encountered
 @rtype: int
