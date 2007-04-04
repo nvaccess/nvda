@@ -50,8 +50,10 @@ def writeException(message):
 		info=traceback.format_exc()
 	except:
 		info='unknown'
+	# Specifying errors="replace" to the utf-8 codec doesn't ignore decode errors in the ascii codec,
+	# so convert to unicode here and specify errors="replace" to avoid errors.
 	debugFile.write("Exception %s\n"%datetime.datetime.now())
-	debugFile.write("%s: ----\n%s\n----\n"%(message,info))
+	debugFile.write(unicode("%s: ----\n%s\n----\n"%(message,info),errors="replace"))
 	debugFile.flush()
 
 def start(fileName):
@@ -60,7 +62,7 @@ def start(fileName):
 @type fileName: string
 """
 	global debugFile
-	debugFile=codecs.open(fileName,"w","utf-8")
+	debugFile=codecs.open(fileName,"w","utf-8",errors="replace")
 	writeMessage("Screen reader log file started")
 	debugFile.flush()
 
