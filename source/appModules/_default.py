@@ -445,6 +445,6 @@ class appModule(appModuleHandler.appModule):
 			return
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		else: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
+		elif sps.BatteryLifeTime != 0xffffffff: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
 		audio.speakMessage(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
