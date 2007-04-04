@@ -4,8 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-NO_SYSTEM_BATTERY = 0X80
-
 import gc
 import comtypesClient
 import datetime
@@ -452,6 +450,7 @@ class appModule(appModuleHandler.appModule):
 			return
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		else: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
+		elif sps.BatteryLifeTime!=0xffffffff: 
+			text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
 		speech.speakMessage(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
