@@ -147,7 +147,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 		if config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
 			text=_("cap %s")%text
 		oldPitch=config.conf["speech"][getSynth().name]["pitch"]
-		getSynth().pitch=99
+		getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 	getSynth().speakText(text,wait=wait,index=index)
 	if uppercase:
 		getSynth().pitch=oldPitch
