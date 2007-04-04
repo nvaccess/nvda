@@ -14,7 +14,7 @@ from textProcessing import *
 import debug
 import config
 import tones
-import synthDriverHandler
+from synthDriverHandler import *
 
 speechMode_off=0
 speechMode_beeps=1
@@ -25,14 +25,14 @@ beenCanceled=True
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
-	synthDriverHandler.setDriver(config.conf["speech"]["synth"])
+	setSynth(config.conf["speech"]["synth"])
 
 def getLastIndex():
 	"""Gets the last index passed by the synthesizer. Indexing is used so that its possible to find out when a certain peace of text has been spoken yet. Usually the character position of the text is passed to speak functions as the index.
 @returns: the last index encountered
 @rtype: int
 """
-	return synthDriverHandler.getLastIndex()
+	return getSynth().lastIndex
 
 def processText(text):
 	"""Processes the text using the L{textProcessing} module which converts punctuation so it is suitable to be spoken by the synthesizer. This function makes sure that all punctuation is included if it is configured so in nvda.ini.
@@ -51,7 +51,7 @@ def cancel():
 		return
 	elif speechMode==speechMode_beeps:
 		return
-	synthDriverHandler.cancel()
+	getSynth().cancel()
 	beenCanceled=True
 
 def speakMessage(text,wait=False,index=None):
@@ -73,7 +73,7 @@ This function will not speak if L{speechMode} is false.
 	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.speakText("\n"+text+"\n",wait=wait,index=index)
+		getSynth().speakText("\n"+text+"\n",wait=wait,index=index)
 
 def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,keyboardShortcut=None,position=None,level=None,contains=None,wait=False,index=None):
 	"""Speaks some given object properties.
@@ -117,7 +117,7 @@ This function will not speak if L{speechMode} is false.
 		text="%s %s"%(text,multi)
 	if text and not text.isspace():
 		text=processText(text)
-		synthDriverHandler.speakText(text,wait=wait,index=index)
+		getSynth().speakText(text,wait=wait,index=index)
 
 def speakSymbol(symbol,wait=False,index=None):
 	"""Speaks a given single character.
@@ -144,13 +144,13 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	else:
 		uppercase=False
 	if uppercase:
-		if config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]:
+		if config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
 			text=_("cap %s")%text
-		oldPitch=config.conf["speech"][synthDriverHandler.driverName]["pitch"]
-		synthDriverHandler.driverObject.pitch=99
-	synthDriverHandler.speakText(text,wait=wait,index=index)
+		oldPitch=config.conf["speech"][getSynth().name]["pitch"]
+		getSynth().pitch=99
+	getSynth().speakText(text,wait=wait,index=index)
 	if uppercase:
-		synthDriverHandler.driverObject.pitch=oldPitch
+		getSynth().pitch=oldPitch
 
 def speakText(text,wait=False,index=None):
 	"""Speaks some given text.
@@ -171,4 +171,4 @@ This function will not speak if L{speechMode} is false.
 	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
-		synthDriverHandler.speakText(text,wait=wait,index=index)
+		getSynth().speakText(text,wait=wait,index=index)

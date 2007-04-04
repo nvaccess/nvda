@@ -6,7 +6,7 @@
 
 import os
 import wx
-import synthDriverHandler
+from synthDriverHandler import *
 import debug
 import config
 import languageHandler
@@ -72,12 +72,12 @@ class synthesizerDialog(wx.Dialog):
 		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		synthListLabel=wx.StaticText(self,-1,label=_("Synthesizer"))
 		synthListID=wx.NewId()
-		driverList=synthDriverHandler.getDriverList()
+		driverList=getSynthList()
 		self.synthNames=[x[0] for x in driverList]
 		options=['%s, %s'%x for x in driverList]
 		self.synthList=wx.Choice(self,synthListID,choices=options)
 		try:
-			index=self.synthNames.index(synthDriverHandler.driverName)
+			index=self.synthNames.index(getSynth().name)
 			self.synthList.SetSelection(index)
 		except:
 			pass
@@ -94,7 +94,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		synthDriverHandler.setDriver(self.synthNames[self.synthList.GetSelection()])
+		setSynth(self.synthNames[self.synthList.GetSelection()])
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):
@@ -106,11 +106,11 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		voiceListLabel=wx.StaticText(self,-1,label=_("Voice"))
 		voiceListID=wx.NewId()
-		voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=synthDriverHandler.driverVoiceNames)
+		voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[getSynth().getVoiceName(x) for x in range(1,getSynth().voiceCount+1)])
 		try:
-			voiceIndex=self.oldVoice=synthDriverHandler.getVoice()
+			voiceIndex=self.oldVoice=getSynth().voice
 			voiceIndex-=1
-			if voiceIndex>=0 and voiceIndex<len(synthDriverHandler.driverVoiceNames):
+			if voiceIndex>=0 and voiceIndex<getSynth().voiceCount:
 				voiceList.SetSelection(voiceIndex)
 		except:
 			pass
@@ -121,7 +121,7 @@ class voiceSettingsDialog(wx.Dialog):
 		rateSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		rateSliderLabel=wx.StaticText(self,-1,label=_("Rate"))
 		rateSliderID=wx.NewId()
-		self.oldRate=synthDriverHandler.getRate()
+		self.oldRate=getSynth().rate
 		rateSlider=wx.Slider(self,rateSliderID,value=self.oldRate,minValue=0,maxValue=100,name="Rate:")
 		rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
 		rateSliderSizer.Add(rateSliderLabel)
@@ -130,7 +130,7 @@ class voiceSettingsDialog(wx.Dialog):
 		pitchSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		pitchSliderLabel=wx.StaticText(self,-1,label=_("Pitch"))
 		pitchSliderID=wx.NewId()
-		self.oldPitch=synthDriverHandler.getPitch()
+		self.oldPitch=getSynth().pitch
 		pitchSlider=wx.Slider(self,pitchSliderID,value=self.oldPitch,minValue=0,maxValue=100)
 		pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
 		pitchSliderSizer.Add(pitchSliderLabel)
@@ -139,7 +139,7 @@ class voiceSettingsDialog(wx.Dialog):
 		volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 		volumeSliderLabel=wx.StaticText(self,-1,label=_("Volume"))
 		volumeSliderID=wx.NewId()
-		self.oldVolume=synthDriverHandler.getVolume()
+		self.oldVolume=getSynth().volume
 		volumeSlider=wx.Slider(self,volumeSliderID,value=self.oldVolume,minValue=0,maxValue=100)
 		volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
 		volumeSliderSizer.Add(volumeSliderLabel)
@@ -149,7 +149,7 @@ class voiceSettingsDialog(wx.Dialog):
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
 		self.capsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Say cap before capitals"))
-		self.capsCheckBox.SetValue(config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"])
+		self.capsCheckBox.SetValue(config.conf["speech"][getSynth().name]["sayCapForCapitals"])
 		settingsSizer.Add(self.capsCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -162,27 +162,37 @@ class voiceSettingsDialog(wx.Dialog):
 		voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		synthDriverHandler.setVoice(evt.GetSelection()+1)
+		val=evt.GetSelection()+1
+		getSynth().voice=val
+		getSynth().rate=self.oldRate
+		getSynth().pitch=self.oldPitch
+		config.conf["speech"][getSynth().name]["voice"]=val
 
 	def onRateChange(self,evt):
-		synthDriverHandler.setRate(evt.GetSelection())
+		val=evt.GetSelection()
+		getSynth().rate=val
+		config.conf["speech"][getSynth().name]["rate"]=val
 
 	def onPitchChange(self,evt):
-		synthDriverHandler.setPitch(evt.GetSelection())
+		val=evt.GetSelection()
+		getSynth().pitch=val
+		config.conf["speech"][getSynth().name]["pitch"]=val
 
 	def onVolumeChange(self,evt):
-		synthDriverHandler.setVolume(evt.GetSelection())
+		val=evt.GetSelection()
+		getSynth().volume=val
+		config.conf["speech"][getSynth().name]["volume"]=val
 
 	def onCancel(self,evt):
-		synthDriverHandler.setVoice(self.oldVoice)
-		synthDriverHandler.setRate(self.oldRate)
-		synthDriverHandler.setPitch(self.oldPitch)
-		synthDriverHandler.setVolume(self.oldVolume)
+		getSynth().voice=self.oldVoice
+		getSynth().rate=self.oldRate
+		getSynth().pitch=self.oldPitch
+		getSynth().volume=self.oldVolume
 		self.Destroy()
 
 	def onOk(self,evt):
 		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()
-		config.conf["speech"][synthDriverHandler.driverName]["sayCapForCapitals"]=self.capsCheckBox.IsChecked()
+		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.capsCheckBox.IsChecked()
 		self.Destroy()
 
 class keyboardEchoDialog(wx.Dialog):

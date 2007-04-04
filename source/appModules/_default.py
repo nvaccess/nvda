@@ -18,7 +18,7 @@ import sayAllHandler
 import virtualBuffers
 import NVDAObjects
 import globalVars
-import synthDriverHandler
+from synthDriverHandler import *
 import gui
 import core
 import config
@@ -52,13 +52,17 @@ class appModule(appModuleHandler.appModule):
 	script_dateTime.__doc__=_("Reports the current date and time")
 
 	def script_increaseRate(self,keyPress,nextScript):
-		synthDriverHandler.setRate(synthDriverHandler.getRate()+5)
-		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
+		rate=getSynth().rate+5
+		getSynth().rate=rate
+		config.conf["speech"][getSynth().name]["rate"]=rate
+		audio.speakMessage(_("rate %d%%")%rate)
 	script_increaseRate.__doc__=_("Increases the speech rate by 5 percent")
 
 	def script_decreaseRate(self,keyPress,nextScript):
-		synthDriverHandler.setRate(synthDriverHandler.getRate()-5)
-		audio.speakMessage(_("rate %d%%")%synthDriverHandler.getRate())
+		rate=getSynth().rate-5
+		getSynth().rate=rate
+		config.conf["speech"][getSynth().name]["rate"]=rate
+		audio.speakMessage(_("rate %d%%")%rate)
 	script_decreaseRate.__doc__=_("decreases the speech rate by 5 percent")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
@@ -445,6 +449,6 @@ class appModule(appModuleHandler.appModule):
 			return
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		elif sps.BatteryLifeTime != 0xffffffff: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
+		else: text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
 		audio.speakMessage(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")

@@ -10,7 +10,6 @@ import os
 import wx
 import globalVars
 import debug
-import synthDriverHandler
 import config
 import versionInfo
 import audio

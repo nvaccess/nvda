@@ -5,51 +5,58 @@ import comtypesClient
 import win32com.client
 import _winreg
 import debug
-import queueHandler
-import baseObject
-
-name="sapi4"
-description="Microsoft Speech API version 4 (ActiveVoice.ActiveVoice)"
+import silence
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 
-def check():
-	try:
-		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
-		r.Close()
-		return True
-	except:
-		pass
-	return registerDll()
+class SynthDriver(silence.SynthDriver):
 
-def registerDll():
-	try:
-		ret = os.system(r"regsvr32 /s %SystemRoot%\speech\xvoice.dll")
-		return ret == 0
-	except:
-		pass
-		return False
+	name="sapi4activeVoice"
+	description="Microsoft Speech API 4 (ActiveVoice.ActiveVoice)"
 
-class synthDriver(baseObject.autoPropertyObject):
-
-	def __init__(self):
-		registerDll()
-		self.tts=comtypesClient.CreateObject(COM_CLASS,sink=self)
-		self.tts.CallBacksEnabled=1
-		self.tts.Tagged=1
-		self.tts.initialized=1
-		self._lastIndex=None
-		self.voiceNames=[]
+	def _registerDll(self):
 		try:
-			self.voiceNames=[self.tts.modeName(num) for num in range(1,self.tts.CountEngines+1)]
+			ret = os.system(r"regsvr32 /s %SystemRoot%\speech\xvoice.dll")
+			return ret == 0
 		except:
 			pass
- 
+			return False
+
+	def check(self):
+		try:
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
+			r.Close()
+			return True
+		except:
+			pass
+		return self._registerDll()
+
+	def initialize(self):
+		try:
+			self.check()
+			self.tts=comtypesClient.CreateObject(COM_CLASS,sink=self)
+			self.tts.CallBacksEnabled=1
+			self.tts.Tagged=1
+			self.tts.initialized=1
+			self._lastIndex=None
+			return True
+		except:
+			return False
+
+	def _get_voiceCount(self):
+		return self.tts.CountEngines
+
+	def getVoiceName(self,num):
+		return self.tts.modeName(num)
+
+	def terminate(self):
+		del self.tts
+
 	def _paramToPercent(self, current, min, max):
-		return int(round(float(current - min) / (max - min) * 100))
+		return float(current - min) / (max - min) * 100
 
 	def _percentToParam(self, percent, min, max):
-		return int(round(float(percent) / 100 * (max - min) + min))
+		return int(float(percent) / 100 * (max - min) + min)
 
 	#Events
 

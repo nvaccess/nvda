@@ -8,53 +8,58 @@ import time
 import os
 import comtypesClient
 import _winreg
-import baseObject
 import debug
 import globalVars
-
-name="sapi5"
-description="Microsoft Speech API version 5 (sapi.SPVoice)"
-
-def check():
-	try:
-		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"SAPI.SPVoice")
-		r.Close()
-		return True
-	except:
-		return False
+import silence
 
 class constants:
 	SVSFlagsAsync = 1
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
 
-class synthDriver(baseObject.autoPropertyObject):
+class SynthDriver(silence.SynthDriver):
 
-	def __init__(self):
-		self.tts = comtypesClient.CreateObject('sapi.SPVoice')
-		self._rate=(self.tts.rate*5)+50
-		self._voice=1
-		self._pitch=50
-		self._volume=self.tts.volume
-		self.voiceNames=[]
+	name="sapi5"
+	description="Microsoft Speech API version 5 (sapi.SPVoice)"
+
+	def check(self):
 		try:
-			for num in range(self.tts.GetVoices().Count):
-				self.voiceNames.append(self.tts.GetVoices()[num].GetDescription())
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"SAPI.SPVoice")
+			r.Close()
+			return True
 		except:
-			pass
+			return False
+
+	def initialize(self):
+		try:
+			self.tts = comtypesClient.CreateObject('sapi.SPVoice')
+			self._pitch=50
+			self._voice=1
+			return True
+		except:
+			return False
+
+	def terminate(self):
+		del self.tts
+
+	def _get_voiceCount(self):
+		return len(self.tts.GetVoices())
+
+	def getVoiceName(self,num):
+		return self.tts.GetVoices()[num-1].GetDescription()
 
 	def _get_rate(self):
-		return self._rate
+		return (self.tts.rate*5)+50
 
 	def _get_pitch(self):
 		return self._pitch
 
 	def _get_volume(self):
-		return self._volume
+		return self.tts.volume
 
 	def _get_voice(self):
 		return self._voice
-
+ 
 	def _get_lastIndex(self):
 		bookmark=self.tts.status.LastBookmark
 		if bookmark!="" and bookmark is not None:
@@ -64,7 +69,6 @@ class synthDriver(baseObject.autoPropertyObject):
 
 	def _set_rate(self,rate):
 		self.tts.Rate = (rate-50)/5
-		self._rate=rate
 
 	def _set_pitch(self,value):
 		#pitch is really controled with xml around speak commands
@@ -72,16 +76,13 @@ class synthDriver(baseObject.autoPropertyObject):
 
 	def _set_volume(self,value):
 		self.tts.Volume = value
-		self._volume=value
 
 	def _set_voice(self,value):
-		if value>len(self.voiceNames):
+		if value>self.voiceCount:
 			value=1
 		self.tts=comtypesClient.CreateObject('sapi.SPVoice')
 		self.tts.Voice(self.tts.GetVoices()[value-1])
 		self._voice=value
-		self.rate=self._rate
-		self.volume=self._volume
 
 
 	def speakText(self,text,wait=False,index=None):

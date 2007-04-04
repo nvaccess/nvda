@@ -8,33 +8,40 @@ import winsound
 import time
 import _winreg
 import pythoncom
-import baseObject
 import core
+import silence
 import _sapi4serotekHelper
 
-name="sapi4"
 description="Microsoft Speech API version 4 (Serotek driver)"
 
-def check():
-	return True
-	try:
-		r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"Speech.VoiceText")
-		r.Close()
-		return True
-	except:
-		return False
+class SynthDriver(silence.SynthDriver):
 
-class synthDriver(baseObject.autoPropertyObject):
+	name="sapi4serotek"
+	description="Microsoft Speech API version 4 (Serotek driver)"
 
-	def __init__(self):
-		self.tts=_sapi4serotekHelper.SAPI4()
-		self.tts.say('')
-		self._lastIndex=None
-		self.tts.callWhenDone(self.onDoneSpeaking)
-		self._waitFlag=False
+	def check(self):
+		try:
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"Speech.VoiceText")
+			r.Close()
+			return True
+		except:
+			return False
+
+	def initialize(self):
+		try:
+			self.tts=_sapi4serotekHelper.SAPI4()
+			self.tts.say('')
+			self._lastIndex=None
+			self.tts.callWhenDone(self.onDoneSpeaking)
+			self._waitFlag=False
+			return True
+		except:
+			return False
+
+	def terminate(self):
+		del self.tts
 
 	def onIndexMark(self,index):
-		winsound.Beep(440,20)
 		self._lastIndex=index
 
 	def onDoneSpeaking(self):
@@ -71,9 +78,12 @@ class synthDriver(baseObject.autoPropertyObject):
 	def _get_lastIndex(self):
 		return self._lastIndex
 
-	def _get_voiceNames(self):
-		return [x[1] for x in self.tts.voices]
+	def _get_voiceCount(self):
+		return len(self.tts.voices)
 
+	def getVoiceName(self,num):
+		return self.tts.voices[num-1]
+ 
 	def _set_rate(self,rate):
 		self.tts.rate = int(round(rate*self.rateRatio))+self.rateOffset
 
@@ -88,10 +98,9 @@ class synthDriver(baseObject.autoPropertyObject):
 
 	def speakText(self,text,wait=False,index=None):
 		self.waitFlag=wait
-		self.tts.say(text)
 		if index is not None:
-			self.addIndexMark(self.onIndexMark,[index],{})
-			self.tts.speak()
+			self.tts.addIndexMark(self.onIndexMark,[index],{})
+		self.tts.say(text)
 		while self.waitFlag:
 			pythoncom.PumpWaitingMessages()
 			time.sleep(0.001)
