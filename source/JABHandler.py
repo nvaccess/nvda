@@ -125,5 +125,4 @@ def initialize():
 		bridgeDll.setFocusGainedFP(event_gainFocus)
 		return True
 	except:
-		debug.writeException('initialize')
 		return False
