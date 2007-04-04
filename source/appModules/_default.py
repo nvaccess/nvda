@@ -398,11 +398,14 @@ class appModule(appModuleHandler.appModule):
 		api.setNavigatorObject(statusBarObject)
 
 	def script_toggleReportObjectUnderMouse(self,keyPress,nextScript):
-		config.conf["mouse"]["reportObjectUnderMouse"]=not config.conf["mouse"]["reportObjectUnderMouse"]
 		if config.conf["mouse"]["reportObjectUnderMouse"]:
-			speech.speakMessage(_("speak object under mouse"))
+			onOff=_("off")
+			config.conf["mouse"]["reportObjectUnderMouse"]=False
 		else:
-			speech.speakMessage(_("don't speak object under mouse"))
+			onOff=_("on")
+			config.conf["mouse"]["reportObjectUnderMouse"]=True
+		speech.speakMessage(_("Report object under mouse")+" "+onOff)
+	script_toggleReportObjectUnderMouse.__doc__=_("Toggles on and off the reporting of objects under the mouse")
 
 	def script_title(self,keyPress,nextScript):
 		obj=api.getForegroundObject()
