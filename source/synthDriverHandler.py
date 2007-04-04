@@ -30,8 +30,8 @@ def getSynth():
 
 def setSynth(name):
 	global _curSynth
-	if _curSynth:
-		_curSynth.cancel()
+	if name=='auto':
+		name='sapi5'
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver()
 		newSynth.initialize()
@@ -40,12 +40,15 @@ def setSynth(name):
 		newSynth.rate=config.conf["speech"][name]["rate"]
 		newSynth.pitch=config.conf["speech"][name]["pitch"]
 		newSynth.volume=config.conf["speech"][name]["volume"]
+		if _curSynth:
+			_curSynth.cancel()
+			_curSynth.terminate()
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
-		debug.writeException("Error in synthDriver %s"%name)
+		debug.writeException('setSynth')
 		if _curSynth:
 			return False
 		elif name not in ['sapi5','silence']:
