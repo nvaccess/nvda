@@ -9,6 +9,7 @@ import time
 import ctypes
 import difflib
 import debug
+import queueHandler
 import tones
 from keyUtils import sendKey, key
 import winKernel
@@ -104,7 +105,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 					newLines=self.consoleVisibleLines
 					newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
 					if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
-						speech.speakText(newText)
+						queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakText,newText)
 					self.prevConsoleVisibleLines=newLines
 				#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
 				if checkDead_timer>=10:
