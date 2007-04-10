@@ -6,8 +6,8 @@ import characterSymbols
 def getAvailableLanguages():
 	l=[x for x in os.listdir('locale') if not x.startswith('.')]
 	l=[x for x in l if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
-	if 'enu' not in l:
-		l.append('enu')
+	if 'en' not in l:
+		l.append('en')
 	return l
 
 def setLanguage(lang):
@@ -20,3 +20,4 @@ def setLanguage(lang):
 		gettext.install("nvda", unicode=True)
 		reload(characterSymbols)
 		return False
+

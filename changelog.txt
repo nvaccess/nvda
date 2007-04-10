@@ -1,3 +1,42 @@
+Changes since 425:
+*Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
+*Added support for more edit fields in Skype.
+*Make loading of virtualBuffers a little more silent if focus is not directly with in the window where the virtualBuffer is situated.
+*Added commandline arguments to NVDA:
+-m, --minimal: do not play startup/exit sounds and do not show the interface on startup if set to do so.
+-q, --quit: quit any other already running instance of NVDA and then exit
+-s, --stderr-file fileName: specify where NVDA should place uncaught errors and exceptions
+-d, --debug-file fileName: specify where NVDA should place debug messages
+-h, -help: show a help message listing commandline arguments
+ *Fixed bug where punctuation symbols would not be translated to the appropriate language, when using a language other than english, and when speak typed characters was turned on.
+*Added sky language files thanks to Peter Vagner 
+*Added Italian language file
+*Added a Virtual Buffer settings dialog and a Document Formatting settings dialog, from Peter Vagner.
+*Added French translation thanks to Michel Such 
+*Added a script to toggle beeping of progress bars on and off (insert+u). Contributed by Peter Vagner.
+*Made more messages in NVDA be translatable for other languages. This includes script descriptions when in keyboard help.
+*Added a find dialog to the virtualBuffers (internet Explorer and Firefox). Pressing control+f when on a page brings up a dialog in which you can type some text to find. Pressing enter will then search for this text and place the virtualBuffer cursor on this line. Pressing f3 will also search for the next occurance of the text.
+*When speak typed characters is turned on, more characters should be now spoken. Technically, now ascii characters from 32 to 255 can now be spoken.
+*Renamed some control types for better readability. Editable text is now edit, outline is now tree view and push button is now button.
+*When arrowing around list items in a list, or tree view items in a tree view, the control type (list item, tree view item) is no longer spoken, to speed up navigation.
+*Has Popup (to indicate that a menu has a submenu) is now spoken as submenu.
+*Where some language use control and alt to enter a special character, NVDA now will speak these characters when speak typed characters is on.
+*Fixed some problems with reviewing static text controls.
+*Added Translation for Traditional Chinese, thanks to Coscell Kao.
+*Re-structured an important part of the NVDA coe, which should now fix many issues with NVDA's user interface (including settings dialogs).
+*Added Sapi4 support to NVDA. Currently there are two sapi4 drivers, one based on code contributed by Serotek Corporation, and one using the ActiveVoice.ActiveVoice com Interface. Both these drivers have issues, see which one works best for you.
+*Now when trying to run a new copy of NVDA while an older copy is still running will cause the new copy to just exit. This fixes a major problem where running multiple copies of NVDA makes your system very unusable.
+*Renamed the title of the NVDA user interface from NVDA Interface to NVDA. 
+*Fixed a bug in Outlook Express where pressing backspace at the start of an editable message would cause an error.
+*Added patch from Rui Batista that adds a script to report the current battery status on laptops (insert+shift+b).
+ *Added a synth driver called Silence. This is a synth driver that does not speak anything, allowing NVDA to stay completely silent at all times. Eventually this could be used along with Braille support, when we have it.
+*Added capitalPitchChange setting for synthesizers thanks to J.J. Meddaugh
+*Added patch from J.J. Meddaugh that makes the toggle report objects under mouse script more like the other toggle scripts (saying on/off rather than changing the whole statement).
+*Added spanish translation (es) contributed by Juan C. buo.
+*Added Hu language file from Tamas Gczy.
+*Added PTG language file from Rui Batista.
+*Changing the voice in the voice settings dialog now sets the rate, pitch and volume sliders to the new values according to the synthesizer, rather than forcing the synthesizer to be set to the old values. This fixes issues where a synth like eloquence or viavoice seems to speek at a much faster rate than all other synths.
+
 Changes since revision 380:
 *Added German language translation thanks to Ali Savas <ali-savas@gmx.de>.
 *Make the NVDA exit dialog act more like a standard warning dialog with icon and sound.

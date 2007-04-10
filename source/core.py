@@ -29,8 +29,8 @@ def applyConfiguration(reportDone=False):
 """
 	config.load()
 	#Language
-	lang = config.conf["general"]["language"]
-	languageHandler.setLanguage(lang)
+	#lang = config.conf["general"]["language"]
+	#languageHandler.setLanguage(lang)
 	#Speech
 	speech.initialize()
 	try:

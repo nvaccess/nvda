@@ -19,6 +19,15 @@ else:
 	debugFileName='debug.log'
 	stderrFileName='stderr.log'
 
+#Localization settings
+import locale
+locale.setlocale(locale.LC_ALL,'')
+import gettext
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import time
 import globalVars
 import win32gui
@@ -70,8 +79,6 @@ if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 import debug
 debug.start(globalVars.appArgs.debugFileName)
-import gettext
-gettext.install("nvda", unicode=True)
 try:
 	import core
 	res=core.main()
