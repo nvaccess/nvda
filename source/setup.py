@@ -4,12 +4,16 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import os
 import gettext
 gettext.install("nvda", unicode=True)
 from distutils.core import setup
 import py2exe
 from glob import glob
 from versionInfo import *
+
+def getLocaleDataFiles():
+	return [(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
 
 setup(
 	name = name,
@@ -42,5 +46,5 @@ setup(
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.png")),
-	],
+	] + getLocaleDataFiles(),
 )
