@@ -111,6 +111,8 @@ def internal_keyDownEvent(event):
 
 def speakKey(keyPress,ascii):
 	global word
+	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
+		audio.speakSymbol(chr(ascii))
 	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift'])) or (keyPress[0]==frozenset(['Control','Alt']))) and (ascii in range(33,255)):
 		if isTypingProtected():
 			char="*"
@@ -118,7 +120,7 @@ def speakKey(keyPress,ascii):
 			char=chr(ascii)
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			speech.speakSymbol(char)
-		if config.conf["keyboard"]["speakTypedWords"] and (((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
+		if config.conf["keyboard"]["speakTypedWords"] and ((ascii >=128) or ((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
 			word+=char
 		elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 			speech.speakText(word)
@@ -128,17 +130,12 @@ def speakKey(keyPress,ascii):
 			keyList=[]
 			if (keyPress[0] is not None) and (len(keyPress[0])>0):
 				keyList+=keyPress[0]
-			if ascii in range(33,128):
-				keyList.append(chr(ascii))
-			else:
-				keyList.append(keyPress[1])
+			keyList.append(keyPress[1])
 			label="+".join(keyList)
 			speech.speakMessage(keyList)
 		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 			speech.speakMessage(word)
 			word=""
-	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
-		speech.speakSymbol(chr(ascii))
 
 def internal_keyUpEvent(event):
 	"""Event that pyHook calls when it receives keyUps"""
