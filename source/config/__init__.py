@@ -17,9 +17,8 @@ val = Validator()
 ### The configuration specification
 confspec = StringIO("""# NVDA Configuration File
 
-#Language settings
 [general]
-	language = string(default="enu")
+	language = string(default="Windows")
 	hideInterfaceOnStartup = boolean(default=False)
 	saveConfigurationOnExit = boolean(default=False)
 
