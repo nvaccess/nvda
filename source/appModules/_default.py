@@ -436,6 +436,36 @@ class appModule(appModuleHandler.appModule):
 		speech.speakMessage(_("Beep on progress bar updates")+" "+onOff)
 	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles on and off the beeping on progress bar updates")
 
+	def script_toggleReportDynamicContentChanges(self,keyPress,nextScript):
+		if globalVars.reportDynamicContentChanges:
+			onOff=_("off")
+			globalVars.reportDynamicContentChanges=False
+		else:
+			onOff=_("on")
+			globalVars.reportDynamicContentChanges=True
+		speech.speakMessage(_("report dynamic content changes")+" "+onOff)
+	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
+
+	def script_toggleCaretMovesReviewCursor(self,keyPress,nextScript):
+		if globalVars.caretMovesReviewCursor:
+			onOff=_("off")
+			globalVars.caretMovesReviewCursor=False
+		else:
+			onOff=_("on")
+			globalVars.caretMovesReviewCursor=True
+		speech.speakMessage(_("caret moves review cursor")+" "+onOff)
+	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
+
+	def script_toggleFocusMovesNavigatorObject(self,keyPress,nextScript):
+		if globalVars.focusMovesNavigatorObject:
+			onOff=_("off")
+			globalVars.focusMovesNavigatorObject=False
+		else:
+			onOff=_("on")
+			globalVars.focusMovesNavigatorObject=True
+		speech.speakMessage(_("focus moves navigator object")+" "+onOff)
+	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self, keyPress, nextScript):
 		UNKNOWN_BATTERY_STATUS = 0xFF

@@ -8,6 +8,7 @@ import thread
 import time
 import ctypes
 import difflib
+import globalVars
 import debug
 import queueHandler
 import tones
@@ -80,7 +81,8 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		if window!=self.windowHandle:
 			return
 		#Update the review cursor position with the caret position
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -102,11 +104,12 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 				if update_timer>=4:
 					update_timer=0
 					#the timer got up to 4, so now we can collect the lines of the console and try and find out the new text
-					newLines=self.consoleVisibleLines
-					newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
-					if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
-						queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakText,newText)
-					self.prevConsoleVisibleLines=newLines
+					if globalVars.reportDynamicContentChanges:
+						newLines=self.consoleVisibleLines
+						newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
+						if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
+							queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakText,newText)
+						self.prevConsoleVisibleLines=newLines
 				#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
 				if checkDead_timer>=10:
 					checkDead_timer=0

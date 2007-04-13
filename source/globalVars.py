@@ -43,3 +43,6 @@ keyboardHelp=False
 virtualBufferPassThrough=False
 keyCounter=0
 lastProgressValue=0
+reportDynamicContentChanges=True
+caretMovesReviewCursor=True
+focusMovesNavigatorObject=True

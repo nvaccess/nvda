@@ -1,3 +1,4 @@
+import globalVars
 import baseObject
 import config
 import speech
@@ -462,35 +463,40 @@ class textBufferObject(baseObject.scriptableObject):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakLine(self.text_caretOffset)
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveByLine.__doc__=_("Moves and then reads the current line")
 
 	def script_text_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakCharacter(self.text_caretOffset)
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveByCharacter.__doc__=_("Moves and reads the current character")
 
 	def script_text_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakWord(self.text_caretOffset)
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveByWord.__doc__=_("Moves and reads the current word")
 
 	def script_text_moveBySentence(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakSentence(self.text_caretOffset)
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveBySentence.__doc__=_("Moves and then reads the current line")
 
 	def script_text_moveByParagraph(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			self.text_speakParagraph(self.text_caretOffset)
-		self.text_reviewOffset=self.text_caretOffset
+		if globalVars.caretMovesReviewCursor:
+			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveByParagraph.__doc__=_("Moves and then reads the current line")
 
 	def script_text_nextParagraph(self,keyPress,nextScript):
