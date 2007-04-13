@@ -15,6 +15,9 @@ from versionInfo import *
 def getLocaleDataFiles():
 	return [(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
 
+def getUserDocsDataFiles():
+	return [(os.path.dirname(f).replace("../user_docs","documentation"), (f,)) for f in glob("../user_docs/*/*.txt")]
+
 setup(
 	name = name,
 	version=version,
@@ -38,7 +41,7 @@ setup(
 	options = {"py2exe": {"bundle_files": 3}},
 	zipfile = None,
 	data_files = [
-		("documentation", glob("../*.txt")),
+		("documentation", ['../changelog.txt','../copying.txt','../todo.txt','../bugs.txt']), 
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
@@ -46,5 +49,5 @@ setup(
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.png")),
-	] + getLocaleDataFiles(),
+	] + getLocaleDataFiles()+getUserDocsDataFiles(),
 )
