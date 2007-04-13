@@ -368,6 +368,7 @@ class appModule(appModuleHandler.appModule):
 			sayAllHandler.sayAll(v.text_reviewOffset,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewOffset)
 		else:
 			sayAllHandler.sayAll(o.text_caretOffset,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_caretOffset)
+	script_sayAll_caret.__doc__ = _("reads from cursor up to end of current text")
 
 	def script_review_reportPresentation(self,keyPress,nextScript):
 		o=api.getFocusObject()
@@ -382,6 +383,7 @@ class appModule(appModuleHandler.appModule):
 			focusObject.speakObject()
 		else:
 			speech.speakMessage(_("no focus"))
+	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
 
 	def script_reportStatusLine(self,keyPress,nextScript):
 		foregroundObject=api.getForegroundObject()
@@ -394,6 +396,7 @@ class appModule(appModuleHandler.appModule):
 			return
 		statusBarObject.speakObject()
 		api.setNavigatorObject(statusBarObject)
+	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
 	def script_toggleReportObjectUnderMouse(self,keyPress,nextScript):
 		if config.conf["mouse"]["reportObjectUnderMouse"]:
@@ -416,6 +419,7 @@ class appModule(appModuleHandler.appModule):
 		if obj:
 			obj.speakObject()
 			obj.speakDescendantObjects()
+	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
@@ -425,6 +429,7 @@ class appModule(appModuleHandler.appModule):
 			speech.speakSymbol("%s"%char)
 		speech.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 		speech.speakMessage("text: %s"%obj.windowText)
+	script_test_navigatorWindowInfo.__doc__ = _("reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text")	
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:

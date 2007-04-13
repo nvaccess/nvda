@@ -318,6 +318,8 @@ class virtualBuffer(textBuffer.textBufferObject):
 		if self.text_reviewOffset==0:
 			speech.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewOffset)
+	script_pageUp.__doc__ = _("moves one page up in the virtual buffer's current document")
+
 
 	def script_pageDown(self,keyPress,nextScript):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
@@ -331,10 +333,12 @@ class virtualBuffer(textBuffer.textBufferObject):
 		if self.text_reviewOffset>=self.text_characterCount-1:
 			speech.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewOffset)
+	script_pageDown.__doc__ = _("moves one page down in the virtual buffer's current document")
 
 	def script_activatePosition(self,keyPress,nextScript):
 		self.activatePosition(self.text_reviewOffset)
-
+	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
+	
 	def text_reportPresentation(self,offset):
 		ID=self.getIDFromPosition(offset)
 		IDs=self.getIDAncestors(ID)+[ID]
@@ -357,7 +361,8 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more headings"))
-
+	script_nextHeading.__doc__ = _("moves to the next heading")
+	
 	def script_previousHeading(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_heading)
 		if isinstance(pos,int):
@@ -367,6 +372,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more headings"))
+	script_previousHeading.__doc__ = _("moves to the previous heading")
 
 	def script_nextParagraph(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_paragraph)
@@ -377,6 +383,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more paragraphs"))
+	script_nextParagraph.__doc__ = _("moves to the next paragraph")
 
 	def script_previousParagraph(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_paragraph)
@@ -387,6 +394,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more paragraphs"))
+	script_previousParagraph.__doc__ = _("moves to the previous paragraph")
 
 	def script_nextTable(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_table)
@@ -397,6 +405,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more tables"))
+	script_nextTable.__doc__ = _("moves to the next table")
 
 	def script_previousTable(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_table)
@@ -407,6 +416,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more tables"))
+	script_previousTable.__doc__ = _("moves to the previous table")
 
 	def script_nextLink(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_link)
@@ -417,6 +427,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more links"))
+	script_nextLink.__doc__ = _("moves to the next link")
 
 	def script_previousLink(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_link)
@@ -427,7 +438,8 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more links"))
-
+	script_previousLink.__doc__ = _("moves to the previous link")
+	
 	def script_nextList(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_list)
 		if isinstance(pos,int):
@@ -437,6 +449,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more lists"))
+	script_nextList.__doc__ = _("moves to the next list")
 
 	def script_previousList(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_list)
@@ -447,6 +460,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more lists"))
+	script_previousList.__doc__ = _("moves to the previous list")
 
 	def script_nextListItem(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_listItem)
@@ -457,6 +471,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more list items"))
+	script_nextListItem.__doc__ = _("moves to the next list item")
 
 	def script_previousListItem(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_listItem)
@@ -467,6 +482,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more list items"))
+	script_previousListItem.__doc__ = _("moves to the previous list item")
 
 	def script_nextFormField(self,keyPress,nextScript):
 		pos=self.nextField(self.text_reviewOffset,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
@@ -477,6 +493,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more form fields"))
+	script_nextFormField.__doc__ = _("Move to the next form field")
 
 	def script_previousFormField(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
@@ -487,6 +504,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more form fields"))
+	script_previousFormField.__doc__ = _("moves to the previous form field")
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindTextDialogHelper)
@@ -504,10 +522,12 @@ class virtualBuffer(textBuffer.textBufferObject):
 		self._lastFindText=text
 
 	def script_findText(self,keyPress,nextScript): 
-		self.doFindTextDialog()
+		self.doFindTextDialog()	
+	script_findText.__doc__ = _("find a text pattern from the current cursor's position")
 
 	def script_findNext(self,keyPress,nextScript):
 		self.doFindTextDialogHelper(self._lastFindText)
+	script_findNext.__doc__ = _("find next occurrence of text")
 
 [virtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+f","findText"),
