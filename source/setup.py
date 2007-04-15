@@ -11,6 +11,15 @@ from distutils.core import setup
 import py2exe
 from glob import glob
 from versionInfo import *
+from py2exe import build_exe
+
+# py2exe insists on excluding certain dlls that don't seem to exist on many systems, so hackishly force them to be included.
+origIsSystemDLL = build_exe.isSystemDLL
+def isSystemDLL(pathname):
+	if os.path.basename(pathname).lower() in ("msvcp71.dll", "gdiplus.dll"):
+		return 0
+	return origIsSystemDLL(pathname)
+build_exe.isSystemDLL = isSystemDLL
 
 def getLocaleDataFiles():
 	return [(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
