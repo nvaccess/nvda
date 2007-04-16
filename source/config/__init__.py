@@ -6,7 +6,9 @@
 """ 
 # NVDA Configuration Support
 
-configFileName = "nvda.ini"
+import globalVars
+configFileName = globalVars.appArgs.configFileName
+
 
 import os
 from StringIO import StringIO

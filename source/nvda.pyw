@@ -53,6 +53,7 @@ parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName,help="The file where debug messages should be written to")
 parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
+parser.add_option('-c','--config-file',dest='configFileName',default="./nvda.ini",help="The file where all settings are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 #Handle running multiple instances of NVDA
