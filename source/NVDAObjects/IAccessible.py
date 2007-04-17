@@ -540,7 +540,7 @@ class NVDAObject_outlineItem(NVDAObject_IAccessible):
 		try:
 			return int(val)
 		except:
-			return None
+			return 0
 
 	def _get_value(self):
 		val=super(NVDAObject_outlineItem,self)._get_value()
@@ -774,6 +774,17 @@ class NVDAObject_sysLink(NVDAObject_IAccessible):
 
 	speakOnGainFocus=False
 
+class NVDAObject_directUIHwndText(NVDAObject_IAccessible):
+
+	def _get_text_characterCount(self):
+		return len(self.value)
+
+	def text_getText(self,start=None,end=None):
+		start=start if start is not None else 0
+		end=end if end is not None else self.text_characterCount
+		text=self.value
+		return text[start:end]
+
 ###class mappings
 
 import winEdit
@@ -821,7 +832,6 @@ _staticMap={
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
 ("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
 ("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
-
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
 ("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winConsole.NVDAObject_winConsole,
 (None,IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_listItem,
@@ -845,4 +855,5 @@ _staticMap={
 ("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_dialog,
 ("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_sysLink,
 ("VsTextEditPane",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
+("DirectUIHWND",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_directUIHwndText,
 }
