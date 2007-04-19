@@ -18,6 +18,7 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 
 ;Include Modern UI Macro's
 !include "MUI.nsh"
+!include "NSProcess.nsh"
 !include "WinMessages.nsh"
 SetCompressor /SOLID LZMA
 CRCCheck On
@@ -26,6 +27,7 @@ ShowUninstDetails hide
 SetOverwrite On
 SetDateSave on
 XPStyle on
+InstProgressFlags Smooth
 
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the installation of ${PRODUCT}, a free and open source screen reader for Windows"
 !define MUI_WELCOMEPAGE_TEXT "Copyright 2006 - 2007 by Michael Curran\n\
@@ -90,11 +92,14 @@ var hmci
 
 Function .onInit
 call isNVDARunning
-pop $1
+pop $1	; TRUE or FALSE
+pop $2	; if true, will contain the handle of NVDA window
 IntCmp $1 1 +1 SpeechInstall
 MessageBox MB_OK "Another copy of NVDA is already running. It will be shut down before the installer can continue."
-execwait "$PROGRAMFILES\${PRODUCT}\nvda.exe --quit" $1
-
+; Shut down NVDA
+${NSProcess::KillProcess} "${PRODUCT}.exe" $3
+IntCmp $3 0 SpeechInstall 0 +1
+MessageBox MB_OK "Could not shut down NVDA process"
 
 SpeechInstall:
 InitPluginsDir
@@ -159,26 +164,26 @@ Section Uninstaller
   WriteUninstaller "$INSTDIR\Uninst.exe"
  SectionEnd
 
- 
-Function un.onUninstSuccess
-  HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer.."
-FunctionEnd
-  
+var PreserveConfig
 Function un.onInit 
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
+MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
+InitPluginsDir
 FunctionEnd
- 
+
 Section "Uninstall" 
   SetShellVarContext all
 
-;Delete Files 
-  RMDir /r "$INSTDIR\*.*"    
- 
-;Remove the installation directory
-  RMDir "$INSTDIR"
+; Warn about configuration file
+IfFileExists "$INSTDIR\nvda.ini" +1 +2
+MessageBox MB_ICONQUESTION|MB_YESNO|MB_DefButton2 "The installer found existing configuration file for NVDA. Would you  like to delete NVDA configruation file?" IDYES +1 IDNO PreserveConfiguration
+StrCpy $PreserveConfig 0
+goto Continue
 
+PreserveConfiguration:
+StrCpy $PreserveConfig 1
+
+Continue:
   Delete "$SMPROGRAMS\${PRODUCT}\*.*"
   RmDir "$SMPROGRAMS\${PRODUCT}"
   Delete $DESKTOP\${PRODUCT}.lnk"
@@ -187,6 +192,18 @@ Section "Uninstall"
    SectionEnd
 
 Function isNVDARunning
+FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"
+;MessageBox MB_OK "Window handle is $0"
+StrCmp $0 "0" +1 +3
+push 0
+goto end
+push $0	; push the handle of NVDA window onto the stack
+push 1	; push TRUE onto the stack
+
+end:
+FunctionEnd
+
+Function un.isNVDARunning
 FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"
 ;MessageBox MB_OK "Window handle is $0"
 StrCmp $0 "0" +1 +3
@@ -229,4 +246,48 @@ System::Call 'msvfw32.dll::MCIWndCreate(i 0, i 0, i 0x0070, t "$9") i .r0'
   ;SendMessage $hmci ${WM_CLOSE} 0 0
   
 nosup:
+FunctionEnd
+
+Function un.onUninstSuccess
+  HideWindow
+  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer.."
+FunctionEnd
+
+Function un.onGUIEnd
+call un.isNVDARunning
+pop $1
+IntCmp $1 1 +1 end
+${NSProcess::KillProcess} "${PRODUCT}.exe" $3
+
+end:
+sleep 1000
+StrCmp $PreserveConfig 0 +1 PreserveConfiguration
+;Delete Files 
+Delete /RebootOK "$INSTDIR\*.*"    
+RMDir /RebootOK /r "$INSTDIR\appModules"
+RMDir /RebootOK /r "$INSTDIR\comInterfaces"
+RMDir /RebootOK /r "$INSTDIR\documentation"
+RMDir /RebootOK /r "$INSTDIR\images"
+RMDir /RebootOK /r "$INSTDIR\lib"
+RMDir /RebootOK /r "$INSTDIR\locale"
+RMDir /RebootOK /r "$INSTDIR\synthDrivers"
+RMDir /RebootOK /r "$INSTDIR\waves"
+;Remove the installation directory
+RMDir /RebootOK "$INSTDIR"
+goto done
+
+PreserveConfiguration:
+CopyFiles /SILENT "$INSTDIR\nvda.ini" "$PLUGINSDIR"
+Delete /RebootOK "$INSTDIR\*.*"
+RMDir /RebootOK /r "$INSTDIR\appModules"
+RMDir /RebootOK /r "$INSTDIR\comInterfaces"
+RMDir /RebootOK /r "$INSTDIR\documentation"
+RMDir /RebootOK /r "$INSTDIR\images"
+RMDir /RebootOK /r "$INSTDIR\lib"
+RMDir /RebootOK /r "$INSTDIR\locale"
+RMDir /RebootOK /r "$INSTDIR\synthDrivers"
+RMDir /RebootOK /r "$INSTDIR\waves"
+CopyFiles /SILENT "$PLUGINSDIR\nvda.ini" "$INSTDIR"
+
+done:
 FunctionEnd
