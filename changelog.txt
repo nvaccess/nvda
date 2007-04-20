@@ -7,10 +7,10 @@ Changes since 425:
 -q, --quit: quit any other already running instance of NVDA and then exit
 -s, --stderr-file fileName: specify where NVDA should place uncaught errors and exceptions
 -d, --debug-file fileName: specify where NVDA should place debug messages
+-c, --config-file: specify an alternative configuration file  
 -h, -help: show a help message listing commandline arguments
  *Fixed bug where punctuation symbols would not be translated to the appropriate language, when using a language other than english, and when speak typed characters was turned on.
-*Added sky language files thanks to Peter Vagner 
-*Added Italian language file
+*Added Slovak language files thanks to Peter Vagner 
 *Added a Virtual Buffer settings dialog and a Document Formatting settings dialog, from Peter Vagner.
 *Added French translation thanks to Michel Such 
 *Added a script to toggle beeping of progress bars on and off (insert+u). Contributed by Peter Vagner.
@@ -20,10 +20,10 @@ Changes since 425:
 *Renamed some control types for better readability. Editable text is now edit, outline is now tree view and push button is now button.
 *When arrowing around list items in a list, or tree view items in a tree view, the control type (list item, tree view item) is no longer spoken, to speed up navigation.
 *Has Popup (to indicate that a menu has a submenu) is now spoken as submenu.
-*Where some language use control and alt to enter a special character, NVDA now will speak these characters when speak typed characters is on.
+*Where some language use control and alt (or altGR) to enter a special character, NVDA now will speak these characters when speak typed characters is on.
 *Fixed some problems with reviewing static text controls.
 *Added Translation for Traditional Chinese, thanks to Coscell Kao.
-*Re-structured an important part of the NVDA coe, which should now fix many issues with NVDA's user interface (including settings dialogs).
+*Re-structured an important part of the NVDA code, which should now fix many issues with NVDA's user interface (including settings dialogs).
 *Added Sapi4 support to NVDA. Currently there are two sapi4 drivers, one based on code contributed by Serotek Corporation, and one using the ActiveVoice.ActiveVoice com Interface. Both these drivers have issues, see which one works best for you.
 *Now when trying to run a new copy of NVDA while an older copy is still running will cause the new copy to just exit. This fixes a major problem where running multiple copies of NVDA makes your system very unusable.
 *Renamed the title of the NVDA user interface from NVDA Interface to NVDA. 
@@ -33,10 +33,20 @@ Changes since 425:
 *Added capitalPitchChange setting for synthesizers thanks to J.J. Meddaugh
 *Added patch from J.J. Meddaugh that makes the toggle report objects under mouse script more like the other toggle scripts (saying on/off rather than changing the whole statement).
 *Added spanish translation (es) contributed by Juan C. buo.
-*Added Hu language file from Tamas Gczy.
-*Added PTG language file from Rui Batista.
+*Added Hungarian language file from Tamas Gczy.
+*Added Portuguese language file from Rui Batista.
 *Changing the voice in the voice settings dialog now sets the rate, pitch and volume sliders to the new values according to the synthesizer, rather than forcing the synthesizer to be set to the old values. This fixes issues where a synth like eloquence or viavoice seems to speek at a much faster rate than all other synths.
-
+*Fixed a bug where either speech would stop, or NVDA would entirely crash, when in a Dos console window.
+*If support for a particular language exists, NVDA now automatically can show its interface and speak its messages in the language Windows is set to. A particular language can still be chosen manualy from the user interface settings dialog as well.
+*Added script 'toggleReportDynamicContentChanges' (insert+5). This toggles whether new text, or other dynamic changes should be automatically announced. So far this only works in Dos Console Windows.
+*Added script 'toggleCaretMovesReviewCursor' (insert+6). This toggles whether the review cursor should be automatically repositioned when the system caret moves. This is useful in Dos console windows when trying to read information as the screen is updating.
+*Added script 'toggleFocusMovesNavigatorObject' (insert+7). This toggles whether the navigator object is repositioned on the object with focus as it changes.
+*Added some documentation translated in to various languages. So far there is French, Spannish and Finish.
+*Removed some developer documentation from the binary distribution of NVDA, it is only now in the source version.
+*Fixed a possible bug in Windows Live Messanger and MSN Messenger where arrowing up and down the contact list would cause errors.
+*Made reading the conversation history in Windows Live Messenger a little clearer by ignoring a line of text that shouldn't be part of the content.
+*Added script 'passNextKeyThrough' (insert+f2). Press this key, and then the next key pressed will be passed straight through to Windows. This is useful if you have to press a certain key in an application but NVDA uses that key for something else.
+ 
 Changes since revision 380:
 *Added German language translation thanks to Ali Savas <ali-savas@gmx.de>.
 *Make the NVDA exit dialog act more like a standard warning dialog with icon and sound.
