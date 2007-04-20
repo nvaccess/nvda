@@ -8,6 +8,7 @@ import gc
 import comtypesClient
 import datetime
 from keyUtils import key
+import keyboardHandler
 import IAccessibleHandler
 import api
 import debug
@@ -489,3 +490,8 @@ class appModule(appModuleHandler.appModule):
 			text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
 		speech.speakMessage(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
+
+	def script_passNextKeyThrough(self,keyPress,nextScript):
+		keyboardHandler.passNextKeyThrough()
+		speech.speakMessage(_("Pass next key through"))
+ 	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")

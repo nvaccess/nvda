@@ -18,13 +18,10 @@ import globalVars
 import queueHandler
 import config
 
-
 keyUpIgnoreSet=set()
-keyPressIgnoreSet=set()
+passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
 insertDown=False
 word=""
-
-ignoreNextKeyPress = False
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -37,13 +34,20 @@ def isTypingProtected():
 	else:
 		return False
 
+def passNextKeyThrough():
+	global passKeyThroughCount
+	if passKeyThroughCount==-1:
+		passKeyThroughCount=0
 
 #Internal functions for key presses
 
 def internal_keyDownEvent(event):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
-	global insertDown, ignoreNextKeyPress, word
+	global insertDown, passKeyThroughCount
+	if passKeyThroughCount>=0:
+		passKeyThroughCount+=1
+		return True
 	try:
 		if event.Injected:
 			return True
@@ -76,10 +80,6 @@ def internal_keyDownEvent(event):
 		if event.Extended==1:
 			mainKey="Extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
-		if keyPress in keyPressIgnoreSet:
-			keyPressIgnoreSet.remove(keyPress)
-			keyUpIgnoreSet.add((event.Key,event.Extended))
-			return True
 		debug.writeMessage("key press: %s"%keyName(keyPress))
 		if mainKey=="Capital":
 			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
@@ -139,17 +139,22 @@ def speakKey(keyPress,ascii):
 
 def internal_keyUpEvent(event):
 	"""Event that pyHook calls when it receives keyUps"""
-	global insertDown, ignoreNextKeyPress
+	global insertDown, passKeyThroughCount
 	try:
 		if event.Injected:
 			return True
-		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+		elif passKeyThroughCount>=1:
+			passKeyThroughCount-=1
+			if passKeyThroughCount==0:
+				passKeyThroughCount=-1
+			return True
+		elif (event.Key,event.Extended) in keyUpIgnoreSet:
+			keyUpIgnoreSet.remove((event.Key,event.Extended))
+			return False
+		elif event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		elif (event.Key=="Insert"): #and (event.Extended==0):
 			insertDown=False
-			return False
-		elif (event.Key,event.Extended) in keyUpIgnoreSet:
-			keyUpIgnoreSet.remove((event.Key,event.Extended))
 			return False
 		else:
 			return True
