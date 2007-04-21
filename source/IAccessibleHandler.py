@@ -471,7 +471,6 @@ winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
 }
 
 def manageEvent(name,window,objectID,childID):
-	virtualBuffers.IAccessible.update(window)
 	desktopObject=api.getDesktopObject()
 	foregroundObject=api.getForegroundObject()
 	focusObject=api.getFocusObject()
@@ -484,7 +483,6 @@ def manageEvent(name,window,objectID,childID):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 		if not obj:
 			return
-		virtualBuffers.IAccessible.update(window)
 	if obj:
 		eventHandler.manageEvent(name,obj)
 
