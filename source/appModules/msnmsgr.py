@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import globalVars
 import winUser
 import NVDAObjects
 import IAccessibleHandler
@@ -28,7 +29,7 @@ class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText)
 		global lastMSNHistoryValue
 		if isinstance(self,NVDAObject_MSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
-			if value!=lastMSNHistoryValue:
+			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
 				speech.speakText(value)
 				lastMSNHistoryValue=value
 
