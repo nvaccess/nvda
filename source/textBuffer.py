@@ -217,6 +217,8 @@ class textBufferObject(baseObject.scriptableObject):
 			wasInTable=self._text_lastReportedPresentation.get('inTable',None)
 			if not inTable and wasInTable:
 				speech.speakMessage(_("out of table"))
+				self._text_lastReportedPresentation['tableRowNumber']=None
+				self._text_lastReportedPresentation['tableColumnNumber']=None
 			elif inTable and not wasInTable:
 				rowCount=self.text_getTableRowCount(offset)
 				columnCount=self.text_getTableColumnCount(offset)
