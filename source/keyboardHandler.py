@@ -112,12 +112,12 @@ def internal_keyDownEvent(event):
 def speakKey(keyPress,ascii):
 	global word
 	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
-		speech.speakSymbol(unichr(ascii))
+		speech.speakSymbol(unicode(chr(ascii), errors="replace"))
 	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift'])) or (keyPress[0]==frozenset(['Control','Alt']))) and (ascii in range(33,255)):
 		if isTypingProtected():
 			char="*"
 		else:
-			char=unichr(ascii)
+			char=unicode(chr(ascii), errors="replace")
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			speech.speakSymbol(char)
 		if config.conf["keyboard"]["speakTypedWords"] and ((ascii >=128) or ((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
