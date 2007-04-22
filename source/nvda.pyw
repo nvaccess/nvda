@@ -80,6 +80,8 @@ if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 import debug
 debug.start(globalVars.appArgs.debugFileName)
+import winUser
+winUser.setSystemScreenReaderFlag(True)
 try:
 	import core
 	res=core.main()
@@ -88,6 +90,7 @@ try:
 		raise RuntimeError("core has errors")
 except:
 	debug.writeException("nvda.pyw executing core.main")
+winUser.setSystemScreenReaderFlag(False)
 debug.stop()
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
