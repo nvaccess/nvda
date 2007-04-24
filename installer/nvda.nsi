@@ -156,7 +156,7 @@ Section Uninstaller
   CreateShortCut "$SMPROGRAMS\NVDA\Uninstall.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayName" "${PRODUCT} ${VERSION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayVersion" "${VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "URLInfoAbout" "http://www.nvaccess.org/nvda/"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "URLInfoAbout" "http://www.nvda-project.org/"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "Publisher" "Michael Curran"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "UninstallString" "$INSTDIR\Uninst.exe"
   WriteRegStr HKCU "Software\${PRODUCT}" "" $INSTDIR
