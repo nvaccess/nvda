@@ -18,7 +18,6 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 
 ;Include Modern UI Macro's
 !include "MUI.nsh"
-!include "NSProcess.nsh"
 !include "WinMessages.nsh"
 SetCompressor /SOLID LZMA
 CRCCheck On
@@ -97,9 +96,9 @@ pop $2	; if true, will contain the handle of NVDA window
 IntCmp $1 1 +1 SpeechInstall
 MessageBox MB_OK "Another copy of NVDA is already running. It will be shut down before the installer can continue."
 ; Shut down NVDA
-${NSProcess::KillProcess} "${PRODUCT}.exe" $3
-IntCmp $3 0 SpeechInstall 0 +1
-MessageBox MB_OK "Could not shut down NVDA process"
+System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
+;IntCmp $3 0 SpeechInstall 0 +1
+;MessageBox MB_OK "Could not shut down NVDA process"
 
 SpeechInstall:
 InitPluginsDir
@@ -256,8 +255,9 @@ FunctionEnd
 Function un.onGUIEnd
 call un.isNVDARunning
 pop $1
+pop $2
 IntCmp $1 1 +1 end
-${NSProcess::KillProcess} "${PRODUCT}.exe" $3
+System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 
 end:
 sleep 1000
