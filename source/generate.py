@@ -9,50 +9,39 @@ import os
 import sys
 from glob import glob
 import comtypesClient
+import compileall
 
-#MS HTML
-try:
-	print "MS HTML"
-	comtypesClient.GetModule('mshtml.tlb')
-	print "done"
-except:
-	print "not found"
+COM_INTERFACES = (
+	("MS HTML", comtypesClient.GetModule, "mshtml.tlb"),
+	("IAccessible 2", comtypesClient.GetModule, "lib/ia2.tlb"),
+	("IService Provider library", comtypesClient.GetModule, "lib/servprov.tlb"),
+	("MS Active Accessibility", comtypesClient.GetModule, "oleacc.dll"),
+	("SAPI 5", comtypesClient.CreateObject, "Sapi.SPVoice"),
+	("SAPI 4", comtypesClient.CreateObject, "ActiveVoice.ActiveVoice"),
+)
+COMPILE_DIRS = ("appModules", "synthDrivers")
 
-#IAccessible2
-try:
-	print "IAccessible2"
-	comtypesClient.GetModule('lib/ia2.tlb')
-	print "done"
-except:
-	print "not found"
+def main():
+	print "COM interfaces:"
+	for desc, func, interface in COM_INTERFACES:
+		print "%s:" % desc,
+		try:
+			func(interface)
+			print "done."
+		except:
+			print "not found."
+	print
 
-#IServiceProvider library
-try:
-	print "IServiceProvider library"
-	comtypesClient.GetModule('lib/servprov.tlb')
-	print "done"
-except:
-	print "not found"
+	print "Language files:"
+	poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
+	for f in poFiles:
+		print f
+		os.spawnv(os.P_WAIT,r"%s\python.exe"%sys.exec_prefix,['python',r'"%s\Tools\i18n\msgfmt.py"'%sys.exec_prefix,f])
+	print
 
-#MS Active Accessibility
-try:
-	print "MS Active Accessibility"
-	comtypesClient.GetModule('oleacc.dll')
-	print "done"
-except:
-	print "not found"
+	print "Byte code compilation:"
+	for dir in COMPILE_DIRS:
+		compileall.compile_dir(dir, maxlevels=0)
 
-#Sapi5
-try:
-	print "Sapi5"
-	comtypesClient.CreateObject("Sapi.SPVoice")
-	print "done"
-except:
-	print "not found"
-
-print "Language files"
-poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
-for f in poFiles:
-	print f
-	os.spawnv(os.P_WAIT,r"%s\python.exe"%sys.exec_prefix,['python',r'"%s\Tools\i18n\msgfmt.py"'%sys.exec_prefix,f])
-
+if __name__ == "__main__":
+	main()
