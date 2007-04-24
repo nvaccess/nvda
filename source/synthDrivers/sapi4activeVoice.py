@@ -53,10 +53,10 @@ class SynthDriver(silence.SynthDriver):
 		del self.tts
 
 	def _paramToPercent(self, current, min, max):
-		return float(current - min) / (max - min) * 100
+		return int(round(float(current - min) / (max - min) * 100))
 
 	def _percentToParam(self, percent, min, max):
-		return int(float(percent) / 100 * (max - min) + min)
+		return int(round(float(percent) / 100 * (max - min) + min))
 
 	#Events
 
