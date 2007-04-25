@@ -4,7 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""Script to generate needed com interfaces and language files"""
+"""Script to prepare an NVDA source tree for optimal execution.
+This script:
+* Generates Python code for COM interfaces to avoid doing this at runtime;
+* Compiles source language files into binary form for use by NVDA;
+* Compiles appModules and synthDrivers into Python byte code to eliminate the need to do this on launch.
+This should be run prior to executing NVDA from a clean source tree for the first time and before building a binary distribution with py2exe.
+"""
+
 import os
 import sys
 from glob import glob
