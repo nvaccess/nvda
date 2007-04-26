@@ -44,9 +44,12 @@ Changes since 425:
 *Added some documentation translated in to various languages. So far there is French, Spannish and Finish.
 *Removed some developer documentation from the binary distribution of NVDA, it is only now in the source version.
 *Fixed a possible bug in Windows Live Messanger and MSN Messenger where arrowing up and down the contact list would cause errors.
-*Made reading the conversation history in Windows Live Messenger a little clearer by ignoring a line of text that shouldn't be part of the content.
+*New messages are now automatically spoken when in a conversation using Windows Live Messenger. (only works for English versions so far)
+*The history window in a Windows Live Messenger conversation can now be read by using the arrow keys. (Only works for English versions so far) 
 *Added script 'passNextKeyThrough' (insert+f2). Press this key, and then the next key pressed will be passed straight through to Windows. This is useful if you have to press a certain key in an application but NVDA uses that key for something else.
- 
+*NVDA no longer freezes up for more than a minute when opening very large documents in MS Word.
+ *Fixed a bug where moving out of a table in MS Word, and then moving back in, caused the current row/column numbers not to be spoken if moving back in to exactly the same cell.
+
 Changes since revision 380:
 *Added German language translation thanks to Ali Savas <ali-savas@gmx.de>.
 *Make the NVDA exit dialog act more like a standard warning dialog with icon and sound.
