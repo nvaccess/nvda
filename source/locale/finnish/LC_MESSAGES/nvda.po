@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r556\n"
-"POT-Creation-Date: 2007-04-20 13:19+Kesäaika\n"
-"PO-Revision-Date: 2007-04-20 13:57+0300\n"
+"Project-Id-Version: r586\n"
+"POT-Creation-Date: 2007-04-27 14:13+Kesäaika\n"
+"PO-Revision-Date: 2007-04-27 14:31+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "alavalikko"
 msgid "not %s"
 msgstr "ei %s"
 
-#: IAccessibleHandler.py:565
+#: IAccessibleHandler.py:563
 msgid "lost focus"
 msgstr "kohdistus menetetty"
 
@@ -70,13 +70,13 @@ msgstr "ei tueta"
 msgid "%d items"
 msgstr "%d osaa"
 
-#: NVDAObjects\MSHTML.py:312 NVDAObjects\MSHTML.py:318 textBuffer.py:539
-#: textBuffer.py:541 textBuffer.py:545
+#: NVDAObjects\MSHTML.py:312 NVDAObjects\MSHTML.py:318 textBuffer.py:541
+#: textBuffer.py:543 textBuffer.py:547
 msgid "unselected %s"
 msgstr "ei valittu %s"
 
-#: NVDAObjects\MSHTML.py:315 NVDAObjects\MSHTML.py:321 textBuffer.py:531
-#: textBuffer.py:535 textBuffer.py:537 textBuffer.py:543
+#: NVDAObjects\MSHTML.py:315 NVDAObjects\MSHTML.py:321 textBuffer.py:533
+#: textBuffer.py:537 textBuffer.py:539 textBuffer.py:545
 msgid "selected %s"
 msgstr "valittu %s"
 
@@ -92,7 +92,7 @@ msgstr "tila %s"
 msgid "rich %s"
 msgstr "täyttö %s"
 
-#: NVDAObjects\winEdit.py:57
+#: NVDAObjects\winEdit.py:52
 msgid "protected %s "
 msgstr "suojattu %s"
 
@@ -553,7 +553,9 @@ msgstr "Päästä läpi seuraava näppäinpainallus"
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
-msgstr "NVDA ei käsittele lainkaan seuraavaa näppäinpainallusta, vaan se annetaan suoraan Windowsin käsiteltäväksi."
+msgstr ""
+"NVDA ei käsittele lainkaan seuraavaa näppäinpainallusta, vaan se annetaan "
+"suoraan Windowsin käsiteltäväksi."
 
 #: appModules\excel.py:80
 msgid "through"
@@ -579,15 +581,15 @@ msgstr "fontti"
 msgid "point"
 msgstr "piste"
 
-#: appModules\excel.py:120 textBuffer.py:264 textBuffer.py:316
+#: appModules\excel.py:120 textBuffer.py:266 textBuffer.py:318
 msgid "bold"
 msgstr "lihavoitu"
 
-#: appModules\excel.py:122 textBuffer.py:271 textBuffer.py:318
+#: appModules\excel.py:122 textBuffer.py:273 textBuffer.py:320
 msgid "italic"
 msgstr "kursivoitu"
 
-#: appModules\excel.py:124 textBuffer.py:278 textBuffer.py:320
+#: appModules\excel.py:124 textBuffer.py:280 textBuffer.py:322
 msgid "underline"
 msgstr "alleviivattu"
 
@@ -955,11 +957,11 @@ msgstr "tarvittava"
 msgid "configuration applyed"
 msgstr "asetukset otettu käyttöön"
 
-#: core.py:52
+#: core.py:61
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alajärjestelmiä, odota..."
 
-#: core.py:70
+#: core.py:75
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -1515,6 +1517,10 @@ msgstr "Sijainti: %s"
 msgid "cap %s"
 msgstr "iso %s"
 
+#: synthDriverHandler.py:52
+msgid "Could not initialize Synth %s"
+msgstr "Syntetisaattoria %s ei voi alustaa"
+
 #: synthDrivers\silence.py:14
 msgid "No speech,  a template synthesizer"
 msgstr "Ei puhetta, mallisyntetisaattori"
@@ -1531,105 +1537,105 @@ msgstr "rivi %d"
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: textBuffer.py:223
+#: textBuffer.py:225
 msgid "table with %d columns and %d rows"
 msgstr "taulukko jossa %d saraketta ja %d riviä"
 
-#: textBuffer.py:229
+#: textBuffer.py:231
 msgid "row %d"
 msgstr "rivi %d"
 
-#: textBuffer.py:234
+#: textBuffer.py:236
 msgid "column %d"
 msgstr "sarake %d"
 
-#: textBuffer.py:240 textBuffer.py:308
+#: textBuffer.py:242 textBuffer.py:310
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: textBuffer.py:246 textBuffer.py:310
+#: textBuffer.py:248 textBuffer.py:312
 msgid "alignment %s"
 msgstr "tasaus %s"
 
-#: textBuffer.py:252 textBuffer.py:312
+#: textBuffer.py:254 textBuffer.py:314
 msgid "font name %s"
 msgstr "fontti %s"
 
-#: textBuffer.py:258 textBuffer.py:314
+#: textBuffer.py:260 textBuffer.py:316
 msgid "font size %d"
 msgstr "fonttikoko %d"
 
-#: textBuffer.py:266
+#: textBuffer.py:268
 msgid "not bold"
 msgstr "ei lihavoitu"
 
-#: textBuffer.py:273
+#: textBuffer.py:275
 msgid "not italic"
 msgstr "ei kursivoitu"
 
-#: textBuffer.py:280
+#: textBuffer.py:282
 msgid "not underline"
 msgstr "ei alleviivausta"
 
-#: textBuffer.py:285 textBuffer.py:292 textBuffer.py:322
+#: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
 msgid "superscript"
 msgstr "päällekirjoitus"
 
-#: textBuffer.py:287
+#: textBuffer.py:289
 msgid "not superscript"
 msgstr "ei päällekirjoitusta"
 
-#: textBuffer.py:294
+#: textBuffer.py:296
 msgid "not subscript"
 msgstr "ei alaindeksiä"
 
-#: textBuffer.py:324
+#: textBuffer.py:326
 msgid "subscript"
 msgstr "alaindeksi"
 
-#: textBuffer.py:362 textBuffer.py:389 textBuffer.py:410 textBuffer.py:431
+#: textBuffer.py:364 textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
 #: virtualBuffers\baseType.py:319
 msgid "top"
 msgstr "yläreuna"
 
-#: textBuffer.py:367 textBuffer.py:380 textBuffer.py:401 textBuffer.py:422
+#: textBuffer.py:369 textBuffer.py:382 textBuffer.py:403 textBuffer.py:424
 #: virtualBuffers\baseType.py:334
 msgid "bottom"
 msgstr "alareuna"
 
-#: textBuffer.py:468 textBuffer.py:492 textBuffer.py:500
+#: textBuffer.py:470 textBuffer.py:494 textBuffer.py:502
 msgid "Moves and then reads the current line"
 msgstr "Siirtää ja lukee kohdalla olevan rivin "
 
-#: textBuffer.py:476
+#: textBuffer.py:478
 msgid "Moves and reads the current character"
 msgstr "Siirtää ja lukee kohdalla olevan merkin"
 
-#: textBuffer.py:484
+#: textBuffer.py:486
 msgid "Moves and reads the current word"
 msgstr "Siirtää ja lukee kohdalla olevan sanan"
 
-#: textBuffer.py:508
+#: textBuffer.py:510
 msgid "Manually moves to the next paragraph and then speaks it"
 msgstr "Siirtää manuaalisesti seuraavaan kappaleeseen ja lukee sen"
 
-#: textBuffer.py:516
+#: textBuffer.py:518
 msgid "Manually moves to the previous paragraph and then speaks it"
 msgstr "Siirtää manuaalisesti edelliseen kappaleeseen ja lukee sen"
 
-#: textBuffer.py:528
+#: textBuffer.py:530
 msgid "no selections"
 msgstr "ei valintoja"
 
-#: textBuffer.py:547
+#: textBuffer.py:549
 msgid "Moves and reads the current selection"
 msgstr "Siirtyy nykyisen valinnan kohdalle ja lukee sen"
 
-#: textBuffer.py:553
+#: textBuffer.py:555
 msgid "Deletes the character and reads the new current character"
 msgstr "Poistaa merkin ja lukee uuden kohdalla olevan merkin"
 
-#: textBuffer.py:567
+#: textBuffer.py:569
 msgid "Reads the character before the current character and then deletes it"
 msgstr "Lukee ennen kohdalla olevaa merkkiä olevan merkin ja poistaa sen"
 

@@ -28,7 +28,9 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		#Get the process ID of the console this NVDAObject is fore
 		processID=self.windowProcessID[0]
 		#Attatch NVDA to this console so we can access its text etc
-		winKernel.attachConsole(processID)
+		res=winKernel.attachConsole(processID)
+		if not res:
+			raise OSError("NVDAObject_winConsole: could not get console std handle") 
 		#Try and get the handle for this console's standard out
 		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
 		if not res:
