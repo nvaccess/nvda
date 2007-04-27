@@ -46,7 +46,16 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	try:
-		applyConfiguration()
+		config.load()
+	except:
+		pass
+	try:
+		config.save()
+	except:
+		pass
+	try:
+		lang = config.conf["general"]["language"]
+		languageHandler.setLanguage(lang)
 		speech.initialize()
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			speech.speakMessage(_("Loading subsystems, please wait..."))
@@ -62,10 +71,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import mouseHandler
 		mouseHandler.initialize()
 		speech.cancelSpeech()
-		try:
-			config.save()
-		except:
-			pass
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"),wait=True)
 	except:

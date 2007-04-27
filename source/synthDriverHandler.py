@@ -7,12 +7,13 @@
 import os
 import debug
 import config
+import queueHandler
+import speech
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
 
-_curSynth=__import__('silence',globals(),locals(),[]).SynthDriver()
-_curSynth.initialize()
+_curSynth=None
 
 def getSynthList():
 	synthList=[]
@@ -48,7 +49,7 @@ def setSynth(name):
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
-		debug.writeException('setSynth')
+		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Could not initialize Synth %s")%name,wait=True)
 		if _curSynth:
 			return False
 		elif name not in ['sapi5','silence']:
