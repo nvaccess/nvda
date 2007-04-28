@@ -97,7 +97,10 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		setSynth(self.synthNames[self.synthList.GetSelection()])
+		newSynth=self.synthNames[self.synthList.GetSelection()]
+		if not setSynth(newSynth):
+			wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING).ShowModal()
+			return 
 		self.Destroy()
 
 class voiceSettingsDialog(wx.Dialog):

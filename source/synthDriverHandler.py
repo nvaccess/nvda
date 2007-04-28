@@ -49,10 +49,8 @@ def setSynth(name):
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Could not initialize Synth %s")%name,wait=True)
-		if _curSynth:
-			return False
-		elif name not in ['sapi5','silence']:
-			return setSynth('sapi5')
-		elif name=='sapi5':
-			return setSynth('silence')
+		if not _curSynth and name not in ['sapi5','silence']:
+			setSynth('sapi5')
+		elif not _curSynth and name=='sapi5':
+			setSynth('silence')
+		return False
