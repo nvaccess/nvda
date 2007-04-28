@@ -11,6 +11,8 @@ import debug
 import config
 import languageHandler
 import speech
+import gui
+import globalVars
 from wx.lib.masked import textctrl
 
 class interfaceSettingsDialog(wx.Dialog):
@@ -23,16 +25,15 @@ class interfaceSettingsDialog(wx.Dialog):
 		languageLabel=wx.StaticText(self,-1,label=_("Language (requires restart to fully take affect)"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
-		languages=languageHandler.getAvailableLanguages()
-		languageList=wx.Choice(self,languageListID,name=_("Language"),choices=languages)
+		self.languageNames=languageHandler.getAvailableLanguages()
+		self.languageList=wx.Choice(self,languageListID,name=_("Language"),choices=self.languageNames)
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
-			index=languages.index(self.oldLanguage)
-			languageList.SetSelection(index)
+			index=self.languageNames.index(self.oldLanguage)
+			self.languageList.SetSelection(index)
 		except:
 			pass
-		languageList.Bind(wx.EVT_CHOICE,self.onLanguageChange)
-		languageSizer.Add(languageList)
+		languageSizer.Add(self.languageList)
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		self.hideInterfaceCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Hide user interface on startup"))
 		self.hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
@@ -45,22 +46,24 @@ class interfaceSettingsDialog(wx.Dialog):
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		languageList.SetFocus()
-
-	def onLanguageChange(self,evt):
-		lang=evt.GetString()
-		languageHandler.setLanguage(lang)
-		config.conf["general"]["language"]=lang
-
-	def onCancel(self,evt):
-		languageHandler.setLanguage(self.oldLanguage)
-		self.Destroy()
+		self.languageList.SetFocus()
 
 	def onOk(self,evt):
+		newLanguage=self.languageNames[self.languageList.GetSelection()]
+		if newLanguage!=self.oldLanguage:
+			try:
+				languageHandler.setLanguage(newLanguage)
+			except:
+				wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING).ShowModal()
+				return
+		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["hideInterfaceOnStartup"]=self.hideInterfaceCheckBox.IsChecked()
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
+		if self.oldLanguage!=newLanguage:
+			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
+				config.save()
+				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,gui.restart)
 		self.Destroy()
 
 class synthesizerDialog(wx.Dialog):

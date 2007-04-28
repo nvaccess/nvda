@@ -16,6 +16,11 @@ import config
 import queueHandler
 import languageHandler
 
+CORE_INITERROR=0
+CORE_MAINLOOPERROR=1
+CORE_QUIT=2
+CORE_RESTART=3
+
 def quit():
 	"""
 Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
@@ -45,17 +50,18 @@ def main():
 	"""NVDA's core main loop.
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
+	endResult=CORE_QUIT
 	try:
 		config.load()
-	except:
-		pass
-	try:
-		config.save()
-	except:
-		pass
-	try:
-		lang = config.conf["general"]["language"]
-		languageHandler.setLanguage(lang)
+		try:
+			config.save()
+		except:
+			pass
+		try:
+			lang = config.conf["general"]["language"]
+			languageHandler.setLanguage(lang)
+		except:
+			debug.writeException("Error in language file")
 		speech.initialize()
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			speech.speakMessage(_("Loading subsystems, please wait..."))
@@ -73,23 +79,35 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"),wait=True)
+		app = wx.PySimpleApp()
+		gui.initialize(app)
+		pump = CorePump()
+		pump.Start(1)
 	except:
-		debug.writeException("core.py main init")
-		return False
-	app = wx.PySimpleApp()
-	gui.initialize(app)
-	pump = CorePump()
-	pump.Start(1)
+		debug.writeException("initialization error")
+		return CORE_INITERROR
 	try:
 		app.MainLoop()
 	except:
-		debug.writeException("core.py main loop")
-		return False
-	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
-		globalVars.focusObject.event_looseFocus()
-	IAccessibleHandler.terminate()
-	speech.cancelSpeech()
-	return True
+		debug.writeException("Main loop error")
+		endResult=CORE_MAINLOOPERROR
+	try:
+		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
+			globalVars.focusObject.event_looseFocus()
+	except:
+		debug.writeException("LooseFocus error")
+	try:
+		IAccessibleHandler.terminate()
+	except:
+		debug.writeException("IAccessible handler termination")
+	try:
+		keyboardHandler.terminate()
+	except:
+		debug.writeException("Keyboard handler termination")
+	if endResult==CORE_QUIT and globalVars.restart:
+		globalVars.restart=False
+		endResult=CORE_RESTART
+	return endResult
 
 class CorePump(wx.Timer):
 	"Checks the queues and executes functions."

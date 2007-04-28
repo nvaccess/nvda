@@ -290,6 +290,10 @@ def quit():
 def abort():
 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))
 
+def restart():
+	globalVars.restart=True
+	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))
+
 def execute(func, callback=None, *args, **kwargs):
 	"""Execute a function in the GUI thread.
 	This should be used when scripts need to interact with the user via the GUI.

@@ -22,6 +22,7 @@ keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
 insertDown=False
 word=""
+hookManager=None
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -167,8 +168,12 @@ def internal_keyUpEvent(event):
 
 def initialize():
 	"""Initialises keyboard support."""
+	global hookManager
 	hookManager=pyHook.HookManager()
 	hookManager.KeyDown=internal_keyDownEvent
 	hookManager.KeyUp=internal_keyUpEvent
 	hookManager.HookKeyboard()
+
+def terminate():
+	hookManager.UnhookKeyboard()
 

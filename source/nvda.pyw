@@ -4,9 +4,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+restartByErrorCount=0
+
 import os
 import sys
 import tempfile
+import new
+
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
@@ -85,11 +89,14 @@ winUser.setSystemScreenReaderFlag(True)
 try:
 	import core
 	res=core.main()
-	if not res:
-		winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
-		raise RuntimeError("core has errors")
+	if res in [core.CORE_MAINLOOPERROR,core.CORE_RESTART]:
+		os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
+		os._exit(0)
+	elif res==core.CORE_INITERROR:
+		raise RuntimeError("Error initializing core")
 except:
-	debug.writeException("nvda.pyw executing core.main")
+	debug.writeException("critical error")
+	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 winUser.setSystemScreenReaderFlag(False)
 debug.stop()
 if not globalVars.appArgs.minimal:
