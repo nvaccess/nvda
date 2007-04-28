@@ -90,6 +90,7 @@ try:
 	import core
 	res=core.main()
 	if res in [core.CORE_MAINLOOPERROR,core.CORE_RESTART]:
+		winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 		os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
 		os._exit(0)
 	elif res==core.CORE_INITERROR:
