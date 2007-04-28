@@ -51,14 +51,14 @@ class appModule(appModuleHandler.appModule):
 	script_dateTime.__doc__=_("Reports the current date and time")
 
 	def script_increaseRate(self,keyPress,nextScript):
-		rate=getSynth().rate+5
+		rate=min(getSynth().rate+5, 100)
 		getSynth().rate=rate
 		config.conf["speech"][getSynth().name]["rate"]=rate
 		speech.speakMessage(_("rate %d%%")%rate)
 	script_increaseRate.__doc__=_("Increases the speech rate by 5 percent")
 
 	def script_decreaseRate(self,keyPress,nextScript):
-		rate=getSynth().rate-5
+		rate=max(0, getSynth().rate-5)
 		getSynth().rate=rate
 		config.conf["speech"][getSynth().name]["rate"]=rate
 		speech.speakMessage(_("rate %d%%")%rate)
