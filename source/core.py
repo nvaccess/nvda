@@ -96,6 +96,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			globalVars.focusObject.event_looseFocus()
 	except:
 		debug.writeException("LooseFocus error")
+
+	try:
+		speech.cancelSpeech()
+	except:
+		pass
 	try:
 		IAccessibleHandler.terminate()
 	except:
