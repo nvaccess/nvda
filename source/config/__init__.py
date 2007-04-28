@@ -119,6 +119,9 @@ def updateSynthConfig(name):
 	if not speech.has_key(name):
 		speech[name] = {}
 		conf.validate(val, copy = True)
+		return True
+	else:
+		return False
 
 def save(force = False):
 	"""Saves the configuration to the config file. However it does not if the file's modification time has changed and L{force} is not true.

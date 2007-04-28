@@ -36,11 +36,16 @@ def setSynth(name):
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver()
 		newSynth.initialize()
-		config.updateSynthConfig(name)
-		newSynth.voice=config.conf["speech"][name]["voice"]
-		newSynth.rate=config.conf["speech"][name]["rate"]
-		newSynth.pitch=config.conf["speech"][name]["pitch"]
-		newSynth.volume=config.conf["speech"][name]["volume"]
+		updatedConfig=config.updateSynthConfig(name)
+		if not updatedConfig:
+			newSynth.voice=config.conf["speech"][name]["voice"]
+			newSynth.rate=config.conf["speech"][name]["rate"]
+			newSynth.pitch=config.conf["speech"][name]["pitch"]
+			newSynth.volume=config.conf["speech"][name]["volume"]
+		else:
+			config.conf["speech"][name]["voice"]=newSynth.voice
+			config.conf["speech"][name]["rate"]=newSynth.rate
+			config.conf["speech"][name]["pitch"]=newSynth.pitch
 		if _curSynth:
 			_curSynth.cancel()
 			_curSynth.terminate()
