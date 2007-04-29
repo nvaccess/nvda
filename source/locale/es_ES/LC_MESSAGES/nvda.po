@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r514\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2007-04-22 20:56+0100\n"
+"PO-Revision-Date: 2007-04-29 03:43+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: es_ES <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -135,8 +135,8 @@ msgstr "pasar a través del modo virtual"
 #: appModules\_default.py:447
 #: appModules\_default.py:457
 #: appModules\_default.py:467
-#: keyboardHandler.py:86
-#: keyboardHandler.py:89
+#: keyboardHandler.py:87
+#: keyboardHandler.py:90
 msgid "off"
 msgstr "desactivado"
 
@@ -151,8 +151,8 @@ msgstr "desactivado"
 #: appModules\_default.py:450
 #: appModules\_default.py:460
 #: appModules\_default.py:470
-#: keyboardHandler.py:86
-#: keyboardHandler.py:89
+#: keyboardHandler.py:87
+#: keyboardHandler.py:90
 msgid "on"
 msgstr "activado"
 
@@ -422,7 +422,7 @@ msgid "reads the current aplication status bar and moves the navigation cursor t
 msgstr "lee la barra de estado de la aplicación actual y mueve el cursor de navegación a ella"
 
 #: appModules\_default.py:409
-#: gui\settingsDialogs.py:236
+#: gui\settingsDialogs.py:242
 msgid "Report object under mouse"
 msgstr "anunciar objeto bajo el ratón"
 
@@ -445,7 +445,7 @@ msgid "reports som info about the current navigator object, mainly useful for de
 msgstr "Anuncia la línea del objeto actual en el navegador dónde esté situado el cursor de revisión"
 
 #: appModules\_default.py:442
-#: gui\settingsDialogs.py:273
+#: gui\settingsDialogs.py:279
 msgid "Beep on progress bar updates"
 msgstr "pitar en barras de progresso"
 
@@ -927,15 +927,15 @@ msgstr "protegido"
 msgid "required"
 msgstr "requerido"
 
-#: core.py:42
+#: core.py:47
 msgid "configuration applyed"
 msgstr "configuración aplicada"
 
-#: core.py:52
+#: core.py:67
 msgid "Loading subsystems, please wait..."
 msgstr "cargando subsistema; un momento por favor..."
 
-#: core.py:70
+#: core.py:81
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -1220,7 +1220,7 @@ msgid "User interface settings"
 msgstr "Opciones de usuario de la interface"
 
 #: gui\__init__.py:240
-#: gui\settingsDialogs.py:73
+#: gui\settingsDialogs.py:76
 msgid "Synthesizer"
 msgstr "Sintetizador"
 
@@ -1276,184 +1276,211 @@ msgstr "&Activar enlace"
 msgid "&Move to link"
 msgstr "&Moverse al enlace"
 
-#: gui\settingsDialogs.py:23
+#: gui\settingsDialogs.py:25
 msgid "Language (requires restart to fully take affect)"
 msgstr "Idioma (requiere reiniciar para llevarse a cabo)"
 
-#: gui\settingsDialogs.py:27
+#: gui\settingsDialogs.py:29
 msgid "Language"
 msgstr "Idioma"
 
-#: gui\settingsDialogs.py:37
+#: gui\settingsDialogs.py:38
 msgid "Hide user interface on startup"
 msgstr "Ocultar ventana de interface al iniciar"
 
-#: gui\settingsDialogs.py:40
+#: gui\settingsDialogs.py:41
 msgid "Save configuration on exit"
 msgstr "Guardar configuración al salir"
 
-#: gui\settingsDialogs.py:107
+#: gui\settingsDialogs.py:58
+msgid "Error in %s language file"
+msgstr "Error en fichero de idioma %s"
+
+#: gui\settingsDialogs.py:58
+#, fuzzy
+msgid "Language Error"
+msgstr "Idioma"
+
+#: gui\settingsDialogs.py:64
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "Para que el nuevo idioma tenga efecto, la configuración debe ser guardada y NVDA debe ser reiniciado. Presiona intro para guardar y reiniciar NVDA, o cancela para guardar manualmente y salir más tarde."
+
+#: gui\settingsDialogs.py:64
+#, fuzzy
+msgid "Language Configuration Change"
+msgstr "Guardar configuración al salir"
+
+#: gui\settingsDialogs.py:102
+msgid "Could not load the %s synthesizer."
+msgstr "No se pudo cargar el sintetizador %s."
+
+#: gui\settingsDialogs.py:102
+#, fuzzy
+msgid "Synthesizer Error"
+msgstr "Sintetizador"
+
+#: gui\settingsDialogs.py:113
 msgid "Voice"
 msgstr "Voz"
 
-#: gui\settingsDialogs.py:122
+#: gui\settingsDialogs.py:128
 msgid "Rate"
 msgstr "velocidad"
 
-#: gui\settingsDialogs.py:130
+#: gui\settingsDialogs.py:136
 msgid "Pitch"
 msgstr "tono"
 
-#: gui\settingsDialogs.py:138
+#: gui\settingsDialogs.py:144
 msgid "Volume"
 msgstr "volumen"
 
-#: gui\settingsDialogs.py:145
+#: gui\settingsDialogs.py:151
 msgid "Speak all punctuation"
 msgstr "decir toda la puntuación"
 
-#: gui\settingsDialogs.py:148
+#: gui\settingsDialogs.py:154
 msgid "Say cap before capitals"
 msgstr "Decir cap antes de mayúsculas"
 
-#: gui\settingsDialogs.py:204
+#: gui\settingsDialogs.py:210
 msgid "Speak typed characters"
 msgstr "verbalizar carácteres al escribir"
 
-#: gui\settingsDialogs.py:207
+#: gui\settingsDialogs.py:213
 msgid "Speak typed words"
 msgstr "verbalizar palabras al escribir"
 
-#: gui\settingsDialogs.py:210
+#: gui\settingsDialogs.py:216
 msgid "Speak command keys"
 msgstr "verbalizar teclas de comando"
 
-#: gui\settingsDialogs.py:233
+#: gui\settingsDialogs.py:239
 msgid "Report mouse shape changes"
 msgstr "anunciar cambios en el formato del ratón"
 
-#: gui\settingsDialogs.py:258
+#: gui\settingsDialogs.py:264
 msgid "Report tooltips"
 msgstr "Anunciar barras de herramientas"
 
-#: gui\settingsDialogs.py:261
+#: gui\settingsDialogs.py:267
 msgid "Report help balloons"
 msgstr "Anunciar globos de ayuda"
 
-#: gui\settingsDialogs.py:264
+#: gui\settingsDialogs.py:270
 msgid "Report object shortcut keys"
 msgstr "Anunciar teclas de atajo de los objetos"
 
-#: gui\settingsDialogs.py:267
+#: gui\settingsDialogs.py:273
 msgid "Report object group names"
 msgstr "Anunciar nombres de grupos de los objetos"
 
-#: gui\settingsDialogs.py:270
+#: gui\settingsDialogs.py:276
 msgid "Say object state first"
 msgstr "Decir estado del objeto primero"
 
-#: gui\settingsDialogs.py:299
+#: gui\settingsDialogs.py:305
 msgid "Maximum number of characters on one line"
 msgstr "Máximo de carácteres en una línea"
 
-#: gui\settingsDialogs.py:304
+#: gui\settingsDialogs.py:310
 msgid "Number of lines per page"
 msgstr "número de líneas por página"
 
-#: gui\settingsDialogs.py:309
+#: gui\settingsDialogs.py:315
 msgid "Report virtual presentation on focus changes"
 msgstr "Anunciar la presentación del modo virtual cuando el foco cambia"
 
-#: gui\settingsDialogs.py:312
+#: gui\settingsDialogs.py:318
 msgid "Update the content dynamically"
 msgstr "Actualizar el contenido dinámicamente"
 
-#: gui\settingsDialogs.py:315
+#: gui\settingsDialogs.py:321
 msgid "Report links"
 msgstr "Anunciar enlaces"
 
-#: gui\settingsDialogs.py:318
+#: gui\settingsDialogs.py:324
 msgid "Report lists"
 msgstr "Anunciar listas"
 
-#: gui\settingsDialogs.py:321
+#: gui\settingsDialogs.py:327
 msgid "Report list items"
 msgstr "Anunciar elementos de lista"
 
-#: gui\settingsDialogs.py:324
+#: gui\settingsDialogs.py:330
 msgid "Report headings"
 msgstr "Anunciar encabezados"
 
-#: gui\settingsDialogs.py:327
-#: gui\settingsDialogs.py:408
+#: gui\settingsDialogs.py:333
+#: gui\settingsDialogs.py:414
 msgid "Report tables"
 msgstr "Anunciar tablas"
 
-#: gui\settingsDialogs.py:330
+#: gui\settingsDialogs.py:336
 msgid "Report graphics"
 msgstr "Anunciar gráficos"
 
-#: gui\settingsDialogs.py:333
+#: gui\settingsDialogs.py:339
 msgid "Report forms"
 msgstr "Anunciar formularios"
 
-#: gui\settingsDialogs.py:336
+#: gui\settingsDialogs.py:342
 msgid "Report form fields"
 msgstr "Anunciar campos de formulario"
 
-#: gui\settingsDialogs.py:339
+#: gui\settingsDialogs.py:345
 msgid "Report block quotes"
 msgstr "Anunciar citas"
 
-#: gui\settingsDialogs.py:342
+#: gui\settingsDialogs.py:348
 msgid "Report paragraphs"
 msgstr "Anunciar párrafos"
 
-#: gui\settingsDialogs.py:345
+#: gui\settingsDialogs.py:351
 msgid "Report frames"
 msgstr "Anunciar marcos"
 
-#: gui\settingsDialogs.py:390
+#: gui\settingsDialogs.py:396
 msgid "Report font name"
 msgstr "Anunciar nombre de la fuente"
 
-#: gui\settingsDialogs.py:393
+#: gui\settingsDialogs.py:399
 msgid "Report font size"
 msgstr "Anunciar tamaño de la fuente"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:402
 msgid "Report font attributes"
 msgstr "Anunciar atributos de la fuente"
 
-#: gui\settingsDialogs.py:399
+#: gui\settingsDialogs.py:405
 msgid "Report style"
 msgstr "Anunciar estilo"
 
-#: gui\settingsDialogs.py:402
+#: gui\settingsDialogs.py:408
 msgid "Report pages"
 msgstr "Anunciar páginas"
 
-#: gui\settingsDialogs.py:405
+#: gui\settingsDialogs.py:411
 msgid "Report line numbers"
 msgstr "Anunciar números de línea"
 
-#: gui\settingsDialogs.py:411
+#: gui\settingsDialogs.py:417
 msgid "Report alignment"
 msgstr "Anunciar alineamiento"
 
-#: keyboardHandler.py:86
+#: keyboardHandler.py:87
 msgid "caps lock %s"
 msgstr "bloqueo mayúsculas %s"
 
-#: keyboardHandler.py:89
+#: keyboardHandler.py:90
 msgid "num lock %s"
 msgstr "bloqueo numérico %s"
 
-#: keyboardHandler.py:98
+#: keyboardHandler.py:99
 msgid "Description: %s"
 msgstr "Descripción: %s"
 
-#: keyboardHandler.py:99
+#: keyboardHandler.py:100
 msgid "Location: %s"
 msgstr "Localización: %s"
 
