@@ -109,6 +109,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		keyboardHandler.terminate()
 	except:
 		debug.writeException("Keyboard handler termination")
+	try:
+		mouseHandler.terminate()
+	except:
+		debug.writeException("Mouse handler termination")
 	if endResult==CORE_QUIT and globalVars.restart:
 		globalVars.restart=False
 		endResult=CORE_RESTART

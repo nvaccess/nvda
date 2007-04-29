@@ -17,6 +17,7 @@ import IAccessibleHandler
 
 mouseOldX=None
 mouseOldY=None
+hookManager=None
 
 
 #Internal mouse event
@@ -68,8 +69,12 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
+	global hookManager
 	(x,y)=winUser.getCursorPos()
 	api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
 	hookManager=pyHook.HookManager()
 	hookManager.MouseAll=internal_mouseEvent
 	hookManager.HookMouse()
+
+def terminate():
+	hookManager.UnhookMouse()
