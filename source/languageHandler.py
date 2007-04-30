@@ -1,8 +1,10 @@
 import config
 import os
+import ctypes
 import locale
 import gettext
 import characterSymbols
+import debug
 
 def getAvailableLanguages():
 	l=[x for x in os.listdir('locale') if not x.startswith('.')]
@@ -15,7 +17,9 @@ def getAvailableLanguages():
 def setLanguage(lang):
 	try:
 		if lang=="Windows":
-			gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+			windowsLCID=ctypes.windll.kernel32.GetThreadLocale()
+			localeName=locale.windows_locale[windowsLCID]
+			gettext.translation('nvda',localedir='locale',languages=[localeName]).install(True)
 		else:
 			gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
 		config.conf["general"]["language"]=lang
