@@ -96,7 +96,6 @@ class virtualBuffer_gecko(virtualBuffer):
 			return nextHandler()
 		if self.NVDAObject.states&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
-		tones.beep(440,100)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
@@ -118,7 +117,6 @@ class virtualBuffer_gecko(virtualBuffer):
 		textLen=self.text_characterCount
 		if self.text_reviewOffset>=textLen:
 			self.text_reviewOffset=textLen-1
-		tones.beep(880,100)
 
 	def activatePosition(self,pos):
 		ID=self.getIDFromPosition(pos)
