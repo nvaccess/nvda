@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:21+0200\n"
-"PO-Revision-Date: 2007-04-27 19:06+0500\n"
+"PO-Revision-Date: 2007-04-29 18:39+0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net.com>\n"
 "Language-Team: hun <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -160,6 +160,10 @@ msgstr "csak olvasás"
 msgid "window"
 msgstr"ablak"
 
+#: IAccessibleHandler.py:135 controlTypes.py:53
+msgid "window"
+msgstr "ablak"
+
 
 #: controlTypes.py:95
 msgid "expanded"
@@ -211,7 +215,7 @@ msgstr "léptet és az aktív sort bejelenti"
 
 #: textBuffer.py:473
 msgid "Moves and reads the current character"
-msgstr "léptet, és felolvassa za aktív karaktert"
+msgstr "léptet, és felolvassa az aktív karaktert"
 
 #: textBuffer.py:480
 msgid "Moves and reads the current word"
@@ -262,8 +266,8 @@ msgid "protected %s "
 msgstr "védve %s"
 
 #: appModules\_default.py:43
-msgid "keyboard help"
-msgstr "billentyüzet segítség"
+msgid "keyboard help %s"
+msgstr "billentyüzet segítség %s"
 
 #: api.py:173 api.py:233 appModules\_default.py:66 appModules\_default.py:75
 #: appModules\_default.py:84 appModules\_default.py:93 keyboardHandler.py:165
@@ -480,7 +484,7 @@ msgstr "betütípus"
 msgid "point"
 msgstr "pont"
 
-#: appModules\winword.py:309
+#: appModules\winword.py:284
 msgid "left"
 msgstr "balra"
 
@@ -787,7 +791,7 @@ msgid ""
 
 
 msgstr ""
-"NVDA gyors felhasználási útmutato. \n"
+"NVDA gyors felhasználói útmutato. \n"
 
 "NVDA (%(description)s)\n"
 "verzió: %(version)s\n"
@@ -811,31 +815,33 @@ msgstr ""
 
 "Ok gombbal kilép, vagy a mégse gombbal vissza tud térni a windows-ba."
 "\n"
-"Ha különbözö NVDA beállitásokat megakar változtatni,  (Például hang karakter, billentyüzet visszhang, "
-"és a segítö buborékok felolvasása), akkor nyomja meg az alt gombot,  "
+"Ha különbözö NVDA beállitásokat megakarna változtatni,  (Például hang karakter, billentyüzet visszhang, "
+"és hogy  a segítö buborékok felolvasva legyenek), akkor nyomja meg az alt gombot,  "
 "és válassza ki a beállitások menüt a jobb és bal nyilakkal. Majd a le és felnyillal válassza ki a kivánt változtatnivaló beállitást. "
 "\n"
 "Legtöbb beállitás fel fog hozni egy párbeszédpanelt, ahol megtudja változtatni öket. " 
-"Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Ritkán elöfoldulhat, hogy újra kell inditani az NVDA programot."
+"Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Ritkán elöfordulhat, hogy újra kell inditani az NVDA programot."
 "Bárhonnan az NVDA ablakban, a Kontrol +S billentyüvel tudja lementeni a beálitott konfigurációt. Ez a parancs"
 "A NVDA menüben is megtalálható"
 "Söt, azt is megteheti, hogy az NVDA kilépéskor lementse a konfigurációt. Ez az ópció a felhasználói felület beállitások...' panelben van."
 "Itt van egy pár hasznos NVDA billentyüparancs. \N"
+"\n"
+
 "Álltalános parancsok: \n"
 "Kontrol - beszéd megszakítása \n"
 "Inzert 1 - billentyüzet segítség ki és bekapcsolása. \n"
 "Inzert felnyíl: A fókuszban lévö elemet elmondja az NVDA. \n"
-" inzert lenyíl: minden mondása: az NVDA elkezdi olvasni a képernyot. A kontrol billentyüvel ezt meg lehet szakítani. \N"
-"Inzert t - ablak cím kimondása. \n"
-"Inzert f12 - Az idö és dátum kimondása. \n"
-"Inzert f2 - Karakterek kimondásának ki és bekapcsolása."
+" inzert lenyíl: minden mondása: az NVDA elkezdi olvasni a képernyot. A kontrol billentyüvel ezt meg lehet szakítani. \n"
+"Inzert + t - ablak cím kimondása. \n"
+"Inzert + f12 - Az idö és dátum kimondása. \n"
+"Inzert + f2 - Karakterek kimondásának ki és bekapcsolása. \n"
 "Inzert +3 - a begépelt  Szavak kimondását ki és bekapcsolása. \n"
-"inzert +4 - parancsgombok kimondása ki és bekapcsolása. \N"
-"inzert +pageup - beszédsebesség felgyorsítása. \N"
+"inzert +4 - parancsgombok kimondása ki és bekapcsolása. \n"
+"inzert +pageup - beszédsebesség felgyorsítása. \n"
 "Inzert +pagedown - Sebesség lelassítása. \n"
 
 "Inzert +P: hangsúly kimondásának ki és bekapcsolása. \n"
-"Inzert +S: Beszéd mód váltása (Nincs, Beszéd, És sípolások) \N"
+"Inzert +S: Beszéd mód váltása (Nincs, Beszéd, És sípolások) \n"
 
 "Inzert +M: Egér alatt lévö elemek felolvasása. \N"
 "Inzert +F - betütípus kimondása (egy dokumentumban) \n"
@@ -878,7 +884,7 @@ msgstr ""
 "\n"
 
 "inzert + shift- b - a tápegység állapota. \n"
-"inzert+ f - szöveg keresés. \n" 
+"kontrol+ f - szöveg keresés. \n" 
 "\n"
 
 "köszönjük, hogy az NVDA-t választotta képernyofelolvasáshoz! "
@@ -933,7 +939,7 @@ msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerö beállitása"
 
 #: gui\__init__.py:132
 msgid "Voice settings...\tctrl+shift+v"
-msgstr "hangbeállitások...\tctrl+shift+v"
+msgstr "beszéd beállitások...\tctrl+shift+v"
 
 #: gui\__init__.py:135
 msgid "&Keyboard echo...\tctrl+e"
@@ -1017,6 +1023,11 @@ msgstr "válassza ki a kivánt szintetizátort"
 msgid "Synthesizer"
 msgstr "szintetizátor"
 
+
+#: gui\__init__.py:244
+msgid "Voice settings"
+msgstr "beszéd beállitások"
+
 #: gui\__init__.py:247
 msgid "Keyboard echo settings"
 msgstr "billentyüzet visszhang beállitások"
@@ -1067,8 +1078,37 @@ msgstr "elinduláskor a NVDA ablak nejelenjen meg"
 
 #: gui\settingsDialogs.py:41
 msgid "Save configuration on exit"
-msgstr "kilépéskor mentsem le a konfigurációt"
+msgstr "kilépéskor konfiguráció automatikus lementése "
 
+
+#: gui\settingsDialogs.py:58
+msgid "Error in %s language file"
+msgstr "hiba a %s nyelv fájlban"
+
+#: gui\settingsDialogs.py:58
+#, fuzzy
+msgid "Language Error"
+msgstr "nyelv fájl hiba"
+
+#: gui\settingsDialogs.py:64
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "ahhoz, hogy az új nyelv élletbe léphessen, a konfigurációt újra le kell menteni és az nvda programot újra kell inditani. Nyomja meg az enter billentyüt, és a konfiguráció le lesz mentve, majd a nvda újra fog indulni. nyomja meg a mégse gombot, ha ezt késobb sajátkezüleg akarja végrehajtani." 
+
+
+#: gui\settingsDialogs.py:64
+msgid "Language Configuration Change"
+msgstr "nyelv konfiguráció megváltozott"
+
+#: gui\settingsDialogs.py:102
+msgid "Could not load the %s synthesizer."
+msgstr "a %s szintetizátort nem lehetett sikeresen betölteni."
+
+
+#: gui\settingsDialogs.py:102
+#, fuzzy
+msgid "Synthesizer Error"
+msgstr "hiba a szintetizátorban"
+ 
 #: gui\settingsDialogs.py:69
 msgid "Voice"
 msgstr "hangkarakter"
@@ -1112,6 +1152,8 @@ msgstr " egér alak változás bejelentése"
 #: gui\settingsDialogs.py:190
 msgid "Report object under mouse"
 msgstr "az egér alatt lévö elem bejelentése"
+
+
 
 #: gui\settingsDialogs.py:213
 msgid "Report tooltips"
@@ -1245,11 +1287,27 @@ msgstr "dinamikus tartalom változások  bejelentése"
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "a dinamikus tartalomnak bejelentését ki, és bekapcsolja. Ilyen  például az msdos parancs ablakokban  található." 
 
+#: appModules\_default.py:416
+msgid "Reports the title of the current application or foreground window"
+msgstr "a jelen alkalmazás vagy ablak címét bejelenti."
+
+
+#: appModules\_default.py:423
+msgid "speaks the current foreground object"
+msgstr "bejelenti az elotérben lévö elemet"
+
+#: appModules\_default.py:433
+#, fuzzy
+msgid "reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text"
+msgstr "a jelenlévo navigátor elemre információt ad. Ez leginkább hasznos fejlesztöknek: kontrol id, típus és belsö szöveg"
+ 
 
 #: appModules\_default.py:462
 msgid "caret moves review cursor"
 msgstr "a rendszer kurzor lépteti az átnézési kurzort"
+
 #: appModules\_default.py:472
+#, fuzzy
 msgid "focus moves navigator object"
 msgstr "fókusz változások léptetik a navigátor kurzort"
 
@@ -1297,7 +1355,7 @@ msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Egy ingyenes és nyílt képernyöfelolvasó a windows operációs rendszerhez"
+msgstr "Egy ingyenes és nyílt terjeztésü képernyöfelolvasó a windows operációs rendszerhez"
 
 #: versionInfo.py:14
 #, possible-python-format
@@ -1316,7 +1374,7 @@ msgstr ""
 "\n"
 "A NVDA-t Géczy Tamás forditotta le magyar nyelvre. Ha valamilyen nyelvtani hibát észlel, irjon a gt1991@gmail.com címre.  \n"
 "köszönlet jár Velegi Istvánnak, aki ötleteket adott a nyelvtanban. \n"
-"új nyelvcsomagokat a http://techreviews.raydi.com/other.html honlapon találhat \n."
+"új nyelvcsomagokat a http://techreviews.raydi.com/other.html honlapon találhat \n"
 "ezek nyelvtani hibákat javitanak ki a programban. \n"
 
 "%(name)s az új álltalános publik licenszerzödés gpl alatt áll, ami azt jelenti, hogy ön megtudja osztani   "
@@ -1419,6 +1477,12 @@ msgstr "lenyomva"
 #: controlTypes.py:92
 msgid "checked"
 msgstr "bejelölve"
+
+
+#: controlTypes.py:93
+#, fuzzy
+msgid "half checked"
+msgstr "félig bejelölve"
 
 #: virtualBuffers\baseType.py:49
 msgid "column"
@@ -1646,5 +1710,5 @@ msgid "no sayAll functionality here"
 msgstr "itt nincsen minden mondása funkció"
 
 msgid "no format info"
-msgstr "nincsen formatálás információ"
+msgstr "nincsen formátum információ"
 
