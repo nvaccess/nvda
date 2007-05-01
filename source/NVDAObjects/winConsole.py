@@ -8,6 +8,7 @@ import thread
 import time
 import ctypes
 import difflib
+import pythoncom
 import globalVars
 import debug
 import queueHandler
@@ -25,9 +26,14 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		self.consoleEventHookHandles=[] #Holds the handles for all the win events we register so we can remove them later
 
 	def connectConsole(self):
+		#Give a little time for the console to settle down
+		time.sleep(0.1)
+		pythoncom.PumpWaitingMessages()
+		if not winUser.isWindow(self.windowHandle):
+			return
 		#Get the process ID of the console this NVDAObject is fore
-		processID=self.windowProcessID[0]
-		#Attatch NVDA to this console so we can access its text etc
+		processID,threadID=self.windowProcessID
+		#Attach NVDA to this console so we can access its text etc
 		res=winKernel.attachConsole(processID)
 		if not res:
 			raise OSError("NVDAObject_winConsole: could not get console std handle") 
@@ -36,7 +42,6 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		if not res:
 			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
-		#Create a callback function which will be used to receive events for console updates etc
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		#Register this callback with all the win events we need, storing the given handles for removal later
 		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
@@ -49,7 +54,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		#Each event doesn't individually speak its own text since speaking text is quite intensive due to the diff algorithms  
 		self.keepMonitoring=True
 		self.lastConsoleEvent=None
-		thread.start_new_thread(self.monitorThread,())
+		t=thread.start_new_thread(self.monitorThread,())
 
 	def disconnectConsole(self):
 		#Unregister any win events we are using
