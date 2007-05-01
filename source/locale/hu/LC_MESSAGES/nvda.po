@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:21+0200\n"
-"PO-Revision-Date: 2007-04-29 18:39+0500\n"
+"PO-Revision-Date: 2007-04-30 14:46+0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net.com>\n"
 "Language-Team: hun <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -241,7 +241,7 @@ msgstr "a kurzor alatt lévö karaktert letörli, és a  jelenlévo karaktert felolva
 
 #: textBuffer.py:561
 msgid "Reads the character before the current character and then deletes it"
-msgstr "a aktív karakter elötti karaktert felolvassa, majd letörli ezt."
+msgstr "a aktív karakter elotti karaktert felolvassa, majd letörli azt."
 
 #: NVDAObjects\baseType.py:864 NVDAObjects\baseType.py:868
 #: NVDAObjects\baseType.py:870 NVDAObjects\baseType.py:876
@@ -420,6 +420,16 @@ msgid "speech mode %s"
 msgstr "beszéd mód %s"
 
 
+#: appModules\_default.py:347msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr "beszéd mód váltás. Ha ez ki van kapcsolva, akkor az nvda nem fog semmilyen beszédet kiadni. Ha ez sípolásokra van beállitva, akkor minden történo esemény sípolásokkal lesz jelezve. És ha ez a beszéd opcióra van beállitva, akkor az NVDA rendesen fogja olvasni a képernyot." 
+
+
+#: appModules\_default.py:351
+msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control with out the virtualBuffer doing something else with the key."
+msgstr "a virtuális buffer kereztül lépés funkciót ki, és bekapcsolja. Ha ez be van kapcsolva, minden billentyü lenyomás egyenesen kereztül lép az aktív alkalmazáshoz, és ez megengedi, hogy  ön tudjon  egy vezérloelemmel kommunikálni, anélkül, hogy a parancs valami mást csináljon a paranccsal."
+ 
+
 #: appModules\_default.py:344
 msgid "speech mode %s"
 msgstr "beszéd mód %s"
@@ -431,7 +441,7 @@ msgstr "kilép a nvda alkalmazásból!"
 
 #: appModules\_default.py:359
 msgid "Shows the NVDA interface window"
-msgstr "megjeleneti az nvda felület ablakját."
+msgstr "megjeleniti az nvda felület ablakját."
 
 
 #: appModules\_default.py:372
@@ -446,7 +456,7 @@ msgstr "a fókuszban lévö elemet bejelenti."
 
 #: appModules\_default.py:364
 msgid "no foreground object"
-msgstr "nincsen elötér elem"
+msgstr "nincsen az elötérben elem"
 
 #: appModules\_default.py:368
 msgid "no stats bar found"
@@ -474,7 +484,7 @@ msgstr "egyenletet tartalmaz"
 
 #: appModules\excel.py:113
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "a kurzort egy celára teszi, és kimondja a kordinátáit." 
+msgstr "a kurzort egy celára teszi, és kimondja a kordinátáit és tartalmát" 
 
 #: appModules\excel.py:133
 msgid "font"
@@ -803,7 +813,7 @@ msgstr ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"ez az NVDA ablakja. Ez megengedi, hogy az nvda-ból kilépjen, és hogy "
+"ez az NVDA fo  ablakja. Ez megengedi, hogy az nvda-ból kilépjen, és hogy "
 "különbözö beállitásokat módositson. "
 "\n"
 "Bárhonnan a windows-ból, ezt az ablakot feltudja hozzni a inzert +n parancssal. Ha kiakar lépni"
@@ -854,7 +864,7 @@ msgstr ""
 "inzert + numpad 8 - szülö elem \N"
 "inzert +numpad 2 - elsö gyerek elem. \n"
 
-"inzert +numpad 4 - elözö elem. \n"
+"inzert +numpad 4 - elozo  elem. \n"
 "inzert +numpad 6 - következo elem. \n"
 "inzert +numpad mínusz - fókusz elemre való mozgás \n"
 
@@ -884,7 +894,8 @@ msgstr ""
 "\n"
 
 "inzert + shift- b - a tápegység állapota. \n"
-"kontrol+ f - szöveg keresés. \n" 
+"kontrol+ f - szöveg keresés. \n"
+"inzert +f2 - billentyüparancs átadás. A NVDA átadja azt a billentyü kombinációt, amit legközelebb lenyom az aktív allkalmazásnak. Hasznos amikor egy olyan billentyüparancsot szeretne használni, amit a nvda  már használ."  
 "\n"
 
 "köszönjük, hogy az NVDA-t választotta képernyofelolvasáshoz! "
@@ -955,15 +966,15 @@ msgstr "&egér beállitásai...\tctrl+m"
 
 #: gui\__init__.py:138
 msgid "Change reporting of mouse sape, object under mouse"
-msgstr "az egér alatt lévö alakoknak és objekteknek  neve megváltoztatás"
+msgstr "az egér alatt lévö alakoknak és objektumoknak  neve megváltoztatás"
 
 #: gui\__init__.py:141
 msgid "&Object presentation...\tctrl+shift+o"
-msgstr "&objektok bemutatása...\tctrl+shift+o"
+msgstr "&objektumok jelzése...\tctrl+shift+o"
 
 #: gui\__init__.py:141
 msgid "Change reporting of objects"
-msgstr "objektek kifejezésének megváltoztatása"
+msgstr "objektumok kifejezésének megváltoztatása"
 
 #: gui\__init__.py:167
 msgid "Change virtual buffers specific settings"
@@ -1038,7 +1049,7 @@ msgstr "egér beállitások"
 
 #: gui\__init__.py:268
 msgid "Object presentation"
-msgstr "objekt bemutatása"
+msgstr "objektum megjelenitése"
 
 #: gui\__init__.py:260
 msgid "virtual buffers"
@@ -1131,8 +1142,7 @@ msgstr "minden hangsúly kiejtése"
 
 #: gui\settingsDialogs.py:112
 msgid "Say cap before capitals"
-msgstr "nagybetük elött, mondja ki a NVDA azt hogy nagy"
-
+msgstr "nagybetük szóbeli jelzése" 
 #: gui\settingsDialogs.py:149
 msgid "Speak typed characters"
 msgstr "begépelt karakterek kimondása"
@@ -1154,6 +1164,10 @@ msgid "Report object under mouse"
 msgstr "az egér alatt lévö elem bejelentése"
 
 
+#: appModules\_default.py:410
+msgid "Toggles on and off the reporting of objects under the mouse"
+msgstr "az egér alatt lévo elem vagy objektum  bejelentését ki, és bekapcsolja."
+ 
 
 #: gui\settingsDialogs.py:213
 msgid "Report tooltips"
@@ -1165,15 +1179,15 @@ msgstr "segítö   buborékok bejelentése"
 
 #: gui\settingsDialogs.py:223
 msgid "Report object shortcut keys"
-msgstr "elem parancsbillentyü kimondása"
+msgstr "objektum parancsbillentyük kimondása"
 
 #: gui\settingsDialogs.py:228
 msgid "Report object group names"
-msgstr "objekt csoport nevek bejelentése"
+msgstr "objektum csoport nevek bejelentése"
 
 #: gui\settingsDialogs.py:233
 msgid "Say object state first"
-msgstr "az objekt állapotának mondása elöször"
+msgstr "az objektum állapotának mondása elöször"
 
 #: gui\settingsDialogs.py:299
 msgid "Maximum number of characters on one line"
@@ -1269,8 +1283,7 @@ msgstr "kiegyenlités bejelentése"
 
 #: gui\settingsDialogs.py:238
 msgid "Beep on progress bar updates"
-msgstr "mikor a folyamat jelzö változik, akkor sípoljon a NVDA"
-
+msgstr "hangjel kiadása folyamat jelzo változásokkor" 
 
 #: appModules\_default.py:437
 msgid "Toggles on and off the beeping on progress bar updates"
@@ -1333,6 +1346,15 @@ msgstr "%d óra és %d perc a jelenlegi  elem idötartalom."
 #: appModules\_default.py:456
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "a hátra lévö elem idöt bejelenti, ha az AC tápegység nincsen bekapcsolva."  
+
+
+#: appModules\_default.py:496
+msgid "Pass next key through"
+msgstr "következo billentyüparancs átadása"
+
+#: appModules\_default.py:497
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "a következo billentyü lenyomást nem az NVDA fogja végrehajtani, hanem egyenesen átfog adódni a windows rendszerbe."
 
 #: appModules\excel.py:80
 msgid "through"
@@ -1509,9 +1531,9 @@ msgstr "fa nézet"
 msgid "sub menu"
 msgstr "almenü"
 
-#: virtualBuffers\baseType.py:51
+#: virtualBuffers\baseType.py:53
 msgid "combo box"
-msgstr "kombinált listamezö"
+msgstr "kombinált listamezo"
 
 #: virtualBuffers\baseType.py:52
 msgid "graphic"
