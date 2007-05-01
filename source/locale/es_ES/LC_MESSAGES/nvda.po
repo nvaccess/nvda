@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r514\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2007-04-29 03:43+0100\n"
+"PO-Revision-Date: 2007-05-01 14:02+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: es_ES <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,7 @@ msgstr "estado %s"
 
 #: NVDAObjects\richEdit.py:74
 msgid "rich %s"
-msgstr "con formato %s"
+msgstr "formateado %s"
 
 #: NVDAObjects\winEdit.py:52
 msgid "protected %s "
@@ -392,9 +392,8 @@ msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pa
 msgstr "Activa o desactiva el modo de pase directo en los modos virtuales. Cuandoesté activado, las teclas pasan directamente a través del modo virtual,permitiendo interactuar con el control sin que el modo virtual haga otracosa con la tecla."
 
 #: appModules\_default.py:355
-#, fuzzy
 msgid "Quits NVDA!"
-msgstr "salir del NVDA"
+msgstr "!sale del NVDA¡"
 
 #: appModules\_default.py:359
 msgid "Shows the NVDA interface window"
@@ -405,9 +404,8 @@ msgid "reads from cursor up to end of current text"
 msgstr "lee desde el cursor hasta el fin del texto actual"
 
 #: appModules\_default.py:387
-#, fuzzy
 msgid "reports the object with focus"
-msgstr "Anunciar teclas de atajo de los objetos"
+msgstr "Anuncia las teclas de atajo de los objetos"
 
 #: appModules\_default.py:392
 msgid "no foreground object"
@@ -435,14 +433,12 @@ msgid "Reports the title of the current application or foreground window"
 msgstr "Anuncia el título de la aplicación actual o de la ventana en primer plano"
 
 #: appModules\_default.py:423
-#, fuzzy
 msgid "speaks the current foreground object"
-msgstr "sin objetos de primer plano"
+msgstr "Verbaliza el objeto actual en primer plano"
 
 #: appModules\_default.py:433
-#, fuzzy
 msgid "reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text"
-msgstr "Anuncia la línea del objeto actual en el navegador dónde esté situado el cursor de revisión"
+msgstr "Anuncia determinada información acerca del objeto actual en el navegador, útil principalmente para desarrolladores: id del control, clase y texto interno"
 
 #: appModules\_default.py:442
 #: gui\settingsDialogs.py:279
@@ -454,38 +450,32 @@ msgid "Toggles on and off the beeping on progress bar updates"
 msgstr "Activa y desactiva los pitidos en las barras de progresso"
 
 #: appModules\_default.py:452
-#, fuzzy
 msgid "report dynamic content changes"
-msgstr "anunciar cambios en el formato del ratón"
+msgstr "Anunciar cambios en el contenido dinámico "
 
 #: appModules\_default.py:453
-#, fuzzy
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Activa y desactiva el anunciado de objetos bajo el ratón"
+msgstr "Activa y desactiva el anunciado de los cambios de contenido dinámico, tales como texto nuevo en la consola dos de windows"
 
 #: appModules\_default.py:462
 msgid "caret moves review cursor"
-msgstr "circumflejo mueve cursor de revisión"
+msgstr "el puntero mueve al cursor de revisión"
 
 #: appModules\_default.py:463
-#, fuzzy
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Activa y desactiva el anunciado de objetos bajo el ratón"
+msgstr "Activa y desactiva el movimiento del cursor de revisión debido al movimiento del puntero"
 
 #: appModules\_default.py:472
-#, fuzzy
 msgid "focus moves navigator object"
-msgstr "no hay objetos para el navegador"
+msgstr "el foco se mueve al objeto del navegador"
 
 #: appModules\_default.py:473
-#, fuzzy
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Activa y desactiva el anunciado de objetos bajo el ratón"
+msgstr "Activa y desactiva el movimiento del objeto del navegador debido a cambios del foco"
 
 #: appModules\_default.py:487
-#, fuzzy
 msgid "%d percent"
-msgstr "porciento"
+msgstr "%d porciento"
 
 #: appModules\_default.py:488
 msgid "AC power on"
@@ -607,7 +597,7 @@ msgstr "vacío"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "envío de línea"
+msgstr "alimentación de línea"
 
 #: characterSymbols.py:22
 msgid "carage return"
@@ -813,7 +803,7 @@ msgstr "globos de ayuda"
 
 #: controlTypes.py:70
 msgid "tool tip"
-msgstr "herramientas"
+msgstr "herramientas de ayuda"
 
 #: controlTypes.py:71
 #: virtualBuffers\baseType.py:45
@@ -826,7 +816,7 @@ msgstr "árbol"
 
 #: controlTypes.py:73
 msgid "tree view item"
-msgstr "elemento del árbol"
+msgstr "elemento de árbol"
 
 #: controlTypes.py:75
 msgid "tab control"
@@ -890,9 +880,8 @@ msgid "checked"
 msgstr "verificado"
 
 #: controlTypes.py:93
-#, fuzzy
 msgid "half checked"
-msgstr "verificado"
+msgstr "Semi verificado"
 
 #: controlTypes.py:94
 msgid "read only"
@@ -916,7 +905,7 @@ msgstr "enlazado"
 
 #: controlTypes.py:99
 msgid "has popup"
-msgstr "tiene popup"
+msgstr "tiene emergente"
 
 #: controlTypes.py:100
 #: virtualBuffers\MSHTML.py:303
@@ -1159,7 +1148,7 @@ msgstr "Opciones de &objeto...\tctrl+shift+o"
 
 #: gui\__init__.py:164
 msgid "Change reporting of objects"
-msgstr "Configurar lectura de objetos"
+msgstr "Cambiar el anunciado de los objetos"
 
 #: gui\__init__.py:167
 msgid "Change virtual buffers specific settings"
@@ -1213,7 +1202,7 @@ msgstr "No se pudo guardar la configuración; causa provable: el sistema de arch
 
 #: gui\__init__.py:227
 msgid "Press OK to quit NVDA"
-msgstr "Presiona OK para salir del NVDA"
+msgstr "Presiona Aceptar para salir del NVDA"
 
 #: gui\__init__.py:236
 msgid "User interface settings"
@@ -1230,7 +1219,7 @@ msgstr "configuraciones de voz"
 
 #: gui\__init__.py:248
 msgid "Keyboard echo settings"
-msgstr "Eco del teclado"
+msgstr "Opciones de Eco del teclado"
 
 #: gui\__init__.py:252
 msgid "Mouse settings"
@@ -1238,11 +1227,11 @@ msgstr "Opciones de ratón"
 
 #: gui\__init__.py:256
 msgid "Object presentation"
-msgstr "Opciones de objeto"
+msgstr "Presentación del Objeto"
 
 #: gui\__init__.py:260
 msgid "virtual buffers"
-msgstr "Modo virtual"
+msgstr "Modos virtuales"
 
 #: gui\__init__.py:264
 msgid "Document formatting"
@@ -1278,7 +1267,7 @@ msgstr "&Moverse al enlace"
 
 #: gui\settingsDialogs.py:25
 msgid "Language (requires restart to fully take affect)"
-msgstr "Idioma (requiere reiniciar para llevarse a cabo)"
+msgstr "Idioma (requiere el reinicio para llevarse a cabo)"
 
 #: gui\settingsDialogs.py:29
 msgid "Language"
@@ -1297,27 +1286,24 @@ msgid "Error in %s language file"
 msgstr "Error en fichero de idioma %s"
 
 #: gui\settingsDialogs.py:58
-#, fuzzy
 msgid "Language Error"
-msgstr "Idioma"
+msgstr "Error en el Idioma"
 
 #: gui\settingsDialogs.py:64
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Para que el nuevo idioma tenga efecto, la configuración debe ser guardada y NVDA debe ser reiniciado. Presiona intro para guardar y reiniciar NVDA, o cancela para guardar manualmente y salir más tarde."
 
 #: gui\settingsDialogs.py:64
-#, fuzzy
 msgid "Language Configuration Change"
-msgstr "Guardar configuración al salir"
+msgstr "Cambio de Configuración de Idioma"
 
 #: gui\settingsDialogs.py:102
 msgid "Could not load the %s synthesizer."
 msgstr "No se pudo cargar el sintetizador %s."
 
 #: gui\settingsDialogs.py:102
-#, fuzzy
 msgid "Synthesizer Error"
-msgstr "Sintetizador"
+msgstr "Error de Sintetizador"
 
 #: gui\settingsDialogs.py:113
 msgid "Voice"
@@ -1361,7 +1347,7 @@ msgstr "anunciar cambios en el formato del ratón"
 
 #: gui\settingsDialogs.py:264
 msgid "Report tooltips"
-msgstr "Anunciar barras de herramientas"
+msgstr "Anunciar herramientas de ayuda"
 
 #: gui\settingsDialogs.py:267
 msgid "Report help balloons"
@@ -1752,14 +1738,12 @@ msgid "no more paragraphs"
 msgstr "sin más párrafos"
 
 #: virtualBuffers\baseType.py:386
-#, fuzzy
 msgid "moves to the next paragraph"
-msgstr "Se mueve manualmente al siguiente párrafo y luego lo verbaliza"
+msgstr "moverse al párrafo siguiente"
 
 #: virtualBuffers\baseType.py:397
-#, fuzzy
 msgid "moves to the previous paragraph"
-msgstr "Se mueve manualmente al párrafo anterior y lo luego lo verbaliza"
+msgstr "moverse al párrafo anterior"
 
 #: virtualBuffers\baseType.py:407
 #: virtualBuffers\baseType.py:418
@@ -1780,9 +1764,8 @@ msgid "no more links"
 msgstr "sin más enlaces"
 
 #: virtualBuffers\baseType.py:430
-#, fuzzy
 msgid "moves to the next link"
-msgstr "&Moverse al enlace"
+msgstr "moverse al enlace siguiente"
 
 #: virtualBuffers\baseType.py:441
 msgid "moves to the previous link"
@@ -1807,14 +1790,12 @@ msgid "no more list items"
 msgstr "sin más elementos de lista"
 
 #: virtualBuffers\baseType.py:474
-#, fuzzy
 msgid "moves to the next list item"
-msgstr "sin más elementos de lista"
+msgstr "moverse al siguiente elemento de lista"
 
 #: virtualBuffers\baseType.py:485
-#, fuzzy
 msgid "moves to the previous list item"
-msgstr "sin más elementos de lista"
+msgstr "Moverse al anterior elemento de lista"
 
 #: virtualBuffers\baseType.py:495
 #: virtualBuffers\baseType.py:506
@@ -1822,14 +1803,12 @@ msgid "no more form fields"
 msgstr "sin más campos de formulário"
 
 #: virtualBuffers\baseType.py:496
-#, fuzzy
 msgid "Move to the next form field"
-msgstr "sin más campos de formulário"
+msgstr "Moverse al siguiente campo de formulario"
 
 #: virtualBuffers\baseType.py:507
-#, fuzzy
 msgid "moves to the previous form field"
-msgstr "sin más campos de formulário"
+msgstr "moverse al anterior campo de formulario"
 
 #: virtualBuffers\baseType.py:510
 msgid "Find"

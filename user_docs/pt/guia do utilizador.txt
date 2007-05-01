@@ -1,0 +1,312 @@
+Guia do Utilizador do NVDA
+
+Última Actualização: 5 de Março de 2007.
+
+Sumário
+
+ 1 introdução.
+ 2 requerimentos do sistema.
+ 3 Como obter o NVDA .
+ 4 iniciar o NVDA .
+ 5 A Interface do Utilizador.
+ 5.1  mostrar e ocultar a Janela do NVDA.
+ 5.2  guardar e recuperar as configurações .
+ 5.3  Configurações da interface do utilizador .
+ 5.4 sintetizadores.
+ 5.5 configuração da voz.
+ 5.6 eco do teclado.
+ 5.7 configuração do rato (mouse).
+ 5.8 apresentação dos objectos .
+ 6 navegar com  o  NVDA .
+ 6.1 navegando por focos.
+ 6.2 navegação de objectos.
+ 6.3 Vendo texto no objecto activo.
+ 6.4 navegar com o sistema realçado.
+ 6.5 navegar com o rato (mouse).
+ 7 Modos virtuais.
+ 8 assobios (sinais sonoros) da barra de progresso.
+ 9 modo de assobio verbal.
+
+1 introdução
+
+ O NVDA é um leitor de ecrã para o sistema operativo Windows, que permite ao utilizador aceder ao computador sem a necessidade de ter quaisquer resquícios de visão. Consultando o sistema operativo onde se encontra o utilizador, que janelas e comandos estão no ecrã  e observando de perto as mudanças do sistema operativo, o  NVDA  pode processar e dizer através do sintetizador de voz, esta informação, de maneira que o utilizador entenda o que exactamente se passa no ecrã.
+
+ Actualmente o NVDA suporta os sintetizadores de voz compatíveis com sapi 4 e sapi 5 e usa uma estrutura modular que permite suportar outros sintetizadores de voz que sejam programados. 
+
+ O NVDA baseia-se no uso de Microsoft active  accesibility (msaa), chamadas as API de Windows de baixo nível  e modelos de objectos de aplicações específicas.
+
+ O NVDA não usa controladores de vídeo ou conectadores com o ecrã.. a vantagem de tudo isto é que  o  NVDA pode trabalhar com diferentes Configurações de sistema e não depende de uma configuração particular de cor ou de modo de ecrã de vídeo.  O NVDA não tem que instalar nenhum driver  especial ou ficheiro que requeira reiniciar o PC antes de executar o programa pela primeira vez .
+
+ O NVDA ainda não suporta dispositivos Braille, embora estejamos trabalhando actualmente  sobre este aspecto.
+
+ Actualmente há poucas traduções da interface do utilizador do NVDA  para diferentes idiomas  mas, futuramente, aparecerão muitas outras. 
+
+ O NVDA deve estar habilitado para ler um texto em qualquer  idioma, desde que haja instaladas vozes sapi 5 ou sapi 4.
+
+O NVDA é um programa experimental  e está em constante desenvolvimento; também é de código aberto; isto significa que qualquer pessoa pode ver o código fonte ou mudá-lo a seu gosto para satisfazer os seus interesses e necessidades . Devido a isto pode haver erros e as coisas podem não funcionar como se espera em todos os sistemas operativos e aplicações. 
+
+ Mas quanto mais pessoas usem este leitor e enviem as suas sugestões para o programador, mais o NVDA crescerá, impondo-se aos softwares já existentes no mercado, que custam muito caro.
+
+ O NVDA trabalha com muitos programas e só depende de quão  acessíveis sejam estes, para o seu bom funcionamento com eles. 
+
+ Para além das funcionalidades gerais do Windows, o  NVDA funciona com o Word pad, o bloco de notas,o outlook express e o internet explorer. Também tem suporte básico    para o Microsoft Word 2000/xp/2003 e   para o Microsoft excel 2000/xp/2003. ainda não foi testado com o Microsoft Office 2007.
+
+ O NVDA também tem extensões para o Mozilla fire fox 2.0 e superiores , sendo o explorador recomendado para obter maior acessibilidade com este programa.
+
+ Este guia do utilizador não é de modo  algum um guia completo  para usar o  NVDA   e o Windows  mas sim a informação necessária para que você comece a usar o  NVDA  , navegar  e aprender por você mesmo como fazer muitas outras coisas.
+
+ 2 requisitos do sistema.
+
+ O NVDA corre no Windows xp e no Windows vista, também corre em Windows 2000 mas ainda não houve muitas pessoas a fazer testes exaustivos.
+
+ O NVDA não funcionará no Windows 95/98/me, nem trabalha ainda em versões do Windows de 64 bits.
+
+ A sua máquina deve ter como mínimo 256 de memória ram; o NVDA correrá melhor em computadores que possuam 1.0 GHz de velocidade ou superiores. Ainda que o NVDA corra em máquinas mais lentas, a sua velocidade de resposta em actividades mais intensas como a carga de páginas web por exemplo, podem fazer-se muito lentamente  
+
+ 3 obter o NVDA .
+
+ Si ainda não tem uma cópia do programa , pode descarregá-la visitando a web na seguinte direcção :
+
+ Http://www.nvaccess.org/NVDA/ 
+
+ Vá Al. encabeçamento de descargas, ali encontrará um link para descarregar  a última revisão  do programa. 
+
+ as descargas do  NVDA estão actualmente numeradas por revisão.  Esta revisão coincide exactamente com as vezes que foi mudado o código fonte. Quando é colocado um novo arquivo no sítio web, isto não significa que o programa esteja livre de erros, mas que os seus desenvolve dores pensam que há características novas que estão a funcionar correctamente, as quais querem que sejam testadas pelos restantes utilizadores.
+
+ O ficheiro com extensão ZIP que descarregue, necessita de ser descomprimido em qualquer pasta do seu sistema.
+
+ O NVDA normalmente poderá ser executado de qualquer lugar do disco rígido, mas também pode correr-se a partir de unidades flash ou mesmo de CDS, desde que tenham espaço para isso.
+
+ 4 iniciar  o NVDA
+
+ para iniciar o NVDA deve pressionar enter  ou dar dois cliques sobre o ficheiro chamado NVDA.exe, que se encontra na pasta onde descomprimiu o zip que descarregou da web. 
+
+ Quando o NVDA arrancar, escutará primeiro  uma série de sons ascendentes que lhe indicam que o programa se está a carregar. Seguidamente, deve escutar: “NVDA activado”.
+O tempo decorrido pode depender da velocidade do seu computador ou do facto de estar a tentar correr o programa a partir de uma memória flash ou de um CD. Se o tempo decorrido for muito lento, o NVDA deverá dizer: “carregando o subsistema, por favor aguarde!”
+
+Se nenhuma das situações anteriores ocorrer, pode ouvir-se o som característico de erro no Windows. Isto significa que o leitor deu um erro e que deverá comunicá-lo ao seu programador, para que, em futuras actualizações, seja corrigido. Veja, na janela do utilizador, que se abre com o NVDA, como proceder.
+
+ Uma vez que o NVDA arranque com êxito, deve abrir-se a sua janela de interface, que lhe permitirá controlar as Configurações do programa, e sair do mesmo. 
+
+ 5 a interface do utilizador .
+
+ O NVDA possui uma janela de interface que contém uma barra de menus, com menus que lhe permitirão fazer mudanças na configuração do programa e sair do mesmo. Também tem um guia rápido com uma lista com a maior parte dos comandos de teclado que pode usar enquanto estiver a executar o NVDA.
+
+ A janela da interface do NVDA é um bom lugar para se habituar a navegar com o programa, uma vez que tem um documento através do qual se pode deslocar com as setas, bem como menus e quadros de diálogo.
+
+ 5.1 mostrar e ocultar a interface do NVDA.
+
+ Mesmo que a janela de interface do leitor apareça quando se carrega o programa, não é necessário mantê-la sempre aberta. Não há nada pior que manter muitas aplicações abertas e tentar encontrar uma, usando alt+tab.
+ 
+Para esconder a janela de interface do NVDA só tem que pressionar alt+f4, estando nessa janela. Isto não fará com que saia do leitor. Para voltar a mostrá-la, pressione insert+n ou dê um clique sobre o ícone do programa, na bandeja do sistema.
+
+ 5.2 guardar e recuperar a configuração do NVDA.
+
+ O NVDA guarda as suas Configurações num ficheiro chamado NVDA.ini, no qual, provavelmente, nunca terá que tocar. Porém este é bastante interessante e necessário para utilizadores avançados, que nele podem alterar configurações que não se encontram disponíveis nos menus ou nos quadros de diálogo.
+
+ O NVDA não guarda as Configurações automaticamente; assim, se sair do programa e não as guardar, quando voltar a entrar não as encontrará, sendo assumidas as originais.   Para que possa ver salvas as suas configurações, deverá marcar, com a barra de espaços, em “preferências do utilizador”, a opção “salvar configurações ao sair”. Se quiser guardá-las manualmente, uma vez na janela da interface, basta pressionar alt+s. Atenção!: se estiver a usar o leitor a partir de um suporte só de leitura, esta opção não estará activa, pois não é possível gravar ficheiros alterados.
+
+Se cometeu um erro na sua nova configuração e deseja voltar à anterior, duas maneiras lhe restam: pode ir ao menu do leitor e escolher a opção “voltar à configuração anterior” ou, de igual valor, dentro da janela da interface, pressionar ctrl+r.
+ 
+ 5.3  Configurações da interface do utilizador.
+
+Este quadro de diálogo encontra-se no menu “preferências” e permite:
+Mudar o idioma das mensagens e da interface;
+Mostrar (ou não) a janela da interface;
+Salvar (ou não) as configurações ao sair.
+
+ 5.4 sintetizadores.
+
+Esta opção encontra-se no  menu “preferências” e permite que se escolham os sintetizadores a usar, que podem ser sapi 4 ou 5. Também aqui pode ser encontrada uma opção de silêncio, que será de grande utilidade, quando se implementar o uso do NVDA com linhas Braille.
+
+5.5 configuração de voz.
+
+ A configuração de voz, no menu preferências, abre uma caixa de diálogo que lhe permite mudar a voz que usará o NVDA assim como mudar a sua velocidade
+de verbalização e o seu volume.
+
+ A velocidade de verbalização pode alterar-se desde qualquer lugar do sistema pressionando as teclas insert+pág acima ou insert+pág abaixo. insert +pág
+acima aumentará em 5% e insert+pág abaixo diminuirá em 5% a velocidade de verbalização.
+
+ Neste menu há mais duas opções que são: verbalizar sinais de pontuação e dizer  encabeçamento antes das maiúsculas.
+
+ A verbalização da pontuação permite lhe escolher se o NVDA  verbalizará os sinais de pontuação ou se só os usará  para controlar o modelo de verbalização.
+
+ A opção de verbalizar encabeçamento antes de caracteres em maiúsculas, diz ao NVDA  que deve dizer a palavra encabeçamento antes de verbalizar qualquer caracter em
+maiúsculas. Usualmente o NVDA aumentará o tom da voz para as letras maiúsculas mas nem todas as vozes suportam esta funcionalidade, pelo que pode ser útil activar
+esta opção.
+
+ 5.6 eco de teclado.
+
+ O NVDA pode verbalizar desde os caracteres e palavras que sejam escritas, até as combinações de teclas que pressione. todas estas opções são configuráveis
+desde   o eco de teclado (opção que se encontra no menu preferências)
+
+ Para alterar estas opções, desde qualquer lugar do sistema, deve pressionar  as seguintes combinações de teclas :
+
+ Insert+2 do teclado alfanumérico para activar ou desactivar verbalização de caracteres .
+
+ Insert+ 3 do teclado alfanumérico para activar ou desactivar verbalização de palavras e  Insert +4 do teclado alfanumérico para activar ou desactivar verbalização
+de teclas de comando.
+
+ 5.7 configuração do rato (mouse).
+
+ pode configurar-se o NVDA para anunciar quando a posição do cursor mude  (como por exemplo quando um programa se está a carregar) ou quando se movimenta o rato para qualquer campo de edição. Também pode configurar o NVDA  se quer  que automaticamente  verbalize o que há actualmente debaixo do rato,
+como seu movimento.
+
+ Estas opções podem encontrar-se na caixa de diálogo de configuração do Mouse (rato) que está no menu preferências.
+
+ 5.8 apresentação dos objectos.
+
+ A opção de apresentação de objectos, abre uma caixa de diálogo que lhe permite configurar como o NVDA trata certos controlos (ou objectos)
+em Windows.
+
+ pode dizer-se ao NVDA se deseja ler as ajudas quando estas apareçam , se  quer o estado de um objecto (por exemplo se está verificado, seleccionado,
+premido, etc. etc.) ou se quer que o NVDA  emita um assobio (sinal sonoro) quando uma barra de progresso se esteja a movimentar.
+
+ 6 navegar com o NVDA.
+
+ 6.1 navegar por focos.
+
+ A maneira mais comum de navegar pelo Windows com o NVDA é simplesmente  movimentar-se com os comandos normais do teclado,  como por exemplo tab. ou shift+tab.
+para avançar ou retroceder entre objectos., pressionar Alt. para aceder à barra de menus e depois navegar por eles com as setas, usando Alt. + tab. para
+movimentar-se entre aplicações em processo; fazendo isto, o NVDA anunciará  o que  está no foco.
+
+ Quando o NVDA anuncia um objecto (Ex. quando recebe o foco). Usualmente  diz o nome do objecto , tipo, valor, descrição, atalho de teclado e informação de
+sua posição.
+
+ Isto é bastante similar em outros leitores de tela, no entanto os objectos podem ser algo diferentes .
+
+ 6.2 navegação de objectos.
+
+ Se se deseja navegar ao redor de alguns objectos mas sem movimentar o foco, pode usar-se a navegação por objectos do NVDA, isto permitir-lhe-á
+movimentar-se objecto por objecto, como em uma estrutura de árvore.
+
+ A estrutura em árvore dos objectos, começa na área de trabalho do Windows, que é o seu tronco. 
+
+ os galhos principais da árvore são as aplicações actualmente em processo; e certamente estas aplicações têm os seus próprios galhos (os objectos) representando
+várias partes da aplicação.
+
+ A estrutura pode tornar-se bastante comprida mas isso permite lhe navegar em uma ordem lógica ; assim poder-se-á encontrar rapidamente a informação
+De que se necessita.
+
+ Esta estrutura não tem nada que ver com a forma como os objectos  se colocam no ecrã, mas sim com a forma como logicamente se relacionam.  pode perder-se 
+um pouco de tempo acostumar-se a isto, mas  uma vez que se compreenda, fica-se preparado para movimentar-se  facilmente por todas as janelas.  
+
+ Actualmente o NVDA não pode navegar nos objectos pelo design de um ecrã devido a que não usa controlador de vídeo  nem conectores de ecrã.
+
+ O NVDA escolhe não interagir com o ecrã, porque os seus objectivos são os de permitir  uma percepção lógica de uma aplicação e do sistema
+operativo, em lugar de tratar de obter uma imagem plana do ecrã.
+
+ Nem todas as aplicações têm uma estrutura em árvore perfeita, mas  isto depende do programador da aplicação em particular; muitas parecem estar bem desenhadas, permitindo que o leitor cumpra os seus principais objectivos.
+
+ Para navegar por objectos, use os seguintes comandos:
+
+ Verbalizar objecto actual  insert+ 5 do teclado numérico. 
+Mover-se para o objecto superior ou objecto origem ( movimentar-se para o tronco da árvore) insert+8 do teclado  numérico. 
+Movimentar-se para o objecto anterior (o objecto directamente antes deste , no mesmo nível)  insert+4 do teclado numérico. 
+Movimentar-se para o objecto seguinte ( o objecto imediatamente depois deste , no mesmo nível) insert+6 do teclado numérico. 
+Movimentar-se para o primeiro objecto  inferior ( o primeiro
+galho  que sai deste) insert+2 do teclado numérico. 
+Movimentar-se para o foco  insert+ tecla menos do bloco numérico. 
+Activar objecto actual (Ex. Pressionar
+enter , clique  ou Duplo clique sobre o mesmo)  insert+ enter do bloco numérico. 
+Movimentar o rato (Mouse) para o objecto actual insert+ tecla dividir do bloco numérico. Movimentar-se para o rato (Mouse) insert+ tecla multiplicar do bloco numérico.
+
+ 6.3 verificar texto no objecto activo.
+
+ Algumas vezes pode querer saber-se como se soletra algo, ou provavelmente pode necessitar-se de  ler algo por palavras. pode observar-se o texto do
+objecto activo com os seguintes comandos :
+
+ Linha superior insert+7 do teclado numérico. 
+Linha anterior tecla 7 do teclado numérico 
+Linha actual tecla 8 do teclado numérico  
+Linha seguinte tecla 9 do teclado numérico  
+Linha inferior shift+9 do teclado numérico 
+Palavra anterior  tecla 4 do teclado numérico 
+Palavra actual tecla 5 do teclado numérico
+Palavra seguinte tecla 6 do teclado numérico 
+Início de linha shift+1 do teclado numérico 
+Caracter anterior tecla 1 do teclado numérico 
+Caracter actual tecla 2 do teclado numérico 
+Caracter seguinte tecla 3 do teclado numérico  
+Fim de linha shift+3 do teclado numérico 
+Ler todo o texto shift + tecla mais do teclado numérico
+
+ para a maioria dos objectos , o texto  neles contido está identificado por nome , valor e descrição. No entanto, para os objectos que actualmente contêm texto real
+ou conteúdo editável,  o texto actual é o texto no objecto.
+
+ Por exemplo: um objecto de uma lista, terá texto que contenha seu nome, valor e descrição, mas  em um campo de edição ou na linha de comando do DOS do Windows,
+terá o texto actual que esteja no campo de edição ou em Windows.
+
+ 6.4 navegar com o sistema realçado.
+
+ Quando o foco está sobre um objecto que está em forma de cursor de edição (sistema realçado),  pode deslocar-se  por ele normalmente como se goste.
+ o NVDA  anunciará que nos estamos a movimentar por caracteres, palavras, linhas e também anunciará se o texto está seleccionado ou não.
+
+ Quando nos movimentamos com o sistema realçado, a posição do cursor de revisão também se actualizará para coincidir com este sistema.
+
+ também se pode ler todo o texto  (verbalizar tudo) usando as teclas insert+ seta abaixo. Note  no entanto, que isto é diferente de usar  insert+ tecla
+mais que só movimenta o cursor de revisão; 
+
+ 6.5 navegar com o rato (mouse).
+
+ Quando se movimenta o rato, o NVDA pode verbalizar o objecto que se encontre precisamente por baixo do ponteiro do rato(Mouse) se o configurar para isso.
+
+ Inclusive usando o rato (Mouse) uma pessoa cega pode obter uma ideia de como está disposto o ecrã .. o NVDA  só pode ler o objecto que está debaixo do rato,
+ainda não pode ler informação textual específica ou detalhes característicos.
+
+ 7 Modos virtuais.
+
+ Os documentos complexos, como por exemplo as páginas Site, estão representadas no NVDA  como um modo virtual.
+
+ Um modo virtual, é uma representação em texto plano de um documento que permite ao usuário deslocar-se  pelo mesmo, ler o texto e os campos que estejam
+no documento. À parte disto , também se pode pressionar enter ou barra de espaços sobre links ou botões para activá-los, pressionar enter ou barra
+de espaço em campos de edição  para modificar seu conteúdo, pressionar enter ou barra de espaço em quadros de verificação ou botões de opção para seleccioná-los
+e pressionar enter ou barra de espaço em quadros combinados para habilitar   a mudança de selecção de opções.
+
+ Quando nos deslocamos por um campo (como por exemplo uma ligação) o NVDA verbaliza o tipo de campo; no entanto esta informação não está fisicamente representada
+no modo virtual, o que significa que o senhor pode deslocar-se normalmente através do texto..
+
+ Actualmente o NVDA possui modos virtuais para mozilla FIRE fox e para Internet Explorer. O modo virtual tem a capacidade de actualizar-se dinamicamente,
+mas actualmente só o mozilla FIRE fox usa dita característica. Mesmo que provavelmente  o Internet Explorer mostre correctamente as páginas, o mozilla
+FIRE fox é muito melhor  com o conteúdo  que muda devido a java script etc. etc.
+
+ Por causa da complexidade dos modos virtuais, o NVDA  pode levar um pouco de tempo para carregar algumas páginas . algumas se carregarão rapidamente,
+mas outras, algo maiores, demorarão algo mais, cerca de 5 segundos ou mais.
+
+ Para uma navegação mais rápida, o NVDA também fornece algumas teclas individuais  para nos deslocarmos a certos campos no modo virtual. Por se mesmas , movem-se para o
+campo seguinte e  com a tecla shift deslocam-se para o campo anterior..
+
+ Estas teclas são as seguintes:
+
+ Encabeçamentos tecla h  
+listas tecla l  
+Objectos de listas tecla i  
+Tabela tecla t  
+Ligação tecla k  
+Parágrafo tecla  p 
+Campo de formulário tecla f 
+
+ Algumas vezes pode desejar-se interagir com alguns formulários sem a combinação  do modo virtual; de alguma maneira, o modo virtual ultrapassa exactamente
+este problema  e pode alternar-se de activado a desativado pressionando insert+ barra de espaço.
+
+ No entanto, geralmente quando se pressiona sobre um formulário este activa-se automaticamente e quando se carrega uma nova página, se desactiva sem que haja necessidade de fazer algo.
+
+ 8 assobios (sinais sonoros) da barra de progresso.
+
+ Em Windows, a barra de progresso usa-se para indicar quando uma tarefa foi completada, como por exemplo, copiar arquivos no internet Explorer,, carregar
+um site,  ou revisar o correio no Outlook Express, tudo  isto usa uma barra de progresso.
+
+ O NVDA pode emitir um assobio para indicar-lhe onde se encontra a barra de progresso. Se o assobio é alto e perto, quer dizer que a barra está a 100%.
+Facilmente se aprenderá a distinguir, segundo o assobio, Qual o estado e progressão da barra de progresso.
+
+ 9 modo de assobio verbal.
+
+ O modo de assobio verbal no NVDA é um modo no qual em lugar de verbalizar tudo, o NVDA  simplesmente emite um assobio rápido e forte. Isto é muito útil
+quando se está a realizar tarefas onde há muitos ecrãs de actualização , como por exemplo a usar um programa para queimar CD desde a linha de comandos do DOS ou copiando grande quantidade de arquivos.
+
+ Em lugar de escutar cada arquivo ou cada percentagem, ou em lugar de pressionar constantemente a tecla controle para calar a verbalização, pode
+pressionar as teclas insert +s duas vezes e activar  o modo de assobio verbal. Tudo o que se escutará, serão pequenos assobios até que a tela se detenha
+o que lhe indica que a tarefa terminou.
+
+ Para voltar ao modo normal , só terá de pressionar insert+ s  novamente .
+ 
