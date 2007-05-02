@@ -54,6 +54,7 @@ def setSynth(name):
 		debug.writeMessage("Loaded synthDriver %s"%name)
 		return True
 	except:
+		debug.writeException("setSynth")
 		if not _curSynth and name not in ['sapi5','silence']:
 			setSynth('sapi5')
 		elif not _curSynth and name=='sapi5':
