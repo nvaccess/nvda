@@ -142,13 +142,19 @@ def speak(msg, index=None, wait=False):
 def stop():
 	global isSpeaking, bgQueue
 	# Kill all speech from now.
+	# We still want parameter changes to occur, so requeue them.
+	params = []
 	while not bgQueue.empty():
-		bgQueue.get_nowait()
+		item = bgQueue.get_nowait()
+		if item[0] == espeakDLL.espeak_SetParameter:
+			params.append(item)
+	for item in params:
+		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
 
 def setParameter(param,value,relative):
-	espeakDLL.espeak_SetParameter(param,value,relative)
+	_bgExec(espeakDLL.espeak_SetParameter,param,value,relative)
 
 def getParameter(param,current):
 	return espeakDLL.espeak_GetParameter(param,current)
