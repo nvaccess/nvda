@@ -32,7 +32,7 @@ def getSynth():
 def setSynth(name):
 	global _curSynth
 	if name=='auto':
-		name='sapi5'
+		name='espeak'
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver()
 		newSynth.initialize()
@@ -55,8 +55,8 @@ def setSynth(name):
 		return True
 	except:
 		debug.writeException("setSynth")
-		if not _curSynth and name not in ['sapi5','silence']:
-			setSynth('sapi5')
-		elif not _curSynth and name=='sapi5':
+		if not _curSynth and name not in ['espeak','silence']:
+			setSynth('espeak')
+		elif not _curSynth and name=='espeak':
 			setSynth('silence')
 		return False
