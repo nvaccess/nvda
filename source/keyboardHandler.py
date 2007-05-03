@@ -17,6 +17,7 @@ import scriptHandler
 import globalVars
 import queueHandler
 import config
+import locale
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
@@ -118,7 +119,7 @@ def speakKey(keyPress,ascii):
 		if isTypingProtected():
 			char="*"
 		else:
-			char=unicode(chr(ascii), errors="replace")
+			char=unicode(chr(ascii), errors="replace", encoding=locale.getlocale()[1])
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			speech.speakSymbol(char)
 		if config.conf["keyboard"]["speakTypedWords"] and ((ascii >=128) or ((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
