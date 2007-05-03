@@ -24,10 +24,11 @@ build_exe.isSystemDLL = isSystemDLL
 def getLocaleDataFiles():
 	return [(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
 
-def getUserDocsDataFiles():
-	docs=[(os.path.dirname(f).replace("../user_docs","documentation"), (f,)) for f in glob("../user_docs/*/*.txt")]
-	docs.append(('documentation',glob('../user_docs/*.txt')))
-	return docs
+def getRecursiveDataFiles(dest,source):
+	rulesList=[]
+	rulesList.append((dest,filter(os.path.isfile,glob("%s/*"%source))))
+	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
+	return rulesList
 
 setup(
 	name = name,
@@ -53,11 +54,10 @@ setup(
 	data_files = [
 		("documentation", ['../copying.txt','../todo.txt','../bugs.txt']), 
 		("comInterfaces", glob("comInterfaces/*.pyc")),
-		("synthDrivers", glob("synthDrivers/*.py*")),
 		("appModules", glob("appModules/*.py*")),
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.png")),
-	] + getLocaleDataFiles()+getUserDocsDataFiles(),
+	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers'),
 )
