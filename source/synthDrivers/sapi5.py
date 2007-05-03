@@ -87,6 +87,7 @@ class SynthDriver(silence.SynthDriver):
 
 	def speakText(self,text,wait=False,index=None):
 		flags=constants.SVSFIsXML
+		text=text.replace("<","&lt;")
 		pitch=(self._pitch/2)-25
 		if isinstance(index,int):
 			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
