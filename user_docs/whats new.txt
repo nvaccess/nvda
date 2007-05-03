@@ -1,4 +1,11 @@
-Changes since 425:
+Whatès New in NVDA
+
+Changes since r425:
+*NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.
+It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will be used by default. 
+eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
+For more info on eSpeak, or to find other versions, go to
+http://espeak.sourceforge.net/.
 *Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 *Added support for more edit fields in Skype.
 *VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.
