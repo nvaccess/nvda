@@ -49,9 +49,12 @@ setup(
 'Operating System :: Microsoft :: Windows',
 ],
 	windows = ["nvda.pyw"],
-	options = {"py2exe": {"bundle_files": 3}},
+	options = {"py2exe": {
+		"bundle_files": 3,
+		"includes": "nvwave",
+	}},
 	zipfile = None,
-	data_files = [
+	data_files=[
 		("documentation", ['../copying.txt','../todo.txt','../bugs.txt']), 
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("appModules", glob("appModules/*.py*")),
