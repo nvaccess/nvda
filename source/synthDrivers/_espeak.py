@@ -178,7 +178,7 @@ def getCurrentVoice():
 
 def setVoice(voice):
 	# For some weird reason, espeak_EspeakSetVoiceByProperties throws an integer divide by zero exception.
-	espeakDLL.espeak_SetVoiceByName(voice.name)
+	espeakDLL.espeak_SetVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
 	espeakDLL.espeak_SetVoiceByName(name)

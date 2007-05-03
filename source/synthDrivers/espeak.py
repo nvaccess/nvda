@@ -15,7 +15,7 @@ class SynthDriver(silence.SynthDriver):
 		return int(round(float(percent) / 100 * (max - min) + min))
 
 	def initialize(self):
-		_espeak.setParameter(_espeak.espeakRATE,300,0)
+		_espeak.setParameter(_espeak.espeakRATE,230,0)
 		_espeak.setVoiceByName("english")
 		self._voiceList=_espeak.getVoiceList()
 
