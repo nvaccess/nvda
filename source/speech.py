@@ -105,7 +105,8 @@ def processTextSymbols(text,expandPunctuation=False):
 	return text
 
 def processSymbol(symbol):
-	symbol=symbol.replace(u'\xa0',u' ')
+	if isinstance(symbol,basestring):
+		symbol=symbol.replace(u'\xa0',u' ')
 	newSymbol=characterSymbols.names.get(symbol,symbol)
 	return newSymbol
 
