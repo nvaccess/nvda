@@ -13,8 +13,8 @@ import speech
 import debug
 from keyUtils import sendKey, key
 import config
-import NVDAObjects
-import appModuleHandler
+import IAccessible
+import winEdit
 
 #Word constants
 
@@ -54,20 +54,10 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class appModule(appModuleHandler.appModule):
-
-	def __init__(self,appName,appWindow):
-		appModuleHandler.appModule.__init__(self,appName,appWindow)
-		NVDAObjects.IAccessible.registerNVDAObjectClass(self,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT,NVDAObject_wordDocument)
-
-	def __del__(self):
-		NVDAObjects.IAccessible.unregisterNVDAObjectClass(self,"_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT)
-		appModuleHandler.appModule.__del__(self)
-
-class NVDAObject_wordDocument(NVDAObjects.winEdit.NVDAObject_winEdit):
+class NVDAObject_wordDocument(winEdit.NVDAObject_winEdit):
 
 	def __init__(self,*args,**vars):
-		NVDAObjects.winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
+		winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
 		self.dom=self.getDocumentObjectModel()
 		self.text_reviewOffset=self.text_caretOffset
 

@@ -792,6 +792,7 @@ import richEdit
 import winConsole
 import MSHTML
 import sysListView32
+import winword
 
 _dynamicMap={}
 
@@ -856,4 +857,5 @@ _staticMap={
 ("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_sysLink,
 ("VsTextEditPane",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
 ("DirectUIHWND",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_directUIHwndText,
+("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winword.NVDAObject_wordDocument,
 }
