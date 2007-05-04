@@ -24,6 +24,7 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
+import locale
 
 class appModule(appModuleHandler.appModule):
 
@@ -44,7 +45,7 @@ class appModule(appModuleHandler.appModule):
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
 	def script_dateTime(self,keyPress,nextScript):
-		text=datetime.datetime.today().strftime("%I:%M %p, %A %B %d %Y")
+		text=unicode(datetime.datetime.today().strftime("%I:%M %p, %A %B %d %Y"), errors="replace", encoding=locale.getlocale()[1])
 		if text[0]=='0':
 			text=text[1:]
 		speech.speakMessage(text)
