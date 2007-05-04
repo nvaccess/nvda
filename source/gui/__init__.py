@@ -209,7 +209,7 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		core.applyConfiguration(reportDone=True)
+		core.resetConfiguration(reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		try:

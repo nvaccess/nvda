@@ -31,6 +31,10 @@ def getSynth():
 
 def setSynth(name):
 	global _curSynth
+	if name is None: 
+		_curSynth.terminate()
+		_curSynth=None
+		return True
 	if name=='auto':
 		name='espeak'
 	try:

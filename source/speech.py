@@ -38,6 +38,9 @@ def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
 	setSynth(config.conf["speech"]["synth"])
 
+def terminate():
+	setSynth(None)
+
 def processTextSymbols(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 

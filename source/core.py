@@ -27,11 +27,12 @@ Instructs the GUI that you want to quit. The GUI responds by bringing up a dialo
 """
 	gui.quit()
 
-def applyConfiguration(reportDone=False):
+def resetConfiguration(reportDone=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 @param reportDone: if true then this function will speak when done, if else it won't.
 @type reportDone: boolean
 """
+	speech.terminate()
 	config.load()
 	#Language
 	lang = config.conf["general"]["language"]
@@ -113,6 +114,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		debug.writeException("Mouse handler termination")
+	try:
+		speech.terminate()
+	except:
+		debug.writeException("speech termination")
 	if endResult==CORE_QUIT and globalVars.restart:
 		globalVars.restart=False
 		endResult=CORE_RESTART

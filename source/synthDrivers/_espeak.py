@@ -2,11 +2,14 @@ import nvwave
 import threading
 import Queue
 from ctypes import *
+import debug
 
 isSpeaking = False
 lastIndex = None
+bgThread=None
 bgQueue = None
 player = None
+espeakDLL=None
 
 #Parameter bounds
 minRate=50
@@ -96,7 +99,6 @@ class espeak_VOICE(Structure):
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
- 
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
@@ -112,23 +114,23 @@ def callback(wav,numsamples,event):
 		player.feed(string_at(wav, numsamples * sizeof(c_short)))
 	return 0
 
-espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
-espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
-espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-
 class BgThread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.setDaemon(True)
 
 	def run(self):
-		global bgQueue
+		global bgQueue, player, isSpeaking
 		while True:
 			func, args, kwargs = bgQueue.get()
 			if not func:
 				# Terminate.
-				bgQueue = None
 				espeakDLL.espeak_Terminate()
+				del espeakDLL
+				isSpeaking=False
+				bgQueue=None
+				player.close()
+				player=None
 				break
 			func(*args, **kwargs)
 			bgQueue.task_done()
@@ -194,14 +196,17 @@ def setVoiceByName(name):
 	espeakDLL.espeak_SetVoiceByName(name)
 
 def initialize():
-	global espeakDLL, bgQueue, player
+	global espeakDLL, bgThread, bgQueue, player
+	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
+	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=22050, bitsPerSample=16)
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
-	BgThread().start()
+	bgThread=BgThread()
+	bgThread.start()
 
 def terminate():
-	global bgQueue
 	bgQueue.put((None, None, None))
-	player.close()
+	bgThread.join()
