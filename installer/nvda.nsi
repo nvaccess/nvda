@@ -9,7 +9,7 @@
 Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
-!define READMEFILE "documentation\readme.txt"
+!define READMEFILE "documentation\en\readme.txt"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
