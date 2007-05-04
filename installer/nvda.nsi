@@ -30,16 +30,13 @@ SetDateSave on
 XPStyle on
 InstProgressFlags Smooth
 
-!define MUI_WELCOMEPAGE_TITLE "Welcome to the installation of ${PRODUCT}, a free and open source screen reader for Windows"
-!define MUI_WELCOMEPAGE_TEXT "Copyright 2006 - 2007 by Michael Curran\n\
-This wizard will guide you through the installation of ${PRODUCT}\n\
-It is recommended that you close all other applications before starting Setup. This will allow Setup to update certain \
-system files without rebooting your computer.$\n"
+!define MUI_WELCOMEPAGE_TITLE $(msg_WelcomePageTitle)
+!define MUI_WELCOMEPAGE_TEXT $(msg_WelcomePageText)
 
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\${READMEFILE}
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "View README file (recommended)"
-!define MUI_FINISHPAGE_LINK "Visit the official NVDA web site"
+!define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 
