@@ -128,6 +128,7 @@ class BgThread(threading.Thread):
 			if not func:
 				# Terminate.
 				bgQueue = None
+				espeakDLL.espeak_Terminate()
 				break
 			func(*args, **kwargs)
 			bgQueue.task_done()
