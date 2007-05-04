@@ -42,14 +42,14 @@ CALLBACK_FUNCTION = 0x30000
 
 class WavePlayer:
 
-	def __init__(self, channels, samplesPerSec, avgBytesPerSec, blockAlign, bitsPerSample):
+	def __init__(self, channels, samplesPerSec, bitsPerSample):
 		wfx = WAVEFORMATEX()
 		wfx.wFormatTag = WAVE_FORMAT_PCM
 		wfx.nChannels = channels
 		wfx.nSamplesPerSec = samplesPerSec
-		wfx.nAvgBytesPerSec = avgBytesPerSec
-		wfx.nBlockAlign = blockAlign
 		wfx.wBitsPerSample = bitsPerSample
+		wfx.nBlockAlign = bitsPerSample / 8 * channels
+		wfx.nAvgBytesPerSec = samplesPerSec * wfx.nBlockAlign
 		waveout = HANDLE(0)
 		res = winmm.waveOutOpen(byref(waveout), WAVE_MAPPER, LPWAVEFORMATEX(wfx), DWORD(0), DWORD(0), DWORD(CALLBACK_NULL))
 		if res != MMSYSERR_NOERROR:
@@ -71,7 +71,14 @@ class WavePlayer:
 			# todo: Wait for an event instead of spinning.
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
 				time.sleep(0.005)
+			res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+			if res != MMSYSERR_NOERROR:
+				raise RuntimeError("Error unpreparing buffer: code %d" % res)
 		self._prev_whdr = whdr
 
 	def stop(self):
 		winmm.waveOutReset(self._waveout)
+
+	def close(self):
+		winmm.waveOutClose(self._waveout)
+		self._waveout = None

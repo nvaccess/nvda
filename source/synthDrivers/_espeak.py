@@ -5,7 +5,8 @@ from ctypes import *
 
 isSpeaking = False
 lastIndex = None
-bgQueue = Queue.Queue()
+bgQueue = None
+player = None
 
 #Parameter bounds
 minRate=50
@@ -111,6 +112,10 @@ def callback(wav,numsamples,event):
 		player.feed(string_at(wav, numsamples * sizeof(c_short)))
 	return 0
 
+espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
+espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
+
 class BgThread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
@@ -120,6 +125,10 @@ class BgThread(threading.Thread):
 		global bgQueue
 		while True:
 			func, args, kwargs = bgQueue.get()
+			if not func:
+				# Terminate.
+				bgQueue = None
+				break
 			func(*args, **kwargs)
 			bgQueue.task_done()
 
@@ -183,11 +192,15 @@ def setVoice(voice):
 def setVoiceByName(name):
 	espeakDLL.espeak_SetVoiceByName(name)
 
-# Initialise.
-espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
-espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,100,"synthDrivers")
-player = nvwave.WavePlayer(1, 22050, 44100, 2, 16)
-espeakDLL.espeak_SetSynthCallback(callback)
-espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
-espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-BgThread().start()
+def initialize():
+	global espeakDLL, bgQueue, player
+	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=22050, bitsPerSample=16)
+	espeakDLL.espeak_SetSynthCallback(callback)
+	bgQueue = Queue.Queue()
+	BgThread().start()
+
+def terminate():
+	global bgQueue
+	bgQueue.put((None, None, None))
+	player.close()
