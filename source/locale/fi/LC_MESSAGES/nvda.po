@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r632\n"
-"POT-Creation-Date: 2007-05-04 11:00+Kesäaika\n"
-"PO-Revision-Date: 2007-05-04 11:57+0300\n"
+"Project-Id-Version: r648\n"
+"POT-Creation-Date: 2007-05-05 11:12+Kesäaika\n"
+"PO-Revision-Date: 2007-05-05 11:20+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "alavalikko"
 #: IAccessibleHandler.py:189 NVDAObjects\IAccessible.py:205
 #: NVDAObjects\baseType.py:176 virtualBuffers\MSHTML.py:113
 #: virtualBuffers\MSHTML.py:312 virtualBuffers\MSHTML.py:317
-#: virtualBuffers\gecko.py:302 virtualBuffers\gecko.py:307
+#: virtualBuffers\gecko.py:300 virtualBuffers\gecko.py:305
 msgid "not %s"
 msgstr "ei %s"
 
@@ -326,7 +326,8 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object"
 msgstr ""
-"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle riville"
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle "
+"riville"
 
 #: appModules\_default.py:254
 msgid ""
@@ -340,7 +341,8 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the next line of the current navigator object"
 msgstr ""
-"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle riville"
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle "
+"riville"
 
 #: appModules\_default.py:270
 msgid ""
@@ -1162,7 +1164,7 @@ msgstr "Kirjoita nykyiset asetukset nvda.ini-tiedostoon"
 msgid "E&xit"
 msgstr "&Lopeta"
 
-#: gui\__init__.py:143 gui\__init__.py:227
+#: gui\__init__.py:143 gui\__init__.py:233
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
@@ -1240,82 +1242,98 @@ msgstr "Dokumentin &muotoilu...\tctrl+shift+f"
 msgid "&Preferences"
 msgstr "&Asetukset"
 
-#: gui\__init__.py:175
+#: gui\__init__.py:176
+msgid "NVDA homepage..."
+msgstr "NVDA:n kotisivu..."
+
+#: gui\__init__.py:176
+msgid "Opens NVDA homepage in the default browser"
+msgstr "Avaa NVDA:n kotisivun oletusselaimessa"
+
+#: gui\__init__.py:179
+msgid "NVDA wiki..."
+msgstr "NVDA-wiki..."
+
+#: gui\__init__.py:179
+msgid "Opens NVDA wiki in the default browser"
+msgstr "Avaa NVDA-wikin oletusselaimessa"
+
+#: gui\__init__.py:181
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:175 gui\__init__.py:274
+#: gui\__init__.py:181 gui\__init__.py:286
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
-#: gui\__init__.py:177 gui\__init__.py:178
+#: gui\__init__.py:183 gui\__init__.py:184
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:190 gui\scriptUI.py:52 gui\scriptUI.py:61
+#: gui\__init__.py:196 gui\scriptUI.py:52 gui\scriptUI.py:61
 #: gui\scriptUI.py:74
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\__init__.py:217
+#: gui\__init__.py:223
 msgid "configuration saved"
 msgstr "asetukset tallennettu"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Asetuksia ei voi tallentaa - tiedostojärjestelmä luultavasti vain luku -"
 "tyyppiä"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:233
 msgid "Press OK to quit NVDA"
 msgstr "Sulje NVDA painamalla OK"
 
-#: gui\__init__.py:236
+#: gui\__init__.py:242
 msgid "User interface settings"
 msgstr "Käyttöliittymän asetukset"
 
-#: gui\__init__.py:240 gui\settingsDialogs.py:77
+#: gui\__init__.py:246 gui\settingsDialogs.py:77
 msgid "Synthesizer"
 msgstr "Syntetisaattori"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:250
 msgid "Voice settings"
 msgstr "Puheasetukset"
 
-#: gui\__init__.py:248
+#: gui\__init__.py:254
 msgid "Keyboard echo settings"
 msgstr "Näppäinkaiutuksen asetukset"
 
-#: gui\__init__.py:252
+#: gui\__init__.py:258
 msgid "Mouse settings"
 msgstr "Hiiriasetukset"
 
-#: gui\__init__.py:256
+#: gui\__init__.py:262
 msgid "Object presentation"
 msgstr "Objektien lukeminen"
 
-#: gui\__init__.py:260
+#: gui\__init__.py:266
 msgid "virtual buffers"
 msgstr "näennäispuskurit"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:270
 msgid "Document formatting"
 msgstr "Dokumentin muotoilu"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:285
 msgid "copyright"
 msgstr "tekijänoikeus"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:285
 msgid "maintainer"
 msgstr "ylläpitäjä"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:285
 msgid "url"
 msgstr "osoite"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:285
 msgid "version"
 msgstr "versio"
 
@@ -1542,7 +1560,7 @@ msgstr "Kuvaus: %s"
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: speech.py:234
+#: speech.py:235
 msgid "cap %s"
 msgstr "iso %s"
 
@@ -1619,12 +1637,12 @@ msgid "subscript"
 msgstr "alaindeksi"
 
 #: textBuffer.py:364 textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
-#: virtualBuffers\baseType.py:319
+#: virtualBuffers\baseType.py:312
 msgid "top"
 msgstr "yläreuna"
 
 #: textBuffer.py:369 textBuffer.py:382 textBuffer.py:403 textBuffer.py:424
-#: virtualBuffers\baseType.py:334
+#: virtualBuffers\baseType.py:327
 msgid "bottom"
 msgstr "alareuna"
 
@@ -1694,26 +1712,26 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html,\n"
 "tai katso tämän ohjelmiston mukana toimitettua Copying.txt-tiedostoa."
 
-#: virtualBuffers\MSHTML.py:134 virtualBuffers\gecko.py:159
+#: virtualBuffers\MSHTML.py:134 virtualBuffers\gecko.py:157
 msgid "loading document %s"
 msgstr "ladataan dokumenttia %s"
 
-#: virtualBuffers\MSHTML.py:142 virtualBuffers\gecko.py:168
+#: virtualBuffers\MSHTML.py:142 virtualBuffers\gecko.py:166
 msgid "done"
 msgstr "valmis"
 
 #: virtualBuffers\MSHTML.py:248 virtualBuffers\MSHTML.py:252
-#: virtualBuffers\MSHTML.py:259 virtualBuffers\gecko.py:264
+#: virtualBuffers\MSHTML.py:259 virtualBuffers\gecko.py:262
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
 #: virtualBuffers\MSHTML.py:255 virtualBuffers\MSHTML.py:262
-#: virtualBuffers\gecko.py:259 virtualBuffers\gecko.py:269
+#: virtualBuffers\gecko.py:257 virtualBuffers\gecko.py:267
 msgid "bullet"
 msgstr "nuoli"
 
 #: virtualBuffers\MSHTML.py:258 virtualBuffers\MSHTML.py:265
-#: virtualBuffers\gecko.py:263 virtualBuffers\gecko.py:275
+#: virtualBuffers\gecko.py:261 virtualBuffers\gecko.py:273
 msgid "definition"
 msgstr "määritelmä"
 
@@ -1761,159 +1779,159 @@ msgstr "taulukon alatunniste"
 msgid "table body"
 msgstr "taulukon sisältö"
 
-#: virtualBuffers\baseType.py:240
+#: virtualBuffers\baseType.py:233
 msgid "out of %s"
 msgstr "kautta %s"
 
-#: virtualBuffers\baseType.py:321
+#: virtualBuffers\baseType.py:314
 msgid "moves one page up in the virtual buffer's current document"
 msgstr ""
 "Siirtää yhden sivun ylös näennäispuskurin nykyisessä dokumentissa"
 
-#: virtualBuffers\baseType.py:336
+#: virtualBuffers\baseType.py:329
 msgid "moves one page down in the virtual buffer's current document"
 msgstr "Siirtää yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
 
-#: virtualBuffers\baseType.py:340
+#: virtualBuffers\baseType.py:333
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivoi kohdalla olevan objektin näennäispuskurissa"
 
-#: virtualBuffers\baseType.py:363 virtualBuffers\baseType.py:374
+#: virtualBuffers\baseType.py:356 virtualBuffers\baseType.py:367
 msgid "no more headings"
 msgstr "ei enempää otsikoita"
 
-#: virtualBuffers\baseType.py:364
+#: virtualBuffers\baseType.py:357
 msgid "moves to the next heading"
 msgstr "Siirtää seuraavan otsikon kohdalle"
 
-#: virtualBuffers\baseType.py:375
+#: virtualBuffers\baseType.py:368
 msgid "moves to the previous heading"
 msgstr "Siirtää edellisen otsikon kohdalle"
 
-#: virtualBuffers\baseType.py:385 virtualBuffers\baseType.py:396
+#: virtualBuffers\baseType.py:378 virtualBuffers\baseType.py:389
 msgid "no more paragraphs"
 msgstr "ei enempää kappaleita"
 
-#: virtualBuffers\baseType.py:386
+#: virtualBuffers\baseType.py:379
 msgid "moves to the next paragraph"
 msgstr "Siirtää seuraavan kappaleen kohdalle"
 
-#: virtualBuffers\baseType.py:397
+#: virtualBuffers\baseType.py:390
 msgid "moves to the previous paragraph"
 msgstr "Siirtää edellisen kappaleen kohdalle"
 
-#: virtualBuffers\baseType.py:407 virtualBuffers\baseType.py:418
+#: virtualBuffers\baseType.py:400 virtualBuffers\baseType.py:411
 msgid "no more tables"
 msgstr "ei enempää taulukoita"
 
-#: virtualBuffers\baseType.py:408
+#: virtualBuffers\baseType.py:401
 msgid "moves to the next table"
 msgstr "Siirtää seuraavan taulukon kohdalle"
 
-#: virtualBuffers\baseType.py:419
+#: virtualBuffers\baseType.py:412
 msgid "moves to the previous table"
 msgstr "Siirry edellisen taulukon kohdalle"
 
-#: virtualBuffers\baseType.py:429 virtualBuffers\baseType.py:440
+#: virtualBuffers\baseType.py:422 virtualBuffers\baseType.py:433
 msgid "no more links"
 msgstr "ei enempää linkkejä"
 
-#: virtualBuffers\baseType.py:430
+#: virtualBuffers\baseType.py:423
 msgid "moves to the next link"
 msgstr "Siirtää seuraavan linkin kohdalle"
 
-#: virtualBuffers\baseType.py:441
+#: virtualBuffers\baseType.py:434
 msgid "moves to the previous link"
 msgstr "Siirtää edellisen linkin kohdalle"
 
-#: virtualBuffers\baseType.py:451 virtualBuffers\baseType.py:462
+#: virtualBuffers\baseType.py:444 virtualBuffers\baseType.py:455
 msgid "no more lists"
 msgstr "ei enempää luetteloita"
 
-#: virtualBuffers\baseType.py:452
+#: virtualBuffers\baseType.py:445
 msgid "moves to the next list"
 msgstr "siirtää seuraavan luettelon kohdalle"
 
-#: virtualBuffers\baseType.py:463
+#: virtualBuffers\baseType.py:456
 msgid "moves to the previous list"
 msgstr "Siirtää edellisen luettelon kohdalle"
 
-#: virtualBuffers\baseType.py:473 virtualBuffers\baseType.py:484
+#: virtualBuffers\baseType.py:466 virtualBuffers\baseType.py:477
 msgid "no more list items"
 msgstr "ei enempää luettelon osia"
 
-#: virtualBuffers\baseType.py:474
+#: virtualBuffers\baseType.py:467
 msgid "moves to the next list item"
 msgstr "Siirtää seuraavan luettelon osan kohdalle"
 
-#: virtualBuffers\baseType.py:485
+#: virtualBuffers\baseType.py:478
 msgid "moves to the previous list item"
 msgstr "Siirtää edellisen luettelon osan kohdalle"
 
-#: virtualBuffers\baseType.py:495 virtualBuffers\baseType.py:506
+#: virtualBuffers\baseType.py:488 virtualBuffers\baseType.py:499
 msgid "no more form fields"
 msgstr "ei enempää lomakekenttiä"
 
-#: virtualBuffers\baseType.py:496
+#: virtualBuffers\baseType.py:489
 msgid "Move to the next form field"
 msgstr "Siirtää seuraavan lomakekentän kohdalle"
 
-#: virtualBuffers\baseType.py:507
+#: virtualBuffers\baseType.py:500
 msgid "moves to the previous form field"
 msgstr "Siirtää edellisen lomakekentän kohdalle"
 
-#: virtualBuffers\baseType.py:510
+#: virtualBuffers\baseType.py:503
 msgid "Find"
 msgstr "Etsi"
 
-#: virtualBuffers\baseType.py:510
+#: virtualBuffers\baseType.py:503
 msgid "Type the text you wish to find"
 msgstr "Kirjoita etsittävä teksti"
 
-#: virtualBuffers\baseType.py:520
+#: virtualBuffers\baseType.py:513
 msgid "Find Error"
 msgstr "Virhe"
 
-#: virtualBuffers\baseType.py:520
+#: virtualBuffers\baseType.py:513
 msgid "text: \"%s\" not found"
 msgstr "Tekstiä \"%s\" ei löydy"
 
-#: virtualBuffers\baseType.py:526
+#: virtualBuffers\baseType.py:519
 msgid "find a text pattern from the current cursor's position"
 msgstr "Etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
-#: virtualBuffers\baseType.py:530
+#: virtualBuffers\baseType.py:523
 msgid "find next occurrence of text"
 msgstr "Etsi seuraava tekstin esiintymä"
 
-#: virtualBuffers\baseType.py:549 virtualBuffers\baseType.py:550
+#: virtualBuffers\baseType.py:542 virtualBuffers\baseType.py:543
 msgid "h=headingQuickKey"
 msgstr "h=otsikko"
 
-#: virtualBuffers\baseType.py:551 virtualBuffers\baseType.py:552
+#: virtualBuffers\baseType.py:544 virtualBuffers\baseType.py:545
 msgid "f=formFieldQuickKey"
 msgstr "f=lomake"
 
-#: virtualBuffers\baseType.py:553 virtualBuffers\baseType.py:554
+#: virtualBuffers\baseType.py:546 virtualBuffers\baseType.py:547
 msgid "p=paragraphQuickKey"
 msgstr "p=kappale"
 
-#: virtualBuffers\baseType.py:555 virtualBuffers\baseType.py:556
+#: virtualBuffers\baseType.py:548 virtualBuffers\baseType.py:549
 msgid "t=tableQuickKey"
 msgstr "t=taulukko"
 
-#: virtualBuffers\baseType.py:557 virtualBuffers\baseType.py:558
+#: virtualBuffers\baseType.py:550 virtualBuffers\baseType.py:551
 msgid "k=linkQuickKey"
 msgstr "k=linkki"
 
-#: virtualBuffers\baseType.py:559 virtualBuffers\baseType.py:560
+#: virtualBuffers\baseType.py:552 virtualBuffers\baseType.py:553
 msgid "l=listQuickKey"
 msgstr "l=luettelo"
 
-#: virtualBuffers\baseType.py:561 virtualBuffers\baseType.py:562
+#: virtualBuffers\baseType.py:554 virtualBuffers\baseType.py:555
 msgid "i=listItemQuickKey"
 msgstr "i=luettelon osa"
 
-#: virtualBuffers\gecko.py:316
+#: virtualBuffers\gecko.py:314
 msgid "protected %s"
 msgstr "suojattu %s"
