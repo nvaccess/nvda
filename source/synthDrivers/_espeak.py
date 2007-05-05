@@ -127,10 +127,14 @@ class BgThread(threading.Thread):
 			func, args, kwargs = bgQueue.get()
 			if not func:
 				# Terminate.
-				espeakDLL.espeak_Terminate()
+				res=espeakDLL.espeak_Terminate()
+				if res!=EE_OK:
+					raise OSError("espeak_Terminate %d"%res)
 				isSpeaking=False
 				break
-			func(*args, **kwargs)
+			res=func(*args, **kwargs)
+			if res!=EE_OK:
+				raise OSError("%s, %d"%(str(func),res))
 			bgQueue.task_done()
 
 def _bgExec(func, *args, **kwargs):
@@ -141,7 +145,7 @@ def _speakBg(msg, index=None):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
-	espeakDLL.espeak_Synth(unicode(msg),0,0,0,0,espeakCHARS_WCHAR,byref(uniqueID),index)
+	return espeakDLL.espeak_Synth(unicode(msg),0,0,0,0,espeakCHARS_WCHAR,byref(uniqueID),index)
 
 def speak(msg, index=None, wait=False):
 	global bgQueue
@@ -188,19 +192,24 @@ def getCurrentVoice():
 
 def setVoice(voice):
 	# For some weird reason, espeak_EspeakSetVoiceByProperties throws an integer divide by zero exception.
-	espeakDLL.espeak_SetVoiceByName(voice.identifier)
+	res=espeakDLL.espeak_SetVoiceByName(voice.identifier)
+	if res!=EE_OK:
+		raise OSError("espeak_SetVoiceByName %d"%res)
 
 def setVoiceByName(name):
-	espeakDLL.espeak_SetVoiceByName(name)
+	res=espeakDLL.espeak_SetVoiceByName(name)
+	if res!=EE_OK:
+		raise OSError("espeak_SetVoiceByName, %d"%res)
 
 def initialize():
 	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
-	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=22050, bitsPerSample=16)
+	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
+	if sampleRate<0:
+		raise OSError("espeak_Initialize %d"%sampleRate)
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16)
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
 	bgThread=BgThread()
