@@ -1,3 +1,4 @@
+import time
 import nvwave
 import threading
 import Queue
@@ -121,18 +122,13 @@ class BgThread(threading.Thread):
 		self.setDaemon(True)
 
 	def run(self):
-		global bgQueue, player, isSpeaking
+		global isSpeaking
 		while True:
 			func, args, kwargs = bgQueue.get()
 			if not func:
 				# Terminate.
 				espeakDLL.espeak_Terminate()
-				del espeakDLL
-				raise RuntimeError("ding")
 				isSpeaking=False
-				bgQueue=None
-				player.close()
-				player=None
 				break
 			func(*args, **kwargs)
 			bgQueue.task_done()
@@ -203,6 +199,7 @@ def initialize():
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
+	espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=22050, bitsPerSample=16)
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
@@ -210,5 +207,11 @@ def initialize():
 	bgThread.start()
 
 def terminate():
+	global bgThread, bgQueue, player, espeakDLL 
 	bgQueue.put((None, None, None))
 	bgThread.join()
+	bgThread=None
+	bgQueue=None
+	player.close()
+	player=None
+	espeakDLL=None
