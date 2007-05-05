@@ -134,7 +134,7 @@ def speakKey(keyPress,ascii):
 				keyList+=keyPress[0]
 			keyList.append(keyPress[1])
 			label="+".join(keyList)
-			speech.speakMessage(keyList)
+			speech.speakMessage(label)
 		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
 			speech.speakMessage(word)
 			word=""
