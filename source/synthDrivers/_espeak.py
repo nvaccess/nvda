@@ -123,19 +123,22 @@ class BgThread(threading.Thread):
 
 	def run(self):
 		global isSpeaking
-		while True:
-			func, args, kwargs = bgQueue.get()
-			if not func:
-				# Terminate.
-				res=espeakDLL.espeak_Terminate()
+		try:
+			while True:
+				func, args, kwargs = bgQueue.get()
+				if not func:
+					# Terminate.
+					res=espeakDLL.espeak_Terminate()
+					if res!=EE_OK:
+						raise OSError("espeak_Terminate %d"%res)
+					isSpeaking=False
+					break
+				res=func(*args, **kwargs)
 				if res!=EE_OK:
-					raise OSError("espeak_Terminate %d"%res)
-				isSpeaking=False
-				break
-			res=func(*args, **kwargs)
-			if res!=EE_OK:
-				raise OSError("%s, %d"%(str(func),res))
-			bgQueue.task_done()
+					raise OSError("%s, %d"%(str(func),res))
+				bgQueue.task_done()
+		except:
+			debug.writeException("bgThread.run")
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue
