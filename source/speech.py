@@ -45,7 +45,8 @@ def processTextSymbols(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
 	#Convert non-breaking spaces to spaces
-	text=text.replace(u'\xa0',u' ')
+	if isinstance(text,basestring):
+		text=text.replace(u'\xa0',u' ')
 	#Limit groups of the same character to 5 or less.
 	trunkatedText=""
 	lastChar=""

@@ -128,6 +128,7 @@ class BgThread(threading.Thread):
 				# Terminate.
 				espeakDLL.espeak_Terminate()
 				del espeakDLL
+				raise RuntimeError("ding")
 				isSpeaking=False
 				bgQueue=None
 				player.close()

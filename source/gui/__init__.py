@@ -172,6 +172,12 @@ class MainFrame(wx.Frame):
 		menuBar.Append(menu_preferences,_("&Preferences"))
 		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
 		menu_help = wx.Menu()
+		id_homePageCommand=wx.NewId()
+		menu_help.Append(id_homePageCommand, _("NVDA homepage..."), _("Opens NVDA homepage in the default browser"))
+		wx.EVT_MENU(self, id_homePageCommand, self.onHomePageCommand)
+		id_nvdaWikiCommand=wx.NewId()
+		menu_help.Append(id_nvdaWikiCommand, _("NVDA wiki..."), _("Opens NVDA wiki in the default browser"))
+		wx.EVT_MENU(self, id_nvdaWikiCommand, self.onNvdaWikiCommand)
 		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
 		menuBar.Append(menu_help,_("&Help"))
@@ -263,6 +269,12 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self,evt):
 		d=documentFormattingDialog(self,-1,_("Document formatting"))
 		d.Show(True)
+
+	def onHomePageCommand(self,evt):
+		os.startfile("http://www.nvda-project.org")
+
+	def onNvdaWikiCommand(self,evt):
+		os.startfile("http://wiki.nvda-project.org")
 
 	def onAboutCommand(self,evt):
 		try:
