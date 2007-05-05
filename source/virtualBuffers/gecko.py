@@ -92,8 +92,6 @@ class virtualBuffer_gecko(virtualBuffer):
 	def event_reorder(self,obj,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
 			return nextHandler() 
-		if time.time()<(lastLoadTime+2):
-			return nextHandler()
 		if self.NVDAObject.states&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))

@@ -116,7 +116,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		curID=ID
 		ancestors=[]
 		ancestors_append=ancestors.append
-		while IDs[curID]['parent']:
+		while IDs.has_key(curID) and IDs[curID]['parent']:
 			curID=IDs[curID]['parent']
 			ancestors_append(curID)
 		ancestors.reverse()
@@ -128,7 +128,10 @@ class virtualBuffer(textBuffer.textBufferObject):
 		ancestors=self.getIDAncestors(ID)
 		ancestors.reverse()
 		for parentID in ancestors:
-			childNum=IDs[parentID]['children'].index(ID)
+			try:
+				childNum=IDs[parentID]['children'].index(ID)
+			except:
+				childNum=0
 			zOrder.insert(0,childNum)
 			ID=parentID
 		return zOrder
