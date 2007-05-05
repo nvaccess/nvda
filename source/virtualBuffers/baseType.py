@@ -144,13 +144,6 @@ class virtualBuffer(textBuffer.textBufferObject):
 			isAppending=True
 		#If this ID path already has a range, expand it to fit the new text
 		r=IDs[ID]['range']
-		if (r[1]==position) and (r[1]>r[0]):
-			#Grab the old text in this range and prepend it to the new text, dropping the newline 
-			#text="".join([self._textBuf[r[0]:r[1]-1],text])
-			#Remove the old text from the buffer as it will be added later along with the new text
-			#self._textBuf="".join([self._textBuf[0:r[0]],self._textBuf[r[1]:]])
-			position=position-1 #r[0]
-			isMurging=True
 		#clean up newLine characters  a bit
 		text=text.replace('\r\n','\n')
 		text=text.replace('\r','\n')
@@ -160,10 +153,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
 			text=wrapper.fill(text)
 		textLen=len(text)
-		if not isMurging:
-			self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
-		else:
-			self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position+1:]])
+		self._textBuf= "".join([self._textBuf[0:position],text,'\n',self._textBuf[position:]])
 		extraLength=textLen+1
 		r[1]=position+extraLength
 		#Recalculate the ranges of IDs that are before and after this ID in its family tree Z order
