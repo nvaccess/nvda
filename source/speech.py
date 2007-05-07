@@ -182,14 +182,28 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		if isinstance(roleNum,int) and (reason!=REASON_FOCUS or roleNum not in silentRolesOnFocus):
 			textList.append(controlTypes.speechRoleLabels[roleNum])
 	if states:
-		statesSet=obj.states
+		stateSet=obj.states
+		oldStateSet=obj._oldStates
+		positiveStateSet=stateSet
+		oldPositiveStateSet=oldStateSet
+		negativeStateSet=set()
+		oldNegativeStateSet=set()
+		if not role:
+			roleNum=obj.role
 		if reason==REASON_CHANGE:
-			statesSet=statesSet-obj._oldStates
-		roleNum=obj.role
-		if isinstance(statesSet,frozenset):
-			textList.extend([controlTypes.speechStateLabels[state] for state in statesSet if reason!=REASON_FOCUS or state not in silentPositiveStatesOnFocus.get(roleNum,frozenset())])
+			if silentPositiveStatesOnStateChange.has_key(roleNum):
+				positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[roleNum]
+				oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[roleNum]
+			textList.extend([controlTypes.speechStateLabels[state] for state in (positiveStateSet-oldPositiveStateSet)])
+		if reason==REASON_FOCUS:
+			if silentPositiveStatesOnFocus.has_key(roleNum):
+				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]
+			textList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
 		if spokenNegativeStates.has_key(roleNum):
-			textList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (spokenNegativeStates[roleNum]-statesSet)]) 
+			negativeStateSet=negativeStateSet|(spokenNegativeStates[roleNum]-stateSet)
+			if reason==REASON_CHANGE:
+				oldNegativeStateSet=oldNegativeStateSet|(spokenNegativeStates[roleNum]-oldStateSet)
+		textList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (negativeStateSet-oldNegativeStateSet)])
 	if value:
 		valueText=obj.value
 		if isinstance(valueText,basestring) and len(valueText)>0 and not valueText.isspace():
@@ -217,7 +231,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		if isinstance(containsText,basestring) and len(containsText)>0 and not containsText.isspace():
 			textList.append(_("contains %s")%containsText)
 	text=" ".join(textList)
-	if not text.isspace():
+	if len(text)>0 and not text.isspace():
 		text=processText(text)
 		getSynth().speakText(text)
 
@@ -287,6 +301,10 @@ silentRolesOnFocus=frozenset([
 silentPositiveStatesOnFocus={
 	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_SELECTED]),
+}
+
+silentPositiveStatesOnStateChange={
+	controlTypes.ROLE_CHECKBOX:frozenset([controlTypes.STATE_PRESSED]),
 }
 
 spokenNegativeStates={
