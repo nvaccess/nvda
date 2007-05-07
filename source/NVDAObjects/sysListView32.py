@@ -7,8 +7,8 @@
 import winUser
 import IAccessible
 
-class NVDAObject_listItem(IAccessible.NVDAObject_listItem):
+class NVDAObject_listItem(IAccessible.NVDAObject_IAccessible):
 
 	def _get_positionString(self):
 		totalCount=winUser.sendMessage(self.windowHandle,0x1004,0,0)
-		return _("%s of %s")%(self._accChild,totalCount)
+		return _("%s of %s")%(self.IAccessibleChildID,totalCount)

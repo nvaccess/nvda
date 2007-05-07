@@ -15,6 +15,13 @@ import IAccessible
 
 class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 
+	def _get_name(self):
+		name=super(NVDAObject_winEdit,self)._get_name()
+		if not isinstance(name,basestring):
+			name=""
+		if self.text_getText().strip()!=name.strip():
+			return name
+
 	def text_getText(self,start=None,end=None):
 		start=start if isinstance(start,int) else 0
 		end=end if isinstance(end,int) else len(self.value)

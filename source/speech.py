@@ -11,6 +11,8 @@
 
 import time
 import debug
+import api
+import controlTypes
 import config
 import tones
 from synthDriverHandler import *
@@ -33,6 +35,12 @@ re_sentence_colon=re.compile(r"(\w|\)|\"|'):(\s|$)")
 re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
 re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
+
+REASON_FOCUS=1
+REASON_QUERY=2
+REASON_CHANGE=3
+REASON_MESSAGE=4
+REASON_DEBUG=5
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -141,49 +149,18 @@ def cancelSpeech():
 	getSynth().cancel()
 	beenCanceled=True
 
-def speakMessage(text,wait=False,index=None):
+def speakMessage(text,wait=False):
 	"""Speaks a given message.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
 @type wait: boolean
-@param index: the index to mark this current text with 
-@type index: int
 """
 	global beenCanceled
-	if speechMode==speechMode_off:
-		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
-		return
-	beenCanceled=False
-	text=processText(text)
-	if text and not text.isspace():
-		getSynth().speakText("\n"+text+"\n",wait=wait,index=index)
+	speakText(text,wait=wait,reason=REASON_MESSAGE)
 
-def speakObjectProperties(name=None,typeString=None,stateText=None,value=None,description=None,keyboardShortcut=None,position=None,level=None,contains=None,wait=False,index=None):
-	"""Speaks some given object properties.
-This function will not speak if L{speechMode} is false.
-@param name: object name
-@type name: string
-@param typeString: object type string
-@type typeString: string
-@param stateText: object state text
-@type stateText: string
-@param value: object value
-@type value: string
-@param description: object description
-@type description: string
-@param keyboardShortcut: object keyboard shortcut
-@type keyboardShortcut: string
-@param position: object position info
-@type position: string
-@param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
-@type wait: boolean
-@param index: the index to mark this current text with 
-@type index: int
-"""
+def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,reason=REASON_QUERY):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -191,20 +168,59 @@ This function will not speak if L{speechMode} is false.
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	beenCanceled=False
-	if description and name==description:
-		description=None
-	text=""
-	if config.conf["presentation"]["sayStateFirst"] and (stateText is not None):
-		multiList=[stateText,name,typeString,value,description,level,contains,position]
-	else:
-		multiList=[name,typeString,value,stateText,description,level,contains,position]
-	if config.conf["presentation"]["reportKeyboardShortcuts"]:
-		multiList.append(keyboardShortcut)
-	for multi in filter(lambda x: isinstance(x,basestring) and (len(x)>0) and not x.isspace(),multiList):
-		text="%s %s"%(text,multi)
-	if text and not text.isspace():
+	textList=[]
+	if groupName:
+		groupNameText=obj.groupName
+		if isinstance(groupNameText,basestring) and len(groupNameText)>0 and not groupNameText.isspace():
+			textList.append(groupNameText)
+	if name:
+		nameText=obj.name
+		if isinstance(nameText,basestring) and len(nameText)>0 and not nameText.isspace():
+			textList.append(nameText)
+	if role:
+		roleNum=obj.role
+		if isinstance(roleNum,int) and (reason!=REASON_FOCUS or roleNum not in silentRolesOnFocus):
+			textList.append(controlTypes.speechRoleLabels[roleNum])
+	if states:
+		statesSet=obj.states
+		if reason==REASON_CHANGE:
+			statesSet=statesSet-obj._oldStates
+		roleNum=obj.role
+		if isinstance(statesSet,frozenset):
+			textList.extend([controlTypes.speechStateLabels[state] for state in statesSet if reason!=REASON_FOCUS or state not in silentPositiveStatesOnFocus.get(roleNum,frozenset())])
+		if spokenNegativeStates.has_key(roleNum):
+			textList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (spokenNegativeStates[roleNum]-statesSet)]) 
+	if value:
+		valueText=obj.value
+		if isinstance(valueText,basestring) and len(valueText)>0 and not valueText.isspace():
+			textList.append(valueText)
+	if description:
+		descriptionText=obj.description
+		if isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
+			textList.append(descriptionText)
+	if keyboardShortcut:
+		keyboardShortcutText=obj.keyboardShortcut
+		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
+			textList.append(keyboardShortcutText)
+	if positionString:
+		positionStringText=obj.positionString
+		if isinstance(positionStringText,basestring) and len(positionStringText)>0 and not positionStringText.isspace():
+			textList.append(positionStringText)
+	if level:
+		levelNum=obj.level
+		if isinstance(levelNum,int):
+			textList.append(_("level %d")%levelNum)
+	if contains:
+		containsText=obj.contains
+		if isinstance(containsText,basestring) and len(containsText)>0 and not containsText.isspace():
+			textList.append(_("contains %s")%containsText)
+	text=" ".join(textList)
+	if not text.isspace():
 		text=processText(text)
-		getSynth().speakText(text,wait=wait,index=index)
+		getSynth().speakText(text)
+
+def speakObject(obj,reason=REASON_QUERY):
+	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,reason=reason)
 
 def speakSymbol(symbol,wait=False,index=None):
 	"""Speaks a given single character.
@@ -239,7 +255,7 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	if uppercase:
 		getSynth().pitch=oldPitch
 
-def speakText(text,wait=False,index=None):
+def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
@@ -259,3 +275,20 @@ This function will not speak if L{speechMode} is false.
 	text=processText(text)
 	if text and not text.isspace():
 		getSynth().speakText(text,wait=wait,index=index)
+
+silentRolesOnFocus=frozenset([
+	controlTypes.ROLE_LISTITEM,
+	controlTypes.ROLE_MENUITEM,
+	controlTypes.ROLE_TREEVIEWITEM,
+])
+
+silentPositiveStatesOnFocus={
+	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
+	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_SELECTED]),
+}
+
+spokenNegativeStates={
+	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
+	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_EXPANDED]),
+	controlTypes.ROLE_CHECKBOX: frozenset([controlTypes.STATE_CHECKED]),
+}

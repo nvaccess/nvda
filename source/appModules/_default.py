@@ -116,7 +116,7 @@ class appModule(appModuleHandler.appModule):
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 		if obj:
 			api.setNavigatorObject(obj)
-			obj.speakObject()
+			speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the object that is directly under the mouse pointer")
 
 	def script_navigatorObject_current(self,keyPress,nextScript):
@@ -124,7 +124,7 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject.speakObject()
+		speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object")
 
@@ -145,7 +145,7 @@ class appModule(appModuleHandler.appModule):
 			speech.speakMessage(_("no focus"))
 		api.setNavigatorObject(obj)
 		speech.speakMessage(_("move to focus"))
-		obj.speakObject()
+		speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
 
 	def script_navigatorObject_parent(self,keyPress,nextScript):
@@ -156,7 +156,7 @@ class appModule(appModuleHandler.appModule):
 		curObject=curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			curObject.speakObject()
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No parents"))
 	script_navigatorObject_parent.__doc__=_("Sets the navigator object to the parent of the object it is currently on.")
@@ -169,7 +169,7 @@ class appModule(appModuleHandler.appModule):
 		curObject=curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			curObject.speakObject()
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No next"))
 	script_navigatorObject_next.__doc__=_("Sets the navigator object to the next object to the one it is currently on")
@@ -182,7 +182,7 @@ class appModule(appModuleHandler.appModule):
 		curObject=curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			curObject.speakObject()
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No previous"))
 	script_navigatorObject_previous.__doc__=_("Sets the navigator object to the previous object to the one it is currently on")
@@ -195,7 +195,7 @@ class appModule(appModuleHandler.appModule):
 		curObject=curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			curObject.speakObject()
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object to the one it is currently on")
@@ -217,7 +217,7 @@ class appModule(appModuleHandler.appModule):
 		curObject=curObject.parent
 		while curObject is not None:
 			speech.speakMessage("in")
-			curObject.speakObject()
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 			curObject=curObject.parent
 	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
 
@@ -413,13 +413,13 @@ class appModule(appModuleHandler.appModule):
 	def script_title(self,keyPress,nextScript):
 		obj=api.getForegroundObject()
 		if obj:
-			obj.speakObject()
+			speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_title.__doc__=_("Reports the title of the current application or foreground window")
 
 	def script_speakForeground(self,keyPress,nextScript):
 		obj=api.getForegroundObject()
 		if obj:
-			obj.speakObject()
+			speech.speakObject(obj,reason=speech.REASON_QUERY)
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 

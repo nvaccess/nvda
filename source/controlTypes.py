@@ -31,7 +31,11 @@ ROLE_TABLE=28
 ROLE_TABLECELL=29
 ROLE_TABLECOLUMN=30
 ROLE_TABLEROW=31
-ROLE_FRAME=32
+ROLE_TABLECOLUMNHEADER=32
+ROLE_TABLEROWHEADER=33
+ROLE_FRAME=34
+ROLE_TOOLBAR=35
+ROLE_SPLITBUTTON=36
 
 STATE_UNAVAILABLE=1
 STATE_SELECTED=2
@@ -67,10 +71,10 @@ speechRoleLabels={
 	ROLE_LISTITEM:_("list item"),
 	ROLE_GRAPHIC:_("graphic"),
 	ROLE_HELPBALLOON:_("help balloon"),
-	ROLE_TOOLTIP:_("tool tip")
+	ROLE_TOOLTIP:_("tool tip"),
 	ROLE_LINK:_("link"),
-	ROLE_TREEVIEW:_("tree view")
-	ROLE_TREEVIEWITEM:_("tree view item")
+	ROLE_TREEVIEW:_("tree view"),
+	ROLE_TREEVIEWITEM:_("tree view item"),
 	ROLE_TAB:_("tab"),
 	ROLE_TABCONTROL:_("tab control"),
 	ROLE_SLIDER:_("slider"),
@@ -82,6 +86,10 @@ speechRoleLabels={
 	ROLE_TABLECOLUMN:_("column"),
 	ROLE_TABLEROW:_("row"),
 	ROLE_FRAME:_("frame"),
+	ROLE_TOOLBAR:_("tool bar"),
+	ROLE_SPLITBUTTON:_("split button"),
+	ROLE_TABLECOLUMNHEADER:_("column header"),
+	ROLE_TABLEROWHEADER:_("row header"),
 }
 
 speechStateLabels={
@@ -96,7 +104,7 @@ speechStateLabels={
 	STATE_INVISIBLE:_("invisible"),
 	STATE_VISITED:_("visited"),
 	STATE_LINKED:_("linked"),
-	STATE_HASPOPUP:_("has popup"),
+	STATE_HASPOPUP:_("subMenu"),
 	STATE_PROTECTED:_("protected"),
 	STATE_REQUIRED:_("required"),
 }

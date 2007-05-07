@@ -145,7 +145,8 @@ def isVirtualBufferPassThrough():
 
 def createStateList(states):
 	"""Breaks down the given integer in to a list of numbers that are 2 to the power of their position.""" 
-	return filter(lambda x: x&states,[1<<bitVal for bitVal in xrange(32)])
+	return [x for x in [1<<y for y in xrange(32)] if x&states]
+
 
 def moveMouseToNVDAObject(obj):
 	"""Moves the mouse to the given NVDA object's position""" 

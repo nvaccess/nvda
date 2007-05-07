@@ -476,7 +476,7 @@ def manageEvent(name,window,objectID,childID):
 	focusObject=api.getFocusObject()
 	obj=None
 	for testObject in [o for o in [focusObject,foregroundObject,desktopObject] if o]:
-		if isinstance(testObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==testObject.windowHandle and objectID==testObject._accObjectID and childID==testObject._accOrigChildID:
+		if isinstance(testObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==testObject.windowHandle and objectID==testObject.IAccessibleObjectID and childID==testObject.IAccessibleChildID:
 			obj=testObject
 			break
 	if obj is None and name not in ["hide","locationChange"]:
@@ -501,13 +501,13 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		mouseObject=api.getMouseObject()
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
-			if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject._accObjectID) and (childID==focusObject._accOrigChildID):
+			if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleChildID):
 				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				queueHandler.queueFunction(queueHandler.ID_EVENT,correctFocus)
 				return
-			elif isinstance(foregroundObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject._accObjectID) and (childID==foregroundObject._accOrigChildID):
+			elif isinstance(foregroundObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleChildID):
 				api.setForegroundObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
@@ -521,7 +521,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
 			if obj and obj.name!=lastMouseShape:
-				queueHandler.queueFunction(queueHandler.ID_MOUSE,obj.speakObject)
+				queueHandler.queueFunction(queueHandler.ID_MOUSE,speech.speakObject, obj)
 				globals()["lastMouseShape"]=obj.name
 			return
 		#Process foreground events
@@ -547,7 +547,7 @@ def updateFocusFromEvent(window,objectID,childID):
 	appModuleHandler.update(window)
 	virtualBuffers.IAccessible.update(window)
 	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus._accObjectID and childID==oldFocus._accOrigChildID:
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.NVDAObject_IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleChildID:
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
@@ -556,7 +556,7 @@ def updateFocusFromEvent(window,objectID,childID):
 
 def correctFocus():
 	focusObject=api.findObjectWithFocus()
-	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and not focusObject.states&STATE_SYSTEM_INVISIBLE and not focusObject.states&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
+	if isinstance(focusObject,NVDAObjects.IAccessible.NVDAObject_IAccessible) and not focusObject.IAccessibleStates&STATE_SYSTEM_INVISIBLE and not focusObject.IAccessibleStates&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
 		updateFocusFromEvent(focusObject.windowHandle,OBJID_CLIENT,0)
 		manageEvent("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
 	else:

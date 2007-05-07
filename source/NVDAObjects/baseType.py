@@ -87,6 +87,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	def __init__(self):
 		textBuffer.textBufferObject.__init__(self)
 		self._oldValue=None
+		self._oldStates=self.states
 		self._oldName=None
 		self._oldDescription=None
 		self._hashLimit=10000000
@@ -131,7 +132,7 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 			return instancemethod(self._keyMap[keyPress],self,self.__class__)
 
 	def _get_name(self):
-		return ""
+		return None
 
 	def _get_role(self):
 		return "NVDA object"
@@ -140,16 +141,16 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 		return _("role %s")%self.role
 
 	def _get_value(self):
-		return ""
+		return None
 
 	def _get_description(self):
-		return ""
+		return None
 
 	def _get_keyboardShortcut(self):
-		return ""
+		return None
 
 	def _get_states(self):
-		return 0
+		return frozenset()
 
 	def calculatePositiveStates(self):
 		"""
@@ -187,10 +188,10 @@ Returns a string of names for a given bitwise group of states. Takes in to accou
 		return " ".join([self.getStateName(state,opposite) for state in api.createStateList(states)])
 
 	def _get_level(self):
-		return ""
+		return None
 
 	def _get_contains(self):
-		return ""
+		return None
 
 	def _get_location(self):
 		return (0,0,0,0)
@@ -243,7 +244,7 @@ Tries to force this object to take the focus.
 		return None
 
 	def _get_positionString(self):
-		return ""
+		return None
 
 	def _get_isProtected(self):
 		return False
@@ -251,30 +252,6 @@ Tries to force this object to take the focus.
 
 	def _get_statusBar(self):
 		return None
-
-	def speakObject(self):
-		"""
-Speaks the properties of this object such as name, typeString,value, description, states, position etc.
-"""
-		name=self.name
-		typeString=self.typeString
-		positiveStateNames=self.getStateNames(self.calculatePositiveStates())
-		negativeStateNames=self.getStateNames(self.calculateNegativeStates(),opposite=True)
-		stateNames="%s %s"%(positiveStateNames,negativeStateNames)
-		value=self.value
-		description=self.description
-		if description==name:
-			description=None
-		if config.conf["presentation"]["reportKeyboardShortcuts"]:
-			keyboardShortcut=self.keyboardShortcut
-		else:
-			keyboardShortcut=None
-		position=self.positionString
-		level=self.level
-		if isinstance(level,int):
-			level=_("level %d")%level 
-		contains=self.contains
-		speech.speakObjectProperties(name=name,typeString=typeString,stateText=stateNames,value=value,description=description,keyboardShortcut=keyboardShortcut,position=position,level=level,contains=contains)
 
 	def speakDescendantObjects(self,hashList=None):
 		if hashList is None:
@@ -284,31 +261,35 @@ Speaks the properties of this object such as name, typeString,value, description
 			h=hash(child)
 			if h not in hashList:
 				hashList.append(h)
-				child.speakObject()
+				speech.speakObject(child)
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
 	def reportFocus(self):
-		self.speakObject()
+		if self.hasFocus:
+			speech.speakObject(self,reason=speech.REASON_FOCUS)
+
+	def event_stateChange(self):
+		if self.hasFocus:
+			states=self.states
+			if states!=self._oldStates:
+				speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
+				self._oldStates=states
 
 	def event_gainFocus(self):
 		"""
 This code is executed if a gain focus event is received by this object.
 """
-		if self.speakOnGainFocus and (not self.needsFocusState or (self.needsFocusState and self.hasFocus)):
-			if globalVars.focusMovesNavigatorObject:
-				api.setNavigatorObject(self)
-			if not ((self==api.getForegroundObject()) and self.speakOnForeground):
-				self.reportFocus()
+		api.setNavigatorObject(self)
+		self.reportFocus()
 
 	def event_foreground(self):
 		"""
 This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
 """
 		speech.cancelSpeech()
-		if self.speakOnForeground:
-			api.setNavigatorObject(self)
-			self.speakObject()
+		api.setNavigatorObject(self)
+		speech.speakObject(self)
 
 	def text_getText(self,start=None,end=None):
 		"""Gets either all the text the object has, or the text from a certain offset, or to a certain offset.
@@ -319,17 +300,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 @returns: the text
 @rtype: string
 """
-		name=self.name
-		value=self.value
-		description=self.description
-		text=""
-		if name:
-			text+="%s "%name
-		if value:
-			text+="%s "%value
-		if description and description!=name:
-			text+="%s"%description
-		text=text.rstrip()
+		text=" ".join([x for x in [self.name,self.value,self.description] if isinstance(x,basestring) and not x.isspace()])
 		if start is None:
 			start=0
 		if end is None:
@@ -342,17 +313,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_valueChange(self):
 		value=self.value
 		if self.hasFocus and value!=self._oldValue:
-			speech.speakObjectProperties(value=self.value)
+			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
 			self._oldValue=value
 
 	def event_nameChange(self):
 		name=self.name
 		if self.hasFocus and name!=self._oldName:
-			speech.speakObjectProperties(name=self.name)
+			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
 			self._oldName=name
 
 	def event_descriptionChange(self):
 		description=self.description
 		if self.hasFocus and description!=self._oldDescription:
-			speech.speakObjectProperties(description=self.description)
+			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
