@@ -39,6 +39,10 @@ def setSynth(name):
 		name='espeak'
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver()
+		if _curSynth and _curSynth.name == newSynth.name:
+			_curSynth.cancel()
+			_curSynth.terminate()
+			_curSynth = None
 		newSynth.initialize()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
