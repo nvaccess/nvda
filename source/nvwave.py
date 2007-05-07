@@ -71,14 +71,15 @@ class WavePlayer:
 		self._prev_whdr = whdr
 
 	def sync(self):
-		if self._prev_whdr:
-			# todo: Wait for an event instead of spinning.
-			while not (self._prev_whdr.dwFlags & WHDR_DONE):
-				time.sleep(0.005)
-			res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
-			if res != MMSYSERR_NOERROR:
-				raise RuntimeError("Error unpreparing buffer: code %d" % res)
-			self._prev_whdr = None
+		# todo: Wait for an event instead of spinning.
+		while self._prev_whdr and not (self._prev_whdr.dwFlags & WHDR_DONE):
+			time.sleep(0.005)
+		if not self._prev_whdr:
+			return
+		res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+		if res != MMSYSERR_NOERROR:
+			raise RuntimeError("Error unpreparing buffer: code %d" % res)
+		self._prev_whdr = None
 
 	def stop(self):
 		winmm.waveOutReset(self._waveout)
