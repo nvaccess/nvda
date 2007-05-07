@@ -7,7 +7,7 @@
 import globalVars
 import winUser
 import NVDAObjects
-import IAccessibleHandler
+import controlTypes
 import appModuleHandler
 import speech
 
@@ -16,7 +16,7 @@ lastMSNHistoryValue=None
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==IAccessibleHandler.ROLE_SYSTEM_TEXT and obj.name=="History":
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name=="History":
 			obj.__class__=NVDAObject_MSNHistory
 
 class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText):
