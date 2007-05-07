@@ -196,7 +196,9 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			textList.append(valueText)
 	if description:
 		descriptionText=obj.description
-		if isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
+		if not name:
+			nameText=obj.name
+		if descriptionText!=nameText and isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
 			textList.append(descriptionText)
 	if keyboardShortcut:
 		keyboardShortcutText=obj.keyboardShortcut
