@@ -127,11 +127,6 @@ class BgThread(threading.Thread):
 			while True:
 				func, args, kwargs = bgQueue.get()
 				if not func:
-					# Terminate.
-					res=espeakDLL.espeak_Terminate()
-					if res!=EE_OK:
-						raise OSError("espeak_Terminate %d"%res)
-					isSpeaking=False
 					break
 				res=func(*args, **kwargs)
 				if res!=EE_OK:
@@ -220,8 +215,12 @@ def initialize():
 
 def terminate():
 	global bgThread, bgQueue, player, espeakDLL 
+	stop()
 	bgQueue.put((None, None, None))
 	bgThread.join()
+	res=espeakDLL.espeak_Terminate()
+	if res!=EE_OK:
+		raise OSError("espeak_Terminate %d"%res)
 	bgThread=None
 	bgQueue=None
 	player.close()
