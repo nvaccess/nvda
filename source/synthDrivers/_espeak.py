@@ -107,7 +107,7 @@ def callback(wav,numsamples,event):
 	global player, isSpeaking, lastIndex
 	lastIndex = event.contents.user_data
 	if not wav:
-		player.feed("")
+		player.sync()
 		isSpeaking = False
 		return 0
 	if not isSpeaking:

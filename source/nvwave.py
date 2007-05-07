@@ -67,6 +67,10 @@ class WavePlayer:
 		res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 		if res != MMSYSERR_NOERROR:
 			raise RuntimeError("Error writing wave data: code %d" % res)
+		self.sync()
+		self._prev_whdr = whdr
+
+	def sync(self):
 		if self._prev_whdr:
 			# todo: Wait for an event instead of spinning.
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
@@ -74,11 +78,14 @@ class WavePlayer:
 			res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			if res != MMSYSERR_NOERROR:
 				raise RuntimeError("Error unpreparing buffer: code %d" % res)
-		self._prev_whdr = whdr
+			self._prev_whdr = None
 
 	def stop(self):
 		winmm.waveOutReset(self._waveout)
+		# Unprepare the previous buffer.
+		self.sync()
 
 	def close(self):
+		self.stop()
 		winmm.waveOutClose(self._waveout)
 		self._waveout = None
