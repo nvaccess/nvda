@@ -50,8 +50,8 @@ def update(obj):
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(curWindow,IAccessibleHandler.OBJID_CLIENT,0)
 			if not obj:
 				return
-			role=obj.role
-			k=(className,obj.role)
+			role=obj.IAccessibleRole
+			k=(className,obj.IAccessibleRole)
 			if _staticMap.has_key(k):
 				virtualBufferClass=_staticMap[k]
 		if virtualBufferClass:

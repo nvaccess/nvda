@@ -33,7 +33,7 @@ class virtualBuffer_gecko(virtualBuffer):
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
 		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
-		#(pacc,child)=IAccessibleHandler.accNavigate(NVDAObject._pacc,NVDAObject._accChild,NAVRELATION_EMBEDS)
+		#(pacc,child)=IAccessibleHandler.accNavigate(NVDAObject.IAccessibleObject,NVDAObject._accChild,NAVRELATION_EMBEDS)
 		#newObj=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
 		#if newObj:
 		#	self.NVDAObject=newObj
@@ -43,7 +43,7 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def event_gainFocus(self,obj,nextHandler):
 		role=getMozillaRole(obj.role)
-		states=obj.states
+		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
 				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
@@ -78,7 +78,7 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def event_stateChange(self,obj,nextHandler):
 		role=getMozillaRole(obj.role)
-		states=obj.states
+		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
 				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
@@ -92,7 +92,7 @@ class virtualBuffer_gecko(virtualBuffer):
 	def event_reorder(self,obj,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
 			return nextHandler() 
-		if self.NVDAObject.states&IAccessibleHandler.STATE_SYSTEM_BUSY:
+		if self.NVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
@@ -122,7 +122,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		if obj is None:
 			return
 		role=getMozillaRole(obj.role)
-		states=obj.states
+		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY) or role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -142,7 +142,7 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def isDocumentComplete(self):
 		role=self.NVDAObject.role
-		states=self.NVDAObject.states
+		states=self.NVDAObject.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			return True
 		else:
@@ -170,7 +170,7 @@ class virtualBuffer_gecko(virtualBuffer):
 	def fillBuffer(self,obj,parentID=None,position=None):
 		getNVDAObjectID=self.getNVDAObjectID
 		role=getMozillaRole(obj.role)
-		states=obj.states
+		states=obj.IAccessibleStates
 		text=""
 		if position is None:
 			position=self.text_characterCount
@@ -185,7 +185,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			windowHandle=obj.windowHandle
 			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
 			hwnd=obj.windowHandle
-			children=[NVDAObject_IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj._pacc,0,obj.childCount)]
+			children=[NVDAObject_IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj.IAccessibleObject,0,obj.childCount)]
 		else:
 			children=[]
 		#Get rid of the bullet object if this was a list item's children (its in the name)
@@ -297,12 +297,12 @@ class virtualBuffer_gecko(virtualBuffer):
 			text="%s "%obj.name
 			info["fieldType"]=fieldType_radioButton
 			info["typeString"]=fieldNames[fieldType_radioButton]
-			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			text="%s "%obj.name
 			info["fieldType"]=fieldType_checkBox
 			info["typeString"]=fieldNames[fieldType_checkBox]
-			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.states&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			val=obj.value
 			if val=="":
@@ -310,7 +310,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			text=val
 			info["fieldType"]=fieldType_edit
 			info["typeString"]=fieldNames[fieldType_edit]
-			if obj.states&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
+			if obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
 				info["typeString"]=_("protected %s")%info["typeString"]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			text="%s "%obj.value
@@ -336,6 +336,6 @@ class virtualBuffer_gecko(virtualBuffer):
 	def getNVDAObjectID(self,obj):
 		if not obj:
 			return None
-		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return ctypes.cast(obj._pacc,ctypes.c_void_p).value
+		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
+			return ctypes.cast(obj.IAccessibleObject,ctypes.c_void_p).value
 
