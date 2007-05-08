@@ -212,7 +212,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		fieldType=info["fieldType"]
 		vbc=config.conf["virtualBuffers"]
 		if (fieldType==fieldType_link and vbc["reportLinks"]) or (fieldType==fieldType_list and vbc["reportLists"]) or (fieldType==fieldType_listItem and vbc["reportListItems"]) or (fieldType==fieldType_heading and vbc["reportHeadings"]) or (fieldType==fieldType_table and vbc["reportTables"]) or (fieldType==fieldType_tableHeader and vbc["reportTables"]) or (fieldType==fieldType_tableFooter and vbc["reportTables"]) or (fieldType==fieldType_row and vbc["reportTables"]) or (fieldType==fieldType_cell and vbc["reportTables"]) or (fieldType==fieldType_graphic and vbc["reportGraphics"]) or (fieldType==fieldType_form and vbc["reportForms"]) or ((fieldType in [fieldType_button,fieldType_edit,fieldType_editArea,fieldType_checkBox,fieldType_radioButton,fieldType_comboBox]) and vbc["reportFormFields"]) or (fieldType==fieldType_paragraph and vbc["reportParagraphs"]) or (fieldType==fieldType_blockQuote and vbc["reportBlockQuotes"]) or (fieldType==fieldType_frame and vbc["reportFrames"]):
-			msg=info["typeString"]
+			msg=fieldNames[info["fieldType"]]
 			if callable(info["stateTextFunc"]):
 				msg+=" "+info["stateTextFunc"](info["node"])
 			if callable(info["descriptionFunc"]):

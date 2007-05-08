@@ -37,12 +37,12 @@ class virtualBuffer_gecko(virtualBuffer):
 		#newObj=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
 		#if newObj:
 		#	self.NVDAObject=newObj
-		speech.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,self.NVDAObject.typeString))
+		speech.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,_("document")))
 		if self.isDocumentComplete():
 			self.loadDocument()
 
 	def event_gainFocus(self,obj,nextHandler):
-		role=getMozillaRole(obj.role)
+		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
@@ -77,7 +77,7 @@ class virtualBuffer_gecko(virtualBuffer):
 			speech.speakText(self.text_getText(r[0],r[1]))
 
 	def event_stateChange(self,obj,nextHandler):
-		role=getMozillaRole(obj.role)
+		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
@@ -94,7 +94,6 @@ class virtualBuffer_gecko(virtualBuffer):
 			return nextHandler() 
 		if self.NVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
-		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
 		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
@@ -121,7 +120,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		obj=self._IDs[ID]["node"]
 		if obj is None:
 			return
-		role=getMozillaRole(obj.role)
+		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY) or role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			if not api.isVirtualBufferPassThrough():
@@ -169,13 +168,12 @@ class virtualBuffer_gecko(virtualBuffer):
 
 	def fillBuffer(self,obj,parentID=None,position=None):
 		getNVDAObjectID=self.getNVDAObjectID
-		role=getMozillaRole(obj.role)
+		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
 		text=""
 		if position is None:
 			position=self.text_characterCount
 		ID=getNVDAObjectID(obj)
-		#debug.writeMessage("virtualBuffers.gecko.fillBuffer: object (%s %s %s %s)"%(obj.name,obj.typeString,obj.value,obj.description))
 		if ID is None:
 			ID=parentID
 		#Collect the children
@@ -206,7 +204,6 @@ class virtualBuffer_gecko(virtualBuffer):
 			text=obj.name.replace('\r\n','\n')
 		elif role=="frame":
 			info["fieldType"]=fieldType_frame
-			info["typeString"]=fieldNames[fieldType_frame]
 		if role=="iframe":
 			info["fieldType"]=fieldType_frame
 			info["typeString"]=fieldNames[fieldType_frame]
@@ -216,7 +213,6 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["typeString"]=fieldNames[fieldType_document]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 			info["fieldType"]=fieldType_link
-			info["typeString"]=obj.typeString
 			if True:
 				text=obj.name
 				if not text or text.isspace():
@@ -336,6 +332,6 @@ class virtualBuffer_gecko(virtualBuffer):
 	def getNVDAObjectID(self,obj):
 		if not obj:
 			return None
-		if getMozillaRole(obj.role)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
+		if getMozillaRole(obj.IAccessibleRole)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return ctypes.cast(obj.IAccessibleObject,ctypes.c_void_p).value
 
