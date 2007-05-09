@@ -240,7 +240,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_previousLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevLine(keyPress,None)
+			obj.script_review_prevLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object")
@@ -248,7 +248,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_currentLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentLine(keyPress,None)
+			obj.script_review_currentLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated")
@@ -256,7 +256,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_nextLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextLine(keyPress,None)
+			obj.script_review_nextLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object")
@@ -264,7 +264,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_previousWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevWord(keyPress,None)
+			obj.script_review_prevWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object")
@@ -272,7 +272,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_currentWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentWord(keyPress,None)
+			obj.script_review_currentWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated")
@@ -280,7 +280,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_nextWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextWord(keyPress,None)
+			obj.script_review_nextWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object")
@@ -288,7 +288,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_prevCharacter(keyPress,None)
+			obj.script_review_prevCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object")
@@ -296,7 +296,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_currentCharacter(keyPress,None)
+			obj.script_review_currentCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated")
@@ -304,7 +304,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_nextCharacter(keyPress,None)
+			obj.script_review_nextCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object")

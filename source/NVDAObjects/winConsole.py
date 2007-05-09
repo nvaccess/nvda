@@ -54,7 +54,13 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		#Each event doesn't individually speak its own text since speaking text is quite intensive due to the diff algorithms  
 		self.keepMonitoring=True
 		self.lastConsoleEvent=None
-		t=thread.start_new_thread(self.monitorThread,())
+		text=self.consoleVisibleText
+		self.textRepresentation=text
+		lineLength=self.getConsoleHorizontalLength()
+		self.textRepresentationLineLength=lineLength
+		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+		thread.start_new_thread(self.monitorThread,())
 
 	def disconnectConsole(self):
 		#Unregister any win events we are using
@@ -87,9 +93,10 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		#We don't want to do anything with the event if the event is not for the window this console is in
 		if window!=self.windowHandle:
 			return
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor:
-			self.text_reviewOffset=self.text_caretOffset
+			self.reviewOffset=self.text_caretOffset-info.windowRect.top*info.consoleSize.x
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -112,7 +119,10 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 					update_timer=0
 					#the timer got up to 4, so now we can collect the lines of the console and try and find out the new text
 					if globalVars.reportDynamicContentChanges:
-						newLines=self.consoleVisibleLines
+						text=self.consoleVisibleText
+						self.textRepresentation=text
+						lineLength=self.getConsoleHorizontalLength()
+						newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 						newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
 						if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
 							queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakText,newText)
@@ -208,17 +218,14 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,x,y)
 		return text
 
-	def _get_consoleVisibleLines(self):
+	def _get_consoleVisibleText(self):
 		if not hasattr(self,"consoleHandle"):
-			return []
+			return ""
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		top=info.windowRect.top
-		bottom=info.windowRect.bottom
-		lines=[]
-		consoleHorizontalLength=self.getConsoleHorizontalLength()
-		consoleHandle=self.consoleHandle
-		func=winKernel.readConsoleOutputCharacter
-		return [func(consoleHandle,consoleHorizontalLength,0,lineNum) for lineNum in xrange(top,bottom+1)]
+		topLine=info.windowRect.top
+		bottomLine=info.windowRect.bottom
+		lineLength=info.consoleSize.x
+		return winKernel.readConsoleOutputCharacter(self.consoleHandle,((bottomLine-topLine)+1)*lineLength,0,topLine)
 
 	def event_nameChange(self):
 		pass
@@ -226,10 +233,9 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 	def event_gainFocus(self):
 		super(NVDAObject_winConsole,self).event_gainFocus()
 		self.connectConsole()
-		self.text_reviewOffset=self.text_caretOffset
-		for line in (x for x in self.consoleVisibleLines if not x.isspace()):
+		self.reviewOffset=self.text_caretOffset
+		for line in self.prevConsoleVisibleLines:
 			speech.speakText(line)
-		self.prevConsoleVisibleLines=self.consoleVisibleLines
 
 	def event_looseFocus(self):
 		self.disconnectConsole()

@@ -6,11 +6,13 @@
 
 """Module that contains the base NVDA object type"""
 from new import instancemethod
-import textBuffer
+import baseObject
 import speech
 from keyUtils import key, sendKey
 import globalVars
 import api
+from textPositionUtils import *
+import textBuffer
 import config
 import controlTypes
 
@@ -75,6 +77,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._hashLimit=10000000
 		self._hashPrime=23
+		self.reviewOffset=0
+		self.textRepresentationLineLength=None #Use \r and or \n
 
 	def __hash__(self):
 		l=self._hashLimit
@@ -236,7 +240,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		api.setNavigatorObject(self)
 		speech.speakObject(self)
 
-	def text_getText(self,start=None,end=None):
+	def _get_textRepresentation(self,start=None,end=None):
 		"""Gets either all the text the object has, or the text from a certain offset, or to a certain offset.
 @param start: the start offset
 @type start: int
@@ -282,3 +286,91 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if self.hasFocus and description!=self._oldDescription:
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
+
+	def script_review_currentLine(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
+		speech.speakText(text[start:end])
+
+	def script_review_nextLine(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
+		if end<len(text):
+			start=end
+			end=findEndOfLine(text,start,lineLength=lineLength)
+			self.reviewOffset=start
+		else:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(text[start:end])
+
+	def script_review_prevLine(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
+		if start>0:
+			end=start
+			start=findStartOfLine(text,end-1,lineLength=lineLength)
+			self.reviewOffset=start
+		else:
+			speech.speakMessage(_("top"))
+		speech.speakText(text[start:end])
+
+	def script_review_currentWord(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
+		speech.speakText(text[start:end])
+
+	def script_review_nextWord(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
+		if end<len(text):
+			start=end
+			end=findEndOfWord(text,start,lineLength=lineLength)
+			self.reviewOffset=start
+		else:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(text[start:end])
+
+	def script_review_prevWord(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
+		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
+		if start>0:
+			end=start
+			start=findStartOfWord(text,end-1,lineLength=lineLength)
+			self.reviewOffset=start
+		else:
+			speech.speakMessage(_("top"))
+		speech.speakText(text[start:end])
+
+	def script_review_currentCharacter(self,keyPress,nextScript):
+		text=self.textRepresentation
+		speech.speakSymbol(text[self.reviewOffset])
+
+	def script_review_nextCharacter(self,keyPress,nextScript):
+		text=self.textRepresentation
+		offset=self.reviewOffset+1
+		if offset<len(text):
+			self.reviewOffset=offset
+		else:
+			speech.speakMessage(_("bottom"))
+		speech.speakSymbol(text[self.reviewOffset])
+
+	def script_review_prevCharacter(self,keyPress,nextScript):
+		text=self.textRepresentation
+		offset=self.reviewOffset-1
+		if offset>=0:
+			self.reviewOffset=offset
+		else:
+			speech.speakMessage(_("top"))
+		speech.speakSymbol(text[self.reviewOffset])
