@@ -12,6 +12,7 @@ from keyUtils import key, sendKey
 import globalVars
 import api
 import config
+import controlTypes
 
 class NVDAObject(textBuffer.textBufferObject):
 	"""
@@ -28,14 +29,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type value: string
 @ivar role: The object's chosen role. (NVDA uses the set of IAccessible role constants for roles, however sometimes if there is no suitable role, this can be a string)
 @type role: int or string
-@ivar typeString: The object's friendly type. (e.g. a link will have a link role, but its typeString may be 'visited link' depending on its states etc). This type can be anything, it is only communicated to the user, never used programatically.
-@type typeString: string 
-@ivar states: The object's states. (NVDA uses IAccessible state constants for its states, bitwised grouped together)
-@type states: int
-@ivar allowedPositiveStates: a bitwise group of states that are allowed to be reported when on
-@type allowedPositiveStates: int
-@ivar allowedNegativeStates: a bitwise group of states that are allowed to be reported when off
-@type allowedNegativeStates: int
+@ivar states: The object's states. (NVDA uses state constants for its states)
+@type states: frozenset
 @ivar description: The object's description. (e.g. Further info to describe the button's action to go with the label) 
 @type description: string
 @ivar positionString: a description of where the object is in relation to other objects around it. (e.g. a list item might say 2 of 5).
@@ -58,12 +53,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type children: list of L{NVDAObject}
 @ivar childCount: The number of child NVDA objects under this one in the tree
 @type childCount: int
-@ivar speakOnGainFocus: If true, the object will speak when it gains focus, if false it will not.
-@type speakOnGainFocus: boolean
-@ivar needsFocusState: If true the object will only react to gainFocus events if its focus state is set at the time.
-@type needsFocusState: boolean
-@ivar speakOnForeground: if true, this object is spoken if it becomes the current foreground object
-@type speakOnForeground: boolean
 @ivar hasFocus: if true then the object believes it has focus
 @type hasFocus: boolean 
 @ivar isProtected: if true then this object should be treeted like a password field.
@@ -77,12 +66,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @ivar _text_lastReportedPresentation: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
 @type _text_lastReportedPresentation: dict
 """
-
-	allowedPositiveStates=0
-	allowedNegativeStates=0
-	speakOnGainFocus=True
-	needsFocusState=True
-	speakOnForeground=True
 
 	def __init__(self):
 		textBuffer.textBufferObject.__init__(self)
@@ -135,10 +118,7 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 		return None
 
 	def _get_role(self):
-		return "NVDA object"
-
-	def _get_typeString(self):
-		return _("role %s")%self.role
+		return controlTypes.ROLE_UNKNOWN
 
 	def _get_value(self):
 		return None
@@ -151,41 +131,6 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 
 	def _get_states(self):
 		return frozenset()
-
-	def calculatePositiveStates(self):
-		"""
-Filters the states property, only allowing certain positive states.
-"""
-		return self.states&self.allowedPositiveStates
-
-	def calculateNegativeStates(self):
-		"""
-Filters the states property, only allowing certain positive states.
-"""
-		return (~self.states)&self.allowedNegativeStates
-
-	def getStateName(self,state,opposite=False):
-		"""
-Returns a name for a given state. Takes in to account if opposite is true or not.
-@param state: IAccessible state constant
-@type state: int
-@param opposite: True if the state is negative, or false if the state is positive, default is False
-@type opposite: boolean
-"""
-		text=_("state %s")%state
-		if opposite:
-			text=_("not %s")%text
-		return text
-
-	def getStateNames(self,states,opposite=False):
-		"""
-Returns a string of names for a given bitwise group of states. Takes in to account if opposite is true or not.
-@param states: bitwise group of IAccessible state constants
-@type state: int
-@param opposite: True if the states are negative, or false if the states are positive, default is False
-@type opposite: boolean
-"""
-		return " ".join([self.getStateName(state,opposite) for state in api.createStateList(states)])
 
 	def _get_level(self):
 		return None
