@@ -249,17 +249,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 @returns: the text
 @rtype: string
 """
-		textList=[]
-		name=self.name
-		if isinstance(name,basestring) and len(name)>0 and not name.isspace():
-			textList.append(name)
-		value=self.value
-		if isinstance(value,basestring) and len(value)>0 and not value.isspace():
-			textList.append(value)
-		description=self.description
-		if isinstance(description,basestring) and len(description)>0 and not description.isspace():
-			textList.append(description)
-		text=" ".join(textList)
+		text = " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 		if start is None:
 			start=0
 		if end is None:
