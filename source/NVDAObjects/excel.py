@@ -15,7 +15,7 @@ import controlTypes
 import speech
 import debug
 from keyUtils import sendKey, key
-import IAccessible
+from IAccessible import NVDAObject_IAccessible
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
@@ -87,7 +87,7 @@ class NVDAObject_excelGrid(NVDAObject_IAccessible):
 		return cell.Font.Underline
 
 	def event_gainFocus(self):
-		self.speakObject()
+		speech.speakObject(self, reason=speech.REASON_FOCUS)
 		self.speakSelection()
 
 	def script_moveByCell(self,keyPress,nextScript):
@@ -107,7 +107,7 @@ class NVDAObject_excelGrid(NVDAObject_IAccessible):
 		if self.isUnderline(self.getActiveCell()):
 			speech.speakMessage(_("underline"))
 
-[NVDAObject_excelTable.bindKey(keyName,scriptName) for keyName,scriptName in [
+[NVDAObject_excelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByCell"),
 	("ExtendedDown","moveByCell"),
 	("ExtendedLeft","moveByCell"),

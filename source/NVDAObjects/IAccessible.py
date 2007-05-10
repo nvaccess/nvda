@@ -733,6 +733,7 @@ import winConsole
 import MSHTML
 import sysListView32
 import winword
+import excel
 
 _dynamicMap={}
 
