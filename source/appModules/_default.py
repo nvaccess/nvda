@@ -382,7 +382,7 @@ class appModule(appModuleHandler.appModule):
 	def script_reportCurrentFocus(self,keyPress,nextScript):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
-			focusObject.speakObject()
+			speech.speakObject(focusObject, reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("no focus"))
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")

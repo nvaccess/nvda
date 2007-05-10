@@ -406,7 +406,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			speech.speakObject(self)
 
 	def _get_groupName(self):
-		if not (api.getForegroundObject() and api.getForegroundObject().IAccessibleRole == IAccessibleHandler.ROLE_SYSTEM_DIALOG and self.IAccessibleChildID == 0):
+		if not api.getForegroundObject() or self == api.getForegroundObject() or api.getForegroundObject().IAccessibleRole != IAccessibleHandler.ROLE_SYSTEM_DIALOG or self.IAccessibleChildID != 0:
 			return None
 		try:
 			curLocation=self.location
