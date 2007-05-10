@@ -793,4 +793,5 @@ _staticMap={
 ("VsTextEditPane",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
 ("DirectUIHWND",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_directUIHwndText,
 ("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winword.NVDAObject_wordDocument,
+("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):excel.NVDAObject_excelGrid,
 }
