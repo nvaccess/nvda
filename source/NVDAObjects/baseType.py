@@ -310,6 +310,26 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakMessage(_("top"))
 		speech.speakText(text[start:end])
 
+	def script_review_top(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		offset=0
+		start=findStartOfLine(text,offset,lineLength=lineLength)
+		end=findEndOfLine(text,offset,lineLength=lineLength)
+		self.reviewOffset=offset
+		speech.speakMessage(_("top"))
+		speech.speakText(text[start:end])
+
+	def script_review_bottom(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		offset=len(text)-1
+		start=findStartOfLine(text,offset,lineLength=lineLength)
+		end=findEndOfLine(text,offset,lineLength=lineLength)
+		self.reviewOffset=offset
+		speech.speakMessage(_("bottom"))
+		speech.speakText(text[start:end])
+
 	def script_review_currentWord(self,keyPress,nextScript):
 		text=self.textRepresentation
 		lineLength=self.textRepresentationLineLength
@@ -363,4 +383,18 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			self.reviewOffset=offset
 		else:
 			speech.speakMessage(_("top"))
+		speech.speakSymbol(text[self.reviewOffset])
+
+	def script_review_startOfLine(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
+		self.reviewOffset=start
+		speech.speakSymbol(text[self.reviewOffset])
+
+	def script_review_endOfLine(self,keyPress,nextScript):
+		text=self.textRepresentation
+		lineLength=self.textRepresentationLineLength
+		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)-1
+		self.reviewOffset=end
 		speech.speakSymbol(text[self.reviewOffset])

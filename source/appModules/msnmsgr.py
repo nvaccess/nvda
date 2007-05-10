@@ -21,9 +21,14 @@ class appModule(appModuleHandler.appModule):
 
 class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText):
 
-	def __init__(self,*args,**kwargs):
-		super(self.__class__,self).__init__(*args,**kwargs)
-		self._lastMSNHistoryValue=None
+	def _get_textRepresentation(self):
+		return "%s - %s\r%s"%(self.name,self.description,self.value)
+
+	def _get_value(self):
+		value=super(self.__class__,self)._get_value()
+		if not isinstance(value,basestring):
+			value=""
+		return value
 
 	def event_valueChange(self):
 		global lastMSNHistoryValue
@@ -35,20 +40,21 @@ class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText)
 
 	def event_gainFocus(self):
 		super(self.__class__,self).event_gainFocus()
-		self.text_reviewOffset=self.text_characterCount-1
+		self.reviewOffset=len(self.textRepresentation)-1
+
 
 	def reportFocus(self):
-		speech.speakMessage("%s %s %s"%(self.name,self.typeString,self.description))
+		speech.speakObjectProperties(self,name=True,role=True)
 
 [NVDAObject_MSNHistory.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","text_review_nextLine"),
-	("extendedUp","text_review_prevLine"),
-	("extendedLeft","text_review_prevCharacter"),
-	("extendedRight","text_review_nextCharacter"),
-	("extendedHome","text_review_startOfLine"),
-	("extendedEnd","text_review_endOfLine"),
-	("control+extendedLeft","text_review_prevWord"),
-	("control+extendedRight","text_review_nextWord"),
-	("control+extendedHome","text_review_top"),
-	("control+extendedEnd","text_review_bottom"),
+	("extendedDown","review_nextLine"),
+	("extendedUp","review_prevLine"),
+	("extendedLeft","review_prevCharacter"),
+	("extendedRight","review_nextCharacter"),
+	("extendedHome","review_startOfLine"),
+	("extendedEnd","review_endOfLine"),
+	("control+extendedLeft","review_prevWord"),
+	("control+extendedRight","review_nextWord"),
+	("control+extendedHome","review_top"),
+	("control+extendedEnd","review_bottom"),
 ]]

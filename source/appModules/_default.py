@@ -224,7 +224,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_top(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_top(keyPress,None)
+			obj.script_review_top(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object")
@@ -232,7 +232,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_bottom(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
-			obj.script_text_review_bottom(keyPress,None)
+			obj.script_review_bottom(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object")
