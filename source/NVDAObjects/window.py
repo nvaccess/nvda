@@ -10,9 +10,9 @@ import virtualBuffers
 import appModuleHandler
 import winUser
 import speech
-import baseType
+from NVDAObjects import NVDAObject
 
-class NVDAObject_window(baseType.NVDAObject):
+class Window(NVDAObject):
 	"""
 An NVDAObject for a window
 @ivar windowHandle: The window's handle
@@ -28,7 +28,7 @@ An NVDAObject for a window
 """
 
 	def __init__(self,windowHandle):
-		baseType.NVDAObject.__init__(self)
+		NVDAObject.__init__(self)
 		self.windowHandle=windowHandle
 		if not hasattr(self,'appModule'):
 			try:

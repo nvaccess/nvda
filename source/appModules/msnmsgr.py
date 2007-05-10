@@ -6,7 +6,7 @@
 
 import globalVars
 import winUser
-import NVDAObjects
+from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
 import appModuleHandler
 import speech
@@ -17,9 +17,9 @@ class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name=="History":
-			obj.__class__=NVDAObject_MSNHistory
+			obj.__class__=MSNHistory
 
-class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText):
+class MSNHistory(IAccessible):
 
 	def _get_textRepresentation(self):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
@@ -32,7 +32,7 @@ class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText)
 
 	def event_valueChange(self):
 		global lastMSNHistoryValue
-		if isinstance(self,NVDAObject_MSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+		if isinstance(self,MSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
 			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
 				speech.speakText(value)
@@ -42,11 +42,10 @@ class NVDAObject_MSNHistory(NVDAObjects.IAccessible.NVDAObject_directUIHwndText)
 		super(self.__class__,self).event_gainFocus()
 		self.reviewOffset=len(self.textRepresentation)-1
 
-
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
 
-[NVDAObject_MSNHistory.bindKey(keyName,scriptName) for keyName,scriptName in [
+[MSNHistory.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","review_nextLine"),
 	("extendedUp","review_prevLine"),
 	("extendedLeft","review_prevCharacter"),

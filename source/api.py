@@ -31,7 +31,7 @@ def findObjectWithFocus():
 	while obj and obj!=prevObj:
 		prevObj=obj
 		obj=obj.activeChild
-	if isinstance(prevObj,NVDAObjects.baseType.NVDAObject) and prevObj.hasFocus:
+	if isinstance(prevObj,NVDAObjects.NVDAObject) and prevObj.hasFocus:
 		return prevObj
 	else:
 		return None
@@ -40,23 +40,23 @@ def getFocusObject():
 	"""
 Gets the current object with focus.
 @returns: the object with focus
-@rtype: L{NVDAObjects.baseType.NVDAObject}
+@rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.focusObject
 
 def getForegroundObject():
 	"""Gets the current foreground object.
 @returns: the current foreground object
-@rtype: L{NVDAObjects.baseType.NVDAObject}
+@rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
 	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
 @param obj: the object that will be stored as the current foreground object
-@type obj: NVDAObjects.baseType.NVDAObject
+@type obj: NVDAObjects.NVDAObject
 """
-	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
 	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
@@ -66,9 +66,9 @@ def setFocusObject(obj):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
 Before overriding the last object, this function calls event_looseFocus on the object to notify it that it is loosing focus. 
 @param obj: the object that will be stored as the focus object
-@type obj: NVDAObjects.baseType.NVDAObject
+@type obj: NVDAObjects.NVDAObject
 """
-	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 		try:
@@ -98,16 +98,16 @@ def setDesktopObject(obj):
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
 @returns: the current navigator object
-@rtype: L{NVDAObjects.baseType.NVDAObject}
+@rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
 	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus.  
 @param obj: the object that will be set as the current navigator object
-@type obj: NVDAObjects.baseType.NVDAObject  
+@type obj: NVDAObjects.NVDAObject  
 """
-	if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
 

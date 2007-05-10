@@ -1,5 +1,4 @@
 import appModuleHandler
-import NVDAObjects
 import speech
 
 class appModule(appModuleHandler.appModule):
@@ -11,6 +10,7 @@ class appModule(appModuleHandler.appModule):
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="Edit" and obj.windowControlID==403:
 			obj.name="Display"
+
 	def event_valueChange(self,obj,nextHandler):
 		if obj.windowClassName=="Edit" and obj.windowControlID==403:
 			text=obj.windowText[0:-1]

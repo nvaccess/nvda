@@ -6,6 +6,7 @@
 
 import weakref
 import re
+import os
 import tones
 import time
 import difflib
@@ -23,8 +24,8 @@ import speech
 import api
 import config
 import controlTypes
-import baseType
-import window
+from ..window import Window
+from .. import NVDAObject
 
 re_gecko_level=re.compile('.*L([0-9]+)')
 re_gecko_position=re.compile('.*([0-9]+) of ([0-9]+)')
@@ -35,7 +36,7 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	if not accHandle:
 		return None
 	(pacc,child)=accHandle
-	obj=NVDAObject_IAccessible(pacc,child,hwnd,objectID=objectID,origChildID=childID)
+	obj=IAccessible(pacc,child,hwnd,objectID=objectID,origChildID=childID)
 	return obj
 
 def getNVDAObjectFromPoint(x,y):
@@ -43,14 +44,8 @@ def getNVDAObjectFromPoint(x,y):
 	if not accHandle:
 		return None
 	(pacc,child)=accHandle
-	obj=NVDAObject_IAccessible(pacc,child)
+	obj=IAccessible(pacc,child)
 	return obj
-
-def registerNVDAObjectClass(appModule,windowClass,objectRole,cls):
-	_dynamicMap[(id(appModule),windowClass,objectRole)]=cls
-
-def unregisterNVDAObjectClass(appModule,windowClass,objectRole):
-	del _dynamicMap[(id(appModule),windowClass,objectRole)]
 
 def processGeckoDescription(obj):
 	if obj.windowClassName not in ["MozillaWindowClass","MozillaContentWindowClass","MozillaUIWindowClass","MozillaDialogClass"]:
@@ -131,7 +126,7 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_BUTTONDROPDOWN:controlTypes.ROLE_DROPDOWNBUTTON,
 }
 
-class NVDAObject_IAccessible(window.NVDAObject_window):
+class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
 @ivar IAccessibleChildID: the IAccessible object's child ID
@@ -140,7 +135,7 @@ the NVDAObject for IAccessible
 
 	def __new__(cls,pacc,childID,windowHandle=None,origChildID=None,objectID=None):
 		"""
-Checks the window class and IAccessible role against a map of NVDAObject_IAccessible sub-types, and if a match is found, returns that rather than just NVDAObject_IAccessible.
+Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
 """  
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(pacc)
@@ -149,30 +144,25 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			objectRole=pacc.accRole(childID)
 		except:
 			objectRole=0
-		newCls=None
-		appModule=appModuleHandler.getAppModuleFromWindow(windowHandle)
-		if appModule:
-			appModuleRef=id(appModule)
-			if _dynamicMap.has_key((appModuleRef,windowClass,objectRole)):
-				newCls=_dynamicMap[(appModuleRef,windowClass,objectRole)]
-			elif _dynamicMap.has_key((appModuleRef,windowClass,None)):
-				newCls=_dynamicMap[(appModuleRef,windowClass,None)]
-			elif _dynamicMap.has_key((appModuleRef,None,objectRole)):
-				newCls=_dynamicMap[(appModuleRef,None,objectRole)]
-		if newCls is None:
-			if _staticMap.has_key((windowClass,objectRole)):
-				newCls=_staticMap[(windowClass,objectRole)]
-			elif _staticMap.has_key((windowClass,None)):
-				newCls=_staticMap[(windowClass,None)]
-			elif _staticMap.has_key((None,objectRole)):
-				newCls=_staticMap[(None,objectRole)]
-		if newCls is None:
-			newCls=NVDAObject_IAccessible
-		obj=window.NVDAObject_window.__new__(newCls,windowHandle)
-		if appModule is not None:
-			obj.appModule=weakref.ref(appModule)
+		classString=None
+		if _staticMap.has_key((windowClass,objectRole)):
+			classString=_staticMap[(windowClass,objectRole)]
+		elif _staticMap.has_key((windowClass,None)):
+			classString=_staticMap[(windowClass,None)]
+		elif _staticMap.has_key((None,objectRole)):
+			classString=_staticMap[(None,objectRole)]
+		if classString is None:
+			classString="IAccessible"
+		if classString.find('.')>0:
+			modString,classString=os.path.splitext(classString)
+			classString=classString[1:]
+			mod=__import__(modString,globals(),locals(),[])
+			debug.writeMessage("Imported %s, for %s"%(modString,classString))
+			debug.writeMessage("Contents: %s"%dir(mod))
+			newClass=getattr(mod,classString)
 		else:
-			obj.appModule=lambda: None
+			newClass=globals()[classString]
+		obj=Window.__new__(newClass,windowHandle)
 		obj.__init__(pacc,childID,windowHandle=windowHandle,origChildID=origChildID,objectID=objectID)
 		return obj
 
@@ -193,7 +183,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 		self.IAccessibleChildID=childID
 		self.IAccessibleObjectID=objectID
 		self._accOrigChildID=origChildID
-		window.NVDAObject_window.__init__(self,windowHandle)
+		Window.__init__(self,windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
 		self._doneInit=True
@@ -201,7 +191,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def __hash__(self):
 		l=self._hashLimit
 		p=self._hashPrime
-		h=baseType.NVDAObject.__hash__(self)
+		h=NVDAObject.__hash__(self)
 		h=(h+(hash(self.windowHandle)*p))%l
 		h=(h+(hash(self.IAccessibleObjectID)*p))%l
 		h=(h+(hash(self.IAccessibleChildID)*p))%l
@@ -276,7 +266,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_labeledBy(self):
 		try:
 			(pacc,accChild)=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_LABELLED_BY)
-			obj=NVDAObject_IAccessible(pacc,accChild)
+			obj=IAccessible(pacc,accChild)
 			return obj
 		except:
 			return None
@@ -287,7 +277,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			(ia,child)=res
 		else:
 			return None
-		obj=NVDAObject_IAccessible(ia,child)
+		obj=IAccessible(ia,child)
 		if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 			return obj.parent
 		else:
@@ -296,7 +286,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_next(self):
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
-			parentObject=NVDAObject_IAccessible(res[0],res[1])
+			parentObject=IAccessible(res[0],res[1])
 			parentRole=parentObject.IAccessibleRole
 		else:
 			parentObject=None
@@ -307,7 +297,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			obj=self
 		res=IAccessibleHandler.accNavigate(obj.IAccessibleObject,obj.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
 		if res:
-			nextObject=NVDAObject_IAccessible(res[0],res[1])
+			nextObject=IAccessible(res[0],res[1])
 			if nextObject and (nextObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
 			return nextObject if nextObject and nextObject.IAccessibleRole!=0 else None
@@ -315,7 +305,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_previous(self):
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
-			parentObject=NVDAObject_IAccessible(res[0],res[1])
+			parentObject=IAccessible(res[0],res[1])
 			parentRole=parentObject.IAccessibleRole
 		else:
 			parentObject=None
@@ -326,7 +316,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			obj=self
 		res=IAccessibleHandler.accNavigate(obj.IAccessibleObject,obj.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
 		if res:
-			previousObject=NVDAObject_IAccessible(res[0],res[1])
+			previousObject=IAccessible(res[0],res[1])
 			if previousObject and (previousObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
 				previousObject=getNVDAObjectFromEvent(previousObject.windowHandle,-4,0)
 			return previousObject
@@ -334,7 +324,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_firstChild(self):
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
 		if res:
-			obj=NVDAObject_IAccessible(res[0],res[1])
+			obj=IAccessible(res[0],res[1])
 		else:
 			return None
 		if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
@@ -347,7 +337,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_children(self):
 		childCount= self.childCount
 		if childCount>0:
-			children=[NVDAObject_IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount) if x]
+			children=[IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount) if x]
 			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
 		else:
 			child=self.firstChild
@@ -364,7 +354,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_activeChild(self):
 		res=IAccessibleHandler.accFocus(self.IAccessibleObject)
 		if res:
-			return NVDAObject_IAccessible(res[0],res[1])
+			return IAccessible(res[0],res[1])
 
 	def _get_hasFocus(self):
 		if (self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED):
@@ -381,7 +371,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def _get_statusBar(self):
 		statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'msctls_statusbar32',0)
 		statusObject=getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
-		if not isinstance(statusObject,baseType.NVDAObject):
+		if not isinstance(statusObject,NVDAObject):
 			return None 
 		return statusObject
 
@@ -439,7 +429,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 			speech.cancelSpeech()
 		else:
 			api.setMenuMode(False)
-		window.NVDAObject_window.event_gainFocus(self)
+		Window.event_gainFocus(self)
 
 	def event_menuStart(self):
 		api.setMenuMode(True)
@@ -456,7 +446,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def event_menuEnd(self):
 		if self.IAccessibleRole not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
 			obj=api.findObjectWithFocus()
-			if isinstance(obj,baseType.NVDAObject) and obj!=api.getFocusObject():
+			if isinstance(obj,NVDAObject) and obj!=api.getFocusObject():
 				api.setFocusObject(obj)
 				speech.cancelSpeech()
 				obj.event_gainFocus()
@@ -473,7 +463,7 @@ Checks the window class and IAccessible role against a map of NVDAObject_IAccess
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-class NVDAObject_dialog(NVDAObject_IAccessible):
+class Dialog(IAccessible):
 	"""
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
 	"""
@@ -485,10 +475,10 @@ class NVDAObject_dialog(NVDAObject_IAccessible):
 		return None
 
 	def event_foreground(self):
-		super(NVDAObject_dialog,self).event_foreground()
+		super(Dialog,self).event_foreground()
 		self.speakDescendantObjects()
 
-class NVDAObject_TrayClockWClass(NVDAObject_IAccessible):
+class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
 	"""
@@ -496,15 +486,15 @@ class NVDAObject_TrayClockWClass(NVDAObject_IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
-class NVDAObject_Shell_TrayWnd_client(NVDAObject_IAccessible):
+class Shell_TrayWnd_client(IAccessible):
 	speakOnForeground=False
 	speakOnGainFocus=False
 
-class NVDAObject_Progman_client(NVDAObject_IAccessible):
+class Progman_client(IAccessible):
 	speakOnForeground=False
 	speakOnGainFocus=False
 
-class NVDAObject_staticText(NVDAObject_IAccessible):
+class StaticText(IAccessible):
 
 	def _get_role(self):
 		return controlTypes.ROLE_STATICTEXT
@@ -518,7 +508,7 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 		end=end if isinstance(end,int) else len(self.name)
 		return text[start:end]
 
-[NVDAObject_staticText.bindKey(keyName,scriptName) for keyName,scriptName in [
+[StaticText.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","text_review_nextLine"),
 	("extendedUp","text_review_prevLine"),
 	("extendedLeft","text_review_prevCharacter"),
@@ -531,34 +521,34 @@ class NVDAObject_staticText(NVDAObject_IAccessible):
 	("control+extendedEnd","text_review_bottom"),
 ]]
 
-class NVDAObject_outlineItem(NVDAObject_IAccessible):
+class OutlineItem(IAccessible):
 
 	def _get_level(self):
-		val=super(NVDAObject_outlineItem,self)._get_value()
+		val=super(OutlineItem,self)._get_value()
 		try:
 			return int(val)
 		except:
 			return 0
 
 	def _get_value(self):
-		val=super(NVDAObject_outlineItem,self)._get_value()
+		val=super(OutlineItem,self)._get_value()
 		try:
 			int(val)
 		except:
 			return val
 
-class NVDAObject_tooltip(NVDAObject_IAccessible):
+class Tooltip(IAccessible):
 
 	def event_show(self):
 		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON)):
 			speech.speakObject(self)
 
-class NVDAObject_consoleWindowClass(NVDAObject_IAccessible):
+class ConsoleWindowClass(IAccessible):
 
 	def event_nameChange(self):
 		pass
 
-class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
+class MozillaProgressBar(IAccessible):
 
 	def event_valueChange(self):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"] and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
@@ -570,21 +560,21 @@ class NVDAObject_mozillaProgressBar(NVDAObject_IAccessible):
 				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
 				globalVars.lastProgressValue=val
 		else:
-			super(NVDAObject_mozillaProgressBar,self).event_valueChange()
+			super(MozillaProgressBar,self).event_valueChange()
 
-class NVDAObject_mozillaUIWindowClass(NVDAObject_IAccessible):
+class MozillaUIWindowClass(IAccessible):
 	"""
 	Based on NVDAObject, but on focus events, actions are performed whether or not the object really has focus.
 	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
 	"""
 
 	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
+		IAccessible.__init__(self,*args,**vars)
 		self.needsFocusState=False
 
-class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClass):
+class MozillaUIWindowClass_application(MozillaUIWindowClass):
 	"""
-	Based on NVDAObject_mozillaUIWindowClass, but:
+	Based on MozillaUIWindowClass, but:
 	*Value is always empty because otherwise it is a long url to a .shul file that generated the mozilla application.
 	*firstChild is the first child that is not a tooltip or a menu popup since these don't seem to allow getNext etc.
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
@@ -608,47 +598,47 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 			except:
 				pass
 
-class NVDAObject_mozillaDocument(NVDAObject_IAccessible):
+class MozillaDocument(IAccessible):
 
 	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
+		IAccessible.__init__(self,*args,**vars)
 		self.needsFocusState=False
 
 
 	def _get_value(self):
 		return 
 
-class NVDAObject_mozillaListItem(NVDAObject_IAccessible):
+class MozillaListItem(IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_mozillaListItem,self)._get_name()
+		name=super(MozillaListItem,self)._get_name()
 		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			children=super(NVDAObject_mozillaListItem,self)._get_children()
+			children=super(MozillaListItem,self)._get_children()
 			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
 				name=children[0].value
 		return name
 
 	def _get_children(self):
-		children=super(NVDAObject_mozillaListItem,self)._get_children()
+		children=super(MozillaListItem,self)._get_children()
 		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccesssibleHandler.ROLE_SYSTEM_STATICTEXT]):
 			del children[0]
 		return children
 
-class NVDAObject_mozillaText(NVDAObject_IAccessible):
+class MozillaText(IAccessible):
 
 	def text_getText(self,start=None,end=None):
 		return self.name
 
-class NVDAObject_SHELLDLL_DefView_client(NVDAObject_IAccessible):
+class SHELLDLL_DefView_client(IAccessible):
 
 	speakOnGainFocus=False
 
-class NVDAObject_list(NVDAObject_IAccessible):
+class List(IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_list,self)._get_name()
+		name=super(List,self)._get_name()
 		if not name:
-			name=super(NVDAObject_IAccessible,self)._get_name()
+			name=super(IAccessible,self)._get_name()
 		return name
 
 	def _get_role(self):
@@ -660,28 +650,28 @@ class NVDAObject_list(NVDAObject_IAccessible):
 			speech.speakObject(child)
 
 	def event_gainFocus(self):
-		NVDAObject_IAccessible.event_gainFocus(self)
+		IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
 			IAccessibleHandler.objectEventCallback(-1,winUser.EVENT_OBJECT_FOCUS,self.windowHandle,self.IAccessibleObjectID,child.IAccessibleChildID,0,0)
 		elif not self.firstChild:
 			speech.speakMessage(_("%d items")%0)
 
-class NVDAObject_comboBox(NVDAObject_IAccessible):
+class ComboBox(IAccessible):
 
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
 			speech.speakObject(child)
 
-class NVDAObject_outline(NVDAObject_IAccessible):
+class Outline(IAccessible):
 
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
 			speech.speakObject(child)
 
-class NVDAObject_progressBar(NVDAObject_IAccessible):
+class ProgressBar(IAccessible):
 
 	def event_valueChange(self):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
@@ -691,9 +681,9 @@ class NVDAObject_progressBar(NVDAObject_IAccessible):
 				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
 				globalVars.lastProgressValue=val
 		else:
-			super(NVDAObject_progressBar,self).event_valueChange()
+			super(ProgressBar,self).event_valueChange()
 
-class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
+class InternetExplorerClient(IAccessible):
 
 	def _get_name(self):
 		return None
@@ -701,7 +691,7 @@ class NVDAObject_internetExplorerClient(NVDAObject_IAccessible):
 	def _get_description(self):
 		return None
 
-class NVDAObject_statusBar(NVDAObject_IAccessible):
+class StatusBar(IAccessible):
 
 	def _get_value(self):
 		value=""
@@ -710,89 +700,66 @@ class NVDAObject_statusBar(NVDAObject_IAccessible):
 				value+="  "+child.name
 		return value
 
-class NVDAObject_sysLink(NVDAObject_IAccessible):
+class SysLink(IAccessible):
 
 	speakOnGainFocus=False
 
-class NVDAObject_directUIHwndText(NVDAObject_IAccessible):
-
-	def _get_text_characterCount(self):
-		return len(self.value)
-
-	def text_getText(self,start=None,end=None):
-		start=start if start is not None else 0
-		end=end if end is not None else self.text_characterCount
-		text=self.value
-		return text[start:end]
-
 ###class mappings
 
-import winEdit
-import richEdit
-import winConsole
-import MSHTML
-import sysListView32
-import winword
-import excel
-
-_dynamicMap={}
-
 _staticMap={
-("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_Shell_TrayWnd_client,
-("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):NVDAObject_tooltip,
-("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):NVDAObject_tooltip,
-("Progman",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_Progman_client,
-(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_TrayClockWClass,
-("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
-("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
-("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
-("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
-("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):richEdit.NVDAObject_richEdit,
-(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):NVDAObject_outlineItem,
-("MozillaUIWindowClass",None):NVDAObject_mozillaUIWindowClass,
-("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):NVDAObject_mozillaUIWindowClass_application,
-("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):NVDAObject_dialog,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):NVDAObject_dialog,
-("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):NVDAObject_staticText,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_mozillaText,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):NVDAObject_mozillaListItem,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):NVDAObject_mozillaDocument,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
-("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_mozillaProgressBar,
-("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):NVDAObject_consoleWindowClass,
-("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winConsole.NVDAObject_winConsole,
-("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_SHELLDLL_DefView_client,
-(None,IAccessibleHandler.ROLE_SYSTEM_LIST):NVDAObject_list,
-(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):NVDAObject_comboBox,
-(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):NVDAObject_outline,
-("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):NVDAObject_progressBar,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):MSHTML.NVDAObject_MSHTML,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):MSHTML.NVDAObject_MSHTML,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_internetExplorerClient,
-("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):NVDAObject_statusBar,
-("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
-("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
-("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winEdit.NVDAObject_winEdit,
-("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_staticText,
-("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):richEdit.NVDAObject_richEdit,
-("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_list,
-("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
-("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):sysListView32.NVDAObject_listItem,
-("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_dialog,
-("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):NVDAObject_sysLink,
-("VsTextEditPane",IAccessibleHandler.ROLE_SYSTEM_TEXT):winEdit.NVDAObject_winEdit,
-("DirectUIHWND",IAccessibleHandler.ROLE_SYSTEM_TEXT):NVDAObject_directUIHwndText,
-("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):winword.NVDAObject_wordDocument,
-("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):excel.NVDAObject_excelGrid,
+	("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Shell_TrayWnd_client",
+	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
+	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
+	("Progman",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Progman_client",
+	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
+	("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
+	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
+	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
+	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
+	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
+	("MozillaUIWindowClass",None):"MozillaUIWindowClass",
+	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
+	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
+	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
+	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MozillaText",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MozillaText",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"MozillaProgressBar",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"MozillaProgressBar",
+	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
+	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
+	("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SHELLDLL_DefView_client",
+	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
+	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
+	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",
+	("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
+	("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
+	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
+	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
+	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winEdit.WinEdit",
+	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"StaticText",
+	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"richEdit.RichEdit",
+	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
+	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
+	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
+	("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winword.WordDocument",
+	("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"excel.ExcelGrid",
 }

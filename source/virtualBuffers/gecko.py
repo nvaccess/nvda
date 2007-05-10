@@ -34,7 +34,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		virtualBuffer.__init__(self,NVDAObject)
 		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
 		#(pacc,child)=IAccessibleHandler.accNavigate(NVDAObject.IAccessibleObject,NVDAObject._accChild,NAVRELATION_EMBEDS)
-		#newObj=NVDAObjects.IAccessible.NVDAObject_IAccessible(pacc,child)
+		#newObj=NVDAObjects.IAccessible.IAccessible(pacc,child)
 		#if newObj:
 		#	self.NVDAObject=newObj
 		speech.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,_("document")))
@@ -181,9 +181,9 @@ class virtualBuffer_gecko(virtualBuffer):
 		#Don't get children of combo boxes or embed objects
 		if obj.childCount>0 and role not in [IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,"embed",IAccessibleHandler.ROLE_SYSTEM_LINK]:
 			windowHandle=obj.windowHandle
-			NVDAObject_IAccessible=NVDAObjects.IAccessible.NVDAObject_IAccessible
+			IAccessible=NVDAObjects.IAccessible.IAccessible
 			hwnd=obj.windowHandle
-			children=[NVDAObject_IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj.IAccessibleObject,0,obj.childCount)]
+			children=[IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj.IAccessibleObject,0,obj.childCount)]
 		else:
 			children=[]
 		#Get rid of the bullet object if this was a list item's children (its in the name)

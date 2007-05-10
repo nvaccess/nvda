@@ -15,15 +15,15 @@ import controlTypes
 import speech
 import debug
 from keyUtils import sendKey, key
-from IAccessible import NVDAObject_IAccessible
+from . import IAccessible
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
-class NVDAObject_excelGrid(NVDAObject_IAccessible):
+class ExcelGrid(IAccessible):
 
 	def __init__(self,*args,**vars):
-		NVDAObject_IAccessible.__init__(self,*args,**vars)
+		IAccessible.__init__(self,*args,**vars)
 		ptr=ctypes.c_void_p()
 		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
@@ -87,7 +87,7 @@ class NVDAObject_excelGrid(NVDAObject_IAccessible):
 		return cell.Font.Underline
 
 	def event_gainFocus(self):
-		speech.speakObject(self, reason=speech.REASON_FOCUS)
+		self.speakObject()
 		self.speakSelection()
 
 	def script_moveByCell(self,keyPress,nextScript):
@@ -107,7 +107,7 @@ class NVDAObject_excelGrid(NVDAObject_IAccessible):
 		if self.isUnderline(self.getActiveCell()):
 			speech.speakMessage(_("underline"))
 
-[NVDAObject_excelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
+[excelTable.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByCell"),
 	("ExtendedDown","moveByCell"),
 	("ExtendedLeft","moveByCell"),

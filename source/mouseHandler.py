@@ -53,7 +53,7 @@ def executeMouseMoveEvent(x,y):
 		return
 	(left,top,width,height)=location
 	if (newLeft!=left) or (newTop!=top) or (newWidth!=width) or (newHeight!=height):
-		obj=NVDAObjects.IAccessible.NVDAObject_IAccessible(newPacc,newChild)
+		obj=NVDAObjects.IAccessible.IAccessible(newPacc,newChild)
 		if obj:
 			mouseObject=obj
 			isEntering=True

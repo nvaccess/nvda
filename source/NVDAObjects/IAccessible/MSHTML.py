@@ -15,9 +15,9 @@ import virtualBuffers
 from keyUtils import key, sendKey
 import api
 import speech
-import IAccessible
-
-class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
+from . import IAccessible
+ 
+class MSHTML(IAccessible):
 
 	def getDocumentObjectModel(self):
 		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(self)
@@ -247,7 +247,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 		self.offsetBias=self.getOffsetBias()
 		if self.dom.body.isContentEditable and not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
-		IAccessible.NVDAObject_IAccessible.event_gainFocus(self)
+		IAccessible.event_gainFocus(self)
 
 	def event_looseFocus(self):
 		if hasattr(self,'dom'):
@@ -320,7 +320,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
  			after.setEndPoint("startToEnd",before)
 			speech.speakMessage(_("selected %s")%after.text)
 
-[NVDAObject_MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
+[MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","text_moveByLine"),
 	("ExtendedDown","text_moveByLine"),
 	("ExtendedLeft","text_moveByCharacter"),

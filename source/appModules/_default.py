@@ -15,7 +15,7 @@ import debug
 import speech
 import sayAllHandler
 import virtualBuffers
-import NVDAObjects
+from NVDAObjects import NVDAObject
 import globalVars
 from synthDriverHandler import *
 import gui
@@ -121,7 +121,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_current(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -141,7 +141,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_toFocus(self,keyPress,nextScript):
 		obj=api.getFocusObject()
-		if not isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(obj,NVDAObject):
 			speech.speakMessage(_("no focus"))
 		api.setNavigatorObject(obj)
 		speech.speakMessage(_("move to focus"))
@@ -150,7 +150,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_parent(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject=curObject.parent
@@ -163,7 +163,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_next(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject=curObject.next
@@ -176,7 +176,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_previous(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject=curObject.previous
@@ -189,7 +189,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_firstChild(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject=curObject.firstChild
@@ -202,7 +202,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_navigatorObject_doDefaultAction(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject.doDefaultAction()
@@ -211,7 +211,7 @@ class appModule(appModuleHandler.appModule):
 	def script_navigatorObject_where(self,keyPress,nextScript):
 		"""Reports where the current navigator object is by reporting each of its ancestors""" 
 		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObjects.baseType.NVDAObject):
+		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
 		curObject=curObject.parent
@@ -223,7 +223,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_top(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_top(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -231,7 +231,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_bottom(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_bottom(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -239,7 +239,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_previousLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_prevLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -247,7 +247,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_currentLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_currentLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -255,7 +255,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_nextLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_nextLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -263,7 +263,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_previousWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_prevWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -271,7 +271,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_currentWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_currentWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -279,7 +279,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_nextWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_nextWord(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -287,7 +287,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_prevCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -295,7 +295,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_currentCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -303,7 +303,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_review_nextCharacter(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -311,7 +311,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_startOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_text_review_startOfLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -319,7 +319,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_endOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_text_review_endOfLine(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -327,7 +327,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObjects.baseType.NVDAObject):
+		if isinstance(obj,NVDAObject):
 			obj.script_text_review_moveToCaret(keyPress,None)
 		else:
 			speech.speakMessage(_("no navigator object"))
@@ -381,7 +381,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_reportCurrentFocus(self,keyPress,nextScript):
 		focusObject=api.getFocusObject()
-		if isinstance(focusObject,NVDAObjects.baseType.NVDAObject):
+		if isinstance(focusObject,NVDAObject):
 			speech.speakObject(focusObject, reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("no focus"))

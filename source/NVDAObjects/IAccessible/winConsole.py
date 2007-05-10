@@ -1,4 +1,4 @@
-#NVDAObjects/winConsole.py
+#NVDAObjects/WinConsole.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -17,12 +17,12 @@ from keyUtils import sendKey, key
 import winKernel
 import winUser
 import speech
-import IAccessible
+from . import IAccessible
 
-class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
+class WinConsole(IAccessible):
 
 	def __init__(self,*args,**vars):
-		IAccessible.NVDAObject_IAccessible.__init__(self,*args,**vars)
+		IAccessible.__init__(self,*args,**vars)
 		self.consoleEventHookHandles=[] #Holds the handles for all the win events we register so we can remove them later
 
 	def connectConsole(self):
@@ -36,11 +36,11 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		#Attach NVDA to this console so we can access its text etc
 		res=winKernel.attachConsole(processID)
 		if not res:
-			raise OSError("NVDAObject_winConsole: could not get console std handle") 
+			raise OSError("WinConsole: could not get console std handle") 
 		#Try and get the handle for this console's standard out
 		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
 		if not res:
-			raise OSError("NVDAObject_consoleWindowClassClient: could not get console std handle") 
+			raise OSError("consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
 		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		#Register this callback with all the win events we need, storing the given handles for removal later
@@ -233,7 +233,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		pass
 
 	def event_gainFocus(self):
-		super(NVDAObject_winConsole,self).event_gainFocus()
+		super(WinConsole,self).event_gainFocus()
 		self.connectConsole()
 		for line in self.prevConsoleVisibleLines:
 			speech.speakText(line)
@@ -271,7 +271,7 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		self.connectConsole()
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
 
-[NVDAObject_winConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
+[WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+c","protectConsoleKillKey"),
 	("ExtendedUp","text_moveByLine"),
 	("ExtendedDown","text_moveByLine"),

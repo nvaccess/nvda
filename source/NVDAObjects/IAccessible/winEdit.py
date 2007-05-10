@@ -1,4 +1,4 @@
-#NVDAObjects/winEdit.py
+#NVDAObjects/WinEdit.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #This file is covered by the GNU General Public License.
@@ -11,12 +11,12 @@ import debug
 import winUser
 from keyUtils import key
 import IAccessibleHandler
-import IAccessible
+from . import IAccessible
 
-class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
+class WinEdit(IAccessible):
 
 	def _get_name(self):
-		name=super(NVDAObject_winEdit,self)._get_name()
+		name=super(WinEdit,self)._get_name()
 		if not isinstance(name,basestring):
 			name=""
 		if self.text_getText().strip()!=name.strip():
@@ -118,7 +118,7 @@ class NVDAObject_winEdit(IAccessible.NVDAObject_IAccessible):
 	def event_valueChange(self):
 		pass
 
-[NVDAObject_winEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
+[WinEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","text_moveByLine"),
 	("ExtendedDown","text_moveByLine"),
 	("ExtendedLeft","text_moveByCharacter"),

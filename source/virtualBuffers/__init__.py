@@ -8,7 +8,7 @@ import NVDAObjects
 import IAccessible
 
 def getVirtualBuffer(obj):
-	if isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+	if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 		return IAccessible.getVirtualBuffer(obj)
 
 def update(obj):

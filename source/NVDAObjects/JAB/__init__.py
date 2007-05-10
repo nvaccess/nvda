@@ -3,18 +3,16 @@ import debug
 import appModuleHandler
 import winUser
 import JABHandler
-import window
+from window import Window
 
-class NVDAObject_JAB(window.NVDAObject_window):
-
-	needsFocusState=False
+class JAB(Window):
 
 	def __init__(self,vmID,accContext,windowHandle=None):
 		if windowHandle is None:
 			#windowHandle=JABHandler.bridgeDll.getHWNDFromAccessibleContext(vmID,accContext)
 			windowHandle=winUser.getForegroundWindow()
 		debug.writeMessage("JAB windowHandle: %s"%windowHandle)
-		window.NVDAObject_window.__init__(self,windowHandle)
+		Window.__init__(self,windowHandle)
 		self.JABVmID=vmID
 		self.JABAccContext=accContext
 		info=JABHandler.AccessibleContextInfo()

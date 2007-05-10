@@ -16,7 +16,7 @@ runningTable={}
 def getVirtualBuffer(obj):
 	if len(runningTable)==0:
 		return None
-	if isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+	if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 		windowHandle=obj.windowHandle
 	elif isinstance(obj,int):
 		windowHandle=obj
@@ -32,7 +32,7 @@ def update(obj):
 		debug.writeMessage("virtualBuffers.IAccessible.removeVirtualBuffer: removed %s at %s"%(runningTable[w],w))
 		del runningTable[w]
 	#debug.writeMessage("virtualBuffers.IAccessible.update: trying to update with %s (%s)"%(hwnd,winUser.getClassName(hwnd)))
-	if isinstance(obj,NVDAObjects.IAccessible.NVDAObject_IAccessible):
+	if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 		windowHandle=obj.windowHandle
 	elif isinstance(obj,int):
 		windowHandle=obj

@@ -13,8 +13,7 @@ import speech
 import debug
 from keyUtils import sendKey, key
 import config
-import IAccessible
-import winEdit
+from winEdit import WinEdit
 
 #Word constants
 
@@ -54,10 +53,10 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class NVDAObject_wordDocument(winEdit.NVDAObject_winEdit):
+class WordDocument(WinEdit):
 
 	def __init__(self,*args,**vars):
-		winEdit.NVDAObject_winEdit.__init__(self,*args,**vars)
+		WinEdit.__init__(self,*args,**vars)
 		self.dom=self.getDocumentObjectModel()
 		self.text_reviewOffset=self.text_caretOffset
 
