@@ -60,6 +60,8 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 		self.textRepresentationLineLength=lineLength
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		self.reviewOffset=self.text_caretOffset-info.windowRect.top*info.consoleSize.x
 		thread.start_new_thread(self.monitorThread,())
 
 	def disconnectConsole(self):
@@ -233,7 +235,6 @@ class NVDAObject_winConsole(IAccessible.NVDAObject_IAccessible):
 	def event_gainFocus(self):
 		super(NVDAObject_winConsole,self).event_gainFocus()
 		self.connectConsole()
-		self.reviewOffset=self.text_caretOffset
 		for line in self.prevConsoleVisibleLines:
 			speech.speakText(line)
 
