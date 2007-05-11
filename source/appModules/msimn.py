@@ -28,5 +28,5 @@ class appModule(appModuleHandler.appModule):
 		windowHandle=obj.windowHandle
 		parentWindow=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		parentClassName=winUser.getClassName(parentWindow)
-		if parentClassName=="OE_Envelope" and obj._accChild==0 and envelopeNames.has_key(controlID):
+		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
