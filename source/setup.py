@@ -51,7 +51,8 @@ setup(
 	windows = ["nvda.pyw"],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"includes": "nvwave",
+		"includes": ["nvwave"],
+		"packages": ["NVDAObjects"],
 	}},
 	zipfile = None,
 	data_files=[
