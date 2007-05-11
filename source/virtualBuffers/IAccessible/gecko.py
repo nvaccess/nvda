@@ -260,7 +260,8 @@ class Gecko(virtualBuffer):
 			info["descriptionFunc"]=lambda x: _("with %s items")%x.childCount
 		elif role=="dt":
 			info["role"]=controlTypes.ROLE_LISTITEM
-			bullet=obj.name.rstrip()
+			bullet=obj.name
+			bullet = bullet.rstrip() if isinstance(bullet,basestring) else ""
 			if not bullet:
 				bullet=_("bullet")
 			elif bullet.endswith('.'):
