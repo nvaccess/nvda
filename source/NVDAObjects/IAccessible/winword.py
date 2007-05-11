@@ -13,6 +13,7 @@ import speech
 import debug
 from keyUtils import sendKey, key
 import config
+import controlTypes
 from winEdit import WinEdit
 
 #Word constants
@@ -67,7 +68,7 @@ class WordDocument(WinEdit):
 		self.destroyObjectModel(self.dom)
 
 	def _get_role(self):
-		return IAccessibleHandler.ROLE_SYSTEM_TEXT
+		return controlTypes.ROLE_EDITABLETEXT
 
 	def getDocumentObjectModel(self):
 		ptr=ctypes.c_void_p()
