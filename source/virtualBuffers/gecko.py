@@ -248,7 +248,8 @@ class virtualBuffer_gecko(virtualBuffer):
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
-			bullet=obj.name.rstrip()
+			bullet=obj.name
+			bullet=bullet.rstrip() if isinstance(bullet,basestring) else ""
 			if not bullet or (len(bullet)>0 and ord(bullet[0])>127):
 				bullet=_("bullet")
 			info["typeString"]=bullet
