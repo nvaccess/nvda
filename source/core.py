@@ -15,6 +15,7 @@ import speech
 import config
 import queueHandler
 import languageHandler
+import keyboardHandler
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
@@ -127,6 +128,7 @@ class CorePump(wx.Timer):
 	"Checks the queues and executes functions."
 
 	def Notify(self):
+		keyboardHandler.pumpAll()
 		while True:
 			queueHandler.pumpAll()
 			if not queueHandler.isPendingItems():

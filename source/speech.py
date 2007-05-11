@@ -35,7 +35,7 @@ re_sentence_colon=re.compile(r"(\w|\)|\"|'):(\s|$)")
 re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
 re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
-
+typedWord=""
 REASON_FOCUS=1
 REASON_QUERY=2
 REASON_CHANGE=3
@@ -291,6 +291,19 @@ This function will not speak if L{speechMode} is false.
 	text=processText(text)
 	if text and not text.isspace():
 		getSynth().speakText(text,wait=wait,index=index)
+
+def speakTypedCharacters(ch):
+	global typedWord
+	if config.conf["keyboard"]["speakTypedCharacters"]:
+		speakSymbol(ch)
+	if config.conf["keyboard"]["speakTypedWords"]: 
+		if ch.isalnum():
+			typedWord="".join([typedWord,ch])
+		elif len(typedWord)>0:
+			speakText(typedWord)
+			typedWord=""
+	else:
+		typedWord=""
 
 silentRolesOnFocus=frozenset([
 	controlTypes.ROLE_LISTITEM,

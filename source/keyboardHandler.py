@@ -9,6 +9,7 @@
 import winUser
 import time
 import pyHook
+import nvwh
 import debug
 import speech
 from keyUtils import key, keyName
@@ -43,22 +44,24 @@ def passNextKeyThrough():
 
 #Internal functions for key presses
 
-def internal_keyDownEvent(event):
+@nvwh.userKeyCallbackType
+def internal_keyDownEvent(keyInfo):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	global insertDown, passKeyThroughCount
+	vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
 	if passKeyThroughCount>=0:
 		passKeyThroughCount+=1
 		return True
 	try:
-		if event.Injected:
+		if keyInfo.injected:
 			return True
 		globalVars.keyCounter+=1
 		if not speech.beenCanceled:
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.cancelSpeech)
-		if event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+		if keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
-		if (event.Key=="Insert"): #and (event.Extended==0):
+		if (vkName=="Insert"): #and (keyInfo.extended==0):
 			insertDown=True
 			return False
 		modifierList=[]
@@ -78,8 +81,8 @@ def internal_keyDownEvent(event):
 			modifiers=frozenset(modifierList)
 		else:
 			modifiers=None
-		mainKey=event.Key
-		if event.Extended==1:
+		mainKey=vkName
+		if keyInfo.extended==1:
 			mainKey="Extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
@@ -89,7 +92,6 @@ def internal_keyDownEvent(event):
 		elif mainKey=="ExtendedNumlock":
 			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
 			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
-		queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speakKey,keyPress,event.Ascii)
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
@@ -102,7 +104,7 @@ def internal_keyDownEvent(event):
 			else:
 				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,script,keyPress)
 		if script or globalVars.keyboardHelp:
-			keyUpIgnoreSet.add((event.Key,event.Extended))
+			keyUpIgnoreSet.add((vkName,keyInfo.extended))
 			return False
 		else:
 			return True
@@ -111,51 +113,25 @@ def internal_keyDownEvent(event):
 		speech.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
 		return True
 
-def speakKey(keyPress,ascii):
-	global word
-	if ascii==32 and ((config.conf["keyboard"]["speakTypedCharacters"] and not config.conf["keyboard"]["speakTypedWords"]) or (config.conf["keyboard"]["speakTypedCharacters"] and config.conf["keyboard"]["speakTypedWords"] and (len(word)==0))):
-		speech.speakSymbol(unicode(chr(ascii), errors="replace"))
-	if ((keyPress[0] is None) or (keyPress[0]==frozenset(['Shift'])) or (keyPress[0]==frozenset(['Control','Alt']))) and (ascii in range(33,255)):
-		if isTypingProtected():
-			char="*"
-		else:
-			char=unicode(chr(ascii), errors="replace", encoding=locale.getlocale()[1])
-		if config.conf["keyboard"]["speakTypedCharacters"]:
-			speech.speakSymbol(char)
-		if config.conf["keyboard"]["speakTypedWords"] and ((ascii >=128) or ((keyPress[1]>=ord('a')) and (ascii<=ord('z'))) or ((ascii>=ord('A')) and (ascii<=ord('Z')))):
-			word+=char
-		elif config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-			speech.speakText(word)
-			word=""
-	else:
-		if config.conf["keyboard"]["speakCommandKeys"]:
-			keyList=[]
-			if (keyPress[0] is not None) and (len(keyPress[0])>0):
-				keyList+=keyPress[0]
-			keyList.append(keyPress[1])
-			label="+".join(keyList)
-			speech.speakMessage(label)
-		if config.conf["keyboard"]["speakTypedWords"] and (len(word)>=1):
-			speech.speakMessage(word)
-			word=""
-
-def internal_keyUpEvent(event):
+@nvwh.userKeyCallbackType
+def internal_keyUpEvent(keyInfo):
 	"""Event that pyHook calls when it receives keyUps"""
 	global insertDown, passKeyThroughCount
 	try:
-		if event.Injected:
+		vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
+		if keyInfo.injected:
 			return True
 		elif passKeyThroughCount>=1:
 			passKeyThroughCount-=1
 			if passKeyThroughCount==0:
 				passKeyThroughCount=-1
 			return True
-		elif (event.Key,event.Extended) in keyUpIgnoreSet:
-			keyUpIgnoreSet.remove((event.Key,event.Extended))
+		elif (vkName,keyInfo.extended) in keyUpIgnoreSet:
+			keyUpIgnoreSet.remove((vkName,keyInfo.extended))
 			return False
-		elif event.KeyID in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+		elif keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
-		elif (event.Key=="Insert"): #and (event.Extended==0):
+		elif (vkName=="Insert"): #and (keyInfo.extended==0):
 			insertDown=False
 			return False
 		else:
@@ -165,16 +141,24 @@ def internal_keyUpEvent(event):
 		speech.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
 		return True
 
+@nvwh.userCharCallbackType
+def internal_typeCharacterEvent(ch):
+	queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakTypedCharacters,unichr(ch))
+
 #Register internal key press event with  operating system
 
 def initialize():
 	"""Initialises keyboard support."""
 	global hookManager
-	hookManager=pyHook.HookManager()
-	hookManager.KeyDown=internal_keyDownEvent
-	hookManager.KeyUp=internal_keyUpEvent
-	hookManager.HookKeyboard()
+	nvwh.setUserKeyUpCallback(internal_keyUpEvent)
+	nvwh.setUserKeyDownCallback(internal_keyDownEvent)
+	nvwh.setUserCharCallback(internal_typeCharacterEvent)
+	nvwh.registerKeyHook()
+	nvwh.registerCharHook()
+
+def pumpAll():
+	nvwh.pumpCharQueue()
 
 def terminate():
-	hookManager.UnhookKeyboard()
-
+	nvwh.unregisterCharHook()
+	nvwh.unregisterKeyHook()

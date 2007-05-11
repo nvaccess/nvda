@@ -55,6 +55,7 @@ setup(
 	}},
 	zipfile = None,
 	data_files=[
+		(".",glob("*.dll")),
 		("documentation", ['../copying.txt','../todo.txt','../bugs.txt']), 
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("appModules", glob("appModules/*.py*")),

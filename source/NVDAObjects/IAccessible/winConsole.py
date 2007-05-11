@@ -102,6 +102,8 @@ class WinConsole(IAccessible):
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
+		if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
+			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
 
 	def monitorThread(self):
 		try:

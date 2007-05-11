@@ -24,8 +24,8 @@ import speech
 import api
 import config
 import controlTypes
-from ..window import Window
-from .. import NVDAObject
+from NVDAObjects.window import Window
+from NVDAObjects import NVDAObject
 
 re_gecko_level=re.compile('.*L([0-9]+)')
 re_gecko_position=re.compile('.*([0-9]+) of ([0-9]+)')
@@ -157,8 +157,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			modString,classString=os.path.splitext(classString)
 			classString=classString[1:]
 			mod=__import__(modString,globals(),locals(),[])
-			debug.writeMessage("Imported %s, for %s"%(modString,classString))
-			debug.writeMessage("Contents: %s"%dir(mod))
 			newClass=getattr(mod,classString)
 		else:
 			newClass=globals()[classString]
