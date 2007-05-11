@@ -124,6 +124,9 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_COLUMNHEADER:controlTypes.ROLE_TABLECOLUMNHEADER,
 	IAccessibleHandler.ROLE_SYSTEM_ROWHEADER:controlTypes.ROLE_TABLEROWHEADER,
 	IAccessibleHandler.ROLE_SYSTEM_BUTTONDROPDOWN:controlTypes.ROLE_DROPDOWNBUTTON,
+	IAccessibleHandler.ROLE_SYSTEM_SEPARATOR:controlTypes.ROLE_SEPARATOR,
+	IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:controlTypes.ROLE_DOCUMENT,
+	IAccessibleHandler.ROLE_SYSTEM_ANIMATION:controlTypes.ROLE_ANIMATION,
 }
 
 class IAccessible(Window):
