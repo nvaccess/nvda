@@ -107,7 +107,9 @@ class WinConsole(IAccessible):
 
 	def monitorThread(self):
 		try:
-			update_timer=0
+			consoleEvent=None
+			# We want the first event to be handled immediately.
+			timeSinceLast=5
 			checkDead_timer=0
 			#Keep the thread alive while keepMonitoring is true - disconnectConsole will make it false if the focus moves away 
 			while self.keepMonitoring:
@@ -115,22 +117,22 @@ class WinConsole(IAccessible):
 				if self.lastConsoleEvent:
 					consoleEvent=self.lastConsoleEvent
 					self.lastConsoleEvent=None
-					#When we know there's an event, we wait for some time befor acting on it, since there may be quite a few all in a row 
-					update_timer=1
-				if update_timer>0:
-					update_timer+=1
-				if update_timer>=4:
-					update_timer=0
-					#the timer got up to 4, so now we can collect the lines of the console and try and find out the new text
+				if timeSinceLast<5:
+					timeSinceLast+=1
+				if consoleEvent and timeSinceLast==5:
+					# There is a new event and there has been enough time since the last one was handled, so handle this.
+					timeSinceLast=0
 					if globalVars.reportDynamicContentChanges:
 						text=self.consoleVisibleText
 						self.textRepresentation=text
 						lineLength=self.getConsoleHorizontalLength()
 						newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
-						newText=self.calculateNewText(newLines,self.prevConsoleVisibleLines).strip()
-						if len(newText)>0 and (not consoleEvent==winUser.EVENT_CONSOLE_UPDATE_SIMPLE or (self.lastConsoleEvent or len(newText)>1)):
-							queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakText,newText)
+						outLines=self.calculateNewText(newLines,self.prevConsoleVisibleLines)
+						if consoleEvent != winUser.EVENT_CONSOLE_UPDATE_SIMPLE and not (len(outLines) == 1 and len(outLines[0]) <= 1):
+							for line in outLines:
+								queueHandler.queueFunction(queueHandler.ID_INTERACTIVE, speech.speakText, line)
 						self.prevConsoleVisibleLines=newLines
+					consoleEvent=None
 				#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
 				if checkDead_timer>=10:
 					checkDead_timer=0
@@ -244,27 +246,35 @@ class WinConsole(IAccessible):
 		self.disconnectConsole()
 
 	def calculateNewText(self,newLines,oldLines):
-		newText=""
-		diffLines=[x for x in list(difflib.ndiff(oldLines,newLines)) if (x[0] in ['+','-'])] 
+		foundChange=False
+		outLines=[]
+		diffLines=[x for x in difflib.ndiff(oldLines,newLines) if (x[0] in ['+','-'])] 
 		for lineNum in xrange(len(diffLines)):
 			if diffLines[lineNum][0]=="+":
 				text=diffLines[lineNum][2:]
-				if not diffLines[lineNum][2:].isspace() and (lineNum>0) and (diffLines[lineNum-1][0]=="-"):
+				if not text.isspace() and (lineNum>0) and (diffLines[lineNum-1][0]=="-"):
 					start=0
 					end=len(text)
 					for pos in xrange(len(text)):
-						if diffLines[lineNum][2:][pos]!=diffLines[lineNum-1][2:][pos]:
+						if text[pos]!=diffLines[lineNum-1][2:][pos]:
 							start=pos
 							break
 					for pos in xrange(len(text)-1,0,-1):
-						if diffLines[lineNum][2:][pos]!=diffLines[lineNum-1][2:][pos]:
+						if text[pos]!=diffLines[lineNum-1][2:][pos]:
 							end=pos+1
 							break
-					text=text[start:end]
+					if end - start < 15:
+						# Less than 15 characters have changed, so only speak the changed chunk.
+						text=text[start:end]
+						foundChange=True
 				if len(text)>0 and not text.isspace():
-					newText=" ".join([newText,text])
-			#time.sleep(0.001)
-		return newText
+					outLines.append(text)
+		if not foundChange and not outLines:
+			# We know that something has changed, but there doesn't appear to be any new text.
+			# Therefore, just speak the current line.
+			start, end = self.text_getLineOffsets(self.text_caretOffset)
+			outLines.append(self.text_getText(start, end).strip())
+		return outLines
 
 	def script_protectConsoleKillKey(self,keyPress,nextScript):
 		self.disconnectConsole()
