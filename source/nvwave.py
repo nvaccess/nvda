@@ -59,11 +59,11 @@ class WavePlayer:
 
 	def feed(self, data):
 		whdr = WAVEHDR()
+		whdr.lpData = data
+		whdr.dwBufferLength = len(data)
 		res = winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 		if res != MMSYSERR_NOERROR:
 			raise RuntimeError("Error preparing buffer: code %d" % res)
-		whdr.lpData = data
-		whdr.dwBufferLength = len(data)
 		res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 		if res != MMSYSERR_NOERROR:
 			raise RuntimeError("Error writing wave data: code %d" % res)
