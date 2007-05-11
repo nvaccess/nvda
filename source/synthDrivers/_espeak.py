@@ -13,10 +13,10 @@ player = None
 espeakDLL=None
 
 #Parameter bounds
-minRate=50
-maxRate=350
-minPitch=10
-maxPitch=140
+minRate=80
+maxRate=370
+minPitch=0
+maxPitch=99
 
 #event types
 espeakEVENT_LIST_TERMINATED=0
