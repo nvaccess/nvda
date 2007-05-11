@@ -52,7 +52,7 @@ setup(
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"includes": ["nvwave"],
-		"packages": ["NVDAObjects"],
+		"packages": ["NVDAObjects","virtualBuffers"],
 	}},
 	zipfile = None,
 	data_files=[

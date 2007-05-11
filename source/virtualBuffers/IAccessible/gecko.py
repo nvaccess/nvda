@@ -14,8 +14,9 @@ import IAccessibleHandler
 import speech
 import api
 import config
+import controlTypes
 import NVDAObjects
-from baseType import *
+from .. import virtualBuffer
 
 NAVRELATION_EMBEDS=0x1009 
 
@@ -28,7 +29,7 @@ def getMozillaRole(role):
 	else:
 		return role
 
-class virtualBuffer_gecko(virtualBuffer):
+class Gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
@@ -190,7 +191,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		if (role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM) and (len(children)>0) and (children[0].role in [IAccessibleHandler.ROLE_SYSTEM_STATICTEXT,'bullet']):
 			del children[0]
 		#Get the info and text depending on the node type
-		info=fieldInfo.copy()
+		info=self.fieldInfoTemplate.copy()
 		info["node"]=obj
 		info['range']=[position,position]
 		info['parent']=parentID
@@ -203,16 +204,16 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role=="white space":
 			text=obj.name.replace('\r\n','\n')
 		elif role=="frame":
-			info["fieldType"]=fieldType_frame
+			info["role"]=controlTypes.ROLE_FRAME
 		if role=="iframe":
-			info["fieldType"]=fieldType_frame
-			info["typeString"]=fieldNames[fieldType_frame]
+			info["role"]=controlTypes.ROLE_FRAME
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			text="%s \n "%obj.name
-			info["fieldType"]=fieldType_document
-			info["typeString"]=fieldNames[fieldType_document]
+			info["role"]=controlTypes.ROLE_DOCUMENT
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_DOCUMENT]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
-			info["fieldType"]=fieldType_link
+			info["role"]=controlTypes.ROLE_LINK
 			if True:
 				text=obj.name
 				if not text or text.isspace():
@@ -222,43 +223,43 @@ class virtualBuffer_gecko(virtualBuffer):
 				if text:
 					text=text.strip()
 		elif role=="p":
-			info["fieldType"]=fieldType_paragraph
-			info["typeString"]=fieldNames[fieldType_paragraph]
+			info["role"]=controlTypes.ROLE_PARAGRAPH
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_PARAGRAPH]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CELL:
-			info["fieldType"]=fieldType_cell
-			info["typeString"]=fieldNames[fieldType_cell]
+			info["role"]=controlTypes.ROLE_TABLECELL
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLECELL]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TABLE:
-			info["fieldType"]=fieldType_table
-			info["typeString"]=fieldNames[fieldType_table]
+			info["role"]=controlTypes.ROLE_TABLE
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLE]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_ROW:
-			info["fieldType"]=fieldType_row
-			info["typeString"]=fieldNames[fieldType_row]
+			info["role"]=controlTypes.ROLE_TABLEROW
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEROW]
 		elif role=="thead":
-			info["fieldType"]=fieldType_tableHeader
-			info["typeString"]=fieldNames[fieldType_tableHeader]
+			info["role"]=controlTypes.ROLE_TABLEHEADER
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEHEADER]
 		elif role=="tfoot":
-			info["fieldType"]=fieldType_tableFooter
-			info["typeString"]=fieldNames[fieldType_tableFooter]
+			info["role"]=controlTypes.ROLE_TABLEFOOTER
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEFOOTER]
 		elif role=="tbody":
-			info["fieldType"]=fieldType_tableBody
-			info["typeString"]=fieldNames[fieldType_tableBody]
+			info["role"]=controlTypes.ROLE_TABLEBODY
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEBODY]
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LIST,"ul"]:
-			info["fieldType"]=fieldType_list
-			info["typeString"]=fieldNames[fieldType_list]
+			info["role"]=controlTypes.ROLE_LIST
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			bullet=obj.name
 			bullet=bullet.rstrip() if isinstance(bullet,basestring) else ""
 			if not bullet or (len(bullet)>0 and ord(bullet[0])>127):
 				bullet=_("bullet")
 			info["typeString"]=bullet
 		elif role=="dl":
-			info["fieldType"]=fieldType_list
-			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
+			info["role"]=controlTypes.ROLE_LIST
+			info["typeString"]=_("definition")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: _("with %s items")%x.childCount
 		elif role=="dt":
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			bullet=obj.name.rstrip()
 			if not bullet:
 				bullet=_("bullet")
@@ -266,53 +267,53 @@ class virtualBuffer_gecko(virtualBuffer):
 				bullet=bullet[0:-1]
 			info["typeString"]=bullet
 		elif role=="dd":
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			info["typeString"]=_("definition")
 		elif role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC:
 			text="%s"%obj.name
 			if not text and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 				text=" "
-			info["fieldType"]=fieldType_graphic
-			info["typeString"]=fieldNames[fieldType_graphic]
+			info["role"]=controlTypes.ROLE_GRAPHIC
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
-			info["fieldType"]=fieldType_heading
-			info["typeString"]=fieldNames[fieldType_heading]+" %s"%role[1]
+			info["role"]=controlTypes.ROLE_HEADING
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]+" %s"%role[1]
 		elif role=="blockquote":
-			info["fieldType"]=fieldType_blockQuote
-			info["typeString"]=fieldNames[fieldType_blockQuote]
+			info["role"]=controlTypes.ROLE_BLOCKQUOTE
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
 		elif role=="q":
-			info["fieldType"]=fieldType_blockQuote
-			info["typeString"]=fieldNames[fieldType_blockQuote]
+			info["role"]=controlTypes.ROLE_BLOCKQUOTE
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			text="%s "%obj.name
-			info["fieldType"]=fieldType_button
-			info["typeString"]=fieldNames[fieldType_button]
+			info["role"]=controlTypes.ROLE_BUTTON
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
 		elif role=="form":
-			info["fieldType"]=fieldType_form
-			info["typeString"]=fieldNames[fieldType_form]
+			info["role"]=controlTypes.ROLE_FORM
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FORM]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
 			text="%s "%obj.name
-			info["fieldType"]=fieldType_radioButton
-			info["typeString"]=fieldNames[fieldType_radioButton]
+			info["role"]=controlTypes.ROLE_RADIOBUTTON
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_RADIOBUTTON]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			text="%s "%obj.name
-			info["fieldType"]=fieldType_checkBox
-			info["typeString"]=fieldNames[fieldType_checkBox]
+			info["role"]=controlTypes.ROLE_CHECKBOX
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_CHECKBOX]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			val=obj.value
 			if val=="":
 				val="\0"
 			text=val
-			info["fieldType"]=fieldType_edit
-			info["typeString"]=fieldNames[fieldType_edit]
+			info["role"]=controlTypes.ROLE_EDITABLETEXT
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 			if obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
 				info["typeString"]=_("protected %s")%info["typeString"]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			text="%s "%obj.value
-			info["fieldType"]=fieldType_comboBox
-			info["typeString"]=fieldNames[fieldType_comboBox]
+			info["role"]=controlTypes.ROLE_COMBOBOX
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_COMBOBOX]
 		else:
 			info["typeString"]=IAccessibleHandler.getRoleName(role) if isinstance(role,int) else role
 		accessKey=obj.keyboardShortcut

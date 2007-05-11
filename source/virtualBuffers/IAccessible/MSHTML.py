@@ -15,10 +15,12 @@ import winUser
 import api
 import speech
 import config
+import controlTypes
 import NVDAObjects
-from baseType import *
+from .. import virtualBuffer
 
-class virtualBuffer_MSHTML(virtualBuffer):
+
+class MSHTML(virtualBuffer):
 
 	class domEventsType(object):
 
@@ -180,7 +182,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			return position
 		if position is None:
 			position=self.text_characterCount
-		info=fieldInfo.copy()
+		info=self.fieldInfoTemplate.copy()
 		info["node"]=domNode
 		info['parent']=parentID
 		info['range']=[position,position]
@@ -212,65 +214,65 @@ class virtualBuffer_MSHTML(virtualBuffer):
 			if data and not data.isspace():
 				text=data
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement) or nodeName=="IFRAME":
-			info["fieldType"]=fieldType_frame
-			info["typeString"]=fieldNames[fieldType_frame]
+			info["role"]=controlTypes.ROLE_FRAME
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
-			info["fieldType"]=fieldType_document
-			info["typeString"]=fieldNames[fieldType_document]
+			info["role"]=controlTypes.ROLE_DOCUMENT
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_DOCUMENT]
 			text=domNode.title+"\n "
 		elif nodeName=="A":
-			info["fieldType"]=fieldType_link
-			info["typeString"]=fieldNames[fieldType_link]
+			info["role"]=controlTypes.ROLE_LINK
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
 		elif nodeName=="TABLE":
-			info["fieldType"]=fieldType_table
-			info["typeString"]=fieldNames[fieldType_table]
+			info["role"]=controlTypes.ROLE_TABLE
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLE]
 		elif nodeName=="THEAD":
-			info["fieldType"]=fieldType_tableHeader
-			info["typeString"]=fieldNames[fieldType_tableHeader]
+			info["role"]=controlTypes.ROLE_TABLEHEADER
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEHEADER]
 		elif nodeName=="TBODY":
-			info["fieldType"]=fieldType_tableBody
-			info["typeString"]=fieldNames[fieldType_tableBody]
+			info["role"]=controlTypes.ROLE_TABLEBODY
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEBODY]
 		elif nodeName=="TFOOT":
-			info["fieldType"]=fieldType_tableFooter
-			info["typeString"]=fieldNames[fieldType_tableFooter]
+			info["role"]=controlTypes.ROLE_TABLEFOOTER
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEFOOTER]
 		elif nodeName=="TR":
-			info["fieldType"]=fieldType_row
-			info["typeString"]=fieldNames[fieldType_row]
+			info["role"]=controlTypes.ROLE_TABLEROW
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEROW]
 		elif nodeName=="TD":
-			info["fieldType"]=fieldType_cell
-			info["typeString"]=fieldNames[fieldType_cell]
+			info["role"]=controlTypes.ROLE_TABLECELL
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLECELL]
 		elif nodeName=="P":
-			info["fieldType"]=fieldType_paragraph
-			info["typeString"]=fieldNames[fieldType_paragraph]
+			info["role"]=controlTypes.ROLE_PARAGRAPH
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_PARAGRAPH]
 		elif nodeName=="UL":
-			info["fieldType"]=fieldType_list
-			info["typeString"]=fieldNames[fieldType_list]
+			info["role"]=controlTypes.ROLE_LIST
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="OL":
-			info["fieldType"]=fieldType_list
-			info["typeString"]=fieldNames[fieldType_list]
+			info["role"]=controlTypes.ROLE_LIST
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="LI":
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			info["typeString"]=_("bullet")
 		elif nodeName=="DL":
-			info["fieldType"]=fieldType_list
-			info["typeString"]=_("definition")+" "+fieldNames[fieldType_list]
+			info["role"]=controlTypes.ROLE_LIST
+			info["typeString"]=_("definition")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: _("with %s items")%x.children.length
 		elif nodeName=="DT":
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			info["typeString"]=_("bullet")
 		elif nodeName=="DD":
-			info["fieldType"]=fieldType_listItem
+			info["role"]=controlTypes.ROLE_LISTITEM
 			info["typeString"]=_("definition")
 		elif nodeName=="TEXTAREA":
-			info["fieldType"]=fieldType_editArea
-			info["typeString"]=fieldNames[fieldType_editArea]
+			info["role"]=controlTypes.ROLE_EDITABLETEXT
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 			if domNode.children.length==0:
 				text=" "
 		elif nodeName=="IMG":
-			info["fieldType"]=fieldType_graphic
-			info["typeString"]=fieldNames[fieldType_graphic]
+			info["role"]=controlTypes.ROLE_GRAPHIC
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
 			label=domNode.getAttribute('alt')
 			if not label:
 				label=domNode.getAttribute('title')
@@ -280,45 +282,45 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				label=domNode.getAttribute('src').split('/')[-1]
 			text=label
 		elif nodeName in ["H1","H2","H3","H4","H5","H6"]:
-			info["fieldType"]=fieldType_heading
-			info["typeString"]=fieldNames[fieldType_heading]+" %s"%nodeName[1]
+			info["role"]=controlTypes.ROLE_HEADING
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]+" %s"%nodeName[1]
 		elif nodeName=="BLOCKQUOTE":
-			info["fieldType"]=fieldType_blockQuote
-			info["typeString"]=fieldNames[fieldType_blockQuote]
+			info["role"]=controlTypes.ROLE_BLOCKQUOTE
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
 		elif nodeName=="FORM":
-			info["fieldType"]=fieldType_form
-			info["typeString"]=fieldNames[fieldType_form]
+			info["role"]=controlTypes.ROLE_FORM
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FORM]
 		elif nodeName=="INPUT":
 			inputType=domNode.getAttribute("type")
 			if inputType=="text":
-				info["fieldType"]=fieldType_edit
-				info["typeString"]=fieldNames[fieldType_edit]
+				info["role"]=controlTypes.ROLE_EDITABLETEXT
+				info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="file":
-				info["fieldType"]=fieldType_edit
-				info["typeString"]=_("file updload")+" "+fieldNames[fieldType_edit]
+				info["role"]=controlTypes.ROLE_EDITABLETEXT
+				info["typeString"]=_("file updload")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="password":
-				info["fieldType"]=fieldType_edit
-				info["typeString"]=_("protected")+" "+fieldNames[fieldType_edit]
+				info["role"]=controlTypes.ROLE_EDITABLETEXT
+				info["typeString"]=_("protected")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 				text="*"*len(domNode.getAttribute('value'))+" "
 			elif inputType in ["button","image","reset","submit"]:
-				info["fieldType"]=fieldType_button
-				info["typeString"]=fieldNames[fieldType_button]
+				info["role"]=controlTypes.ROLE_BUTTON
+				info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
 				text=domNode.getAttribute('value')
 			elif inputType=="radio":
-				info["fieldType"]=fieldType_radioButton
-				info["typeString"]=fieldNames[fieldType_radioButton]
+				info["role"]=controlTypes.ROLE_RADIOBUTTON
+				info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_RADIOBUTTON]
 				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 				text=" "
 			elif inputType=="checkbox":
-				info["fieldType"]=fieldType_checkBox
-				info["typeString"]=fieldNames[fieldType_checkBox]
+				info["role"]=controlTypes.ROLE_CHECKBOX
+				info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_CHECKBOX]
 				info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.checked else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 				text=" "
 		elif nodeName=="SELECT":
-			info["fieldType"]=fieldType_comboBox
-			info["typeString"]=fieldNames[fieldType_comboBox]
+			info["role"]=controlTypes.ROLE_COMBOBOX
+			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_COMBOBOX]
 			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
 			text=itemText
 		elif (nodeName=="BR") and (domNode.previousSibling and domNode.previousSibling.nodeName=="#text"):

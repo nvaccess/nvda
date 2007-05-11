@@ -4,12 +4,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import os
 import debug
 import winUser
 import NVDAObjects
 import IAccessibleHandler
-import MSHTML
-import gecko
 
 runningTable={}
 
@@ -40,7 +39,7 @@ def update(obj):
 		return
 	if any((winUser.isDescendantWindow(w,windowHandle) for w in runningTable)):
 		return
-	virtualBufferClass=None
+	classString=None
 	for curWindow in [windowHandle,winUser.getAncestor(windowHandle,winUser.GA_PARENT)]:
 		if not curWindow:
 			return 
@@ -53,18 +52,22 @@ def update(obj):
 			role=obj.IAccessibleRole
 			k=(className,obj.IAccessibleRole)
 			if _staticMap.has_key(k):
-				virtualBufferClass=_staticMap[k]
-		if virtualBufferClass:
-			debug.writeMessage("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(virtualBufferClass,obj.windowHandle,className))
-			virtualBufferObject=virtualBufferClass(obj)
+				classString=_staticMap[k]
+		if classString:
+			modString,classString=os.path.splitext(classString)
+			classString=classString[1:]
+			mod=__import__(modString,globals(),locals(),[])
+			newClass=getattr(mod,classString)
+			debug.writeMessage("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,className))
+			virtualBufferObject=newClass(obj)
 			windows=frozenset([curWindow,obj.windowHandle])
 			for w in windows:
 				runningTable[w]=virtualBufferObject
 			return
 
 _staticMap={
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):MSHTML.virtualBuffer_MSHTML,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):MSHTML.virtualBuffer_MSHTML,
-("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):MSHTML.virtualBuffer_MSHTML,
-("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):gecko.virtualBuffer_gecko,
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MSHTML.MSHTML",
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"MSHTML.MSHTML",
+	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"gecko.Gecko",
 }
