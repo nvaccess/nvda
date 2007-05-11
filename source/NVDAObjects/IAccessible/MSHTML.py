@@ -8,10 +8,11 @@ import time
 import ctypes
 import comtypesClient
 import comtypes.automation
+import pythoncom
+import win32com.client
 import debug
 import winUser
 import IAccessibleHandler
-import virtualBuffers
 from keyUtils import key, sendKey
 import api
 import speech
@@ -20,15 +21,16 @@ from . import IAccessible
 class MSHTML(IAccessible):
 
 	def getDocumentObjectModel(self):
-		virtualBuffer=virtualBuffers.IAccessible.getVirtualBuffer(self)
-		if virtualBuffer and hasattr(virtualBuffer,'dom'):
-			return virtualBuffer.dom
-		else:
-			domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-			wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-			lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-			res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-			return comtypesClient.wrap(domPointer)
+		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
+		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
+		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
+		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
+		o=pythoncom._univgw.interface(ctypes.cast(domPointer,ctypes.c_void_p).value,pythoncom.IID_IDispatch)
+		t=o.GetTypeInfo()
+		a=t.GetTypeAttr()
+		oleRepr=win32com.client.build.DispatchItem(attr=a)
+		return win32com.client.CDispatch(o,oleRepr)
 
 	def _get_typeString(self):
 		if self.isContentEditable:
