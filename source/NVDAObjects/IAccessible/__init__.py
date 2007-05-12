@@ -127,6 +127,7 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_SEPARATOR:controlTypes.ROLE_SEPARATOR,
 	IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:controlTypes.ROLE_DOCUMENT,
 	IAccessibleHandler.ROLE_SYSTEM_ANIMATION:controlTypes.ROLE_ANIMATION,
+	IAccessibleHandler.ROLE_SYSTEM_APPLICATION:controlTypes.ROLE_APPLICATION,
 }
 
 class IAccessible(Window):
