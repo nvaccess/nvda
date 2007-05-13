@@ -43,6 +43,9 @@ CALLBACK_FUNCTION = 0x30000
 class WavePlayer:
 
 	def __init__(self, channels, samplesPerSec, bitsPerSample):
+		self.channels=channels
+		self.samplesPerSec=samplesPerSec
+		self.bitsPerSample=bitsPerSample
 		wfx = WAVEFORMATEX()
 		wfx.wFormatTag = WAVE_FORMAT_PCM
 		wfx.nChannels = channels
@@ -58,17 +61,22 @@ class WavePlayer:
 		self._prev_whdr = None
 
 	def feed(self, data):
-		whdr = WAVEHDR()
-		whdr.lpData = data
-		whdr.dwBufferLength = len(data)
-		res = winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-		if res != MMSYSERR_NOERROR:
-			raise RuntimeError("Error preparing buffer: code %d" % res)
-		res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-		if res != MMSYSERR_NOERROR:
-			raise RuntimeError("Error writing wave data: code %d" % res)
-		self.sync()
-		self._prev_whdr = whdr
+		try:
+			whdr = WAVEHDR()
+			whdr.lpData = data
+			whdr.dwBufferLength = len(data)
+			res = winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+			if res != MMSYSERR_NOERROR:
+				raise RuntimeError("Error preparing buffer: code %d" % res)
+			res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+			self.sync()
+			if res != MMSYSERR_NOERROR:
+				self.close()
+				self.__init__(self.channels,self.samplesPerSec,self.bitsPerSample)
+				raise RuntimeError("Error writing wave data: code %d" % res)
+			self._prev_whdr = whdr
+		except:
+			debug.writeException("player.feed")
 
 	def sync(self):
 		# todo: Wait for an event instead of spinning.
