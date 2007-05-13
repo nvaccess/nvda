@@ -143,7 +143,7 @@ class Gecko(virtualBuffer):
 	def isDocumentComplete(self):
 		role=self.NVDAObject.role
 		states=self.NVDAObject.IAccessibleStates
-		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
+		if (role==controlTypes.ROLE_DOCUMENT) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			return True
 		else:
 			return False
