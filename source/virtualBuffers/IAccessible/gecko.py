@@ -277,7 +277,7 @@ class Gecko(virtualBuffer):
 			info["role"]=controlTypes.ROLE_GRAPHIC
 			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
-			info["role"]=controlTypes.ROLE_HEADING
+			info["role"]=getattr(controlTypes,"ROLE_HEADING%s"%role[1:])
 			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]+" %s"%role[1]
 		elif role=="blockquote":
 			info["role"]=controlTypes.ROLE_BLOCKQUOTE
