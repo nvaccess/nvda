@@ -282,8 +282,7 @@ class MSHTML(virtualBuffer):
 				label=domNode.getAttribute('src').split('/')[-1]
 			text=label
 		elif nodeName in ["H1","H2","H3","H4","H5","H6"]:
-			info["role"]=controlTypes.ROLE_HEADING
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]+" %s"%nodeName[1]
+			info["role"]=getattr(controlTypes,"ROLE_HEADING%s"%nodeName[1])
 		elif nodeName=="BLOCKQUOTE":
 			info["role"]=controlTypes.ROLE_BLOCKQUOTE
 			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
