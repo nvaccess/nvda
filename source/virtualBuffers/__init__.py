@@ -305,7 +305,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		super(virtualBuffer,self).text_reportPresentation(offset)
 
 	def script_nextHeading(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_HEADING)
+		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
 			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
@@ -316,7 +316,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 	script_nextHeading.__doc__ = _("moves to the next heading")
 	
 	def script_previousHeading(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_HEADING)
+		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
 			self.text_reviewOffset=pos
 			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
