@@ -191,13 +191,17 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		if not role:
 			roleNum=obj.role
 		if reason==REASON_CHANGE:
-			if silentPositiveStatesOnStateChange.has_key(roleNum):
+			positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
+			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnStateChange.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 				oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 			textList.extend([controlTypes.speechStateLabels[state] for state in (positiveStateSet-oldPositiveStateSet)])
 		if reason==REASON_FOCUS:
-			if silentPositiveStatesOnFocus.has_key(roleNum):
+			positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
+			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnFocus.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]
+			textList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
+		else:
 			textList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
 		if spokenNegativeStates.has_key(roleNum):
 			negativeStateSet=negativeStateSet|(spokenNegativeStates[roleNum]-stateSet)
@@ -294,6 +298,8 @@ This function will not speak if L{speechMode} is false.
 
 def speakTypedCharacters(ch):
 	global typedWord
+	if api.isTypingProtected():
+		ch="*"
 	if config.conf["keyboard"]["speakTypedCharacters"]:
 		speakSymbol(ch)
 	if config.conf["keyboard"]["speakTypedWords"]: 
@@ -312,17 +318,18 @@ silentRolesOnFocus=frozenset([
 ])
 
 silentPositiveStatesOnFocus={
+	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED]),
 	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_LINK:frozenset([controlTypes.STATE_LINKED]),
 }
 
 silentPositiveStatesOnStateChange={
+	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED]),
 	controlTypes.ROLE_CHECKBOX:frozenset([controlTypes.STATE_PRESSED]),
 }
 
 spokenNegativeStates={
 	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_EXPANDED]),
 	controlTypes.ROLE_CHECKBOX: frozenset([controlTypes.STATE_CHECKED]),
 }

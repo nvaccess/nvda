@@ -13,7 +13,6 @@ import nvwh
 import debug
 import speech
 from keyUtils import key, keyName
-import api
 import scriptHandler
 import globalVars
 import queueHandler
@@ -26,16 +25,6 @@ insertDown=False
 word=""
 hookManager=None
 
-def isTypingProtected():
-	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
-@returns: True if it should be suppressed, False otherwise.
-@rtype: boolean
-"""
-	focusObject=api.getFocusObject()
-	if focusObject and focusObject.isProtected:
-		return True
-	else:
-		return False
 
 def passNextKeyThrough():
 	global passKeyThroughCount

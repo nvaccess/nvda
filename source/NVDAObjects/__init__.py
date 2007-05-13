@@ -238,7 +238,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 """
 		speech.cancelSpeech()
 		api.setNavigatorObject(self)
-		speech.speakObject(self)
+		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def _get_textRepresentation(self,start=None,end=None):
 		"""Gets either all the text the object has, or the text from a certain offset, or to a certain offset.

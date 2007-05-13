@@ -12,6 +12,7 @@ import speech
 import NVDAObjects
 import winUser
 import core
+import controlTypes
 
 #User functions
 
@@ -110,6 +111,17 @@ def setNavigatorObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
+
+def isTypingProtected():
+	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
+@returns: True if it should be suppressed, False otherwise.
+@rtype: boolean
+"""
+	focusObject=getFocusObject()
+	if focusObject and (controlTypes.STATE_PROTECTED in focusObject.states):
+		return True
+	else:
+		return False
 
 def setMenuMode(switch):
 	"""Turns on or off menu mode according to the given parameter. Menu mode is used for some objects to work out whether or not menu items should be spoken at a certain time.

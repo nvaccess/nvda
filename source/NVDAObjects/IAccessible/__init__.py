@@ -72,12 +72,14 @@ def processGeckoDescription(obj):
 
 IAccessibleStatesToNVDAStates={
 	IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE:controlTypes.STATE_UNAVAILABLE,
+	IAccessibleHandler.STATE_SYSTEM_FOCUSED:controlTypes.STATE_FOCUSED,
 	IAccessibleHandler.STATE_SYSTEM_SELECTED:controlTypes.STATE_SELECTED,
 	IAccessibleHandler.STATE_SYSTEM_BUSY:controlTypes.STATE_BUSY,
 	IAccessibleHandler.STATE_SYSTEM_PRESSED:controlTypes.STATE_PRESSED,
 	IAccessibleHandler.STATE_SYSTEM_CHECKED:controlTypes.STATE_CHECKED,
 	IAccessibleHandler.STATE_SYSTEM_MIXED:controlTypes.STATE_HALFCHECKED,
 	IAccessibleHandler.STATE_SYSTEM_EXPANDED:controlTypes.STATE_EXPANDED,
+	IAccessibleHandler.STATE_SYSTEM_COLLAPSED:controlTypes.STATE_COLLAPSED,
 	IAccessibleHandler.STATE_SYSTEM_INVISIBLE:controlTypes.STATE_INVISIBLE,
 	IAccessibleHandler.STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
 	IAccessibleHandler.STATE_SYSTEM_LINKED:controlTypes.STATE_LINKED,
