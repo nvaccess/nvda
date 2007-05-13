@@ -273,7 +273,7 @@ class WinConsole(IAccessible):
 			# We know that something has changed, but there doesn't appear to be any new text.
 			# Therefore, just speak the current line.
 			start, end = self.text_getLineOffsets(self.text_caretOffset)
-			outLines.append(self.text_getText(start, end).strip())
+			#outLines.append(self.text_getText(start, end).strip())
 		return outLines
 
 	def script_protectConsoleKillKey(self,keyPress,nextScript):
