@@ -584,8 +584,6 @@ class MozillaUIWindowClass_application(MozillaUIWindowClass):
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
 
-	speakOnGainFocus=False
-
 	def _get_value(self):
 		return None
 
@@ -601,6 +599,10 @@ class MozillaUIWindowClass_application(MozillaUIWindowClass):
 					return child
 			except:
 				pass
+
+	def event_nameChange(self):
+		if winUser.getForegroundWindow()==self.windowHandle:
+			speech.speakObjectProperties(self,name=True)
 
 class MozillaDocument(IAccessible):
 
