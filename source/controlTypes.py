@@ -54,6 +54,7 @@ ROLE_TABLEFOOTER=51
 ROLE_DOCUMENT=52
 ROLE_ANIMATION=53
 ROLE_APPLICATION=54
+ROLE_BOX=55
 
 STATE_UNAVAILABLE=1
 STATE_FOCUSED=2
@@ -128,6 +129,7 @@ speechRoleLabels={
 	ROLE_DOCUMENT:_("document"),
 	ROLE_ANIMATION:_("animation"),
 	ROLE_APPLICATION:_("application"),
+	ROLE_BOX:_("box"),
 }
 
 speechStateLabels={

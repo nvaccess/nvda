@@ -125,11 +125,20 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_TOOLBAR:controlTypes.ROLE_TOOLBAR,
 	IAccessibleHandler.ROLE_SYSTEM_COLUMNHEADER:controlTypes.ROLE_TABLECOLUMNHEADER,
 	IAccessibleHandler.ROLE_SYSTEM_ROWHEADER:controlTypes.ROLE_TABLEROWHEADER,
+	IAccessibleHandler.ROLE_SYSTEM_SPLITBUTTON:controlTypes.ROLE_DROPDOWNBUTTON,
 	IAccessibleHandler.ROLE_SYSTEM_BUTTONDROPDOWN:controlTypes.ROLE_DROPDOWNBUTTON,
 	IAccessibleHandler.ROLE_SYSTEM_SEPARATOR:controlTypes.ROLE_SEPARATOR,
 	IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:controlTypes.ROLE_DOCUMENT,
 	IAccessibleHandler.ROLE_SYSTEM_ANIMATION:controlTypes.ROLE_ANIMATION,
 	IAccessibleHandler.ROLE_SYSTEM_APPLICATION:controlTypes.ROLE_APPLICATION,
+	"h1":controlTypes.ROLE_HEADING1,
+	"h2":controlTypes.ROLE_HEADING2,
+	"h3":controlTypes.ROLE_HEADING3,
+	"h4":controlTypes.ROLE_HEADING4,
+	"h5":controlTypes.ROLE_HEADING5,
+	"h6":controlTypes.ROLE_HEADING6,
+	"p":controlTypes.ROLE_PARAGRAPH,
+	"hbox":controlTypes.ROLE_BOX,
 }
 
 class IAccessible(Window):
@@ -229,7 +238,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return res if (isinstance(res,basestring) or isinstance(res,int) or isinstance(res,float)) else ""
 
 	def _get_role(self):
-		return IAccessibleRolesToNVDARoles.get(self.IAccessibleRole,controlTypes.ROLE_UNKNOWN)
+		IARole=self.IAccessibleRole
+		if isinstance(IARole,basestring):
+			IARole=IARole.split(',')[0].lower()
+			debug.writeMessage("IARole: %s"%IARole)
+		return IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
 
 	def _get_IAccessibleStates(self):
 		try:
