@@ -469,6 +469,10 @@ class textBufferObject(baseObject.scriptableObject):
 			self.text_reviewOffset=self.text_caretOffset
 	script_text_moveByLine.__doc__=_("Moves and then reads the current line")
 
+	def script_text_reportCurrentLine(self,keyPress,nextScript):
+		self.text_speakLine(self.text_caretOffset)
+	script_text_reportCurrentLine.__doc__=_("reads the current line")
+
 	def script_text_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():

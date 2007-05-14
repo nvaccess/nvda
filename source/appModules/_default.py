@@ -44,6 +44,9 @@ class appModule(appModuleHandler.appModule):
 		speech.speakMessage(_("keyboard help %s")%state)
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
+	def script_reportCurrentLine(self,keyPress,nextScript):
+		api.getFocusObject().script_text_reportCurrentLine(keyPress,nextScript)
+
 	def script_dateTime(self,keyPress,nextScript):
 		text=unicode(datetime.datetime.today().strftime("%I:%M %p, %A %B %d %Y"), errors="replace", encoding=locale.getlocale()[1])
 		if text[0]=='0':
