@@ -11,11 +11,6 @@ import time
 import debug
 import globalVars
 import winUser
-import speech
-import config
-import queueHandler
-import languageHandler
-import keyboardHandler
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
@@ -54,20 +49,25 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	endResult=CORE_QUIT
 	try:
+		import config
 		config.load()
 		try:
 			config.save()
 		except:
 			pass
+		import sys
+		for key in sys.modules.keys():
+			debug.writeMessage("module: %s, %s"%(key,sys.modules[key]))
 		try:
 			lang = config.conf["general"]["language"]
+			import languageHandler
 			languageHandler.setLanguage(lang)
 		except:
 			debug.writeException("Error in language file")
+		import speech
 		speech.initialize()
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			speech.speakMessage(_("Loading subsystems, please wait..."))
-		import gui
 		import appModuleHandler
 		appModuleHandler.initialize()
 		import JABHandler
@@ -82,7 +82,17 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"),wait=True)
 		app = wx.PySimpleApp()
+		import queueHandler
+		import gui
 		gui.initialize(app)
+		class CorePump(wx.Timer):
+			"Checks the queues and executes functions."
+			def Notify(self):
+				keyboardHandler.pumpAll()
+				while True:
+					queueHandler.pumpAll()
+					if not queueHandler.isPendingItems():
+						break
 		pump = CorePump()
 		pump.Start(1)
 	except:
@@ -98,7 +108,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			globalVars.focusObject.event_looseFocus()
 	except:
 		debug.writeException("LooseFocus error")
-
 	try:
 		speech.cancelSpeech()
 	except:
@@ -124,12 +133,3 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		endResult=CORE_RESTART
 	return endResult
 
-class CorePump(wx.Timer):
-	"Checks the queues and executes functions."
-
-	def Notify(self):
-		keyboardHandler.pumpAll()
-		while True:
-			queueHandler.pumpAll()
-			if not queueHandler.isPendingItems():
-				break
