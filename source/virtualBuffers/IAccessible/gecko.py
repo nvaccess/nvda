@@ -207,11 +207,9 @@ class Gecko(virtualBuffer):
 			info["role"]=controlTypes.ROLE_FRAME
 		if role=="iframe":
 			info["role"]=controlTypes.ROLE_FRAME
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			text="%s \n "%obj.name
 			info["role"]=controlTypes.ROLE_DOCUMENT
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_DOCUMENT]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LINK and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 			info["role"]=controlTypes.ROLE_LINK
 			if True:
@@ -224,28 +222,20 @@ class Gecko(virtualBuffer):
 					text=text.strip()
 		elif role=="p":
 			info["role"]=controlTypes.ROLE_PARAGRAPH
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_PARAGRAPH]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CELL:
 			info["role"]=controlTypes.ROLE_TABLECELL
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLECELL]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TABLE:
 			info["role"]=controlTypes.ROLE_TABLE
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLE]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_ROW:
 			info["role"]=controlTypes.ROLE_TABLEROW
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEROW]
 		elif role=="thead":
 			info["role"]=controlTypes.ROLE_TABLEHEADER
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEHEADER]
 		elif role=="tfoot":
 			info["role"]=controlTypes.ROLE_TABLEFOOTER
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEFOOTER]
 		elif role=="tbody":
 			info["role"]=controlTypes.ROLE_TABLEBODY
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_TABLEBODY]
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LIST,"ul"]:
 			info["role"]=controlTypes.ROLE_LIST
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
 			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["role"]=controlTypes.ROLE_LISTITEM
@@ -275,32 +265,24 @@ class Gecko(virtualBuffer):
 			if not text and states&IAccessibleHandler.STATE_SYSTEM_LINKED:
 				text=" "
 			info["role"]=controlTypes.ROLE_GRAPHIC
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
 		elif role in ["h1","h2","h3","h4","h5","h6"]:
 			info["role"]=getattr(controlTypes,"ROLE_HEADING%s"%role[1:])
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]+" %s"%role[1]
 		elif role=="blockquote":
 			info["role"]=controlTypes.ROLE_BLOCKQUOTE
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
 		elif role=="q":
 			info["role"]=controlTypes.ROLE_BLOCKQUOTE
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BLOCKQUOTE]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			text="%s "%obj.name
 			info["role"]=controlTypes.ROLE_BUTTON
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
 		elif role=="form":
 			info["role"]=controlTypes.ROLE_FORM
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_FORM]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
 			text="%s "%obj.name
 			info["role"]=controlTypes.ROLE_RADIOBUTTON
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_RADIOBUTTON]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			text="%s "%obj.name
 			info["role"]=controlTypes.ROLE_CHECKBOX
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_CHECKBOX]
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			val=obj.value
@@ -308,13 +290,11 @@ class Gecko(virtualBuffer):
 				val="\0"
 			text=val
 			info["role"]=controlTypes.ROLE_EDITABLETEXT
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 			if obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
 				info["typeString"]=_("protected %s")%info["typeString"]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			text="%s "%obj.value
 			info["role"]=controlTypes.ROLE_COMBOBOX
-			info["typeString"]=controlTypes.speechRoleLabels[controlTypes.ROLE_COMBOBOX]
 		else:
 			info["typeString"]=IAccessibleHandler.getRoleName(role) if isinstance(role,int) else role
 		accessKey=obj.keyboardShortcut
