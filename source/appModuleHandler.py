@@ -35,6 +35,8 @@ __path__=['.\\appModules']
 
 #Dictionary of windowHandle:appModule paires used to hold the currently running modules
 runningTable={}
+#Variable to hold the active (focused) appModule
+activeModule=None
 #variable to hold the default appModule instance
 default=None
 
@@ -112,8 +114,13 @@ def update(windowHandle):
 @param windowHandle: any window in an application
 @type windowHandle: int
 """
+	global activeModule
 	for w in [x for x in runningTable if not winUser.isWindow(x)]:
 		debug.writeMessage("appModuleHandler.update: application %s closed, window %s"%(runningTable[w].appName,w))
+		if isinstance(activeModule,appModule) and w==activeModule.appWindow: 
+			if hasattr(activeModule,"event_appLooseFocus"):
+				activeModule.event_appLooseFocus()
+			activeModule=None
 		del runningTable[w]
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
 	if appWindow<=0 or not winUser.isWindowVisible(appWindow) or not winUser.isWindowEnabled(appWindow):
@@ -127,9 +134,19 @@ def update(windowHandle):
 		mod=fetchModule(appName)
 		if mod: 
 			mod=mod(appName,appWindow)
-			debug.writeMessage("Loaded appModule %s"%mod.appName) 
+			if mod.__class__!=appModule:
+				debug.writeMessage("Loaded appModule %s, %s"%(mod.appName,mod)) 
 			loadKeyMap(appName,mod)
 		runningTable[appWindow]=mod
+	activeAppWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
+	if isinstance(activeModule,appModule) and activeAppWindow!=activeModule.appWindow: 
+		if hasattr(activeModule,"event_appLooseFocus"):
+			activeModule.event_appLooseFocus()
+		activeModule=None
+	if not activeModule and runningTable.has_key(activeAppWindow):
+		activeModule=runningTable[activeAppWindow]
+		if hasattr(activeModule,"event_appGainFocus"):
+			activeModule.event_appGainFocus()
 
 def loadKeyMap(appName,mod):
 	"""Loads a key map in to the given appModule, with the given name. if the key map exists. It takes in to account what layout NVDA is currently set to.
