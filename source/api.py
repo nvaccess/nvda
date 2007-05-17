@@ -25,7 +25,7 @@ Instructs the GUI that you want to quit. The GUI responds by bringing up a dialo
 def findObjectWithFocus():
 	"""Walks the object hyerarchy starting at the desktop Window (root object) and follows the activeChild property of each object until it can not go any further - this will be the object with focus.
 @returns: object with focus
-@rtype: NVDAObject
+@rtype: L{NVDAObjects.NVDAObject}
 """
 	prevObj=getDesktopObject()
 	obj=prevObj.activeChild

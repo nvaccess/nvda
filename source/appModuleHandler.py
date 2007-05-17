@@ -7,7 +7,7 @@
 """Manages appModules.
 @var default: holds the default appModule.
 @type: default: appModule
-@var runningTable: a dctionary of the currently running appModules, using their application's main window handle as a key value.
+@var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key value.
 @type runningTable: dict
 @var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
 @type re_keyScript: regular expression
@@ -152,7 +152,7 @@ def loadKeyMap(appName,mod):
 	"""Loads a key map in to the given appModule, with the given name. if the key map exists. It takes in to account what layout NVDA is currently set to.
 @param appName: the application name
 @type appName: string
-@param mod: athe appModule
+@param mod: the appModule
 @type mod: appModule
 """  
 	layout=config.conf["keyboard"]["keyboardLayout"]
