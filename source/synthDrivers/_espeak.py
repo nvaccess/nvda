@@ -199,6 +199,14 @@ def setVoiceByName(name):
 	if res!=EE_OK:
 		raise OSError("espeak_SetVoiceByName, %d"%res)
 
+def setVoiceByLanguage(lang):
+	v=espeak_VOICE()
+	lang=lang.replace('_','-')
+	v.languages=lang
+	res=espeakDLL.espeak_SetVoiceByProperties(byref(v))
+	if res!=EE_OK:
+		raise RuntimeError("espeakDLL.setVoiceByProperties: %d"%res)
+
 def initialize():
 	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")

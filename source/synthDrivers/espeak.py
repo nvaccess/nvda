@@ -19,12 +19,7 @@ class SynthDriver(silence.SynthDriver):
 		_espeak.initialize()
 		_espeak.setParameter(_espeak.espeakRATE,230,0)
 		lang=languageHandler.getLanguage()
-		#debug.writeMessage("eSpeak language: %s"%lang)
-		try:
-			_espeak.setVoiceByName(lang)
-		except:
-			if lang.count('_')==1:
-				_espeak.setVoiceByName(lang.split('_')[0])
+		_espeak.setVoiceByLanguage(lang)
 		self._voiceList=_espeak.getVoiceList()
 
 	def speakText(self,text,wait=False,index=None):
