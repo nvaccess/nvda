@@ -399,7 +399,7 @@ class appModule(appModuleHandler.appModule):
 		if not statusBarObject:
 			speech.speakMessage(_("no status bar found"))
 			return
-		statusBarObject.speakObject()
+		speech.speakObject(statusBarObject,reason=speech.REASON_QUERY)
 		api.setNavigatorObject(statusBarObject)
 	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
