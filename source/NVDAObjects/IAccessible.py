@@ -21,6 +21,7 @@ import winKernel
 import globalVars
 import speech
 import api
+import queueHandler
 import config
 import baseType
 import window
