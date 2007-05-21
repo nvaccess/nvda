@@ -67,6 +67,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
 			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import gui
+		app = wx.PySimpleApp()
+		gui.initialize(app)
 		import appModuleHandler
 		appModuleHandler.initialize()
 		import JABHandler
@@ -80,8 +82,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"),wait=True)
-		app = wx.PySimpleApp()
-		gui.initialize(app)
 		pump = CorePump()
 		pump.Start(1)
 	except:
