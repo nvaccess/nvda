@@ -1,4 +1,5 @@
 import debug
+import languageHandler
 import _espeak
 import Queue
 import threading
@@ -17,7 +18,8 @@ class SynthDriver(silence.SynthDriver):
 	def initialize(self):
 		_espeak.initialize()
 		_espeak.setParameter(_espeak.espeakRATE,230,0)
-		_espeak.setVoiceByName("english")
+		lang=languageHandler.getLanguage()
+		_espeak.setVoiceByLanguage(lang)
 		self._voiceList=_espeak.getVoiceList()
 
 	def speakText(self,text,wait=False,index=None):
