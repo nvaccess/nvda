@@ -64,6 +64,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			languageHandler.setLanguage(lang)
 		except:
 			debug.writeException("Error in language file")
+		app = wx.PySimpleApp()
+		import queueHandler
+		import gui
+		gui.initialize(app)
 		import speech
 		speech.initialize()
 		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
@@ -81,10 +85,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"),wait=True)
-		app = wx.PySimpleApp()
-		import queueHandler
-		import gui
-		gui.initialize(app)
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def Notify(self):
