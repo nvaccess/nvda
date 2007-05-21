@@ -161,6 +161,9 @@ import config
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
 
+#Keep track of the last event
+lastEventParams=None
+
 #Load IAccessible from oleacc.dll
 IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 pointer_IAccessible=ctypes.POINTER(IAccessible)
@@ -487,7 +490,12 @@ def manageEvent(name,window,objectID,childID):
 		eventHandler.manageEvent(name,obj)
 
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	global lastEventParams
 	try:
+		#Ignore certain duplicate events
+		if lastEventParams is not None and eventID==winUser.EVENT_OBJECT_FOCUS and lastEventParams==(eventID,window,objectID,childID):
+			return
+		lastEventParams=(eventID,window,objectID,childID)
 		eventName=eventMap[eventID]
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
