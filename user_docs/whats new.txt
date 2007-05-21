@@ -6,6 +6,8 @@ It is very responsive and lite-weight, and has support for many different langua
 eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
 For more info on eSpeak, or to find other versions, go to
 http://espeak.sourceforge.net/.
+*NVDA now uses the built-in eSpeak synthesizer by default.
+*the built-in eSpeak synthesizer will now start in the language NVDA is set to, unless another voice has previously been chosen.
 *Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 *Added support for more edit fields in Skype.
 *VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.
@@ -56,7 +58,6 @@ http://espeak.sourceforge.net/.
 *Added script 'passNextKeyThrough' (insert+f2). Press this key, and then the next key pressed will be passed straight through to Windows. This is useful if you have to press a certain key in an application but NVDA uses that key for something else.
 *NVDA no longer freezes up for more than a minute when opening very large documents in MS Word.
  *Fixed a bug where moving out of a table in MS Word, and then moving back in, caused the current row/column numbers not to be spoken if moving back in to exactly the same cell.
-*When starting NVDA with a synthesizer that doesn't exist, or is not working, the sapi5 synth will try and be loaded in stead, or if sapi5 isn't working, then speech will be set to silence.
 *Increasing and decreasing rate scripts can no longer take the rate above 100 or below 0.
 *If there is an error with a language when choosing it in the User Interface Settings dialog, a message box will alert the user to the fact.
 *NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog.
