@@ -71,8 +71,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		gui.initialize(app)
 		import appModuleHandler
 		appModuleHandler.initialize()
-		import JABHandler
-		JABHandler.initialize()
 		import IAccessibleHandler
 		IAccessibleHandler.initialize()
 		import keyboardHandler
