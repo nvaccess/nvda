@@ -59,7 +59,6 @@ setup(
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("appModules", glob("appModules/*.py*")),
 		("appModules", glob("appModules/*.kbd")),
-		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.png")),
 	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers'),
