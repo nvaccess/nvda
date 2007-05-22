@@ -43,9 +43,9 @@ def resetConfiguration(reportDone=False):
 		config.save()
 	except:
 		pass
-	debug.writeMessage("core.applyConfiguration: configuration applyed")
+	debug.writeMessage("core.applyConfiguration: configuration applied")
 	if reportDone:
-		speech.speakMessage(_("configuration applyed"),wait=True)
+		speech.speakMessage(_("configuration applied"),wait=True)
 
 def main():
 	"""NVDA's core main loop.

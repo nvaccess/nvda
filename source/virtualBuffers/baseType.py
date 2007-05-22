@@ -486,7 +486,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 			self.text_speakLine(self.text_reviewOffset)
 		else:
 			speech.speakMessage(_("no more form fields"))
-	script_nextFormField.__doc__ = _("Move to the next form field")
+	script_nextFormField.__doc__ = _("Moves to the next form field")
 
 	def script_previousFormField(self,keyPress,nextScript):
 		pos=self.previousField(self.text_reviewOffset,fieldType_edit,fieldType_radioButton,fieldType_checkBox,fieldType_editArea,fieldType_comboBox,fieldType_button)
