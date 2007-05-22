@@ -280,7 +280,7 @@ class MSHTML(virtualBuffer):
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="file":
 				info["role"]=controlTypes.ROLE_EDITABLETEXT
-				info["typeString"]=_("file updload")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
+				info["typeString"]=_("file upload")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="password":
 				info["role"]=controlTypes.ROLE_EDITABLETEXT

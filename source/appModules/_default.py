@@ -352,7 +352,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress,nextScript):
 		api.toggleVirtualBufferPassThrough()
-	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control with out the virtualBuffer doing something else with the key.")
+	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key.")
 
 	def script_quit(self,keyPress,nextScript):
 		gui.quit()
@@ -434,7 +434,7 @@ class appModule(appModuleHandler.appModule):
 			speech.speakSymbol("%s"%char)
 		speech.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
 		speech.speakMessage("text: %s"%obj.windowText)
-	script_test_navigatorWindowInfo.__doc__ = _("reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text")	
+	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers: control id, class and internal text")	
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
