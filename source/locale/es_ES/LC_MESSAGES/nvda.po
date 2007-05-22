@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r514\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2007-05-09 23:07+0100\n"
+"PO-Revision-Date: 2007-05-22 15:43+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: es_ES <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,24 +17,20 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #: IAccessibleHandler.py:135
-#: controlTypes.py:58
 msgid "window"
 msgstr "ventana"
 
 #: IAccessibleHandler.py:136
 #: characterSymbols.py:20
-#: controlTypes.py:79
 msgid "tab"
 msgstr "tab"
 
 #: IAccessibleHandler.py:137
-#: controlTypes.py:65
 #: virtualBuffers\baseType.py:52
 msgid "edit"
 msgstr "edición"
 
 #: IAccessibleHandler.py:138
-#: controlTypes.py:66
 #: virtualBuffers\baseType.py:44
 msgid "button"
 msgstr "botón"
@@ -47,31 +43,41 @@ msgstr "árbol"
 msgid "sub menu"
 msgstr "submenú"
 
-#: IAccessibleHandler.py:189
-#: speech.py:206
+#: IAccessibleHandler.py:190
+#: NVDAObjects\IAccessible.py:206
+#: NVDAObjects\baseType.py:176
 #: virtualBuffers\MSHTML.py:113
 #: virtualBuffers\MSHTML.py:312
 #: virtualBuffers\MSHTML.py:317
-#: virtualBuffers\gecko.py:296
-#: virtualBuffers\gecko.py:301
+#: virtualBuffers\gecko.py:300
+#: virtualBuffers\gecko.py:305
 msgid "not %s"
 msgstr "no %s"
 
-#: IAccessibleHandler.py:563
+#: IAccessibleHandler.py:562
 msgid "lost focus"
 msgstr "foco perdido"
 
-#: NVDAObjects\IAccessible.py:71
-#: NVDAObjects\IAccessible.py:396
+#: NVDAObjects\IAccessible.py:69
+#: NVDAObjects\IAccessible.py:359
 #: NVDAObjects\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s de %s"
 
-#: NVDAObjects\IAccessible.py:75
+#: NVDAObjects\IAccessible.py:73
 msgid "%s items"
 msgstr "%s elementos"
 
-#: NVDAObjects\IAccessible.py:668
+#: NVDAObjects\IAccessible.py:558
+#: NVDAObjects\baseType.py:275
+msgid "level %d"
+msgstr "nivel %d"
+
+#: NVDAObjects\IAccessible.py:644
+msgid "not supported"
+msgstr "no soportado"
+
+#: NVDAObjects\IAccessible.py:726
 msgid "%d items"
 msgstr "%d elementos"
 
@@ -92,53 +98,35 @@ msgstr "no seleccionado %s"
 msgid "selected %s"
 msgstr "seleccionado %s"
 
-#: NVDAObjects\baseType.py:297
-#: NVDAObjects\baseType.py:330
-#: NVDAObjects\baseType.py:356
-#: textBuffer.py:369
-#: textBuffer.py:382
-#: textBuffer.py:403
-#: textBuffer.py:424
-#: virtualBuffers\baseType.py:327
-msgid "bottom"
-msgstr "fin"
+#: NVDAObjects\baseType.py:140
+msgid "role %s"
+msgstr "rol %s"
 
-#: NVDAObjects\baseType.py:310
-#: NVDAObjects\baseType.py:343
-#: NVDAObjects\baseType.py:365
-#: textBuffer.py:364
-#: textBuffer.py:391
-#: textBuffer.py:412
-#: textBuffer.py:433
-#: virtualBuffers\baseType.py:312
-msgid "top"
-msgstr "início"
+#: NVDAObjects\baseType.py:174
+msgid "state %s"
+msgstr "estado %s"
 
 #: NVDAObjects\richEdit.py:74
 msgid "rich %s"
 msgstr "formateado %s"
 
-#: NVDAObjects\winEdit.py:59
+#: NVDAObjects\winEdit.py:52
 msgid "protected %s "
 msgstr "protegido %s"
 
 #: NVDAObjects\winword.py:274
-#: appModules\winword.py:284
 msgid "left"
 msgstr "izquierda"
 
 #: NVDAObjects\winword.py:276
-#: appModules\winword.py:286
 msgid "centered"
 msgstr "centrado"
 
 #: NVDAObjects\winword.py:278
-#: appModules\winword.py:288
 msgid "right"
 msgstr "derecha"
 
 #: NVDAObjects\winword.py:280
-#: appModules\winword.py:290
 msgid "justified"
 msgstr "justificado"
 
@@ -522,13 +510,12 @@ msgid "The next key that is pressed will not be handled at all by NVDA, it will 
 msgstr "La siguiente tecla que sea presionada no será manipulada por NVDA, será dejada pasar directamente a Windows."
 
 #: appModules\excel.py:80
-msgid "through"
-msgstr "hasta"
-
-#: appModules\excel.py:80
-#: controlTypes.py:99
 msgid "selected"
 msgstr "seleccionado"
+
+#: appModules\excel.py:80
+msgid "through"
+msgstr "hasta"
 
 #: appModules\excel.py:84
 msgid "has formula"
@@ -595,7 +582,7 @@ msgstr "CCO:"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:54
+#: speech.py:46
 msgid "blank"
 msgstr "en blanco"
 
@@ -742,207 +729,6 @@ msgstr "cierra llave"
 #: characterSymbols.py:55
 msgid "tilda"
 msgstr "tilde"
-
-#: controlTypes.py:57
-msgid "unknown object"
-msgstr "objeto desconocido"
-
-#: controlTypes.py:59
-msgid "title bar"
-msgstr "barra de título"
-
-#: controlTypes.py:60
-msgid "panel"
-msgstr "panel"
-
-#: controlTypes.py:61
-msgid "dialog"
-msgstr "diálogo"
-
-#: controlTypes.py:62
-#: virtualBuffers\baseType.py:60
-msgid "check box"
-msgstr "casilla de verificación"
-
-#: controlTypes.py:63
-#: virtualBuffers\baseType.py:61
-msgid "radio button"
-msgstr "botón de opción"
-
-#: controlTypes.py:64
-msgid "text"
-msgstr "texto"
-
-#: controlTypes.py:67
-msgid "menu bar"
-msgstr "barra de menú"
-
-#: controlTypes.py:68
-msgid "menu item"
-msgstr "elemento de menú"
-
-#: controlTypes.py:69
-msgid "popup menu"
-msgstr "menú emergente"
-
-#: controlTypes.py:70
-#: virtualBuffers\baseType.py:53
-msgid "combo box"
-msgstr "cuadro combinado"
-
-#: controlTypes.py:71
-#: virtualBuffers\baseType.py:46
-msgid "list"
-msgstr "lista"
-
-#: controlTypes.py:72
-#: virtualBuffers\baseType.py:47
-msgid "list item"
-msgstr "elemento de lista"
-
-#: controlTypes.py:73
-#: virtualBuffers\baseType.py:54
-msgid "graphic"
-msgstr "gráfico"
-
-#: controlTypes.py:74
-msgid "help balloon"
-msgstr "globos de ayuda"
-
-#: controlTypes.py:75
-msgid "tool tip"
-msgstr "herramientas de ayuda"
-
-#: controlTypes.py:76
-#: virtualBuffers\baseType.py:45
-msgid "link"
-msgstr "enlace"
-
-#: controlTypes.py:77
-msgid "tree view"
-msgstr "árbol"
-
-#: controlTypes.py:78
-msgid "tree view item"
-msgstr "elemento de árbol"
-
-#: controlTypes.py:80
-msgid "tab control"
-msgstr "pestaña"
-
-#: controlTypes.py:81
-msgid "slider"
-msgstr "deslizamiento"
-
-#: controlTypes.py:82
-msgid "progress bar"
-msgstr "barra de progreso"
-
-#: controlTypes.py:83
-msgid "scroll bar"
-msgstr "barra de desplazamiento"
-
-#: controlTypes.py:84
-msgid "status bar"
-msgstr "barra de estado"
-
-#: controlTypes.py:85
-#: virtualBuffers\baseType.py:49
-msgid "table"
-msgstr "tabla"
-
-#: controlTypes.py:86
-#: virtualBuffers\baseType.py:63
-msgid "cell"
-msgstr "celda"
-
-#: controlTypes.py:87
-#: virtualBuffers\baseType.py:51
-msgid "column"
-msgstr "columna"
-
-#: controlTypes.py:88
-#: virtualBuffers\baseType.py:50
-msgid "row"
-msgstr "fila"
-
-#: controlTypes.py:89
-#: virtualBuffers\baseType.py:55
-msgid "frame"
-msgstr "marco"
-
-#: controlTypes.py:90
-msgid "tool bar"
-msgstr "barra de herramientas"
-
-#: controlTypes.py:91
-msgid "column header"
-msgstr "encabezado de columna"
-
-#: controlTypes.py:92
-msgid "row header"
-msgstr "encabezado de fila"
-
-#: controlTypes.py:93
-msgid "drop down button"
-msgstr "botón soltar"
-
-#: controlTypes.py:94
-msgid "clock"
-msgstr "reloj"
-
-#: controlTypes.py:98
-msgid "unavailable"
-msgstr "no disponible"
-
-#: controlTypes.py:100
-msgid "busy"
-msgstr "ocupado"
-
-#: controlTypes.py:101
-msgid "pressed"
-msgstr "pulsado"
-
-#: controlTypes.py:102
-msgid "checked"
-msgstr "verificado"
-
-#: controlTypes.py:103
-msgid "half checked"
-msgstr "Semi verificado"
-
-#: controlTypes.py:104
-msgid "read only"
-msgstr "sólo lectura"
-
-#: controlTypes.py:105
-msgid "expanded"
-msgstr "expandido"
-
-#: controlTypes.py:106
-msgid "invisible"
-msgstr "invisible"
-
-#: controlTypes.py:107
-msgid "visited"
-msgstr "visitado"
-
-#: controlTypes.py:108
-msgid "linked"
-msgstr "enlazado"
-
-#: controlTypes.py:109
-msgid "subMenu"
-msgstr "Submenú"
-
-#: controlTypes.py:110
-#: virtualBuffers\MSHTML.py:303
-msgid "protected"
-msgstr "protegido"
-
-#: controlTypes.py:111
-msgid "required"
-msgstr "requerido"
 
 #: core.py:48
 msgid "configuration applyed"
@@ -1514,15 +1300,7 @@ msgstr "Descripción: %s"
 msgid "Location: %s"
 msgstr "Localización: %s"
 
-#: speech.py:228
-msgid "level %d"
-msgstr "nivel %d"
-
-#: speech.py:232
-msgid "contains %s"
-msgstr "contiene %s"
-
-#: speech.py:267
+#: speech.py:235
 msgid "cap %s"
 msgstr "cap %s"
 
@@ -1604,6 +1382,22 @@ msgstr "no hay subíndice"
 msgid "subscript"
 msgstr "subíndice"
 
+#: textBuffer.py:364
+#: textBuffer.py:391
+#: textBuffer.py:412
+#: textBuffer.py:433
+#: virtualBuffers\baseType.py:312
+msgid "top"
+msgstr "início"
+
+#: textBuffer.py:369
+#: textBuffer.py:382
+#: textBuffer.py:403
+#: textBuffer.py:424
+#: virtualBuffers\baseType.py:327
+msgid "bottom"
+msgstr "fin"
+
 #: textBuffer.py:470
 #: textBuffer.py:494
 #: textBuffer.py:502
@@ -1665,33 +1459,33 @@ msgstr ""
 "o mira el archivo copying.txt que vino con este programa."
 
 #: virtualBuffers\MSHTML.py:134
-#: virtualBuffers\gecko.py:156
+#: virtualBuffers\gecko.py:157
 msgid "loading document %s"
 msgstr "Cargando documento %s"
 
 #: virtualBuffers\MSHTML.py:142
-#: virtualBuffers\gecko.py:165
+#: virtualBuffers\gecko.py:166
 msgid "done"
 msgstr "hecho"
 
 #: virtualBuffers\MSHTML.py:248
 #: virtualBuffers\MSHTML.py:252
 #: virtualBuffers\MSHTML.py:259
-#: virtualBuffers\gecko.py:258
+#: virtualBuffers\gecko.py:262
 msgid "with %s items"
 msgstr "con %s elementos"
 
 #: virtualBuffers\MSHTML.py:255
 #: virtualBuffers\MSHTML.py:262
-#: virtualBuffers\gecko.py:253
-#: virtualBuffers\gecko.py:263
+#: virtualBuffers\gecko.py:257
+#: virtualBuffers\gecko.py:267
 msgid "bullet"
 msgstr "viñeta"
 
 #: virtualBuffers\MSHTML.py:258
 #: virtualBuffers\MSHTML.py:265
-#: virtualBuffers\gecko.py:257
-#: virtualBuffers\gecko.py:269
+#: virtualBuffers\gecko.py:261
+#: virtualBuffers\gecko.py:273
 msgid "definition"
 msgstr "definición"
 
@@ -1699,16 +1493,55 @@ msgstr "definición"
 msgid "file updload"
 msgstr "cargando archivo"
 
+#: virtualBuffers\MSHTML.py:303
+msgid "protected"
+msgstr "protegido"
+
 #: virtualBuffers\MSHTML.py:336
 msgid "clickable"
 msgstr "cliqueable"
+
+#: virtualBuffers\baseType.py:45
+msgid "link"
+msgstr "enlace"
+
+#: virtualBuffers\baseType.py:46
+msgid "list"
+msgstr "lista"
+
+#: virtualBuffers\baseType.py:47
+msgid "list item"
+msgstr "elemento de lista"
 
 #: virtualBuffers\baseType.py:48
 msgid "heading"
 msgstr "encabezado"
 
+#: virtualBuffers\baseType.py:49
+msgid "table"
+msgstr "tabla"
+
+#: virtualBuffers\baseType.py:50
+msgid "row"
+msgstr "fila"
+
+#: virtualBuffers\baseType.py:51
+msgid "column"
+msgstr "columna"
+
+#: virtualBuffers\baseType.py:53
+msgid "combo box"
+msgstr "cuadro combinado"
+
+#: virtualBuffers\baseType.py:54
+msgid "graphic"
+msgstr "gráfico"
+
+#: virtualBuffers\baseType.py:55
+msgid "frame"
+msgstr "marco"
+
 #: virtualBuffers\baseType.py:56
-#: virtualBuffers\gecko.py:40
 msgid "document"
 msgstr "documento"
 
@@ -1724,9 +1557,21 @@ msgstr "Párrafo"
 msgid "form"
 msgstr "formulário"
 
+#: virtualBuffers\baseType.py:60
+msgid "check box"
+msgstr "casilla de verificación"
+
+#: virtualBuffers\baseType.py:61
+msgid "radio button"
+msgstr "botón de opción"
+
 #: virtualBuffers\baseType.py:62
 msgid "edit area"
 msgstr "área de edición"
+
+#: virtualBuffers\baseType.py:63
+msgid "cell"
+msgstr "celda"
 
 #: virtualBuffers\baseType.py:64
 msgid "table header"
@@ -1906,7 +1751,7 @@ msgstr "l=tecla rápida para lista"
 msgid "i=listItemQuickKey"
 msgstr "i=tecla rápida para elemento de lista"
 
-#: virtualBuffers\gecko.py:310
+#: virtualBuffers\gecko.py:314
 msgid "protected %s"
 msgstr "protegido %s"
 
