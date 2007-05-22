@@ -20,8 +20,6 @@ import compileall
 
 COM_INTERFACES = (
 	("MS HTML", comtypesClient.GetModule, "mshtml.tlb"),
-	("IAccessible 2", comtypesClient.GetModule, "lib/ia2.tlb"),
-	("IService Provider library", comtypesClient.GetModule, "lib/servprov.tlb"),
 	("MS Active Accessibility", comtypesClient.GetModule, "oleacc.dll"),
 	("SAPI 5", comtypesClient.CreateObject, "Sapi.SPVoice"),
 	("SAPI 4", comtypesClient.CreateObject, "ActiveVoice.ActiveVoice"),
