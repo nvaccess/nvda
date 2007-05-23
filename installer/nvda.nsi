@@ -35,7 +35,7 @@ InstProgressFlags Smooth
 
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\${READMEFILE}
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "View README file (recommended)"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT ${msg_READMEText)
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
@@ -148,7 +148,11 @@ var InstallWithSpeech
 var hmci
 
 Function .onInit
-!insertmacro MUI_LANGDLL_DISPLAY
+;!insertmacro MUI_LANGDLL_DISPLAY
+; Get the locale language ID from kernel32.dll and dynamically change language of the installer
+System::Call 'kernel32::GetThreadLocale() i .r0'
+StrCmp $LANGUAGE $0
+
 call isNVDARunning
 pop $1	; TRUE or FALSE
 pop $2	; if true, will contain the handle of NVDA window
@@ -224,7 +228,11 @@ WriteUninstaller "$INSTDIR\Uninst.exe"
 
 var PreserveConfig
 Function un.onInit 
-!insertmacro MUI_UNGETLANGUAGE
+;!insertmacro MUI_UNGETLANGUAGE
+; Get the locale language ID from kernel32.dll and dynamically change language of the installer
+System::Call 'kernel32::GetThreadLocale() i .r0'
+StrCmp $LANGUAGE $0
+
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 $(msg_RemoveNVDA)  IDYES +2
 Abort
 InitPluginsDir
