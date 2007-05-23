@@ -35,13 +35,15 @@ InstProgressFlags Smooth
 
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\${READMEFILE}
-!define MUI_FINISHPAGE_SHOWREADME_TEXT ${msg_READMEText)
+!define MUI_FINISHPAGE_SHOWREADME_TEXT $(msg_READMEText)
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 
 !define MUI_UNINSTALLER
 !define MUI_CUSTOMPAGECOMMANDS
+!define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
+!define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
 
 ;--------------------------------
 ;Pages
@@ -147,7 +149,7 @@ ReserveFile "waves\${SND_NAME_PleaseWait}"
 var InstallWithSpeech
 var hmci
 
-Function .onInit
+Function NVDA_GUIInit
 ;!insertmacro MUI_LANGDLL_DISPLAY
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
@@ -227,7 +229,7 @@ WriteUninstaller "$INSTDIR\Uninst.exe"
  SectionEnd
 
 var PreserveConfig
-Function un.onInit 
+Function un.NVDA_GUIInit 
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
