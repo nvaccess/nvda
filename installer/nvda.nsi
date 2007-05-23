@@ -76,7 +76,7 @@ InstProgressFlags Smooth
 !insertmacro MUI_LANGUAGE "Italian"
 ;!insertmacro MUI_LANGUAGE "Dutch"
 ;!insertmacro MUI_LANGUAGE "Danish"
-;!insertmacro MUI_LANGUAGE "Swedish"
+!insertmacro MUI_LANGUAGE "Swedish"
 ;!insertmacro MUI_LANGUAGE "Norwegian"
 ;!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 !insertmacro MUI_LANGUAGE "Finnish"
