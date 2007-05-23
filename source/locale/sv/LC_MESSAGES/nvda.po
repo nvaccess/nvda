@@ -1,0 +1,1696 @@
+# Svensk språkfil för NVDA
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+# Michael Curran <mick@kulgan.net> 2006
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.5\n"
+"POT-Creation-Date: 2007-05-22 14:57+Västeuropa, normaltid\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Daniel Innala Ahlmark <86daia@gmail.com>\n"
+"Language-Team: sve <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: IAccessibleHandler.py:135
+msgid "window"
+msgstr "fönster"
+
+#: IAccessibleHandler.py:136 characterSymbols.py:20
+msgid "tab"
+msgstr "tabb"
+
+#: IAccessibleHandler.py:137 virtualBuffers\baseType.py:52
+msgid "edit"
+msgstr "redigeringsruta"
+
+#: IAccessibleHandler.py:138 virtualBuffers\baseType.py:44
+msgid "button"
+msgstr "knapp"
+
+#: IAccessibleHandler.py:139
+msgid "Tree view"
+msgstr "trädvy"
+
+#: IAccessibleHandler.py:143
+msgid "sub menu"
+msgstr "undermeny"
+
+#: IAccessibleHandler.py:190 NVDAObjects\IAccessible.py:206
+#: NVDAObjects\baseType.py:176 virtualBuffers\MSHTML.py:113
+#: virtualBuffers\MSHTML.py:312 virtualBuffers\MSHTML.py:317
+#: virtualBuffers\gecko.py:300 virtualBuffers\gecko.py:305
+msgid "not %s"
+msgstr "inte %s"
+
+#: IAccessibleHandler.py:562
+msgid "lost focus"
+msgstr "tappade fokus"
+
+#: NVDAObjects\IAccessible.py:69 NVDAObjects\IAccessible.py:359
+#: NVDAObjects\sysListView32.py:14
+msgid "%s of %s"
+msgstr "%s av %s"
+
+#: NVDAObjects\IAccessible.py:73
+msgid "%s items"
+msgstr "%s objekt"
+
+#: NVDAObjects\IAccessible.py:558 NVDAObjects\baseType.py:275
+msgid "level %d"
+msgstr "nivå %d"
+
+#: NVDAObjects\IAccessible.py:644
+msgid "not supported"
+msgstr "stöds inte"
+
+#: NVDAObjects\IAccessible.py:726
+msgid "%d items"
+msgstr "%d objekt"
+
+#: NVDAObjects\MSHTML.py:312 NVDAObjects\MSHTML.py:318 textBuffer.py:541
+#: textBuffer.py:543 textBuffer.py:547
+msgid "unselected %s"
+msgstr "inte markerad %s"
+
+#: NVDAObjects\MSHTML.py:315 NVDAObjects\MSHTML.py:321 textBuffer.py:533
+#: textBuffer.py:537 textBuffer.py:539 textBuffer.py:545
+msgid "selected %s"
+msgstr "markerad %s"
+
+#: NVDAObjects\baseType.py:140
+msgid "role %s"
+msgstr "roll %s"
+
+#: NVDAObjects\baseType.py:174
+msgid "state %s"
+msgstr "läge %s"
+
+#: NVDAObjects\richEdit.py:74
+msgid "rich %s"
+msgstr "utökad %s"
+
+#: NVDAObjects\winEdit.py:52
+msgid "protected %s "
+msgstr "skyddad %s "
+
+#: NVDAObjects\winword.py:274
+msgid "left"
+msgstr "vänster"
+
+#: NVDAObjects\winword.py:276
+msgid "centered"
+msgstr "centrerad"
+
+#: NVDAObjects\winword.py:278
+msgid "right"
+msgstr "höger"
+
+#: NVDAObjects\winword.py:280
+msgid "justified"
+msgstr "justerad"
+
+#: api.py:133 api.py:136
+msgid "virtual buffer pass through"
+msgstr "släpp genom virtuell buffert"
+
+#: api.py:133 appModules\_default.py:42 appModules\_default.py:70
+#: appModules\_default.py:80 appModules\_default.py:90
+#: appModules\_default.py:100 appModules\_default.py:341
+#: appModules\_default.py:405 appModules\_default.py:438
+#: appModules\_default.py:448 appModules\_default.py:458
+#: appModules\_default.py:468 keyboardHandler.py:88 keyboardHandler.py:91
+msgid "off"
+msgstr "av"
+
+#: api.py:136 appModules\_default.py:39 appModules\_default.py:73
+#: appModules\_default.py:83 appModules\_default.py:93
+#: appModules\_default.py:103 appModules\_default.py:408
+#: appModules\_default.py:441 appModules\_default.py:451
+#: appModules\_default.py:461 appModules\_default.py:471 keyboardHandler.py:88
+#: keyboardHandler.py:91
+msgid "on"
+msgstr "på"
+
+#: appModules\_default.py:44
+msgid "keyboard help %s"
+msgstr "tangentbordshjälp %s"
+
+#: appModules\_default.py:45
+msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
+msgstr "Slår på eller av tangentbordshjälp. Med denna funktion kan du höra vilket skript som är associerat med en tangent du trycker på."
+
+#: appModules\_default.py:52
+msgid "Reports the current date and time"
+msgstr "Läser aktuellt datum och tid"
+
+#: appModules\_default.py:58 appModules\_default.py:65
+msgid "rate %d%%"
+msgstr "hastighet %d%%"
+
+#: appModules\_default.py:59
+msgid "Increases the speech rate by 5 percent"
+msgstr "Ökar talets hastighet med 5 procent"
+
+#: appModules\_default.py:66
+msgid "decreases the speech rate by 5 percent"
+msgstr "minskar talets hastighet med 5 procent"
+
+#: appModules\_default.py:75
+msgid "speak typed characters"
+msgstr "läs skrivna tecken"
+
+#: appModules\_default.py:76
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "Slår på eller av uppläsning av skrivna tecken"
+
+#: appModules\_default.py:85
+msgid "speak typed words"
+msgstr "läs skrivna ord"
+
+#: appModules\_default.py:86
+msgid "Toggles on and off the speaking of typed words"
+msgstr "Slår på eller av uppläsning av skrivna ord"
+
+#: appModules\_default.py:95
+msgid "speak command keys"
+msgstr "läs kommandotangenter"
+
+#: appModules\_default.py:96
+msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgstr "Slår på eller av uppläsning av tangenter som inte är tecken"
+
+#: appModules\_default.py:105
+msgid "speak punctuation"
+msgstr "läs upp skiljetecken"
+
+#: appModules\_default.py:106
+msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
+msgstr "Slår på eller av uppläsning av skiljetecken. När detta är på kommer NVDA att läsa namnen på skiljetecknen, om det är av är det upp till talsyntesen att bestämma hur skiljetecken läses"
+
+#: appModules\_default.py:111
+msgid "Moves the mouse pointer to the current navigator object."
+msgstr "Flyttar muspekaren till det aktuella navigatorobjektet"
+
+#: appModules\_default.py:120
+msgid "Sets the navigator object to the object that is directly under the mouse pointer"
+msgstr "Sätter navigatorobjektet till det objekt som finns under muspekaren"
+
+#: appModules\_default.py:125 appModules\_default.py:134
+#: appModules\_default.py:154 appModules\_default.py:167
+#: appModules\_default.py:180 appModules\_default.py:193
+#: appModules\_default.py:206 appModules\_default.py:215
+#: appModules\_default.py:229 appModules\_default.py:237
+#: appModules\_default.py:245 appModules\_default.py:253
+#: appModules\_default.py:261 appModules\_default.py:269
+#: appModules\_default.py:277 appModules\_default.py:285
+#: appModules\_default.py:293 appModules\_default.py:301
+#: appModules\_default.py:309 appModules\_default.py:317
+#: appModules\_default.py:325 appModules\_default.py:333
+msgid "no navigator object"
+msgstr "inget navigatorobjekt"
+
+#: appModules\_default.py:129
+msgid "Reports the current navigator object"
+msgstr "Läser typen för det aktuella navigatorobjektet"
+
+#: appModules\_default.py:137
+msgid "No location information for navigator object"
+msgstr "Ingen platsinformation för navigatorobjektet"
+
+#: appModules\_default.py:139
+msgid "%d wide by %d high, located %d from left and %d from top"
+msgstr "%d bred och %d hög, placerad %d från vänster och %d uppifrån"
+
+#: appModules\_default.py:140
+msgid "Reports the hight, width and position of the current navigator object"
+msgstr "Läser höjd, bredd och position för det aktuella navigatorobjektet"
+
+#: appModules\_default.py:145 appModules\_default.py:387
+msgid "no focus"
+msgstr "inget fokus"
+
+#: appModules\_default.py:147
+msgid "move to focus"
+msgstr "gå till fokus"
+
+#: appModules\_default.py:149
+msgid "Sets the navigator object to the current focus"
+msgstr "Sätter navigatorobjektet till aktuellt fokus"
+
+#: appModules\_default.py:161
+msgid "No parents"
+msgstr "Inga föräldrar"
+
+#: appModules\_default.py:162
+msgid "Sets the navigator object to the parent of the object it is currently on."
+msgstr "Sätter navigatorobjektet till detta objekts förälder"
+
+#: appModules\_default.py:174
+msgid "No next"
+msgstr "Inget nästa"
+
+#: appModules\_default.py:175
+msgid "Sets the navigator object to the next object to the one it is currently on"
+msgstr "Sätter navigatorobjektet till nästa objekt"
+
+#: appModules\_default.py:187
+msgid "No previous"
+msgstr "Inget föregående"
+
+#: appModules\_default.py:188
+msgid "Sets the navigator object to the previous object to the one it is currently on"
+msgstr "Sätter navigatorobjektet till föregående objekt"
+
+#: appModules\_default.py:200
+msgid "No children"
+msgstr "Inga barn"
+
+#: appModules\_default.py:201
+msgid "Sets the navigator object to the first child object to the one it is currently on"
+msgstr "Sätter navigatorobjektet till detta objekts första barn"
+
+#: appModules\_default.py:209
+msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+msgstr "utför detta objekts standardfunktion (exempel: trycker på det om det är en knapp)."
+
+#: appModules\_default.py:222
+msgid "Reports where the current navigator object is by reporting each of its ancestors"
+msgstr "Läser upp var det aktuella navigatorobjektet finns i objekthierarkin"
+
+#: appModules\_default.py:230
+msgid "Moves the review cursor to the top line of the current navigator object"
+msgstr "Flytter läsmarkören till översta raden i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:238
+msgid "Moves the review cursor to the bottom line of the current navigator object"
+msgstr "Flyttar läsmarkören till nedersta raden i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:246
+msgid "Moves the review cursor to the previous line of the current navigator object"
+msgstr "Flyttar läsmarkören till föregående rad i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:254
+msgid "Reports the line of the current navigator object where the review cursor is situated"
+msgstr "Läser raden i det aktuella navigatorobjektet där läsmarkören finns"
+
+#: appModules\_default.py:262
+msgid "Moves the review cursor to the next line of the current navigator object"
+msgstr "Flyttar läsmarkören till nästa rad i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:270
+msgid "Moves the review cursor to the previous word of the current navigator object"
+msgstr "Flyttar läsmarkören till det föregående ordet i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:278
+msgid "Speaks the word of the current navigator object where the review cursor is situated"
+msgstr "Läser ordet i det aktuella navigatorobjektet där läsmarkören finns"
+
+#: appModules\_default.py:286
+msgid "Moves the review cursor to the next word of the current navigator object"
+msgstr "Flyttar läsmarkören till nästa ord i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:294
+msgid "Moves the review cursor to the previous character of the current navigator object"
+msgstr "Flyttar läsmarkören till föregående tecken i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:302
+msgid "Reports the character of the current navigator object where the review cursor is situated"
+msgstr "Läser tecknet i det aktuella navigatorobjektet där läsmarkören finns"
+
+#: appModules\_default.py:310
+msgid "Moves the review cursor to the next character of the current navigator object"
+msgstr "Flyttar läsmarkören till nästa tecken i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:318
+msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
+msgstr "Flyttar läsmarkören till början av raden den befinner sig på i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:326
+msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
+msgstr "Flyttar läsmarkören till slutet av raden den befinner sig på i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:334
+msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
+msgstr "Flyttar läsmarkören till systemmarkören i det aktuella navigatorobjektet"
+
+#: appModules\_default.py:343
+msgid "beeps"
+msgstr "pip"
+
+#: appModules\_default.py:345
+msgid "talk"
+msgstr "tala"
+
+#: appModules\_default.py:346
+msgid "speech mode %s"
+msgstr "talläge %s"
+
+#: appModules\_default.py:348
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr "Växlar mellan tallägena av, pip och tala. I läget av säger NVDA ingenting. är läget pip kommer NVDA att spela upp ett pip istället för att tala. Ã„r läget satt till tala kommer NVDA att tala som vanligt."
+
+#: appModules\_default.py:352
+msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control with out the virtualBuffer doing something else with the key."
+msgstr "Slår på eller av genomgång av virtuell buffert. När detta är på kommer tangenttryckningar att gå direkt genom den aktuella virtuella bufferten, vilket medför att man kan använda kontrollen utan att den virtuella bufferten gör något annat med tangenten."
+
+#: appModules\_default.py:356
+msgid "Quits NVDA!"
+msgstr "Avslutar NVDA!"
+
+#: appModules\_default.py:360
+msgid "Shows the NVDA interface window"
+msgstr "Visar NVDA:s huvudfönster"
+
+#: appModules\_default.py:373
+msgid "reads from cursor up to end of current text"
+msgstr "läser från markören till slutet av dokumentet"
+
+#: appModules\_default.py:388
+msgid "reports the object with focus"
+msgstr "läser typen för det objekt som har fokus"
+
+#: appModules\_default.py:393
+msgid "no foreground object"
+msgstr "inget förgrundsobjekt"
+
+#: appModules\_default.py:397
+msgid "no status bar found"
+msgstr "inget statusfält hittades"
+
+#: appModules\_default.py:401
+msgid "reads the current aplication status bar and moves the navigation cursor to it"
+msgstr "läser det aktuella statusfältet och flytter markören dit"
+
+#: appModules\_default.py:410 gui\settingsDialogs.py:243
+msgid "Report object under mouse"
+msgstr "Läs objekt under muspekaren"
+
+#: appModules\_default.py:411
+msgid "Toggles on and off the reporting of objects under the mouse"
+msgstr "Slår på eller av uppläsning av objekt under muspekaren"
+
+#: appModules\_default.py:417
+msgid "Reports the title of the current application or foreground window"
+msgstr "Läser titeln för det aktuella fönstret"
+
+#: appModules\_default.py:424
+msgid "speaks the current foreground object"
+msgstr "läser det aktuella förgrundsobjektet"
+
+#: appModules\_default.py:434
+msgid "reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text"
+msgstr "läser upp information om det aktuella navigatorobjektet. Används främst för utvecklare: kontrollens id, klass och intern text"
+
+#: appModules\_default.py:443 gui\settingsDialogs.py:280
+msgid "Beep on progress bar updates"
+msgstr "Pip när en förloppsindikator uppdateras"
+
+#: appModules\_default.py:444
+msgid "Toggles on and off the beeping on progress bar updates"
+msgstr "Slår på eller av pip när en förloppsindikator uppdateras"
+
+#: appModules\_default.py:453
+msgid "report dynamic content changes"
+msgstr "läs upp förändringar av dynamiskt innehåll"
+
+#: appModules\_default.py:454
+msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+msgstr "Slår på eller av uppläsning av förändringar av dynamiska objekt. Detta kan till exempel vara text som dyker upp i en kommandoprompt"
+
+#: appModules\_default.py:463
+msgid "caret moves review cursor"
+msgstr "markören flyttar läsmarkören"
+
+#: appModules\_default.py:464
+msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "Slår på eller av markörföljning för läsmarkören."
+
+#: appModules\_default.py:473
+msgid "focus moves navigator object"
+msgstr "fokus flyttar navigatorobjektet"
+
+#: appModules\_default.py:474
+msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "Slår på eller av fokusföljning för navigatorobjektet"
+
+#: appModules\_default.py:488
+msgid "%d percent"
+msgstr "%d procent"
+
+#: appModules\_default.py:489
+msgid "AC power on"
+msgstr "Laddar"
+
+#: appModules\_default.py:491
+msgid "%d hours and %d minutes remaining"
+msgstr "%d timmar och %d minuter återstår"
+
+#: appModules\_default.py:493
+msgid "reports battery status and time remaining if AC is not plugged in"
+msgstr "läser upp batteristatus och återstående batteritid om inte laddaren är ikopplad"
+
+#: appModules\_default.py:497
+msgid "Pass next key through"
+msgstr "Släpp igenom nästa tangent"
+
+#: appModules\_default.py:498
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "Nästa tangenttryckning kommer inte att hanteras av NVDA, utan skickas direkt till Windows."
+
+#: appModules\excel.py:80
+msgid "selected"
+msgstr "markerad"
+
+#: appModules\excel.py:80
+msgid "through"
+msgstr "genom"
+
+#: appModules\excel.py:84
+msgid "has formula"
+msgstr "har formel"
+
+#: appModules\excel.py:113
+msgid "Moves to a cell and speaks its coordinates and content"
+msgstr "Flyttar till en cell och läser upp koordinater och innehåll"
+
+#: appModules\excel.py:117
+msgid "font"
+msgstr "teckensnitt"
+
+#: appModules\excel.py:118
+msgid "point"
+msgstr "punkt"
+
+#: appModules\excel.py:120 textBuffer.py:266 textBuffer.py:318
+msgid "bold"
+msgstr "fet"
+
+#: appModules\excel.py:122 textBuffer.py:273 textBuffer.py:320
+msgid "italic"
+msgstr "kursiv"
+
+#: appModules\excel.py:124 textBuffer.py:280 textBuffer.py:322
+msgid "underline"
+msgstr "understruken"
+
+#: appModules\msimn.py:14
+msgid "Attachments"
+msgstr "Bilagor"
+
+#: appModules\msimn.py:15
+msgid "To:"
+msgstr "Till:"
+
+#: appModules\msimn.py:16
+msgid "CC:"
+msgstr "CC:"
+
+#: appModules\msimn.py:17
+msgid "Subject:"
+msgstr "Ämne:"
+
+#: appModules\msimn.py:18 appModules\msimn.py:21
+msgid "From:"
+msgstr "Från:"
+
+#: appModules\msimn.py:19
+msgid "Date:"
+msgstr "Datum:"
+
+#: appModules\msimn.py:20
+msgid "BCC:"
+msgstr "BCC:"
+
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:46
+msgid "blank"
+msgstr "blank"
+
+#: characterSymbols.py:19
+msgid "null"
+msgstr "blank"
+
+#: characterSymbols.py:21
+msgid "line feed"
+msgstr "enter"
+
+#: characterSymbols.py:22
+msgid "carage return"
+msgstr "retur"
+
+#: characterSymbols.py:23
+msgid "space"
+msgstr "mellanslag"
+
+#: characterSymbols.py:24
+msgid "bang"
+msgstr "utropstecken"
+
+#: characterSymbols.py:25
+msgid "quote"
+msgstr "citattecken"
+
+#: characterSymbols.py:26
+msgid "number"
+msgstr "nummer"
+
+#: characterSymbols.py:27
+msgid "dollar"
+msgstr "dollar"
+
+#: characterSymbols.py:28
+msgid "percent"
+msgstr "procent"
+
+#: characterSymbols.py:29
+msgid "and"
+msgstr "och"
+
+#: characterSymbols.py:30
+msgid "tick"
+msgstr "apostrof"
+
+#: characterSymbols.py:31
+msgid "left paren"
+msgstr "vänsterparentes"
+
+#: characterSymbols.py:32
+msgid "right paren"
+msgstr "högerparentes"
+
+#: characterSymbols.py:33
+msgid "star"
+msgstr "stjärna"
+
+#: characterSymbols.py:34
+msgid "plus"
+msgstr "plus"
+
+#: characterSymbols.py:35
+msgid "comma"
+msgstr "komma"
+
+#: characterSymbols.py:36
+msgid "dash"
+msgstr "streck"
+
+#: characterSymbols.py:37
+msgid "dot"
+msgstr "punkt"
+
+#: characterSymbols.py:38
+msgid "slash"
+msgstr "snedstreck"
+
+#: characterSymbols.py:39
+msgid "colon"
+msgstr "kolon"
+
+#: characterSymbols.py:40
+msgid "semi"
+msgstr "semi"
+
+#: characterSymbols.py:41
+msgid "less"
+msgstr "mindre än"
+
+#: characterSymbols.py:42
+msgid "equals"
+msgstr "lika med"
+
+#: characterSymbols.py:43
+msgid "greater"
+msgstr "större än"
+
+#: characterSymbols.py:44
+msgid "question"
+msgstr "frågetecken"
+
+#: characterSymbols.py:45
+msgid "at"
+msgstr "snabelA"
+
+#: characterSymbols.py:46
+msgid "left bracket"
+msgstr "vänster hakparentes"
+
+#: characterSymbols.py:47
+msgid "back slash"
+msgstr "omvänt snedstreck"
+
+#: characterSymbols.py:48
+msgid "right bracket"
+msgstr "höger hakparentes"
+
+#: characterSymbols.py:49
+msgid "caret"
+msgstr "upphöjd"
+
+#: characterSymbols.py:50
+msgid "line"
+msgstr "understreck"
+
+#: characterSymbols.py:51
+msgid "graav"
+msgstr "grav accent"
+
+#: characterSymbols.py:52
+msgid "left brace"
+msgstr "vänster spetsparentes"
+
+#: characterSymbols.py:53
+msgid "bar"
+msgstr "lodstreck"
+
+#: characterSymbols.py:54
+msgid "right brace"
+msgstr "höger spetsparentes"
+
+#: characterSymbols.py:55
+msgid "tilda"
+msgstr "tilde"
+
+#: core.py:48
+msgid "configuration applyed"
+msgstr "konfigurationsändring verkställd"
+
+#: core.py:68
+msgid "Loading subsystems, please wait..."
+msgstr "Laddar undersystem, var god vänta..."
+
+#: core.py:82
+msgid "NVDA started"
+msgstr "NVDA startad"
+
+#: gui\__init__.py:23
+msgid ""
+"NVDA - Quick Start document\n"
+"\n"
+"NVDA (%(description)s)\n"
+"Version: %(version)s\n"
+"URL: %(url)s\n"
+"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
+"\n"
+"--- Copyright Info ---\n"
+"%(copyrightInfo)s\n"
+"----------------------\n"
+"\n"
+"This is the NVDA interface window. It enables you to control NVDA's "
+"settings, and also to exit NVDA altogether.\n"
+"\n"
+"To bring this window up at any time, press insert+n. To close this window "
+"with out exiting NVDA, press alt+f4.\n"
+"\n"
+"To exit NVDA completely, either press insert+q from anywhere, or choose "
+"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
+"box asking you if you want to exit, and you can either press the yes or no "
+"button.\n"
+"\n"
+"To set the preferences (such as voice settings, key echo, reading of "
+"tooltips etc),\n"
+"Use the alt key to move to the menu bar and then use the arrow keys to "
+"navigate the menus and find the settings you want to change. Pressing enter "
+"on many of the menu items will bring up a dialog box in which you can change "
+"the individual settings. Most settings will take effect straight away (such "
+"as changing the rate or pitch of the voice) so you can easily find what "
+"settings most suit you. However, if you cancel out of the dialog box the "
+"settings will go back to what they were before you changed them. \n"
+"\n"
+"By default settings are not kept for the next time you run NVDA unless you "
+"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
+"NVDA to automatically save the settings on exit by going to 'user "
+"interface...' in the Preferences menu and checking the 'Save configuration "
+"on exit' checkbox and press ing ok.\n"
+"\n"
+"Some usefull key commands when using NVDA are:\n"
+"\n"
+"General key strokes:\n"
+"control - interupt speech\n"
+"insert+1 - turns keyboard help on and off\n"
+"insert+upArrow - reports the object with focus\n"
+"insert+downArrow - starts sayAll (press control or any other key to stop)\n"
+"insert+t speak title\n"
+"insert+f12 - report time and date\n"
+"insert+2 - turn speaking of typed characters on and off\n"
+"insert+3 turn speaking of typed words on and off\n"
+"insert+4 - turn speaking of typed command keys (such as space, arrows, "
+"control and shift combinations) on and off\n"
+"insert+pageUp - increase rate of speech\n"
+"insert+pageDown - decrease rate of speech\n"
+"insert+p - turn reading of punctuation on and off\n"
+"insert+s - toggle speech modes (off, talk and beeps)\n"
+"insert+m - turn  reading of objects under the mouse on and off\n"
+"insert+f - report current font (when in a document)\n"
+"\n"
+"Object navigation:\n"
+"insert+numpadAdd - Where am I\n"
+"insert+numpad5 - current object\n"
+"shift+insert+numpad5 - dimensions and location of current object\n"
+"insert+numpad8 - parent object\n"
+"insert+numpad4 - previous object\n"
+"insert+numpad6 - next object\n"
+"insert+numpad2 - first child object\n"
+"insert+numpadMinus - move to focus object\n"
+" insert+end - move to statusbar\n"
+"insert+numpadDivide - Move mouse to current navigator object\n"
+"insert+numpadMultiply - move to mouse\n"
+"insert+numpadEnter - activate current object\n"
+"\n"
+"Reviewing the current object:\n"
+"shift+numpad7 - move to top line\n"
+"numpad7 - previous line\n"
+"numpad8 - current line\n"
+"numpad9 - next line\n"
+"shift+numpad9 - bottom line\n"
+"numpad4 - previous word\n"
+"numpad5 - current word\n"
+"numpad6 - next word\n"
+"shift+numpad1 - start of line\n"
+"numpad1 - previous character\n"
+"numpad2 - current character\n"
+"numpad3 - next character\n"
+"shift+numpad3 - end of line\n"
+msgstr ""
+"Kom igång med NVDA\n"
+"\n"
+"NVDA (%(description)s)\n"
+"Version: %(version)s\n"
+"URL: %(url)s\n"
+"Rapportera buggar eller ge förslag till förbättringar: %(maintainer)s <%"
+"(maintainer_email)s>.\n"
+"\n"
+"--- Copyrightinformation ---\n"
+"%(copyrightInfo)s\n"
+"----------------------\n"
+"\n"
+"Detta är NVDA:s huvudfönster. Här kan du ändra inställningar, eller "
+"avsluta NVDA.\n"
+"\n"
+"För att ta fram detta fönster när som helst, tryck insert+n. För att stä"
+"nga detta fönster utan att avsluta NVDA, tryck alt+f4.\n"
+"\n"
+"För att avsluta NVDA var som helst tryck insert+q, eller välj 'Avsluta' i "
+"detta fönster. En dialogruta kommer då upp där du bekräftar att du vill "
+"avsluta NVDA.\n"
+"\n"
+"För att ändra inställningar (röstinställningar, tangenteko, uppläsning "
+"av verktygstips, etc.),\n"
+"Tryck på alt-tangenten för att gå till menyraden och använd sedan "
+"piltangenterna för att hitta inställningarna du vill ändra. Många av "
+"menyvalen tar dig till en dialogruta där du kan ändra inställningarna. Må"
+"nga inställningar verkställs direkt (t.ex. röstinställningar) så du kan "
+"lätt hitta inställningar som passar dig. Om du ångrar dig kan du välja "
+"avbryt i dialogrutan. Inställningarna kommer då att återställas till hur "
+"de var innan du öppnade dialogrutan. \n"
+"\n"
+"Som standard kommer inställningarna inte sparas till nästa session av "
+"NVDA. Om du vill spara inställningarna kan du trycka ctrl+s eller välja "
+"'Spara konfiguration när programmet avslutas' i NVDA-menyn. Du kan välja "
+"att NVDA sparar dina inställningar automatiskt genom att gå till "
+"'Användargränssnitt...' i menyn Inställningar och kryssa i kryssrutan "
+"'Spara inställningar'.\n"
+"\n"
+"Några användbara snabbtangenter för NVDA:\n"
+"\n"
+"Generella kommandon:\n"
+"ctrl - tysta talet\n"
+"insert+1 - slår på eller stänger av tangentbordshjälp\n"
+"insert+uppil - läser upp det objekt som har fokus\n"
+"insert+nerpil - starta uppläsning (tryck ctrl eller någon annan tangent fö"
+"r att stoppa)\n"
+"insert+t läs fönstertitel\n"
+"insert+f12 - läs datum och tid\n"
+"insert+2 - slår på eller stänger av uppläsning av skrivna tecken\n"
+"insert+3 - slår på eller stänger av uppläsning av skrivna ord\n"
+"insert+4 - slår på eller stänger av uppläsning av kommandotangenter (så"
+"som mellanslag, piltangenter, ctrl+shift-kombinationer)\n"
+"insert+pageUp - öka talets hastighet\n"
+"insert+pageDown - minska talets hastighet\n"
+"insert+p - slår på eller stänger av uppläsning av skiljetecken\n"
+"insert+s - växlar talläge (av, pip eller tala)\n"
+"insert+m - slår på eller stänger av uppläsning av objekt under "
+"muspekaren\n"
+"insert+f - läs aktuellt teckensnitt (i ett dokument)\n"
+"\n"
+"Objectnavigering:\n"
+"insert+numpad+ - Var är jag?\n"
+"insert+numpad5 - aktuellt objekt\n"
+"shift+insert+numpad5 - storlek och plats för aktuellt objekt\n"
+"insert+numpad8 - objektets förälderobjekt\n"
+"insert+numpad4 - föregående objekt\n"
+"insert+numpad6 - nästa objekt\n"
+"insert+numpad2 - objektets första barnobjekt\n"
+"insert+numpad- - flytta till objektet med fokus\n"
+"insert+end - flytta till statusfältet\n"
+"insert+numpad/ - flytta muspekaren till aktuellt navigatorobjekt\n"
+"insert+numpad* - flytta till muspekaren\n"
+"insert+numpadEnter - aktivera aktuellt objekt\n"
+"\n"
+"Att undersöka aktuellt objekt:\n"
+"shift+numpad7 - flytta till översta raden\n"
+"numpad7 - föregående rad\n"
+"numpad8 - aktuell rad\n"
+"numpad9 - nästa rad\n"
+"shift+numpad9 - flytta till nedersta raden\n"
+"numpad4 - föregående ord\n"
+"numpad5 - aktuellt ord\n"
+"numpad6 - nästa ord\n"
+"shift+numpad1 - början av raden\n"
+"numpad1 - föregående tecken\n"
+"numpad2 - aktuellt tecken\n"
+"numpad3 - nästa tecken\n"
+"shift+numpad3 - slutet av raden\n"
+
+#: gui\__init__.py:139
+msgid "&Revert to saved configuration\tctrl+r"
+msgstr "&Återgå till sparad konfiguration\tctrl+t"
+
+#: gui\__init__.py:139
+msgid "Reset all setting back to nvda.ini"
+msgstr "Ställer tillbaks alla inställningar från nvda.ini"
+
+#: gui\__init__.py:141
+msgid "&Save configuration\tctrl+s"
+msgstr "&Spara konfiguration\tctrl+s"
+
+#: gui\__init__.py:141
+msgid "Write the current configuration to nvda.ini"
+msgstr "Spara den aktuella konfigurationen till nvda.ini"
+
+#: gui\__init__.py:143
+msgid "E&xit"
+msgstr "&Avsluta"
+
+#: gui\__init__.py:143 gui\__init__.py:233
+msgid "Exit NVDA"
+msgstr "Avsluta NVDA"
+
+#: gui\__init__.py:145 gui\__init__.py:146
+msgid "&NVDA"
+msgstr "&NVDA"
+
+#: gui\__init__.py:149
+msgid "&User interface...\tctrl+shift+u"
+msgstr "&Användargränssnitt...\tctrl+shift+a"
+
+#: gui\__init__.py:149
+msgid "Change user interface settings"
+msgstr "Ändra inställningar för användargränssnittet"
+
+#: gui\__init__.py:152
+msgid " the synthesizer to use"
+msgstr " talsyntesen som ska användas"
+
+#: gui\__init__.py:152
+msgid "&Synthesizer...\tctrl+shift+s"
+msgstr "&Talsyntes...\tctrl+shift+t"
+
+#: gui\__init__.py:155
+msgid "Choose the voice, rate, pitch and volume  to use"
+msgstr "Välj röst, hastighet, tonhöjd och volym"
+
+#: gui\__init__.py:155
+msgid "Voice settings...\tctrl+shift+v"
+msgstr "Röstinställningar...\tctrl+shift+r"
+
+#: gui\__init__.py:158
+msgid "&Keyboard echo...\tctrl+e"
+msgstr "Tangentbords&eko...\tctrl+e"
+
+#: gui\__init__.py:158
+msgid "Configure speaking of typed characters, words or command keys"
+msgstr "Konfigurera uppläsning av skrivna tecken, ord eller kommandotangenter"
+
+#: gui\__init__.py:161
+msgid "&Mouse settings...\tctrl+m"
+msgstr "&Musinställningar...\tctrl+m"
+
+#: gui\__init__.py:161
+msgid "Change reporting of mouse sape, object under mouse"
+msgstr "Ställ in uppläsning av förändringar i pekarens utseende och uppläsningen av objekt under muspekaren"
+
+#: gui\__init__.py:164
+msgid "&Object presentation...\tctrl+shift+o"
+msgstr "&Objektpresentation...\tctrl+shift+o"
+
+#: gui\__init__.py:164
+msgid "Change reporting of objects"
+msgstr "Ändrar hur objekt läses upp"
+
+#: gui\__init__.py:167
+msgid "Change virtual buffers specific settings"
+msgstr "Ändrar inställningar för den virtuella bufferten"
+
+#: gui\__init__.py:167
+msgid "Virtual &buffers...\tctrl+shift+b"
+msgstr "Virtuell &buffert...\tctrl+shift+b"
+
+#: gui\__init__.py:170
+msgid "Change echo of document properties"
+msgstr "Ändra uppläsning av dokumentegenskaper"
+
+#: gui\__init__.py:170
+msgid "Document &formatting...\tctrl+shift+f"
+msgstr "Dokument&formatering...\tctrl+shift+f"
+
+#: gui\__init__.py:172 gui\__init__.py:173
+msgid "&Preferences"
+msgstr "&Inställningar"
+
+#: gui\__init__.py:176
+msgid "NVDA homepage..."
+msgstr "NVDA:s hemsida..."
+
+#: gui\__init__.py:176
+msgid "Opens NVDA homepage in the default browser"
+msgstr "Öppna NVDA:s hemsida i standardwebbläsaren"
+
+#: gui\__init__.py:179
+msgid "NVDA wiki..."
+msgstr "NVDA wiki..."
+
+#: gui\__init__.py:179
+msgid "Opens NVDA wiki in the default browser"
+msgstr "Öppnar NVDA wiki i standardwebbläsaren"
+
+#: gui\__init__.py:181
+msgid "About..."
+msgstr "Om..."
+
+#: gui\__init__.py:181 gui\__init__.py:286
+msgid "About NVDA"
+msgstr "Om NVDA"
+
+#: gui\__init__.py:183 gui\__init__.py:184
+msgid "&Help"
+msgstr "&Hjälp"
+
+#: gui\__init__.py:196 gui\scriptUI.py:52 gui\scriptUI.py:61
+#: gui\scriptUI.py:74
+msgid "NVDA"
+msgstr "NVDA"
+
+#: gui\__init__.py:223
+msgid "configuration saved"
+msgstr "konfiguration sparad"
+
+#: gui\__init__.py:225
+msgid "Could not save configuration - probably read only file system"
+msgstr "Kunde inte spara konfigurationen - filsystemet är troligen skrivskyddat"
+
+#: gui\__init__.py:233
+msgid "Press OK to quit NVDA"
+msgstr "Tryck på OK för att avsluta NVDA"
+
+#: gui\__init__.py:242
+msgid "User interface settings"
+msgstr "Inställningar för användargränssnittet"
+
+#: gui\__init__.py:246 gui\settingsDialogs.py:77
+msgid "Synthesizer"
+msgstr "Talsyntes"
+
+#: gui\__init__.py:250
+msgid "Voice settings"
+msgstr "Röstinställningar"
+
+#: gui\__init__.py:254
+msgid "Keyboard echo settings"
+msgstr "Inställningar för tangenteko"
+
+#: gui\__init__.py:258
+msgid "Mouse settings"
+msgstr "Musinställningar"
+
+#: gui\__init__.py:262
+msgid "Object presentation"
+msgstr "Objektpresentation"
+
+#: gui\__init__.py:266
+msgid "virtual buffers"
+msgstr "virtuell buffert"
+
+#: gui\__init__.py:270
+msgid "Document formatting"
+msgstr "Dokumentformatering"
+
+#: gui\__init__.py:285
+msgid "copyright"
+msgstr "copyright"
+
+#: gui\__init__.py:285
+msgid "maintainer"
+msgstr "ansvarig"
+
+#: gui\__init__.py:285
+msgid "url"
+msgstr "url"
+
+#: gui\__init__.py:285
+msgid "version"
+msgstr "version"
+
+#: gui\scriptUI.py:109
+msgid "Links List"
+msgstr "Länklista"
+
+#: gui\scriptUI.py:120
+msgid "&Activate Link"
+msgstr "&Aktivera Länk"
+
+#: gui\scriptUI.py:121
+msgid "&Move to link"
+msgstr "&Gå till länk"
+
+#: gui\settingsDialogs.py:25
+msgid "Language (requires restart to fully take affect)"
+msgstr "Språk (kräver omstart)"
+
+#: gui\settingsDialogs.py:29
+msgid "Language"
+msgstr "Språk"
+
+#: gui\settingsDialogs.py:38
+msgid "Hide user interface on startup"
+msgstr "Dölj det grafiska gränssnittet vid uppstart"
+
+#: gui\settingsDialogs.py:41
+msgid "Save configuration on exit"
+msgstr "Spara konfigurationen när programmet avslutas"
+
+#: gui\settingsDialogs.py:59
+msgid "Error in %s language file"
+msgstr "Fel i språkfil %s"
+
+#: gui\settingsDialogs.py:59
+msgid "Language Error"
+msgstr "Språkfel"
+
+#: gui\settingsDialogs.py:65
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "För att det nya språket ska börja gälla måste den aktuella konfigurationen sparas och NVDA startas om. Tryck enter för att spara inställningarna och starta om NVDA, eller avbryt för att själv göra detta senare."
+
+#: gui\settingsDialogs.py:65
+msgid "Language Configuration Change"
+msgstr "Ändring i Språkinställningar"
+
+#: gui\settingsDialogs.py:103
+msgid "Could not load the %s synthesizer."
+msgstr "Det gick inte att ladda talsyntesen %s"
+
+#: gui\settingsDialogs.py:103
+msgid "Synthesizer Error"
+msgstr "Talsyntesfel"
+
+#: gui\settingsDialogs.py:114
+msgid "Voice"
+msgstr "Röst"
+
+#: gui\settingsDialogs.py:129
+msgid "Rate"
+msgstr "Hastighet"
+
+#: gui\settingsDialogs.py:137
+msgid "Pitch"
+msgstr "Tonhöjd"
+
+#: gui\settingsDialogs.py:145
+msgid "Volume"
+msgstr "Volym"
+
+#: gui\settingsDialogs.py:152
+msgid "Speak all punctuation"
+msgstr "Läs alla skiljetecken"
+
+#: gui\settingsDialogs.py:155
+msgid "Say cap before capitals"
+msgstr "Säg \"versal\" före versaler"
+
+#: gui\settingsDialogs.py:211
+msgid "Speak typed characters"
+msgstr "Läs skrivna tecken"
+
+#: gui\settingsDialogs.py:214
+msgid "Speak typed words"
+msgstr "Läs skrivna ord"
+
+#: gui\settingsDialogs.py:217
+msgid "Speak command keys"
+msgstr "Läs kommandotangenter"
+
+#: gui\settingsDialogs.py:240
+msgid "Report mouse shape changes"
+msgstr "Läs upp förändringar i muspekarens utseende"
+
+#: gui\settingsDialogs.py:265
+msgid "Report tooltips"
+msgstr "Läs verktygsfält"
+
+#: gui\settingsDialogs.py:268
+msgid "Report help balloons"
+msgstr "Läs ballongtips"
+
+#: gui\settingsDialogs.py:271
+msgid "Report object shortcut keys"
+msgstr "Läs snabbtangenter"
+
+#: gui\settingsDialogs.py:274
+msgid "Report object group names"
+msgstr "Läs objektgruppnamn"
+
+#: gui\settingsDialogs.py:277
+msgid "Say object state first"
+msgstr "Säg objektets läge först"
+
+#: gui\settingsDialogs.py:306
+msgid "Maximum number of characters on one line"
+msgstr "Maximalt antal tecken på en rad"
+
+#: gui\settingsDialogs.py:311
+msgid "Number of lines per page"
+msgstr "Antal rader per sida"
+
+#: gui\settingsDialogs.py:316
+msgid "Report virtual presentation on focus changes"
+msgstr "Läs upp virtuell presentation när fokus förändras"
+
+#: gui\settingsDialogs.py:319
+msgid "Update the content dynamically"
+msgstr "Uppdatera innehållet dynamiskt"
+
+#: gui\settingsDialogs.py:322
+msgid "Report links"
+msgstr "Läs länkar"
+
+#: gui\settingsDialogs.py:325
+msgid "Report lists"
+msgstr "Läs listor"
+
+#: gui\settingsDialogs.py:328
+msgid "Report list items"
+msgstr "Läs listobjekt"
+
+#: gui\settingsDialogs.py:331
+msgid "Report headings"
+msgstr "Läs rubriker"
+
+#: gui\settingsDialogs.py:334 gui\settingsDialogs.py:415
+msgid "Report tables"
+msgstr "Läs tabeller"
+
+#: gui\settingsDialogs.py:337
+msgid "Report graphics"
+msgstr "Läs grafik"
+
+#: gui\settingsDialogs.py:340
+msgid "Report forms"
+msgstr "Läs formulär"
+
+#: gui\settingsDialogs.py:343
+msgid "Report form fields"
+msgstr "Läs formulärfält"
+
+#: gui\settingsDialogs.py:346
+msgid "Report block quotes"
+msgstr "Läs blockcitat"
+
+#: gui\settingsDialogs.py:349
+msgid "Report paragraphs"
+msgstr "Läs stycken"
+
+#: gui\settingsDialogs.py:352
+msgid "Report frames"
+msgstr "Läs ramar"
+
+#: gui\settingsDialogs.py:397
+msgid "Report font name"
+msgstr "Läs teckensnitt"
+
+#: gui\settingsDialogs.py:400
+msgid "Report font size"
+msgstr "Läs teckenstorlek"
+
+#: gui\settingsDialogs.py:403
+msgid "Report font attributes"
+msgstr "Läs teckenattribut"
+
+#: gui\settingsDialogs.py:406
+msgid "Report style"
+msgstr "Läs stil"
+
+#: gui\settingsDialogs.py:409
+msgid "Report pages"
+msgstr "Läs sidor"
+
+#: gui\settingsDialogs.py:412
+msgid "Report line numbers"
+msgstr "Läs radnummer"
+
+#: gui\settingsDialogs.py:418
+msgid "Report alignment"
+msgstr "Läs justering"
+
+#: keyboardHandler.py:88
+msgid "caps lock %s"
+msgstr "caps lock %s"
+
+#: keyboardHandler.py:91
+msgid "num lock %s"
+msgstr "num lock %s"
+
+#: keyboardHandler.py:100
+msgid "Description: %s"
+msgstr "Förklaring: %s"
+
+#: keyboardHandler.py:101
+msgid "Location: %s"
+msgstr "Plats: %s"
+
+#: speech.py:235
+msgid "cap %s"
+msgstr "versal %s"
+
+#: synthDrivers\silence.py:14
+msgid "No speech,  a template synthesizer"
+msgstr "Ingen talsyntes"
+
+#: textBuffer.py:207
+msgid "page %d"
+msgstr "sida %d"
+
+#: textBuffer.py:213
+msgid "line %d"
+msgstr "rad %d"
+
+#: textBuffer.py:219
+msgid "out of table"
+msgstr "slutet av tabellen"
+
+#: textBuffer.py:225
+msgid "table with %d columns and %d rows"
+msgstr "tabell med %d kolumner och %d rader"
+
+#: textBuffer.py:231
+msgid "row %d"
+msgstr "rad %d"
+
+#: textBuffer.py:236
+msgid "column %d"
+msgstr "kolumn %d"
+
+#: textBuffer.py:242 textBuffer.py:310
+msgid "style %s"
+msgstr "stil %d"
+
+#: textBuffer.py:248 textBuffer.py:312
+msgid "alignment %s"
+msgstr "justering %s"
+
+#: textBuffer.py:254 textBuffer.py:314
+msgid "font name %s"
+msgstr "teckensnitt %s"
+
+#: textBuffer.py:260 textBuffer.py:316
+msgid "font size %d"
+msgstr "teckenstorlek %d"
+
+#: textBuffer.py:268
+msgid "not bold"
+msgstr "inte fet"
+
+#: textBuffer.py:275
+msgid "not italic"
+msgstr "inte kursiv"
+
+#: textBuffer.py:282
+msgid "not underline"
+msgstr "inte understruken"
+
+#: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
+msgid "superscript"
+msgstr "övre index"
+
+#: textBuffer.py:289
+msgid "not superscript"
+msgstr "inte index"
+
+#: textBuffer.py:296
+msgid "not subscript"
+msgstr "inte index"
+
+#: textBuffer.py:326
+msgid "subscript"
+msgstr "nedre index"
+
+#: textBuffer.py:364 textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
+#: virtualBuffers\baseType.py:312
+msgid "top"
+msgstr "överst"
+
+#: textBuffer.py:369 textBuffer.py:382 textBuffer.py:403 textBuffer.py:424
+#: virtualBuffers\baseType.py:327
+msgid "bottom"
+msgstr "nederst"
+
+#: textBuffer.py:470 textBuffer.py:494 textBuffer.py:502
+msgid "Moves and then reads the current line"
+msgstr "Flyttar och läser sedan aktuell rad"
+
+#: textBuffer.py:478
+msgid "Moves and reads the current character"
+msgstr "Flyttar och läser sedan aktuellt tecken"
+
+#: textBuffer.py:486
+msgid "Moves and reads the current word"
+msgstr "Flyttar och läser sedan aktuellt ord"
+
+#: textBuffer.py:510
+msgid "Manually moves to the next paragraph and then speaks it"
+msgstr "Flyttar till nästa stycke manuellt och läser detta"
+
+#: textBuffer.py:518
+msgid "Manually moves to the previous paragraph and then speaks it"
+msgstr "Flyttar till föregående stycke manuellt och läser detta"
+
+#: textBuffer.py:530
+msgid "no selections"
+msgstr "inga markeringar"
+
+#: textBuffer.py:549
+msgid "Moves and reads the current selection"
+msgstr "Flyttar och läser sedan den aktuella markeringen"
+
+#: textBuffer.py:555
+msgid "Deletes the character and reads the new current character"
+msgstr "Tar bort tecknet och läser sedan det nya aktuella tecknet"
+
+#: textBuffer.py:569
+msgid "Reads the character before the current character and then deletes it"
+msgstr "Läser tecknet före det aktuella tecknet och tar sedan bort det"
+
+#: versionInfo.py:8
+msgid "NonVisual Desktop Access"
+msgstr "NonVisual Desktop Access"
+
+#: versionInfo.py:10
+msgid "A free and open-source screen reader for MS Windows"
+msgstr "En fri och open-source skärmläsare för MS Windows"
+
+#: versionInfo.py:14
+msgid ""
+"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
+"%(name)s is covered by the GNU General Public License. You are free to share "
+"or change this software in any way you like as long as you distribute the "
+"licence along with the software, and make all source code available to "
+"anyone who wants it. This applies to both origional and modified copies of "
+"the software, plus any software that uses code taken from this software.\n"
+"For further details, you can view the licence online at:\n"
+"http://www.gnu.org/licenses/gpl.html\n"
+"Or see the file Copying.txt that came with this software."
+msgstr ""
+"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
+"%(name)s täcks av GNU General Public Licence. Du har tillåtelse att dela "
+"och ändra detta program efter ditt eget tycke, så länge du distribuerar "
+"licensen tillsammans med ditt program, och gör källkoden tillgänglig för "
+"den som vill ha den. Detta omfattar såväl original som modifierade kopior "
+"av programmet, och därtill program som använder kod från detta program.\n"
+"För mer information, var vänlig besök webbplatsen:\n"
+"http://www.gnu.org/licenses/gpl.html\n"
+"Alternativt kan du titta i filen Copying.txt som följde med detta program."
+
+#: virtualBuffers\MSHTML.py:134 virtualBuffers\gecko.py:157
+msgid "loading document %s"
+msgstr "laddar dokument %s"
+
+#: virtualBuffers\MSHTML.py:142 virtualBuffers\gecko.py:166
+msgid "done"
+msgstr "klar"
+
+#: virtualBuffers\MSHTML.py:248 virtualBuffers\MSHTML.py:252
+#: virtualBuffers\MSHTML.py:259 virtualBuffers\gecko.py:262
+msgid "with %s items"
+msgstr "med %s objekt"
+
+#: virtualBuffers\MSHTML.py:255 virtualBuffers\MSHTML.py:262
+#: virtualBuffers\gecko.py:257 virtualBuffers\gecko.py:267
+msgid "bullet"
+msgstr "punkt"
+
+#: virtualBuffers\MSHTML.py:258 virtualBuffers\MSHTML.py:265
+#: virtualBuffers\gecko.py:261 virtualBuffers\gecko.py:273
+msgid "definition"
+msgstr "definition"
+
+#: virtualBuffers\MSHTML.py:299
+msgid "file updload"
+msgstr "ladda upp fil"
+
+#: virtualBuffers\MSHTML.py:303
+msgid "protected"
+msgstr "skyddad"
+
+#: virtualBuffers\MSHTML.py:336
+msgid "clickable"
+msgstr "klickbar"
+
+#: virtualBuffers\baseType.py:45
+msgid "link"
+msgstr "länk"
+
+#: virtualBuffers\baseType.py:46
+msgid "list"
+msgstr "lista"
+
+#: virtualBuffers\baseType.py:47
+msgid "list item"
+msgstr "listobjekt"
+
+#: virtualBuffers\baseType.py:48
+msgid "heading"
+msgstr "rubrik"
+
+#: virtualBuffers\baseType.py:49
+msgid "table"
+msgstr "tabell"
+
+#: virtualBuffers\baseType.py:50
+msgid "row"
+msgstr "rad"
+
+#: virtualBuffers\baseType.py:51
+msgid "column"
+msgstr "kolumn"
+
+#: virtualBuffers\baseType.py:53
+msgid "combo box"
+msgstr "kombinationsruta"
+
+#: virtualBuffers\baseType.py:54
+msgid "graphic"
+msgstr "grafik"
+
+#: virtualBuffers\baseType.py:55
+msgid "frame"
+msgstr "ram"
+
+#: virtualBuffers\baseType.py:56
+msgid "document"
+msgstr "dokument"
+
+#: virtualBuffers\baseType.py:57
+msgid "block quote"
+msgstr "blockcitat"
+
+#: virtualBuffers\baseType.py:58
+msgid "paragraph"
+msgstr "stycke"
+
+#: virtualBuffers\baseType.py:59
+msgid "form"
+msgstr "formulärfält"
+
+#: virtualBuffers\baseType.py:60
+msgid "check box"
+msgstr "kryssruta"
+
+#: virtualBuffers\baseType.py:61
+msgid "radio button"
+msgstr "radioknapp"
+
+#: virtualBuffers\baseType.py:62
+msgid "edit area"
+msgstr "redigeringsfält"
+
+#: virtualBuffers\baseType.py:63
+msgid "cell"
+msgstr "cell"
+
+#: virtualBuffers\baseType.py:64
+msgid "table header"
+msgstr "tabellhuvud"
+
+#: virtualBuffers\baseType.py:65
+msgid "table footer"
+msgstr "tabellfot"
+
+#: virtualBuffers\baseType.py:66
+msgid "table body"
+msgstr "tabellinnehåll"
+
+#: virtualBuffers\baseType.py:233
+msgid "out of %s"
+msgstr "slut på %s"
+
+#: virtualBuffers\baseType.py:314
+msgid "moves one page up in the virtual buffer's current document"
+msgstr "flyttar en sida upp i den virtuella buffertens aktuella dokument"
+
+#: virtualBuffers\baseType.py:329
+msgid "moves one page down in the virtual buffer's current document"
+msgstr "flytter en sida ner i den virtuella buffertens aktuella dokument"
+
+#: virtualBuffers\baseType.py:333
+msgid "activates the current object in the virtual buffer"
+msgstr "aktiverar det aktuella objektet i den virtuella bufferten"
+
+#: virtualBuffers\baseType.py:356 virtualBuffers\baseType.py:367
+msgid "no more headings"
+msgstr "inga fler rubriker"
+
+#: virtualBuffers\baseType.py:357
+msgid "moves to the next heading"
+msgstr "går till nästa rubrik"
+
+#: virtualBuffers\baseType.py:368
+msgid "moves to the previous heading"
+msgstr "går till föregående rubrik"
+
+#: virtualBuffers\baseType.py:378 virtualBuffers\baseType.py:389
+msgid "no more paragraphs"
+msgstr "inga fler stycken"
+
+#: virtualBuffers\baseType.py:379
+msgid "moves to the next paragraph"
+msgstr "går till nästa stycke"
+
+#: virtualBuffers\baseType.py:390
+msgid "moves to the previous paragraph"
+msgstr "går till föregående stycke"
+
+#: virtualBuffers\baseType.py:400 virtualBuffers\baseType.py:411
+msgid "no more tables"
+msgstr "inga fler tabeller"
+
+#: virtualBuffers\baseType.py:401
+msgid "moves to the next table"
+msgstr "går till nästa tabell"
+
+#: virtualBuffers\baseType.py:412
+msgid "moves to the previous table"
+msgstr "går till föregående tabell"
+
+#: virtualBuffers\baseType.py:422 virtualBuffers\baseType.py:433
+msgid "no more links"
+msgstr "inga fler länkar"
+
+#: virtualBuffers\baseType.py:423
+msgid "moves to the next link"
+msgstr "går till nästa länk"
+
+#: virtualBuffers\baseType.py:434
+msgid "moves to the previous link"
+msgstr "går till föregående länk"
+
+#: virtualBuffers\baseType.py:444 virtualBuffers\baseType.py:455
+msgid "no more lists"
+msgstr "inga fler listor"
+
+#: virtualBuffers\baseType.py:445
+msgid "moves to the next list"
+msgstr "går till nästa lista"
+
+#: virtualBuffers\baseType.py:456
+msgid "moves to the previous list"
+msgstr "går till föregående lista"
+
+#: virtualBuffers\baseType.py:466 virtualBuffers\baseType.py:477
+msgid "no more list items"
+msgstr "inga fler listobjekt"
+
+#: virtualBuffers\baseType.py:467
+msgid "moves to the next list item"
+msgstr "går till nästa listobjekt"
+
+#: virtualBuffers\baseType.py:478
+msgid "moves to the previous list item"
+msgstr "går till föregående listobjekt"
+
+#: virtualBuffers\baseType.py:488 virtualBuffers\baseType.py:499
+msgid "no more form fields"
+msgstr "inga fler formulärfält"
+
+#: virtualBuffers\baseType.py:489
+msgid "Move to the next form field"
+msgstr "går till nästa formulärfält"
+
+#: virtualBuffers\baseType.py:500
+msgid "moves to the previous form field"
+msgstr "går till föregående formulärfält"
+
+#: virtualBuffers\baseType.py:503
+msgid "Find"
+msgstr "Sök"
+
+#: virtualBuffers\baseType.py:503
+msgid "Type the text you wish to find"
+msgstr "Skriv in texten du vill söka efter"
+
+#: virtualBuffers\baseType.py:513
+msgid "Find Error"
+msgstr "Sökfel"
+
+#: virtualBuffers\baseType.py:513
+msgid "text: \"%s\" not found"
+msgstr "kunde inte hitta texten \"%s\""
+
+#: virtualBuffers\baseType.py:519
+msgid "find a text pattern from the current cursor's position"
+msgstr "sök efter en textsträng med början vid markörens position"
+
+#: virtualBuffers\baseType.py:523
+msgid "find next occurrence of text"
+msgstr "sök nästa"
+
+#: virtualBuffers\baseType.py:542 virtualBuffers\baseType.py:543
+msgid "h=headingQuickKey"
+msgstr "h=rubrik"
+
+#: virtualBuffers\baseType.py:544 virtualBuffers\baseType.py:545
+msgid "f=formFieldQuickKey"
+msgstr "f=formulärfält"
+
+#: virtualBuffers\baseType.py:546 virtualBuffers\baseType.py:547
+msgid "p=paragraphQuickKey"
+msgstr "p=stycke"
+
+#: virtualBuffers\baseType.py:548 virtualBuffers\baseType.py:549
+msgid "t=tableQuickKey"
+msgstr "t=tabell"
+
+#: virtualBuffers\baseType.py:550 virtualBuffers\baseType.py:551
+msgid "k=linkQuickKey"
+msgstr "k=länk"
+
+#: virtualBuffers\baseType.py:552 virtualBuffers\baseType.py:553
+msgid "l=listQuickKey"
+msgstr "l=lista"
+
+#: virtualBuffers\baseType.py:554 virtualBuffers\baseType.py:555
+msgid "i=listItemQuickKey"
+msgstr "i=listobjekt"
+
+#: virtualBuffers\gecko.py:314
+msgid "protected %s"
+msgstr "skyddad %s"
