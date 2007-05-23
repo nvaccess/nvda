@@ -20,7 +20,7 @@ NVDA is not restricted by a need to follow market trends and demands. Commercial
 You can help the development of NVDA by notifying them of bugs as you encounter them. The instructions for reporting bugs, and a number of useful articles, can be found in the wiki at: www.nvda-project.org/nvda/wiki. Or, if you would like more general information about NVDA you can visit the website at: www.nvda-project.org/nvda. There, you can also find information on joining the NVDA mailing lists. There are currently two lists: one for general user related discussions and a development list for anyone who runs and tests NVDA 		from source. 
 
 --- Copyright Info ---
-Copyrigh	t (C) 2006-2007 Michael Curran <mick@kulgan.net>
+Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 	NVDA is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both original and modified copies of the software, plus any software that uses code taken from this software.
 For further details, you can view the licence online at:
 http://www.gnu.org/licenses/gpl.html
