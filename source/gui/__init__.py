@@ -233,7 +233,10 @@ class MainFrame(wx.Frame):
 		d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL|wx.ICON_WARNING)
 		if d.ShowModal() == wx.ID_OK:
 			if config.conf["general"]["saveConfigurationOnExit"]:
-				config.save()
+				try:
+					config.save()
+				except:
+					debug.writeMessage("Could not save configuration - probably read only file system")
 			self.Destroy()
 		elif not wasShown:
 			self.onHideGuiCommand(None)
