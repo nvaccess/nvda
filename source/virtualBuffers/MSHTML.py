@@ -296,7 +296,7 @@ class virtualBuffer_MSHTML(virtualBuffer):
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="file":
 				info["fieldType"]=fieldType_edit
-				info["typeString"]=_("file upload")+" "+fieldNames[fieldType_edit]
+				info["typeString"]=_("file updload")+" "+fieldNames[fieldType_edit]
 				text=domNode.getAttribute('value')+" "
 			elif inputType=="password":
 				info["fieldType"]=fieldType_edit

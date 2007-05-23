@@ -33,7 +33,7 @@ Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.
 
 This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.
 
-To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.
+To bring this window up at any time, press insert+n. To close this window with out exiting NVDA, press alt+f4.
 
 To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
 
