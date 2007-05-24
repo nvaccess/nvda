@@ -41,9 +41,9 @@ InstProgressFlags Smooth
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 
 !define MUI_UNINSTALLER
-!define MUI_CUSTOMPAGECOMMANDS
 !define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
 !define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
+!define MUI_CUSTOMPAGECOMMANDS
 
 ;--------------------------------
 ;Pages
@@ -149,12 +149,14 @@ ReserveFile "waves\${SND_NAME_PleaseWait}"
 var InstallWithSpeech
 var hmci
 
-Function NVDA_GUIInit
+Function .onInit
 ;!insertmacro MUI_LANGDLL_DISPLAY
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
+FunctionEnd
 
+Function NVDA_GUIInit
 call isNVDARunning
 pop $1	; TRUE or FALSE
 pop $2	; if true, will contain the handle of NVDA window
@@ -229,12 +231,14 @@ WriteUninstaller "$INSTDIR\Uninst.exe"
  SectionEnd
 
 var PreserveConfig
-Function un.NVDA_GUIInit 
+Function un.onInit 
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
+FunctionEnd
 
+Function un.NVDA_GUIInit
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 $(msg_RemoveNVDA)  IDYES +2
 Abort
 InitPluginsDir
