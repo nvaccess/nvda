@@ -149,16 +149,18 @@ def cancelSpeech():
 	getSynth().cancel()
 	beenCanceled=True
 
-def speakMessage(text,wait=False):
+def speakMessage(text,wait=False,index=None):
 	"""Speaks a given message.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
 @type wait: boolean
+@param index: the index to mark this current text with, its best to use the character position of the text if you know it 
+@type index: int
 """
 	global beenCanceled
-	speakText(text,wait=wait,reason=REASON_MESSAGE)
+	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
 
 def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,reason=REASON_QUERY):
 	global beenCanceled

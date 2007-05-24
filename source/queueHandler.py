@@ -44,7 +44,10 @@ def pumpAll():
 	for ID in generators.keys():
 		try:
 			generators[ID].next()
+		except StopIteration:
+			del generators[ID]
 		except:
+			debug.writeException("generator %d" % ID)
 			del generators[ID]
 	for queueID,queue in enumerate(queueList):
 		if queue.empty():
