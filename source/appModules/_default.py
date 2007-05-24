@@ -24,7 +24,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-import locale
 
 class appModule(appModuleHandler.appModule):
 
@@ -48,7 +47,7 @@ class appModule(appModuleHandler.appModule):
 		api.getFocusObject().script_text_reportCurrentLine(keyPress,nextScript)
 
 	def script_dateTime(self,keyPress,nextScript):
-		text=unicode(datetime.datetime.today().strftime("%I:%M %p, %A %B %d %Y"), errors="replace", encoding=locale.getlocale()[1])
+		text=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		if text[0]=='0':
 			text=text[1:]
 		speech.speakMessage(text)
