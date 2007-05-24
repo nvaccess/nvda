@@ -35,12 +35,14 @@ InstProgressFlags Smooth
 
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\${READMEFILE}
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "View README file (recommended)"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT $(msg_READMEText)
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 
 !define MUI_UNINSTALLER
+!define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
+!define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
 !define MUI_CUSTOMPAGECOMMANDS
 
 ;--------------------------------
@@ -76,7 +78,7 @@ InstProgressFlags Smooth
 !insertmacro MUI_LANGUAGE "Italian"
 ;!insertmacro MUI_LANGUAGE "Dutch"
 ;!insertmacro MUI_LANGUAGE "Danish"
-;!insertmacro MUI_LANGUAGE "Swedish"
+!insertmacro MUI_LANGUAGE "Swedish"
 ;!insertmacro MUI_LANGUAGE "Norwegian"
 ;!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 !insertmacro MUI_LANGUAGE "Finnish"
@@ -86,7 +88,7 @@ InstProgressFlags Smooth
 !insertmacro MUI_LANGUAGE "PortugueseBR"
 ;!insertmacro MUI_LANGUAGE "Polish"
 ;!insertmacro MUI_LANGUAGE "Ukrainian"
-;!insertmacro MUI_LANGUAGE "Czech"
+!insertmacro MUI_LANGUAGE "Czech"
 !insertmacro MUI_LANGUAGE "Slovak"
 ;!insertmacro MUI_LANGUAGE "Croatian"
 ;!insertmacro MUI_LANGUAGE "Bulgarian"
@@ -148,7 +150,13 @@ var InstallWithSpeech
 var hmci
 
 Function .onInit
-!insertmacro MUI_LANGDLL_DISPLAY
+;!insertmacro MUI_LANGDLL_DISPLAY
+; Get the locale language ID from kernel32.dll and dynamically change language of the installer
+System::Call 'kernel32::GetThreadLocale() i .r0'
+StrCpy $LANGUAGE $0
+FunctionEnd
+
+Function NVDA_GUIInit
 call isNVDARunning
 pop $1	; TRUE or FALSE
 pop $2	; if true, will contain the handle of NVDA window
@@ -224,7 +232,13 @@ WriteUninstaller "$INSTDIR\Uninst.exe"
 
 var PreserveConfig
 Function un.onInit 
-!insertmacro MUI_UNGETLANGUAGE
+;!insertmacro MUI_UNGETLANGUAGE
+; Get the locale language ID from kernel32.dll and dynamically change language of the installer
+System::Call 'kernel32::GetThreadLocale() i .r0'
+StrCpy $LANGUAGE $0
+FunctionEnd
+
+Function un.NVDA_GUIInit
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 $(msg_RemoveNVDA)  IDYES +2
 Abort
 InitPluginsDir
