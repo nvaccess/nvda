@@ -24,7 +24,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-import locale
 
 class appModule(appModuleHandler.appModule):
 
@@ -45,7 +44,7 @@ class appModule(appModuleHandler.appModule):
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
 	def script_dateTime(self,keyPress,nextScript):
-		text=unicode(datetime.datetime.today().strftime("%I:%M %p, %A %B %d %Y"), errors="replace", encoding=locale.getlocale()[1])
+		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
 		if text[0]=='0':
 			text=text[1:]
 		speech.speakMessage(text)
@@ -425,6 +424,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
+		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
 		speech.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage("Class: %s"%obj.windowClassName)
 		for char in obj.windowClassName:

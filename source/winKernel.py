@@ -17,6 +17,9 @@ READ_CONTROL=0x20000
 STD_INPUT_HANDLE=-10
 STD_OUTPUT_HANDLE=-11
 STD_ERROR_HANDLE=-12
+LOCALE_USER_DEFAULT=0x800 
+DATE_LONGDATE=0x00000002 
+TIME_NOSECONDS=0x00000002
 
 class coordType(ctypes.Structure):
 	_fields_=[
@@ -82,3 +85,15 @@ class SYSTEM_POWER_STATUS(ctypes.Structure):
 
 def GetSystemPowerStatus(sps):
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+def getThreadLocale():
+	return kernel32.GetThreadLocale()
+
+def GetDateFormat(Locale,dwFlags,lpDate,lpFormat):
+	buf=ctypes.create_unicode_buffer("", 32)
+	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, ctypes.sizeof(buf))
+	return buf.value
+
+def GetTimeFormat(Locale,dwFlags,lpTime,lpFormat):
+	buf=ctypes.create_unicode_buffer("", 32)
+	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, ctypes.sizeof(buf))
+	return buf.value
