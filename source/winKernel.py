@@ -85,6 +85,8 @@ class SYSTEM_POWER_STATUS(ctypes.Structure):
 
 def GetSystemPowerStatus(sps):
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+def getThreadLocale():
+	return kernel32.GetThreadLocale()
 
 def GetDateFormat(Locale,dwFlags,lpDate,lpFormat):
 	buf=ctypes.create_unicode_buffer("", 32)

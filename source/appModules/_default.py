@@ -47,7 +47,7 @@ class appModule(appModuleHandler.appModule):
 		api.getFocusObject().script_text_reportCurrentLine(keyPress,nextScript)
 
 	def script_dateTime(self,keyPress,nextScript):
-		text=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
+		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
 		if text[0]=='0':
 			text=text[1:]
 		speech.speakMessage(text)
@@ -427,6 +427,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
+		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
 		speech.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage("Class: %s"%obj.windowClassName)
 		for char in obj.windowClassName:
