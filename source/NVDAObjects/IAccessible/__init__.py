@@ -17,6 +17,7 @@ import debug
 import appModuleHandler
 from keyUtils import sendKey, key 
 import IAccessibleHandler
+import IA2Handler
 import winUser
 import winKernel
 import globalVars
@@ -152,6 +153,12 @@ the NVDAObject for IAccessible
 		"""
 Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
 """  
+		IA2Pacc=IA2Handler.IA2FromMSAA(pacc)
+		if IA2Pacc:
+			IA2Class=__import__("IA2",globals(),locals(),[]).IA2
+			obj=Window.__new__(IA2Class,windowHandle)
+			obj.__init__(IA2Pacc,childID,windowHandle=windowHandle,origChildID=origChildID,objectID=objectID)
+			return obj
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(pacc)
 		windowClass=winUser.getClassName(windowHandle)

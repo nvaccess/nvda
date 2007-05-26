@@ -47,7 +47,7 @@ def update(obj):
 		possibles=[x for x in _staticMap if x[0]==className]
 		if len(possibles)>0:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(curWindow,IAccessibleHandler.OBJID_CLIENT,0)
-			if not obj:
+			if not obj or not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
 				return
 			role=obj.IAccessibleRole
 			k=(className,obj.IAccessibleRole)
