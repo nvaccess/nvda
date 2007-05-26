@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import debug
 from new import instancemethod
 from keyUtils import key
 
@@ -33,6 +34,15 @@ class scriptableObject(autoPropertyObject):
 			cls._keyMap=getattr(cls,'_keyMap',{}).copy()
 		cls._keyMap[key(keyName)]=getattr(cls,scriptName)
 
+	def bindKey_runtime(self,keyName,scriptName):
+		scriptName="script_%s"%scriptName
+		if not hasattr(self.__class__,scriptName):
+			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
+		if not self.__dict__.has_key('_keyMap'):
+			self._keyMap=getattr(self.__class__,'_keyMap',{}).copy()
+		self._keyMap[key(keyName)]=getattr(self.__class__,scriptName)
+
+
 	_keyMap={}
 
 	def getScript(self,keyPress):
@@ -42,4 +52,5 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 @type keyPress: key
 """ 
 		if self._keyMap.has_key(keyPress):
-			return instancemethod(self._keyMap[keyPress],self,self.__class__)
+			func=self._keyMap[keyPress]
+			return instancemethod(func,self,self.__class__)

@@ -10,7 +10,7 @@ class IA2(IAccessible):
 			self.IAccessibleTextObject=pacc.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
 			try:
 				self.IAccessibleEditableTextObject=pacc.QueryInterface(IA2Handler.IA2Lib.IAccessibleEditableText)
-				[self.bindKey(keyName,scriptName) for keyName,scriptName in [
+				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","text_moveByLine"),
 					("ExtendedDown","text_moveByLine"),
 					("ExtendedLeft","text_moveByCharacter"),
@@ -38,7 +38,6 @@ class IA2(IAccessible):
 				pass
 		except:
 			pass
-		self.bindKey("extendedDown","text_moveByLine")
 
 	def _get_text_characterCount(self):
 		if not hasattr(self,"IAccessibleTextObject"):
