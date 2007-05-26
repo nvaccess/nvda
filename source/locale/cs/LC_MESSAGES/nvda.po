@@ -45,7 +45,7 @@ msgstr "Stromové zobrazení"
 msgid "sub menu"
 msgstr "podnabídka"
 
-#: IAccessibleHandler.py:192
+#: IAccessibleHandler.py:190
 #: speech.py:212
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
@@ -55,7 +55,7 @@ msgstr "podnabídka"
 msgid "not %s"
 msgstr "ne %s"
 
-#: IAccessibleHandler.py:571
+#: IAccessibleHandler.py:562
 msgid "lost focus"
 msgstr "nic nemá fokus"
 
@@ -76,17 +76,17 @@ msgstr "nevybráno %s"
 msgid "selected %s"
 msgstr "vybráno %s"
 
-#: NVDAObjects\IAccessible\__init__.py:66
-#: NVDAObjects\IAccessible\__init__.py:403
+#: NVDAObjects\IAccessible\__init__.py:67
+#: NVDAObjects\IAccessible\__init__.py:410
 #: NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: NVDAObjects\IAccessible\__init__.py:70
+#: NVDAObjects\IAccessible\__init__.py:71
 msgid "%s items"
 msgstr "%s položek"
 
-#: NVDAObjects\IAccessible\__init__.py:677
+#: NVDAObjects\IAccessible\__init__.py:684
 msgid "%d items"
 msgstr "%d položek"
 
@@ -181,8 +181,7 @@ msgstr "spodek"
 msgid "top"
 msgstr "vršek"
 
-#: api.py:145
-#: api.py:148
+#: api.py:145 api.py:148
 msgid "virtual buffer pass through"
 msgstr "Propustit přes virtuální dokument"
 
@@ -224,8 +223,12 @@ msgid "keyboard help %s"
 msgstr "klávesová nápověda %s"
 
 #: appModules\_default.py:44
-msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "Zapíná a vypíná klávesovou nápovědu. je-li zapnuta, NVDA ohlásí název a popis skriptu přiřazeného k dané klávese"
+msgid ""
+"Turns keyboard help on and off. When on, pressing a key on the keyboard will "
+"tell you what script is associated with it, if any."
+msgstr ""
+"Zapíná a vypíná klávesovou nápovědu. je-li zapnuta, NVDA ohlásí ná"
+"zev a popis skriptu přiřazeného k dané klávese"
 
 #: appModules\_default.py:54
 msgid "Reports the current date and time"
@@ -265,7 +268,9 @@ msgid "speak command keys"
 msgstr "hlásit příkazové klávesy"
 
 #: appModules\_default.py:98
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "Zapíná a vypíná hlášení kláves, které nevkládají znaky"
 
 #: appModules\_default.py:107
@@ -273,16 +278,25 @@ msgid "speak punctuation"
 msgstr "hlásit interpunkci"
 
 #: appModules\_default.py:108
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "Zapíná a vypíná hlášení interpunkce. je-li zapnuto, NVDA oznamuje názvy interpunkčních znamének, je-li vypnuto, je zacházení s interpunkci ponecháno na hlasovém výstupu"
+msgid ""
+"Toggles on and off the speaking of punctuation. When on NVDA will say the "
+"names of punctuation symbols, when off it will be up to the synthesizer as "
+"to how it speaks punctuation"
+msgstr ""
+"Zapíná a vypíná hlášení interpunkce. je-li zapnuto, NVDA oznamuje ná"
+"zvy interpunkčních znamének, je-li vypnuto, je zacházení s interpunkci "
+"ponecháno na hlasovém výstupu"
 
 #: appModules\_default.py:113
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "Přesune kurzor myši k prohlíženému objektu"
 
 #: appModules\_default.py:122
-msgid "Sets the navigator object to the object that is directly under the mouse pointer"
-msgstr "Prohlíženým objektem se stane objekt nacházející se pod kurzorem myši"
+msgid ""
+"Sets the navigator object to the object that is directly under the mouse "
+"pointer"
+msgstr ""
+"Prohlíženým objektem se stane objekt nacházející se pod kurzorem myši"
 
 #: appModules\_default.py:127
 #: appModules\_default.py:136
@@ -343,7 +357,8 @@ msgid "No parents"
 msgstr "Žádné nadřízené objekty"
 
 #: appModules\_default.py:164
-msgid "Sets the navigator object to the parent of the object it is currently on."
+msgid ""
+"Sets the navigator object to the parent of the object it is currently on."
 msgstr "Přejde o úroveň výše na nadřízený objekt"
 
 #: appModules\_default.py:176
@@ -351,7 +366,8 @@ msgid "No next"
 msgstr "nenalezen"
 
 #: appModules\_default.py:177
-msgid "Sets the navigator object to the next object to the one it is currently on"
+msgid ""
+"Sets the navigator object to the next object to the one it is currently on"
 msgstr "Přejde na další objekt ve stejné úrovní"
 
 #: appModules\_default.py:189
@@ -359,7 +375,9 @@ msgid "No previous"
 msgstr "nenalezen"
 
 #: appModules\_default.py:190
-msgid "Sets the navigator object to the previous object to the one it is currently on"
+msgid ""
+"Sets the navigator object to the previous object to the one it is currently "
+"on"
 msgstr "Přejde na předchozí objekt ve stejné úrovní"
 
 #: appModules\_default.py:202
@@ -367,72 +385,127 @@ msgid "No children"
 msgstr "žádné podřízené objekty"
 
 #: appModules\_default.py:203
-msgid "Sets the navigator object to the first child object to the one it is currently on"
-msgstr "Přejde na první podřízený objekt o úroveň níž vzhledem k prohlíženému objektu"
+msgid ""
+"Sets the navigator object to the first child object to the one it is "
+"currently on"
+msgstr ""
+"Přejde na první podřízený objekt o úroveň níž vzhledem k "
+"prohlíženému objektu"
 
 #: appModules\_default.py:211
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Provede výchozí akci na prohlíženém objektu (například ho stiskne, pokud se jedná o tlačítko)"
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Provede výchozí akci na prohlíženém objektu (například ho stiskne, "
+"pokud se jedná o tlačítko)"
 
 #: appModules\_default.py:224
-msgid "Reports where the current navigator object is by reporting each of its ancestors"
-msgstr "Oznámí umístění prohlíženého objektu ohlášením všech jeho nadřízených objektů"
+msgid ""
+"Reports where the current navigator object is by reporting each of its "
+"ancestors"
+msgstr ""
+"Oznámí umístění prohlíženého objektu ohlášením všech jeho nadří"
+"zených objektů"
 
 #: appModules\_default.py:232
 msgid "Moves the review cursor to the top line of the current navigator object"
-msgstr "Přesune čtecí kurzor na horní řádek právě prohlíženého objektu"
+msgstr ""
+"Přesune čtecí kurzor na horní řádek právě prohlíženého objektu"
 
 #: appModules\_default.py:240
-msgid "Moves the review cursor to the bottom line of the current navigator object"
-msgstr "Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu"
 
 #: appModules\_default.py:248
-msgid "Moves the review cursor to the previous line of the current navigator object"
-msgstr "Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na předchozí řádek právě prohlíženého "
+"objektu"
 
 #: appModules\_default.py:256
-msgid "Reports the line of the current navigator object where the review cursor is situated"
-msgstr "Přečte řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor"
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated"
+msgstr ""
+"Přečte řádek, na němž se v rámci prohlíženého objektu nachází "
+"čtecí kurzor"
 
 #: appModules\_default.py:264
-msgid "Moves the review cursor to the next line of the current navigator object"
-msgstr "Přesune čtecí kurzor na následující řádek právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na následující řádek právě prohlíženého "
+"objektu"
 
 #: appModules\_default.py:272
-msgid "Moves the review cursor to the previous word of the current navigator object"
-msgstr "Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu"
 
 #: appModules\_default.py:280
-msgid "Speaks the word of the current navigator object where the review cursor is situated"
-msgstr "Přečte slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor"
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated"
+msgstr ""
+"Přečte slovo, na němž se v rámci prohlíženého objektu nachází "
+"čtecí kurzor"
 
 #: appModules\_default.py:288
-msgid "Moves the review cursor to the next word of the current navigator object"
-msgstr "Přesune čtecí kurzor na následující slovo právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na následující slovo právě prohlíženého "
+"objektu"
 
 #: appModules\_default.py:296
-msgid "Moves the review cursor to the previous character of the current navigator object"
-msgstr "Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object"
+msgstr ""
+"Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu"
 
 #: appModules\_default.py:304
-msgid "Reports the character of the current navigator object where the review cursor is situated"
-msgstr "Přečte znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor"
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated"
+msgstr ""
+"Přečte znak, na němž se v rámci prohlíženého objektu nachází "
+"čtecí kurzor"
 
 #: appModules\_default.py:312
-msgid "Moves the review cursor to the next character of the current navigator object"
-msgstr "Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the next character of the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu"
 
 #: appModules\_default.py:320
-msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
-msgstr "Přesune čtecí kurzor na začátek aktuálního řádku v rámci prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the start of the line where it is situated, in "
+"the current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na začátek aktuálního řádku v rámci "
+"prohlíženého objektu"
 
 #: appModules\_default.py:328
-msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
-msgstr "Přesune čtecí kurzor na konec aktuálního řádku v rámci prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the end of the line where it is situated, in the "
+"current navigator object"
+msgstr ""
+"Přesune čtecí kurzor na konec aktuálního řádku v rámci prohlížené"
+"ho objektu"
 
 #: appModules\_default.py:336
-msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "Přesune čtecí kurzor na pozici textového kurzoru v rámci prohlíženého objektu"
+msgid ""
+"Moves the review cursor to the position of the system caret, in the current "
+"navigator object"
+msgstr ""
+"Přesune čtecí kurzor na pozici textového kurzoru v rámci prohlížené"
+"ho objektu"
 
 #: appModules\_default.py:345
 msgid "beeps"
@@ -447,12 +520,25 @@ msgid "speech mode %s"
 msgstr "režim řeči %s"
 
 #: appModules\_default.py:350
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím, mluvení dává normální hlasovou odezvu"
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté "
+"řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím, "
+"mluvení dává normální hlasovou odezvu"
 
 #: appModules\_default.py:354
-msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "Zapíná a vypíná režim propouštění virtuálního dokumentu. Při jeho aktivaci nebudou stisknuté klávesy považovány za příkazy pro virtuální dokument a projdou dál k prohlížeči, který si je sám zpracuje"
+msgid ""
+"Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
+"straight through the current virtualBuffer, allowing you to interact with a "
+"control without the virtualBuffer doing something else with the key."
+msgstr ""
+"Zapíná a vypíná režim propouštění virtuálního dokumentu. Při jeho "
+"aktivaci nebudou stisknuté klávesy považovány za příkazy pro "
+"virtuální dokument a projdou dál k prohlížeči, který si je sám "
+"zpracuje"
 
 #: appModules\_default.py:358
 msgid "Quits NVDA!"
@@ -479,11 +565,13 @@ msgid "no status bar found"
 msgstr "stavový řádek nenalezen"
 
 #: appModules\_default.py:403
-msgid "reads the current aplication status bar and moves the navigation cursor to it"
-msgstr "Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem"
+msgid ""
+"reads the current aplication status bar and moves the navigation cursor to it"
+msgstr ""
+"Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým "
+"objektem"
 
 #: appModules\_default.py:412
-#: gui\settingsDialogs.py:243
 msgid "Report object under mouse"
 msgstr "&Hlásit objekt pod kurzorem myši"
 
@@ -500,32 +588,41 @@ msgid "speaks the current foreground object"
 msgstr "ohlásí aktuální objekt na popředí"
 
 #: appModules\_default.py:437
-msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "Ohlásí informace o prohlíženém objektu, které mohou být užitečné pro vývojáře"
+msgid ""
+"reports some info about the current navigator object, mainly useful for "
+"developers: control id, class and internal text"
+msgstr ""
+"Ohlásí informace o prohlíženém objektu, které mohou být užitečné "
+"pro vývojáře"
 
 #: appModules\_default.py:446
-#: gui\settingsDialogs.py:280
 msgid "Beep on progress bar updates"
 msgstr "Píp&at při změně indikátoru průběhu"
 
 #: appModules\_default.py:447
 msgid "Toggles on and off the beeping on progress bar updates"
-msgstr "Zapíná a vypíná režim pípání při změně indikátoru průběhu"
+msgstr ""
+"Zapíná a vypíná režim pípání při změně indikátoru průběhu"
 
 #: appModules\_default.py:456
 msgid "report dynamic content changes"
 msgstr "hlásit dynamicky změněný obsahu"
 
 #: appModules\_default.py:457
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Zapíná a vypíná hlášení dynamických změn obsahu, například v oknech příkazového řádku"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Zapíná a vypíná hlášení dynamických změn obsahu, například v "
+"oknech příkazového řádku"
 
 #: appModules\_default.py:466
 msgid "caret moves review cursor"
 msgstr "Textový kurzor pohybuje čtecím kurzorem"
 
 #: appModules\_default.py:467
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Zapíná a vypíná pohyb čtecího kurzoru spolu s textovým kurzorem"
 
 #: appModules\_default.py:476
@@ -533,7 +630,8 @@ msgid "focus moves navigator object"
 msgstr "změna fokusu změní prohlížený objekt"
 
 #: appModules\_default.py:477
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Zapíná a vypíná změnu prohlíženého objektu při změně fokusu"
 
 #: appModules\_default.py:491
@@ -550,15 +648,21 @@ msgstr "zbývá %d hodin a %d minut"
 
 #: appModules\_default.py:496
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení ze sítě"
+msgstr ""
+"Oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení "
+"ze sítě"
 
 #: appModules\_default.py:500
 msgid "Pass next key through"
 msgstr "Propustit následující klávesu"
 
 #: appModules\_default.py:501
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Další stisknutá klávesa nebude interpretována programem NVDA, ale bude předána ke zpracování ve Windows"
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Další stisknutá klávesa nebude interpretována programem NVDA, ale bude "
+"předána ke zpracování ve Windows"
 
 #: appModules\msimn.py:14
 msgid "Attachments"
@@ -1034,16 +1138,32 @@ msgid ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
+"This is the NVDA interface window. It enables you to control NVDA's "
+"settings, and also to exit NVDA altogether.\n"
 "\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
+"To bring this window up at any time, press insert+n. To close this window "
+"without exiting NVDA, press alt+f4.\n"
 "\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
+"To exit NVDA completely, either press insert+q from anywhere, or choose "
+"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
+"box asking you if you want to exit, and you can either press the yes or no "
+"button.\n"
 "\n"
-"To set the preferences (such as voice settings, key echo, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
+"To set the preferences (such as voice settings, key echo, reading of "
+"tooltips etc),\n"
+"Use the alt key to move to the menu bar and then use the arrow keys to "
+"navigate the menus and find the settings you want to change. Pressing enter "
+"on many of the menu items will bring up a dialog box in which you can change "
+"the individual settings. Most settings will take effect straight away (such "
+"as changing the rate or pitch of the voice) so you can easily find what "
+"settings most suit you. However, if you cancel out of the dialog box the "
+"settings will go back to what they were before you changed them. \n"
 "\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
+"By default settings are not kept for the next time you run NVDA unless you "
+"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
+"NVDA to automatically save the settings on exit by going to 'user "
+"interface...' in the Preferences menu and checking the 'Save configuration "
+"on exit' checkbox and press ing ok.\n"
 "\n"
 "Some usefull key commands when using NVDA are:\n"
 "\n"
@@ -1056,7 +1176,8 @@ msgid ""
 "insert+f12 - report time and date\n"
 "insert+2 - turn speaking of typed characters on and off\n"
 "insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
+"insert+4 - turn speaking of typed command keys (such as space, arrows, "
+"control and shift combinations) on and off\n"
 "insert+pageUp - increase rate of speech\n"
 "insert+pageDown - decrease rate of speech\n"
 "insert+p - turn reading of punctuation on and off\n"
@@ -1098,21 +1219,38 @@ msgstr ""
 "NVDA (%(description)s)\n"
 "Verze: %(version)s\n"
 "URL: %(url)s\n"
-"Hlášení o chybách a návrhy na vylepšení programu zasílejte prosím na: %(maintainer)s <%(maintainer_email)s>.\n"
+"Hlášení o chybách a návrhy na vylepšení programu zasílejte prosím "
+"na: %(maintainer)s <%(maintainer_email)s>.\n"
 "\n"
 "--- Autorská práva ---\n"
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"Toto je hlavní okno programu NVDA. Umožňuje měnit nastavení programu a také jej úplně ukončit.\n"
+"Toto je hlavní okno programu NVDA. Umožňuje měnit nastavení programu a "
+"také jej úplně ukončit.\n"
 "\n"
-"Můžete je vyvolat kdykoli kombinací Insert+N. Toto okno skryjete kombinací Alt+F4, která nezpůsobí úplné ukončení NVDA.\n"
+"Můžete je vyvolat kdykoli kombinací Insert+N. Toto okno skryjete "
+"kombinací Alt+F4, která nezpůsobí úplné ukončení NVDA.\n"
 "\n"
-"Ukončit NVDA lze odkudkoli klávesovou kombinací Insert+Q nebo v okně programu zvolte položku \"Konec\" z nabídky NVDA. Objeví se potvrzovací dialog, v němž jsou na výběr tlačítka OK, které program ukončí, a Storno, jehož stiskem ponecháte program spuštěný.\n"
+"Ukončit NVDA lze odkudkoli klávesovou kombinací Insert+Q nebo v okně "
+"programu zvolte položku \"Konec\" z nabídky NVDA. Objeví se potvrzovací "
+"dialog, v němž jsou na výběr tlačítka OK, které program ukončí, a "
+"Storno, jehož stiskem ponecháte program spuštěný.\n"
 "\n"
-"Změnit nastavení, jako například nastavení hlasu, echa klávesnice, čtení kontextových popisků a podobně lze z hlavní nabídky dostupné po stisku klávesy Alt. Poté si šipkami vyberte nastavení, jež chcete změnit. Stisk klávesy Enter vyvolá u mnoha příkazů dialogové okno zpřístupňující jednotlivá nastavení. Řada nastavení se projeví okamžitě (třeba tempo či výška řeči) a usnadňuje tak hledání vámi žádaného nastavení. Pokud změněná nastavení nepotvrdíte, vrátí se po stornování dialogového okna na původní hodnoty.\n"
+"Změnit nastavení, jako například nastavení hlasu, echa klávesnice, "
+"čtení kontextových popisků a podobně lze z hlavní nabídky dostupné "
+"po stisku klávesy Alt. Poté si šipkami vyberte nastavení, jež chcete "
+"změnit. Stisk klávesy Enter vyvolá u mnoha příkazů dialogové okno "
+"zpřístupňující jednotlivá nastavení. Řada nastavení se projeví "
+"okamžitě (třeba tempo či výška řeči) a usnadňuje tak hledání vá"
+"mi žádaného nastavení. Pokud změněná nastavení nepotvrdíte, vrátí "
+"se po stornování dialogového okna na původní hodnoty.\n"
 "\n"
-"Změněná nastavení se obvykle neukládají jako výchozí pro další spuštění. Můžete je ručně uložit z okna programu kombinací Ctrl+S nebo položkou nabídky \"Uložit nastavení\". K dispozici je i možnost \"Uložit nastavení při ukončení\", dostupná prostřednictvím příkazu \"Nastavení programu...\" v nabídce \"Možnosti\".\n"
+"Změněná nastavení se obvykle neukládají jako výchozí pro další "
+"spuštění. Můžete je ručně uložit z okna programu kombinací Ctrl+S "
+"nebo položkou nabídky \"Uložit nastavení\". K dispozici je i možnost "
+"\"Uložit nastavení při ukončení\", dostupná prostřednictvím pří"
+"kazu \"Nastavení programu...\" v nabídce \"Možnosti\".\n"
 "\n"
 "Následují některé užitečné klávesové kombinace:\n"
 "\n"
@@ -1120,12 +1258,14 @@ msgstr ""
 "Control - přerušení mluvení\n"
 "Insert+1 - zapnutí a vypnutí klávesové nápovědy.\n"
 "Insert+šipka nahoru - ohlášení objektu majícího fokus.\n"
-"Insert+šipka dolů - spuštění příkazu přečíst vše (lze ukončit klávesou Control nebo kteroukoli jinou klávesou).\n"
+"Insert+šipka dolů - spuštění příkazu přečíst vše (lze ukončit "
+"klávesou Control nebo kteroukoli jinou klávesou).\n"
 "Insert+T - ohlášení titulku okna.\n"
 "Insert+F12 - ohlášení času a data.\n"
 "Insert+2 - zapnutí a vypnutí hlášení psaných znaků.\n"
 "Insert+3 - zapnutí a vypnutí hlášení psaných slov.\n"
-"Insert+4 - zapnutí a vypnutí hlášení stisku příkazových kláves (například mezera, šipky, kombinace s Control a Shift).\n"
+"Insert+4 - zapnutí a vypnutí hlášení stisku příkazových kláves "
+"(například mezera, šipky, kombinace s Control a Shift).\n"
 "Insert+PageUp - zrychlení tempa řeči.\n"
 "Insert+PageDown - zpomalení tempa řeči.\n"
 "Insert+P - zapnutí a vypnutí čtení interpunkce.\n"
@@ -1163,7 +1303,7 @@ msgstr ""
 "Shift+num3 - konec řádku.\n"
 
 #: gui\__init__.py:139
-msgid "&Revert to saved configuration\tctrl+r"
+msgid "&Revert to saved configuration\tCtrl+R"
 msgstr "Znovu &načíst nastavení\tCtrl+R"
 
 #: gui\__init__.py:139
@@ -1171,7 +1311,7 @@ msgid "Reset all setting back to nvda.ini"
 msgstr "Vrátit nastavení na hodnoty z nvda.ini"
 
 #: gui\__init__.py:141
-msgid "&Save configuration\tctrl+s"
+msgid "&Save configuration\tCtrl+S"
 msgstr "&Uložit nastavení\tCtrl+S"
 
 #: gui\__init__.py:141
@@ -1193,7 +1333,7 @@ msgid "&NVDA"
 msgstr "&NVDA"
 
 #: gui\__init__.py:149
-msgid "&User interface...\tctrl+shift+u"
+msgid "&User interface...\tCtrl+Shift+U"
 msgstr "&Nastavení okna programu...\tCtrl+Shift+U"
 
 #: gui\__init__.py:149
@@ -1205,19 +1345,19 @@ msgid " the synthesizer to use"
 msgstr "použít hlasový výstup"
 
 #: gui\__init__.py:152
-msgid "&Synthesizer...\tctrl+shift+s"
+msgid "&Synthesizer...\tCtrl+Shift+S"
 msgstr "&Hlasový výstup...\tCtrl+Shift+S"
+
+#: gui\__init__.py:155
+msgid "&Voice settings...\tCtrl+Shift+V"
+msgstr "Nastavení h&lasu...\tCtrl+Shift+V"
 
 #: gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Zvolit hlas, jeho tempo, výšku a hlasitost"
 
-#: gui\__init__.py:155
-msgid "Voice settings...\tctrl+shift+v"
-msgstr "Nastavení h&lasu...\tCtrl+Shift+V"
-
 #: gui\__init__.py:158
-msgid "&Keyboard echo...\tctrl+e"
+msgid "&Keyboard echo...\tCtrl+E"
 msgstr "&Echo klávesnice...\tCtrl+E"
 
 #: gui\__init__.py:158
@@ -1225,15 +1365,16 @@ msgid "Configure speaking of typed characters, words or command keys"
 msgstr "Nastavit hlášení psaných znaků, slov a příkazových kláves"
 
 #: gui\__init__.py:161
-msgid "&Mouse settings...\tctrl+m"
+msgid "&Mouse settings...\tCtrl+M"
 msgstr "Nastavení &myši...\tCtrl+M"
 
 #: gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
-msgstr "nastavit hlášení změn tvaru kurzoru myši a objektu pod kurzorem myši"
+msgstr ""
+"nastavit hlášení změn tvaru kurzoru myši a objektu pod kurzorem myši"
 
 #: gui\__init__.py:164
-msgid "&Object presentation...\tctrl+shift+o"
+msgid "&Object presentation...\tCtrl+Shift+O"
 msgstr "&Prezentace objektů...\tCtrl+Shift+O"
 
 #: gui\__init__.py:164
@@ -1245,7 +1386,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "Změnit nastavení virtuálního dokumentu"
 
 #: gui\__init__.py:167
-msgid "Virtual &buffers...\tctrl+shift+b"
+msgid "Virtual &buffers...\tCtrl+Shift+B"
 msgstr "&Virtuální dokument...\tCtrl+Shift+B"
 
 #: gui\__init__.py:170
@@ -1253,7 +1394,7 @@ msgid "Change echo of document properties"
 msgstr "Změnit způsob hlášení vlastností dokumentu"
 
 #: gui\__init__.py:170
-msgid "Document &formatting...\tctrl+shift+f"
+msgid "Document &formatting...\tCtrl+Shift+F"
 msgstr "&Formátování dokumentu...\tCtrl+Shift+F"
 
 #: gui\__init__.py:172
@@ -1262,7 +1403,7 @@ msgid "&Preferences"
 msgstr "&Možnosti"
 
 #: gui\__init__.py:176
-msgid "NVDA homepage..."
+msgid "NVDA homepage"
 msgstr "&Domovská stránka NVDA"
 
 #: gui\__init__.py:176
@@ -1270,7 +1411,7 @@ msgid "Opens NVDA homepage in the default browser"
 msgstr "Otevřít domovskou stránku NVDA ve výchozím prohlížeči"
 
 #: gui\__init__.py:179
-msgid "NVDA wiki..."
+msgid "NVDA wiki"
 msgstr "NVDA &wiki"
 
 #: gui\__init__.py:179
@@ -1304,7 +1445,8 @@ msgstr "nastavení uloženo"
 
 #: gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
-msgstr "Nastavení neuloženo - pravděpodobně souborový systém jen pro čtení"
+msgstr ""
+"Nastavení neuloženo - pravděpodobně souborový systém jen pro čtení"
 
 #: gui\__init__.py:233
 msgid "Press OK to quit NVDA"
@@ -1315,7 +1457,6 @@ msgid "User interface settings"
 msgstr "Nastavení okna programu"
 
 #: gui\__init__.py:249
-#: gui\settingsDialogs.py:77
 msgid "Synthesizer"
 msgstr "Hlasové výstupy"
 
@@ -1372,7 +1513,7 @@ msgid "&Move to link"
 msgstr "&Přejít na odkaz"
 
 #: gui\settingsDialogs.py:25
-msgid "Language (requires restart to fully take affect)"
+msgid "&Language (requires restart to fully take affect)"
 msgstr "&Jazyk (vyžaduje restart NVDA)"
 
 #: gui\settingsDialogs.py:29
@@ -1380,11 +1521,11 @@ msgid "Language"
 msgstr "Jazyk"
 
 #: gui\settingsDialogs.py:38
-msgid "Hide user interface on startup"
+msgid "&Hide user interface on startup"
 msgstr "&Skrýt okno programu po spuštění"
 
 #: gui\settingsDialogs.py:41
-msgid "Save configuration on exit"
+msgid "&Save configuration on exit"
 msgstr "&Uložit nastavení při ukončení"
 
 #: gui\settingsDialogs.py:59
@@ -1396,12 +1537,22 @@ msgid "Language Error"
 msgstr "Chyba jazyka"
 
 #: gui\settingsDialogs.py:65
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Aby se projevilo nové nastavení jazyka, je třeba uložit nastavení a restartovat NVDA. Stiskněte Enter pro uložení a restart nebo Storno pro ruční uložení a ukončení v pozdějším čase"
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Aby se projevilo nové nastavení jazyka, je třeba uložit nastavení a "
+"restartovat NVDA. Stiskněte Enter pro uložení a restart nebo Storno pro "
+"ruční uložení a ukončení v pozdějším čase"
 
 #: gui\settingsDialogs.py:65
 msgid "Language Configuration Change"
 msgstr "Změna nastavení jazyka"
+
+#: gui\settingsDialogs.py:77
+msgid "&Synthesizer"
+msgstr "Hlasové výstupy"
 
 #: gui\settingsDialogs.py:103
 msgid "Could not load the %s synthesizer."
@@ -1412,152 +1563,160 @@ msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
 
 #: gui\settingsDialogs.py:114
-msgid "Voice"
+msgid "&Voice"
 msgstr "&Hlas"
 
 #: gui\settingsDialogs.py:129
-msgid "Rate"
+msgid "&Rate"
 msgstr "&Tempo"
 
 #: gui\settingsDialogs.py:137
-msgid "Pitch"
+msgid "&Pitch"
 msgstr "&Výška"
 
 #: gui\settingsDialogs.py:145
-msgid "Volume"
+msgid "V&olume"
 msgstr "H&lasitost"
 
 #: gui\settingsDialogs.py:152
-msgid "Speak all punctuation"
+msgid "&Speak all punctuation"
 msgstr "Číst &interpunkci"
 
 #: gui\settingsDialogs.py:155
-msgid "Say cap before capitals"
+msgid "Say &cap before capitals"
 msgstr "Ohlásit &velké písmeno slovem \"velké\""
 
 #: gui\settingsDialogs.py:211
-msgid "Speak typed characters"
+msgid "Speak typed &characters"
 msgstr "hlásit psané &znaky"
 
 #: gui\settingsDialogs.py:214
-msgid "Speak typed words"
+msgid "Speak typed &words"
 msgstr "Hlásit psaná &slova"
 
 #: gui\settingsDialogs.py:217
-msgid "Speak command keys"
+msgid "Speak command &keys"
 msgstr "Hlásit příkazové &klávesy"
 
 #: gui\settingsDialogs.py:240
-msgid "Report mouse shape changes"
+msgid "Report mouse &shape changes"
 msgstr "Hlásit změny &tvaru kurzoru myši"
 
+#: gui\settingsDialogs.py:243
+msgid "Report &object under mouse"
+msgstr "&Hlásit objekt pod kurzorem myši"
+
 #: gui\settingsDialogs.py:265
-msgid "Report tooltips"
+msgid "Report &tooltips"
 msgstr "Hlásit kontextové &popisky"
 
 #: gui\settingsDialogs.py:268
-msgid "Report help balloons"
+msgid "Report &help balloons"
 msgstr "Hlásit obsah &bublinové nápovědy"
 
 #: gui\settingsDialogs.py:271
-msgid "Report object shortcut keys"
+msgid "Report object shortcut &keys"
 msgstr "Hlásit přístupové &klávesy k objektům"
 
 #: gui\settingsDialogs.py:274
-msgid "Report object group names"
+msgid "Report object &group names"
 msgstr "Hlásit &jména skupiny objektů"
 
 #: gui\settingsDialogs.py:277
-msgid "Say object state first"
+msgid "Say object &state first"
 msgstr "Ohlásit nejdříve &stav objektu"
 
+#: gui\settingsDialogs.py:280
+msgid "&Beep on progress bar updates"
+msgstr "Píp&at při změně indikátoru průběhu"
+
 #: gui\settingsDialogs.py:306
-msgid "Maximum number of characters on one line"
+msgid "&Maximum number of characters on one line"
 msgstr "&Maximální počet znaků na řádku"
 
 #: gui\settingsDialogs.py:311
-msgid "Number of lines per page"
+msgid "&Number of lines per page"
 msgstr "&Počet řádků na stránce"
 
 #: gui\settingsDialogs.py:316
-msgid "Report virtual presentation on focus changes"
+msgid "Report &virtual presentation on focus changes"
 msgstr "Hlásit &webové objekty při změně fokusu"
 
 #: gui\settingsDialogs.py:319
-msgid "Update the content dynamically"
+msgid "Update the content &dynamically"
 msgstr "&Aktualizovat obsah dynamicky"
 
 #: gui\settingsDialogs.py:322
-msgid "Report links"
+msgid "Report lin&ks"
 msgstr "Hlásit &odkazy"
 
 #: gui\settingsDialogs.py:325
-msgid "Report lists"
+msgid "Report &lists"
 msgstr "Hlásit &seznamy"
 
 #: gui\settingsDialogs.py:328
-msgid "Report list items"
+msgid "Report list &items"
 msgstr "Hlásit položky s&eznamu"
 
 #: gui\settingsDialogs.py:331
-msgid "Report headings"
+msgid "Report &headings"
 msgstr "Hlásit &nadpisy"
 
 #: gui\settingsDialogs.py:334
 #: gui\settingsDialogs.py:415
-msgid "Report tables"
+msgid "Report &tables"
 msgstr "Hlásit ta&bulky"
 
 #: gui\settingsDialogs.py:337
-msgid "Report graphics"
+msgid "Report &graphics"
 msgstr "Hlásit &grafiku"
 
 #: gui\settingsDialogs.py:340
-msgid "Report forms"
+msgid "Report f&orms"
 msgstr "Hlásit &formuláře"
 
 #: gui\settingsDialogs.py:343
-msgid "Report form fields"
+msgid "Report form &fields"
 msgstr "Hlásit prvky fo&rmuláře"
 
 #: gui\settingsDialogs.py:346
-msgid "Report block quotes"
+msgid "Report block &quotes"
 msgstr "Hlásit c&itace"
 
 #: gui\settingsDialogs.py:349
-msgid "Report paragraphs"
+msgid "Report &paragraphs"
 msgstr "Hlásit o&dstavce"
 
 #: gui\settingsDialogs.py:352
-msgid "Report frames"
+msgid "Report f&rames"
 msgstr "Hlásit rám&ce"
 
 #: gui\settingsDialogs.py:397
-msgid "Report font name"
+msgid "Report font &name"
 msgstr "Hlásit &jméno písma"
 
 #: gui\settingsDialogs.py:400
-msgid "Report font size"
+msgid "Report font &size"
 msgstr "Hlásit &velikost písma"
 
 #: gui\settingsDialogs.py:403
-msgid "Report font attributes"
+msgid "Report font attri&butes"
 msgstr "Hlásit v&lastnosti písma"
 
 #: gui\settingsDialogs.py:406
-msgid "Report style"
+msgid "Report st&yle"
 msgstr "Hlásit &styl"
 
 #: gui\settingsDialogs.py:409
-msgid "Report pages"
+msgid "Report &pages"
 msgstr "Hlásit s&trany"
 
 #: gui\settingsDialogs.py:412
-msgid "Report line numbers"
+msgid "Report &line numbers"
 msgstr "Hlásit čísla řá&dků"
 
 #: gui\settingsDialogs.py:418
-msgid "Report alignment"
+msgid "Report &alignment"
 msgstr "Hlásit &zarovnání"
 
 #: keyboardHandler.py:80
@@ -1719,13 +1878,21 @@ msgstr "Svobodný a otevřený odečítač obrazovky pro MS Windows"
 #: versionInfo.py:14
 msgid ""
 "Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
-"%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
+"%(name)s is covered by the GNU General Public License. You are free to share "
+"or change this software in any way you like as long as you distribute the "
+"licence along with the software, and make all source code available to "
+"anyone who wants it. This applies to both origional and modified copies of "
+"the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
-"%(name)s je chráněn licencí GNU General Public License. Program můžete svobodně sdílet a upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům. Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také na software užívající kód převzatý z tohoto programu.\n"
+"%(name)s je chráněn licencí GNU General Public License. Program můžete "
+"svobodně sdílet a upravovat za předpokladu, že k němu přiložíte tuto "
+"licenci a zpřístupníte jeho zdrojový kód všem zájemcům. Toto se "
+"vztahuje jak na původní, tak upravené kopie tohoto programu a také na "
+"software užívající kód převzatý z tohoto programu.\n"
 "Podrobností najdete na následující webové stránce:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Viz též soubor Copying.txt přiložený k tomuto programu."
@@ -1938,4 +2105,3 @@ msgstr "L=seznam (list)"
 #: virtualBuffers\__init__.py:515
 msgid "i=listItemQuickKey"
 msgstr "I=položka seznamu (list item)"
-
