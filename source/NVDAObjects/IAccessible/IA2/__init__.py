@@ -3,6 +3,8 @@ import speech
 import IA2Handler
 from NVDAObjects.IAccessible import IAccessible
 
+IA2_TEXT_BOUNDARY_LINE=4
+
 class IA2(IAccessible):
 
 	def __init__(self,pacc,childID,windowHandle=None,origChildID=None,objectID=None):
@@ -67,6 +69,10 @@ class IA2(IAccessible):
 
 	def text_getSelectionOffsets(self,index):
 		if not hasattr(self,"IAccessibleTextObject"):
-			return IAccessible._get_text_selectionOffsets(self,index)
+			return IAccessible.text_getSelectionOffsets(self,index)
 		return self.IAccessibleTextObject.Selection(index)
 
+	def text_getLineOffsets(self,offset):
+		if not hasattr(self,"IAccessibleTextObject"):
+			return IAccessible.text_getLineOffsets(self,offset)
+		return self.IAccessibleTextObject.TextAtOffset(offset,  IA2_TEXT_BOUNDARY_LINE)[:2]
