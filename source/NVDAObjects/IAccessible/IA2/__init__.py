@@ -1,4 +1,5 @@
 import debug
+import speech
 import IA2Handler
 from NVDAObjects.IAccessible import IAccessible
 
@@ -58,3 +59,14 @@ class IA2(IAccessible):
 		if not hasattr(self,"IAccessibleTextObject"):
 			return IAccessible._get_text_caretOffset(self)
 		return self.IAccessibleTextObject.CaretOffset
+
+	def _get_text_selectionCount(self):
+		if not hasattr(self,"IAccessibleTextObject"):
+			return IAccessible._get_text_selectionCount(self)
+		return self.IAccessibleTextObject.NSelections
+
+	def text_getSelectionOffsets(self,index):
+		if not hasattr(self,"IAccessibleTextObject"):
+			return IAccessible._get_text_selectionOffsets(self,index)
+		return self.IAccessibleTextObject.Selection(index)
+
