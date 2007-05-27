@@ -140,6 +140,8 @@ IAccessibleRolesToNVDARoles={
 	"h6":controlTypes.ROLE_HEADING6,
 	"p":controlTypes.ROLE_PARAGRAPH,
 	"hbox":controlTypes.ROLE_BOX,
+	IAccessibleHandler.ROLE_SYSTEM_GROUPING:controlTypes.ROLE_GROUPING,
+	IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE:controlTypes.ROLE_PROPERTYPAGE,
 }
 
 class IAccessible(Window):
