@@ -142,6 +142,7 @@ IAccessibleRolesToNVDARoles={
 	"hbox":controlTypes.ROLE_BOX,
 	IAccessibleHandler.ROLE_SYSTEM_GROUPING:controlTypes.ROLE_GROUPING,
 	IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE:controlTypes.ROLE_PROPERTYPAGE,
+	IAccessibleHandler.ROLE_SYSTEM_ALERT:controlTypes.ROLE_DIALOG,
 }
 
 class IAccessible(Window):
@@ -752,6 +753,7 @@ _staticMap={
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	("Progman",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Progman_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
 	("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
