@@ -202,7 +202,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		self.IAccessibleObject=pacc
 		self.IAccessibleChildID=childID
 		self.IAccessibleObjectID=objectID
-		self._accOrigChildID=origChildID
+		if origChildID is not None:
+			self.IAccessibleOrigChildID=origChildID
+		else:
+			self.IAccessibleOrigChildID=childID
 		Window.__init__(self,windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)

@@ -194,11 +194,12 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			roleNum=obj.role
 		if reason==REASON_CHANGE:
 			positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
+			oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
 			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnStateChange.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 				oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 			textList.extend([controlTypes.speechStateLabels[state] for state in (positiveStateSet-oldPositiveStateSet)])
-		if reason==REASON_FOCUS:
+		elif reason==REASON_FOCUS:
 			positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
 			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnFocus.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]

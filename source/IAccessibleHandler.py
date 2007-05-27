@@ -470,7 +470,7 @@ def manageEvent(name,window,objectID,childID):
 	focusObject=api.getFocusObject()
 	obj=None
 	for testObject in [o for o in [focusObject,foregroundObject,desktopObject] if o]:
-		if isinstance(testObject,NVDAObjects.IAccessible.IAccessible) and window==testObject.windowHandle and objectID==testObject.IAccessibleObjectID and childID==testObject.IAccessibleChildID:
+		if isinstance(testObject,NVDAObjects.IAccessible.IAccessible) and window==testObject.windowHandle and objectID==testObject.IAccessibleObjectID and childID==testObject.IAccessibleOrigChildID:
 			obj=testObject
 			break
 	if obj is None and name not in ["hide","locationChange"]:
@@ -500,13 +500,13 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		mouseObject=api.getMouseObject()
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
-			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleChildID):
+			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleOrigChildID):
 				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				queueHandler.queueFunction(queueHandler.ID_EVENT,correctFocus)
 				return
-			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleChildID):
+			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleOrigChildID):
 				api.setForegroundObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
@@ -546,7 +546,7 @@ def updateFocusFromEvent(window,objectID,childID):
 	appModuleHandler.update(window)
 	virtualBuffers.IAccessible.update(window)
 	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleChildID:
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID:
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:

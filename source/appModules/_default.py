@@ -127,6 +127,7 @@ class appModule(appModuleHandler.appModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		speech.speakObject(curObject,reason=speech.REASON_QUERY)
+		speech.speakText(curObject.text_getText())
 		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object")
 
@@ -207,7 +208,7 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject.doDefaultAction()
+		curObject.setFocus()
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_navigatorObject_where(self,keyPress,nextScript):

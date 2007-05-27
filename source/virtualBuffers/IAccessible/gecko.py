@@ -45,13 +45,13 @@ class Gecko(virtualBuffer):
 	def event_gainFocus(self,obj,nextHandler):
 		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
-		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
+		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
 				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
 				self.loadDocument()
-			return True
+			return nextHandler()
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
 			return nextHandler()
