@@ -492,6 +492,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
+class Client(IAccessible):
+
+	def _get_name(self):
+		name=super(Client,self)._get_name()
+		if not name or (isinstance(name,basestring) and name.isspace()):
+			name=self.windowClassName
+		return name
+
 class Dialog(IAccessible):
 	"""
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
@@ -738,6 +746,7 @@ class SysLink(IAccessible):
 ###class mappings
 
 _staticMap={
+	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Client",
 	("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Shell_TrayWnd_client",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
