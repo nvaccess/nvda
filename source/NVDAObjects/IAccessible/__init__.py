@@ -423,7 +423,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			speech.speakObject(self)
 
 	def _get_groupName(self):
-		if not api.getForegroundObject() or self == api.getForegroundObject() or api.getForegroundObject().IAccessibleRole != IAccessibleHandler.ROLE_SYSTEM_DIALOG or self.IAccessibleChildID != 0:
+		if not self.hasFocus or not api.getForegroundObject() or api.getForegroundObject().IAccessibleRole != IAccessibleHandler.ROLE_SYSTEM_DIALOG or self.IAccessibleChildID != 0 or self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_DIALOG:
 			return None
 		try:
 			curLocation=self.location
