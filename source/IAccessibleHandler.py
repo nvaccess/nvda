@@ -157,6 +157,7 @@ import virtualBuffers
 import NVDAObjects.IAccessible
 import appModuleHandler
 import config
+import IA2Handler
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -461,7 +462,7 @@ winUser.EVENT_OBJECT_SELECTIONADD:"selectionAdd",
 winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
-winUser.EVENT_OBJECT_VALUECHANGE:"valueChange"
+winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
 }
 
 def manageEvent(name,window,objectID,childID):
@@ -504,7 +505,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
-				queueHandler.queueFunction(queueHandler.ID_EVENT,correctFocus)
+				queueHandler.queueFunction(queueHandler.eventQueue,correctFocus)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleOrigChildID):
 				api.setForegroundObject(desktopObject)
@@ -520,17 +521,17 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
 			if obj and obj.name!=lastMouseShape:
-				queueHandler.queueFunction(queueHandler.ID_MOUSE,speech.speakObject, obj)
+				queueHandler.queueFunction(queueHandler.mouseQueue,speech.speakObject, obj)
 				globals()["lastMouseShape"]=obj.name
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.ID_EVENT,updateForegroundFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,updateForegroundFromEvent,window,objectID,childID)
 		#Process focus events
 		elif eventName=="gainFocus":
-			queueHandler.queueFunction(queueHandler.ID_EVENT,updateFocusFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,updateFocusFromEvent,window,objectID,childID)
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
-		queueHandler.queueFunction(queueHandler.ID_EVENT,manageEvent,eventName,window,objectID,childID)
+		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 

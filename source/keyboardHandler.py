@@ -47,7 +47,7 @@ def internal_keyDownEvent(keyInfo):
 			return True
 		globalVars.keyCounter+=1
 		if not speech.beenCanceled:
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
 		if keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		if (vkName=="Insert"): #and (keyInfo.extended==0):
@@ -77,21 +77,21 @@ def internal_keyDownEvent(keyInfo):
 		debug.writeMessage("key press: %s"%keyName(keyPress))
 		if mainKey=="Capital":
 			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
 		elif mainKey=="ExtendedNumlock":
 			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
-			queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
 			scriptLocation=scriptHandler.getScriptLocation(script)
 			scriptDescription=scriptHandler.getScriptDescription(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,"%s"%scriptName.replace('_',' '))
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Description: %s")%scriptDescription)
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakMessage,_("Location: %s")%scriptLocation)
+				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,"%s"%scriptName.replace('_',' '))
+				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
+				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
 			else:
-				queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,script,keyPress)
+				queueHandler.queueFunction(queueHandler.interactiveQueue,script,keyPress)
 		if script or globalVars.keyboardHelp:
 			keyUpIgnoreSet.add((vkName,keyInfo.extended))
 			return False
@@ -132,7 +132,7 @@ def internal_keyUpEvent(keyInfo):
 
 @nvwh.userCharCallbackType
 def internal_typeCharacterEvent(ch):
-	queueHandler.queueFunction(queueHandler.ID_INTERACTIVE,speech.speakTypedCharacters,unichr(ch))
+	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakTypedCharacters,unichr(ch))
 
 #Register internal key press event with  operating system
 

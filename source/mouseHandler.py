@@ -27,9 +27,9 @@ def internal_mouseEvent(event):
 		return True
 	try:
 		if event.MessageName=="mouse move":
-			queueHandler.queueFunction(queueHandler.ID_MOUSE,executeMouseMoveEvent,event.Position[0],event.Position[1])
+			queueHandler.queueFunction(queueHandler.mouseQueue,executeMouseMoveEvent,event.Position[0],event.Position[1])
 		elif event.MessageName.endswith("down"):
-			queueHandler.queueFunction(queueHandler.ID_MOUSE,speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.mouseQueue,speech.cancelSpeech)
 		return True
 	except:
 		debug.writeException("mouseHandler.internal_mouseEvent")

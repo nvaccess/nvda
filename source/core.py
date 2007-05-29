@@ -11,6 +11,7 @@ import time
 import debug
 import globalVars
 import winUser
+import speech
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
@@ -89,10 +90,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			"Checks the queues and executes functions."
 			def Notify(self):
 				keyboardHandler.pumpAll()
-				while True:
-					queueHandler.pumpAll()
-					if not queueHandler.isPendingItems():
-						break
+				queueHandler.pumpAll()
 		pump = CorePump()
 		pump.Start(1)
 	except:

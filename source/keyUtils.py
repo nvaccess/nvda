@@ -111,4 +111,4 @@ def isKeyWaiting():
 	@returns: C{True} if a script key is waiting to be handled, C{False} otherwise.
 	@rtype: boolean
 """
-	return queueHandler.isPendingItems([queueHandler.ID_INTERACTIVE])
+	return queueHandler.isPendingItems(queueHandler.interactiveQueue)

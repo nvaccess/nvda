@@ -9,12 +9,12 @@ from Queue import Queue
 import debug
 
 MAX_ITEMS=500
-ID_INTERACTIVE=0
-ID_MOUSE=1
-ID_EVENT=2
-queueOrder=list(range(3))
-queueList=[Queue(MAX_ITEMS) for x in queueOrder]
-
+interactiveQueue=Queue(MAX_ITEMS)
+interactiveQueue.__name__="interactiveQueue"
+eventQueue=Queue(MAX_ITEMS)
+eventQueue.__name__="eventQueue"
+mouseQueue=Queue(MAX_ITEMS)
+mouseQueue.__name__="mouseQueue"
 generators={}
 lastGeneratorObjID=0
 
@@ -25,20 +25,30 @@ def registerGeneratorObject(generatorObj):
 	lastGeneratorObjID+=1
 	generators[lastGeneratorObjID]=generatorObj
 
-def queueFunction(queueID,func,*args,**vars):
-	if not queueList[queueID].full():
-		queueList[queueID].put_nowait((func,args,vars))
+def queueFunction(queue,func,*args,**vars):
+	if not queue.full():
+		queue.put_nowait((func,args,vars))
 	else:
 		pass #raise RuntimeError('Queue full')
 
-def isPendingItems(queueIDs=None):
-	if queueIDs==None:
-		queueIDs=queueOrder
-	res=any((not queueList[x].empty() for x in queueIDs))
-	return res
-
 def isRunningGenerators():
 	return True if len(generators)>0 else False
+
+def flushQueue(queue):
+	for count in range(queue.qsize()+1):
+		if not queue.empty():
+			(func,args,vars)=queue.get_nowait()
+			debug.writeMessage("flushQueue: got function %s"%func.__name__)
+			try:
+				func(*args,**vars)
+			except:
+				debug.writeException("function from queue %s"%queue.__name__)
+
+def isPendingItems(queue=None):
+		if (queue is None  and (not eventQueue.empty() or not mouseQueue.empty() or not interactiveQueue.empty())) or not queue.empty():
+			return True
+		else:
+			return False
 
 def pumpAll():
 	for ID in generators.keys():
@@ -49,11 +59,6 @@ def pumpAll():
 		except:
 			debug.writeException("generator %d" % ID)
 			del generators[ID]
-	for queueID,queue in enumerate(queueList):
-		if queue.empty():
-			continue
-		(func,args,vars)=queue.get_nowait()
-		try:
-			func(*args,**vars)
-		except:
-			debug.writeException("function from queue %s"%queueID)
+	flushQueue(interactiveQueue)
+	flushQueue(mouseQueue)
+	flushQueue(eventQueue)
