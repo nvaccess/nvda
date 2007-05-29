@@ -3,7 +3,6 @@ import os
 import ctypes
 import locale
 import gettext
-import characterSymbols
 import debug
 
 curLang="en"
@@ -28,12 +27,10 @@ def setLanguage(lang):
 			gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
 			curLang=lang
 		config.conf["general"]["language"]=lang
-		reload(characterSymbols)
 		return True
 	except IOError:
 		gettext.install("nvda", unicode=True)
 		curLang="en"
-		reload(characterSymbols)
 		return False
 
 def getLanguage():

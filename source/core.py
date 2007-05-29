@@ -11,7 +11,6 @@ import time
 import debug
 import globalVars
 import winUser
-import speech
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
@@ -29,6 +28,7 @@ def resetConfiguration(reportDone=False):
 @param reportDone: if true then this function will speak when done, if else it won't.
 @type reportDone: boolean
 """
+	import speech
 	speech.terminate()
 	config.load()
 	#Language
@@ -56,9 +56,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			config.save()
 		except:
 			pass
-		import sys
-		for key in sys.modules.keys():
-			debug.writeMessage("module: %s, %s"%(key,sys.modules[key]))
 		try:
 			lang = config.conf["general"]["language"]
 			import languageHandler
