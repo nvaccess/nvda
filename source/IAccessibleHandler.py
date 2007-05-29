@@ -463,6 +463,7 @@ winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
+IA2Handler.EVENT_TEXT_CARET_MOVED:"caret",
 }
 
 def manageEvent(name,window,objectID,childID):

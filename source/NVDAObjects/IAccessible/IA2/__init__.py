@@ -1,9 +1,12 @@
 import debug
+import api
 import speech
 import IA2Handler
+import IAccessibleHandler
+from keyUtils import sendKey, isKeyWaiting
 from NVDAObjects.IAccessible import IAccessible
 
-IA2_TEXT_BOUNDARY_LINE=4
+objWithCaret=None
 
 class IA2(IAccessible):
 
@@ -75,4 +78,29 @@ class IA2(IAccessible):
 	def text_getLineOffsets(self,offset):
 		if not hasattr(self,"IAccessibleTextObject"):
 			return IAccessible.text_getLineOffsets(self,offset)
-		return self.IAccessibleTextObject.TextAtOffset(offset,  IA2_TEXT_BOUNDARY_LINE)[:2]
+		return self.IAccessibleTextObject.TextAtOffset(offset,  IA2Handler.TEXT_BOUNDARY_LINE)[:2]
+
+	def event_caret(self):
+		global objWithCaret
+		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
+			return
+		objWithCaret=self
+
+	def script_text_moveByLine(self,keyPress,nextScript):
+		sendKey(keyPress)
+		api.processPendingEvents()
+		if not isKeyWaiting():
+			objWithCaret.text_speakLine(objWithCaret.text_caretOffset)
+
+	def script_text_moveByWord(self,keyPress,nextScript):
+		sendKey(keyPress)
+		api.processPendingEvents()
+		if not isKeyWaiting():
+			objWithCaret.text_speakWord(objWithCaret.text_caretOffset)
+
+	def script_text_moveByCharacter(self,keyPress,nextScript):
+		sendKey(keyPress)
+		api.processPendingEvents()
+		if not isKeyWaiting():
+			objWithCaret.text_speakCharacter(objWithCaret.text_caretOffset)
+

@@ -10,6 +10,8 @@ import ctypes
 IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
 IA2Lib=comtypesClient.GetModule('lib/ia2.tlb')
 
+TEXT_BOUNDARY_LINE=4
+
 (EVENT_ACTION_CHANGED,
 EVENT_ACTIVE_DECENDENT_CHANGED,
 EVENT_DOCUMENT_ATTRIBUTE_CHANGED,

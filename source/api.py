@@ -11,7 +11,9 @@ import globalVars
 import speech
 import NVDAObjects
 import winUser
+import wx
 import core
+import queueHandler
 import controlTypes
 
 #User functions
@@ -168,3 +170,7 @@ def moveMouseToNVDAObject(obj):
 		x=(left+left+width)/2
 		y=(top+top+height)/2
 		winUser.setCursorPos(x,y)
+
+def processPendingEvents():
+	wx.Yield()
+	queueHandler.flushQueue(queueHandler.eventQueue)
