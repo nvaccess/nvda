@@ -804,4 +804,5 @@ _staticMap={
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
 	("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winword.WordDocument",
 	("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"excel.ExcelGrid",
+	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 }

@@ -485,6 +485,9 @@ def manageEvent(name,window,objectID,childID):
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global lastEventParams
 	try:
+		#A hack to fix a terible bug in Notepad++
+		if eventID==winUser.EVENT_OBJECT_FOCUS and winUser.getControlID(window)==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
+			return
 		#Ignore certain duplicate events
 		if lastEventParams is not None and eventID==winUser.EVENT_OBJECT_FOCUS and lastEventParams==(eventID,window,objectID,childID):
 			return
