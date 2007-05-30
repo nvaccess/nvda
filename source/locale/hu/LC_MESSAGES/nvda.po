@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-0223 12:21+0200\n"
-"PO-Revision-Date: 2007-05-24 21:31+0500\n"
+"POT-Creation-Date: 2007-0223 12:-0500200\n"
+"PO-Revision-Date: 2007-05-29 20:54-0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net.com>\n"
 "Language-Team: hun <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1022,12 +1022,17 @@ msgstr ""
 "köszönjük, hogy az NVDA-t választotta képernyofelolvasáshoz! "
 
 #: gui\__init__.py:117
-msgid "&Revert to saved configuration\tctrl+r"
+msgid "&Revert to saved configuration\tCtrl+R"
 msgstr "&lementett konfiguráció visszaállitása\tctrl+r"
 
 #: gui\__init__.py:117
 msgid "Reset all setting back to nvda.ini"
 msgstr " a nvda.iniban lévö  beállitások visszaállitása"
+
+#: source\gui\__init__.py:141
+#: gui\__init__.py:141
+msgid "&Save configuration\tCtrl+S"
+msgstr "&konfiguráció mentése\tcontrol+s"
 
 #: gui\__init__.py:119
 msgid "&Save configuration\tctrl+s"
@@ -1049,6 +1054,11 @@ msgstr "kilépés az nvda alkalmazásból"
 msgid "&NVDA"
 msgstr "&NVDA"
 
+
+#: gui\__init__.py:149
+msgid "&User interface...\tCtrl+Shift+U"
+msgstr "&felhasználói felület...\tControl+shift+u"
+
 #: gui\__init__.py:126
 msgid "&User interface...\tctrl+shift+u"
 msgstr "&felhasználói felület...\tctrl+shift+u"
@@ -1061,6 +1071,11 @@ msgstr "felhasználói felület beállitása"
 msgid " the synthesizer to use"
 msgstr "a használt szintetizátor"
 
+
+#: gui\__init__.py:152
+msgid "&Synthesizer...\tCtrl+Shift+S"
+msgstr "&szintetizátor...\t+shift+s"
+
 #: gui\__init__.py:129
 msgid "&Synthesizer...\tctrl+shift+s"
 msgstr "&szintetizátor...\tctrl+shift+s"
@@ -1069,9 +1084,21 @@ msgstr "&szintetizátor...\tctrl+shift+s"
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerö beállitása"
 
+
+
+
+#: gui\__init__.py:155
+msgid "&Voice settings...\tCtrl+Shift+V"
+msgstr "beszéd...\tKontrol+shift+v"
+
 #: gui\__init__.py:132
 msgid "Voice settings...\tctrl+shift+v"
 msgstr "beszéd beállitások...\tctrl+shift+v"
+
+
+#: gui\__init__.py:152
+msgid "&Keyboard echo...\tCtrl+E"
+msgstr "&billentyüzet visszhang...\tkontrol+e"
 
 #: gui\__init__.py:135
 msgid "&Keyboard echo...\tctrl+e"
@@ -1081,6 +1108,11 @@ msgstr "&billentyüzet visszhang...\tctrl+e"
 msgid "Configure speaking of typed characters, words or command keys"
 msgstr "a beirt karakterek, szavak, és parancsbillentyük kimondásának beállitása"
 
+
+#: gui\__init__.py:161
+msgid "&Mouse settings...\tCtrl+M"
+msgstr "&egér beállitásai...\tCt+m"
+
 #: gui\__init__.py:138
 msgid "&Mouse settings...\tctrl+m"
 msgstr "&egér beállitásai...\tctrl+m"
@@ -1088,6 +1120,11 @@ msgstr "&egér beállitásai...\tctrl+m"
 #: gui\__init__.py:138
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "az egér alatt lévö alakoknak és objektumoknak  neve megváltoztatás"
+
+
+#: gui\__init__.py:164
+msgid "&Object presentation...\tCtrl+Shift+O"
+msgstr "&objektumok jelzése...\tCtrl+shift+o"
 
 #: gui\__init__.py:141
 msgid "&Object presentation...\tctrl+shift+o"
@@ -1099,11 +1136,21 @@ msgstr "objektumok kifejezésének megváltoztatása"
 
 #: gui\__init__.py:167
 msgid "Change virtual buffers specific settings"
-"virtuális buffer speciális beállitások megváltoztatása"
+msgstr "virtuális buffer speciális beállitások megváltoztatása"
+
+
+#: gui\__init__.py:167
+msgid "Virtual &buffers...\tCtrl+Shift+B"
+msgstr "virtuális &buffer...\tCtrl+shift+b"
 
 #: gui\__init__.py:167
 msgid "Virtual &buffers...\tctrl+shift+b"
 msgstr "virtuális &buffer...\tctrl+shift+b"
+
+
+#: gui\__init__.py:170
+msgid "Document &formatting...\tCtrl+Shift+F"
+msgstr "dokument &formátum...\tCtrl+shift+f" 
 
 #: gui\__init__.py:170
 msgid "Document &formatting...\tctrl+shift+f"
@@ -1112,6 +1159,20 @@ msgstr "dokument &formátum...\tctrl+shift+f"
 #: gui\__init__.py:143
 msgid "&Preferences"
 msgstr "&beállitások"
+
+
+#: gui\__init__.py:176
+msgid "NVDA homepage"
+msgstr "NVDA honlap"
+
+#: gui\__init__.py:176
+msgid "Opens NVDA homepage in the default browser"
+msgstr "A NVDA honlapját megnyitja az alapértelmezett böngészovel."
+
+
+#: gui\__init__.py:179
+msgid "Opens NVDA wiki in the default browser"
+msgstr "a NVDA wiki honlapját megnyitja az alapértelmezett böngészovel."
 
 #: gui\__init__.py:145
 msgid "About..."
@@ -1196,9 +1257,25 @@ msgstr "honlap"
 msgid "version"
 msgstr "verzió"
 
+
+#: gui\scriptUI.py:121
+msgid "&Move to link"
+msgstr "hivatkozásra mozgás"
+
+#: gui\scriptUI.py:120
+msgid "&Activate Link"
+msgstr "hivatkozás aktivilása"
+
+
+#: gui\scriptUI.py:109
+msgid "Links List"
+msgstr "hivatkozások listája"
+
+
 #: gui\settingsDialogs.py:22
-msgid "Language (requires restart to fully take affect)"
-msgstr "nyelv (telljes újrainditás szükséges hogy életbelépjen)"
+#: gui\settingsDialogs.py:25
+msgid "&Language (requires restart to fully take affect)"
+msgstr "&nyelv (telljes újrainditás szükséges hogy életbelépjen)"
 
 #: gui\settingsDialogs.py:26
 msgid "Language"
@@ -1207,6 +1284,15 @@ msgstr "nyelv"
 #: gui\settingsDialogs.py:36
 msgid "Hide user interface on startup"
 msgstr "elinduláskor a NVDA ablak nejelenjen meg"
+
+
+#: gui\settingsDialogs.py:38
+msgid "&Hide user interface on startup"
+msgstr "&elinduláskor a NVDA ablak nejelenjen meg"
+
+#: gui\settingsDialogs.py:41
+msgid "&Save configuration on exit"
+msgstr "&kilépéskor konfiguráció automatikus lementése "
 
 #: gui\settingsDialogs.py:41
 msgid "Save configuration on exit"
@@ -1245,44 +1331,88 @@ msgstr "a %s szintetizátort nem lehetett sikeresen betölteni."
 msgid "Synthesizer Error"
 msgstr "hiba a szintetizátorban"
  
+
+
+#: gui\settingsDialogs.py:114
+msgid "&Voice"
+msgstr "&hangkarakter"
+
 #: gui\settingsDialogs.py:69
 msgid "Voice"
 msgstr "hangkarakter"
 
 #: gui\settingsDialogs.py:83
-msgid "Rate"
-msgstr "sebesség"
+msgid "&Rate"
+msgstr "&sebesség"
+
+#: gui\settingsDialogs.py:137
+msgid "&Pitch"
+msgstr "&hangmagasság"
 
 #: gui\settingsDialogs.py:91
 msgid "Pitch"
 msgstr "hangmagasság"
 
+#: gui\settingsDialogs.py:145
+msgid "V&olume"
+msgstr "hang&erö"
+
 #: gui\settingsDialogs.py:99
 msgid "Volume"
 msgstr "hangerö"
+
+#: gui\settingsDialogs.py:152
+msgid "&Speak all punctuation"
+msgstr "&minden hangsúly kiejtése"
 
 #: gui\settingsDialogs.py:107
 msgid "Speak all punctuation"
 msgstr "minden hangsúly kiejtése"
 
+#: gui\settingsDialogs.py:155
+msgid "Say &cap before capitals"
+msgstr "nagybetük szóbeli&jelzése" 
+
 #: gui\settingsDialogs.py:112
 msgid "Say cap before capitals"
 msgstr "nagybetük szóbeli jelzése" 
+
+
+#: gui\settingsDialogs.py:211
+msgid "Speak typed &characters"
+msgstr "begépelt karakterek&kimondása"
+
 #: gui\settingsDialogs.py:149
 msgid "Speak typed characters"
 msgstr "begépelt karakterek kimondása"
+
+#: gui\settingsDialogs.py:214
+msgid "Speak typed &words"
+msgstr "begépelt szavak&kimondása"
 
 #: gui\settingsDialogs.py:154
 msgid "Speak typed words"
 msgstr "begépelt szavak kimondása"
 
+#: gui\settingsDialogs.py:217
+msgid "Speak command &keys"
+msgstr "parancs&billentyük kimondása"
+
 #: gui\settingsDialogs.py:159
 msgid "Speak command keys"
 msgstr "parancs billentyük kimondása"
 
+#: gui\settingsDialogs.py:240
+msgid "Report mouse &shape changes"
+msgstr " egér&alak változás bejelentése"
+
 #: gui\settingsDialogs.py:185
 msgid "Report mouse shape changes"
 msgstr " egér alak változás bejelentése"
+
+#: gui\settingsDialogs.py:243
+msgid "Report &object under mouse"
+msgstr "az egér alatt&lévö elem bejelentése"
 
 #: gui\settingsDialogs.py:190
 msgid "Report object under mouse"
@@ -1294,9 +1424,17 @@ msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr "az egér alatt lévo elem vagy objektum  bejelentését ki, és bekapcsolja."
  
 
+#: gui\settingsDialogs.py:265
+msgid "Report &tooltips"
+msgstr "ezköztippek&bejelentése"
+
 #: gui\settingsDialogs.py:213
 msgid "Report tooltips"
 msgstr "ezköztippek bejelentése"
+
+#: gui\settingsDialogs.py:268
+msgid "Report &help balloons"
+msgstr "segíto  &buborékok bejelentése"
 
 #: gui\settingsDialogs.py:218
 msgid "Report help balloons"
@@ -1306,93 +1444,205 @@ msgstr "segíto   buborékok bejelentése"
 msgid "Report object shortcut keys"
 msgstr "objektum parancsbillentyük kimondása"
 
+
+#: gui\settingsDialogs.py:271
+msgid "Report object shortcut &keys"
+msgstr "objektum parancsbillentyük & kimondása"
+
+
+#: gui\settingsDialogs.py:274
+msgid "Report object &group names"
+msgstr "objektum csoport& nevek bejelentése"
+
+
 #: gui\settingsDialogs.py:228
 msgid "Report object group names"
 msgstr "objektum csoport nevek bejelentése"
+
+
+#: gui\settingsDialogs.py:277
+msgid "Say object &state first"
+msgstr "az objektum& állapotának mondása elöször"
 
 #: gui\settingsDialogs.py:233
 msgid "Say object state first"
 msgstr "az objektum állapotának mondása elöször"
 
+
+#: gui\settingsDialogs.py:306
+msgid "&Maximum number of characters on one line"
+msgstr "&maximum karakter szám egy soron "
+
 #: gui\settingsDialogs.py:299
 msgid "Maximum number of characters on one line"
 msgstr "maximum karakter szám egy soron "
 
+
+#: gui\settingsDialogs.py:311
+msgid "&Number of lines per page"
+msgstr "&maximum sor szám egy oldalon"
+
 #: gui\settingsDialogs.py:304
 msgid "Number of lines per page"
 msgstr "maximum sor szám egy oldalon"
+
 #: gui\settingsDialogs.py:309
 msgid "Report virtual presentation on focus changes"
 msgstr"fókusz változásokkor a virtuális bemutatás bejelentése"
 
+#: gui\settingsDialogs.py:316
+msgid "Report &virtual presentation on focus changes"
+msgstr"fókusz& változásokkor a virtuális bemutatás bejelentése"
+
+
+#: gui\settingsDialogs.py:319
+msgid "Update the content &dynamically"
+msgstr"a tartalom& dinamikus frissitése"
 
 #: gui\settingsDialogs.py:312
 msgid "Update the content dynamically"
 msgstr"a tartalom dinamikus frissitése"
+
+#: gui\settingsDialogs.py:322
+msgid "Report lin&ks"
+msgstr "hivatk&ozások bejelentése"
+
 
 #: gui\settingsDialogs.py:315
 msgid "Report links"
 msgstr "hivatkozások bejelentése"
 
 
+
+#: gui\settingsDialogs.py:325
+msgid "Report &lists"
+msgstr "listák&bejelentése"
+
+
 #: gui\settingsDialogs.py:318
 msgid "Report lists"
 msgstr "listák bejelentése"
 
+
+#: gui\settingsDialogs.py:328
+msgid "Report list &items"
+msgstr"lista& elemek bejelentése"
+
 #: gui\settingsDialogs.py:321
 msgid "Report list items"
-
 msgstr"lista elemek bejelentése"
+
+#: gui\settingsDialogs.py:331
+msgid "Report &headings"
+msgstr "címsorok&bejelentése"
 
 #: gui\settingsDialogs.py:324
 msgid "Report headings"
 msgstr "címsorok bejelentése"
 
+#: gui\settingsDialogs.py:334
+#: gui\settingsDialogs.py:415
+msgid "Report &tables"
+msgstr "táblázatok&bejelentése"
+
 #: gui\settingsDialogs.py:408
 msgid "Report tables"
 msgstr "táblázatok bejelentése"
+
+#: gui\settingsDialogs.py:337
+msgid "Report &graphics"
+msgstr "képek&bejelentése"
 
 #: gui\settingsDialogs.py:330
 msgid "Report graphics"
 msgstr "képek bejelentése"
 
+#: gui\settingsDialogs.py:340
+msgid "Report f&orms"
+msgstr"ür&lapok bejelentése"
+
 #: gui\settingsDialogs.py:333
 msgid "Report forms"
 msgstr"ürlapok bejelentése"
 
+#: gui\settingsDialogs.py:343
+msgid "Report form &fields"
+msgstr "ürlap&mezök bejelentése"
+
 #: gui\settingsDialogs.py:336
 msgid "Report form fields"
 msgstr "ürlap mezök bejelentése"
+
+
+#: gui\settingsDialogs.py:346
+msgid "Report block &quotes"
+msgstr "idézo&blokkok bejelentése"
 
 #: gui\settingsDialogs.py:339
 msgid "Report block quotes"
 msgstr "idézo blokkok bejelentése"
 
 
+#: gui\settingsDialogs.py:349
+msgid "Report &paragraphs"
+msgstr "paragrafok&bejelentése"
+
 #: gui\settingsDialogs.py:342
 msgid "Report paragraphs"
 msgstr "paragrafok bejelentése"
+
+
+#: gui\settingsDialogs.py:352
+msgid "Report f&rames"
+msgstr "keretek&bejelentése"
 
 #: gui\settingsDialogs.py:345
 msgid "Report frames"
 msgstr "keretek bejelentése"
 
-#: gui\settingsDialogs.py:390
 
+#: gui\settingsDialogs.py:397
+msgid "Report font &name"
+msgstr "betütípus&név bejelentése"
+
+#: gui\settingsDialogs.py:390
 msgid "Report font name"
 msgstr "betütípus név bejelentése"
+
+
+#: gui\settingsDialogs.py:400
+msgid "Report font &size"
+msgstr "betütípus&méret bejelentése"
 
 #: gui\settingsDialogs.py:393
 msgid "Report font size"
 msgstr "betütípus méret bejelentése"
 
+#: gui\settingsDialogs.py:403
+msgid "Report font attri&butes"
+msgstr "betütípus&attríbútumok bejelentése"
+
+
 #: gui\settingsDialogs.py:396
 msgid "Report font attributes"
 msgstr "betütípus attríbútumok bejelentése"
 
+
+#: gui\settingsDialogs.py:406
+msgid "Report st&yle"
+msgstr "stí&lus bejelentése"
+
 #: gui\settingsDialogs.py:399
 msgid "Report style"
 msgstr "stílus bejelentése"
+
+#: gui\settingsDialogs.py:409
+msgid "Report &pages"
+msgstr "oldal&számok bejelentése"
+
+#: gui\settingsDialogs.py:412
+msgid "Report &line numbers"
+msgstr "sor&számok bejelentése"
 
 #: gui\settingsDialogs.py:402
 msgid "Report pages"
@@ -1401,6 +1651,10 @@ msgstr "oldalszámok bejelentése"
 #: gui\settingsDialogs.py:405
 msgid "Report line numbers"
 msgstr "sorszámok bejelentése"
+
+#: gui\settingsDialogs.py:418
+msgid "Report &alignment"
+msgstr "kiegyenlités& bejelentése"
 
 #: gui\settingsDialogs.py:411
 msgid "Report alignment"
