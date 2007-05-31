@@ -799,6 +799,7 @@ _staticMap={
 	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"richEdit.RichEdit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("SysTreeView32",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
