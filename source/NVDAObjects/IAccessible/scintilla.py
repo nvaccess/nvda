@@ -90,12 +90,12 @@ class Scintilla(IAccessible):
 #To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 	def text_getFontName(self,offset):
 		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		fontNameBuf=ctypes.create_string_buffer(32)
 		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
 		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,processID)
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,100,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalBuf=winKernel.virtualAllocEx(processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winUser.sendMessage(self.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
-		fontNameBuf=ctypes.create_string_buffer(100)
-		winKernel.readProcessMemory(processHandle,internalBuf,fontNameBuf,100,None)
+		winKernel.readProcessMemory(processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		return fontNameBuf.value
 
