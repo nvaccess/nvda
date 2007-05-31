@@ -12,7 +12,14 @@ kernel32=ctypes.windll.kernel32
 #Constants
 #Process control
 PROCESS_ALL_ACCESS=0x1F0FFF
+PROCESS_VM_OPERATION=0x8
+PROCESS_VM_READ=0x10
+PROCESS_VM_WRITE=0X20
+PROCESS_QUERY_INFORMATION=0x400
 READ_CONTROL=0x20000
+MEM_COMMIT=0x1000
+MEM_RELEASE=0x8000
+PAGE_READWRITE=0x4
 #Console handles
 STD_INPUT_HANDLE=-10
 STD_OUTPUT_HANDLE=-11
@@ -97,3 +104,22 @@ def GetTimeFormat(Locale,dwFlags,lpTime,lpFormat):
 	buf=ctypes.create_unicode_buffer("", 32)
 	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, ctypes.sizeof(buf))
 	return buf.value
+
+def openProcess(*args):
+	return kernel32.OpenProcess(*args)
+
+def virtualAllocEx(*args):
+	return kernel32.VirtualAllocEx(*args)
+
+def virtualFreeEx(*args):
+	return kernel32.VirtualFreeEx(*args)
+
+def readProcessMemory(*args):
+	return kernel32.ReadProcessMemory(*args)
+
+def writeProcessMemory(*args):
+	return kernel32.WriteProcessMemory(*args)
+
+
+
+

@@ -1,7 +1,11 @@
 from textPositionUtils import *
+import winKernel
 import winUser
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible 
+import ctypes
+import debug
+import speech
 
 #Window messages
 SCI_GETLENGTH=2006
@@ -11,6 +15,14 @@ SCI_GETLINEENDPOSITION=2136
 SCI_GETLINECOUNT=2154
 SCI_LINEFROMPOSITION=2166
 SCI_POSITIONFROMLINE=2167
+SCI_GETSTYLEAT=2010
+SCI_STYLEGETFONT=2486
+SCI_STYLEGETSIZE=2485
+SCI_STYLEGETBOLD=2483
+SCI_STYLEGETITALIC=2484
+SCI_STYLEGETUNDERLINE=2488
+#constants
+STYLE_DEFAULT=32
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(IAccessible):
@@ -75,6 +87,35 @@ class Scintilla(IAccessible):
 		else:
 			return [offset,offset+1]
 
+#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
+	def text_getFontName(self,offset):
+		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
+		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,processID)
+		internalBuf=winKernel.virtualAllocEx(processHandle,None,100,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winUser.sendMessage(self.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
+		fontNameBuf=ctypes.create_string_buffer(100)
+		winKernel.readProcessMemory(processHandle,internalBuf,fontNameBuf,100,None)
+		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		return fontNameBuf.value
+
+
+
+	def text_getFontSize(self,offset):
+		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETSIZE,style,0)
+
+	def text_isBold(self,offset):
+		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETBOLD,style,0)
+
+	def text_isItalic(self,offset):
+		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETITALIC,style,0)
+
+	def text_isUnderline(self,offset):
+		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
+		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETUNDERLINE,style,0)
 
 #We want all the standard text editing key commands to be handled by NVDA
 [Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [
