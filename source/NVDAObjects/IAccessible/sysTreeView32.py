@@ -2,6 +2,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
+import controlTypes
 import speech
 from . import IAccessible
 
@@ -101,6 +102,17 @@ class TreeViewItem(IAccessible):
 			return None
 		return self.__class__(self.IAccessibleObject,newID)
 
+	def _get_children(self):
+		children=[]
+		child=self.firstChild
+		while child:
+			children.append(child)
+			child=child.next
+		return children
+
+	def _get_childCount(self):
+		return len(self.children)
+
 	def _get_positionString(self):
 		if self.IAccessibleChildID==0:
 			return super(self.__class__,self)._get_positionString()
@@ -118,3 +130,14 @@ class TreeViewItem(IAccessible):
 			numItems+=1
 			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
 		return _("%d of %d")%(index,numItems)
+
+	def _get_contains(self):
+		count=self.childCount
+		if (controlTypes.STATE_EXPANDED in self.states) and count>0:
+			return "%d items"%count
+
+	def event_stateChange(self):
+		newStates=(self.states-self._oldStates)
+		super(self.__class__,self).event_stateChange()
+		if controlTypes.STATE_EXPANDED in newStates:
+			speech.speakObjectProperties(self,contains=True)
