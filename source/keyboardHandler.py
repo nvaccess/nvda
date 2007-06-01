@@ -145,9 +145,6 @@ def initialize():
 	nvwh.registerKeyHook()
 	nvwh.registerCharHook()
 
-def pumpAll():
-	nvwh.pumpCharQueue()
-
 def terminate():
 	nvwh.unregisterCharHook()
 	nvwh.unregisterKeyHook()

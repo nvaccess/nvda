@@ -86,7 +86,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def Notify(self):
-				keyboardHandler.pumpAll()
 				queueHandler.pumpAll()
 		pump = CorePump()
 		pump.Start(1)
