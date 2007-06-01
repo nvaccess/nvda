@@ -365,16 +365,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return None
 
 	def _get_children(self):
-		childCount= self.childCount
+		if self.IAccessibleChildID>0:
+			return []
+		childCount= self.IAccessibleObject.accChildCount
+		children=[]
 		if childCount>0:
 			children=[IAccessible(x[0],x[1]) for x in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount) if x]
 			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
-		else:
-			child=self.firstChild
-			children=[]
-			while child:
-				children.append(child)
-				child=child.next
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
