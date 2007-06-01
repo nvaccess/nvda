@@ -103,7 +103,10 @@ class WinConsole(IAccessible):
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
 		if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
+			x=winUser.LOWORD(objectID)
+			y=winUser.HIWORD(objectID)
+			if x<info.cursorPosition.x and (y==info.cursorPosition.y or y==info.cursorPosition.y+1):  
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
 
 	def monitorThread(self):
 		try:
@@ -130,7 +133,7 @@ class WinConsole(IAccessible):
 						outLines=self.calculateNewText(newLines,self.prevConsoleVisibleLines)
 						if consoleEvent != winUser.EVENT_CONSOLE_UPDATE_SIMPLE and not (len(outLines) == 1 and len(outLines[0]) <= 1):
 							for line in outLines:
-								queueHandler.queueFunction(queueHandler.interactiveQueue, speech.speakText, line)
+								queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, line)
 						self.prevConsoleVisibleLines=newLines
 					consoleEvent=None
 				#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
