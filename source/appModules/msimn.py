@@ -13,10 +13,12 @@ import speech
 envelopeNames={
 	1000:_("Attachments"),
 	1001:_("To:"),
+	1002:_("Newsgroup:"),
 	1003:_("CC:"),
 	1004:_("Subject:"),
 	1005:_("From:"),
 	1016:_("Date:"),
+	1020:_("Organisation:"),
 	1026:_("BCC:"),
 	1037:_("From:"),
 }
