@@ -1,12 +1,12 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+# Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r805\n"
+"Project-Id-Version: r848\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2007-05-27 09:40+0200\n"
+"PO-Revision-Date: 2007-06-02 09:30+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr "Fenêtre"
 
 #: IAccessibleHandler.py:136 characterSymbols.py:20 controlTypes.py:101
 msgid "tab"
-msgstr "tab"
+msgstr "onglet"
 
 #: IAccessibleHandler.py:137 controlTypes.py:87
 msgid "edit"
@@ -38,7 +38,7 @@ msgstr "Arborescence"
 msgid "sub menu"
 msgstr "sous menu"
 
-#: IAccessibleHandler.py:190 speech.py:213
+#: IAccessibleHandler.py:191 speech.py:213
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
 #: virtualBuffers\IAccessible\MSHTML.py:298
@@ -47,7 +47,7 @@ msgstr "sous menu"
 msgid "not %s"
 msgstr "non %s"
 
-#: IAccessibleHandler.py:562
+#: IAccessibleHandler.py:567
 msgid "lost focus"
 msgstr "focus perdu"
 
@@ -62,7 +62,7 @@ msgid "selected %s"
 msgstr "sélectionné %s"
 
 #: NVDAObjects\IAccessible\__init__.py:67
-#: NVDAObjects\IAccessible\__init__.py:415
+#: NVDAObjects\IAccessible\__init__.py:413
 #: NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s sur %s"
@@ -71,7 +71,7 @@ msgstr "%s sur %s"
 msgid "%s items"
 msgstr "%s éléments"
 
-#: NVDAObjects\IAccessible\__init__.py:697
+#: NVDAObjects\IAccessible\__init__.py:695
 msgid "%d items"
 msgstr "%d éléments"
 
@@ -115,6 +115,10 @@ msgstr "souligné"
 msgid "rich %s"
 msgstr "riche %s"
 
+#: NVDAObjects\IAccessible\sysTreeView32.py:132
+msgid "%d of %d"
+msgstr "%s sur %s"
+
 #: NVDAObjects\IAccessible\winEdit.py:59
 msgid "protected %s "
 msgstr "%s protégé"
@@ -149,11 +153,11 @@ msgstr "bas"
 msgid "top"
 msgstr "haut"
 
-#: api.py:145 api.py:148
+#: api.py:147 api.py:150
 msgid "virtual buffer pass through"
 msgstr "mode formulaire"
 
-#: api.py:145 appModules\_default.py:41 appModules\_default.py:72
+#: api.py:147 appModules\_default.py:43 appModules\_default.py:72
 #: appModules\_default.py:82 appModules\_default.py:92
 #: appModules\_default.py:102 appModules\_default.py:343
 #: appModules\_default.py:407 appModules\_default.py:441
@@ -162,7 +166,7 @@ msgstr "mode formulaire"
 msgid "off"
 msgstr "désactivé"
 
-#: api.py:148 appModules\_default.py:38 appModules\_default.py:75
+#: api.py:150 appModules\_default.py:40 appModules\_default.py:75
 #: appModules\_default.py:85 appModules\_default.py:95
 #: appModules\_default.py:105 appModules\_default.py:410
 #: appModules\_default.py:444 appModules\_default.py:454
@@ -171,11 +175,11 @@ msgstr "désactivé"
 msgid "on"
 msgstr "activé"
 
-#: appModules\_default.py:43
+#: appModules\_default.py:45
 msgid "keyboard help %s"
 msgstr "aide du clavier %s"
 
-#: appModules\_default.py:44
+#: appModules\_default.py:46
 msgid ""
 "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
 "tell you what script is associated with it, if any."
@@ -610,6 +614,18 @@ msgstr ""
 "La touche suivante ne sera pas traitée par NVDA,elle sera passée directement "
 "à Windows"
 
+#: appModules\_default.py:512
+msgid "The default button is "
+msgstr "Le bouton par défaut est "
+
+#: appModules\_default.py:515
+msgid "You are not in a dialog"
+msgstr "Vous n'êtes pas dans un dialogue"
+
+#: appModules\_default.py:518
+msgid "Speak the default button in the current dialogue"
+msgstr "Annonce le bouton par défaut dans le dialogue en cours"
+
 #: appModules\msimn.py:14
 msgid "Attachments"
 msgstr "pièces jointes"
@@ -619,22 +635,46 @@ msgid "To:"
 msgstr "A :"
 
 #: appModules\msimn.py:16
+msgid "Newsgroup:"
+msgstr "Groupe de discussion:"
+
+#: appModules\msimn.py:17
 msgid "CC:"
 msgstr "Cc :"
 
-#: appModules\msimn.py:17
+#: appModules\msimn.py:18
 msgid "Subject:"
 msgstr "Objet :"
 
-#: appModules\msimn.py:18 appModules\msimn.py:21
+#: appModules\msimn.py:19 appModules\msimn.py:27
 msgid "From:"
 msgstr "De :"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "Date:"
 msgstr "Date :"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
+msgid "Forward to:"
+msgstr "Transférer a:"
+
+#: appModules\msimn.py:22
+msgid "Answer to:"
+msgstr "Répondre a:"
+
+#: appModules\msimn.py:23
+msgid "Organisation:"
+msgstr "organisation:"
+
+#: appModules\msimn.py:24
+msgid "Distribution:"
+msgstr "Distribution:"
+
+#: appModules\msimn.py:25
+msgid "Key words:"
+msgstr "Mots clé:"
+
+#: appModules\msimn.py:26
 msgid "BCC:"
 msgstr "Cci :"
 
@@ -728,7 +768,7 @@ msgstr "point virgule"
 
 #: characterSymbols.py:41
 msgid "less"
-msgstr "inférieur à"
+msgstr "inférieur a"
 
 #: characterSymbols.py:42
 msgid "equals"
@@ -736,7 +776,7 @@ msgstr "égal"
 
 #: characterSymbols.py:43
 msgid "greater"
-msgstr "supérieur à"
+msgstr "supérieur a"
 
 #: characterSymbols.py:44
 msgid "question"
@@ -996,7 +1036,7 @@ msgstr "boîte"
 
 #: controlTypes.py:135
 msgid "grouping"
-msgstr "/groupage"
+msgstr "groupage"
 
 #: controlTypes.py:136
 msgid "property page"
@@ -1062,15 +1102,15 @@ msgstr "protégé"
 msgid "required"
 msgstr "obligatoire"
 
-#: core.py:44
+#: core.py:45
 msgid "configuration applied"
 msgstr "configuration appliquée"
 
-#: core.py:74
+#: core.py:72
 msgid "Loading subsystems, please wait..."
 msgstr "Chargement des sous-systèmes: veuillez patienter..."
 
-#: core.py:87
+#: core.py:85
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -1810,7 +1850,7 @@ msgstr "Une revue d'écran gratuite et open-source pour MS Windows"
 
 #: versionInfo.py:14
 msgid ""
-"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
+"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
 "or change this software in any way you like as long as you distribute the "
 "licence along with the software, and make all source code available to "
@@ -1820,7 +1860,7 @@ msgid ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
+"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s est couvert par la license publique générale GNU. Vous êtes libre "
 "de partager ou modifier ce logiciel à votre guise tant que vous distribuez "
 "la license avec le logiciel , et laissez le source disponible à qui le veut. "
@@ -1845,7 +1885,7 @@ msgstr "terminé"
 #: virtualBuffers\IAccessible\MSHTML.py:249
 #: virtualBuffers\IAccessible\gecko.py:250
 msgid "with %s items"
-msgstr "contient %s éléments"
+msgstr "avec %s éléments"
 
 #: virtualBuffers\IAccessible\MSHTML.py:245
 #: virtualBuffers\IAccessible\MSHTML.py:252
