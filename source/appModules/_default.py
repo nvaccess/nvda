@@ -509,10 +509,10 @@ class appModule(appModuleHandler.appModule):
 		if windowClass =="#32770":
 			defaultButton=winUser.sendMessage(ThreadInfo.hwndActive,winUser.DM_GETDEFID,0,0)
 			if winUser.HIWORD(defaultButton) == winUser.DC_HASDEFID:
-				defaultButtonText="The default button is "+winUser.getDlgItemText(ThreadInfo.hwndActive,winUser.LOWORD(defaultButton))
+				defaultButtonText=_("The default button is ")+winUser.getDlgItemText(ThreadInfo.hwndActive,winUser.LOWORD(defaultButton))
 				speech.speakMessage(defaultButtonText)
 		else:
-			speech.speakMessage("You are not in a dialog")
+			speech.speakMessage(_("You are not in a dialog"))
 
 
 	script_say_default_button.__doc__ = _("Speak the default button in the current dialogue")
