@@ -18,7 +18,11 @@ envelopeNames={
 	1004:_("Subject:"),
 	1005:_("From:"),
 	1016:_("Date:"),
+	1018:_("Forward to:"),
+	1019:_("Answer to:"),
 	1020:_("Organisation:"),
+	1021:_("Distribution:"),
+	1022:_("Key words:"),
 	1026:_("BCC:"),
 	1037:_("From:"),
 }
