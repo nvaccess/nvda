@@ -2927,8 +2927,8 @@ cpp_quote("")
 
 library IAccessible2Lib
 {
-	importlib ("stdole2.tlb");
-	interface Accessible2;
+importlib ("stdole2.tlb");
+interface IAccessible2;
     interface IAccessibleAction;
     interface IAccessibleApplication;
     interface IAccessibleComponent;
