@@ -1,4 +1,6 @@
+from __future__ import with_statement
 import time
+import threading
 from ctypes import *
 from ctypes.wintypes import *
 
@@ -59,6 +61,7 @@ class WavePlayer:
 			raise RuntimeError("Error opening wave device: code %d" % res)
 		self._waveout = waveout.value
 		self._prev_whdr = None
+		self._whdr_lock = threading.RLock()
 
 	def feed(self, data):
 		try:
@@ -74,20 +77,22 @@ class WavePlayer:
 				self.close()
 				self.__init__(self.channels,self.samplesPerSec,self.bitsPerSample)
 				raise RuntimeError("Error writing wave data: code %d" % res)
-			self._prev_whdr = whdr
+			with self._whdr_lock:
+				self._prev_whdr = whdr
 		except:
 			debug.writeException("player.feed")
 
 	def sync(self):
-		# todo: Wait for an event instead of spinning.
-		while self._prev_whdr and not (self._prev_whdr.dwFlags & WHDR_DONE):
-			time.sleep(0.005)
-		if not self._prev_whdr:
-			return
-		res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
-		if res != MMSYSERR_NOERROR:
-			raise RuntimeError("Error unpreparing buffer: code %d" % res)
-		self._prev_whdr = None
+		with self._whdr_lock:
+			if not self._prev_whdr:
+				return
+			# todo: Wait for an event instead of spinning.
+			while not (self._prev_whdr.dwFlags & WHDR_DONE):
+				time.sleep(0.005)
+			res = winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+			if res != MMSYSERR_NOERROR:
+				raise RuntimeError("Error unpreparing buffer: code %d" % res)
+			self._prev_whdr = None
 
 	def stop(self):
 		winmm.waveOutReset(self._waveout)
