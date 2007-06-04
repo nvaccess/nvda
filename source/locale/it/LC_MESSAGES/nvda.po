@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2007-05-31 14:44+0100\n"
+"PO-Revision-Date: 2007-06-04 14:36+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "sottomenu'"
 msgid "not %s"
 msgstr "non %s"
 
-#: IAccessibleHandler.py:563
+#: IAccessibleHandler.py:567
 msgid "lost focus"
 msgstr "nessun focus"
 
@@ -74,7 +74,7 @@ msgid "selected %s"
 msgstr "selezionato %s"
 
 #: NVDAObjects\IAccessible\__init__.py:67
-#: NVDAObjects\IAccessible\__init__.py:416
+#: NVDAObjects\IAccessible\__init__.py:413
 #: NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s di %s"
@@ -83,7 +83,7 @@ msgstr "%s di %s"
 msgid "%s items"
 msgstr "%s elementi"
 
-#: NVDAObjects\IAccessible\__init__.py:698
+#: NVDAObjects\IAccessible\__init__.py:695
 msgid "%d items"
 msgstr "%d elementi"
 
@@ -134,6 +134,10 @@ msgstr "sottolineato"
 msgid "rich %s"
 msgstr "con formato %s"
 
+#: NVDAObjects\IAccessible\sysTreeView32.py:132
+msgid "%d of %d"
+msgstr "%d di %d"
+
 #: NVDAObjects\IAccessible\winEdit.py:59
 msgid "protected %s "
 msgstr "protetto %s"
@@ -178,13 +182,13 @@ msgstr "alla fine"
 msgid "top"
 msgstr "all'inizio"
 
-#: api.py:145
-#: api.py:148
+#: api.py:147
+#: api.py:150
 msgid "virtual buffer pass through"
 msgstr "passa attraverso il buffer virtuale"
 
-#: api.py:145
-#: appModules\_default.py:41
+#: api.py:147
+#: appModules\_default.py:43
 #: appModules\_default.py:72
 #: appModules\_default.py:82
 #: appModules\_default.py:92
@@ -200,8 +204,8 @@ msgstr "passa attraverso il buffer virtuale"
 msgid "off"
 msgstr "disattivato"
 
-#: api.py:148
-#: appModules\_default.py:38
+#: api.py:150
+#: appModules\_default.py:40
 #: appModules\_default.py:75
 #: appModules\_default.py:85
 #: appModules\_default.py:95
@@ -216,11 +220,11 @@ msgstr "disattivato"
 msgid "on"
 msgstr "attivato"
 
-#: appModules\_default.py:43
+#: appModules\_default.py:45
 msgid "keyboard help %s"
 msgstr "aiuto tastiera %s"
 
-#: appModules\_default.py:44
+#: appModules\_default.py:46
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "attiva o disattiva l'aiuto tastiera"
 
@@ -555,6 +559,18 @@ msgstr "passa il tasto successivo all'applicazione"
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "il tasto successivo premuto non viene riconosciuto da nvda ma passa direttamente al controllo di windows"
 
+#: appModules\_default.py:512
+msgid "The default button is "
+msgstr "il pulsante di default e'"
+
+#: appModules\_default.py:515
+msgid "You are not in a dialog"
+msgstr "non siete in un dialogo"
+
+#: appModules\_default.py:518
+msgid "Speak the default button in the current dialogue"
+msgstr "legge il pulsante attuale in un dialogo"
+
 #: appModules\msimn.py:14
 msgid "Attachments"
 msgstr "allegati"
@@ -564,23 +580,47 @@ msgid "To:"
 msgstr "a:"
 
 #: appModules\msimn.py:16
+msgid "Newsgroup:"
+msgstr "newsgroup:"
+
+#: appModules\msimn.py:17
 msgid "CC:"
 msgstr "cc:"
 
-#: appModules\msimn.py:17
+#: appModules\msimn.py:18
 msgid "Subject:"
 msgstr "oggetto:"
 
-#: appModules\msimn.py:18
-#: appModules\msimn.py:21
+#: appModules\msimn.py:19
+#: appModules\msimn.py:27
 msgid "From:"
 msgstr "da:"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "Date:"
 msgstr "data:"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
+msgid "Forward to:"
+msgstr "inoltra a:"
+
+#: appModules\msimn.py:22
+msgid "Answer to:"
+msgstr "rispondi a"
+
+#: appModules\msimn.py:23
+msgid "Organisation:"
+msgstr "societa'"
+
+#: appModules\msimn.py:24
+msgid "Distribution:"
+msgstr "distribuzione:"
+
+#: appModules\msimn.py:25
+msgid "Key words:"
+msgstr "parole chiave"
+
+#: appModules\msimn.py:26
 msgid "BCC:"
 msgstr "bcc:"
 

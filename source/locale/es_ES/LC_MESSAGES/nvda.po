@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r514\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2007-05-28 17:09+0100\n"
+"PO-Revision-Date: 2007-06-02 13:30+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: es_ES <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "árbol"
 msgid "sub menu"
 msgstr "submenú"
 
-#: IAccessibleHandler.py:190
+#: IAccessibleHandler.py:191
 #: speech.py:213
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
@@ -55,7 +55,7 @@ msgstr "submenú"
 msgid "not %s"
 msgstr "no %s"
 
-#: IAccessibleHandler.py:562
+#: IAccessibleHandler.py:567
 msgid "lost focus"
 msgstr "foco perdido"
 
@@ -77,7 +77,7 @@ msgid "selected %s"
 msgstr "seleccionado %s"
 
 #: NVDAObjects\IAccessible\__init__.py:67
-#: NVDAObjects\IAccessible\__init__.py:416
+#: NVDAObjects\IAccessible\__init__.py:413
 #: NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s de %s"
@@ -86,7 +86,7 @@ msgstr "%s de %s"
 msgid "%s items"
 msgstr "%s elementos"
 
-#: NVDAObjects\IAccessible\__init__.py:698
+#: NVDAObjects\IAccessible\__init__.py:695
 msgid "%d items"
 msgstr "%d elementos"
 
@@ -137,6 +137,10 @@ msgstr "subrayado"
 msgid "rich %s"
 msgstr "formateado %s"
 
+#: NVDAObjects\IAccessible\sysTreeView32.py:132
+msgid "%d of %d"
+msgstr "%d de %d"
+
 #: NVDAObjects\IAccessible\winEdit.py:59
 msgid "protected %s "
 msgstr "protegido %s"
@@ -181,13 +185,13 @@ msgstr "fin"
 msgid "top"
 msgstr "início"
 
-#: api.py:145
-#: api.py:148
+#: api.py:147
+#: api.py:150
 msgid "virtual buffer pass through"
 msgstr "pasar a través del modo virtual"
 
-#: api.py:145
-#: appModules\_default.py:41
+#: api.py:147
+#: appModules\_default.py:43
 #: appModules\_default.py:72
 #: appModules\_default.py:82
 #: appModules\_default.py:92
@@ -203,8 +207,8 @@ msgstr "pasar a través del modo virtual"
 msgid "off"
 msgstr "desactivado"
 
-#: api.py:148
-#: appModules\_default.py:38
+#: api.py:150
+#: appModules\_default.py:40
 #: appModules\_default.py:75
 #: appModules\_default.py:85
 #: appModules\_default.py:95
@@ -219,11 +223,11 @@ msgstr "desactivado"
 msgid "on"
 msgstr "activado"
 
-#: appModules\_default.py:43
+#: appModules\_default.py:45
 msgid "keyboard help %s"
 msgstr "ayuda de teclado %s"
 
-#: appModules\_default.py:44
+#: appModules\_default.py:46
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "Activa y desactiva la ayuda de teclado. Cuando se activa, presionando una tecla en el teclado se te dirá qué script está asociado con ella, si hay alguno."
 
@@ -558,6 +562,18 @@ msgstr "Dejar pasar la siguiente tecla"
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "La siguiente tecla que sea presionada no será manipulada por NVDA, será dejada pasar directamente a Windows."
 
+#: appModules\_default.py:512
+msgid "The default button is "
+msgstr "El botón por omisión es "
+
+#: appModules\_default.py:515
+msgid "You are not in a dialog"
+msgstr "No estás en un cuadro de diálogo"
+
+#: appModules\_default.py:518
+msgid "Speak the default button in the current dialogue"
+msgstr "Verbaliza el botón por omisión en el diálogo actual"
+
 #: appModules\msimn.py:14
 msgid "Attachments"
 msgstr "adjuntos"
@@ -567,23 +583,47 @@ msgid "To:"
 msgstr "para:"
 
 #: appModules\msimn.py:16
+msgid "Newsgroup:"
+msgstr "Grupo de noticias:"
+
+#: appModules\msimn.py:17
 msgid "CC:"
 msgstr "CC:"
 
-#: appModules\msimn.py:17
+#: appModules\msimn.py:18
 msgid "Subject:"
 msgstr "assunto:"
 
-#: appModules\msimn.py:18
-#: appModules\msimn.py:21
+#: appModules\msimn.py:19
+#: appModules\msimn.py:27
 msgid "From:"
 msgstr "de:"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "Date:"
 msgstr "fecha:"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
+msgid "Forward to:"
+msgstr "Remitir a:"
+
+#: appModules\msimn.py:22
+msgid "Answer to:"
+msgstr "Responder a:"
+
+#: appModules\msimn.py:23
+msgid "Organisation:"
+msgstr "Organización:"
+
+#: appModules\msimn.py:24
+msgid "Distribution:"
+msgstr "Distribución:"
+
+#: appModules\msimn.py:25
+msgid "Key words:"
+msgstr "Palabras clave:"
+
+#: appModules\msimn.py:26
 msgid "BCC:"
 msgstr "CCO:"
 
@@ -1015,15 +1055,15 @@ msgstr "protegido"
 msgid "required"
 msgstr "requerido"
 
-#: core.py:44
+#: core.py:45
 msgid "configuration applied"
 msgstr "Configuración aplicada"
 
-#: core.py:74
+#: core.py:72
 msgid "Loading subsystems, please wait..."
 msgstr "cargando subsistema; un momento por favor..."
 
-#: core.py:87
+#: core.py:85
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -1736,17 +1776,17 @@ msgstr "Lector de pantalla libre y de código abierto para Windows"
 
 #: versionInfo.py:14
 msgid ""
-"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
+"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>\n"
-"%(name)s se encuentra  bajo la Licencia Pública General GNU. eres libre para compartir y modificar este programa como desees, tanto en cuanto siempre distribuyas la licencia con el programa y ofrezcas todo el código fuente de éste a quien lo requiera. Esto se aplica al original y a las copias de este programa, como a cualquier otro programa que haga uso de código proveniente de este.\n"
-"Para máss detalles, consulta la licencia en la dirección electrónica:\n"
+"Copyright (C) 2006-2007 Colaboradores de NVDA <http://www.nvda-project.org/>\n"
+"%(name)s está protegido por la Licencia Pública General GNU. Eres libre para compartir o cambiar este software en cualquier forma que quieras tanto en cuanto distribuyas la licencia junto con el software, y hagas que todo el código fuente esté disponible para aquél que lo quiera. Esto se aplica tanto a al original como a las copias modificadas del software, más cualquier software que utilice código tomado de este software.\n"
+"Para detalles adicionales, puedes ver la licencia online en:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
-"o mira el archivo copying.txt que vino con este programa."
+"O mirar el fichero Copying.txt que viene con este software."
 
 #: virtualBuffers\IAccessible\MSHTML.py:136
 #: virtualBuffers\IAccessible\gecko.py:157
