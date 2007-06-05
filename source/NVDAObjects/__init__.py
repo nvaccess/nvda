@@ -265,6 +265,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
 
+	def _get_caretOffset(self):
+		raise NotImplementedError("caret not supported")
+
+	def _get_selectionOffsets(self):
+		raise NotImplementedError("selection not supported")
+
 	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None,endPosition=None):
 		return self.TextInfo(self,position,expandToUnit,limitToUnit,endPosition)
 
@@ -301,10 +307,7 @@ class TextInfo(text.TextInfo):
 			raise NotImplementedError("endPosition: %s not supported"%endPosition)
 		#Set the offset limits
 		#Set the start and end offsets from expanding position to a unit 
-		if expandToUnit is None:
-			self._startOffset=self._startOffset
-			self._endOffset=self.endPosition
-		elif expandToUnit is text.UNIT_CHARACTER:
+		if expandToUnit is text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
 			self._endOffset=self.startOffset+1
 		elif expandToUnit is text.UNIT_WORD:
@@ -316,7 +319,7 @@ class TextInfo(text.TextInfo):
 		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
 			self._startOffset=0
 			self._endOffset=len(self._text)
-		else:
+		elif expandToUnit is not None:
 			raise NotImplementedError("unit: %s not supported"%unit)
 		if limitToUnit in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
 			self._lowOffsetLimit=0
