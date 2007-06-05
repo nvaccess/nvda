@@ -13,6 +13,7 @@ import globalVars
 import api
 from textPositionUtils import *
 import textBuffer
+import text
 import config
 import controlTypes
 
@@ -240,21 +241,8 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		api.setNavigatorObject(self)
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
-	def _get_textRepresentation(self,start=None,end=None):
-		"""Gets either all the text the object has, or the text from a certain offset, or to a certain offset.
-@param start: the start offset
-@type start: int
-@param end: the end offset
-@type end: int
-@returns: the text
-@rtype: string
-"""
-		text = " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
-		if start is None:
-			start=0
-		if end is None:
-			end=len(text)
-		return text[start:end]
+	def _get_textRepresentation(self):
+		return " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 
 	def event_caret(self):
 		self.text_reviewOffset=self.text_caretOffset
@@ -277,124 +265,103 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
 
-	def script_review_currentLine(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
-		speech.speakText(text[start:end])
+	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None,endPosition=None):
+		return self.TextInfo(self,position,expandToUnit,limitToUnit,endPosition)
 
-	def script_review_nextLine(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
-		if end<len(text):
-			start=end
-			end=findEndOfLine(text,start,lineLength=lineLength)
-			self.reviewOffset=start
+class TextInfo(text.TextInfo):
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None,_text=None):
+		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit,endPosition)
+		#cache the text of the object, either from a parameter, or get it from the object
+		if _text is not None:
+			self._text=_text
 		else:
-			speech.speakMessage(_("bottom"))
-		speech.speakText(text[start:end])
-
-	def script_review_prevLine(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)
-		if start>0:
-			end=start
-			start=findStartOfLine(text,end-1,lineLength=lineLength)
-			self.reviewOffset=start
+			self._text=self.obj.textRepresentation
+			if not self._text:
+				self._text="\0"
+		#Translate the position in to an offset and cache it
+		if position==text.POSITION_FIRST:
+			self._startOffset=0
+		elif position==text.POSITION_LAST:
+			self._startOffset=len(self._text)-1
+		elif position==text.POSITION_CARET:
+			self._startOffset=obj.caretOffset
+		elif isinstance(position,int):
+			self._startOffset=position
+		elif position is not None:
+			raise NotImplementedError("position: %s not supported"%position)
+		#Set the possible end position
+		elif endPosition==text.POSITION_LAST:
+			self._endOffset=len(self._text)
+		elif endPosition==text.POSITION_CARET:
+			self._endOffset=obj.caretOffset
+		elif isinstance(endPosition,int):
+			self._endOffset=endPosition
+		elif endPosition is not None:
+			raise NotImplementedError("endPosition: %s not supported"%endPosition)
+		#Set the offset limits
+		#Set the start and end offsets from expanding position to a unit 
+		if expandToUnit is None:
+			self._startOffset=self._startOffset
+			self._endOffset=self.endPosition
+		elif expandToUnit is text.UNIT_CHARACTER:
+			self._startOffset=self._startOffset
+			self._endOffset=self.startOffset+1
+		elif expandToUnit is text.UNIT_WORD:
+			self._startOffset=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength) 
+			self._endOffset=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif expandToUnit is text.UNIT_LINE:
+			self._startOffset=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._endOffset=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+			self._startOffset=0
+			self._endOffset=len(self._text)
 		else:
-			speech.speakMessage(_("top"))
-		speech.speakText(text[start:end])
-
-	def script_review_top(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		offset=0
-		start=findStartOfLine(text,offset,lineLength=lineLength)
-		end=findEndOfLine(text,offset,lineLength=lineLength)
-		self.reviewOffset=offset
-		speech.speakMessage(_("top"))
-		speech.speakText(text[start:end])
-
-	def script_review_bottom(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		offset=len(text)-1
-		start=findStartOfLine(text,offset,lineLength=lineLength)
-		end=findEndOfLine(text,offset,lineLength=lineLength)
-		self.reviewOffset=offset
-		speech.speakMessage(_("bottom"))
-		speech.speakText(text[start:end])
-
-	def script_review_currentWord(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
-		speech.speakText(text[start:end])
-
-	def script_review_nextWord(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
-		if end<len(text):
-			start=end
-			end=findEndOfWord(text,start,lineLength=lineLength)
-			self.reviewOffset=start
+			raise NotImplementedError("unit: %s not supported"%unit)
+		if limitToUnit in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
+			self._lowOffsetLimit=0
+			self._highOffsetLimit=len(self._text)-1
+		elif limitToUnit is text.UNIT_CHARACTER:
+			self._lowOffsetLimit=self._startOffset
+			self._highOffset=self._lowOffsetLimit+1
+		elif limitToUnit is text.UNIT_WORD:
+			self._lowOffsetLimit=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._highOffsetLimit=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif limitToUnit is text.UNIT_LINE:
+			self._lowOffsetLimit=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._highOffsetLimit=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
 		else:
-			speech.speakMessage(_("bottom"))
-		speech.speakText(text[start:end])
+			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
 
-	def script_review_prevWord(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfWord(text,self.reviewOffset,lineLength=lineLength)
-		end=findEndOfWord(text,self.reviewOffset,lineLength=lineLength)
-		if start>0:
-			end=start
-			start=findStartOfWord(text,end-1,lineLength=lineLength)
-			self.reviewOffset=start
+	def _get_startOffset(self):
+		return self._startOffset
+
+	def _get_endOffset(self):
+		return self._endOffset
+
+	def _get_text(self):
+		return self._text[self._startOffset:self._endOffset]
+
+	def getRelatedUnit(self,relation):
+		if self.unit is None:
+			raise RuntimeError("no unit specified")
+		if relation==text.UNITRELATION_NEXT:
+			newOffset=self._endOffset
+		elif relation==text.UNITRELATION_PREVIOUS:
+			newOffset=self._startOffset-1
+		elif relation==text.UNITRELATION_FIRST:
+			newOffset=self._lowOffsetLimit
+		elif relation==text.UNITRELATION_LAST:
+			newOffset=self._highOffsetLimit-1
 		else:
-			speech.speakMessage(_("top"))
-		speech.speakText(text[start:end])
+			raise NotImplementedError("unit relation: %s not supported"%relation)
+		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
+			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
+		return self.__class__(self.obj,newOffset,_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
-	def script_review_currentCharacter(self,keyPress,nextScript):
-		text=self.textRepresentation
-		speech.speakSymbol(text[self.reviewOffset])
+	def _get_inUnit(self):
+		if self.unit is None:
+			raise RuntimeError("no unit specified")
+		return True
 
-	def script_review_nextCharacter(self,keyPress,nextScript):
-		text=self.textRepresentation
-		offset=self.reviewOffset+1
-		if offset<len(text):
-			self.reviewOffset=offset
-		else:
-			speech.speakMessage(_("bottom"))
-		speech.speakSymbol(text[self.reviewOffset])
-
-	def script_review_prevCharacter(self,keyPress,nextScript):
-		text=self.textRepresentation
-		offset=self.reviewOffset-1
-		if offset>=0:
-			self.reviewOffset=offset
-		else:
-			speech.speakMessage(_("top"))
-		speech.speakSymbol(text[self.reviewOffset])
-
-	def script_review_startOfLine(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		start=findStartOfLine(text,self.reviewOffset,lineLength=lineLength)
-		self.reviewOffset=start
-		speech.speakSymbol(text[self.reviewOffset])
-
-	def script_review_endOfLine(self,keyPress,nextScript):
-		text=self.textRepresentation
-		lineLength=self.textRepresentationLineLength
-		end=findEndOfLine(text,self.reviewOffset,lineLength=lineLength)-1
-		self.reviewOffset=end
-		speech.speakSymbol(text[self.reviewOffset])
+NVDAObject.TextInfo=TextInfo

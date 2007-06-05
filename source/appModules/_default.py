@@ -11,6 +11,7 @@ from keyUtils import key
 import keyboardHandler
 import IAccessibleHandler
 import api
+import text
 import debug
 import speech
 import sayAllHandler
@@ -225,106 +226,116 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_top(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_top(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
+		obj.reviewOffset=info.startOffset
+		speech.speakText(info.text)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object")
-
-	def script_review_bottom(self,keyPress,nextScript):
-		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_bottom(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
-	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object")
 
 	def script_review_previousLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_prevLine(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("top"))
+		speech.speakText(info.text)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object")
 
 	def script_review_currentLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_currentLine(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		speech.speakText(info.text)
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated")
 
 	def script_review_nextLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_nextLine(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(info.text)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object")
+
+	def script_review_bottom(self,keyPress,nextScript):
+		obj=api.getNavigatorObject()
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		info=info.getRelatedUnit(text.UNITRELATION_LAST)
+		obj.reviewOffset=info.startOffset
+		speech.speakText(info.text)
+	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object")
 
 	def script_review_previousWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_prevWord(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("top"))
+		speech.speakText(info.text)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object")
 
 	def script_review_currentWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_currentWord(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		speech.speakText(info.text)
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated")
 
 	def script_review_nextWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_nextWord(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(info.text)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object")
+
+	def script_review_startOfLine(self,keyPress,nextScript):
+		obj=api.getNavigatorObject()
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
+		speech.speakSymbol(info.text)
+	script_review_startOfLine.__doc__=_("Moves the review cursor to the start of the line where it is situated, in the current navigator object")
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_prevCharacter(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("left"))
+		speech.speakSymbol(info.text)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object")
 
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_currentCharacter(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER)
+		speech.speakSymbol(info.text)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated")
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_review_nextCharacter(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			obj.reviewOffset=info.startOffset
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("right"))
+		speech.speakSymbol(info.text)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object")
-
-	def script_review_startOfLine(self,keyPress,nextScript):
-		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_text_review_startOfLine(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
-	script_review_startOfLine.__doc__=_("Moves the review cursor to the start of the line where it is situated, in the current navigator object")
 
 	def script_review_endOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_text_review_endOfLine(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		info=info.getRelatedUnit(text.UNITRELATION_LAST)
+		speech.speakSymbol(info.text)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the end of the line where it is situated, in the current navigator object")
 
 	def script_review_moveToCaret(self,keyPress,nextScript):

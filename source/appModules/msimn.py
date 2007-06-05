@@ -29,6 +29,10 @@ envelopeNames={
 
 class appModule(appModuleHandler.appModule):
 
+	def __init__(self,*args):
+		appModuleHandler.appModule.__init__(self,*args)
+		self.previousClassName=None
+
 	def event_NVDAObject_init(self,obj):
 		controlID=obj.windowControlID
 		windowHandle=obj.windowHandle
@@ -36,3 +40,9 @@ class appModule(appModuleHandler.appModule):
 		parentClassName=winUser.getClassName(parentWindow)
 		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
+			self.previousClassName=parentClassName
+		elif parentClassName=="Outlook Express Message List":
+			if parentClassName==self.previousClassName:
+				obj.name=""
+			else:
+				self.previousClassName=parentClassName

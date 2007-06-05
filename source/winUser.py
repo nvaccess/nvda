@@ -18,10 +18,18 @@ user32=ctypes.windll.user32
 POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
+class NMHdrStruct(Structure):
+	_fields_=[
+		('hwndFrom',ctypes.wintypes.HWND),
+		('idFrom',c_uint),
+		('code',ctypes.c_uint),
+	]
+
 #constants
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
 SPIF_SENDCHANGE=2
+WM_NOTIFY=78
 WM_USER=1024
 DM_GETDEFID =0x0400
 DC_HASDEFID =0x534B
