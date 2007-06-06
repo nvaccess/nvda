@@ -175,20 +175,24 @@ class WinEdit(IAccessible):
 
 class TextInfo(text.TextInfo):
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None,_text=None):
+	def _fetchLine(self,lineNum,lineLength):
+		buf=(ctypes.c_char*((lineLength*2)+2))()
+		buf.value=struct.pack('h',lineLength+1)
+		winUser.sendMessage(self.obj.windowHandle,EM_GETLINE,lineNum,buf)
+		return ctypes.c_wchar_p(ctypes.cast(buf,ctypes.c_void_p).value).value
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None,_storyText=None,_storyLength=None,_lineNum=None,_lineText=None,_lineStartOffset=None,_lineLength=None):
 		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit,endPosition)
-		#cache the text of the object, either from a parameter, or get it from the object
-		if _text is not None:
-			self._text=_text
+		#Find out the size of the entire text
+		if _storyLength is not None:
+			self._storyLength=_storyLength
 		else:
-			self._text=self.obj.windowText
-			if not self._text:
-				self._text="\0"
+			self._storyLength=winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		#Translate the position in to an offset and cache it
 		if position==text.POSITION_FIRST:
 			self._startOffset=0
 		elif position==text.POSITION_LAST:
-			self._startOffset=len(self._text)-1
+			self._startOffset=self._storyLength-1
 		elif position==text.POSITION_CARET:
 			self._startOffset=obj.caretOffset
 		elif isinstance(position,int):
@@ -197,48 +201,74 @@ class TextInfo(text.TextInfo):
 			raise NotImplementedError("position: %s not supported"%position)
 		#Set the possible end position
 		elif endPosition==text.POSITION_LAST:
-			self._endOffset=len(self._text)
+			self._endOffset=self._storyLength
 		elif endPosition==text.POSITION_CARET:
 			self._endOffset=obj.caretOffset
 		elif isinstance(endPosition,int):
 			self._endOffset=endPosition
 		elif endPosition is not None:
 			raise NotImplementedError("endPosition: %s not supported"%endPosition)
-		#Set the offset limits
-		self._lineNum=winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,self._startOffset,0)
+		#If working with in a line, grab its text
+		#Otherwise grab the entire text
+		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnitIn [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
+			if _lineNum is not None:
+				self._lineNum=_lineNum
+			else:
+				self._lineNum=winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,self._startOffset,0)
+			if _lineStartOffset is not None:
+				self._lineStartOffset=_lineStartOffset
+			else:
+				self._lineStartOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,self._lineNum,0)
+			if _lineLength is not None:
+				self._lineLength=_lineLength
+			else:
+				self._lineLength=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,self._lineStartOffset,0)
+			if _lineText is not None:
+				self._lineText=_lineText
+			else:
+				self._lineText=self._fetchLine(self._lineNum,self._lineLength)
+			if len(self._lineText)==0:
+				self._lineText="\0"
+		else:
+			if _storyText is not None:
+				self._storyText=_storyText
+			else:
+				self._storyText=self.obj.windowText
+			if len(self._storyText)==0:
+				self._storyText="\0"
 		#Set the start and end offsets from expanding position to a unit 
-		if expandToUnit is text.UNIT_CHARACTER:
+		if expandToUnit==text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
 			self._endOffset=self.startOffset+1
-		elif expandToUnit is text.UNIT_WORD:
-			self._startOffset=text.findStartOfWord(self._text,self._startOffset) 
-			self._endOffset=text.findEndOfWord(self._text,self._startOffset)
-		elif expandToUnit is text.UNIT_LINE:
-			self._startOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,self._lineNum,0)
-			self._endOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,self._startOffset,0)+self._startOffset
-		elif expandToUnit is text.UNIT_SCREEN:
+		elif expandToUnit==text.UNIT_WORD:
+			self._startOffset=text.findStartOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset 
+			self._endOffset=text.findEndOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset
+		elif expandToUnit==text.UNIT_LINE:
+			self._startOffset=self._lineStartOffset
+			self._endOffset=self._lineStartOffset+self._lineLength
+		elif expandToUnit==text.UNIT_SCREEN:
 			self._startOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,winUser.sendMessage(self.obj.windowHandle,EM_GETFIRSTVISIBLELINE,0,0),0)
-			self._endOffset=len(self._text)
-		elif expandToUnit is text.UNIT_STORY:
+			self._endOffset=self._storyLength
+		elif expandToUnit==text.UNIT_STORY:
 			self._startOffset=0
-			self._endOffset=len(self._text)
+			self._endOffset=self._storyLength
 		else:
 			raise NotImplementedError("unit: %s not supported"%unit)
-		if limitToUnit is text.UNIT_CHARACTER:
+		if limitToUnit==text.UNIT_CHARACTER:
 			self._lowOffsetLimit=self._startOffset
-			self._highOffset=self._lowOffsetLimit+1
-		elif limitToUnit is text.UNIT_WORD:
-			self._lowOffsetLimit=text.findStartOfWord(self._text,self._startOffset)
-			self._highOffsetLimit=text.findEndOfWord(self._text,self._startOffset)
-		elif limitToUnit is text.UNIT_LINE:
-			self._lowOffsetLimit=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,self._lineNum,0)
-			self._highOffsetLimit=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,self._lowOffsetLimit,0)+self._lowOffsetLimit
-		elif limitToUnit is text.UNIT_SCREEN:
+			self._highOffsetLimit=self._lowOffsetLimit+1
+		elif limitToUnit==text.UNIT_WORD:
+			self._lowOffsetLimit=text.findStartOfWord(self._lineText,self._lowOffsetLimit-self._lineStartOffset)+self._lineStartOffset 
+			self._highOffsetLimit=text.findEndOfWord(self._lineText,self._startOffsetLimit-self._lineStartOffset)+self._lineStartOffset
+		elif limitToUnit==text.UNIT_LINE:
+			self._lowOffsetLimit=self._lineStartOffset
+			self._highOffsetLimit=self._lineStartOffset+self._lineLength
+		elif limitToUnit==text.UNIT_SCREEN:
 			self._lowOffsetLimit=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,winUser.sendMessage(self.obj.windowHandle,EM_GETFIRSTVISIBLELINE,0,0),0)
-			self._highOffsetLimit=len(self._text)
+			self._highOffsetLimit=self._storyLength
 		elif limitToUnit in [None,text.UNIT_STORY]:
 			self._lowOffsetLimit=0
-			self._highOffsetLimit=len(self._text)
+			self._highOffsetLimit=self._storyLength
 		else:
 			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
 
@@ -249,17 +279,21 @@ class TextInfo(text.TextInfo):
 		return self._endOffset
 
 	def _get_text(self):
-		return self._text[self._startOffset:self._endOffset]
+		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnitIn [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
+			return self._lineText[self._startOffset-self._lineStartOffset:self._endOffset-self._lineStartOffset]
+		else:
+			return self._storyText[self._startOffset:self._endOffset]
 
 	def getRelatedUnit(self,relation):
 		if self.unit is None:
 			raise RuntimeError("no unit specified")
+		debug.writeMessage("getRelatedUnit: releation %s, unit %s, limitUnit %s"%(relation,self.unit,self.limitUnit))
 		if relation==text.UNITRELATION_NEXT:
 			newOffset=self._endOffset
 			if self.unit==text.UNIT_LINE:
 				#the control gives back line offsets sometimes with line break chars, sometimes not,
 				#So Keep moving till the line number changes, or we reach the end of the text
-				while winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,newOffset,0)==self._lineNum and newOffset<len(self._text):
+				while winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,newOffset,0)==self._lineNum and newOffset<self._highOffsetLimit:
 					newOffset+=1 
 		elif relation==text.UNITRELATION_PREVIOUS:
 			newOffset=self._startOffset-1
@@ -271,7 +305,12 @@ class TextInfo(text.TextInfo):
 			raise NotImplementedError("unit relation: %s not supported"%relation)
 		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
 			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
-		return self.__class__(self.obj,newOffset,_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		if  self.limitUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or (self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD] and newOffset>=self._lineStartOffset and newOffset<(self._lineStartOffset+self._lineLength)):
+			return self.__class__(self.obj,newOffset,_lineText=self._lineText,_lineNum=self._lineNum,_lineStartOffset=self._lineStartOffset,_lineLength=self._lineLength,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		elif hasattr(self,"_storyText"):
+			return self.__class__(self.obj,newOffset,_storyText=self._storyText,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		else:
+			return self.__class__(self.obj,newOffset,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
 	def _get_inUnit(self):
 		if self.unit is None:
