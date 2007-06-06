@@ -271,13 +271,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_selectionOffsets(self):
 		raise NotImplementedError("selection not supported")
 
-	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None,endPosition=None):
-		return self.TextInfo(self,position,expandToUnit,limitToUnit,endPosition)
+	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None):
+		return self.TextInfo(self,position,expandToUnit,limitToUnit)
 
 class TextInfo(text.TextInfo):
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None,_text=None):
-		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit,endPosition)
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_text=None):
+		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit)
 		#cache the text of the object, either from a parameter, or get it from the object
 		if _text is not None:
 			self._text=_text
@@ -285,27 +285,22 @@ class TextInfo(text.TextInfo):
 			self._text=self.obj.textRepresentation
 			if not self._text:
 				self._text="\0"
-		#Translate the position in to an offset and cache it
+		#Translate the position in to offsets and cache it
 		if position==text.POSITION_FIRST:
-			self._startOffset=0
+			self._startOffset=self._endOffset=0
 		elif position==text.POSITION_LAST:
-			self._startOffset=len(self._text)-1
+			self._startOffset=self._endOffset=len(self._text)-1
 		elif position==text.POSITION_CARET:
-			self._startOffset=obj.caretOffset
-		elif isinstance(position,int):
-			self._startOffset=position
-		elif position is not None:
+			self._startOffset=self._endOffset=obj.caretOffset
+		elif position==text.POSITION_SELECTION:
+			(self._startOffset,self._endOffset)=obj.selectionOffsets
+		elif isinstance(position,text.OffsetPosition):
+			self._startOffset=self._endOffset=position.offset
+		elif isinstance(position,text.OffsetsPosition):
+			self._startOffset=position.start
+			self._endOffset=position.end
+		else:
 			raise NotImplementedError("position: %s not supported"%position)
-		#Set the possible end position
-		elif endPosition==text.POSITION_LAST:
-			self._endOffset=len(self._text)
-		elif endPosition==text.POSITION_CARET:
-			self._endOffset=obj.caretOffset
-		elif isinstance(endPosition,int):
-			self._endOffset=endPosition
-		elif endPosition is not None:
-			raise NotImplementedError("endPosition: %s not supported"%endPosition)
-		#Set the offset limits
 		#Set the start and end offsets from expanding position to a unit 
 		if expandToUnit is text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
@@ -360,7 +355,7 @@ class TextInfo(text.TextInfo):
 			raise NotImplementedError("unit relation: %s not supported"%relation)
 		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
 			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
-		return self.__class__(self.obj,newOffset,_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		return self.__class__(self.obj,text.OffsetPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
 	def _get_inUnit(self):
 		if self.unit is None:

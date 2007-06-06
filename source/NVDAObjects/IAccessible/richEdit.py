@@ -10,6 +10,7 @@ import comtypes.automation
 import win32com.client
 import pythoncom
 import winUser
+import text
 import speech
 import IAccessibleHandler
 from winEdit import WinEdit
@@ -63,6 +64,7 @@ class RichEdit(WinEdit):
 			oleRepr=win32com.client.build.DispatchItem(attr=a)
 			self.dom=win32com.client.CDispatch(o,oleRepr)
 		except:
+			self.textInfo=WinEdit.textInfo
 			pass
 
 	def __del__(self):
@@ -246,3 +248,11 @@ class RichEdit(WinEdit):
 		if not hasattr(self,'dom'):
 			return super(RichEdit,self).text_isSubscript(offset)
 		return bool(self.dom.Range(offset,offset).Font.Subscript)
+
+class TextInfo(text.TextInfo):
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
+		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit)
+		if position in [text.POSITION_CARET,text.POSITION_SELECTION]:
+			self._range=self.obj.dom.selection.duplicate
+

@@ -175,60 +175,64 @@ class WinEdit(IAccessible):
 
 class TextInfo(text.TextInfo):
 
-	def _fetchLine(self,lineNum,lineLength):
-		buf=(ctypes.c_char*((lineLength*2)+2))()
-		buf.value=struct.pack('h',lineLength+1)
-		winUser.sendMessage(self.obj.windowHandle,EM_GETLINE,lineNum,buf)
-		return ctypes.c_wchar_p(ctypes.cast(buf,ctypes.c_void_p).value).value
+	def _updateLineCache(self,_lineNum=None,_lineText=None,_lineStartOffset=None,_lineLength=None):
+		#If any of the line info is missing, then get it all  
+		if (_lineNum is None or _lineText is None or _lineStartOffset is None or _lineLength is None):
+			_lineNum=winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,self._startOffset,0)
+			_lineStartOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,_lineNum,0)
+			_lineLength=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,_lineStartOffset,0)
+			buf=(ctypes.c_char*((_lineLength*2)+2))()
+			buf.value=struct.pack('h',_lineLength+1)
+			winUser.sendMessage(self.obj.windowHandle,EM_GETLINE,_lineNum,buf)
+			_lineText=ctypes.c_wchar_p(ctypes.cast(buf,ctypes.c_void_p).value).value[0:_lineLength]
+			#Edit controls lye about their line length, grow it to its actual length
+			#Fill it in with a \r, a \r\n, or nulls and then \r\n.
+			offset=_lineStartOffset+_lineLength
+			count=0
+			limit=self._storyLength-1
+			while winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)==_lineNum and offset<limit:
+				count+=1
+				offset+=1
+			if count==1:
+				_lineText+="\r"
+			elif count==2:
+				_lineText+="\r\n"
+			else:
+				_lineText+="".join(['\0']*(count-2))+"\r\n"
+			_lineLength=len(_lineText)
+		#Cache all info in the object
+		self._lineNum=_lineNum
+		self._lineText=_lineText
+		self._lineStartOffset=_lineStartOffset
+		self._lineLength=_lineLength
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None,_storyText=None,_storyLength=None,_lineNum=None,_lineText=None,_lineStartOffset=None,_lineLength=None):
-		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit,endPosition)
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_storyText=None,_storyLength=None,_lineNum=None,_lineText=None,_lineStartOffset=None,_lineLength=None):
+		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit)
 		#Find out the size of the entire text
 		if _storyLength is not None:
 			self._storyLength=_storyLength
 		else:
 			self._storyLength=winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
-		#Translate the position in to an offset and cache it
+		#Translate the position in to offsets and cache it
 		if position==text.POSITION_FIRST:
-			self._startOffset=0
+			self._startOffset=self._endOffset=0
 		elif position==text.POSITION_LAST:
-			self._startOffset=self._storyLength-1
+			self._startOffset=self._endOffset=self._storyLength-1
 		elif position==text.POSITION_CARET:
-			self._startOffset=obj.caretOffset
-		elif isinstance(position,int):
-			self._startOffset=position
-		elif position is not None:
+			self._startOffset=self._endOffset=obj.caretOffset
+		elif position==text.POSITION_SELECTION:
+			(self._startOffset,self._endOffset)=obj.selectionOffsets
+		elif isinstance(position,text.OffsetPosition):
+			self._startOffset=self._endOffset=position.offset
+		elif isinstance(position,text.OffsetsPosition):
+			self._startOffset=position.start
+			self._endOffset=position.end
+		else:
 			raise NotImplementedError("position: %s not supported"%position)
-		#Set the possible end position
-		elif endPosition==text.POSITION_LAST:
-			self._endOffset=self._storyLength
-		elif endPosition==text.POSITION_CARET:
-			self._endOffset=obj.caretOffset
-		elif isinstance(endPosition,int):
-			self._endOffset=endPosition
-		elif endPosition is not None:
-			raise NotImplementedError("endPosition: %s not supported"%endPosition)
 		#If working with in a line, grab its text
 		#Otherwise grab the entire text
 		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnitIn [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
-			if _lineNum is not None:
-				self._lineNum=_lineNum
-			else:
-				self._lineNum=winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,self._startOffset,0)
-			if _lineStartOffset is not None:
-				self._lineStartOffset=_lineStartOffset
-			else:
-				self._lineStartOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,self._lineNum,0)
-			if _lineLength is not None:
-				self._lineLength=_lineLength
-			else:
-				self._lineLength=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,self._lineStartOffset,0)
-			if _lineText is not None:
-				self._lineText=_lineText
-			else:
-				self._lineText=self._fetchLine(self._lineNum,self._lineLength)
-			if len(self._lineText)==0:
-				self._lineText="\0"
+			self._updateLineCache(_lineNum=_lineNum,_lineText=_lineText,_lineStartOffset=_lineStartOffset,_lineLength=_lineLength)
 		else:
 			if _storyText is not None:
 				self._storyText=_storyText
@@ -290,11 +294,6 @@ class TextInfo(text.TextInfo):
 		debug.writeMessage("getRelatedUnit: releation %s, unit %s, limitUnit %s"%(relation,self.unit,self.limitUnit))
 		if relation==text.UNITRELATION_NEXT:
 			newOffset=self._endOffset
-			if self.unit==text.UNIT_LINE:
-				#the control gives back line offsets sometimes with line break chars, sometimes not,
-				#So Keep moving till the line number changes, or we reach the end of the text
-				while winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,newOffset,0)==self._lineNum and newOffset<self._highOffsetLimit:
-					newOffset+=1 
 		elif relation==text.UNITRELATION_PREVIOUS:
 			newOffset=self._startOffset-1
 		elif relation==text.UNITRELATION_FIRST:
@@ -306,11 +305,11 @@ class TextInfo(text.TextInfo):
 		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
 			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
 		if  self.limitUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or (self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD] and newOffset>=self._lineStartOffset and newOffset<(self._lineStartOffset+self._lineLength)):
-			return self.__class__(self.obj,newOffset,_lineText=self._lineText,_lineNum=self._lineNum,_lineStartOffset=self._lineStartOffset,_lineLength=self._lineLength,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetPosition(newOffset),_lineText=self._lineText,_lineNum=self._lineNum,_lineStartOffset=self._lineStartOffset,_lineLength=self._lineLength,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 		elif hasattr(self,"_storyText"):
-			return self.__class__(self.obj,newOffset,_storyText=self._storyText,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetPosition(newOffset),_storyText=self._storyText,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 		else:
-			return self.__class__(self.obj,newOffset,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetPosition(newOffset),_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
 	def _get_inUnit(self):
 		if self.unit is None:

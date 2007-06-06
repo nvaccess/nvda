@@ -10,6 +10,36 @@ import baseObject
 class E_noRelatedUnit(RuntimeError):
 	pass
 
+#position types
+class Position:
+	pass
+
+class OffsetPosition(Position):
+	def __init__(self,offset):
+		self.offset=offset
+
+class OffsetsPosition(Position):
+	def __init__(self,start,end):
+		self.start=start
+		self.end=end
+
+class pointPosition(Position):
+	def __init__(self,x,y):
+		self.x=x
+		self.y=y
+
+class rectPosition(Position):
+	def __init__(self,left,top,right,bottom):
+		self.left=left
+		self.top=top
+		self.right=right
+		self.bottom=bottom
+
+POSITION_FIRST="first"
+POSITION_CARET="caret"
+POSITION_SELECTION="selection"
+POSITION_LAST="last"
+
 #Unit constants
 UNIT_CHARACTER="character"
 UNIT_WORD="word"
@@ -22,12 +52,6 @@ UNIT_COLUMN="column"
 UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
-
-#Position constants
-POSITION_FIRST="first"
-POSITION_CARET="caret"
-POSITION_SELECTION="selection"
-POSITION_LAST="last"
 
 #Unit relationship string constants
 UNITRELATION_NEXT="next"
@@ -46,11 +70,9 @@ class TextInfo(baseObject.autoPropertyObject):
 @type: L{NVDAObject}
 @ivar unit: The unit (character, word, line, paragraph) which this object has been expanded to
 @type unit: string
-@ivar endPosition: the end position (offset or point) that completes the range this object represents (if a unit has not been set).
-@type endPosition: int, tuple or string
 """
  
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,endPosition=None):
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
 		"""
 @param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection
 @type position: int, tuple or string
@@ -60,16 +82,11 @@ class TextInfo(baseObject.autoPropertyObject):
 @type expandToUnit: string
 @param limitToUnit: the unit that all navigation is limited to
 @type limitToUnit: string 
-@param endPosition: the end position (offset or point) that completes the range this object represents (if a unit has not been set).
-@type endPosition: int, tuple or string
 """
-		if (expandToUnit is not None and endPosition is not None) or (expandToUnit is None and endPosition is None):
-			raise ValueError("Please give a unit or an endPosition.") 
 		self.obj=obj
 		self.basePosition=position
 		self.unit=expandToUnit
 		self.limitUnit=limitToUnit
-		self.endPosition=endPosition
 
 	def _get_startOffset(self):
 		"""
@@ -167,7 +184,7 @@ Locates another unit of this type with the given relation
 
 def findStartOfLine(text,offset,lineLength=None):
 	if offset>=len(text):
-		raise ValueError("Offset %d is too high for text of length %d"%(offset,len(text)))
+		offset=len(text)-1
 	start=offset
 	if isinstance(lineLength,int):
 		return offset-(offset%lineLength)
@@ -182,7 +199,7 @@ def findStartOfLine(text,offset,lineLength=None):
 
 def findEndOfLine(text,offset,lineLength=None):
 	if offset>=len(text):
-		raise ValueError("Offset %d is too high for text of length %d"%(offset,len(text)))
+		offset=len(text)-1
 	if isinstance(lineLength,int):
 		return (offset-(offset%lineLength)+lineLength)
 	end=offset
@@ -197,26 +214,24 @@ def findEndOfLine(text,offset,lineLength=None):
 
 def findStartOfWord(text,offset,lineLength=None):
 	if offset>=len(text):
-		raise ValueError("Offset %d is too high for text of length %d"%(offset,len(text)))
-	lineStart=findStartOfLine(text,offset,lineLength=lineLength)
-	while offset>lineStart and text[offset].isspace():
+		offset=len(text)-1
+	while offset>0 and text[offset].isspace():
 		offset-=1
 	if not text[offset].isalnum():
 		return offset
 	else:
-		while offset>lineStart and text[offset-1].isalnum():
+		while offset>0 and text[offset-1].isalnum():
 			offset-=1
 	return offset
 
 def findEndOfWord(text,offset,lineLength=None):
 	if offset>=len(text):
-		raise ValueError("Offset %d is too high for text of length %d"%(offset,len(text)))
-	lineEnd=findEndOfLine(text,offset,lineLength=lineLength)
+		offset=len(text)-1
 	if text[offset].isalnum():
-		while offset<lineEnd and text[offset].isalnum():
+		while offset<len(text) and text[offset].isalnum():
 			offset+=1
 	elif not text[offset].isspace() and not text[offset].isalnum():
 		offset+=1
-	while offset<lineEnd and text[offset].isspace():
+	while offset<len(text) and text[offset].isspace():
 		offset+=1
 	return offset
