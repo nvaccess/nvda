@@ -13,6 +13,7 @@ import appModuleHandler
 import speech
 
 lastFocusRole=None
+lastFocusWindowHandle=None
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
@@ -45,9 +46,10 @@ class appModule(appModuleHandler.appModule):
 			obj.name=envelopeNames[controlID]
 
 	def event_gainFocus(self,obj,nextHandler):
-		global lastFocusRole
+		global lastFocusRole, lastFocusWindowHandle
 		ignore=False
 		focusRole=obj.role
+		focusWindowHandle=obj.windowHandle
 		#When deleting a message, an MSAA focus event gets sent before the message is deleted, so the child ID ends up being wrong
 		if focusRole==controlTypes.ROLE_LISTITEM and obj.IAccessibleChildID>1 and not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
 			prevObj=obj.previous
@@ -56,9 +58,10 @@ class appModule(appModuleHandler.appModule):
 				eventHandler.manageEvent("gainFocus",prevObj)
 				return
 		#Outlook express has a bug where deleting a message causes focus to move to the message list.
-		if focusRole==controlTypes.ROLE_LIST and lastFocusRole==controlTypes.ROLE_LISTITEM:
+		if focusWindowHandle==lastFocusWindowHandle and focusRole==controlTypes.ROLE_LIST and lastFocusRole==controlTypes.ROLE_LISTITEM:
 			ignore=True
 		lastFocusRole=focusRole
+		lastFocusWindowHandle=focusWindowHandle
 		if not ignore:
 			return nextHandler()
 
