@@ -156,10 +156,14 @@ def stop():
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
-	while not bgQueue.empty():
-		item = bgQueue.get_nowait()
-		if item[0] == espeakDLL.espeak_SetParameter:
-			params.append(item)
+	try:
+		while not bgQueue.empty():
+			item = bgQueue.get_nowait()
+			if item[0] == espeakDLL.espeak_SetParameter:
+				params.append(item)
+	except queue.Empty:
+		# In some rare cases, the queue can be empty even after queue.empty() returns False.
+		pass
 	for item in params:
 		bgQueue.put(item)
 	isSpeaking = False
