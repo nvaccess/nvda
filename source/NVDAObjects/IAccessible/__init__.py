@@ -212,6 +212,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		Window.__init__(self,windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
+		if not hasattr(self,"reportFocusNeedsIAccessibleFocusState"):
+			self.reportFocusNeedsIAccessibleFocusState=True
 		self._doneInit=True
 
 	def __hash__(self):
@@ -437,6 +439,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return None
 		except:
 			return None
+
+	def reportFocus(self):
+		if self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
+			return
+		super(IAccessible,self).reportFocus()
 
 	def speakDescendantObjects(self,hashList=None):
 		if hashList is None:

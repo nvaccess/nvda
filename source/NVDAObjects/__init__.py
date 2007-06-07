@@ -216,8 +216,7 @@ Tries to force this object to take the focus.
 			child=child.next
 
 	def reportFocus(self):
-		if self.hasFocus:
-			speech.speakObject(self,reason=speech.REASON_FOCUS)
+		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_stateChange(self):
 		if self.hasFocus:
