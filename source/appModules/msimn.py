@@ -7,6 +7,7 @@
 import winUser
 import controlTypes
 import api
+import eventHandler
 import IAccessibleHandler
 import appModuleHandler
 import speech
@@ -42,15 +43,18 @@ class appModule(appModuleHandler.appModule):
 		#Then set the object's name to the label 
 		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
-		#Sometimes list items in the message list get a focus event, yet their focus state is not set
-		#So allow reportFocus to run on these objects
-		if obj.role==controlTypes.ROLE_LISTITEM:
-			obj.reportFocusNeedsIAccessibleFocusState=False
 
 	def event_gainFocus(self,obj,nextHandler):
 		global lastFocusRole
 		ignore=False
 		focusRole=obj.role
+		#When deleting a message, an MSAA focus event gets sent before the message is deleted, so the child ID ends up being wrong
+		if focusRole==controlTypes.ROLE_LISTITEM and obj.IAccessibleChildID>1 and not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
+			prevObj=obj.previous
+			if prevObj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
+				api.setFocusObject(prevObj)
+				eventHandler.manageEvent("gainFocus",prevObj)
+				return
 		#Outlook express has a bug where deleting a message causes focus to move to the message list.
 		if focusRole==controlTypes.ROLE_LIST and lastFocusRole==controlTypes.ROLE_LISTITEM:
 			ignore=True
