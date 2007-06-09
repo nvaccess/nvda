@@ -7,6 +7,7 @@
 """Keyboard support"""
 
 import winUser
+import ctypes
 import time
 import pyHook
 import nvwh
@@ -75,8 +76,16 @@ def internal_keyDownEvent(keyInfo):
 			mainKey="Extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
-		if globalVars.keyboardHelp or config.conf["keyboard"]["speakCommandKeys"]:
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,keyName(keyPress))
+		if globalVars.keyboardHelp or (config.conf["keyboard"]["speakCommandKeys"] and not ( not keyPress[0] and config.conf["keyboard"]["speakTypedCharacters"])):
+			labelList=[]
+			if keyPress[0] is not None:
+				labelList.extend(keyPress[0])
+			ch=ctypes.windll.user32.MapVirtualKeyW(keyInfo.vkCode,winUser.MAPVK_VK_TO_CHAR)
+			if ch>32:
+				labelList.append(unichr(ch))
+			else:
+				labelList.append(keyPress[1])
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,"+".join(labelList))
 		if mainKey=="Capital":
 			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
