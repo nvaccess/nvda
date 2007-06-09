@@ -23,6 +23,7 @@ confspec = StringIO("""# NVDA Configuration File
 	language = string(default="Windows")
 	hideInterfaceOnStartup = boolean(default=False)
 	saveConfigurationOnExit = boolean(default=False)
+	askToExit = boolean(default=true)
 
 # Speech settings
 [speech]

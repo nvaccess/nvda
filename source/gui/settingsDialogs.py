@@ -41,6 +41,9 @@ class interfaceSettingsDialog(wx.Dialog):
 		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
+		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
+		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
+		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
@@ -61,6 +64,7 @@ class interfaceSettingsDialog(wx.Dialog):
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["hideInterfaceOnStartup"]=self.hideInterfaceCheckBox.IsChecked()
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
+		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()

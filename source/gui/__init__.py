@@ -225,21 +225,27 @@ class MainFrame(wx.Frame):
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onExitCommand(self, evt):
-		wasShown=self.IsShown()
-		if not wasShown:
-			self.onShowGuiCommand(None)
-		self.Raise()
-		self.SetFocus()
-		d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL|wx.ICON_WARNING)
-		if d.ShowModal() == wx.ID_OK:
+		canExit=False
+		if config.conf["general"]["askToExit"]:
+			wasShown=self.IsShown()
+			if not wasShown:
+				self.onShowGuiCommand(None)
+			self.Raise()
+			self.SetFocus()
+			d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL|wx.ICON_WARNING)
+			if d.ShowModal() == wx.ID_OK:
+				canExit=True
+			elif not wasShown:
+				self.onHideGuiCommand(None)
+		else:
+			canExit=True
+		if canExit:
 			if config.conf["general"]["saveConfigurationOnExit"]:
 				try:
 					config.save()
 				except:
 					debug.writeMessage("Could not save configuration - probably read only file system")
 			self.Destroy()
-		elif not wasShown:
-			self.onHideGuiCommand(None)
 
 	def onInterfaceSettingsCommand(self,evt):
 		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
