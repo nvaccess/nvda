@@ -16,6 +16,7 @@ import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
 import speech
+import controlTypes
 from . import IAccessible
  
 class MSHTML(IAccessible):
@@ -244,11 +245,15 @@ class MSHTML(IAccessible):
 		return r
 
 	def event_gainFocus(self):
+		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE and self.IAccessibleObjectID==-4:
+			return
 		self.dom=self.getDocumentObjectModel()
 		self.lineNumBias=self.getLineNumBias()
 		self.offsetBias=self.getOffsetBias()
-		if self.dom.body.isContentEditable and not api.isVirtualBufferPassThrough():
-			api.toggleVirtualBufferPassThrough()
+		if self.dom.body.isContentEditable:
+			self.role=controlTypes.ROLE_EDITABLETEXT
+			if not api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
 
 	def event_looseFocus(self):

@@ -727,10 +727,10 @@ class ProgressBar(IAccessible):
 		else:
 			super(ProgressBar,self).event_valueChange()
 
-class InternetExplorerClient(IAccessible):
+class InternetExplorerClient(Client):
 
 	def _get_name(self):
-		return None
+		return self.windowClassName
 
 	def _get_description(self):
 		return None
