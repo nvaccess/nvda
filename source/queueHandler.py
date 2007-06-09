@@ -38,7 +38,6 @@ def flushQueue(queue):
 	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,vars)=queue.get_nowait()
-			debug.writeMessage("flushQueue: got function %s"%func.__name__)
 			try:
 				func(*args,**vars)
 			except:

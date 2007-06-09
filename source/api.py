@@ -79,7 +79,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 	globalVars.focusObject=obj
-	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
+	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
 	return True
 
 def getMouseObject():
