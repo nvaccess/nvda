@@ -548,7 +548,7 @@ def updateForegroundFromEvent(window,objectID,childID):
 	if not obj:
 		return
 	api.setForegroundObject(obj)
-	manageEvent("foreground",window,objectID,childID)
+	eventHandler.manageEvent("foreground",obj)
 
 def updateFocusFromEvent(window,objectID,childID):
 	appModuleHandler.update(window)
@@ -562,7 +562,8 @@ def updateFocusFromEvent(window,objectID,childID):
 	if not obj:
 		return
 	api.setFocusObject(obj)
-	manageEvent("gainFocus",window,objectID,childID)
+	eventHandler.manageEvent("gainFocus",obj)
+
 
 def correctFocus():
 	focusObject=api.findObjectWithFocus()
