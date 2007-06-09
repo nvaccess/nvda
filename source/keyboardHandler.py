@@ -75,6 +75,8 @@ def internal_keyDownEvent(keyInfo):
 			mainKey="Extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
+		if globalVars.keyboardHelp or config.conf["keyboard"]["speakCommandKeys"]:
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,keyName(keyPress))
 		if mainKey=="Capital":
 			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
