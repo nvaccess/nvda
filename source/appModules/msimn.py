@@ -51,14 +51,15 @@ class appModule(appModuleHandler.appModule):
 		focusRole=obj.role
 		focusWindowHandle=obj.windowHandle
 		#When deleting a message, an MSAA focus event gets sent before the message is deleted, so the child ID ends up being wrong
-		if focusRole==controlTypes.ROLE_LISTITEM and obj.IAccessibleChildID>1 and not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
-			prevObj=obj.previous
-			if prevObj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
-				api.setFocusObject(prevObj)
-				eventHandler.manageEvent("gainFocus",prevObj)
-				return
+		if (focusRole==controlTypes.ROLE_LISTITEM and obj.IAccessibleChildID>1 and not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED) or (focusRole==controlTypes.ROLE_UNKNOWN and obj.windowClassName=="SysListView32" and obj.IAccessibleChildID>0):
+			newObj=obj.parent.activeChild
+			api.setFocusObject(newObj)
+			eventHandler.manageEvent("gainFocus",newObj)
+			lastFocusWindowHandle=focusWindowHandle
+			lastFocusRole=focusRole
+			return
 		#Outlook express has a bug where deleting a message causes focus to move to the message list.
-		if focusWindowHandle==lastFocusWindowHandle and focusRole==controlTypes.ROLE_LIST and lastFocusRole==controlTypes.ROLE_LISTITEM:
+		if focusWindowHandle==lastFocusWindowHandle and focusRole==controlTypes.ROLE_LIST and lastFocusRole in [controlTypes.ROLE_LISTITEM,controlTypes.ROLE_LIST]:
 			ignore=True
 		lastFocusRole=focusRole
 		lastFocusWindowHandle=focusWindowHandle
