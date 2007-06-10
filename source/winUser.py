@@ -49,6 +49,10 @@ GW_OWNER=4
 #Window messages
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
+#Clipboard formats
+CF_TEXT=1
+#mapVirtualKey constants
+MAPVK_VK_TO_CHAR=2   
 #Virtual key codes
 VK_LBUTTON=1
 VK_RBUTTON=2
@@ -351,3 +355,4 @@ class GUITHREADINFO (Structure):
 		("hwndCaret", c_ulong),
 		("rcCaret", RECT)
 	]
+
