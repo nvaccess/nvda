@@ -63,6 +63,8 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		self.reviewOffset=self.text_caretOffset-info.windowRect.top*info.consoleSize.x
 		thread.start_new_thread(self.monitorThread,())
+		pythoncom.PumpWaitingMessages()
+		time.sleep(0.1)
 
 	def disconnectConsole(self):
 		#Unregister any win events we are using
