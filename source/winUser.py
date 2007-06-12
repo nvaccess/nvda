@@ -17,10 +17,10 @@ user32=ctypes.windll.user32
 POINT=ctypes.wintypes.POINT
 MSG=ctypes.wintypes.MSG
 
-class NMHdrStruct(Structure):
+class NMHdrStruct(ctypes.Structure):
 	_fields_=[
 		('hwndFrom',ctypes.wintypes.HWND),
-		('idFrom',c_uint),
+		('idFrom',ctypes.c_uint),
 		('code',ctypes.c_uint),
 	]
 
