@@ -62,7 +62,7 @@ def setForegroundObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
-	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,obj.typeString,obj.value,obj.description))
+	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
 	return True
 
 def setFocusObject(obj):
