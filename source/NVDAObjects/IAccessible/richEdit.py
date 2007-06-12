@@ -7,10 +7,13 @@
 import struct
 import ctypes
 import comtypes.automation
+import comtypesClient
+import oleTypes
 import win32com.client
 import pythoncom
 import winUser
 import text
+import debug
 import speech
 import IAccessibleHandler
 from winEdit import WinEdit
@@ -54,17 +57,19 @@ class RichEdit(WinEdit):
 	def __init__(self,*args,**vars):
 		WinEdit.__init__(self,*args,**vars)
 		try:
-			ptr=ctypes.c_void_p()
+			#ptr=ctypes.c_void_p()
+			ptr=ctypes.POINTER(comtypes.automation.IUnknown)()
 			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 				raise OSError("No native object model")
+			self.dom=comtypesClient.wrap(ptr)
 			#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-			o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
-			t=o.GetTypeInfo()
-			a=t.GetTypeAttr()
-			oleRepr=win32com.client.build.DispatchItem(attr=a)
-			self.dom=win32com.client.CDispatch(o,oleRepr)
+			#o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
+			#t=o.GetTypeInfo()
+			#a=t.GetTypeAttr()
+			#oleRepr=win32com.client.build.DispatchItem(attr=a)
+			#self.dom=win32com.client.CDispatch(o,oleRepr)
 		except:
-			self.textInfo=WinEdit.textInfo
+			self.TextInfo=WinEdit.textInfo
 			pass
 
 	def __del__(self):
@@ -251,8 +256,101 @@ class RichEdit(WinEdit):
 
 class TextInfo(text.TextInfo):
 
+	unitMap={
+		text.UNIT_CHARACTER:tomCharacter,
+		text.UNIT_WORD:tomWord,
+		text.UNIT_LINE:tomLine,
+		text.UNIT_PARAGRAPH:tomParagraph,
+		text.UNIT_PAGE:tomPage,
+		text.UNIT_TABLE:tomTable,
+		text.UNIT_COLUMN:tomColumn,
+		text.UNIT_ROW:tomRow,
+		text.UNIT_CELL:tomCell,
+		text.UNIT_SCREEN:tomStory,
+		text.UNIT_STORY:tomStory,
+	}
+
 	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
 		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit)
-		if position in [text.POSITION_CARET,text.POSITION_SELECTION]:
-			self._range=self.obj.dom.selection.duplicate
+		#Create a range object for the given position
+		if position==text.POSITION_FIRST:
+			self._range=self.obj.dom.Range(0,0)
+		elif position==text.POSITION_LAST:
+			self._range=self.obj.dom.Range(0,0)
+			self._range.expand(tomStory)
+			self._range.Start=self._range.End=self._range.End-1
+		elif position in [text.POSITION_CARET,text.POSITION_SELECTION]:
+			self._range=self.obj.dom.selection.Duplicate
+			if position==text.POSITION_CARET:
+				self._range.End=self._range.Start
+		elif isinstance(position,text.OffsetsPosition):
+			self._range=self.obj.dom.Range(position.start,position.end)
+		elif isinstance(position,text.OffsetPosition):
+			self._range=self.obj.dom.Range(position.offset,position.offset)
+		else:
+			raise NotImplementedError("position: %s"%position)
+		#Expand the range object to the given unit
+		if expandToUnit is not None:
+			unit=self.unitMap.get(expandToUnit,None)
+			if unit is not None:
+				self._range.expand(unit)
+			else:
+				raise NotImplementedError("expandToUnit: %s"%expandToUnit)
+		#create another range object expanded to the given limit unit
+		if limitToUnit not in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
+			unit=self.unitMap.get(limitToUnit)
+			if unit is not None:
+				self._limitRange=self._range.Duplicate
+				self._limitRange.expand(unit)
+			else:
+				raise NotImplementedError("limitToUnit: %s"%limitToUnit)
+
+	def _get_startOffset(self):
+		return self._range.Start
+
+	def _get_endOffset(self):
+		return self._range.End
+
+	def _get_text(self):
+		obj=self._range.getEmbeddedObject()
+		if ctypes.cast(obj,ctypes.c_void_p).value==None:
+			return ""
+		obj=obj.QueryInterface(oleTypes.IOleObject)
+		clipFormat=oleTypes.wireCLIPFORMAT()
+		clipFormat.u.dwValue=winUser.CF_TEXT
+		format=oleTypes.tagFORMATETC
+		format.cfFormat=clipFormat
+		format.ptd=None
+		format.dwAspect=1
+		format.lindex=0
+		format.tymed=1
+
+		return ""
+
+	def getRelatedUnit(self,relation):
+		unit=self.unitMap.get(self.unit,None)
+		if unit is None:
+			raise RuntimeError("No unit")
+		r=self._range.Duplicate
+		r.End=r.Start
+		moved=0
+		if relation==text.UNITRELATION_NEXT:
+			moved=r.move(unit,1)
+		elif relation==text.UNITRELATION_PREVIOUS:
+			moved=r.move(unit,-1)
+		elif relation==text.UNITRELATION_FIRST:
+			r.setRange(0,0)
+			moved=1
+		elif relation==text.UNITRELATION_LAST:
+			r.Start=r.End=self._limitRange.End-1
+			moved=1
+		if moved==0 or (hasattr(self,"_limitRange") and not r.inRange(self._limitRange)):
+			raise text.E_noRelatedUnit
+		return self.__class__(self.obj,text.OffsetPosition(r.Start),expandToUnit=self.unit,limitToUnit=self.limitUnit)
+
+class testTextInfo(WinEdit.TextInfo):
+
+	APIVersion=2
+
+RichEdit.TextInfo=testTextInfo
 
