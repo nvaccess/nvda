@@ -33,10 +33,6 @@ class MSHTML(IAccessible):
 		oleRepr=win32com.client.build.DispatchItem(attr=a)
 		return win32com.client.CDispatch(o,oleRepr)
 
-	def _get_typeString(self):
-		if self.isContentEditable:
-			return IAccessibleHandler.getRoleName(IAccessibleHandler.ROLE_SYSTEM_TEXT)
-
 	def _get_value(self):
 		if self.isContentEditable:
 			r=self.text_getLineOffsets(self.text_caretOffset)
