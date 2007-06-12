@@ -6,10 +6,9 @@ import debug
 #See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from user32.dll"""
+
 import ctypes
 import ctypes.wintypes
-from ctypes import *
-from ctypes.wintypes import *
 
 #dll handles
 user32=ctypes.windll.user32
@@ -31,8 +30,6 @@ SPI_SETSCREENREADER=71
 SPIF_SENDCHANGE=2
 WM_NOTIFY=78
 WM_USER=1024
-DM_GETDEFID =0x0400
-DC_HASDEFID =0x534B
 #PeekMessage
 PM_REMOVE=1
 PM_NOYIELD=2
@@ -334,25 +331,3 @@ def isWindowVisible(window):
 
 def isWindowEnabled(window):
 	return bool(user32.IsWindowEnabled(window))
-
-#added by Sean Farrow<sean.farrow@seanfarrow.co.uk
-#GetDlgItemText function.
-def getDlgItemText(window, controlID):	
-	buf=ctypes.create_unicode_buffer(256)
-	user32.GetDlgItemTextW(window,controlID,buf,255)
-	return buf.value
-
-#GuiThreadInfo structure.
-class GUITHREADINFO (Structure):
-	_fields_ = [
-		("cbSize", c_ulong),
-		("flags", c_ulong),
-		("hwndActive", c_ulong),
-		("hwndFocus", c_ulong),
-		("hwndCapture", c_ulong),
-		("hwndMenuOwner", c_ulong),
-		("hwndMoveSize", c_ulong),
-		("hwndCaret", c_ulong),
-		("rcCaret", RECT)
-	]
-

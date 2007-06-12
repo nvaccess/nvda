@@ -25,8 +25,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-import ctypes
-from ctypes import *
 
 class appModule(appModuleHandler.appModule):
 
@@ -510,20 +508,3 @@ class appModule(appModuleHandler.appModule):
 		keyboardHandler.passNextKeyThrough()
 		speech.speakMessage(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
-
-	#added by Sean Farrow<sean.farrow@seanfarrow.co.uk> to implement a say default button script
-	def script_say_default_button(self, keyPress, nextScript):
-		#find the Active Window.
-		ThreadInfo =winUser.GUITHREADINFO(cbSize=sizeof(winUser.GUITHREADINFO))
-		winUser.user32.GetGUIThreadInfo(0, byref(ThreadInfo))
-		windowClass=winUser.getClassName(ThreadInfo.hwndActive)
-		if windowClass =="#32770":
-			defaultButton=winUser.sendMessage(ThreadInfo.hwndActive,winUser.DM_GETDEFID,0,0)
-			if winUser.HIWORD(defaultButton) == winUser.DC_HASDEFID:
-				defaultButtonText=_("The default button is ")+winUser.getDlgItemText(ThreadInfo.hwndActive,winUser.LOWORD(defaultButton))
-				speech.speakMessage(defaultButtonText)
-		else:
-			speech.speakMessage(_("You are not in a dialog"))
-
-
-	script_say_default_button.__doc__ = _("Speak the default button in the current dialogue")
