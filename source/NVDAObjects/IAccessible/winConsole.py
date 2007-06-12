@@ -32,7 +32,7 @@ class WinConsole(IAccessible):
 		if not winUser.isWindow(self.windowHandle):
 			return
 		#Get the process ID of the console this NVDAObject is fore
-		processID,threadID=self.windowProcessID
+		processID=self.windowProcessID
 		#Attach NVDA to this console so we can access its text etc
 		res=winKernel.attachConsole(processID)
 		if not res:

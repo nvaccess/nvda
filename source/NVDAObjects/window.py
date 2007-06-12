@@ -50,13 +50,18 @@ An NVDAObject for a window
 		return winUser.getWindowText(self.windowHandle)
 
 	def _get_windowClassName(self):
-		return winUser.getClassName(self.windowHandle)
- 
-	def _get_windowControlID(self):
-		return winUser.getControlID(self.windowHandle)
+		if hasattr(self,"_windowClassName"):
+			return self._windowClassName
+		name=winUser.getClassName(self.windowHandle)
+ 		self._windowClassName=name
+		return name
 
-	def _get_typeString(self):
-		return self.windowClassName
+	def _get_windowControlID(self):
+		if hasattr(self,"_windowControlID"):
+			return self._windowControlID
+		ID=winUser.getControlID(self.windowHandle)
+		self._windowControlID=ID
+		return ID
 
 	def _get_location(self):
 		return winUser.getClientRect(self.windowHandle)
@@ -68,4 +73,13 @@ An NVDAObject for a window
 		return textBuf.value+u"\0"
 
 	def _get_windowProcessID(self):
-		return winUser.getWindowThreadProcessID(self.windowHandle)
+		if hasattr(self,"_processIDThreadID"):
+			return self._processIDThreadID[0]
+		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
+		return self._processIDThreadID[0]
+
+	def _get_windowThreadID(self):
+		if hasattr(self,"_processIDThreadID"):
+			return self._processIDThreadID[1]
+		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
+		return self._processIDThreadID[1]
