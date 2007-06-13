@@ -61,7 +61,7 @@ class WinConsole(IAccessible):
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		self.reviewOffset=self.text_caretOffset-info.windowRect.top*info.consoleSize.x
+		self.reviewOffset=self.caretOffset-info.windowRect.top*info.consoleSize.x
 		thread.start_new_thread(self.monitorThread,())
 		pythoncom.PumpWaitingMessages()
 		time.sleep(0.1)
@@ -100,7 +100,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor:
-			self.reviewOffset=self.text_caretOffset-info.windowRect.top*info.consoleSize.x
+			self.reviewOffset=self.caretOffset-info.windowRect.top*info.consoleSize.x
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -157,15 +157,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
-	def _get_text_reviewOffsetLimits(self):
-		if not hasattr(self,"consoleHandle"):
-			return (0,0) 
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		top=self.getOffsetFromConsoleCoord(0,info.windowRect.top)
-		bottom=self.getOffsetFromConsoleCoord(self.getConsoleHorizontalLength(),info.windowRect.bottom)
-		return (top,bottom)
-
-	def _get_text_caretOffset(self):
+	def _get_caretOffset(self):
 		if not hasattr(self,"consoleHandle"):
 			return 0
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -182,52 +174,6 @@ class WinConsole(IAccessible):
 		if not hasattr(self,"consoleHandle"):
 			return (0,0)
 		return (offset%self.getConsoleHorizontalLength(),offset/self.getConsoleHorizontalLength())
-
-	def text_getLineOffsets(self,offset):
-		if not hasattr(self,"consoleHandle"):
-			return (0,0)
-		start=offset-(offset%self.getConsoleHorizontalLength())
-		end=start+self.getConsoleHorizontalLength()
-		return (start,end)
-
-	def text_getNextLineOffsets(self,offset):
-		if not hasattr(self,"consoleHandle"):
-			return (0,0)
-		(x,y)=self.getConsoleCoordFromOffset(offset)
-		x=0
-		y+=1
-		newOffset=self.getOffsetFromConsoleCoord(x,y)
-		if newOffset<self.text_characterCount:
-			return self.text_getLineOffsets(newOffset)
-		else:
-			return None
-
-	def text_getPrevLineOffsets(self,offset):
-		if not hasattr(self,"consoleHandle"):
-			return (0,0)
-		(x,y)=self.getConsoleCoordFromOffset(offset)
-		x=0
-		if y<=0:
-			return None
-		y-=1
-		newOffset=self.getOffsetFromConsoleCoord(x,y)
-		if newOffset>=0:
-			return self.text_getLineOffsets(newOffset)
-		else:
-			return None
-
-	def _get_text_characterCount(self):
-		return self.getOffsetFromConsoleCoord(self.getConsoleHorizontalLength(),self.getConsoleVerticalLength()-1)
-
-	def text_getText(self,start=None,end=None):
-		if not hasattr(self,"consoleHandle"):
-			return "\0"
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else len(self.value)
-		(x,y)=self.getConsoleCoordFromOffset(start)
-		maxLen=end-start
-		text=winKernel.readConsoleOutputCharacter(self.consoleHandle,maxLen,x,y)
-		return text
 
 	def _get_consoleVisibleText(self):
 		if not hasattr(self,"consoleHandle"):
@@ -274,11 +220,6 @@ class WinConsole(IAccessible):
 						foundChange=True
 				if len(text)>0 and not text.isspace():
 					outLines.append(text)
-		if not foundChange and not outLines:
-			# We know that something has changed, but there doesn't appear to be any new text.
-			# Therefore, just speak the current line.
-			start, end = self.text_getLineOffsets(self.text_caretOffset)
-			#outLines.append(self.text_getText(start, end).strip())
 		return outLines
 
 	def script_protectConsoleKillKey(self,keyPress,nextScript):
@@ -290,26 +231,26 @@ class WinConsole(IAccessible):
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+c","protectConsoleKillKey"),
-	("ExtendedUp","text_moveByLine"),
-	("ExtendedDown","text_moveByLine"),
-	("ExtendedLeft","text_moveByCharacter"),
-	("ExtendedRight","text_moveByCharacter"),
-	("Control+ExtendedLeft","text_moveByWord"),
-	("Control+ExtendedRight","text_moveByWord"),
-	("Shift+ExtendedRight","text_changeSelection"),
-	("Shift+ExtendedLeft","text_changeSelection"),
-	("Shift+ExtendedHome","text_changeSelection"),
-	("Shift+ExtendedEnd","text_changeSelection"),
-	("Shift+ExtendedUp","text_changeSelection"),
-	("Shift+ExtendedDown","text_changeSelection"),
-	("Control+Shift+ExtendedLeft","text_changeSelection"),
-	("Control+Shift+ExtendedRight","text_changeSelection"),
-	("ExtendedHome","text_moveByCharacter"),
-	("ExtendedEnd","text_moveByCharacter"),
-	("control+extendedHome","text_moveByLine"),
-	("control+extendedEnd","text_moveByLine"),
-	("control+shift+extendedHome","text_changeSelection"),
-	("control+shift+extendedEnd","text_changeSelection"),
-	("ExtendedDelete","text_delete"),
-	("Back","text_backspace"),
+	("ExtendedUp","moveByLine"),
+	("ExtendedDown","moveByLine"),
+	("ExtendedLeft","moveByCharacter"),
+	("ExtendedRight","moveByCharacter"),
+	("Control+ExtendedLeft","moveByWord"),
+	("Control+ExtendedRight","moveByWord"),
+	("Shift+ExtendedRight","changeSelection"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Control+Shift+ExtendedLeft","changeSelection"),
+	("Control+Shift+ExtendedRight","changeSelection"),
+	("ExtendedHome","moveByCharacter"),
+	("ExtendedEnd","moveByCharacter"),
+	("control+extendedHome","moveByLine"),
+	("control+extendedEnd","moveByLine"),
+	("control+shift+extendedHome","changeSelection"),
+	("control+shift+extendedEnd","changeSelection"),
+	("ExtendedDelete","delete"),
+	("Back","backspace"),
 ]]

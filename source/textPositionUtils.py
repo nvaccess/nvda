@@ -1,2 +1,0 @@
-
-from text import *

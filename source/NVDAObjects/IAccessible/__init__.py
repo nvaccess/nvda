@@ -536,33 +536,6 @@ class Progman_client(IAccessible):
 	speakOnForeground=False
 	speakOnGainFocus=False
 
-class StaticText(IAccessible):
-
-	def _get_role(self):
-		return controlTypes.ROLE_STATICTEXT
-
-	def _get_text_characterCount(self):
-		return len(self.name)
-
-	def text_getText(self,start=None,end=None):
-		text=self.name
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else len(self.name)
-		return text[start:end]
-
-[StaticText.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","text_review_nextLine"),
-	("extendedUp","text_review_prevLine"),
-	("extendedLeft","text_review_prevCharacter"),
-	("extendedRight","text_review_nextCharacter"),
-	("extendedHome","text_review_startOfLine"),
-	("extendedEnd","text_review_endOfLine"),
-	("control+extendedLeft","text_review_prevWord"),
-	("control+extendedRight","text_review_nextWord"),
-	("control+extendedHome","text_review_top"),
-	("control+extendedEnd","text_review_bottom"),
-]]
-
 class OutlineItem(IAccessible):
 
 	def _get_level(self):
@@ -668,11 +641,6 @@ class MozillaListItem(IAccessible):
 			del children[0]
 		return children
 
-class MozillaText(IAccessible):
-
-	def text_getText(self,start=None,end=None):
-		return self.name
-
 class SHELLDLL_DefView_client(IAccessible):
 
 	speakOnGainFocus=False
@@ -759,12 +727,11 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
-	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
-	("Static",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
-	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
-	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
-	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
-	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"richEdit.RichEdit",
+	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
+	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
+	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
+	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	("MozillaUIWindowClass",None):"MozillaUIWindowClass",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
@@ -774,11 +741,6 @@ _staticMap={
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
-	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT):"StaticText",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MozillaText",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MozillaText",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
@@ -796,11 +758,10 @@ _staticMap={
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
 	("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
-	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
-	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"winEdit.WinEdit",
-	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winEdit.WinEdit",
-	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"StaticText",
-	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"richEdit.RichEdit",
+	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.Edit",
+	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.RichEdit20",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("SysTreeView32",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",

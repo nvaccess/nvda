@@ -1,4 +1,4 @@
-#NVDAObjects/WinEdit.py
+#NVDAObjects/Edit.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -32,6 +32,7 @@ EM_EXLINEFROMCHAR=winUser.WM_USER+54
 EM_EXSETSEL=winUser.WM_USER+55
 EM_GETCHARFORMAT=winUser.WM_USER+58
 EM_GETPARAFORMAT=winUser.WM_USER+61
+EM_GETTEXTRANGE=winUser.WM_USER+75
 EM_FINDWORDBREAK=winUser.WM_USER+76
 #Rich edit 2.0 messages
 EM_GETTEXTEX=winUser.WM_USER+94
@@ -44,6 +45,12 @@ class CharRangeStruct(ctypes.Structure):
 	_fields_=[
 		('cpMin',ctypes.c_long),
 		('cpMax',ctypes.c_long),
+	]
+
+class TextRangeStruct(ctypes.Structure):
+	_fields_=[
+		('chrg',CharRangeStruct),
+		('lpstrText',ctypes.c_wchar_p),
 	]
 
 class getTextExStruct(ctypes.Structure):
@@ -83,153 +90,10 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
-class WinEdit(IAccessible):
-
-	def _get_name(self):
-		name=super(WinEdit,self)._get_name()
-		if not isinstance(name,basestring):
-			name=""
-		if self.text_getText().strip()!=name.strip():
-			return name
-
-	def text_getText(self,start=None,end=None):
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else len(self.value)
-		if self.text_lineCount>1:
-			startLineNum=self.text_getLineNumber(start)-1
-			startOffset=start-self.text_getLineOffsets(start)[0]
-			endLineNum=self.text_getLineNumber(end-1)-1
-			lines=[]
-			for lineNum in xrange(startLineNum,endLineNum+1):
-				lineStart=winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
-				lineLength=winUser.sendMessage(self.windowHandle,EM_LINELENGTH,lineStart,0)
-				#em_getline needs a buffer in which to place a unicode string.
-				#However it must already contain the length of the line as its first word.
-				#We use a char array to hold the word, plus receive the line, then we cast to unicode 
-				buf=(ctypes.c_char*((lineLength*2)+2))()
-				buf.value=struct.pack('h',lineLength+1)
-				winUser.sendMessage(self.windowHandle,EM_GETLINE,lineNum,buf)
-				bufPtr=ctypes.cast(buf,ctypes.POINTER(ctypes.c_wchar*(lineLength+1)))
-				lines.append(bufPtr.contents.value[0:lineLength])
-			text="".join(lines)
-			text=text[startOffset:][:end-start]
-			if text=="":
-				text='\r'
-			return text
-		else:
-			text=self.windowText
-			return text[start:end]
-
-	def _get_text_characterCount(self):
-		return winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
- 
-	def _get_value(self):
-		return self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE).text
-
-
-	def _get_text_selectionCount(self):
-		if self.text_getSelectionOffsets(0) is not None:
-			return 1
-		else:
-			return 0
-
-	def text_getSelectionOffsets(self,index):
-		if index!=0:
-			return None
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		start=winUser.LOWORD(long)
-		end=winUser.HIWORD(long)
-		if start!=end:
-			return (start,end)
-		else:
-			return None
-
-	def _get_text_caretOffset(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		pos=winUser.LOWORD(long)
-		return pos
-
-	def _set_text_caretOffset(self,pos):
-		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
-
-	def text_getLineNumber(self,offset):
-		return winUser.sendMessage(self.windowHandle,EM_LINEFROMCHAR,offset,0)+1
-
-	def _get_text_lineCount(self):
-		return winUser.sendMessage(self.windowHandle,EM_GETLINECOUNT,0,0)
-
-	def text_getLineOffsets(self,offset):
-		if self.text_lineCount<1:
-			return (0,self.text_characterCount)
-		lineNum=self.text_getLineNumber(offset)-1
-		lineStart=winUser.sendMessage(self.windowHandle,EM_LINEINDEX,lineNum,0)
-		lineLength=winUser.sendMessage(self.windowHandle,EM_LINELENGTH,lineStart,0)
-		lineEnd=lineStart+lineLength
-		return (lineStart,lineEnd)
-
-	def text_getNextLineOffsets(self,offset):
-		(start,end)=self.text_getLineOffsets(offset)
-		startLineNum=self.text_getLineNumber(start)
-		if self.text_getLineNumber(end)!=startLineNum:
-			return self.text_getLineOffsets(end)
-		limit=self.text_characterCount
-		while end<limit:
-			end+=1
-			if self.text_getLineNumber(end)!=startLineNum:
-				return self.text_getLineOffsets(end)
-		return None
-
-	def event_valueChange(self):
-		pass
-
-	def _get_caretOffset(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		pos=winUser.LOWORD(long)
-		return pos
-
-	def _set_caretOffset(self,pos):
-		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
-
-	def _get_selectionOffsets(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		start=winUser.LOWORD(long)
-		end=winUser.HIWORD(long)
-		if start!=end:
-			return (start,end)
-		else:
-			return None
-
-[WinEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","text_moveByLine"),
-	("ExtendedDown","text_moveByLine"),
-	("ExtendedLeft","text_moveByCharacter"),
-	("ExtendedRight","text_moveByCharacter"),
-	("Control+ExtendedLeft","text_moveByWord"),
-	("Control+ExtendedRight","text_moveByWord"),
-	("Shift+ExtendedRight","text_changeSelection"),
-	("Shift+ExtendedLeft","text_changeSelection"),
-	("Shift+ExtendedHome","text_changeSelection"),
-	("Shift+ExtendedEnd","text_changeSelection"),
-	("Shift+ExtendedUp","text_changeSelection"),
-	("Shift+ExtendedDown","text_changeSelection"),
-	("Control+Shift+ExtendedLeft","text_changeSelection"),
-	("Control+Shift+ExtendedRight","text_changeSelection"),
-	("ExtendedHome","text_moveByCharacter"),
-	("ExtendedEnd","text_moveByCharacter"),
-	("control+extendedHome","text_moveByLine"),
-	("control+extendedEnd","text_moveByLine"),
-	("control+shift+extendedHome","text_changeSelection"),
-	("control+shift+extendedEnd","text_changeSelection"),
-	("ExtendedDelete","text_delete"),
-	("Back","text_backspace"),
-]]
-
-class TextInfo(text.TextInfo):
-
-	APIVersion=0
+class EditTextInfo(text.TextInfo):
 
 	def _getSelOffsets(self):
-		if self.APIVersion>=1:
+		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
 			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,self.obj.windowProcessID)
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -241,8 +105,8 @@ class TextInfo(text.TextInfo):
 			long=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,0,0)
 			return [winUser.LOWORD(long),winUser.HIWORD(long)]
 
-	def _getTextLength(self):
-		if self.APIVersion>=2:
+	def _getStoryLength(self):
+		if self.obj.editAPIVersion>=2:
 			info=getTextLengthExStruct()
 			info.flags=GTL_NUMCHARS
 			info.codepage=1200
@@ -255,28 +119,29 @@ class TextInfo(text.TextInfo):
 		else:
 			return winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 
-	def _getText(self,textLength):
-		if self.APIVersion>=2:
-			info=getTextExStruct()
-			info.codepage=1200
-			info.cb=textLength
+	def _getText(self,start,end):
+		if self.obj.editAPIVersion>=2:
+			bufLen=((end-start)+1)*2
+			textRange=TextRangeStruct()
+			textRange.chrg.cpMin=start
+			textRange.chrg.cpMax=end
 			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
-			internalInfo=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
-			internalBuf=winKernel.virtualAllocEx(processHandle,None,textLength*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTEX,internalInfo,internalBuf)
-			winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
-			buf=ctypes.create_unicode_buffer(textLength)
-			winKernel.readProcessMemory(processHandle,internalBuf,buf,textLength*2,None)
+			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			textRange.lpstrText=internalBuf
+			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
+			winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
+			winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
+			buf=ctypes.create_unicode_buffer(bufLen)
+			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			return buf.value
 		else:
-			return self.obj.windowText
+			return self.obj.windowText[start:end]
 
 	def _getExWordOffsets(self,offset):
 		start=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,offset)
 		end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,start)
-		#speech.speakMessage("offset: %s, word start: %s, word end: %s"%(offset,start,end))
 		if end<=offset:
 			start=end
 			end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
@@ -284,7 +149,7 @@ class TextInfo(text.TextInfo):
 
 
 	def _lineNumFromOffset(self,offset):
-		if self.APIVersion>=1:
+		if self.obj.editAPIVersion>=1:
 			return winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
 		else:
 			return winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
@@ -321,12 +186,12 @@ class TextInfo(text.TextInfo):
 		self._lineLength=_lineLength
 
 	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_storyText=None,_storyLength=None,_lineNum=None,_lineText=None,_lineStartOffset=None,_lineLength=None):
-		super(TextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
+		super(EditTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
 		#Find out the size of the entire text
 		if _storyLength is not None:
 			self._storyLength=_storyLength
 		else:
-				self._storyLength=self._getTextLength()
+				self._storyLength=self._getStoryLength()
 		#Translate the position in to offsets and cache it
 		if position==text.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
@@ -344,14 +209,13 @@ class TextInfo(text.TextInfo):
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 		#If working with in a line, grab its text
-		#Otherwise grab the entire text
-		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnitIn [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
+		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
 			self._updateLineCache(_lineNum=_lineNum,_lineText=_lineText,_lineStartOffset=_lineStartOffset,_lineLength=_lineLength)
-		else:
+		elif expandToUnit==text.UNIT_PARAGRAPH:
 			if _storyText is not None:
 				self._storyText=_storyText
 			else:
-				self._storyText=self._getText(self._storyLength)
+				self._storyText=self._getText(0,self._storyLength)
 			if len(self._storyText)==0:
 				self._storyText="\0"
 		#Set the start and end offsets from expanding position to a unit 
@@ -359,7 +223,7 @@ class TextInfo(text.TextInfo):
 			self._startOffset=self._startOffset
 			self._endOffset=self.startOffset+1
 		elif expandToUnit==text.UNIT_WORD:
-			if self.APIVersion>=1:
+			if self.obj.editAPIVersion>=1:
 				(self._startOffset,self._endOffset)=self._getExWordOffsets(self._startOffset)
 			else:
 				self._startOffset=text.findStartOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset 
@@ -367,19 +231,22 @@ class TextInfo(text.TextInfo):
 		elif expandToUnit==text.UNIT_LINE:
 			self._startOffset=self._lineStartOffset
 			self._endOffset=self._lineStartOffset+self._lineLength
+		elif expandToUnit==text.UNIT_PARAGRAPH:
+			self._startOffset=text.findStartOfLine(self._storyText,self._startOffset)
+			self._endOffset=text.findEndOfLine(self._storyText,self._startOffset)
 		elif expandToUnit==text.UNIT_SCREEN:
-			self._startOffset=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,winUser.sendMessage(self.obj.windowHandle,EM_GETFIRSTVISIBLELINE,0,0),0)
+			self._startOffset=0 #winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,winUser.sendMessage(self.obj.windowHandle,EM_GETFIRSTVISIBLELINE,0,0),0)
 			self._endOffset=self._storyLength
 		elif expandToUnit==text.UNIT_STORY:
 			self._startOffset=0
 			self._endOffset=self._storyLength
-		else:
-			raise NotImplementedError("unit: %s not supported"%unit)
+		elif expandToUnit is not None:
+			raise NotImplementedError("unit: %s not supported"%expandToUnit)
 		if limitToUnit==text.UNIT_CHARACTER:
 			self._lowOffsetLimit=self._startOffset
 			self._highOffsetLimit=self._lowOffsetLimit+1
 		elif limitToUnit==text.UNIT_WORD:
-			if self.APIVersion>=1:
+			if self.obj.editAPIVersion>=1:
 				(self._lowOffsetLimit,self._highOffsetLimit)=self._getExWordOffsets(self._startOffset)
 			else:
 				self._lowOffsetLimit=text.findStartOfWord(self._lineText,self._lowOffsetLimit-self._lineStartOffset)+self._lineStartOffset 
@@ -387,6 +254,9 @@ class TextInfo(text.TextInfo):
 		elif limitToUnit==text.UNIT_LINE:
 			self._lowOffsetLimit=self._lineStartOffset
 			self._highOffsetLimit=self._lineStartOffset+self._lineLength
+		elif limitToUnit==text.UNIT_PARAGRAPH:
+			self._lowOffsetLimit=text.findStartOfLine(self._storyText,self._startOffset)
+			self._highOffsetLimit=text.findEndOfLine(self._storyText,self._startOffset)
 		elif limitToUnit==text.UNIT_SCREEN:
 			self._lowOffsetLimit=0 #winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,winUser.sendMessage(self.obj.windowHandle,EM_GETFIRSTVISIBLELINE,0,0),0)
 			self._highOffsetLimit=self._storyLength
@@ -403,10 +273,12 @@ class TextInfo(text.TextInfo):
 		return self._endOffset
 
 	def _get_text(self):
-		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or limitToUnitIn [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
+		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or self.limitUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
 			return self._lineText[self._startOffset-self._lineStartOffset:self._endOffset-self._lineStartOffset]
-		else:
+		elif self.unit==text.UNIT_PARAGRAPH:
 			return self._storyText[self._startOffset:self._endOffset]
+		else:
+			return self._getText(self._startOffset,self._endOffset)
 
 	def getRelatedUnit(self,relation):
 		if self.unit is None:
@@ -436,4 +308,65 @@ class TextInfo(text.TextInfo):
 			raise RuntimeError("no unit specified")
 		return True
 
-WinEdit.TextInfo=TextInfo
+
+class Edit(IAccessible):
+
+	TextInfo=EditTextInfo
+	editAPIVersion=0
+
+	def _get_value(self):
+		return self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE).text
+
+	def event_valueChange(self):
+		pass
+
+	def _get_caretOffset(self):
+		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
+		pos=winUser.LOWORD(long)
+		return pos
+
+	def _set_caretOffset(self,pos):
+		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
+
+	def _get_selectionOffsets(self):
+		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
+		start=winUser.LOWORD(long)
+		end=winUser.HIWORD(long)
+		if start!=end:
+			return (start,end)
+		else:
+			return None
+
+[Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","moveByLine"),
+	("ExtendedDown","moveByLine"),
+	("ExtendedLeft","moveByCharacter"),
+	("ExtendedRight","moveByCharacter"),
+	("Control+ExtendedLeft","moveByWord"),
+	("Control+ExtendedRight","moveByWord"),
+	("Shift+ExtendedRight","changeSelection"),
+	("control+extendedDown","moveByParagraph"),
+	("control+extendedUp","moveByParagraph"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Control+Shift+ExtendedLeft","changeSelection"),
+	("Control+Shift+ExtendedRight","changeSelection"),
+	("ExtendedHome","moveByCharacter"),
+	("ExtendedEnd","moveByCharacter"),
+	("control+extendedHome","moveByLine"),
+	("control+extendedEnd","moveByLine"),
+	("control+shift+extendedHome","changeSelection"),
+	("control+shift+extendedEnd","changeSelection"),
+	("ExtendedDelete","delete"),
+	("Back","backspace"),
+]]
+
+class RichEdit(Edit):
+	editAPIVersion=1
+
+class RichEdit20(RichEdit):
+	editAPIVersion=2
+

@@ -9,6 +9,7 @@
 import winUser
 import ctypes
 import time
+import winsound
 import pyHook
 import nvwh
 import debug
@@ -143,7 +144,8 @@ def internal_keyUpEvent(keyInfo):
 
 @nvwh.userCharCallbackType
 def internal_typeCharacterEvent(ch):
-	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakTypedCharacters,unichr(ch))
+	if ch>=32:
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(ch))
 
 #Register internal key press event with  operating system
 

@@ -7,17 +7,105 @@
 """Module that contains the base NVDA object type"""
 from new import instancemethod
 import baseObject
+import debug
 import speech
-from keyUtils import key, sendKey
+from keyUtils import key, sendKey, isKeyWaiting
 import globalVars
 import api
-from textPositionUtils import *
-import textBuffer
 import text
 import config
 import controlTypes
+import baseObject
 
-class NVDAObject(textBuffer.textBufferObject):
+class NVDAObjectTextInfo(text.TextInfo):
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_text=None):
+		super(NVDAObjectTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
+		#cache the text of the object, either from a parameter, or get it from the object
+		if _text is not None:
+			self._text=_text
+		else:
+			self._text=self.obj.textRepresentation
+			if not self._text:
+				self._text="\0"
+		#Translate the position in to offsets and cache it
+		if position==text.POSITION_FIRST:
+			self._startOffset=self._endOffset=0
+		elif position==text.POSITION_LAST:
+			self._startOffset=self._endOffset=len(self._text)-1
+		elif position==text.POSITION_CARET:
+			self._startOffset=self._endOffset=obj.caretOffset
+		elif position==text.POSITION_SELECTION:
+			(self._startOffset,self._endOffset)=obj.selectionOffsets
+		elif isinstance(position,text.OffsetPosition):
+			self._startOffset=self._endOffset=position.offset
+		elif isinstance(position,text.OffsetsPosition):
+			self._startOffset=position.start
+			self._endOffset=position.end
+		else:
+			raise NotImplementedError("position: %s not supported"%position)
+		#Set the start and end offsets from expanding position to a unit 
+		if expandToUnit is text.UNIT_CHARACTER:
+			self._startOffset=self._startOffset
+			self._endOffset=self.startOffset+1
+		elif expandToUnit is text.UNIT_WORD:
+			self._startOffset=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength) 
+			self._endOffset=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif expandToUnit is text.UNIT_LINE:
+			self._startOffset=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._endOffset=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+			self._startOffset=0
+			self._endOffset=len(self._text)
+		elif expandToUnit is not None:
+			raise NotImplementedError("unit: %s not supported"%unit)
+		if limitToUnit in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
+			self._lowOffsetLimit=0
+			self._highOffsetLimit=len(self._text)-1
+		elif limitToUnit is text.UNIT_CHARACTER:
+			self._lowOffsetLimit=self._startOffset
+			self._highOffset=self._lowOffsetLimit+1
+		elif limitToUnit is text.UNIT_WORD:
+			self._lowOffsetLimit=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._highOffsetLimit=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		elif limitToUnit is text.UNIT_LINE:
+			self._lowOffsetLimit=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+			self._highOffsetLimit=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
+		else:
+			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
+
+	def _get_startOffset(self):
+		return self._startOffset
+
+	def _get_endOffset(self):
+		return self._endOffset
+
+	def _get_text(self):
+		return self._text[self._startOffset:self._endOffset]
+
+	def getRelatedUnit(self,relation):
+		if self.unit is None:
+			raise RuntimeError("no unit specified")
+		if relation==text.UNITRELATION_NEXT:
+			newOffset=self._endOffset
+		elif relation==text.UNITRELATION_PREVIOUS:
+			newOffset=self._startOffset-1
+		elif relation==text.UNITRELATION_FIRST:
+			newOffset=self._lowOffsetLimit
+		elif relation==text.UNITRELATION_LAST:
+			newOffset=self._highOffsetLimit-1
+		else:
+			raise NotImplementedError("unit relation: %s not supported"%relation)
+		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
+			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
+		return self.__class__(self.obj,text.OffsetPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+
+	def _get_inUnit(self):
+		if self.unit is None:
+			raise RuntimeError("no unit specified")
+		return True
+
+class NVDAObject(baseObject.scriptableObject):
 	"""
 The baseType NVDA object. All other NVDA objects are based on this one.
 @ivar _hashLimit: The limit in size for a hash of this object
@@ -70,8 +158,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
+	TextInfo=NVDAObjectTextInfo
+
 	def __init__(self):
-		textBuffer.textBufferObject.__init__(self)
 		self._oldValue=None
 		self._oldStates=self.states
 		self._oldName=None
@@ -243,9 +332,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_textRepresentation(self):
 		return " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 
-	def event_caret(self):
-		self.text_reviewOffset=self.text_caretOffset
-
 	def event_valueChange(self):
 		value=self.value
 		if self.hasFocus and value!=self._oldValue:
@@ -273,92 +359,90 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None):
 		return self.TextInfo(self,position,expandToUnit,limitToUnit)
 
-class TextInfo(text.TextInfo):
+	def script_moveByLine(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE)
+			speech.speakText(textInfo.text)
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_text=None):
-		super(self.__class__,self).__init__(obj,position,expandToUnit,limitToUnit)
-		#cache the text of the object, either from a parameter, or get it from the object
-		if _text is not None:
-			self._text=_text
+	def script_moveByCharacter(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+			speech.speakSymbol(textInfo.text)
+
+	def script_moveByWord(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_WORD)
+			speech.speakText(textInfo.text)
+
+	def script_moveByParagraph(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_PARAGRAPH)
+			speech.speakText(textInfo.text)
+
+	def script_backspace(self,keyPress,nextScript):
+		textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+		oldOffset=textInfo.startOffset
+		if oldOffset>0:
+			delChar=textInfo.getRelatedUnit(text.UNITRELATION_PREVIOUS).text
+			sendKey(keyPress)
+			if not isKeyWaiting():
+				api.processPendingEvents()
+				textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+				newOffset=textInfo.startOffset
+				if newOffset<oldOffset:
+					speech.speakSymbol(delChar)
 		else:
-			self._text=self.obj.textRepresentation
-			if not self._text:
-				self._text="\0"
-		#Translate the position in to offsets and cache it
-		if position==text.POSITION_FIRST:
-			self._startOffset=self._endOffset=0
-		elif position==text.POSITION_LAST:
-			self._startOffset=self._endOffset=len(self._text)-1
-		elif position==text.POSITION_CARET:
-			self._startOffset=self._endOffset=obj.caretOffset
-		elif position==text.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=obj.selectionOffsets
-		elif isinstance(position,text.OffsetPosition):
-			self._startOffset=self._endOffset=position.offset
-		elif isinstance(position,text.OffsetsPosition):
-			self._startOffset=position.start
-			self._endOffset=position.end
-		else:
-			raise NotImplementedError("position: %s not supported"%position)
-		#Set the start and end offsets from expanding position to a unit 
-		if expandToUnit is text.UNIT_CHARACTER:
-			self._startOffset=self._startOffset
-			self._endOffset=self.startOffset+1
-		elif expandToUnit is text.UNIT_WORD:
-			self._startOffset=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength) 
-			self._endOffset=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif expandToUnit is text.UNIT_LINE:
-			self._startOffset=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._endOffset=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
-			self._startOffset=0
-			self._endOffset=len(self._text)
-		elif expandToUnit is not None:
-			raise NotImplementedError("unit: %s not supported"%unit)
-		if limitToUnit in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
-			self._lowOffsetLimit=0
-			self._highOffsetLimit=len(self._text)-1
-		elif limitToUnit is text.UNIT_CHARACTER:
-			self._lowOffsetLimit=self._startOffset
-			self._highOffset=self._lowOffsetLimit+1
-		elif limitToUnit is text.UNIT_WORD:
-			self._lowOffsetLimit=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._highOffsetLimit=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif limitToUnit is text.UNIT_LINE:
-			self._lowOffsetLimit=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._highOffsetLimit=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		else:
-			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
+			sendKey(keyPress)
 
-	def _get_startOffset(self):
-		return self._startOffset
+	def script_delete(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+			speech.speakSymbol(textInfo.text)
 
-	def _get_endOffset(self):
-		return self._endOffset
+	def script_changeSelection(self,keyPress,nextScript):
+		oldObj=api.getFocusObject()
+		textInfo=oldObj.makeTextInfo(text.POSITION_SELECTION)
+		oldStart=textInfo.startOffset
+		oldEnd=textInfo.endOffset
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			newObj=api.getFocusObject()
+			textInfo=newObj.makeTextInfo(text.POSITION_SELECTION)
+			newStart=textInfo.startOffset
+			newEnd=textInfo.endOffset
+			mode=None
+			mode_selected=_("selected")
+			mode_unselected=_("unselected")
+			if newEnd>oldEnd:
+				mode=mode_selected
+				fromOffset=oldEnd
+				toOffset=newEnd
+			elif newStart<oldStart:
+				mode=mode_selected
+				fromOffset=newStart
+				toOffset=oldStart
+			elif oldEnd>newEnd:
+				mode=mode_unselected
+				fromOffset=newEnd
+				toOffset=oldEnd
+			elif oldStart<newStart:
+				mode=mode_unselected
+				fromOffset=oldStart
+				toOffset=newStart
+			if isinstance(mode,basestring):
+				selectingText=newObj.makeTextInfo(text.OffsetsPosition(fromOffset,toOffset)).text
+				if len(selectingText)==1:
+					selectingText=speech.processSymbol(selectingText)
+				speech.speakMessage("%s %s"%(mode,selectingText))
 
-	def _get_text(self):
-		return self._text[self._startOffset:self._endOffset]
-
-	def getRelatedUnit(self,relation):
-		if self.unit is None:
-			raise RuntimeError("no unit specified")
-		if relation==text.UNITRELATION_NEXT:
-			newOffset=self._endOffset
-		elif relation==text.UNITRELATION_PREVIOUS:
-			newOffset=self._startOffset-1
-		elif relation==text.UNITRELATION_FIRST:
-			newOffset=self._lowOffsetLimit
-		elif relation==text.UNITRELATION_LAST:
-			newOffset=self._highOffsetLimit-1
-		else:
-			raise NotImplementedError("unit relation: %s not supported"%relation)
-		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
-			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
-		return self.__class__(self.obj,text.OffsetPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
-
-	def _get_inUnit(self):
-		if self.unit is None:
-			raise RuntimeError("no unit specified")
-		return True
-
-NVDAObject.TextInfo=TextInfo
