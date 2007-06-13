@@ -273,6 +273,16 @@ class TextInfo(text.TextInfo):
 		else:
 			return self.obj.windowText
 
+	def _getExWordOffsets(self,offset):
+		start=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,offset)
+		end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,start)
+		#speech.speakMessage("offset: %s, word start: %s, word end: %s"%(offset,start,end))
+		if end<=offset:
+			start=end
+			end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
+		return [start,end]
+
+
 	def _lineNumFromOffset(self,offset):
 		if self.APIVersion>=1:
 			return winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
@@ -349,8 +359,11 @@ class TextInfo(text.TextInfo):
 			self._startOffset=self._startOffset
 			self._endOffset=self.startOffset+1
 		elif expandToUnit==text.UNIT_WORD:
-			self._startOffset=text.findStartOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset 
-			self._endOffset=text.findEndOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset
+			if self.APIVersion>=1:
+				(self._startOffset,self._endOffset)=self._getExWordOffsets(self._startOffset)
+			else:
+				self._startOffset=text.findStartOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset 
+				self._endOffset=text.findEndOfWord(self._lineText,self._startOffset-self._lineStartOffset)+self._lineStartOffset
 		elif expandToUnit==text.UNIT_LINE:
 			self._startOffset=self._lineStartOffset
 			self._endOffset=self._lineStartOffset+self._lineLength
@@ -366,8 +379,11 @@ class TextInfo(text.TextInfo):
 			self._lowOffsetLimit=self._startOffset
 			self._highOffsetLimit=self._lowOffsetLimit+1
 		elif limitToUnit==text.UNIT_WORD:
-			self._lowOffsetLimit=text.findStartOfWord(self._lineText,self._lowOffsetLimit-self._lineStartOffset)+self._lineStartOffset 
-			self._highOffsetLimit=text.findEndOfWord(self._lineText,self._startOffsetLimit-self._lineStartOffset)+self._lineStartOffset
+			if self.APIVersion>=1:
+				(self._lowOffsetLimit,self._highOffsetLimit)=self._getExWordOffsets(self._startOffset)
+			else:
+				self._lowOffsetLimit=text.findStartOfWord(self._lineText,self._lowOffsetLimit-self._lineStartOffset)+self._lineStartOffset 
+				self._highOffsetLimit=text.findEndOfWord(self._lineText,self._startOffsetLimit-self._lineStartOffset)+self._lineStartOffset
 		elif limitToUnit==text.UNIT_LINE:
 			self._lowOffsetLimit=self._lineStartOffset
 			self._highOffsetLimit=self._lineStartOffset+self._lineLength
