@@ -8,7 +8,6 @@ import struct
 import ctypes
 import comtypes.automation
 import comtypesClient
-import oleTypes
 import win32com.client
 import pythoncom
 import winUser
@@ -312,20 +311,7 @@ class TextInfo(text.TextInfo):
 		return self._range.End
 
 	def _get_text(self):
-		obj=self._range.getEmbeddedObject()
-		if ctypes.cast(obj,ctypes.c_void_p).value==None:
-			return ""
-		obj=obj.QueryInterface(oleTypes.IOleObject)
-		clipFormat=oleTypes.wireCLIPFORMAT()
-		clipFormat.u.dwValue=winUser.CF_TEXT
-		format=oleTypes.tagFORMATETC
-		format.cfFormat=clipFormat
-		format.ptd=None
-		format.dwAspect=1
-		format.lindex=0
-		format.tymed=1
-
-		return ""
+		return self._range.text
 
 	def getRelatedUnit(self,relation):
 		unit=self.unitMap.get(self.unit,None)
