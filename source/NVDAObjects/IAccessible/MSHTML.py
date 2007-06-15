@@ -15,10 +15,128 @@ import winUser
 import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
+import text
 import speech
 import controlTypes
 from . import IAccessible
  
+class MSHTMLTextRangePosition(text.Position):
+
+	def __init__(self,textRange):
+		self.textRange=textRange
+
+	def compareStart(self,p):
+		res=self.textRange.compareEndPoints("startToStart",p.textRange)
+		return res
+
+	def compareEnd(self,p):
+		return self.textRange.compareEndPoints("endToEnd",p.textRange)
+
+class MSHTMLTextInfo(text.TextInfo):
+
+	def _expandToLine(self,textRange):
+		if self.basePosition in [text.POSITION_CARET,text.POSITION_SELECTION]:
+			oldSelMark=self.obj.dom.selection.createRange().getBookmark()
+			sendKey(key("ExtendedEnd"))
+			api.processPendingEvents()
+			textRange.setEndPoint("endToEnd",self.obj.dom.selection.createRange())
+			sendKey(key("ExtendedHome"))
+			api.processPendingEvents()
+			textRange.setEndPoint("startToStart",self.obj.dom.selection.createRange())
+			self.obj.dom.selection.createRange().moveToBookmark(oldSelMark)
+		else:
+			textRange.expand("sentence")
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
+		super(MSHTMLTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
+		if isinstance(position,MSHTMLTextRangePosition):
+			self._rangeObj=position.textRange
+			if expandToUnit:
+				self._rangeObj.collapse()
+		else:
+			self._rangeObj=self.obj.dom.selection.createRange().duplicate()
+		if position==text.POSITION_CARET:
+			self._rangeObj.collapse()
+		#Expand the position if its character, word or paragraph
+		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
+			self._rangeObj.expand(expandToUnit)
+		elif expandToUnit==text.UNIT_LINE:
+			self._expandToLine(self._rangeObj)
+		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+			self._rangeObj.expand("textedit")
+		elif expandToUnit is not None:
+			raise NotImplementedError("unit: %s"%expandToUnit)
+		self._limitRangeObj=self.obj.dom.selection.createRange().duplicate()
+		if limitToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
+			self._limitRangeObj.expand(limitToUnit)
+		elif limitToUnit==text.UNIT_LINE:
+			self._expandToLine(self._limitRangeObj)
+		elif limitToUnit in [text.UNIT_SCREEN,text.UNIT_STORY,None]:
+			self._limitRangeObj.expand("textedit")
+		else:
+			raise NotImplementedError("unit: %s"%limitToUnit)
+
+	def _get_position(self):
+		return MSHTMLTextRangePosition(self._rangeObj.duplicate())
+
+	def _get_text(self):
+		return self._rangeObj.text
+
+	def calculateSelectionChangedInfo(self,info):
+		selInfo=text.TextSelectionChangedInfo()
+		before=self._rangeObj.duplicate()
+		after=info._rangeObj.duplicate()
+		leftDelta=before.compareEndPoints("startToStart",after)
+		rightDelta=before.compareEndPoints("endToEnd",after)
+		afterLen=after.compareEndPoints("startToEnd",after)
+		mode=None
+		selectingText=None
+		if leftDelta<0:
+			mode=text.SELECTIONMODE_UNSELECTED
+			before.setEndPoint("endToStart",after)
+			selectingText=before.text
+		elif leftDelta>0:
+			mode=text.SELECTIONMODE_SELECTED
+			after.setEndPoint("endToStart",before)
+			selectingText=after.text
+		elif rightDelta>0:
+			mode=text.SELECTIONMODE_UNSELECTED
+			before.setEndPoint("startToEnd",after)
+			selectingText=before.text
+		elif rightDelta<0:
+			mode=text.SELECTIONMODE_SELECTED
+			after.setEndPoint("startToEnd",before)
+			selectingText=after.text
+		selInfo.mode=mode
+		selInfo.text=selectingText
+		return selInfo
+
+	def getRelatedUnit(self,relation):
+		if self.unit is None:
+			raise RuntimeError("No unit")
+		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
+			unit=self.unit
+		elif self.unit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+			unit="textedit"
+		elif self.unit==text.UNIT_LINE:
+			unit="sentence"
+		newRangeObj=self._rangeObj.duplicate()
+		res=0
+		if relation==text.UNITRELATION_NEXT:
+			res=newRangeObj.move(unit,1)
+		elif relation==text.UNITRELATION_PREVIOUS:
+			res=newRangeObj.move(unit,-1)
+		elif relation==text.UNITRELATION_FIRST:
+			res=newRangeObj.move("textedit",-1)
+		elif relation==text.UNITRELATION_LAST:
+			res=newRangeObj.move("textedit",1)
+			res=newRangeObj.move("character",-1)
+		newRangeObj.collapse()
+		if res and self._limitRangeObj.compareEndPoints("startToStart",newRangeObj)<=0 and self._limitRangeObj.compareEndPoints("endToEnd",newRangeObj)>=0: 
+			return self.__class__(self.obj,MSHTMLTextRangePosition(newRangeObj),expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		else:
+			raise text.E_noRelatedUnit
+
 class MSHTML(IAccessible):
 
 	def getDocumentObjectModel(self):
@@ -35,10 +153,9 @@ class MSHTML(IAccessible):
 
 	def _get_value(self):
 		if self.isContentEditable:
-			r=self.text_getLineOffsets(self.text_caretOffset)
-			if r:
-				return self.text_getText(r[0],r[1])
-		return ""
+			return self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE).text
+		else:
+			return ""
 
 	def _get_isContentEditable(self):
 		if hasattr(self,'dom') and self.dom.activeElement.isContentEditable:
@@ -46,208 +163,13 @@ class MSHTML(IAccessible):
 		else:
 			return False
 
-	def getOffsetBias(self):
-		r=self.dom.selection.createRange().duplicate()
-		r.move("textedit",-1)
-		return ord(r.getBookmark()[2])
-
-	def getLineNumBias(self):
-		r=self.dom.selection.createRange().duplicate()
-		r.move("textedit",-1)
-		return ord(r.getBookmark()[8])
-
-	def getBookmarkOffset(self,bookmark):
-		lineNum=(ord(bookmark[8])-self.getLineNumBias())/2
-		return ord(bookmark[2])-self.getOffsetBias()-lineNum
-
-	def getBookmarkOffsets(self,bookmark):
-		start=self.getBookmarkOffset(bookmark)
-		if ord(bookmark[1])==3:
-			lineNum=(ord(bookmark[8])-self.getLineNumBias())/2
-			end=ord(bookmark[40])-self.getOffsetBias()-lineNum
-		else:
-			end=start
-		return (start,end)
-
-	def getDomRange(self,start,end):
-		r=self.dom.selection.createRange().duplicate()
-		r.move("textedit",-1)
-		r.move("character",start)
-		if end!=start:
-			r.moveEnd("character",end-start)
-		return r
-
-	def _get_text_characterCount(self):
-		if not hasattr(self,'dom'):
-			return 0
-		r=self.dom.selection.createRange().duplicate()
-		r.expand("textedit")
-		bookmark=r.getBookmark()
-		return self.getBookmarkOffsets(bookmark)[1]
-
-	def text_getText(self,start=None,end=None):
-		if not hasattr(self,'dom'):
-			return "\0"
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else self.text_characterCount
-		r=self.getDomRange(start,end)
-		return r.text
-
-	def _get_text_selectionCount(self):
-		if not hasattr(self,'dom'):
-			return 0
-		bookmark=self.dom.selection.createRange().getBookmark()
-		if ord(bookmark[1])==3:
-			return 1
-		else:
-			return 0
-
-	def text_getSelectionOffsets(self,index):
-		if not hasattr(self,'dom') or (index!=0) or (self.text_selectionCount!=1):
-			return None
-		bookmark=self.dom.selection.createRange().getBookmark()
-		return self.getBookmarkOffsets(bookmark)
-
-	def _get_text_caretOffset(self):
-		if not hasattr(self,'dom'):
-			return 0
-		bookmark=self.dom.selection.createRange().getBookmark()
-		return self.getBookmarkOffset(bookmark)
-
-	def _set_text_caretOffset(self,offset):
-		if not hasattr(self,'dom'):
-			return
-		r=self.getDomRange(offset,offset)
-		bookmark=r.getBookmark()
-		self.dom.selection.createRange().moveToBookmark(bookmark)
-
-	def text_getLineNumber(self,offset):
-		r=self.getDomRange(offset,offset)
-		return (ord(r.getBookmark()[8])-self.lineNumBias)/2
-
-	def text_getLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return
-		oldBookmark=self.dom.selection.createRange().getBookmark()
-		r=self.getDomRange(offset,offset)
-		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
-		sendKey(key("ExtendedEnd"))
-		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		sendKey(key("ExtendedHome"))
-		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		return (start,end)
-
-	def text_getNextLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return
-		oldBookmark=self.dom.selection.createRange().getBookmark()
-		r=self.getDomRange(offset,offset)
-		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
-		sendKey(key("extendedDown"))
-		sendKey(key("ExtendedEnd"))
-		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		sendKey(key("ExtendedHome"))
-		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		if start>offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getPrevLineOffsets(self,offset):
-		if not hasattr(self,'dom'):
-			return
-		oldBookmark=self.dom.selection.createRange().getBookmark()
-		r=self.getDomRange(offset,offset)
-		self.dom.selection.createRange().moveToBookmark(r.getBookmark())
-		sendKey(key("extendedUp"))
-		sendKey(key("ExtendedEnd"))
-		end=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		sendKey(key("ExtendedHome"))
-		start=self.getBookmarkOffset(self.dom.selection.createRange().getBookmark())
-		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		if end<=offset and start<offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getWordOffsets(self,offset):
-		r=self.getDomRange(offset,offset+1)
-		r.expand("word")
-		return self.getBookmarkOffsets(r.getBookmark())
-
-	def text_getNextWordOffsets(self,offset):
-		r=self.getDomRange(offset,offset)
-		r.move("word",1)
-		r.expand("word")
-		(start,end)=self.getBookmarkOffsets(r.getBookmark())
-		if start>offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getPrevWordOffsets(self,offset):
-		r=self.getDomRange(offset,offset)
-		r.move("word",-1)
-		r.expand("word")
-		(start,end)=self.getBookmarkOffsets(r.getBookmark())
-		if end<=offset and start<offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getSentenceOffsets(self,offset):
-		r=self.getDomRange(offset,offset)
-		r.expand("sentence")
-		return self.getBookmarkOffsets(r.getBookmark())
-
-	def text_getNextSentenceOffsets(self,offset):
-		r=self.getDomRange(offset,offset)
-		r.move("sentence",1)
-		r.expand("sentence")
-		(start,end)=self.getBookmarkOffsets(r.getBookmark())
-		if start>offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getPrevSentenceOffsets(self,offset):
-		r=self.getDomRange(offset,offset)
-		r.move("sentence",-1)
-		r.expand("sentence")
-		(start,end)=self.getBookmarkOffsets(r.getBookmark())
-		if end<=offset and start<offset:
-			return (start,end)
-		else:
-			return None
-
-	def text_getFieldOffsets(self,offset):
-		r=self.text_getSentenceOffsets(offset)
-		if r is None:
-			r=self.text_getLineOffsets(offset)
-		return r
-
-	def text_getNextFieldOffsets(self,offset):
-		r=self.text_getNextSentenceOffsets(offset)
-		if r is None:
-			r=self.text_getNextLineOffsets(offset)
-		return r
-
-	def text_getPrevFieldOffsets(self,offset):
-		r=self.text_getPrevSentenceOffsets(offset)
-		if r is None:
-			r=self.text_getPrevLineOffsets(offset)
-		return r
-
 	def event_gainFocus(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE and self.IAccessibleObjectID==-4:
 			return
 		self.dom=self.getDocumentObjectModel()
-		self.lineNumBias=self.getLineNumBias()
-		self.offsetBias=self.getOffsetBias()
 		if self.dom.body.isContentEditable:
 			self.role=controlTypes.ROLE_EDITABLETEXT
+			self.TextInfo=MSHTMLTextInfo
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
@@ -255,95 +177,29 @@ class MSHTML(IAccessible):
 	def event_looseFocus(self):
 		if hasattr(self,'dom'):
 			del self.dom
-
-	def script_text_moveByLine(self,keyPress,nextScript):
-		sendKey(keyPress)
-		if not hasattr(self,'dom'):
-			return 
-		oldBookmark=self.dom.selection.createRange().getBookmark()
-		sendKey(key("extendedEnd"))
-		end=self.dom.selection.createRange().duplicate()
-		sendKey(key("extendedHome"))
-		start=self.dom.selection.createRange().duplicate()
-		start.setEndPoint("endToStart",end)
-		self.dom.selection.createRange().moveToBookmark(oldBookmark)
-		speech.speakText(start.text)
-
-	def script_text_moveByCharacter(self,keyPress,nextScript):
-		sendKey(keyPress)
-		if not hasattr(self,'dom'):
-			return 
-		r=self.dom.selection.createRange().duplicate()
-		r.expand("character")
-		speech.speakSymbol(r.text)
-
-	def script_text_moveByWord(self,keyPress,nextScript):
-		sendKey(keyPress)
-		if not hasattr(self,'dom'):
-			return 
-		r=self.dom.selection.createRange().duplicate()
-		r.expand("word")
-		speech.speakText(r.text)
-
-	def script_text_backspace(self,keyPress,nextScript):
-		if not hasattr(self,'dom'):
-			return 
-		r=self.dom.selection.createRange().duplicate()
-		delta=r.move("character",-1)
-		if delta<0:
-			r.expand("character")
-			delChar=r.text
-		else:
-			delChar=""
-		sendKey(keyPress)
-		speech.speakSymbol(delChar)
-
-	def script_text_changeSelection(self,keyPress,nextScript):
-		if not hasattr(self,'dom'):
-			return 
-		before=self.dom.selection.createRange().duplicate()
-		sendKey(keyPress)
-		after=self.dom.selection.createRange().duplicate()
-		leftDelta=before.compareEndPoints("startToStart",after)
-		rightDelta=before.compareEndPoints("endToEnd",after)
-		afterLen=after.compareEndPoints("startToEnd",after)
-		if afterLen==0:
-			after.expand("character")
-			speech.speakSymbol(after.text)
-		elif leftDelta<0:
- 			before.setEndPoint("endToStart",after)
-			speech.speakMessage(_("unselected %s")%before.text)
-		elif leftDelta>0:
- 			after.setEndPoint("endToStart",before)
-			speech.speakMessage(_("selected %s")%after.text)
-		elif rightDelta>0:
- 			before.setEndPoint("startToEnd",after)
-			speech.speakMessage(_("unselected %s")%before.text)
-		elif rightDelta<0:
- 			after.setEndPoint("startToEnd",before)
-			speech.speakMessage(_("selected %s")%after.text)
+		self.TextInfo=super(MSHTML,self).TextInfo
 
 [MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","text_moveByLine"),
-	("ExtendedDown","text_moveByLine"),
-	("ExtendedLeft","text_moveByCharacter"),
-	("ExtendedRight","text_moveByCharacter"),
-	("Control+ExtendedLeft","text_moveByWord"),
-	("Control+ExtendedRight","text_moveByWord"),
-	("Shift+ExtendedRight","text_changeSelection"),
-	("Shift+ExtendedLeft","text_changeSelection"),
-	("Shift+ExtendedHome","text_changeSelection"),
-	("Shift+ExtendedEnd","text_changeSelection"),
-	("Shift+ExtendedUp","text_changeSelection"),
-	("Shift+ExtendedDown","text_changeSelection"),
-	("Control+Shift+ExtendedLeft","text_changeSelection"),
-	("Control+Shift+ExtendedRight","text_changeSelection"),
-	("ExtendedHome","text_moveByCharacter"),
-	("ExtendedEnd","text_moveByCharacter"),
-	("control+extendedHome","text_moveByLine"),
-	("control+extendedEnd","text_moveByLine"),
-	("control+shift+extendedHome","text_changeSelection"),
-	("control+shift+extendedEnd","text_changeSelection"),
-	("ExtendedDelete","text_moveByCharacter"),
-	("Back","text_backspace"),
+	("ExtendedUp","moveByLine"),
+	("ExtendedDown","moveByLine"),
+	("ExtendedLeft","moveByCharacter"),
+	("ExtendedRight","moveByCharacter"),
+	("Control+ExtendedLeft","moveByWord"),
+	("Control+ExtendedRight","moveByWord"),
+	("Shift+ExtendedRight","changeSelection"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Control+Shift+ExtendedLeft","changeSelection"),
+	("Control+Shift+ExtendedRight","changeSelection"),
+	("ExtendedHome","moveByCharacter"),
+	("ExtendedEnd","moveByCharacter"),
+	("control+extendedHome","moveByLine"),
+	("control+extendedEnd","moveByLine"),
+	("control+shift+extendedHome","changeSelection"),
+	("control+shift+extendedEnd","changeSelection"),
+	("ExtendedDelete","moveByCharacter"),
+	("Back","backspace"),
 ]]

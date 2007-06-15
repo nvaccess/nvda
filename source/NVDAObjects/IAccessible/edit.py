@@ -201,8 +201,6 @@ class EditTextInfo(text.TextInfo):
 			self._startOffset=self._endOffset=self._getSelOffsets()[0]
 		elif position==text.POSITION_SELECTION:
 			(self._startOffset,self._endOffset)=self._getSelOffsets()
-		elif isinstance(position,text.OffsetPosition):
-			self._startOffset=self._endOffset=position.offset
 		elif isinstance(position,text.OffsetsPosition):
 			self._startOffset=position.start
 			self._endOffset=position.end
@@ -221,7 +219,7 @@ class EditTextInfo(text.TextInfo):
 		#Set the start and end offsets from expanding position to a unit 
 		if expandToUnit==text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
-			self._endOffset=self.startOffset+1
+			self._endOffset=self._startOffset+1
 		elif expandToUnit==text.UNIT_WORD:
 			if self.obj.editAPIVersion>=1:
 				(self._startOffset,self._endOffset)=self._getExWordOffsets(self._startOffset)
@@ -266,11 +264,10 @@ class EditTextInfo(text.TextInfo):
 		else:
 			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
 
-	def _get_startOffset(self):
-		return self._startOffset
+	def _get_offsetsPosition(self):
+		return text.OffsetsPosition(self._startOffset,self._endOffset)
 
-	def _get_endOffset(self):
-		return self._endOffset
+	_get_position=_get_offsetsPosition
 
 	def _get_text(self):
 		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or self.limitUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE]:
@@ -297,17 +294,46 @@ class EditTextInfo(text.TextInfo):
 		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
 			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
 		if  self.limitUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_LINE] or (self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD] and newOffset>=self._lineStartOffset and newOffset<(self._lineStartOffset+self._lineLength)):
-			return self.__class__(self.obj,text.OffsetPosition(newOffset),_lineText=self._lineText,_lineNum=self._lineNum,_lineStartOffset=self._lineStartOffset,_lineLength=self._lineLength,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetsPosition(newOffset),_lineText=self._lineText,_lineNum=self._lineNum,_lineStartOffset=self._lineStartOffset,_lineLength=self._lineLength,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 		elif hasattr(self,"_storyText"):
-			return self.__class__(self.obj,text.OffsetPosition(newOffset),_storyText=self._storyText,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetsPosition(newOffset),_storyText=self._storyText,_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 		else:
-			return self.__class__(self.obj,text.OffsetPosition(newOffset),_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			return self.__class__(self.obj,text.OffsetsPosition(newOffset),_storyLength=self._storyLength,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
 	def _get_inUnit(self):
 		if self.unit is None:
 			raise RuntimeError("no unit specified")
 		return True
 
+	def calculateSelectionChangedInfo(self,info):
+		selInfo=text.TextSelectionChangedInfo()
+		selectingText=None
+		mode=None
+		oldStart=self.offsetsPosition.start
+		oldEnd=self.offsetsPosition.end
+		newStart=info.offsetsPosition.start
+		newEnd=info.offsetsPosition.end
+		if newEnd>oldEnd:
+			mode=text.SELECTIONMODE_SELECTED
+			fromOffset=oldEnd
+			toOffset=newEnd
+		elif newStart<oldStart:
+			mode=text.SELECTIONMODE_SELECTED
+			fromOffset=newStart
+			toOffset=oldStart
+		elif oldEnd>newEnd:
+			mode=text.SELECTIONMODE_UNSELECTED
+			fromOffset=newEnd
+			toOffset=oldEnd
+		elif oldStart<newStart:
+			mode=text.SELECTIONMODE_UNSELECTED
+			fromOffset=oldStart
+			toOffset=newStart
+		if mode is not None:
+			selectingText=info.obj.makeTextInfo(text.OffsetsPosition(fromOffset,toOffset)).text
+		selInfo.text=selectingText
+		selInfo.mode=mode
+		return selInfo
 
 class Edit(IAccessible):
 
@@ -319,23 +345,6 @@ class Edit(IAccessible):
 
 	def event_valueChange(self):
 		pass
-
-	def _get_caretOffset(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		pos=winUser.LOWORD(long)
-		return pos
-
-	def _set_caretOffset(self,pos):
-		winUser.sendMessage(self.windowHandle,EM_SETSEL,pos,pos)
-
-	def _get_selectionOffsets(self):
-		long=winUser.sendMessage(self.windowHandle,EM_GETSEL,0,0)
-		start=winUser.LOWORD(long)
-		end=winUser.HIWORD(long)
-		if start!=end:
-			return (start,end)
-		else:
-			return None
 
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

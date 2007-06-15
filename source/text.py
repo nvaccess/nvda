@@ -11,34 +11,50 @@ class E_noRelatedUnit(RuntimeError):
 	pass
 
 #position types
-class Position:
-	pass
 
-class OffsetPosition(Position):
-	def __init__(self,offset):
-		self.offset=offset
+class Position(baseObject.autoPropertyObject):
+
+	def compareStart(self,p):
+		raise NotImplementedError
+
+	def compareEnd(self,p):
+		raise NotImplementedError
 
 class OffsetsPosition(Position):
-	def __init__(self,start,end):
+
+	def __init__(self,start,end=None):
+		if end is None:
+			end=start
 		self.start=start
 		self.end=end
 
-class pointPosition(Position):
-	def __init__(self,x,y):
-		self.x=x
-		self.y=y
+	def compareStart(self,p):
+		return self.start-p.start
 
-class rectPosition(Position):
-	def __init__(self,left,top,right,bottom):
-		self.left=left
-		self.top=top
-		self.right=right
-		self.bottom=bottom
+	def compareEnd(self,p):
+		return self.end-p.end
 
+class pointsPosition(Position):
+
+	def __init__(self,startX,startY,endX=None,endY=None):
+		if endX is None:
+			endX=startX
+		if endY is None:
+			endY=startY
+		self.startX=startX
+		self.startY=startY
+		self.endX=endX
+		self.endY=endY
+
+#Position constants
 POSITION_FIRST="first"
+POSITION_LAST="last"
 POSITION_CARET="caret"
 POSITION_SELECTION="selection"
-POSITION_LAST="last"
+
+#Selection mode constants
+SELECTIONMODE_SELECTED="selected"
+SELECTIONMODE_UNSELECTED="unselected"
 
 #Unit constants
 UNIT_CHARACTER="character"
@@ -61,6 +77,14 @@ UNITRELATION_FOOTER="footer"
 UNITRELATION_FIRST="first"
 UNITRELATION_LAST="last"
 UNITRELATION_LINKEDTO="linkedTo"
+
+class TextSelectionChangedInfo(baseObject.autoPropertyObject):
+
+	def _get_text(self):
+		raise NotImplementedError
+
+	def _get_mode(self):
+		raise NotImplementedError
 
 class TextInfo(baseObject.autoPropertyObject):
 	"""Contains information about the text at the given position or unit
@@ -88,32 +112,13 @@ class TextInfo(baseObject.autoPropertyObject):
 		self.unit=expandToUnit
 		self.limitUnit=limitToUnit
 
-	def _get_startOffset(self):
-		"""
-@returns: The 0 based offset where this text is positioned in the object
-@rtype: int
-"""
+	def _get_position(self):
 		raise NotImplementedError
 
-	def _get_endOffset(self):
-		"""
-@returns: The 0 based offset where this text ends, in the object
-@rtype: int
-"""
+	def _get_offsetsPosition(self):
 		raise NotImplementedError
 
-	def _get_startPoint(self):
-		"""
-@returns: The screen x,y point where this text starts
-@rtype: tuple 
-"""
-		raise NotImplementedError
-
-	def _get_endPoint(self):
-		"""
-@returns: The screen x,y point where this text ends
-@rtype: tuple
-"""
+	def _get_pointsPosition(self):
 		raise NotImplementedError
 
 	def _get_text(self):
@@ -149,6 +154,9 @@ class TextInfo(baseObject.autoPropertyObject):
 @returns: The format at the start of the set range
 @rtype: dict (string:string)
 """
+		raise NotImplementedError
+
+	def calculateSelectionChangedInfo(self,info):
 		raise NotImplementedError
 
 	def _get_inUnit(self):

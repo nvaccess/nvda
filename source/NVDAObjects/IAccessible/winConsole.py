@@ -12,6 +12,7 @@ import pythoncom
 import globalVars
 import debug
 import queueHandler
+import text
 import tones
 from keyUtils import sendKey, key
 import winKernel
@@ -61,7 +62,7 @@ class WinConsole(IAccessible):
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		self.reviewOffset=self.caretOffset-info.windowRect.top*info.consoleSize.x
+		self.reviewOffset=self.caretPosition
 		thread.start_new_thread(self.monitorThread,())
 		pythoncom.PumpWaitingMessages()
 		time.sleep(0.1)
@@ -100,7 +101,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor:
-			self.reviewOffset=self.caretOffset-info.windowRect.top*info.consoleSize.x
+			self.reviewOffset=self.caretPosition
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -157,22 +158,27 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
-	def _get_caretOffset(self):
+	def _get_caretPosition(self):
 		if not hasattr(self,"consoleHandle"):
-			return 0
-		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		y=info.cursorPosition.y
-		x=info.cursorPosition.x
-		return self.getOffsetFromConsoleCoord(x,y)
+			offset=0 
+		else:
+			info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+			y=info.cursorPosition.y
+			x=info.cursorPosition.x
+			offset=self.getOffsetFromConsoleCoord(x,y)
+		return text.OffsetsPosition(offset)
 
 	def getOffsetFromConsoleCoord(self,x,y):
 		if not hasattr(self,"consoleHandle"):
 			return 0
-		return (y*self.getConsoleHorizontalLength())+x
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		return ((y*self.getConsoleHorizontalLength())+x)-(info.windowRect.top*info.consoleSize.x)
 
 	def getConsoleCoordFromOffset(self,offset):
 		if not hasattr(self,"consoleHandle"):
 			return (0,0)
+		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
+		offset+=(info.windowRect.top*info.consoleSize.x)
 		return (offset%self.getConsoleHorizontalLength(),offset/self.getConsoleHorizontalLength())
 
 	def _get_consoleVisibleText(self):

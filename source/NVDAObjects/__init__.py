@@ -34,11 +34,13 @@ class NVDAObjectTextInfo(text.TextInfo):
 		elif position==text.POSITION_LAST:
 			self._startOffset=self._endOffset=len(self._text)-1
 		elif position==text.POSITION_CARET:
-			self._startOffset=self._endOffset=obj.caretOffset
+			caretPos=self.obj.caretPosition
+			self._startOffset=caretPos.start
+			self._endOffset=caretPos.end
 		elif position==text.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=obj.selectionOffsets
-		elif isinstance(position,text.OffsetPosition):
-			self._startOffset=self._endOffset=position.offset
+			selPos=self.obj.selectionOffsets
+			self._startOffset=selectionPos.start
+			self._endOffset=selectionPos.end
 		elif isinstance(position,text.OffsetsPosition):
 			self._startOffset=position.start
 			self._endOffset=position.end
@@ -47,7 +49,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 		#Set the start and end offsets from expanding position to a unit 
 		if expandToUnit is text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
-			self._endOffset=self.startOffset+1
+			self._endOffset=self._startOffset+1
 		elif expandToUnit is text.UNIT_WORD:
 			self._startOffset=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength) 
 			self._endOffset=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
@@ -74,11 +76,10 @@ class NVDAObjectTextInfo(text.TextInfo):
 		else:
 			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
 
-	def _get_startOffset(self):
-		return self._startOffset
+	def _get_offsetsPosition(self):
+		return text.OffsetsPosition(self._startOffset,self._endOffset)
 
-	def _get_endOffset(self):
-		return self._endOffset
+	_get_position=_get_offsetsPosition
 
 	def _get_text(self):
 		return self._text[self._startOffset:self._endOffset]
@@ -98,7 +99,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 			raise NotImplementedError("unit relation: %s not supported"%relation)
 		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
 			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
-		return self.__class__(self.obj,text.OffsetPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		return self.__class__(self.obj,text.OffsetsPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
 
 	def _get_inUnit(self):
 		if self.unit is None:
@@ -148,8 +149,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type hasFocus: boolean 
 @ivar isProtected: if true then this object should be treeted like a password field.
 @type isProtected: boolean 
-@ivar text_caretOffset: the caret position in this object's text as an offset from 0
-@type text_caretOffset: int
+@ivar text_caretPosition: the caret position in this object's text as an offset from 0
+@type text_caretPosition: int
 @ivar text_reviewOffset: the review cursor's position in the object's text as an offset from 0
 @type text_reviewOffset: int
 @ivar text_characterCount: the number of characters in this object's text
@@ -167,7 +168,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._hashLimit=10000000
 		self._hashPrime=23
-		self.reviewOffset=0
+		self.reviewOffset=text.OffsetsPosition(0)
+
 		self.textRepresentationLineLength=None #Use \r and or \n
 
 	def __hash__(self):
@@ -350,11 +352,11 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
 
-	def _get_caretOffset(self):
-		raise NotImplementedError("caret not supported")
+	def _get_caretPosition(self):
+		return text.OffsetsPosition(0)
 
 	def _get_selectionOffsets(self):
-		raise NotImplementedError("selection not supported")
+		return text.OffsetsPosition(0)
 
 	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None):
 		return self.TextInfo(self,position,expandToUnit,limitToUnit)
@@ -388,19 +390,19 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakText(textInfo.text)
 
 	def script_backspace(self,keyPress,nextScript):
-		textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-		oldOffset=textInfo.startOffset
-		if oldOffset>0:
+		textInfo=self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+		oldPos=textInfo.position
+		try:
 			delChar=textInfo.getRelatedUnit(text.UNITRELATION_PREVIOUS).text
-			sendKey(keyPress)
-			if not isKeyWaiting():
-				api.processPendingEvents()
-				textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-				newOffset=textInfo.startOffset
-				if newOffset<oldOffset:
-					speech.speakSymbol(delChar)
-		else:
-			sendKey(keyPress)
+		except:
+			delChar=""
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
+			newPos=textInfo.position
+			if oldPos.compareStart(newPos)!=0:
+				speech.speakSymbol(delChar)
 
 	def script_delete(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -411,38 +413,18 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldObj=api.getFocusObject()
-		textInfo=oldObj.makeTextInfo(text.POSITION_SELECTION)
-		oldStart=textInfo.startOffset
-		oldEnd=textInfo.endOffset
+		oldTextInfo=oldObj.makeTextInfo(text.POSITION_SELECTION)
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
 			newObj=api.getFocusObject()
-			textInfo=newObj.makeTextInfo(text.POSITION_SELECTION)
-			newStart=textInfo.startOffset
-			newEnd=textInfo.endOffset
-			mode=None
-			mode_selected=_("selected")
-			mode_unselected=_("unselected")
-			if newEnd>oldEnd:
-				mode=mode_selected
-				fromOffset=oldEnd
-				toOffset=newEnd
-			elif newStart<oldStart:
-				mode=mode_selected
-				fromOffset=newStart
-				toOffset=oldStart
-			elif oldEnd>newEnd:
-				mode=mode_unselected
-				fromOffset=newEnd
-				toOffset=oldEnd
-			elif oldStart<newStart:
-				mode=mode_unselected
-				fromOffset=oldStart
-				toOffset=newStart
-			if isinstance(mode,basestring):
-				selectingText=newObj.makeTextInfo(text.OffsetsPosition(fromOffset,toOffset)).text
+			newTextInfo=newObj.makeTextInfo(text.POSITION_SELECTION)
+			selInfo=oldTextInfo.calculateSelectionChangedInfo(newTextInfo)
+			if selInfo.mode is not None:
+				selectingText=selInfo.text
 				if len(selectingText)==1:
 					selectingText=speech.processSymbol(selectingText)
-				speech.speakMessage("%s %s"%(mode,selectingText))
-
+				if selInfo.mode==text.SELECTIONMODE_SELECTED:
+					speech.speakMessage(_("selected %s")%selectingText)
+				elif selInfo.mode==text.SELECTIONMODE_UNSELECTED:
+					speech.speakMessage(_("unselected %s")%selectingText)
