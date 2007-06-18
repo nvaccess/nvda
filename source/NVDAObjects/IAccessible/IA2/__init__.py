@@ -24,7 +24,11 @@ class IA2TextTextInfo(text.TextInfo):
 			self._endOffset=position.end
 		else:
 			raise NotImplementedError("Position: %s"%position)
-		if expandToUnit==text.UNIT_CHARACTER:
+		self._storyLength=self.obj.IAccessibleTextObject.NCharacters
+		#If the start offset is higher than the actual text length, then we need to handle it specially
+		if self._startOffset>=self._storyLength:
+			self._text=""
+		elif expandToUnit==text.UNIT_CHARACTER:
 			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_CHAR)
 		elif expandToUnit==text.UNIT_WORD:
 			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_WORD)
@@ -34,7 +38,7 @@ class IA2TextTextInfo(text.TextInfo):
 			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)
 		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
 			self._startOffset=0
-			self._endOffset=self.obj.IAccessibleTextObject.NCharacters
+			self._endOffset=self._storyLength
 		elif expandToUnit is not None:
 			raise NotImplementedError("unit: %s"%expandToUnit)
 		if limitToUnit==text.UNIT_CHARACTER:
@@ -47,7 +51,7 @@ class IA2TextTextInfo(text.TextInfo):
 			(self._lowOffsetLimit,self._highOffsetLimit)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
 		elif limitToUnit in [text.UNIT_SCREEN,text.UNIT_STORY,None]:
 			self._lowOffsetLimit=0
-			self._highOffsetLimit=self.obj.IAccessibleTextObject.NCharacters
+			self._highOffsetLimit=self._storyLength
 		else:
 			raise NotImplementedError("limitToUnit: %s"%limitToUnit)
 
