@@ -394,7 +394,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		oldPos=textInfo.position
 		try:
 			delChar=textInfo.getRelatedUnit(text.UNITRELATION_PREVIOUS).text
-		except:
+		except text.E_noRelatedUnit:
 			delChar=""
 		sendKey(keyPress)
 		if not isKeyWaiting():
