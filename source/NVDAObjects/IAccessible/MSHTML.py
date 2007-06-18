@@ -19,7 +19,14 @@ import text
 import speech
 import controlTypes
 from . import IAccessible
- 
+
+IServiceProvider=comtypesClient.GetModule('lib/Servprov.tlb').IServiceProvider
+
+IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
+IID_DispHTMLGenericElement=comtypes.GUID('{3050F563-98B5-11CF-BB82-00AA00BDCE0B}')
+IID_DispHTMLTextAreaElement=comtypes.GUID('{3050F521-98B5-11CF-BB82-00AA00BDCE0B}')
+IID_IHTMLInputTextElement=comtypes.GUID('{3050F2A6-98B5-11CF-BB82-00AA00BDCE0B}')
+
 class MSHTMLTextRangePosition(text.Position):
 
 	def __init__(self,textRange):
@@ -36,14 +43,14 @@ class MSHTMLTextInfo(text.TextInfo):
 
 	def _expandToLine(self,textRange):
 		if self.basePosition in [text.POSITION_CARET,text.POSITION_SELECTION]:
-			oldSelMark=self.obj.dom.selection.createRange().getBookmark()
+			oldSelMark=self.obj.domElement.document.selection.createRange().getBookmark()
 			sendKey(key("ExtendedEnd"))
 			api.processPendingEvents()
-			textRange.setEndPoint("endToEnd",self.obj.dom.selection.createRange())
+			textRange.setEndPoint("endToEnd",self.obj.domElement.document.selection.createRange())
 			sendKey(key("ExtendedHome"))
 			api.processPendingEvents()
-			textRange.setEndPoint("startToStart",self.obj.dom.selection.createRange())
-			self.obj.dom.selection.createRange().moveToBookmark(oldSelMark)
+			textRange.setEndPoint("startToStart",self.obj.domElement.document.selection.createRange())
+			self.obj.domElement.document.selection.createRange().moveToBookmark(oldSelMark)
 		else:
 			textRange.expand("sentence")
 
@@ -54,7 +61,7 @@ class MSHTMLTextInfo(text.TextInfo):
 			if expandToUnit:
 				self._rangeObj.collapse()
 		else:
-			self._rangeObj=self.obj.dom.selection.createRange().duplicate()
+			self._rangeObj=self.obj.domElement.document.selection.createRange().duplicate()
 		if position==text.POSITION_CARET:
 			self._rangeObj.collapse()
 		#Expand the position if its character, word or paragraph
@@ -66,7 +73,7 @@ class MSHTMLTextInfo(text.TextInfo):
 			self._rangeObj.expand("textedit")
 		elif expandToUnit is not None:
 			raise NotImplementedError("unit: %s"%expandToUnit)
-		self._limitRangeObj=self.obj.dom.selection.createRange().duplicate()
+		self._limitRangeObj=self.obj.domElement.document.selection.createRange().duplicate()
 		if limitToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
 			self._limitRangeObj.expand(limitToUnit)
 		elif limitToUnit==text.UNIT_LINE:
@@ -139,26 +146,22 @@ class MSHTMLTextInfo(text.TextInfo):
 
 class MSHTML(IAccessible):
 
-	def getDocumentObjectModel(self):
-		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
-		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
-		lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
-		res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
+	def __init__(self,*args,**kwargs):
+		super(MSHTML,self).__init__(*args,**kwargs)
+		self.domElement=self.getDOMElementFromIAccessible()
+
+	def getDOMElementFromIAccessible(self):
+		s=self.IAccessibleObject.QueryInterface(IServiceProvider)
+		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(IID_IHTMLElement))
 		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-		o=pythoncom._univgw.interface(ctypes.cast(domPointer,ctypes.c_void_p).value,pythoncom.IID_IDispatch)
+		o=pythoncom._univgw.interface(interfaceAddress,pythoncom.IID_IDispatch)
 		t=o.GetTypeInfo()
 		a=t.GetTypeAttr()
 		oleRepr=win32com.client.build.DispatchItem(attr=a)
 		return win32com.client.CDispatch(o,oleRepr)
 
-	def _get_value(self):
-		if self.isContentEditable:
-			return self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE).text
-		else:
-			return ""
-
 	def _get_isContentEditable(self):
-		if hasattr(self,'dom') and self.dom.activeElement.isContentEditable:
+		if hasattr(self,'domElement') and self.domElement.isContentEditable:
 			return True
 		else:
 			return False
@@ -166,18 +169,14 @@ class MSHTML(IAccessible):
 	def event_gainFocus(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE and self.IAccessibleObjectID==-4:
 			return
-		self.dom=self.getDocumentObjectModel()
-		if self.dom.body.isContentEditable:
-			self.role=controlTypes.ROLE_EDITABLETEXT
-			self.TextInfo=MSHTMLTextInfo
-			if not api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+		self.TextInfo=MSHTMLTextInfo
+		if not api.isVirtualBufferPassThrough():
+			api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
 
 	def event_looseFocus(self):
-		if hasattr(self,'dom'):
-			del self.dom
-		self.TextInfo=super(MSHTML,self).TextInfo
+		if hasattr(self,'domElement'):
+			self.TextInfo=super(MSHTML,self).TextInfo
 
 [MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
