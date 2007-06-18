@@ -160,6 +160,13 @@ class MSHTML(IAccessible):
 		oleRepr=win32com.client.build.DispatchItem(attr=a)
 		return win32com.client.CDispatch(o,oleRepr)
 
+	def _get_value(self):
+		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
+			return ""
+		else:
+			return super(MSHTML,self)._get_value()
+
+
 	def _get_isContentEditable(self):
 		if hasattr(self,'domElement') and self.domElement.isContentEditable:
 			return True
@@ -169,7 +176,9 @@ class MSHTML(IAccessible):
 	def event_gainFocus(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE and self.IAccessibleObjectID==-4:
 			return
-		self.TextInfo=MSHTMLTextInfo
+		if self.isContentEditable: 
+			self.TextInfo=MSHTMLTextInfo
+			self.role=controlTypes.ROLE_EDITABLETEXT
 		if not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
