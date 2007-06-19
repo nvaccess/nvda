@@ -1,4 +1,4 @@
-# Vizuális asztal nélküli hozzáférés magyar forditása
+# Vizuális asztal nélküli hozzáférés magyar fordítása
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
 #
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2007-06-01 18:14-0500\n"
+"PO-Revision-Date: 2007-06-14 10:15-0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,7 @@ msgstr "stilus %s"
 #, possible-python-format
 #: textBuffer.py:248 textBuffer.py:312
 msgid "alignment %s"
-msgstr "kiegyenlítés %s"
+msgstr "%s kiegyenlítve "
 
 #: NVDAObjects\baseType.py:591 NVDAObjects\baseType.py:651
 #, possible-python-format
@@ -294,11 +294,15 @@ msgstr "védett  %s"
 
 #: appModules\_default.py:43
 msgid "keyboard help %s"
-msgstr "billentyüzet segítség %s"
+msgstr "billentyûzet segítség %s"
 
 #: api.py:173 api.py:233 appModules\_default.py:66 appModules\_default.py:75
 #: appModules\_default.py:84 appModules\_default.py:93 keyboardHandler.py:165
-
+#: appModules\_default.py:46
+msgid ""
+"Turns keyboard help on and off. When on, pressing a key on the keyboard will "
+"tell you what script is associated with it, if any."
+msgstr "A billentyûzet segitség parancsot ki, és bekapcsolja. Amikor ez be van kapcsolva, NVDA befogja jelenteni a lenyomott  billentyû kombinációnak skript nevét, és létezo magyarázatát." 
 
 
 #: appModules\_default.py:50
@@ -364,11 +368,11 @@ msgstr"A begépelt szavak kimondását ki, és bekapcsolja."
 
 #: appModules\_default.py:86
 msgid "speak command keys"
-msgstr "parancs billentyük kimondása"
+msgstr "parancs billentyûk kimondása"
 
 #: appModules\_default.py:94
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "ki és bekapcsolja a parancs billentyük kimondását. Ezek a billentyük nem karakterek és álltalában egy program funkcióit  befolysólják" 
+msgstr "ki és bekapcsolja a parancs billentyûk kimondását. Ezek a billentyûk nem karakterek és álltalában egy program funkcióit  befolysólják" 
 
 #: appModules\_default.py:104
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
@@ -512,7 +516,7 @@ msgstr "beszéd mód %s"
 
 #: appModules\_default.py:347msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "beszéd mód váltás. Ha ez ki van kapcsolva, akkor az nvda nem fog semmilyen beszédet kiadni. Ha ez sípolásokra van beállitva, akkor minden történo esemény sípolásokkal lesz jelezve. És ha ez a beszéd opcióra van beállitva, akkor az NVDA rendesen fogja olvasni a képernyot." 
+msgstr "beszéd mód váltás. Ha ez ki van kapcsolva, akkor az nvda nem fog semmilyen beszédet kiadni. Ha ez sípolásokra van beállitva, akkor minden történo esemény sípolásokkal lesz jelezve. És ha ez a beszéd opcióra van beállitva, akkor az NVDA rendesen fogja olvasni a képernyõt." 
 
 
 #: appModules\_default.py:351
@@ -521,7 +525,7 @@ msgid ""
 "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
 "straight through the current virtualBuffer, allowing you to interact with a "
 "control without the virtualBuffer doing something else with the key."
-msgstr "a virtuális buffer keresztül lépés funkciót ki, és bekapcsolja. Ha ez be van kapcsolva, minden billentyü lenyomás egyenesen keresztül lép az aktív alkalmazáshoz, és ez megengedi, hogy  ön tudjon  egy vezérloelemmel kommunikálni, anélkül, hogy a parancs valami mást csináljon a billentyüzettel."
+msgstr "a virtuális buffer keresztül lépés funkciót ki, és bekapcsolja. Ha ez be van kapcsolva, minden billentyû lenyomás egyenesen keresztül lép az aktív alkalmazáshoz, és ez megengedi, hogy  ön tudjon  egy vezérloelemmel kommunikálni, anélkül, hogy a parancs valami mást csináljon a billentyûzettel."
  
 
 #: appModules\_default.py:344
@@ -646,7 +650,7 @@ msgstr "felkiáltójel"
 
 #: characterSymbols.py:25
 msgid "quote"
-msgstr "idézöjel"
+msgstr "idézõjel"
 
 #: characterSymbols.py:26
 msgid "number"
@@ -686,7 +690,7 @@ msgstr "plusz"
 
 #: characterSymbols.py:35
 msgid "comma"
-msgstr "vesszö"
+msgstr "vesszõ"
 
 #: characterSymbols.py:36
 msgid "dash"
@@ -702,11 +706,11 @@ msgstr "per"
 
 #: characterSymbols.py:39
 msgid "colon"
-msgstr "kettöspont"
+msgstr "kettõspont"
 
 #: characterSymbols.py:40
 msgid "semi"
-msgstr "pontosvesszö"
+msgstr "pontosvesszõ"
 
 #: characterSymbols.py:41
 msgid "less"
@@ -714,7 +718,7 @@ msgstr "kissebb"
 
 #: characterSymbols.py:42
 msgid "equals"
-msgstr "egyenlö"
+msgstr "egyenlõ"
 
 #: characterSymbols.py:43
 msgid "greater"
@@ -722,7 +726,7 @@ msgstr "nagyobb"
 
 #: characterSymbols.py:44
 msgid "question"
-msgstr "kérdöjel"
+msgstr "kérdõjel"
 
 #: characterSymbols.py:45
 msgid "at"
@@ -754,7 +758,7 @@ msgstr "grav"
 
 #: characterSymbols.py:52
 msgid "left brace"
-msgstr "kezdökapcsos"
+msgstr "kezdõkapcsos"
 
 #: characterSymbols.py:53
 msgid "bar"
@@ -942,7 +946,7 @@ msgstr ""
 "----------------------\n"
 "\n"
 "ez a NVDA fo  ablakja. Az ablak  megengedi, hogy az nvda-ból kilépjen, és hogy "
-"különbözö beállitásokat módositson. "
+"különbözõ beállitásokat módositson. "
 "\n"
 "Bárhonnan a windowsból, ezt az ablakot feltudja hozzni az inzert +n paranccsal. Ha kiakar lépni"
 "ebböl az ablakból, a nélkül, hogy az nvda bezáruljon, akkor használja az alt+ f4 parancsot."
@@ -953,23 +957,23 @@ msgstr ""
 
 "Ok gombbal kilép, vagy a mégse gombbal vissza tud térni a windows rendszerbe."
 "\n"
-"Ha   különbözö NVDA beállitásokat megakarna változtatni,  (Például hang karakter, billentyüzet visszhang, "
+"Ha   különbözõ NVDA beállitásokat megakarna változtatni,  (Például hang karakter, billentyûzet visszhang, "
 "és hogy  a segíto buborékok felolvasva legyenek e), akkor nyomja meg az alt gombot,  "
 "és válassza ki a beállitások menüt a jobb és bal nyilakkal. Majd a le és felnyillal a kivánt változtatnivaló beállitást válassza ki. "
 "\n"
 "Legtöbb beállitás fel fog hozni egy párbeszédpanelt,amelyben megtudja változtatni oket. " 
 "Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Ritkán elöfordulhat, hogy újra kell inditani az NVDA programot."
-"Bárhonnan az NVDA ablakban, a Kontrol +S billentyüvel tudja lementeni a beálitott konfigurációt. Ez a parancs"
+"Bárhonnan az NVDA ablakban, a Kontrol +S billentyûvel tudja lementeni a beálitott konfigurációt. Ez a parancs"
 "A NVDA menüben is megtalálható."
 "Sot, azt is megteheti, hogy az NVDA kilépéskor lementse a konfigurációt. Ez az ópció a felhasználói felület beállitások...' panelben van."
-"Az alábbiakban egy pár hasznos NVDA billentyüparancs van felsorolva. \n"
+"Az alábbiakban egy pár hasznos NVDA billentyûparancs van felsorolva. \n"
 "\n"
 
 "Álltalános parancsok: \n"
 "Kontrol - beszéd megszakítása \n"
-"Inzert 1 - billentyüzet segítség mód ki és bekapcsolása. \n"
+"Inzert 1 - billentyûzet segítség mód ki és bekapcsolása. \n"
 "Inzert felnyíl: A fókuszban lévö elem  kimondása. \n"
-" inzert lenyíl: minden mondása: a NVDA elkezdi olvasni a képernyot. A kontrol billentyüvel ezt meg lehet szakítani. \n"
+" inzert lenyíl: minden mondása: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
 "Inzert + t - ablak cím kimondása. \n"
 "Inzert + f12 - Az idö és dátum kimondása. \n"
 "Inzert + 2 - Karakterek kimondásának ki és bekapcsolása. \n"
@@ -986,7 +990,7 @@ msgstr ""
 
 "elem navigálás"
 " \n"
-"inzert + numpad plusz - hol vagyok a képernyon? \n"
+"inzert + numpad plusz - hol vagyok a képernyõn? \n"
 "inzert + 5 - elem típus kimondása. \n"
 "inzert + shift + numpad 5 - elem dimenzió és tartózkodási információk. \n"
 "inzert + numpad 8 - szülö elem \n"
@@ -1022,10 +1026,10 @@ msgstr ""
 
 "inzert + shift- b - a tápegység állapota. \n"
 "kontrol+ f - szöveg keresés, internet explorer és mozilla firefox böngészökben.  \n"
-"inzert +f2 - billentyüparancs átadás. A NVDA átadja azt a billentyü kombinációt, amit legközelebb lenyom az aktív alkalmazásnak. Hasznos amikor egy olyan billentyüparancsot szeretne használni, amit a nvda  már használ."  
+"inzert +f2 - billentyûparancs átadás. A NVDA átadja azt a billentyû kombinációt, amit legközelebb lenyom az aktív alkalmazásnak. Hasznos amikor egy olyan billentyûparancsot szeretne használni, amit a nvda  már használ."  
 "\n"
 
-"köszönjük, hogy az NVDA-t választotta képernyofelolvasáshoz! "
+"köszönjük, hogy az NVDA-t választotta képernyõfelolvasáshoz! "
 
 #: gui\__init__.py:117
 msgid "&Revert to saved configuration\tCtrl+R"
@@ -1088,7 +1092,7 @@ msgstr "&szintetizátor...\tctrl+shift+s"
 
 #: gui\__init__.py:132
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerö beállitása"
+msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerõ beállitása"
 
 
 
@@ -1104,15 +1108,15 @@ msgstr "beszéd beállitások...\tctrl+shift+v"
 
 #: gui\__init__.py:152
 msgid "&Keyboard echo...\tCtrl+E"
-msgstr "&billentyüzet visszhang...\tkontrol+e"
+msgstr "&billentyûzet visszhang...\tkontrol+e"
 
 #: gui\__init__.py:135
 msgid "&Keyboard echo...\tctrl+e"
-msgstr "&billentyüzet visszhang...\tctrl+e"
+msgstr "&billentyûzet visszhang...\tctrl+e"
 
 #: gui\__init__.py:135
 msgid "Configure speaking of typed characters, words or command keys"
-msgstr "a beirt karakterek, szavak, és parancsbillentyük kimondásának beállitása"
+msgstr "a beirt karakterek, szavak, és parancsbillentyûk kimondásának beállitása"
 
 
 #: gui\__init__.py:161
@@ -1186,7 +1190,7 @@ msgstr "névjegy..."
 
 #: gui\__init__.py:145 gui\__init__.py:284
 msgid "About NVDA"
-msgstr "nvda névgegye:sta"
+msgstr "nvda névgegye"
 
 #: gui\__init__.py:147
 msgid "&Help"
@@ -1229,7 +1233,7 @@ msgstr "beszéd beállitások"
 
 #: gui\__init__.py:247
 msgid "Keyboard echo settings"
-msgstr "billentyüzet visszhang beállitások"
+msgstr "billentyûzet visszhang beállitások"
 
 #: gui\__init__.py:256
 msgid "Mouse settings"
@@ -1300,6 +1304,9 @@ msgstr "&elinduláskor a NVDA ablak nejelenjen meg"
 msgid "&Save configuration on exit"
 msgstr "&kilépéskor konfiguráció automatikus lementése "
 
+msgid"warn before exiting nvda"
+msgstr "A NVDA kilépése elõtt egy  figyelmeztetõ üzenet megjelenitése"
+ 
 #: gui\settingsDialogs.py:41
 msgid "Save configuration on exit"
 msgstr "kilépéskor konfiguráció automatikus lementése "
@@ -1317,7 +1324,7 @@ msgstr "nyelv fájl hiba"
 #: gui\settingsDialogs.py:64
 #: gui\settingsDialogs.py:65
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "ahhoz, hogy az új nyelv élletbe léphessen, a konfigurációt újra le kell menteni és az nvda programot újra kell inditani. Nyomja meg az enter billentyüt, és a konfiguráció le lesz mentve, majd a nvda újra fog indulni. nyomja meg a mégse gombot, ha ezt késobb sajátkezüleg akarja végrehajtani." 
+msgstr "ahhoz, hogy az új nyelv élletbe léphessen, a konfigurációt újra le kell menteni és az nvda programot újra kell inditani. Nyomja meg az enter billentyût, és a konfiguráció le lesz mentve, majd a nvda újra fog indulni. nyomja meg a mégse gombot, ha ezt késobb sajátkezüleg akarja végrehajtani." 
 
 
 #: gui\settingsDialogs.py:64
@@ -1402,11 +1409,11 @@ msgstr "begépelt szavak kimondása"
 
 #: gui\settingsDialogs.py:217
 msgid "Speak command &keys"
-msgstr "parancs&billentyük kimondása"
+msgstr "parancs&billentyûk kimondása"
 
 #: gui\settingsDialogs.py:159
 msgid "Speak command keys"
-msgstr "parancs billentyük kimondása"
+msgstr "parancs billentyûk kimondása"
 
 #: gui\settingsDialogs.py:240
 msgid "Report mouse &shape changes"
@@ -1448,12 +1455,12 @@ msgstr "segíto   buborékok bejelentése"
 
 #: gui\settingsDialogs.py:223
 msgid "Report object shortcut keys"
-msgstr "objektum parancsbillentyük kimondása"
+msgstr "objektum parancsbillentyûk kimondása"
 
 
 #: gui\settingsDialogs.py:271
 msgid "Report object shortcut &keys"
-msgstr "objektum parancsbillentyük & kimondása"
+msgstr "objektum parancsbillentyûk & kimondása"
 
 
 #: gui\settingsDialogs.py:274
@@ -1737,12 +1744,27 @@ msgstr "a hátra lévö elem idöt bejelenti, ha az AC tápegység nincsen bekapcsolva
 
 #: appModules\_default.py:496
 msgid "Pass next key through"
-msgstr "következo billentyüparancs átadása"
+msgstr "következo billentyûparancs átadása"
 
 #: appModules\_default.py:497
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "a következo billentyü lenyomást nem az NVDA fogja végrehajtani, hanem egyenesen átfog adódni a windows rendszerbe."
+msgstr "a következo billentyû lenyomást nem az NVDA fogja végrehajtani, hanem egyenesen átfog adódni a windows rendszerbe."
 
+
+#: appModules\_default.py:512
+msgid "The default button is "
+msgstr "az alapértelmezett gomb neve:"
+
+
+#: appModules\_default.py:515
+msgid "You are not in a dialog"
+msgstr "nem egy párbeszédpanel aktív"
+
+#: appModules\_default.py:518
+msgid "Speak the default button in the current dialogue"
+msgstr "az alapértelmezett gomb bejelentése"
+
+ 
 #: appModules\msimn.py:14
 msgid "Attachments"
 msgstr "csatolások"
@@ -1750,18 +1772,54 @@ msgstr "csatolások"
 msgid "To:"
 msgstr "címzett:"
 
+
+#: appModules\msimn.py:16
+msgid "Newsgroup:"
+msgstr "hírcsoport:"
+
+#: appModules\msimn.py:17
+msgid "CC:"
+msgstr "üzenet másolás:"
+
 #: appModules\msimn.py:17
 msgid "Subject:"
-msgstr "téma:"
+msgstr "tárgy:"
 
 #: appModules\msimn.py:18
 #: appModules\msimn.py:21
 msgid "From:"
-msgstr "küldo:"
+msgstr "küldõ:"
 
 #: appModules\msimn.py:19
 msgid "Date:"
 msgstr "dátum:"
+
+
+#: appModules\msimn.py:21
+msgid "Forward to:"
+msgstr "átküldés:"
+
+#: appModules\msimn.py:22
+msgid "Answer to:"
+msgstr "válaszolás:"
+
+#: appModules\msimn.py:23
+msgid "Organisation:"
+msgstr "rendezés:"
+
+#: appModules\msimn.py:24
+msgid "Distribution:"
+msgstr "elosztás:"
+
+#: appModules\msimn.py:25
+msgid "Key words:"
+msgstr "kulcsszavak:"
+
+
+
+#: appModules\msimn.py:26
+msgid "BCC:"
+msgstr "láthatatlan másolat:"
 
 #: characterSymbols.py:22
 msgid "carriage return"
@@ -1788,7 +1846,7 @@ msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Egy ingyenes és nyílt terjeztésü képernyo felolvasó a windows operációs rendszerhez"
+msgstr "Egy ingyenes és nyílt terjeztésü képernyõ felolvasó a windows operációs rendszerhez"
 
 #: versionInfo.py:14
 #, possible-python-format
@@ -1807,7 +1865,7 @@ msgstr ""
 "\n"
 "A NVDA-t Géczy Tamás forditotta le magyar nyelvre. Ha valamilyen nyelvtani hibát észlel, irjon a gt1991@gmail.com címre.  \n"
 "köszönlet jár Velegi Istvánnak, aki ötleteket adott a nyelvtanban. \n"
-"új nyelvcsomagokat a http://techreviews.raydi.com/other.html honlapon találhat \n"
+"új nyelvcsomagokat a http://www.eurpod.com/nvda.html honlapon találhat \n"
 "ezek nyelvtani hibákat javitanak ki a programban, és álltalában két hetente fog megjelenni egy új nyelv kiadás \n"
 
 "%(name)s az új álltalános publik licenszerzödés gpl alatt áll, ami azt jelenti, hogy ön megtudja osztani   "
@@ -1835,7 +1893,8 @@ msgstr "%s elemmel"
 #: virtualBuffers\MSHTML.py:254 virtualBuffers\MSHTML.py:261
 #: virtualBuffers\gecko.py:261 virtualBuffers\gecko.py:271
 msgid "bullet"
-msgstr "asdf"
+msgstr "listaelem"
+
 
 #: virtualBuffers\MSHTML.py:257 virtualBuffers\MSHTML.py:264
 #: virtualBuffers\gecko.py:265 virtualBuffers\gecko.py:277
@@ -1972,6 +2031,11 @@ msgid "unavailable"
 msgstr "nem érheto el"
 
 #: controlTypes.py:90
+msgid "focused"
+msgstr "aktív"
+
+
+#: controlTypes.py:90
 msgid "busy"
 msgstr "foglalt"
 
@@ -2092,7 +2156,7 @@ msgstr "négyzet"
 
 #: controlTypes.py:136
 msgid "property page"
-msgstr "tulojdonságok oldal"
+msgstr "tulajdonságok oldal"
 
 
 #: controlTypes.py:135
@@ -2101,7 +2165,7 @@ msgstr "csoportositás"
 
 #: virtualBuffers\baseType.py:55
 msgid "block quote"
-msgstr "idézo blokk"
+msgstr "idézõ blokk"
 
 #: virtualBuffers\baseType.py:56
 msgid "paragraph"
