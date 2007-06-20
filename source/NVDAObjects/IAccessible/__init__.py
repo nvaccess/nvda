@@ -161,6 +161,7 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_SOUND:controlTypes.ROLE_SOUND,
 	IAccessibleHandler.ROLE_SYSTEM_WHITESPACE:controlTypes.ROLE_WHITESPACE,
 	IAccessibleHandler.ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
+	"page":controlTypes.ROLE_PAGE,
 }
 
 class IAccessible(Window):
