@@ -543,24 +543,22 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 
 def updateForegroundFromEvent(window,objectID,childID):
 	appModuleHandler.update(window)
-	virtualBuffers.IAccessible.update(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
+	virtualBuffers.IAccessible.update(obj)
 	api.setForegroundObject(obj)
 	eventHandler.manageEvent("foreground",obj)
 
 def updateFocusFromEvent(window,objectID,childID):
 	appModuleHandler.update(window)
-	virtualBuffers.IAccessible.update(window)
 	oldFocus=api.getFocusObject()
-	debug.writeMessage("old focus: %s, %s, %s"%(oldFocus.windowHandle,oldFocus.IAccessibleObjectID,oldFocus.IAccessibleChildID))
-	debug.writeMessage("Focus: %s %s %s"%(window,objectID,childID))
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID:
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
+	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
 
