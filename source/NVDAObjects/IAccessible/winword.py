@@ -13,8 +13,9 @@ import speech
 import debug
 from keyUtils import sendKey, key
 import config
+import text
 import controlTypes
-from winEdit import WinEdit
+from . import IAccessible
 
 #Word constants
 
@@ -54,15 +55,129 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class WordDocument(WinEdit):
+class WordDocumentTextRangePosition(text.Position):
 
-	def __init__(self,*args,**vars):
-		WinEdit.__init__(self,*args,**vars)
+	def __init__(self,textRange):
+		self.textRange=textRange
+
+	def compareStart(self,p):
+		return self.textRange.Start-p.textRange.Start
+
+	def compareEnd(self,p):
+		return self.textRange.End-p.textRange.End
+
+NVDAUnitsToWordUnits={
+	text.UNIT_CHARACTER:wdCharacter,
+	text.UNIT_WORD:wdWord,
+	text.UNIT_LINE:wdLine,
+	text.UNIT_PARAGRAPH:wdParagraph,
+	text.UNIT_TABLE:wdTable,
+	text.UNIT_ROW:wdRow,
+	text.UNIT_COLUMN:wdColumn,
+	text.UNIT_SCREEN:wdStory,
+	text.UNIT_STORY:wdStory,
+}
+
+class WordDocumentTextInfo(text.TextInfo):
+
+
+	def _expandToLine(self,textRange):
+		sel=self.obj.dom.selection
+		oldSel=sel.range
+		sel.SetRange(textRange.Start,textRange.End)
+		sel.Expand(wdLine)
+		textRange.SetRange(sel.Start,sel.End)
+		sel.SetRange(oldSel.Start,oldSel.End)
+
+	def _moveByLine(self,textRange,movement):
+		sel=self.obj.dom.selection
+		oldSel=sel.range
+		sel.SetRange(textRange.Start,textRange.End)
+		sel.Collapse()
+		res=sel.Move(wdLine,movement)
+		textRange.SetRange(sel.Start,sel.End)
+		sel.SetRange(oldSel.Start,oldSel.End)
+		return res
+
+	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_limitRange=None):
+		super(WordDocumentTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
+		if isinstance(position,WordDocumentTextRangePosition):
+			self._range=position.textRange.duplicate
+		elif isinstance(position,text.OffsetsPosition):
+			self._range=self.obj.dom.selection.range
+			self._range.SetRange(position.start,position.end)
+		elif position==text.POSITION_CARET:
+			self._range=self.obj.dom.selection.range
+			self._range.end=self._range.start
+		elif position==text.POSITION_SELECTION:
+			self._range=self.obj.dom.selection.range
+		else:
+			raise NotImplementedError("Position: %s"%position)
+		if expandToUnit and NVDAUnitsToWordUnits.has_key(expandToUnit):
+			wordUnit=NVDAUnitsToWordUnits[expandToUnit]
+			self._range.Collapse()
+			if expandToUnit==text.UNIT_LINE:
+				self._expandToLine(self._range)
+			else:
+				self._range.Expand(wordUnit)
+		elif expandToUnit is not None:
+			raise NotImplementedError("Unit: %s"%expandToUnit)
+		if _limitRange is not None:
+			self._limitRange=_limitRange
+		else:
+			if limitToUnit is None:
+				limitToUnit=text.UNIT_STORY
+			if NVDAUnitsToWordUnits.has_key(limitToUnit):
+				wordUnit=NVDAUnitsToWordUnits[limitToUnit]
+				self._limitRange=self._range.duplicate
+				if limitToUnit==text.UNIT_LINE:
+					self._expandToLine(self._limitRange)
+				else:
+					self._limitRange.Expand(wordUnit)
+			else:
+				raise NotImplementedError("Unit: %s"%limitToUnit)
+
+	def _get_text(self):
+		return self._range.text
+
+	def _get_position(self):
+		return WordDocumentTextRangePosition(self._range.duplicate)
+
+	def getRelatedUnit(self,relation):
+		if self.unit is None:
+			raise RuntimeError("No unit")
+		newRange=self._range.duplicate
+		newRange.Collapse()
+		res=0
+		if relation==text.UNITRELATION_NEXT:
+			if self.unit==text.UNIT_LINE:
+				res=self._moveByLine(newRange,1)
+			else:
+				res=newRange.Move(NVDAUnitsToWordUnits[self.unit],1)
+		elif relation==text.UNITRELATION_PREVIOUS:
+			if self.unit==text.UNIT_LINE:
+				res=self._moveByLine(newRange,-1)
+			else:
+				res=newRange.Move(NVDAUnitsToWordUnits[self.unit],-1)
+		elif relation==text.UNITRELATION_FIRST:
+			newRange.SetRange(self._limitRange.start,self._limitRange.start)
+			res=1
+		elif relation==text.UNITRELATION_LAST:
+			newRange.SetRange(self._limitRange.end-1,self._limitRange.end-1)
+			res=1
+		if res and newRange.InRange(self._limitRange):
+			return self.__class__(self.obj,WordDocumentTextRangePosition(newRange.duplicate),expandToUnit=self.unit,limitToUnit=self.limitUnit,_limitRange=self._limitRange)
+		else:
+			raise text.E_noRelatedUnit
+
+
+
+
+class WordDocument(IAccessible):
+
+	def __init__(self,*args,**kwargs):
+		super(WordDocument,self).__init__(*args,**kwargs)
 		self.dom=self.getDocumentObjectModel()
-		self.text_reviewOffset=self.text_caretOffset
-
-	def event_caret(self):
-		pass
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -84,244 +199,31 @@ class WordDocument(WinEdit):
 	def destroyObjectModel(self,om):
 		pass
 
-	def _get_text_characterCount(self):
-		r=self.dom.selection.Document.Range(0,0)
-		r.Expand(wdStory)
-		return r.End
+[WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedUp","moveByLine"),
+	("ExtendedDown","moveByLine"),
+	("ExtendedLeft","moveByCharacter"),
+	("ExtendedRight","moveByCharacter"),
+	("Control+ExtendedLeft","moveByWord"),
+	("Control+ExtendedRight","moveByWord"),
+	("Shift+ExtendedRight","changeSelection"),
+	("control+extendedDown","moveByParagraph"),
+	("control+extendedUp","moveByParagraph"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Control+Shift+ExtendedLeft","changeSelection"),
+	("Control+Shift+ExtendedRight","changeSelection"),
+	("ExtendedHome","moveByCharacter"),
+	("ExtendedEnd","moveByCharacter"),
+	("control+extendedHome","moveByLine"),
+	("control+extendedEnd","moveByLine"),
+	("control+shift+extendedHome","changeSelection"),
+	("control+shift+extendedEnd","changeSelection"),
+	("ExtendedDelete","delete"),
+	("Back","backspace"),
+]]
 
-	def text_getText(self,start=None,end=None):
-		start=start if isinstance(start,int) else 0
-		end=end if isinstance(end,int) else self.text_characterCount
-		r=self.dom.selection.Document.Range(start,end)
-		return r.text
-
-	def _get_text_selectionCount(self):
-		if self.dom.Selection.Start!=self.dom.Selection.End:
-			return 1
-		else:
-			return 0
-
-	def text_getSelectionOffsets(self,index):
-		if index!=0:
-			return None
-		start=self.dom.Selection.Start
-		end=self.dom.Selection.End
-		if start!=end:
-			return (start,end)
-		else:
-			return None
-
-	def _get_text_caretOffset(self):
-		return self.dom.Selection.Start
-
-	def _set_text_caretOffset(self,offset):
-		self.dom.Selection.SetRange(offset,offset)
-
-	def text_getLineNumber(self,offset):
-		return self.dom.selection.Document.Range(offset,offset).Information(wdFirstCharacterLineNumber)
-
-	def text_getPageNumber(self,offset):
-		pageNum=self.dom.selection.Document.Range(offset,offset).Information(wdActiveEndPageNumber)
-		if pageNum>0:
-			return pageNum
-		else:
-			return None
-
-	def text_getLineOffsets(self,offset):
-		oldSel=self.dom.selection.Range
-		oldReview=self.text_reviewOffset
-		sel=self.dom.selection
-		sel.Start=offset
-		sel.End=offset
-		sel.Expand(wdLine)
-		lineOffsets=(sel.Start,sel.End)
-		sel.Start=oldSel.Start
-		sel.End=oldSel.End
-		self.text_reviewOffset=oldReview
-		return lineOffsets
-
-	def text_getNextLineOffsets(self,offset):
-		(start,end)=self.text_getLineOffsets(offset)
-		oldSel=self.dom.selection.Range
-		oldReview=self.text_reviewOffset
-		sel=self.dom.selection
-		sel.Start=sel.End=start
-		res=sel.Move(wdLine,1)
-		if res!=0:
-			lineOffsets=self.text_getLineOffsets(sel.Start)
-		else:
-			lineOffsets=None
-		sel.Start=oldSel.Start
-		sel.End=oldSel.End
-		self.text_reviewOffset=oldReview
-		return lineOffsets
-
-	def text_getPrevLineOffsets(self,offset):
-		(start,end)=self.text_getLineOffsets(offset)
-		oldSel=self.dom.selection.Range
-		oldReview=self.text_reviewOffset
-		sel=self.dom.selection
-		sel.Start=sel.End=start
-		res=sel.Move(wdLine,-1)
-		if res!=0:
-			lineOffsets=self.text_getLineOffsets(sel.Start)
-		else:
-			lineOffsets=None
-		sel.Start=oldSel.Start
-		sel.End=oldSel.End
-		self.text_reviewOffset=oldReview
-		return lineOffsets
-
-	def text_getWordOffsets(self,offset):
-		r=self.dom.selection.Document.Range(offset,offset)
-		r.Expand(wdWord)
-		return (r.Start,r.End)
-
-	def text_getNextWordOffsets(self,offset):
-		(start,end)=self.text_getWordOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdWord,1)
-		if res:
-			return self.text_getWordOffsets(r.Start)
-		else:
-			return None
-
-	def text_getPrevWordOffsets(self,offset):
-		(start,end)=self.text_getWordOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdWord,-1)
-		if res:
-			return self.text_getWordOffsets(r.Start)
-		else:
-			return None
-
-	def text_getSentenceOffsets(self,offset):
-		r=self.dom.selection.Document.Range(offset,offset)
-		r.Expand(wdSentence)
-		return (r.Start,r.End)
-
-	def text_getNextSentenceOffsets(self,offset):
-		(start,end)=self.text_getSentenceOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdSentence,1)
-		if res:
-			return self.text_getSentenceOffsets(r.Start)
-		else:
-			return None
-
-	def text_getPrevSentenceOffsets(self,offset):
-		(start,end)=self.text_getSentenceOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdSentence,-1)
-		if res:
-			return self.text_getSentenceOffsets(r.Start)
-		else:
-			return None
-
-	def text_getParagraphOffsets(self,offset):
-		r=self.dom.selection.Document.Range(offset,offset)
-		r.Expand(wdParagraph)
-		return (r.Start,r.End)
-
-	def text_getNextParagraphOffsets(self,offset):
-		(start,end)=self.text_getParagraphOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdParagraph,1)
-		if res:
-			return self.text_getParagraphOffsets(r.Start)
-		else:
-			return None
-
-	def text_getPrevParagraphOffsets(self,offset):
-		(start,end)=self.text_getParagraphOffsets(offset)
-		r=self.dom.selection.Document.Range(start,start)
-		res=r.Move(wdParagraph,-1)
-		if res:
-			return self.text_getParagraphOffsets(r.Start)
-		else:
-			return None
-
-	def text_getFieldOffsets(self,offset):
-		r=self.text_getSentenceOffsets(offset)
-		if r is None:
-			r=self.text_getLineOffsets(offset)
-		return r
-
-	def text_getNextFieldOffsets(self,offset):
-		r=self.text_getNextSentenceOffsets(offset)
-		if (r is None) or (r[0]<=offset):
-			r=self.text_getNextLineOffsets(offset)
-		return r
-
-	def text_getPrevFieldOffsets(self,offset):
-		r=self.text_getPrevSentenceOffsets(offset)
-		if (r is None) or (r[0]>=offset):
-			r=self.text_getPrevLineOffsets(offset)
-		return r
-
-	def text_getStyle(self,offset):
-		return self.dom.selection.Document.Range(offset,offset).Style.NameLocal
-
-	def text_getFontName(self,offset):
-		return self.dom.selection.Document.Range(offset,offset).Font.Name
-
-	def text_getFontSize(self,offset):
-		return int(self.dom.selection.Document.Range(offset,offset).Font.Size)
-
-	def text_getAlignment(self,offset):
-		alignment=self.dom.selection.Document.Range(offset,offset).ParagraphFormat.Alignment
-		if alignment==wdAlignParagraphLeft:
-			return _("left")
-		elif alignment==wdAlignParagraphCenter:
-			return _("centered")
-		elif alignment==wdAlignParagraphRight:
-			return _("right")
-		elif alignment==wdAlignParagraphJustify:
-			return _("justified")
-
-	def text_isBold(self,offset):
-		return bool(self.dom.selection.Document.Range(offset,offset).Font.Bold)
-
-	def text_isItalic(self,offset):
-		return bool(self.dom.selection.Document.Range(offset,offset).Font.Italic)
-
-	def text_isUnderline(self,offset):
-		return bool(self.dom.selection.Document.Range(offset,offset).Font.Underline)
-
-	def text_isSuperscript(self,offset):
-		return bool(self.dom.selection.Document.Range(offset,offset).Font.Superscript)
-
-	def text_isSubscript(self,offset):
-		return bool(self.dom.selection.Document.Range(offset,offset).Font.Subscript)
-
-	def text_inTable(self,offset):
-		return self.dom.selection.Document.Range(offset,offset).Information(wdWithInTable)
- 
-	def text_getTableRowNumber(self,offset):
-		rowNum=self.dom.selection.Document.Range(offset,offset).Information(wdStartOfRangeRowNumber)
-		if rowNum>0:
-			return rowNum
-		else:
-			return None
-
-	def text_getTableColumnNumber(self,offset):
-		columnNum=self.dom.selection.Document.Range(offset,offset).Information(wdStartOfRangeColumnNumber)
-		if columnNum>0:
-			return columnNum
-		else:
-			return None
-
-	def text_getTableRowCount(self,offset):
-		rowCount=self.dom.selection.Document.Range(offset,offset).Information(wdMaximumNumberOfRows)
-		if rowCount>0:
-			return rowCount
-		else:
-			return None
-
-	def text_getTableColumnCount(self,offset):
-		columnCount=self.dom.selection.Document.Range(offset,offset).Information(wdMaximumNumberOfColumns)
-		if columnCount>0:
-			return columnCount
-		else:
-			return None
-
+WordDocument.TextInfo=WordDocumentTextInfo
