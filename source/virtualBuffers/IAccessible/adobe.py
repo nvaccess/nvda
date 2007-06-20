@@ -45,7 +45,7 @@ class Adobe(virtualBuffer):
 				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
-				self.loadDocument()
+				#self.loadDocument()
 			return nextHandler()
 		ID=self.getNVDAObjectID(obj)
 		if not self._IDs.has_key(ID):
@@ -61,6 +61,13 @@ class Adobe(virtualBuffer):
 			api.setNavigatorObject(obj)
 			return True
 		return nextHandler()
+
+	def event_valueChange(self,obj,nextHandler):
+		if self.NVDAObject.role==0:
+			self.NVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.NVDAObject.windowHandle,-4,0)
+			self.loadDocument()
+
+		speech.speakObject(obj)
 
 	def event_scrollingStart(self,obj,nextHandler):
 		ID=self.getNVDAObjectID(obj)
