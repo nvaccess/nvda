@@ -140,6 +140,38 @@ class WordDocumentTextInfo(text.TextInfo):
 	def _get_text(self):
 		return self._range.text
 
+	def calculateSelectionChangedInfo(self,info):
+		selInfo=text.TextSelectionChangedInfo()
+		selectingText=None
+		mode=None
+		oldStart=self._range.Start
+		oldEnd=self._range.End
+		newStart=info._range.Start
+		newEnd=info._range.End
+		if newEnd>oldEnd:
+			mode=text.SELECTIONMODE_SELECTED
+			fromOffset=oldEnd
+			toOffset=newEnd
+		elif newStart<oldStart:
+			mode=text.SELECTIONMODE_SELECTED
+			fromOffset=newStart
+			toOffset=oldStart
+		elif oldEnd>newEnd:
+			mode=text.SELECTIONMODE_UNSELECTED
+			fromOffset=newEnd
+			toOffset=oldEnd
+		elif oldStart<newStart:
+			mode=text.SELECTIONMODE_UNSELECTED
+			fromOffset=oldStart
+			toOffset=newStart
+		if mode is not None:
+			r=self._range.duplicate
+			r.SetRange(fromOffset,toOffset)
+			selectingText=r.text
+		selInfo.text=selectingText
+		selInfo.mode=mode
+		return selInfo
+
 	def _get_position(self):
 		return WordDocumentTextRangePosition(self._range.duplicate)
 
