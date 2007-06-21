@@ -183,6 +183,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		roleNum=obj.role
 		if isinstance(roleNum,int) and (reason!=REASON_FOCUS or roleNum not in silentRolesOnFocus):
 			textList.append(controlTypes.speechRoleLabels[roleNum])
+	stateList=[]
 	if states:
 		stateSet=obj.states
 		oldStateSet=obj._oldStates
@@ -203,14 +204,18 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
 			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnFocus.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]
-			textList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
+			stateList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
 		else:
-			textList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
+			stateList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
 		if spokenNegativeStates.has_key(roleNum):
 			negativeStateSet=negativeStateSet|(spokenNegativeStates[roleNum]-stateSet)
 			if reason==REASON_CHANGE:
 				oldNegativeStateSet=oldNegativeStateSet|(spokenNegativeStates[roleNum]-oldStateSet)
-		textList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (negativeStateSet-oldNegativeStateSet)])
+		stateList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (negativeStateSet-oldNegativeStateSet)])
+	if config.conf["presentation"]["sayStateFirst"]:
+		textList.insert(0," ".join(stateList))
+	else:
+		textList.append(" ".join(stateList))
 	if value:
 		valueText=obj.value
 		if isinstance(valueText,basestring) and len(valueText)>0 and not valueText.isspace():
