@@ -160,6 +160,15 @@ class voiceSettingsDialog(wx.Dialog):
 			pitchSliderSizer.Add(pitchSliderLabel)
 			pitchSliderSizer.Add(self.pitchSlider)
 			settingsSizer.Add(pitchSliderSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasInflection:
+			inflectionSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
+			inflectionSliderLabel=wx.StaticText(self,-1,label=_("&Inflection"))
+			inflectionSliderID=wx.NewId()
+			self.inflectionSlider=wx.Slider(self,inflectionSliderID,value=getSynth().inflection,minValue=0,maxValue=100)
+			self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
+			inflectionSliderSizer.Add(inflectionSliderLabel)
+			inflectionSliderSizer.Add(self.inflectionSlider)
+			settingsSizer.Add(inflectionSliderSizer,border=10,flag=wx.BOTTOM)
 		if getSynth().hasVolume:
 			volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
 			volumeSliderLabel=wx.StaticText(self,-1,label=_("V&olume"))
@@ -206,6 +215,10 @@ class voiceSettingsDialog(wx.Dialog):
 		val=evt.GetSelection()
 		getSynth().pitch=val
 
+	def onInflectionChange(self,evt):
+		val=evt.GetSelection()
+		getSynth().inflection=val
+
 	def onVolumeChange(self,evt):
 		val=evt.GetSelection()
 		getSynth().volume=val
@@ -219,6 +232,8 @@ class voiceSettingsDialog(wx.Dialog):
 			getSynth().rate=config.conf["speech"][getSynth().name]["rate"]
 		if getSynth().hasPitch:
 			getSynth().pitch=config.conf["speech"][getSynth().name]["pitch"]
+		if getSynth().hasInflection:
+			getSynth().inflection=config.conf["speech"][getSynth().name]["inflection"]
 		if getSynth().hasVolume:
 			getSynth().volume=config.conf["speech"][getSynth().name]["volume"]
 		self.Destroy()
@@ -232,6 +247,8 @@ class voiceSettingsDialog(wx.Dialog):
 			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
 		if getSynth().hasPitch:
 			config.conf["speech"][getSynth().name]["pitch"]=self.pitchSlider.GetValue()
+		if getSynth().hasInflection:
+			config.conf["speech"][getSynth().name]["inflection"]=self.inflectionSlider.GetValue()
 		if getSynth().hasVolume:
 			config.conf["speech"][getSynth().name]["volume"]=self.volumeSlider.GetValue()
 		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()

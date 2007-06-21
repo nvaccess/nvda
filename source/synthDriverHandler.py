@@ -54,6 +54,8 @@ def setSynth(name):
 				newSynth.rate=config.conf["speech"][name]["rate"]
 			if newSynth.hasPitch:
 				newSynth.pitch=config.conf["speech"][name]["pitch"]
+			if newSynth.hasInflection:
+				newSynth.inflection=config.conf["speech"][name]["inflection"]
 			if newSynth.hasVolume:
 				newSynth.volume=config.conf["speech"][name]["volume"]
 		else:
@@ -65,6 +67,8 @@ def setSynth(name):
 				config.conf["speech"][name]["rate"]=newSynth.rate
 			if newSynth.hasPitch:
 				config.conf["speech"][name]["pitch"]=newSynth.pitch
+			if newSynth.hasInflection:
+				config.conf["speech"][name]["inflection"]=newSynth.inflection
 			if newSynth.hasVolume:
 				config.conf["speech"][name]["volume"]=newSynth.volume
 		if _curSynth:

@@ -53,6 +53,14 @@ class SynthDriver(silence.SynthDriver):
 		val=self._percentToParam(pitch, _espeak.minPitch, _espeak.maxPitch)
 		_espeak.setParameter(_espeak.espeakPITCH,val,0)
 
+	def _get_inflection(self):
+		val=_espeak.getParameter(_espeak.espeakRANGE,1)
+		return self._paramToPercent(val,_espeak.minPitch,_espeak.maxPitch)
+
+	def _set_inflection(self,val):
+		val=self._percentToParam(val, _espeak.minPitch, _espeak.maxPitch)
+		_espeak.setParameter(_espeak.espeakRANGE,val,0)
+
 	def _get_volume(self):
 		return _espeak.getParameter(_espeak.espeakVOLUME,1)
 
@@ -79,6 +87,7 @@ class SynthDriver(silence.SynthDriver):
 			_espeak.setVoiceByName(identifier)
 		except:
 			_espeak.setVoiceByName(identifier.split('+')[0])
+		self.inflection=0
 
 	def _get_voiceCount(self):
 		return len(self._voiceList)
