@@ -609,8 +609,6 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
 	"""
 
-	speakOnGainFocus=False
-
 	def _get_value(self):
 		return ""
 
@@ -626,6 +624,10 @@ class NVDAObject_mozillaUIWindowClass_application(NVDAObject_mozillaUIWindowClas
 					return child
 			except:
 				pass
+
+	def event_nameChange(self):
+		if winUser.getForegroundWindow()==self.windowHandle:
+			speech.speakObjectProperties(self.name)
 
 class NVDAObject_mozillaDocument(NVDAObject_IAccessible):
 
