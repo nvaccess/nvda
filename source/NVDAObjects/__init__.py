@@ -151,8 +151,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type isProtected: boolean 
 @ivar text_caretPosition: the caret position in this object's text as an offset from 0
 @type text_caretPosition: int
-@ivar text_reviewOffset: the review cursor's position in the object's text as an offset from 0
-@type text_reviewOffset: int
+@ivar text_reviewPosition: the review cursor's position in the object's text as an offset from 0
+@type text_reviewPosition: int
 @ivar text_characterCount: the number of characters in this object's text
 @type text_characterCount: int
 @ivar _text_lastReportedPresentation: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
@@ -168,7 +168,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._hashLimit=10000000
 		self._hashPrime=23
-		self.reviewOffset=text.OffsetsPosition(0)
+		self.reviewPosition=text.OffsetsPosition(0)
 
 		self.textRepresentationLineLength=None #Use \r and or \n
 
@@ -361,12 +361,107 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None):
 		return self.TextInfo(self,position,expandToUnit,limitToUnit)
 
+	def script_review_top(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
+		self.reviewPosition=info.position
+		speech.speakText(info.text)
+
+	def script_review_previousLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("top"))
+		speech.speakText(info.text)
+
+	def script_review_currentLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		speech.speakText(info.text)
+
+	def script_review_nextLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(info.text)
+
+	def script_review_bottom(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		info=info.getRelatedUnit(text.UNITRELATION_LAST)
+		self.reviewPosition=info.position
+		speech.speakText(info.text)
+
+	def script_review_previousWord(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("top"))
+		speech.speakText(info.text)
+
+	def script_review_currentWord(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		speech.speakText(info.text)
+
+	def script_review_nextWord(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("bottom"))
+		speech.speakText(info.text)
+
+	def script_review_startOfLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
+		speech.speakSymbol(info.text)
+
+	def script_review_previousCharacter(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("left"))
+		speech.speakSymbol(info.text)
+
+	def script_review_currentCharacter(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER)
+		speech.speakSymbol(info.text)
+
+	def script_review_nextCharacter(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		try:
+			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
+			self.reviewPosition=info.position
+		except text.E_noRelatedUnit:
+			speech.speakMessage(_("right"))
+		speech.speakSymbol(info.text)
+
+	def script_review_endOfLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
+		info=info.getRelatedUnit(text.UNITRELATION_LAST)
+		speech.speakSymbol(info.text)
+
+	def script_review_moveToCaret(self,keyPress,nextScript):
+		info=self.makeTextInfo(text.POSITION_CARET)
+		self.reviewPosition=info.position
+		info=self.makeTextInfo(info.position,expandToUnit=text.UNIT_LINE)
+		speech.speakText(info.text)
+
 	def script_moveByLine(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
 			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE)
 			speech.speakText(textInfo.text)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -374,6 +469,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
 			speech.speakSymbol(textInfo.text)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -381,6 +477,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_WORD)
 			speech.speakText(textInfo.text)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_moveByParagraph(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -388,6 +485,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_PARAGRAPH)
 			speech.speakText(textInfo.text)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_backspace(self,keyPress,nextScript):
 		textInfo=self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
@@ -403,6 +501,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			newPos=textInfo.position
 			if oldPos.compareStart(newPos)!=0:
 				speech.speakSymbol(delChar)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_delete(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -410,6 +509,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
 			speech.speakSymbol(textInfo.text)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldObj=api.getFocusObject()
@@ -428,3 +528,4 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 					speech.speakMessage(_("selected %s")%selectingText)
 				elif selInfo.mode==text.SELECTIONMODE_UNSELECTED:
 					speech.speakMessage(_("unselected %s")%selectingText)
+			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position

@@ -158,7 +158,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 	def resetBuffer(self):
 		self._textBuf=""
 		self._IDs={}
-		self.text_reviewOffset=0
+		self.text_reviewPosition=0
 		self._lastCaretIDs=[]
 
 	def addID(self,ID,info):
@@ -220,11 +220,11 @@ class virtualBuffer(textBuffer.textBufferObject):
 		labelID=self._IDs[ID]['labeledBy']
 		if labelID is not None:
 			r=self.getFullRangeFromID(labelID)
-			oldReview=self.text_reviewOffset
-			self.text_reviewOffset=r[0]
-			self.text_reportNewPresentation(self.text_reviewOffset)
+			oldReview=self.text_reviewPosition
+			self.text_reviewPosition=r[0]
+			self.text_reportNewPresentation(self.text_reviewPosition)
 			speech.speakText(self.text_getText(r[0],r[1]))
-			self.text_reviewOffset=oldReview
+			self.text_reviewPosition=oldReview
 
 	def reportIDMessages(self,newIDs,oldIDs):
 		msg=""
@@ -261,35 +261,35 @@ class virtualBuffer(textBuffer.textBufferObject):
 
 	def script_pageUp(self,keyPress,nextScript):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
-		curPos=self.text_reviewOffset
+		curPos=self.text_reviewPosition
 		lineCount=0
 		while (curPos>0) and (lineCount<=pageLength):
 			curPos=curPos-1
 			if self.text_getText(curPos,curPos+1)=='\n':
 				lineCount+=1
-		self.text_reviewOffset=curPos
-		if self.text_reviewOffset==0:
+		self.text_reviewPosition=curPos
+		if self.text_reviewPosition==0:
 			speech.speakMessage(_("top"))
-		self.text_speakLine(self.text_reviewOffset)
+		self.text_speakLine(self.text_reviewPosition)
 	script_pageUp.__doc__ = _("moves one page up in the virtual buffer's current document")
 
 
 	def script_pageDown(self,keyPress,nextScript):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
-		curPos=self.text_reviewOffset
+		curPos=self.text_reviewPosition
 		lineCount=0
 		while (curPos<self.text_characterCount-1) and (lineCount<=pageLength):
 			curPos=curPos+1
 			if self.text_getText(curPos,curPos+1)=='\n':
 				lineCount+=1
-		self.text_reviewOffset=curPos
-		if self.text_reviewOffset>=self.text_characterCount-1:
+		self.text_reviewPosition=curPos
+		if self.text_reviewPosition>=self.text_characterCount-1:
 			speech.speakMessage(_("bottom"))
-		self.text_speakLine(self.text_reviewOffset)
+		self.text_speakLine(self.text_reviewPosition)
 	script_pageDown.__doc__ = _("moves one page down in the virtual buffer's current document")
 
 	def script_activatePosition(self,keyPress,nextScript):
-		self.activatePosition(self.text_reviewOffset)
+		self.activatePosition(self.text_reviewPosition)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 	
 	def text_reportPresentation(self,offset):
@@ -306,155 +306,155 @@ class virtualBuffer(textBuffer.textBufferObject):
 		super(virtualBuffer,self).text_reportPresentation(offset)
 
 	def script_nextHeading(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more headings"))
 	script_nextHeading.__doc__ = _("moves to the next heading")
 	
 	def script_previousHeading(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more headings"))
 	script_previousHeading.__doc__ = _("moves to the previous heading")
 
 	def script_nextParagraph(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_PARAGRAPH)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_PARAGRAPH)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more paragraphs"))
 	script_nextParagraph.__doc__ = _("moves to the next paragraph")
 
 	def script_previousParagraph(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_PARAGRAPH)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_PARAGRAPH)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more paragraphs"))
 	script_previousParagraph.__doc__ = _("moves to the previous paragraph")
 
 	def script_nextTable(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_TABLE)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_TABLE)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more tables"))
 	script_nextTable.__doc__ = _("moves to the next table")
 
 	def script_previousTable(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_TABLE)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_TABLE)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more tables"))
 	script_previousTable.__doc__ = _("moves to the previous table")
 
 	def script_nextLink(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_LINK)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LINK)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more links"))
 	script_nextLink.__doc__ = _("moves to the next link")
 
 	def script_previousLink(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_LINK)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LINK)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more links"))
 	script_previousLink.__doc__ = _("moves to the previous link")
 	
 	def script_nextList(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_LIST)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LIST)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more lists"))
 	script_nextList.__doc__ = _("moves to the next list")
 
 	def script_previousList(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_LIST)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LIST)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more lists"))
 	script_previousList.__doc__ = _("moves to the previous list")
 
 	def script_nextListItem(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_LISTITEM)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LISTITEM)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more list items"))
 	script_nextListItem.__doc__ = _("moves to the next list item")
 
 	def script_previousListItem(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_LISTITEM)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LISTITEM)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more list items"))
 	script_previousListItem.__doc__ = _("moves to the previous list item")
 
 	def script_nextFormField(self,keyPress,nextScript):
-		pos=self.nextField(self.text_reviewOffset,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
+		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more form fields"))
 	script_nextFormField.__doc__ = _("Moves to the next form field")
 
 	def script_previousFormField(self,keyPress,nextScript):
-		pos=self.previousField(self.text_reviewOffset,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
+		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
 		if isinstance(pos,int):
-			self.text_reviewOffset=pos
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reviewPosition=pos
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 		else:
 			speech.speakMessage(_("no more form fields"))
 	script_previousFormField.__doc__ = _("moves to the previous form field")
@@ -464,9 +464,9 @@ class virtualBuffer(textBuffer.textBufferObject):
 		findDialog.run()
 
 	def doFindTextDialogHelper(self,text):
-	 	res=self._textBuf.find(text,self.text_reviewOffset+1)
+	 	res=self._textBuf.find(text,self.text_reviewPosition+1)
 		if res>=0:
-			self.text_reviewOffset=res
+			self.text_reviewPosition=res
 			speech.cancelSpeech()
 			self.text_speakLine(res)
 		else:

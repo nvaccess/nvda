@@ -48,8 +48,8 @@ class MSHTML(virtualBuffer):
 					vObj._IDs[parentID]['children'].insert(childNum,ID)
 				vObj.fillBuffer(domNode,parentID,position=start)
 				textLen=vObj.text_characterCount
-				if vObj.text_reviewOffset>=textLen:
-					vObj.text_reviewOffset=textLen-1
+				if vObj.text_reviewPosition>=textLen:
+					vObj.text_reviewPosition=textLen-1
 			except:
 				debug.writeException("onchange")
 
@@ -86,10 +86,10 @@ class MSHTML(virtualBuffer):
 		r=self.getFullRangeFromID(ID)
 		if r is None:
 			return nextHandler()
-		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
-			self.text_reviewOffset=r[0]
+		if ((self.text_reviewPosition<r[0]) or (self.text_reviewPosition>=r[1])):
+			self.text_reviewPosition=r[0]
 			if obj and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
-				self.text_reportNewPresentation(self.text_reviewOffset)
+				self.text_reportNewPresentation(self.text_reviewPosition)
 				speech.speakText(self.text_getText(r[0],r[1]))
 				api.setFocusObject(obj)
 				api.setNavigatorObject(obj)
@@ -136,14 +136,14 @@ class MSHTML(virtualBuffer):
 			speech.speakMessage(_("loading document %s")%self.dom.title+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
-		self.text_reviewOffset=0
+		self.text_reviewPosition=0
 		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			speech.cancelSpeech()
-			self.text_reviewOffset=0
+			self.text_reviewPosition=0
 			time.sleep(0.01)
 			speech.speakMessage(_("done"))
-			self.text_reportNewPresentation(self.text_reviewOffset)
-			self.text_speakLine(self.text_reviewOffset)
+			self.text_reportNewPresentation(self.text_reviewPosition)
+			self.text_speakLine(self.text_reviewPosition)
 
 	def isDocumentComplete(self):
 		documentComplete=True

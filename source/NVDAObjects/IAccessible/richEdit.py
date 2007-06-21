@@ -94,17 +94,17 @@ class RichEdit(WinEdit):
 				offsets=None
 		return offsets
 
-	def _get_text_caretOffset(self):
-		offset=super(RichEdit,self)._get_text_caretOffset()
+	def _get_text_caretPosition(self):
+		offset=super(RichEdit,self)._get_text_caretPosition()
 		if offset>=65535 and hasattr(self,'dom'):
 			offset=self.dom.Selection.Start
 		return offset
 
-	def _set_text_caretOffset(self,offset):
+	def _set_text_caretPosition(self,offset):
 		if offset>=65535 and hasattr(self,'dom'):
 			self.dom.Selection.SetRange(offset,offset)
 		else:
-			super(RichEdit,self)._set_text_caretOffset(offset)
+			super(RichEdit,self)._set_text_caretPosition(offset)
 
 	def text_getWordOffsets(self,offset):
 		if not hasattr(self,'dom'):

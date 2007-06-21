@@ -8,6 +8,7 @@ import globalVars
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
+import text
 import appModuleHandler
 import speech
 
@@ -25,7 +26,7 @@ class MSNHistory(IAccessible):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
 
 	def _get_value(self):
-		value=super(self.__class__,self)._get_value()
+		value=super(MSNHistory,self)._get_value()
 		if not isinstance(value,basestring):
 			value=""
 		return value
@@ -39,8 +40,8 @@ class MSNHistory(IAccessible):
 				lastMSNHistoryValue=value
 
 	def event_gainFocus(self):
-		super(self.__class__,self).event_gainFocus()
-		self.reviewOffset=len(self.textRepresentation)-1
+		super(MSNHistory,self).event_gainFocus()
+		self.reviewPosition=text.OffsetsPosition(len(self.textRepresentation)-1)
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)

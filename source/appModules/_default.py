@@ -224,124 +224,72 @@ class appModule(appModuleHandler.appModule):
 
 	def script_review_top(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
-		obj.reviewOffset=info.position
-		speech.speakText(info.text)
+		obj.script_review_top(keyPress,nextScript)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object")
 
 	def script_review_previousLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("top"))
-		speech.speakText(info.text)
+		obj.script_review_previousLine(keyPress,nextScript)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object")
 
 	def script_review_currentLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		speech.speakText(info.text)
+		obj.script_review_currentLine(keyPress,nextScript)
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated")
 
 	def script_review_nextLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("bottom"))
-		speech.speakText(info.text)
+		obj.script_review_nextLine(keyPress,nextScript)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object")
 
 	def script_review_bottom(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		info=info.getRelatedUnit(text.UNITRELATION_LAST)
-		obj.reviewOffset=info.position
-		speech.speakText(info.text)
+		obj.script_review_bottom(keyPress,nextScript)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object")
 
 	def script_review_previousWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("top"))
-		speech.speakText(info.text)
+		obj.script_review_previousWord(keyPress,nextScript)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object")
 
 	def script_review_currentWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
-		speech.speakText(info.text)
+		obj.script_review_currentWord(keyPress,nextScript)
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated")
 
 	def script_review_nextWord(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("bottom"))
-		speech.speakText(info.text)
+		obj.script_review_nextWord(keyPress,nextScript)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object")
 
 	def script_review_startOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
-		speech.speakSymbol(info.text)
+		obj.script_review_startOfLine(keyPress,nextScript)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the start of the line where it is situated, in the current navigator object")
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("left"))
-		speech.speakSymbol(info.text)
+		obj.script_review_previousCharacter(keyPress,nextScript)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object")
 
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER)
-		speech.speakSymbol(info.text)
+		obj.script_review_currentCharacter(keyPress,nextScript)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated")
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			obj.reviewOffset=info.position
-		except text.E_noRelatedUnit:
-			speech.speakMessage(_("right"))
-		speech.speakSymbol(info.text)
+		obj.script_review_nextCharacter(keyPress,nextScript)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object")
 
 	def script_review_endOfLine(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		info=obj.makeTextInfo(obj.reviewOffset,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		info=info.getRelatedUnit(text.UNITRELATION_LAST)
-		speech.speakSymbol(info.text)
+		obj.script_review_endOfLine(keyPress,nextScript)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the end of the line where it is situated, in the current navigator object")
 
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
-		if isinstance(obj,NVDAObject):
-			obj.script_text_review_moveToCaret(keyPress,None)
-		else:
-			speech.speakMessage(_("no navigator object"))
+		obj.script_review_moveToCaret(keyPress,None)
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_speechMode(self,keyPress,nextScript):
@@ -372,15 +320,15 @@ class appModule(appModuleHandler.appModule):
 
 	def script_sayAll_review(self,keyPress,nextScript):
 		o=api.getNavigatorObject()
-		sayAllHandler.sayAll(o.text_reviewOffset,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_reviewOffset)
+		sayAllHandler.sayAll(o.text_reviewPosition,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_reviewPosition)
 
 	def script_sayAll_caret(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=virtualBuffers.getVirtualBuffer(o)
 		if v and not api.isVirtualBufferPassThrough():
-			sayAllHandler.sayAll(v.text_reviewOffset,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewOffset)
+			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
-			sayAllHandler.sayAll(o.text_caretOffset,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_caretOffset)
+			sayAllHandler.sayAll(o.text_caretPosition,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_caretPosition)
 	script_sayAll_caret.__doc__ = _("reads from cursor up to end of current text")
 
 	def script_review_reportPresentation(self,keyPress,nextScript):
@@ -388,7 +336,7 @@ class appModule(appModuleHandler.appModule):
 		v=virtualBuffers.getVirtualBuffer(o)
 		if v and not api.isVirtualBufferPassThrough():
 			o=v
-		o.text_reportPresentation(o.text_reviewOffset)
+		o.text_reportPresentation(o.text_reviewPosition)
 
 	def script_reportCurrentFocus(self,keyPress,nextScript):
 		focusObject=api.getFocusObject()
@@ -437,6 +385,7 @@ class appModule(appModuleHandler.appModule):
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
+		speech.speakMessage("%s"%obj)
 		speech.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage("Class: %s"%obj.windowClassName)
 		for char in obj.windowClassName:

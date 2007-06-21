@@ -62,7 +62,7 @@ class WinConsole(IAccessible):
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		self.reviewOffset=self.caretPosition
+		self.reviewPosition=self.caretPosition
 		thread.start_new_thread(self.monitorThread,())
 		pythoncom.PumpWaitingMessages()
 		time.sleep(0.1)
@@ -101,7 +101,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor:
-			self.reviewOffset=self.caretPosition
+			self.reviewPosition=self.caretPosition
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID

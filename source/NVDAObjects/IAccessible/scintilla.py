@@ -37,7 +37,7 @@ class Scintilla(IAccessible):
 
 #The value of the object should be the current line of the text
 	def _get_value(self):
-		(start,end)=self.text_getLineOffsets(self.text_caretOffset)
+		(start,end)=self.text_getLineOffsets(self.text_caretPosition)
 		return self.text_getText(start,end)
 
 #The text is found in the MSAA name property
@@ -53,7 +53,7 @@ class Scintilla(IAccessible):
 			return "\0"
 
 #There is a window message to get the caret offset
-	def _get_text_caretOffset(self):
+	def _get_text_caretPosition(self):
 		return winUser.sendMessage(self.windowHandle,SCI_GETCURRENTPOS,0,0)
 
 	def _get_text_selectionCount(self):

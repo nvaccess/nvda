@@ -56,11 +56,11 @@ class Gecko(virtualBuffer):
 		if not self._IDs.has_key(ID):
 			return nextHandler()
 		r=self.getFullRangeFromID(ID)
-		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
-			self.text_reviewOffset=r[0]
+		if ((self.text_reviewPosition<r[0]) or (self.text_reviewPosition>=r[1])):
+			self.text_reviewPosition=r[0]
 		if not api.isVirtualBufferPassThrough() and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
-			self.reportLabel(self.getIDFromPosition(self.text_reviewOffset))
-			self.text_reportNewPresentation(self.text_reviewOffset)
+			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
+			self.text_reportNewPresentation(self.text_reviewPosition)
 			speech.speakText(self.text_getText(r[0],r[1]))
 			api.setFocusObject(obj)
 			api.setNavigatorObject(obj)
@@ -72,9 +72,9 @@ class Gecko(virtualBuffer):
 		if not self._IDs.has_key(ID):
 			return nextHandler()
 		r=self._IDs[ID]['range']
-		if ((self.text_reviewOffset<r[0]) or (self.text_reviewOffset>=r[1])):
-			self.text_reviewOffset=r[0]
-			self.text_reportNewPresentation(self.text_reviewOffset)
+		if ((self.text_reviewPosition<r[0]) or (self.text_reviewPosition>=r[1])):
+			self.text_reviewPosition=r[0]
+			self.text_reportNewPresentation(self.text_reviewPosition)
 			speech.speakText(self.text_getText(r[0],r[1]))
 
 	def event_stateChange(self,obj,nextHandler):
@@ -113,8 +113,8 @@ class Gecko(virtualBuffer):
 			self._IDs[parentID]['children'].insert(childNum,ID)
 		self.fillBuffer(obj,parentID,position=r[0])
 		textLen=self.text_characterCount
-		if self.text_reviewOffset>=textLen:
-			self.text_reviewOffset=textLen-1
+		if self.text_reviewPosition>=textLen:
+			self.text_reviewPosition=textLen-1
 
 	def activatePosition(self,pos):
 		ID=self.getIDFromPosition(pos)
@@ -162,7 +162,7 @@ class Gecko(virtualBuffer):
 		lastLoadTime=time.time()
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
-			self.text_reviewOffset=0
+			self.text_reviewPosition=0
 			speech.speakMessage(_("done"))
 			time.sleep(0.001)
 			self.text_speakLine(0)

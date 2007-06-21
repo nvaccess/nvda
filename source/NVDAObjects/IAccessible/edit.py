@@ -340,6 +340,10 @@ class Edit(IAccessible):
 	TextInfo=EditTextInfo
 	editAPIVersion=0
 
+	def __init__(self,*args,**kwargs):
+		super(Edit,self).__init__(*args,**kwargs)
+		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+
 	def _get_value(self):
 		return self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE).text
 
