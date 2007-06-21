@@ -221,7 +221,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			nameText=obj.name
 		if descriptionText!=nameText and isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
 			textList.append(descriptionText)
-	if keyboardShortcut:
+	if keyboardShortcut and config.conf["presentation"]["reportKeyboardShortcuts"]:
 		keyboardShortcutText=obj.keyboardShortcut
 		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
 			textList.append(keyboardShortcutText)
