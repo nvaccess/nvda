@@ -736,6 +736,11 @@ class SysLink(IAccessible):
 	def reportFocus(self):
 		pass
 
+class TaskListIcon(IAccessible):
+
+	def _get_role(self):
+		return controlTypes.ROLE_ICON
+
 ###class mappings
 
 _staticMap={
@@ -791,4 +796,5 @@ _staticMap={
 	("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winword.WordDocument",
 	("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"excel.ExcelGrid",
 	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
+	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 }
