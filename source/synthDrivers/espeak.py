@@ -6,8 +6,16 @@ import languageHandler
 import silence
 
 class SynthDriver(silence.SynthDriver):
+
 	name = "espeak"
 	description = "eSpeak"
+
+	hasVoice=True
+	hasPitch=True
+	hasRate=True
+	hasVolume=True
+	hasVariant=True
+	hasInflection=True
 
 	def _paramToPercent(self, current, min, max):
 		return int(round(float(current - min) / (max - min) * 100))
@@ -21,6 +29,7 @@ class SynthDriver(silence.SynthDriver):
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._voiceList=_espeak.getVoiceList()
+		self._variant=0
 
 	def speakText(self,text,wait=False,index=None):
 		_espeak.speak(text, index=index, wait=wait)
@@ -62,7 +71,14 @@ class SynthDriver(silence.SynthDriver):
 	def _set_voice(self, index):
 		if index == 0:
 			return
-		_espeak.setVoice(self._voiceList[index - 1])
+		if self._variant>0:
+			identifier="%s+%s"%(self._voiceList[index - 1].identifier,self._variant)
+		else:
+			identifier=self._voiceList[index - 1].identifier
+		try:
+			_espeak.setVoiceByName(identifier)
+		except:
+			_espeak.setVoiceByName(identifier.split('+')[0])
 
 	def _get_voiceCount(self):
 		return len(self._voiceList)
@@ -76,3 +92,13 @@ class SynthDriver(silence.SynthDriver):
 
 	def terminate(self):
 		_espeak.terminate()
+
+	def _get_variant(self):
+		return self._variant
+
+	def _set_variant(self,val):
+		self._variant=val
+		self.voice=self.voice
+
+	def _get_variantCount(self):
+		return 15

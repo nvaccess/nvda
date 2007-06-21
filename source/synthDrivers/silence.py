@@ -10,6 +10,13 @@ import debug
 
 class SynthDriver(baseObject.autoPropertyObject):
 
+	hasVoice=False
+	hasPitch=False
+	hasRate=False
+	hasVolume=False
+	hasVariant=False
+	hasInflection=False
+
 	#A description of the synth
 	description=_("No speech,  a template synthesizer")
 	#The name must be the original module file name
@@ -83,4 +90,19 @@ class SynthDriver(baseObject.autoPropertyObject):
 		return 0
 
 	def _set_volume(self,value):
+		pass
+
+	def _get_variant(self):
+		return 1
+
+	def _set_variant(self,val):
+		pass
+
+	def _get_variantCount(self):
+		return 1
+
+	def _get_inflection(self):
+		return 0
+
+	def _set_inflection(self,val):
 		pass

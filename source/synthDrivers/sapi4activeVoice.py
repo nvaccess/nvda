@@ -11,6 +11,11 @@ COM_CLASS = "ActiveVoice.ActiveVoice"
 
 class SynthDriver(silence.SynthDriver):
 
+	hasVoice=True
+	hasRate=True
+	hasPitch=True
+	hasVolume=True
+
 	name="sapi4activeVoice"
 	description="Microsoft Speech API 4 (ActiveVoice.ActiveVoice)"
 

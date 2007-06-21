@@ -33,6 +33,7 @@ confspec = StringIO("""# NVDA Configuration File
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 
 	[[__many__]]
+		variant = integer(default=0,min=0)
 		rate = integer(default=60,min=0,max=100)
 		pitch = integer(default=50,min=0,max=100)
 		capPitchChange = integer(default=20,min=-100,max=100)

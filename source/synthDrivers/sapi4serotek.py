@@ -12,9 +12,12 @@ import core
 import silence
 import _sapi4serotekHelper
 
-description="Microsoft Speech API version 4 (Serotek driver)"
-
 class SynthDriver(silence.SynthDriver):
+
+	hasVoice=True
+	hasRate=True
+	hasPitch=True
+	hasVolume=True
 
 	name="sapi4serotek"
 	description="Microsoft Speech API version 4 (Serotek driver)"

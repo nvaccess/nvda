@@ -46,14 +46,27 @@ def setSynth(name):
 		newSynth.initialize()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
-			newSynth.voice=config.conf["speech"][name]["voice"]
-			newSynth.rate=config.conf["speech"][name]["rate"]
-			newSynth.pitch=config.conf["speech"][name]["pitch"]
-			newSynth.volume=config.conf["speech"][name]["volume"]
+			if newSynth.hasVoice:
+				newSynth.voice=config.conf["speech"][name]["voice"]
+			if newSynth.hasVariant:
+				newSynth.variant=config.conf["speech"][name]["variant"]
+			if newSynth.hasRate:
+				newSynth.rate=config.conf["speech"][name]["rate"]
+			if newSynth.hasPitch:
+				newSynth.pitch=config.conf["speech"][name]["pitch"]
+			if newSynth.hasVolume:
+				newSynth.volume=config.conf["speech"][name]["volume"]
 		else:
-			config.conf["speech"][name]["voice"]=newSynth.voice
-			config.conf["speech"][name]["rate"]=newSynth.rate
-			config.conf["speech"][name]["pitch"]=newSynth.pitch
+			if newSynth.hasVoice:
+				config.conf["speech"][name]["voice"]=newSynth.voice
+			if newSynth.hasVariant:
+				config.conf["speech"][name]["variant"]=newSynth.variant
+			if newSynth.hasRate:
+				config.conf["speech"][name]["rate"]=newSynth.rate
+			if newSynth.hasPitch:
+				config.conf["speech"][name]["pitch"]=newSynth.pitch
+			if newSynth.hasVolume:
+				config.conf["speech"][name]["volume"]=newSynth.volume
 		if _curSynth:
 			_curSynth.cancel()
 			_curSynth.terminate()

@@ -19,6 +19,12 @@ class constants:
 
 class SynthDriver(silence.SynthDriver):
 
+	hasVoice=True
+	hasRate=True
+	hasPitch=True
+	hasVolume=True
+	hasIndexing=True
+
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"
 

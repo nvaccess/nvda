@@ -114,45 +114,61 @@ class voiceSettingsDialog(wx.Dialog):
 		wx.Dialog.__init__(self,parent,ID,title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
-		voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
-		voiceListLabel=wx.StaticText(self,-1,label=_("&Voice"))
-		voiceListID=wx.NewId()
-		self.voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[getSynth().getVoiceName(x) for x in range(1,getSynth().voiceCount+1)])
-		try:
-			voiceIndex=getSynth().voice
-			voiceIndex-=1
-			if voiceIndex>=0 and voiceIndex<getSynth().voiceCount:
-				self.voiceList.SetSelection(voiceIndex)
-		except:
-			pass
-		self.voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
-		voiceListSizer.Add(voiceListLabel)
-		voiceListSizer.Add(self.voiceList)
-		settingsSizer.Add(voiceListSizer,border=10,flag=wx.BOTTOM)
-		rateSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-		rateSliderLabel=wx.StaticText(self,-1,label=_("&Rate"))
-		rateSliderID=wx.NewId()
-		self.rateSlider=wx.Slider(self,rateSliderID,value=getSynth().rate,minValue=0,maxValue=100,name="Rate:")
-		self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
-		rateSliderSizer.Add(rateSliderLabel)
-		rateSliderSizer.Add(self.rateSlider)
-		settingsSizer.Add(rateSliderSizer,border=10,flag=wx.BOTTOM)
-		pitchSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-		pitchSliderLabel=wx.StaticText(self,-1,label=_("&Pitch"))
-		pitchSliderID=wx.NewId()
-		self.pitchSlider=wx.Slider(self,pitchSliderID,value=getSynth().pitch,minValue=0,maxValue=100)
-		self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
-		pitchSliderSizer.Add(pitchSliderLabel)
-		pitchSliderSizer.Add(self.pitchSlider)
-		settingsSizer.Add(pitchSliderSizer,border=10,flag=wx.BOTTOM)
-		volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-		volumeSliderLabel=wx.StaticText(self,-1,label=_("V&olume"))
-		volumeSliderID=wx.NewId()
-		self.volumeSlider=wx.Slider(self,volumeSliderID,value=getSynth().volume,minValue=0,maxValue=100)
-		self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
-		volumeSliderSizer.Add(volumeSliderLabel)
-		volumeSliderSizer.Add(self.volumeSlider)
-		settingsSizer.Add(volumeSliderSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasVoice:
+			voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
+			voiceListLabel=wx.StaticText(self,-1,label=_("&Voice"))
+			voiceListID=wx.NewId()
+			self.voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[getSynth().getVoiceName(x) for x in range(1,getSynth().voiceCount+1)])
+			try:
+				voiceIndex=getSynth().voice
+				voiceIndex-=1
+				if voiceIndex>=0 and voiceIndex<getSynth().voiceCount:
+					self.voiceList.SetSelection(voiceIndex)
+			except:
+				pass
+			self.voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
+			voiceListSizer.Add(voiceListLabel)
+			voiceListSizer.Add(self.voiceList)
+			settingsSizer.Add(voiceListSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasVariant:
+			variantListSizer=wx.BoxSizer(wx.HORIZONTAL)
+			variantListLabel=wx.StaticText(self,-1,label=_("V&ariant"))
+			variantListID=wx.NewId()
+			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=["%s"%x for x in range(getSynth().variantCount)])
+			variantIndex=getSynth().variant
+			print "variant: %s, %s"%(type(variantIndex),variantIndex)
+			self.variantList.SetSelection(variantIndex)
+			self.variantList.Bind(wx.EVT_CHOICE,self.onVariantChange)
+			variantListSizer.Add(variantListLabel)
+			variantListSizer.Add(self.variantList)
+			settingsSizer.Add(variantListSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasRate:
+			rateSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
+			rateSliderLabel=wx.StaticText(self,-1,label=_("&Rate"))
+			rateSliderID=wx.NewId()
+			self.rateSlider=wx.Slider(self,rateSliderID,value=getSynth().rate,minValue=0,maxValue=100,name="Rate:")
+			self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
+			rateSliderSizer.Add(rateSliderLabel)
+			rateSliderSizer.Add(self.rateSlider)
+			settingsSizer.Add(rateSliderSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasPitch:
+			pitchSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
+			pitchSliderLabel=wx.StaticText(self,-1,label=_("&Pitch"))
+			pitchSliderID=wx.NewId()
+			self.pitchSlider=wx.Slider(self,pitchSliderID,value=getSynth().pitch,minValue=0,maxValue=100)
+			self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
+			pitchSliderSizer.Add(pitchSliderLabel)
+			pitchSliderSizer.Add(self.pitchSlider)
+			settingsSizer.Add(pitchSliderSizer,border=10,flag=wx.BOTTOM)
+		if getSynth().hasVolume:
+			volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
+			volumeSliderLabel=wx.StaticText(self,-1,label=_("V&olume"))
+			volumeSliderID=wx.NewId()
+			self.volumeSlider=wx.Slider(self,volumeSliderID,value=getSynth().volume,minValue=0,maxValue=100)
+			self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
+			volumeSliderSizer.Add(volumeSliderLabel)
+			volumeSliderSizer.Add(self.volumeSlider)
+			settingsSizer.Add(volumeSliderSizer,border=10,flag=wx.BOTTOM)
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
@@ -178,6 +194,10 @@ class voiceSettingsDialog(wx.Dialog):
 		volume=getSynth().volume
 		self.volumeSlider.SetValue(volume)
 
+	def onVariantChange(self,evt):
+		val=evt.GetSelection()
+		getSynth().variant=val
+
 	def onRateChange(self,evt):
 		val=evt.GetSelection()
 		getSynth().rate=val
@@ -191,17 +211,29 @@ class voiceSettingsDialog(wx.Dialog):
 		getSynth().volume=val
 
 	def onCancel(self,evt):
-		getSynth().voice=config.conf["speech"][getSynth().name]["voice"]
-		getSynth().rate=config.conf["speech"][getSynth().name]["rate"]
-		getSynth().pitch=config.conf["speech"][getSynth().name]["pitch"]
-		getSynth().volume=config.conf["speech"][getSynth().name]["volume"]
+		if getSynth().hasVoice:
+			getSynth().voice=config.conf["speech"][getSynth().name]["voice"]
+		if getSynth().hasVariant:
+			getSynth().variant=config.conf["speech"][getSynth().name]["variant"]
+		if getSynth().hasRate:
+			getSynth().rate=config.conf["speech"][getSynth().name]["rate"]
+		if getSynth().hasPitch:
+			getSynth().pitch=config.conf["speech"][getSynth().name]["pitch"]
+		if getSynth().hasVolume:
+			getSynth().volume=config.conf["speech"][getSynth().name]["volume"]
 		self.Destroy()
 
 	def onOk(self,evt):
-		config.conf["speech"][getSynth().name]["voice"]=self.voiceList.GetSelection()+1
-		config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
-		config.conf["speech"][getSynth().name]["pitch"]=self.pitchSlider.GetValue()
-		config.conf["speech"][getSynth().name]["volume"]=self.volumeSlider.GetValue()
+		if getSynth().hasVoice:
+			config.conf["speech"][getSynth().name]["voice"]=self.voiceList.GetSelection()+1
+		if getSynth().hasVariant:
+			config.conf["speech"][getSynth().name]["variant"]=self.variantList.GetSelection()
+		if getSynth().hasRate:
+			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
+		if getSynth().hasPitch:
+			config.conf["speech"][getSynth().name]["pitch"]=self.pitchSlider.GetValue()
+		if getSynth().hasVolume:
+			config.conf["speech"][getSynth().name]["volume"]=self.volumeSlider.GetValue()
 		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.capsCheckBox.IsChecked()
 		self.Destroy()
