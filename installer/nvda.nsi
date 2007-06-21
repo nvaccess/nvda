@@ -150,7 +150,6 @@ var InstallWithSpeech
 var hmci
 
 Function .onInit
-;!insertmacro MUI_LANGDLL_DISPLAY
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
@@ -162,34 +161,20 @@ pop $1	; TRUE or FALSE
 pop $2	; if true, will contain the handle of NVDA window
 IntCmp $1 1 +1 SpeechInstall
 MessageBox MB_OK $(msg_NVDARunning)
+
+SpeechInstall:
+InitPluginsDir
+CreateDirectory $PLUGINSDIR\_nvda_temp_
+SetOutPath $PLUGINSDIR\_nvda_temp_
+File /r "${NVDASourceDir}\"
 ; Shut down NVDA
 System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 ;IntCmp $3 0 SpeechInstall 0 +1
 ;MessageBox MB_OK "Could not shut down NVDA process"
-
-SpeechInstall:
-InitPluginsDir
-SetOutPath $PLUGINSDIR
-File "waves\${SND_NAME_Welcome}"
-push "$PLUGINSDIR\${SND_NAME_Welcome}"
-Call PlaySound
-
-MessageBox MB_OKCANCEL $(msg_SpeechInstall) IDOK +1 IDCANCEL end
-SendMessage $hmci ${WM_CLOSE} 0 0
-Strcpy $InstallWithSpeech 1
-
-; Tell users to "please wait..."
-File "waves\${SND_NAME_PleaseWait}"
-push "$PLUGINSDIR\${SND_NAME_PleaseWait}"
-Call PlaySound
-
-CreateDirectory $PLUGINSDIR\_nvda_temp_
-SetOutPath $PLUGINSDIR\_nvda_temp_
-File /r "${NVDASourceDir}\"
 exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -m true"
 
 	end:
-	SendMessage $hmci ${WM_CLOSE} 0 0
+	;SendMessage $hmci ${WM_CLOSE} 0 0
 FunctionEnd
  
 Section "install" section_install
