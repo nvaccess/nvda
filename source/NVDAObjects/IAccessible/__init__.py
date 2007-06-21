@@ -733,7 +733,8 @@ class StatusBar(IAccessible):
 
 class SysLink(IAccessible):
 
-	speakOnGainFocus=False
+	def reportFocus(self):
+		pass
 
 ###class mappings
 
