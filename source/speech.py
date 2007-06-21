@@ -230,7 +230,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		keyboardShortcutText=obj.keyboardShortcut
 		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
 			textList.append(keyboardShortcutText)
-	if positionString:
+	if positionString and config.conf["presentation"]["reportObjectPositionInformation"]:
 		positionStringText=obj.positionString
 		if isinstance(positionStringText,basestring) and len(positionStringText)>0 and not positionStringText.isspace():
 			textList.append(positionStringText)

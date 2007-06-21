@@ -46,6 +46,7 @@ confspec = StringIO("""# NVDA Configuration File
 [presentation]
 		reportClassOfClientObjects = boolean(default=false)
 		reportKeyboardShortcuts = boolean(default=true)
+		reportObjectPositionInformation = boolean(default=true)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectGroupNames = boolean(default=True)
