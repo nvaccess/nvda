@@ -87,7 +87,6 @@ class SynthDriver(silence.SynthDriver):
 			_espeak.setVoiceByName(identifier)
 		except:
 			_espeak.setVoiceByName(identifier.split('+')[0])
-		self.inflection=0
 
 	def _get_voiceCount(self):
 		return len(self._voiceList)
