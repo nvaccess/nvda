@@ -336,19 +336,19 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def event_valueChange(self):
 		value=self.value
-		if self.hasFocus and value!=self._oldValue:
+		if id(self)==id(api.getFocusObject()) and value!=self._oldValue:
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
 			self._oldValue=value
 
 	def event_nameChange(self):
 		name=self.name
-		if self.hasFocus and name!=self._oldName:
+		if id(self)==id(api.getFocusObject()) and name!=self._oldName:
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
 			self._oldName=name
 
 	def event_descriptionChange(self):
 		description=self.description
-		if self.hasFocus and description!=self._oldDescription:
+		if id(self)==id(api.getFocusObject()) and description!=self._oldDescription:
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
 

@@ -462,6 +462,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def reportFocus(self):
 		if self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
 			return
+		if self==api.getForegroundObject():
+			return
 		super(IAccessible,self).reportFocus()
 
 	def speakDescendantObjects(self,hashList=None):
