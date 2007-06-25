@@ -160,6 +160,7 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_SPINBUTTON:controlTypes.ROLE_SPINBUTTON,
 	IAccessibleHandler.ROLE_SYSTEM_SOUND:controlTypes.ROLE_SOUND,
 	IAccessibleHandler.ROLE_SYSTEM_WHITESPACE:controlTypes.ROLE_WHITESPACE,
+	IAccessibleHandler.ROLE_SYSTEM_IPADDRESS:controlTypes.ROLE_IPADDRESS,
 	IAccessibleHandler.ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
 	"page":controlTypes.ROLE_PAGE,
 }
