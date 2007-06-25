@@ -255,12 +255,21 @@ class voiceSettingsDialog(wx.Dialog):
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.capsCheckBox.IsChecked()
 		self.Destroy()
 
-class keyboardEchoDialog(wx.Dialog):
+class keyboardSettingsDialog(wx.Dialog):
 
 	def __init__(self,parent,ID,title):
 		wx.Dialog.__init__(self,parent,ID,title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))
+		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		settingsSizer.Add(self.capsAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
+		self.numpadInsertAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use numpad Insert as an NVDA modifier key"))
+		self.numpadInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"])
+		settingsSizer.Add(self.numpadInsertAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
+		self.extendedInsertAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use extended Insert as an NVDA modifier key"))
+		self.extendedInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"])
+		settingsSizer.Add(self.extendedInsertAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
 		self.charsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak typed &characters"))
 		self.charsCheckBox.SetValue(config.conf["keyboard"]["speakTypedCharacters"])
 		settingsSizer.Add(self.charsCheckBox,border=10,flag=wx.BOTTOM)
@@ -276,9 +285,12 @@ class keyboardEchoDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.charsCheckBox.SetFocus()
+		self.capsAsNVDAModifierCheckBox.SetFocus()
 
 	def onOk(self,evt):
+		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
+		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
+		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()

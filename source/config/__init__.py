@@ -59,6 +59,9 @@ confspec = StringIO("""# NVDA Configuration File
 
 #Keyboard settings
 [keyboard]
+	useCapsLockAsNVDAModifierKey = boolean(default=false)
+	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
+	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)

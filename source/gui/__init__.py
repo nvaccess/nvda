@@ -37,7 +37,7 @@ To bring this window up at any time, press insert+n. To close this window withou
 
 To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
 
-To set the preferences (such as voice settings, key echo, reading of tooltips etc),
+To set the preferences (such as voice settings, key Settings, reading of tooltips etc),
 Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. 
 
 By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.
@@ -154,9 +154,9 @@ class MainFrame(wx.Frame):
 		id_VoiceCommand=wx.NewId()
 		menu_preferences.Append(id_VoiceCommand,_("&Voice settings...\tCtrl+Shift+V"),_("Choose the voice, rate, pitch and volume  to use"))
 		wx.EVT_MENU(self,id_VoiceCommand,self.onVoiceCommand)
-		id_onKeyboardEchoCommand=wx.NewId()
-		menu_preferences.Append(id_onKeyboardEchoCommand,_("&Keyboard echo...\tCtrl+E"),_("Configure speaking of typed characters, words or command keys"))
-		wx.EVT_MENU(self,id_onKeyboardEchoCommand,self.onKeyboardEchoCommand)
+		id_onKeyboardSettingsCommand=wx.NewId()
+		menu_preferences.Append(id_onKeyboardSettingsCommand,_("&Keyboard Settings...\tCtrl+E"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
+		wx.EVT_MENU(self,id_onKeyboardSettingsCommand,self.onKeyboardSettingsCommand)
 		id_mouseSettingsCommand=wx.NewId()
 		menu_preferences.Append(id_mouseSettingsCommand,_("&Mouse settings...\tCtrl+M"),_("Change reporting of mouse sape, object under mouse"))
 		wx.EVT_MENU(self,id_mouseSettingsCommand,self.onMouseSettingsCommand)
@@ -167,7 +167,7 @@ class MainFrame(wx.Frame):
 		menu_preferences.Append(id_virtualBuffersCommand,_("Virtual &buffers...\tCtrl+Shift+B"),_("Change virtual buffers specific settings")) 
 		wx.EVT_MENU(self,id_virtualBuffersCommand,self.onVirtualBuffersCommand)
 		id_documentFormattingCommand=wx.NewId()
-		menu_preferences.Append(id_documentFormattingCommand,_("Document &formatting...\tCtrl+Shift+F"),_("Change echo of document properties")) 
+		menu_preferences.Append(id_documentFormattingCommand,_("Document &formatting...\tCtrl+Shift+F"),_("Change Settings of document properties")) 
 		wx.EVT_MENU(self,id_documentFormattingCommand,self.onDocumentFormattingCommand)
 		menuBar.Append(menu_preferences,_("&Preferences"))
 		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
@@ -259,8 +259,8 @@ class MainFrame(wx.Frame):
 		d=voiceSettingsDialog(self,-1,_("Voice settings"))
 		d.Show(True)
 
-	def onKeyboardEchoCommand(self,evt):
-		d=keyboardEchoDialog(self,-1,_("Keyboard echo settings"))
+	def onKeyboardSettingsCommand(self,evt):
+		d=keyboardSettingsDialog(self,-1,_("Keyboard Settings"))
 		d.Show(True)
 
 	def onMouseSettingsCommand(self,evt):

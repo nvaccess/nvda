@@ -14,7 +14,7 @@ import pyHook
 import nvwh
 import debug
 import speech
-from keyUtils import key, keyName
+from keyUtils import key, keyName, sendKey
 import scriptHandler
 import globalVars
 import queueHandler
@@ -23,41 +23,63 @@ import locale
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
-insertDown=False
-word=""
-hookManager=None
-
+NVDAModifierKey=None
+usedNVDAModifierKey=False
+lastNVDAModifierKey=None
 
 def passNextKeyThrough():
 	global passKeyThroughCount
 	if passKeyThroughCount==-1:
 		passKeyThroughCount=0
 
-#Internal functions for key presses
+def isNVDAModifierKey(vkCode,extended):
+	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and not extended:
+		return True
+	elif config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and extended:
+		return True
+	elif config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] and vkCode==winUser.VK_CAPITAL:
+		return True
+	else:
+		return False
+
+def speakToggleKey(vkCode):
+	toggleState=bool(not winUser.getKeyState(vkCode)&1)
+	if vkCode==winUser.VK_CAPITAL:
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if toggleState else _("off")))
+	elif vkCode==winUser.VK_NUMLOCK:
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("num lock %s")%(_("on") if toggleState else _("off")))
+	elif vkCode==winUser.VK_SCROLL:
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
 @nvwh.userKeyCallbackType
 def internal_keyDownEvent(keyInfo):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
-	global insertDown, passKeyThroughCount
-	vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
-	if passKeyThroughCount>=0:
-		passKeyThroughCount+=1
-		return True
 	try:
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, passKeyThroughCount
+		#Injected keys should be ignored
 		if keyInfo.injected:
 			return True
-		globalVars.keyCounter+=1
+		if passKeyThroughCount>=0:
+			passKeyThroughCount+=1
+			return True
 		if not speech.beenCanceled:
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
+		vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
+		globalVars.keyCounter+=1
+		if lastNVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==lastNVDAModifierKey:
+			lastNVDAModifierKey=None
+			speakToggleKey(keyInfo.vkCode)
+			return True
+		lastNVDAModifierKey=None
+		if isNVDAModifierKey(keyInfo.vkCode,keyInfo.extended):
+			NVDAModifierKey=(keyInfo.vkCode,keyInfo.extended)
+			return False
 		if keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
-		if (vkName=="Insert"): #and (keyInfo.extended==0):
-			insertDown=True
-			return False
 		modifierList=[]
-		if insertDown:
-			modifierList.append("Insert")
+		if NVDAModifierKey:
+			modifierList.append("NVDA")
 		if winUser.getKeyState(winUser.VK_CONTROL)&32768:
 			modifierList.append("Control")
 		if winUser.getKeyState(winUser.VK_SHIFT)&32768:
@@ -87,12 +109,6 @@ def internal_keyDownEvent(keyInfo):
 			else:
 				labelList.append(keyPress[1])
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,"+".join(labelList))
-		if mainKey=="Capital":
-			capState=bool(not winUser.getKeyState(winUser.VK_CAPITAL)&1)
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if capState else _("off")))
-		elif mainKey=="ExtendedNumlock":
-			numState=bool(not winUser.getKeyState(winUser.VK_NUMLOCK)&1)
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("num lock %s")%(_("on") if numState else _("off")))
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
@@ -105,9 +121,12 @@ def internal_keyDownEvent(keyInfo):
 			else:
 				queueHandler.queueFunction(queueHandler.interactiveQueue,script,keyPress)
 		if script or globalVars.keyboardHelp:
-			keyUpIgnoreSet.add((vkName,keyInfo.extended))
+			keyUpIgnoreSet.add((keyInfo.vkCode,keyInfo.extended))
+			if NVDAModifierKey:
+				usedNVDAModifierKey=True 
 			return False
 		else:
+			speakToggleKey(keyInfo.vkCode)
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
@@ -117,9 +136,8 @@ def internal_keyDownEvent(keyInfo):
 @nvwh.userKeyCallbackType
 def internal_keyUpEvent(keyInfo):
 	"""Event that pyHook calls when it receives keyUps"""
-	global insertDown, passKeyThroughCount
 	try:
-		vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, passKeyThroughCount
 		if keyInfo.injected:
 			return True
 		elif passKeyThroughCount>=1:
@@ -127,14 +145,17 @@ def internal_keyUpEvent(keyInfo):
 			if passKeyThroughCount==0:
 				passKeyThroughCount=-1
 			return True
-		elif (vkName,keyInfo.extended) in keyUpIgnoreSet:
-			keyUpIgnoreSet.remove((vkName,keyInfo.extended))
+		elif NVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==NVDAModifierKey:
+			if not usedNVDAModifierKey:
+				lastNVDAModifierKey=NVDAModifierKey
+			NVDAModifierKey=None
+			usedNVDAModifierKey=False
+			return False
+		elif (keyInfo.vkCode,keyInfo.extended) in keyUpIgnoreSet:
+			keyUpIgnoreSet.remove((keyInfo.vkCode,keyInfo.extended))
 			return False
 		elif keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
-		elif (vkName=="Insert"): #and (keyInfo.extended==0):
-			insertDown=False
-			return False
 		else:
 			return True
 	except:
@@ -151,7 +172,6 @@ def internal_typeCharacterEvent(ch):
 
 def initialize():
 	"""Initialises keyboard support."""
-	global hookManager
 	nvwh.setUserKeyUpCallback(internal_keyUpEvent)
 	nvwh.setUserKeyDownCallback(internal_keyDownEvent)
 	nvwh.setUserCharCallback(internal_typeCharacterEvent)
