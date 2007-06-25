@@ -155,7 +155,7 @@ class MainFrame(wx.Frame):
 		menu_preferences.Append(id_VoiceCommand,_("&Voice settings...\tCtrl+Shift+V"),_("Choose the voice, rate, pitch and volume  to use"))
 		wx.EVT_MENU(self,id_VoiceCommand,self.onVoiceCommand)
 		id_onKeyboardSettingsCommand=wx.NewId()
-		menu_preferences.Append(id_onKeyboardSettingsCommand,_("&Keyboard Settings...\tCtrl+E"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
+		menu_preferences.Append(id_onKeyboardSettingsCommand,_("&Keyboard Settings...\tCtrl+K"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		wx.EVT_MENU(self,id_onKeyboardSettingsCommand,self.onKeyboardSettingsCommand)
 		id_mouseSettingsCommand=wx.NewId()
 		menu_preferences.Append(id_mouseSettingsCommand,_("&Mouse settings...\tCtrl+M"),_("Change reporting of mouse sape, object under mouse"))
