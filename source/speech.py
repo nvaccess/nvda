@@ -37,10 +37,11 @@ re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
 re_word_apostraphy=re.compile(r"(\w)'(\w)")
 typedWord=""
 REASON_FOCUS=1
-REASON_QUERY=2
-REASON_CHANGE=3
-REASON_MESSAGE=4
-REASON_DEBUG=5
+REASON_MOUSE=2
+REASON_QUERY=3
+REASON_CHANGE=4
+REASON_MESSAGE=5
+REASON_DEBUG=6
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""

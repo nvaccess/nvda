@@ -441,7 +441,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_mouseMove(self,isEntering,x,y,oldX,oldY):
 		if isEntering:
 			speech.cancelSpeech()
-			speech.speakObject(self)
+			speech.speakObject(self,reason=speech.REASON_MOUSE)
 
 	def _get_groupName(self):
 		if not self.hasFocus or not api.getForegroundObject() or api.getForegroundObject().IAccessibleRole != IAccessibleHandler.ROLE_SYSTEM_DIALOG or self.IAccessibleChildID != 0 or self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_DIALOG:
@@ -474,7 +474,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			h=hash(child)
 			if h not in hashList:
 				hashList.append(h)
-				speech.speakObject(child)
+				speech.speakObject(child,reason=speech.REASON_FOCUS)
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
@@ -494,9 +494,9 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			api.setFocusObject(self)
 			speech.cancelSpeech()
 			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP and focusObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
-				speech.speakObject(self)
+				speech.speakObject(self,reason=speech.REASON_FOCUS)
 			else:
-				speech.speakObject(self)
+				speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_menuEnd(self):
 		if self.IAccessibleRole not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
@@ -577,7 +577,7 @@ class Tooltip(IAccessible):
 
 	def event_show(self):
 		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON)):
-			speech.speakObject(self)
+			speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 class ConsoleWindowClass(IAccessible):
 
@@ -634,7 +634,7 @@ class MozillaUIWindowClass_application(MozillaUIWindowClass):
 
 	def event_nameChange(self):
 		if winUser.getForegroundWindow()==self.windowHandle:
-			speech.speakObjectProperties(self,name=True)
+			speech.speakObjectProperties(self,name=True,reason=speech.REASON_QUERY)
 
 class MozillaDocument(IAccessible):
 
@@ -680,7 +680,7 @@ class List(IAccessible):
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
-			speech.speakObject(child)
+			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		IAccessible.event_gainFocus(self)
@@ -695,14 +695,14 @@ class ComboBox(IAccessible):
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
-			speech.speakObject(child)
+			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
 class Outline(IAccessible):
 
 	def speakDescendantObjects(self,hashList=None):
 		child=self.activeChild
 		if child:
-			speech.speakObject(child)
+			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
 class ProgressBar(IAccessible):
 
