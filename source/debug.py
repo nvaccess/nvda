@@ -50,10 +50,14 @@ def writeException(message):
 		info=traceback.format_exc()
 	except:
 		info='unknown'
+	debugFile.write("Exception %s\n"%datetime.datetime.now())
+	text = "%s: ----\n%s\n----\n"%(message,info)
 	# Specifying errors="replace" to the utf-8 codec doesn't ignore decode errors in the ascii codec,
 	# so convert to unicode here and specify errors="replace" to avoid errors.
-	debugFile.write("Exception %s\n"%datetime.datetime.now())
-	debugFile.write(unicode("%s: ----\n%s\n----\n"%(message,info),errors="replace"))
+	# However, don't try to convert if already unicode.
+	if not isinstance(text, unicode):
+		text=unicode(text)
+	debugFile.write(text)
 	debugFile.flush()
 
 def start(fileName):
