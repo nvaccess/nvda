@@ -17,7 +17,7 @@ lastMSNHistoryValue=None
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name=="History":
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name==_("History"):
 			obj.__class__=MSNHistory
 
 class MSNHistory(IAccessible):
