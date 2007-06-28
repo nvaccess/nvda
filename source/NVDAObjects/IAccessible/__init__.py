@@ -551,12 +551,14 @@ class TrayClockWClass(IAccessible):
 		return controlTypes.ROLE_CLOCK
 
 class Shell_TrayWnd_client(IAccessible):
-	speakOnForeground=False
-	speakOnGainFocus=False
+
+	def event_foreground(self):
+		pass
 
 class Progman_client(IAccessible):
-	speakOnForeground=False
-	speakOnGainFocus=False
+
+	def event_foreground(self):
+		pass
 
 class OutlineItem(IAccessible):
 
