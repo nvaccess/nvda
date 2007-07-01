@@ -868,7 +868,7 @@ msgid ""
 "box asking you if you want to exit, and you can either press the yes or no "
 "button.\n"
 "\n"
-"To set the preferences (such as voice settings, key echo, reading of "
+"To set the preferences (such as voice settings, key Settings, reading of "
 "tooltips etc),\n"
 "Use the alt key to move to the menu bar and then use the arrow keys to "
 "navigate the menus and find the settings you want to change. Pressing enter "
@@ -1067,7 +1067,7 @@ msgstr "&NVDA"
 
 #: gui\__init__.py:149
 msgid "&User interface...\tCtrl+Shift+U"
-msgstr "&felhasználói felület...\tControl+shift+u"
+msgstr "&felhasználói felület...\tCtrl+shift+u"
 
 #: gui\__init__.py:126
 msgid "&User interface...\tctrl+shift+u"
@@ -1095,7 +1095,14 @@ msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerõ beállitása"
 
 
+#: gui\__init__.py:158
+msgid "&Keyboard Settings...\tCtrl+K"
+msgstr "&billentyûzet...\tCtrl+K"
 
+#: gui\__init__.py:263
+msgid "Keyboard Settings"
+
+msgstr "billentyûzet opcíók"
 
 #: gui\__init__.py:155
 msgid "&Voice settings...\tCtrl+Shift+V"
@@ -1121,11 +1128,11 @@ msgstr "a beirt karakterek, szavak, és parancsbillentyûk kimondásának beállitása
 
 #: gui\__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
-msgstr "&egér beállitásai...\tCt+m"
+msgstr "&egér beállitások...\tCt+m"
 
 #: gui\__init__.py:138
 msgid "&Mouse settings...\tctrl+m"
-msgstr "&egér beállitásai...\tctrl+m"
+msgstr "&egér beállitások...\tctrl+m"
 
 #: gui\__init__.py:138
 msgid "Change reporting of mouse sape, object under mouse"
@@ -1304,13 +1311,14 @@ msgstr "&elinduláskor a NVDA ablak nejelenjen meg"
 msgid "&Save configuration on exit"
 msgstr "&kilépéskor konfiguráció automatikus lementése "
 
-msgid"warn before exiting nvda"
-msgstr "A NVDA kilépése elõtt egy  figyelmeztetõ üzenet megjelenitése"
- 
+
 #: gui\settingsDialogs.py:41
 msgid "Save configuration on exit"
 msgstr "kilépéskor konfiguráció automatikus lementése "
 
+#: gui\settingsDialogs.py:44
+msgid "&Warn before exiting NVDA"
+msgstr "&Figyelmeztetõ üzenet megjelenítése kilépés elõtt"
 
 #: gui\settingsDialogs.py:58
 msgid "Error in %s language file"
@@ -1386,6 +1394,19 @@ msgstr "minden hangsúly kiejtése"
 msgid "Say &cap before capitals"
 msgstr "nagybetük szóbeli&jelzése" 
 
+
+#: gui\settingsDialogs.py:264
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "A capslock használata NVDA  billentyû módosító parancsként"
+
+#: gui\settingsDialogs.py:267
+msgid "Use numpad Insert as an NVDA modifier key"
+msgstr "A numpad és inzert gombok  használata NVDA  billentyû módosító parancsként"
+
+#: gui\settingsDialogs.py:270
+msgid "Use extended Insert as an NVDA modifier key"
+msgstr "Az inzert gomb hosszú lenyomásanak való használata  NVDA  billentyû módosító parancsként"
+ 
 #: gui\settingsDialogs.py:112
 msgid "Say cap before capitals"
 msgstr "nagybetük szóbeli jelzése" 
@@ -1462,6 +1483,10 @@ msgstr "objektum parancsbillentyûk kimondása"
 msgid "Report object shortcut &keys"
 msgstr "objektum parancsbillentyûk & kimondása"
 
+
+#: gui\settingsDialogs.py:339
+msgid "Report object &position information"
+msgstr "az objektum tartózkodási hely bejelentése"
 
 #: gui\settingsDialogs.py:274
 msgid "Report object &group names"
@@ -1589,7 +1614,7 @@ msgstr "ürlap mezök bejelentése"
 
 #: gui\settingsDialogs.py:346
 msgid "Report block &quotes"
-msgstr "idézo&blokkok bejelentése"
+msgstr "idézõ&blokkok bejelentése"
 
 #: gui\settingsDialogs.py:339
 msgid "Report block quotes"
@@ -1672,6 +1697,11 @@ msgstr "kiegyenlités& bejelentése"
 #: gui\settingsDialogs.py:411
 msgid "Report alignment"
 msgstr "kiegyenlités bejelentése"
+
+
+#: gui\settingsDialogs.py:348
+msgid "&Beep on progress bar updates"
+msgstr "&hangjel kiadása folyamat jelzo változásokkor" 
 
 #: gui\settingsDialogs.py:238
 msgid "Beep on progress bar updates"
@@ -2028,7 +2058,7 @@ msgstr "szétválasztó"
 #: controlTypes.py:132
 #: controlTypes.py:136
 msgid "unavailable"
-msgstr "nem érheto el"
+msgstr "nem érhetõ el"
 
 #: controlTypes.py:90
 msgid "focused"
@@ -2102,7 +2132,7 @@ msgstr "folyamat jelzo"
 
 #: controlTypes.py:100
 msgid "scroll bar"
-msgstr "gördíto sáv"
+msgstr "gördítõ sáv"
 
 
 #: controlTypes.py:101
@@ -2158,6 +2188,225 @@ msgstr "négyzet"
 msgid "property page"
 msgstr "tulajdonságok oldal"
 
+
+#: controlTypes.py:191
+msgid "caption"
+msgstr "felirat"
+
+#: controlTypes.py:192
+msgid "check menu item"
+msgstr "a menüelem bejelölése"
+
+#: controlTypes.py:193
+msgid "date edit"
+msgstr "dátum szerkeztés"
+
+#: controlTypes.py:194
+msgid "icon"
+msgstr "ikon"
+
+#: controlTypes.py:195
+msgid "directory pane"
+msgstr "könyvtár mezo"
+
+#: controlTypes.py:196
+msgid "embedded object"
+msgstr "beépített objektum"
+
+#: controlTypes.py:197
+msgid "end note"
+msgstr "vége jel"
+
+#: controlTypes.py:198
+msgid "footer"
+msgstr "vége"
+
+#: controlTypes.py:199
+msgid "foot note"
+msgstr "lábjegyzet"
+
+
+#: controlTypes.py:200
+msgid "glass pane"
+msgstr "átlátszó terület"
+
+
+#: controlTypes.py:201
+msgid "header"
+msgstr "fejléc"
+
+
+#: controlTypes.py:202
+msgid "image map"
+msgstr "képtömb"
+
+#: controlTypes.py:203
+msgid "input window"
+msgstr "input ablak"
+
+
+#: controlTypes.py:204
+msgid "label"
+msgstr "cím"
+
+
+#: controlTypes.py:205
+msgid "note"
+msgstr "jegyzet"
+
+#: controlTypes.py:206
+msgid "page"
+msgstr "oldal"
+
+#: controlTypes.py:207
+msgid "radio menu item"
+msgstr "válaztó menüelem"
+
+
+#: controlTypes.py:210
+msgid "root pane"
+msgstr "gyökér terület"
+
+#: controlTypes.py:211
+msgid "edit bar"
+msgstr "szerkezto sáv"
+
+#: controlTypes.py:212
+msgid "terminal"
+msgstr "terminál"
+
+#: controlTypes.py:213
+msgid "rich edit"
+msgstr "szerkeztés"
+
+#: controlTypes.py:214
+msgid "ruler"
+msgstr "vonalzó"
+
+#: controlTypes.py:215
+msgid "scroll pane"
+msgstr "gördítõ terület"
+
+
+#: controlTypes.py:216
+msgid "section"
+msgstr "fejezet"
+
+
+#: controlTypes.py:217
+msgid "shape"
+msgstr "alak"
+
+
+#: controlTypes.py:218
+msgid "split pane"
+msgstr "elosztott terület"
+
+
+#: controlTypes.py:219
+msgid "view port"
+msgstr "megtekinto port"
+
+
+#: controlTypes.py:220
+msgid "tear off menu"
+msgstr "letépett menü"
+
+
+#: controlTypes.py:221
+msgid "text frame"
+msgstr "szöveg keret"
+
+
+#: controlTypes.py:222
+msgid "toggle button"
+msgstr "váltható gomb"
+
+
+#: controlTypes.py:223
+msgid "border"
+msgstr "határ"
+
+#: controlTypes.py:225
+msgid "character"
+msgstr "karakter"
+
+
+#: controlTypes.py:226
+msgid "chart"
+msgstr "táblázat"
+
+#: controlTypes.py:227
+msgid "cursor"
+msgstr "kurzor"
+
+#: controlTypes.py:229
+msgid "dial"
+msgstr "gördítõ"
+
+
+#: controlTypes.py:230
+msgid "drop list"
+msgstr "leemelkedõ lista"
+
+
+#: controlTypes.py:231
+msgid "split button"
+msgstr "felosztott gomb"
+
+
+#: controlTypes.py:232
+msgid "menu button"
+msgstr "menügomb"
+
+
+#: controlTypes.py:233
+msgid "drop down button grid"
+msgstr "leemelkedõ gomb rács"
+
+
+#: controlTypes.py:234
+msgid "equation"
+msgstr "feladat"
+
+
+#: controlTypes.py:235
+msgid "grip"
+msgstr "tartó"
+
+
+#: controlTypes.py:236
+msgid "hot key field"
+msgstr "forrógomb mezo"
+
+#: controlTypes.py:237
+msgid "indicator"
+msgstr "jelzõ" 
+
+
+#: controlTypes.py:238
+msgid "spin button"
+msgstr "forgatható gomb"
+
+
+#: controlTypes.py:239
+msgid "sound"
+msgstr "hang"
+
+#: controlTypes.py:240
+msgid "white space"
+msgstr "fehér hely"
+
+
+#: controlTypes.py:241
+msgid "tree view button"
+msgstr "fa nézet gomb"
+
+#: controlTypes.py:242
+msgid "IP address"
+msgstr "IP cím"
+
+ 
 
 #: controlTypes.py:135
 msgid "grouping"
