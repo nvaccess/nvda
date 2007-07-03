@@ -278,11 +278,15 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	if uppercase:
 		if config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
 			text=_("cap %s")%text
-		oldPitch=config.conf["speech"][getSynth().name]["pitch"]
-		getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
+		if config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
+			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
+			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 	getSynth().speakText(text,wait=wait,index=index)
 	if uppercase:
-		getSynth().pitch=oldPitch
+		if config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
+			getSynth().pitch=oldPitch
+		if config.conf["speech"][getSynth().name]["beepForCapitals"]:
+			tones.beep(2000,50)
 
 def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.

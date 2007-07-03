@@ -40,7 +40,9 @@ confspec = StringIO("""# NVDA Configuration File
 		capPitchChange = integer(default=20,min=-100,max=100)
 		volume = integer(default=100,min=0,max=100)
 		voice = integer(default=1,min=1)
+		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
+		beepForCapitals = boolean(default=false)
 
 # Presentation settings
 [presentation]
