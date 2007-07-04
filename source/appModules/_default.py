@@ -107,12 +107,12 @@ class appModule(appModuleHandler.appModule):
 	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
 	def script_moveMouseToNavigatorObject(self,keyPress,nextScript):
-		speech.speakMessage("Move mouse to navigator")
+		speech.speakMessage(_("Move mouse to navigator"))
 		api.moveMouseToNVDAObject(api.getNavigatorObject())
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object.")
 
 	def script_moveNavigatorObjectToMouse(self,keyPress,nextScript):
-		speech.speakMessage("Move navigator object to mouse")
+		speech.speakMessage(_("Move navigator object to mouse"))
 		(x,y)=winUser.getCursorPos()
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 		if obj:
@@ -386,12 +386,12 @@ class appModule(appModuleHandler.appModule):
 		obj=api.getNavigatorObject()
 		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
 		speech.speakMessage("%s"%obj)
-		speech.speakMessage("Control ID: %s"%winUser.getControlID(obj.windowHandle))
-		speech.speakMessage("Class: %s"%obj.windowClassName)
+		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
+		speech.speakMessage(_("Class: %s")%obj.windowClassName)
 		for char in obj.windowClassName:
 			speech.speakSymbol("%s"%char)
-		speech.speakMessage("internal text: %s"%winUser.getWindowText(obj.windowHandle))
-		speech.speakMessage("text: %s"%obj.windowText)
+		speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
+		speech.speakMessage(_("text: %s")%obj.windowText)
 	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers: control id, class and internal text")	
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
@@ -444,7 +444,7 @@ class appModule(appModuleHandler.appModule):
 			debug.writeError("error accessing system power status")
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
-			speech.speakMessage("no system battery")
+			speech.speakMessage(_("no system battery"))
 			return
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")

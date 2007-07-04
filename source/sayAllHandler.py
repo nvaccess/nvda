@@ -28,7 +28,7 @@ def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getTex
 			if text and not text.isspace():
 				speech.speakText(text,index=curPos)
 			if (nextRange is None) or (nextRange[0]>=toOffset) or (nextRange[0]<=curPos):
-				speech.speakMessage("end of text",index=toOffset)
+				speech.speakMessage(_("end of text"),index=toOffset)
 				curPos=None
 			else:
 				curPos=nextRange[0]

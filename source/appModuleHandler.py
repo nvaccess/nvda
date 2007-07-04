@@ -185,7 +185,7 @@ def fetchModule(appName):
 			mod=__import__(appName,globals(),locals(),[]).appModule
 		except:
 			debug.writeException("appModuleHandler.loadModule: Error in appModule %s"%appName)
-			speech.speakMessage("Error in appModule %s"%appName,wait=True)
+			speech.speakMessage(_("Error in appModule %s")%appName,wait=True)
 	if mod is None:
 		return appModule
 	return mod
@@ -201,10 +201,10 @@ def initialize():
 		if loadKeyMap('_default',default):
 			debug.writeMessage("appModuleHandler.initialize: loaded default module")
 		else:
-			speech.speakMessage("Could not load default module keyMap",wait=True)
+			speech.speakMessage(_("Could not load default module keyMap"),wait=True)
 			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
 	else:
-		speech.speakMessage("Could not load default module ",wait=True)
+		speech.speakMessage(_("Could not load default module "),wait=True)
 		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
 
 #base class for appModules

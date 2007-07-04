@@ -134,7 +134,7 @@ class TreeViewItem(IAccessible):
 	def _get_contains(self):
 		count=self.childCount
 		if (controlTypes.STATE_EXPANDED in self.states) and count>0:
-			return "%d items"%count
+			return _("%d items")%count
 
 	def event_stateChange(self):
 		newStates=(self.states-self._oldStates)
