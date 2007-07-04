@@ -19,92 +19,142 @@ import baseObject
 
 class NVDAObjectTextInfo(text.TextInfo):
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_text=None):
-		super(NVDAObjectTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
-		#cache the text of the object, either from a parameter, or get it from the object
-		if _text is not None:
-			self._text=_text
+	def _getSelOffsets(self):
+		return [0,0]
+
+	def _getStoryLength(self):
+		if hasattr(self,'_text'):
+			return len(self._text)
 		else:
 			self._text=self.obj.textRepresentation
-			if not self._text:
-				self._text="\0"
-		#Translate the position in to offsets and cache it
+			return len(self._text)
+
+	def _getLineCount(self):
+		return -1
+
+	def _getText(self,start,end):
+		if hasattr(self,'_text'):
+			return self._text[start:end]
+		else:
+			self._text=self.obj.textRepresentation
+			return self._text[start:end]
+
+	def _getWordOffsets(self,offset):
+		if not hasattr(self,'_text'):
+			self._text=self.obj.textRepresentation
+		start=text.findStartOfWord(self._text,offset)
+		end=text.findEndOfWord(self._text,offset)
+		return [start,end]
+
+	def _getLineNumFromOffset(self,offset):
+		return -1
+
+	def _getLineOffsets(self,offset):
+		if not hasattr(self,'_text'):
+			self._text=self.obj.textRepresentation
+		start=text.findStartOfLine(self._text,offset)
+		end=text.findEndOfLine(self._text,offset)
+		return [start,end]
+
+	_getParagraphOffsets=_getLineOffsets
+
+	def __init__(self,obj,position):
+		super(NVDAObjectTextInfo,self).__init__(obj,position)
 		if position==text.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==text.POSITION_LAST:
-			self._startOffset=self._endOffset=len(self._text)-1
+			self._startOffset=self._endOffset=self._getStoryLength()-1
 		elif position==text.POSITION_CARET:
-			caretPos=self.obj.caretPosition
-			self._startOffset=caretPos.start
-			self._endOffset=caretPos.end
+			self._startOffset=self._endOffset=self._getSelOffsets()[0]
 		elif position==text.POSITION_SELECTION:
-			selPos=self.obj.selectionOffsets
-			self._startOffset=selectionPos.start
-			self._endOffset=selectionPos.end
+			(self._startOffset,self._endOffset)=self._getSelOffsets()
+		elif position==text.POSITION_ALL:
+			self._startOffset=0
+			self._endOffset=self._getStoryLength()
 		elif isinstance(position,text.OffsetsPosition):
 			self._startOffset=position.start
 			self._endOffset=position.end
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
-		#Set the start and end offsets from expanding position to a unit 
-		if expandToUnit is text.UNIT_CHARACTER:
+
+	def collapse(self,end=False):
+		if not end:
+			self._endOffset=self._startOffset
+		else:
+			self._startOffset=self._endOffset
+
+	def expand(self,unit):
+		if unit==text.UNIT_CHARACTER:
 			self._startOffset=self._startOffset
 			self._endOffset=self._startOffset+1
-		elif expandToUnit is text.UNIT_WORD:
-			self._startOffset=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength) 
-			self._endOffset=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif expandToUnit is text.UNIT_LINE:
-			self._startOffset=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._endOffset=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+		elif unit==text.UNIT_WORD:
+				(self._startOffset,self._endOffset)=self._getWordOffsets(self._startOffset)
+		elif unit==text.UNIT_LINE:
+			(self._startOffset,self._endOffset)=self._getLineOffsets(self._startOffset)
+		elif unit==text.UNIT_PARAGRAPH:
+			(self._startOffset,self._endOffset)=self._getParagraphOffsets(self._startOffset)
+		elif unit==text.UNIT_STORY:
 			self._startOffset=0
-			self._endOffset=len(self._text)
-		elif expandToUnit is not None:
-			raise NotImplementedError("unit: %s not supported"%unit)
-		if limitToUnit in [None,text.UNIT_SCREEN,text.UNIT_STORY]:
-			self._lowOffsetLimit=0
-			self._highOffsetLimit=len(self._text)-1
-		elif limitToUnit is text.UNIT_CHARACTER:
-			self._lowOffsetLimit=self._startOffset
-			self._highOffset=self._lowOffsetLimit+1
-		elif limitToUnit is text.UNIT_WORD:
-			self._lowOffsetLimit=text.findStartOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._highOffsetLimit=text.findEndOfWord(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		elif limitToUnit is text.UNIT_LINE:
-			self._lowOffsetLimit=text.findStartOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-			self._highOffsetLimit=text.findEndOfLine(self._text,self._startOffset,lineLength=obj.textRepresentationLineLength)
-		else:
-			raise NotImplementedError("limitToUnit: %s not supported"%limitToUnit)
+			self._endOffset=self._getStoryLength()
+		elif unit is not None:
+			raise NotImplementedError("unit: %s not supported"%expandToUnit)
 
-	def _get_offsetsPosition(self):
-		return text.OffsetsPosition(self._startOffset,self._endOffset)
+	def copy(self):
+		o=self.__class__(self.obj,text.OffsetsPosition(self._startOffset,self._endOffset))
+		o.__dict__=self.__dict__.copy()
+		return o
 
-	_get_position=_get_offsetsPosition
+	def compareStart(self,info):
+		return self._startOffset-info._startOffset
+
+	def compareEnd(self,info):
+		return self._endOffset-info._endOffset
 
 	def _get_text(self):
-		return self._text[self._startOffset:self._endOffset]
+		return self._getText(self._startOffset,self._endOffset)
 
-	def getRelatedUnit(self,relation):
-		if self.unit is None:
-			raise RuntimeError("no unit specified")
-		if relation==text.UNITRELATION_NEXT:
-			newOffset=self._endOffset
-		elif relation==text.UNITRELATION_PREVIOUS:
-			newOffset=self._startOffset-1
-		elif relation==text.UNITRELATION_FIRST:
-			newOffset=self._lowOffsetLimit
-		elif relation==text.UNITRELATION_LAST:
-			newOffset=self._highOffsetLimit-1
+	def unitIndex(self,unit):
+		if unit==text.UNIT_LINE:  
+			return self._lineNumFromOffset(self._startOffset)
 		else:
-			raise NotImplementedError("unit relation: %s not supported"%relation)
-		if newOffset<self._lowOffsetLimit or newOffset>=self._highOffsetLimit:
-			raise text.E_noRelatedUnit("offset %d is out of range for limits %d, %d"%(newOffset,self._lowOffsetLimit,self._highOffsetLimit))
-		return self.__class__(self.obj,text.OffsetsPosition(newOffset),_text=self._text,expandToUnit=self.unit,limitToUnit=self.limitUnit)
+			raise NotImplementedError
 
-	def _get_inUnit(self):
-		if self.unit is None:
-			raise RuntimeError("no unit specified")
-		return True
+	def unitCount(self,unit):
+		if unit==text.UNIT_LINE:
+			return self._getLineCount()
+		else:
+			raise NotImplementedError
+
+	def moveByUnit(self,unit,num,start=True,end=True):
+		oldStart=self._startOffset
+		oldEnd=self._endOffset
+		lowLimit=0
+		highLimit=self._getStoryLength()
+		count=0
+		if num<0:
+			while self._startOffset>lowLimit and count>num:
+				self._startOffset-=1
+				self.expand(unit)
+				self.collapse()
+				count-=1
+ 		elif num>0:
+			while self._endOffset<highLimit and count<num:
+				lastStart=self._startOffset
+				lastEnd=self._endOffset
+				self.expand(unit)
+				self.collapse(end=True)
+				count+=1
+				if self._endOffset>=highLimit:
+					count-=1
+					self._startOffset=lastStart
+					self._endOffset=lastEnd
+					self.collapse()
+					break
+		if start==False:
+			self._startOffset=oldStart
+		if end==False:
+			self._endOffset=oldEnd
+		return count
 
 class NVDAObject(baseObject.scriptableObject):
 	"""
@@ -168,9 +218,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._hashLimit=10000000
 		self._hashPrime=23
-		self.reviewPosition=text.OffsetsPosition(0)
-
 		self.textRepresentationLineLength=None #Use \r and or \n
+		if self.TextInfo==NVDAObjectTextInfo: 
+			self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
 
 	def __hash__(self):
 		l=self._hashLimit
@@ -358,174 +408,249 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_selectionOffsets(self):
 		return text.OffsetsPosition(0)
 
-	def makeTextInfo(self,position,expandToUnit=None,limitToUnit=None):
-		return self.TextInfo(self,position,expandToUnit,limitToUnit)
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
 
 	def script_review_top(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
-		self.reviewPosition=info.position
+		info=self.makeTextInfo(text.POSITION_FIRST)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
+		speech.speakMessage(_("top"))
 		speech.speakText(info.text)
 
 	def script_review_previousLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_LINE)
+		info.collapse()
+		res=info.moveByUnit(text.UNIT_LINE,-1)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
+		if res==0:
 			speech.speakMessage(_("top"))
 		speech.speakText(info.text)
 
 	def script_review_currentLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_LINE)
 		speech.speakText(info.text)
 
 	def script_review_nextLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_LINE)
+		info.collapse()
+		res=info.moveByUnit(text.UNIT_LINE,1)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
+		if res==0:
 			speech.speakMessage(_("bottom"))
 		speech.speakText(info.text)
 
 	def script_review_bottom(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_LINE,limitToUnit=text.UNIT_SCREEN)
-		info=info.getRelatedUnit(text.UNITRELATION_LAST)
-		self.reviewPosition=info.position
+		info=self.makeTextInfo(text.POSITION_LAST)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
+		speech.speakMessage(_("bottom"))
 		speech.speakText(info.text)
 
 	def script_review_previousWord(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_WORD)
+		info.collapse()
+		res=info.moveByUnit(text.UNIT_WORD,-1)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_WORD)
+		if res==0:
 			speech.speakMessage(_("top"))
 		speech.speakText(info.text)
 
 	def script_review_currentWord(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_WORD)
 		speech.speakText(info.text)
 
 	def script_review_nextWord(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_WORD,limitToUnit=text.UNIT_SCREEN)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_WORD)
+		info.collapse()
+		res=info.moveByUnit(text.UNIT_WORD,1)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_WORD)
+		if res==0:
 			speech.speakMessage(_("bottom"))
 		speech.speakText(info.text)
 
 	def script_review_startOfLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		info=info.getRelatedUnit(text.UNITRELATION_FIRST)
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_LINE)
+		info.collapse()
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_CHARACTER)
+		speech.speakMessage(_("left"))
 		speech.speakSymbol(info.text)
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_PREVIOUS)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		lineInfo=self.reviewPosition.copy()
+		lineInfo.expand(text.UNIT_LINE)
+		charInfo=self.reviewPosition.copy()
+		charInfo.expand(text.UNIT_CHARACTER)
+		charInfo.collapse()
+		res=charInfo.moveByUnit(text.UNIT_CHARACTER,-1)
+		if res==0 or charInfo.compareStart(lineInfo)<0:
 			speech.speakMessage(_("left"))
-		speech.speakSymbol(info.text)
+			reviewInfo=self.reviewPosition.copy()
+			reviewInfo.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(reviewInfo.text)
+		else:
+			self.reviewPosition=charInfo.copy()
+			charInfo.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(charInfo.text)
 
 	def script_review_currentCharacter(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER)
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_CHARACTER)
 		speech.speakSymbol(info.text)
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		try:
-			info=info.getRelatedUnit(text.UNITRELATION_NEXT)
-			self.reviewPosition=info.position
-		except text.E_noRelatedUnit:
+		lineInfo=self.reviewPosition.copy()
+		lineInfo.expand(text.UNIT_LINE)
+		charInfo=self.reviewPosition.copy()
+		charInfo.expand(text.UNIT_CHARACTER)
+		charInfo.collapse()
+		res=charInfo.moveByUnit(text.UNIT_CHARACTER,1)
+		if res==0 or charInfo.compareEnd(lineInfo)>=0:
 			speech.speakMessage(_("right"))
-		speech.speakSymbol(info.text)
+			reviewInfo=self.reviewPosition.copy()
+			reviewInfo.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(reviewInfo.text)
+		else:
+			self.reviewPosition=charInfo.copy()
+			charInfo.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(charInfo.text)
 
 	def script_review_endOfLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(self.reviewPosition,expandToUnit=text.UNIT_CHARACTER,limitToUnit=text.UNIT_LINE)
-		info=info.getRelatedUnit(text.UNITRELATION_LAST)
+		info=self.reviewPosition.copy()
+		info.expand(text.UNIT_LINE)
+		info.collapse(end=True)
+		info.moveByUnit(text.UNIT_CHARACTER,-1)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_CHARACTER)
+		speech.speakMessage(_("right"))
 		speech.speakSymbol(info.text)
 
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		info=self.makeTextInfo(text.POSITION_CARET)
-		self.reviewPosition=info.position
-		info=self.makeTextInfo(info.position,expandToUnit=text.UNIT_LINE)
+		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
 		speech.speakText(info.text)
 
 	def script_moveByLine(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_LINE)
-			speech.speakText(textInfo.text)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(text.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=info.copy()
+			info.expand(text.UNIT_LINE)
+			speech.speakText(info.text)
 
 	def script_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-			speech.speakSymbol(textInfo.text)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(text.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=info.copy()
+			info.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(info.text)
 
 	def script_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_WORD)
-			speech.speakText(textInfo.text)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(text.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=info.copy()
+			info.expand(text.UNIT_WORD)
+			speech.speakText(info.text)
 
 	def script_moveByParagraph(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_PARAGRAPH)
-			speech.speakText(textInfo.text)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(text.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=info.copy()
+			info.expand(text.UNIT_PARAGRAPH)
+			speech.speakText(info.text)
 
 	def script_backspace(self,keyPress,nextScript):
-		textInfo=self.makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-		oldPos=textInfo.position
-		try:
-			delChar=textInfo.getRelatedUnit(text.UNITRELATION_PREVIOUS).text
-		except text.E_noRelatedUnit:
+		oldInfo=self.makeTextInfo(text.POSITION_CARET)
+		testInfo=oldInfo.copy()
+		res=testInfo.moveByUnit(text.UNIT_CHARACTER,-1)
+		if res<0:
+			testInfo.expand(text.UNIT_CHARACTER)
+			delChar=testInfo.text
+		else:
 			delChar=""
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-			newPos=textInfo.position
-			if oldPos.compareStart(newPos)!=0:
+			focus=api.getFocusObject()
+			newInfo=focus.makeTextInfo(text.POSITION_CARET)
+			if newInfo.compareStart(oldInfo)!=0:
 				speech.speakSymbol(delChar)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=newInfo
 
 	def script_delete(self,keyPress,nextScript):
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			textInfo=api.getFocusObject().makeTextInfo(text.POSITION_CARET,expandToUnit=text.UNIT_CHARACTER)
-			speech.speakSymbol(textInfo.text)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(text.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				focus.reviewPosition=info.copy()
+			info.expand(text.UNIT_CHARACTER)
+			speech.speakSymbol(info.text)
 
 	def script_changeSelection(self,keyPress,nextScript):
-		oldObj=api.getFocusObject()
-		oldTextInfo=oldObj.makeTextInfo(text.POSITION_SELECTION)
+		oldInfo=self.makeTextInfo(text.POSITION_SELECTION)
 		sendKey(keyPress)
 		if not isKeyWaiting():
 			api.processPendingEvents()
-			newObj=api.getFocusObject()
-			newTextInfo=newObj.makeTextInfo(text.POSITION_SELECTION)
-			selInfo=oldTextInfo.calculateSelectionChangedInfo(newTextInfo)
-			if selInfo.mode is not None:
-				selectingText=selInfo.text
-				if len(selectingText)==1:
-					selectingText=speech.processSymbol(selectingText)
-				if selInfo.mode==text.SELECTIONMODE_SELECTED:
-					speech.speakMessage(_("selected %s")%selectingText)
-				elif selInfo.mode==text.SELECTIONMODE_UNSELECTED:
-					speech.speakMessage(_("unselected %s")%selectingText)
-			api.getFocusObject().reviewPosition=self.makeTextInfo(text.POSITION_CARET).position
+			focus=api.getFocusObject()
+			newInfo=focus.makeTextInfo(text.POSITION_SELECTION)
+			leftDelta=newInfo.compareStart(oldInfo)
+			rightDelta=newInfo.compareEnd(oldInfo)
+			mode=None
+			selText=None
+			if leftDelta<0:
+				newInfo.collapse()
+				newInfo.moveByUnit(text.UNIT_CHARACTER,abs(leftDelta),start=False)
+				mode="select"
+				selText=newInfo.text
+			elif rightDelta>0:
+				newInfo.collapse(end=True)
+				newInfo.moveByUnit(text.UNIT_CHARACTER,0-rightDelta,end=False)
+				mode="select"
+				selText=newInfo.text
+			elif leftDelta>0:
+				newInfo.collapse()
+				newInfo.moveByUnit(text.UNIT_CHARACTER,0-leftDelta,end=False)
+				mode="unselect"
+				selText=newInfo.text
+			elif rightDelta<0:
+				newInfo.collapse(end=True)
+				newInfo.moveByUnit(text.UNIT_CHARACTER,abs(rightDelta),start=False)
+				mode="unselect"
+				selText=newInfo.text
+			if isinstance(selText,basestring) and len(selText)==1:
+				selText=speech.processSymbol(selText)
+			if mode=="select":
+				speech.speakMessage(_("selected %s")%selText)
+			elif mode=="unselect":
+				speech.speakMessage(_("unselected %s")%selText)

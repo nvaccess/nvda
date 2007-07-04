@@ -13,12 +13,7 @@ class E_noRelatedUnit(RuntimeError):
 #position types
 
 class Position(baseObject.autoPropertyObject):
-
-	def compareStart(self,p):
-		raise NotImplementedError
-
-	def compareEnd(self,p):
-		raise NotImplementedError
+	pass
 
 class OffsetsPosition(Position):
 
@@ -28,11 +23,6 @@ class OffsetsPosition(Position):
 		self.start=start
 		self.end=end
 
-	def compareStart(self,p):
-		return self.start-p.start
-
-	def compareEnd(self,p):
-		return self.end-p.end
 
 class pointsPosition(Position):
 
@@ -51,6 +41,7 @@ POSITION_FIRST="first"
 POSITION_LAST="last"
 POSITION_CARET="caret"
 POSITION_SELECTION="selection"
+POSITION_ALL="all"
 
 #Selection mode constants
 SELECTIONMODE_SELECTED="selected"
@@ -69,15 +60,6 @@ UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
 
-#Unit relationship string constants
-UNITRELATION_NEXT="next"
-UNITRELATION_PREVIOUS="previous"
-UNITRELATION_header="header"
-UNITRELATION_FOOTER="footer"
-UNITRELATION_FIRST="first"
-UNITRELATION_LAST="last"
-UNITRELATION_LINKEDTO="linkedTo"
-
 class TextSelectionChangedInfo(baseObject.autoPropertyObject):
 
 	def _get_text(self):
@@ -88,38 +70,18 @@ class TextSelectionChangedInfo(baseObject.autoPropertyObject):
 
 class TextInfo(baseObject.autoPropertyObject):
 	"""Contains information about the text at the given position or unit
-@ivar basePosition: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection
-@type basePosition: int, tuple or string
 @ivar obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
-@ivar unit: The unit (character, word, line, paragraph) which this object has been expanded to
-@type unit: string
 """
  
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
+	def __init__(self,obj,position):
 		"""
 @param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection
 @type position: int, tuple or string
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
-@param expandToUnit: The unit (character, word, line, paragraph) which this object has been expanded to
-@type expandToUnit: string
-@param limitToUnit: the unit that all navigation is limited to
-@type limitToUnit: string 
 """
 		self.obj=obj
-		self.basePosition=position
-		self.unit=expandToUnit
-		self.limitUnit=limitToUnit
-
-	def _get_position(self):
-		raise NotImplementedError
-
-	def _get_offsetsPosition(self):
-		raise NotImplementedError
-
-	def _get_pointsPosition(self):
-		raise NotImplementedError
 
 	def _get_text(self):
 		"""
@@ -156,37 +118,56 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
-	def calculateSelectionChangedInfo(self,info):
-		raise NotImplementedError
-
-	def _get_inUnit(self):
+	def unitIndex(self,unit):
 		"""
-@returns: whether this range is in the specified unit type
-@rtype: boolean
-"""
-		raise NotImplementedError
-
-	def _get_unitNumber(self):
-		"""
+@param unit: a unit constant for which you want to retreave an index
+@type: string
 @returns: The 1-based index of this unit, out of all the units of this type in the object
 @rtype: int
 """  
 		raise NotImplementedError
 
-	def _get_unitCount(self):
+	def unitCount(self,unit):
 		"""
+@param unit: a unit constant
+@type unit: string
 @returns: the number of units of this type in the object
 @rtype: int
 """
 		raise NotImplementedError
 
-	def getRelatedUnit(self,relation):
+	def compareStart(self,info):
 		"""
-Locates another unit of this type with the given relation
-@param relation: relationship type constant 
-@type param: string
-@returns: a new textInfo object set to the new range found with the unit relationship
-@rtype: L{TextInfo}
+@param info: the text info object to compare with
+@type info: L{TextInfo}
+@returns: the start of this text info object relative to the start of the given text info object
+@rtype: int
+"""
+		raise NotImplementedError
+
+	def compareEnd(self,info):
+		"""
+@param info: the text info object to compare with
+@type info: L{TextInfo}
+@returns: the end of this text info object relative to the end of the given text info object
+@rtype: int
+"""
+		raise NotImplementedError
+
+	def expand(self,unit):
+		"""Expands the start and end of this text info object to a given unit
+@param unit: a unit constant
+@type unit: string
+"""
+		raise NotImplementedError
+
+	def collapse(self):
+		"""Sets the end of this text info object so its equal to the start (collapsing it to a point)
+"""
+		raise NotImplementedError
+
+	def copy(self):
+		"""duplicates this text info object so that changes can be made to either one with out afecting the other 
 """
 		raise NotImplementedError
 
