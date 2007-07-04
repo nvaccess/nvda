@@ -19,6 +19,9 @@ import baseObject
 
 class NVDAObjectTextInfo(text.TextInfo):
 
+	def _getTextRepresentation(self):
+		return " ".join([x for x in self.obj.name, self.obj.value, self.obj.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+
 	def _getSelOffsets(self):
 		return [0,0]
 
@@ -26,7 +29,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 		if hasattr(self,'_text'):
 			return len(self._text)
 		else:
-			self._text=self.obj.textRepresentation
+			self._text=self._getTextRepresentation()
 			return len(self._text)
 
 	def _getLineCount(self):
@@ -36,12 +39,12 @@ class NVDAObjectTextInfo(text.TextInfo):
 		if hasattr(self,'_text'):
 			return self._text[start:end]
 		else:
-			self._text=self.obj.textRepresentation
+			self._text=self._getTextRepresentation()
 			return self._text[start:end]
 
 	def _getWordOffsets(self,offset):
 		if not hasattr(self,'_text'):
-			self._text=self.obj.textRepresentation
+			self._text=self._getTextRepresentation()
 		start=text.findStartOfWord(self._text,offset)
 		end=text.findEndOfWord(self._text,offset)
 		return [start,end]
@@ -51,7 +54,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 
 	def _getLineOffsets(self,offset):
 		if not hasattr(self,'_text'):
-			self._text=self.obj.textRepresentation
+			self._text=self._getTextRepresentation()
 		start=text.findStartOfLine(self._text,offset)
 		end=text.findEndOfLine(self._text,offset)
 		return [start,end]
@@ -381,9 +384,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		api.setNavigatorObject(self)
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
-	def _get_textRepresentation(self):
-		return " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
-
 	def event_valueChange(self):
 		value=self.value
 		if id(self)==id(api.getFocusObject()) and value!=self._oldValue:
@@ -401,12 +401,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if id(self)==id(api.getFocusObject()) and description!=self._oldDescription:
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
-
-	def _get_caretPosition(self):
-		return text.OffsetsPosition(0)
-
-	def _get_selectionOffsets(self):
-		return text.OffsetsPosition(0)
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
