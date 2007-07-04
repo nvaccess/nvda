@@ -19,6 +19,7 @@ import winKernel
 import winUser
 import speech
 from . import IAccessible
+from .. import NVDAObjectTextInfo
 
 class WinConsole(IAccessible):
 
@@ -55,14 +56,12 @@ class WinConsole(IAccessible):
 		#Each event doesn't individually speak its own text since speaking text is quite intensive due to the diff algorithms  
 		self.keepMonitoring=True
 		self.lastConsoleEvent=None
-		text=self.consoleVisibleText
-		self.textRepresentation=text
+		self.basicText=self.consoleVisibleText
 		lineLength=self.getConsoleHorizontalLength()
-		self.textRepresentationLineLength=lineLength
-		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
-		self.prevConsoleVisibleLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+		self.basicTextLineLength=lineLength
+		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		self.reviewPosition=self.caretPosition
+		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
 		thread.start_new_thread(self.monitorThread,())
 		pythoncom.PumpWaitingMessages()
 		time.sleep(0.1)
@@ -101,7 +100,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor:
-			self.reviewPosition=self.caretPosition
+			self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -130,7 +129,7 @@ class WinConsole(IAccessible):
 					timeSinceLast=0
 					if globalVars.reportDynamicContentChanges:
 						text=self.consoleVisibleText
-						self.textRepresentation=text
+						self.basicText=text
 						lineLength=self.getConsoleHorizontalLength()
 						newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 						outLines=self.calculateNewText(newLines,self.prevConsoleVisibleLines)
@@ -158,7 +157,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
-	def _get_caretPosition(self):
+	def _get_basicSelectionOffsets(self):
 		if not hasattr(self,"consoleHandle"):
 			offset=0 
 		else:
@@ -166,7 +165,10 @@ class WinConsole(IAccessible):
 			y=info.cursorPosition.y
 			x=info.cursorPosition.x
 			offset=self.getOffsetFromConsoleCoord(x,y)
-		return text.OffsetsPosition(offset)
+		return [offset,offset]
+
+	def _get_basicTextLineLength(self):
+		return self.getConsoleHorizontalLength()
 
 	def getOffsetFromConsoleCoord(self,x,y):
 		if not hasattr(self,"consoleHandle"):

@@ -106,6 +106,11 @@ class EditTextInfo(NVDAObjectTextInfo):
 			long=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,0,0)
 			return [winUser.LOWORD(long),winUser.HIWORD(long)]
 
+	def _getStoryText(self):
+		if not hasattr(self,'_storyText'):
+			self._storyText=self.obj.windowText
+		return self._storyText
+
 	def _getStoryLength(self):
 		if hasattr(self,'_storyLength'):
 			return self._storyLength
@@ -126,7 +131,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getLineCount(self):
 		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
 
-	def _getText(self,start,end):
+	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
 			bufLen=((end-start)+1)*2
 			textRange=TextRangeStruct()
@@ -144,10 +149,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			return buf.value
 		else:
-			if hasattr(self,'_storyText'):
-				return self._storyText[start:end]
-			self._storyText=self.obj.windowText
-			return self._storyText[start:end]
+			return self._getStoryText()[start:end]
 
 	def _getWordOffsets(self,offset):
 		if self.obj.editAPIVersion>=2:
@@ -158,11 +160,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return [start,end]
 		else:
-			storyLength=self._getStoryLength()
-			storyText=self._getText(0,storyLength)
-			start=text.findStartOfWord(storyText,offset)
-			end=text.findEndOfWord(storyText,offset)
-			return [start,end]
+			return super(EditTextInfo,self)._getWordOffsets(offset)
 
 	def _lineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
@@ -182,11 +180,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
-		storyLength=self._getStoryLength()
-		storyText=self._getText(0,storyLength)
-		start=text.findStartOfLine(storyText,offset)
-		end=text.findEndOfLine(storyText,offset)
-		return [start,end]
+		return super(EditTextInfo,self)._getLineOffsets(offset)
 
 class Edit(IAccessible):
 

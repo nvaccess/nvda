@@ -19,44 +19,58 @@ import baseObject
 
 class NVDAObjectTextInfo(text.TextInfo):
 
-	def _getTextRepresentation(self):
-		return " ".join([x for x in self.obj.name, self.obj.value, self.obj.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
-
-	def _getSelOffsets(self):
-		return [0,0]
+	def _getStoryText(self):
+		if not hasattr(self,'_storyText'):
+			self._storyText=self.obj.basicText
+		return self._storyText
 
 	def _getStoryLength(self):
-		if hasattr(self,'_text'):
-			return len(self._text)
-		else:
-			self._text=self._getTextRepresentation()
-			return len(self._text)
+		if not hasattr(self,'_storyLength'):
+			self._storyLength=len(self._getStoryText())
+		return self._storyLength
 
-	def _getLineCount(self):
-		return -1
+	def _getTextLineLength(self):
+		if not hasattr(self,'_textLineLength'):
+			self._textLineLength=self.obj.basicTextLineLength
+		return self._textLineLength
 
-	def _getText(self,start,end):
+	def _getSelOffsets(self):
+		return self.obj.basicSelectionOffsets
+
+	def _getTextRange(self,start,end):
 		if hasattr(self,'_text'):
 			return self._text[start:end]
 		else:
-			self._text=self._getTextRepresentation()
+			self._text=self._getStoryText()
 			return self._text[start:end]
 
 	def _getWordOffsets(self,offset):
-		if not hasattr(self,'_text'):
-			self._text=self._getTextRepresentation()
-		start=text.findStartOfWord(self._text,offset)
-		end=text.findEndOfWord(self._text,offset)
+		storyText=self._getStoryText()
+		lineLength=self._getTextLineLength()
+		start=text.findStartOfWord(storyText,offset,lineLength=lineLength)
+		end=text.findEndOfWord(storyText,offset,lineLength=lineLength)
 		return [start,end]
 
+	def _getLineCount(self):
+		lineLength=self._getTextLineLength()
+		if lineLength:
+			storyLength=self._getStoryLength()
+			return storyLength/lineLength
+		else:
+			return -1
+
 	def _getLineNumFromOffset(self,offset):
-		return -1
+		lineLength=self._getTextLineLength()
+		if lineLength:
+			return offset/lineLength
+		else:
+			return -1
 
 	def _getLineOffsets(self,offset):
-		if not hasattr(self,'_text'):
-			self._text=self._getTextRepresentation()
-		start=text.findStartOfLine(self._text,offset)
-		end=text.findEndOfLine(self._text,offset)
+		storyText=self._getStoryText()
+		lineLength=self._getTextLineLength()
+		start=text.findStartOfLine(storyText,offset,lineLength=lineLength)
+		end=text.findEndOfLine(storyText,offset,lineLength=lineLength)
 		return [start,end]
 
 	_getParagraphOffsets=_getLineOffsets
@@ -114,7 +128,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 		return self._endOffset-info._endOffset
 
 	def _get_text(self):
-		return self._getText(self._startOffset,self._endOffset)
+		return self._getTextRange(self._startOffset,self._endOffset)
 
 	def unitIndex(self,unit):
 		if unit==text.UNIT_LINE:  
@@ -401,6 +415,15 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if id(self)==id(api.getFocusObject()) and description!=self._oldDescription:
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 			self._oldDescription=description
+
+	def _get_basicText(self):
+		return " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+
+	def _get_basicTextLineLength(self):
+		return None
+
+	def _get_basicSelectionOffsets(self):
+		return [0,0]
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
