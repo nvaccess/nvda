@@ -82,6 +82,8 @@ class TextInfo(baseObject.autoPropertyObject):
 @type: L{NVDAObject}
 """
 		self.obj=obj
+		self.basePosition=position
+
 
 	def _get_text(self):
 		"""

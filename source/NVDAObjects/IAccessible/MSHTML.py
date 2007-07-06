@@ -27,122 +27,104 @@ IID_DispHTMLGenericElement=comtypes.GUID('{3050F563-98B5-11CF-BB82-00AA00BDCE0B}
 IID_DispHTMLTextAreaElement=comtypes.GUID('{3050F521-98B5-11CF-BB82-00AA00BDCE0B}')
 IID_IHTMLInputTextElement=comtypes.GUID('{3050F2A6-98B5-11CF-BB82-00AA00BDCE0B}')
 
-class MSHTMLTextRangePosition(text.Position):
-
-	def __init__(self,textRange):
-		self.textRange=textRange
-
-	def compareStart(self,p):
-		res=self.textRange.compareEndPoints("startToStart",p.textRange)
-		return res
-
-	def compareEnd(self,p):
-		return self.textRange.compareEndPoints("endToEnd",p.textRange)
-
 class MSHTMLTextInfo(text.TextInfo):
 
+	def _getSelectionOffsets(self):
+		mark=self._rangeObj.getBookmark()
+		start=(ord(mark[2])-self._offsetBias)-((ord(mark[8])-self._lineNumBias)/2)
+		if ord(mark[1])==3:
+			end=(ord(mark[40])-self._offsetBias)-((ord(mark[8])-self._lineNumBias)/2)
+		else:
+			end=start
+		return [start,end]
+
 	def _expandToLine(self,textRange):
-		if self.basePosition in [text.POSITION_CARET,text.POSITION_SELECTION]:
-			oldSelMark=self.obj.domElement.document.selection.createRange().getBookmark()
-			sendKey(key("ExtendedEnd"))
-			api.processPendingEvents()
-			textRange.setEndPoint("endToEnd",self.obj.domElement.document.selection.createRange())
-			sendKey(key("ExtendedHome"))
-			api.processPendingEvents()
-			textRange.setEndPoint("startToStart",self.obj.domElement.document.selection.createRange())
-			self.obj.domElement.document.selection.createRange().moveToBookmark(oldSelMark)
-		else:
-			textRange.expand("sentence")
+		oldSelMark=self.obj.domElement.document.selection.createRange().getBookmark()
+		curMark=textRange.getBookmark()
+		self.obj.domElement.document.selection.createRange().moveToBookmark(curMark)
+		api.processPendingEvents()
+		sendKey(key("ExtendedEnd"))
+		api.processPendingEvents()
+		textRange.setEndPoint("endToEnd",self.obj.domElement.document.selection.createRange())
+		sendKey(key("ExtendedHome"))
+		api.processPendingEvents()
+		textRange.setEndPoint("startToStart",self.obj.domElement.document.selection.createRange())
+		self.obj.domElement.document.selection.createRange().moveToBookmark(oldSelMark)
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
-		super(MSHTMLTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
-		if isinstance(position,MSHTMLTextRangePosition):
-			self._rangeObj=position.textRange
-			if expandToUnit:
-				self._rangeObj.collapse()
-		else:
-			self._rangeObj=self.obj.domElement.document.selection.createRange().duplicate()
-		if position==text.POSITION_CARET:
+	def __init__(self,obj,position,_rangeObj=None,_lineNumBias=None,_offsetBias=None):
+		super(MSHTMLTextInfo,self).__init__(obj,position)
+		if self.obj.domElement.uniqueID!=self.obj.domElement.document.activeElement.uniqueID:
+			raise RuntimeError("Only works with currently selected element")
+		if _rangeObj:
+			self._rangeObj=_rangeObj.duplicate()
+			self._lineNumBias=_lineNumBias
+			self._offsetBias=_offsetBias
+			return
+		self._rangeObj=self.obj.domElement.document.selection.createRange().duplicate()
+		biasRange=self._rangeObj.duplicate()
+		biasRange.move("textedit",-1)
+		biasRange.collapse()
+		biasMark=biasRange.getBookmark()
+		self._lineNumBias=ord(biasMark[8])
+		self._offsetBias=ord(biasMark[2])
+		if position==text.POSITION_SELECTION:
+			pass
+		elif position==text.POSITION_CARET:
 			self._rangeObj.collapse()
-		#Expand the position if its character, word or paragraph
-		if expandToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
-			self._rangeObj.expand(expandToUnit)
-		elif expandToUnit==text.UNIT_LINE:
-			self._expandToLine(self._rangeObj)
-		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
+		elif position==text.POSITION_FIRST:
 			self._rangeObj.expand("textedit")
-		elif expandToUnit is not None:
-			raise NotImplementedError("unit: %s"%expandToUnit)
-		self._limitRangeObj=self.obj.domElement.document.selection.createRange().duplicate()
-		if limitToUnit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
-			self._limitRangeObj.expand(limitToUnit)
-		elif limitToUnit==text.UNIT_LINE:
-			self._expandToLine(self._limitRangeObj)
-		elif limitToUnit in [text.UNIT_SCREEN,text.UNIT_STORY,None]:
-			self._limitRangeObj.expand("textedit")
+			self.collapse()
+		elif position==text.POSITION_FIRST:
+			self._rangeObj.expand("textedit")
+			self.collapse(True)
+			self._rangeObj.move("character",-1)
 		else:
-			raise NotImplementedError("unit: %s"%limitToUnit)
+			raise NotImplementedError("position: %s"%position)
 
-	def _get_position(self):
-		return MSHTMLTextRangePosition(self._rangeObj.duplicate())
+	def expand(self,unit):
+		if unit==text.UNIT_LINE and self.basePosition not in [text.POSITION_SELECTION,text.POSITION_CARET]:
+			unit="sentence" 
+		if unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH,"sentence"]:
+			self._rangeObj.expand(unit)
+		elif unit==text.UNIT_LINE:
+			self._expandToLine(self._rangeObj)
+		elif unit==text.UNIT_STORY:
+			self._rangeObj.expand("textedit")
+		else:
+			raise NotImplementedError("unit: %s"%unit)
+
+	def collapse(self,end=False):
+		self._rangeObj.collapse(not end)
+
+	def copy(self):
+		return self.__class__(self.obj,None,_rangeObj=self._rangeObj,_lineNumBias=self._lineNumBias,_offsetBias=self._offsetBias)
+
+	def compareStart(self,info):
+		newOffsets=self._getSelectionOffsets()
+		oldOffsets=info._getSelectionOffsets()
+		return newOffsets[0]-oldOffsets[0]
+
+	def compareEnd(self,info):
+		newOffsets=self._getSelectionOffsets()
+		oldOffsets=info._getSelectionOffsets()
+		return newOffsets[1]-oldOffsets[1]
 
 	def _get_text(self):
 		return self._rangeObj.text
 
-	def calculateSelectionChangedInfo(self,info):
-		selInfo=text.TextSelectionChangedInfo()
-		before=self._rangeObj.duplicate()
-		after=info._rangeObj.duplicate()
-		leftDelta=before.compareEndPoints("startToStart",after)
-		rightDelta=before.compareEndPoints("endToEnd",after)
-		afterLen=after.compareEndPoints("startToEnd",after)
-		mode=None
-		selectingText=None
-		if leftDelta<0:
-			mode=text.SELECTIONMODE_UNSELECTED
-			before.setEndPoint("endToStart",after)
-			selectingText=before.text
-		elif leftDelta>0:
-			mode=text.SELECTIONMODE_SELECTED
-			after.setEndPoint("endToStart",before)
-			selectingText=after.text
-		elif rightDelta>0:
-			mode=text.SELECTIONMODE_UNSELECTED
-			before.setEndPoint("startToEnd",after)
-			selectingText=before.text
-		elif rightDelta<0:
-			mode=text.SELECTIONMODE_SELECTED
-			after.setEndPoint("startToEnd",before)
-			selectingText=after.text
-		selInfo.mode=mode
-		selInfo.text=selectingText
-		return selInfo
-
-	def getRelatedUnit(self,relation):
-		if self.unit is None:
-			raise RuntimeError("No unit")
-		if self.unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH]:
-			unit=self.unit
-		elif self.unit in [text.UNIT_SCREEN,text.UNIT_STORY]:
-			unit="textedit"
-		elif self.unit==text.UNIT_LINE:
+	def moveByUnit(self,unit,num,start=True,end=True):
+		if unit==text.UNIT_LINE:
 			unit="sentence"
-		newRangeObj=self._rangeObj.duplicate()
-		res=0
-		if relation==text.UNITRELATION_NEXT:
-			res=newRangeObj.move(unit,1)
-		elif relation==text.UNITRELATION_PREVIOUS:
-			res=newRangeObj.move(unit,-1)
-		elif relation==text.UNITRELATION_FIRST:
-			res=newRangeObj.move("textedit",-1)
-		elif relation==text.UNITRELATION_LAST:
-			res=newRangeObj.move("textedit",1)
-			res=newRangeObj.move("character",-1)
-		newRangeObj.collapse()
-		if res and self._limitRangeObj.compareEndPoints("startToStart",newRangeObj)<=0 and self._limitRangeObj.compareEndPoints("endToEnd",newRangeObj)>=0: 
-			return self.__class__(self.obj,MSHTMLTextRangePosition(newRangeObj),expandToUnit=self.unit,limitToUnit=self.limitUnit)
+		if start and not end:
+			moveFunc=self._rangeObj.moveStart
+		elif end and not start:
+			moveFunc=self._rangeObj.moveEnd
 		else:
-			raise text.E_noRelatedUnit
+			moveFunc=self._rangeObj.move
+		res=moveFunc(unit,num)
+		if start and end:
+			pass #self._rangeObj.collapse()
+		return res
 
 class MSHTML(IAccessible):
 
