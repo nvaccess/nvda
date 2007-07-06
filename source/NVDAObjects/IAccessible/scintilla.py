@@ -1,13 +1,17 @@
-from textPositionUtils import *
-import winKernel
-import winUser
-import controlTypes
-from NVDAObjects.IAccessible import IAccessible 
 import ctypes
 import debug
 import speech
+import text
+import winKernel
+import winUser
+import controlTypes
+from . import IAccessible 
+from .. import NVDAObjectTextInfo
 
 #Window messages
+SCI_GETTEXTRANGE=2162
+SCI_GETTEXT=2182
+SCI_GETTEXTLENGTH=2183
 SCI_GETLENGTH=2006
 SCI_GETCURRENTPOS=2008
 SCI_GETANCHOR=2009
@@ -21,11 +25,83 @@ SCI_STYLEGETSIZE=2485
 SCI_STYLEGETBOLD=2483
 SCI_STYLEGETITALIC=2484
 SCI_STYLEGETUNDERLINE=2488
+SCI_WORDSTARTPOSITION=2266
+SCI_WORDENDPOSITION=2267
+
 #constants
 STYLE_DEFAULT=32
 
+class CharacterRangeStruct(ctypes.Structure):
+	_fields_=[
+		('cpMin',ctypes.c_long),
+		('cpMax',ctypes.c_long),
+	]
+
+class TextRangeStruct(ctypes.Structure):
+	_fields_=[
+		('chrg',CharacterRangeStruct),
+		('lpstrText',ctypes.c_char_p),
+	]
+
+class ScintillaTextInfo(NVDAObjectTextInfo):
+
+	def _getSelOffsets(self):
+		curOffset=winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
+		curAnchor=winUser.sendMessage(self.obj.windowHandle,SCI_GETANCHOR,0,0)
+		return [min(curOffset,curAnchor),max(curOffset,curAnchor)]
+
+	def _getStoryText(self):
+		if not hasattr(self,'_storyText'):
+			storyLength=self._getStoryLength()
+			self._storyText=self._getTextRange(0,storyLength)
+		return self._storyText
+
+	def _getStoryLength(self):
+		if not hasattr(self,'_storyLength'):
+			self._storyLength=winUser.sendMessage(self.obj.windowHandle,SCI_GETTEXTLENGTH,0,0)
+		return self._storyLength
+
+	def _getLineCount(self):
+		return winUser.sendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
+
+	def _getTextRange(self,start,end):
+		bufLen=(end-start)+1
+		textRange=TextRangeStruct()
+		textRange.chrg.cpMin=start
+		textRange.chrg.cpMax=end
+		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		textRange.lpstrText=internalBuf
+		internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
+		winUser.sendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+		winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
+		buf=ctypes.create_string_buffer(bufLen)
+		winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		return buf.value
+
+	def _getWordOffsets(self,offset):
+		start=winUser.sendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
+		end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
+		return [start,end]
+
+	def _lineNumFromOffset(self,offset):
+		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+
+	def _getLineOffsets(self,offset):
+		lineNum=self._lineNumFromOffset(offset)
+		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,lineNum,0)
+		end=winUser.sendMessage(self.obj.windowHandle,SCI_GETLINEENDPOSITION,lineNum,0)
+		return [start,end]
+
+	def _getParagraphOffsets(self,offset):
+		return super(EditTextInfo,self)._getLineOffsets(offset)
+
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(IAccessible):
+
+	TextInfo=ScintillaTextInfo
 
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):
@@ -37,109 +113,32 @@ class Scintilla(IAccessible):
 
 #The value of the object should be the current line of the text
 	def _get_value(self):
-		(start,end)=self.text_getLineOffsets(self.text_caretPosition)
-		return self.text_getText(start,end)
-
-#The text is found in the MSAA name property
-	def text_getText(self,start=None,end=None):
-		text=self.IAccessibleObject.accName()
-		if text is None:
-			return "\0"
-		start=start if start is not None else 0
-		end=end if end is not None else len(text)
-		if start>=0 and end>start:
-			return text[start:end]
-		else:
-			return "\0"
-
-#There is a window message to get the caret offset
-	def _get_text_caretPosition(self):
-		return winUser.sendMessage(self.windowHandle,SCI_GETCURRENTPOS,0,0)
-
-	def _get_text_selectionCount(self):
-		if winUser.sendMessage(self.windowHandle,SCI_GETANCHOR,0,0)!=winUser.sendMessage(self.windowHandle,SCI_GETCURRENTPOS,0,0):
-			return 1
-		else:
-			return 0
-
-	def text_getSelectionOffsets(self,index):
-		a=winUser.sendMessage(self.windowHandle,SCI_GETCURRENTPOS,0,0)
-		b=winUser.sendMessage(self.windowHandle,SCI_GETANCHOR,0,0)
-		return [min(a,b),max(a,b)]
-
-	def _get_text_lineCount(self):
-		return winUser.sendMessage(self.windowHandle,SCI_GETLINECOUNT,0,0)
-
-	def text_getLineNumber(self,offset):
-		return winUser.sendMessage(self.windowHandle,SCI_LINEFROMPOSITION,offset,0)
-
-	def text_getLineOffsets(self,offset):
-		text=self.text_getText()
-		if offset<len(text):
-			return [findStartOfLine(text,offset),findEndOfLine(text,offset)]
-		else:
-			return [offset,offset+1]
-
-	def text_getWordOffsets(self,offset):
-		text=self.text_getText()
-		if offset<len(text):
-			return [findStartOfWord(text,offset),findEndOfWord(text,offset)]
-		else:
-			return [offset,offset+1]
-
-#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
-	def text_getFontName(self,offset):
-		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
-		fontNameBuf=ctypes.create_string_buffer(32)
-		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
-		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,processID)
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
-		winKernel.readProcessMemory(processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
-		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		return fontNameBuf.value
-
-
-
-	def text_getFontSize(self,offset):
-		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
-		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETSIZE,style,0)
-
-	def text_isBold(self,offset):
-		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
-		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETBOLD,style,0)
-
-	def text_isItalic(self,offset):
-		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
-		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETITALIC,style,0)
-
-	def text_isUnderline(self,offset):
-		style=winUser.sendMessage(self.windowHandle,SCI_GETSTYLEAT,offset,0)
-		return winUser.sendMessage(self.windowHandle,SCI_STYLEGETUNDERLINE,style,0)
+		info=self.makeTextInfo(text.POSITION_CARET)
+		info.expand(text.UNIT_LINE)
+		return info.text
 
 #We want all the standard text editing key commands to be handled by NVDA
 [Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","text_moveByLine"),
-	("ExtendedDown","text_moveByLine"),
-	("ExtendedLeft","text_moveByCharacter"),
-	("ExtendedRight","text_moveByCharacter"),
-	("Control+ExtendedLeft","text_moveByWord"),
-	("Control+ExtendedRight","text_moveByWord"),
-	("Shift+ExtendedRight","text_changeSelection"),
-	("Shift+ExtendedLeft","text_changeSelection"),
-	("Shift+ExtendedHome","text_changeSelection"),
-	("Shift+ExtendedEnd","text_changeSelection"),
-	("Shift+ExtendedUp","text_changeSelection"),
-	("Shift+ExtendedDown","text_changeSelection"),
-	("Control+Shift+ExtendedLeft","text_changeSelection"),
-	("Control+Shift+ExtendedRight","text_changeSelection"),
-	("ExtendedHome","text_moveByCharacter"),
-	("ExtendedEnd","text_moveByCharacter"),
-	("control+extendedHome","text_moveByLine"),
-	("control+extendedEnd","text_moveByLine"),
-	("control+shift+extendedHome","text_changeSelection"),
-	("control+shift+extendedEnd","text_changeSelection"),
-	("ExtendedDelete","text_delete"),
-	("Back","text_backspace"),
+	("ExtendedUp","moveByLine"),
+	("ExtendedDown","moveByLine"),
+	("ExtendedLeft","moveByCharacter"),
+	("ExtendedRight","moveByCharacter"),
+	("Control+ExtendedLeft","moveByWord"),
+	("Control+ExtendedRight","moveByWord"),
+	("Shift+ExtendedRight","changeSelection"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Control+Shift+ExtendedLeft","changeSelection"),
+	("Control+Shift+ExtendedRight","changeSelection"),
+	("ExtendedHome","moveByCharacter"),
+	("ExtendedEnd","moveByCharacter"),
+	("control+extendedHome","moveByLine"),
+	("control+extendedEnd","moveByLine"),
+	("control+shift+extendedHome","changeSelection"),
+	("control+shift+extendedEnd","changeSelection"),
+	("ExtendedDelete","delete"),
+	("Back","backspace"),
 ]]
-
