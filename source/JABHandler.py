@@ -11,7 +11,7 @@ import speech
 import debug
 import api
 import eventHandler
-import NVDAObjects
+import NVDAObjects.JAB
 
 bridgeDll=None
 
@@ -109,7 +109,7 @@ class AccessibleTextAttributesInfo(Structure):
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def event_gainFocus(vmID, event,accContext):
 	try:
-		obj=NVDAObjects.JAB.NVDAObject_JAB(vmID,accContext)
+		obj=NVDAObjects.JAB.JAB(vmID,accContext)
 		api.setFocusObject(obj)
 		eventHandler.manageEvent("gainFocus",obj)
 	except:
