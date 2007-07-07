@@ -8,7 +8,8 @@ import text
 import controlTypes
 import IAccessibleHandler
 from keyUtils import sendKey, isKeyWaiting
-from NVDAObjects.IAccessible import IAccessible
+from .. import IAccessible
+from ... import NVDAObjectTextInfo
 
 IA2RolesToNVDARoles={
 IA2Handler.ROLE_UNKNOWN:controlTypes.ROLE_UNKNOWN,
@@ -57,108 +58,41 @@ IA2Handler.ROLE_TOGGLE_BUTTON:controlTypes.ROLE_TOGGLEBUTTON,
 IA2Handler.ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
 }
 
-class IA2TextTextInfo(text.TextInfo):
+class IA2TextTextInfo(NVDAObjectTextInfo):
 
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None):
-		super(IA2TextTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
-		if position==text.POSITION_CARET:
-			self._startOffset=self._endOffset=self.obj.IAccessibleTextObject.CaretOffset
-		elif position==text.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=self.obj.IAccessibleTextObject.Selection(0)
-		elif isinstance(position,text.OffsetsPosition):
-			self._startOffset=position.start
-			self._endOffset=position.end
+	def _getSelOffsets(self):
+		if self.obj.IAccessibleTextObject.nSelections>0:
+			(start,end)=self.obj.IAccessibleTextObject.Selection[0]
 		else:
-			raise NotImplementedError("Position: %s"%position)
-		self._storyLength=self.obj.IAccessibleTextObject.NCharacters
-		#If the start offset is higher than the actual text length, then we need to handle it specially
-		if self._startOffset>=self._storyLength:
-			self._text=""
-		elif expandToUnit==text.UNIT_CHARACTER:
-			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_CHAR)
-		elif expandToUnit==text.UNIT_WORD:
-			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_WORD)
-		elif expandToUnit==text.UNIT_LINE:
-			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_LINE)
-		elif expandToUnit==text.UNIT_PARAGRAPH:
-			(self._startOffset,self._endOffset,self._text)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)
-		elif expandToUnit in [text.UNIT_SCREEN,text.UNIT_STORY]:
-			self._startOffset=0
-			self._endOffset=self._storyLength
-		elif expandToUnit is not None:
-			raise NotImplementedError("unit: %s"%expandToUnit)
-		if limitToUnit==text.UNIT_CHARACTER:
-			(self._lowOffsetLimit,self._highOffsetLimit)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_CHAR)[0:2]
-		elif limitToUnit==text.UNIT_WORD:
-			(self._lowOffsetLimit,self._highOffsetLimit)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_WORD)[0:2]
-		elif limitToUnit==text.UNIT_LINE:
-			(self._lowOffsetLimit,self._highOffsetLimit)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
-		elif limitToUnit==text.UNIT_PARAGRAPH:
-			(self._lowOffsetLimit,self._highOffsetLimit)=self.obj.IAccessibleTextObject.TextAtOffset(self._startOffset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
-		elif limitToUnit in [text.UNIT_SCREEN,text.UNIT_STORY,None]:
-			self._lowOffsetLimit=0
-			self._highOffsetLimit=self._storyLength
-		else:
-			raise NotImplementedError("limitToUnit: %s"%limitToUnit)
+			start=self.obj.IAccessibleTextObject.CaretOffset
+			end=start
+		return [min(start,end),max(start,end)]
 
-	def _get_offsetsPosition(self):
-		return text.OffsetsPosition(self._startOffset,self._endOffset)
+	def _getStoryLength(self):
+		if not hasattr(self,'_storyLength'):
+			self._storyLength=self.obj.IAccessibleTextObject.NCharacters
+		return self._storyLength
 
-	_get_position=_get_offsetsPosition
+	def _getLineCount(self):
+		return -1 #winUser.sendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
 
-	def _get_text(self):
-		if hasattr(self,"_text"):
-			return self._text
-		else:
-			return self.obj.IAccessibleTextObject.Text(self._startOffset,self._endOffset)
+	def _getTextRange(self,start,end):
+		return self.obj.IAccessibleTextObject.Text(start,end)
 
-	def calculateSelectionChangedInfo(self,info):
-		selInfo=text.TextSelectionChangedInfo()
-		selectingText=None
-		mode=None
-		oldStart=self.offsetsPosition.start
-		oldEnd=self.offsetsPosition.end
-		newStart=info.offsetsPosition.start
-		newEnd=info.offsetsPosition.end
-		if newEnd>oldEnd:
-			mode=text.SELECTIONMODE_SELECTED
-			fromOffset=oldEnd
-			toOffset=newEnd
-		elif newStart<oldStart:
-			mode=text.SELECTIONMODE_SELECTED
-			fromOffset=newStart
-			toOffset=oldStart
-		elif oldEnd>newEnd:
-			mode=text.SELECTIONMODE_UNSELECTED
-			fromOffset=newEnd
-			toOffset=oldEnd
-		elif oldStart<newStart:
-			mode=text.SELECTIONMODE_UNSELECTED
-			fromOffset=oldStart
-			toOffset=newStart
-		if mode is not None:
-			selectingText=info.obj.makeTextInfo(text.OffsetsPosition(fromOffset,toOffset)).text
-		selInfo.text=selectingText
-		selInfo.mode=mode
-		return selInfo
+	def _getCharacterOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_CHAR)[0:2]
 
-	def getRelatedUnit(self,relation):
-		if self.unit is None:
-			raise RuntimeError("no unit")
-		if relation==text.UNITRELATION_NEXT:
-			newOffset=self._endOffset
-		elif relation==text.UNITRELATION_PREVIOUS:
-			newOffset=self._startOffset-1
-		elif relation==text.UNITRELATION_FIRST:
-			newOffset=self._lowOffsetLimit
-		elif relation==text.UNITRELATION_LAST:
-			newOffset=self._highOffsetLimit-1
-		else:
-			raise NotImplementedError("relation: %s"%relation)
-		if newOffset>=self._lowOffsetLimit and newOffset<self._highOffsetLimit:
-			return self.__class__(self.obj,text.OffsetsPosition(newOffset),expandToUnit=self.unit,limitToUnit=self.limitUnit)
-		else:
-			raise text.E_noRelatedUnit
+	def _getWordOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_WORD)[0:2]
+
+	def _getLineOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
+
+	def _getParagraphOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
+
+	def _lineNumFromOffset(self,offset):
+		return -1 #winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 class IA2(IAccessible):
 

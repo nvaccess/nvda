@@ -44,6 +44,9 @@ class NVDAObjectTextInfo(text.TextInfo):
 			self._text=self._getStoryText()
 			return self._text[start:end]
 
+	def _getCharacterOffsets(self,offset):
+		return [offset,offset+1]
+
 	def _getWordOffsets(self,offset):
 		storyText=self._getStoryText()
 		lineLength=self._getTextLineLength()
@@ -102,8 +105,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 
 	def expand(self,unit):
 		if unit==text.UNIT_CHARACTER:
-			self._startOffset=self._startOffset
-			self._endOffset=self._startOffset+1
+			(self._startOffset,self._endOffset)=self._getCharacterOffsets(self._startOffset)
 		elif unit==text.UNIT_WORD:
 				(self._startOffset,self._endOffset)=self._getWordOffsets(self._startOffset)
 		elif unit==text.UNIT_LINE:
