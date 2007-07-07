@@ -26,6 +26,7 @@ espeakEVENT_MARK=3
 espeakEVENT_PLAY=4
 espeakEVENT_END=5
 espeakEVENT_MSG_TERMINATED=6
+espeakEVENT_PHONEME=7
 
 #position types
 POS_CHARACTER=1
@@ -216,7 +217,7 @@ def initialize():
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
+	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16)
