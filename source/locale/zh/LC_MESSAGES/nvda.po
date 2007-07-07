@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-06-25 18:45+0800\n"
+"PO-Revision-Date: 2007-07-07 14:33+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -226,6 +226,18 @@ msgstr "關"
 msgid "on"
 msgstr "開"
 
+# c:\nvda-source\source\appModuleHandler.py:188
+msgid "Error in appModule %s"
+msgstr "錯誤的模組 %s"
+
+# c:\nvda-source\source\appModuleHandler.py:204
+msgid "Could not load default module keyMap"
+msgstr "未能載入預設的鍵盤分配模組"
+
+# c:\nvda-source\source\appModuleHandler.py:207
+msgid "Could not load default module "
+msgstr "未能載入預設的模組"
+
 # c:\nvda-source\source\appModules\_default.py:43
 # c:\nvda-source\source\dist\appModules\_default.py:43
 msgid "keyboard help %s"
@@ -298,10 +310,62 @@ msgstr "讀出標點符號"
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
 msgstr "切換讀出標點符號開關。開的時候 NVDA 會讀出標點符號，關的時候則由朗讀引擎決定如何朗讀標點。"
 
+# c:\nvda-source\source\appModules\_default.py:110
+# c:\nvda-source\source\dist\appModules\_default.py:110
+msgid "Move mouse to navigator"
+msgstr "把滑鼠游標移到瀏覽項目"
+
 # c:\nvda-source\source\appModules\_default.py:113
 # c:\nvda-source\source\dist\appModules\_default.py:113
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "把鼠標移到目前瀏覽的項目"
+
+# c:\nvda-source\source\appModules\_default.py:127
+# c:\nvda-source\source\appModules\_default.py:136
+# c:\nvda-source\source\appModules\_default.py:156
+# c:\nvda-source\source\appModules\_default.py:169
+# c:\nvda-source\source\appModules\_default.py:182
+# c:\nvda-source\source\appModules\_default.py:195
+# c:\nvda-source\source\appModules\_default.py:208
+# c:\nvda-source\source\appModules\_default.py:217
+# c:\nvda-source\source\appModules\_default.py:231
+# c:\nvda-source\source\appModules\_default.py:239
+# c:\nvda-source\source\appModules\_default.py:247
+# c:\nvda-source\source\appModules\_default.py:255
+# c:\nvda-source\source\appModules\_default.py:263
+# c:\nvda-source\source\appModules\_default.py:271
+# c:\nvda-source\source\appModules\_default.py:279
+# c:\nvda-source\source\appModules\_default.py:287
+# c:\nvda-source\source\appModules\_default.py:295
+# c:\nvda-source\source\appModules\_default.py:303
+# c:\nvda-source\source\appModules\_default.py:311
+# c:\nvda-source\source\appModules\_default.py:319
+# c:\nvda-source\source\appModules\_default.py:327
+# c:\nvda-source\source\appModules\_default.py:335
+# c:\nvda-source\source\dist\appModules\_default.py:127
+# c:\nvda-source\source\dist\appModules\_default.py:136
+# c:\nvda-source\source\dist\appModules\_default.py:156
+# c:\nvda-source\source\dist\appModules\_default.py:169
+# c:\nvda-source\source\dist\appModules\_default.py:182
+# c:\nvda-source\source\dist\appModules\_default.py:195
+# c:\nvda-source\source\dist\appModules\_default.py:208
+# c:\nvda-source\source\dist\appModules\_default.py:217
+# c:\nvda-source\source\dist\appModules\_default.py:231
+# c:\nvda-source\source\dist\appModules\_default.py:239
+# c:\nvda-source\source\dist\appModules\_default.py:247
+# c:\nvda-source\source\dist\appModules\_default.py:255
+# c:\nvda-source\source\dist\appModules\_default.py:263
+# c:\nvda-source\source\dist\appModules\_default.py:271
+# c:\nvda-source\source\dist\appModules\_default.py:279
+# c:\nvda-source\source\dist\appModules\_default.py:287
+# c:\nvda-source\source\dist\appModules\_default.py:295
+# c:\nvda-source\source\dist\appModules\_default.py:303
+# c:\nvda-source\source\dist\appModules\_default.py:311
+# c:\nvda-source\source\dist\appModules\_default.py:319
+# c:\nvda-source\source\dist\appModules\_default.py:327
+# c:\nvda-source\source\dist\appModules\_default.py:335
+msgid "Move navigator object to mouse"
+msgstr "把瀏覽游標移到滑鼠游標"
 
 # c:\nvda-source\source\appModules\_default.py:122
 # c:\nvda-source\source\dist\appModules\_default.py:122
@@ -592,6 +656,25 @@ msgstr "讀出目前應用視窗的標題"
 msgid "speaks the current foreground object"
 msgstr "讀出目前的前景項目"
 
+# c:\nvda-source\source\appModules\_default.py:389
+# c:\nvda-source\source\dist\appModules\_default.py:389
+msgid "Control ID: %s"
+msgstr "控制識別符"
+
+# c:\nvda-source\source\appModules\_default.py:390
+# c:\nvda-source\source\dist\appModules\_default.py:390
+msgid "Class: %s"
+msgstr "類別 %s"
+
+# c:\nvda-source\source\appModules\_default.py:393
+# c:\nvda-source\source\dist\appModules\_default.py:393
+msgid "internal text: %s"
+msgstr "內部文字 %s"
+
+# c:\nvda-source\source\controlTypes.py:86
+msgid "text: %s"
+msgstr "文字 %s"
+
 # c:\nvda-source\source\appModules\_default.py:437
 # c:\nvda-source\source\dist\appModules\_default.py:437
 msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
@@ -636,6 +719,11 @@ msgstr "焦點帶動項目"
 # c:\nvda-source\source\dist\appModules\_default.py:477
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "切換當焦點改變時是否帶動項目"
+
+# c:\nvda-source\source\appModules\_default.py:447
+# c:\nvda-source\source\dist\appModules\_default.py:447
+msgid "no system battery"
+msgstr "系統沒有電池"
 
 # c:\nvda-source\source\appModules\_default.py:491
 # c:\nvda-source\source\dist\appModules\_default.py:491
@@ -731,6 +819,11 @@ msgstr "關鍵字:"
 # c:\nvda-source\source\dist\appModules\msimn.py:20
 msgid "BCC:"
 msgstr "密件副本收件者"
+
+# c:\nvda-source\source\appModules\msnmsgr.py:20
+# c:\nvda-source\source\dist\appModules\msnmsgr.py:20
+msgid "History"
+msgstr "記錄"
 
 # c:\nvda-source\source\characterSymbols.py:17
 # c:\nvda-source\source\characterSymbols.py:18
@@ -1089,7 +1182,7 @@ msgstr "應用程式"
 
 # c:\nvda-source\source\controlTypes.py:134
 msgid "box"
-msgstr "盒子"
+msgstr "窗格"
 
 # c:\nvda-source\source\controlTypes.py:135
 msgid "grouping"
@@ -1765,7 +1858,7 @@ msgstr "&M 移到連結"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:25
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&L 需要重新啟動才可套用語言設定"
+msgstr "&L 選擇語言(需要重新啟動才可套用這個設定)"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:29
 msgid "Language"
@@ -1839,20 +1932,28 @@ msgid "&Speak all punctuation"
 msgstr "&S 讀出所有標點符號"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:155
+msgid "Raise pitch for capitals"
+msgstr "每當遇到大寫字元時提高音調"
+
+# c:\nvda-source\source\gui\settingsDialogs.py:155
 msgid "Say &cap before capitals"
 msgstr "&C 每當遇到大寫字元時先說大寫"
 
+# c:\nvda-source\source\gui\settingsDialogs.py:155
+msgid "&Beep for capitals"
+msgstr "&B 每當遇到大寫字元時發出逼逼聲"
+
 # c:\nvda-source\source\gui\settingsDialogs.py:264
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "讓 CapsLock 鍵為 NVDA 的組合鍵"
+msgstr "把 CapsLock 鍵設為 NVDA 的組合鍵"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:267
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "讓數字鍵盤的 Insert 鍵為 NVDA 的組合鍵"
+msgstr "把數字鍵盤的 Insert 鍵設為 NVDA 的組合鍵"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:270
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "讓伸延的 Insert 鍵為 NVDA 的組合鍵"
+msgstr "把伸延的 Insert 鍵設為 NVDA 的組合鍵"
 
 # c:\nvda-source\source\gui\settingsDialogs.py:211
 msgid "Speak typed &characters"
@@ -2010,6 +2111,10 @@ msgstr "描述 %s"
 # c:\nvda-source\source\keyboardHandler.py:92
 msgid "Location: %s"
 msgstr "位置在 %s"
+
+# c:\nvda-source\source\controlTypes.py:196
+msgid "end of text"
+msgstr "全部完"
 
 # c:\nvda-source\source\speech.py:235
 msgid "level %d"
