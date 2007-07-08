@@ -111,7 +111,7 @@ def event_gainFocus(vmID, event,accContext):
 	try:
 		obj=NVDAObjects.JAB.JAB(vmID,accContext)
 		api.setFocusObject(obj)
-		eventHandler.manageEvent("gainFocus",obj)
+		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",obj)
 	except:
 		debug.writeException("event_focus")
 
