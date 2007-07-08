@@ -288,6 +288,10 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 	def _get_value(self):
 		return None
 
+	def _get_groupName(self):
+		return None
+
+
 	def _get_description(self):
 		return None
 
