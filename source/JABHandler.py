@@ -106,10 +106,29 @@ class AccessibleTextAttributesInfo(Structure):
 		('fullAttributesString',WCHAR*MAX_STRING_SIZE),
 	]
 
+def getAccessibleContextInfo(vmID,accContext):
+	info=AccessibleContextInfo()
+	bridgeDll.getAccessibleContextInfo(vmID,accContext,byref(info))
+	return info
+
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
-def event_gainFocus(vmID, event,accContext):
+def event_focusGained(vmID, event,accContext):
 	try:
 		obj=NVDAObjects.JAB.JAB(vmID,accContext)
+		api.setFocusObject(obj)
+		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",obj)
+		activeChild=obj.activeChild
+		if activeChild:
+			api.setFocusObject(activeChild)
+			queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",activeChild)
+	except:
+		debug.writeException("event_focus")
+
+@CFUNCTYPE(c_voidp,c_int,c_int,c_int)
+def event_activeDescendantChange(vmID, event,accContext):
+	try:
+		obj=NVDAObjects.JAB.JAB(vmID,accContext)
+		obj=obj.activeChild
 		api.setFocusObject(obj)
 		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",obj)
 	except:
@@ -122,7 +141,8 @@ def initialize():
 		res=bridgeDll.Windows_run()
 		if not res:
 			raise RuntimeError('Windows_run') 
-		bridgeDll.setFocusGainedFP(event_gainFocus)
+		bridgeDll.setFocusGainedFP(event_focusGained)
+		bridgeDll.setPropertyActiveDescendentChangeFP(event_activeDescendantChange)
 		return True
 	except:
 		return False

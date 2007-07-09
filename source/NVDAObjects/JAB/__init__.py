@@ -1,6 +1,7 @@
 import ctypes
 import debug
 import appModuleHandler
+import speech
 import winUser
 import JABHandler
 import controlTypes
@@ -85,10 +86,8 @@ class JAB(Window):
 		debug.writeMessage("JAB windowHandle: %s"%windowHandle)
 		self.JABVmID=vmID
 		self.JABAccContext=accContext
-		info=JABHandler.AccessibleContextInfo()
 		debug.writeMessage("JAB: about to call contextInfo")
-		JABHandler.bridgeDll.getAccessibleContextInfo(vmID,accContext,ctypes.byref(info))
-		self._JABAccContextInfo=info
+		self._JABAccContextInfo=JABHandler.getAccessibleContextInfo(vmID,accContext)
 		Window.__init__(self,windowHandle)
 
 	def __del__(self):
@@ -117,3 +116,57 @@ class JAB(Window):
 
 	def _get_description(self):
 		return self._JABAccContextInfo.description
+
+	def _get_activeChild(self):
+		childAccContext=JABHandler.bridgeDll.getActiveDescendent(self.JABVmID,self.JABAccContext)
+		if childAccContext<=0:
+			return None
+		return JAB(self.JABVmID,childAccContext)
+
+	def _get_parent(self):
+		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
+		if parentAccContext>0:
+			return JAB(self.JABVmID,parentAccContext)
+
+	def _get_next(self):
+		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
+		if parentAccContext<=0:
+			return None
+		parentAccContextInfo=JABHandler.getAccessibleContextInfo(self.JABVmID,parentAccContext)
+		newIndex=self._JABAccContextInfo.indexInParent+1
+		if newIndex>=parentAccContextInfo.childrenCount:
+			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+			return None
+		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,parentAccContext,newIndex)
+		if childAccContext<=0:
+			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+			return None
+		obj=JAB(self.JABVmID,childAccContext)
+		if obj._JABAccContextInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+			return None
+		return obj
+
+	def _get_previous(self):
+		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
+		if parentAccContext<=0:
+			return None
+		parentAccContextInfo=JABHandler.getAccessibleContextInfo(self.JABVmID,parentAccContext)
+		newIndex=self._JABAccContextInfo.indexInParent-1
+		if newIndex<0:
+			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+			return None
+		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,parentAccContext,newIndex)
+		if childAccContext<=0:
+			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+			return None
+		obj=JAB(self.JABVmID,childAccContext)
+		if obj._JABAccContextInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+			return None
+		return obj
+
+	def _get_firstChild(self):
+		if self._JABAccContextInfo.childrenCount<=0:
+			return None
+		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,self.JABAccContext,0)
+		return JAB(self.JABVmID,childAccContext)
+
