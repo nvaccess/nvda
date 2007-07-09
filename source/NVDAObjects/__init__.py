@@ -423,7 +423,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			self._oldDescription=description
 
 	def _get_basicText(self):
-		return " ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+		basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+		if len(basicText)==0:
+			basicText="\n"
+		return basicText
 
 	def _get_basicTextLineLength(self):
 		return None
