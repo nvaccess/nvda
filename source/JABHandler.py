@@ -112,27 +112,28 @@ def getAccessibleContextInfo(vmID,accContext):
 	return info
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
-def event_focusGained(vmID, event,accContext):
-	try:
-		obj=NVDAObjects.JAB.JAB(vmID,accContext)
-		api.setFocusObject(obj)
-		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",obj)
-		activeChild=obj.activeChild
-		if activeChild:
-			api.setFocusObject(activeChild)
-			queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",activeChild)
-	except:
-		debug.writeException("event_focus")
+def internal_event_focusGained(vmID, event,source):
+	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
+
+def event_gainFocus(vmID,accContext):
+	obj=NVDAObjects.JAB.JAB(vmID,accContext)
+	api.setFocusObject(obj)
+	eventHandler.manageEvent("gainFocus",obj)
+	activeChild=obj.activeChild
+	if activeChild:
+		api.setFocusObject(activeChild)
+		eventHandler.manageEvent("gainFocus",activeChild)
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
-def event_activeDescendantChange(vmID, event,accContext):
-	try:
-		obj=NVDAObjects.JAB.JAB(vmID,accContext)
-		obj=obj.activeChild
-		api.setFocusObject(obj)
-		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",obj)
-	except:
-		debug.writeException("event_focus")
+def internal_event_activeDescendantChange(vmID, event,source):
+	queueHandler.queueFunction(queueHandler.eventQueue,event_activeDescendantChange,vmID,event)
+
+def event_activeDescendantChange(vmID,accContext):
+	obj=NVDAObjects.JAB.JAB(vmID,accContext)
+	activeChild=obj.activeChild
+	if activeChild:
+		api.setFocusObject(activeChild)
+		eventHandler.manageEvent("gainFocus",activeChild)
 
 def initialize():
 	global bridgeDll
@@ -141,8 +142,8 @@ def initialize():
 		res=bridgeDll.Windows_run()
 		if not res:
 			raise RuntimeError('Windows_run') 
-		bridgeDll.setFocusGainedFP(event_focusGained)
-		bridgeDll.setPropertyActiveDescendentChangeFP(event_activeDescendantChange)
+		bridgeDll.setFocusGainedFP(internal_event_focusGained)
+		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 		return True
 	except:
 		return False
