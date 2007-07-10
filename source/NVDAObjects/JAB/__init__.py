@@ -6,6 +6,9 @@ import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
+import text
+import controlTypes
+from .. import NVDAObjectTextInfo
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -76,6 +79,39 @@ JABStatesToNVDAStates={
 	"expanded":controlTypes.STATE_EXPANDED,
 	"collapsed":controlTypes.STATE_COLLAPSED,
 }
+
+class JABTextInfo(NVDAObjectTextInfo):
+
+	def _getSelOffsets(self):
+		info=JABHandler.getAccessibleTextSelectionInfo(self.obj.JABVmID,self.obj.JABAccContext)
+		return [info.selectionStart,info.selectionEnd]
+
+	def _getStoryText(self):
+		if not hasattr(self,'_storyText'):
+			storyLength=self._getStoryLength()
+			self._storyText=self._getTextRange(0,storyLength)
+		return self._storyText
+
+	def _getStoryLength(self):
+		if not hasattr(self,'_storyLength'):
+			textInfo=JABHandler.getAccessibleTextInfo(self.obj.JABVmID,self.obj.JABAccContext,self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
+			self._storyLength=textInfo.charCount
+		return self._storyLength
+
+	def _getLineCount(self):
+		return -1 
+
+	def _getTextRange(self,start,end):
+		return JABHandler.getAccessibleTextRange(self.obj.JABVmID,self.obj.JABAccContext,start,end)
+
+	def _lineNumFromOffset(self,offset):
+		return -1
+
+	def _getLineOffsets(self,offset):
+		return JABHandler.getAccessibleTextLineBounds(self.obj.JABVmID,self.obj.JABAccContext,offset)
+
+	def _getParagraphOffsets(self,offset):
+		return super(EditTextInfo,self)._getLineOffsets(offset)
 
 class JAB(Window):
 

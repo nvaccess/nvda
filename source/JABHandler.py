@@ -111,6 +111,33 @@ def getAccessibleContextInfo(vmID,accContext):
 	bridgeDll.getAccessibleContextInfo(vmID,accContext,byref(info))
 	return info
 
+def getAccessibleTextInfo(vmID,accText,x,y):
+	textInfo=AccessibleTextInfo()
+	bridgeDll.getAccessibleTextInfo(vmID,accText,byref(textInfo),x,y)
+	return textInfo
+
+def getAccessibleTextItems(vmID,accText,index):
+	textItemsInfo=AccessibleTextItemsInfo()
+	bridgeDll.getAccessibleTextItems(vmID,accText,byref(textItemsInfo),index)
+	return textItemsInfo
+
+def getAccessibleTextSelectionInfo(vmID,accText):
+	textSelectionInfo=AccessibleTextSelectionInfo()
+	bridgeDll.getAccessibleTextSelectionInfo(vmID,accText,byref(textSelectionInfo))
+	return textSelectionInfo
+
+def getAccessibleTextRange(vmID,accText,start,end):
+	len=(end-start)+1
+	text=create_unicode_buffer(len+1)
+	bridgeDll.getAccessibleTextRange(vmID,accText,start,end,text,len)
+	return text.value
+
+def getAccessibleTextLineBounds(vmID,accText,index):
+	startIndex=0
+	endIndex=0
+	bridgeDll.GetAccessibleTextLineBounds(vmID,accText,index,byref(startIndex),byref(endIndex))
+	return [startIndex,endIndex]
+
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
