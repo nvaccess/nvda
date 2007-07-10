@@ -119,7 +119,6 @@ class JAB(Window):
 
 	def _get_activeChild(self):
 		childAccContext=JABHandler.bridgeDll.getActiveDescendent(self.JABVmID,self.JABAccContext)
-		speech.speakMessage("%s"%childAccContext)
 		if childAccContext<=0:
 			return None
 		return JAB(self.JABVmID,childAccContext)

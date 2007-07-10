@@ -126,7 +126,7 @@ def event_gainFocus(vmID,accContext):
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source):
-	queueHandler.queueFunction(queueHandler.eventQueue,event_activeDescendantChange,vmID,event)
+	queueHandler.queueFunction(queueHandler.eventQueue,event_activeDescendantChange,vmID,source)
 
 def event_activeDescendantChange(vmID,accContext):
 	obj=NVDAObjects.JAB.JAB(vmID,accContext)
