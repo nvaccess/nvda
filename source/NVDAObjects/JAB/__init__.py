@@ -84,12 +84,12 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getSelOffsets(self):
 		info=JABHandler.getAccessibleTextSelectionInfo(self.obj.JABVmID,self.obj.JABAccContext)
-		return [info.selectionStart,info.selectionEnd]
+		return [info.selectionStartIndex,info.selectionEndIndex]
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
 			storyLength=self._getStoryLength()
-			self._storyText=self._getTextRange(0,storyLength)
+			self._storyText=self._getTextRange(0,(storyLength-1))
 		return self._storyText
 
 	def _getStoryLength(self):
@@ -124,6 +124,32 @@ class JAB(Window):
 		self.JABAccContext=accContext
 		debug.writeMessage("JAB: about to call contextInfo")
 		self._JABAccContextInfo=JABHandler.getAccessibleContextInfo(vmID,accContext)
+		if self._JABAccContextInfo.accessibleText:
+			self.TextInfo=JABTextInfo
+			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
+			("ExtendedUp","moveByLine"),
+			("ExtendedDown","moveByLine"),
+			("ExtendedLeft","moveByCharacter"),
+			("ExtendedRight","moveByCharacter"),
+			("Control+ExtendedLeft","moveByWord"),
+			("Control+ExtendedRight","moveByWord"),
+			("Shift+ExtendedRight","changeSelection"),
+			("Shift+ExtendedLeft","changeSelection"),
+			("Shift+ExtendedHome","changeSelection"),
+			("Shift+ExtendedEnd","changeSelection"),
+			("Shift+ExtendedUp","changeSelection"),
+			("Shift+ExtendedDown","changeSelection"),
+			("Control+Shift+ExtendedLeft","changeSelection"),
+			("Control+Shift+ExtendedRight","changeSelection"),
+			("ExtendedHome","moveByCharacter"),
+			("ExtendedEnd","moveByCharacter"),
+			("control+extendedHome","moveByLine"),
+			("control+extendedEnd","moveByLine"),
+			("control+shift+extendedHome","changeSelection"),
+			("control+shift+extendedEnd","changeSelection"),
+			("ExtendedDelete","delete"),
+			("Back","backspace"),
+  	]]	
 		Window.__init__(self,windowHandle)
 
 	def __del__(self):

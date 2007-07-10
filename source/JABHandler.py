@@ -127,15 +127,15 @@ def getAccessibleTextSelectionInfo(vmID,accText):
 	return textSelectionInfo
 
 def getAccessibleTextRange(vmID,accText,start,end):
-	len=(end-start)+1
+	len=(end-start)
 	text=create_unicode_buffer(len+1)
 	bridgeDll.getAccessibleTextRange(vmID,accText,start,end,text,len)
 	return text.value
 
 def getAccessibleTextLineBounds(vmID,accText,index):
-	startIndex=0
-	endIndex=0
-	bridgeDll.GetAccessibleTextLineBounds(vmID,accText,index,byref(startIndex),byref(endIndex))
+	startIndex=c_int()
+	endIndex=c_int()
+	bridgeDll.getAccessibleTextLineBounds(vmID,accText,index,byref(startIndex),byref(endIndex))
 	return [startIndex,endIndex]
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
