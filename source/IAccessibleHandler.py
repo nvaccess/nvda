@@ -464,7 +464,9 @@ winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
+IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:"gainFocus",
 IA2Handler.EVENT_TEXT_CARET_MOVED:"caret",
+IA2Handler.EVENT_DOCUMENT_CONTENT_CHANGED:"reorder",
 }
 
 def manageEvent(name,window,objectID,childID):
@@ -531,18 +533,22 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.eventQueue,updateForegroundFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,handleForegroundEvent,window,objectID,childID)
 			return
 		#Process focus events
 		elif eventName=="gainFocus":
-			queueHandler.queueFunction(queueHandler.eventQueue,updateFocusFromEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,handleFocusEvent,window,objectID,childID)
+			return
+		#Process IA2 active descendant events
+		if eventID==IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:
+			IA2Handler.handleActiveDescendantEvent(window,objectID,childID)
 			return
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
 		debug.writeException("objectEventCallback")
 
-def updateForegroundFromEvent(window,objectID,childID):
+def handleForegroundEvent(window,objectID,childID):
 	appModuleHandler.update(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
@@ -551,7 +557,7 @@ def updateForegroundFromEvent(window,objectID,childID):
 	api.setForegroundObject(obj)
 	eventHandler.manageEvent("foreground",obj)
 
-def updateFocusFromEvent(window,objectID,childID):
+def handleFocusEvent(window,objectID,childID):
 	appModuleHandler.update(window)
 	oldFocus=api.getFocusObject()
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID:
@@ -567,7 +573,7 @@ def updateFocusFromEvent(window,objectID,childID):
 def correctFocus():
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and not focusObject.IAccessibleStates&STATE_SYSTEM_INVISIBLE and not focusObject.IAccessibleStates&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
-		updateFocusFromEvent(focusObject.windowHandle,OBJID_CLIENT,0)
+		handleFocusEvent(focusObject.windowHandle,OBJID_CLIENT,0)
 		manageEvent("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
 	else:
 		speech.speakMessage(_("lost focus"))

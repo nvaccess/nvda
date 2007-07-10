@@ -6,6 +6,10 @@
 
 import comtypesClient
 import ctypes
+import api
+import eventHandler
+import speech
+import NVDAObjects.IAccessible
 
 IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
 IA2Lib=comtypesClient.GetModule('lib/ia2.tlb')
@@ -108,3 +112,14 @@ def IA2FromMSAA(pacc):
 		return newPacc
 	except:
 		return None
+
+def handleActiveDescendantEvent(window,objectID,childID):
+	speech.speakMessage("active")
+	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	if not obj:
+		return
+	obj=obj.activeChild
+	if not obj:
+		return
+	api.setFocusObject(obj)
+	eventHandler.manageEvent("gainFocus",obj)
