@@ -107,6 +107,15 @@ class JABObjectWrapper(object):
 		else:
 			return None
 
+	def getCurrentAccessibleValueFromContext(self):
+		buf=create_unicode_buffer(SHORT_STRING_SIZE+1)
+		bridgeDll.getCurrentAccessibleValueFromContext(self.vmID,self.accContext,buf,SHORT_STRING_SIZE)
+		return buf.value
+
+
+
+
+
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[
 		('VMVersion',WCHAR*SHORT_STRING_SIZE),
@@ -133,7 +142,7 @@ class AccessibleContextInfo(Structure):
 		('accessibleAction',BOOL),
 		('accessibleSelection',BOOL),
 		('accessibleText',BOOL),
-		('accessibleInterfaces',BOOL),
+		('accessibleValue',BOOL),
 	]
 
 class AccessibleTextInfo(Structure):

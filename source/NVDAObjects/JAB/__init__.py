@@ -183,13 +183,16 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
+		value=None
 		if self._JABAccContextInfo.accessibleText:
 			info=self.makeTextInfo(text.POSITION_CARET)
 			info.expand(text.UNIT_LINE)
 			value=info.text
-			if self.name!=value:
-				return info.text
-		return super(JAB,self)._get_value()
+			if self.name==value:
+				value=None
+		if value is None and self._JABAccContextInfo.accessibleValue:
+			value=self.JABObject.getCurrentAccessibleValueFromContext()
+		return value
 
 	def _get_description(self):
 		return self._JABAccContextInfo.description
