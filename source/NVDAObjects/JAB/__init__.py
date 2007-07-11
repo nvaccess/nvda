@@ -196,6 +196,8 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
+		if self.role==controlTypes.ROLE_CHECKBOX:
+			return None
 		value=None
 		if self._JABAccContextInfo.accessibleText:
 			info=self.makeTextInfo(text.POSITION_CARET)
@@ -209,6 +211,18 @@ class JAB(Window):
 
 	def _get_description(self):
 		return self._JABAccContextInfo.description
+
+	def _get_positionString(self):
+		if self._JABAccContextInfo.childrenCount:
+			return None
+		parent=self.parent
+		if not parent or (self.role!=controlTypes.ROLE_RADIOBUTTON and parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]):
+			return None
+		index=self._JABAccContextInfo.indexInParent+1
+		childCount=parent._JABAccContextInfo.childrenCount
+		return _("%d of %d")%(index,childCount)
+
+
 
 	def _get_activeChild(self):
 		JABObject=self.JABObject.getActiveDescendent()
