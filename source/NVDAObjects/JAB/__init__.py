@@ -198,7 +198,7 @@ class JAB(Window):
 
 	def _get_value(self):
 		value=None
-		if self.role!=controlTypes.ROLE_BUTTON and self._JABAccContextInfo.accessibleText:
+		if self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM] and self._JABAccContextInfo.accessibleText:
 			info=self.makeTextInfo(text.POSITION_CARET)
 			info.expand(text.UNIT_LINE)
 			value=info.text

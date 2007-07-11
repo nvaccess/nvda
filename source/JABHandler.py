@@ -242,11 +242,11 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 def event_stateChange(vmID,accContext,oldState,newState):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
-	#For broken Open Office menus, we need to watch for things being selected and pretend its a focus change
+	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
 	stateList=newState.split(',')
-	if "focused" in stateList:
+	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(JABObject)
-		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU]:
+		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU]:
 			api.setFocusObject(obj)
 			eventHandler.manageEvent("gainFocus",obj)
 			return
