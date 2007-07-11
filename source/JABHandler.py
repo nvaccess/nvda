@@ -15,6 +15,7 @@ import NVDAObjects.JAB
 
 bridgeDll=None
 isRunning=False
+vmIDsToWindowHandles={}
 
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
@@ -28,8 +29,10 @@ class JABObjectWrapper(object):
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
 			vmID=vmID.value
 			accContext=accContext.value
+			#Record  this vm ID and window handle for later use with other objects
+			vmIDsToWindowHandles[vmID]=hwnd
 		elif vmID and accContext and not hwnd:
-			hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,accContext)
+			hwnd=vmIDsToWindowHandles.get(vmID,0)
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
@@ -233,6 +236,7 @@ def initialize():
 			raise RuntimeError('Windows_run') 
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
+		bridgeDll.setPropertySelectionChangeFP(internal_event_focusGained)
 		isRunning=True
 		return True
 	except:
