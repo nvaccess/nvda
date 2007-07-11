@@ -2,6 +2,7 @@ import ctypes
 import debug
 import appModuleHandler
 import speech
+import api
 import winUser
 import JABHandler
 import controlTypes
@@ -197,7 +198,7 @@ class JAB(Window):
 
 	def _get_value(self):
 		value=None
-		if self._JABAccContextInfo.accessibleText:
+		if self.role!=controlTypes.ROLE_BUTTON and self._JABAccContextInfo.accessibleText:
 			info=self.makeTextInfo(text.POSITION_CARET)
 			info.expand(text.UNIT_LINE)
 			value=info.text
@@ -244,14 +245,13 @@ class JAB(Window):
 			return self._parent
  
 	def _get_next(self):
-		JABObject=self.JABObject.getAccessibleParentFromContext()
-		if not JABObject:
+		parent=self.parent
+		if not parent:
 			return None
-		parentInfo=JABObject.getAccessibleContextInfo()
 		newIndex=self._JABAccContextInfo.indexInParent+1
-		if newIndex>=parentInfo.childrenCount:
+		if newIndex>=parent._JABAccContextInfo.childrenCount:
 			return None
-		JABObject=JABObject.getAccessibleChildFromContext(newIndex)
+		JABObject=parent.JABObject.getAccessibleChildFromContext(newIndex)
 		if not JABObject:
 			return None
 		childInfo=JABObject.getAccessibleContextInfo()
@@ -260,14 +260,13 @@ class JAB(Window):
 		return JAB(JABObject)
 
 	def _get_previous(self):
-		JABObject=self.JABObject.getAccessibleParentFromContext()
-		if not JABObject:
+		parent=self.parent
+		if not parent:
 			return None
-		parentInfo=JABObject.getAccessibleContextInfo()
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
 			return None
-		JABObject=JABObject.getAccessibleChildFromContext(newIndex)
+		JABObject=parent.JABObject.getAccessibleChildFromContext(newIndex)
 		if not JABObject:
 			return None
 		childInfo=JABObject.getAccessibleContextInfo()
@@ -284,6 +283,14 @@ class JAB(Window):
 		else:
 			return None
 
+	def _get_children(self):
+		children=[]
+		for index in range(self._JABAccContextInfo.childrenCount):
+			JABObject=self.JABObject.getAccessibleChildFromContext(index)
+			if JABObject:
+				children.append(JAB(JABObject))
+		return children
+
 	def event_stateChange(self):
 		self._JABAccContextInfo=self.JABObject.getAccessibleContextInfo()
 		super(JAB,self).event_stateChange()
@@ -293,3 +300,7 @@ class JAB(Window):
 		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and parent and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).event_gainFocus()
+
+	def event_foreground(self):
+		super(JAB,self).event_foreground()
+		self.speakDescendantObjects()

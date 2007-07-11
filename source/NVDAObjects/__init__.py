@@ -370,14 +370,12 @@ Tries to force this object to take the focus.
 	def speakDescendantObjects(self,hashList=None):
 		if hashList is None:
 			hashList=[]
-		child=self.firstChild
-		while child:
+		for child in self.children:
 			h=hash(child)
 			if h not in hashList:
 				hashList.append(h)
 				speech.speakObject(child)
 				child.speakDescendantObjects(hashList=hashList)
-			child=child.next
 
 	def reportFocus(self):
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
