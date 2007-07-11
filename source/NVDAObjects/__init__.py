@@ -259,13 +259,13 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		return h
 
 	def __eq__(self,other):
-		if hash(self)==hash(other):
+		if (id(self)==id(other)) or (hash(self)==hash(other)):
 			return True
 		else:
 			return False
 
 	def __ne__(self,other):
-		if hash(self)!=hash(other):
+		if (id(self)!=id(other)) and (hash(self)!=hash(other)):
 			return True
 		else:
 			return False

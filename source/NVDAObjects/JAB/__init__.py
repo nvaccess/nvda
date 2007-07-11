@@ -161,6 +161,18 @@ class JAB(Window):
 		Window.__init__(self,self.JABObject.hwnd)
 		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
 
+	def __eq__(self,other):
+		if (id(self)==id(other)) or (self.__class__==other.__class__ and self.JABObject==other.JABObject):
+			return True
+		else:
+			return False
+
+	def __ne__(self,other):
+		if (self.__class__!=other.__class__) or (self.JABObject!=other.JABObject):
+			return True
+		else:
+			return False
+ 
 	def _get_name(self):
 		return self._JABAccContextInfo.name
 

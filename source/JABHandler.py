@@ -40,6 +40,12 @@ class JABObjectWrapper(object):
 	def __del__(self):
 		bridgeDll.releaseJavaObject(self.vmID,self.accContext)
 
+	def __eq__(self,JABObject):
+		if self.vmID==JABObject.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,JABObject.accContext):
+			return True
+		else:
+			return False
+
 	def getVersionInfo(self):
 		info=AccessBridgeVersionInfo()
 		bridgeDll.getVersionInfo(self.vmID,byref(info))
@@ -206,6 +212,8 @@ def internal_event_focusGained(vmID, event,source):
 def event_gainFocus(vmID,accContext):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
 	obj=NVDAObjects.JAB.JAB(JABObject)
+	if obj==api.getFocusObject():
+		return
 	api.setFocusObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
 	activeChild=obj.activeChild
@@ -219,17 +227,11 @@ def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDe
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
-def event_activeDescendantChange(vmID,accContext):
-	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
-	obj=NVDAObjects.JAB.JAB(JABObject)
-	activeChild=obj.activeChild
-	if activeChild:
-		api.setFocusObject(activeChild)
-		eventHandler.manageEvent("gainFocus",activeChild)
-
 def event_enterJavaWindow(hwnd):
 	JABObject=JABObjectWrapper(hwnd=hwnd)
 	obj=NVDAObjects.JAB.JAB(JABObject)
+	if obj==api.getForegroundObject():
+		return
 	api.setForegroundObject(obj)
 	eventHandler.manageEvent("foreground",obj)
 
