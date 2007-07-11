@@ -196,8 +196,6 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role==controlTypes.ROLE_CHECKBOX:
-			return None
 		value=None
 		if self._JABAccContextInfo.accessibleText:
 			info=self.makeTextInfo(text.POSITION_CARET)
@@ -205,7 +203,7 @@ class JAB(Window):
 			value=info.text
 			if self.name==value:
 				value=None
-		if value is None and self._JABAccContextInfo.accessibleValue:
+		if value is None and self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON] and self._JABAccContextInfo.accessibleValue:
 			value=self.JABObject.getCurrentAccessibleValueFromContext()
 		return value
 
