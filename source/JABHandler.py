@@ -11,6 +11,7 @@ import speech
 import debug
 import api
 import eventHandler
+import controlTypes
 import NVDAObjects.JAB
 
 bridgeDll=None
@@ -42,6 +43,12 @@ class JABObjectWrapper(object):
 
 	def __eq__(self,JABObject):
 		if self.vmID==JABObject.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,JABObject.accContext):
+			return True
+		else:
+			return False
+
+	def __ne__(self,JABObject):
+		if self.vmID!=JABObject.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,JABObject.accContext):
 			return True
 		else:
 			return False
@@ -227,7 +234,7 @@ def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDe
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_char_p,c_char_p)
+@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_wchar_p,c_wchar_p)
 def internal_event_stateChange(vmID,event,source,oldState,newState):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_stateChange,vmID,source,oldState,newState)
 	bridgeDll.releaseJavaObject(source)
@@ -235,9 +242,19 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 def event_stateChange(vmID,accContext,oldState,newState):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
+	#For broken Open Office menus, we need to watch for things being selected and pretend its a focus change
+	stateList=newState.split(',')
+	if "focused" in stateList:
+		obj=NVDAObjects.JAB.JAB(JABObject)
+		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU]:
+			api.setFocusObject(obj)
+			eventHandler.manageEvent("gainFocus",obj)
+			return
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.JABObject==JABObject:
-		eventHandler.manageEvent("stateChange",focus)
-
+		obj=focus
+	else:
+		obj=NVDAObjects.JAB.JAB(JABObject)
+	eventHandler.manageEvent("stateChange",focus)
 
 def event_enterJavaWindow(hwnd):
 	JABObject=JABObjectWrapper(hwnd=hwnd)
