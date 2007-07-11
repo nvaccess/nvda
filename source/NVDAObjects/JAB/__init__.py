@@ -236,12 +236,13 @@ class JAB(Window):
 			return None
 
 	def _get_parent(self):
-		JABObject=self.JABObject.getAccessibleParentFromContext()
-		if JABObject:
-			return JAB(JABObject)
-		else:
-			return None
-
+		if not hasattr(self,'_parent'):
+			JABObject=self.JABObject.getAccessibleParentFromContext()
+			if JABObject:
+				self._parent=JAB(JABObject)
+		if hasattr(self,'_parent'):
+			return self._parent
+ 
 	def _get_next(self):
 		JABObject=self.JABObject.getAccessibleParentFromContext()
 		if not JABObject:
@@ -292,4 +293,3 @@ class JAB(Window):
 		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and parent and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).event_gainFocus()
-
