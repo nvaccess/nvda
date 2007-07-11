@@ -63,15 +63,24 @@ class JABObjectWrapper(object):
 		return textSelectionInfo
 
 	def getAccessibleTextRange(self,start,end):
-		length=(end-start)
+		length=((end+1)-start)
+		if length<=0:
+			return "\n"
 		text=create_unicode_buffer(length+1)
 		bridgeDll.getAccessibleTextRange(self.vmID,self.accContext,start,end,text,length)
 		return text.value
 
 	def getAccessibleTextLineBounds(self,index):
+		#Java returns end as the last character, not end as past the last character
 		startIndex=c_int()
 		endIndex=c_int()
 		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
+		startIndex=startIndex.value
+		endIndex=endIndex.value
+		if startIndex<0:
+			startIndex=0
+		if endIndex<0:
+			endIndex=0
 		return [startIndex,endIndex]
 
 	def getAccessibleParentFromContext(self):
@@ -180,6 +189,7 @@ class AccessibleTextAttributesInfo(Structure):
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
+	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
@@ -191,9 +201,11 @@ def event_gainFocus(vmID,accContext):
 		api.setFocusObject(activeChild)
 		eventHandler.manageEvent("gainFocus",activeChild)
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int)
-def internal_event_activeDescendantChange(vmID, event,source):
-	queueHandler.queueFunction(queueHandler.eventQueue,event_activeDescendantChange,vmID,source)
+@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
+def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
+	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,newDescendant)
+	for accContext in [event,oldDescendant]:
+		bridgeDll.releaseJavaObject(vmID,accContext)
 
 def event_activeDescendantChange(vmID,accContext):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
@@ -202,6 +214,15 @@ def event_activeDescendantChange(vmID,accContext):
 	if activeChild:
 		api.setFocusObject(activeChild)
 		eventHandler.manageEvent("gainFocus",activeChild)
+
+def event_enterJavaWindow(hwnd):
+	JABObject=JABObjectWrapper(hwnd=hwnd)
+	obj=NVDAObjects.JAB.JAB(JABObject)
+	api.setForegroundObject(obj)
+	eventHandler.manageEvent("foreground",obj)
+
+def isJavaWindow(hwnd):
+	return bridgeDll.isJavaWindow(hwnd)
 
 def initialize():
 	global bridgeDll, isRunning

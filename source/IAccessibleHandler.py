@@ -149,6 +149,7 @@ import ctypes
 import comtypesClient
 import comtypes.automation
 import debug
+import JABHandler
 import eventHandler
 import winUser
 import speech
@@ -550,6 +551,8 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 
 def handleForegroundEvent(window,objectID,childID):
 	appModuleHandler.update(window)
+	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+		return JABHandler.event_enterJavaWindow(window)
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
 		return
@@ -559,6 +562,8 @@ def handleForegroundEvent(window,objectID,childID):
 
 def handleFocusEvent(window,objectID,childID):
 	appModuleHandler.update(window)
+	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+		return JABHandler.event_enterJavaWindow(window)
 	oldFocus=api.getFocusObject()
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID:
 		return

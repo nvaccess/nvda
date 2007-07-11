@@ -84,12 +84,18 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getSelOffsets(self):
 		info=self.obj.JABObject.getAccessibleTextSelectionInfo()
-		return [info.selectionStartIndex,info.selectionEndIndex]
+		start=info.selectionStartIndex
+		end=info.selectionEndIndex
+		if start<0:
+			start=0
+		if end<0:
+			end=0
+		return [start,end]
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
 			storyLength=self._getStoryLength()
-			self._storyText=self._getTextRange(0,(storyLength-1))
+			self._storyText=self._getTextRange(0,storyLength)
 		return self._storyText
 
 	def _getStoryLength(self):
@@ -102,13 +108,20 @@ class JABTextInfo(NVDAObjectTextInfo):
 		return -1 
 
 	def _getTextRange(self,start,end):
-		return self.obj.JABObject.getAccessibleTextRange(start,end)
+		#Java needs end of range as last character, not one past the last character
+		return self.obj.JABObject.getAccessibleTextRange(start,end-1)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
 
 	def _getLineOffsets(self,offset):
-		return self.obj.JABObject.getAccessibleTextLineBounds(offset)
+		(start,end)=self.obj.JABObject.getAccessibleTextLineBounds(offset)
+		#If start and end are 0, then something is broken in java
+		if start==0 and end==0:
+			return super(JABTextInfo,self)._getLineOffsets(offset)
+		#Java gives end end as the last character, not one past the last character
+		end=end+1
+		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
 		return super(EditTextInfo,self)._getLineOffsets(offset)
@@ -120,31 +133,33 @@ class JAB(Window):
 		self._JABAccContextInfo=JABObject.getAccessibleContextInfo()
 		if self._JABAccContextInfo.accessibleText:
 			self.TextInfo=JABTextInfo
-			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-			("ExtendedUp","moveByLine"),
-			("ExtendedDown","moveByLine"),
-			("ExtendedLeft","moveByCharacter"),
-			("ExtendedRight","moveByCharacter"),
-			("Control+ExtendedLeft","moveByWord"),
-			("Control+ExtendedRight","moveByWord"),
-			("Shift+ExtendedRight","changeSelection"),
-			("Shift+ExtendedLeft","changeSelection"),
-			("Shift+ExtendedHome","changeSelection"),
-			("Shift+ExtendedEnd","changeSelection"),
-			("Shift+ExtendedUp","changeSelection"),
-			("Shift+ExtendedDown","changeSelection"),
-			("Control+Shift+ExtendedLeft","changeSelection"),
-			("Control+Shift+ExtendedRight","changeSelection"),
-			("ExtendedHome","moveByCharacter"),
-			("ExtendedEnd","moveByCharacter"),
-			("control+extendedHome","moveByLine"),
-			("control+extendedEnd","moveByLine"),
-			("control+shift+extendedHome","changeSelection"),
-			("control+shift+extendedEnd","changeSelection"),
-			("ExtendedDelete","delete"),
-			("Back","backspace"),
-  	]]	
+			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
+				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
+					("ExtendedUp","moveByLine"),
+					("ExtendedDown","moveByLine"),
+					("ExtendedLeft","moveByCharacter"),
+					("ExtendedRight","moveByCharacter"),
+					("Control+ExtendedLeft","moveByWord"),
+					("Control+ExtendedRight","moveByWord"),
+					("Shift+ExtendedRight","changeSelection"),
+					("Shift+ExtendedLeft","changeSelection"),
+					("Shift+ExtendedHome","changeSelection"),
+					("Shift+ExtendedEnd","changeSelection"),
+					("Shift+ExtendedUp","changeSelection"),
+					("Shift+ExtendedDown","changeSelection"),
+					("Control+Shift+ExtendedLeft","changeSelection"),
+					("Control+Shift+ExtendedRight","changeSelection"),
+					("ExtendedHome","moveByCharacter"),
+					("ExtendedEnd","moveByCharacter"),
+					("control+extendedHome","moveByLine"),
+					("control+extendedEnd","moveByLine"),
+					("control+shift+extendedHome","changeSelection"),
+					("control+shift+extendedEnd","changeSelection"),
+					("ExtendedDelete","delete"),
+					("Back","backspace"),
+			  	]]
 		Window.__init__(self,self.JABObject.hwnd)
+		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
 
 	def _get_name(self):
 		return self._JABAccContextInfo.name
@@ -166,6 +181,15 @@ class JAB(Window):
 			if JABStatesToNVDAStates.has_key(state):
 				stateSet.add(JABStatesToNVDAStates[state])
 		return stateSet
+
+	def _get_value(self):
+		if self._JABAccContextInfo.accessibleText:
+			info=self.makeTextInfo(text.POSITION_CARET)
+			info.expand(text.UNIT_LINE)
+			value=info.text
+			if self.name!=value:
+				return info.text
+		return super(JAB,self)._get_value()
 
 	def _get_description(self):
 		return self._JABAccContextInfo.description
