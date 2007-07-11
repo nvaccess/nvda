@@ -236,7 +236,6 @@ def initialize():
 			raise RuntimeError('Windows_run') 
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
-		bridgeDll.setPropertySelectionChangeFP(internal_event_focusGained)
 		isRunning=True
 		return True
 	except:
