@@ -436,6 +436,9 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+	def setCaret(self,info):
+		pass
+
 
 	def script_review_top(self,keyPress,nextScript):
 		info=self.makeTextInfo(text.POSITION_FIRST)

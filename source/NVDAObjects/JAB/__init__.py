@@ -83,7 +83,7 @@ JABStatesToNVDAStates={
 class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getSelOffsets(self):
-		info=JABHandler.getAccessibleTextSelectionInfo(self.obj.JABVmID,self.obj.JABAccContext)
+		info=self.obj.JABObject.getAccessibleTextSelectionInfo()
 		return [info.selectionStartIndex,info.selectionEndIndex]
 
 	def _getStoryText(self):
@@ -94,7 +94,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryLength(self):
 		if not hasattr(self,'_storyLength'):
-			textInfo=JABHandler.getAccessibleTextInfo(self.obj.JABVmID,self.obj.JABAccContext,self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
+			textInfo=self.obj.JABObject.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 			self._storyLength=textInfo.charCount
 		return self._storyLength
 
@@ -102,28 +102,22 @@ class JABTextInfo(NVDAObjectTextInfo):
 		return -1 
 
 	def _getTextRange(self,start,end):
-		return JABHandler.getAccessibleTextRange(self.obj.JABVmID,self.obj.JABAccContext,start,end)
+		return self.obj.JABObject.getAccessibleTextRange(start,end)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
 
 	def _getLineOffsets(self,offset):
-		return JABHandler.getAccessibleTextLineBounds(self.obj.JABVmID,self.obj.JABAccContext,offset)
+		return self.obj.JABObject.getAccessibleTextLineBounds(offset)
 
 	def _getParagraphOffsets(self,offset):
 		return super(EditTextInfo,self)._getLineOffsets(offset)
 
 class JAB(Window):
 
-	def __init__(self,vmID,accContext,windowHandle=None):
-		if windowHandle is None:
-			#windowHandle=JABHandler.bridgeDll.getHWNDFromAccessibleContext(vmID,accContext)
-			windowHandle=winUser.getForegroundWindow()
-		debug.writeMessage("JAB windowHandle: %s"%windowHandle)
-		self.JABVmID=vmID
-		self.JABAccContext=accContext
-		debug.writeMessage("JAB: about to call contextInfo")
-		self._JABAccContextInfo=JABHandler.getAccessibleContextInfo(vmID,accContext)
+	def __init__(self,JABObject):
+		self.JABObject=JABObject
+		self._JABAccContextInfo=JABObject.getAccessibleContextInfo()
 		if self._JABAccContextInfo.accessibleText:
 			self.TextInfo=JABTextInfo
 			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
@@ -150,10 +144,7 @@ class JAB(Window):
 			("ExtendedDelete","delete"),
 			("Back","backspace"),
   	]]	
-		Window.__init__(self,windowHandle)
-
-	def __del__(self):
-		JABHandler.bridgeDll.releaseJavaObject(self.JABAccContext)
+		Window.__init__(self,self.JABObject.hwnd)
 
 	def _get_name(self):
 		return self._JABAccContextInfo.name
@@ -180,55 +171,57 @@ class JAB(Window):
 		return self._JABAccContextInfo.description
 
 	def _get_activeChild(self):
-		childAccContext=JABHandler.bridgeDll.getActiveDescendent(self.JABVmID,self.JABAccContext)
-		if childAccContext<=0:
+		JABObject=self.JABObject.getActiveDescendent()
+		if JABObject:
+			return JAB(JABObject)
+		else:
 			return None
-		return JAB(self.JABVmID,childAccContext)
 
 	def _get_parent(self):
-		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
-		if parentAccContext>0:
-			return JAB(self.JABVmID,parentAccContext)
+		JABObject=self.JABObject.getAccessibleParentFromContext()
+		if JABObject:
+			return JAB(JABObject)
+		else:
+			return None
 
 	def _get_next(self):
-		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
-		if parentAccContext<=0:
+		JABObject=self.JABObject.getAccessibleParentFromContext()
+		if not JABObject:
 			return None
-		parentAccContextInfo=JABHandler.getAccessibleContextInfo(self.JABVmID,parentAccContext)
+		parentInfo=JABObject.getAccessibleContextInfo()
 		newIndex=self._JABAccContextInfo.indexInParent+1
-		if newIndex>=parentAccContextInfo.childrenCount:
-			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+		if newIndex>=parentInfo.childrenCount:
 			return None
-		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,parentAccContext,newIndex)
-		if childAccContext<=0:
-			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+		JABObject=JABObject.getAccessibleChildFromContext(newIndex)
+		if not JABObject:
 			return None
-		obj=JAB(self.JABVmID,childAccContext)
-		if obj._JABAccContextInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+		childInfo=JABObject.getAccessibleContextInfo()
+		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return obj
+		return JAB(JABObject)
 
 	def _get_previous(self):
-		parentAccContext=JABHandler.bridgeDll.getAccessibleParentFromContext(self.JABVmID,self.JABAccContext)
-		if parentAccContext<=0:
+		JABObject=self.JABObject.getAccessibleParentFromContext()
+		if not JABObject:
 			return None
-		parentAccContextInfo=JABHandler.getAccessibleContextInfo(self.JABVmID,parentAccContext)
+		parentInfo=JABObject.getAccessibleContextInfo()
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
-			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
 			return None
-		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,parentAccContext,newIndex)
-		if childAccContext<=0:
-			JABHandler.bridgeDll.releaseJavaObject(self.JABVmID,parentAccContext)
+		JABObject=JABObject.getAccessibleChildFromContext(newIndex)
+		if not JABObject:
 			return None
-		obj=JAB(self.JABVmID,childAccContext)
-		if obj._JABAccContextInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+		childInfo=JABObject.getAccessibleContextInfo()
+		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return obj
+		return JAB(JABObject)
 
 	def _get_firstChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
-		childAccContext=JABHandler.bridgeDll.getAccessibleChildFromContext(self.JABVmID,self.JABAccContext,0)
-		return JAB(self.JABVmID,childAccContext)
+		JABObject=self.JABObject.getAccessibleChildFromContext(0)
+		if JABObject:
+			return JAB(JABObject)
+		else:
+			return None
 

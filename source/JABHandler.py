@@ -14,16 +14,86 @@ import eventHandler
 import NVDAObjects.JAB
 
 bridgeDll=None
+isRunning=False
 
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
 
-class NVDAJavaContext(Structure):
-	_fields_=[
-		('hwnd',c_int),
-		('VM',c_int),
-		('accessibleContext',c_int),
-	]
+class JABObjectWrapper(object):
+
+	def __init__(self,hwnd=None,vmID=None,accContext=None):
+		if hwnd and (not vmID or not accContext):
+ 			vmID=c_int()
+			accContext=c_int()
+			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
+			vmID=vmID.value
+			accContext=accContext.value
+		elif vmID and accContext and not hwnd:
+			hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,accContext)
+		self.hwnd=hwnd
+		self.vmID=vmID
+		self.accContext=accContext
+
+	def __del__(self):
+		bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+
+	def getVersionInfo(self):
+		info=AccessBridgeVersionInfo()
+		bridgeDll.getVersionInfo(self.vmID,byref(info))
+		return info
+
+	def getAccessibleContextInfo(self):
+		info=AccessibleContextInfo()
+		bridgeDll.getAccessibleContextInfo(self.vmID,self.accContext,byref(info))
+		return info
+
+	def getAccessibleTextInfo(self,x,y):
+		textInfo=AccessibleTextInfo()
+		bridgeDll.getAccessibleTextInfo(self.vmID,self.accContext,byref(textInfo),x,y)
+		return textInfo
+
+	def getAccessibleTextItems(self,index):
+		textItemsInfo=AccessibleTextItemsInfo()
+		bridgeDll.getAccessibleTextItems(self.vmID,self.accContext,byref(textItemsInfo),index)
+		return textItemsInfo
+
+	def getAccessibleTextSelectionInfo(self):
+		textSelectionInfo=AccessibleTextSelectionInfo()
+		bridgeDll.getAccessibleTextSelectionInfo(self.vmID,self.accContext,byref(textSelectionInfo))
+		return textSelectionInfo
+
+	def getAccessibleTextRange(self,start,end):
+		length=(end-start)
+		text=create_unicode_buffer(length+1)
+		bridgeDll.getAccessibleTextRange(self.vmID,self.accContext,start,end,text,length)
+		return text.value
+
+	def getAccessibleTextLineBounds(self,index):
+		startIndex=c_int()
+		endIndex=c_int()
+		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
+		return [startIndex,endIndex]
+
+	def getAccessibleParentFromContext(self):
+		accContext=bridgeDll.getAccessibleParentFromContext(self.vmID,self.accContext)
+		if accContext:
+			return self.__class__(self.hwnd,self.vmID,accContext)
+		else:
+			return None
+
+	def getAccessibleChildFromContext(self,index):
+		accContext=bridgeDll.getAccessibleChildFromContext(self.vmID,self.accContext,index)
+		if accContext:
+			return self.__class__(self.hwnd,self.vmID,accContext)
+		else:
+			return None
+
+	def getActiveDescendent(self):
+		accContext=bridgeDll.getActiveDescendent(self.vmID,self.accContext)
+		if accContext:
+			return self.__class__(self.hwnd,self.vmID,accContext)
+		else:
+			return None
 
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[
@@ -106,44 +176,14 @@ class AccessibleTextAttributesInfo(Structure):
 		('fullAttributesString',WCHAR*MAX_STRING_SIZE),
 	]
 
-def getAccessibleContextInfo(vmID,accContext):
-	info=AccessibleContextInfo()
-	bridgeDll.getAccessibleContextInfo(vmID,accContext,byref(info))
-	return info
-
-def getAccessibleTextInfo(vmID,accText,x,y):
-	textInfo=AccessibleTextInfo()
-	bridgeDll.getAccessibleTextInfo(vmID,accText,byref(textInfo),x,y)
-	return textInfo
-
-def getAccessibleTextItems(vmID,accText,index):
-	textItemsInfo=AccessibleTextItemsInfo()
-	bridgeDll.getAccessibleTextItems(vmID,accText,byref(textItemsInfo),index)
-	return textItemsInfo
-
-def getAccessibleTextSelectionInfo(vmID,accText):
-	textSelectionInfo=AccessibleTextSelectionInfo()
-	bridgeDll.getAccessibleTextSelectionInfo(vmID,accText,byref(textSelectionInfo))
-	return textSelectionInfo
-
-def getAccessibleTextRange(vmID,accText,start,end):
-	len=(end-start)
-	text=create_unicode_buffer(len+1)
-	bridgeDll.getAccessibleTextRange(vmID,accText,start,end,text,len)
-	return text.value
-
-def getAccessibleTextLineBounds(vmID,accText,index):
-	startIndex=c_int()
-	endIndex=c_int()
-	bridgeDll.getAccessibleTextLineBounds(vmID,accText,index,byref(startIndex),byref(endIndex))
-	return [startIndex,endIndex]
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
 
 def event_gainFocus(vmID,accContext):
-	obj=NVDAObjects.JAB.JAB(vmID,accContext)
+	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
+	obj=NVDAObjects.JAB.JAB(JABObject)
 	api.setFocusObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
 	activeChild=obj.activeChild
@@ -156,14 +196,15 @@ def internal_event_activeDescendantChange(vmID, event,source):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_activeDescendantChange,vmID,source)
 
 def event_activeDescendantChange(vmID,accContext):
-	obj=NVDAObjects.JAB.JAB(vmID,accContext)
+	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
+	obj=NVDAObjects.JAB.JAB(JABObject)
 	activeChild=obj.activeChild
 	if activeChild:
 		api.setFocusObject(activeChild)
 		eventHandler.manageEvent("gainFocus",activeChild)
 
 def initialize():
-	global bridgeDll
+	global bridgeDll, isRunning
 	try:
 		bridgeDll=cdll.WINDOWSACCESSBRIDGE
 		res=bridgeDll.Windows_run()
@@ -171,6 +212,7 @@ def initialize():
 			raise RuntimeError('Windows_run') 
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
+		isRunning=True
 		return True
 	except:
 		return False
