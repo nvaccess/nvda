@@ -287,3 +287,9 @@ class JAB(Window):
 		self._JABAccContextInfo=self.JABObject.getAccessibleContextInfo()
 		super(JAB,self).event_stateChange()
 
+	def event_gainFocus(self):
+		parent=self.parent
+		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and parent and parent.role==controlTypes.ROLE_COMBOBOX:
+			return
+		super(JAB,self).event_gainFocus()
+
