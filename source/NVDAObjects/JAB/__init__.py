@@ -60,6 +60,7 @@ JABRolesToNVDARoles={
 	"tool bar":controlTypes.ROLE_TOOLBAR,
 	"tool tip":controlTypes.ROLE_TOOLTIP,
 	"status bar":controlTypes.ROLE_STATUSBAR,
+	"statusbar":controlTypes.ROLE_STATUSBAR,
 	"date editor":controlTypes.ROLE_DATEEDITOR,
 	"spin box":controlTypes.ROLE_SPINBUTTON,
 	"font chooser":controlTypes.ROLE_FONTCHOOSER,
