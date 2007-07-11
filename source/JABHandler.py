@@ -227,6 +227,18 @@ def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDe
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
+@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_char_p,c_char_p)
+def internal_event_stateChange(vmID,event,source,oldState,newState):
+	queueHandler.queueFunction(queueHandler.eventQueue,event_stateChange,vmID,source,oldState,newState)
+	bridgeDll.releaseJavaObject(source)
+
+def event_stateChange(vmID,accContext,oldState,newState):
+	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
+	focus=api.getFocusObject()
+	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.JABObject==JABObject:
+		eventHandler.manageEvent("stateChange",focus)
+
+
 def event_enterJavaWindow(hwnd):
 	JABObject=JABObjectWrapper(hwnd=hwnd)
 	obj=NVDAObjects.JAB.JAB(JABObject)
@@ -247,6 +259,7 @@ def initialize():
 			raise RuntimeError('Windows_run') 
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
+		bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
 		isRunning=True
 		return True
 	except:

@@ -44,7 +44,7 @@ An NVDAObject for a window
 			self.appModule().event_NVDAObject_init(self)
 
 	def __hash__(self):
-		return self.windowHandle
+		return int(self.windowHandle)
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)

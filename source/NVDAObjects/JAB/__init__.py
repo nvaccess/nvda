@@ -212,6 +212,12 @@ class JAB(Window):
 	def _get_description(self):
 		return self._JABAccContextInfo.description
 
+	def _get_hasFocus(self):
+		if controlTypes.STATE_FOCUSED in self.states:
+			return True
+		else:
+			return False
+
 	def _get_positionString(self):
 		if self._JABAccContextInfo.childrenCount:
 			return None
@@ -278,4 +284,8 @@ class JAB(Window):
 			return JAB(JABObject)
 		else:
 			return None
+
+	def event_stateChange(self):
+		self._JABAccContextInfo=self.JABObject.getAccessibleContextInfo()
+		super(JAB,self).event_stateChange()
 
