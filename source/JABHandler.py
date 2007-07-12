@@ -9,6 +9,7 @@ from ctypes.wintypes import *
 import queueHandler
 import speech
 import debug
+import winUser
 import api
 import eventHandler
 import controlTypes
@@ -218,6 +219,8 @@ def internal_event_focusGained(vmID, event,source):
 
 def event_gainFocus(vmID,accContext):
 	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
+	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),JABObject.hwnd):
+		return
 	obj=NVDAObjects.JAB.JAB(JABObject)
 	if obj==api.getFocusObject():
 		return
