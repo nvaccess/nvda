@@ -117,7 +117,10 @@ class EditTextInfo(NVDAObjectTextInfo):
 		if self.obj.editAPIVersion>=2:
 			info=getTextLengthExStruct()
 			info.flags=GTL_NUMCHARS
-			info.codepage=1200
+			if self.obj.editAPIUnicode:
+				info.codepage=1200
+			else:
+				info.codepage=0
 			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
 			internalInfo=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
@@ -133,7 +136,9 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
-			bufLen=((end-start)+1)*2
+			bufLen=(end-start)+1
+			if self.obj.editAPIUnicode:
+				bufLen*=2
 			textRange=TextRangeStruct()
 			textRange.chrg.cpMin=start
 			textRange.chrg.cpMax=end
@@ -144,7 +149,10 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
 			winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
 			winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			buf=ctypes.create_unicode_buffer(bufLen)
+			if self.obj.editAPIUnicode:
+				buf=ctypes.create_unicode_buffer(bufLen)
+			else:
+				buf=ctypes.create_string_buffer(bufLen)
 			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			return buf.value
@@ -186,6 +194,8 @@ class Edit(IAccessible):
 
 	TextInfo=EditTextInfo
 	editAPIVersion=0
+	editAPIUnicode=True
+
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
@@ -231,4 +241,8 @@ class RichEdit(Edit):
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2
+
+class RichEdit20A(RichEdit20):
+	editAPIUnicode=False
+
 
