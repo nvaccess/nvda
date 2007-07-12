@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import locale
 import struct
 import ctypes
 import speech
@@ -155,7 +156,10 @@ class EditTextInfo(NVDAObjectTextInfo):
 				buf=ctypes.create_string_buffer(bufLen)
 			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			return buf.value
+			if self.obj.editAPIUnicode:
+				return buf.value
+			else:
+				return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
 		else:
 			return self._getStoryText()[start:end]
 
