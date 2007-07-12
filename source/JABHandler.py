@@ -257,7 +257,7 @@ def event_stateChange(vmID,accContext,oldState,newState):
 		obj=focus
 	else:
 		obj=NVDAObjects.JAB.JAB(JABObject)
-	eventHandler.manageEvent("stateChange",focus)
+	eventHandler.manageEvent("stateChange",obj)
 
 def event_enterJavaWindow(hwnd):
 	JABObject=JABObjectWrapper(hwnd=hwnd)

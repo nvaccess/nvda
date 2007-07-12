@@ -381,7 +381,7 @@ Tries to force this object to take the focus.
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_stateChange(self):
-		if self.hasFocus:
+		if id(self)==id(api.getFocusObject()):
 			states=self.states
 			if states!=self._oldStates:
 				speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
