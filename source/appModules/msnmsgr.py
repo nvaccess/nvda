@@ -1,3 +1,4 @@
+﻿#coding=UTF-8
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
@@ -13,11 +14,24 @@ import appModuleHandler
 import speech
 
 lastMSNHistoryValue=None
+possibleHistoryWindowNames=frozenset([
+u'History',
+u'geskiedenis',
+u'Verlauf',
+u'Historia',
+u'Historique',
+u'cronologia',
+u'HistÃ³rico',
+u'Histórico',
+u'HistÃ³ria',
+u'LÆ°á»£c Sá',
+u'è¨˜éŒ',
+])
 
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name==_("History"):
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			obj.__class__=MSNHistory
 
 class MSNHistory(IAccessible):
