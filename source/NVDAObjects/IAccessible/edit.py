@@ -183,8 +183,11 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getLineOffsets(self,offset):
 		lineNum=self._lineNumFromOffset(offset)
 		start=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,lineNum,0)
-		length=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,start,0)
+		length=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,offset,0)
 		end=start+length
+		#If we just seem to get invalid line info, calculate manually
+		if start<=0 and end<=0 and lineNum<=0 and self._getLineCount()<=0 and self._getStoryLength()>0:
+			return super(EditTextInfo,self)._getLineOffsets(offset)
 		#edit controls lye about their line length
 		limit=end+4
 		while self._lineNumFromOffset(end)==lineNum and end<limit:
