@@ -85,3 +85,7 @@ class ListItem(IAccessible):
 	def oldevent_gainFocus(self):
 		speech.speakMessage("%s"%self.lvAppImageID)
 		super(self.__class__,self).event_gainFocus()
+
+	def event_stateChange(self):
+		if self.hasFocus:
+			super(ListItem,self).event_stateChange()
