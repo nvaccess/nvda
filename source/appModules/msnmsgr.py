@@ -22,7 +22,7 @@ class appModule(appModuleHandler.appModule):
 
 class MSNHistory(IAccessible):
 
-	def _get_textRepresentation(self):
+	def _get_basicText(self):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
 
 	def _get_value(self):
@@ -41,7 +41,8 @@ class MSNHistory(IAccessible):
 
 	def event_gainFocus(self):
 		super(MSNHistory,self).event_gainFocus()
-		self.reviewPosition=text.OffsetsPosition(len(self.textRepresentation)-1)
+		self.reviewPosition=self.makeTextInfo(text.POSITION_LAST)
+
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
