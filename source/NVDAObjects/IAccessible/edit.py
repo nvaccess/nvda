@@ -94,7 +94,7 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
-	def _getSelOffsets(self):
+	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
 			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,self.obj.windowProcessID)
@@ -102,10 +102,29 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winUser.sendMessage(self.obj.windowHandle,EM_EXGETSEL,0, internalCharRange)
 			winKernel.readProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
 			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
-			return [charRange.cpMin,charRange.cpMax]
+			return (charRange.cpMin,charRange.cpMax)
 		else:
 			long=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,0,0)
-			return [winUser.LOWORD(long),winUser.HIWORD(long)]
+			return (winUser.LOWORD(long),winUser.HIWORD(long))
+
+	def _setSelectionOffsets(self,start,end):
+		if self.obj.editAPIVersion>=1:
+			charRange=CharRangeStruct()
+			charRange.cpMin=start
+			charRange.cpMax=end
+			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			winKernel.writeProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
+			winUser.sendMessage(self.obj.windowHandle,EM_EXSETSEL,0, internalCharRange)
+			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
+		else:
+			winUser.sendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
+
+	def _getCaretOffset(self):
+		return self._getSelectionOffsets()[0]
+
+	def _setCaretOffset(self,offset):
+		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
@@ -170,7 +189,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			if end<=offset:
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
-			return [start,end]
+			return (start,end)
 		else:
 			return super(EditTextInfo,self)._getWordOffsets(offset)
 
@@ -192,7 +211,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 		limit=end+4
 		while self._lineNumFromOffset(end)==lineNum and end<limit:
 			end+=1
-		return [start,end]
+		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
 		return super(EditTextInfo,self)._getLineOffsets(offset)

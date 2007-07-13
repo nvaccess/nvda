@@ -60,13 +60,24 @@ IA2Handler.ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
 
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
-	def _getSelOffsets(self):
+	def _getCaretOffset(self):
+		return self.obj.IAccessibleTextObject.CaretOffset
+
+	def _setCaretOffset(self,offset):
+		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
+
+	def _getSelectionOffsets(self):
 		if self.obj.IAccessibleTextObject.nSelections>0:
 			(start,end)=self.obj.IAccessibleTextObject.Selection[0]
 		else:
-			start=self.obj.IAccessibleTextObject.CaretOffset
+			start=self._getCaretOffset()
 			end=start
 		return [min(start,end),max(start,end)]
+
+	def _setSelectionOffsets(self,start,end):
+		for selIndex in range(self.obj.IAccessibleTextObject.NSelections):
+			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
+		self.obj.IAccessibleTextObject.AddSelection(start,end)
 
 	def _getStoryLength(self):
 		if not hasattr(self,'_storyLength'):

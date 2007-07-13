@@ -126,9 +126,11 @@ class JABObjectWrapper(object):
 		bridgeDll.getCurrentAccessibleValueFromContext(self.vmID,self.accContext,buf,SHORT_STRING_SIZE)
 		return buf.value
 
+	def selectTextRange(self,start,end):
+		bridgeDll.selectTextRange(start,end)
 
-
-
+	def setCaretPosition(self,offset):
+		bridgeDll.setCaretPosition(self.vmID,self.accContext,offset)
 
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[

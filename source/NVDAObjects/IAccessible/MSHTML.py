@@ -72,12 +72,13 @@ class MSHTMLTextInfo(text.TextInfo):
 		elif position==text.POSITION_CARET:
 			self._rangeObj.collapse()
 		elif position==text.POSITION_FIRST:
-			self._rangeObj.expand("textedit")
-			self.collapse()
+			self._rangeObj.move("textedit",-1)
 		elif position==text.POSITION_FIRST:
 			self._rangeObj.expand("textedit")
 			self.collapse(True)
 			self._rangeObj.move("character",-1)
+		elif isinstance(position,text.Bookmark):
+			self._rangeObj.moveToBookmark(position.data)
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -125,6 +126,19 @@ class MSHTMLTextInfo(text.TextInfo):
 		if start and end:
 			pass #self._rangeObj.collapse()
 		return res
+
+	def updateCaret(self):
+		sel=self.obj.domElement.document.selection.createRange()
+		sel.setEndPoint("startToStart",self._rangeObj)
+		sel.collapse()
+
+	def updateSelection(self):
+		sel=self.obj.domElement.document.selection.createRange()
+		sel.setEndPoint("startToStart",self._rangeObj)
+		sel.setEndPoint("endToEnd",self._rangeObj)
+
+	def _get_bookmark(self):
+		return self._rangeObj.getBookmark()
 
 class MSHTML(IAccessible):
 

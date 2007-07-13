@@ -157,7 +157,7 @@ class WinConsole(IAccessible):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		return info.consoleSize.x
 
-	def _get_basicSelectionOffsets(self):
+	def _get_basicCaretOffset(self):
 		if not hasattr(self,"consoleHandle"):
 			offset=0 
 		else:
@@ -165,7 +165,11 @@ class WinConsole(IAccessible):
 			y=info.cursorPosition.y
 			x=info.cursorPosition.x
 			offset=self.getOffsetFromConsoleCoord(x,y)
-		return [offset,offset]
+		return offset
+
+	def _get_basicSelectionOffsets(self):
+		offset=self.basicCaretOffset
+		return (offset,offset)
 
 	def _get_basicTextLineLength(self):
 		return self.getConsoleHorizontalLength()

@@ -292,6 +292,11 @@ class appModule(appModuleHandler.appModule):
 		obj.script_review_moveToCaret(keyPress,None)
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
+	def script_review_moveCaretHere(self,keyPress,nextScript):
+		obj=api.getNavigatorObject()
+		obj.script_review_moveCaretHere(keyPress,None)
+	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
+
 	def script_speechMode(self,keyPress,nextScript):
 		curMode=speech.speechMode
 		speech.speechMode=speech.speechMode_talk

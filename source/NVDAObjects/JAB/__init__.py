@@ -84,7 +84,15 @@ JABStatesToNVDAStates={
 
 class JABTextInfo(NVDAObjectTextInfo):
 
-	def _getSelOffsets(self):
+	def _getCaretOffset(self):
+		textInfo=self.obj.JABObject.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
+		return textInfo.caretIndex
+
+	def _setCaretOffset(self,offset):
+		speech.speakMessage("%s"%offset)
+		self.obj.JABObject.setCaretPosition(offset)
+
+	def _getSelectionOffsets(self):
 		info=self.obj.JABObject.getAccessibleTextSelectionInfo()
 		start=info.selectionStartIndex
 		end=info.selectionEndIndex
@@ -92,7 +100,10 @@ class JABTextInfo(NVDAObjectTextInfo):
 			start=0
 		if end<0:
 			end=0
-		return [start,end]
+		return (start,end)
+
+	def _setSelectionOffsets(self,start,end):
+		self.obj.JABObject.selectTextRange(start,end)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):

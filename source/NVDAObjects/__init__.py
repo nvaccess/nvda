@@ -34,8 +34,17 @@ class NVDAObjectTextInfo(text.TextInfo):
 			self._textLineLength=self.obj.basicTextLineLength
 		return self._textLineLength
 
-	def _getSelOffsets(self):
+	def _getCaretOffset(self):
+		return self.obj.basicCaretOffset
+
+	def _setCaretOffset(self):
+		self.obj.basicCaretOffset=self._startOffset
+
+	def _getSelectionOffsets(self):
 		return self.obj.basicSelectionOffsets
+
+	def _setSelectionOffsets(self):
+		self.obj.basicSelectionOffsets=(self._startOffset,self._endOffset)
 
 	def _getTextRange(self,start,end):
 		if hasattr(self,'_text'):
@@ -85,15 +94,17 @@ class NVDAObjectTextInfo(text.TextInfo):
 		elif position==text.POSITION_LAST:
 			self._startOffset=self._endOffset=self._getStoryLength()-1
 		elif position==text.POSITION_CARET:
-			self._startOffset=self._endOffset=self._getSelOffsets()[0]
+			self._startOffset=self._endOffset=self._getCaretOffset()
 		elif position==text.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=self._getSelOffsets()
+			(self._startOffset,self._endOffset)=self._getSelectionOffsets()
 		elif position==text.POSITION_ALL:
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
 		elif isinstance(position,text.OffsetsPosition):
 			self._startOffset=position.start
 			self._endOffset=position.end
+		elif isinstance(position,text.Bookmark):
+			(self._startOffset,self._endOffset)=position.data
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 
@@ -174,6 +185,15 @@ class NVDAObjectTextInfo(text.TextInfo):
 		if end==False:
 			self._endOffset=oldEnd
 		return count
+
+	def updateCaret(self):
+		return self._setCaretOffset(self._startOffset)
+
+	def updateSelection(self):
+		return self._setSelectionOffsets(self._startOffset,self._endOffset)
+
+	def _get_bookmark(self):
+		return text.Bookmark((self._startOffset,self._endOffset))
 
 class NVDAObject(baseObject.scriptableObject):
 	"""
@@ -429,8 +449,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_basicTextLineLength(self):
 		return None
 
+	def _get_basicCaretOffset(self):
+		return 0
+
+	def _set_basicCaretOffset(self):
+		pass
+
 	def _get_basicSelectionOffsets(self):
 		return [0,0]
+
+	def _set_basicSelectionOffsets(self):
+		pass
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
@@ -567,6 +596,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		info=self.makeTextInfo(text.POSITION_CARET)
 		self.reviewPosition=info.copy()
+		info.expand(text.UNIT_LINE)
+		speech.speakText(info.text)
+
+	def script_review_moveCaretHere(self,keyPress,nextScript):
+		self.reviewPosition.updateCaret()
+		info=self.reviewPosition.copy()
 		info.expand(text.UNIT_LINE)
 		speech.speakText(info.text)
 

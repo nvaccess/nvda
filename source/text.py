@@ -43,6 +43,11 @@ POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
+class Bookmark(baseObject.autoPropertyObject):
+
+	def __init__(self,data):
+		self.data=data
+
 #Selection mode constants
 SELECTIONMODE_SELECTED="selected"
 SELECTIONMODE_UNSELECTED="unselected"
@@ -170,6 +175,21 @@ class TextInfo(baseObject.autoPropertyObject):
 
 	def copy(self):
 		"""duplicates this text info object so that changes can be made to either one with out afecting the other 
+"""
+		raise NotImplementedError
+
+	def updateCaret(self):
+		"""Moves the system caret to the position of this text info object"""
+		raise NotImplementedError
+
+	def updateSelection(self):
+		"""Moves the system caret to the position of this text info object"""
+		raise NotImplementedError
+
+	def _get_bookmark(self):
+		"""Returns a unique identifier that can be used to make another textInfo object at this position
+@returns: a bookmark
+@rtype: L{Bookmark}
 """
 		raise NotImplementedError
 
