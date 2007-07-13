@@ -45,7 +45,11 @@ class appModule(appModuleHandler.appModule):
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
 	def script_reportCurrentLine(self,keyPress,nextScript):
-		api.getFocusObject().script_text_reportCurrentLine(keyPress,nextScript)
+		obj=api.getFocusObject()
+		info=obj.makeTextInfo(text.POSITION_CARET)
+		info.expand(text.UNIT_LINE)
+		speech.speakText(info.text)
+
 
 	def script_dateTime(self,keyPress,nextScript):
 		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
@@ -323,18 +327,23 @@ class appModule(appModuleHandler.appModule):
 		gui.showGui()
 	script_showGui.__doc__=_("Shows the NVDA interface window")
 
-	def script_sayAll_review(self,keyPress,nextScript):
+	def script_review_sayAll(self,keyPress,nextScript):
 		o=api.getNavigatorObject()
-		sayAllHandler.sayAll(o.text_reviewPosition,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_reviewPosition)
+		info=o.reviewPosition.copy()
+		info.moveByUnit(text.UNIT_STORY,1,start=False)
+		sayAllHandler.read(info,sayAllHandler.CURSOR_REVIEW)
+	script_review_sayAll.__doc__ = _("reads from review cursor  up to end of current text, moving the review cursor as it goes")
 
-	def script_sayAll_caret(self,keyPress,nextScript):
+	def script_sayAll(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=virtualBuffers.getVirtualBuffer(o)
 		if v and not api.isVirtualBufferPassThrough():
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
-			sayAllHandler.sayAll(o.text_caretPosition,o.text_characterCount,o.text_getNextFieldOffsets,o.text_getText,o.text_reportNewPresentation,o._set_text_caretPosition)
-	script_sayAll_caret.__doc__ = _("reads from cursor up to end of current text")
+			info=o.makeTextInfo(text.POSITION_CARET)
+			info.moveByUnit(text.UNIT_STORY,1,start=False)
+			sayAllHandler.read(info,sayAllHandler.CURSOR_CARET)
+	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
 
 	def script_review_reportPresentation(self,keyPress,nextScript):
 		o=api.getFocusObject()

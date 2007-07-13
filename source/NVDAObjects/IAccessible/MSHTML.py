@@ -84,8 +84,10 @@ class MSHTMLTextInfo(text.TextInfo):
 
 	def expand(self,unit):
 		if unit==text.UNIT_LINE and self.basePosition not in [text.POSITION_SELECTION,text.POSITION_CARET]:
-			unit="sentence" 
-		if unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_PARAGRAPH,"sentence"]:
+			unit=text.UNIT_SENTENCE
+		if unit==text.UNIT_READINGCHUNK:
+			unit=text.UNIT_SENTENCE
+		if unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_SENTENCE,text.UNIT_PARAGRAPH]:
 			self._rangeObj.expand(unit)
 		elif unit==text.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
@@ -114,8 +116,10 @@ class MSHTMLTextInfo(text.TextInfo):
 		return self._rangeObj.text
 
 	def moveByUnit(self,unit,num,start=True,end=True):
-		if unit==text.UNIT_LINE:
-			unit="sentence"
+		if unit in [text.UNIT_READINGCHUNK,text.UNIT_LINE]:
+			unit=text.UNIT_SENTENCE
+		if unit==text.UNIT_STORY:
+			unit="textedit"
 		if start and not end:
 			moveFunc=self._rangeObj.moveStart
 		elif end and not start:
@@ -123,22 +127,16 @@ class MSHTMLTextInfo(text.TextInfo):
 		else:
 			moveFunc=self._rangeObj.move
 		res=moveFunc(unit,num)
-		if start and end:
-			pass #self._rangeObj.collapse()
 		return res
 
 	def updateCaret(self):
-		sel=self.obj.domElement.document.selection.createRange()
-		sel.setEndPoint("startToStart",self._rangeObj)
-		sel.collapse()
+		self._rangeObj.select()
 
 	def updateSelection(self):
-		sel=self.obj.domElement.document.selection.createRange()
-		sel.setEndPoint("startToStart",self._rangeObj)
-		sel.setEndPoint("endToEnd",self._rangeObj)
+		self._rangeObj.select()
 
 	def _get_bookmark(self):
-		return self._rangeObj.getBookmark()
+		return text.Bookmark(self._rangeObj.getBookmark())
 
 class MSHTML(IAccessible):
 

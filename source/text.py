@@ -56,6 +56,7 @@ SELECTIONMODE_UNSELECTED="unselected"
 UNIT_CHARACTER="character"
 UNIT_WORD="word"
 UNIT_LINE="line"
+UNIT_SENTENCE="sentence"
 UNIT_PARAGRAPH="paragraph"
 UNIT_PAGE="page"
 UNIT_TABLE="table"
@@ -64,6 +65,7 @@ UNIT_COLUMN="column"
 UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
+UNIT_READINGCHUNK="readingChunck"
 
 class TextSelectionChangedInfo(baseObject.autoPropertyObject):
 

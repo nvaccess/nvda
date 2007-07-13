@@ -37,8 +37,8 @@ class NVDAObjectTextInfo(text.TextInfo):
 	def _getCaretOffset(self):
 		return self.obj.basicCaretOffset
 
-	def _setCaretOffset(self):
-		self.obj.basicCaretOffset=self._startOffset
+	def _setCaretOffset(self,offset):
+		self.obj.basicCaretOffset=offset
 
 	def _getSelectionOffsets(self):
 		return self.obj.basicSelectionOffsets
@@ -85,7 +85,13 @@ class NVDAObjectTextInfo(text.TextInfo):
 		end=text.findEndOfLine(storyText,offset,lineLength=lineLength)
 		return [start,end]
 
+	def _getSentenceOffsets(self,offset):
+		return self._getLineOffsets(offset)
+
 	_getParagraphOffsets=_getLineOffsets
+
+	def _getReadingChunkOffsets(self,offset):
+		return self._getSentenceOffsets(offset)
 
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
@@ -121,13 +127,17 @@ class NVDAObjectTextInfo(text.TextInfo):
 				(self._startOffset,self._endOffset)=self._getWordOffsets(self._startOffset)
 		elif unit==text.UNIT_LINE:
 			(self._startOffset,self._endOffset)=self._getLineOffsets(self._startOffset)
+		elif unit==text.UNIT_SENTENCE:
+			(self._startOffset,self._endOffset)=self._getSentenceOffsets(self._startOffset)
 		elif unit==text.UNIT_PARAGRAPH:
 			(self._startOffset,self._endOffset)=self._getParagraphOffsets(self._startOffset)
 		elif unit==text.UNIT_STORY:
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
+		elif unit==text.UNIT_READINGCHUNK:
+			(self._startOffset,self._endOffset)=self._getReadingChunkOffsets(self._startOffset)
 		elif unit is not None:
-			raise NotImplementedError("unit: %s not supported"%expandToUnit)
+			raise NotImplementedError("unit: %s not supported"%unit)
 
 	def copy(self):
 		o=self.__class__(self.obj,text.OffsetsPosition(self._startOffset,self._endOffset))
@@ -174,7 +184,7 @@ class NVDAObjectTextInfo(text.TextInfo):
 				self.expand(unit)
 				self.collapse(end=True)
 				count+=1
-				if self._endOffset>=highLimit:
+				if self._endOffset>highLimit:
 					count-=1
 					self._startOffset=lastStart
 					self._endOffset=lastEnd
@@ -452,7 +462,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_basicCaretOffset(self):
 		return 0
 
-	def _set_basicCaretOffset(self):
+	def _set_basicCaretOffset(self,offset):
 		pass
 
 	def _get_basicSelectionOffsets(self):

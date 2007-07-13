@@ -99,6 +99,9 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 	def _getLineOffsets(self,offset):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
 
+	def _getSentenceOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_SENTENCE)[0:2]
+
 	def _getParagraphOffsets(self,offset):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
 
