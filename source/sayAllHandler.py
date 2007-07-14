@@ -47,10 +47,11 @@ def readHelper_generator(info,cursor):
 			oldSpokenIndex=spokenIndex
 			bookmark=indexMap.get(spokenIndex,None)
 			if bookmark is not None:
+				updater=reader.obj.makeTextInfo(bookmark)
 				if cursor==CURSOR_CARET:
-					reader.obj.makeTextInfo(bookmark).updateCaret()
-				elif cursor==CURSOR_REVIEW:
-					reader.obj.reviewPosition=reader.obj.makeTextInfo(bookmark)
+					updater.updateCaret()
+				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
+					updater.obj.reviewPosition=updater
 		if endIndex is not None and spokenIndex==endIndex:
 			keepUpdating=keepReading=False
 		if globalVars.keyCounter!=startKeyCount:
