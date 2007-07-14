@@ -26,6 +26,7 @@ passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed
 NVDAModifierKey=None
 usedNVDAModifierKey=False
 lastNVDAModifierKey=None
+lastNVDAModifierKeyTime=None
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -56,7 +57,7 @@ def internal_keyDownEvent(keyInfo):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, passKeyThroughCount
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount
 		#Injected keys should be ignored
 		if keyInfo.injected:
 			return True
@@ -69,8 +70,9 @@ def internal_keyDownEvent(keyInfo):
 		globalVars.keyCounter+=1
 		if lastNVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==lastNVDAModifierKey:
 			lastNVDAModifierKey=None
-			speakToggleKey(keyInfo.vkCode)
-			return True
+			if (time.time()-lastNVDAModifierKeyTime)<0.5:
+				speakToggleKey(keyInfo.vkCode)
+				return True
 		lastNVDAModifierKey=None
 		if isNVDAModifierKey(keyInfo.vkCode,keyInfo.extended):
 			NVDAModifierKey=(keyInfo.vkCode,keyInfo.extended)
@@ -137,7 +139,7 @@ def internal_keyDownEvent(keyInfo):
 def internal_keyUpEvent(keyInfo):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, passKeyThroughCount
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount
 		if keyInfo.injected:
 			return True
 		elif passKeyThroughCount>=1:
@@ -148,6 +150,7 @@ def internal_keyUpEvent(keyInfo):
 		elif NVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==NVDAModifierKey:
 			if not usedNVDAModifierKey:
 				lastNVDAModifierKey=NVDAModifierKey
+				lastNVDAModifierKeyTime=time.time()
 			NVDAModifierKey=None
 			usedNVDAModifierKey=False
 			return False

@@ -174,5 +174,3 @@ def moveMouseToNVDAObject(obj):
 def processPendingEvents():
 	wx.Yield()
 	queueHandler.flushQueue(queueHandler.eventQueue)
-	wx.Yield()
-	queueHandler.flushQueue(queueHandler.eventQueue)
