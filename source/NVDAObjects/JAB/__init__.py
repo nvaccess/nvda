@@ -215,7 +215,7 @@ class JAB(Window):
 			value=info.text
 			if self.name==value:
 				value=None
-		if value is None and self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON] and self._JABAccContextInfo.accessibleValue:
+		if value is None and self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue:
 			value=self.JABObject.getCurrentAccessibleValueFromContext()
 		return value
 
