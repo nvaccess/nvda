@@ -162,7 +162,7 @@ def stop():
 			item = bgQueue.get_nowait()
 			if item[0] == espeakDLL.espeak_SetParameter:
 				params.append(item)
-	except queue.Empty:
+	except Queue.Empty:
 		# In some rare cases, the queue can be empty even after queue.empty() returns False.
 		pass
 	for item in params:
