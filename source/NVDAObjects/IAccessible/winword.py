@@ -55,155 +55,104 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
-class WordDocumentTextRangePosition(text.Position):
-
-	def __init__(self,textRange):
-		self.textRange=textRange
-
-	def compareStart(self,p):
-		return self.textRange.Start-p.textRange.Start
-
-	def compareEnd(self,p):
-		return self.textRange.End-p.textRange.End
-
 NVDAUnitsToWordUnits={
 	text.UNIT_CHARACTER:wdCharacter,
 	text.UNIT_WORD:wdWord,
 	text.UNIT_LINE:wdLine,
+	text.UNIT_SENTENCE:wdSentence,
 	text.UNIT_PARAGRAPH:wdParagraph,
 	text.UNIT_TABLE:wdTable,
 	text.UNIT_ROW:wdRow,
 	text.UNIT_COLUMN:wdColumn,
-	text.UNIT_SCREEN:wdStory,
 	text.UNIT_STORY:wdStory,
+	text.UNIT_READINGCHUNK:wdSentence,
 }
 
 class WordDocumentTextInfo(text.TextInfo):
 
-
-	def _expandToLine(self,textRange):
-		sel=self.obj.dom.selection
+	def _expandToLine(self,rangeObj):
+		sel=self.obj.dom.Selection
 		oldSel=sel.range
-		sel.SetRange(textRange.Start,textRange.End)
+		sel.Start=rangeObj.Start
+		sel.End=rangeObj.End
 		sel.Expand(wdLine)
-		textRange.SetRange(sel.Start,sel.End)
+		rangeObj.SetRange(sel.Start,sel.End)
 		sel.SetRange(oldSel.Start,oldSel.End)
 
-	def _moveByLine(self,textRange,movement):
-		sel=self.obj.dom.selection
-		oldSel=sel.range
-		sel.SetRange(textRange.Start,textRange.End)
-		sel.Collapse()
-		res=sel.Move(wdLine,movement)
-		textRange.SetRange(sel.Start,sel.End)
-		sel.SetRange(oldSel.Start,oldSel.End)
-		return res
-
-	def __init__(self,obj,position,expandToUnit=None,limitToUnit=None,_limitRange=None):
-		super(WordDocumentTextInfo,self).__init__(obj,position,expandToUnit,limitToUnit)
-		if isinstance(position,WordDocumentTextRangePosition):
-			self._range=position.textRange.duplicate
-		elif isinstance(position,text.OffsetsPosition):
-			self._range=self.obj.dom.selection.range
-			self._range.SetRange(position.start,position.end)
+	def __init__(self,obj,position,_rangeObj=None):
+		super(WordDocumentTextInfo,self).__init__(obj,position)
+		if _rangeObj:
+			self._rangeObj=_rangeObj.Duplicate
+			return
+		self._rangeObj=self.obj.dom.Selection.range
+		if position==text.POSITION_SELECTION:
+			pass
 		elif position==text.POSITION_CARET:
-			self._range=self.obj.dom.selection.range
-			self._range.end=self._range.start
-		elif position==text.POSITION_SELECTION:
-			self._range=self.obj.dom.selection.range
+			self._rangeObj.Collapse()
+		elif position==text.POSITION_FIRST:
+			self._rangeObj.SetRange(0,0)
+		elif position==text.POSITION_LAST:
+			self._rangeObj.moveEnd(wdStory,1)
+			self._rangeObj.move(wdCharacter,-1)
+		elif isinstance(position,text.Bookmark):\
+			self._rangeObj.SetRange(position.data[0],position.data[1])
 		else:
-			raise NotImplementedError("Position: %s"%position)
-		if expandToUnit and NVDAUnitsToWordUnits.has_key(expandToUnit):
-			wordUnit=NVDAUnitsToWordUnits[expandToUnit]
-			self._range.Collapse()
-			if expandToUnit==text.UNIT_LINE:
-				self._expandToLine(self._range)
-			else:
-				self._range.Expand(wordUnit)
-		elif expandToUnit is not None:
-			raise NotImplementedError("Unit: %s"%expandToUnit)
-		if _limitRange is not None:
-			self._limitRange=_limitRange
+			raise NotImplementedError("position: %s"%position)
+
+	def expand(self,unit):
+		if unit==text.UNIT_LINE and self.basePosition not in (text.POSITION_CARET,text.POSITION_SELECTION):
+			unit=text.UNIT_SENTENCE
+		if unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_SENTENCE,text.UNIT_PARAGRAPH,text.UNIT_STORY,text.UNIT_READINGCHUNK]:
+			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
+		elif unit==text.UNIT_LINE:
+			self._expandToLine(self._rangeObj)
 		else:
-			if limitToUnit is None:
-				limitToUnit=text.UNIT_STORY
-			if NVDAUnitsToWordUnits.has_key(limitToUnit):
-				wordUnit=NVDAUnitsToWordUnits[limitToUnit]
-				self._limitRange=self._range.duplicate
-				if limitToUnit==text.UNIT_LINE:
-					self._expandToLine(self._limitRange)
-				else:
-					self._limitRange.Expand(wordUnit)
-			else:
-				raise NotImplementedError("Unit: %s"%limitToUnit)
+			raise NotImplementedError("unit: %s"%unit)
+
+	def compareStart(self,info):
+		return self._rangeObj.Start-info._rangeObj.Start
+
+	def compareEnd(self,info):
+		return self._rangeObj.End-info._rangeObj.End
+
+	def collapse(self,end=False):
+		a=self._rangeObj.Start
+		b=self._rangeObj.end
+		startOffset=min(a,b)
+		endOffset=max(a,b)
+		if not end:
+			offset=startOffset
+		else:
+			offset=endOffset
+		self._rangeObj.SetRange(offset,offset)
+
+	def copy(self):
+		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		return self._range.text
+		return self._rangeObj.text
 
-	def calculateSelectionChangedInfo(self,info):
-		selInfo=text.TextSelectionChangedInfo()
-		selectingText=None
-		mode=None
-		oldStart=self._range.Start
-		oldEnd=self._range.End
-		newStart=info._range.Start
-		newEnd=info._range.End
-		if newEnd>oldEnd:
-			mode=text.SELECTIONMODE_SELECTED
-			fromOffset=oldEnd
-			toOffset=newEnd
-		elif newStart<oldStart:
-			mode=text.SELECTIONMODE_SELECTED
-			fromOffset=newStart
-			toOffset=oldStart
-		elif oldEnd>newEnd:
-			mode=text.SELECTIONMODE_UNSELECTED
-			fromOffset=newEnd
-			toOffset=oldEnd
-		elif oldStart<newStart:
-			mode=text.SELECTIONMODE_UNSELECTED
-			fromOffset=oldStart
-			toOffset=newStart
-		if mode is not None:
-			r=self._range.duplicate
-			r.SetRange(fromOffset,toOffset)
-			selectingText=r.text
-		selInfo.text=selectingText
-		selInfo.mode=mode
-		return selInfo
-
-	def _get_position(self):
-		return WordDocumentTextRangePosition(self._range.duplicate)
-
-	def getRelatedUnit(self,relation):
-		if self.unit is None:
-			raise RuntimeError("No unit")
-		newRange=self._range.duplicate
-		newRange.Collapse()
-		res=0
-		if relation==text.UNITRELATION_NEXT:
-			if self.unit==text.UNIT_LINE:
-				res=self._moveByLine(newRange,1)
-			else:
-				res=newRange.Move(NVDAUnitsToWordUnits[self.unit],1)
-		elif relation==text.UNITRELATION_PREVIOUS:
-			if self.unit==text.UNIT_LINE:
-				res=self._moveByLine(newRange,-1)
-			else:
-				res=newRange.Move(NVDAUnitsToWordUnits[self.unit],-1)
-		elif relation==text.UNITRELATION_FIRST:
-			newRange.SetRange(self._limitRange.start,self._limitRange.start)
-			res=1
-		elif relation==text.UNITRELATION_LAST:
-			newRange.SetRange(self._limitRange.end-1,self._limitRange.end-1)
-			res=1
-		if res and newRange.InRange(self._limitRange):
-			return self.__class__(self.obj,WordDocumentTextRangePosition(newRange.duplicate),expandToUnit=self.unit,limitToUnit=self.limitUnit,_limitRange=self._limitRange)
+	def moveByUnit(self,unit,num,start=True,end=True):
+		if unit==text.UNIT_LINE:
+			unit=text.UNIT_SENTENCE
+		if unit in NVDAUnitsToWordUnits:
+			unit=NVDAUnitsToWordUnits[unit]
 		else:
-			raise text.E_noRelatedUnit
+			raise NotImplementedError("unit: %s"%unit)
+		if start and not end:
+			moveFunc=self._rangeObj.MoveStart
+		elif end and not start:
+			moveFunc=self._rangeObj.MoveEnd
+		else:
+			moveFunc=self._rangeObj.Move
+		res=moveFunc(unit,num)
+		return res
 
+	def _get_bookmark(self):
+		return text.Bookmark((self._rangeObj.Start,self._rangeObj.End))
 
-
+	def updateCaret(self):
+		self.obj.dom.Selection.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
 class WordDocument(IAccessible):
 
