@@ -20,6 +20,9 @@ import speech
 import controlTypes
 from . import IAccessible
 
+lastMSHTMLEditGainFocusTimeStamp=0
+
+
 IServiceProvider=comtypesClient.GetModule('lib/Servprov.tlb').IServiceProvider
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
@@ -168,14 +171,19 @@ class MSHTML(IAccessible):
 			return False
 
 	def event_gainFocus(self):
-		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE and self.IAccessibleObjectID==-4:
-			return
-		if self.isContentEditable: 
+		if self.isContentEditable:
 			self.TextInfo=MSHTMLTextInfo
 			self.role=controlTypes.ROLE_EDITABLETEXT
 		if not api.isVirtualBufferPassThrough():
 			api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
+
+	def reportFocus(self):
+		global lastMSHTMLEditGainFocusTimeStamp
+		timeStamp=time.time()
+		if self.isContentEditable and (timeStamp-lastMSHTMLEditGainFocusTimeStamp)>0.5:
+			super(MSHTML,self).reportFocus()
+		lastMSHTMLEditGainFocusTimeStamp=timeStamp
 
 	def event_looseFocus(self):
 		if hasattr(self,'domElement'):
