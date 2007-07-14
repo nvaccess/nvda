@@ -192,9 +192,9 @@ class WinConsole(IAccessible):
 			return ""
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		topLine=info.windowRect.top
-		bottomLine=info.windowRect.bottom
+		lineCount=(info.windowRect.bottom-topLine)+1
 		lineLength=info.consoleSize.x
-		return winKernel.readConsoleOutputCharacter(self.consoleHandle,((bottomLine-topLine)+1)*lineLength,0,topLine)
+		return winKernel.readConsoleOutputCharacter(self.consoleHandle,lineCount*lineLength,0,topLine)
 
 	def event_nameChange(self):
 		pass

@@ -178,17 +178,15 @@ class NVDAObjectTextInfo(text.TextInfo):
 				self.collapse()
 				count-=1
  		elif num>0:
-			while self._endOffset<highLimit and count<num:
+			while self._startOffset<highLimit and count<num:
 				lastStart=self._startOffset
 				lastEnd=self._endOffset
 				self.expand(unit)
 				self.collapse(end=True)
 				count+=1
-				if self._endOffset>highLimit:
+				if start and self._startOffset>=highLimit:
 					count-=1
-					self._startOffset=lastStart
-					self._endOffset=lastEnd
-					self.collapse()
+					self._startOffset=self._endOffset=lastStart
 					break
 		if start==False:
 			self._startOffset=oldStart
