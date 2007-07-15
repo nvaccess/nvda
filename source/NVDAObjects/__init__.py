@@ -6,6 +6,7 @@
 
 """Module that contains the base NVDA object type"""
 from new import instancemethod
+import time
 import baseObject
 import debug
 import speech
@@ -671,7 +672,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			newInfo=focus.makeTextInfo(text.POSITION_CARET)
-			if newInfo.compareStart(oldInfo)!=0:
+			if res<0 and newInfo.compareStart(testInfo)==0:
 				speech.speakSymbol(delChar)
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=newInfo

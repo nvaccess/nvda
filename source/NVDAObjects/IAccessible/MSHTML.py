@@ -32,7 +32,7 @@ IID_IHTMLInputTextElement=comtypes.GUID('{3050F2A6-98B5-11CF-BB82-00AA00BDCE0B}'
 
 class MSHTMLTextInfo(text.TextInfo):
 
-	def _getSelectionOffsets(self):
+	def _getRangeOffsets(self):
 		mark=self._rangeObj.getBookmark()
 		start=(ord(mark[2])-self._offsetBias)-((ord(mark[8])-self._lineNumBias)/2)
 		if ord(mark[1])==3:
@@ -103,16 +103,16 @@ class MSHTMLTextInfo(text.TextInfo):
 		self._rangeObj.collapse(not end)
 
 	def copy(self):
-		return self.__class__(self.obj,None,_rangeObj=self._rangeObj,_lineNumBias=self._lineNumBias,_offsetBias=self._offsetBias)
+		return self.__class__(self.obj,None,_rangeObj=self._rangeObj.duplicate(),_lineNumBias=self._lineNumBias,_offsetBias=self._offsetBias)
 
 	def compareStart(self,info):
-		newOffsets=self._getSelectionOffsets()
-		oldOffsets=info._getSelectionOffsets()
+		newOffsets=self._getRangeOffsets()
+		oldOffsets=info._getRangeOffsets()
 		return newOffsets[0]-oldOffsets[0]
 
 	def compareEnd(self,info):
-		newOffsets=self._getSelectionOffsets()
-		oldOffsets=info._getSelectionOffsets()
+		newOffsets=self._getRangeOffsets()
+		oldOffsets=info._getRangeOffsets()
 		return newOffsets[1]-oldOffsets[1]
 
 	def _get_text(self):
