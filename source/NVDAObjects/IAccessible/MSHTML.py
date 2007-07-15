@@ -34,9 +34,10 @@ class MSHTMLTextInfo(text.TextInfo):
 
 	def _getRangeOffsets(self):
 		mark=self._rangeObj.getBookmark()
-		start=(ord(mark[2])-self._offsetBias)-((ord(mark[8])-self._lineNumBias)/2)
+		lineNum=(ord(mark[8])-self.obj._textRangeLineNumBias)/2
+		start=(ord(mark[2])-self.obj._textRangeOffsetBias)-lineNum
 		if ord(mark[1])==3:
-			end=(ord(mark[40])-self._offsetBias)-((ord(mark[8])-self._lineNumBias)/2)
+			end=(ord(mark[40])-self.obj._textRangeOffsetBias)-lineNum
 		else:
 			end=start
 		return [start,end]
@@ -54,22 +55,14 @@ class MSHTMLTextInfo(text.TextInfo):
 		textRange.setEndPoint("startToStart",self.obj.domElement.document.selection.createRange())
 		self.obj.domElement.document.selection.createRange().moveToBookmark(oldSelMark)
 
-	def __init__(self,obj,position,_rangeObj=None,_lineNumBias=None,_offsetBias=None):
+	def __init__(self,obj,position,_rangeObj=None):
 		super(MSHTMLTextInfo,self).__init__(obj,position)
 		if self.obj.domElement.uniqueID!=self.obj.domElement.document.activeElement.uniqueID:
 			raise RuntimeError("Only works with currently selected element")
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
-			self._lineNumBias=_lineNumBias
-			self._offsetBias=_offsetBias
 			return
 		self._rangeObj=self.obj.domElement.document.selection.createRange().duplicate()
-		biasRange=self._rangeObj.duplicate()
-		biasRange.move("textedit",-1)
-		biasRange.collapse()
-		biasMark=biasRange.getBookmark()
-		self._lineNumBias=ord(biasMark[8])
-		self._offsetBias=ord(biasMark[2])
 		if position==text.POSITION_SELECTION:
 			pass
 		elif position==text.POSITION_CARET:
@@ -103,7 +96,7 @@ class MSHTMLTextInfo(text.TextInfo):
 		self._rangeObj.collapse(not end)
 
 	def copy(self):
-		return self.__class__(self.obj,None,_rangeObj=self._rangeObj.duplicate(),_lineNumBias=self._lineNumBias,_offsetBias=self._offsetBias)
+		return self.__class__(self.obj,None,_rangeObj=self._rangeObj.duplicate())
 
 	def compareStart(self,info):
 		newOffsets=self._getRangeOffsets()
@@ -173,6 +166,11 @@ class MSHTML(IAccessible):
 	def event_gainFocus(self):
 		if self.isContentEditable:
 			self.TextInfo=MSHTMLTextInfo
+			biasRange=self.domElement.document.selection.createRange().duplicate()
+			biasRange.move("textedit",-1)
+			biasMark=biasRange.getBookmark()
+			self._textRangeLineNumBias=ord(biasMark[8])
+			self._textRangeOffsetBias=ord(biasMark[2])
 			self.role=controlTypes.ROLE_EDITABLETEXT
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
