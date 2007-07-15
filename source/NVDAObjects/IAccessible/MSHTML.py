@@ -174,8 +174,11 @@ class MSHTML(IAccessible):
 		if self.isContentEditable:
 			self.TextInfo=MSHTMLTextInfo
 			self.role=controlTypes.ROLE_EDITABLETEXT
-		if not api.isVirtualBufferPassThrough():
-			api.toggleVirtualBufferPassThrough()
+			if not api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
+		else:
+			if api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
 		IAccessible.event_gainFocus(self)
 
 	def reportFocus(self):
