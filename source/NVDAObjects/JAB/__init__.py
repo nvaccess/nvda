@@ -1,4 +1,5 @@
 import ctypes
+import re
 import debug
 import appModuleHandler
 import speech
@@ -8,7 +9,6 @@ import JABHandler
 import controlTypes
 from ..window import Window
 import text
-import controlTypes
 from .. import NVDAObjectTextInfo
 
 JABRolesToNVDARoles={
@@ -81,6 +81,8 @@ JABStatesToNVDAStates={
 	"expanded":controlTypes.STATE_EXPANDED,
 	"collapsed":controlTypes.STATE_COLLAPSED,
 }
+
+re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
 class JABTextInfo(NVDAObjectTextInfo):
 
@@ -220,7 +222,7 @@ class JAB(Window):
 		return value
 
 	def _get_description(self):
-		return self._JABAccContextInfo.description
+		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
 
 	def _get_hasFocus(self):
 		if controlTypes.STATE_FOCUSED in self.states:
