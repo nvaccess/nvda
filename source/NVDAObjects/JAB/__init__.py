@@ -195,7 +195,14 @@ class JAB(Window):
 		return self._JABAccContextInfo.role_en_US
 
 	def _get_role(self):
-		return JABRolesToNVDARoles.get(self.JABRole,controlTypes.ROLE_UNKNOWN)
+		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.ROLE_UNKNOWN)
+		if role in ( controlTypes.ROLE_LABEL, controlTypes.ROLE_PANEL) and self.parent:
+			parentRole = self.parent.role
+			if parentRole == controlTypes.ROLE_LIST:
+				return controlTypes.ROLE_LISTITEM
+			elif parentRole in (controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
+				return controlTypes.ROLE_TREEVIEWITEM
+		return role
 
 	def _get_JABStates(self):
 		return self._JABAccContextInfo.states_en_US
