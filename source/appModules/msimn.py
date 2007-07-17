@@ -6,6 +6,7 @@
 
 import winUser
 import controlTypes
+import text
 import api
 import eventHandler
 import IAccessibleHandler
@@ -44,6 +45,8 @@ class appModule(appModuleHandler.appModule):
 		#Then set the object's name to the label 
 		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
+			obj.editAPIHasITextDocument=True
+			obj.editValueUnit=text.UNIT_STORY
 
 	def event_gainFocus(self,obj,nextHandler):
 		global lastFocusRole, lastFocusWindowHandle

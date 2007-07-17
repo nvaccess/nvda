@@ -5,17 +5,24 @@
 #See the file COPYING for more details.
 
 import locale
+import comtypesClient
 import struct
 import ctypes
+import pythoncom
+import win32clipboard
+import oleTypes
 import speech
 import debug
 import winKernel
+from IAccessibleHandler import pointer_IAccessible
 import winUser
 import text
 from keyUtils import key
 import IAccessibleHandler
 from . import IAccessible
 from .. import NVDAObjectTextInfo
+
+IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
 
 #Edit control window messages
 EM_GETSEL=176
@@ -94,6 +101,28 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
+	def _getTextRangeWithEmbeddedObjects(self,start,end):
+		ptr=ctypes.POINTER(comtypesClient.GetModule('msftedit.dll').ITextDocument)()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
+		r=ptr.Range(self._startOffset,self._endOffset)
+		bufText=r.text
+		newTextList=[]
+		for offset in range(len(bufText)):
+			if ord(bufText[offset])==0xfffc:
+				embedRange=ptr.Range(start+offset,start+offset)
+				o=embedRange.GetEmbeddedObject()
+				o=o.QueryInterface(oleTypes.IOleObject)
+				dataObj=o.GetClipboardData(0)
+				dataObj=pythoncom._univgw.interface(ctypes.cast(dataObj,ctypes.c_void_p).value,pythoncom.IID_IDataObject)
+				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+				medium=dataObj.GetData(format)
+				buf=ctypes.create_string_buffer(medium.data)
+				buf=ctypes.cast(buf,ctypes.c_wchar_p)
+				newTextList.append(buf.value)
+			else:
+				newTextList.append(bufText[offset])
+		return "".join(newTextList)
+
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
@@ -156,6 +185,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
+			if self.obj.editAPIHasITextDocument:
+				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=(end-start)+1
 			if self.obj.editAPIUnicode:
 				bufLen*=2
@@ -221,6 +252,9 @@ class Edit(IAccessible):
 	TextInfo=EditTextInfo
 	editAPIVersion=0
 	editAPIUnicode=True
+	editAPIHasITextDocument=False
+	editValueUnit=text.UNIT_LINE
+
 
 
 	def __init__(self,*args,**kwargs):
@@ -229,13 +263,30 @@ class Edit(IAccessible):
 
 	def _get_value(self):
 		info=self.makeTextInfo(text.POSITION_CARET)
-		info.expand(text.UNIT_LINE)
+		info.expand(self.editValueUnit)
 		return info.text
 
 	def event_valueChange(self):
 		pass
 
+	def script_test(self,keyPress,nextScript):
+		info=self.makeTextInfo(text.POSITION_CARET)
+		ptr=ctypes.POINTER(comtypesClient.GetModule('msftedit.dll').ITextDocument)()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
+		r=ptr.Range(info._startOffset,info._endOffset)
+		o=r.GetEmbeddedObject()
+		oleTypes=comtypesClient.GetModule('lib/oleTypes.tlb')
+		o=o.QueryInterface(oleTypes.IOleObject)
+		dataObj=o.GetClipboardData(0)
+		dataObj=pythoncom._univgw.interface(ctypes.cast(dataObj,ctypes.c_void_p).value,pythoncom.IID_IDataObject)
+		format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+		medium=dataObj.GetData(format)
+		buf=ctypes.create_string_buffer(medium.data)
+		buf=ctypes.cast(buf,ctypes.c_wchar_p)
+		speech.speakMessage(buf.value)
+
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("NVDA+c","test"),
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
 	("ExtendedLeft","moveByCharacter"),

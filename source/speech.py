@@ -263,6 +263,8 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 @param index: the index to mark this current text with 
 @type index: int
 """
+	if len(symbol)>1:
+		return speakText(symbol,wait=wait,index=index)
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
