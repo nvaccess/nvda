@@ -224,14 +224,14 @@ class EditTextInfo(NVDAObjectTextInfo):
 		else:
 			return super(EditTextInfo,self)._getWordOffsets(offset)
 
-	def _lineNumFromOffset(self,offset):
+	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
 			return winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
 		else:
 			return winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
 
 	def _getLineOffsets(self,offset):
-		lineNum=self._lineNumFromOffset(offset)
+		lineNum=self._getLineNumFromOffset(offset)
 		start=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,lineNum,0)
 		length=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,offset,0)
 		end=start+length
@@ -240,7 +240,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			return super(EditTextInfo,self)._getLineOffsets(offset)
 		#edit controls lye about their line length
 		limit=end+4
-		while self._lineNumFromOffset(end)==lineNum and end<limit:
+		while self._getLineNumFromOffset(end)==lineNum and end<limit:
 			end+=1
 		return (start,end)
 
