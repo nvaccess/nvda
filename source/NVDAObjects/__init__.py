@@ -703,7 +703,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info)
+			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
