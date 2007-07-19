@@ -8,7 +8,7 @@ import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
-import text
+import textHandler
 from .. import NVDAObjectTextInfo
 
 JABRolesToNVDARoles={
@@ -174,7 +174,7 @@ class JAB(Window):
 					("Back","backspace"),
 			  	]]
 		Window.__init__(self,self.JABObject.hwnd)
-		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
+		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def __eq__(self,other):
 		if (id(self)==id(other)) or (self.__class__==other.__class__ and self.JABObject==other.JABObject):
@@ -219,8 +219,8 @@ class JAB(Window):
 	def _get_value(self):
 		value=None
 		if self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM] and self._JABAccContextInfo.accessibleText:
-			info=self.makeTextInfo(text.POSITION_CARET)
-			info.expand(text.UNIT_LINE)
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info.expand(textHandler.UNIT_LINE)
 			value=info.text
 			if self.name==value:
 				value=None

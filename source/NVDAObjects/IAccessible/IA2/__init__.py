@@ -4,7 +4,7 @@ import debug
 import api
 import speech
 import IA2Handler
-import text
+import textHandler
 import controlTypes
 import IAccessibleHandler
 from keyUtils import sendKey, isKeyWaiting

@@ -11,7 +11,7 @@ from keyUtils import key
 import keyboardHandler
 import IAccessibleHandler
 import api
-import text
+import textHandler
 import debug
 import speech
 import sayAllHandler
@@ -46,8 +46,8 @@ class appModule(appModuleHandler.appModule):
 
 	def script_reportCurrentLine(self,keyPress,nextScript):
 		obj=api.getFocusObject()
-		info=obj.makeTextInfo(text.POSITION_CARET)
-		info.expand(text.UNIT_LINE)
+		info=obj.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(textHandler.UNIT_LINE)
 		speech.speakText(info.text)
 
 
@@ -330,7 +330,7 @@ class appModule(appModuleHandler.appModule):
 	def script_review_sayAll(self,keyPress,nextScript):
 		o=api.getNavigatorObject()
 		info=o.reviewPosition.copy()
-		info.moveByUnit(text.UNIT_STORY,1,start=False)
+		info.moveByUnit(textHandler.UNIT_STORY,1,start=False)
 		sayAllHandler.read(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from review cursor  up to end of current text, moving the review cursor as it goes")
 
@@ -340,8 +340,8 @@ class appModule(appModuleHandler.appModule):
 		if v and not api.isVirtualBufferPassThrough():
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
-			info=o.makeTextInfo(text.POSITION_CARET)
-			info.moveByUnit(text.UNIT_STORY,1,start=False)
+			info=o.makeTextInfo(textHandler.POSITION_CARET)
+			info.moveByUnit(textHandler.UNIT_STORY,1,start=False)
 			sayAllHandler.read(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
 

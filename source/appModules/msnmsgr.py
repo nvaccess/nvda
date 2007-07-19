@@ -9,7 +9,7 @@ import globalVars
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
-import text
+import textHandler
 import appModuleHandler
 import speech
 
@@ -55,7 +55,7 @@ class MSNHistory(IAccessible):
 
 	def event_gainFocus(self):
 		super(MSNHistory,self).event_gainFocus()
-		self.reviewPosition=self.makeTextInfo(text.POSITION_LAST)
+		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_LAST)
 
 
 	def reportFocus(self):

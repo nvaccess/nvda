@@ -6,7 +6,7 @@
 
 import queueHandler
 import speech
-import text
+import textHandler
 import characterSymbols
 import globalVars
 
@@ -31,7 +31,7 @@ def readHelper_generator(info,cursor):
 		if keepReading:
 			bookmark=reader.bookmark
 			index=hash(bookmark)
-			reader.expand(text.UNIT_READINGCHUNK)
+			reader.expand(textHandler.UNIT_READINGCHUNK)
 			delta=reader.compareEnd(info)
 			if delta>=0:
 				keepReading=False

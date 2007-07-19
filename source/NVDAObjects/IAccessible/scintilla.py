@@ -1,7 +1,7 @@
 import ctypes
 import debug
 import speech
-import text
+import textHandler
 import winKernel
 import winUser
 import controlTypes
@@ -128,8 +128,8 @@ class Scintilla(IAccessible):
 
 #The value of the object should be the current line of the text
 	def _get_value(self):
-		info=self.makeTextInfo(text.POSITION_CARET)
-		info.expand(text.UNIT_LINE)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(textHandler.UNIT_LINE)
 		return info.text
 
 #We want all the standard text editing key commands to be handled by NVDA

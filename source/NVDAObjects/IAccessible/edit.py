@@ -16,7 +16,7 @@ import debug
 import winKernel
 from IAccessibleHandler import pointer_IAccessible
 import winUser
-import text
+import textHandler
 from keyUtils import key
 import IAccessibleHandler
 from . import IAccessible
@@ -253,16 +253,16 @@ class Edit(IAccessible):
 	editAPIVersion=0
 	editAPIUnicode=True
 	editAPIHasITextDocument=False
-	editValueUnit=text.UNIT_LINE
+	editValueUnit=textHandler.UNIT_LINE
 
 
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
-		self.reviewPosition=self.makeTextInfo(text.POSITION_CARET)
+		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _get_value(self):
-		info=self.makeTextInfo(text.POSITION_CARET)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(self.editValueUnit)
 		return info.text
 

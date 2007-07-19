@@ -13,7 +13,7 @@ import speech
 import debug
 from keyUtils import sendKey, key
 import config
-import text
+import textHandler
 import controlTypes
 from . import IAccessible
 
@@ -56,19 +56,19 @@ wdGoToPage=1
 wdGoToLine=3
 
 NVDAUnitsToWordUnits={
-	text.UNIT_CHARACTER:wdCharacter,
-	text.UNIT_WORD:wdWord,
-	text.UNIT_LINE:wdLine,
-	text.UNIT_SENTENCE:wdSentence,
-	text.UNIT_PARAGRAPH:wdParagraph,
-	text.UNIT_TABLE:wdTable,
-	text.UNIT_ROW:wdRow,
-	text.UNIT_COLUMN:wdColumn,
-	text.UNIT_STORY:wdStory,
-	text.UNIT_READINGCHUNK:wdSentence,
+	textHandler.UNIT_CHARACTER:wdCharacter,
+	textHandler.UNIT_WORD:wdWord,
+	textHandler.UNIT_LINE:wdLine,
+	textHandler.UNIT_SENTENCE:wdSentence,
+	textHandler.UNIT_PARAGRAPH:wdParagraph,
+	textHandler.UNIT_TABLE:wdTable,
+	textHandler.UNIT_ROW:wdRow,
+	textHandler.UNIT_COLUMN:wdColumn,
+	textHandler.UNIT_STORY:wdStory,
+	textHandler.UNIT_READINGCHUNK:wdSentence,
 }
 
-class WordDocumentTextInfo(text.TextInfo):
+class WordDocumentTextInfo(textHandler.TextInfo):
 
 	def _expandToLine(self,rangeObj):
 		sel=self.obj.dom.Selection
@@ -85,26 +85,26 @@ class WordDocumentTextInfo(text.TextInfo):
 			self._rangeObj=_rangeObj.Duplicate
 			return
 		self._rangeObj=self.obj.dom.Selection.range
-		if position==text.POSITION_SELECTION:
+		if position==textHandler.POSITION_SELECTION:
 			pass
-		elif position==text.POSITION_CARET:
+		elif position==textHandler.POSITION_CARET:
 			self._rangeObj.Collapse()
-		elif position==text.POSITION_FIRST:
+		elif position==textHandler.POSITION_FIRST:
 			self._rangeObj.SetRange(0,0)
-		elif position==text.POSITION_LAST:
+		elif position==textHandler.POSITION_LAST:
 			self._rangeObj.moveEnd(wdStory,1)
 			self._rangeObj.move(wdCharacter,-1)
-		elif isinstance(position,text.Bookmark):\
+		elif isinstance(position,textHandler.Bookmark):\
 			self._rangeObj.SetRange(position.data[0],position.data[1])
 		else:
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
-		if unit==text.UNIT_LINE and self.basePosition not in (text.POSITION_CARET,text.POSITION_SELECTION):
-			unit=text.UNIT_SENTENCE
-		if unit in [text.UNIT_CHARACTER,text.UNIT_WORD,text.UNIT_SENTENCE,text.UNIT_PARAGRAPH,text.UNIT_STORY,text.UNIT_READINGCHUNK]:
+		if unit==textHandler.UNIT_LINE and self.basePosition not in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
+			unit=textHandler.UNIT_SENTENCE
+		if unit in [textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_SENTENCE,textHandler.UNIT_PARAGRAPH,textHandler.UNIT_STORY,textHandler.UNIT_READINGCHUNK]:
 			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
-		elif unit==text.UNIT_LINE:
+		elif unit==textHandler.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
 		else:
 			raise NotImplementedError("unit: %s"%unit)
@@ -133,8 +133,8 @@ class WordDocumentTextInfo(text.TextInfo):
 		return self._rangeObj.text
 
 	def moveByUnit(self,unit,num,start=True,end=True):
-		if unit==text.UNIT_LINE:
-			unit=text.UNIT_SENTENCE
+		if unit==textHandler.UNIT_LINE:
+			unit=textHandler.UNIT_SENTENCE
 		if unit in NVDAUnitsToWordUnits:
 			unit=NVDAUnitsToWordUnits[unit]
 		else:
@@ -149,7 +149,7 @@ class WordDocumentTextInfo(text.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return text.Bookmark((self._rangeObj.Start,self._rangeObj.End))
+		return textHandler.Bookmark((self._rangeObj.Start,self._rangeObj.End))
 
 	def updateCaret(self):
 		self.obj.dom.Selection.SetRange(self._rangeObj.Start,self._rangeObj.End)
