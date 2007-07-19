@@ -312,7 +312,7 @@ This function will not speak if L{speechMode} is false.
 	if text and not text.isspace():
 		getSynth().speakText(text,wait=wait,index=index)
 
-def speakFormattedText(textInfo,wait=False,index=None):
+def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -345,7 +345,7 @@ def speakFormattedText(textInfo,wait=False,index=None):
 				speakMessage(speechText)
 		elif isinstance(item,basestring):
 			checkFormats=False
-			if len(item)>1:
+			if len(item)>1 or not handleSymbols:
 				speakText(item,wait=wait,index=index)
 			else:
 				speech.speakSymbol(item)

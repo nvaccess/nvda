@@ -48,7 +48,7 @@ class appModule(appModuleHandler.appModule):
 		obj=api.getFocusObject()
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 
 	def script_dateTime(self,keyPress,nextScript):

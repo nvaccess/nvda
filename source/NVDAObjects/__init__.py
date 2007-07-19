@@ -568,7 +568,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakFormattedText(info)
+		speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		lineInfo=self.reviewPosition.copy()
@@ -585,12 +585,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		else:
 			self.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(charInfo.text)
+			speech.speakFormattedText(charInfo,handleSymbols=True)
 
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakFormattedText(info)
+		speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		lineInfo=self.reviewPosition.copy()
@@ -607,7 +607,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		else:
 			self.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(charInfo.text)
+			speech.speakFormattedText(charInfo,handleSymbols=True)
 
 	def script_review_endOfLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -617,7 +617,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakFormattedText(info)
+		speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -651,7 +651,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info)
+			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)

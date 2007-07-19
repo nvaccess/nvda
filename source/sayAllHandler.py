@@ -39,7 +39,7 @@ def readHelper_generator(info,cursor):
 			txt=reader.text
 			if not keepReading or ((txt is not None) and (len(txt)>0) and (isinstance(txt,basestring) and not (set(txt)<=set(characterSymbols.blankList)))):
 				indexMap[index]=bookmark
-				speech.speakText(txt,index=index)
+				speech.speakFormattedText(reader,index=index)
 			if keepReading:
 				reader.collapse(True)
 		spokenIndex=speech.getLastSpeechIndex()
