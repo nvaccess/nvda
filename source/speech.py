@@ -17,6 +17,7 @@ import config
 import tones
 from synthDriverHandler import *
 import re
+import textHandler
 import characterSymbols
 
 speechMode_off=0
@@ -310,6 +311,45 @@ This function will not speak if L{speechMode} is false.
 	text=processText(text)
 	if text and not text.isspace():
 		getSynth().speakText(text,wait=wait,index=index)
+
+def speakFormattedText(textInfo,wait=False,index=None):
+	global beenCanceled
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
+		return
+	beenCanceled=False
+	formattedText=textInfo.formattedText
+	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
+		textInfo.obj._lastInitialSpokenFormats=set()
+	initialSpokenFormats=set()
+	checkFormats=True
+	for item in formattedText:
+		if isinstance(item,textHandler.FormatCommand):
+			itemKey=(item.format.role,item.format.value,item.format.uniqueID)
+			if item.cmd==textHandler.FORMAT_CMD_SINGLETON:
+				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
+					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
+					speakMessage(speechText)
+				if checkFormats:
+					initialSpokenFormats.add(itemKey)
+			elif item.cmd==textHandler.FORMAT_CMD_ON:
+				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
+					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value,_("on")])
+					speakMessage(speechText)
+				if checkFormats:
+					initialSpokenFormats.add(itemKey)
+			elif item.cmd==textHandler.FORMAT_CMD_OFF:
+				speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),_("off")])
+				speakMessage(speechText)
+		elif isinstance(item,basestring):
+			checkFormats=False
+			if len(item)>1:
+				speakText(item,wait=wait,index=index)
+			else:
+				speech.speakSymbol(item)
+		textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
 def speakTypedCharacters(ch):
 	global typedWord

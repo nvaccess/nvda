@@ -91,6 +91,15 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	_getParagraphOffsets=_getLineOffsets
 
+	def _getFormatAndOffsets(self,offset):
+		formats=[]
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			lineNum=self._getLineNumFromOffset(offset)
+			if lineNum>=0:
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
+				formats.append(f)
+		return (formats,offset,offset+1)
+
 	def _getReadingChunkOffsets(self,offset):
 		return self._getSentenceOffsets(offset)
 
@@ -153,6 +162,14 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)
+
+	def _get_formattedText(self):
+		formats=self._getFormatAndOffsets(self._startOffset)
+		l=[]
+		for i in formats[0]:
+			l.append(i)
+		l.append(self.text)
+		return l
 
 	def unitIndex(self,unit):
 		if unit==textHandler.UNIT_LINE:  
@@ -481,7 +498,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakMessage(_("top"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_previousLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -492,12 +509,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_currentLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_nextLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -508,14 +525,14 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_bottom(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_LAST)
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_previousWord(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -526,12 +543,12 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_currentWord(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_nextWord(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -542,7 +559,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_startOfLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -551,7 +568,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakSymbol(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_previousCharacter(self,keyPress,nextScript):
 		lineInfo=self.reviewPosition.copy()
@@ -573,7 +590,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakSymbol(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		lineInfo=self.reviewPosition.copy()
@@ -600,19 +617,19 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakSymbol(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_moveToCaret(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		self.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_review_moveCaretHere(self,keyPress,nextScript):
 		self.reviewPosition.updateCaret()
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakText(info.text)
+		speech.speakFormattedText(info)
 
 	def script_moveByLine(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -623,7 +640,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
-			speech.speakText(info.text)
+			speech.speakFormattedText(info)
 
 	def script_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -634,7 +651,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(info.text)
+			speech.speakFormattedText(info)
 
 	def script_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -645,7 +662,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
-			speech.speakText(info.text)
+			speech.speakFormattedText(info)
 
 	def script_moveByParagraph(self,keyPress,nextScript):
 		sendKey(keyPress)
@@ -656,7 +673,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
-			speech.speakText(info.text)
+			speech.speakFormattedText(info)
 
 	def script_backspace(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -686,7 +703,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				focus.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(info.text)
+			speech.speakFormattedText(info)
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
