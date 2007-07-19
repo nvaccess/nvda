@@ -125,7 +125,8 @@ class TextInfo(baseObject.autoPropertyObject):
 @returns: The text (containing formatting markup) with in the set range
 @rtype: string
 """
-		raise NotImplementedError
+		return [self.text]
+
 
 	def _get_FGColor(self):
 		"""
