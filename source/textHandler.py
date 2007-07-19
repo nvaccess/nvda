@@ -16,7 +16,7 @@ FORMAT_CMD_ON=1
 FORMAT_CMD_OFF=2
 FORMAT_CMD_SINGLETON=3
 
-class formatCommand(object):
+class FormatCommand(object):
 
 	def __init__(self,cmd,format):
  		self.cmd=cmd
@@ -24,11 +24,12 @@ class formatCommand(object):
 
 class Format(object):
 
-	def __init__(self,role,value=None,states=None,contains=None):
+	def __init__(self,role,value="",states=frozenset(),contains="",uniqueID=""):
 		self.role=role
 		self.value=value
 		self.states=states
 		self.contains=contains
+		self.uniqueID=uniqueID
 
 #position types
 
