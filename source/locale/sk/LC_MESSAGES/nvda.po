@@ -1,12 +1,12 @@
 # Slovenská lokalizácia NVDA
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+# Copyright (C) 2006-2007 NVDA contributers <http://www.nvda-project.org>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r971\n"
+"Project-Id-Version: r1031\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2007-07-09 21:55+Central Europe Standard Time\n"
+"PO-Revision-Date: 2007-07-19 10:25+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "%s z %s"
 #: textBuffer.py:433
 #: virtualBuffers\__init__.py:272
 msgid "top"
-msgstr "vrchol"
+msgstr "vrch"
 
 #: NVDAObjects\__init__.py:471
 #: NVDAObjects\__init__.py:478
@@ -146,12 +146,12 @@ msgstr "spodok"
 #: NVDAObjects\__init__.py:514
 #: NVDAObjects\__init__.py:525
 msgid "left"
-msgstr "do ľava"
+msgstr "v ľavo"
 
 #: NVDAObjects\__init__.py:547
 #: NVDAObjects\__init__.py:563
 msgid "right"
-msgstr "do prava"
+msgstr "v pravo"
 
 #: NVDAObjects\__init__.py:680
 #: textBuffer.py:537
@@ -159,7 +159,7 @@ msgstr "do prava"
 #: textBuffer.py:543
 #: textBuffer.py:549
 msgid "selected %s"
-msgstr "vybraté %s"
+msgstr "vybrané %s"
 
 #: NVDAObjects\__init__.py:682
 #: textBuffer.py:545
@@ -170,7 +170,7 @@ msgstr "nevybrané %s"
 
 #: api.py:147 api.py:150
 msgid "virtual buffer pass through"
-msgstr "prepustiť cez virtuálny buffer"
+msgstr "režim prepúšťania"
 
 #: api.py:147
 #: appModules\_default.py:42
@@ -250,7 +250,7 @@ msgstr "spomalí reč o 5 percent"
 
 #: appModules\_default.py:76
 msgid "speak typed characters"
-msgstr "hovoriť napísané znaky"
+msgstr "Čítať napísané znaky"
 
 #: appModules\_default.py:77
 msgid "Toggles on and off the speaking of typed characters"
@@ -258,7 +258,7 @@ msgstr "Zapína alebo vypína oznamovanie napísaných znakov"
 
 #: appModules\_default.py:86
 msgid "speak typed words"
-msgstr "hovoriť napísané slová"
+msgstr "Čítať po slovách"
 
 #: appModules\_default.py:87
 msgid "Toggles on and off the speaking of typed words"
@@ -266,7 +266,7 @@ msgstr "vypína alebo zapína oznamovanie napísaných slov"
 
 #: appModules\_default.py:96
 msgid "speak command keys"
-msgstr "hovoriť klávesové príkazy"
+msgstr "Čítať príkazové skratky"
 
 #: appModules\_default.py:97
 msgid ""
@@ -285,8 +285,8 @@ msgid ""
 "to how it speaks punctuation"
 msgstr ""
 "Zapína a vypína čítanie interpunkčných znamienok. Keď je toto zapnuté"
-" NVDA bude čítať názvy značiek, keď je to vypnuté, o vyslovovanie "
-"interpunkciesa stará len hlasový výstup"
+" NVDA bude čítať názvy znamienok, pri vypnutí sa o vyslovovanie "
+"interpunkcie stará len hlasový výstup"
 
 #: appModules\_default.py:110
 msgid "Move mouse to navigator"
@@ -323,7 +323,7 @@ msgstr "oznámi informácie o aktuálnom navigačnom objekte"
 
 #: appModules\_default.py:138
 msgid "No location information for navigator object"
-msgstr "nie je informácia o pozícii navigačného objektu"
+msgstr "Žiadna informácia o pozícii navigačného objektu"
 
 #: appModules\_default.py:140
 msgid "%d wide by %d high, located %d from left and %d from top"
@@ -407,13 +407,13 @@ msgstr ""
 
 #: appModules\_default.py:228
 msgid "Moves the review cursor to the top line of the current navigator object"
-msgstr "premiestni kurzor na vrchný riadok aktuálneho navigačného objektu"
+msgstr "premiestni prehliadací kurzor na vrchný riadok aktuálneho navigačného objektu"
 
 #: appModules\_default.py:233
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object"
 msgstr ""
-"premiestni kurzor na predchádzajúci riadok aktuálneho navigačného "
+"premiestni prehliadací kurzor na predchádzajúci riadok aktuálneho navigačného "
 "objektu"
 
 #: appModules\_default.py:238
@@ -421,44 +421,44 @@ msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated"
 msgstr ""
-"prečíta riadok aktuálneho navigačného objektu, na ktorom je kurzor"
+"prečíta riadok aktuálneho navigačného objektu, kde je prehliadací kurzor"
 
 #: appModules\_default.py:243
 msgid ""
 "Moves the review cursor to the next line of the current navigator object"
 msgstr ""
-"premiestni kurzor na nasledujúci riadok aktuálneho navigačného objektu"
+"premiestni prehliadací kurzor na nasledujúci riadok aktuálneho navigačného objektu"
 
 #: appModules\_default.py:248
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object"
-msgstr "premiestni kurzor na spodný riadok aktuálneho navigačného objektu"
+msgstr "premiestni prehliadací kurzor na spodný riadok aktuálneho navigačného objektu"
 
 #: appModules\_default.py:253
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object"
 msgstr ""
-"premiestni kurzor na predchádzajúce slovo aktuálneho navigačného objektu"
+"premiestni prehliadací kurzor na predchádzajúce slovo aktuálneho navigačného objektu"
 
 #: appModules\_default.py:258
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated"
 msgstr ""
-"prečíta slovo aktuálneho navigačného objektu, na ktorom je kurzor"
+"prečíta slovo aktuálneho navigačného objektu, na ktorom je prehliadací kurzor"
 
 #: appModules\_default.py:263
 msgid ""
 "Moves the review cursor to the next word of the current navigator object"
 msgstr ""
-"premiestni kurzor na nasledujúce slovo aktuálneho navigačného objektu"
+"premiestni prehliadací kurzor na nasledujúce slovo aktuálneho navigačného objektu"
 
 #: appModules\_default.py:268
 msgid ""
 "Moves the review cursor to the start of the line where it is situated, in "
 "the current navigator object"
 msgstr ""
-"presunie kurzor na začiatok aktuálneho riadka v rámci aktuálneho "
+"presunie prehliadací kurzor na začiatok aktuálneho riadka v rámci aktuálneho "
 "navigačného objektu"
 
 #: appModules\_default.py:273
@@ -466,26 +466,26 @@ msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object"
 msgstr ""
-"premiestni kurzor na predchádzajúci znak aktuálneho navigačného objektu"
+"premiestni prehliadací kurzor na predchádzajúci znak aktuálneho navigačného objektu"
 
 #: appModules\_default.py:278
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated"
-msgstr "prečíta znak aktuálneho navigačného objektu, na ktorom je kurzor"
+msgstr "prečíta znak aktuálneho navigačného objektu, na ktorom je prehliadací kurzor"
 
 #: appModules\_default.py:283
 msgid ""
 "Moves the review cursor to the next character of the current navigator object"
 msgstr ""
-"premiestni kurzor na nasledujúci znak aktuálneho navigačného objektu"
+"premiestni prehliadací kurzor na nasledujúci znak aktuálneho navigačného objektu"
 
 #: appModules\_default.py:288
 msgid ""
 "Moves the review cursor to the end of the line where it is situated, in the "
 "current navigator object"
 msgstr ""
-"presunie kurzor na koniec aktuálneho riadka v rámci aktuálneho navigačné"
+"presunie prehliadací kurzor na koniec aktuálneho riadka v rámci aktuálneho navigačné"
 "ho objektu"
 
 #: appModules\_default.py:293
@@ -493,7 +493,7 @@ msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
 msgstr ""
-"premiestni kurzor navigačného objektu na pozíciu systémového kurzora"
+"premiestni prehliadací kurzor v aktuálnom navigačnom objekte na pozíciu systémového kurzora"
 
 #: appModules\_default.py:302
 msgid "beeps"
@@ -523,7 +523,7 @@ msgid ""
 "straight through the current virtualBuffer, allowing you to interact with a "
 "control without the virtualBuffer doing something else with the key."
 msgstr ""
-"Zapína a vypína režim prepustiť cez virtuálny buffer. Keď je to "
+"Zapína a vypína režim prepúšťania klávesových príkazov cez virtuálny buffer. Keď je to "
 "zapnuté, klávesy budú prepustené čo umožní interaktívne pracovať s "
 "aktuálnym formulárovým prvkom bez spracovania stlačeného klávesu."
 
@@ -560,11 +560,11 @@ msgstr ""
 
 #: appModules\_default.py:369
 msgid "Report object under mouse"
-msgstr "Oznamovať objekty pod myšou"
+msgstr "Oznamovať objekty pod kurzorom myši"
 
 #: appModules\_default.py:370
 msgid "Toggles on and off the reporting of objects under the mouse"
-msgstr "nastavuje oznamovanie objektov pod myšou"
+msgstr "nastavuje automatické oznamovanie objektov pod kurzorom myši"
 
 #: appModules\_default.py:376
 msgid "Reports the title of the current application or foreground window"
@@ -620,12 +620,12 @@ msgstr ""
 
 #: appModules\_default.py:424
 msgid "caret moves review cursor"
-msgstr "kurzor navigačného objektu sleduje kurzor windows"
+msgstr "prehliadací kurzor sleduje textový kurzor"
 
 #: appModules\_default.py:425
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "prepína sledovanie kurzora windows kurzorom navigačného objektu"
+msgstr "prepína automatické polohovanie prehliadacieho kurzora pri pohybe textovým kurzorom"
 
 #: appModules\_default.py:434
 msgid "focus moves navigator object"
@@ -1681,7 +1681,7 @@ msgstr "nastaví hlas, jeho tempo výšku a hlasitosť"
 
 #: gui\__init__.py:158
 msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "Nastavenie &klávesnice...\tCtrl+K"
+msgstr "Nastavenia &klávesnice...\tCtrl+K"
 
 #: gui\__init__.py:158
 msgid ""
@@ -1701,7 +1701,7 @@ msgstr "nastavuje oznamovanie objektov pod myšou"
 
 #: gui\__init__.py:164
 msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "nastavenia čítania &objektov...\tCtrl+Shift+O"
+msgstr "Prezentácia &objektov...\tCtrl+Shift+O"
 
 #: gui\__init__.py:164
 msgid "Change reporting of objects"
@@ -1801,7 +1801,7 @@ msgstr "Nastavenia myši"
 
 #: gui\__init__.py:271
 msgid "Object presentation"
-msgstr "Čítanie objektov"
+msgstr "Prezentácia objektov"
 
 #: gui\__init__.py:275
 msgid "virtual buffers"
@@ -1875,7 +1875,7 @@ msgid ""
 msgstr ""
 "Aby sa úplne prejavila zmena jazyka, musí byť uložená konfigurácia a "
 "vykonaný reštart NVDA. Stlačte enter ak chcete teraz automaticky uložiť "
-"konfiguráciu a reštartovať NVDA alebo klepnite na tlačidlo cancel a "
+"konfiguráciu a reštartovať NVDA alebo stlačte cancel a "
 "uložte konfiguráciu a reštartujte NVDA ručne."
 
 #: gui\settingsDialogs.py:69
@@ -1912,7 +1912,7 @@ msgstr "&Výška"
 
 #: gui\settingsDialogs.py:165
 msgid "&Inflection"
-msgstr "&Inflexia"
+msgstr "&Modulácia"
 
 #: gui\settingsDialogs.py:174
 msgid "V&olume"
@@ -1948,19 +1948,19 @@ msgstr "používať insert ako kláves NVDA"
 
 #: gui\settingsDialogs.py:281
 msgid "Speak typed &characters"
-msgstr "Oznamovať napísané &znaky"
+msgstr "Čítať napísané &znaky"
 
 #: gui\settingsDialogs.py:284
 msgid "Speak typed &words"
-msgstr "Oznamovať napísané &slová"
+msgstr "Čítať po &slovách"
 
 #: gui\settingsDialogs.py:287
 msgid "Speak command &keys"
-msgstr "Oznamovať &klávesové príkazy"
+msgstr "Čítať príkazové s&kratky"
 
 #: gui\settingsDialogs.py:313
 msgid "Report mouse &shape changes"
-msgstr "Hlásiť zmenu &tvaru kurzora myši"
+msgstr "Hlásiť zmeny &tvaru kurzora myši"
 
 #: gui\settingsDialogs.py:316
 msgid "Report &object under mouse"
@@ -1976,7 +1976,7 @@ msgstr "Čítať &bublinkovú nápovedu"
 
 #: gui\settingsDialogs.py:344
 msgid "Report object shortcut &keys"
-msgstr "Čítať skratkové &klávesy"
+msgstr "Čítať skratkové &klávesy objektov"
 
 #: gui\settingsDialogs.py:347
 msgid "Report object &position information"
@@ -2000,11 +2000,11 @@ msgstr "&Maximálny počet znakov na riadku"
 
 #: gui\settingsDialogs.py:388
 msgid "&Number of lines per page"
-msgstr "&Počet riadkov na stranu"
+msgstr "Maximálny &počet riadkov na jednej stránke"
 
 #: gui\settingsDialogs.py:393
 msgid "Report &virtual presentation on focus changes"
-msgstr "Oznamovať &virtuálny buffer pri zmene fokusu"
+msgstr "Pri zmene fokusu načítať informácie o objekte z &virtuálneho bufferu"
 
 #: gui\settingsDialogs.py:396
 msgid "Update the content &dynamically"
@@ -2201,7 +2201,7 @@ msgstr "dolný index"
 #: textBuffer.py:498
 #: textBuffer.py:506
 msgid "Moves and then reads the current line"
-msgstr "prečíta aktuálny riadok"
+msgstr "Nastaví kurzor na aktuálny riadok a prečíta ho."
 
 #: textBuffer.py:474
 msgid "reads the current line"
@@ -2245,7 +2245,7 @@ msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Slobodný a otvorený odčítač obrazovky pre microsoft windows"
+msgstr "Voľne šíriteľný otvorený čítač obrazovky pre microsoft windows"
 
 #: versionInfo.py:14
 msgid ""
@@ -2259,14 +2259,14 @@ msgid ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2007 prispievatelia NVDA <http://www.nvda-project.org>\n"
-"%(name)s je chránený GNU všeobecnou verejnou Licenciou. Tento software mô"
-"žete ľubovoľne šíriť a modifikovať v prípade, že spolu so "
-"zdrojovými kódmi priložíte aj text licencie. Toto platí ako pre originá"
-"l tak aj pre rôzne modifikácie tohoto software a tiež pre software využí"
-"vajúci časti tohoto software.\n"
-"Celú licenciu si môžete detailne preštudovať na adrese:\n"
+"Copyright (C) 2006-2007 Tím NVDA <http://www.nvda-project.org>\n"
+"%(name)s je chránený licenciou GNU General Public License. "
+"Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, "
+"kto si to vyžiada. Týka sa to oboch pôvodných, aj upravených kópií daného softwaru.\n"
+"Pre viac informácií si môžete detailnejšiu licenciu pozrieť online na stránke:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
+"alebo slovenský preklad licencie na stránke:\n"
+"http://www.inzertko.sk/admini/gnu_gpl_sk.htm\n"
 "alebo si prečítajte súbor Copying.txt dodaný spolu s týmto programom."
 
 #: virtualBuffers\IAccessible\MSHTML.py:136
@@ -2435,7 +2435,7 @@ msgstr "Hľadať"
 
 #: virtualBuffers\__init__.py:463
 msgid "Type the text you wish to find"
-msgstr "napíšte text, ktorý si želáte vyhľadať"
+msgstr "napíšte text, ktorý chcete vyhľadať"
 
 #: virtualBuffers\__init__.py:473
 msgid "Find Error"
