@@ -10,6 +10,26 @@ import baseObject
 class E_noRelatedUnit(RuntimeError):
 	pass
 
+#Field stuff
+
+FORMAT_CMD_ON=1
+FORMAT_CMD_OFF=2
+FORMAT_CMD_SINGLETON=3
+
+class formatCommand(object):
+
+	def __init__(self,cmd,format):
+ 		self.cmd=cmd
+		self.format=format
+
+class Format(object):
+
+	def __init__(self,role,value=None,states=None,contains=None):
+		self.role=role
+		self.value=value
+		self.states=states
+		self.contains=contains
+
 #position types
 
 class Position(baseObject.autoPropertyObject):
