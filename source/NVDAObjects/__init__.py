@@ -151,7 +151,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def copy(self):
 		o=self.__class__(self.obj,textHandler.OffsetsPosition(self._startOffset,self._endOffset))
-		o.__dict__=self.__dict__.copy()
+		for item in self.__dict__.keys():
+			if item.startswith('_'):
+				o.__dict__[item]=self.__dict__[item]
 		return o
 
 	def compareStart(self,info):

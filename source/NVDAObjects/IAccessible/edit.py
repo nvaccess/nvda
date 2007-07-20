@@ -17,7 +17,7 @@ import winKernel
 from IAccessibleHandler import pointer_IAccessible
 import winUser
 import textHandler
-from keyUtils import key
+from keyUtils import key, sendKey
 import IAccessibleHandler
 from . import IAccessible
 from .. import NVDAObjectTextInfo
@@ -221,6 +221,26 @@ class EditTextInfo(NVDAObjectTextInfo):
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
+		elif self.basePosition in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
+			oldSel=self._getSelectionOffsets()
+			if offset>=(self._getStoryLength()-1):
+				return [offset,offset+1]
+			self._setSelectionOffsets(offset,offset)
+			sendKey(key("control+shift+ExtendedLeft"))
+			back=self._getSelectionOffsets()
+			sendKey(key("control+shift+ExtendedRight"))
+			forward=self._getSelectionOffsets()
+			if (back[1]-back[0])>0 and (forward[1]-forward[0])>0 and forward[0]>back[0]:
+				start=back[0]
+				end=forward[1]
+			elif back[0]<forward[0]:
+				sendKey(key("control+shift+ExtendedRight"))
+	 			forward=self._getSelectionOffsets()
+				start,end=forward
+			else:
+				start,end=forward
+			self._setSelectionOffsets(oldSel[0],oldSel[1])
+			return [start,end]
 		else:
 			return super(EditTextInfo,self)._getWordOffsets(offset)
 
