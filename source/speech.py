@@ -347,34 +347,38 @@ def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 	beenCanceled=False
 	formattedText=textInfo.getFormattedText(excludes=getExcludedAutoSpeakFormats())
 	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
-		textInfo.obj._lastInitialSpokenFormats=set()
-	initialSpokenFormats=set()
+		textInfo.obj._lastInitialSpokenFormats={}
+	initialSpokenFormats={}
 	checkFormats=True
 	for item in formattedText:
 		if isinstance(item,textHandler.FormatCommand):
-			itemKey=(item.format.role,item.format.value,item.format.uniqueID)
+			itemKey="%d, %s, %s"%(item.format.role,item.format.value,item.format.uniqueID)
 			if item.cmd==textHandler.FORMAT_CMD_SINGLETON:
 				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
 					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
 					speakMessage(speechText)
 				if checkFormats:
-					initialSpokenFormats.add(itemKey)
+					initialSpokenFormats[itemKey]=item
 			elif item.cmd==textHandler.FORMAT_CMD_ON:
 				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
 					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value,_("on")])
 					speakMessage(speechText)
 				if checkFormats:
-					initialSpokenFormats.add(itemKey)
+					initialSpokenFormats[itemKey]=item
 			elif item.cmd==textHandler.FORMAT_CMD_OFF:
 				speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),_("off")])
 				speakMessage(speechText)
 		elif isinstance(item,basestring):
 			checkFormats=False
+			for oldItemKey,oldItem in textInfo.obj._lastInitialSpokenFormats.items():
+				if oldItem.cmd==textHandler.FORMAT_CMD_ON and oldItemKey not in initialSpokenFormats:
+					speechText=" ".join([controlTypes.speechRoleLabels.get(oldItem.format.role,""),_("off")])
+					speakMessage(speechText)
 			if len(item)>1 or not handleSymbols:
 				speakText(item,wait=wait,index=index)
 			else:
 				speech.speakSymbol(item)
-		textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
+	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
 def speakTypedCharacters(ch):
 	global typedWord
