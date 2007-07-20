@@ -19,6 +19,7 @@ import winUser
 import textHandler
 from keyUtils import key, sendKey
 import IAccessibleHandler
+import controlTypes
 from . import IAccessible
 from .. import NVDAObjectTextInfo
 
@@ -49,6 +50,8 @@ EM_GETTEXTLENGTHEX=winUser.WM_USER+95
 #Rich edit 4.0 messages
 EM_GETPAGE=winUser.WM_USER+228
 
+LF_FACESIZE=32
+
 #structures
 class CharRangeStruct(ctypes.Structure):
 	_fields_=[
@@ -56,11 +59,54 @@ class CharRangeStruct(ctypes.Structure):
 		('cpMax',ctypes.c_long),
 	]
 
-class TextRangeStruct(ctypes.Structure):
+class TextRangeUStruct(ctypes.Structure):
 	_fields_=[
 		('chrg',CharRangeStruct),
 		('lpstrText',ctypes.c_wchar_p),
 	]
+
+class TextRangeAStruct(ctypes.Structure):
+	_fields_=[
+		('chrg',CharRangeStruct),
+		('lpstrText',ctypes.c_char_p),
+	]
+
+CFM_BOLD=0x1
+CFM_ITALIC=0x2
+CFM_UNDERLINE=0x4
+CFM_STRIKEOUT=0x8
+CFM_PROTECTED=0x10
+CFM_LINK=0x20
+
+SCF_SELECTION=0x1
+
+class CharFormat2WStruct(ctypes.Structure):
+	_fields_=[
+		('cbSize',ctypes.c_uint),
+		('dwMask',ctypes.wintypes.DWORD),
+		('dwEffects',ctypes.wintypes.DWORD),
+		('yHeight',ctypes.c_long),
+		('yOffset',ctypes.c_long),
+		('crTextColor',ctypes.wintypes.COLORREF),
+		('bCharSet',ctypes.c_byte),
+		('bPitchAndFamily',ctypes.c_byte),
+		('szFaceName',ctypes.c_wchar*LF_FACESIZE),
+		('wWeight',ctypes.wintypes.WORD),
+		('sSpacing',ctypes.c_short),
+		('crBackColor',ctypes.wintypes.COLORREF),
+		('lcid',ctypes.wintypes.LCID),
+		('dwReserved',ctypes.wintypes.DWORD),
+		('sStyle',ctypes.c_short),
+		('wKerning',ctypes.wintypes.WORD),
+		('bUnderlineType',ctypes.c_byte),
+		('bAnimation',ctypes.c_byte),
+		('bRevAuthor',ctypes.c_byte),
+		('bReserved1',ctypes.c_byte),
+	]
+
+class CharFormat2AStruct(ctypes.Structure):
+	_fields_=CharFormat2WStruct._fields_[:]
+	_fields_[8]=('szFaceName',ctypes.c_char*LF_FACESIZE)
 
 class getTextExStruct(ctypes.Structure):
 	_fields_=[
@@ -123,10 +169,42 @@ class EditTextInfo(NVDAObjectTextInfo):
 				newTextList.append(bufText[offset])
 		return "".join(newTextList)
 
+	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
+		formatList,start,end=super(EditTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
+		if self.obj.editAPIVersion>=1:
+			oldSel=self._getSelectionOffsets()
+			if oldSel[0]!=offset and oldSel[1]!=offset:
+				self._setSelectionOffsets(offset,offset)
+			if self.obj.editAPIUnicode:
+				charFormatStruct=CharFormat2WStruct
+			else:
+				charFormatStruct=charFormat2AStruct
+			charFormat=charFormatStruct()
+			charFormat.cbSize=ctypes.sizeof(charFormatStruct)
+			processHandle=self.obj.editProcessHandle
+			internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+			winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+			if controlTypes.ROLE_FONTNAME in includes or controlTypes.ROLE_FONTNAME not in excludes: 
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=charFormat.szFaceName))
+				formatList.append(f)
+			if (charFormat.dwEffects&CFM_BOLD) and (controlTypes.ROLE_BOLD in includes or controlTypes.ROLE_BOLD not in excludes): 
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_ON,textHandler.Format(role=controlTypes.ROLE_BOLD))
+				formatList.append(f)
+			if oldSel[0]!=offset and oldSel[1]!=offset:
+				self._setSelectionOffsets(oldSel[0],oldSel[1])
+		return (formatList,start,end)
+
+
+
+
+
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
-			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ,False,self.obj.windowProcessID)
+			processHandle=self.obj.editProcessHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winUser.sendMessage(self.obj.windowHandle,EM_EXGETSEL,0, internalCharRange)
 			winKernel.readProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
@@ -141,7 +219,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			charRange=CharRangeStruct()
 			charRange.cpMin=start
 			charRange.cpMax=end
-			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+			processHandle=self.obj.editProcessHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
 			winUser.sendMessage(self.obj.windowHandle,EM_EXSETSEL,0, internalCharRange)
@@ -170,7 +248,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				info.codepage=1200
 			else:
 				info.codepage=0
-			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+			processHandle=self.obj.editProcessHandle
 			internalInfo=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
 			textLen=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
@@ -190,10 +268,12 @@ class EditTextInfo(NVDAObjectTextInfo):
 			bufLen=(end-start)+1
 			if self.obj.editAPIUnicode:
 				bufLen*=2
-			textRange=TextRangeStruct()
+				textRange=TextRangeUStruct()
+			else:
+				textRange=TextRangeAStruct()
 			textRange.chrg.cpMin=start
 			textRange.chrg.cpMax=end
-			processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+			processHandle=self.obj.editProcessHandle
 			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			textRange.lpstrText=internalBuf
 			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -275,11 +355,16 @@ class Edit(IAccessible):
 	editAPIHasITextDocument=False
 	editValueUnit=textHandler.UNIT_LINE
 
-
-
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
+		if self.editAPIVersion>=1:
+			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+
+	def __del__(self):
+		if self.editAPIVersion>=1:
+			winKernel.closeHandle(self.editProcessHandle)
+		super(Edit,self).__del__()
 
 	def _get_value(self):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
