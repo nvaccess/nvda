@@ -249,7 +249,7 @@ class virtualBuffer_gecko(virtualBuffer):
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LIST,"ul"]:
 			info["fieldType"]=fieldType_list
 			info["typeString"]=fieldNames[fieldType_list]
-			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.childCount
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["fieldType"]=fieldType_listItem
 			bullet=obj.name.rstrip()
