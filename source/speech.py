@@ -312,6 +312,31 @@ This function will not speak if L{speechMode} is false.
 	if text and not text.isspace():
 		getSynth().speakText(text,wait=wait,index=index)
 
+def getExcludedAutoSpeakFormats():
+	formats=set()
+	if not config.conf["documentFormatting"]["reportFontName"]:
+		formats.add(controlTypes.ROLE_FONTNAME)
+	if not config.conf["documentFormatting"]["reportFontSize"]:
+		formats.add(controlTypes.ROLE_FONTSIZE)
+	if not config.conf["documentFormatting"]["reportFontAttributes"]:
+		formats.add(controlTypes.ROLE_BOLD)
+		formats.add(controlTypes.ROLE_ITALIC)
+		formats.add(controlTypes.ROLE_UNDERLINE)
+	if not config.conf["documentFormatting"]["reportStyle"]:
+		formats.add(controlTypes.ROLE_STYLE)
+	if not config.conf["documentFormatting"]["reportPage"]:
+		formats.add(controlTypes.ROLE_PAGE)
+	if not config.conf["documentFormatting"]["reportLineNumber"]:
+		formats.add(controlTypes.ROLE_LINE)
+	if not config.conf["documentFormatting"]["reportTables"]:
+		formats.add(controlTypes.ROLE_TABLE)
+		formats.add(controlTypes.ROLE_TABLEROW)
+		formats.add(controlTypes.ROLE_TABLECOLUMN)
+		formats.add(controlTypes.ROLE_TABLECELL)
+	if not config.conf["documentFormatting"]["reportAlignment"]:
+		formats.add(controlTypes.ROLE_ALIGNMENT)
+	return formats
+
 def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
@@ -320,7 +345,7 @@ def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	beenCanceled=False
-	formattedText=textInfo.formattedText
+	formattedText=textInfo.getFormattedText(excludes=getExcludedAutoSpeakFormats())
 	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
 		textInfo.obj._lastInitialSpokenFormats=set()
 	initialSpokenFormats=set()

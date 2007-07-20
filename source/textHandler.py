@@ -120,34 +120,12 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
-	def _get_formattedText(self):
+	def getFormattedText(self,includes=set(),excludes=set()):
 		"""
 @returns: The text (containing formatting markup) with in the set range
 @rtype: string
 """
 		return [self.text]
-
-
-	def _get_FGColor(self):
-		"""
-@returns: The foreground color at the start of the set range
-@rtype: string
-"""
-		raise NotImplementedError
-
-	def _get_BGColor(self):
-		"""
-@returns: The background color at the start of the set range
-@rtype: string
-"""
-		raise NotImplementedError
-
-	def _get_format(self):
-		"""
-@returns: The format at the start of the set range
-@rtype: dict (string:string)
-"""
-		raise NotImplementedError
 
 	def unitIndex(self,unit):
 		"""

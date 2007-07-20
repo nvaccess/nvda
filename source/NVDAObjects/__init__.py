@@ -91,9 +91,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	_getParagraphOffsets=_getLineOffsets
 
-	def _getFormatAndOffsets(self,offset):
+	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
 		formats=[]
-		if config.conf["documentFormatting"]["reportLineNumber"]:
+		if controlTypes.ROLE_LINE in includes or controlTypes.ROLE_LINE not in excludes: 
 			lineNum=self._getLineNumFromOffset(offset)
 			if lineNum>=0:
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
@@ -165,8 +165,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)
 
-	def _get_formattedText(self):
-		formats=self._getFormatAndOffsets(self._startOffset)
+	def getFormattedText(self,includes=set(),excludes=set()):
+		formats=self._getFormatAndOffsets(self._startOffset,includes=includes,excludes=excludes)
 		l=[]
 		for i in formats[0]:
 			l.append(i)

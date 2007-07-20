@@ -132,6 +132,9 @@ ROLE_FGCOLOR=131
 ROLE_BGCOLOR=132
 ROLE_SUPERSCRIPT=133
 ROLE_SUBSCRIPT=134
+ROLE_STYLE=135
+ROLE_INDENT=136
+ROLE_ALIGNMENT=137
 
 STATE_UNAVAILABLE=1
 STATE_FOCUSED=2
@@ -284,6 +287,9 @@ speechRoleLabels={
 	ROLE_BGCOLOR:_("background color"),
 	ROLE_SUPERSCRIPT:_("superscript"),
 	ROLE_SUBSCRIPT:_("subscript"),
+	ROLE_STYLE:_("style"),
+	ROLE_INDENT:_("indent"),
+	ROLE_ALIGNMENT:_("alignment"),
 }
 
 speechStateLabels={
