@@ -236,7 +236,7 @@ class Gecko(virtualBuffer):
 			info["role"]=controlTypes.ROLE_TABLEBODY
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LIST,"ul"]:
 			info["role"]=controlTypes.ROLE_LIST
-			info["descriptionFunc"]=lambda x: "with %s items"%x.childCount
+			info["descriptionFunc"]=lambda x: _("with %s items")%x.childCount
 		elif role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
 			info["role"]=controlTypes.ROLE_LISTITEM
 			bullet=obj.name
