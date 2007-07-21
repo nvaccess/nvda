@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1033\n"
-"POT-Creation-Date: 2007-07-19 12:15+Kesäaika\n"
-"PO-Revision-Date: 2007-07-19 12:21+0300\n"
+"Project-Id-Version: 1043\n"
+"POT-Creation-Date: 2007-07-21 09:00+Kesäaika\n"
+"PO-Revision-Date: 2007-07-21 09:07+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:136 controlTypes.py:155
+#: IAccessibleHandler.py:136 controlTypes.py:158
 msgid "window"
 msgstr "ikkuna"
 
-#: IAccessibleHandler.py:137 characterSymbols.py:20 controlTypes.py:176
+#: IAccessibleHandler.py:137 characterSymbols.py:20 controlTypes.py:179
 msgid "tab"
 msgstr "sarkain"
 
-#: IAccessibleHandler.py:138 controlTypes.py:162
+#: IAccessibleHandler.py:138 controlTypes.py:165
 msgid "edit"
 msgstr "muokkaa"
 
-#: IAccessibleHandler.py:139 controlTypes.py:163
+#: IAccessibleHandler.py:139 controlTypes.py:166
 msgid "button"
 msgstr "painike"
 
@@ -72,7 +72,7 @@ msgstr "%d kohdetta"
 msgid "through"
 msgstr "kautta"
 
-#: NVDAObjects\IAccessible\excel.py:64 controlTypes.py:292
+#: NVDAObjects\IAccessible\excel.py:64 controlTypes.py:298
 msgid "selected"
 msgstr "valittu"
 
@@ -92,51 +92,51 @@ msgstr "fontti"
 msgid "point"
 msgstr "piste"
 
-#: NVDAObjects\IAccessible\excel.py:104 controlTypes.py:280 textBuffer.py:266
+#: NVDAObjects\IAccessible\excel.py:104 controlTypes.py:283 textBuffer.py:266
 #: textBuffer.py:318
 msgid "bold"
-msgstr "lihavoitu"
+msgstr "lihavointi"
 
 #: NVDAObjects\IAccessible\excel.py:106 textBuffer.py:273 textBuffer.py:320
 msgid "italic"
-msgstr "kursivoitu"
+msgstr "kursiivi"
 
-#: NVDAObjects\IAccessible\excel.py:108 controlTypes.py:282 textBuffer.py:280
+#: NVDAObjects\IAccessible\excel.py:108 controlTypes.py:285 textBuffer.py:280
 #: textBuffer.py:322
 msgid "underline"
-msgstr "alleviivattu"
+msgstr "alleviivaus"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
 #: NVDAObjects\JAB\__init__.py:248
 msgid "%d of %d"
 msgstr "%d kautta %d"
 
-#: NVDAObjects\__init__.py:500 NVDAObjects\__init__.py:511
-#: NVDAObjects\__init__.py:545 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:502 NVDAObjects\__init__.py:513
+#: NVDAObjects\__init__.py:547 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "yläreuna"
 
-#: NVDAObjects\__init__.py:527 NVDAObjects\__init__.py:534
-#: NVDAObjects\__init__.py:561 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:529 NVDAObjects\__init__.py:536
+#: NVDAObjects\__init__.py:563 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "alareuna"
 
-#: NVDAObjects\__init__.py:570 NVDAObjects\__init__.py:581
+#: NVDAObjects\__init__.py:572 NVDAObjects\__init__.py:583
 msgid "left"
 msgstr "vasen"
 
-#: NVDAObjects\__init__.py:603 NVDAObjects\__init__.py:619
+#: NVDAObjects\__init__.py:605 NVDAObjects\__init__.py:621
 msgid "right"
 msgstr "oikea"
 
-#: NVDAObjects\__init__.py:742 textBuffer.py:537 textBuffer.py:541
+#: NVDAObjects\__init__.py:744 textBuffer.py:537 textBuffer.py:541
 #: textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
 
-#: NVDAObjects\__init__.py:744 textBuffer.py:545 textBuffer.py:547
+#: NVDAObjects\__init__.py:746 textBuffer.py:545 textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "ei valittu %s"
@@ -151,7 +151,7 @@ msgstr "näennäispuskurin läpivienti"
 #: appModules\_default.py:378 appModules\_default.py:413
 #: appModules\_default.py:423 appModules\_default.py:433
 #: appModules\_default.py:443 keyboardHandler.py:49 keyboardHandler.py:51
-#: keyboardHandler.py:53 speech.py:344
+#: keyboardHandler.py:53 speech.py:369 speech.py:375
 msgid "off"
 msgstr "pois"
 
@@ -160,7 +160,7 @@ msgstr "pois"
 #: appModules\_default.py:108 appModules\_default.py:381
 #: appModules\_default.py:416 appModules\_default.py:426
 #: appModules\_default.py:436 appModules\_default.py:446 keyboardHandler.py:49
-#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:339
+#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:364
 msgid "on"
 msgstr "päällä"
 
@@ -824,11 +824,11 @@ msgstr "keno"
 msgid "right bracket"
 msgstr "loppuhaka"
 
-#: characterSymbols.py:49 controlTypes.py:246
+#: characterSymbols.py:49 controlTypes.py:249
 msgid "caret"
 msgstr "hattu"
 
-#: characterSymbols.py:50 controlTypes.py:277
+#: characterSymbols.py:50 controlTypes.py:280
 msgid "line"
 msgstr "pysty"
 
@@ -852,564 +852,576 @@ msgstr "loppuaalto"
 msgid "tilda"
 msgstr "mato"
 
-#: controlTypes.py:154
+#: controlTypes.py:157
 msgid "unknown object"
 msgstr "tuntematon objekti"
 
-#: controlTypes.py:156
+#: controlTypes.py:159
 msgid "title bar"
 msgstr "otsikkopalkki"
 
-#: controlTypes.py:157
+#: controlTypes.py:160
 msgid "pane"
 msgstr "ruutu"
 
-#: controlTypes.py:158
+#: controlTypes.py:161
 msgid "dialog"
 msgstr "valintaikkuna"
 
-#: controlTypes.py:159
+#: controlTypes.py:162
 msgid "check box"
 msgstr "valintaruutu"
 
-#: controlTypes.py:160
+#: controlTypes.py:163
 msgid "radio button"
 msgstr "valintanappi"
 
-#: controlTypes.py:161
+#: controlTypes.py:164
 msgid "text"
 msgstr "teksti"
 
-#: controlTypes.py:164
+#: controlTypes.py:167
 msgid "menu bar"
 msgstr "valikkorivi"
 
-#: controlTypes.py:165
+#: controlTypes.py:168
 msgid "menu item"
 msgstr "valikon osa"
 
-#: controlTypes.py:166
+#: controlTypes.py:169
 msgid "popup menu"
 msgstr "ponnahdusvalikko"
 
-#: controlTypes.py:167
+#: controlTypes.py:170
 msgid "combo box"
 msgstr "yhdistelmäruutu"
 
-#: controlTypes.py:168
+#: controlTypes.py:171
 msgid "list"
 msgstr "luettelo"
 
-#: controlTypes.py:169
+#: controlTypes.py:172
 msgid "list item"
 msgstr "luettelon osa"
 
-#: controlTypes.py:170
+#: controlTypes.py:173
 msgid "graphic"
 msgstr "kuva"
 
-#: controlTypes.py:171
+#: controlTypes.py:174
 msgid "help balloon"
 msgstr "kuplailmoitus"
 
-#: controlTypes.py:172
+#: controlTypes.py:175
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:173
+#: controlTypes.py:176
 msgid "link"
 msgstr "linkki"
 
-#: controlTypes.py:174
+#: controlTypes.py:177
 msgid "tree view"
 msgstr "puunäkymä"
 
-#: controlTypes.py:175
+#: controlTypes.py:178
 msgid "tree view item"
 msgstr "puunäkymän osa"
 
-#: controlTypes.py:177
+#: controlTypes.py:180
 msgid "tab control"
 msgstr "välilehti"
 
-#: controlTypes.py:178
+#: controlTypes.py:181
 msgid "slider"
 msgstr "liukusäädin"
 
-#: controlTypes.py:179
+#: controlTypes.py:182
 msgid "progress bar"
 msgstr "edistymispalkki"
 
-#: controlTypes.py:180
+#: controlTypes.py:183
 msgid "scroll bar"
 msgstr "vierityspalkki"
 
-#: controlTypes.py:181
+#: controlTypes.py:184
 msgid "status bar"
 msgstr "tilarivi"
 
-#: controlTypes.py:182
+#: controlTypes.py:185
 msgid "table"
 msgstr "taulukko"
 
-#: controlTypes.py:183
+#: controlTypes.py:186
 msgid "cell"
 msgstr "solu"
 
-#: controlTypes.py:184
+#: controlTypes.py:187
 msgid "column"
 msgstr "sarake"
 
-#: controlTypes.py:185
+#: controlTypes.py:188
 msgid "row"
 msgstr "rivi"
 
-#: controlTypes.py:186
+#: controlTypes.py:189
 msgid "frame"
 msgstr "kehys"
 
-#: controlTypes.py:187
+#: controlTypes.py:190
 msgid "tool bar"
 msgstr "työkalupalkki"
 
-#: controlTypes.py:188
+#: controlTypes.py:191
 msgid "column header"
 msgstr "sarakkeen ylätunniste"
 
-#: controlTypes.py:189
+#: controlTypes.py:192
 msgid "row header"
 msgstr "rivin ylätunniste"
 
-#: controlTypes.py:190
+#: controlTypes.py:193
 msgid "drop down button"
 msgstr "alasvetopainike"
 
-#: controlTypes.py:191
+#: controlTypes.py:194
 msgid "clock"
 msgstr "kello"
 
-#: controlTypes.py:192
+#: controlTypes.py:195
 msgid "separator"
 msgstr "erotin"
 
-#: controlTypes.py:193
+#: controlTypes.py:196
 msgid "form"
 msgstr "lomake"
 
-#: controlTypes.py:194
+#: controlTypes.py:197
 msgid "heading"
 msgstr "otsikko"
 
-#: controlTypes.py:195
+#: controlTypes.py:198
 msgid "heading 1"
 msgstr "otsikko yksi"
 
-#: controlTypes.py:196
+#: controlTypes.py:199
 msgid "heading 2"
 msgstr "otsikko kaksi"
 
-#: controlTypes.py:197
+#: controlTypes.py:200
 msgid "heading 3"
 msgstr "otsikko kolme"
 
-#: controlTypes.py:198
+#: controlTypes.py:201
 msgid "heading 4"
 msgstr "otsikko neljä"
 
-#: controlTypes.py:199
+#: controlTypes.py:202
 msgid "heading 5"
 msgstr "otsikko viisi"
 
-#: controlTypes.py:200
+#: controlTypes.py:203
 msgid "heading 6"
 msgstr "otsikko kuusi"
 
-#: controlTypes.py:201
+#: controlTypes.py:204
 msgid "paragraph"
 msgstr "kappale"
 
-#: controlTypes.py:202
+#: controlTypes.py:205
 msgid "block quote"
 msgstr "lainaus"
 
-#: controlTypes.py:203
+#: controlTypes.py:206
 msgid "table header"
 msgstr "taulukon ylätunniste"
 
-#: controlTypes.py:204
+#: controlTypes.py:207
 msgid "table body"
 msgstr "taulukon sisältö"
 
-#: controlTypes.py:205
+#: controlTypes.py:208
 msgid "table footer"
 msgstr "taulukon alatunniste"
 
-#: controlTypes.py:206 virtualBuffers\IAccessible\adobe.py:36
+#: controlTypes.py:209 virtualBuffers\IAccessible\adobe.py:36
 #: virtualBuffers\IAccessible\gecko.py:41
 msgid "document"
 msgstr "dokumentti"
 
-#: controlTypes.py:207
+#: controlTypes.py:210
 msgid "animation"
 msgstr "animaatio"
 
-#: controlTypes.py:208
+#: controlTypes.py:211
 msgid "application"
 msgstr "sovellus"
 
-#: controlTypes.py:209
+#: controlTypes.py:212
 msgid "box"
 msgstr "ruutu"
 
-#: controlTypes.py:210
+#: controlTypes.py:213
 msgid "grouping"
 msgstr "ryhmittely"
 
-#: controlTypes.py:211
+#: controlTypes.py:214
 msgid "property page"
 msgstr "ominaisuussivu"
 
-#: controlTypes.py:212
+#: controlTypes.py:215
 msgid "canvas"
 msgstr "kangas"
 
-#: controlTypes.py:213
+#: controlTypes.py:216
 msgid "caption"
 msgstr "otsikko"
 
-#: controlTypes.py:214
+#: controlTypes.py:217
 msgid "check menu item"
 msgstr "valittava valikon osa"
 
-#: controlTypes.py:215
+#: controlTypes.py:218
 msgid "date edit"
 msgstr "päivämäärä muokkaa"
 
-#: controlTypes.py:216
+#: controlTypes.py:219
 msgid "icon"
 msgstr "kuvake"
 
-#: controlTypes.py:217
+#: controlTypes.py:220
 msgid "directory pane"
 msgstr "hakemistoruutu"
 
-#: controlTypes.py:218
+#: controlTypes.py:221
 msgid "embedded object"
 msgstr "upotettu objekti"
 
-#: controlTypes.py:219
+#: controlTypes.py:222
 msgid "end note"
 msgstr "loppuhuomautus"
 
-#: controlTypes.py:220
+#: controlTypes.py:223
 msgid "footer"
 msgstr "alatunniste"
 
-#: controlTypes.py:221
+#: controlTypes.py:224
 msgid "foot note"
 msgstr "alareunan huomautus"
 
-#: controlTypes.py:222
+#: controlTypes.py:225
 msgid "glass pane"
 msgstr "lasiruutu"
 
-#: controlTypes.py:223
+#: controlTypes.py:226
 msgid "header"
 msgstr "ylätunniste"
 
-#: controlTypes.py:224
+#: controlTypes.py:227
 msgid "image map"
 msgstr "kuvakartta"
 
-#: controlTypes.py:225
+#: controlTypes.py:228
 msgid "input window"
 msgstr "syöttöikkuna"
 
-#: controlTypes.py:226
+#: controlTypes.py:229
 msgid "label"
 msgstr "nimi"
 
-#: controlTypes.py:227
+#: controlTypes.py:230
 msgid "note"
 msgstr "huomautus"
 
-#: controlTypes.py:228
+#: controlTypes.py:231
 msgid "page"
 msgstr "sivu"
 
-#: controlTypes.py:229
+#: controlTypes.py:232
 msgid "radio menu item"
 msgstr "valintanappi valikon osana"
 
-#: controlTypes.py:230
+#: controlTypes.py:233
 msgid "layered pane"
 msgstr "kerrostettu ruutu"
 
-#: controlTypes.py:231
+#: controlTypes.py:234
 msgid "redundant object"
 msgstr "tarpeeton objekti"
 
-#: controlTypes.py:232
+#: controlTypes.py:235
 msgid "root pane"
 msgstr "juuripaneeli"
 
-#: controlTypes.py:233
+#: controlTypes.py:236
 msgid "edit bar"
 msgstr "muokkauspalkki"
 
-#: controlTypes.py:234
+#: controlTypes.py:237
 msgid "terminal"
 msgstr "pääte"
 
-#: controlTypes.py:235
+#: controlTypes.py:238
 msgid "rich edit"
 msgstr "muokkaa"
 
-#: controlTypes.py:236
+#: controlTypes.py:239
 msgid "ruler"
 msgstr "viivain"
 
-#: controlTypes.py:237
+#: controlTypes.py:240
 msgid "scroll pane"
 msgstr "vieritysruutu"
 
-#: controlTypes.py:238
+#: controlTypes.py:241
 msgid "section"
 msgstr "kappale"
 
-#: controlTypes.py:239
+#: controlTypes.py:242
 msgid "shape"
 msgstr "kaava"
 
-#: controlTypes.py:240
+#: controlTypes.py:243
 msgid "split pane"
 msgstr "jaettu ruutu"
 
-#: controlTypes.py:241
+#: controlTypes.py:244
 msgid "view port"
 msgstr "näköaukko"
 
-#: controlTypes.py:242
+#: controlTypes.py:245
 msgid "tear off menu"
 msgstr "irrotusvalikko"
 
-#: controlTypes.py:243
+#: controlTypes.py:246
 msgid "text frame"
 msgstr "tekstikehys"
 
-#: controlTypes.py:244
+#: controlTypes.py:247
 msgid "toggle button"
 msgstr "vipupainike"
 
-#: controlTypes.py:245
+#: controlTypes.py:248
 msgid "border"
 msgstr "reuna"
 
-#: controlTypes.py:247
+#: controlTypes.py:250
 msgid "character"
 msgstr "merkki"
 
-#: controlTypes.py:248
+#: controlTypes.py:251
 msgid "chart"
 msgstr "kaavio"
 
-#: controlTypes.py:249
+#: controlTypes.py:252
 msgid "cursor"
 msgstr "kohdistin"
 
-#: controlTypes.py:250
+#: controlTypes.py:253
 msgid "diagram"
 msgstr "diagrammi"
 
-#: controlTypes.py:251
+#: controlTypes.py:254
 msgid "dial"
 msgstr "arvosäädin"
 
-#: controlTypes.py:252
+#: controlTypes.py:255
 msgid "drop list"
 msgstr "pudotuslista"
 
-#: controlTypes.py:253
+#: controlTypes.py:256
 msgid "split button"
 msgstr "jaettu painike"
 
-#: controlTypes.py:254
+#: controlTypes.py:257
 msgid "menu button"
 msgstr "valikkopainike"
 
-#: controlTypes.py:255
+#: controlTypes.py:258
 msgid "drop down button grid"
 msgstr "alasvetopainikeruudukko"
 
-#: controlTypes.py:256
+#: controlTypes.py:259
 msgid "equation"
 msgstr "yhtälö"
 
-#: controlTypes.py:257
+#: controlTypes.py:260
 msgid "grip"
 msgstr "kahva"
 
-#: controlTypes.py:258
+#: controlTypes.py:261
 msgid "hot key field"
 msgstr "pikanäppäinkenttä"
 
-#: controlTypes.py:259
+#: controlTypes.py:262
 msgid "indicator"
 msgstr "ilmaisin"
 
-#: controlTypes.py:260
+#: controlTypes.py:263
 msgid "spin button"
 msgstr "kiertopainike"
 
-#: controlTypes.py:261
+#: controlTypes.py:264
 msgid "sound"
 msgstr "ääni"
 
-#: controlTypes.py:262
+#: controlTypes.py:265
 msgid "white space"
 msgstr "väli"
 
-#: controlTypes.py:263
+#: controlTypes.py:266
 msgid "tree view button"
 msgstr "puunäkymäpainike"
 
-#: controlTypes.py:264
+#: controlTypes.py:267
 msgid "IP address"
 msgstr "IP-osoite"
 
-#: controlTypes.py:265
+#: controlTypes.py:268
 msgid "desktop icon"
 msgstr "työpöytäkuvake"
 
-#: controlTypes.py:266
+#: controlTypes.py:269
 msgid "alert"
 msgstr "hälytys"
 
-#: controlTypes.py:267
+#: controlTypes.py:270
 msgid "internal frame"
 msgstr "sisäinen kehys"
 
-#: controlTypes.py:268
+#: controlTypes.py:271
 msgid "desktop pane"
 msgstr "työpöytäpaneeli"
 
-#: controlTypes.py:269
+#: controlTypes.py:272
 msgid "option pane"
 msgstr "valintapaneeli"
 
-#: controlTypes.py:270
+#: controlTypes.py:273
 msgid "color chooser"
 msgstr "värinvalitsija"
 
-#: controlTypes.py:271
+#: controlTypes.py:274
 msgid "file chooser"
 msgstr "tiedostonvalitsija"
 
-#: controlTypes.py:272
+#: controlTypes.py:275
 msgid "filler"
 msgstr "täyttäjä"
 
-#: controlTypes.py:273
+#: controlTypes.py:276
 msgid "menu"
 msgstr "valikko"
 
-#: controlTypes.py:274
+#: controlTypes.py:277
 msgid "panel"
 msgstr "paneeli"
 
-#: controlTypes.py:275
+#: controlTypes.py:278
 msgid "password edit"
 msgstr "salasana muokkaa"
 
-#: controlTypes.py:276
+#: controlTypes.py:279
 msgid "font chooser"
 msgstr "fontinvalitsija"
 
-#: controlTypes.py:278
+#: controlTypes.py:281
 msgid "font name"
 msgstr "fontti"
 
-#: controlTypes.py:279
+#: controlTypes.py:282
 msgid "font size"
 msgstr "fonttikoko"
 
-#: controlTypes.py:281
+#: controlTypes.py:284
 msgid "ITALIC"
 msgstr "kursivoitu"
 
-#: controlTypes.py:283
+#: controlTypes.py:286
 msgid "foreground color"
 msgstr "edustan väri"
 
-#: controlTypes.py:284
+#: controlTypes.py:287
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:285 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
+#: controlTypes.py:288 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
 msgid "superscript"
 msgstr "päällekirjoitus"
 
-#: controlTypes.py:286 textBuffer.py:326
+#: controlTypes.py:289 textBuffer.py:326
 msgid "subscript"
 msgstr "alaindeksi"
 
 #: controlTypes.py:290
+msgid "style"
+msgstr "tyyli"
+
+#: controlTypes.py:291
+msgid "indent"
+msgstr "sisennys"
+
+#: controlTypes.py:292
+msgid "alignment"
+msgstr "tasaus"
+
+#: controlTypes.py:296
 msgid "unavailable"
 msgstr "ei käytettävissä"
 
-#: controlTypes.py:291
+#: controlTypes.py:297
 msgid "focused"
 msgstr "kohdistus"
 
-#: controlTypes.py:293
+#: controlTypes.py:299
 msgid "busy"
 msgstr "varattu"
 
-#: controlTypes.py:294
+#: controlTypes.py:300
 msgid "pressed"
 msgstr "painettu"
 
-#: controlTypes.py:295
+#: controlTypes.py:301
 msgid "checked"
 msgstr "valittu"
 
-#: controlTypes.py:296
+#: controlTypes.py:302
 msgid "half checked"
 msgstr "puolivalittu"
 
-#: controlTypes.py:297
+#: controlTypes.py:303
 msgid "read only"
 msgstr "vain luku"
 
-#: controlTypes.py:298
+#: controlTypes.py:304
 msgid "expanded"
 msgstr "avattu"
 
-#: controlTypes.py:299
+#: controlTypes.py:305
 msgid "collapsed"
 msgstr "suljettu"
 
-#: controlTypes.py:300
+#: controlTypes.py:306
 msgid "invisible"
 msgstr "näkymätön"
 
-#: controlTypes.py:301
+#: controlTypes.py:307
 msgid "visited"
 msgstr "avattu"
 
-#: controlTypes.py:302
+#: controlTypes.py:308
 msgid "linked"
 msgstr "linkitetty"
 
-#: controlTypes.py:303
+#: controlTypes.py:309
 msgid "subMenu"
 msgstr "alavalikko"
 
-#: controlTypes.py:304 virtualBuffers\IAccessible\MSHTML.py:287
+#: controlTypes.py:310 virtualBuffers\IAccessible\MSHTML.py:287
 msgid "protected"
 msgstr "suojattu"
 
-#: controlTypes.py:305
+#: controlTypes.py:311
 msgid "required"
 msgstr "pakollinen"
 
@@ -2241,7 +2253,9 @@ msgstr "valmis"
 #: virtualBuffers\IAccessible\MSHTML.py:239
 #: virtualBuffers\IAccessible\MSHTML.py:242
 #: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\adobe.py:246
 #: virtualBuffers\IAccessible\adobe.py:257
+#: virtualBuffers\IAccessible\gecko.py:239
 #: virtualBuffers\IAccessible\gecko.py:250
 msgid "with %s items"
 msgstr "jossa %s osaa"
