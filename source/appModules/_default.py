@@ -10,6 +10,7 @@ import datetime
 from keyUtils import key
 import keyboardHandler
 import IAccessibleHandler
+import controlTypes
 import api
 import textHandler
 import debug
@@ -345,12 +346,17 @@ class appModule(appModuleHandler.appModule):
 			sayAllHandler.read(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
 
-	def script_review_reportPresentation(self,keyPress,nextScript):
+	def script_reportFormatting(self,keyPress,nextScript):
 		o=api.getFocusObject()
-		v=virtualBuffers.getVirtualBuffer(o)
-		if v and not api.isVirtualBufferPassThrough():
-			o=v
-		o.text_reportPresentation(o.text_reviewPosition)
+		info=o.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(textHandler.UNIT_CHARACTER)
+		formattedText=info.getFormattedText(includes=set([controlTypes.ROLE_FONTNAME,controlTypes.ROLE_FONTSIZE,controlTypes.ROLE_BOLD,controlTypes.ROLE_ITALIC,controlTypes.ROLE_UNDERLINE]))
+		for item in formattedText:
+			if isinstance(item,textHandler.FormatCommand):
+				if item.cmd in (textHandler.FORMAT_CMD_ON,textHandler.FORMAT_CMD_SINGLETON):
+					speech.speakMessage("%s %s"%(controlTypes.speechRoleLabels[item.format.role],item.format.value)) 
+
+
 
 	def script_reportCurrentFocus(self,keyPress,nextScript):
 		focusObject=api.getFocusObject()
