@@ -471,6 +471,9 @@ class documentFormattingDialog(wx.Dialog):
 		wx.Dialog.__init__(self,parent,ID,title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Announce formatting changes after the cursor (can cause a lag)"))
+		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
+		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
 		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &name"))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
 		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
@@ -501,9 +504,10 @@ class documentFormattingDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.fontNameCheckBox.SetFocus()
+		self.detectFormatAfterCursorCheckBox.SetFocus()
 
 	def onOk(self,evt):
+		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()

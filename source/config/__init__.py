@@ -89,6 +89,7 @@ confspec = StringIO("""# NVDA Configuration File
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
+	detectFormatAfterCursor = boolean(default=false)
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)

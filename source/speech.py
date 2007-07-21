@@ -345,7 +345,7 @@ def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
 	beenCanceled=False
-	formattedText=textInfo.getFormattedText(excludes=getExcludedAutoSpeakFormats())
+	formattedText=textInfo.getFormattedText(searchRange=config.conf["documentFormatting"]["detectFormatAfterCursor"],excludes=getExcludedAutoSpeakFormats())
 	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
 		textInfo.obj._lastInitialSpokenFormats={}
 	initialSpokenFormats={}

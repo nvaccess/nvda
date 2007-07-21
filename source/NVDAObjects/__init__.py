@@ -165,12 +165,35 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)
 
-	def getFormattedText(self,includes=set(),excludes=set()):
-		formats=self._getFormatAndOffsets(self._startOffset,includes=includes,excludes=excludes)
+	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
+		if not searchRange:
+			formats,start,end=self._getFormatAndOffsets(self._startOffset,includes=includes,excludes=excludes)
+			formats.append(self.text)
+			return formats
+		lastFormatKeys={}
 		l=[]
-		for i in formats[0]:
-			l.append(i)
-		l.append(self.text)
+		finnished=False
+		offset=self._startOffset
+		while not finnished:
+			curFormatKeys={}
+			formats,start,end=self._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
+			for item in formats:
+				itemKey="%d, %d, %s, %s"%(item.cmd,item.format.role,item.format.value,item.format.uniqueID)
+				if itemKey not in lastFormatKeys:
+					l.append(item)
+				curFormatKeys[itemKey]=item
+			for itemKey,item in lastFormatKeys.items():
+				if item.cmd==textHandler.FORMAT_CMD_ON and itemKey not in curFormatKeys:
+					l.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_OFF,item.format))
+			text=self._getTextRange(start,end)
+			if len(l)>0 and isinstance(l[-1],basestring):
+				text="%s%s"%(l[-1],text)
+				del l[-1]
+			l.append(text)
+			lastFormatKeys=curFormatKeys
+			offset=end
+			if end>=self._endOffset:
+				finnished=True
 		return l
 
 	def unitIndex(self,unit):

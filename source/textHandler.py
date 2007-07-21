@@ -120,7 +120,7 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
-	def getFormattedText(self,includes=set(),excludes=set()):
+	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
 		"""
 @returns: The text (containing formatting markup) with in the set range
 @rtype: string
