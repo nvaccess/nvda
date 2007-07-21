@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2007-07-05 11:25:-0500\n"
+"PO-Revision-Date: 2007-07-21 13:53:23 -0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -380,7 +380,7 @@ msgstr "a hangsúly kiejtése - ki és bekapcsolása. Ha ez bevan kapcsolva, akkor a
 
 #: appModules\_default.py:95
 msgid "speak punctuation"
-msgstr "hangsúly kiejtése"
+msgstr "írásjelek kimondása"
 
 
 #: appModules\_default.py:109
@@ -944,27 +944,27 @@ msgstr ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"ez a NVDA fõ  ablakja. Az ablak  megengedi, hogy az nvda-ból kilépjen, és hogy "
+"ez a NVDA fõ  ablaka. Az ablak  megengedi, hogy az nvda-ból kilépjen, és hogy "
 "különbözõ beállításokat módosítson. "
 "\n"
 "Bárhonnan a windowsból, ezt az ablakot feltudja hozni az insert +n paranccsal. Ha kiakar lépni"
-"ebbõl az ablakból, a nélkül, hogy az nvda bezáruljon, akkor használja az alt+ f4 parancsot."
+"ebbõl az ablakból, és azt szeretné, hogy a nvda a háttérben futson beszédtámogatással, akkor használja az alt+ f4 parancsot."
 "\n"
-"Ha teljesen kiakarna  lépni az NVDa alkalmazásból, akkor vagy az insert +Q parancsot használja, vagy nyomja meg az alt gombot, és a nyilakkal válassza ki a kilépés parancsot."
+"Ha teljesen kiakarna  lépni az NVDa alkalmazásból, akkor vagy az inzert +Q parancsot használja, vagy nyomja meg az alt gombot, és a nyilakkal válassza ki a kilépés parancsot."
 
 "a program kilépés elott egy párbeszédpanelben megfogja önt kérdezni, hogy bisztos e ebben. Itt vagy az" 
 
 "Ok gombbal kilép, vagy a mégse gombbal vissza tud térni a windows rendszerbe."
 "\n"
-"Ha   különbözõ NVDA beállitásokat megakarna változtatni,  (Például hang karakter, billentyûzet visszhang, "
+"Ha   különbözõ NVDA beállitásokat megakarna változtatni,  (Például hang karakter, a billentyûzet használata, "
 "és hogy  a segítõ buborékok felolvasva legyenek e), akkor nyomja meg az alt gombot,  "
-"és válassza ki a beállitások menüt a jobb és bal nyilakkal. Majd a le és felnyillal a kivánt változtatnivaló beállitást válassza ki. "
+"és válassza ki a beállitások menüt a jobb és bal nyilakkal. Majd a le és felnyillal a kivánt változtatni való beállitást válassza ki. "
 "\n"
-"Legtöbb beállitás fel fog hozni egy párbeszédpanelt,amelyben megtudja változtatni oket. " 
-"Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Ritkán elöfordulhat, hogy újra kell inditani az NVDA programot."
-"Bárhonnan az NVDA ablakban, a Kontrol +S billentyûvel tudja lementeni a beálitott konfigurációt. Ez a parancs"
+"Legtöbb beállitás fel fog hozni egy párbeszédpanelt,amelyben megtudja változtatni a paramétereket. " 
+"Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Bizonyos esetekben  elöfordulhat, hogy újra kell inditania az NVDA programot."
+"Bárhonnan az NVDA ablakban, a Kontrol +S billentyûvel tudja lementeni a jelenleg beálitott konfigurációt. Ez a parancs"
 "A NVDA menüben is megtalálható."
-"Sot, azt is megteheti, hogy az NVDA kilépéskor lementse a konfigurációt. Ez az ópció a felhasználói felület beállitások...' panelben van."
+"Sot, azt is megteheti, hogy az NVDA kilépéskor lementse a konfigurációt. Ez az opció a felhasználói felület beállitások...' panelben van."
 "Az alábbiakban egy pár hasznos NVDA billentyûparancs van felsõrolva. \n"
 "\n"
 
@@ -972,12 +972,12 @@ msgstr ""
 "Kontrol - beszéd megszakítása \n"
 "Inzert 1 - billentyûzet segítség mód ki és bekapcsolása. \n"
 "Inzert felnyíl: A fókuszban lévö elem  kimondása. \n"
-" inzert lenyíl: minden mondása: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
+" inzert lenyíl: felolvasás elinditása: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
 "Inzert + t - ablak cím kimondása. \n"
 "Inzert + f12 - Az idõ és dátum kimondása. \n"
 "Inzert + 2 - Karakterek kimondásának ki és bekapcsolása. \n"
 "Inzert +3 - a begépelt  Szavak kimondását ki és bekapcsolja. \n"
-"inzert +4 - parancsgombok kimondása ki és bekapcsolása. \n"
+"inzert +4 - parancsgombok kimondásának ki és bekapcsolása. \n"
 "inzert +pageup - beszédsebesség felgyorsítása. \n"
 "Inzert +pagedown - beszédSebesség lelassítása. \n"
 
@@ -1348,7 +1348,7 @@ msgstr "hang&erö"
 
 #: gui\settingsDialogs.py:152
 msgid "&Speak all punctuation"
-msgstr "&minden hangsúly kiejtése"
+msgstr "&minden írásjel kimondása"
 
 #: gui\settingsDialogs.py:155
 msgid "Say &cap before capitals"
@@ -1648,6 +1648,22 @@ msgstr "a jelen alkalmazás vagy ablak címét bejelenti."
 msgid "speaks the current foreground object"
 msgstr "bejelenti az elotérben lévö elemet"
 
+#: appModules\_default.py:389
+msgid "Control ID: %s"
+msgstr "a vezérlõ azonosító száma: %s"
+
+#: appModules\_default.py:390
+msgid "Class: %s"
+msgstr "osztályzat: %s"
+
+#: appModules\_default.py:393
+msgid "internal text: %s"
+msgstr "belsõ szöveg: %s"
+
+#: appModules\_default.py:394
+msgid "text: %s"
+msgstr "szöveg: %s"
+
 #: appModules\_default.py:433
 #, fuzzy
 msgid "reports som info about the current navigator object, mainly useful for developpers: control id, class and internal text"
@@ -1810,10 +1826,10 @@ msgid ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2007 nvda termékfejleztok. \n"
+"Copyright (C) 2006-2007 nvda termékfejlesztõk. \n"
 "\n"
 "A NVDA-t Géczy Tamás forditotta le magyar nyelvre. Ha valamilyen nyelvtani hibát észlel, irjon a gt1991@gmail.com címre.  \n"
-"köszönlet jár Velegi Istvánnak, aki ötleteket adott a nyelvtanban. \n"
+"köszönet jár Velegi Istvánnak, aki ötleteket adott a nyelvtanban. \n"
 "új nyelvcsomagokat a http://www.eurpod.com/nvda.html honlapon találhat \n"
 "ezek nyelvtani hibákat javitanak ki a programban, és álltalában két hetente fog megjelenni egy új nyelv kiadás \n"
 
@@ -2026,20 +2042,17 @@ msgstr "szerkeztés "
 msgid "button"
 msgstr "gomb"
 
-
-#: IAccessibleHandler.py:139
-#: controlTypes.py:94
-#: IAccessibleHandler.py:139
+#: controlTypes.py:165
 msgid "Tree view"
 msgstr "fa nézet"
 
 #: controlTypes.py:95
 msgid "tree view item"
-msgstr "fa nézet elem"
+msgstr "fanézet elem"
 
 #: controlTypes.py:97
 msgid "tab control"
-msgstr "tab vezérlo"
+msgstr "lapfül"
 
 #: controlTypes.py:98
 msgid "slider"
@@ -2047,7 +2060,7 @@ msgstr "csúszka"
 
 #: controlTypes.py:99
 msgid "progress bar"
-msgstr "folyamat jelzõ"
+msgstr "folyam jelzõ"
 
 #: controlTypes.py:100
 msgid "scroll bar"
@@ -2325,7 +2338,50 @@ msgstr "körvonalgomb"
 msgid "IP address"
 msgstr "IP cím"
 
+#: controlTypes.py:256
+msgid "desktop icon"
+msgstr "asztal ikon"
  
+#: controlTypes.py:257
+msgid "alert"
+msgstr "figyelmeztetés"
+
+#: controlTypes.py:258
+msgid "internal frame"
+msgstr "belsõ keret"
+
+#: controlTypes.py:259
+msgid "desktop pane"
+msgstr "asztal terület"
+
+#: controlTypes.py:260
+msgid "option pane"
+msgstr "beállitások terület"
+
+#: controlTypes.py:261
+msgid "color chooser"
+msgstr "szín választó"
+
+#: controlTypes.py:262
+msgid "file chooser"
+msgstr "Fájl kiválasztó"
+
+#: controlTypes.py:263
+msgid "filler"
+msgstr "kitöltõ"
+
+#: controlTypes.py:264
+msgid "menu"
+msgstr "menü"
+
+#: controlTypes.py:266
+msgid "password edit"
+msgstr "jelszó. szerkeztés"
+
+#: controlTypes.py:267
+msgid "font chooser"
+msgstr "betûtípus kiválasztó"
+
 
 #: controlTypes.py:135
 msgid "grouping"
