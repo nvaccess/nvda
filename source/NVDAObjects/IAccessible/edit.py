@@ -187,11 +187,17 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
 			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
 			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-			if controlTypes.ROLE_FONTNAME in includes or controlTypes.ROLE_FONTNAME not in excludes: 
+			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=charFormat.szFaceName))
 				formatList.append(f)
-			if (charFormat.dwEffects&CFM_BOLD) and (controlTypes.ROLE_BOLD in includes or controlTypes.ROLE_BOLD not in excludes): 
+			if (charFormat.dwEffects&CFM_BOLD) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_ON,textHandler.Format(role=controlTypes.ROLE_BOLD))
+				formatList.append(f)
+			if (charFormat.dwEffects&CFM_ITALIC) and textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_ON,textHandler.Format(role=controlTypes.ROLE_ITALIC))
+				formatList.append(f)
+			if (charFormat.dwEffects&CFM_UNDERLINE) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_ON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
 				formatList.append(f)
 			if oldSel[0]!=offset and oldSel[1]!=offset:
 				self._setSelectionOffsets(oldSel[0],oldSel[1])

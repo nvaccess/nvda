@@ -10,6 +10,16 @@ import baseObject
 class E_noRelatedUnit(RuntimeError):
 	pass
 
+def isFormatEnabled(role,includes=set(),excludes=set()):
+	if len(includes)>0 and len(excludes)>0:
+		raise ValueError("Only one of includes or excludes can be used")
+	elif role in excludes:
+		return False
+	elif len(includes)>0 and role not in includes:
+		return False
+	else: 
+		return True
+   
 #Field stuff
 
 FORMAT_CMD_ON=1

@@ -92,13 +92,15 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	_getParagraphOffsets=_getLineOffsets
 
 	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
+		end=offset+1
 		formats=[]
-		if controlTypes.ROLE_LINE in includes or controlTypes.ROLE_LINE not in excludes: 
+		if textHandler.isFormatEnabled(controlTypes.ROLE_LINE,includes=includes,excludes=excludes):
 			lineNum=self._getLineNumFromOffset(offset)
 			if lineNum>=0:
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
 				formats.append(f)
-		return (formats,offset,offset+1)
+				lineStart,end=self._getLineOffsets(offset)
+		return (formats,offset,end)
 
 	def _getReadingChunkOffsets(self,offset):
 		return self._getSentenceOffsets(offset)
