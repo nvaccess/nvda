@@ -87,7 +87,7 @@ class ExcelGrid(IAccessible):
 		return cell.Font.Underline
 
 	def event_gainFocus(self):
-		self.speakObject()
+		super(ExcelGrid,self).event_gainFocus()
 		self.speakSelection()
 
 	def script_moveByCell(self,keyPress,nextScript):
@@ -107,7 +107,7 @@ class ExcelGrid(IAccessible):
 		if self.isUnderline(self.getActiveCell()):
 			speech.speakMessage(_("underline"))
 
-[excelTable.bindKey(keyName,scriptName) for keyName,scriptName in [
+[ExcelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByCell"),
 	("ExtendedDown","moveByCell"),
 	("ExtendedLeft","moveByCell"),
