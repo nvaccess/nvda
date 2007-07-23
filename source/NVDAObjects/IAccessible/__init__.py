@@ -419,6 +419,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_statusBar(self):
 		statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'msctls_statusbar32',0)
+		if statusWindow is None:
+			statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'TTntStatusBar.UnicodeClass',0)
 		statusObject=getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
 		if not isinstance(statusObject,NVDAObject):
 			return None 
@@ -805,4 +807,5 @@ _staticMap={
 	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TTntStatusBar.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 }
