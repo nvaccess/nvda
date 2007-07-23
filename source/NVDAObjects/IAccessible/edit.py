@@ -178,7 +178,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			if self.obj.editAPIUnicode:
 				charFormatStruct=CharFormat2WStruct
 			else:
-				charFormatStruct=charFormat2AStruct
+				charFormatStruct=CharFormat2AStruct
 			charFormat=charFormatStruct()
 			charFormat.cbSize=ctypes.sizeof(charFormatStruct)
 			processHandle=self.obj.editProcessHandle
