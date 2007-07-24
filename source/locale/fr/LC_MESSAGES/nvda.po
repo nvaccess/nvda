@@ -11,8 +11,6 @@ msgstr ""
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
 
 #: IAccessibleHandler.py:136 controlTypes.py:158
 msgid "window"
@@ -111,32 +109,32 @@ msgstr "souligné"
 msgid "%d of %d"
 msgstr "%s sur %s"
 
-#: NVDAObjects\__init__.py:502 NVDAObjects\__init__.py:513
-#: NVDAObjects\__init__.py:547 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:525 NVDAObjects\__init__.py:536
+#: NVDAObjects\__init__.py:570 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "haut"
 
-#: NVDAObjects\__init__.py:529 NVDAObjects\__init__.py:536
-#: NVDAObjects\__init__.py:563 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:552 NVDAObjects\__init__.py:559
+#: NVDAObjects\__init__.py:586 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "bas"
 
-#: NVDAObjects\__init__.py:572 NVDAObjects\__init__.py:583
+#: NVDAObjects\__init__.py:595 NVDAObjects\__init__.py:606
 msgid "left"
 msgstr "gauche"
 
-#: NVDAObjects\__init__.py:605 NVDAObjects\__init__.py:621
+#: NVDAObjects\__init__.py:628 NVDAObjects\__init__.py:644
 msgid "right"
 msgstr "droite"
 
-#: NVDAObjects\__init__.py:744 textBuffer.py:537 textBuffer.py:541
+#: NVDAObjects\__init__.py:767 textBuffer.py:537 textBuffer.py:541
 #: textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "sélectionné %s"
 
-#: NVDAObjects\__init__.py:746 textBuffer.py:545 textBuffer.py:547
+#: NVDAObjects\__init__.py:769 textBuffer.py:545 textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "non sélectionné %s"
@@ -2010,7 +2008,7 @@ msgstr "Annoncer les &éléments de listes"
 msgid "Report &headings"
 msgstr "Annoncer les &titres"
 
-#: gui\settingsDialogs.py:411 gui\settingsDialogs.py:492
+#: gui\settingsDialogs.py:411 gui\settingsDialogs.py:495
 msgid "Report &tables"
 msgstr "Annoncer les ta&bleaux"
 
@@ -2039,30 +2037,34 @@ msgid "Report f&rames"
 msgstr "Annoncer les c&adres"
 
 #: gui\settingsDialogs.py:474
+msgid "Announce formatting changes after the cursor (can cause a lag)"
+msgstr "Annonce les changements de format après le curseur (peut dégrader les performances)"
+
+#: gui\settingsDialogs.py:477
 msgid "Report font &name"
 msgstr "annoncer le &nom de la police"
 
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:480
 msgid "Report font &size"
 msgstr "annoncer la &taille de la police"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:483
 msgid "Report font attri&butes"
 msgstr "annoncer les &attributs de la police"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:486
 msgid "Report st&yle"
 msgstr "annoncer le st&yle"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:489
 msgid "Report &pages"
 msgstr "annoncer la &page"
 
-#: gui\settingsDialogs.py:489
+#: gui\settingsDialogs.py:492
 msgid "Report &line numbers"
 msgstr "annoncer le numéro de &ligne"
 
-#: gui\settingsDialogs.py:495
+#: gui\settingsDialogs.py:498
 msgid "Report &alignment"
 msgstr "annoncer l'&alignement"
 
@@ -2251,7 +2253,9 @@ msgstr "terminé"
 #: virtualBuffers\IAccessible\MSHTML.py:239
 #: virtualBuffers\IAccessible\MSHTML.py:242
 #: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\adobe.py:246
 #: virtualBuffers\IAccessible\adobe.py:257
+#: virtualBuffers\IAccessible\gecko.py:239
 #: virtualBuffers\IAccessible\gecko.py:250
 msgid "with %s items"
 msgstr "avec %s éléments"
