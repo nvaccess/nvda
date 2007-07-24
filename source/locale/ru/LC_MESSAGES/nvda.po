@@ -49,6 +49,65 @@ msgstr "Не %s"
 msgid "lost focus"
 msgstr "Фокус потерян"
 
+#: NVDAObjects\IAccessible\__init__.py:67
+#: NVDAObjects\IAccessible\__init__.py:437
+#: NVDAObjects\IAccessible\sysListView32.py:83
+msgid "%s of %s"
+msgstr "%s из %s"
+
+#: NVDAObjects\IAccessible\__init__.py:71
+msgid "%s items"
+msgstr "%s элементов"
+
+#: NVDAObjects\IAccessible\__init__.py:696
+#: NVDAObjects\IAccessible\sysTreeView32.py:137
+msgid "%d items"
+msgstr "%d элементов"
+
+#: NVDAObjects\IAccessible\excel.py:64
+msgid "through"
+msgstr "по"
+
+#: NVDAObjects\IAccessible\excel.py:64 controlTypes.py:298
+msgid "selected"
+msgstr "Выбрано"
+
+#: NVDAObjects\IAccessible\excel.py:68
+msgid "has formula"
+msgstr "Содержит формулу"
+
+#: NVDAObjects\IAccessible\excel.py:97
+msgid "Moves to a cell and speaks its coordinates and content"
+msgstr "Переходит к ячейке и читает её координаты и содержание"
+
+#: NVDAObjects\IAccessible\excel.py:101
+msgid "font"
+msgstr "Шрифт"
+
+#: NVDAObjects\IAccessible\excel.py:102
+msgid "point"
+msgstr "Размер"
+
+#: NVDAObjects\IAccessible\excel.py:104 controlTypes.py:283
+#: textBuffer.py:266 textBuffer.py:318
+msgid "bold"
+msgstr "Полужирный"
+
+#: NVDAObjects\IAccessible\excel.py:106 textBuffer.py:273
+#: textBuffer.py:320
+msgid "italic"
+msgstr "Курсив"
+
+#: NVDAObjects\IAccessible\excel.py:108 controlTypes.py:285
+#: textBuffer.py:280 textBuffer.py:322
+msgid "underline"
+msgstr "Подчёркнутый"
+
+#: NVDAObjects\IAccessible\sysTreeView32.py:132
+#: NVDAObjects\JAB\__init__.py:248
+msgid "%d of %d"
+msgstr "%d из %d"
+
 #: NVDAObjects\__init__.py:483 NVDAObjects\__init__.py:494
 #: NVDAObjects\__init__.py:528 textBuffer.py:364
 #: textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
@@ -528,11 +587,11 @@ msgstr "Слепая копия"
 #: characterSymbols.py:17 characterSymbols.py:18
 #: speech.py:55
 msgid "blank"
-msgstr "Пусто"
+msgstr "Чисто"
 
 #: characterSymbols.py:19
 msgid "null"
-msgstr "Ноль"
+msgstr "пусто"
 
 #: characterSymbols.py:21
 msgid "line feed"
@@ -1116,7 +1175,7 @@ msgstr "Область рабочего стола"
 
 #: controlTypes.py:260
 msgid "option pane"
-msgstr "Область параметров"
+msgstr "Область параметра"
 
 #: controlTypes.py:261
 msgid "color chooser"
@@ -1145,6 +1204,47 @@ msgstr "Редактор пароля"
 #: controlTypes.py:267
 msgid "font chooser"
 msgstr "Выбор шрифта"
+
+#: controlTypes.py:281
+msgid "font name"
+msgstr "Название шрифта"
+
+#: controlTypes.py:282
+msgid "font size"
+msgstr "Размер шрифта"
+
+#: controlTypes.py:284
+msgid "ITALIC"
+msgstr "Курсив"
+
+#: controlTypes.py:286
+msgid "foreground color"
+msgstr "Цвет шрифта"
+
+#: controlTypes.py:287
+msgid "background color"
+msgstr "Цвет фона"
+
+#: controlTypes.py:288 textBuffer.py:287
+#: textBuffer.py:294 textBuffer.py:324
+msgid "superscript"
+msgstr "Надстрочный"
+
+#: controlTypes.py:289 textBuffer.py:326
+msgid "subscript"
+msgstr "Подстрочный"
+
+#: controlTypes.py:290
+msgid "style"
+msgstr "Стиль"
+
+#: controlTypes.py:291
+msgid "indent"
+msgstr "Отступ"
+
+#: controlTypes.py:292
+msgid "alignment"
+msgstr "Выравнивание"
 
 #: controlTypes.py:271
 msgid "unavailable"
@@ -1775,6 +1875,10 @@ msgid "Report f&rames"
 msgstr "Читать &Фреймы"
 
 #: gui\settingsDialogs.py:474
+msgid "Announce formatting changes after the cursor (can cause a lag)"
+msgstr "Читать изменения формата после курсора (может вызвать отставание"
+
+#: gui\settingsDialogs.py:474
 msgid "Report font &name"
 msgstr "Читать название &Шрифта"
 
@@ -1882,33 +1986,17 @@ msgstr "Название шрифта %s"
 msgid "font size %d"
 msgstr "Размер шрифта %d"
 
-#: textBuffer.py:266 textBuffer.py:318
-msgid "bold"
-msgstr "Полужирный"
-
 #: textBuffer.py:268
 msgid "not bold"
 msgstr "Не полужирный"
-
-#: textBuffer.py:273 textBuffer.py:320
-msgid "italic"
-msgstr "Курсив"
 
 #: textBuffer.py:275
 msgid "not italic"
 msgstr "Не курсив"
 
-#: textBuffer.py:280 textBuffer.py:322
-msgid "underline"
-msgstr "Подчёркнутый"
-
 #: textBuffer.py:282
 msgid "not underline"
 msgstr "Не подчёркнутый"
-
-#: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
-msgid "superscript"
-msgstr "Надстрочный"
 
 #: textBuffer.py:289
 msgid "not superscript"
@@ -1917,10 +2005,6 @@ msgstr "Не надстрочный"
 #: textBuffer.py:296
 msgid "not subscript"
 msgstr "Не подстрочный"
-
-#: textBuffer.py:326
-msgid "subscript"
-msgstr "Подстрочный"
 
 #: textBuffer.py:470 textBuffer.py:498 textBuffer.py:506
 msgid "Moves and then reads the current line"
@@ -1983,6 +2067,59 @@ msgstr ""
 "Получить дополнительную информацию по данной лицензии вы можете на сайте:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "или из входящего в комплект поставки программы файла Copying.txt."
+
+#: virtualBuffers\IAccessible\MSHTML.py:136
+#: virtualBuffers\IAccessible\adobe.py:159
+#: virtualBuffers\IAccessible\gecko.py:157
+msgid "loading document %s"
+msgstr "Загрузка документа %s"
+
+#: virtualBuffers\IAccessible\MSHTML.py:144
+#: virtualBuffers\IAccessible\adobe.py:168
+#: virtualBuffers\IAccessible\gecko.py:166
+msgid "done"
+msgstr "Готово"
+
+#: virtualBuffers\IAccessible\MSHTML.py:239
+#: virtualBuffers\IAccessible\MSHTML.py:242
+#: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\adobe.py:246
+#: virtualBuffers\IAccessible\adobe.py:257
+#: virtualBuffers\IAccessible\gecko.py:239
+#: virtualBuffers\IAccessible\gecko.py:250
+msgid "with %s items"
+msgstr "из % элементов"
+
+#: virtualBuffers\IAccessible\MSHTML.py:245
+#: virtualBuffers\IAccessible\MSHTML.py:252
+#: virtualBuffers\IAccessible\adobe.py:252
+#: virtualBuffers\IAccessible\adobe.py:263
+#: virtualBuffers\IAccessible\gecko.py:245
+#: virtualBuffers\IAccessible\gecko.py:256
+msgid "bullet"
+msgstr "Буллит"
+
+#: virtualBuffers\IAccessible\MSHTML.py:248
+#: virtualBuffers\IAccessible\MSHTML.py:255
+#: virtualBuffers\IAccessible\adobe.py:256
+#: virtualBuffers\IAccessible\adobe.py:269
+#: virtualBuffers\IAccessible\gecko.py:249
+#: virtualBuffers\IAccessible\gecko.py:262
+msgid "definition"
+msgstr "Определение"
+
+#: virtualBuffers\IAccessible\MSHTML.py:283
+msgid "file upload"
+msgstr "Загрузить файл"
+
+#: virtualBuffers\IAccessible\MSHTML.py:316
+msgid "clickable"
+msgstr "Щелчок мышью"
+
+#: virtualBuffers\IAccessible\adobe.py:301
+#: virtualBuffers\IAccessible\gecko.py:294
+msgid "protected %s"
+msgstr "Защищено %s"
 
 #: virtualBuffers\__init__.py:193
 msgid "out of %s"
