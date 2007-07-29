@@ -402,8 +402,6 @@ class appModule(appModuleHandler.appModule):
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
-		import devUtils
-		speech.speakMessage(str(devUtils.getNativeObjectModelFromWindow(obj.windowHandle)))
 		speech.speakMessage("%s"%obj)
 		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage(_("Class: %s")%obj.windowClassName)

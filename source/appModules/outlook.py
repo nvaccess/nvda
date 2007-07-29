@@ -47,11 +47,18 @@ def getSentMessageString(obj):
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
-		obj.description=None
+		role=obj.role
+		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
+			obj.description=None
+		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
+			obj.reportFocusNeedsIAccessibleFocusState=False
 		controlID=obj.windowControlID
 		className=obj.windowClassName
-		if outlookVersion<=9 and isinstance(obj,IAccessible) and ((className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109)):
-			obj.__class__=MessageList_pre2003
+		if (className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109):
+			if outlookVersion<=9 and isinstance(obj,IAccessible):
+				obj.__class__=MessageList_pre2003
+			elif obj.role==controlTypes.ROLE_UNKNOWN:
+				obj.role=controlTypes.ROLE_ICON
 
 class MessageList_pre2003(IAccessible):
 

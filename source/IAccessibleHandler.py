@@ -489,8 +489,9 @@ def manageEvent(name,window,objectID,childID):
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global lastEventParams
 	try:
+		controlID=winUser.getControlID(window)
 		#A hack to fix a terible bug in Notepad++
-		if eventID==winUser.EVENT_OBJECT_FOCUS and winUser.getControlID(window)==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
+		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
 			return
 		#Ignore certain duplicate events
 		if lastEventParams is not None and eventID==winUser.EVENT_OBJECT_FOCUS and lastEventParams==(eventID,window,objectID,childID):
@@ -565,7 +566,7 @@ def handleFocusEvent(window,objectID,childID):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
 	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID:
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID and winUser.getClassName(window)!="OUTEXVLB":
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj:
