@@ -119,3 +119,9 @@ class SynthDriver(silence.SynthDriver):
 
 	def cancel(self):
 		self.tts.audioReset()
+
+	def pause(self,switch):
+		if switch:
+			self.tts.audioPause()
+		else:
+			self.tts.audioResume()

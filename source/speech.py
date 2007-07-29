@@ -26,6 +26,7 @@ speechMode_talk=2
 speechMode=2
 speechMode_beeps_ms=15
 beenCanceled=True
+isPaused=False
 re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
 re_singleCapAfterCapsInWord=re.compile(r"([A-Z])([A-Z][a-z])")
 re_numericAfterAlphaInWord=re.compile(r"([a-zA-Z])([0-9])")
@@ -141,7 +142,7 @@ def processText(text):
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled
+	global beenCanceled, isPaused
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -150,6 +151,13 @@ def cancelSpeech():
 		return
 	getSynth().cancel()
 	beenCanceled=True
+	isPaused=False
+
+def pauseSpeech(switch):
+	global isPaused, beenCanceled
+	getSynth().pause(switch)
+	isPaused=switch
+	beenCanceled=False
 
 def speakMessage(text,wait=False,index=None):
 	"""Speaks a given message.

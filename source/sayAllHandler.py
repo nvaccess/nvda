@@ -54,6 +54,9 @@ def readHelper_generator(info,cursor):
 					updater.obj.reviewPosition=updater
 		if endIndex is not None and spokenIndex==endIndex:
 			keepUpdating=keepReading=False
+		while speech.isPaused:
+			yield
+			startKeyCount=globalVars.keyCounter
 		if globalVars.keyCounter!=startKeyCount:
 			speech.cancelSpeech()
 			keepUpdating=keepReading=False

@@ -37,6 +37,9 @@ class SynthDriver(silence.SynthDriver):
 	def cancel(self):
 		_espeak.stop()
 
+	def pause(self,switch):
+		_espeak.pause(switch)
+
 	def _get_rate(self):
 		val=_espeak.getParameter(_espeak.espeakRATE,1)
 		return self._paramToPercent(val,_espeak.minRate,_espeak.maxRate)

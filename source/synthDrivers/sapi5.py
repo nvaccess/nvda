@@ -107,3 +107,7 @@ class SynthDriver(silence.SynthDriver):
 	def cancel(self):
 		#if self.tts.Status.RunningState == 2:
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
+
+	def pause(self,switch):
+		if switch:
+			self.cancel()
