@@ -418,13 +418,19 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			pass
 
 	def _get_statusBar(self):
-		statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'msctls_statusbar32',0)
-		if statusWindow is None:
-			statusWindow=ctypes.windll.user32.FindWindowExW(self.windowHandle,0,u'TTntStatusBar.UnicodeClass',0)
-		statusObject=getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
-		if not isinstance(statusObject,NVDAObject):
-			return None 
-		return statusObject
+		windowClasses=(u'msctls_statusbar32',u'TTntStatusBar.UnicodeClass')
+		curWindow=self.windowHandle
+		statusWindow=0
+		while not statusWindow and curWindow:
+			for windowClass in windowClasses:
+				statusWindow=ctypes.windll.user32.FindWindowExW(curWindow,0,windowClass,0)
+				if statusWindow:
+					break
+			curWindow=winUser.getAncestor(curWindow,winUser.GA_PARENT)
+		if statusWindow:
+			return getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
+		else:
+			return None
 
 	def _get_positionString(self):
 		position=""
@@ -732,11 +738,12 @@ class InternetExplorerClient(Client):
 class StatusBar(IAccessible):
 
 	def _get_value(self):
-		value=""
-		for child in self.children:
-			if child.name is not None:
-				value+="  "+child.name
-		return value
+		oldValue=super(StatusBar,self)._get_value()
+		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in self.children if x.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_STATICTEXT)])
+		if valueFromChildren:
+			return valueFromChildren
+		else:
+			return oldValue
 
 class SysLink(IAccessible):
 

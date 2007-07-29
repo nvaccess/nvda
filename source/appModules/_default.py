@@ -367,11 +367,8 @@ class appModule(appModuleHandler.appModule):
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
 
 	def script_reportStatusLine(self,keyPress,nextScript):
-		foregroundObject=api.getForegroundObject()
-		if not foregroundObject:
-			speech.speakMessage(_("no foreground object"))
-			return
-		statusBarObject=foregroundObject.statusBar
+		focus=api.getFocusObject()
+		statusBarObject=focus.statusBar
 		if not statusBarObject:
 			speech.speakMessage(_("no status bar found"))
 			return
@@ -405,6 +402,8 @@ class appModule(appModuleHandler.appModule):
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
 		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
+		import devUtils
+		speech.speakMessage(str(devUtils.getNativeObjectModelFromWindow(obj.windowHandle)))
 		speech.speakMessage("%s"%obj)
 		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage(_("Class: %s")%obj.windowClassName)
