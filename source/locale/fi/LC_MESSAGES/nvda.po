@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1054\n"
-"POT-Creation-Date: 2007-07-23 18:35+Kesäaika\n"
-"PO-Revision-Date: 2007-07-23 18:39+0300\n"
+"Project-Id-Version: r1073\n"
+"POT-Creation-Date: 2007-07-29 20:10+Kesäaika\n"
+"PO-Revision-Date: 2007-07-29 20:12+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Puunäkymä"
 msgid "sub menu"
 msgstr "alavalikko"
 
-#: IAccessibleHandler.py:193 speech.py:216
+#: IAccessibleHandler.py:193 speech.py:226
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
 #: virtualBuffers\IAccessible\MSHTML.py:298
@@ -49,12 +49,12 @@ msgstr "alavalikko"
 msgid "not %s"
 msgstr "ei %s"
 
-#: IAccessibleHandler.py:584
+#: IAccessibleHandler.py:585
 msgid "lost focus"
 msgstr "kohdistus menetetty"
 
 #: NVDAObjects\IAccessible\__init__.py:67
-#: NVDAObjects\IAccessible\__init__.py:437
+#: NVDAObjects\IAccessible\__init__.py:443
 #: NVDAObjects\IAccessible\sysListView32.py:83
 msgid "%s of %s"
 msgstr "%s kautta %s"
@@ -63,7 +63,7 @@ msgstr "%s kautta %s"
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: NVDAObjects\IAccessible\__init__.py:696
+#: NVDAObjects\IAccessible\__init__.py:702
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d kohdetta"
@@ -148,19 +148,19 @@ msgstr "näennäispuskurin läpivienti"
 #: api.py:147 appModules\_default.py:43 appModules\_default.py:76
 #: appModules\_default.py:86 appModules\_default.py:96
 #: appModules\_default.py:106 appModules\_default.py:310
-#: appModules\_default.py:384 appModules\_default.py:419
-#: appModules\_default.py:429 appModules\_default.py:439
-#: appModules\_default.py:449 keyboardHandler.py:49 keyboardHandler.py:51
-#: keyboardHandler.py:53 speech.py:369 speech.py:375
+#: appModules\_default.py:381 appModules\_default.py:416
+#: appModules\_default.py:426 appModules\_default.py:436
+#: appModules\_default.py:446 keyboardHandler.py:49 keyboardHandler.py:51
+#: keyboardHandler.py:53 speech.py:385 speech.py:391
 msgid "off"
 msgstr "pois"
 
 #: api.py:150 appModules\_default.py:40 appModules\_default.py:79
 #: appModules\_default.py:89 appModules\_default.py:99
-#: appModules\_default.py:109 appModules\_default.py:387
-#: appModules\_default.py:422 appModules\_default.py:432
-#: appModules\_default.py:442 appModules\_default.py:452 keyboardHandler.py:49
-#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:364
+#: appModules\_default.py:109 appModules\_default.py:384
+#: appModules\_default.py:419 appModules\_default.py:429
+#: appModules\_default.py:439 appModules\_default.py:449 keyboardHandler.py:49
+#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:380
 msgid "on"
 msgstr "päällä"
 
@@ -521,54 +521,50 @@ msgstr ""
 msgid "reports the object with focus"
 msgstr "Ilmoittaa objektin, jossa kohdistus on"
 
-#: appModules\_default.py:372
-msgid "no foreground object"
-msgstr "ei edusobjektia"
-
-#: appModules\_default.py:376
+#: appModules\_default.py:373
 msgid "no status bar found"
 msgstr "tilariviä ei löydy"
 
-#: appModules\_default.py:380
+#: appModules\_default.py:377
 msgid ""
 "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointikohdistimen sen "
 "kohdalle"
 
-#: appModules\_default.py:389
+#: appModules\_default.py:386
 msgid "Report object under mouse"
 msgstr "Lue hiiren alla oleva objekti"
 
-#: appModules\_default.py:390
+#: appModules\_default.py:387
 msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr "Hiiren alla olevan objektin lukeminen päälle ja pois"
 
-#: appModules\_default.py:396
+#: appModules\_default.py:393
 msgid "Reports the title of the current application or foreground window"
 msgstr "Lukee nykyisen sovelluksen tai edustalla olevan ikkunan nimen"
 
-#: appModules\_default.py:403
+#: appModules\_default.py:400
 msgid "speaks the current foreground object"
 msgstr "Lukee nykyisen edusobjektin"
 
-#: appModules\_default.py:409
+#: appModules\_default.py:406
 msgid "Control ID: %s"
 msgstr "Säädintunnus: %s"
 
-#: appModules\_default.py:410
+#: appModules\_default.py:407
 msgid "Class: %s"
 msgstr "Luokka: %s"
 
-#: appModules\_default.py:413
+#: appModules\_default.py:410
 msgid "internal text: %s"
 msgstr "Sisäinen teksti: %s"
 
-#: appModules\_default.py:414
+#: appModules\_default.py:411
 msgid "text: %s"
 msgstr "teksti: %s"
 
-#: appModules\_default.py:415
+#: appModules\_default.py:412
 msgid ""
 "reports some info about the current navigator object, mainly useful for "
 "developers: control id, class and internal text"
@@ -577,19 +573,19 @@ msgstr ""
 "pääasiassa ohjelmistokehittäjille: ohjaintunnus, luokka ja sisäinen "
 "teksti"
 
-#: appModules\_default.py:424
+#: appModules\_default.py:421
 msgid "Beep on progress bar updates"
 msgstr "Anna äänimerkki edistymispalkin päivittyessä"
 
-#: appModules\_default.py:425
+#: appModules\_default.py:422
 msgid "Toggles on and off the beeping on progress bar updates"
 msgstr "Äänimerkin antaminen edistymispalkin päivittyessä päälle ja pois"
 
-#: appModules\_default.py:434
+#: appModules\_default.py:431
 msgid "report dynamic content changes"
 msgstr "ilmoita dynaamisen sisällön muutoksista"
 
-#: appModules\_default.py:435
+#: appModules\_default.py:432
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -597,54 +593,54 @@ msgstr ""
 "Dynaamisen sisällön, kuten uuden tekstin DOS-ikkunoissa, muutoksista "
 "ilmoittaminen päälle ja pois"
 
-#: appModules\_default.py:444
+#: appModules\_default.py:441
 msgid "caret moves review cursor"
 msgstr "Järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
-#: appModules\_default.py:445
+#: appModules\_default.py:442
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Tarkastelukohdistimen siirtäminen järjestelmäkohdistimen mukaan päälle "
 "ja pois."
 
-#: appModules\_default.py:454
+#: appModules\_default.py:451
 msgid "focus moves navigator object"
 msgstr "kohdistus siirtää navigointiobjektia"
 
-#: appModules\_default.py:455
+#: appModules\_default.py:452
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Navigointiobjektin siirtäminen kohdistusmuutosten mukaan päälle ja pois"
 
-#: appModules\_default.py:467
+#: appModules\_default.py:464
 msgid "no system battery"
 msgstr "järjestelmässä ei akkua"
 
-#: appModules\_default.py:469
+#: appModules\_default.py:466
 msgid "%d percent"
 msgstr "%d prosenttia"
 
-#: appModules\_default.py:470
+#: appModules\_default.py:467
 msgid "AC power on"
 msgstr "verkkovirta käytössä"
 
-#: appModules\_default.py:472
+#: appModules\_default.py:469
 msgid "%d hours and %d minutes remaining"
 msgstr "%d tuntia ja %d minuuttia jäljellä"
 
-#: appModules\_default.py:474
+#: appModules\_default.py:471
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Ilmoittaa akun varauksen ja jäljellä olevan ajan, jos verkkovirta ei ole "
 "käytössä"
 
-#: appModules\_default.py:478
+#: appModules\_default.py:475
 msgid "Pass next key through"
 msgstr "Päästä läpi seuraava näppäinpainallus"
 
-#: appModules\_default.py:479
+#: appModules\_default.py:476
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -704,7 +700,27 @@ msgstr "Avainsanat:"
 msgid "BCC:"
 msgstr "Piilokopio:"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:56
+#: appModules\outlook.py:30 appModules\outlook.py:43
+msgid "subject: %s"
+msgstr "aihe: %s"
+
+#: appModules\outlook.py:31
+msgid "received: %s"
+msgstr "vastaanotettu: %s"
+
+#: appModules\outlook.py:35
+msgid "unread"
+msgstr "lukematon"
+
+#: appModules\outlook.py:37
+msgid "attachment"
+msgstr "liite"
+
+#: appModules\outlook.py:44
+msgid "sent: %s"
+msgstr "lähetetty: %s"
+
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:57
 msgid "blank"
 msgstr "tyhjä"
 
@@ -2086,27 +2102,27 @@ msgstr "num lock %s"
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:121
+#: keyboardHandler.py:127
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:122
+#: keyboardHandler.py:128
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: sayAllHandler.py:82
+#: sayAllHandler.py:85
 msgid "end of text"
 msgstr "Tekstin loppu"
 
-#: speech.py:242
+#: speech.py:252
 msgid "level %d"
 msgstr "taso %d"
 
-#: speech.py:246
+#: speech.py:256
 msgid "contains %s"
 msgstr "sisältää %s"
 
-#: speech.py:283
+#: speech.py:295
 msgid "cap %s"
 msgstr "iso %s"
 
