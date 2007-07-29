@@ -107,6 +107,7 @@ class MessageList_pre2003(IAccessible):
 	("extendedUp","moveByMessage"),
 	("extendedHome","moveByMessage"),
 	("extendedEnd","moveByMessage"),
+	("extendedDelete","moveByMessage"),
 ]]
 
 class MessageItem(Window):
