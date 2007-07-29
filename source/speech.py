@@ -179,6 +179,8 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	if isPaused:
+		cancelSpeech()
 	beenCanceled=False
 	textList=[]
 	if groupName:
@@ -280,6 +282,8 @@ Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} i
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	if isPaused:
+		cancelSpeech()
 	beenCanceled=False
 	text=processSymbol(symbol)
 	if symbol is not None and len(symbol)==1 and symbol.isupper(): 
@@ -315,6 +319,8 @@ This function will not speak if L{speechMode} is false.
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	if isPaused:
+		cancelSpeech()
 	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
@@ -352,6 +358,8 @@ def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 	elif speechMode==speechMode_beeps:
 		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
 		return
+	if isPaused:
+		cancelSpeech()
 	beenCanceled=False
 	formattedText=textInfo.getFormattedText(searchRange=config.conf["documentFormatting"]["detectFormatAfterCursor"],excludes=getExcludedAutoSpeakFormats())
 	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
