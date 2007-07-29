@@ -172,7 +172,10 @@ class WinConsole(IAccessible):
 		return (offset,offset)
 
 	def _get_basicTextLineLength(self):
-		return self.getConsoleHorizontalLength()
+		if hasattr(self,'consoleHandle'):
+			return self.getConsoleHorizontalLength()
+		else:
+			return super(WinConsole,self)._get_basicTextLineLength()
 
 	def getOffsetFromConsoleCoord(self,x,y):
 		if not hasattr(self,"consoleHandle"):
