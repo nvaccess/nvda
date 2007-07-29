@@ -19,7 +19,7 @@ try:
 	nativeOm=win32com.client.GetActiveObject("outlook.application")
 except:
 	nativeOm=win32com.client.Dispatch("outlook.application")
-outlookVersion=int(nativeOm.version[0])
+outlookVersion=int(nativeOm.version.split('.')[0])
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -50,7 +50,7 @@ class appModule(appModuleHandler.appModule):
 		obj.description=None
 		controlID=obj.windowControlID
 		className=obj.windowClassName
-		if outlookVersion<11 and isinstance(obj,IAccessible) and ((className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109)):
+		if outlookVersion<=9 and isinstance(obj,IAccessible) and ((className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109)):
 			obj.__class__=MessageList_pre2003
 
 class MessageList_pre2003(IAccessible):
