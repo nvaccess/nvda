@@ -395,6 +395,9 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 	def _get_firstChild(self):
 		return None
 
+	def _get_lastChild(self):
+		return None
+
 	def _get_children(self):
 		children=[]
 		child=self.firstChild
@@ -402,6 +405,56 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 			children.append(child)
 			child=child.next
 		return children
+
+	def getNextInFlow(self,down=None,up=None):
+		"""Retreaves the next object in depth first tree traversal order
+@param up: a list that all objects that we moved up out of will be placed in
+@type up: list
+@param down: a list which all objects we moved down in to will be placed
+@type down: list
+"""
+		child=self.firstChild
+		if child:
+			if isinstance(down,list):
+				down.append(self)
+			return child
+		next=self.next
+		if next:
+			return next
+		parent=self.parent
+		while not next and parent:
+			next=parent.next
+			if isinstance(up,list):
+				up.append(parent)
+			parent=parent.parent
+		return next
+
+	_get_nextInFlow=getNextInFlow
+
+	def getPreviousInFlow(self,down=None,up=None):
+		"""Retreaves the previous object in depth first tree traversal order
+@param up: a list that all objects that we moved up out of will be placed in
+@type up: list
+@param down: a list which all objects we moved down in to will be placed
+@type down: list
+"""
+		prev=self.previous
+		if prev:
+			lastLastChild=prev
+			lastChild=prev.lastChild
+			while lastChild:
+				if isinstance(down,list):
+					down.append(lastLastChild)
+				lastLastChild=lastChild
+				lastChild=lastChild.lastChild
+			return lastLastChild
+		parent=self.parent
+		if parent:
+			if isinstance(up,list):
+				up.append(self)
+			return parent
+
+	_get_previousInFlow=getPreviousInFlow
 
 	def _get_childCount(self):
 		return len(self.children)

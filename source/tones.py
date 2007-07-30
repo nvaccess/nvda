@@ -12,7 +12,7 @@ from glob import glob
 
 sampleRate=22050.0
 slopeRatio=0.01
-amplitude=5000.0
+amplitude=7000.0
 
 player = nvwave.WavePlayer(channels=1, samplesPerSec=int(sampleRate), bitsPerSample=16)
 

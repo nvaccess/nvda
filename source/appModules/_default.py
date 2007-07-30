@@ -7,6 +7,8 @@
 import gc
 import comtypesClient
 import datetime
+import time
+import tones
 from keyUtils import key
 import keyboardHandler
 import IAccessibleHandler
@@ -205,6 +207,52 @@ class appModule(appModuleHandler.appModule):
 		else:
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object to the one it is currently on")
+
+	def script_navigatorObject_nextInFlow(self,keyPress,nextScript):
+		curObject=api.getNavigatorObject()
+		if not isinstance(curObject,NVDAObject):
+			speech.speakMessage(_("no navigator object"))
+			return
+		up=[]
+		down=[]
+		curObject=curObject.getNextInFlow(up=up,down=down)
+		if curObject is not None:
+			api.setNavigatorObject(curObject)
+			if len(up)>0:
+				for count in range(len(up)+1):
+					tones.beep(880*(1.25**count),50)
+					time.sleep(0.025)
+			if len(down)>0:
+				for count in range(len(down)+1):
+					tones.beep(880/(1.25**count),50)
+					time.sleep(0.025)
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+		else:
+			speech.speakMessage(_("end of flow"))
+	script_navigatorObject_nextInFlow.__doc__=_("Sets the navigator object to the object this object flows to.")
+
+	def script_navigatorObject_previousInFlow(self,keyPress,nextScript):
+		curObject=api.getNavigatorObject()
+		if not isinstance(curObject,NVDAObject):
+			speech.speakMessage(_("no navigator object"))
+			return
+		up=[]
+		down=[]
+		curObject=curObject.getPreviousInFlow(up=up,down=down)
+		if curObject is not None:
+			api.setNavigatorObject(curObject)
+			if len(up)>0:
+				for count in range(len(up)+1):
+					tones.beep(880*(1.25**count),50)
+					time.sleep(0.025)
+			if len(down)>0:
+				for count in range(len(down)+1):
+					tones.beep(880/(1.25**count),50)
+					time.sleep(0.025)
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+		else:
+			speech.speakMessage(_("Beginning of flow"))
+	script_navigatorObject_previousInFlow.__doc__=_("Sets the navigator object to the object this object flows from.")
 
 	def script_navigatorObject_doDefaultAction(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()

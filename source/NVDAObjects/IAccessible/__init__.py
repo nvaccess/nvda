@@ -386,6 +386,19 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		else:
 			return None
 
+	def _get_lastChild(self):
+		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
+		if res:
+			obj=IAccessible(res[0],res[1])
+		else:
+			return None
+		if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
+			obj=getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
+			return obj
+		else:
+			return None
+
 	def _get_children(self):
 		if self.IAccessibleChildID>0:
 			return []
