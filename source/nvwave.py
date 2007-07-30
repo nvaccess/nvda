@@ -100,6 +100,12 @@ class WavePlayer:
 				raise RuntimeError("Error unpreparing buffer: code %d" % res)
 			self._prev_whdr = None
 
+	def pause(self, switch):
+		if switch:
+			winmm.waveOutPause(self._waveout)
+		else:
+			winmm.waveOutRestart(self._waveout)
+
 	def stop(self):
 		winmm.waveOutReset(self._waveout)
 		# Unprepare the previous buffer.

@@ -10,18 +10,13 @@ import threading
 import Queue
 from ctypes import *
 import debug
-import winsound
 
-paused=False
 isSpeaking = False
 lastIndex = None
 bgThread=None
 bgQueue = None
-sampleRate=None
 player = None
 espeakDLL=None
-lastCallbackBuffer=""
-lastLastCallbackBuffer=""
 
 #Parameter bounds
 minRate=80
@@ -116,8 +111,7 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
 def callback(wav,numsamples,event):
-	global player, isSpeaking, lastIndex, lastCallbackBuffer, lastLastCallbackBuffer
-	didPause=False
+	global player, isSpeaking, lastIndex
 	lastIndex = event.contents.user_data
 	if not wav:
 		player.sync()
@@ -125,17 +119,8 @@ def callback(wav,numsamples,event):
 		return 0
 	if not isSpeaking:
 		return 1
-	while paused:
-		didPause=True
-	if didPause:
-		player.feed(lastLastCallbackBuffer)
-		player.feed(lastCallbackBuffer)
 	if numsamples > 0:
-		if not isSpeaking:
-			return 1
-		lastLastCallbackBuffer=lastCallbackBuffer
-		lastCallbackBuffer=string_at(wav, numsamples * sizeof(c_short))
-		player.feed(lastCallbackBuffer)
+		player.feed(string_at(wav, numsamples * sizeof(c_short)))
 	return 0
 
 class BgThread(threading.Thread):
@@ -151,7 +136,7 @@ class BgThread(threading.Thread):
 				if not func:
 					break
 				res=func(*args, **kwargs)
-				if res not in (None,EE_OK):
+				if res!=EE_OK:
 					raise OSError("%s, %d"%(str(func),res))
 				bgQueue.task_done()
 		except:
@@ -174,7 +159,7 @@ def speak(msg, index=None, wait=False):
 		bgQueue.join()
 
 def stop():
-	global isSpeaking, bgQueue, paused, lastCallbackBuffer, lastLastCallbackBuffer
+	global isSpeaking, bgQueue
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -189,15 +174,11 @@ def stop():
 	for item in params:
 		bgQueue.put(item)
 	isSpeaking = False
-	paused=False
-	lastCallbackBuffer=lastLastCallbackBuffer=""
 	player.stop()
 
 def pause(switch):
-	global paused
-	if switch:
-		player.stop()
-	paused=switch
+	global player
+	player.pause(switch)
 
 def setParameter(param,value,relative):
 	_bgExec(espeakDLL.espeak_SetParameter,param,value,relative)
@@ -242,7 +223,7 @@ def setVoiceByLanguage(lang):
 		raise RuntimeError("espeakDLL.setVoiceByProperties: %d"%res)
 
 def initialize():
-	global espeakDLL, bgThread, bgQueue, player, sampleRate
+	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
