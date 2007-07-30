@@ -11,6 +11,7 @@ import _winreg
 import debug
 import globalVars
 import silence
+import config
 
 class constants:
 	SVSFlagsAsync = 1
@@ -87,6 +88,8 @@ class SynthDriver(silence.SynthDriver):
 		if value>self.voiceCount:
 			value=1
 		self.tts=comtypesClient.CreateObject('sapi.SPVoice')
+		if config.conf["speech"]["outputDevice"] >=0:
+			self.tts.audioOutput(self.tts.getAudioOutputs()[config.conf["speech"]["outputDevice"]])
 		self.tts.Voice(self.tts.GetVoices()[value-1])
 		self._voice=value
 

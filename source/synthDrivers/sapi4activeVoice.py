@@ -12,6 +12,7 @@ import win32com.client
 import _winreg
 import debug
 import silence
+import config
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 
@@ -46,6 +47,7 @@ class SynthDriver(silence.SynthDriver):
 		try:
 			self.check()
 			self.tts=comtypesClient.CreateObject(COM_CLASS,sink=self)
+			self.tts.InitAudioDestMM(config.conf["speech"]["outputDevice"])
 			self.tts.CallBacksEnabled=1
 			self.tts.Tagged=1
 			self.tts.initialized=1

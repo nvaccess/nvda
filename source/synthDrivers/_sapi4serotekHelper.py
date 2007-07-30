@@ -10,6 +10,7 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes import *
 import traceback
+import config
 
 ###comtypes class definitions
 
@@ -267,6 +268,7 @@ class SAPI4(object):
         self._tts = POINTER(ITTSCentralW)()
         self._audio = CoCreateInstance(CLSID_MMAudioDest,
                                        IAudioMultiMediaDevice)
+        self._audio.DeviceNumSet(config.conf["speech"]["outputDevice"])
         self._enum.Select(modeID, byref(self._tts), self._audio)
         self._ttsAttrs = self._tts.QueryInterface(ITTSAttributesW)
         self.averagePitchDefault = self.averagePitch

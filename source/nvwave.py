@@ -9,6 +9,7 @@ import time
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import config
 
 winmm = windll.winmm
 
@@ -62,7 +63,7 @@ class WavePlayer:
 		wfx.nBlockAlign = bitsPerSample / 8 * channels
 		wfx.nAvgBytesPerSec = samplesPerSec * wfx.nBlockAlign
 		waveout = HANDLE(0)
-		res = winmm.waveOutOpen(byref(waveout), WAVE_MAPPER, LPWAVEFORMATEX(wfx), DWORD(0), DWORD(0), DWORD(CALLBACK_NULL))
+		res = winmm.waveOutOpen(byref(waveout), UINT(config.conf["speech"]["outputDevice"]), LPWAVEFORMATEX(wfx), DWORD(0), DWORD(0), DWORD(CALLBACK_NULL))
 		if res != MMSYSERR_NOERROR:
 			raise RuntimeError("Error opening wave device: code %d" % res)
 		self._waveout = waveout.value

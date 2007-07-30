@@ -31,6 +31,7 @@ confspec = StringIO("""# NVDA Configuration File
 	synth = string(default=auto)
 	speakPunctuation = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
+outputDevice = integer(default=-1,min=-1,max=2)
 
 	[[__many__]]
 		variant = integer(default=0,min=0)

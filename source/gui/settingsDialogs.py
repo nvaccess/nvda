@@ -14,6 +14,22 @@ import speech
 import gui
 import globalVars
 from wx.lib.masked import textctrl
+from ctypes import *
+from ctypes.wintypes import *
+
+MAXPNAMELEN=32
+
+class WAVEOUTCAPS(Structure):
+	_fields_=[
+		('wMid',WORD),
+		('wPid',WORD),
+		('vDriverVersion',c_uint),
+		('szPname',WCHAR*MAXPNAMELEN),
+		('dwFormats',DWORD),
+		('wChannels',WORD),
+		('wReserved1',WORD),
+		('dwSupport',DWORD),
+	]
 
 class interfaceSettingsDialog(wx.Dialog):
 
@@ -92,6 +108,29 @@ class synthesizerDialog(wx.Dialog):
 		synthListSizer.Add(synthListLabel)
 		synthListSizer.Add(self.synthList)
 		settingsSizer.Add(synthListSizer,border=10,flag=wx.BOTTOM)
+		deviceListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		deviceListLabel=wx.StaticText(self,-1,label=_("Output &device"))
+		deviceListID=wx.NewId()
+		deviceIndex =-1
+		numDevices=windll.winmm.waveOutGetNumDevs()
+		deviceNames=[]
+		self.deviceIndexes=[]
+		caps=WAVEOUTCAPS()
+		while deviceIndex<numDevices:
+			windll.winmm.waveOutGetDevCapsW(deviceIndex,byref(caps),sizeof(caps))
+			deviceNames.append(caps.szPname)
+			self.deviceIndexes.append(deviceIndex)
+			if deviceIndex==config.conf["speech"]["outputDevice"]:
+				selection=deviceIndex+1
+			deviceIndex=deviceIndex+1
+		self.deviceList=wx.Choice(self,deviceListID,choices=deviceNames)
+		try:
+			self.deviceList.SetSelection(selection)
+		except:
+			pass
+		deviceListSizer.Add(deviceListLabel)
+		deviceListSizer.Add(self.deviceList)
+		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
@@ -102,6 +141,7 @@ class synthesizerDialog(wx.Dialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
+		config.conf["speech"]["outputDevice"]=self.deviceIndexes[self.deviceList.GetSelection()]
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
 			wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING).ShowModal()
