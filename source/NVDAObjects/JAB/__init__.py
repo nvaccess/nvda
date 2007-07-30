@@ -242,7 +242,7 @@ class JAB(Window):
 		if self._JABAccContextInfo.childrenCount:
 			return None
 		parent=self.parent
-		if not parent or (self.role!=controlTypes.ROLE_RADIOBUTTON and parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]):
+		if not isinstance(parent,JAB) or (self.role!=controlTypes.ROLE_RADIOBUTTON and parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]):
 			return None
 		index=self._JABAccContextInfo.indexInParent+1
 		childCount=parent._JABAccContextInfo.childrenCount
@@ -268,7 +268,7 @@ class JAB(Window):
  
 	def _get_next(self):
 		parent=self.parent
-		if not parent:
+		if not isinstance(parent,JAB):
 			return None
 		newIndex=self._JABAccContextInfo.indexInParent+1
 		if newIndex>=parent._JABAccContextInfo.childrenCount:
@@ -283,7 +283,7 @@ class JAB(Window):
 
 	def _get_previous(self):
 		parent=self.parent
-		if not parent:
+		if not isinstance(parent,JAB):
 			return None
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
@@ -319,7 +319,7 @@ class JAB(Window):
 
 	def event_gainFocus(self):
 		parent=self.parent
-		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and parent and parent.role==controlTypes.ROLE_COMBOBOX:
+		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).event_gainFocus()
 
