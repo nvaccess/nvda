@@ -784,11 +784,20 @@ class StatusBar(IAccessible):
 
 	def _get_value(self):
 		oldValue=super(StatusBar,self)._get_value()
-		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in self.children if x.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_STATICTEXT)])
+		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in super(StatusBar,self)._get_children() if x.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_STATICTEXT)])
 		if valueFromChildren:
 			return valueFromChildren
 		else:
 			return oldValue
+
+	def _get_firstChild(self):
+		return None
+
+	def _get_lastChild(self):
+		return None
+
+	def _get_children(self):
+		return []
 
 class SysLink(IAccessible):
 
