@@ -12,22 +12,27 @@ from glob import glob
 
 sampleRate=22050.0
 slopeRatio=0.01
-amplitude=7000.0
+amplitude=10000.0
 
 player = nvwave.WavePlayer(channels=1, samplesPerSec=int(sampleRate), bitsPerSample=16)
 
 def beep(hz,length):
 	player.stop()
-	volume=0
 	sampleLength=int(length*(sampleRate/1000.0))
-	slopeLength=sampleLength*slopeRatio
-	riseEnd=slopeLength
-	fallStart=sampleLength-slopeLength
 	data=""
+	cycleLength=sampleRate/hz
+	halfCycleLength=cycleLength/2
+	quarterCycleLength=cycleLength/4
+	threeQuarterCycleLength=halfCycleLength+quarterCycleLength
 	for sampleCount in xrange(sampleLength):
-		if sampleCount<=riseEnd:
-			volume=sampleCount/slopeLength
-		elif sampleCount>=fallStart:
-			volume=(sampleLength-sampleCount)/slopeLength
-		data+=struct.pack('h',amplitude*math.sin((sampleCount*math.pi*2)/(sampleRate/hz))*volume)
+		cyclePos=sampleCount%cycleLength
+		if cyclePos<=quarterCycleLength:
+			sample=amplitude*(cyclePos/quarterCycleLength)
+		elif cyclePos<=halfCycleLength:
+			sample=amplitude*((halfCycleLength-cyclePos)/quarterCycleLength)
+		elif cyclePos<=threeQuarterCycleLength:
+			sample=0-(amplitude*((cyclePos-halfCycleLength)/quarterCycleLength))
+		elif cyclePos<=cycleLength:
+			sample=0-(amplitude*((halfCycleLength-(cyclePos-halfCycleLength))/quarterCycleLength))
+		data+=struct.pack('h',sample)
 	player.feed(data)
