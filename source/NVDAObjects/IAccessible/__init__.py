@@ -18,6 +18,7 @@ import appModuleHandler
 from keyUtils import sendKey, key 
 import IAccessibleHandler
 import IA2Handler
+import JABHandler
 import winUser
 import winKernel
 import globalVars
@@ -27,6 +28,7 @@ import config
 import controlTypes
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject
+import NVDAObjects.JAB
 
 re_gecko_level=re.compile('.*L([0-9]+)')
 re_gecko_position=re.compile('.*([0-9]+) of ([0-9]+)')
@@ -547,6 +549,27 @@ class Client(IAccessible):
 		if not name or (isinstance(name,basestring) and name.isspace()):
 			name=self.windowClassName
 		return name
+
+	def _get_firstChild(self):
+		child=super(Client,self)._get_firstChild()
+		if child:
+			return child
+		if JABHandler.isJavaWindow(self.windowHandle):
+			JABObject=JABHandler.JABObjectWrapper(hwnd=self.windowHandle)
+			return NVDAObjects.JAB.JAB(JABObject)
+		return None
+
+	def _get_children(self):
+		children=super(Client,self)._get_children()
+		if children:
+			return children
+		children=[]
+		if JABHandler.isJavaWindow(self.windowHandle):
+			JABObject=JABHandler.JABObjectWrapper(hwnd=self.windowHandle)
+			obj=NVDAObjects.JAB.JAB(JABObject)
+			if obj:
+				children.append(obj)
+		return children
 
 class Dialog(IAccessible):
 	"""

@@ -10,6 +10,7 @@ import controlTypes
 from ..window import Window
 import textHandler
 from .. import NVDAObjectTextInfo
+import NVDAObjects.IAccessible
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -261,8 +262,9 @@ class JAB(Window):
 			JABObject=self.JABObject.getAccessibleParentFromContext()
 			if JABObject:
 				self._parent=JAB(JABObject)
-		if hasattr(self,'_parent'):
-			return self._parent
+			else:
+				self._parent=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.JABObject.hwnd,-4,0)
+		return self._parent
  
 	def _get_next(self):
 		parent=self.parent
