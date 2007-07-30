@@ -559,6 +559,15 @@ class Client(IAccessible):
 			return NVDAObjects.JAB.JAB(JABObject)
 		return None
 
+	def _get_lastChild(self):
+		child=super(Client,self)._get_lastChild()
+		if child:
+			return child
+		if JABHandler.isJavaWindow(self.windowHandle):
+			JABObject=JABHandler.JABObjectWrapper(hwnd=self.windowHandle)
+			return NVDAObjects.JAB.JAB(JABObject)
+		return None
+
 	def _get_children(self):
 		children=super(Client,self)._get_children()
 		if children:

@@ -305,6 +305,15 @@ class JAB(Window):
 		else:
 			return None
 
+	def _get_lastChild(self):
+		if self._JABAccContextInfo.childrenCount<=0:
+			return None
+		JABObject=self.JABObject.getAccessibleChildFromContext(self._JABAccContextInfo.childrenCount-1)
+		if JABObject:
+			return JAB(JABObject)
+		else:
+			return None
+
 	def _get_children(self):
 		children=[]
 		for index in range(self._JABAccContextInfo.childrenCount):
