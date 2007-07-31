@@ -9,7 +9,6 @@ import time
 import threading
 from ctypes import *
 from ctypes.wintypes import *
-import config
 
 winmm = windll.winmm
 
@@ -41,7 +40,7 @@ WAVEHDR._fields_ = [
 WHDR_DONE = 1
 
 WAVE_FORMAT_PCM = 1
-WAVE_MAPPER = UINT(-1)
+WAVE_MAPPER = -1
 MMSYSERR_NOERROR = 0
 
 CALLBACK_NULL = 0
@@ -51,10 +50,11 @@ CALLBACK_FUNCTION = 0x30000
 
 class WavePlayer:
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDeviceNumber=WAVE_MAPPER):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
+		self.outputDeviceNumber=outputDeviceNumber
 		wfx = WAVEFORMATEX()
 		wfx.wFormatTag = WAVE_FORMAT_PCM
 		wfx.nChannels = channels
@@ -63,7 +63,7 @@ class WavePlayer:
 		wfx.nBlockAlign = bitsPerSample / 8 * channels
 		wfx.nAvgBytesPerSec = samplesPerSec * wfx.nBlockAlign
 		waveout = HANDLE(0)
-		res = winmm.waveOutOpen(byref(waveout), UINT(config.conf["speech"]["outputDevice"]), LPWAVEFORMATEX(wfx), DWORD(0), DWORD(0), DWORD(CALLBACK_NULL))
+		res = winmm.waveOutOpen(byref(waveout), UINT(outputDeviceNumber), LPWAVEFORMATEX(wfx), DWORD(0), DWORD(0), DWORD(CALLBACK_NULL))
 		if res != MMSYSERR_NOERROR:
 			raise RuntimeError("Error opening wave device: code %d" % res)
 		self._waveout = waveout.value
