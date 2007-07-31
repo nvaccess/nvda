@@ -56,8 +56,9 @@ class appModule(appModuleHandler.appModule):
 		#When deleting a message, an MSAA focus event gets sent before the message is deleted, so the child ID ends up being wrong
 		if (focusRole==controlTypes.ROLE_LISTITEM and obj.IAccessibleChildID>1 and not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED) or (focusRole==controlTypes.ROLE_UNKNOWN and obj.windowClassName=="SysListView32" and obj.IAccessibleChildID>0):
 			newObj=obj.parent.activeChild
-			api.setFocusObject(newObj)
-			eventHandler.manageEvent("gainFocus",newObj)
+			if newObj:
+				api.setFocusObject(newObj)
+				eventHandler.manageEvent("gainFocus",newObj)
 			lastFocusWindowHandle=focusWindowHandle
 			lastFocusRole=focusRole
 			return
