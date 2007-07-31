@@ -22,7 +22,7 @@ def beep(hz,length):
 	data=""
 	for sampleCount in xrange(sampleLength):
 		sampleCount=sampleCount%sampleLength
-		sample=math.sin((sampleCount*math.pi*2)/(sampleRate/hz))*3
+		sample=math.sin((sampleCount*math.pi*2)/(sampleRate/hz))*2
 		if sample>1:
 			sample=1
 		elif sample<-1:
