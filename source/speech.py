@@ -172,7 +172,7 @@ This function will not speak if L{speechMode} is false.
 	global beenCanceled
 	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
 
-def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,reason=REASON_QUERY):
+def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -257,10 +257,10 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 	text=" ".join(textList)
 	if len(text)>0 and not text.isspace():
 		text=processText(text)
-		getSynth().speakText(text)
+		getSynth().speakText(text,index=index)
 
-def speakObject(obj,reason=REASON_QUERY):
-	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,reason=reason)
+def speakObject(obj,reason=REASON_QUERY,index=None):
+	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,reason=reason,index=index)
 
 def speakSymbol(symbol,wait=False,index=None):
 	"""Speaks a given single character.

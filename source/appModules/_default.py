@@ -380,8 +380,13 @@ class appModule(appModuleHandler.appModule):
 		o=api.getNavigatorObject()
 		info=o.reviewPosition.copy()
 		info.moveByUnit(textHandler.UNIT_STORY,1,start=False)
-		sayAllHandler.read(info,sayAllHandler.CURSOR_REVIEW)
+		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from review cursor  up to end of current text, moving the review cursor as it goes")
+
+	def script_navigatorObject_sayAll(self,keyPress,nextScript):
+		obj=api.getNavigatorObject()
+		sayAllHandler.readObjects(obj)
+	script_navigatorObject_sayAll.__doc__ = _("reads from navigator object ")
 
 	def script_sayAll(self,keyPress,nextScript):
 		o=api.getFocusObject()
@@ -391,7 +396,7 @@ class appModule(appModuleHandler.appModule):
 		else:
 			info=o.makeTextInfo(textHandler.POSITION_CARET)
 			info.moveByUnit(textHandler.UNIT_STORY,1,start=False)
-			sayAllHandler.read(info,sayAllHandler.CURSOR_CARET)
+			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
 
 	def script_reportFormatting(self,keyPress,nextScript):
