@@ -43,7 +43,8 @@ REASON_MOUSE=2
 REASON_QUERY=3
 REASON_CHANGE=4
 REASON_MESSAGE=5
-REASON_DEBUG=6
+REASON_SAYALL=6
+REASON_DEBUG=7
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -193,7 +194,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			textList.append(nameText)
 	if role:
 		roleNum=obj.role
-		if isinstance(roleNum,int) and (reason!=REASON_FOCUS or roleNum not in silentRolesOnFocus):
+		if isinstance(roleNum,int) and (reason not in (REASON_FOCUS,REASON_SAYALL) or roleNum not in silentRolesOnFocus):
 			textList.append(controlTypes.speechRoleLabels[roleNum])
 	stateList=[]
 	if states:
@@ -212,7 +213,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 				oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[roleNum]
 			textList.extend([controlTypes.speechStateLabels[state] for state in (positiveStateSet-oldPositiveStateSet)])
-		elif reason==REASON_FOCUS:
+		elif reason in (REASON_FOCUS,REASON_SAYALL):
 			positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
 			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnFocus.has_key(roleNum):
 				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]
@@ -238,11 +239,11 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 			nameText=obj.name
 		if descriptionText!=nameText and isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
 			textList.append(descriptionText)
-	if keyboardShortcut and (reason!=REASON_FOCUS or config.conf["presentation"]["reportKeyboardShortcuts"]):
+	if keyboardShortcut and (reason not in (REASON_FOCUS,REASON_SAYALL) or config.conf["presentation"]["reportKeyboardShortcuts"]):
 		keyboardShortcutText=obj.keyboardShortcut
 		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
 			textList.append(keyboardShortcutText)
-	if positionString and (reason!=REASON_FOCUS or config.conf["presentation"]["reportObjectPositionInformation"]):
+	if positionString and (reason!=(REASON_FOCUS,REASON_SAYALL) or config.conf["presentation"]["reportObjectPositionInformation"]):
 		positionStringText=obj.positionString
 		if isinstance(positionStringText,basestring) and len(positionStringText)>0 and not positionStringText.isspace():
 			textList.append(positionStringText)

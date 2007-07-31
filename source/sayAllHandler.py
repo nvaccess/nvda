@@ -36,7 +36,7 @@ def readObjectsHelper_generator(obj):
 			yield
 			continue
 		if keepReading:
-			speech.speakObject(obj,index=indexCount)
+			speech.speakObject(obj,index=indexCount,reason=speech.REASON_SAYALL)
 			up=[]
 			down=[]
 			obj=obj.getNextInFlow(up=up,down=down)
