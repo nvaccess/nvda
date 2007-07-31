@@ -119,10 +119,14 @@ class MessageList_pre2003(IAccessible):
 
 class MessageItem(Window):
 
-	def __init__(self,parent,msg):
+	def __init__(self,windowHandle=None,parent=None,msg=None):
+		if not parent or not msg:
+			raise ArguementError("__init__ needs windowHandle, parent and msg arguments")
+		if not windowHandle:
+			windowHandle=parent.windowHandle
 		self.msg=msg
 		self.parent=parent
-		Window.__init__(self,parent.windowHandle)
+		Window.__init__(self,windowHandle=windowHandle)
 
 	def _get_name(self):
 		typeID=self.msg.Class

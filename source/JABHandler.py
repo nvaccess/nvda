@@ -22,7 +22,7 @@ vmIDsToWindowHandles={}
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
 
-class JABObjectWrapper(object):
+class JABContext(object):
 
 	def __init__(self,hwnd=None,vmID=None,accContext=None):
 		if hwnd and (not vmID or not accContext):
@@ -42,14 +42,14 @@ class JABObjectWrapper(object):
 	def __del__(self):
 		bridgeDll.releaseJavaObject(self.vmID,self.accContext)
 
-	def __eq__(self,JABObject):
-		if self.vmID==JABObject.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,JABObject.accContext):
+	def __eq__(self,jabContext):
+		if self.vmID==jabContext.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
 			return True
 		else:
 			return False
 
-	def __ne__(self,JABObject):
-		if self.vmID!=JABObject.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,JABObject.accContext):
+	def __ne__(self,jabContext):
+		if self.vmID!=jabContext.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
 			return True
 		else:
 			return False
@@ -220,10 +220,10 @@ def internal_event_focusGained(vmID, event,source):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
-	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
-	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),JABObject.hwnd):
+	jabContext=JABContext(vmID=vmID,accContext=accContext)
+	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
-	obj=NVDAObjects.JAB.JAB(JABObject)
+	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getFocusObject():
 		return
 	api.setFocusObject(obj)
@@ -245,25 +245,25 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	bridgeDll.releaseJavaObject(source)
 
 def event_stateChange(vmID,accContext,oldState,newState):
-	JABObject=JABObjectWrapper(vmID=vmID,accContext=accContext)
+	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
 	stateList=newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
-		obj=NVDAObjects.JAB.JAB(JABObject)
+		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU]:
 			api.setFocusObject(obj)
 			eventHandler.manageEvent("gainFocus",obj)
 			return
-	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.JABObject==JABObject:
+	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
 		obj=focus
 	else:
-		obj=NVDAObjects.JAB.JAB(JABObject)
+		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	eventHandler.manageEvent("stateChange",obj)
 
 def event_enterJavaWindow(hwnd):
-	JABObject=JABObjectWrapper(hwnd=hwnd)
-	obj=NVDAObjects.JAB.JAB(JABObject)
+	jabContext=JABContext(hwnd=hwnd)
+	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getForegroundObject():
 		return
 	api.setForegroundObject(obj)

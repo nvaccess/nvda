@@ -88,15 +88,15 @@ re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
-		textInfo=self.obj.JABObject.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
+		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 		return textInfo.caretIndex
 
 	def _setCaretOffset(self,offset):
 		speech.speakMessage("%s"%offset)
-		self.obj.JABObject.setCaretPosition(offset)
+		self.obj.jabContext.setCaretPosition(offset)
 
 	def _getSelectionOffsets(self):
-		info=self.obj.JABObject.getAccessibleTextSelectionInfo()
+		info=self.obj.jabContext.getAccessibleTextSelectionInfo()
 		start=info.selectionStartIndex
 		end=info.selectionEndIndex
 		if start<0:
@@ -106,7 +106,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
-		self.obj.JABObject.selectTextRange(start,end)
+		self.obj.jabContext.selectTextRange(start,end)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
@@ -116,7 +116,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryLength(self):
 		if not hasattr(self,'_storyLength'):
-			textInfo=self.obj.JABObject.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
+			textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 			self._storyLength=textInfo.charCount
 		return self._storyLength
 
@@ -125,13 +125,13 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		#Java needs end of range as last character, not one past the last character
-		return self.obj.JABObject.getAccessibleTextRange(start,end-1)
+		return self.obj.jabContext.getAccessibleTextRange(start,end-1)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
 
 	def _getLineOffsets(self,offset):
-		(start,end)=self.obj.JABObject.getAccessibleTextLineBounds(offset)
+		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
 		#If start and end are 0, then something is broken in java
 		if start==0 and end==0:
 			return super(JABTextInfo,self)._getLineOffsets(offset)
@@ -144,9 +144,16 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 class JAB(Window):
 
-	def __init__(self,JABObject):
-		self.JABObject=JABObject
-		self._JABAccContextInfo=JABObject.getAccessibleContextInfo()
+	def __init__(self,windowHandle=None,jabContext=None):
+		if windowHandle and not jabContext:
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
+		elif jabContext and not windowHandle:
+			windowHandle=jabContext.hwnd
+		elif not windowHandle and not jabContext:
+			raise ArguementError("Give either a valid window handle or jab context")
+		self.windowHandle=windowHandle
+		self.jabContext=jabContext
+		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		if self._JABAccContextInfo.accessibleText:
 			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
@@ -174,17 +181,17 @@ class JAB(Window):
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 			  	]]
-		Window.__init__(self,self.JABObject.hwnd)
+		Window.__init__(self,windowHandle=windowHandle)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def __eq__(self,other):
-		if (id(self)==id(other)) or (self.__class__==other.__class__ and self.JABObject==other.JABObject):
+		if (id(self)==id(other)) or (self.__class__==other.__class__ and self.jabContext==other.jabContext):
 			return True
 		else:
 			return False
 
 	def __ne__(self,other):
-		if (self.__class__!=other.__class__) or (self.JABObject!=other.JABObject):
+		if (self.__class__!=other.__class__) or (self.jabContext!=other.jabContext):
 			return True
 		else:
 			return False
@@ -226,7 +233,7 @@ class JAB(Window):
 			if self.name==value:
 				value=None
 		if value is None and self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue:
-			value=self.JABObject.getCurrentAccessibleValueFromContext()
+			value=self.jabContext.getCurrentAccessibleValueFromContext()
 		return value
 
 	def _get_description(self):
@@ -251,19 +258,19 @@ class JAB(Window):
 
 
 	def _get_activeChild(self):
-		JABObject=self.JABObject.getActiveDescendent()
-		if JABObject:
-			return JAB(JABObject)
+		jabContext=self.jabContext.getActiveDescendent()
+		if jabContext:
+			return JAB(jabContext=jabContext)
 		else:
 			return None
 
 	def _get_parent(self):
 		if not hasattr(self,'_parent'):
-			JABObject=self.JABObject.getAccessibleParentFromContext()
-			if JABObject:
-				self._parent=JAB(JABObject)
+			jabContext=self.jabContext.getAccessibleParentFromContext()
+			if jabContext:
+				self._parent=JAB(jabContext=jabContext)
 			else:
-				self._parent=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.JABObject.hwnd,-4,0)
+				self._parent=NVDAObjects.IAccessible.IAccessible(windowHandle=self.jabContext.hwnd)
 		return self._parent
  
 	def _get_next(self):
@@ -273,13 +280,13 @@ class JAB(Window):
 		newIndex=self._JABAccContextInfo.indexInParent+1
 		if newIndex>=parent._JABAccContextInfo.childrenCount:
 			return None
-		JABObject=parent.JABObject.getAccessibleChildFromContext(newIndex)
-		if not JABObject:
+		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
+		if not jabContext:
 			return None
-		childInfo=JABObject.getAccessibleContextInfo()
+		childInfo=jabContext.getAccessibleContextInfo()
 		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return JAB(JABObject)
+		return JAB(jabContext=jabContext)
 
 	def _get_previous(self):
 		parent=self.parent
@@ -288,42 +295,42 @@ class JAB(Window):
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
 			return None
-		JABObject=parent.JABObject.getAccessibleChildFromContext(newIndex)
-		if not JABObject:
+		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
+		if not jabContext:
 			return None
-		childInfo=JABObject.getAccessibleContextInfo()
+		childInfo=jabContext.getAccessibleContextInfo()
 		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return JAB(JABObject)
+		return JAB(jabContext=jabContext)
 
 	def _get_firstChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
-		JABObject=self.JABObject.getAccessibleChildFromContext(0)
-		if JABObject:
-			return JAB(JABObject)
+		jabContext=self.jabContext.getAccessibleChildFromContext(0)
+		if jabContext:
+			return JAB(jabContext=jabContext)
 		else:
 			return None
 
 	def _get_lastChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
-		JABObject=self.JABObject.getAccessibleChildFromContext(self._JABAccContextInfo.childrenCount-1)
-		if JABObject:
-			return JAB(JABObject)
+		jabContext=self.jabContext.getAccessibleChildFromContext(self._JABAccContextInfo.childrenCount-1)
+		if jabContext:
+			return JAB(jabContext=jabContext)
 		else:
 			return None
 
 	def _get_children(self):
 		children=[]
 		for index in range(self._JABAccContextInfo.childrenCount):
-			JABObject=self.JABObject.getAccessibleChildFromContext(index)
-			if JABObject:
-				children.append(JAB(JABObject))
+			jabContext=self.jabContext.getAccessibleChildFromContext(index)
+			if jabContext:
+				children.append(JAB(jabContext=jabContext))
 		return children
 
 	def event_stateChange(self):
-		self._JABAccContextInfo=self.JABObject.getAccessibleContextInfo()
+		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
 		super(JAB,self).event_stateChange()
 
 	def event_gainFocus(self):

@@ -27,8 +27,12 @@ An NVDAObject for a window
 @type windowProcessID: list of two ints
 """
 
-	def __init__(self,windowHandle):
+	def __init__(self,windowHandle=None,windowClassName=None):
+		if not windowHandle:
+			raise ArguementError("invalid or not specified window handle")
 		NVDAObject.__init__(self)
+		if windowClassName:
+			self.windowClassName=windowClassName
 		self.windowHandle=windowHandle
 		if not hasattr(self,'appModule'):
 			try:
@@ -83,3 +87,8 @@ An NVDAObject for a window
 			return self._processIDThreadID[1]
 		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
 		return self._processIDThreadID[1]
+
+	def _get_parent(self):
+		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
+		if parentHandle:
+			return self.__class__(windowHandle=parentHandle)

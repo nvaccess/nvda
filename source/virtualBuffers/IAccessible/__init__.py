@@ -47,9 +47,6 @@ def update(obj):
 		if not curWindow:
 			return 
 		className=winUser.getClassName(curWindow)
-		debug.writeMessage("checking class name: %s"%className)
-		if firstObj:
-			debug.writeMessage("with firstObj: %s, role %s"%(firstObj,firstObj.IAccessibleRole))
 		possibles=[x for x in _staticMap if x[0]==className]
 		if len(possibles)>0:
 			debug.writeMessage("possibles: %s"%str(possibles))

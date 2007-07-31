@@ -110,13 +110,13 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 class IA2(IAccessible):
 
-	def __init__(self,pacc,childID,windowHandle=None,origChildID=None,objectID=None):
-		IAccessible.__init__(self,pacc,childID,windowHandle=windowHandle,origChildID=origChildID,objectID=objectID)
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 		try:
-			self.IAccessibleTextObject=pacc.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
+			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
 			self.TextInfo=IA2TextTextInfo
 			try:
-				self.IAccessibleEditableTextObject=pacc.QueryInterface(IA2Handler.IA2Lib.IAccessibleEditableText)
+				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleEditableText)
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
 					("ExtendedDown","moveByLine"),

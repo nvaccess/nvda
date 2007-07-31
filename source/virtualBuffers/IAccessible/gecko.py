@@ -184,7 +184,7 @@ class Gecko(virtualBuffer):
 			windowHandle=obj.windowHandle
 			IAccessible=NVDAObjects.IAccessible.IAccessible
 			hwnd=obj.windowHandle
-			children=[IAccessible(x[0],x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj.IAccessibleObject,0,obj.childCount)]
+			children=[IAccessible(IAccessibleObject=x[0],IAccessibleChildID=x[1],windowHandle=hwnd) for x in IAccessibleHandler.accessibleChildren(obj.IAccessibleObject,0,obj.childCount)]
 		else:
 			children=[]
 		#Get rid of the bullet object if this was a list item's children (its in the name)
