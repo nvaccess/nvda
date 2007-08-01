@@ -70,9 +70,9 @@ espeakVOICETYPE=9
 
 #error codes
 EE_OK=0
-EE_INTERNAL_ERROR=-1
-EE_BUFFER_FULL=1
-EE_NOT_FOUND=2
+#EE_INTERNAL_ERROR=-1
+#EE_BUFFER_FULL=1
+#EE_NOT_FOUND=2
 
 class espeak_EVENT_id(Union):
 	_fields_=[
@@ -136,9 +136,7 @@ class BgThread(threading.Thread):
 				func, args, kwargs = bgQueue.get()
 				if not func:
 					break
-				res=func(*args, **kwargs)
-				if res!=EE_OK:
-					raise OSError("%s, %d"%(str(func),res))
+				func(*args, **kwargs)
 				bgQueue.task_done()
 		except:
 			debug.writeException("bgThread.run")
@@ -165,12 +163,12 @@ def stop():
 	# We still want parameter changes to occur, so requeue them.
 	params = []
 	try:
-		while not bgQueue.empty():
+		while True:
 			item = bgQueue.get_nowait()
 			if item[0] == espeakDLL.espeak_SetParameter:
 				params.append(item)
 	except Queue.Empty:
-		# In some rare cases, the queue can be empty even after queue.empty() returns False.
+		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
 		pass
 	for item in params:
 		bgQueue.put(item)
@@ -188,13 +186,11 @@ def getParameter(param,current):
 	return espeakDLL.espeak_GetParameter(param,current)
 
 def getVoiceList():
-	begin=espeakDLL.espeak_ListVoices(None)
-	count=0
+	voices=espeakDLL.espeak_ListVoices(None)
 	voiceList=[]
-	while True:
-		if not begin[count]: break
- 		voiceList.append(begin[count].contents)
-		count+=1
+	for voice in voices:
+		if not voice: break
+ 		voiceList.append(voice.contents)
 	return voiceList
 
 def getCurrentVoice():
@@ -206,26 +202,30 @@ def getCurrentVoice():
 
 def setVoice(voice):
 	# For some weird reason, espeak_EspeakSetVoiceByProperties throws an integer divide by zero exception.
-	res=espeakDLL.espeak_SetVoiceByName(voice.identifier)
-	if res!=EE_OK:
-		raise OSError("espeak_SetVoiceByName %d"%res)
+	espeakDLL.espeak_SetVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	res=espeakDLL.espeak_SetVoiceByName(name)
-	if res!=EE_OK:
-		raise OSError("espeak_SetVoiceByName, %d"%res)
+	espeakDLL.espeak_SetVoiceByName(name)
 
 def setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
 	v.languages=lang
-	res=espeakDLL.espeak_SetVoiceByProperties(byref(v))
-	if res!=EE_OK:
-		raise RuntimeError("espeakDLL.setVoiceByProperties: %d"%res)
+	espeakDLL.espeak_SetVoiceByProperties(byref(v))
+
+def espeak_errcheck(res, func, args):
+	if res != EE_OK:
+		raise RuntimeError("%s: code %d" % (func.__name__, res))
+	return res
 
 def initialize():
 	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetVoiceByName.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetVoiceByProperties.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetParameter.errcheck=espeak_errcheck
+	espeakDLL.espeak_Terminate.errcheck=espeak_errcheck
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
@@ -242,9 +242,7 @@ def terminate():
 	stop()
 	bgQueue.put((None, None, None))
 	bgThread.join()
-	res=espeakDLL.espeak_Terminate()
-	if res!=EE_OK:
-		raise OSError("espeak_Terminate %d"%res)
+	espeakDLL.espeak_Terminate()
 	bgThread=None
 	bgQueue=None
 	player.close()
