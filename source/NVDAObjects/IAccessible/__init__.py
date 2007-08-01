@@ -165,6 +165,10 @@ IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_IPADDRESS:controlTypes.ROLE_IPADDRESS,
 	IAccessibleHandler.ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
 	"page":controlTypes.ROLE_PAGE,
+	"form":controlTypes.ROLE_FORM,
+	"div":controlTypes.ROLE_SECTION,
+	"tbody":controlTypes.ROLE_TABLEBODY,
+	"browser":controlTypes.ROLE_WINDOW,
 }
 
 class IAccessible(Window):
