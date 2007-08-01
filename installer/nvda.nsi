@@ -15,8 +15,6 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
 !define NVDASourceDir "..\source\dist"
-!define SND_NAME_Welcome "NVDA_Welcome.wav"
-!define SND_NAME_PleaseWait "NVDA_PleaseWait.wav"
 
 ;Include Modern UI Macro's
 !include "MUI.nsh"
@@ -139,15 +137,8 @@ InstallDirRegKey HKLM "Software\${PRODUCT}" ""
 ;--------------------------------
 ;Reserve Files
 !insertmacro MUI_RESERVEFILE_LANGDLL
-;ReserveFile "${INIFILE}"
 ReserveFile "${NSISDIR}\Plugins\system.dll"
-ReserveFile "waves\${SND_NAME_Welcome}"
-ReserveFile "waves\${SND_NAME_PleaseWait}"
-;!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
-; user vars
-var InstallWithSpeech
-var hmci
 
 Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
@@ -173,7 +164,7 @@ System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 ;MessageBox MB_OK "Could not shut down NVDA process"
 exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -m true"
 
-	end:
+	;end:
 	;SendMessage $hmci ${WM_CLOSE} 0 0
 FunctionEnd
  
@@ -289,6 +280,8 @@ Function .onGUIEnd
 Call RestartNVDA
 FunctionEnd
 
+/*
+
 Function PlaySound
 ; Retrieve the file to play
 pop $9
@@ -305,6 +298,7 @@ SendMessage $hmci 0x0465 0 "STR:play"
 
 nosup:
 FunctionEnd
+*/
 
 Function un.onUninstSuccess
 HideWindow
