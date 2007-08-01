@@ -92,6 +92,13 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 
+	def _get_isCollapsed(self):
+		start,end=self._getRangeOffsets()
+		if start==end:
+			return True
+		else:
+			return False
+
 	def collapse(self,end=False):
 		self._rangeObj.collapse(not end)
 

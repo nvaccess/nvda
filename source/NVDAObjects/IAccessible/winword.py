@@ -115,6 +115,13 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 	def compareEnd(self,info):
 		return self._rangeObj.End-info._rangeObj.End
 
+	def _get_isCollapsed(self):
+		if self._rangeObj.Start==self._rangeObj.End:
+			return True
+		else:
+			return False
+
+
 	def collapse(self,end=False):
 		a=self._rangeObj.Start
 		b=self._rangeObj.end

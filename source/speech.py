@@ -352,7 +352,7 @@ def getExcludedAutoSpeakFormats():
 		formats.add(controlTypes.ROLE_ALIGNMENT)
 	return formats
 
-def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
+def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=False,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -392,7 +392,8 @@ def speakFormattedText(textInfo,handleSymbols=False,wait=False,index=None):
 					speechText=" ".join([controlTypes.speechRoleLabels.get(oldItem.format.role,""),_("off")])
 					speakMessage(speechText)
 			if len(item)>1 or not handleSymbols:
-				speakText(item,wait=wait,index=index)
+				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
+					speakText(item,wait=wait,index=index)
 			else:
 				speech.speakSymbol(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats

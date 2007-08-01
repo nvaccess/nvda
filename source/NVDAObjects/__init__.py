@@ -126,6 +126,12 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 
+	def _get_isCollapsed(self):
+		if self._startOffset==self._endOffset:
+			return True
+		else:
+			return False
+
 	def collapse(self,end=False):
 		if not end:
 			self._endOffset=self._startOffset

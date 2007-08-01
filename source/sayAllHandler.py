@@ -75,7 +75,11 @@ def readTextHelper_generator(info,cursor):
 	startKeyCount=globalVars.keyCounter
 	cursorIndexMap.clear()
 	reader=info.copy()
-	reader.collapse()
+	if not reader.isCollapsed:
+		readToLimit=True
+		reader.collapse()
+	else:
+		readToLimit=False
 	keepReading=True
 	keepUpdating=True
 	oldSpokenIndex=None
@@ -85,16 +89,21 @@ def readTextHelper_generator(info,cursor):
 			bookmark=reader.bookmark
 			index=hash(bookmark)
 			reader.expand(textHandler.UNIT_READINGCHUNK)
-			delta=reader.compareEnd(info)
-			if delta>=0:
-				keepReading=False
-				endIndex=index
-			txt=reader.text
-			if not keepReading or ((txt is not None) and (len(txt)>0) and (isinstance(txt,basestring) and not (set(txt)<=set(characterSymbols.blankList)))):
-				cursorIndexMap[index]=bookmark
-				speech.speakFormattedText(reader,index=index)
-			if keepReading:
-				reader.collapse(True)
+			cursorIndexMap[index]=bookmark
+			speech.speakFormattedText(reader,includeBlankText=False,index=index)
+			if readToLimit:
+				delta=reader.compareEnd(info)
+				if delta>=0:
+					keepReading=False
+					endIndex=index
+				else:
+					reader.collapse(end=True)
+			else:
+				reader.collapse()
+				delta=reader.moveByUnit(textHandler.UNIT_READINGCHUNK,1)
+				if delta==0:
+					keepReading=False
+					endIndex=index
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
 			oldSpokenIndex=spokenIndex

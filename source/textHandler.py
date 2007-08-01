@@ -122,7 +122,6 @@ class TextInfo(baseObject.autoPropertyObject):
 		self.obj=obj
 		self.basePosition=position
 
-
 	def _get_text(self):
 		"""
 @returns: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
@@ -171,6 +170,9 @@ class TextInfo(baseObject.autoPropertyObject):
 @returns: the end of this text info object relative to the end of the given text info object
 @rtype: int
 """
+		raise NotImplementedError
+
+	def _get_isCollapsed(self):
 		raise NotImplementedError
 
 	def expand(self,unit):
