@@ -1,4 +1,4 @@
-#text.py
+#textHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -6,11 +6,16 @@
 
 import baseObject
 
-#exceptions
-class E_noRelatedUnit(RuntimeError):
-	pass
-
 def isFormatEnabled(role,includes=set(),excludes=set()):
+	"""Checks to see if a role is in an includes list (if given), or not in an excludes list (if given).
+@param role: an NVDA object or format role
+@type role: int
+@param includes: a set of 0 or more roles, or None
+@type includes: set, None
+@param excludes: a set of 0 or more roles, or None
+@type excludes: set, None
+@rtype: bool
+"""
 	if len(includes)>0 and len(excludes)>0:
 		raise ValueError("Only one of includes or excludes can be used")
 	elif role in excludes:
@@ -27,45 +32,49 @@ FORMAT_CMD_OFF=2
 FORMAT_CMD_SINGLETON=3
 
 class FormatCommand(object):
+	"""A container to hold a format, and also communicates whether the format is once off, is being turned on, or is being turned off.
+@ivar cmd: the command type (one of the FORMAT_CMD_* constants)
+@type cmd: int
+ @ivar format: the format
+@type format: L{Format}
+"""
 
 	def __init__(self,cmd,format):
+		"""
+@param cmd: the command type (one of the FORMAT_CMD_* constants)
+@type cmd: int
+ @param format: the format
+@type format: L{Format}
+"""
  		self.cmd=cmd
 		self.format=format
 
 class Format(object):
+	"""Represents a field or format with in text.
+@ivar role: The format's role (a control role or format role)
+@type role: int
+@ivar value: a line's number, a link's URL, a font name field's  name
+@type value: string
+@ivar states: a set of state constants (the checked state for a checkbox etc)
+@type states: set
+@ivar uniqueID: either a value unique to this format field, or None
+"""
 
 	def __init__(self,role,value="",states=frozenset(),contains="",uniqueID=""):
+		"""
+@param role: The format's role (a control role or format role)
+@type role: int
+@param value: a line's number, a link's URL, a font name field's  name
+@type value: string
+@param states: a set of state constants (the checked state for a checkbox etc)
+@type states: set
+@param uniqueID: either a value unique to this format field, or None
+"""
 		self.role=role
 		self.value=value
 		self.states=states
 		self.contains=contains
 		self.uniqueID=uniqueID
-
-#position types
-
-class Position(baseObject.autoPropertyObject):
-	pass
-
-class OffsetsPosition(Position):
-
-	def __init__(self,start,end=None):
-		if end is None:
-			end=start
-		self.start=start
-		self.end=end
-
-
-class pointsPosition(Position):
-
-	def __init__(self,startX,startY,endX=None,endY=None):
-		if endX is None:
-			endX=startX
-		if endY is None:
-			endY=startY
-		self.startX=startX
-		self.startY=startY
-		self.endX=endX
-		self.endY=endY
 
 #Position constants
 POSITION_FIRST="first"
@@ -75,13 +84,20 @@ POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
 class Bookmark(baseObject.autoPropertyObject):
+	"""The type for representing a static absolute position from a L{TextInfo} object
+@ivar infoClass: the class of the TextInfo object
+@type infoClass: type
+@ivar data: data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark
+"""
 
-	def __init__(self,data):
+	def __init__(self,infoClass,data):
+		"""
+@param infoClass: the class of the TextInfo object
+@type infoClass: type
+@param data: data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark
+"""
+		self.infoClass=infoClass
 		self.data=data
-
-#Selection mode constants
-SELECTIONMODE_SELECTED="selected"
-SELECTIONMODE_UNSELECTED="unselected"
 
 #Unit constants
 UNIT_CHARACTER="character"
@@ -98,23 +114,23 @@ UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunck"
 
-class TextSelectionChangedInfo(baseObject.autoPropertyObject):
-
-	def _get_text(self):
-		raise NotImplementedError
-
-	def _get_mode(self):
-		raise NotImplementedError
-
 class TextInfo(baseObject.autoPropertyObject):
 	"""Contains information about the text at the given position or unit
+@ivar position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
+@type position: int, tuple or string
 @ivar obj: The NVDA object this object is representing text from
-@type: L{NVDAObject}
+@type: L{NVDAObjects.NVDAObject}
+@ivar isCollapsed: True if this textInfo object represents a collapsed range, False if the range is expanded to cover one or more characters 
+@type isCollapsed: bool
+@ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
+@type text: string
+@ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
+@type bookmark: L{Bookmark}
 """
  
 	def __init__(self,obj,position):
 		"""
-@param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection
+@param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
 @type position: int, tuple or string
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
@@ -123,16 +139,12 @@ class TextInfo(baseObject.autoPropertyObject):
 		self.basePosition=position
 
 	def _get_text(self):
-		"""
-@returns: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
-@rtype: string
-"""
 		raise NotImplementedError
 
 	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
 		"""
-@returns: The text (containing formatting markup) with in the set range
-@rtype: string
+@returns: A sequence of L{FormatCommand} objects and strings of text.
+@rtype: list
 """
 		return [self.text]
 
@@ -155,7 +167,7 @@ class TextInfo(baseObject.autoPropertyObject):
 		raise NotImplementedError
 
 	def compareStart(self,info):
-		"""
+		""" gives the difference in offsets of the start position for this object compared to the start position for the given l{info} object
 @param info: the text info object to compare with
 @type info: L{TextInfo}
 @returns: the start of this text info object relative to the start of the given text info object
@@ -164,7 +176,7 @@ class TextInfo(baseObject.autoPropertyObject):
 		raise NotImplementedError
 
 	def compareEnd(self,info):
-		"""
+		""" gives the difference in offsets of the end position for this object compared to the end position for the given l{info} object
 @param info: the text info object to compare with
 @type info: L{TextInfo}
 @returns: the end of this text info object relative to the end of the given text info object
@@ -197,17 +209,23 @@ class TextInfo(baseObject.autoPropertyObject):
 		raise NotImplementedError
 
 	def updateSelection(self):
-		"""Moves the system caret to the position of this text info object"""
+		"""Moves the selection (usually the system caret) to the position of this text info object"""
 		raise NotImplementedError
 
 	def _get_bookmark(self):
-		"""Returns a unique identifier that can be used to make another textInfo object at this position
-@returns: a bookmark
-@rtype: L{Bookmark}
-"""
 		raise NotImplementedError
 
 def findStartOfLine(text,offset,lineLength=None):
+	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
+@param text: the text to search
+@type text: string
+@param offset: the offset of the text to start at
+@type offset: int
+@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+@type lineLength: int or None
+@return: the found offset
+@rtype: int 
+"""
 	if offset>=len(text):
 		offset=len(text)-1
 	start=offset
@@ -223,6 +241,16 @@ def findStartOfLine(text,offset,lineLength=None):
 	return start+1
 
 def findEndOfLine(text,offset,lineLength=None):
+	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
+@param text: the text to search
+@type text: string
+@param offset: the offset of the text to start at
+@type offset: int
+@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+@type lineLength: int or None
+@return: the found offset
+@rtype: int 
+"""
 	if offset>=len(text):
 		offset=len(text)-1
 	if isinstance(lineLength,int):
@@ -238,6 +266,16 @@ def findEndOfLine(text,offset,lineLength=None):
 	return end+1
 
 def findStartOfWord(text,offset,lineLength=None):
+	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
+@param text: the text to search
+@type text: string
+@param offset: the offset of the text to start at
+@type offset: int
+@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+@type lineLength: int or None
+@return: the found offset
+@rtype: int 
+"""
 	if offset>=len(text):
 		offset=len(text)-1
 	while offset>0 and text[offset].isspace():
@@ -250,6 +288,16 @@ def findStartOfWord(text,offset,lineLength=None):
 	return offset
 
 def findEndOfWord(text,offset,lineLength=None):
+	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
+@param text: the text to search
+@type text: string
+@param offset: the offset of the text to start at
+@type offset: int
+@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+@type lineLength: int or None
+@return: the found offset
+@rtype: int 
+"""
 	if offset>=len(text):
 		offset=len(text)-1
 	if text[offset].isalnum():

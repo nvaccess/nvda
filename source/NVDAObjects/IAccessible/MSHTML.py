@@ -74,7 +74,10 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			self.collapse(True)
 			self._rangeObj.move("character",-1)
 		elif isinstance(position,textHandler.Bookmark):
-			self._rangeObj.moveToBookmark(position.data)
+			if position.infoClass==self.__class__:
+				self._rangeObj.moveToBookmark(position.data)
+			else:
+				raise RuntimeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -139,7 +142,7 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		self._rangeObj.select()
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark(self._rangeObj.getBookmark())
+		return textHandler.Bookmark(self.__class__,self._rangeObj.getBookmark())
 
 class MSHTML(IAccessible):
 

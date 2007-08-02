@@ -118,11 +118,11 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		elif position==textHandler.POSITION_ALL:
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
-		elif isinstance(position,textHandler.OffsetsPosition):
-			self._startOffset=position.start
-			self._endOffset=position.end
 		elif isinstance(position,textHandler.Bookmark):
-			(self._startOffset,self._endOffset)=position.data
+			if position.infoClass==self.__class__:
+				(self._startOffset,self._endOffset)=position.data
+			else:
+				raise RuntimeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 
@@ -158,7 +158,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			raise NotImplementedError("unit: %s not supported"%unit)
 
 	def copy(self):
-		o=self.__class__(self.obj,textHandler.OffsetsPosition(self._startOffset,self._endOffset))
+		o=self.__class__(self.obj,self.bookmark)
 		for item in self.__dict__.keys():
 			if item.startswith('_'):
 				o.__dict__[item]=self.__dict__[item]
@@ -252,7 +252,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		return self._setSelectionOffsets(self._startOffset,self._endOffset)
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark((self._startOffset,self._endOffset))
+		return textHandler.Bookmark(self.__class__,(self._startOffset,self._endOffset))
 
 class NVDAObject(baseObject.scriptableObject):
 	"""
