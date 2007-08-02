@@ -71,23 +71,20 @@ class WavePlayer:
 		self._whdr_lock = threading.RLock()
 
 	def feed(self, data):
-		try:
-			whdr = WAVEHDR()
-			whdr.lpData = data
-			whdr.dwBufferLength = len(data)
-			res = winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-			if res != MMSYSERR_NOERROR:
-				raise RuntimeError("Error preparing buffer: code %d" % res)
-			res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-			self.sync()
-			if res != MMSYSERR_NOERROR:
-				self.close()
-				self.__init__(self.channels,self.samplesPerSec,self.bitsPerSample)
-				raise RuntimeError("Error writing wave data: code %d" % res)
-			with self._whdr_lock:
-				self._prev_whdr = whdr
-		except:
-			debug.writeException("player.feed")
+		whdr = WAVEHDR()
+		whdr.lpData = data
+		whdr.dwBufferLength = len(data)
+		res = winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+		if res != MMSYSERR_NOERROR:
+			raise RuntimeError("Error preparing buffer: code %d" % res)
+		res = winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+		self.sync()
+		if res != MMSYSERR_NOERROR:
+			self.close()
+			self.__init__(self.channels,self.samplesPerSec,self.bitsPerSample)
+			raise RuntimeError("Error writing wave data: code %d" % res)
+		with self._whdr_lock:
+			self._prev_whdr = whdr
 
 	def sync(self):
 		with self._whdr_lock:

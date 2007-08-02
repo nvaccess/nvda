@@ -112,17 +112,20 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
 def callback(wav,numsamples,event):
-	global player, isSpeaking, lastIndex
-	lastIndex = event.contents.user_data
-	if not wav:
-		player.sync()
-		isSpeaking = False
+	try:
+		global player, isSpeaking, lastIndex
+		lastIndex = event.contents.user_data
+		if not wav:
+			player.sync()
+			isSpeaking = False
+			return 0
+		if not isSpeaking:
+			return 1
+		if numsamples > 0:
+			player.feed(string_at(wav, numsamples * sizeof(c_short)))
 		return 0
-	if not isSpeaking:
-		return 1
-	if numsamples > 0:
-		player.feed(string_at(wav, numsamples * sizeof(c_short)))
-	return 0
+	except:
+		debug.writeException("callback")
 
 class BgThread(threading.Thread):
 	def __init__(self):
