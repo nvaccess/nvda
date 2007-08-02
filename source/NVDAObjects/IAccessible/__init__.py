@@ -200,6 +200,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				return obj
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			return None #We really do need a window handle
 		windowClassName=winUser.getClassName(windowHandle)
 		try:
 			IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
