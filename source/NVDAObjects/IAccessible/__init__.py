@@ -450,7 +450,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		statusWindow=0
 		while not statusWindow and curWindow:
 			for windowClass in windowClasses:
-				statusWindow=ctypes.windll.user32.FindWindowExW(curWindow,0,windowClassName0)
+				statusWindow=ctypes.windll.user32.FindWindowExW(curWindow,0,windowClass,0)
 				if statusWindow:
 					break
 			curWindow=winUser.getAncestor(curWindow,winUser.GA_PARENT)
