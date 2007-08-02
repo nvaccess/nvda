@@ -94,7 +94,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		elif position==textHandler.POSITION_LAST:
 			self._rangeObj.moveEnd(wdStory,1)
 			self._rangeObj.move(wdCharacter,-1)
-		elif isinstance(position,textHandler.Bookmark):\
+		elif isinstance(position,textHandler.Bookmark):
 			if position.infoClass==self.__class__:
 				self._rangeObj.SetRange(position.data[0],position.data[1])
 			else:
