@@ -798,33 +798,4 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
-			leftDelta=newInfo.compareStart(oldInfo)
-			rightDelta=newInfo.compareEnd(oldInfo)
-			mode=None
-			selText=None
-			if leftDelta<0:
-				newInfo.collapse()
-				newInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(leftDelta),start=False)
-				mode="select"
-				selText=newInfo.text
-			elif rightDelta>0:
-				newInfo.collapse(end=True)
-				newInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-rightDelta,end=False)
-				mode="select"
-				selText=newInfo.text
-			elif leftDelta>0:
-				newInfo.collapse()
-				newInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-leftDelta,end=False)
-				mode="unselect"
-				selText=newInfo.text
-			elif rightDelta<0:
-				newInfo.collapse(end=True)
-				newInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(rightDelta),start=False)
-				mode="unselect"
-				selText=newInfo.text
-			if isinstance(selText,basestring) and len(selText)==1:
-				selText=speech.processSymbol(selText)
-			if mode=="select":
-				speech.speakMessage(_("selected %s")%selText)
-			elif mode=="unselect":
-				speech.speakMessage(_("unselected %s")%selText)
+			speech.speakSelectionChange(oldInfo,newInfo)

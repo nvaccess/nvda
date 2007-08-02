@@ -398,6 +398,58 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 				speech.speakSymbol(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
+def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,speakSelectionDeleted=True):
+	if newInfo.isCollapsed and oldInfo.isCollapsed:
+		return
+	leftDelta=newInfo.compareStart(oldInfo)
+	rightDelta=newInfo.compareEnd(oldInfo)
+	leftSelectedText=None
+	leftUnselectedText=None
+	rightSelectedText=None
+	rightUnselectedText=None
+	selectionDeleted=False
+	if speakSelected and leftDelta<0 and not newInfo.isCollapsed:
+		tempInfo=newInfo.copy()
+		tempInfo.collapse()
+		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(leftDelta),start=False)
+		leftSelectedText=tempInfo.text
+	if speakSelected and rightDelta>0 and not newInfo.isCollapsed:
+		tempInfo=newInfo.copy()
+		tempInfo.collapse(end=True)
+		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-rightDelta,end=False)
+		rightSelectedText=tempInfo.text
+	if leftDelta>0 and not oldInfo.isCollapsed:
+		tempInfo=newInfo.copy()
+		tempInfo.collapse()
+		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-leftDelta,end=False)
+		if res!=(0-leftDelta):
+			selectionDeleted=True
+		else:
+			leftUnselectedText=tempInfo.text
+	if rightDelta<0 and not oldInfo.isCollapsed:
+		tempInfo=newInfo.copy()
+		tempInfo.collapse(end=True)
+		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(rightDelta),start=False)
+		if res!=abs(rightDelta):
+			selectionDeleted=True
+		else:
+			rightUnselectedText=tempInfo.text
+	if speakSelected:
+		for selected in (leftSelectedText,rightSelectedText):
+			if isinstance(selected,basestring):
+				if  len(selected)==1:
+					selected=processSymbol(selected)
+				speakMessage(_("selected %s")%selected)
+	if speakUnselected:
+		for unselected in (leftUnselectedText,rightUnselectedText):
+			if isinstance(unselected,basestring):
+				if  len(unselected)==1:
+					unselected=processSymbol(unselected)
+				speakMessage(_("unselected %s")%unselected)
+	if speakSelectionDeleted and selectionDeleted:
+		speech.speakMessage(_("selection deleted"))
+
+
 def speakTypedCharacters(ch):
 	global typedWord
 	if api.isTypingProtected():

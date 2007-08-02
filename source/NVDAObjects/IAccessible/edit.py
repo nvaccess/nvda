@@ -11,13 +11,15 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import queueHandler
 import speech
 import debug
 import winKernel
 from IAccessibleHandler import pointer_IAccessible
+import api
 import winUser
 import textHandler
-from keyUtils import key, sendKey
+from keyUtils import key, sendKey, isKeyWaiting
 import IAccessibleHandler
 import controlTypes
 from . import IAccessible
@@ -366,6 +368,7 @@ class Edit(IAccessible):
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+		self._editLastSelectionPos=self.reviewPosition.copy()
 
 	def __del__(self):
 		if self.editAPIVersion>=1:
@@ -379,6 +382,36 @@ class Edit(IAccessible):
 
 	def event_valueChange(self):
 		pass
+
+	def reportFocus(self):
+		speech.speakObjectProperties(self,name=True,role=True,keyboardShortcut=True,positionString=True)
+		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		self._editLastSelectionPos=info
+		if info.isCollapsed:
+			info=info.copy()
+			info.expand(self.editValueUnit)
+			speech.speakFormattedText(info)
+		else:
+			text=info.text
+			if len(text)<=1:
+				text=speech.processSymbol(text)
+			speech.speakMessage(_("selected %s")%text)
+
+	def event_caret(self):
+		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		oldInfo=self._editLastSelectionPos
+		#speakSelectionChange must be in interactive queue so it happens after key scripts
+		queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
+		self._editLastSelectionPos=newInfo.copy()
+
+	def script_changeSelection(self,keyPress,nextScript):
+		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			focus=api.getFocusObject()
+			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
+			speech.speakSelectionChange(oldInfo,newInfo,speakSelected=False)
 
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

@@ -498,16 +498,21 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			return
 		lastEventParams=(eventID,window,objectID,childID)
 		eventName=eventMap[eventID]
-		#Change window objIDs to client objIDs for better reporting of objects
-		if (objectID==0) and (childID==0):
-			objectID=OBJID_CLIENT
-		if objectID==OBJID_CARET and eventName in ["locationChange","show"]:
-			eventName="caret"
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
 		navigatorObject=api.getNavigatorObject()
 		mouseObject=api.getMouseObject()
+		#Change window objIDs to client objIDs for better reporting of objects
+		if (objectID==0) and (childID==0):
+			objectID=OBJID_CLIENT
+		if objectID==OBJID_CARET and eventName=="locationChange":
+			if window==focusObject.windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
+				eventName="caret"
+				objectID=focusObject.IAccessibleObjectID
+				childID=focusObject.IAccessibleChildID
+			else:
+				return
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleOrigChildID):
