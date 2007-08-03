@@ -471,6 +471,9 @@ IA2Handler.EVENT_DOCUMENT_CONTENT_CHANGED:"reorder",
 }
 
 def manageEvent(name,window,objectID,childID):
+	#Ignore any events with invalid window handles
+	if not winUser.isWindow(window):
+		return
 	desktopObject=api.getDesktopObject()
 	foregroundObject=api.getForegroundObject()
 	focusObject=api.getFocusObject()
@@ -489,30 +492,19 @@ def manageEvent(name,window,objectID,childID):
 def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global lastEventParams
 	try:
-		controlID=winUser.getControlID(window)
-		#A hack to fix a terible bug in Notepad++
-		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
-			return
 		#Ignore certain duplicate events
 		if lastEventParams is not None and eventID==winUser.EVENT_OBJECT_FOCUS and lastEventParams==(eventID,window,objectID,childID):
 			return
 		lastEventParams=(eventID,window,objectID,childID)
-		eventName=eventMap[eventID]
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
 		navigatorObject=api.getNavigatorObject()
 		mouseObject=api.getMouseObject()
+		eventName=eventMap[eventID]
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
-		if objectID==OBJID_CARET and eventName=="locationChange":
-			if window==focusObject.windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-				eventName="caret"
-				objectID=focusObject.IAccessibleObjectID
-				childID=focusObject.IAccessibleChildID
-			else:
-				return
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleOrigChildID):
@@ -529,6 +521,21 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#Ignore any other destroy events since the object does not exist
 		if eventName=="destroy":
 			return
+		#Ignore events with invalid window handles
+		if not winUser.isWindow(window):
+			return
+		windowClassName=winUser.getClassName(window)
+		controlID=winUser.getControlID(window)
+		#A hack to fix a terible bug in Notepad++
+		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
+			return
+		if objectID==OBJID_CARET and eventName=="locationChange":
+			if window==focusObject.windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
+				eventName="caret"
+				objectID=focusObject.IAccessibleObjectID
+				childID=focusObject.IAccessibleChildID
+			else:
+				return
 		#Report mouse shape changes
 		if (eventID==winUser.EVENT_OBJECT_NAMECHANGE) and (objectID==OBJID_CURSOR):
 			if not config.conf["mouse"]["reportMouseShapeChanges"]:
@@ -556,6 +563,9 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		debug.writeException("objectEventCallback")
 
 def handleForegroundEvent(window,objectID,childID):
+	#Ignore any events with invalid window handles
+	if not winUser.isWindow(window):
+		return
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
@@ -567,6 +577,9 @@ def handleForegroundEvent(window,objectID,childID):
 	eventHandler.manageEvent("foreground",obj)
 
 def handleFocusEvent(window,objectID,childID):
+	#Ignore any events with invalid window handles
+	if not winUser.isWindow(window):
+		return
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
@@ -579,7 +592,6 @@ def handleFocusEvent(window,objectID,childID):
 	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
-
 
 def correctFocus():
 	focusObject=api.findObjectWithFocus()

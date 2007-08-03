@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import thread
+import threading
 import time
 import ctypes
 import difflib
@@ -28,6 +28,8 @@ class WinConsole(IAccessible):
 		self.consoleEventHookHandles=[] #Holds the handles for all the win events we register so we can remove them later
 
 	def connectConsole(self):
+		if hasattr(self,'consoleHandle'):
+			return
 		#Give a little time for the console to settle down
 		time.sleep(0.1)
 		pythoncom.PumpWaitingMessages()
@@ -36,9 +38,11 @@ class WinConsole(IAccessible):
 		#Get the process ID of the console this NVDAObject is fore
 		processID=self.windowProcessID
 		#Attach NVDA to this console so we can access its text etc
+		if winKernel.kernel32.GetConsoleWindow():
+			winKernel.freeConsole()
 		res=winKernel.attachConsole(processID)
 		if not res:
-			raise OSError("WinConsole: could not get console std handle") 
+			raise OSError("WinConsole: could not attach console") 
 		#Try and get the handle for this console's standard out
 		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
 		if not res:
@@ -62,18 +66,21 @@ class WinConsole(IAccessible):
 		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
-		thread.start_new_thread(self.monitorThread,())
+		self.monitorThread=threading.Thread(target=self.monitorThreadFunc)
+		self.monitorThread.start()
 		pythoncom.PumpWaitingMessages()
 		time.sleep(0.1)
 
 	def disconnectConsole(self):
+		if not hasattr(self,'consoleHandle'):
+			return
 		#Unregister any win events we are using
 		for handle in self.consoleEventHookHandles:
 			winUser.unhookWinEvent(handle)
 		self.consoleEventHookHandles=[]
 		#Get ready to stop monitoring - give it a little time to finish
 		self.keepMonitoring=False
-		time.sleep(0.001)
+		self.monitorThread.join()
 		#Get rid of the console handle we were holding
 		if hasattr(self,'consoleHandle'):
 			del self.consoleHandle
@@ -110,7 +117,7 @@ class WinConsole(IAccessible):
 			if x<info.cursorPosition.x and (y==info.cursorPosition.y or y==info.cursorPosition.y+1):  
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
 
-	def monitorThread(self):
+	def monitorThreadFunc(self):
 		try:
 			consoleEvent=None
 			# We want the first event to be handled immediately.
@@ -142,7 +149,8 @@ class WinConsole(IAccessible):
 				if checkDead_timer>=10:
 					checkDead_timer=0
 					if self.isConsoleDead():
-						self.disconnectConsole()
+						self.keepMonitoring=False
+						queueHandler.queueFunction(queueHandler.eventQueue,self.disconnectConsole)
 				checkDead_timer+=1
 				#Each round of the while loop we wait 10 milliseconds
 				time.sleep(0.01)
