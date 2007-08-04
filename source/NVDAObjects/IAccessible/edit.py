@@ -381,7 +381,7 @@ class Edit(IAccessible):
 		return info.text
 
 	def event_valueChange(self):
-		pass
+		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION).copy()
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True,keyboardShortcut=True,positionString=True)
