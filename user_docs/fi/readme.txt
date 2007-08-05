@@ -1,10 +1,10 @@
-NVDA:n Lueminut-tiedosto
+<div class="moz-text-flowed" style="font-family: -moz-fixed">NVDA:n Lueminut-tiedosto
 
-Ilmainen, avoimen lähdekoodin ruudunlukija Windowsille.
+Ilmainen, avoimen lähdekoodin ruudunlukuohjelma Windowsille.
 
 Tehnyt Michael Curran James Tehin ja muiden avustuksella.
 
-NonVisual Desktop Access (NVDA) on avoimen lähdekoodin ruudunlukija Windows-käyttöjärjestelmälle mahdollistaen sokeiden ja heikkonäköisten tietokoneen käytön heidän tarvitsematta maksaa enemmästä kuin itse tietokoneesta ja käyttöjärjestelmästä. Huhtikuusta 2006 lähtien se on muuttunut melko käyttökelpoiseksi päivittäisenä ruudunlukijana mahdollistaen käyttäjien tehdä useimpia tarvitsemiaan tehtäviä. Se ei ole niin vakaa tai virheetön kuin jotkin kaupallisista ruudunlukijoista. Joulukuusta 2006 lähtien NVDA:n tekijä on pystynyt täysipäiväisesti käyttämään NVDA:ta ensisijaisena ruudunlukijanaan luovuttaen viimeinkin pois käyttämänsä kaupallisen tuotteen.
+NonVisual Desktop Access (NVDA) on avoimen lähdekoodin ruudunlukuohjelma Windows-käyttöjärjestelmälle mahdollistaen sokeiden ja heikkonäköisten tietokoneen käytön heidän tarvitsematta maksaa enemmästä kuin itse tietokoneesta ja käyttöjärjestelmästä. Huhtikuusta 2006 lähtien se on muuttunut melko käyttökelpoiseksi päivittäisenä ruudunlukuohjelmana mahdollistaen käyttäjien tehdä useimpia tarvitsemiaan tehtäviä. Se ei ole niin vakaa tai virheetön kuin jotkin kaupallisista ruudunlukuohjelmista. Joulukuusta 2006 lähtien NVDA:n tekijä on pystynyt täysipäiväisesti käyttämään NVDA:ta ensisijaisena ruudunlukuohjelmanaan luovuttaen viimeinkin pois käyttämänsä kaupallisen tuotteen.
 
 NVDA:n antaessa palautteen synteettisenä puheena, käyttäjä voi käyttää kaikkia Windows-käyttöjärjestelmän osia, kuten:
 
@@ -15,7 +15,7 @@ Käyttää komentoriviohjelmia DOS-kehotteessa
 Tehdä perustaulukoita Microsoft Excelillä
 Yleistä tietokoneen hallintaa Oma tietokone -ikkunan, resurssienhallinnan ja ohjauspaneelin kautta sekä muita yleisiä tehtäviä
 
-NVDA:ta ei rajoita tarve seurata markkinasuuntauksia ja tarpeita. Kaupallisissa ruudunlukijoissa otetaan käyttöön todella hyödyllisiä ominaisuuksia, mutta toisinaan tämä voi olla puolueellista: otetaan käyttöön ominaisuuksia, joita markkinat haluavat sen sijaan, että kehitettäisiin jotain, mikä olisi käyttäjälle todella hyödyllistä. NVDA ei ole välttämättä yhtä vakaa kuin kaupalliset ruudunlukijat, mutta se toimii varmasti koe- ja testaustyökaluna. Sillä voi helposti ja nopeasti testata uusia ideoita ja ominaisuuksia, joita ei ehkä ole nähty muissa Windows-ruudunlukijoissa. Tästä on esimerkkinä NVDA:n kyky ilmoittaa käyttäjälle äänimerkeillä edistymispalkin liikkumisesta. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on. Tämä ominaisuus on lisätty muihin ruudunlukijoihin mukautetuilla skripteillä ja muilla sen kaltaisilla, mutta sitä ei ole koskaan virallisesti kokonaan sovitettu minkään Windows-ruudunlukijan ytimeen.
+NVDA:ta ei rajoita tarve seurata markkinasuuntauksia ja tarpeita. Kaupallisissa ruudunlukuohjelmissa otetaan käyttöön todella hyödyllisiä ominaisuuksia, mutta toisinaan tämä voi olla puolueellista: otetaan käyttöön ominaisuuksia, joita markkinat haluavat sen sijaan, että kehitettäisiin jotain, mikä olisi käyttäjälle todella hyödyllistä. NVDA ei ole välttämättä yhtä vakaa kuin kaupalliset ruudunlukuohjelmat, mutta se toimii varmasti koe- ja testaustyökaluna. Sillä voi helposti ja nopeasti testata uusia ideoita ja ominaisuuksia, joita ei ehkä ole nähty muissa Windows-ruudunlukuohjelmissa. Tästä on esimerkkinä NVDA:n kyky ilmoittaa käyttäjälle äänimerkeillä edistymispalkin liikkumisesta. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on. Tämä ominaisuus on lisätty muihin ruudunlukuohjelmiin mukautetuilla skripteillä ja muilla sen kaltaisilla, mutta sitä ei ole koskaan virallisesti kokonaan sovitettu minkään Windows-ruudunlukuohjelman ytimeen.
 
 Voit auttaa NVDA:n kehittämisessä ilmoittamalla tekijöille virheistä aina, kun niitä löytyy. Ohjeet virheiden ilmoittamiseksi ja muutamia hyödyllisiä artikkeleita löytyy wiki:stä osoitteessa http://wiki.nvda-project.org. Jos haluat lisää yleistä tietoa NVDA:sta, voit käydä web-sivustolla osoitteessa www.nvda-project.org. Sieltä löydät myös tietoja NVDA:n postituslistoille liittymisestä. Tällä hetkellä on kaksi listaa: yksi NVDA:n käyttäjille yleisille keskusteluille ja kehittäjien lista niille, jotka käyttävät ja testaavat NVDA:n lähdekoodiversiota.
 
@@ -26,3 +26,4 @@ NVDA on suojattu GNU GPL-lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjel
 
 Ota yhteyttä tekijään lähettämällä sähköpostia osoitteeseen:
 Michael Curran <mick@kulgan.net>
+</div>
