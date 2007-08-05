@@ -120,7 +120,7 @@ def isTypingProtected():
 @rtype: boolean
 """
 	focusObject=getFocusObject()
-	if focusObject and (controlTypes.STATE_PROTECTED in focusObject.states):
+	if focusObject and (controlTypes.STATE_PROTECTED in focusObject.states or focusObject.role==controlTypes.ROLE_PASSWORDEDIT):
 		return True
 	else:
 		return False
