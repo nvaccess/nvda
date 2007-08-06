@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-07-22 19:15+0800\n"
+"PO-Revision-Date: 2007-08-06 15:15+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,6 +68,15 @@ msgstr "%s 項目"
 # NVDAObjects\IAccessible\__init__.py:698
 msgid "%d items"
 msgstr "%d 個項目"
+
+# NVDAObjects\IAccessible\MSHTML.py:317
+# NVDAObjects\IAccessible\MSHTML.py:323
+# textBuffer.py:537
+# textBuffer.py:541
+# textBuffer.py:543
+# textBuffer.py:549
+msgid "selected %s"
+msgstr "選定了 %s"
 
 # NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -149,23 +158,6 @@ msgstr "左面"
 # NVDAObjects\IAccessible\winword.py:278
 msgid "right"
 msgstr "右面"
-
-# NVDAObjects\IAccessible\MSHTML.py:317
-# NVDAObjects\IAccessible\MSHTML.py:323
-# textBuffer.py:537
-# textBuffer.py:541
-# textBuffer.py:543
-# textBuffer.py:549
-msgid "selected %s"
-msgstr "選定了 %s"
-
-# NVDAObjects\IAccessible\MSHTML.py:314
-# NVDAObjects\IAccessible\MSHTML.py:320
-# textBuffer.py:545
-# textBuffer.py:547
-# textBuffer.py:551
-msgid "unselected %s"
-msgstr "不選定 %s"
 
 # api.py:145
 # api.py:148
@@ -263,7 +255,7 @@ msgid "speak command keys"
 msgstr "邊打邊念指令"
 
 # appModules\_default.py:98
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+# "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "切換邊打邊念指令開關"
 
 # appModules\_default.py:107
@@ -397,6 +389,22 @@ msgstr "沒有下一層項目了"
 msgid "Sets the navigator object to the first child object to the one it is currently on"
 msgstr "把瀏覽游標移到下一層的子項目"
 
+# controlTypes.py:196
+msgid "end of flow"
+msgstr "流程完結"
+
+# appModules\_default.py:164
+msgid "Sets the navigator object to the object this object flows to."
+msgstr "順序讀出下一個項目至下一層項目"
+
+# appModules\_default.py:254
+msgid "Beginning of flow"
+msgstr "開始流程"
+
+# appModules\_default.py:164
+msgid "Sets the navigator object to the object this object flows from."
+msgstr "順序讀出上一個項目至上一層項目"
+
 # appModules\_default.py:211
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "執行瀏覽項目的動作, 例如是按鈕就按下."
@@ -497,6 +505,31 @@ msgstr "顯示 NVDA 介面視窗"
 msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "從目前瀏覽游標所在的一行讀到結尾, 並且讓瀏覽游標跟著走"
 
+# appModules\_default.py:127
+# appModules\_default.py:136
+# appModules\_default.py:156
+# appModules\_default.py:169
+# appModules\_default.py:182
+# appModules\_default.py:195
+# appModules\_default.py:208
+# appModules\_default.py:217
+# appModules\_default.py:231
+# appModules\_default.py:239
+# appModules\_default.py:247
+# appModules\_default.py:255
+# appModules\_default.py:263
+# appModules\_default.py:271
+# appModules\_default.py:279
+# appModules\_default.py:287
+# appModules\_default.py:295
+# appModules\_default.py:303
+# appModules\_default.py:311
+# appModules\_default.py:319
+# appModules\_default.py:327
+# appModules\_default.py:335
+msgid "reads from navigator object "
+msgstr "從目前項目起讀下去"
+
 # appModules\_default.py:375
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr "從目前系統游標所在的一行讀到結尾, 並且讓系統游標跟著走"
@@ -504,10 +537,6 @@ msgstr "從目前系統游標所在的一行讀到結尾, 並且讓系統游標�
 # appModules\_default.py:390
 msgid "reports the object with focus"
 msgstr "讀出焦點所在的項目"
-
-# appModules\_default.py:395
-msgid "no foreground object"
-msgstr "沒有前景項目"
 
 # appModules\_default.py:399
 msgid "no status bar found"
@@ -665,6 +694,26 @@ msgstr "關鍵字:"
 # appModules\msimn.py:20
 msgid "BCC:"
 msgstr "密件副本收件者"
+
+# appModules\msimn.py:17
+msgid "subject: %s"
+msgstr "主題 %s"
+
+# virtualBuffers\IAccessible\gecko.py:294
+msgid "received: %s"
+msgstr "收件 %s"
+
+# appModules\outlook.py:35
+msgid "unread"
+msgstr "未曾閱讀"
+
+# appModules\msimn.py:14
+msgid "attachment"
+msgstr "附件"
+
+# controlTypes.py:86
+msgid "sent: %s"
+msgstr "送出 %s"
 
 # characterSymbols.py:17
 # characterSymbols.py:18
@@ -1818,6 +1867,10 @@ msgstr "修改語言設定"
 msgid "&Synthesizer"
 msgstr "&S 語音合成器"
 
+# gui\settingsDialogs.py:112
+msgid "Output &device"
+msgstr "&D 輸出裝置"
+
 # gui\settingsDialogs.py:103
 msgid "Could not load the %s synthesizer."
 msgstr "未能載入 %s 語音合成器"
@@ -2054,6 +2107,19 @@ msgstr "包含 %s"
 # speech.py:274
 msgid "cap %s"
 msgstr "大寫 %s"
+
+# NVDAObjects\IAccessible\MSHTML.py:314
+# NVDAObjects\IAccessible\MSHTML.py:320
+# textBuffer.py:545
+# textBuffer.py:547
+# textBuffer.py:551
+msgid "unselected %s"
+msgstr "不選定 %s"
+
+# NVDAObjects\IAccessible\excel.py:64
+# controlTypes.py:142
+msgid "selection deleted"
+msgstr "選取了的都已刪除"
 
 # textBuffer.py:207
 msgid "page %d"
