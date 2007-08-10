@@ -159,7 +159,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark((self._rangeObj.Start,self._rangeObj.End))
+		return textHandler.Bookmark(self.__class__,(self._rangeObj.Start,self._rangeObj.End))
 
 	def updateCaret(self):
 		self.obj.dom.Selection.SetRange(self._rangeObj.Start,self._rangeObj.End)
