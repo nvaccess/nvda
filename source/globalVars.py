@@ -48,3 +48,4 @@ caretMovesReviewCursor=True
 focusMovesNavigatorObject=True
 restart=False
 appArgs=None
+settingsRing = None

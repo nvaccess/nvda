@@ -29,6 +29,7 @@ import winUser
 import appModuleHandler
 import winKernel
 
+
 class appModule(appModuleHandler.appModule):
 
 	def event_switchStart(self,obj,nextHandler):
@@ -72,6 +73,26 @@ class appModule(appModuleHandler.appModule):
 		config.conf["speech"][getSynth().name]["rate"]=rate
 		speech.speakMessage(_("rate %d%%")%rate)
 	script_decreaseRate.__doc__=_("decreases the speech rate by 5 percent")
+
+	def script_increaseSetting(self,keyPress,nextScript):
+		#val = globalVars.settingsRing.increase()
+		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
+	script_increaseSetting.__doc__=_("Increases currently active setting in the synth settings ring")
+
+	def script_decreaseSetting(self,keyPress,nextScript):
+		#val = globalVars.settingsRing.decrease()
+		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
+	script_decreaseSetting.__doc__=_("Decreases currently active setting in the synth settings ring")
+
+	def script_nextSetting(self,keyPress,nextScript):
+		#name = globalVars.settingsRing.next()
+		speech.speakMessage("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
+	script_nextSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
+
+	def script_previousSetting(self,keyPress,nextScript):
+#		name = globalVars.settingsRing.previous()
+		speech.speakMessage("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
+	script_previousSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
 		if config.conf["keyboard"]["speakTypedCharacters"]:

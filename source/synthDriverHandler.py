@@ -9,6 +9,8 @@ import debug
 import config
 import queueHandler
 import speech
+import globalVars
+from  _synthSettingsRing import SynthSettingsRing
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
@@ -77,6 +79,9 @@ def setSynth(name):
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
 		debug.writeMessage("Loaded synthDriver %s"%name)
+		#start or update the synthSettingsRing
+		if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings()
+		else:  globalVars.settingsRing = SynthSettingsRing()
 		return True
 	except:
 		debug.writeException("setSynth")
