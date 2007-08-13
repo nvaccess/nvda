@@ -1,20 +1,16 @@
+msgid ""
+msgstr
+"P07-08-12 16:26+Russian Daylight Time\n"
+"PO-Revision-Date: 2007-07-17 21:00+Moscow\n"
+"Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
 # An open-source (and free) Screen Reader for the Windows Operating System.
 # Created by Michael Curran, with help from James Teh and others.
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-
-
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-07-17 18:10+Russian Daylight Time\n"
-"PO-Revision-Date: 2007-07-17 21:00+Moscow\n"
-"Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
-
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: UTF-8\n"
-"Generated-By: pygettext.py 1.5\n"
-
 
 #: IAccessibleHandler.py:136 controlTypes.py:158
 msgid "window"
@@ -91,7 +87,8 @@ msgstr "Содержит формулу"
 
 #: NVDAObjects\IAccessible\excel.py:97
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "Переходит к ячейке и читает её координаты и содержание"
+msgstr "Переходит к ячейке и читает её координаты "
+"и содержание"
 
 #: NVDAObjects\IAccessible\excel.py:101
 msgid "font"
@@ -143,27 +140,51 @@ msgstr "Левый"
 msgid "right"
 msgstr "Правый"
 
+#: _synthSettingsRing.py:55
+msgid "volume"
+msgstr "Громкость"
+
+#: _synthSettingsRing.py:56
+msgid "rate"
+msgstr "Скорость"
+
+#: _synthSettingsRing.py:57
+msgid "pitch"
+msgstr "Высота"
+
+#: _synthSettingsRing.py:58
+msgid "inflection"
+msgstr "Интонация"
+
+#: _synthSettingsRing.py:59
+msgid "voice"
+msgstr "Голос"
+
+#: _synthSettingsRing.py:60
+msgid "variant"
+msgstr "Вариант"
+
 #: api.py:147 api.py:150
 msgid "virtual buffer pass through"
 msgstr "Пропуск виртуального буфера"
 
-#: api.py:147 appModules\_default.py:45
-#: appModules\_default.py:78 appModules\_default.py:88
-#: appModules\_default.py:98 appModules\_default.py:108
-#: appModules\_default.py:358 appModules\_default.py:432
-#: appModules\_default.py:467 appModules\_default.py:477
-#: appModules\_default.py:487 appModules\_default.py:497
+#: api.py:147 appModules\_default.py:46
+#: appModules\_default.py:99 appModules\_default.py:109
+#: appModules\_default.py:119 appModules\_default.py:129
+#: appModules\_default.py:379 appModules\_default.py:453
+#: appModules\_default.py:488 appModules\_default.py:498
+#: appModules\_default.py:508 appModules\_default.py:518
 #: keyboardHandler.py:49 keyboardHandler.py:51
 #: keyboardHandler.py:53 speech.py:386 speech.py:392
 msgid "off"
 msgstr "Выключено"
 
-#: api.py:150 appModules\_default.py:42
-#: appModules\_default.py:81 appModules\_default.py:91
-#: appModules\_default.py:101 appModules\_default.py:111
-#: appModules\_default.py:435 appModules\_default.py:470
-#: appModules\_default.py:480 appModules\_default.py:490
-#: appModules\_default.py:500 keyboardHandler.py:49
+#: api.py:150 appModules\_default.py:43
+#: appModules\_default.py:102 appModules\_default.py:112
+#: appModules\_default.py:122 appModules\_default.py:132
+#: appModules\_default.py:456 appModules\_default.py:491
+#: appModules\_default.py:501 appModules\_default.py:511
+#: appModules\_default.py:521 keyboardHandler.py:49
 #: keyboardHandler.py:51 keyboardHandler.py:53
 #: speech.py:381
 msgid "on"
@@ -181,377 +202,457 @@ msgstr "Не удалось загрузить набор клавиатурны
 msgid "Could not load default module "
 msgstr "Не удалось загрузить модуль поумолчанию"
 
-#: appModules\_default.py:47
+#: appModules\_default.py:48
 msgid "keyboard help %s"
 msgstr "Клавиатурная справка %s"
 
-#: appModules\_default.py:48
-msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "Включает и выключает режим клавиатурной справки, при включённом режиме, при нажатии клавиш, читается соответствующая команда, если назначена"
+#: appModules\_default.py:49
+msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
+"tell you what script is associated with it, if any."
+msgstr ""
+"Включает и выключает режим клавиатурной "
+"справки, при включённом режиме, при "
+"нажатии клавиш, читается соответствующая "
+"команда, если назначена"
 
-#: appModules\_default.py:60
+#: appModules\_default.py:61
 msgid "Reports the current date and time"
 msgstr "читает текущую дату и время"
 
-#: appModules\_default.py:66 appModules\_default.py:73
+#: appModules\_default.py:67 appModules\_default.py:74
 msgid "rate %d%%"
 msgstr "Скорость %d%%"
 
-#: appModules\_default.py:67
+#: appModules\_default.py:68
 msgid "Increases the speech rate by 5 percent"
 msgstr "Увеличивает скорость речи на 5 процентов"
 
-#: appModules\_default.py:74
+#: appModules\_default.py:75
 msgid "decreases the speech rate by 5 percent"
 msgstr "Уменьшает скорость речи на 5 процентов"
 
-#: appModules\_default.py:83
+#: appModules\_default.py:80
+msgid "Increases currently active setting in the synth settings ring"
+msgstr "Увеличивает значение активного параметра в кольце настроек синтезатора"
+
+#: appModules\_default.py:85
+msgid "Decreases currently active setting in the synth settings ring"
+msgstr "Уменьшает значение активного параметра в кольце настроек синтезатора"
+
+#: appModules\_default.py:90
+msgid "Moves to the next available setting in the synth settings ring"
+msgstr "Переходет к следующему параметру в кольце настроек синтезатора"
+
+#: appModules\_default.py:95
+msgid "Moves to the previous available setting in the synth settings ring"
+msgstr "Переходит к предыдущему параметру в кольце настроек синтезатора"
+
+#: appModules\_default.py:104
 msgid "speak typed characters"
 msgstr "читать вводимые символы"
 
-#: appModules\_default.py:84
+#: appModules\_default.py:105
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Переключает чтение символов при вводе"
 
-#: appModules\_default.py:93
+#: appModules\_default.py:114
 msgid "speak typed words"
 msgstr "читать вводимые слова"
 
-#: appModules\_default.py:94
+#: appModules\_default.py:115
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Переключает чтение слов при вводе"
 
-#: appModules\_default.py:103
+#: appModules\_default.py:124
 msgid "speak command keys"
 msgstr "читать командные клавиши"
 
-#: appModules\_default.py:104
+#: appModules\_default.py:125
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "Переключает озвучивание клавиш, часто, не являющихся символами"
 
-#: appModules\_default.py:113
+#: appModules\_default.py:134
 msgid "speak punctuation"
 msgstr "читать пунктуацию"
 
-#: appModules\_default.py:114
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
+#: appModules\_default.py:135
+msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as "
+"to how it speaks punctuation"
 msgstr "Переключает чтение знаков пунктуации. При включено, NVDA обрабатывает знаки пунктуации, при Выключено, озвучивание зависит от активного синтезатора"
 
-#: appModules\_default.py:117
+#: appModules\_default.py:138
 msgid "Move mouse to navigator"
 msgstr "Привести мышь к навигатору"
 
-#: appModules\_default.py:119
+#: appModules\_default.py:140
 msgid "Moves the mouse pointer to the current navigator object."
-msgstr "Перемещает указатель мыши к текущему объекту навигатора"
+msgstr "Перемещает указатель мыши к текущему "
+"объекту навигатора"
 
-#: appModules\_default.py:122
+#: appModules\_default.py:143
 msgid "Move navigator object to mouse"
 msgstr "Привести навигатор к мыши"
 
-#: appModules\_default.py:128
+#: appModules\_default.py:149
 msgid "Sets the navigator object to the object that is directly under the mouse pointer"
 msgstr "Устанавливает навигатор на объект, находящийся под указателем мыши"
 
-#: appModules\_default.py:133 appModules\_default.py:142
-#: appModules\_default.py:162 appModules\_default.py:175
-#: appModules\_default.py:188 appModules\_default.py:201
-#: appModules\_default.py:214 appModules\_default.py:237
-#: appModules\_default.py:260 appModules\_default.py:269
+#: appModules\_default.py:154 appModules\_default.py:163
+#: appModules\_default.py:183 appModules\_default.py:196
+#: appModules\_default.py:209 appModules\_default.py:222
+#: appModules\_default.py:235 appModules\_default.py:258
+#: appModules\_default.py:281 appModules\_default.py:290
 msgid "no navigator object"
 msgstr "Нет объекта навигатора"
 
-#: appModules\_default.py:137
+#: appModules\_default.py:158
 msgid "Reports the current navigator object"
 msgstr "Читает текущий объект навигатора"
 
-#: appModules\_default.py:145
+#: appModules\_default.py:166
 msgid "No location information for navigator object"
-msgstr "Нет информации о расположении объекта навигатора"
+msgstr "Нет информации о расположении объекта "
+"навигатора"
 
-#: appModules\_default.py:147
+#: appModules\_default.py:168
 msgid "%d wide by %d high, located %d from left and %d from top"
 msgstr "%d Ширина %d Высота, Расположено %d слева %d сверху"
 
-#: appModules\_default.py:148
+#: appModules\_default.py:169
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Сообщает высоту, ширину и расположение объекта навигатора"
 
-#: appModules\_default.py:153 appModules\_default.py:417
+#: appModules\_default.py:174 appModules\_default.py:438
 msgid "no focus"
 msgstr "Нет фокуса"
 
-#: appModules\_default.py:155
+#: appModules\_default.py:176
 msgid "move to focus"
 msgstr "Привести к фокусу"
 
-#: appModules\_default.py:157
+#: appModules\_default.py:178
 msgid "Sets the navigator object to the current focus"
 msgstr "Устанавливает объект навигатора на фокус"
 
-#: appModules\_default.py:169
+#: appModules\_default.py:190
 msgid "No parents"
 msgstr "Нет родительского"
 
-#: appModules\_default.py:170
+#: appModules\_default.py:191
 msgid "Sets the navigator object to the parent of the object it is currently on."
 msgstr "Приводит навигатор к родительскому объекту, относительно текущего"
 
-#: appModules\_default.py:182
+#: appModules\_default.py:203
 msgid "No next"
 msgstr "Нет следующего"
 
-#: appModules\_default.py:183
+#: appModules\_default.py:204
 msgid "Sets the navigator object to the next object to the one it is currently on"
-msgstr "устанавливает навигатор на следующий объект, относительно текущего"
+msgstr "устанавливает навигатор на следующий "
+"объект, относительно текущего"
 
-#: appModules\_default.py:195
+#: appModules\_default.py:216
 msgid "No previous"
 msgstr "Нет предыдущего"
 
-#: appModules\_default.py:196
+#: appModules\_default.py:217
 msgid "Sets the navigator object to the previous object to the one it is currently on"
 msgstr "Устанавливает навигатор на предыдущий объект, относительно текущего"
 
-#: appModules\_default.py:208
+#: appModules\_default.py:229
 msgid "No children"
 msgstr "Нет дочернего"
 
-#: appModules\_default.py:209
+#: appModules\_default.py:230
 msgid "Sets the navigator object to the first child object to the one it is currently on"
 msgstr "Устанавливает навигатор на первый дочерний объект, относительно текущего"
 
-#: appModules\_default.py:231
+#: appModules\_default.py:252
 msgid "end of flow"
 msgstr "Конец потока"
 
-#: appModules\_default.py:232
+#: appModules\_default.py:253
 msgid "Sets the navigator object to the object this object flows to."
 msgstr "Устанавливает навигатор на объект потока, к которому пренадлежит текущий объект"
 
-#: appModules\_default.py:254
+#: appModules\_default.py:275
 msgid "Beginning of flow"
 msgstr "Начало потока"
 
-#: appModules\_default.py:255
+#: appModules\_default.py:276
 msgid "Sets the navigator object to the object this object flows from."
 msgstr "Устанавливает навигатор на объект, порождённый потоком текущего объекта"
 
-#: appModules\_default.py:263
+#: appModules\_default.py:284
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "Выполняет установленное действие текущего объекта навигатора, например,нажимает его, если это кнопка"
 
-#: appModules\_default.py:276
+#: appModules\_default.py:297
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
 msgstr "Сообщает расположение текущего объекта навигатора в иерархии, озвучивая его родительские объекты"
 
-#: appModules\_default.py:281
+#: appModules\_default.py:302
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr "Перемещает просмотровый курсор на первую строку объекта навигатора"
 
-#: appModules\_default.py:286
+#: appModules\_default.py:307
 msgid "Moves the review cursor to the previous line of the current navigator object"
 msgstr "Перемещает просмотровый курсор на предыдущую строку объекта навигатора"
 
-#: appModules\_default.py:291
+#: appModules\_default.py:312
 msgid "Reports the line of the current navigator object where the review cursor is situated"
 msgstr "читает строку под просмотровым курсором объекта навигатора"
 
-#: appModules\_default.py:296
+#: appModules\_default.py:317
 msgid "Moves the review cursor to the next line of the current navigator object"
 msgstr "Перемещает просмотровый курсор на следующую строку объекта навигатора"
 
-#: appModules\_default.py:301
+#: appModules\_default.py:322
 msgid "Moves the review cursor to the bottom line of the current navigator object"
 msgstr "Перемещает просмотровый курсор на последнюю строку объекта навигатора"
 
-#: appModules\_default.py:306
+#: appModules\_default.py:327
 msgid "Moves the review cursor to the previous word of the current navigator object"
 msgstr "Перемещает просмотровый курсор на предыдущее слово объекта навигатора"
 
-#: appModules\_default.py:311
+#: appModules\_default.py:332
 msgid "Speaks the word of the current navigator object where the review cursor is situated"
 msgstr "читает слово под просмотровым курсором объекта навигатора"
 
-#: appModules\_default.py:316
+#: appModules\_default.py:337
 msgid "Moves the review cursor to the next word of the current navigator object"
 msgstr "Перемещает просмотровый курсор на следующее слово объекта навигатора"
 
-#: appModules\_default.py:321
+#: appModules\_default.py:342
 msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
 msgstr "Перемещает просмотровый курсор к началу текущей строки объекта навигатора"
 
-#: appModules\_default.py:326
+#: appModules\_default.py:347
 msgid "Moves the review cursor to the previous character of the current navigator object"
 msgstr "Перемещает просмотровый курсор на предыдущий символ объекта навигатора"
 
-#: appModules\_default.py:331
+#: appModules\_default.py:352
 msgid "Reports the character of the current navigator object where the review cursor is situated"
 msgstr "Читает символ под просмотровым курсором объекта навигатора"
 
-#: appModules\_default.py:336
+#: appModules\_default.py:357
 msgid "Moves the review cursor to the next character of the current navigator object"
 msgstr "Перемещает просмотровый курсор на следующий символ объекта навигатора"
 
-#: appModules\_default.py:341
+#: appModules\_default.py:362
 msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
 msgstr "Перемещает просмотровый курсор к концу текущей строки объекта навигатора"
 
-#: appModules\_default.py:346
+#: appModules\_default.py:367
 msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "Приводит просмотровый курсор к системному курсору текущего объекта навигатора"
+msgstr ""
+"Приводит просмотровый курсор к "
+"системному курсору текущего объекта "
+"навигатора"
 
-#: appModules\_default.py:351
-msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "Приводит системный курсор к просмотровому курсору текущего объекта навигатора"
+#: appModules\_default.py:372
+msgid ""
+"Moves the system caret to the position of the review cursor , in the current "
+"navigator object"
+msgstr ""
+"Приводит системный курсор к "
+"просмотровому курсору текущего объекта "
+"навигатора"
 
-#: appModules\_default.py:360
+#: appModules\_default.py:381
 msgid "beeps"
 msgstr "Сигналы"
 
-#: appModules\_default.py:362
+#: appModules\_default.py:383
 msgid "talk"
 msgstr "Речь"
 
-#: appModules\_default.py:363
+#: appModules\_default.py:384
 msgid "speech mode %s"
 msgstr "Режим озвучивания %s"
 
-#: appModules\_default.py:365
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Переключает режим озвучивания NVDA между выключено, Сигналы, Речь. При Выключено NVDA ничего не читает, при режиме Сигналы, NVDA издаёт высокочастотные звуки, когда на экране появляется новая информация, при режиме Речь NVDA озвучивает события активным синтезатором"
+#: appModules\_default.py:386
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Переключает режим озвучивания NVDA между "
+"выключено, Сигналы, Речь. При Выключено NVDA "
+"ничего не читает, при режиме Сигналы, NVDA "
+"издаёт высокочастотные звуки, когда на "
+"экране появляется новая информация, при "
+"режиме Речь NVDA озвучивает события активны"
+"м синтезатором"
 
-#: appModules\_default.py:369
-msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "Переключает режим пропуска виртуального буфера. При Включено, нажатия клавиш отрабатываются не виртуальным буфером, а передаются, непосредственно, элементам управления приложения"
+#: appModules\_default.py:390
+msgid ""
+"Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
+"straight through the current virtualBuffer, allowing you to interact with a "
+"control without the virtualBuffer doing something else with the key."
+msgstr ""
+"Переключает режим пропуска виртуального "
+"буфера. При Включено, нажатия клавиш "
+"отрабатываются не виртуальным буфером, а "
+"передаются, непосредственно, элементам "
+"управления приложения"
 
-#: appModules\_default.py:373
+#: appModules\_default.py:394
 msgid "Quits NVDA!"
 msgstr "Завершает NVDA"
 
-#: appModules\_default.py:377
+#: appModules\_default.py:398
 msgid "Shows the NVDA interface window"
 msgstr "Вызывает окно интерфейса NVDA"
 
-#: appModules\_default.py:383
-msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Читает от просмотрового курсора до конца текста, перемещая просмотровый курсор"
+#: appModules\_default.py:404
+msgid ""
+"reads from review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Читает от просмотрового курсора до конца "
+"текста, перемещая просмотровый курсор"
 
-#: appModules\_default.py:388
+#: appModules\_default.py:409
 msgid "reads from navigator object "
-msgstr "Читает от системного курсора до конца текста, перемещая системный курсор"
+msgstr ""
+"Читает от системного курсора до конца "
+"текста, перемещая системный курсор"
 
-#: appModules\_default.py:398
+#: appModules\_default.py:419
 msgid "reads from system caret up to end of text, moving the caret as it goes"
-msgstr "Читает от системного курсора до конца текста, перемещая системный курсор"
+msgstr ""
+"Читает от системного курсора до конца "
+"текста, перемещая системный курсор"
 
-#: appModules\_default.py:418
+#: appModules\_default.py:439
 msgid "reports the object with focus"
 msgstr "читает объект в фокусе"
 
-#: appModules\_default.py:424
+#: appModules\_default.py:445
 msgid "no status bar found"
 msgstr "Не удалось найти строку состояния"
 
-#: appModules\_default.py:428
+#: appModules\_default.py:449
 msgid "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr "читает строку состояния текущего приложения и приводит туда просмотровый курсор"
 
-#: appModules\_default.py:437
+#: appModules\_default.py:458
 msgid "Report object under mouse"
 msgstr "читать объект под указателем мыши"
 
-#: appModules\_default.py:438
+#: appModules\_default.py:459
 msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr "Переключает чтение объекта под указателем мыши"
 
-#: appModules\_default.py:444
+#: appModules\_default.py:465
 msgid "Reports the title of the current application or foreground window"
 msgstr "читает заголовок текущего приложения или окна на переднем плане"
 
-#: appModules\_default.py:451
+#: appModules\_default.py:472
 msgid "speaks the current foreground object"
 msgstr "читает объект на переднем плане"
 
-#: appModules\_default.py:457
+#: appModules\_default.py:478
 msgid "Control ID: %s"
 msgstr "Контрол ID: %s"
 
-#: appModules\_default.py:458
+#: appModules\_default.py:479
 msgid "Class: %s"
 msgstr "Класс: %s"
 
-#: appModules\_default.py:461
+#: appModules\_default.py:482
 msgid "internal text: %s"
 msgstr "Внутренний текст: %s"
 
-#: appModules\_default.py:462
+#: appModules\_default.py:483
 msgid "text: %s"
 msgstr "Текст: %s"
 
-#: appModules\_default.py:463
-msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "Сообщает техническую информацию об объекте: Контрол ID, класс, внутренний текст, используется, главным образом, разработчиками"
+#: appModules\_default.py:484
+msgid ""
+"reports some info about the current navigator object, mainly useful for "
+"developers: control id, class and internal text"
+msgstr ""
+"Сообщает техническую информацию об "
+"объекте: Контрол ID, класс, внутренний "
+"текст, используется, главным образом, "
+"разработчиками"
 
-#: appModules\_default.py:472
+#: appModules\_default.py:493
 msgid "Beep on progress bar updates"
 msgstr "Сигналы обновления индикаторов выполнения"
 
-#: appModules\_default.py:473
+#: appModules\_default.py:494
 msgid "Toggles on and off the beeping on progress bar updates"
 msgstr "Включает или выключает сигналы во время обновления индикаторов выполнения"
 
-#: appModules\_default.py:482
+#: appModules\_default.py:503
 msgid "report dynamic content changes"
 msgstr "Читать изменения динамического контента"
 
-#: appModules\_default.py:483
+#: appModules\_default.py:504
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Переключает чтение изменений динамического контента, например, озвучивание нового текста в DOS консолях"
 
-#: appModules\_default.py:492
+#: appModules\_default.py:513
 msgid "caret moves review cursor"
 msgstr "Привязка просмотрового курсора к системному"
 
-#: appModules\_default.py:493
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Включает или выключает перемещение просмотрового курсора во время движения системного курсора"
+#: appModules\_default.py:514
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"Включает или выключает перемещение "
+"просмотрового курсора во время движения "
+"системного курсора"
 
-#: appModules\_default.py:502
+#: appModules\_default.py:523
 msgid "focus moves navigator object"
 msgstr "Привязка навигатора к фокусу"
 
-#: appModules\_default.py:503
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Включает или выключает перемещение навигатора при смене фокуса"
+#: appModules\_default.py:524
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"Включает или выключает перемещение "
+"навигатора при смене фокуса"
 
-#: appModules\_default.py:515
+#: appModules\_default.py:536
 msgid "no system battery"
 msgstr "Нет системной батареи"
 
-#: appModules\_default.py:517
+#: appModules\_default.py:538
 msgid "%d percent"
 msgstr "%d процент"
 
-#: appModules\_default.py:518
+#: appModules\_default.py:539
 msgid "AC power on"
 msgstr "Подключено питание от электросети"
 
-#: appModules\_default.py:520
+#: appModules\_default.py:541
 msgid "%d hours and %d minutes remaining"
 msgstr "Осталось %d часов и %d минут"
 
-#: appModules\_default.py:522
+#: appModules\_default.py:543
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Сообщает состояние батареи и время, оставшееся до разрядки, при отключённом питании от электросети"
+msgstr ""
+"Сообщает состояние батареи и время, "
+"оставшееся до разрядки, при отключённом "
+"питании от электросети"
 
-#: appModules\_default.py:526
+#: appModules\_default.py:547
 msgid "Pass next key through"
 msgstr "Пропуск клавиши"
 
-#: appModules\_default.py:527
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Следующее нажатие клавиши или сочетания клавиш не будет отрабатываться NVDA, а будет передано, непосредственно, Windows."
+#: appModules\_default.py:548
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Следующее нажатие клавиши или сочетания "
+"клавиш не будет отрабатываться NVDA, а будет"
+" передано, непосредственно, Windows."
 
 #: appModules\msimn.py:21
 msgid "Attachments"
@@ -1101,7 +1202,7 @@ msgstr "Секция"
 
 #: controlTypes.py:242
 msgid "shape"
-msgstr "Форма"
+msgstr "Очертание"
 
 #: controlTypes.py:243
 msgid "split pane"
@@ -1354,7 +1455,9 @@ msgstr "Конфигурация применена"
 
 #: core.py:72
 msgid "Loading subsystems, please wait..."
-msgstr "Загрузка подсистем, пожалуйста, подождите..."
+msgstr ""
+"Загрузка подсистем, пожалуйста, подождит"
+"е..."
 
 #: core.py:85
 msgid "NVDA started"
@@ -1373,16 +1476,32 @@ msgid ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
+"This is the NVDA interface window. It enables you to control NVDA's "
+"settings, and also to exit NVDA altogether.\n"
 "\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
+"To bring this window up at any time, press insert+n. To close this window "
+"without exiting NVDA, press alt+f4.\n"
 "\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
+"To exit NVDA completely, either press insert+q from anywhere, or choose "
+"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
+"box asking you if you want to exit, and you can either press the yes or no "
+"button.\n"
 "\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
+"To set the preferences (such as voice settings, key Settings, reading of "
+"tooltips etc),\n"
+"Use the alt key to move to the menu bar and then use the arrow keys to "
+"navigate the menus and find the settings you want to change. Pressing enter "
+"on many of the menu items will bring up a dialog box in which you can change "
+"the individual settings. Most settings will take effect straight away (such "
+"as changing the rate or pitch of the voice) so you can easily find what "
+"settings most suit you. However, if you cancel out of the dialog box the "
+"settings will go back to what they were before you changed them. \n"
 "\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
+"By default settings are not kept for the next time you run NVDA unless you "
+"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
+"NVDA to automatically save the settings on exit by going to 'user "
+"interface...' in the Preferences menu and checking the 'Save configuration "
+"on exit' checkbox and press ing ok.\n"
 "\n"
 "Some usefull key commands when using NVDA are:\n"
 "\n"
@@ -1395,7 +1514,8 @@ msgid ""
 "insert+f12 - report time and date\n"
 "insert+2 - turn speaking of typed characters on and off\n"
 "insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
+"insert+4 - turn speaking of typed command keys (such as space, arrows, "
+"control and shift combinations) on and off\n"
 "insert+pageUp - increase rate of speech\n"
 "insert+pageDown - decrease rate of speech\n"
 "insert+p - turn reading of punctuation on and off\n"
@@ -1437,55 +1557,111 @@ msgstr ""
 "NVDA (%(description)s)\n"
 "Version: %(version)s\n"
 "URL: %(url)s\n"
-"Пожалуйста, направляйте замечания и предложения по: %(maintainer)s <%(maintainer_email)s>.\n"
+"Пожалуйста, направляйте замечания и "
+"предложения по: %(maintainer)s <%(maintainer_email)s>.\n"
 "\n"
 "--- Правовая информация ---\n"
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"Это окно интерфейса NVDA . Здесь вы можете настраивать параметры NVDA и, также, можете завершить работу программы.\n"
+"Это окно интерфейса NVDA . Здесь вы можете "
+"настраивать параметры NVDA и, также, можете "
+"завершить работу программы.\n"
 "\n"
-"Для вызова этого окна в любое время нажмите insert+n. Для закрытия окна интерфейса, без завершения работы NVDA, нажмите alt+f4.\n"
+"Для вызова этого окна в любое время нажмит"
+"е insert+n. Для закрытия окна интерфейса, без "
+"завершения работы NVDA, нажмите alt+f4.\n"
 "\n"
-"Для завершения работы NVDA, в любое время,нажмите insert+q или выберите Выход из меню окна интерфейса NVDA , т.е. этого окна. NVDA покажет диалог с вопросом о завершении работы программы и вы сможете нажать кнопку OK или Отмена.\n"
+"Для завершения работы NVDA, в любое время,"
+"нажмите insert+q или выберите Выход из меню "
+"окна интерфейса NVDA , т.е. этого окна. NVDA "
+"покажет диалог с вопросом о завершении "
+"работы программы и вы сможете нажать "
+"кнопку OK или Отмена.\n"
 "\n"
-"Для изменения таких параметров, как Настройки Голоса, Эхо Клавиатуры, Чтение Подсказок,\n"
-"Используйте клавишу alt для активации Меню, затем, клавиши со стрелками для перемещения по пунктам меню. Нажатие клавиши Ввод на большинстве пунктов данного меню вызовет появление диалогов параметров, где вы сможете изменить индивидуальные настройки. Многие настройки применяются сразу, например, изменение скорости голоса активного синтезатора и т.д., поэтому, вы легко сможете подобрать желаемые значения. Однако, если вы нажмёте кнопку Отмена и закроете диалог, сделанные вами изменения настроек не будут приняты и значения параметров вернутся к предыдущему состоянию. \n"
+"Для изменения таких параметров, как "
+"Настройки Голоса, Эхо Клавиатуры, Чтение "
+"Подсказок,\n"
+"Используйте клавишу alt для активации Меню"
+", затем, клавиши со стрелками для "
+"перемещения по пунктам меню. Нажатие "
+"клавиши Ввод на большинстве пунктов да"
+"нного меню вызовет появление диалогов "
+"параметров, где вы сможете изменить "
+"индивидуальные настройки. Многие "
+"настройки применяются сразу, например, "
+"изменение скорости голоса активного "
+"синтезатора и т.д., поэтому, вы легко "
+"сможете подобрать желаемые значения. Одна"
+"ко, если вы нажмёте кнопку Отмена и "
+"закроете диалог, сделанные вами изменения"
+" настроек не будут приняты и значения "
+"параметров вернутся к предыдущему "
+"состоянию. \n"
 "\n"
-"Поумолчанию, настройки сохраняются только на текущую сессию работы NVDA. Чтобы сохранить настройки конфигурации, нажмите ctrl+s или выберите Сохранить Конфигурацию из меню NVDA. Вы можетеотметить флажок, Автосохранение конфигурации при выходе. Откройте Настройки Интерфейса... из меню, Параметры и, нажимая клавишу Таб, остановитесь на соответствующем флажке, нажмите клавишу Пробел, затем, ok.\n"
+"Поумолчанию, настройки сохраняются толь"
+"ко на текущую сессию работы NVDA. Чтобы сох"
+"ранить настройки конфигурации, нажмите ctrl"
+"+s или выберите Сохранить Конфигурацию из "
+"меню NVDA. Вы можетеотметить флажок, Автосох"
+"ранение конфигурации при выходе. Откройт"
+"е Настройки Интерфейса... из меню, "
+"Параметры и, нажимая клавишу Таб, "
+"остановитесь на соответствующем флажке, "
+"нажмите клавишу Пробел, затем, ok.\n"
 "\n"
-"Некоторые Часто используемые клавиатурные команды NVDA:\n"
+"Некоторые Часто используемые клавиатурны"
+"е команды NVDA:\n"
 "\n"
 "Общие команды:\n"
 "Контрол - Прервать речь\n"
-"insert+1 - Включает и выключает режим клавиатурной справки\n"
-"insert+Стрелка вверх - Читать объект в фокусе\n"
-"insert+Стрелка вниз - Читать всё, нажмите Контрол или любую другую клавишу для прерывания\n"
+"insert+1 - Включает и выключает режим "
+"клавиатурной справки\n"
+"insert+Стрелка вверх - Читать объект в "
+"фокусе\n"
+"insert+Стрелка вниз - Читать всё, нажмите "
+"Контрол или любую другую клавишу для "
+"прерывания\n"
 "insert+t - Читать заголовок окна\n"
 "insert+f12 - Читать время и дату\n"
-"insert+2 - Включает или выключает чтение символов при вводе\n"
-"insert+3 Включает и выключает чтение слов при вводе\n"
-"insert+4 - Включает и выключает чтение командных клавиш, таких, как пробел, Контрол, Шифт, стрелки и их сочетаний\n"
-"insert+Страница вверх - увеличить скорость речи\n"
-"insert+Страница вниз - Уменьшить скорость речи\n"
-"insert+p - Включает и выключает чтение пунктуации\n"
-"insert+s - Переключает режим озвучивания NVDA между Выключено, Сигналы, Речь\n"
-"insert+m - Включает и выключает чтение объекта под указателем мыши\n"
-"insert+f - Читать параметры текущего шрифта в документе)\n"
+"insert+2 - Включает или выключает чтение "
+"символов при вводе\n"
+"insert+3 Включает и выключает чтение слов при "
+"вводе\n"
+"insert+4 - Включает и выключает чтение "
+"командных клавиш, таких, как пробел, "
+"Контрол, Шифт, стрелки и их сочетаний\n"
+"insert+Страница вверх - увеличить скорость "
+"речи\n"
+"insert+Страница вниз - Уменьшить скорость "
+"речи\n"
+"insert+p - Включает и выключает чтение "
+"пунктуации\n"
+"insert+s - Переключает режим озвучивания NVDA "
+"между Выключено, Сигналы, Речь\n"
+"insert+m - Включает и выключает чтение объекта"
+" под указателем мыши\n"
+"insert+f - Читать параметры текущего шрифта в "
+"документе)\n"
 "\n"
-"Объект навигатор, Numpad обозначает цифровой блок клавиатуры:\n"
+"Объект навигатор, Numpad обозначает цифр"
+"овой блок клавиатуры:\n"
 "insert+numpad+- Где я\n"
 "insert+numpad5 - Текущий объект\n"
-"shift+insert+numpad5 - Размеры и расположение текущего объекта\n"
+"shift+insert+numpad5 - Размеры и расположение текущ"
+"его объекта\n"
 "insert+numpad8 - Родительский объект\n"
 "insert+numpad4 - Предыдущий объект\n"
 "insert+numpad6 - Следующий объект\n"
 "insert+numpad2 - Первый дочерний объект\n"
 "insert+numpadMinus - Перейти к объекту в фокусе\n"
 " insert+end - Перейти к строке состояния\n"
-"insert+numpadКосая черта - Привести указатель мыши к текущему объекту навигатора\n"
-"insert+numpadЗвёздочка - Привести навигатор к указателю мыши\n"
-"insert+numpadВвод - Задействовать текущий объект\n"
+"insert+numpadКосая черта - Привести указатель "
+"мыши к текущему объекту навигатора\n"
+"insert+numpadЗвёздочка - Привести навигатор к "
+"указателю мыши\n"
+"insert+numpadВвод - Задействовать текущий "
+"объект\n"
 "\n"
 "Просмотр текущего объекта:\n"
 "Шифт+numpad7 - Перейти на верхнюю строку\n"
@@ -1502,10 +1678,11 @@ msgstr ""
 "numpad3 - Следующий символ\n"
 "Шифт+numpad3 - Конец строки\n"
 
-
 #: gui\__init__.py:139
 msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&Вернуться к сохранённой конфигурации\tCtrl+R"
+msgstr ""
+"&Вернуться к сохранённой конфигурации\tCtrl"
+"+R"
 
 #: gui\__init__.py:139
 msgid "Reset all setting back to nvda.ini"
@@ -1553,15 +1730,22 @@ msgstr "&Голоса...\tCtrl+Shift+V"
 
 #: gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "Выберите голос, скорость, высоту и громкость"
+msgstr ""
+"Выберите голос, скорость, высоту и "
+"громкость"
 
 #: gui\__init__.py:158
 msgid "&Keyboard Settings...\tCtrl+K"
 msgstr "&Клавиатура...\tCtrl+K"
 
 #: gui\__init__.py:158
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Настройка раскладки клавиатуры, чтения вводимых символов, слов и командных клавиш"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Настройка раскладки клавиатуры, чтения "
+"вводимых символов, слов и командных "
+"клавиш"
 
 #: gui\__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
@@ -1569,7 +1753,9 @@ msgstr "&Мышь...\tCtrl+M"
 
 #: gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
-msgstr "Изменение чтения объектов под указателем мыши"
+msgstr ""
+"Изменение чтения объектов под указателем "
+"мыши"
 
 #: gui\__init__.py:164
 msgid "&Object presentation...\tCtrl+Shift+O"
@@ -1581,7 +1767,9 @@ msgstr "Изменение чтения объектов"
 
 #: gui\__init__.py:167
 msgid "Change virtual buffers specific settings"
-msgstr "Изменение специальных настроек виртуального буфера"
+msgstr ""
+"Изменение специальных настроек виртуаль"
+"ного буфера"
 
 #: gui\__init__.py:167
 msgid "Virtual &buffers...\tCtrl+Shift+B"
@@ -1605,7 +1793,9 @@ msgstr "Домашняя страница NVDA"
 
 #: gui\__init__.py:176
 msgid "Opens NVDA homepage in the default browser"
-msgstr "Открывает домашнюю страницу NVDA в браузере, установленном поумолчанию"
+msgstr ""
+"Открывает домашнюю страницу NVDA в браузер"
+"е, установленном поумолчанию"
 
 #: gui\__init__.py:179
 msgid "NVDA wiki"
@@ -1613,7 +1803,9 @@ msgstr "NVDA wiki"
 
 #: gui\__init__.py:179
 msgid "Opens NVDA wiki in the default browser"
-msgstr "Открывает NVDA wiki в браузере, установленном поумолчанию"
+msgstr ""
+"Открывает NVDA wiki в браузере, установленном "
+"поумолчанию"
 
 #: gui\__init__.py:181
 msgid "About..."
@@ -1638,7 +1830,10 @@ msgstr "Конфигурация сохранена"
 
 #: gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
-msgstr "Невозможно сохранить конфигурацию, вероятно, файловая система только для чтения"
+msgstr ""
+"Невозможно сохранить конфигурацию, "
+"вероятно, файловая система только для "
+"чтения"
 
 #: gui\__init__.py:235
 msgid "Press OK to quit NVDA"
@@ -1706,7 +1901,9 @@ msgstr "&Перейти к ссылке"
 
 #: gui\settingsDialogs.py:41
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&Для принятия смены языка требуется перезапуск NVDA"
+msgstr ""
+"&Для принятия смены языка требуется "
+"перезапуск NVDA"
 
 #: gui\settingsDialogs.py:45
 msgid "Language"
@@ -1718,7 +1915,8 @@ msgstr "&Скрывать окно интерфейса при старте"
 
 #: gui\settingsDialogs.py:57
 msgid "&Save configuration on exit"
-msgstr "&Автосохранение конфигурации при выходе"
+msgstr ""
+"&Автосохранение конфигурации при выходе"
 
 #: gui\settingsDialogs.py:60
 msgid "&Warn before exiting NVDA"
@@ -1733,8 +1931,16 @@ msgid "Language Error"
 msgstr "Ошибка языка"
 
 #: gui\settingsDialogs.py:85
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Для применения смены языка необходимо сохранение конфигурации и перезапуск NVDA. Нажмите Ввод для выполнения процедуры или нажмите Отмена для выхода из диалога и последующего выполнения действий вручную"
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Для применения смены языка необходимо сох"
+"ранение конфигурации и перезапуск NVDA. "
+"Нажмите Ввод для выполнения процедуры или"
+" нажмите Отмена для выхода из диалога и "
+"последующего выполнения действий вручную"
 
 #: gui\settingsDialogs.py:85
 msgid "Language Configuration Change"
@@ -1790,7 +1996,9 @@ msgstr "Изменять высоту для заглавных букв"
 
 #: gui\settingsDialogs.py:227
 msgid "Say &cap before capitals"
-msgstr "Говорить &Большая перед заглавными буквами"
+msgstr ""
+"Говорить &Большая перед заглавными "
+"буквами"
 
 #: gui\settingsDialogs.py:230
 msgid "&Beep for capitals"
@@ -1798,15 +2006,21 @@ msgstr "&Сигнал перед заглавными буквами"
 
 #: gui\settingsDialogs.py:312
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Использовать CapsLock  как клавишу модификатор NVDA"
+msgstr ""
+"Использовать CapsLock  как клавишу "
+"модификатор NVDA"
 
 #: gui\settingsDialogs.py:315
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Использовать numpad Insert как клавишу модификатор NVDA"
+msgstr ""
+"Использовать numpad Insert как клавишу "
+"модификатор NVDA"
 
 #: gui\settingsDialogs.py:318
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Использовать дополнительный Insert как клавишу модификатор NVDA"
+msgstr ""
+"Использовать дополнительный Insert как "
+"клавишу модификатор NVDA"
 
 #: gui\settingsDialogs.py:321
 msgid "Speak typed &characters"
@@ -1822,7 +2036,8 @@ msgstr "Читать &Командные клавиши"
 
 #: gui\settingsDialogs.py:353
 msgid "Report mouse &shape changes"
-msgstr "Читать изменение &Формы указателя мыши"
+msgstr ""
+"Читать изменение &Формы указателя мыши"
 
 #: gui\settingsDialogs.py:356
 msgid "Report &object under mouse"
@@ -1834,7 +2049,8 @@ msgstr "Читать &Подсказки"
 
 #: gui\settingsDialogs.py:381
 msgid "Report &help balloons"
-msgstr "Читать &Всплывающие системные сообщения"
+msgstr ""
+"Читать &Всплывающие системные сообщения"
 
 #: gui\settingsDialogs.py:384
 msgid "Report object shortcut &keys"
@@ -1854,7 +2070,9 @@ msgstr "Читать вначале &Состояние объекта"
 
 #: gui\settingsDialogs.py:396
 msgid "&Beep on progress bar updates"
-msgstr "&Сигнал обновления индикаторов выполнения"
+msgstr ""
+"&Сигнал обновления индикаторов "
+"выполнения"
 
 #: gui\settingsDialogs.py:423
 msgid "&Maximum number of characters on one line"
@@ -1866,7 +2084,9 @@ msgstr "&Число строк на странице"
 
 #: gui\settingsDialogs.py:433
 msgid "Report &virtual presentation on focus changes"
-msgstr "Читать &Виртуальное представление при изменении фокуса"
+msgstr ""
+"Читать &Виртуальное представление при "
+"изменении фокуса"
 
 #: gui\settingsDialogs.py:436
 msgid "Update the content &dynamically"
@@ -1918,7 +2138,9 @@ msgstr "Читать &Фреймы"
 
 #: gui\settingsDialogs.py:514
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Читать изменения формата после курсора (может вызвать отставание"
+msgstr ""
+"Читать изменения формата после курсора "
+"(может вызвать отставание"
 
 #: gui\settingsDialogs.py:517
 msgid "Report font &name"
@@ -2075,11 +2297,15 @@ msgstr "переходит и читает текущее слово"
 
 #: textBuffer.py:514
 msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "Вручную переходит на следующий абзац и читает его"
+msgstr ""
+"Вручную переходит на следующий абзац и "
+"читает его"
 
 #: textBuffer.py:522
 msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "Вручную переходит на предыдущий абзац и читает его"
+msgstr ""
+"Вручную переходит на предыдущий абзац и "
+"читает его"
 
 #: textBuffer.py:534
 msgid "no selections"
@@ -2091,11 +2317,15 @@ msgstr "переходит и читает текущую выборку"
 
 #: textBuffer.py:559
 msgid "Deletes the character and reads the new current character"
-msgstr "Удаляет символ и читает новый текущий символ"
+msgstr ""
+"Удаляет символ и читает новый текущий "
+"символ"
 
 #: textBuffer.py:573
 msgid "Reads the character before the current character and then deletes it"
-msgstr "Читает предыдущий символ, затем, удаляет его"
+msgstr ""
+"Читает предыдущий символ, затем, удаляет "
+"его"
 
 #: versionInfo.py:8
 msgid "NonVisual Desktop Access"
@@ -2103,22 +2333,40 @@ msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Свободная программа речевого доступа к экрану под Windows с открытым исходным кодом"
+msgstr ""
+"Свободная программа речевого доступа к "
+"экрану под Windows с открытым исходным кодом"
 
 #: versionInfo.py:14
 msgid ""
 "Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
+"%(name)s is covered by the GNU General Public License. You are free to share "
+"or change this software in any way you like as long as you distribute the "
+"licence along with the software, and make all source code available to "
+"anyone who wants it. This applies to both origional and modified copies of "
+"the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Авторское право (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s защищается GNU General Public License. Вы можете свободно распространять и изменять данное программное обеспечение, если соблюдаете лицензионное соглашение и сохраняете файл лицензии в не изменнённом виде в программе при распространении, позволяя и другим получать доступ к оригиналу.Также, разрешается изменять программное обеспечение, использующее код, взятый из данного пакета и его частей.\n"
-"Получить дополнительную информацию по данной лицензии вы можете на сайте:\n"
+"Авторское право (C) 2006-2007 NVDA Contributors <http://www."
+"nvda-project.org/>\n"
+"%(name)s защищается GNU General Public License. Вы можете "
+"свободно распространять и изменять да"
+"нное программное обеспечение, если "
+"соблюдаете лицензионное соглашение и сох"
+"раняете файл лицензии в не изменнённом "
+"виде в программе при распространении, "
+"позволяя и другим получать доступ к "
+"оригиналу.Также, разрешается изменять "
+"программное обеспечение, использующее "
+"код, взятый из данного пакета и его част"
+"ей.\n"
+"Получить дополнительную информацию по да"
+"нной лицензии вы можете на сайте:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
-"или из входящего в комплект поставки программы файла Copying.txt."
-
+"или из входящего в комплект поставки "
+"программы файла Copying.txt."
 
 #: virtualBuffers\IAccessible\MSHTML.py:136
 #: virtualBuffers\IAccessible\adobe.py:159
@@ -2179,15 +2427,21 @@ msgstr "вне %s"
 
 #: virtualBuffers\__init__.py:274
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "переходит на одну страницу вверх по документу в виртуальном буфере"
+msgstr ""
+"переходит на одну страницу вверх по "
+"документу в виртуальном буфере"
 
 #: virtualBuffers\__init__.py:289
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "переходит на одну страницу вниз по документу в виртуальном буфере"
+msgstr ""
+"переходит на одну страницу вниз по "
+"документу в виртуальном буфере"
 
 #: virtualBuffers\__init__.py:293
 msgid "activates the current object in the virtual buffer"
-msgstr "Задействует текущий объект в виртуальном буфере"
+msgstr ""
+"Задействует текущий объект в виртуальном "
+"буфере"
 
 #: virtualBuffers\__init__.py:316 virtualBuffers\__init__.py:327
 msgid "no more headings"
@@ -2259,7 +2513,8 @@ msgstr "переходит на следующий элемент списка"
 
 #: virtualBuffers\__init__.py:438
 msgid "moves to the previous list item"
-msgstr "переходит на предыдущий элемент списка"
+msgstr ""
+"переходит на предыдущий элемент списка"
 
 #: virtualBuffers\__init__.py:448 virtualBuffers\__init__.py:459
 msgid "no more form fields"
@@ -2291,7 +2546,9 @@ msgstr "Текст %s не найден"
 
 #: virtualBuffers\__init__.py:479
 msgid "find a text pattern from the current cursor's position"
-msgstr "Поиск текстовой последовательности с текущей позиции курсора"
+msgstr ""
+"Поиск текстовой последовательности с "
+"текущей позиции курсора"
 
 #: virtualBuffers\__init__.py:483
 msgid "find next occurrence of text"
@@ -2324,4 +2581,3 @@ msgstr "l=Быстрая клавиша списка"
 #: virtualBuffers\__init__.py:514 virtualBuffers\__init__.py:515
 msgid "i=listItemQuickKey"
 msgstr "i=Быстрая клавиша элемента списка"
-
