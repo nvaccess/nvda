@@ -28,6 +28,8 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
+import win32clipboard
+import win32con
 
 
 class appModule(appModuleHandler.appModule):
@@ -546,3 +548,23 @@ class appModule(appModuleHandler.appModule):
 		keyboardHandler.passNextKeyThrough()
 		speech.speakMessage(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
+
+	def script_navigatorObject_copyCurrent(self,keyPress,nextScript):
+		curObject=api.getNavigatorObject()
+		if not isinstance(curObject,NVDAObject):
+			speech.speakMessage(_("no navigator object"))
+			return
+		win32clipboard.OpenClipboard()
+		try:
+			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, curObject.name+" "+curObject.value)
+		finally:
+			win32clipboard.CloseClipboard()
+		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
+		try:
+			got = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+		finally:
+			win32clipboard.CloseClipboard()
+		if got == curObject.name+" "+curObject.value:
+			speech.speakMessage(_("%s copyed to clipboard")%got)
+		return False
+	script_navigatorObject_copyCurrent.__doc__=_("Copies name and value of current navigator object to the clipboard")
