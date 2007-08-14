@@ -554,17 +554,25 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		win32clipboard.OpenClipboard()
-		try:
-			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, curObject.name+" "+curObject.value)
-		finally:
-			win32clipboard.CloseClipboard()
-		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-		try:
-			got = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-		finally:
-			win32clipboard.CloseClipboard()
-		if got == curObject.name+" "+curObject.value:
-			speech.speakMessage(_("%s copyed to clipboard")%got)
+		text=""
+		if curObject.name is not None:
+			text=text+curObject.name
+		if curObject.name is not None and curObject.value is not None:
+			text=text+" "
+		if curObject.value is not None:
+			text=text+curObject.value
+		if text is not None:
+			win32clipboard.OpenClipboard()
+			try:
+				win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
+			finally:
+				win32clipboard.CloseClipboard()
+			win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
+			try:
+				got = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+			finally:
+				win32clipboard.CloseClipboard()
+			if got == text:
+				speech.speakMessage(_("%s copyed to clipboard")%got)
 		return False
 	script_navigatorObject_copyCurrent.__doc__=_("Copies name and value of current navigator object to the clipboard")
