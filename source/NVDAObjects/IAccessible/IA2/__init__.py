@@ -85,7 +85,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self._storyLength
 
 	def _getLineCount(self):
-		return -1 #winUser.sendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
+		return -1
 
 	def _getTextRange(self,start,end):
 		return self.obj.IAccessibleTextObject.Text(start,end)
@@ -106,11 +106,13 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
 
 	def _lineNumFromOffset(self,offset):
-		return -1 #winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+		return -1
 
 class IA2(IAccessible):
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+		if not windowHandle:
+			pass #windowHandle=IAccessibleObject.WindowHandle
 		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
@@ -146,7 +148,7 @@ class IA2(IAccessible):
 		except:
 			pass
 
-	def disabled_get_role(self):
+	def _get_role(self):
 		IA2Role=self.IAccessibleObject.role()
 		if IA2Role>IA2Handler.ROLE_UNKNOWN and IA2RolesToNVDARoles.has_key(IA2Role):
 			return IA2RolesToNVDARoles[IA2Role]
