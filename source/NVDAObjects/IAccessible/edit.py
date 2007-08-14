@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import locale
-import comtypesClient
+import comtypes.client
 import struct
 import ctypes
 import pythoncom
@@ -25,7 +25,7 @@ import controlTypes
 from . import IAccessible
 from .. import NVDAObjectTextInfo
 
-IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
+IServiceProvider=comtypes.client.GetModule('lib/ServProv.tlb').IServiceProvider
 
 #Edit control window messages
 EM_GETSEL=176
@@ -150,7 +150,7 @@ WB_RIGHTBREAK=7
 class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRangeWithEmbeddedObjects(self,start,end):
-		ptr=ctypes.POINTER(comtypesClient.GetModule('msftedit.dll').ITextDocument)()
+		ptr=ctypes.POINTER(comtypes.client.GetModule('msftedit.dll').ITextDocument)()
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
 		r=ptr.Range(self._startOffset,self._endOffset)
 		bufText=r.text
