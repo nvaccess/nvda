@@ -29,7 +29,7 @@ An NVDAObject for a window
 
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
-			raise ArguementError("invalid or not specified window handle")
+			pass #raise ValueError("invalid or not specified window handle")
 		NVDAObject.__init__(self)
 		if windowClassName:
 			self.windowClassName=windowClassName
