@@ -46,7 +46,8 @@ class SynthDriver(silence.SynthDriver):
 	def initialize(self):
 		try:
 			self.check()
-			self.tts=comtypes.client.CreateObject(COM_CLASS,sink=self)
+			self.tts=comtypes.client.CreateObject(COM_CLASS,)
+			self._ttsEventObj=comtypes.client.GetEvents(self.tts,self)
 			self.tts.InitAudioDestMM(config.conf["speech"]["outputDevice"])
 			self.tts.CallBacksEnabled=1
 			self.tts.Tagged=1
@@ -54,6 +55,7 @@ class SynthDriver(silence.SynthDriver):
 			self._lastIndex=None
 			return True
 		except:
+			debug.writeException("initialize")
 			return False
 
 	def _get_voiceCount(self):
