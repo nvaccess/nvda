@@ -215,7 +215,7 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		core.resetConfiguration(reportDone=True)
+		queueHandler.queueFunction(queueHandler.interactiveQueue,core.resetConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		try:

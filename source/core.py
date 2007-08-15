@@ -34,7 +34,10 @@ def resetConfiguration(reportDone=False):
 @param reportDone: if true then this function will speak when done, if else it won't.
 @type reportDone: boolean
 """
+	import config
 	import speech
+	import languageHandler
+	import debug
 	speech.terminate()
 	config.load()
 	#Language
