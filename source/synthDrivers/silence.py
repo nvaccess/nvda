@@ -106,3 +106,6 @@ class SynthDriver(baseObject.autoPropertyObject):
 
 	def _set_inflection(self,val):
 		pass
+
+	def pause(self,switch):
+		pass
