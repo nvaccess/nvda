@@ -58,7 +58,7 @@ setup(
 	data_files=[
 		(".",glob("*.dll")),
 		("documentation", ['../copying.txt','../todo.txt','../bugs.txt']), 
-		("comInterfaces", glob("comInterfaces/*.pyc")),
+		("comtypes_gen", glob("comtypes_gen/*.pyc")),
 		("appModules", glob("appModules/*.py*")),
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
