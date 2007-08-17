@@ -6,7 +6,7 @@
 
 import time
 import os
-import comtypes.client
+import comtypesClient
 import _winreg
 import debug
 import globalVars
@@ -39,7 +39,7 @@ class SynthDriver(silence.SynthDriver):
 
 	def initialize(self):
 		try:
-			self.tts = comtypes.client.CreateObject('sapi.SPVoice')
+			self.tts = comtypesClient.CreateObject('sapi.SPVoice')
 			self._pitch=50
 			self._voice=1
 			return True
@@ -87,7 +87,7 @@ class SynthDriver(silence.SynthDriver):
 	def _set_voice(self,value):
 		if value>self.voiceCount:
 			value=1
-		self.tts=comtypes.client.CreateObject('sapi.SPVoice')
+		self.tts=comtypesClient.CreateObject('sapi.SPVoice')
 		if config.conf["speech"]["outputDevice"] >=0:
 			self.tts.audioOutput(self.tts.getAudioOutputs()[config.conf["speech"]["outputDevice"]])
 		self.tts.Voice(self.tts.GetVoices()[value-1])

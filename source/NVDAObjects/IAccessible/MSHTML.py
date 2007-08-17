@@ -6,7 +6,7 @@
 
 import time
 import ctypes
-import comtypes.client
+import comtypesClient
 import comtypes.automation
 import pythoncom
 import win32com.client
@@ -23,7 +23,7 @@ from . import IAccessible
 lastMSHTMLEditGainFocusTimeStamp=0
 
 
-IServiceProvider=comtypes.client.GetModule('lib/Servprov.tlb').IServiceProvider
+IServiceProvider=comtypesClient.GetModule('lib/Servprov.tlb').IServiceProvider
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 IID_DispHTMLGenericElement=comtypes.GUID('{3050F563-98B5-11CF-BB82-00AA00BDCE0B}')

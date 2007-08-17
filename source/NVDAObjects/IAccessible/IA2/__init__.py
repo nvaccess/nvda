@@ -112,7 +112,7 @@ class IA2(IAccessible):
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
 		if not windowHandle:
-			windowHandle=IAccessibleObject.WindowHandle
+			pass #windowHandle=IAccessibleObject.WindowHandle
 		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)

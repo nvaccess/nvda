@@ -6,17 +6,11 @@
 
 """NVDA core"""
 
-#Force comtypes generated COM interfaces in to a local module
-import comtypes_gen 
-comtypes_gen.setAsComtypesGenModule()
-
 import wx
 import time
 import debug
 import globalVars
 import winUser
-
-
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1

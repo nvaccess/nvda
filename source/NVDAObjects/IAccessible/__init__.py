@@ -12,7 +12,7 @@ import time
 import difflib
 import ctypes
 import comtypes.automation
-import comtypes.client
+import comtypesClient
 import debug
 import appModuleHandler
 from keyUtils import sendKey, key 

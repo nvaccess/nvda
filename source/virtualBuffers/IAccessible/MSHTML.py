@@ -6,7 +6,7 @@
 
 import time
 import ctypes
-import comtypes.client
+import comtypesClient
 import comtypes.automation
 import core
 import IAccessibleHandler
@@ -59,18 +59,18 @@ class MSHTML(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
-		self.MSHTMLLib=comtypes.client.GetModule('mshtml.tlb')
+		self.MSHTMLLib=comtypesClient.GetModule('mshtml.tlb')
 		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
 		#domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		lresult=winUser.sendMessage(NVDAObject.windowHandle,wm,0,0)
 		ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-		self.dom=comtypes.client.wrap(domPointer)
+		self.dom=comtypesClient.wrap(domPointer)
 		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
-		comtypes.client.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+		comtypesClient.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -194,10 +194,10 @@ class MSHTML(virtualBuffer):
 				pass
 		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
 			try:
-				comtypes.client.ReleaseEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+				comtypesClient.ReleaseEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			except:
 				pass
-			comtypes.client.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+			comtypesClient.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			children.append(domNode.body)
 		else:
 			child=domNode.firstChild
@@ -299,7 +299,7 @@ class MSHTML(virtualBuffer):
 				text=" "
 		elif nodeName=="SELECT":
 			info["role"]=controlTypes.ROLE_COMBOBOX
-			itemText=comtypes.client.wrap(domNode.item(domNode.selectedIndex)).text
+			itemText=comtypesClient.wrap(domNode.item(domNode.selectedIndex)).text
 			text=itemText
 		elif (nodeName=="BR") and (domNode.previousSibling and domNode.previousSibling.nodeName=="#text"):
 			text="\n"
