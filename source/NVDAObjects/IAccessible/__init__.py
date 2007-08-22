@@ -823,6 +823,31 @@ class TaskListIcon(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_ICON
 
+class ToolBar(IAccessible):
+
+	def event_gainFocus(self):
+		# Sometimes, the toolbar itself receives the focus instead of the focused child.
+		# However, the focused child still has the focused state.
+		for child in self.children:
+			if child.IAccessibleStates & IAccessibleHandler.STATE_SYSTEM_FOCUSED:
+				# Redirect the focus to the focused child.
+				api.setFocusObject(child)
+				child.event_gainFocus()
+				return
+		super(ToolBar, self).event_gainFocus()
+
+class ToolBarButton(IAccessible):
+
+	def event_gainFocus(self):
+		super(ToolBarButton, self).event_gainFocus()
+		# If the mouse is on another toolbar control, some toolbars will rudely
+		# bounce the focus back to the object under the mouse after a brief pause.
+		# This is particularly annoying in the system tray in Windows XP.
+		# Moving the mouse to the focus object isn't a good solution because
+		# sometimes, the focus can't be moved away from the object under the mouse.
+		# Therefore, move the mouse out of the way.
+		winUser.setCursorPos(1, 1)
+
 ###class mappings
 
 _staticMap={
@@ -884,4 +909,6 @@ _staticMap={
 	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TTntStatusBar.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
+	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_TOOLBAR):"ToolBar",
+	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"ToolBarButton",
 }
