@@ -526,8 +526,8 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			return
 		windowClassName=winUser.getClassName(window)
 		controlID=winUser.getControlID(window)
-		#A hack to fix a terible bug in Notepad++
-		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getForegroundWindow())=="Notepad++":
+		#A hack to fix a bug in Notepad++ where focus is constantly given to some strange list
+		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getAncestor(window,winUser.GA_ROOTOWNER))=="Notepad++":
 			return
 		if objectID==OBJID_CARET and eventName=="locationChange":
 			if window==focusObject.windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
