@@ -98,7 +98,10 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 
 	def _getWordOffsets(self,offset):
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
+		end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,start,0)
+		if end<=offset:
+			start=end
+			end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
 		return [start,end]
 
 	def _lineNumFromOffset(self,offset):
