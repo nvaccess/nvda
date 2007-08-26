@@ -309,24 +309,25 @@ class EditTextInfo(NVDAObjectTextInfo):
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif self.basePosition in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
-			oldSel=self._getSelectionOffsets()
+		elif self.basePosition in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION) and self.obj==api.getFocusObject():
 			if offset>=(self._getStoryLength()-1):
 				return [offset,offset+1]
+			oldSel=self._getSelectionOffsets()
 			self._setSelectionOffsets(offset,offset)
-			sendKey(key("control+shift+ExtendedLeft"))
-			back=self._getSelectionOffsets()
-			sendKey(key("control+shift+ExtendedRight"))
-			forward=self._getSelectionOffsets()
-			if (back[1]-back[0])>0 and (forward[1]-forward[0])>0 and forward[0]>back[0]:
-				start=back[0]
-				end=forward[1]
-			elif back[0]<forward[0]:
-				sendKey(key("control+shift+ExtendedRight"))
-	 			forward=self._getSelectionOffsets()
-				start,end=forward
+			sendKey(key("control+ExtendedLeft"))
+			back=self._getSelectionOffsets()[0]
+			sendKey(key("control+ExtendedRight"))
+			forward=self._getSelectionOffsets()[0]
+			if (back<=offset) and (forward>offset):
+				start=back
+				end=forward
+			elif (back<offset) and (forward==offset):
+				start=forward
+				sendKey(key("control+ExtendedRight"))
+	 			forward=self._getSelectionOffsets()[0]
+				end=forward
 			else:
-				start,end=forward
+				return super(EditTextInfo,self)._getWordOffsets(offset)
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 			return [start,end]
 		else:
