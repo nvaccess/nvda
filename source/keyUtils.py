@@ -10,6 +10,7 @@ import debug
 import winUser
 import queueHandler
 import wx
+import vkCodes
 
 def key(name):
 	"""Converts a string representation of a keyPress in to a set of modifiers and a key (which is NVDA's internal key representation).
@@ -17,13 +18,14 @@ def key(name):
 @type name: string
 @returns: the internal key representation 
 """
+	name=name.lower()
 	l = name.split("+")
 	for num in range(len(l)):
 		t=l[num]
 		if len(t)>1:
-			t="%s%s"%(t[0].upper(),t[1:])
+			t="%s%s"%(t[0],t[1:])
 		elif len(t)==1:
-			t=t[0].upper()
+			t=t[0]
 		l[num]=t
 	if len(l) >= 2:
 		s=set()
@@ -54,32 +56,31 @@ def sendKey(keyPress):
 	#Process modifier keys
 	if keyPress[0] is not None:
 		for modifier in keyPress[0]:
-			if (modifier=="Alt") and (winUser.getKeyState(winUser.VK_MENU)&32768):
+			if (modifier=="alt") and (winUser.getKeyState(winUser.VK_MENU)&32768):
 				continue
-			elif (modifier=="Control") and (winUser.getKeyState(winUser.VK_CONTROL)&32768):
+			elif (modifier=="control") and (winUser.getKeyState(winUser.VK_CONTROL)&32768):
 				continue
-			elif (modifier=="Shift") and (winUser.getKeyState(winUser.VK_SHIFT)&32768):
+			elif (modifier=="shift") and (winUser.getKeyState(winUser.VK_SHIFT)&32768):
 				continue
-			elif (modifier=="Win") and ((winUser.getKeyState(winUser.VK_LWIN)&32768) or (winUser.getKeyState(winUser.VK_RWIN)&32768)):
+			elif (modifier=="win") and ((winUser.getKeyState(winUser.VK_LWIN)&32768) or (winUser.getKeyState(winUser.VK_RWIN)&32768)):
 				continue
-			elif (modifier=="Insert") and insertDown:
+			elif (modifier=="insert") and insertDown:
 				continue
-			if modifier[0:8]=="Extended":
+			if modifier[0:8]=="extended":
 				extended=1
 				modifier=modifier[8:]
 			else:
 				extended=0
-			if modifier=="Alt":
-				modifier="Menu"
-			if modifier=="Win":
-				modifier="Lwin"
-			modifier=modifier.upper()
-			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%modifier)
+			if modifier=="alt":
+				modifier="MENU"
+			if modifier=="win":
+				modifier="LWIN"
+			keyID=vkCodes.byName[modifier]
 			keyList.append((keyID,extended))
 	#Process normal key
 	if keyPress[1] is not None:
 		k=keyPress[1]
-		if k[0:8]=="Extended":
+		if k[0:8]=="extended":
 			extended=1
 			k=k[8:]
 		else:
@@ -88,7 +89,7 @@ def sendKey(keyPress):
 		if len(k)==1:
 			keyID=ord(k)
 		else:
-			keyID=pyHook.HookConstants.VKeyToID("VK_%s"%k)
+			keyID=vkCodes.byName[k]
 		keyList.append((keyID,extended))
 	if (keyList is None) or (len(keyList)==0):
 		return

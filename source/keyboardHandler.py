@@ -63,7 +63,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if passKeyThroughCount>=0:
 			passKeyThroughCount+=1
 			return True
-		vkName=vkCodes.byCode.get(vkCode,"").title()
+		vkName=vkCodes.byCode.get(vkCode,"").lower()
+		if not vkName and vkCode>=32 and vkCode<128:
+			vkName=unichr(vkCode).lower()
 		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
 			if speech.isPaused:
 				unPauseByControlUp=True
@@ -86,24 +88,24 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			return True
 		modifierList=[]
 		if NVDAModifierKey:
-			modifierList.append("NVDA")
+			modifierList.append("nvda")
 		if winUser.getKeyState(winUser.VK_CONTROL)&32768:
-			modifierList.append("Control")
+			modifierList.append("control")
 		if winUser.getKeyState(winUser.VK_SHIFT)&32768:
-			modifierList.append("Shift")
+			modifierList.append("shift")
 		if winUser.getKeyState(winUser.VK_MENU)&32768:
-			modifierList.append("Alt")
+			modifierList.append("alt")
 		if winUser.getKeyState(winUser.VK_LWIN)&32768:
-			modifierList.append("Win")
+			modifierList.append("win")
 		if winUser.getKeyState(winUser.VK_RWIN)&32768:
-			modifierList.append("Win")
+			modifierList.append("win")
 		if len(modifierList) > 0:
 			modifiers=frozenset(modifierList)
 		else:
 			modifiers=None
 		mainKey=vkName
 		if extended==1:
-			mainKey="Extended%s"%mainKey
+			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
 		if globalVars.keyboardHelp or (config.conf["keyboard"]["speakCommandKeys"] and not ( not keyPress[0] and config.conf["keyboard"]["speakTypedCharacters"])):
