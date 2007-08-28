@@ -9,8 +9,7 @@
 import winUser
 import ctypes
 import time
-import pyHook
-import nvwh
+import vkCodes
 import debug
 import speech
 from keyUtils import key, keyName, sendKey
@@ -52,20 +51,20 @@ def speakToggleKey(vkCode):
 	elif vkCode==winUser.VK_SCROLL:
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
-@nvwh.userKeyCallbackType
-def internal_keyDownEvent(keyInfo):
+@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
+def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp
 		#Injected keys should be ignored
-		if keyInfo.injected:
+		if injected:
 			return True
 		if passKeyThroughCount>=0:
 			passKeyThroughCount+=1
 			return True
-		vkName=pyHook.HookConstants.IDToName(keyInfo.vkCode)
-		if keyInfo.vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
+		vkName=vkCodes.byCode.get(vkCode,"").title()
+		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
 			if speech.isPaused:
 				unPauseByControlUp=True
 			else:
@@ -74,16 +73,16 @@ def internal_keyDownEvent(keyInfo):
 			unPauseByControlUp=False
 			globalVars.keyCounter+=1
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
-		if lastNVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==lastNVDAModifierKey:
+		if lastNVDAModifierKey and (vkCode,extended)==lastNVDAModifierKey:
 			lastNVDAModifierKey=None
 			if (time.time()-lastNVDAModifierKeyTime)<0.5:
-				speakToggleKey(keyInfo.vkCode)
+				speakToggleKey(vkCode)
 				return True
 		lastNVDAModifierKey=None
-		if isNVDAModifierKey(keyInfo.vkCode,keyInfo.extended):
-			NVDAModifierKey=(keyInfo.vkCode,keyInfo.extended)
+		if isNVDAModifierKey(vkCode,extended):
+			NVDAModifierKey=(vkCode,extended)
 			return False
-		if keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+		if vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		modifierList=[]
 		if NVDAModifierKey:
@@ -103,7 +102,7 @@ def internal_keyDownEvent(keyInfo):
 		else:
 			modifiers=None
 		mainKey=vkName
-		if keyInfo.extended==1:
+		if extended==1:
 			mainKey="Extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
@@ -111,7 +110,7 @@ def internal_keyDownEvent(keyInfo):
 			labelList=[]
 			if keyPress[0] is not None:
 				labelList.extend(keyPress[0])
-			ch=ctypes.windll.user32.MapVirtualKeyW(keyInfo.vkCode,winUser.MAPVK_VK_TO_CHAR)
+			ch=ctypes.windll.user32.MapVirtualKeyW(vkCode,winUser.MAPVK_VK_TO_CHAR)
 			if ch>32:
 				labelList.append(unichr(ch))
 			else:
@@ -129,44 +128,43 @@ def internal_keyDownEvent(keyInfo):
 			else:
 				queueHandler.queueFunction(queueHandler.interactiveQueue,script,keyPress)
 		if script or globalVars.keyboardHelp:
-			keyUpIgnoreSet.add((keyInfo.vkCode,keyInfo.extended))
+			keyUpIgnoreSet.add((vkCode,extended))
 			if NVDAModifierKey:
 				usedNVDAModifierKey=True 
 			return False
 		else:
-			speakToggleKey(keyInfo.vkCode)
+			speakToggleKey(vkCode)
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
 		speech.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
 		return True
-
-@nvwh.userKeyCallbackType
-def internal_keyUpEvent(keyInfo):
+@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
+def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp
-		if keyInfo.injected:
+		if injected:
 			return True
 		elif passKeyThroughCount>=1:
 			passKeyThroughCount-=1
 			if passKeyThroughCount==0:
 				passKeyThroughCount=-1
 			return True
-		if unPauseByControlUp and keyInfo.vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
+		if unPauseByControlUp and vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,False)
 			unPauseByControlUp=False
-		if NVDAModifierKey and (keyInfo.vkCode,keyInfo.extended)==NVDAModifierKey:
+		if NVDAModifierKey and (vkCode,extended)==NVDAModifierKey:
 			if not usedNVDAModifierKey:
 				lastNVDAModifierKey=NVDAModifierKey
 				lastNVDAModifierKeyTime=time.time()
 			NVDAModifierKey=None
 			usedNVDAModifierKey=False
 			return False
-		elif (keyInfo.vkCode,keyInfo.extended) in keyUpIgnoreSet:
-			keyUpIgnoreSet.remove((keyInfo.vkCode,keyInfo.extended))
+		elif (vkCode,extended) in keyUpIgnoreSet:
+			keyUpIgnoreSet.remove((vkCode,extended))
 			return False
-		elif keyInfo.vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+		elif vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 		else:
 			return True
@@ -175,21 +173,18 @@ def internal_keyUpEvent(keyInfo):
 		speech.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
 		return True
 
-@nvwh.userCharCallbackType
+@ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_wchar)
 def internal_typeCharacterEvent(ch):
-	if ch>=32:
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(ch))
+	if ord(ch)>=32:
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,ch)
 
 #Register internal key press event with  operating system
 
 def initialize():
 	"""Initialises keyboard support."""
-	nvwh.setUserKeyUpCallback(internal_keyUpEvent)
-	nvwh.setUserKeyDownCallback(internal_keyDownEvent)
-	nvwh.setUserCharCallback(internal_typeCharacterEvent)
-	nvwh.registerKeyHook()
-	nvwh.registerCharHook()
+	ctypes.cdll.keyHook.initialize(internal_keyDownEvent,internal_keyUpEvent)
+	ctypes.cdll.charHook.initialize(internal_typeCharacterEvent)
 
 def terminate():
-	nvwh.unregisterCharHook()
-	nvwh.unregisterKeyHook()
+	ctypes.cdll.keyHook.terminate()
+	ctypes.cdll.charHook.terminate()

@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import pyHook
+import ctypes
 import winUser
 import queueHandler
 import api
@@ -15,20 +15,29 @@ import globalVars
 import config
 import IAccessibleHandler
 
+WM_MOUSEMOVE=0x0200
+WM_LBUTTONDOWN=0x0201
+WM_LBUTTONUP=0x0202
+WM_LBUTTONDBLCLK=0x0203
+WM_RBUTTONDOWN=0x0204
+WM_RBUTTONUP=0x0205
+WM_RBUTTONDBLCLK=0x0206
+
 mouseOldX=None
 mouseOldY=None
-hookManager=None
-
 
 #Internal mouse event
 
-def internal_mouseEvent(event):
+@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
+def internal_mouseEvent(msg,x,y,injected):
 	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return True
 	try:
-		if event.MessageName=="mouse move":
-			queueHandler.queueFunction(queueHandler.mouseQueue,executeMouseMoveEvent,event.Position[0],event.Position[1])
-		elif event.MessageName.endswith("down"):
+		if injected:
+			return True
+		if msg==WM_MOUSEMOVE:
+			queueHandler.queueFunction(queueHandler.mouseQueue,executeMouseMoveEvent,x,y)
+		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.mouseQueue,speech.cancelSpeech)
 		return True
 	except:
@@ -72,9 +81,7 @@ def initialize():
 	global hookManager
 	(x,y)=winUser.getCursorPos()
 	api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
-	hookManager=pyHook.HookManager()
-	hookManager.MouseAll=internal_mouseEvent
-	hookManager.HookMouse()
+	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
 
 def terminate():
-	hookManager.UnhookMouse()
+	ctypes.cdll.mouseHook.terminate()
