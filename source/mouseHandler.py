@@ -4,13 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import winsound
 import ctypes
 import winUser
 import queueHandler
 import api
 import debug
 import speech
-import NVDAObjects
+import NVDAObjects.IAccessible
 import globalVars
 import config
 import IAccessibleHandler
@@ -45,31 +46,41 @@ def internal_mouseEvent(msg,x,y,injected):
 
 def executeMouseMoveEvent(x,y):
 	global mouseOldX, mouseOldY
+	#Don't run if reportObjectUnderMouse is false
 	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return
-	isEntering=False
-	res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-	if not res:
+	oldMouseObject=api.getMouseObject()
+	try:
+		(oldLeft,oldTop,oldWidth,oldHeight)=oldMouseObject.location
+	except:
+		oldLeft=oldTop=oldWidth=oldHeight=0
+	mouseObject=None
+	#If the old mouse object was not an IAccessible, or the current coordinates are outside the old object
+	#Just grab a new object at these coordinates
+	if not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
+		mouseObject=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
+	else:
+		try:
+			res=IAccessibleHandler.accHitTest(oldMouseObject.IAccessibleObject,oldMouseObject.IAccessibleChildID,x,y)
+		except:
+			res=None
+		if res is None or (res[0]==oldMouseObject.IAccessibleObject and res[1]==oldMouseObject.IAccessibleChildID):
+			return
+		else:
+			mouseObject=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+	if not mouseObject:
 		return
-	(newPacc,newChild)=res
-	newLocation=IAccessibleHandler.accLocation(newPacc,newChild)
-	if not newLocation:
+	try:
+		(left,top,width,height)=mouseObject.location
+	except:
+		left=top=width=height=0
+	if (left,top,width,height)==(oldLeft,oldTop,oldWidth,oldHeight) or x<left or x>(left+width) or y<top or y>(top+height):
 		return
-	(newLeft,newTop,newWidth,newHeight)=newLocation
-	mouseObject=api.getMouseObject()
-	location=mouseObject.location
-	if not location:
-		return
-	(left,top,width,height)=location
-	if (newLeft!=left) or (newTop!=top) or (newWidth!=width) or (newHeight!=height):
-		obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=newPacc,IAccessibleChildID=newChild)
-		if obj:
-			mouseObject=obj
-			isEntering=True
-			api.setMouseObject(obj)
+	api.setMouseObject(mouseObject)
 	if hasattr(mouseObject,"event_mouseMove"):
 		try:
-			mouseObject.event_mouseMove(isEntering,x,y,mouseOldX,mouseOldY)
+			mouseObject.event_mouseMove(True,x,y,mouseOldX,mouseOldY)
+			oldMouseObject=mouseObject
 			mouseOldX=x
 			mouseOldY=y
 		except:
