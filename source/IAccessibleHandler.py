@@ -357,7 +357,6 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		speech.speakMessage("%s"%res)
 		if isinstance(res,pointer_IAccessible):
 			new_ia=res
 			new_child=0
@@ -368,10 +367,9 @@ def accHitTest(ia,child,x,y):
 			new_ia=ia
 			new_child=res
 		else:
-			return None
+			return (ia,child)
 		return (new_ia,new_child)
 	except:
-		debug.writeException("hit test")
 		return None
 
 def accChild(ia,child):
