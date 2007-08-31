@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import winsound
+import tones
 import ctypes
 import winUser
 import queueHandler
@@ -32,13 +32,11 @@ mouseMoved=False
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos
-	if not config.conf["mouse"]["reportObjectUnderMouse"]:
-		return True
 	try:
 		if injected:
 			return True
 		curMousePos=(x,y)
-		if msg==WM_MOUSEMOVE:
+		if msg==WM_MOUSEMOVE and config.conf["mouse"]["reportObjectUnderMouse"]:
 			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
@@ -47,9 +45,6 @@ def internal_mouseEvent(msg,x,y,injected):
 		debug.writeException("mouseHandler.internal_mouseEvent")
 
 def executeMouseMoveEvent(x,y):
-	#Don't run if reportObjectUnderMouse is false
-	if not config.conf["mouse"]["reportObjectUnderMouse"]:
-		return
 	oldMouseObject=api.getMouseObject()
 	try:
 		(oldLeft,oldTop,oldWidth,oldHeight)=oldMouseObject.location
@@ -97,7 +92,11 @@ def pumpAll():
 	global mouseMoved, curMousePos
 	if mouseMoved:
 		mouseMoved=False
-		executeMouseMoveEvent(*curMousePos)
+		(x,y)=curMousePos
+		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
+			(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
+			tones.beep(220+(1540*((screenHeight-float(y))/screenHeight)),40,left=100*((screenWidth-float(x))/screenWidth),right=100*(float(x)/screenWidth))
+		executeMouseMoveEvent(x,y)
 
 def terminate():
 	ctypes.cdll.mouseHook.terminate()

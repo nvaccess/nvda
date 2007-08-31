@@ -58,6 +58,7 @@ outputDevice = integer(default=-1,min=-1)
 
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)
+	audioCoordinatesOnMouseMove = boolean(default=True)
 	reportMouseShapeChanges = boolean(default=false)
 
 #Keyboard settings

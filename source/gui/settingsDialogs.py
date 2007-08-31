@@ -356,6 +356,9 @@ class mouseSettingsDialog(wx.Dialog):
 		self.objectCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &object under mouse"))
 		self.objectCheckBox.SetValue(config.conf["mouse"]["reportObjectUnderMouse"])
 		settingsSizer.Add(self.objectCheckBox,border=10,flag=wx.BOTTOM)
+		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
+		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
+		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
@@ -367,6 +370,7 @@ class mouseSettingsDialog(wx.Dialog):
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["reportObjectUnderMouse"]=self.objectCheckBox.IsChecked()
+		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		self.Destroy()
 
 class objectPresentationDialog(wx.Dialog):
