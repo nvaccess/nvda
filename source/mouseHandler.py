@@ -27,8 +27,9 @@ WM_RBUTTONDBLCLK=0x0206
 curMousePos=(0,0)
 mouseMoved=False
 
-def playAudioCoordinates(x, y):
-	(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
+def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
+	if not screenWidth or not screenHeight:
+		(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
 	minPitch=220
 	maxPitch=880
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-float(y))/screenHeight))
@@ -112,9 +113,12 @@ def pumpAll():
 	global mouseMoved, curMousePos
 	if mouseMoved:
 		mouseMoved=False
+		(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
 		(x,y)=curMousePos
+		x=min(max(x,screenLeft),(screenLeft+screenWidth))
+		y=min(max(y,screenTop),(screenTop+screenHeight))
 		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-			playAudioCoordinates(x,y)
+			playAudioCoordinates(x,y,screenWidth=screenWidth,screenHeight=screenHeight)
 		executeMouseMoveEvent(x,y)
 
 def terminate():
