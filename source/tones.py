@@ -15,9 +15,9 @@ import config
 sampleRate=22050
 amplitude=6000
 
-player = nvwave.WavePlayer(channels=1, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
+player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 
-def beep(hz,length):
+def beep(hz,length,left=100,right=100):
 	player.stop()
 	sampleLength=length*(sampleRate/1000)
 	data=""
@@ -29,6 +29,7 @@ def beep(hz,length):
 		elif sample<-1:
 			sample=-1
 		sample*=amplitude
-		data+=struct.pack('h',sample)
-	debug.writeMessage("sample: %s"%sample)
+		leftSample=sample*(left/100.0)
+		rightSample=sample*(right/100.0)
+		data+=struct.pack('hh',leftSample,rightSample)
 	player.feed(data)
