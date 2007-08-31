@@ -30,7 +30,7 @@ import appModuleHandler
 import winKernel
 import win32clipboard
 import win32con
-
+import ctypes
 
 class appModule(appModuleHandler.appModule):
 
@@ -483,6 +483,7 @@ class appModule(appModuleHandler.appModule):
 			speech.speakSymbol("%s"%char)
 		speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
 		speech.speakMessage(_("text: %s")%obj.windowText)
+		speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
 	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers: control id, class and internal text")	
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):

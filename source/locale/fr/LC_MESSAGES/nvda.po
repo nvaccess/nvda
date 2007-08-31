@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1132\n"
+"Project-Id-Version: r1156\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2007-08-16 07:30+0200\n"
+"PO-Revision-Date: 2007-08-31 07:30+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "sous menu"
 msgid "not %s"
 msgstr "non %s"
 
-#: IAccessibleHandler.py:602
+#: IAccessibleHandler.py:600
 msgid "lost focus"
 msgstr "focus perdu"
 
@@ -63,12 +63,12 @@ msgstr "%s sur %s"
 msgid "%s items"
 msgstr "%s éléments"
 
-#: NVDAObjects\IAccessible\__init__.py:761
+#: NVDAObjects\IAccessible\__init__.py:756
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d éléments"
 
-#: NVDAObjects\IAccessible\edit.py:398 speech.py:442 textBuffer.py:537
+#: NVDAObjects\IAccessible\edit.py:399 speech.py:442 textBuffer.py:537
 #: textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "sélectionné %s"
@@ -116,23 +116,23 @@ msgstr "souligné"
 msgid "%d of %d"
 msgstr "%s sur %s"
 
-#: NVDAObjects\__init__.py:586 NVDAObjects\__init__.py:597
-#: NVDAObjects\__init__.py:631 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:590 NVDAObjects\__init__.py:601
+#: NVDAObjects\__init__.py:635 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "haut"
 
-#: NVDAObjects\__init__.py:613 NVDAObjects\__init__.py:620
-#: NVDAObjects\__init__.py:647 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:617 NVDAObjects\__init__.py:624
+#: NVDAObjects\__init__.py:651 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "bas"
 
-#: NVDAObjects\__init__.py:656 NVDAObjects\__init__.py:667
+#: NVDAObjects\__init__.py:660 NVDAObjects\__init__.py:671
 msgid "left"
 msgstr "gauche"
 
-#: NVDAObjects\__init__.py:689 NVDAObjects\__init__.py:705
+#: NVDAObjects\__init__.py:693 NVDAObjects\__init__.py:709
 msgid "right"
 msgstr "droite"
 
@@ -169,8 +169,8 @@ msgstr "mode formulaire"
 #: appModules\_default.py:131 appModules\_default.py:381
 #: appModules\_default.py:455 appModules\_default.py:490
 #: appModules\_default.py:500 appModules\_default.py:510
-#: appModules\_default.py:520 keyboardHandler.py:49 keyboardHandler.py:51
-#: keyboardHandler.py:53 speech.py:386 speech.py:392
+#: appModules\_default.py:520 keyboardHandler.py:48 keyboardHandler.py:50
+#: keyboardHandler.py:52 speech.py:386 speech.py:392
 msgid "off"
 msgstr "désactivé"
 
@@ -178,8 +178,8 @@ msgstr "désactivé"
 #: appModules\_default.py:114 appModules\_default.py:124
 #: appModules\_default.py:134 appModules\_default.py:458
 #: appModules\_default.py:493 appModules\_default.py:503
-#: appModules\_default.py:513 appModules\_default.py:523 keyboardHandler.py:49
-#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:381
+#: appModules\_default.py:513 appModules\_default.py:523 keyboardHandler.py:48
+#: keyboardHandler.py:50 keyboardHandler.py:52 speech.py:381
 msgid "on"
 msgstr "activé"
 
@@ -227,7 +227,8 @@ msgstr "Diminue le débit de 5 pourcent"
 
 #: appModules\_default.py:82
 msgid "Increases currently active setting in the synth settings ring"
-msgstr "augmente le paramètre courant dans la liste des paramètres synthétiseur"
+msgstr ""
+"augmente le paramètre courant dans la liste des paramètres synthétiseur"
 
 #: appModules\_default.py:87
 msgid "Decreases currently active setting in the synth settings ring"
@@ -711,11 +712,11 @@ msgstr ""
 
 #: appModules\_default.py:576
 msgid "%s copyed to clipboard"
-msgstr ""
+msgstr "%s copié dans le presse-papier"
 
 #: appModules\_default.py:578
 msgid "Copies name and value of current navigator object to the clipboard"
-msgstr ""
+msgstr "Copie le nom et le contenu de l'objet de navigation courant dans le presse-papier"
 
 #: appModules\msimn.py:21
 msgid "Attachments"
@@ -1510,15 +1511,15 @@ msgstr "protégé"
 msgid "required"
 msgstr "obligatoire"
 
-#: core.py:54
+#: core.py:48
 msgid "configuration applied"
 msgstr "configuration appliquée"
 
-#: core.py:81
+#: core.py:75
 msgid "Loading subsystems, please wait..."
 msgstr "Chargement des sous-systèmes: veuillez patienter..."
 
-#: core.py:94
+#: core.py:88
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -2035,145 +2036,149 @@ msgstr "Annoncer les changements de &forme de la souris"
 msgid "Report &object under mouse"
 msgstr "Annoncer l'&objet sous la souris"
 
-#: gui\settingsDialogs.py:378
+#: gui\settingsDialogs.py:359
+msgid "play audio coordinates when mouse moves"
+msgstr "Jouer des sons indiquant les coordonnées quand la souris se déplace"
+
+#: gui\settingsDialogs.py:382
 msgid "Report &tooltips"
 msgstr "Annoncer les &suggestions"
 
-#: gui\settingsDialogs.py:381
+#: gui\settingsDialogs.py:385
 msgid "Report &help balloons"
 msgstr "Annoncer les &infobulles"
 
-#: gui\settingsDialogs.py:384
+#: gui\settingsDialogs.py:388
 msgid "Report object shortcut &keys"
 msgstr "Annoncer les touches de &raccourci des objets"
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:391
 msgid "Report object &position information"
 msgstr "Annoncer l'information de &position de l'objet"
 
-#: gui\settingsDialogs.py:390
+#: gui\settingsDialogs.py:394
 msgid "Report object &group names"
 msgstr "Annoncer le nom des &groupes d'objets"
 
-#: gui\settingsDialogs.py:393
+#: gui\settingsDialogs.py:397
 msgid "Say object &state first"
 msgstr "Dire l'&état de l'objet en premier"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:400
 msgid "&Beep on progress bar updates"
 msgstr "Indiquer la mise à jour des barres de progression par des &bips"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:427
 msgid "&Maximum number of characters on one line"
 msgstr "Nombre &maximum de caractères par ligne"
 
-#: gui\settingsDialogs.py:428
+#: gui\settingsDialogs.py:432
 msgid "&Number of lines per page"
 msgstr "&Nombre de lignes par page"
 
-#: gui\settingsDialogs.py:433
+#: gui\settingsDialogs.py:437
 msgid "Report &virtual presentation on focus changes"
 msgstr "Annoncer la présentation &virtuelle au changement de focus"
 
-#: gui\settingsDialogs.py:436
+#: gui\settingsDialogs.py:440
 msgid "Update the content &dynamically"
 msgstr "Mise à jour &dynamique du contenu"
 
-#: gui\settingsDialogs.py:439
+#: gui\settingsDialogs.py:443
 msgid "Report lin&ks"
 msgstr "annoncer les l&iens"
 
-#: gui\settingsDialogs.py:442
+#: gui\settingsDialogs.py:446
 msgid "Report &lists"
 msgstr "Annoncer les &listes"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:449
 msgid "Report list &items"
 msgstr "Annoncer les &éléments de listes"
 
-#: gui\settingsDialogs.py:448
+#: gui\settingsDialogs.py:452
 msgid "Report &headings"
 msgstr "Annoncer les &titres"
 
-#: gui\settingsDialogs.py:451 gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:455 gui\settingsDialogs.py:539
 msgid "Report &tables"
 msgstr "Annoncer les ta&bleaux"
 
-#: gui\settingsDialogs.py:454
+#: gui\settingsDialogs.py:458
 msgid "Report &graphics"
 msgstr "Annoncer les &graphiques"
 
-#: gui\settingsDialogs.py:457
+#: gui\settingsDialogs.py:461
 msgid "Report f&orms"
 msgstr "Annoncer les &formulaires"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:464
 msgid "Report form &fields"
 msgstr "Annoncer les &champs de formulaires"
 
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:467
 msgid "Report block &quotes"
 msgstr "Annoncer les &quotes de blocs"
 
-#: gui\settingsDialogs.py:466
+#: gui\settingsDialogs.py:470
 msgid "Report &paragraphs"
 msgstr "Annoncer les &paragraphes"
 
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:473
 msgid "Report f&rames"
 msgstr "Annoncer les c&adres"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:518
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Annonce les changements de format après le curseur (peut dégrader les "
 "performances)"
 
-#: gui\settingsDialogs.py:517
+#: gui\settingsDialogs.py:521
 msgid "Report font &name"
 msgstr "annoncer le &nom de la police"
 
-#: gui\settingsDialogs.py:520
+#: gui\settingsDialogs.py:524
 msgid "Report font &size"
 msgstr "annoncer la &taille de la police"
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:527
 msgid "Report font attri&butes"
 msgstr "annoncer les &attributs de la police"
 
-#: gui\settingsDialogs.py:526
+#: gui\settingsDialogs.py:530
 msgid "Report st&yle"
 msgstr "annoncer le st&yle"
 
-#: gui\settingsDialogs.py:529
+#: gui\settingsDialogs.py:533
 msgid "Report &pages"
 msgstr "annoncer la &page"
 
-#: gui\settingsDialogs.py:532
+#: gui\settingsDialogs.py:536
 msgid "Report &line numbers"
 msgstr "annoncer le numéro de &ligne"
 
-#: gui\settingsDialogs.py:538
+#: gui\settingsDialogs.py:542
 msgid "Report &alignment"
 msgstr "annoncer l'&alignement"
 
-#: keyboardHandler.py:49
+#: keyboardHandler.py:48
 msgid "caps lock %s"
 msgstr "verrouillage majuscule %s"
 
-#: keyboardHandler.py:51
+#: keyboardHandler.py:50
 msgid "num lock %s"
 msgstr "verrouillage numérique %s"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:52
 msgid "scroll lock %s"
 msgstr "arrêt défilement %s"
 
-#: keyboardHandler.py:127
+#: keyboardHandler.py:128
 msgid "Description: %s"
 msgstr "description %s"
 
-#: keyboardHandler.py:128
+#: keyboardHandler.py:129
 msgid "Location: %s"
 msgstr "position %s"
 

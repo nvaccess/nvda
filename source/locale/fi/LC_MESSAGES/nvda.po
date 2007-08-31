@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1122\n"
+"Project-Id-Version: r1156\n"
 "POT-Creation-Date: 2007-08-14 11:09+Kesäaika\n"
-"PO-Revision-Date: 2007-08-14 11:18+0300\n"
+"PO-Revision-Date: 2007-08-31 11:45+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "alavalikko"
 msgid "not %s"
 msgstr "ei %s"
 
-#: IAccessibleHandler.py:602
+#: IAccessibleHandler.py:600
 msgid "lost focus"
 msgstr "kohdistus menetetty"
 
@@ -63,12 +63,12 @@ msgstr "%s kautta %s"
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: NVDAObjects\IAccessible\__init__.py:761
+#: NVDAObjects\IAccessible\__init__.py:756
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d kohdetta"
 
-#: NVDAObjects\IAccessible\edit.py:398 speech.py:442 textBuffer.py:537
+#: NVDAObjects\IAccessible\edit.py:399 speech.py:442 textBuffer.py:537
 #: textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -116,23 +116,23 @@ msgstr "alleviivaus"
 msgid "%d of %d"
 msgstr "%d kautta %d"
 
-#: NVDAObjects\__init__.py:586 NVDAObjects\__init__.py:597
-#: NVDAObjects\__init__.py:631 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:590 NVDAObjects\__init__.py:601
+#: NVDAObjects\__init__.py:635 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "yläreuna"
 
-#: NVDAObjects\__init__.py:613 NVDAObjects\__init__.py:620
-#: NVDAObjects\__init__.py:647 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:617 NVDAObjects\__init__.py:624
+#: NVDAObjects\__init__.py:651 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "alareuna"
 
-#: NVDAObjects\__init__.py:656 NVDAObjects\__init__.py:667
+#: NVDAObjects\__init__.py:660 NVDAObjects\__init__.py:671
 msgid "left"
 msgstr "vasen"
 
-#: NVDAObjects\__init__.py:689 NVDAObjects\__init__.py:705
+#: NVDAObjects\__init__.py:693 NVDAObjects\__init__.py:709
 msgid "right"
 msgstr "oikea"
 
@@ -169,8 +169,8 @@ msgstr "näennäispuskurin läpivienti"
 #: appModules\_default.py:131 appModules\_default.py:381
 #: appModules\_default.py:455 appModules\_default.py:490
 #: appModules\_default.py:500 appModules\_default.py:510
-#: appModules\_default.py:520 keyboardHandler.py:49 keyboardHandler.py:51
-#: keyboardHandler.py:53 speech.py:386 speech.py:392
+#: appModules\_default.py:520 keyboardHandler.py:48 keyboardHandler.py:50
+#: keyboardHandler.py:52 speech.py:386 speech.py:392
 msgid "off"
 msgstr "pois"
 
@@ -178,8 +178,8 @@ msgstr "pois"
 #: appModules\_default.py:114 appModules\_default.py:124
 #: appModules\_default.py:134 appModules\_default.py:458
 #: appModules\_default.py:493 appModules\_default.py:503
-#: appModules\_default.py:513 appModules\_default.py:523 keyboardHandler.py:49
-#: keyboardHandler.py:51 keyboardHandler.py:53 speech.py:381
+#: appModules\_default.py:513 appModules\_default.py:523 keyboardHandler.py:48
+#: keyboardHandler.py:50 keyboardHandler.py:52 speech.py:381
 msgid "on"
 msgstr "päällä"
 
@@ -713,11 +713,11 @@ msgstr ""
 "NVDA ei käsittele seuraavaksi painettua näppäintä, vaan se annetaan "
 "suoraan Windowsin käsiteltäväksi."
 
-#: appModules\_default.py:568
+#: appModules\_default.py:576
 msgid "%s copyed to clipboard"
 msgstr "%s kopioitu leikepöydälle"
 
-#: appModules\_default.py:570
+#: appModules\_default.py:578
 msgid "Copies name and value of current navigator object to the clipboard"
 msgstr "Kopioi nykyisen navigointiobjektin nimen ja arvon leikepöydälle"
 
@@ -1514,15 +1514,15 @@ msgstr "suojattu"
 msgid "required"
 msgstr "pakollinen"
 
-#: core.py:45
+#: core.py:48
 msgid "configuration applied"
 msgstr "asetukset otettu käyttöön"
 
-#: core.py:72
+#: core.py:75
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alajärjestelmiä, odota..."
 
-#: core.py:85
+#: core.py:88
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -1752,7 +1752,7 @@ msgstr "&Syntetisaattori...\tCtrl+Shift+S"
 
 #: gui\__init__.py:155
 msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "Puheasetukset...\tCtrl+Shift+V"
+msgstr "Puhe...\tCtrl+Shift+V"
 
 #: gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
@@ -1760,7 +1760,7 @@ msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
 #: gui\__init__.py:158
 msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "&Näppäimistöasetukset...\tCtrl+K"
+msgstr "&Näppäimistö...\tCtrl+K"
 
 #: gui\__init__.py:158
 msgid ""
@@ -1772,7 +1772,7 @@ msgstr ""
 
 #: gui\__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
-msgstr "&Hiiriasetukset...\tCtrl+M"
+msgstr "&Hiiri...\tCtrl+M"
 
 #: gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
@@ -1896,7 +1896,7 @@ msgstr "ylläpitäjä"
 
 #: gui\__init__.py:294
 msgid "url"
-msgstr "osoite"
+msgstr "URL-osoite"
 
 #: gui\__init__.py:294
 msgid "version"
@@ -2045,144 +2045,148 @@ msgstr "Ilmoita &hiirikohdistimen muutoksista"
 msgid "Report &object under mouse"
 msgstr "Lue hiiren alla oleva &objekti"
 
-#: gui\settingsDialogs.py:378
+#: gui\settingsDialogs.py:359
+msgid "play audio coordinates when mouse moves"
+msgstr "Ilmoita hiirikohdistimen &koordinaatit äänimerkeillä"
+
+#: gui\settingsDialogs.py:382
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui\settingsDialogs.py:381
+#: gui\settingsDialogs.py:385
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui\settingsDialogs.py:384
+#: gui\settingsDialogs.py:388
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:391
 msgid "Report object &position information"
 msgstr "Lue objektin pa&ikkatiedot"
 
-#: gui\settingsDialogs.py:390
+#: gui\settingsDialogs.py:394
 msgid "Report object &group names"
 msgstr "Lue &objektiryhmien nimet"
 
-#: gui\settingsDialogs.py:393
+#: gui\settingsDialogs.py:397
 msgid "Say object &state first"
 msgstr "Lue &ensin objektin tila"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:400
 msgid "&Beep on progress bar updates"
 msgstr "Anna &äänimerkki edistymispalkin päivittyessä"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:427
 msgid "&Maximum number of characters on one line"
 msgstr "&Merkkien maksimimäärä rivillä"
 
-#: gui\settingsDialogs.py:428
+#: gui\settingsDialogs.py:432
 msgid "&Number of lines per page"
 msgstr "&Rivejä sivulla"
 
-#: gui\settingsDialogs.py:433
+#: gui\settingsDialogs.py:437
 msgid "Report &virtual presentation on focus changes"
-msgstr "&Ilmoita koh&distuksen muuttuessa"
+msgstr "Ilmoita koh&distuksen muuttuessa"
 
-#: gui\settingsDialogs.py:436
+#: gui\settingsDialogs.py:440
 msgid "Update the content &dynamically"
 msgstr "Päivitä sisältöä &dynaamisesti"
 
-#: gui\settingsDialogs.py:439
+#: gui\settingsDialogs.py:443
 msgid "Report lin&ks"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:442
+#: gui\settingsDialogs.py:446
 msgid "Report &lists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:449
 msgid "Report list &items"
 msgstr "Ilmoita luettelon &osat"
 
-#: gui\settingsDialogs.py:448
+#: gui\settingsDialogs.py:452
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:451 gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:455 gui\settingsDialogs.py:539
 msgid "Report &tables"
 msgstr "Ilmoita taulu&kot"
 
-#: gui\settingsDialogs.py:454
+#: gui\settingsDialogs.py:458
 msgid "Report &graphics"
 msgstr "Ilmoita ku&vat"
 
-#: gui\settingsDialogs.py:457
+#: gui\settingsDialogs.py:461
 msgid "Report f&orms"
 msgstr "Ilmoita lom&akkeet"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:464
 msgid "Report form &fields"
 msgstr "Ilmoita lomakek&entät"
 
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:467
 msgid "Report block &quotes"
 msgstr "Ilmoita lainaukse&t"
 
-#: gui\settingsDialogs.py:466
+#: gui\settingsDialogs.py:470
 msgid "Report &paragraphs"
 msgstr "Ilmoita ka&ppaleet"
 
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:473
 msgid "Report f&rames"
 msgstr "Ilmoita ke&hykset"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:518
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
-#: gui\settingsDialogs.py:517
+#: gui\settingsDialogs.py:521
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:520
+#: gui\settingsDialogs.py:524
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:527
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:526
+#: gui\settingsDialogs.py:530
 msgid "Report st&yle"
 msgstr "Ilmoita t&yyli"
 
-#: gui\settingsDialogs.py:529
+#: gui\settingsDialogs.py:533
 msgid "Report &pages"
 msgstr "Ilmoita si&vut"
 
-#: gui\settingsDialogs.py:532
+#: gui\settingsDialogs.py:536
 msgid "Report &line numbers"
 msgstr "Ilmoita rivin&umerot"
 
-#: gui\settingsDialogs.py:538
+#: gui\settingsDialogs.py:542
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: keyboardHandler.py:49
+#: keyboardHandler.py:48
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:51
+#: keyboardHandler.py:50
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:52
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:127
+#: keyboardHandler.py:128
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:128
+#: keyboardHandler.py:129
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
