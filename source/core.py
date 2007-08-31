@@ -90,6 +90,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			"Checks the queues and executes functions."
 			def Notify(self):
 				queueHandler.pumpAll()
+				mouseHandler.pumpAll()
 		pump = CorePump()
 		pump.Start(1)
 	except:

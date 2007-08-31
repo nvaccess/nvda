@@ -13,8 +13,6 @@ interactiveQueue=Queue(MAX_ITEMS)
 interactiveQueue.__name__="interactiveQueue"
 eventQueue=Queue(MAX_ITEMS)
 eventQueue.__name__="eventQueue"
-mouseQueue=Queue(MAX_ITEMS)
-mouseQueue.__name__="mouseQueue"
 generators={}
 lastGeneratorObjID=0
 
@@ -44,7 +42,7 @@ def flushQueue(queue):
 				debug.writeException("function from queue %s"%queue.__name__)
 
 def isPendingItems(queue=None):
-		if (queue is None  and (not eventQueue.empty() or not mouseQueue.empty() or not interactiveQueue.empty())) or not queue.empty():
+		if (queue is None  and (not eventQueue.empty() or not interactiveQueue.empty())) or not queue.empty():
 			return True
 		else:
 			return False
@@ -59,5 +57,4 @@ def pumpAll():
 			debug.writeException("generator %d" % ID)
 			del generators[ID]
 	flushQueue(interactiveQueue)
-	flushQueue(mouseQueue)
 	flushQueue(eventQueue)

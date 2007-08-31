@@ -512,6 +512,10 @@ Tries to force this object to take the focus.
 	def reportFocus(self):
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
+	def event_mouseMove(self,x,y):
+		speech.cancelSpeech()
+		speech.speakObject(self,reason=speech.REASON_MOUSE)
+
 	def event_stateChange(self):
 		if id(self)==id(api.getFocusObject()):
 			states=self.states

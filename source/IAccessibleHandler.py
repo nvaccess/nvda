@@ -367,7 +367,7 @@ def accHitTest(ia,child,x,y):
 			new_ia=ia
 			new_child=res
 		else:
-			return (ia,child)
+			return None
 		return (new_ia,new_child)
 	except:
 		return None

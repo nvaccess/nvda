@@ -24,20 +24,22 @@ WM_RBUTTONDOWN=0x0204
 WM_RBUTTONUP=0x0205
 WM_RBUTTONDBLCLK=0x0206
 
-mouseOldX=None
-mouseOldY=None
+curMousePos=(0,0)
+mouseMoved=False
 
 #Internal mouse event
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
+	global mouseMoved, curMousePos
 	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return True
 	try:
 		if injected:
 			return True
+		curMousePos=(x,y)
 		if msg==WM_MOUSEMOVE:
-			queueHandler.queueFunction(queueHandler.mouseQueue,executeMouseMoveEvent,x,y)
+			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.mouseQueue,speech.cancelSpeech)
 		return True
@@ -45,7 +47,6 @@ def internal_mouseEvent(msg,x,y,injected):
 		debug.writeException("mouseHandler.internal_mouseEvent")
 
 def executeMouseMoveEvent(x,y):
-	global mouseOldX, mouseOldY
 	#Don't run if reportObjectUnderMouse is false
 	if not config.conf["mouse"]["reportObjectUnderMouse"]:
 		return
@@ -79,20 +80,24 @@ def executeMouseMoveEvent(x,y):
 	api.setMouseObject(mouseObject)
 	if hasattr(mouseObject,"event_mouseMove"):
 		try:
-			mouseObject.event_mouseMove(True,x,y,mouseOldX,mouseOldY)
+			mouseObject.event_mouseMove(x,y)
 			oldMouseObject=mouseObject
-			mouseOldX=x
-			mouseOldY=y
 		except:
 			debug.writeException("api.notifyMouseMoved")
 
 #Register internal mouse event
 
 def initialize():
-	global hookManager
 	(x,y)=winUser.getCursorPos()
 	api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
+	curMousePos=(x,y)
 	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
+
+def pumpAll():
+	global mouseMoved, curMousePos
+	if mouseMoved:
+		mouseMoved=False
+		executeMouseMoveEvent(*curMousePos)
 
 def terminate():
 	ctypes.cdll.mouseHook.terminate()
