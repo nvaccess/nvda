@@ -41,7 +41,7 @@ def internal_mouseEvent(msg,x,y,injected):
 		if msg==WM_MOUSEMOVE:
 			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
-			queueHandler.queueFunction(queueHandler.mouseQueue,speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
 		return True
 	except:
 		debug.writeException("mouseHandler.internal_mouseEvent")
