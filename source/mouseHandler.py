@@ -27,6 +27,26 @@ WM_RBUTTONDBLCLK=0x0206
 curMousePos=(0,0)
 mouseMoved=False
 
+def playAudioCoordinates(x, y):
+	(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
+	minPitch=220
+	maxPitch=880
+	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-float(y))/screenHeight))
+	minVolume=5
+	maxVolume=100
+	volumeRange=maxVolume-minVolume
+	hdc=ctypes.windll.user32.GetDC(0)
+	brightness=0
+	for i in range(x-4,x+5):
+		for j in range(y-4,y+5):
+			if i>=0 and j>=0:
+				p=ctypes.windll.gdi32.GetPixel(hdc,i,j)
+				grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
+				brightness=(brightness+(grey/255))/2
+	leftVolume=minVolume+(volumeRange*((screenWidth-float(x))/screenWidth))*brightness
+	rightVolume=minVolume+(volumeRange*(float(x)/screenWidth))*brightness
+	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
+
 #Internal mouse event
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
@@ -94,8 +114,7 @@ def pumpAll():
 		mouseMoved=False
 		(x,y)=curMousePos
 		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-			(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
-			tones.beep(220+(1540*((screenHeight-float(y))/screenHeight)),40,left=100*((screenWidth-float(x))/screenWidth),right=100*(float(x)/screenWidth))
+			playAudioCoordinates(x,y)
 		executeMouseMoveEvent(x,y)
 
 def terminate():
