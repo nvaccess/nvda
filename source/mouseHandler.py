@@ -33,9 +33,6 @@ def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
 	minPitch=220
 	maxPitch=880
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-float(y))/screenHeight))
-	minVolume=5
-	maxVolume=100
-	volumeRange=maxVolume-minVolume
 	hdc=ctypes.windll.user32.GetDC(0)
 	brightness=0
 	for i in range(x-4,x+5):
@@ -44,8 +41,11 @@ def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
 				p=ctypes.windll.gdi32.GetPixel(hdc,i,j)
 				grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
 				brightness=(brightness+(grey/255))/2
-	leftVolume=minVolume+(volumeRange*((screenWidth-float(x))/screenWidth))*brightness
-	rightVolume=minVolume+(volumeRange*(float(x)/screenWidth))*brightness
+	minBrightness=0.1
+	maxBrightness=1
+	brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+	leftVolume=(85*((screenWidth-float(x))/screenWidth))*brightness
+	rightVolume=(85*(float(x)/screenWidth))*brightness
 	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
 
 #Internal mouse event

@@ -13,11 +13,11 @@ from glob import glob
 import config
 
 sampleRate=22050
-amplitude=6000
+amplitude=14000
 
 player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 
-def beep(hz,length,left=100,right=100):
+def beep(hz,length,left=50,right=50):
 	player.stop()
 	sampleLength=length*(sampleRate/1000)
 	data=""
