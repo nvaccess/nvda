@@ -160,6 +160,7 @@ import NVDAObjects.IAccessible
 import appModuleHandler
 import config
 import IA2Handler
+import mouseHandler
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -172,7 +173,6 @@ IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
 pointer_IAccessible=ctypes.POINTER(IAccessible)
 oleAcc=ctypes.windll.oleacc
 
-lastMouseShape=""
 lastEvent=None
 
 def getRoleName(role):
@@ -520,7 +520,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if eventName=="destroy":
 			return
 		#Ignore events with invalid window handles
-		if not winUser.isWindow(window):
+		if not winUser.isWindow(window) and objectID!=OBJID_CURSOR:
 			return
 		windowClassName=winUser.getClassName(window)
 		controlID=winUser.getControlID(window)
@@ -539,9 +539,7 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			if not config.conf["mouse"]["reportMouseShapeChanges"]:
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
-			if obj and obj.name!=lastMouseShape:
-				queueHandler.queueFunction(queueHandler.mouseQueue,speech.speakObject, obj)
-				globals()["lastMouseShape"]=obj.name
+			queueHandler.queueFunction(queueHandler.eventQueue,mouseHandler.updateMouseShape,obj.name)
 			return
 		#Process foreground events
 		if eventName=="foreground":

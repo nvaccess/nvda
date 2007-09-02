@@ -26,13 +26,22 @@ WM_RBUTTONDBLCLK=0x0206
 
 curMousePos=(0,0)
 mouseMoved=False
+curMouseShape=""
+mouseShapeChanged=0
+
+def updateMouseShape(name):
+	global curMouseShape, mouseShapeChanged
+	if not name or name==curMouseShape:
+		return
+	curMouseShape=name
+	mouseShapeChanged=1
 
 def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
 	if not screenWidth or not screenHeight:
 		(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
 	minPitch=220
 	maxPitch=880
-	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-float(y))/screenHeight))
+	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	hdc=ctypes.windll.user32.GetDC(0)
 	brightness=0
 	for i in range(x-4,x+5):
@@ -110,7 +119,7 @@ def initialize():
 	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
-	global mouseMoved, curMousePos
+	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
 	if mouseMoved:
 		mouseMoved=False
 		(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
@@ -120,6 +129,12 @@ def pumpAll():
 		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 			playAudioCoordinates(x,y,screenWidth=screenWidth,screenHeight=screenHeight)
 		executeMouseMoveEvent(x,y)
+	if mouseShapeChanged>0:
+		if mouseShapeChanged==10:
+			mouseShapeChanged=0
+			speech.speakMessage(_("%s cursor")%curMouseShape)
+		else:
+			mouseShapeChanged+=1
 
 def terminate():
 	ctypes.cdll.mouseHook.terminate()
