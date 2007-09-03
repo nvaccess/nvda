@@ -20,13 +20,14 @@ amplitude=14000
 player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 
 def beep(hz,length,left=50,right=50):
+	hz=float(hz)
 	player.stop()
 	samplesPerCycle=(sampleRate/hz)
 	totalSamples=(length/1000.0)/(1.0/sampleRate)
 	totalSamples=totalSamples+(samplesPerCycle-(totalSamples%samplesPerCycle))
 	data=""
 	sampleNum=0
-	while sampleNum<=totalSamples:
+	while sampleNum<totalSamples:
 		sample=min(max(math.sin((sampleNum%sampleRate)*piTwo*(hz/sampleRate))*2,-1),1)*amplitude
 		leftSample=sample*(left/100.0)
 		rightSample=sample*(right/100.0)
