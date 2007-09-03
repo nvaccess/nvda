@@ -11,10 +11,12 @@ import queueHandler
 import api
 import debug
 import speech
+import NVDAObjects.JAB
 import NVDAObjects.IAccessible
 import globalVars
 import config
 import IAccessibleHandler
+import JABHandler
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -63,8 +65,6 @@ def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos
 	try:
-		if injected:
-			return True
 		curMousePos=(x,y)
 		if msg==WM_MOUSEMOVE and config.conf["mouse"]["reportObjectUnderMouse"]:
 			mouseMoved=True
@@ -81,18 +81,23 @@ def executeMouseMoveEvent(x,y):
 	except:
 		oldLeft=oldTop=oldWidth=oldHeight=0
 	mouseObject=None
-	#If the old mouse object was not an IAccessible, or the current coordinates are outside the old object
-	#Just grab a new object at these coordinates
-	if not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
-		mouseObject=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
-	else:
-		try:
-			res=IAccessibleHandler.accHitTest(oldMouseObject.IAccessibleObject,oldMouseObject.IAccessibleChildID,x,y)
-		except:
-			res=None
-		if res is None or (res[0]==oldMouseObject.IAccessibleObject and res[1]==oldMouseObject.IAccessibleChildID):
-			return
+	windowAtPoint=ctypes.windll.user32.WindowFromPoint(x,y)
+	if JABHandler.isJavaWindow(windowAtPoint):
+		if not isinstance(oldMouseObject,NVDAObjects.JAB.JAB) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
+			oldJabContext=JABHandler.JABContext(hwnd=windowAtPoint)
 		else:
+			oldJabContext=oldMouseObject.jabContext
+		res=oldJabContext.getAccessibleContextAt(x,y)
+		if res is None:
+			return
+		mouseObject=NVDAObjects.JAB.JAB(jabContext=res)
+	else: #not a java window
+		if not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
+			mouseObject=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
+		else:
+			res=IAccessibleHandler.accHitTest(oldMouseObject.IAccessibleObject,oldMouseObject.IAccessibleChildID,x,y)
+			if res is None or (res[0]==oldMouseObject.IAccessibleObject and res[1]==oldMouseObject.IAccessibleChildID):
+				return
 			mouseObject=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 	if not mouseObject:
 		return
