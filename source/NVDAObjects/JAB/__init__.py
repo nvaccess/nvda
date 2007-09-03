@@ -239,6 +239,9 @@ class JAB(Window):
 	def _get_description(self):
 		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
 
+	def _get_location(self):
+		return (self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
+
 	def _get_hasFocus(self):
 		if controlTypes.STATE_FOCUSED in self.states:
 			return True
