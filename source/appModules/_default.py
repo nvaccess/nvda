@@ -138,17 +138,20 @@ class appModule(appModuleHandler.appModule):
 
 	def script_moveMouseToNavigatorObject(self,keyPress,nextScript):
 		speech.speakMessage(_("Move mouse to navigator"))
-		api.moveMouseToNVDAObject(api.getNavigatorObject())
+		obj=api.getNavigatorObject()
+		try:
+			(left,top,width,height)=obj.location
+		except:
+			speech.speakMessage(_("object has no location"))
+			return
+		winUser.setCursorPos(left,top)
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object.")
 
 	def script_moveNavigatorObjectToMouse(self,keyPress,nextScript):
 		speech.speakMessage(_("Move navigator object to mouse"))
-		(x,y)=winUser.getCursorPos()
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
-		if obj:
-			api.setNavigatorObject(obj)
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the object that is directly under the mouse pointer")
+		obj=api.getMouseObject()
+		api.setNavigatorObject(obj)
+		speech.speakObject(obj)
 
 	def script_navigatorObject_current(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
