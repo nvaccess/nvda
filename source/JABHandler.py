@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import winsound
 from ctypes import *
 from ctypes.wintypes import *
 import queueHandler
@@ -25,7 +26,7 @@ SHORT_STRING_SIZE=256
 class JABContext(object):
 
 	def __init__(self,hwnd=None,vmID=None,accContext=None):
-		if hwnd and (not vmID or not accContext):
+		if hwnd and not vmID:
  			vmID=c_int()
 			accContext=c_int()
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
@@ -33,7 +34,7 @@ class JABContext(object):
 			accContext=accContext.value
 			#Record  this vm ID and window handle for later use with other objects
 			vmIDsToWindowHandles[vmID]=hwnd
-		elif vmID and accContext and not hwnd:
+		elif vmID and not hwnd:
 			hwnd=vmIDsToWindowHandles.get(vmID,0)
 		self.hwnd=hwnd
 		self.vmID=vmID
@@ -120,6 +121,18 @@ class JABContext(object):
 			return self.__class__(self.hwnd,self.vmID,accContext)
 		else:
 			return None
+
+	def getAccessibleContextAt(self,x,y):
+		newAccContext=c_int()
+		res=bridgeDll.getAccessibleContextAt(self.vmID,self.accContext,x,y,byref(newAccContext))
+		newAccContext=newAccContext.value
+		if not res or not newAccContext:
+			return None
+		if not bridgeDll.isSameObject(newAccContext,self.accContext):
+			return self.__class__(self.hwnd,self.vmID,newAccContext)
+		elif newAccContext!=self.accContext:
+			bridgeDll.releaseJavaObject(newAccContext)
+		return None
 
 	def getCurrentAccessibleValueFromContext(self):
 		buf=create_unicode_buffer(SHORT_STRING_SIZE+1)
