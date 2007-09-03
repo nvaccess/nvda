@@ -14,29 +14,22 @@ import config
 
 piTwo=math.pi*2
 
-sampleRate=22050
+sampleRate=44100
 amplitude=14000
 
 player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 
 def beep(hz,length,left=50,right=50):
 	player.stop()
-	samplesPerCycle=int(sampleRate/hz)
-	numCycles=int((length/1000.0)/(samplesPerCycle*(1.0/sampleRate)))
+	samplesPerCycle=(sampleRate/hz)
+	totalSamples=(length/1000.0)/(1.0/sampleRate)
+	totalSamples=totalSamples+(samplesPerCycle-(totalSamples%samplesPerCycle))
 	data=""
-	cycleNum=0
 	sampleNum=0
-	while cycleNum<=numCycles:
-		sample=min(max(math.sin(piTwo*(float(sampleNum)/samplesPerCycle))*2,-1),1)*amplitude
-		if cycleNum==0:
-			sample=sample*(float(sampleNum)/samplesPerCycle)
-		elif cycleNum==numCycles:
-			sample=sample*(1-(float(sampleNum)/samplesPerCycle))
+	while sampleNum<=totalSamples:
+		sample=min(max(math.sin((sampleNum%sampleRate)*piTwo*(hz/sampleRate))*2,-1),1)*amplitude
 		leftSample=sample*(left/100.0)
 		rightSample=sample*(right/100.0)
 		data+=struct.pack('hh',int(leftSample),int(rightSample))
 		sampleNum+=1
-		if sampleNum==samplesPerCycle:
-			cycleNum+=1
-			sampleNum=0
 	player.feed(data)
