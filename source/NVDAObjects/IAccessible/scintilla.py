@@ -9,6 +9,7 @@ from . import IAccessible
 from .. import NVDAObjectTextInfo
 
 #Window messages
+SCI_POSITIONFROMPOINT=2022
 SCI_GETTEXTRANGE=2162
 SCI_GETTEXT=2182
 SCI_GETTEXTLENGTH=2183
@@ -121,6 +122,10 @@ class Scintilla(IAccessible):
 
 	TextInfo=ScintillaTextInfo
 
+	def __init__(self,*args,**kwargs):
+		self._lastMouseTextOffsets=None
+		super(Scintilla,self).__init__(*args,**kwargs)
+
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
@@ -134,6 +139,18 @@ class Scintilla(IAccessible):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
 		return info.text
+
+	def event_mouseMove(self,x,y):
+		mouseEntered=self._mouseEntered
+		super(Scintilla,self).event_mouseMove(x,y)
+		offset=winUser.sendMessage(self.windowHandle,SCI_POSITIONFROMPOINT,x,y)
+		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
+			if mouseEntered:
+				speech.cancelSpeech()
+			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
+			info.expand(textHandler.UNIT_WORD)
+			speech.speakText(info.text)
+			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 #We want all the standard text editing key commands to be handled by NVDA
 [Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [

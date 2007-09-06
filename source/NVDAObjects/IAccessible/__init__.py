@@ -658,7 +658,7 @@ class MozillaProgressBar(IAccessible):
 				return
 			if val!=globalVars.lastProgressValue:
 				baseFreq=110
-				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
+				tones.beep(baseFreq*(1+(float(val[:-1])/6.25)),40)
 				globalVars.lastProgressValue=val
 		else:
 			super(MozillaProgressBar,self).event_valueChange()
@@ -858,7 +858,7 @@ _staticMap={
 	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20A",
 	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
+	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit50",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	("MozillaUIWindowClass",None):"MozillaUIWindowClass",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",

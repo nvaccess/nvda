@@ -25,8 +25,6 @@ import controlTypes
 from . import IAccessible
 from .. import NVDAObjectTextInfo
 
-IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
-
 #Edit control window messages
 EM_GETSEL=176
 EM_SETSEL=177
@@ -55,6 +53,13 @@ EM_GETPAGE=winUser.WM_USER+228
 LF_FACESIZE=32
 
 #structures
+
+class PointLStruct(ctypes.Structure):
+ 	_fields_=[
+		('x',ctypes.c_long),
+		('y',ctypes.c_long),
+	]
+
 class CharRangeStruct(ctypes.Structure):
 	_fields_=[
 		('cpMin',ctypes.c_long),
@@ -366,6 +371,7 @@ class Edit(IAccessible):
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
+		self._lastMouseTextOffsets=None
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -380,6 +386,29 @@ class Edit(IAccessible):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(self.editValueUnit)
 		return info.text
+
+	def event_mouseMove(self,x,y):
+		mouseEntered=self._mouseEntered
+		super(Edit,self).event_mouseMove(x,y)
+		(left,top,width,height)=self.location
+		if self.editAPIVersion>=1:
+			processHandle=self.editProcessHandle
+			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			p=PointLStruct(x-left,y-top)
+			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+			offset=winUser.sendMessage(self.windowHandle,EM_CHARFROMPOS,0,internalP)
+			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
+		else:
+			p=(x-left)+((y-top)<<16)
+			offset=winUser.sendMessage(self.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
+		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
+			if mouseEntered:
+				speech.cancelSpeech()
+			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
+			info.expand(textHandler.UNIT_WORD)
+			speech.speakText(info.text)
+			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
+
 
 	def event_valueChange(self):
 		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION).copy()
@@ -450,4 +479,8 @@ class RichEdit20(RichEdit):
 class RichEdit20A(RichEdit20):
 	editAPIUnicode=False
 
+class RichEdit30(RichEdit):
+	editAPIVersion=3
 
+class RichEdit50(RichEdit):
+	editAPIVersion=5
