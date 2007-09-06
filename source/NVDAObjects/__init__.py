@@ -20,6 +20,12 @@ import baseObject
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
+	def __eq__(self,other):
+		if id(self)==id(other) or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
+			return True
+		else:
+			return False
+
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
 			self._storyText=self.obj.basicText
@@ -316,6 +322,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._hashLimit=10000000
 		self._hashPrime=23
+		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
 		if self.TextInfo==NVDAObjectTextInfo: 
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -513,8 +520,13 @@ Tries to force this object to take the focus.
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_mouseMove(self,x,y):
-		speech.cancelSpeech()
-		speech.speakObject(self,reason=speech.REASON_MOUSE)
+		if not self._mouseEntered:
+			speech.cancelSpeech()
+			speech.speakObject(self,reason=speech.REASON_MOUSE)
+		self._mouseEntered=True
+
+
+
 
 	def event_stateChange(self):
 		if id(self)==id(api.getFocusObject()):
