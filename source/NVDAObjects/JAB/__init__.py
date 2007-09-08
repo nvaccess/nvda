@@ -141,6 +141,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 class JAB(Window):
 
 	def __init__(self,windowHandle=None,jabContext=None):
+		self._lastMouseTextOffsets=None
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:
@@ -327,6 +328,19 @@ class JAB(Window):
 			if jabContext:
 				children.append(JAB(jabContext=jabContext))
 		return children
+
+	def event_mouseMove(self,x,y):
+		mouseEntered=self._mouseEntered
+		super(JAB,self).event_mouseMove(x,y)
+		info=self.jabContext.getAccessibleTextInfo(x,y)
+		offset=max(min(info.indexAtPoint,info.charCount-1),0)
+		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
+			if mouseEntered:
+				speech.cancelSpeech()
+			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
+			info.expand(textHandler.UNIT_WORD)
+			speech.speakText(info.text)
+			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def event_stateChange(self):
 		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
