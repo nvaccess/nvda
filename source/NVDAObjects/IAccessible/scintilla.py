@@ -10,6 +10,8 @@ from .. import NVDAObjectTextInfo
 
 #Window messages
 SCI_POSITIONFROMPOINT=2022
+SCI_POINTXFROMPOSITION=2164
+SCI_POINTYFROMPOSITION=2165
 SCI_GETTEXTRANGE=2162
 SCI_GETTEXT=2182
 SCI_GETTEXTLENGTH=2183
@@ -109,10 +111,10 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):
-		lineNum=self._lineNumFromOffset(offset)
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,lineNum,0)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_GETLINEENDPOSITION,lineNum,0)
-		return [start,end]
+		curY=winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,offset)
+		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0,curY)
+		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,32768,curY)
+		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
 		return super(EditTextInfo,self)._getLineOffsets(offset)
