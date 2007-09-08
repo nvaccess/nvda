@@ -526,7 +526,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
 			api.setFocusObject(self)
 			speech.cancelSpeech()
-			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP and focusObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
+			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP and isinstance(focusObject,IAccessible) and focusObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUITEM:
 				speech.speakObject(self,reason=speech.REASON_FOCUS)
 			else:
 				speech.speakObject(self,reason=speech.REASON_FOCUS)
