@@ -89,17 +89,38 @@ class JABContext(object):
 		return text.value
 
 	def getAccessibleTextLineBounds(self,index):
+		index=max(index,0)
+		debug.writeMessage("lineBounds: index %s"%index)
 		#Java returns end as the last character, not end as past the last character
 		startIndex=c_int()
 		endIndex=c_int()
 		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
-		startIndex=startIndex.value
-		endIndex=endIndex.value
-		if startIndex<0:
-			startIndex=0
-		if endIndex<0:
-			endIndex=0
-		return [startIndex,endIndex]
+		start=max(startIndex.value,0)
+		end=max(endIndex.value,0)
+		debug.writeMessage("line bounds: start %s, end %s"%(start,end))
+		ok=False
+		while not ok:
+			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,end,byref(startIndex),byref(endIndex))
+			tempStart=max(startIndex.value,0)
+			tempEnd=max(endIndex.value,0)
+			debug.writeMessage("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
+			if tempStart>(index+1):
+				end=tempStart-1
+			else:
+				ok=True
+		ok=False
+		while not ok:
+			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,start,byref(startIndex),byref(endIndex))
+			tempStart=max(startIndex.value,0)
+			tempEnd=max(endIndex.value,0)
+			debug.writeMessage("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
+			if tempEnd<(index-1):
+				start=tempEnd+1
+			else:
+				ok=True
+		debug.writeMessage("line bounds: returning %s, %s"%(start,end))
+		return (start,end)
+
 
 	def getAccessibleParentFromContext(self):
 		accContext=bridgeDll.getAccessibleParentFromContext(self.vmID,self.accContext)
@@ -128,10 +149,10 @@ class JABContext(object):
 		newAccContext=newAccContext.value
 		if not res or not newAccContext:
 			return None
-		if not bridgeDll.isSameObject(newAccContext,self.accContext):
+		if not bridgeDll.isSameObject(self.vmID,newAccContext,self.accContext):
 			return self.__class__(self.hwnd,self.vmID,newAccContext)
 		elif newAccContext!=self.accContext:
-			bridgeDll.releaseJavaObject(newAccContext)
+			bridgeDll.releaseJavaObject(self.vmID,newAccContext)
 		return None
 
 	def getCurrentAccessibleValueFromContext(self):
@@ -255,7 +276,8 @@ def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDe
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_wchar_p,c_wchar_p)
 def internal_event_stateChange(vmID,event,source,oldState,newState):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_stateChange,vmID,source,oldState,newState)
-	bridgeDll.releaseJavaObject(source)
+	bridgeDll.releaseJavaObject(vmID,event)
+
 
 def event_stateChange(vmID,accContext,oldState,newState):
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
