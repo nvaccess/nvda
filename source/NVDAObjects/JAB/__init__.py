@@ -89,7 +89,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
-		return textInfo.caretIndex
+		return max(textInfo.caretIndex,0)
 
 	def _setCaretOffset(self,offset):
 		speech.speakMessage("%s"%offset)
@@ -97,12 +97,8 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getSelectionOffsets(self):
 		info=self.obj.jabContext.getAccessibleTextSelectionInfo()
-		start=info.selectionStartIndex
-		end=info.selectionEndIndex
-		if start<0:
-			start=0
-		if end<0:
-			end=0
+		start=max(info.selectionStartIndex,0)
+		end=max(info.selectionEndIndex,0)
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
@@ -135,7 +131,7 @@ class JABTextInfo(NVDAObjectTextInfo):
 		#If start and end are 0, then something is broken in java
 		if start==0 and end==0:
 			return super(JABTextInfo,self)._getLineOffsets(offset)
-		#Java gives end end as the last character, not one past the last character
+		#Java gives end as the last character, not one past the last character
 		end=end+1
 		return [start,end]
 
