@@ -427,10 +427,10 @@ class appModule(appModuleHandler.appModule):
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
-		formattedText=info.getFormattedText(includes=set([controlTypes.ROLE_FONTNAME,controlTypes.ROLE_FONTSIZE,controlTypes.ROLE_BOLD,controlTypes.ROLE_ITALIC,controlTypes.ROLE_UNDERLINE]))
+		formattedText=info.getFormattedText(includes=set([controlTypes.ROLE_STYLE,controlTypes.ROLE_FONTNAME,controlTypes.ROLE_FONTSIZE,controlTypes.ROLE_BOLD,controlTypes.ROLE_ITALIC,controlTypes.ROLE_UNDERLINE]))
 		for item in formattedText:
 			if isinstance(item,textHandler.FormatCommand):
-				if item.cmd in (textHandler.FORMAT_CMD_ON,textHandler.FORMAT_CMD_SINGLETON):
+				if item.cmd in (textHandler.FORMAT_CMD_SWITCHON,textHandler.FORMAT_CMD_CHANGE):
 					speech.speakMessage("%s %s"%(controlTypes.speechRoleLabels[item.format.role],item.format.value)) 
 
 

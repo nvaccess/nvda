@@ -27,9 +27,11 @@ def isFormatEnabled(role,includes=set(),excludes=set()):
    
 #Field stuff
 
-FORMAT_CMD_ON=1
-FORMAT_CMD_OFF=2
-FORMAT_CMD_SINGLETON=3
+FORMAT_CMD_CHANGE=0
+FORMAT_CMD_INFIELD=1
+FORMAT_CMD_OUTOFFIELD=2
+FORMAT_CMD_SWITCHON=3
+FORMAT_CMD_SWITCHOFF=4
 
 class FormatCommand(object):
 	"""A container to hold a format, and also communicates whether the format is once off, is being turned on, or is being turned off.

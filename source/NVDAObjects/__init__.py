@@ -103,7 +103,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		if textHandler.isFormatEnabled(controlTypes.ROLE_LINE,includes=includes,excludes=excludes):
 			lineNum=self._getLineNumFromOffset(offset)
 			if lineNum>=0:
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SINGLETON,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
 				formats.append(f)
 				lineStart,end=self._getLineOffsets(offset)
 		return (formats,offset,end)
@@ -197,8 +197,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 					l.append(item)
 				curFormatKeys[itemKey]=item
 			for itemKey,item in lastFormatKeys.items():
-				if item.cmd==textHandler.FORMAT_CMD_ON and itemKey not in curFormatKeys:
-					l.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_OFF,item.format))
+				if item.cmd==textHandler.FORMAT_CMD_SWITCHON and itemKey not in curFormatKeys:
+					l.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,item.format))
 			text=self._getTextRange(start,end)
 			if len(l)>0 and isinstance(l[-1],basestring):
 				text="%s%s"%(l[-1],text)

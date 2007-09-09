@@ -370,26 +370,38 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 	for item in formattedText:
 		if isinstance(item,textHandler.FormatCommand):
 			itemKey="%d, %s, %s"%(item.format.role,item.format.value,item.format.uniqueID)
-			if item.cmd==textHandler.FORMAT_CMD_SINGLETON:
+			if item.cmd==textHandler.FORMAT_CMD_CHANGE:
 				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
 					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
 					speakMessage(speechText)
 				if checkFormats:
 					initialSpokenFormats[itemKey]=item
-			elif item.cmd==textHandler.FORMAT_CMD_ON:
+			elif item.cmd==textHandler.FORMAT_CMD_INFIELD:
+				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
+					speechText=" ".join([_("in"),controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
+					speakMessage(speechText)
+				if checkFormats:
+					initialSpokenFormats[itemKey]=item
+			elif item.cmd==textHandler.FORMAT_CMD_OUTOFFIELD:
+				speechText=" ".join([_("out of"),controlTypes.speechRoleLabels.get(item.format.role,""),])
+				speakMessage(speechText)
+			elif item.cmd==textHandler.FORMAT_CMD_SWITCHON:
 				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
 					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value,_("on")])
 					speakMessage(speechText)
 				if checkFormats:
 					initialSpokenFormats[itemKey]=item
-			elif item.cmd==textHandler.FORMAT_CMD_OFF:
+			elif item.cmd==textHandler.FORMAT_CMD_SWITCHOFF:
 				speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),_("off")])
 				speakMessage(speechText)
 		elif isinstance(item,basestring):
 			checkFormats=False
 			for oldItemKey,oldItem in textInfo.obj._lastInitialSpokenFormats.items():
-				if oldItem.cmd==textHandler.FORMAT_CMD_ON and oldItemKey not in initialSpokenFormats:
+				if oldItem.cmd==textHandler.FORMAT_CMD_SWITCHON and oldItemKey not in initialSpokenFormats:
 					speechText=" ".join([controlTypes.speechRoleLabels.get(oldItem.format.role,""),_("off")])
+					speakMessage(speechText)
+				if oldItem.cmd==textHandler.FORMAT_CMD_INFIELD and oldItemKey not in initialSpokenFormats:
+					speechText=" ".join([_("out of"),controlTypes.speechRoleLabels.get(oldItem.format.role,"")])
 					speakMessage(speechText)
 			if len(item)>1 or not handleSymbols:
 				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
