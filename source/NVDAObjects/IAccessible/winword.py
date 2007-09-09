@@ -62,6 +62,7 @@ NVDAUnitsToWordUnits={
 	textHandler.UNIT_SENTENCE:wdSentence,
 	textHandler.UNIT_PARAGRAPH:wdParagraph,
 	textHandler.UNIT_TABLE:wdTable,
+	textHandler.UNIT_CELL:wdCell,
 	textHandler.UNIT_ROW:wdRow,
 	textHandler.UNIT_COLUMN:wdColumn,
 	textHandler.UNIT_STORY:wdStory,
@@ -105,10 +106,10 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 	def expand(self,unit):
 		if unit==textHandler.UNIT_LINE and self.basePosition not in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
 			unit=textHandler.UNIT_SENTENCE
-		if unit in [textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_SENTENCE,textHandler.UNIT_PARAGRAPH,textHandler.UNIT_STORY,textHandler.UNIT_READINGCHUNK]:
-			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
-		elif unit==textHandler.UNIT_LINE:
+		if unit==textHandler.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
+		elif unit in NVDAUnitsToWordUnits:
+			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 
@@ -123,7 +124,6 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			return True
 		else:
 			return False
-
 
 	def collapse(self,end=False):
 		a=self._rangeObj.Start
@@ -141,6 +141,87 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 
 	def _get_text(self):
 		return self._rangeObj.text
+
+	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
+		fieldList=[]
+		curRangeObj=self._rangeObj.Duplicate
+		curRangeObj.Collapse()
+		startLimit=self._rangeObj.Start
+		endLimit=self._rangeObj.End
+		lastStyle=lastFontName=lastFontSize=lastBold=lastItalic=lastUnderline=lastTable=lastRow=lastColumn=None
+		while curRangeObj.Start>=startLimit and curRangeObj.Start<endLimit:
+			if textHandler.isFormatEnabled(controlTypes.ROLE_TABLE,includes=includes,excludes=excludes):
+				table=curRangeObj.Information(wdWithInTable)
+				if table and not lastTable:
+					value=_("with %s columns and %s rows")%(curRangeObj.Information(wdMaximumNumberOfColumns),curRangeObj.Information(wdMaximumNumberOfRows))
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_INFIELD,textHandler.Format(role=controlTypes.ROLE_TABLE,value=value)))
+				elif not table and lastTable:
+	 				fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_OUTOFFIELD,textHandler.Format(role=controlTypes.ROLE_TABLE)))
+				lastTable=table
+				if table:
+					row=str(curRangeObj.Information(wdStartOfRangeRowNumber))
+					if row!=lastRow:
+						fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_TABLEROW,value=row)))
+					lastRow=row
+					column=str(curRangeObj.Information(wdStartOfRangeColumnNumber))
+					if column!=lastColumn:
+						fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_TABLECOLUMN,value=column)))
+					lastColumn=column
+			curFont=curRangeObj.font
+			curStyle=curRangeObj.style
+			if textHandler.isFormatEnabled(controlTypes.ROLE_STYLE,includes=includes,excludes=excludes):
+				style=curStyle.nameLocal
+				if style!=lastStyle:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_STYLE,value=style)))
+					lastStyle=style
+			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
+				fontName=curFont.name
+				if fontName!=lastFontName:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=fontName)))
+					lastFontName=fontName
+			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
+				fontSize=str(curFont.size)
+				if fontSize!=lastFontSize:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=fontSize)))
+					lastFontSize=fontSize
+			if textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
+				bold=curFont.bold
+				if bold!=lastBold and bold:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD)))
+				elif lastBold is not None and bold!=lastBold and not bold:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_BOLD)))
+				lastBold=bold
+			if textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
+				italic=curFont.italic
+				if italic!=lastItalic and italic:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC)))
+				elif lastItalic is not None and italic!=lastItalic and not italic:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_ITALIC)))
+				lastItalic=italic
+			if textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
+				underline=curFont.UNDERLINE
+				if underline!=lastUnderline and underline:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE)))
+				elif lastUnderline is not None and underline!=lastUnderline and not underline:
+					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_UNDERLINE)))
+				lastUnderline=underline
+			if not searchRange:
+				break
+			tempStart=curRangeObj.Start
+			tempEnd=curRangeObj.End
+			curRangeObj.Expand(wdWord)
+			curRangeObj.Start=max(startLimit,curRangeObj.Start)
+			curRangeObj.End=min(endLimit,curRangeObj.End)
+			fieldList.append(curRangeObj.text)
+			curRangeObj.Start=tempStart
+			curRangeObj.End=tempEnd
+			if curRangeObj.Move(wdWord,1)<1:
+				break
+		if curRangeObj.End<endLimit:
+			curRangeObj.Start=curRangeObj.End
+			curRangeObj.End=endLimit
+			fieldList.append(curRangeObj.text)
+		return fieldList
 
 	def moveByUnit(self,unit,num,start=True,end=True):
 		if unit==textHandler.UNIT_LINE:
@@ -190,6 +271,70 @@ class WordDocument(IAccessible):
 	def destroyObjectModel(self,om):
 		pass
 
+	def script_nextRow(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		if not info._rangeObj.Information(wdWithInTable):
+ 			speech.speakMessage(_("not in table"))
+		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)-1
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		if rowIndex<lastRowIndex:
+			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex+1].range
+			info.collapse()
+			info.updateCaret()
+		else:
+			speech.speakMessage(_("bottom of column"))
+		info.expand(textHandler.UNIT_CELL)
+		speech.speakFormattedText(info)
+
+	def script_previousRow(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		if not info._rangeObj.Information(wdWithInTable):
+ 			speech.speakMessage(_("not in table"))
+		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)-1
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		if rowIndex>0:
+			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex-1].range
+			info.collapse()
+			info.updateCaret()
+		else:
+			speech.speakMessage(_("top of column"))
+		info.expand(textHandler.UNIT_CELL)
+		speech.speakFormattedText(info)
+
+	def script_nextColumn(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		if not info._rangeObj.Information(wdWithInTable):
+ 			speech.speakMessage(_("not in table"))
+		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)-1
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		if columnIndex<lastColumnIndex:
+			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex+1].cells[rowIndex].range
+			info.collapse()
+			info.updateCaret()
+		else:
+			speech.speakMessage(_("end of row"))
+		info.expand(textHandler.UNIT_CELL)
+		speech.speakFormattedText(info)
+
+	def script_previousColumn(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		if not info._rangeObj.Information(wdWithInTable):
+ 			speech.speakMessage(_("not in table"))
+		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)-1
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		if columnIndex>0:
+			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex-1].cells[rowIndex].range
+			info.collapse()
+			info.updateCaret()
+		else:
+			speech.speakMessage(_("beginning of row"))
+		info.expand(textHandler.UNIT_CELL)
+		speech.speakFormattedText(info)
+
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
@@ -215,6 +360,10 @@ class WordDocument(IAccessible):
 	("control+shift+extendedEnd","changeSelection"),
 	("ExtendedDelete","delete"),
 	("Back","backspace"),
+	("control+alt+extendedUp","previousRow"),
+	("control+alt+extendedDown","nextRow"),
+	("control+alt+extendedLeft","previousColumn"),
+	("control+alt+extendedRight","nextColumn"),
 ]]
 
 WordDocument.TextInfo=WordDocumentTextInfo
