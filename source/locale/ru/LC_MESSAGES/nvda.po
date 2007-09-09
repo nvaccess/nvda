@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 07-08-31 12:17+Russian Daylight Time\n"
-"PO-Revision-Date: 2007-09-02 21:00+Moscow\n"
+"PO-Revision-Date: 2007-09-09 21:00+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -67,7 +67,7 @@ msgstr "%s элементов"
 msgid "%d items"
 msgstr "%d элементов"
 
-#: NVDAObjects\IAccessible\edit.py:399 speech.py:442
+#: NVDAObjects\IAccessible\edit.py:428 speech.py:454
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543
 #: textBuffer.py:549
 msgid "selected %s"
@@ -120,25 +120,52 @@ msgstr "Подчёркнутый"
 msgid "%d of %d"
 msgstr "%d из %d"
 
-#: NVDAObjects\__init__.py:590 NVDAObjects\__init__.py:601
-#: NVDAObjects\__init__.py:635 textBuffer.py:364
+#: NVDAObjects\IAccessible\winword.py:156
+msgid "with %s columns and %s rows"
+msgstr "из %d столбцов и %d строк"
+
+#: NVDAObjects\IAccessible\winword.py:277
+#: NVDAObjects\IAccessible\winword.py:293
+#: NVDAObjects\IAccessible\winword.py:309
+#: NVDAObjects\IAccessible\winword.py:325
+msgid "not in table"
+msgstr "Вне таблицы"
+
+#: NVDAObjects\IAccessible\winword.py:286
+msgid "bottom of column"
+msgstr "Конец столбца"
+
+#: NVDAObjects\IAccessible\winword.py:302
+msgid "top of column"
+msgstr "Начало Столбца"
+
+#: NVDAObjects\IAccessible\winword.py:318
+msgid "end of row"
+msgstr "Конец строки"
+
+#: NVDAObjects\IAccessible\winword.py:334
+msgid "beginning of row"
+msgstr "Начало строки"
+
+#: NVDAObjects\__init__.py:602 NVDAObjects\__init__.py:613
+#: NVDAObjects\__init__.py:647 textBuffer.py:364
 #: textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
 #: virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "Верхний"
 
-#: NVDAObjects\__init__.py:617 NVDAObjects\__init__.py:624
-#: NVDAObjects\__init__.py:651 textBuffer.py:369
+#: NVDAObjects\__init__.py:629 NVDAObjects\__init__.py:636
+#: NVDAObjects\__init__.py:663 textBuffer.py:369
 #: textBuffer.py:382 textBuffer.py:403 textBuffer.py:424
 #: virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "Нижний"
 
-#: NVDAObjects\__init__.py:660 NVDAObjects\__init__.py:671
+#: NVDAObjects\__init__.py:672 NVDAObjects\__init__.py:683
 msgid "left"
 msgstr "Левый"
 
-#: NVDAObjects\__init__.py:693 NVDAObjects\__init__.py:709
+#: NVDAObjects\__init__.py:705 NVDAObjects\__init__.py:721
 msgid "right"
 msgstr "Правый"
 
@@ -173,22 +200,22 @@ msgstr "Пропуск виртуального буфера"
 #: api.py:147 appModules\_default.py:48
 #: appModules\_default.py:101 appModules\_default.py:111
 #: appModules\_default.py:121 appModules\_default.py:131
-#: appModules\_default.py:381 appModules\_default.py:455
-#: appModules\_default.py:491 appModules\_default.py:501
-#: appModules\_default.py:511 appModules\_default.py:521
+#: appModules\_default.py:384 appModules\_default.py:458
+#: appModules\_default.py:494 appModules\_default.py:504
+#: appModules\_default.py:514 appModules\_default.py:524
 #: keyboardHandler.py:48 keyboardHandler.py:50
-#: keyboardHandler.py:52 speech.py:386 speech.py:392
+#: keyboardHandler.py:52 speech.py:395 speech.py:401
 msgid "off"
 msgstr "Выключено"
 
 #: api.py:150 appModules\_default.py:45
 #: appModules\_default.py:104 appModules\_default.py:114
 #: appModules\_default.py:124 appModules\_default.py:134
-#: appModules\_default.py:458 appModules\_default.py:494
-#: appModules\_default.py:504 appModules\_default.py:514
-#: appModules\_default.py:524 keyboardHandler.py:48
+#: appModules\_default.py:461 appModules\_default.py:497
+#: appModules\_default.py:507 appModules\_default.py:517
+#: appModules\_default.py:527 keyboardHandler.py:48
 #: keyboardHandler.py:50 keyboardHandler.py:52
-#: speech.py:381
+#: speech.py:390
 msgid "on"
 msgstr "Включено"
 
@@ -309,95 +336,91 @@ msgstr ""
 msgid "Move mouse to navigator"
 msgstr "Привести мышь к навигатору"
 
-#: appModules\_default.py:142
+#: appModules\_default.py:145
+msgid "object has no location"
+msgstr "Нет расположения объекта"
+
+#: appModules\_default.py:148
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr ""
 "Перемещает указатель мыши к текущему "
 "объекту навигатора"
 
-#: appModules\_default.py:145
+#: appModules\_default.py:151
 msgid "Move navigator object to mouse"
 msgstr "Привести навигатор к мыши"
 
-#: appModules\_default.py:151
-msgid ""
-"Sets the navigator object to the object that is directly under the mouse "
-"pointer"
-msgstr ""
-"Устанавливает навигатор на объект, нах"
-"одящийся под указателем мыши"
-
-#: appModules\_default.py:156 appModules\_default.py:165
-#: appModules\_default.py:185 appModules\_default.py:198
-#: appModules\_default.py:211 appModules\_default.py:224
-#: appModules\_default.py:237 appModules\_default.py:260
-#: appModules\_default.py:283 appModules\_default.py:292
-#: appModules\_default.py:556
+#: appModules\_default.py:159 appModules\_default.py:168
+#: appModules\_default.py:188 appModules\_default.py:201
+#: appModules\_default.py:214 appModules\_default.py:227
+#: appModules\_default.py:240 appModules\_default.py:263
+#: appModules\_default.py:286 appModules\_default.py:295
+#: appModules\_default.py:559
 msgid "no navigator object"
 msgstr "Нет объекта навигатора"
 
-#: appModules\_default.py:160
+#: appModules\_default.py:163
 msgid "Reports the current navigator object"
 msgstr "Читает текущий объект навигатора"
 
-#: appModules\_default.py:168
+#: appModules\_default.py:171
 msgid "No location information for navigator object"
 msgstr ""
 "Нет информации о расположении объекта "
 "навигатора"
 
-#: appModules\_default.py:170
+#: appModules\_default.py:173
 msgid "%d wide by %d high, located %d from left and %d from top"
 msgstr ""
 "%d Ширина %d Высота, Расположено %d слева %d "
 "сверху"
 
-#: appModules\_default.py:171
+#: appModules\_default.py:174
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr ""
 "Сообщает высоту, ширину и расположение "
 "объекта навигатора"
 
-#: appModules\_default.py:176 appModules\_default.py:440
+#: appModules\_default.py:179 appModules\_default.py:443
 msgid "no focus"
 msgstr "Нет фокуса"
 
-#: appModules\_default.py:178
+#: appModules\_default.py:181
 msgid "move to focus"
 msgstr "Привести к фокусу"
 
-#: appModules\_default.py:180
+#: appModules\_default.py:183
 msgid "Sets the navigator object to the current focus"
 msgstr ""
 "Устанавливает объект навигатора на фокус"
 
-#: appModules\_default.py:192
+#: appModules\_default.py:195
 msgid "No parents"
 msgstr "Нет родительского"
 
-#: appModules\_default.py:193
+#: appModules\_default.py:196
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on."
 msgstr ""
 "Приводит навигатор к родительскому "
 "объекту, относительно текущего"
 
-#: appModules\_default.py:205
+#: appModules\_default.py:208
 msgid "No next"
 msgstr "Нет следующего"
 
-#: appModules\_default.py:206
+#: appModules\_default.py:209
 msgid ""
 "Sets the navigator object to the next object to the one it is currently on"
 msgstr ""
 "устанавливает навигатор на следующий "
 "объект, относительно текущего"
 
-#: appModules\_default.py:218
+#: appModules\_default.py:221
 msgid "No previous"
 msgstr "Нет предыдущего"
 
-#: appModules\_default.py:219
+#: appModules\_default.py:222
 msgid ""
 "Sets the navigator object to the previous object to the one it is currently "
 "on"
@@ -405,11 +428,11 @@ msgstr ""
 "Устанавливает навигатор на предыдущий "
 "объект, относительно текущего"
 
-#: appModules\_default.py:231
+#: appModules\_default.py:234
 msgid "No children"
 msgstr "Нет дочернего"
 
-#: appModules\_default.py:232
+#: appModules\_default.py:235
 msgid ""
 "Sets the navigator object to the first child object to the one it is "
 "currently on"
@@ -417,27 +440,27 @@ msgstr ""
 "Устанавливает навигатор на первый "
 "дочерний объект, относительно текущего"
 
-#: appModules\_default.py:254
+#: appModules\_default.py:257
 msgid "end of flow"
 msgstr "Конец потока"
 
-#: appModules\_default.py:255
+#: appModules\_default.py:258
 msgid "Sets the navigator object to the object this object flows to."
 msgstr ""
 "Устанавливает навигатор на объект потока"
 ", к которому пренадлежит текущий объект"
 
-#: appModules\_default.py:277
+#: appModules\_default.py:280
 msgid "Beginning of flow"
 msgstr "Начало потока"
 
-#: appModules\_default.py:278
+#: appModules\_default.py:281
 msgid "Sets the navigator object to the object this object flows from."
 msgstr ""
 "Устанавливает навигатор на объект, "
 "порождённый потоком текущего объекта"
 
-#: appModules\_default.py:286
+#: appModules\_default.py:289
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -446,7 +469,7 @@ msgstr ""
 "его объекта навигатора, например,нажимает"
 " его, если это кнопка"
 
-#: appModules\_default.py:299
+#: appModules\_default.py:302
 msgid ""
 "Reports where the current navigator object is by reporting each of its "
 "ancestors"
@@ -455,20 +478,20 @@ msgstr ""
 "навигатора в иерархии, озвучивая его "
 "родительские объекты"
 
-#: appModules\_default.py:304
+#: appModules\_default.py:307
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на первую "
 "строку объекта навигатора"
 
-#: appModules\_default.py:309
+#: appModules\_default.py:312
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущую строку объекта навигатора"
 
-#: appModules\_default.py:314
+#: appModules\_default.py:317
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated"
@@ -476,28 +499,28 @@ msgstr ""
 "читает строку под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:319
+#: appModules\_default.py:322
 msgid ""
 "Moves the review cursor to the next line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующую строку объекта навигатора"
 
-#: appModules\_default.py:324
+#: appModules\_default.py:327
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "последнюю строку объекта навигатора"
 
-#: appModules\_default.py:329
+#: appModules\_default.py:332
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущее слово объекта навигатора"
 
-#: appModules\_default.py:334
+#: appModules\_default.py:337
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated"
@@ -505,14 +528,14 @@ msgstr ""
 "читает слово под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:339
+#: appModules\_default.py:342
 msgid ""
 "Moves the review cursor to the next word of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующее слово объекта навигатора"
 
-#: appModules\_default.py:344
+#: appModules\_default.py:347
 msgid ""
 "Moves the review cursor to the start of the line where it is situated, in "
 "the current navigator object"
@@ -520,7 +543,7 @@ msgstr ""
 "Перемещает просмотровый курсор к началу "
 "текущей строки объекта навигатора"
 
-#: appModules\_default.py:349
+#: appModules\_default.py:352
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object"
@@ -528,7 +551,7 @@ msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущий символ объекта навигатора"
 
-#: appModules\_default.py:354
+#: appModules\_default.py:357
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated"
@@ -536,14 +559,14 @@ msgstr ""
 "Читает символ под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:359
+#: appModules\_default.py:362
 msgid ""
 "Moves the review cursor to the next character of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующий символ объекта навигатора"
 
-#: appModules\_default.py:364
+#: appModules\_default.py:367
 msgid ""
 "Moves the review cursor to the end of the line where it is situated, in the "
 "current navigator object"
@@ -551,7 +574,7 @@ msgstr ""
 "Перемещает просмотровый курсор к концу "
 "текущей строки объекта навигатора"
 
-#: appModules\_default.py:369
+#: appModules\_default.py:372
 msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
@@ -560,7 +583,7 @@ msgstr ""
 "системному курсору текущего объекта "
 "навигатора"
 
-#: appModules\_default.py:374
+#: appModules\_default.py:377
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -569,19 +592,19 @@ msgstr ""
 "просмотровому курсору текущего объекта "
 "навигатора"
 
-#: appModules\_default.py:383
+#: appModules\_default.py:386
 msgid "beeps"
 msgstr "Сигналы"
 
-#: appModules\_default.py:385
+#: appModules\_default.py:388
 msgid "talk"
 msgstr "Речь"
 
-#: appModules\_default.py:386
+#: appModules\_default.py:389
 msgid "speech mode %s"
 msgstr "Режим озвучивания %s"
 
-#: appModules\_default.py:388
+#: appModules\_default.py:391
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -595,7 +618,7 @@ msgstr ""
 "режиме Речь NVDA озвучивает события активны"
 "м синтезатором"
 
-#: appModules\_default.py:392
+#: appModules\_default.py:395
 msgid ""
 "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
 "straight through the current virtualBuffer, allowing you to interact with a "
@@ -607,15 +630,15 @@ msgstr ""
 "передаются, непосредственно, элементам "
 "управления приложения"
 
-#: appModules\_default.py:396
+#: appModules\_default.py:399
 msgid "Quits NVDA!"
 msgstr "Завершает NVDA!"
 
-#: appModules\_default.py:400
+#: appModules\_default.py:403
 msgid "Shows the NVDA interface window"
 msgstr "Вызывает окно интерфейса NVDA"
 
-#: appModules\_default.py:406
+#: appModules\_default.py:409
 msgid ""
 "reads from review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -623,27 +646,27 @@ msgstr ""
 "Читает от просмотрового курсора до конца "
 "текста, перемещая просмотровый курсор"
 
-#: appModules\_default.py:411
+#: appModules\_default.py:414
 msgid "reads from navigator object "
 msgstr ""
 "Читает от системного курсора до конца "
 "текста, перемещая системный курсор"
 
-#: appModules\_default.py:421
+#: appModules\_default.py:424
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr ""
 "Читает от системного курсора до конца "
 "текста, перемещая системный курсор"
 
-#: appModules\_default.py:441
+#: appModules\_default.py:444
 msgid "reports the object with focus"
 msgstr "читает объект в фокусе"
 
-#: appModules\_default.py:447
+#: appModules\_default.py:450
 msgid "no status bar found"
 msgstr "Не удалось найти строку состояния"
 
-#: appModules\_default.py:451
+#: appModules\_default.py:454
 msgid ""
 "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr ""
@@ -651,43 +674,43 @@ msgstr ""
 "приложения и приводит туда просмотровый "
 "курсор"
 
-#: appModules\_default.py:460
+#: appModules\_default.py:463
 msgid "Report object under mouse"
 msgstr "читать объект под указателем мыши"
 
-#: appModules\_default.py:461
+#: appModules\_default.py:464
 msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr ""
 "Переключает чтение объекта под указател"
 "ем мыши"
 
-#: appModules\_default.py:467
+#: appModules\_default.py:470
 msgid "Reports the title of the current application or foreground window"
 msgstr ""
 "читает заголовок текущего приложения или "
 "окна на переднем плане"
 
-#: appModules\_default.py:474
+#: appModules\_default.py:477
 msgid "speaks the current foreground object"
 msgstr "читает объект на переднем плане"
 
-#: appModules\_default.py:480
+#: appModules\_default.py:483
 msgid "Control ID: %s"
 msgstr "Контрол ID: %s"
 
-#: appModules\_default.py:481
+#: appModules\_default.py:484
 msgid "Class: %s"
 msgstr "Класс: %s"
 
-#: appModules\_default.py:484
+#: appModules\_default.py:487
 msgid "internal text: %s"
 msgstr "Внутренний текст: %s"
 
-#: appModules\_default.py:485
+#: appModules\_default.py:488
 msgid "text: %s"
 msgstr "Текст: %s"
 
-#: appModules\_default.py:487
+#: appModules\_default.py:490
 msgid ""
 "reports some info about the current navigator object, mainly useful for "
 "developers: control id, class and internal text"
@@ -697,24 +720,24 @@ msgstr ""
 "текст, используется, главным образом, "
 "разработчиками"
 
-#: appModules\_default.py:496
+#: appModules\_default.py:499
 msgid "Beep on progress bar updates"
 msgstr ""
 "Сигналы обновления индикаторов "
 "выполнения"
 
-#: appModules\_default.py:497
+#: appModules\_default.py:500
 msgid "Toggles on and off the beeping on progress bar updates"
 msgstr ""
 "Включает или выключает сигналы "
 "обновления индикаторов выполнения"
 
-#: appModules\_default.py:506
+#: appModules\_default.py:509
 msgid "report dynamic content changes"
 msgstr ""
 "Читать изменения динамического контента"
 
-#: appModules\_default.py:507
+#: appModules\_default.py:510
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -723,13 +746,13 @@ msgstr ""
 "кого контента, например, озвучивание "
 "нового текста в DOS консолях"
 
-#: appModules\_default.py:516
+#: appModules\_default.py:519
 msgid "caret moves review cursor"
 msgstr ""
 "Привязка просмотрового курсора к "
 "системному"
 
-#: appModules\_default.py:517
+#: appModules\_default.py:520
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
@@ -737,45 +760,45 @@ msgstr ""
 "просмотрового курсора во время движения "
 "системного курсора"
 
-#: appModules\_default.py:526
+#: appModules\_default.py:529
 msgid "focus moves navigator object"
 msgstr "Привязка навигатора к фокусу"
 
-#: appModules\_default.py:527
+#: appModules\_default.py:530
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Включает или выключает перемещение "
 "навигатора при смене фокуса"
 
-#: appModules\_default.py:539
+#: appModules\_default.py:542
 msgid "no system battery"
 msgstr "Нет системной батареи"
 
-#: appModules\_default.py:541
+#: appModules\_default.py:544
 msgid "%d percent"
 msgstr "%d процент"
 
-#: appModules\_default.py:542
+#: appModules\_default.py:545
 msgid "AC power on"
 msgstr "Подключено питание от электросети"
 
-#: appModules\_default.py:544
+#: appModules\_default.py:547
 msgid "%d hours and %d minutes remaining"
 msgstr "Осталось %d часов и %d минут"
 
-#: appModules\_default.py:546
+#: appModules\_default.py:549
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Сообщает состояние батареи и время, "
 "оставшееся до разрядки, при отключённом "
 "питании от электросети"
 
-#: appModules\_default.py:550
+#: appModules\_default.py:553
 msgid "Pass next key through"
 msgstr "Пропуск клавиши"
 
-#: appModules\_default.py:551
+#: appModules\_default.py:554
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -784,11 +807,11 @@ msgstr ""
 "клавиш не будет отрабатываться NVDA, а будет"
 " передано, непосредственно, Windows."
 
-#: appModules\_default.py:577
+#: appModules\_default.py:580
 msgid "%s copyed to clipboard"
 msgstr "%s скопировано в буфер обмена"
 
-#: appModules\_default.py:579
+#: appModules\_default.py:582
 msgid "Copies name and value of current navigator object to the clipboard"
 msgstr ""
 "Копирует имя и значение текущего объекта "
@@ -2335,10 +2358,9 @@ msgstr "Описание %s"
 msgid "Location: %s"
 msgstr "Размещение %s"
 
-#: mouseHandler.py:135
-#, fuzzy
+#: mouseHandler.py:138
 msgid "%s cursor"
-msgstr "Курсор"
+msgstr "%s курсор"
 
 #: sayAllHandler.py:147
 msgid "end of text"
@@ -2356,12 +2378,20 @@ msgstr "Содержит %s"
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:448 textBuffer.py:545 textBuffer.py:547
+#: speech.py:381
+msgid "in"
+msgstr "в"
+
+#: speech.py:386 speech.py:404
+msgid "out of"
+msgstr "вне"
+
+#: speech.py:460 textBuffer.py:545 textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "Не выбрано %s"
 
-#: speech.py:450
+#: speech.py:462
 msgid "selection deleted"
 msgstr "Выборка удалена"
 
@@ -2731,3 +2761,4 @@ msgstr "l=Быстрая клавиша списка"
 #: virtualBuffers\__init__.py:514 virtualBuffers\__init__.py:515
 msgid "i=listItemQuickKey"
 msgstr "i=Быстрая клавиша элемента списка"
+
