@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import time
-import pyHook
 import debug
 import winUser
 import queueHandler
