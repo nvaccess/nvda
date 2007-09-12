@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1166\n"
+"Project-Id-Version: r1182\n"
 "POT-Creation-Date: 2007-08-14 11:09+Kesäaika\n"
-"PO-Revision-Date: 2007-09-03 10:18+0300\n"
+"PO-Revision-Date: 2007-09-12 15:25+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr "%s kohdetta"
 msgid "%d items"
 msgstr "%d kohdetta"
 
-#: NVDAObjects\IAccessible\edit.py:399 speech.py:442 textBuffer.py:537
+#: NVDAObjects\IAccessible\edit.py:428 speech.py:454 textBuffer.py:537
 #: textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -112,27 +112,54 @@ msgid "underline"
 msgstr "alleviivaus"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:259
+#: NVDAObjects\JAB\__init__.py:256
 msgid "%d of %d"
 msgstr "%d kautta %d"
 
-#: NVDAObjects\__init__.py:590 NVDAObjects\__init__.py:601
-#: NVDAObjects\__init__.py:635 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\IAccessible\winword.py:156
+msgid "with %s columns and %s rows"
+msgstr "jossa %s saraketta ja %s riviä"
+
+#: NVDAObjects\IAccessible\winword.py:277
+#: NVDAObjects\IAccessible\winword.py:293
+#: NVDAObjects\IAccessible\winword.py:309
+#: NVDAObjects\IAccessible\winword.py:325
+msgid "not in table"
+msgstr "ei taulukossa"
+
+#: NVDAObjects\IAccessible\winword.py:286
+msgid "bottom of column"
+msgstr "sarakkeen alareuna"
+
+#: NVDAObjects\IAccessible\winword.py:302
+msgid "top of column"
+msgstr "sarakkeen yläreuna"
+
+#: NVDAObjects\IAccessible\winword.py:318
+msgid "end of row"
+msgstr "rivin loppu"
+
+#: NVDAObjects\IAccessible\winword.py:334
+msgid "beginning of row"
+msgstr "rivin alku"
+
+#: NVDAObjects\__init__.py:602 NVDAObjects\__init__.py:613
+#: NVDAObjects\__init__.py:647 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "yläreuna"
 
-#: NVDAObjects\__init__.py:617 NVDAObjects\__init__.py:624
-#: NVDAObjects\__init__.py:651 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:629 NVDAObjects\__init__.py:636
+#: NVDAObjects\__init__.py:663 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "alareuna"
 
-#: NVDAObjects\__init__.py:660 NVDAObjects\__init__.py:671
+#: NVDAObjects\__init__.py:672 NVDAObjects\__init__.py:683
 msgid "left"
 msgstr "vasen"
 
-#: NVDAObjects\__init__.py:693 NVDAObjects\__init__.py:709
+#: NVDAObjects\__init__.py:705 NVDAObjects\__init__.py:721
 msgid "right"
 msgstr "oikea"
 
@@ -170,7 +197,7 @@ msgstr "näennäispuskurin läpivienti"
 #: appModules\_default.py:458 appModules\_default.py:494
 #: appModules\_default.py:504 appModules\_default.py:514
 #: appModules\_default.py:524 keyboardHandler.py:48 keyboardHandler.py:50
-#: keyboardHandler.py:52 speech.py:386 speech.py:392
+#: keyboardHandler.py:52 speech.py:395 speech.py:401
 msgid "off"
 msgstr "pois"
 
@@ -179,7 +206,7 @@ msgstr "pois"
 #: appModules\_default.py:134 appModules\_default.py:461
 #: appModules\_default.py:497 appModules\_default.py:507
 #: appModules\_default.py:517 appModules\_default.py:527 keyboardHandler.py:48
-#: keyboardHandler.py:50 keyboardHandler.py:52 speech.py:381
+#: keyboardHandler.py:50 keyboardHandler.py:52 speech.py:390
 msgid "on"
 msgstr "päällä"
 
@@ -352,7 +379,9 @@ msgstr "Ei seuraavaa"
 #: appModules\_default.py:209
 msgid ""
 "Sets the navigator object to the next object to the one it is currently on"
-msgstr "Asettaa navigointiobjektin nykyisen objektin viereiseen objektiin"
+msgstr ""
+"Asettaa navigointiobjektin nykyisestä objektista seuraavana olevaan "
+"objektiin"
 
 #: appModules\_default.py:221
 msgid "No previous"
@@ -613,7 +642,7 @@ msgstr "Lukee nykyisen edusobjektin"
 
 #: appModules\_default.py:483
 msgid "Control ID: %s"
-msgstr "Säädintunnus: %s"
+msgstr "Ohjaintunnus: %s"
 
 #: appModules\_default.py:484
 msgid "Class: %s"
@@ -658,7 +687,7 @@ msgstr ""
 
 #: appModules\_default.py:519
 msgid "caret moves review cursor"
-msgstr "Järjestelmäkohdistin siirtää tarkastelukohdistinta"
+msgstr "järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
 #: appModules\_default.py:520
 msgid ""
@@ -2188,7 +2217,7 @@ msgstr "Kuvaus: %s"
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: mouseHandler.py:140
+#: mouseHandler.py:138
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
@@ -2208,11 +2237,19 @@ msgstr "sisältää %s"
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:448 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
+#: speech.py:381
+msgid "in"
+msgstr "alkaa"
+
+#: speech.py:386 speech.py:404
+msgid "out of"
+msgstr "loppui"
+
+#: speech.py:460 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
 msgid "unselected %s"
 msgstr "ei valittu %s"
 
-#: speech.py:450
+#: speech.py:462
 msgid "selection deleted"
 msgstr "valinta poistettu"
 
