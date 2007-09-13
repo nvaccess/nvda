@@ -855,6 +855,7 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.RichEdit20A",
 	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20A",
 	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
