@@ -1,4 +1,4 @@
-# Vizuális asztal nélküli hozzáférés magyar fordítása
+# NVDA.PO magyar fordítása
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
 #
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2007-08-05 12:04:23 -0500\n"
+"PO-Revision-Date: 2007-09-13 4:05:23 -0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 msgid "window"
 msgstr"ablak"
 
-#: IAccessibleHandler.py:137 characterSymbols.py:20 controlTypes.py:179
+#: characterSymbols.py:20
 msgid "tab"
-msgstr "tab"
+msgstr "tabulátorl"
 
 #: IAccessibleHandler.py:138 controlTypes.py:165
 msgid "edit"
-msgstr "szerkeztés "
+msgstr "szerkeztõmezõ "
 
 #: IAccessibleHandler.py:139 controlTypes.py:166
 msgid "button"
@@ -39,13 +39,13 @@ msgstr "fa nézet"
 msgid "sub menu"
 msgstr "almenü"
 
-#: IAccessibleHandler.py:193 speech.py:216
+#: IAccessibleHandler.py:193 speech.py:227
 msgid "not %s"
-msgstr "nincs %s"
+msgstr "nem %s"
 
-#: IAccessibleHandler.py:584
+#: IAccessibleHandler.py:602
 msgid "lost focus"
-msgstr "fókusz eltünt"
+msgstr "nem találom az aktív elemet"
 
 #: NVDAObjects\IAccessible\__init__.py:67
 #: NVDAObjects\IAccessible\__init__.py:437
@@ -60,12 +60,12 @@ msgstr "%d per %d"
 
 #: NVDAObjects\IAccessible\__init__.py:71
 msgid "%s items"
-msgstr "%s elemek"
+msgstr "%s elem"
 
 #: NVDAObjects\IAccessible\__init__.py:696
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
-msgstr "%d elemek" 
+msgstr "%d elem" 
 
 #: NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -73,15 +73,15 @@ msgstr "kereztül"
 
 #: NVDAObjects\IAccessible\excel.py:64 controlTypes.py:298
 msgid "selected"
-msgstr "kiválasztva"
+msgstr "kijelölve"
 
 #: NVDAObjects\IAccessible\excel.py:68
 msgid "has formula"
-msgstr "tartalmaz formulát"
+msgstr "képletet tartalmaz"
 
 #: NVDAObjects\IAccessible\excel.py:97
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "a kurzort egy celára teszi, és kimondja a kordinátáit és tartalmát" 
+msgstr "a kurzort egy adott cellára állítja, és kimondja a cella kordinátáit és tartalmát" 
 
 #: NVDAObjects\__init__.py:527 NVDAObjects\__init__.py:538
 #: NVDAObjects\__init__.py:572 textBuffer.py:364 textBuffer.py:391
@@ -95,27 +95,27 @@ msgstr "eleje"
 msgid "bottom"
 msgstr "vége"
 
-#: NVDAObjects\__init__.py:597 NVDAObjects\__init__.py:608
+#:NVDAObjects\__init__.py:608
 msgid "left"
-msgstr "balra"
+msgstr "bal"
 
-#: NVDAObjects\__init__.py:630 NVDAObjects\__init__.py:646
+#: NVDAObjects\__init__.py:646
 msgid "right"
-msgstr "jobbra"
+msgstr "jobb"
 
 #: NVDAObjects\__init__.py:769 textBuffer.py:537 textBuffer.py:541
 #: textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
-msgstr "kijelölve %s"
+msgstr "%s kijelölve"
 
 #: NVDAObjects\__init__.py:771 textBuffer.py:545 textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
-msgstr "nincs kiválasztva %s"
+msgstr "%s nincs kijelölve"
 
 #: api.py:147 api.py:150
 msgid "virtual buffer pass through"
-msgstr "virtuális buffer keresztül lépés"
+msgstr "billentyûparancs figyelmen kívül hagyása virtuális ablakban"
 
 #: api.py:147 appModules\_default.py:43 appModules\_default.py:76
 #: appModules\_default.py:86 appModules\_default.py:96
@@ -138,15 +138,15 @@ msgstr "bekapcsolva"
 
 #: appModuleHandler.py:188
 msgid "Error in appModule %s"
-msgstr "Hiba a %s alkalmazás modulban"
+msgstr "Hiba történt a(z) %s alkalmazás modulban!"
 
 #: appModuleHandler.py:204
 msgid "Could not load default module keyMap"
-msgstr "Az alapértelmezett billentyüzet térképet nem lehetett betölteni"
+msgstr "Nem tudtam betölteni az alapértelmezett billentyûzetkiosztást!"
 
 #: appModuleHandler.py:207
 msgid "Could not load default module "
-msgstr "a default modult nem lehetett betölteni "
+msgstr "Nem tudtam betölteni az alapértelmezett modult"
 
 #: appModules\_default.py:45
 msgid "keyboard help %s"
@@ -154,39 +154,40 @@ msgstr "billentyûzet segítség %s"
 
 #: appModules\_default.py:46
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr ""
+msgstr "Ki- vagy bekapcsolja a billentyûzet segítséget. Ha ezt bekapcsolja, akkor a program megmondja,\n"
+ "hogy melyik billentyûhöz milyen szkript tartozik."
 
 #: appModules\_default.py:58
 msgid "Reports the current date and time"
-msgstr "bejelenti a jelen dátumot, és idot."
+msgstr "Megmondja a dátumot és az idõt."
 
 #: appModules\_default.py:64 appModules\_default.py:71
 msgid "rate %d%%"
-msgstr "sebesség %d%%"
+msgstr "beszédsebesség %d%%"
 
 #: appModules\_default.py:65
 msgid "Increases the speech rate by 5 percent"
-msgstr "a beszédsebességet öt százalékkal  növekli."
+msgstr "A beszédet öt százalékkal gyorsítja."
 
 #: appModules\_default.py:72
 msgid "decreases the speech rate by 5 percent"
-msgstr "a beszédsebességet öt százalékkal csökkenti."
+msgstr "A beszédet öt százalékkal lassítja."
 
 #: appModules\_default.py:81
 msgid "speak typed characters"
-msgstr "begépelt karakterek kimondása"
+msgstr "karakterek olvasása gépeléskor"
 
 #: appModules\_default.py:82
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "a begépelt betûk kimondását ki, és bekapcsolja."
+msgstr "Gépeléskor ki- vagy bekapcsolja a karakterenkénti olvasást."
 
 #: appModules\_default.py:91
 msgid "speak typed words"
-msgstr "begépelt szavak kimondása"
+msgstr "szavak olvasása gépeléskor"
 
 #: appModules\_default.py:92
 msgid "Toggles on and off the speaking of typed words"
-msgstr"A begépelt szavak kimondását ki, és bekapcsolja." 
+msgstr"Gépeléskor ki- vagy bekapcsolja a szavak olvasását."
 
 #: appModules\_default.py:101
 msgid "speak command keys"
@@ -194,6 +195,7 @@ msgstr "parancs billentyûk kimondása"
 
 #: appModules\_default.py:102
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgstr "Engedélyezi, vagy tiltja azt, hogy a program bemondja azon billentyûk nevét is, amikhez nem betû tartozik"
 
 #: appModules\_default.py:111
 msgid "speak punctuation"
@@ -201,170 +203,167 @@ msgstr "írásjelek kimondása"
 
 #: appModules\_default.py:112
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "a írásjelek kiejtése - ki és bekapcsolása. Ha ez bevan kapcsolva, akkor a \n"
-"NVDA kimondja a írás jeleket. Ha ez kivan kapcsolva, akkor a szintetizátortól függ, hogy milyen jelek lesznek kiejtve." 
-
+msgstr "az írásjelek kimondásának  ki- és bekapcsolása. Ha ez be van kapcsolva, akkor az \n"
+"NVDA kimondja az összes írásjelet, egyébként a szintetizátortól függ, hogy milyen írásjeleket fog hallani." 
 
 #: appModules\_default.py:115
 msgid "Move mouse to navigator"
-msgstr "Az egér átléptetése a navigátorhoz"
-
+msgstr "az egérmutató ráállítása a navigátorkurzor alatti elemre"
 
 #: appModules\_default.py:117
 msgid "Moves the mouse pointer to the current navigator object."
-msgstr "Az egér mutatót áthelyezi a navigátor elem helyére."
-
+msgstr "Az egérmutatót arra az elemre állítja, amelyen a navigátorkurzor áll."
 
 #: appModules\_default.py:120
 msgid "Move navigator object to mouse"
-msgstr "Navigátor átléptetése az egérhez"
+msgstr "a navigátorkurzor ráállítása az egérmutató alatti elemre"
 
 #: appModules\_default.py:126
 msgid "Sets the navigator object to the object that is directly under the mouse pointer"
-msgstr "A navigátor kurzort áthelyezi az egér alatt lévo elem pozícióhoz"
+msgstr "A navigátorkurzort az egérmutató alatti elemre állítja."
 
 #: appModules\_default.py:131 appModules\_default.py:140
 #: appModules\_default.py:160 appModules\_default.py:173
 #: appModules\_default.py:186 appModules\_default.py:199
 #: appModules\_default.py:212 appModules\_default.py:221
 msgid "no navigator object"
-msgstr "nincsen a  navigátor kurzor alatt  elem"
+msgstr "Nincs elem a navigátorkurzor alatt!"
 
 #: appModules\_default.py:135
 msgid "Reports the current navigator object"
-msgstr "Bejelenti a jelen navigátor kurzor alatt lévo elem nevét"
+msgstr "Kimondja a navigátorkurzor alatti elem nevét."
 
 #: appModules\_default.py:143
 msgid "No location information for navigator object"
-msgstr "a navigátor kurzornak nincsen tartózkodási helye"
+msgstr "a navigátorkurzor alatti elem helyét nem lehet felderíteni!"
 
 #: appModules\_default.py:145
 msgid "%d wide by %d high, located %d from left and %d from top"
-msgstr "%d széles per %d magas, tartózkodik %d balról és %d elejétol"
+msgstr "%d pixel széles, %d pixel magas, bal felsõ sarok: %d. oszlop, %d. sor"
 
 #: appModules\_default.py:146
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Bejelenti a jelen navigátor kurzor alatt lévo elem magasságát, szélességét, és pozicíóját."
+msgstr "Megmondja a navigátorkurzor alatti elem magasságát, szélességét és pozicíóját."
 
 #: appModules\_default.py:151 appModules\_default.py:366
 msgid "no focus"
-msgstr "nincs fókus"
+msgstr "nincs aktív elem"
 
 #: appModules\_default.py:153
 msgid "move to focus"
-msgstr "fokuszra való lépés"
+msgstr "ráállás az aktív elemre"
 
 #: appModules\_default.py:155
 msgid "Sets the navigator object to the current focus"
-msgstr "a navigátor kurzort átállítja a fókusztérben lévo elemre."
+msgstr "A navigátor kurzort az aktív elemre állítja."
 
 #: appModules\_default.py:167
 msgid "No parents"
-msgstr "nincsen létezo szülö ablak"
+msgstr "Ennek az elemnek nincs szülõeleme."
 
 #: appModules\_default.py:168
 msgid "Sets the navigator object to the parent of the object it is currently on."
-msgstr "A navigátor kurzort áthelyezi a jelen aktív elem szülö elemére"
+msgstr "Rááll a navigátorkurzor alatti elem szülõelemére."
 
 #: appModules\_default.py:180
 msgid "No next"
-msgstr "nincs következö"
+msgstr "Nincs következõ elem!"
 
 #: appModules\_default.py:181
 msgid "Sets the navigator object to the next object to the one it is currently on"
-msgstr "A navigátor kurzort áthelyezi a következõ elemhez"
+msgstr "A navigátor kurzort a következõ elemre állítja."
 
 #: appModules\_default.py:193
 msgid "No previous"
-msgstr "nincsen hátralévõ"
+msgstr "Nincs elõzõ elem!"
 
 #: appModules\_default.py:194
 msgid "Sets the navigator object to the previous object to the one it is currently on"
-msgstr "A navigátor kurzort áthelyezi a elõzõ elemhez"
+msgstr "A navigátorkurzort az elõzõ elemre állítja."
 
 #: appModules\_default.py:206
 msgid "No children"
-msgstr "nincsen gyerek ablak"
+msgstr "Ennek az elemnek nincs gyermekeleme."
 
 #: appModules\_default.py:207
 msgid "Sets the navigator object to the first child object to the one it is currently on"
-msgstr "A navigátor kurzort áthelyezi az aktív elemhez viszonyult elsõ gyerek elemre."
+msgstr "Rááll a navigátorkurzor alatti elem elsõ gyermekelemére."
 
 #: appModules\_default.py:215
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "az aktív elemen végrehajtja az alapértelmezett parancsot. P.l: Lenyomja ha egy gomb"
+msgstr "A navigátorkurzor alatti elemen végrehajtja az alapértelmezett parancsot. Pl: lenyomja, ha az egy gomb."
 
 #: appModules\_default.py:228
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
-msgstr ""
+msgstr "Tájékoztat a navigátorkurzor alatti elem helyzetérõl úgy, hogy felsorolja az összes gyermekelemét."
 
 #: appModules\_default.py:233
 msgid "Moves the review cursor to the top line of the current navigator object"
-msgstr "az átnézési kurzort átlépteti a navigátor elem elejére."
+msgstr "Az átnézõkurzort a navigátorkurzor alatti elem elsõ sorába viszi."
 
 #: appModules\_default.py:238
 msgid "Moves the review cursor to the previous line of the current navigator object"
-msgstr "az átnézési kurzort átlépteti a navigátor elem elõzõ sor'ra."
+msgstr "Az átnézõkurzort a navigátorkurzor alatti elem elõzõ sorába viszi."
 
 #: appModules\_default.py:243
 msgid "Reports the line of the current navigator object where the review cursor is situated"
-msgstr "Bejelenti a átnézési kurzor sor tartalmát"
+msgstr "Megmondja, hányadik sorban van az átnézõkurzor."
 
 #: appModules\_default.py:248
 msgid "Moves the review cursor to the next line of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a következõ sorra"
+msgstr "Az átnézõkurzort a navigátorkurzor alatti elem következõ sorára állítja."
 
 #: appModules\_default.py:253
 msgid "Moves the review cursor to the bottom line of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti az elem végére"
+msgstr "Az átnézõkurzort a navigátorkurzor alatti elem alsó sorába viszi."
 
 #: appModules\_default.py:258
 msgid "Moves the review cursor to the previous word of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a jelen aktív elem elõzõ szavára"
+msgstr "Az átnézõkurzort az elõzõ szóra állítja."
 
 #: appModules\_default.py:263
 msgid "Speaks the word of the current navigator object where the review cursor is situated"
-msgstr ""
+msgstr "Felolvassa az átnézõkurzor alatti szót."
 
 #: appModules\_default.py:268
 msgid "Moves the review cursor to the next word of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a jelen aktív elem következõ szavára"
+msgstr "A következõ szóra állítja az átnézõkurzort."
 
 #: appModules\_default.py:273
 msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a sor elejére"
+msgstr "A sor elejére viszi az átnézõkurzort."
 
 #: appModules\_default.py:278
 msgid "Moves the review cursor to the previous character of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a jelen aktív elem elõzõ karakterére"
+msgstr "Az elõzõ karakterre áll az átnézõkurzorral."
 
 #: appModules\_default.py:283
 msgid "Reports the character of the current navigator object where the review cursor is situated"
-msgstr "bejelenti a jelenlévo navigátor kurzor  karakterét, ahol az átnézési kurzor áll."
+msgstr "Bemondja az átnézõkurzor alatti karaktert."
 
 #: appModules\_default.py:288
 msgid "Moves the review cursor to the next character of the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a jelen aktív elem következõ karakterére"
+msgstr "Az átnézõkurzort a következõ karakterre állítja."
 
 #: appModules\_default.py:293
 msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a sor végére"
+msgstr "A sor végére áll az átnézõkurzorral."
 
 #: appModules\_default.py:298
 msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "Az átnézési kurzort átlépteti a rendszer kurzor helyére"
+msgstr "Az átnézõkurzort a szerkesztõkurzor alatti karakterre állítja."
 
 #: appModules\_default.py:303
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "A rendszer kurzort átlépteti az átnézési kurzor helyére"
+msgstr "A szerkesztõkurzort az átnézõkurzor alatti karakterre állítja."
 
 #: appModules\_default.py:312
 msgid "beeps"
-msgstr "sípolások"
+msgstr "hangjelzés"
 
 #: appModules\_default.py:314
 msgid "talk"
-msgstr "beszéd"
+msgstr "normál"
 
 #: appModules\_default.py:315
 msgid "speech mode %s"
@@ -372,151 +371,148 @@ msgstr "beszéd mód %s"
 
 #: appModules\_default.py:317
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "beszéd mód váltás. Ha ez ki van kapcsolva, akkor az nvda nem fog semmilyen beszédet kiadni. \n"
-" Ha ez sípolásokra van beállitva, akkor minden történo esemény sípolásokkal lesz jelezve. \n"
-"És ha ez a beszéd opcióra van beállitva, akkor az NVDA rendesen fogja olvasni a képernyõt." 
+msgstr "beszéd mód váltás. Ha kikapcsoltra állítjuk, az nvda nem mond ki semmit.\n"
+" Ha ezt hangjelzésre állítjuk, akkor minden eseményrõl sípolási hangjelzéssel tájékoztat. \n"
+"Végül, ha a normál opciót választjuk, akkor az NVDA a megszokott módon mûködik."
  
-
 #: appModules\_default.py:321
 msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "a virtuális buffer keresztül lépés funkciót ki, és bekapcsolja. Ha ez be van kapcsolva \n"
-" minden billentyû lenyomás egyenesen keresztül lép az aktív alkalmazáshoz, és ez \n"
-"megengedi, hogy  ön tudjon  egy vezérloelemmel kommunikálni, anélkül, hogy a parancs valami mást csináljon \n"
-"a billentyûzettel."
+msgstr "Ha egy virtuális ablakban dolgozunk, ezzel az\n"
+" opcióval dönthetjük el, hogy az NVDA, vagy az aktív alkalmazás foglalkozzon-e a lenyomott billentyûkkel.\n"
+" Ha ezt engedélyezzük, közvetlenül dolgozhatunk a virtuális ablak vezérlõelemeivel, az NVDA parancsai nem érvényesek."
 
 #: appModules\_default.py:325
-msgstr "kilép a nvda alkalmazásból!"
+msgid "Quits NVDA!"
+msgstr "kilép a nvda programból."
 
 #: appModules\_default.py:329
 msgid "Shows the NVDA interface window"
-msgstr "megjeleniti a nvda felület ablakját."
+msgstr "Elõhozza az nvda fõablakát."
 
 #: appModules\_default.py:336
 msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Az átnézési kurzortól olvas a szöveg végéig, és egyaránt lépteti a kurzort"
+msgstr "Az átnézõkurzortól a szöveg végéig olvas, és az átnézõkurzort is mozgatja közben."
 
 #: appModules\_default.py:347
 msgid "reads from system caret up to end of text, moving the caret as it goes"
-msgstr "A rendszer kurzortól a szöveg végéig olvas, és egyaránt lépteti a rendszer kurzort"
+msgstr "A szerkesztõkurzortól a szöveg végéig olvas, és a szerkesztõkurzort is mozgatja közben."
 
 #: appModules\_default.py:367
 msgid "reports the object with focus"
-msgstr "a fókuszban lévö elemet bejelenti."
+msgstr "Megmondja, melyik elem aktív."
 
 #: appModules\_default.py:372
 msgid "no foreground object"
-msgstr "nincsen az elötérben elem"
+msgstr "nincs elem az elõtérben"
 
 #: appModules\_default.py:376
 msgid "no status bar found"
-msgstr "Az állápot csík nem található"
+msgstr "Az állapot sór nem található!"
 
 #: appModules\_default.py:380
 msgid "reads the current aplication status bar and moves the navigation cursor to it"
-msgstr "Az alkalmazás állápot jelzõét felolvassa, majd a navigátor kurzort átlépteti rá"
+msgstr "Felolvassa az aktív alkalmazás állapotsorát, és a navigátorkurzort rá is állítja."
 
 #: appModules\_default.py:389
 msgid "Report object under mouse"
-msgstr "az egér alatt lévö elem bejelentése"
+msgstr "az egérmutató alatti elem bemondása"
 
 #: appModules\_default.py:390
 msgid "Toggles on and off the reporting of objects under the mouse"
-msgstr "az egér alatt lévo elem vagy objektum  bejelentését ki, és bekapcsolja."
+msgstr "Az egérmutató alatti elem vagy objektum bemondásátt ki, vagy bekapcsolja."
 
 #: appModules\_default.py:396
 msgid "Reports the title of the current application or foreground window"
-msgstr "a jelen alkalmazás vagy elõtér ablak címét bejelenti."
+msgstr "Megmondja az aktív alkalmazás, vagy az éppen elõtérben lévõ ablak címét."
 
 #: appModules\_default.py:403
 msgid "speaks the current foreground object"
-msgstr "bejelenti az elotérben lévö elemet"
+msgstr "Megmondja, hogy melyik elem van elõtérben."
 
 #: appModules\_default.py:409
 msgid "Control ID: %s"
-msgstr "a vezérlõ azonosító száma: %s"
+msgstr "a vezérlõelem azonosítószáma: %s"
 
 #: appModules\_default.py:410
 msgid "Class: %s"
-msgstr "osztályzat: %s"
+msgstr "osztály: %s"
 
 #: appModules\_default.py:413
 msgid "internal text: %s"
-msgstr "belsõ szöveg: %s"
+msgstr "Az objektumban tárolt szöveg: %s"
 
 #: appModules\_default.py:414
 msgid "text: %s"
-msgstr "szöveg: %s"
+msgstr "Képernyõszöveg: %s"
 
 #: appModules\_default.py:415
 msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "a jelenlévo navigátor elemre információt ad. Ez leginkább hasznos fejlesztöknek: kontrol id, osztályzat \n"
-"és belsõ szöveg"
+msgstr "Elmond néhány, leginkább fejlesztõknek hasznos adatot a navigátorkurzor alatti\n"
+" vezérlõelemrõl: az elem azonosítószámát, osztályát és az elemobjektumban tárolt szöveget."
  
 #: appModules\_default.py:424
 msgid "Beep on progress bar updates"
-msgstr "hangjel kiadása folyamat jelzõ változásokkor" 
+msgstr "folyamatjelzõ csíkok haladásának érzékeltetése hangjellel"
 
 #: appModules\_default.py:425
 msgid "Toggles on and off the beeping on progress bar updates"
-msgstr "mikor a folyamat jelzö változik, akkor a nvda egy hanggal jelzi ezt. Ezzel a paranccsal \n"
-"ezt ki és be lehet kapcsolni."
-
+msgstr "Az NVDA egyre magasabb hangjelzésekkel tudja érzékeltetni a folyamatjelzõ csíkok haladását. Ezzel a paranccsal \n"
+"ezt ki- vagy be lehet kapcsolni."
 
 #: appModules\_default.py:434
 msgid "report dynamic content changes"
-msgstr "dinamikus tartalom változások  bejelentése"
+msgstr "ablaktartalom változásának jelzése"
 
 #: appModules\_default.py:435
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "a dinamikus tartalomnak bejelentését ki, és bekapcsolja. Ilyen  például dos parancs ablakokban  található." 
+msgstr "Ezzel a paranccsal ki- és bekapcsolhatja, hogy a program\n"
+" jelezze-e, ha egy ablak tartalma menetközben megváltozott, pl. ha új szöveg jelent meg egy DOS ablakban."
 
 #: appModules\_default.py:444
 msgid "caret moves review cursor"
-msgstr "a rendszer kurzor lépteti az átnézési kurzort"
+msgstr "az átnézõkurzor követi a szerkesztõkurzor mozgását"
 
 #: appModules\_default.py:445
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Az átnézési kurzort a rendszer kurzor is tudja befolyásolni. Ezzel a paranccsal \n"
-"Ezt a funkciót ki, és betudja kapcsolni."
+msgstr "Ezzel a paranccsal eldöntheti, hogy az átnézõkurzor kövesse-e a szerkesztõkurzor mozgását."
 
 #: appModules\_default.py:454
 msgid "focus moves navigator object"
-msgstr "fókusz változások léptetik a navigátor kurzort"
+msgstr "a navigátorkurzor követi az aktív elem változását"
 
 #: appModules\_default.py:455
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Az átnézési kurzort fókusz változások is tudják befolyásolni. Ezzel a paranccsal \n"
-"Ezt a funkciót ki, és betudja kapcsolni."
+msgstr "A program képes arra, hogy a navigátorkurzort mindig az éppen aktív elemre állítsa. Ezzel a paranccsal \n"
+"Ezt a funkciót ki- vagy betudja kapcsolni."
 
 #: appModules\_default.py:467
 msgid "no system battery"
-msgstr "A rendszer nem tartalmaz elem tápegységet"
+msgstr "A számítógépben nincs akkumulátor."
 
 #: appModules\_default.py:469
 msgid "%d percent"
-msgstr "%d százalék"
+msgstr "%d százalékos töltöttség"
 
 #: appModules\_default.py:470
 msgid "AC power on"
-msgstr"AC tápegység aktív"
+msgstr "a gép hálózatról üzemel"
 
 #: appModules\_default.py:472
 msgid "%d hours and %d minutes remaining"
-msgstr "%d óra és %d perc a jelenlegi  elem idötartalom."
+msgstr "a gépet még kábé %d óra %d percig használhatja akkumulátorról"
 
 #: appModules\_default.py:474
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "a hátra lévö elem idöt bejelenti, ha az AC tápegység nem aktív"  
+msgstr "Ha a gépet akkumulátorról használja, akkor tájékoztat az akkumulátor állapotáról és\n"
+"megmondja, hogy kb. meddig használhatja még a gépet akkuról."
 
 #: appModules\_default.py:478
 msgid "Pass next key through"
-msgstr "következo billentyûparancs átadása"
+msgstr "a következõ billentyûparancsot figyelmen kívül hagyom"
 
 #: appModules\_default.py:479
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "a következo billentyû lenyomást nem az NVDA fogja végrehajtani, \n"
-"hanem egyenesen átfog adódni a windows Rendszerbe"
-
+msgstr "A következõ billentyûparancsot nem az NVDA hajtja végre, hanem az aktív alkalmazás." 
 
 #: appModules\msimn.py:21
 msgid "Attachments"
@@ -524,39 +520,39 @@ msgstr "csatolások"
 
 #: appModules\msimn.py:22
 msgid "To:"
-msgstr "címzett:"
+msgstr "Címzett:"
 
 #: appModules\msimn.py:23
 msgid "Newsgroup:"
-msgstr "hírcsoport:"
+msgstr "Hírcsoport:"
 
 #: appModules\msimn.py:24
 msgid "CC:"
-msgstr "üzenet másolás:"
+msgstr "Másolat:"
 
 #: appModules\msimn.py:25
 msgid "Subject:"
-msgstr "tárgy:"
+msgstr "Tárgy:"
 
 #: appModules\msimn.py:26 appModules\msimn.py:34
 msgid "From:"
-msgstr "feladó:"
+msgstr "Feladó:"
 
 #: appModules\msimn.py:27
 msgid "Date:"
-msgstr "dátum:"
+msgstr "Dátum:"
 
 #: appModules\msimn.py:28
 msgid "Forward to:"
-msgstr "átküldés:"
+msgstr "Kinek továbbítsam:"
 
 #: appModules\msimn.py:29
 msgid "Answer to:"
-msgstr "válaszolás címzetnek:"
+msgstr "válasz: "
 
 #: appModules\msimn.py:30
 msgid "Organisation:"
-msgstr "rendezés:"
+msgstr "Szervezet:"
 
 #: appModules\msimn.py:31
 msgid "Distribution:"
@@ -564,11 +560,11 @@ msgstr "elosztás:"
 
 #: appModules\msimn.py:32
 msgid "Key words:"
-msgstr "kulcsszavak:"
+msgstr "Kulcsszavak:"
 
 #: appModules\msimn.py:33
 msgid "BCC:"
-msgstr "láthatatlan másolat:"
+msgstr "Titkos másolat:"
 
 #: characterSymbols.py:17 characterSymbols.py:18 speech.py:56
 msgid "blank"
@@ -580,11 +576,11 @@ msgstr "üres"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "sor fíd"
+msgstr "soremelés"
 
 #: characterSymbols.py:22
 msgid "carriage return"
-msgstr "újsor"
+msgstr "céer"
 
 #: characterSymbols.py:23
 msgid "space"
@@ -600,7 +596,7 @@ msgstr "idézõjel"
 
 #: characterSymbols.py:26
 msgid "number"
-msgstr "számjel"
+msgstr "kettõskereszt"
 
 #: characterSymbols.py:27
 msgid "dollar"
@@ -612,7 +608,7 @@ msgstr "százalék"
 
 #: characterSymbols.py:29
 msgid "and"
-msgstr "és"
+msgstr "etjel"
 
 #: characterSymbols.py:30
 msgid "tick"
@@ -692,7 +688,7 @@ msgstr "zárószögletes"
 
 #: characterSymbols.py:49 controlTypes.py:249
 msgid "caret"
-msgstr "hiányjel"
+msgstr "fölfelé nyíl"
 
 #: characterSymbols.py:50 controlTypes.py:280
 msgid "line"
@@ -700,7 +696,7 @@ msgstr "aláhúzás"
 
 #: characterSymbols.py:51
 msgid "graav"
-msgstr "grav"
+msgstr "ekszent"
 
 #: characterSymbols.py:52
 msgid "left brace"
@@ -708,7 +704,7 @@ msgstr "kezdõkapcsos"
 
 #: characterSymbols.py:53
 msgid "bar"
-msgstr "csík"
+msgstr "függõleges vonal"
 
 #: characterSymbols.py:54
 msgid "right brace"
@@ -724,7 +720,7 @@ msgstr "ismeretlen elem"
 
 #: controlTypes.py:159
 msgid "title bar"
-msgstr "cmsor"
+msgstr "címsor"
 
 #: controlTypes.py:160
 msgid "pane"
@@ -732,11 +728,11 @@ msgstr "terület"
 
 #: controlTypes.py:161
 msgid "dialog"
-msgstr "párbeszéd panel"
+msgstr "párbeszédpanel"
 
 #: controlTypes.py:162
 msgid "check box"
-msgstr "jelelönégyzet"
+msgstr "jelölõnégyzet"
 
 #: controlTypes.py:163
 msgid "radio button"
@@ -744,7 +740,7 @@ msgstr "választó  gomb"
 
 #: controlTypes.py:164
 msgid "text"
-msgstr"szöveg"
+msgstr"csak olvasható szövegmezõ"
 
 #: controlTypes.py:167
 msgid "menu bar"
@@ -760,7 +756,7 @@ msgstr "felugró menü"
 
 #: controlTypes.py:170
 msgid "combo box"
-msgstr "kombinált listamezö"
+msgstr "kombinált listamezõ"
 
 #: controlTypes.py:171
 msgid "list"
@@ -768,7 +764,7 @@ msgstr "lista"
 
 #: controlTypes.py:172
 msgid "list item"
-msgstr "lista elem"
+msgstr "listaelem"
 
 #: controlTypes.py:173
 msgid "graphic"
@@ -788,15 +784,15 @@ msgstr "hivatkozás"
 
 #: controlTypes.py:177
 msgid "tree view"
-msgstr "fa nézet"
+msgstr "fanézet"
 
 #: controlTypes.py:178
 msgid "tree view item"
-msgstr "fanézet elem"
+msgstr "fanézetelem"
 
 #: controlTypes.py:180
 msgid "tab control"
-msgstr "lapfül"
+msgstr "fül"
 
 #: controlTypes.py:181
 msgid "slider"
@@ -804,15 +800,15 @@ msgstr "csúszka"
 
 #: controlTypes.py:182
 msgid "progress bar"
-msgstr "folyam jelzõ"
+msgstr "folyamatjelzõ csík"
 
 #: controlTypes.py:183
 msgid "scroll bar"
-msgstr "gördítõ sáv"
+msgstr "gördítõsáv"
 
 #: controlTypes.py:184
 msgid "status bar"
-msgstr "állapot jelzõ"
+msgstr "állapotsor"
 
 #: controlTypes.py:185
 msgid "table"
@@ -836,19 +832,19 @@ msgstr "keret"
 
 #: controlTypes.py:190
 msgid "tool bar"
-msgstr "ezköz tár"
+msgstr "ezköztár"
 
 #: controlTypes.py:191
 msgid "column header"
-msgstr "oszlop fejléc" 
+msgstr "oszlopfejléc" 
 
 #: controlTypes.py:192
 msgid "row header"
-msgstr "sor fejléc"
+msgstr "sorfejléc"
 
 #: controlTypes.py:193
 msgid "drop down button"
-msgstr "leúgró gomb"
+msgstr "lenyíló gomb"
 
 #: controlTypes.py:194
 msgid "clock"
@@ -856,11 +852,11 @@ msgstr "óra"
 
 #: controlTypes.py:195
 msgid "separator"
-msgstr "szétválasztó"
+msgstr "elválasztó"
 
 #: controlTypes.py:196
 msgid "form"
-msgstr "ürlap"
+msgstr "ûrlap"
 
 #: controlTypes.py:197
 msgid "heading"
@@ -892,7 +888,7 @@ msgstr "hatodik címsor"
 
 #: controlTypes.py:204
 msgid "paragraph"
-msgstr "paragrafus"
+msgstr "bekezdés"
 
 #: controlTypes.py:205
 msgid "block quote"
@@ -900,15 +896,15 @@ msgstr "idézõ blokk"
 
 #: controlTypes.py:206
 msgid "table header"
-msgstr "táblázat fejléc "
+msgstr "táblázatfejléc "
 
 #: controlTypes.py:207
 msgid "table body"
-msgstr "táblázat test"
+msgstr "táblázattörzs"
 
 #: controlTypes.py:208
 msgid "table footer"
-msgstr "táblázat vége"
+msgstr "táblázatlábléc"
 
 #: controlTypes.py:209
 msgid "document"
@@ -922,13 +918,13 @@ msgstr "animáció"
 msgid "application"
 msgstr "alkalmazás"
 
-#: controlTypes.py:212
+#: controlTypes.py:212 
 msgid "box"
 msgstr "négyzet"
 
 #: controlTypes.py:213
 msgid "grouping"
-msgstr "csoportositás"
+msgstr "csoport"
 
 #: controlTypes.py:214
 msgid "property page"
@@ -936,7 +932,7 @@ msgstr "tulajdonságok oldal"
 
 #: controlTypes.py:215
 msgid "canvas"
-msgstr "vászon"
+msgstr "háttér"
 
 #: controlTypes.py:216
 msgid "caption"
@@ -944,11 +940,11 @@ msgstr "felirat"
 
 #: controlTypes.py:217
 msgid "check menu item"
-msgstr "a menüelem bejelölése"
+msgstr "bejelölhetõ menüelem"
 
 #: controlTypes.py:218
 msgid "date edit"
-msgstr "dátum szerkeztés"
+msgstr "dátum szerkeztõ mezõ"
 
 #: controlTypes.py:219
 msgid "icon"
@@ -960,7 +956,7 @@ msgstr "könyvtár terület"
 
 #: controlTypes.py:221
 msgid "embedded object"
-msgstr "beépített objektum"
+msgstr "beágyazott objektum"
 
 #: controlTypes.py:222
 msgid "end note"
@@ -968,7 +964,7 @@ msgstr "vége jel"
 
 #: controlTypes.py:223
 msgid "footer"
-msgstr "vége"
+msgstr "lábléc"
 
 #: controlTypes.py:224
 msgid "foot note"
@@ -988,7 +984,7 @@ msgstr "képtömb"
 
 #: controlTypes.py:228
 msgid "input window"
-msgstr "input ablak"
+msgstr "beviteli ablak"
 
 #: controlTypes.py:229
 msgid "label"
@@ -1012,7 +1008,7 @@ msgstr "réteges terület"
 
 #: controlTypes.py:234
 msgid "redundant object"
-msgstr "maradandó elem"
+msgstr "felesleges elem"
 
 #: controlTypes.py:235
 msgid "root pane"
@@ -1020,7 +1016,7 @@ msgstr "gyökér terület"
 
 #: controlTypes.py:236
 msgid "edit bar"
-msgstr "szerkezto sáv"
+msgstr "szerkeztõsáv"
 
 #: controlTypes.py:237
 msgid "terminal"
@@ -1036,7 +1032,7 @@ msgstr "vonalzó"
 
 #: controlTypes.py:240
 msgid "scroll pane"
-msgstr "gördítõ terület"
+msgstr "gördítõterület"
 
 #: controlTypes.py:241
 msgid "section"
@@ -1048,11 +1044,11 @@ msgstr "alak"
 
 #: controlTypes.py:243
 msgid "split pane"
-msgstr "elosztott terület"
+msgstr "osztott terület"
 
 #: controlTypes.py:244
 msgid "view port"
-msgstr "megtekinto port"
+msgstr "megtekintõ port"
 
 #: controlTypes.py:245
 msgid "tear off menu"
@@ -1060,15 +1056,15 @@ msgstr "letépett menü"
 
 #: controlTypes.py:246
 msgid "text frame"
-msgstr "szöveg keret"
+msgstr "szövegkeret"
 
 #: controlTypes.py:247
 msgid "toggle button"
-msgstr "váltható gomb"
+msgstr "váltható nyomógomb"
 
 #: controlTypes.py:248
 msgid "border"
-msgstr "határ"
+msgstr "szegély"
 
 #: controlTypes.py:250
 msgid "character"
@@ -1076,7 +1072,7 @@ msgstr "karakter"
 
 #: controlTypes.py:251
 msgid "chart"
-msgstr "táblázat"
+msgstr "grafikon"
 
 #: controlTypes.py:252
 msgid "cursor"
@@ -1092,11 +1088,11 @@ msgstr "gördítõ"
 
 #: controlTypes.py:255
 msgid "drop list"
-msgstr "leemelkedõ lista"
+msgstr "lenyíló lista"
 
 #: controlTypes.py:256
 msgid "split button"
-msgstr "felosztott gomb"
+msgstr "osztott gomb"
 
 #: controlTypes.py:257
 msgid "menu button"
@@ -1104,19 +1100,19 @@ msgstr "menügomb"
 
 #: controlTypes.py:258
 msgid "drop down button grid"
-msgstr "leemelkedõ gomb rács"
+msgstr "lenyíló gomb rács"
 
 #: controlTypes.py:259
 msgid "equation"
-msgstr "feladat"
+msgstr "egyenlet"
 
 #: controlTypes.py:260
 msgid "grip"
-msgstr "tartó"
+msgstr "rács"
 
 #: controlTypes.py:261
 msgid "hot key field"
-msgstr "forrógomb mezo"
+msgstr "forrógomb mezõ"
 
 #: controlTypes.py:262
 msgid "indicator"
@@ -1132,7 +1128,7 @@ msgstr "hang"
 
 #: controlTypes.py:265
 msgid "white space"
-msgstr "fehér hely"
+msgstr "üres hely"
 
 #: controlTypes.py:266
 msgid "tree view button"
@@ -1144,7 +1140,7 @@ msgstr "IP cím"
 
 #: controlTypes.py:268
 msgid "desktop icon"
-msgstr "asztal ikon"
+msgstr "ikon az asztalon"
 
 #: controlTypes.py:269
 msgid "alert"
@@ -1160,7 +1156,7 @@ msgstr "asztal terület"
 
 #: controlTypes.py:272
 msgid "option pane"
-msgstr "beállitások terület"
+msgstr "beállitások területe"
 
 #: controlTypes.py:273
 msgid "color chooser"
@@ -1184,19 +1180,19 @@ msgstr "panel"
 
 #: controlTypes.py:278
 msgid "password edit"
-msgstr "jelszó. szerkeztés"
+msgstr "jelszószerkeztõ mezõ"
 
 #: controlTypes.py:279
 msgid "font chooser"
-msgstr "betûtípus kiválasztó"
+msgstr "betûtípusválasztó"
 
 #: controlTypes.py:281
 msgid "font name"
-msgstr "betûtipus  neve"
+msgstr "név"
 
 #: controlTypes.py:282
 msgid "font size"
-msgstr "betûtipus mérete"
+msgstr "méret"
 
 #: controlTypes.py:283 textBuffer.py:266 textBuffer.py:318
 msgid "bold"
@@ -1204,27 +1200,27 @@ msgstr "félkövér"
 
 #: controlTypes.py:284
 msgid "ITALIC"
-msgstr "dölt"
+msgstr "dõlt"
 
 #: controlTypes.py:285 textBuffer.py:280 textBuffer.py:322
 msgid "underline"
-msgstr "aláhúzva"
+msgstr "aláhúzott"
 
 #: controlTypes.py:286
 msgid "foreground color"
-msgstr "elotér szín"
+msgstr "elõtérszín"
 
 #: controlTypes.py:287
 msgid "background color"
-msgstr "háttér szín"
+msgstr "háttérszín"
 
 #: controlTypes.py:288 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
 msgid "superscript"
-msgstr "superskript"
+msgstr "felsõ index"
 
 #: controlTypes.py:289 textBuffer.py:326
 msgid "subscript"
-msgstr "szubskript"
+msgstr "alsó index"
 
 #: controlTypes.py:290
 msgid "style"
@@ -1232,11 +1228,11 @@ msgstr "stílus"
 
 #: controlTypes.py:291
 msgid "indent"
-msgstr "bekezdés"
+msgstr "beljebb kezdés"
 
 #: controlTypes.py:292
 msgid "alignment"
-msgstr "kiegyenlités"
+msgstr "igazítás"
 
 #: controlTypes.py:296
 msgid "unavailable"
@@ -1268,7 +1264,7 @@ msgstr "félig bejelölve"
 
 #: controlTypes.py:303
 msgid "read only"
-msgstr "olvasható szöveg"
+msgstr "csak olvasható"
 
 #: controlTypes.py:304
 msgid "expanded"
@@ -1288,7 +1284,7 @@ msgstr "meglátogatott"
 
 #: controlTypes.py:308
 msgid "linked"
-msgstr "felcsatolva"
+msgstr "hivatkozott"
 
 #: controlTypes.py:309
 msgid "subMenu"
@@ -1304,15 +1300,15 @@ msgstr "szükséges"
 
 #: core.py:45
 msgid "configuration applied"
-msgstr "konfiguráció allkalmazva"
+msgstr "A beállítások életbe léptek." 
 
 #: core.py:72
 msgid "Loading subsystems, please wait..."
-msgstr "alrendszerek betöltése folyamatban, kérem várjon..."
+msgstr "A rendszer betöltése folyamatban, kérem várjon..."
 
 #: core.py:85
 msgid "NVDA started"
-msgstr "NVDA aktiválva"
+msgstr "az NVDA elindult"
 
 #: gui\__init__.py:23
 msgid ""
@@ -1399,108 +1395,113 @@ msgstr ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"ez a NVDA fõ  ablaka. Az ablak  megengedi, hogy az nvda-ból kilépjen, és hogy "
-"különbözõ beállításokat módosítson. "
+"ez a NVDA fõablaka. Itt módosíthatja a program beállításait, és innen léphet ki a programból."
 "\n"
-"Bárhonnan a windowsból, ezt az ablakot feltudja hozni az insert +n paranccsal. Ha kiakar lépni"
-"ebbõl az ablakból, és azt szeretné, hogy a nvda a háttérben futson beszédtámogatással, akkor használja az alt+ f4 parancsot."
+"Az ablakot az Insert-m kombinációval bármikor aktivizálhatja."
+
+"Ha ki akar lépni ebböl az ablakból, anélkül, hogy az nvda-t bezárná, akkor használja az alt+ f4 parancsot."
 "\n"
 "Ha teljesen kiakarna  lépni az NVDa alkalmazásból, akkor vagy az inzert +Q parancsot használja, vagy nyomja meg az alt gombot, és a nyilakkal válassza ki a kilépés parancsot."
 
-"a program kilépés elott egy párbeszédpanelben megfogja önt kérdezni, hogy bisztos e ebben. Itt vagy az" 
-
-"Ok gombbal kilép, vagy a mégse gombbal vissza tud térni a windows rendszerbe."
+"a program kilépés elõtt egy párbeszédpanelben megkérdezi, hogy bisztos e ebben. Itt vagy az Ok gombbal kiléphet, vagy a" 
+"mégse gombbal vissza tud térni a windows rendszerbe."
 "\n"
-"Ha   különbözõ NVDA beállitásokat megakarna változtatni,  (Például hang karakter, a billentyûzet használata, "
-"és hogy  a segítõ buborékok felolvasva legyenek e), akkor nyomja meg az alt gombot,  "
-"és válassza ki a beállitások menüt a jobb és bal nyilakkal. Majd a le és felnyillal a kivánt változtatni való beállitást válassza ki. "
+"Ha módosítani szeretne az NVDA beállításain (pl. hangkarakter, beszédsebesség, segítõ buborékok felolvasásának" 
+"engedélyezése stb.), akkor nyomja meg az Alt gombot és a jobbra-balra nyilakkal keresse meg a Beállítások menüt. Ezután"
+" a le-fel nyilakkal válassza ki a módosítandó beállítást."
 "\n"
-"Legtöbb beállitás fel fog hozni egy párbeszédpanelt,amelyben megtudja változtatni a paramétereket. " 
-"Beállitások, mint a sebesség megváltoztatása, azonnal lépnek életbe. Bizonyos esetekben  elöfordulhat, hogy újra kell inditania az NVDA programot."
-"Bárhonnan az NVDA ablakban, a Kontrol +S billentyûvel tudja lementeni a jelenleg beálitott konfigurációt. Ez a parancs"
-"A NVDA menüben is megtalálható."
-"Sot, azt is megteheti, hogy az NVDA kilépéskor lementse a konfigurációt. Ez az opció a felhasználói felület beállitások...' panelben van."
-"Az alábbiakban egy pár hasznos NVDA billentyûparancs van felsorolva. \n"
+"A beállítások nagy részét párbeszédpanelekben változtathatja meg. Egyes beállitások, mint a sebesség megváltoztatása," 
+"azonnal életbe lépnek.  Néhány esetben újra kell inditani az NVDA programot ahhoz, hogy egy új" 
+"beállítás érvénybe lépjen. A Kontrol +S billentyûvel tudja menteni a beálitásokat, ez a parancs az NVDA ablakában bárhol"
+"mûködik, és az NVDA menüjében is megtalálható. Sõt, az is lehetséges, hogy az NVDA kilépéskor " 
+"automatikusan mentse a beállításokat, ha ezt az opciót bekapcsoljuk. \n"
+"\n"
+"Az alábbiakban egy pár hasznos NVDA billentyûparancsot sorolunk fel. \n"
 "\n"
 
 "Álltalános parancsok: \n"
 "Kontrol - beszéd megszakítása \n"
-"Inzert 1 - billentyûzet segítség mód ki és bekapcsolása. \n"
-"Inzert felnyíl: A fókuszban lévö elem  kimondása. \n"
-" inzert lenyíl: felolvasás elinditása: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
-"Inzert + t - ablak cím kimondása. \n"
+"Inzert 1 - billentyûzet segítség mód ki/bekapcsolása. \n"
+"Inzert felnyíl: Az aktív elem  kimondása. \n"
+" inzert lenyíl: folyamatos felolvasás: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
+"Inzert + t - Az aktuális ablak címének kimondása. \n"
+"Inzert+b - felolvassa az aktuális ablak teljes tartalmát. \n"
 "Inzert + f12 - Az idõ és dátum kimondása. \n"
-"Inzert + 2 - Karakterek kimondásának ki és bekapcsolása. \n"
-"Inzert +3 - a begépelt  Szavak kimondását ki és bekapcsolja. \n"
-"inzert +4 - parancsgombok kimondásának ki és bekapcsolása. \n"
-"inzert +pageup - beszédsebesség felgyorsítása. \n"
-"Inzert +pagedown - beszédSebesség lelassítása. \n"
+"Inzert + 2 - gépeléskor a karakterenkénti olvasás ki/bekapcsolása. \n"
+"Inzert +3 - gépeléskor a szavankénti olvasási mód ki, vagy bekapcsoása. \n"
+"inzert +4 - parancsbillentyûk kimondásának ki- vagy bekapcsolása.\n" 
+"inzert +pageup - beszéd gyorsítása. \n"
+"Inzert +pagedown - beszéd lassítása. \n"
+"Inzert +P -  írásjelekk kimondásának engedélyezése/tiltása. \n"
 
-"Inzert +P: hangsúly kimondásának ki és bekapcsolása. \n"
-"Inzert +S: Beszéd mód váltása (Nincs, Beszéd, És sípolások) \n"
+"Inzert +S -  Beszéd mód váltása (Nincs, normál, És hangjel) \n"
 
-"Inzert +M: Az  Egér alatt lévö elemek felolvasását ki, és bekapcsolja. \n"
-"Inzert +F - betûtípus kimondása (egy dokumentumban) \n"
+"Inzert +M -  Az  Egérmutató alatt lévõ elemek felolvasását ki/bekapcsolja. \n" 
+"Inzert +F - betûtípusjellemzõk  kimondása (egy dokumentumban) \n"
 
-"elem navigálás"
+"Vezérlõelemek közti navigálás"
 " \n"
-"inzert + numpad plusz - hol vagyok a képernyõn? \n"
+"inzert + numerikus  plusz - hol vagyok a képernyõn? \n"
 "inzert + 5 - elem típus kimondása. \n"
-"inzert + shift + numpad 5 - elem dimenzió és tartózkodási információk. \n"
-"inzert + numpad 8 - szülö elem \n"
-"inzert +numpad 2 - elsõ  gyerek elem. \n"
-"inzert +numpad 4 - elozo  elem. \n"
-"inzert +numpad 6 - következo elem. \n"
-"inzert +numpad mínusz - a  fókusz elemre való mozgás \n"
+"inzert + shift + numerikus 5 - elem méretének és helyének lekérdezése. \n" 
+"inzert + numerikus 8 - ráállás a szülõ elemre \n" 
+"inzert +numerikus 2 - ráállás az elsõ  gyermekelemre. \n" 
+"inzert +numerikus 4 - elozo  elem. \n"
+"inzert +numerikus 6 - következo elem. \n"
+"inzert +numerikus mínusz - az aktív elemre áll \n"
 
-"inzert + end - a státuscsíkra való mozgás. \n"
-"inzert +numpad csillag - egér helyére való mozgás. \n"
-"inzert +numpad enter - elem aktiválása. \n"
+"inzert + end - rááll az aktív ablak állapotsorára \n"
+"inzert +numerikus csillag - az egérmutató alatti elemre áll \n"
+"Inzert+numerikus per - az egérmutatót az aktuális elemre viszi \n"
+"inzert +numerikus enter - az aktuális elem aktiválása. \n"
 "\n"
 
-"elem átnézése \n"
+"Az elõzõ parancsokkal kiválasztott elem tartalmának átnézése \n"
 
-"shift + numpad 7 - elsõ sor. \n"
-"numpad 8 - a jelenlévo sor felolvasása. \n"
-"numpad 9 - következö sor. \n"
-"shift + numpad 9 - utolsó sor \n"
+"shift + numerikus 7 - elsõ sor. \n"
+"numerikus 7 - elõzõ sor \n"
+"numpad 8 - az aktuális sor felolvasása. \n"
+"numerikus 9 - következö sor. \n"
+"shift + numerikus 9 - utolsó sor \n"
 
 
-"numpad 4 - elozo  szó \n"
-"numpad 5 - jelenlévo szó felolvasása \n"
-"numpad 6 - következö szó \n"
-"shift + numpad 1 - sor eleje \n"
-"numpad 1 - elozo  karakter \n"
-"numpad 2 - jelenlévo karakter felolvasása \n"
-"shift +numpad 3 - sor vége \n"
+"Numerikus 4 - elozo  szó \n"
+"Numpad 5 - Aktuális szó felolvasása \n"
+"Numerikus 6 - következö szó \n"
+"Shift + numerikus 1 - sor eleje \n"
+"Numerikus 1 - elozo  karakter \n"
+"numerikus 2 - aktuális karakter felolvasása \n"
+"Numerikus 3 - következõ karakter \n"
+"shift +numerikus 3 - sor vége \n"
 "\n"
 
 "vegyes parancsok"
 "\n"
+"inzert + shift- b - az akkumulátor állapotának lekérdezése.\n" 
 
-"inzert + shift- b - a tápegység állapota. \n"
 "kontrol+ f - szöveg keresés, internet explorer és mozilla firefox böngészökben.  \n"
-"inzert +f2 - billentyûparancs átadás. A NVDA átadja azt a billentyû kombinációt, amit legközelebb lenyom az aktív alkalmazásnak. Hasznos amikor egy olyan billentyûparancsot szeretne használni, amit a nvda  már használ."  
+"inzert +f2 - billentyûparancs figyelmen kívül hagyása. A NVDA átadja azt a billentyûkombinációt, amit ezután lenyom,  az"
+"aktív alkalmazásnak, és nem hajtja végre. Hasznos amikor egy olyan billentyûparancsot szeretne használni, amit a nvda már használ."
+
 "\n"
 
-"köszönjük, hogy az NVDA-t választotta képernyõfelolvasáshoz! "
+"köszönjük, hogy az NVDA-t választotta képernyõolvasójának!" 
 
 #: gui\__init__.py:117
 msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&lementett konfiguráció visszaállitása\tctrl+r"
+msgstr "lementett konfiguráció &visszaállitása\tctrl+r"
 
 #: gui\__init__.py:117
 msgid "Reset all setting back to nvda.ini"
-msgstr " a nvda.iniban lévö  beállitások visszaállitása"
+msgstr "az nvda.iniben tárolt beállitások visszaállitása"
 
 #: source\gui\__init__.py:141
 msgid "&Save configuration\tCtrl+S"
-msgstr "&konfiguráció mentése\tcontrol+s"
-
+msgstr "konfiguráció &mentése\tcontrol+s"
 
 #: gui\__init__.py:141
 msgid "Write the current configuration to nvda.ini"
-msgstr "a konfiguráció lementése a nvda.ini fájlba.ini-tiedostoon"
+msgstr "a konfiguráció lementése a nvda.ini fájlba"
 
 #: gui\__init__.py:143
 msgid "E&xit"
@@ -1508,7 +1509,7 @@ msgstr "&kilépés"
 
 #: gui\__init__.py:143 gui\__init__.py:235
 msgid "Exit NVDA"
-msgstr "kilépés a NVDA-ból"
+msgstr "kilépés az NVDA-ból"
 
 #: gui\__init__.py:145 gui\__init__.py:146
 msgid "&NVDA"
@@ -1520,7 +1521,7 @@ msgstr "&felhasználói felület...\tCtrl+shift+u"
 
 #: gui\__init__.py:149
 msgid "Change user interface settings"
-msgstr "felhasználói felület beállitása"
+msgstr "a felhasználói felület beállitása"
 
 #: gui\__init__.py:152
 msgid " the synthesizer to use"
@@ -1532,19 +1533,19 @@ msgstr "&szintetizátor...\tCtrl+shift+s"
 
 #: gui\__init__.py:155
 msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "beszéd...\tKontrol+shift+v"
+msgstr "&beszéd ...\tKontrol+shift+v"
 
 #: gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "a hangkarakter, hangsebesség, hangmagasság, és hangerõ beállitásai"
+msgstr "a hangkarakter, a beszédsebesség, a hangmagasság és a hangerõ beállitása"
 
 #: gui\__init__.py:158
 msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "&billentyûzet...\tCtrl+K"
+msgstr "billentyû&zet...\tCtrl+K"
 
 #: gui\__init__.py:158
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "A billentyûkiosztás konfigurálása, karakterek bejelentése vagy szavak és parancsbillentyûk beállitása"
+msgstr "A billentyûkiosztás konfigurálása, gépeléskor karakterenkénti, vagy szavankénti olvasás választása, parancsbillentyûk kimondásának engedélyezése"
 
 #: gui\__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
@@ -1552,7 +1553,7 @@ msgstr "&egér beállitások...\tCtrl+m"
 
 #: gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
-msgstr "az egér alatt lévö alakoknak és objektumoknak  beállitásai megváltoztatás"
+msgstr "az egérmutató alakjának, és a mutató alatti elem bemondásának beállítása"
 
 #: gui\__init__.py:164
 msgid "&Object presentation...\tCtrl+Shift+O"
@@ -1560,23 +1561,23 @@ msgstr "&objektumok jelzése...\tCtrl+shift+o"
 
 #: gui\__init__.py:164
 msgid "Change reporting of objects"
-msgstr "Az elemek vagy objektumoknak bejelentése"
+msgstr "Az elemek vagy objektumok jelzésének megváltoztatása"
 
 #: gui\__init__.py:167
 msgid "Change virtual buffers specific settings"
-msgstr "virtuális buffer speciális beállitások megváltoztatása"
+msgstr "a virtuális ablakokkal kapcsolatos beállítások elvégzése"
 
 #: gui\__init__.py:167
 msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "virtuális &buffer...\tCtrl+shift+b"
+msgstr "virtuálisa &blakok ...\tCtrl+shift+b"
 
 #: gui\__init__.py:170
 msgid "Change Settings of document properties"
-msgstr "a dokumentumok tulajdonságaihoz való beállitások"
+msgstr "a dokumentumtulajdonságok beállításai"
 
 #: gui\__init__.py:170
 msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "dokument &formátum...\tCtrl+shift+f" 
+msgstr "dokumentum &formázás ...\tCtrl+shift+f" 
 
 #: gui\__init__.py:172 gui\__init__.py:173
 msgid "&Preferences"
@@ -1584,11 +1585,11 @@ msgstr "&beállitások"
 
 #: gui\__init__.py:176
 msgid "NVDA homepage"
-msgstr "NVDA honlap"
+msgstr "az NVDA honlapja"
 
 #: gui\__init__.py:176
 msgid "Opens NVDA homepage in the default browser"
-msgstr "A NVDA honlapját megnyitja az alapértelmezett böngészõvel."
+msgstr "Megnyitja az NVDA honlapját az alapértelmezett böngészõben."
 
 #: gui\__init__.py:179
 msgid "NVDA wiki"
@@ -1596,7 +1597,7 @@ msgstr "NVDA wiki"
 
 #: gui\__init__.py:179
 msgid "Opens NVDA wiki in the default browser"
-msgstr "a NVDA wiki honlapját megnyitja az alapértelmezett böngészõvel."
+msgstr "Megnyitja az NVDA wiki lapját az alapértelmezett böngészõben."
 
 #: gui\__init__.py:181
 msgid "About..."
@@ -1604,7 +1605,7 @@ msgstr "névjegy..."
 
 #: gui\__init__.py:181 gui\__init__.py:295
 msgid "About NVDA"
-msgstr "NVDA névjegye"
+msgstr "az NVDA névjegye"
 
 #: gui\__init__.py:183 gui\__init__.py:184
 msgid "&Help"
@@ -1617,19 +1618,19 @@ msgstr "NVDA"
 
 #: gui\__init__.py:223
 msgid "configuration saved"
-msgstr "konfiguráció lementve"
+msgstr "A beállításokat lementettem."
 
 #: gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
-msgstr" A konfigurációt nem lehetett lementeni - lehetséges, hogy egy védett fájl rendszert használ."
+msgstr" A beállításokat nem lehetett lementeni - lehet, hogy írásvédett fájl rendszert használ."
 
 #: gui\__init__.py:235
 msgid "Press OK to quit NVDA"
-msgstr "az OK gombbal kiléphet a nvda programból."
+msgstr "Az OK gombbal kiléphet a nvda programból."
 
 #: gui\__init__.py:251
 msgid "User interface settings"
-msgstr "felhasználói felület beállitásai"
+msgstr "A felhasználói felület beállitásai"
 
 #: gui\__init__.py:255
 msgid "Synthesizer"
@@ -1637,27 +1638,27 @@ msgstr "Szintetizátor"
 
 #: gui\__init__.py:259
 msgid "Voice settings"
-msgstr "beszéd beállitások"
+msgstr "Beszéd beállitások"
 
 #: gui\__init__.py:263
 msgid "Keyboard Settings"
-msgstr "billentyûzet opciók"
+msgstr "Billentyûzet opciók"
 
 #: gui\__init__.py:267
 msgid "Mouse settings"
-msgstr "egér beállitások"
+msgstr "Egér beállitások"
 
 #: gui\__init__.py:271
 msgid "Object presentation"
-msgstr "objektumok jelzése "
+msgstr "Objektumok jelzése "
 
 #: gui\__init__.py:275
 msgid "virtual buffers"
-msgstr "virtuális bufferek"
+msgstr "Virtuális ablakok"
 
 #: gui\__init__.py:279
 msgid "Document formatting"
-msgstr "dokument formátum megjelenítése"
+msgstr "Dokumentumformázás érzékeltetése"
 
 #: gui\__init__.py:294
 msgid "copyright"
@@ -1669,7 +1670,7 @@ msgstr "Karbantartó"
 
 #: gui\__init__.py:294
 msgid "url"
-msgstr "Honlap"
+msgstr "URL"
 
 #: gui\__init__.py:294
 msgid "version"
@@ -1681,15 +1682,15 @@ msgstr "hivatkozások listája"
 
 #: gui\scriptUI.py:120
 msgid "&Activate Link"
-msgstr "hivatkozás aktivilása"
+msgstr "hivatkozás &aktiválása"
 
 #: gui\scriptUI.py:121
 msgid "&Move to link"
-msgstr "hivatkozásra mozgás"
+msgstr "&hivatkozásra állás"
 
 #: gui\settingsDialogs.py:25
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&nyelv (telljes újrainditás szükséges hogy életbelépjen)"
+msgstr "&nyelv (az NVDa újraindítása szükséges hogy életbelépjen)"
 
 #: gui\settingsDialogs.py:29
 msgid "Language"
@@ -1697,11 +1698,11 @@ msgstr "nyelv"
 
 #: gui\settingsDialogs.py:38
 msgid "&Hide user interface on startup"
-msgstr "&elinduláskor a NVDA ablak nejelenjen meg"
+msgstr "&elinduláskor az NVDA ablak nejelenjen meg"
 
 #: gui\settingsDialogs.py:41
 msgid "&Save configuration on exit"
-msgstr "&kilépéskor konfiguráció automatikus lementése "
+msgstr "a beállítások automatikus mentése &kilépéskor"
 
 #: gui\settingsDialogs.py:44
 msgid "&Warn before exiting NVDA"
@@ -1709,21 +1710,21 @@ msgstr "&Figyelmeztetõ üzenet megjelenítése kilépés elõtt"
 
 #: gui\settingsDialogs.py:62
 msgid "Error in %s language file"
-msgstr "hiba a %s nyelv fájlban"
+msgstr "A(z) %s nyelvi fájl hibás!"
 
 #: gui\settingsDialogs.py:62
 msgid "Language Error"
-msgstr "nyelv fájl hiba"
+msgstr "a nyelvi fájl hibás"
 
 #: gui\settingsDialogs.py:69
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "ahhoz, hogy az új nyelv élletbe léphessen, a konfigurációt újra le kell menteni \n"
-" és az nvda programot újra kell inditani. Nyomja meg az enter billentyût, és a konfiguráció le lesz mentve, \n"
-" majd a nvda újra fog indulni. nyomja meg a mégse gombot, ha ezt késobb sajátkezüleg akarja végrehajtani." 
+msgstr "Ahhoz, hogy nyelvet váltson, mentenie kell a beállításokat, és\n"
+"újra kell indítania az NVDA-t. Az Enter billentyû megnyomásával ez elvégezhetõ. A Cancel gomb\n"
+"megnyomására ez az ablak eltûnik, más nem történik."
 
 #: gui\settingsDialogs.py:69
 msgid "Language Configuration Change"
-msgstr "nyelv konfiguráció megváltozott"
+msgstr "Nyelvi beállítások megváltoztatása"
 
 #: gui\settingsDialogs.py:81
 msgid "&Synthesizer"
@@ -1733,14 +1734,13 @@ msgstr "&Szintetizátor"
 msgid "Output &device"
 msgstr "kimeneti & ezköz"
 
-
 #: gui\settingsDialogs.py:107
 msgid "Could not load the %s synthesizer."
-msgstr "a %s szintetizátort nem lehetett sikeresen betölteni."
+msgstr "Nem tudtam életre kelteni a(z) %s szintetizátort!"
 
 #: gui\settingsDialogs.py:107
 msgid "Synthesizer Error"
-msgstr "hiba a szintetizátorban"
+msgstr "szintetizátorhiba"
 
 #: gui\settingsDialogs.py:119
 msgid "&Voice"
@@ -1748,15 +1748,15 @@ msgstr "&hangkarakter"
 
 #: gui\settingsDialogs.py:135
 msgid "V&ariant"
-msgstr "v&áltozat"
+msgstr "&változat"
 
 #: gui\settingsDialogs.py:147
 msgid "&Rate"
-msgstr "&sebesség"
+msgstr "Beszéd&sebesség"
 
 #: gui\settingsDialogs.py:156
 msgid "&Pitch"
-msgstr "&hangmagasság"
+msgstr "hang&magasság"
 
 #: gui\settingsDialogs.py:165
 msgid "&Inflection"
@@ -1764,15 +1764,15 @@ msgstr "&intonáció"
 
 #: gui\settingsDialogs.py:174
 msgid "V&olume"
-msgstr "hang&erö"
+msgstr "hang&erõ"
 
 #: gui\settingsDialogs.py:181
 msgid "&Speak all punctuation"
-msgstr "&minden írásjel kimondása"
+msgstr "mi&nden írásjel kimondása"
 
 #: gui\settingsDialogs.py:184
 msgid "Raise pitch for capitals"
-msgstr "a hangmagasság felemelése nagybetûknél"
+msgstr "a hangmagasság megemelése nagybetûknél"
 
 #: gui\settingsDialogs.py:187
 msgid "Say &cap before capitals"
@@ -1780,161 +1780,163 @@ msgstr "nagybetük szóbeli&jelzése"
 
 #: gui\settingsDialogs.py:190
 msgid "&Beep for capitals"
-msgstr "&nagybetûk jelzése& hangjel kiadással"
+msgstr "nagy&betûk jelzése hangjellel"
 
 #: gui\settingsDialogs.py:272
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "A capslock használata NVDA  billentyû módosító parancsként"
+msgstr "A capslock használata speciális NVDA billentyûparancsként"
 
 #: gui\settingsDialogs.py:275
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "A numpad és inzert gombok  használata NVDA  billentyû módosító parancsként"
+msgstr "A numerikus billentyûzeten lévõ inzert gomb használata speciális NVDA billentyûparancsként"
 
 #: gui\settingsDialogs.py:278
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Az inzert gomb hosszú lenyomásának való használata  NVDA  billentyû módosító parancsként"
+msgstr "A normál Inzert gomb használata speciális NVDA billentyûparancsként"
 
 #: gui\settingsDialogs.py:281
 msgid "Speak typed &characters"
-msgstr "begépelt karakterek&kimondása"
+msgstr "&Karakterenkénti olvasás gépeléskor"
 
 #: gui\settingsDialogs.py:284
 msgid "Speak typed &words"
-msgstr "begépelt szavak&kimondása"
+msgstr "Sza&vankénti olvasás gépeléskor"
 
 #: gui\settingsDialogs.py:287
 msgid "Speak command &keys"
-msgstr "parancs&billentyûk kimondása"
+msgstr "&parancsbillentyûk kimondása"
 
 #: gui\settingsDialogs.py:313
 msgid "Report mouse &shape changes"
-msgstr " egér&alak változás bejelentése"
+msgstr "Egérmutató &alakváltozás jelzése"
 
 #: gui\settingsDialogs.py:316
 msgid "Report &object under mouse"
-msgstr "az egér alatt&lévö elem bejelentése"
+msgstr "Az egér&mutató alatti elem olvasása"
+
+#: gui\settingsDialogs.py:359
+msgid "play audio coordinates when mouse moves"
+msgstr "egér kordinátor változások jelzése hangjellel"
 
 #: gui\settingsDialogs.py:338
 msgid "Report &tooltips"
-msgstr "ezköztippek&bejelentése"
+msgstr "Eszköz&tippek felolvasása"
 
 #: gui\settingsDialogs.py:341
 msgid "Report &help balloons"
-msgstr "segítõ  &buborékok bejelentése"
+msgstr "&segítõ buborékok felolvasása"
 
 #: gui\settingsDialogs.py:344
 msgid "Report object shortcut &keys"
-msgstr "objektum parancsbillentyûk & kimondása"
+msgstr "objektum &gyorsbillentyûk bemondása"
 
 #: gui\settingsDialogs.py:347
 msgid "Report object &position information"
-msgstr "az objektum tartózkodási hely bejelentése"
+msgstr "&Objektumok heyének bemondása"
 
 #: gui\settingsDialogs.py:350
 msgid "Report object &group names"
-msgstr "objektum csoport& nevek bejelentése"
+msgstr "objektum csoport& nevek bemondása"
 
 #: gui\settingsDialogs.py:353
 msgid "Say object &state first"
-msgstr "az objektum& állapotának mondása elöször"
+msgstr "E&lõször az objektum álapotát mondja"
 
 #: gui\settingsDialogs.py:356
 msgid "&Beep on progress bar updates"
-msgstr "&hangjel kiadása folyamat jelzõ változásokkor" 
+msgstr "Fol&yamatjelzõ csíkok haladásának érzékeltetése hangjelzéssel"
 
 #: gui\settingsDialogs.py:383
 msgid "&Maximum number of characters on one line"
-msgstr "&maximum karakter szám egy soron "
+msgstr "Egy sorban lévõ karakterek ma&ximális száma"
 
 #: gui\settingsDialogs.py:388
 msgid "&Number of lines per page"
-msgstr "&maximum sor szám egy oldalon"
+msgstr "Egy ol&dalon lévõ sorok száma"
 
 #: gui\settingsDialogs.py:393
 msgid "Report &virtual presentation on focus changes"
-msgstr"fókusz& változásokkor a virtuális bemutatás bejelentése"
+msgstr "Az aktív elem változásának jelzése"
 
 #: gui\settingsDialogs.py:396
 msgid "Update the content &dynamically"
-msgstr"a tartalom& dinamikus frissitése"
+msgstr"a tartalom dinamikus f&rissitése"
 
 #: gui\settingsDialogs.py:399
 msgid "Report lin&ks"
-msgstr "hivatk&ozások bejelentése"
+msgstr "hivatkozások jelzése"
 
 #: gui\settingsDialogs.py:402
 msgid "Report &lists"
-msgstr "listák&bejelentése"
+msgstr "listák jelzése"
 
 #: gui\settingsDialogs.py:405
 msgid "Report list &items"
-msgstr"lista& elemek bejelentése"
+msgstr "listaelemek jelzése"
 
 #: gui\settingsDialogs.py:408
 msgid "Report &headings"
-msgstr "címsorok&bejelentése"
+msgstr "Címsorok jelzése"
 
 #: gui\settingsDialogs.py:411 gui\settingsDialogs.py:495
 msgid "Report &tables"
-msgstr "táblázatok&bejelentése"
+msgstr "táblázatok jelzése"
 
 #: gui\settingsDialogs.py:414
 msgid "Report &graphics"
-msgstr "képek&bejelentése"
+msgstr "képek&jelzése"
 
 #: gui\settingsDialogs.py:417
 msgid "Report f&orms"
-msgstr"ür&lapok bejelentése"
+msgstr"Ûr&lapok jelzése"
 
 #: gui\settingsDialogs.py:420
 msgid "Report form &fields"
-msgstr "ürlap&mezök bejelentése"
+msgstr "Ûrlap&mezõk jelzése"
 
 #: gui\settingsDialogs.py:423
 msgid "Report block &quotes"
-msgstr "idézõ&blokkok bejelentése"
+msgstr "idézõ&blokkok jelzése"
 
 #: gui\settingsDialogs.py:426
 msgid "Report &paragraphs"
-msgstr "paragrafok&bejelentése"
+msgstr "Bekezdések jelzése"
 
 #: gui\settingsDialogs.py:429
 msgid "Report f&rames"
-msgstr "keretek&bejelentése"
+msgstr "keretek jelzése"
 
 #: gui\settingsDialogs.py:474
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "a kurzor után lévõ Formátum válltozások bejelentése \n"
-" (bizonyos esetekben lelassulásokat okozhat)"
-
+msgstr "A kurzor utáni formázások érzékeltetése (a beszéd késésével járhat)"
 
 #: gui\settingsDialogs.py:477
 msgid "Report font &name"
-msgstr "betûtípus&név bejelentése"
+msgstr "betûtípus&név bemondása"
 
 #: gui\settingsDialogs.py:480
 msgid "Report font &size"
-msgstr "betütípus&méret bejelentése"
+msgstr "Betû&méret bemondása"
 
 #: gui\settingsDialogs.py:483
 msgid "Report font attri&butes"
-msgstr "betütípus&attríbútumok bejelentése"
+msgstr "Betû&attríbútumok bemondása"
 
 #: gui\settingsDialogs.py:486
 msgid "Report st&yle"
-msgstr "stí&lus bejelentése"
+msgstr "stí&lus bemondása"
 
 #: gui\settingsDialogs.py:489
 msgid "Report &pages"
-msgstr "oldal&számok bejelentése"
+msgstr "oldal&számok bemondása"
 
 #: gui\settingsDialogs.py:492
 msgid "Report &line numbers"
-msgstr "sor&számok bejelentése"
+msgstr "Sorszámok bemondása"
 
 #: gui\settingsDialogs.py:498
 msgid "Report &alignment"
-msgstr "kiegyenlités& bejelentése"
+msgstr "Igazítás jelzése"
 
 #: keyboardHandler.py:49
 msgid "caps lock %s"
@@ -1962,11 +1964,11 @@ msgstr "Szöveg vége"
 
 #: speech.py:242
 msgid "level %d"
-msgstr "fok %d"
+msgstr "%d. szint"
 
 #: speech.py:246
 msgid "contains %s"
-msgstr "tartalmaz %s"
+msgstr "%s-t tartalmaz"
 
 #: speech.py:283
 msgid "cap %s"
@@ -1974,47 +1976,47 @@ msgstr "Nagy %s"
 
 #: synthDrivers\silence.py:21
 msgid "No speech,  a template synthesizer"
-msgstr "Nincs beszéd, egy példa szintetizátor"
+msgstr "Nincs beszéd"
 
 #: textBuffer.py:207
 msgid "page %d"
-msgstr "oldal %d"
+msgstr "%d. oldal"
 
 #: textBuffer.py:213
 msgid "line %d"
-msgstr "sor %d"
+msgstr "%d. sor"
 
 #: textBuffer.py:219
 msgid "out of table"
-msgstr "kilépés a táblázatból"
+msgstr "táblázat vége"
 
 #: textBuffer.py:225
 msgid "table with %d columns and %d rows"
-msgstr "táblázat %d oszloppal és  %d sorral"
+msgstr "%d sorból és %d oszlopból álló táblázat"
 
 #: textBuffer.py:231
 msgid "row %d"
-msgstr "sor %d"
+msgstr "%d. sor"
 
 #: textBuffer.py:236
 msgid "column %d"
-msgstr "oszlop %d"
+msgstr "%d. oszlop"
 
 #: textBuffer.py:242 textBuffer.py:310
 msgid "style %s"
-msgstr "Stílus %s"
+msgstr "%s"
 
 #: textBuffer.py:248 textBuffer.py:312
 msgid "alignment %s"
-msgstr "Kiegyenlités %s"
+msgstr "Igazítás %s"
 
 #: textBuffer.py:254 textBuffer.py:314
 msgid "font name %s"
-msgstr "Betütípus neve %s"
+msgstr "%s"
 
 #: textBuffer.py:260 textBuffer.py:316
 msgid "font size %d"
-msgstr "betûtipus mérete %d"
+msgstr "%d"
 
 #: textBuffer.py:268
 msgid "not bold"
@@ -2022,11 +2024,11 @@ msgstr "nem félkövér"
 
 #: textBuffer.py:273 textBuffer.py:320
 msgid "italic"
-msgstr "dölt"
+msgstr "dõlt"
 
 #: textBuffer.py:275
 msgid "not italic"
-msgstr "nem dölt"
+msgstr "nem dõlt"
 
 #: textBuffer.py:282
 msgid "not underline"
@@ -2034,51 +2036,51 @@ msgstr "nincsen aláhúzva"
 
 #: textBuffer.py:289
 msgid "not superscript"
-msgstr "nem superskript"
+msgstr "nincs felsõ indexben"
 
 #: textBuffer.py:296
 msgid "not subscript"
-msgstr "nem subskript"
+msgstr "nincs alsó indexben"
 
 #: textBuffer.py:470 textBuffer.py:498 textBuffer.py:506
 msgid "Moves and then reads the current line"
-msgstr "léptet és az aktív sort felolvassa"
+msgstr "A megfelelõ kurzormozgatás után felolvassa a kurzor sorát."
 
 #: textBuffer.py:474
 msgid "reads the current line"
-msgstr "Az aktív sort felolvassa"
+msgstr "Felolvassa az aktuális sort."
 
 #: textBuffer.py:482
 msgid "Moves and reads the current character"
-msgstr "léptet, és felolvassa az aktív karaktert"
+msgstr "A megfelelõ kurzormozgatás után bemondja a kurzor alatti karaktert."
 
 #: textBuffer.py:490
 msgid "Moves and reads the current word"
-msgstr "léptet, és az aktív szót felolvassa"
+msgstr "A megfelelõ kurzormozgatás után felolvassa a kurzor alatti szót."
 
 #: textBuffer.py:514
 msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "sajátkézileg a következö paragrafra lép és felolvassa ezt"
+msgstr "A következõ bekezdésre áll, és felolvassa."
 
 #: textBuffer.py:522
 msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "sajátkézileg lép az elozo paragrafra és felolvassa ezt" 
+msgstr "Az elõzõ bekezdésre ugrik, és felolvassa."
 
 #: textBuffer.py:534
 msgid "no selections"
-msgstr "nincsen kiválasztva"
+msgstr "nem jelölt ki szöveget"
 
 #: textBuffer.py:553
 msgid "Moves and reads the current selection"
-msgstr "átlép a következö válaztásra, majd felolvassa azt"
+msgstr "Kijelölés közben felolvassa a kijelölt szöveget."
 
 #: textBuffer.py:559
 msgid "Deletes the character and reads the new current character"
-msgstr "a kurzor alatt lévö karaktert letörli, és a  jelenlévo karaktert felolvassa"
+msgstr "Törli a kurzor alatti karaktert és bemondja az aktuálisat."
 
 #: textBuffer.py:573
 msgid "Reads the character before the current character and then deletes it"
-msgstr "az aktív karakter elotti karaktert felolvassa, majd letörli azt."
+msgstr "kimondja és törli az aktuális karakter elõtti karaktert"
 
 #: versionInfo.py:8
 msgid "NonVisual Desktop Access"
@@ -2086,7 +2088,7 @@ msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Egy ingyenes és nyílt terjeztésü képernyõ felolvasó szoftver a windows operációs rendszerhez"
+msgstr "Egy ingyenes és nyílt forráskódú képernyõolvasó szoftver a windows operációs rendszerhez"
 
 #: versionInfo.py:14
 msgid ""
@@ -2098,34 +2100,33 @@ msgid ""
 msgstr ""
 "Copyright (C) 2006-2007 nvda termékfejlesztõk. \n"
 "\n"
-"A NVDA-t Géczy Tamás forditotta le magyar nyelvre. Ha valamilyen nyelvtani hibát észlel, irjon a gt1991@gmail.com címre.  \n"
-"köszönet jár Velegi Istvánnak, aki ötleteket adott a nyelvtanban. \n"
+"A NVDA-t  a  magyar NVDA fordító csoport  honositotta. Ha valamilyen nyelvtani hibát észlel, irjon a gt1991@gmail.com címre.  \n"
 "új nyelvcsomagokat a http://www.eurpod.com/nvda.html honlapon találhat \n"
-"ezek nyelvtani hibákat javitanak ki a programban, és álltalában két hetente fog megjelenni egy új nyelv kiadás \n"
 
-"%(name)s az új álltalános publik licenszerzödés gpl alatt áll, ami azt jelenti, hogy ön megtudja osztani   "
-"és változtatni a szoftvert ingyen,  feltéve, hogy  a licenszerzödést és  kódokat is átadja. " 
-"Ez akkor is érvényes, ha az eredeti vagy módositott szoftvert addja át, és ha"
-"bármilyen komponenset felhasznál ebböl a szoftverböl. \n"
+"az %(name)s  a GPL nyílt licenszerzödés hatálya alatt áll, ami azt jelenti, hogy ön szabadon terjesztheti az NVDA-t és"
+" kedvére módosíthatja is, feltéve, hogy a licencszerzödést mellékeli és  a forráskódot kérésre rendelkezésre bocsátja."
+"Ez vonatkozik az eredeti és módosított szoftverre, és minden olyan szoftverre is, amiben felhasználta az"
+"NVDA forráskódját. \n"
+
 "Ha elakarja olvasni ezt a szerzödést angolul, akkor a\n" 
 "http://www.gnu.org/licenses/gpl.html\n"
-"honlapon megteheti, vagy olvassa el a copying.txt Fájlt."
+"honlapon megtelálja, vagy olvassa el a copying.txt Fájlt."
 
 #: virtualBuffers\__init__.py:193
 msgid "out of %s"
-msgstr "kilépés a  %s ból"
+msgstr "%s vége"
 
 #: virtualBuffers\__init__.py:274
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "Egy oldalt fellép a virtuális buffer dokumentomban"
+msgstr "Egy oldallal feljebb lép a virtuális ablakban lévõ dokumentumban."
 
 #: virtualBuffers\__init__.py:289
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "Egy oldalal lellép a virtuális buffer dokumentomban"
+msgstr "A virtuális ablakban lévõ dokumentumban egyet elõrelapoz"
 
 #: virtualBuffers\__init__.py:293
 msgid "activates the current object in the virtual buffer"
-msgstr "A virtuális bufferben jelen elemet aktíválja"
+msgstr "Aktivizálja az aktuális elemet a virtuális ablakban."
 
 #: virtualBuffers\__init__.py:316 virtualBuffers\__init__.py:327
 msgid "no more headings"
@@ -2133,23 +2134,23 @@ msgstr "nincsen több címsor"
 
 #: virtualBuffers\__init__.py:317
 msgid "moves to the next heading"
-msgstr "átlép a következo címsorra"
+msgstr "A következõ címsorra áll."
 
 #: virtualBuffers\__init__.py:328
 msgid "moves to the previous heading"
-msgstr "Átlép az elõzõ címsorra"
+msgstr "Az elõzõ címsorra áll."
 
 #: virtualBuffers\__init__.py:338 virtualBuffers\__init__.py:349
 msgid "no more paragraphs"
-msgstr "nincs több paragrafus"
+msgstr "nincs több bekezdés"
 
 #: virtualBuffers\__init__.py:339
 msgid "moves to the next paragraph"
-msgstr "Átlép a következõ paragrafra"
+msgstr "A következõ bekezdésre ugrik."
 
 #: virtualBuffers\__init__.py:350
 msgid "moves to the previous paragraph"
-msgstr "átlép az elõzõ paragrafra"
+msgstr "Az elõzõ bekezdésre áll."
 
 #: virtualBuffers\__init__.py:360 virtualBuffers\__init__.py:371
 msgid "no more tables"
@@ -2157,11 +2158,11 @@ msgstr "nincs több táblázat"
 
 #: virtualBuffers\__init__.py:361
 msgid "moves to the next table"
-msgstr "átlép a következo táblázatra"
+msgstr "A következõ táblázatra áll."
 
 #: virtualBuffers\__init__.py:372
 msgid "moves to the previous table"
-msgstr "átlép az elozo táblázatra."
+msgstr "Rááll az elõzõ táblázatra."
 
 #: virtualBuffers\__init__.py:382 virtualBuffers\__init__.py:393
 msgid "no more links"
@@ -2169,11 +2170,11 @@ msgstr "nincsen több hivatkozás"
 
 #: virtualBuffers\__init__.py:383
 msgid "moves to the next link"
-msgstr "átlép a kovetkezö hivatkozásra"
+msgstr "A következõ hivatkozásra ugrik."
 
 #: virtualBuffers\__init__.py:394
 msgid "moves to the previous link"
-msgstr "átlép az elozo hivatkozásra"
+msgstr "Az elõzõ hivatkozásra ugrik."
 
 #: virtualBuffers\__init__.py:404 virtualBuffers\__init__.py:415
 msgid "no more lists"
@@ -2181,35 +2182,35 @@ msgstr "nincs több lista"
 
 #: virtualBuffers\__init__.py:405
 msgid "moves to the next list"
-msgstr "a következo listára átlép"
+msgstr "a következõ listára ugrik"
 
 #: virtualBuffers\__init__.py:416
 msgid "moves to the previous list"
-msgstr "átlép az elozo listára"
+msgstr "az elõzõ listára ugrik"
 
 #: virtualBuffers\__init__.py:426 virtualBuffers\__init__.py:437
 msgid "no more list items"
-msgstr "nincs több lista elem"
+msgstr "nincs több listaelem"
 
 #: virtualBuffers\__init__.py:427
 msgid "moves to the next list item"
-msgstr "átlép a következo lista elemre"
+msgstr "a következõ listaelemre áll" 
 
 #: virtualBuffers\__init__.py:438
 msgid "moves to the previous list item"
-msgstr "átlép az elozo lista elemre"
+msgstr "az elõzõ listaelemre ugrik"
 
 #: virtualBuffers\__init__.py:448 virtualBuffers\__init__.py:459
 msgid "no more form fields"
-msgstr "nincs több ürlap mezö"
+msgstr "nincs több ûrlapmezõ"
 
 #: virtualBuffers\__init__.py:449
 msgid "Moves to the next form field"
-msgstr "Átlép a következo ürlap mezore"
+msgstr "A következõ ûrlapmezõre ugrik."
 
 #: virtualBuffers\__init__.py:460
 msgid "moves to the previous form field"
-msgstr "átlép az elozo ürlap mezore"
+msgstr "az elõzõ ûrlapmezõre lép."
 
 #: virtualBuffers\__init__.py:463
 msgid "Find"
@@ -2217,23 +2218,23 @@ msgstr "keresés"
 
 #: virtualBuffers\__init__.py:463
 msgid "Type the text you wish to find"
-msgstr "írja be a keresni kivánt szöveget."
+msgstr "írja be a keresendõ szöveget."
 
 #: virtualBuffers\__init__.py:473
 msgid "Find Error"
-msgstr "keresés hiba"
+msgstr "keresési hiba"
 
 #: virtualBuffers\__init__.py:473
 msgid "text: \"%s\" not found"
-msgstr "szöveg: \"%s\" nem található"
+msgstr "Nem találtam meg a  \"%s\" szöveget!"
 
 #: virtualBuffers\__init__.py:479
 msgid "find a text pattern from the current cursor's position"
-msgstr "szöveg keresése, a jelenlegi kurzortól"
+msgstr "szöveg keresése a kurzortól"
 
 #: virtualBuffers\__init__.py:483
 msgid "find next occurrence of text"
-msgstr "a szöveg következo megjelenésének megkeresése"
+msgstr "Megkeresi a megadott szöveg következõ elõfordulását."
 
 #: virtualBuffers\__init__.py:502 virtualBuffers\__init__.py:503
 msgid "h=headingQuickKey"
@@ -2241,25 +2242,26 @@ msgstr "h= következo címsor"
 
 #: virtualBuffers\__init__.py:504 virtualBuffers\__init__.py:505
 msgid "f=formFieldQuickKey"
-msgstr "f=következo urlap mezo"
+msgstr "f=következo ûrlap mezõ"
 
 #: virtualBuffers\__init__.py:506 virtualBuffers\__init__.py:507
 msgid "p=paragraphQuickKey"
-msgstr "p=következö paragrafus gyors parancs"
+msgstr "p=következõ bekezdés"
 
 #: virtualBuffers\__init__.py:508 virtualBuffers\__init__.py:509
 msgid "t=tableQuickKey"
-msgstr "t=táblázat gyors parancs"
+msgstr "t=következõ táblázat"
 
 #: virtualBuffers\__init__.py:510 virtualBuffers\__init__.py:511
 msgid "k=linkQuickKey"
-msgstr "k=következö link gyors parancs"
+msgstr "k=következõ hivatkozás"
 
 #: virtualBuffers\__init__.py:512 virtualBuffers\__init__.py:513
 msgid "l=listQuickKey"
-msgstr "l=következö lista gyors parancs"
+msgstr "l=következõ lista"
 
 #: virtualBuffers\__init__.py:514 virtualBuffers\__init__.py:515
 msgid "i=listItemQuickKey"
-msgstr "i=következö lista elem gyors parancs"
+msgstr "i=következõ listaelem"
+
 
