@@ -374,12 +374,35 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 	def _get_value(self):
 		return None
 
-	def _get_groupName(self):
-		return None
-
-
 	def _get_description(self):
 		return None
+
+	def _get_groupName(self):
+		focus=api.getFocusObject()
+		foreground=api.getForegroundObject()
+		if self!=focus or foreground.role!=controlTypes.ROLE_DIALOG: 
+			return None
+		try:
+			curLocation=self.location
+			groupObjA=groupObjB=self
+			groupObj=None
+			while not groupObj and (groupObjA or groupObjB):
+				groupObjA=groupObjA.previous
+				groupObjB=groupObjB.parent
+				if groupObjA and groupObjA.role==controlTypes.ROLE_GROUPING:
+					groupObj=groupObjA
+					continue
+				if groupObjB and groupObjB.role==controlTypes.ROLE_GROUPING:
+					groupObj=groupObjB
+					continue
+			if groupObj:
+				groupLocation=groupObj.location
+				if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
+					name=groupObj.name
+					return name
+			return None
+		except:
+			return None
 
 	def _get_keyboardShortcut(self):
 		return None

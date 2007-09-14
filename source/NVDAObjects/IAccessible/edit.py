@@ -387,6 +387,9 @@ class Edit(IAccessible):
 		info.expand(self.editValueUnit)
 		return info.text
 
+	def _get_role(self):
+		return controlTypes.ROLE_EDITABLETEXT
+
 	def event_mouseMove(self,x,y):
 		mouseEntered=self._mouseEntered
 		super(Edit,self).event_mouseMove(x,y)
@@ -414,7 +417,7 @@ class Edit(IAccessible):
 		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION).copy()
 
 	def reportFocus(self):
-		speech.speakObjectProperties(self,name=True,role=True,keyboardShortcut=True,positionString=True)
+		speech.speakObjectProperties(self,groupName=True,name=True,role=True,keyboardShortcut=True,positionString=True)
 		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
 		self._editLastSelectionPos=info
 		if info.isCollapsed:
@@ -472,6 +475,9 @@ class Edit(IAccessible):
 
 class RichEdit(Edit):
 	editAPIVersion=1
+
+class RichEditA(RichEdit):
+	editAPIUnicode=False
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2

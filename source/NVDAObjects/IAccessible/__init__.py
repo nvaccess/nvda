@@ -477,20 +477,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			self.event_menuStart()
 
 	def _get_groupName(self):
-		if not self.hasFocus or not api.getForegroundObject() or not isinstance(api.getForegroundObject(),IAccessible) or api.getForegroundObject().IAccessibleRole != IAccessibleHandler.ROLE_SYSTEM_DIALOG or self.IAccessibleChildID != 0 or self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_DIALOG:
+		if self.IAccessibleChildID>0:
 			return None
-		try:
-			curLocation=self.location
-			groupObj=self
-			while groupObj and (groupObj.IAccessibleRole!=IAccessibleHandler.ROLE_SYSTEM_GROUPING):
-				groupObj=groupObj.previous
-			if groupObj and groupObj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_GROUPING:
-				groupLocation=groupObj.location
-				if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
-					return groupObj.name
-			return None
-		except:
-			return None
+		else:
+			return super(IAccessible,self)._get_groupName()
 
 	def reportFocus(self):
 		if self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
@@ -855,7 +845,7 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.RichEdit20A",
+	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20A",
 	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
@@ -907,4 +897,10 @@ _staticMap={
 	("TTntStatusBar.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_TOOLBAR):"ToolBar",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"ToolBarButton",
+	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
+	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
+	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
+	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 }
