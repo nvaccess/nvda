@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5\n"
 "POT-Creation-Date: 2007-08-05 13:50+Kesäaika\n"
-"PO-Revision-Date: 2007-08-12 09:28+0300\n"
+"PO-Revision-Date: 2007-09-15 12:26+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -762,7 +762,7 @@ msgstr "hattu"
 
 #: characterSymbols.py:50
 msgid "line"
-msgstr "pysty"
+msgstr "alaviiva"
 
 #: characterSymbols.py:51
 msgid "graav"
@@ -774,7 +774,7 @@ msgstr "alkuaalto"
 
 #: characterSymbols.py:53
 msgid "bar"
-msgstr "palkki"
+msgstr "pysty"
 
 #: characterSymbols.py:54
 msgid "right brace"
@@ -919,11 +919,7 @@ msgstr ""
 "sopivimmat asetukset. Jos kuitenkin suljet valintaikkunan Peruuta-"
 "painikkeella, tekemiäsi muutoksia ei tallenneta.\n"
 "\n"
-"Asetuksia ei oletuksena säilytetä seuraavalle NVDA:n käyttökerralle, "
-"ellet paina ctrl+s tai valitse NVDA-valikosta 'Tallenna asetukset'. Voit "
-"asettaa NVDA:n tallentamaan asetukset automaattisesti suljettaessa "
-"menemällä Asetukset-valikossa 'Käyttöliittymä...'-kohtaan, valitsemalla "
-"'Tallenna asetukset suljettaessa' -valintaruudun ja painamalla OK.\n"
+"Asetuksia ei oletuksena tallenneta, ellet paina ctrl+s tai valitse NVDA-valikosta 'Tallenna asetukset'. Voit asettaa NVDA:n tallentamaan asetukset automaattisesti suljettaessa menemällä Asetukset-valikossa 'Käyttöliittymä...'-kohtaan, valitsemalla 'Tallenna asetukset suljettaessa' -valintaruudun ja painamalla OK.\n"
 "\n"
 "Muutamia hyödyllisiä NVDA:n näppäinkomentoja:\n"
 "\n"
@@ -1221,7 +1217,7 @@ msgstr "Kieliasetuksen muutos"
 
 #: gui\settingsDialogs.py:103
 msgid "Could not load the %s synthesizer."
-msgstr "Syntetisaattoria %s ei voi ladata."
+msgstr "Syntetisaattoria %s ei voitu ladata."
 
 #: gui\settingsDialogs.py:103
 msgid "Synthesizer Error"
@@ -1337,7 +1333,7 @@ msgstr "Ilmoita lomakekentät"
 
 #: gui\settingsDialogs.py:346
 msgid "Report block quotes"
-msgstr "Ilmoita lainaukset"
+msgstr "Ilmoita sisennykset joissa kappaleenvaihto"
 
 #: gui\settingsDialogs.py:349
 msgid "Report paragraphs"
@@ -1441,11 +1437,11 @@ msgstr "fonttikoko %d"
 
 #: textBuffer.py:268
 msgid "not bold"
-msgstr "ei lihavoitu"
+msgstr "ei lihavointia"
 
 #: textBuffer.py:275
 msgid "not italic"
-msgstr "ei kursivoitu"
+msgstr "ei kursivointia"
 
 #: textBuffer.py:282
 msgid "not underline"
@@ -1453,11 +1449,11 @@ msgstr "ei alleviivausta"
 
 #: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
 msgid "superscript"
-msgstr "päällekirjoitus"
+msgstr "yläindeksi"
 
 #: textBuffer.py:289
 msgid "not superscript"
-msgstr "ei päällekirjoitusta"
+msgstr "ei yläindeksiä"
 
 #: textBuffer.py:296
 msgid "not subscript"
@@ -1479,15 +1475,15 @@ msgstr "alareuna"
 
 #: textBuffer.py:470 textBuffer.py:494 textBuffer.py:502
 msgid "Moves and then reads the current line"
-msgstr "Siirtyy ja lukee kohdalla olevan rivin "
+msgstr "Siirtyy kohdalla olevalle riville ja lukee sen"
 
 #: textBuffer.py:478
 msgid "Moves and reads the current character"
-msgstr "Siirtyy ja lukee kohdalla olevan merkin"
+msgstr "Siirtyy kohdalla olevaan merkkiin ja lukee sen"
 
 #: textBuffer.py:486
 msgid "Moves and reads the current word"
-msgstr "Siirtyy ja lukee kohdalla olevan sanan"
+msgstr "Siirtyy kohdalla olevaan sanaan ja lukee sen"
 
 #: textBuffer.py:510
 msgid "Manually moves to the next paragraph and then speaks it"
@@ -1511,7 +1507,7 @@ msgstr "Poistaa merkin ja lukee uuden kohdalla olevan merkin"
 
 #: textBuffer.py:569
 msgid "Reads the character before the current character and then deletes it"
-msgstr "Lukee ennen kohdalla olevaa merkkiä olevan merkin ja poistaa sen"
+msgstr "lukee kohdalla olevaa merkkiä ennen olevan merkin ja poistaa sen"
 
 #: versionInfo.py:8
 msgid "NonVisual Desktop Access"
@@ -1569,7 +1565,7 @@ msgstr "määritelmä"
 
 #: virtualBuffers\MSHTML.py:299
 msgid "file updload"
-msgstr "tiedoston lataus"
+msgstr "tiedoston siirto"
 
 #: virtualBuffers\MSHTML.py:303
 msgid "protected"
@@ -1625,7 +1621,7 @@ msgstr "dokumentti"
 
 #: virtualBuffers\baseType.py:57
 msgid "block quote"
-msgstr "lainaus"
+msgstr "sisennys kappaleenvaihdolla"
 
 #: virtualBuffers\baseType.py:58
 msgid "paragraph"
@@ -1641,7 +1637,7 @@ msgstr "valintaruutu"
 
 #: virtualBuffers\baseType.py:61
 msgid "radio button"
-msgstr "valintanappi"
+msgstr "valintapainike"
 
 #: virtualBuffers\baseType.py:62
 msgid "edit area"
@@ -1669,11 +1665,11 @@ msgstr "kautta %s"
 
 #: virtualBuffers\baseType.py:314
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "Siirtyy yhden sivun ylös näennäispuskurin nykyisessä dokumentissa"
+msgstr "siirtyy yhden sivun ylös näennäispuskurin nykyisessä dokumentissa"
 
 #: virtualBuffers\baseType.py:329
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "Siirtyy yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
+msgstr "siirtyy yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
 
 #: virtualBuffers\baseType.py:333
 msgid "activates the current object in the virtual buffer"
@@ -1685,11 +1681,11 @@ msgstr "ei enempää otsikoita"
 
 #: virtualBuffers\baseType.py:357
 msgid "moves to the next heading"
-msgstr "Siirtää seuraavan otsikon kohdalle"
+msgstr "siirtää seuraavan otsikon kohdalle"
 
 #: virtualBuffers\baseType.py:368
 msgid "moves to the previous heading"
-msgstr "Siirtää edellisen otsikon kohdalle"
+msgstr "siirtää edellisen otsikon kohdalle"
 
 #: virtualBuffers\baseType.py:378 virtualBuffers\baseType.py:389
 msgid "no more paragraphs"
@@ -1697,11 +1693,11 @@ msgstr "ei enempää kappaleita"
 
 #: virtualBuffers\baseType.py:379
 msgid "moves to the next paragraph"
-msgstr "Siirtää seuraavan kappaleen kohdalle"
+msgstr "siirtää seuraavan kappaleen kohdalle"
 
 #: virtualBuffers\baseType.py:390
 msgid "moves to the previous paragraph"
-msgstr "Siirtää edellisen kappaleen kohdalle"
+msgstr "siirtää edellisen kappaleen kohdalle"
 
 #: virtualBuffers\baseType.py:400 virtualBuffers\baseType.py:411
 msgid "no more tables"
@@ -1709,11 +1705,11 @@ msgstr "ei enempää taulukoita"
 
 #: virtualBuffers\baseType.py:401
 msgid "moves to the next table"
-msgstr "Siirtää seuraavan taulukon kohdalle"
+msgstr "siirtää seuraavan taulukon kohdalle"
 
 #: virtualBuffers\baseType.py:412
 msgid "moves to the previous table"
-msgstr "Siirtää edellisen taulukon kohdalle"
+msgstr "siirtää edellisen taulukon kohdalle"
 
 #: virtualBuffers\baseType.py:422 virtualBuffers\baseType.py:433
 msgid "no more links"
@@ -1721,11 +1717,11 @@ msgstr "ei enempää linkkejä"
 
 #: virtualBuffers\baseType.py:423
 msgid "moves to the next link"
-msgstr "Siirtää seuraavan linkin kohdalle"
+msgstr "siirtää seuraavan linkin kohdalle"
 
 #: virtualBuffers\baseType.py:434
 msgid "moves to the previous link"
-msgstr "Siirtää edellisen linkin kohdalle"
+msgstr "siirtää edellisen linkin kohdalle"
 
 #: virtualBuffers\baseType.py:444 virtualBuffers\baseType.py:455
 msgid "no more lists"
@@ -1737,7 +1733,7 @@ msgstr "siirtää seuraavan luettelon kohdalle"
 
 #: virtualBuffers\baseType.py:456
 msgid "moves to the previous list"
-msgstr "Siirtää edellisen luettelon kohdalle"
+msgstr "siirtää edellisen luettelon kohdalle"
 
 #: virtualBuffers\baseType.py:466 virtualBuffers\baseType.py:477
 msgid "no more list items"
@@ -1745,7 +1741,7 @@ msgstr "ei enempää luettelon osia"
 
 #: virtualBuffers\baseType.py:467
 msgid "moves to the next list item"
-msgstr "Siirtää seuraavan luettelon osan kohdalle"
+msgstr "siirtää seuraavan luettelon osan kohdalle"
 
 #: virtualBuffers\baseType.py:478
 msgid "moves to the previous list item"
@@ -1761,7 +1757,7 @@ msgstr "Siirtää seuraavan lomakekentän kohdalle"
 
 #: virtualBuffers\baseType.py:500
 msgid "moves to the previous form field"
-msgstr "Siirtää edellisen lomakekentän kohdalle"
+msgstr "siirtää edellisen lomakekentän kohdalle"
 
 #: virtualBuffers\baseType.py:503
 msgid "Find"
@@ -1793,7 +1789,7 @@ msgstr "h=otsikko"
 
 #: virtualBuffers\baseType.py:544 virtualBuffers\baseType.py:545
 msgid "f=formFieldQuickKey"
-msgstr "f=lomake"
+msgstr "f=lomakekenttä"
 
 #: virtualBuffers\baseType.py:546 virtualBuffers\baseType.py:547
 msgid "p=paragraphQuickKey"
