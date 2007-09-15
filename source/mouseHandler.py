@@ -83,7 +83,7 @@ def executeMouseMoveEvent(x,y):
 		oldLeft=oldTop=oldWidth=oldHeight=0
 	mouseObject=oldMouseObject
 	windowAtPoint=ctypes.windll.user32.WindowFromPoint(x,y)
-	if JABHandler.isJavaWindow(windowAtPoint):
+	if JABHandler.isRunning and JABHandler.isJavaWindow(windowAtPoint):
 		if not isinstance(oldMouseObject,NVDAObjects.JAB.JAB) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
 			oldJabContext=JABHandler.JABContext(hwnd=windowAtPoint)
 		else:
