@@ -363,19 +363,25 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 class Edit(IAccessible):
 
-	TextInfo=EditTextInfo
 	editAPIVersion=0
 	editAPIUnicode=True
 	editAPIHasITextDocument=False
 	editValueUnit=textHandler.UNIT_LINE
 
 	def __init__(self,*args,**kwargs):
+		if not hasattr(self,'TextInfo'):
+			self.TextInfo=EditTextInfo
+			replacedTextInfo=True
+		else:
+			replacedTextInfo=False
 		super(Edit,self).__init__(*args,**kwargs)
 		self._lastMouseTextOffsets=None
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+		if replacedTextInfo:
+			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 		self._editLastSelectionPos=self.reviewPosition.copy()
+
 
 	def __del__(self):
 		if self.editAPIVersion>=1:

@@ -19,6 +19,7 @@ import textHandler
 import speech
 import controlTypes
 from . import IAccessible
+import NVDAObjects
 
 lastMSHTMLEditGainFocusTimeStamp=0
 
@@ -175,12 +176,13 @@ class MSHTML(IAccessible):
 
 	def event_gainFocus(self):
 		if self.isContentEditable:
-			self.TextInfo=MSHTMLTextInfo
 			biasRange=self.domElement.document.selection.createRange().duplicate()
 			biasRange.move("textedit",-1)
 			biasMark=biasRange.getBookmark()
 			self._textRangeLineNumBias=ord(biasMark[8])
 			self._textRangeOffsetBias=ord(biasMark[2])
+			self.TextInfo=MSHTMLTextInfo
+			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 			self.role=controlTypes.ROLE_EDITABLETEXT
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -198,7 +200,8 @@ class MSHTML(IAccessible):
 
 	def event_looseFocus(self):
 		if hasattr(self,'domElement'):
-			self.TextInfo=super(MSHTML,self).TextInfo
+			self.TextInfo=NVDAObjects.NVDAObjectTextInfo
+
 
 [MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

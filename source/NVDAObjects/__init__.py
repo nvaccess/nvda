@@ -313,8 +313,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
-	TextInfo=NVDAObjectTextInfo
-
 	def __init__(self):
 		self._oldValue=None
 		self._oldStates=self.states
@@ -324,7 +322,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._hashPrime=23
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
-		if self.TextInfo==NVDAObjectTextInfo: 
+		if not hasattr(self,'TextInfo'):
+			self.TextInfo=NVDAObjectTextInfo
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def __hash__(self):

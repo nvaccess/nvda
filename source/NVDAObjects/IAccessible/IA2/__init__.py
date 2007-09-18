@@ -1,5 +1,6 @@
 import ctypes
 import comtypes
+import winsound
 import debug
 import api
 import speech
@@ -108,15 +109,27 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
+class IA2RecursiveTextInfo(textHandler.TextInfo):
+
+	def _getObjWithCaret(self):
+		lastObj=curObj=self.obj
+		while isinstance(curObj,IA2):
+			lastObj=curObj
+			curObj=curObj.activeChild
+		if not curObj:
+			curObj=lastObj
+		return curObj
+
 class IA2(IAccessible):
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+		replacedTextInfo=False
 		if not windowHandle:
 			pass #windowHandle=IAccessibleObject.WindowHandle
-		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
 			self.TextInfo=IA2TextTextInfo
+			replacedTextInfo=True
 			try:
 				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleEditableText)
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
@@ -147,6 +160,9 @@ class IA2(IAccessible):
 				pass
 		except:
 			pass
+		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+		if replacedTextInfo:
+			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _get_role(self):
 		IA2Role=self.IAccessibleObject.role()

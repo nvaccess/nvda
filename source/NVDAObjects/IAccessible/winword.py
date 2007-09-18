@@ -248,8 +248,15 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 class WordDocument(IAccessible):
 
 	def __init__(self,*args,**kwargs):
+		if not hasattr(self,'TextInfo'):
+			self.TextInfo=WordDocumentTextInfo
+			replacedTextInfo=True
+		else:
+			replacedTextInfo=False
 		super(WordDocument,self).__init__(*args,**kwargs)
 		self.dom=self.getDocumentObjectModel()
+		if replacedTextInfo:
+			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -366,4 +373,3 @@ class WordDocument(IAccessible):
 	("control+alt+extendedRight","nextColumn"),
 ]]
 
-WordDocument.TextInfo=WordDocumentTextInfo

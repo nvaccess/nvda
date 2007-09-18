@@ -122,11 +122,16 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(IAccessible):
 
-	TextInfo=ScintillaTextInfo
-
 	def __init__(self,*args,**kwargs):
+		if not hasattr(self,'TextInfo'):
+			self.TextInfo=ScintillaTextInfo
+			replacedTextInfo=True
+		else:
+			replacedTextInfo=False
 		self._lastMouseTextOffsets=None
 		super(Scintilla,self).__init__(*args,**kwargs)
+		if replacedTextInfo:
+			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):
