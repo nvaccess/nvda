@@ -62,7 +62,10 @@ IA2Handler.ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
-		return self.obj.IAccessibleTextObject.CaretOffset
+		try:
+			return self.obj.IAccessibleTextObject.CaretOffset
+		except:
+			return 0
 
 	def _setCaretOffset(self,offset):
 		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
@@ -108,17 +111,6 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _lineNumFromOffset(self,offset):
 		return -1
-
-class IA2RecursiveTextInfo(textHandler.TextInfo):
-
-	def _getObjWithCaret(self):
-		lastObj=curObj=self.obj
-		while isinstance(curObj,IA2):
-			lastObj=curObj
-			curObj=curObj.activeChild
-		if not curObj:
-			curObj=lastObj
-		return curObj
 
 class IA2(IAccessible):
 
