@@ -84,7 +84,7 @@ InstProgressFlags Smooth
 !insertmacro MUI_LANGUAGE "Russian"
 !insertmacro MUI_LANGUAGE "Portuguese"
 !insertmacro MUI_LANGUAGE "PortugueseBR"
-;!insertmacro MUI_LANGUAGE "Polish"
+!insertmacro MUI_LANGUAGE "Polish"
 ;!insertmacro MUI_LANGUAGE "Ukrainian"
 !insertmacro MUI_LANGUAGE "Czech"
 !insertmacro MUI_LANGUAGE "Slovak"
