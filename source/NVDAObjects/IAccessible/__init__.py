@@ -53,6 +53,7 @@ def getNVDAObjectFromPoint(x,y):
 def processGeckoDescription(obj):
 	if obj.windowClassName not in ["MozillaWindowClass","MozillaContentWindowClass","MozillaUIWindowClass","MozillaDialogClass"]:
 		return
+	obj.reportFocusNeedsIAccessibleFocusState=False
 	rawDescription=obj.description
 	if not isinstance(rawDescription,basestring):
 		return
