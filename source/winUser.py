@@ -21,7 +21,25 @@ class NMHdrStruct(Structure):
 		('code',c_uint),
 	]
 
+class GUITHREADINFO(Structure):
+	_fields_=[
+		('cbSize',DWORD),
+		('flags',DWORD),
+		('hwndActive',HWND),
+ 		('hwndFocus',HWND),
+		('hwndCapture',HWND),
+		('hwndMenuOwner',HWND),
+		('hwndMoveSize',HWND),
+		('hwndCaret',HWND),
+		('rcCaret',RECT),
+	]
+
 #constants
+GUI_CARETBLINKING=0x00000001
+GUI_INMOVESIZE=0x00000002
+GUI_INMENUMODE=0x00000004
+GUI_SYSTEMMENUMODE=0x00000008
+GUI_POPUPMENUMODE=0x00000010
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
 SPIF_SENDCHANGE=2
@@ -328,3 +346,8 @@ def isWindowVisible(window):
 
 def isWindowEnabled(window):
 	return bool(user32.IsWindowEnabled(window))
+
+def getGUIThreadInfo(threadID):
+	info=GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))
+	user32.GetGUIThreadInfo(threadID,byref(info))
+	return info
