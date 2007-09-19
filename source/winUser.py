@@ -7,21 +7,18 @@ import debug
 
 """Functions that wrap Windows API functions from user32.dll"""
 
-import ctypes
-import ctypes.wintypes
+from ctypes import *
+from ctypes.wintypes import *
+
 
 #dll handles
-user32=ctypes.windll.user32
+user32=windll.user32
 
-#win types
-POINT=ctypes.wintypes.POINT
-MSG=ctypes.wintypes.MSG
-
-class NMHdrStruct(ctypes.Structure):
+class NMHdrStruct(Structure):
 	_fields_=[
-		('hwndFrom',ctypes.wintypes.HWND),
-		('idFrom',ctypes.c_uint),
-		('code',ctypes.c_uint),
+		('hwndFrom',HWND),
+		('idFrom',c_uint),
+		('code',c_uint),
 	]
 
 #constants
@@ -280,9 +277,9 @@ def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
 def sendMessage2(hwnd,msg,param1,param2):
-	res=ctypes.c_int()
+	res=c_int()
 	debug.writeMessage("winUser.sendMessage: %s, %s, %s, %s"%(hwnd,msg,param1,param2))
-	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,ctypes.byref(res))
+	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,byref(res))
 	debug.writeMessage("winUser.sendMessage: done (%s"%ret)
 	if ret:
 		return res.value
@@ -290,12 +287,12 @@ def sendMessage2(hwnd,msg,param1,param2):
 		raise OSError("sendMessage failed")
 
 def getWindowThreadProcessID(hwnd):
-	processID=ctypes.c_int()
-	threadID=user32.GetWindowThreadProcessId(hwnd,ctypes.byref(processID))
+	processID=c_int()
+	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
 	return (processID.value,threadID)
 
 def getClassName(window):
-	buf=ctypes.create_unicode_buffer(256)
+	buf=create_unicode_buffer(256)
 	user32.GetClassNameW(window,buf,255)
 	return buf.value
 
@@ -309,17 +306,17 @@ def setCursorPos(x,y):
 	user32.SetCursorPos(x,y)
 
 def getCursorPos():
-	point=ctypes.wintypes.POINT()
-	user32.GetCursorPos(ctypes.byref(point))
+	point=POINT()
+	user32.GetCursorPos(byref(point))
 	return [point.x,point.y]
 
 def getCaretPos():
-	point=ctypes.wintypes.POINT()
-	user32.GetCaretPos(ctypes.byref(point))
+	point=POINT()
+	user32.GetCaretPos(byref(point))
 	return [point.x,point.y]
 
 def getWindowText(hwnd):
-	buf=ctypes.create_unicode_buffer(1024)
+	buf=create_unicode_buffer(1024)
 	user32.InternalGetWindowText(hwnd,buf,1023)
 	return buf.value
 
