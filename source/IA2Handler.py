@@ -8,6 +8,7 @@ import comtypesClient
 import ctypes
 import api
 import eventHandler
+import IAccessibleHandler
 import speech
 import NVDAObjects.IAccessible
 
@@ -107,7 +108,7 @@ EVENT_SECTION_CHANGED,
 def IA2FromMSAA(pacc):
 	try:
 		s=pacc.QueryInterface(IServiceProvider)
-		i=s.QueryService(ctypes.byref(IA2Lib.IAccessible2._iid_),ctypes.byref(IA2Lib.IAccessible2._iid_))
+		i=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IA2Lib.IAccessible2._iid_))
 		newPacc=ctypes.POINTER(IA2Lib.IAccessible2)(i)
 		return newPacc
 	except:
