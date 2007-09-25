@@ -141,12 +141,6 @@ class Scintilla(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
-#The value of the object should be the current line of the text
-	def _get_value(self):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(textHandler.UNIT_LINE)
-		return info.text
-
 	def event_mouseMove(self,x,y):
 		mouseEntered=self._mouseEntered
 		super(Scintilla,self).event_mouseMove(x,y)

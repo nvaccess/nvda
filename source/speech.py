@@ -19,6 +19,7 @@ from synthDriverHandler import *
 import re
 import textHandler
 import characterSymbols
+import NVDAObjects
 
 speechMode_off=0
 speechMode_beeps=1
@@ -173,7 +174,7 @@ This function will not speak if L{speechMode} is false.
 	global beenCanceled
 	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
 
-def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,reason=REASON_QUERY,index=None):
+def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -255,13 +256,20 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		containsText=obj.contains
 		if isinstance(containsText,basestring) and len(containsText)>0 and not containsText.isspace():
 			textList.append(_("contains %s")%containsText)
+	if textInfo and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
+		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		if not info.isCollapsed:
+			textList.append(_("selected %s")%info.text)
+		else:
+			info.expand(textHandler.UNIT_READINGCHUNK)
+			textList.append(info.text)
 	text=" ".join(textList)
 	if len(text)>0 and not text.isspace():
 		text=processText(text)
 		getSynth().speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,reason=reason,index=index)
+	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,textInfo=True,reason=reason,index=index)
 
 def speakSymbol(symbol,wait=False,index=None):
 	"""Speaks a given single character.

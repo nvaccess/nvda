@@ -389,9 +389,7 @@ class Edit(IAccessible):
 		super(Edit,self).__del__()
 
 	def _get_value(self):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(self.editValueUnit)
-		return info.text
+		return None
 
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
@@ -418,23 +416,8 @@ class Edit(IAccessible):
 			speech.speakText(info.text)
 			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
-
 	def event_valueChange(self):
 		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION).copy()
-
-	def reportFocus(self):
-		speech.speakObjectProperties(self,groupName=True,name=True,role=True,keyboardShortcut=True,positionString=True)
-		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		self._editLastSelectionPos=info
-		if info.isCollapsed:
-			info=info.copy()
-			info.expand(self.editValueUnit)
-			speech.speakFormattedText(info)
-		else:
-			text=info.text
-			if len(text)<=1:
-				text=speech.processSymbol(text)
-			speech.speakMessage(_("selected %s")%text)
 
 	def event_caret(self):
 		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)

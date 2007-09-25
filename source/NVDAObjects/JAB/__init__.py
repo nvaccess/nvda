@@ -222,16 +222,8 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		value=None
-		if self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM] and self._JABAccContextInfo.accessibleText:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
-			info.expand(textHandler.UNIT_LINE)
-			value=info.text
-			if self.name==value:
-				value=None
-		if value is None and self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue:
-			value=self.jabContext.getCurrentAccessibleValueFromContext()
-		return value
+		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue:
+			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
 		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
