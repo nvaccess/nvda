@@ -506,4 +506,5 @@ silentPositiveStatesOnStateChange={
 spokenNegativeStates={
 	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_CHECKBOX: frozenset([controlTypes.STATE_CHECKED]),
+	controlTypes.ROLE_RADIOBUTTON: frozenset([controlTypes.STATE_CHECKED]),
 }
