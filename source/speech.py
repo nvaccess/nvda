@@ -515,69 +515,24 @@ spokenNegativeStates={
 	controlTypes.ROLE_RADIOBUTTON: frozenset([controlTypes.STATE_CHECKED]),
 }
 
-class FormatFieldXMLParser(object):
+class XMLFieldParser(object):
 
-	def __init__(self,globalXMLFieldStack=[]):
-		self._globalXMLFieldStack=globalXMLFieldStack
+	def __init__(self):
 		self.parser=expat.ParserCreate()
 		self.parser.StartElementHandler=self._StartElementHandler
 		self.parser.EndElementHandler=self._EndElementHandler
 		self.parser.CharacterDataHandler=self._CharacterDataHandler
 		self._commandList=[]
-		self._commandStack=[]
+		self._fieldStack=[]
 
 	def parse(self,xml):
 		#parse the xml, creating a list of fields and text
 		self.parser.Parse(xml)
-		#Find and mark the common fields in the list
-		commonFieldCount=0
-		globalXMLFieldStackLen=len(self._globalXMLFieldStack)
-		commandListLen=len(self._commandList)
-		for index in range(min(commandListLen,globalXMLFieldStackLen)):
-			if self._commandList[index][0]=="start" and self._commandList[index][1]==self._globalXMLFieldStack[index]:
-				self._commandList[index][2]=XMLFIELD_COMMON
-				commonFieldCount+=1
-			else:
-				break
-		#Find the initial fields that should be added to the common fields 
-		addedGlobalFields=[]
-		for index in range(commonFieldCount,commandListLen):
-			if self._commandList[index][0]=="start":
-				addedGlobalFields.append(self._commandList[index][1])
-			else:
-				break
-		#Prepend end field commands to the field list for the common fields we are no longer a part of
-		if globalXMLFieldStackLen>0:
-			for index in range(commonFieldCount,globalXMLFieldStackLen):
-				self._commandList.insert(0,["end",self._globalXMLFieldStack[index],XMLFIELD_WASCOMMON])
-			del self._globalXMLFieldStack[commonFieldCount:]
-		self._globalXMLFieldStack.extend(addedGlobalFields)
-		fieldListLen=len(self._commandList)
-		globalXMLFieldStackLen=len(self._globalXMLFieldStack)
-		for index in range(min(fieldListLen,globalXMLFieldStackLen)):
-			fieldListIndex=(fieldListLen-1)-index
-			if index<globalXMLFieldStackLen and self._commandList[fieldListIndex][0]=='end':
-				self._commandList[fieldListIndex][2]=XMLFIELD_COMMON
-			else:
-				break
-		textList=[]
-		for index in range(len(self._commandList)):
- 			textList.append(self.getText(self._commandList[index]))
-		return " ".join(textList)
-
-	def getText(self,cmd):
-		if cmd[0]=="text":
-			return cmd[1]
-		elif cmd[0]=="start" and not cmd[2]&XMLFIELD_COMMON:
-			return "%s %s"%(controlTypes.speechRoleLabels[int(cmd[1][1]['role'])],cmd[1][1]['value'])
-		elif cmd[0]=="end" and not cmd[2]&XMLFIELD_COMMON:
-			return "%s end"%controlTypes.speechRoleLabels[int(cmd[1][1]['role'])]
-		else:
-			return ""
+		return self._commandList
 
 	def _StartElementHandler(self,name,attrs):
 		field=(name,attrs)
-		self._commandStack.append(field)
+		self._fieldStack.append(field)
 		cmd=["start",field,False]
 		if len(self._commandList)>0 and self._commandList[-1][0]=="end" and field==self._commandList[-1][1]:
 			del self._commandList[-1]
@@ -585,14 +540,69 @@ class FormatFieldXMLParser(object):
 			self._commandList.append(["start",field,False])
 
 	def _EndElementHandler(self,name):
-		field=self._commandStack[-1]
-		del self._commandStack[-1]
+		field=self._fieldStack[-1]
+		del self._fieldStack[-1]
 		self._commandList.append(["end",field,False])
 
 	def _CharacterDataHandler(self,data):
 		self._commandList.append(("text",data))
 
-def speakFormatFieldXML(xml,index=None,wait=False):
-	p=FormatFieldXMLParser(globalXMLFieldStack=globalXMLFieldStack)
-	text=p.parse(xml)
-	speakText(text,index=index,wait=wait)
+def getFormatCommandText(cmd):
+	if cmd[0]=="text":
+		return cmd[1]
+	elif cmd[0]=="start" and not cmd[2]&XMLFIELD_COMMON:
+		return "%s %s"%(controlTypes.speechRoleLabels[int(cmd[1][1]['role'])],cmd[1][1]['value'])
+	elif cmd[0]=="end" and not cmd[2]&XMLFIELD_COMMON:
+		return "%s end"%controlTypes.speechRoleLabels[int(cmd[1][1]['role'])]
+	else:
+		return ""
+
+def newSpeakFormattedText(data):
+	p=XMLFieldParser()
+	commandList=p.parse(data)
+	#Find and mark the common fields in the list
+	commonFieldCount=0
+	globalXMLFieldStackLen=len(globalXMLFieldStack)
+	commandListLen=len(commandList)
+	for index in range(min(commandListLen,globalXMLFieldStackLen)):
+		if commandList[index][0]=="start" and commandList[index][1]==globalXMLFieldStack[index]:
+			commandList[index][2]=XMLFIELD_COMMON
+			commonFieldCount+=1
+		else:
+			break
+	#Find the initial fields that should be added to the common fields 
+	addedGlobalFields=[]
+	for index in range(commonFieldCount,commandListLen):
+		if commandList[index][0]=="start":
+			addedGlobalFields.append(commandList[index][1])
+		else:
+			break
+	#Prepend end field commands to the field list for the common fields we are no longer a part of
+	if globalXMLFieldStackLen>0:
+		for index in range(commonFieldCount,globalXMLFieldStackLen):
+			commandList.insert(0,["end",globalXMLFieldStack[index],XMLFIELD_WASCOMMON])
+		del globalXMLFieldStack[commonFieldCount:]
+	globalXMLFieldStack.extend(addedGlobalFields)
+	fieldListLen=len(commandList)
+	globalXMLFieldStackLen=len(globalXMLFieldStack)
+	for index in range(min(fieldListLen,globalXMLFieldStackLen)):
+		fieldListIndex=(fieldListLen-1)-index
+		if index<globalXMLFieldStackLen and commandList[fieldListIndex][0]=='end':
+			commandList[fieldListIndex][2]=XMLFIELD_COMMON
+		else:
+			break
+	textList=[]
+	for cmd in commandList:
+		textList.append(getFormatCommandText(cmd))
+	speakText(" ".join(textList))
+
+def speakFormat(data):
+	p=XMLFieldParser()
+	commandList=p.parse(data)
+	textList=[]
+	for cmd in commandList:
+		if cmd[0]=="start":
+			textList.append(getFormatCommandText(cmd))
+		else:
+			break
+	speakText(" ".join(textList))
