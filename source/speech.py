@@ -9,6 +9,7 @@
 @type speechMode: boolean
 """ 
 
+from xml.parsers import expat
 import time
 import debug
 import api
@@ -46,6 +47,10 @@ REASON_CHANGE=4
 REASON_MESSAGE=5
 REASON_SAYALL=6
 REASON_DEBUG=7
+
+globalXMLFieldStack=[]
+XMLFIELD_COMMON=1
+XMLFIELD_WASCOMMON=2
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -176,6 +181,7 @@ This function will not speak if L{speechMode} is false.
 
 def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
+	del globalXMLFieldStack[:]
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -508,3 +514,78 @@ spokenNegativeStates={
 	controlTypes.ROLE_CHECKBOX: frozenset([controlTypes.STATE_CHECKED]),
 	controlTypes.ROLE_RADIOBUTTON: frozenset([controlTypes.STATE_CHECKED]),
 }
+
+class FormatFieldXMLParser(object):
+
+	def __init__(self,globalXMLFieldStack=[]):
+		self._globalXMLFieldStack=globalXMLFieldStack
+		self.parser=expat.ParserCreate()
+		self.parser.StartElementHandler=self._StartElementHandler
+		self.parser.EndElementHandler=self._EndElementHandler
+		self.parser.CharacterDataHandler=self._CharacterDataHandler
+		self._fieldList=[]
+		self._fieldStack=[]
+
+	def parse(self,xml):
+		#parse the xml, creating a list of fields and text
+		self.parser.Parse(xml)
+		#Find and mark the common fields in the list
+		commonFieldCount=0
+		globalXMLFieldStackLen=len(self._globalXMLFieldStack)
+		for index in range(globalXMLFieldStackLen):
+			if self._fieldList[index][0]=="start" and self._fieldList[index][1]==self._globalXMLFieldStack[index]:
+				self._fieldList[index][2]=XMLFIELD_COMMON
+				commonFieldCount+=1
+			else:
+				break
+		#Find the initial fields that should be added to the common fields 
+		addedGlobalFields=[]
+		for index in range(commonFieldCount,len(self._fieldList)):
+			if self._fieldList[index][0]=="start":
+				addedGlobalFields.append(self._fieldList[index][1])
+		#Prepend end field commands to the field list for the common fields we are no longer a part of
+		if globalXMLFieldStackLen>0:
+			for index in range(commonFieldCount,globalXMLFieldStackLen):
+				self._fieldList.insert(0,["end",self._globalXMLFieldStack[index],XMLFIELD_WASCOMMON])
+			del self._globalXMLFieldStack[commonFieldCount:]
+		self._globalXMLFieldStack.extend(addedGlobalFields)
+		fieldListLen=len(self._fieldList)
+		globalXMLFieldStackLen=len(self._globalXMLFieldStack)
+		for index in range(fieldListLen):
+			fieldListIndex=(fieldListLen-1)-index
+			if index<globalXMLFieldStackLen and self._fieldList[fieldListIndex][0]=='end':
+				self._fieldList[fieldListIndex][2]=XMLFIELD_COMMON
+			else:
+				break
+		textList=[]
+		for index in range(len(self._fieldList)):
+ 			textList.append(self.getText(self._fieldList[index]))
+		return " ".join(textList)
+
+	def getText(self,cmd):
+		if cmd[0]=="text":
+			return cmd[1]
+		elif cmd[0]=="start" and not cmd[2]&XMLFIELD_COMMON:
+			return "%s %s"%(controlTypes.speechRoleLabels[int(cmd[1][1]['role'])],cmd[1][1]['value'])
+		elif cmd[0]=="end" and not cmd[2]&XMLFIELD_COMMON:
+			return "%s end"%controlTypes.speechRoleLabels[int(cmd[1][1]['role'])]
+		else:
+			return ""
+
+	def _StartElementHandler(self,name,attrs):
+		field=(name,attrs)
+		self._fieldStack.append(field)
+		self._fieldList.append(["start",field,False])
+
+	def _EndElementHandler(self,name):
+		field=self._fieldStack[-1]
+		del self._fieldStack[-1]
+		self._fieldList.append(["end",field,False])
+
+	def _CharacterDataHandler(self,data):
+		self._fieldList.append(("text",data))
+
+def speakFormatFieldXML(xml,index=None,wait=False):
+	p=FormatFieldXMLParser(globalXMLFieldStack=globalXMLFieldStack)
+	text=p.parse(xml)
+	speakText(text,index=index,wait=wait)
