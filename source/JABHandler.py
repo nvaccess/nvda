@@ -257,9 +257,10 @@ def event_gainFocus(vmID,accContext):
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
+	focus=api.getFocusObject()
+	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
+		return 
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj==api.getFocusObject():
-		return
 	api.setFocusObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
 	activeChild=obj.activeChild
@@ -278,7 +279,6 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	queueHandler.queueFunction(queueHandler.eventQueue,event_stateChange,vmID,source,oldState,newState)
 	bridgeDll.releaseJavaObject(vmID,event)
 
-
 def event_stateChange(vmID,accContext,oldState,newState):
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
@@ -295,6 +295,12 @@ def event_stateChange(vmID,accContext,oldState,newState):
 	else:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	eventHandler.manageEvent("stateChange",obj)
+
+@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
+def internal_event_caretChange(vmID, event,source,oldPos,newPos):
+	if oldPos<0 and newPos>=0:
+		queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
+	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_enterJavaWindow(hwnd):
 	jabContext=JABContext(hwnd=hwnd)
@@ -317,6 +323,7 @@ def initialize():
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 		bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
+		bridgeDll.setPropertyCaretChangeFP(internal_event_caretChange)
 		isRunning=True
 		return True
 	except:
