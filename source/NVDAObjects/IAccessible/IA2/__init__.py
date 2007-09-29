@@ -89,7 +89,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self._storyLength
 
 	def _getLineCount(self):
-		return -1
+			return -1
 
 	def _getTextRange(self,start,end):
 		try:
@@ -104,7 +104,10 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_WORD)[0:2]
 
 	def _getLineOffsets(self,offset):
-		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
 
 	def _getSentenceOffsets(self,offset):
 		try:
