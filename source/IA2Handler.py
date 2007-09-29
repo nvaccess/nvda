@@ -106,7 +106,13 @@ EVENT_SECTION_CHANGED,
 )=range(0x101,0x101+35)
 
 def IA2FromMSAA(pacc):
+	if isinstance(pacc,IA2Lib.IAccessible2):
+		return pacc
 	try:
+		try:
+			return pacc.QueryInterface(IA2Lib.IAccessible2) 
+		except:
+			pass
 		s=pacc.QueryInterface(IServiceProvider)
 		i=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IA2Lib.IAccessible2._iid_))
 		newPacc=ctypes.POINTER(IA2Lib.IAccessible2)(i)
