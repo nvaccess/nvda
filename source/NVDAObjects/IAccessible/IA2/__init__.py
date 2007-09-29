@@ -92,7 +92,10 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return -1
 
 	def _getTextRange(self,start,end):
-		return self.obj.IAccessibleTextObject.Text(start,end)
+		try:
+			return self.obj.IAccessibleTextObject.Text(start,end)
+		except:
+			return ""
 
 	def _getCharacterOffsets(self,offset):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_CHAR)[0:2]
@@ -104,7 +107,10 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_LINE)[0:2]
 
 	def _getSentenceOffsets(self,offset):
-		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_SENTENCE)[0:2]
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_SENTENCE)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
 
 	def _getParagraphOffsets(self,offset):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_PARAGRAPH)[0:2]
