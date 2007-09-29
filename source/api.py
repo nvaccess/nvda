@@ -6,6 +6,7 @@
 
 """General functions for NVDA"""
 
+import pythoncom
 import debug
 import globalVars
 import speech
@@ -173,4 +174,5 @@ def moveMouseToNVDAObject(obj):
 
 def processPendingEvents():
 	wx.Yield()
+	pythoncom.PumpWaitingMessages()
 	queueHandler.flushQueue(queueHandler.eventQueue)
