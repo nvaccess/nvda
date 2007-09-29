@@ -255,9 +255,9 @@ def accessibleChildren(ia,startIndex,numChildren):
 	oleAcc.AccessibleChildren(ia,startIndex,numChildren,children,ctypes.byref(realCount))
 	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],pointer_IAccessible):
+		if isinstance(children[childNum],IAccessible):
 			children[childNum]=(children[childNum],0)
-		elif isinstance(children[childNum],comtypesClient._Dispatch):
+		elif isinstance(children[childNum],comtypesClient._Dispatch) or isinstance(children[childNum],comtypes.automation.IUnknown):
 			children[childNum]=(children[childNum].QueryInterface(IAccessible),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
@@ -339,10 +339,10 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,pointer_IAccessible):
+		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch):
+		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
@@ -357,10 +357,10 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,pointer_IAccessible):
+		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch):
+		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
@@ -375,10 +375,10 @@ def accHitTest(ia,child,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,pointer_IAccessible):
+		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch):
+		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
@@ -399,15 +399,14 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,pointer_IAccessible):
+			if isinstance(res,IAccessible):
 				new_ia=res
 				new_child=0
-			elif isinstance(res,comtypesClient._Dispatch):
+			elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 				new_ia=res.QueryInterface(IAccessible)
 				new_child=0
-			elif isinstance(res,int): 
-				new_ia=ia
-				new_child=res
+			else:
+				raise ValueError("no IAccessible interface")
 		else:
 			new_ia=ia
 			new_child=0
@@ -419,13 +418,13 @@ def accNavigate(ia,child,direction):
 	res=None
 	try:
 		res=ia.accNavigate(direction,child)
-		if isinstance(res,pointer_IAccessible):
+		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
 			new_child=res
-		elif isinstance(res,comtypesClient._Dispatch):
+		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		else:
