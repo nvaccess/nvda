@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r514\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2007-09-03 18:11+0100\n"
+"PO-Revision-Date: 2007-09-30 01:04+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: es_ES <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "submenú"
 #: IAccessibleHandler.py:193
 #: NVDAObjects\IAccessible.py:206
 #: NVDAObjects\baseType.py:176
-#: speech.py:227
+#: speech.py:234
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
 #: virtualBuffers\IAccessible\MSHTML.py:298
@@ -66,27 +66,27 @@ msgstr "submenú"
 msgid "not %s"
 msgstr "no %s"
 
-#: IAccessibleHandler.py:598
+#: IAccessibleHandler.py:597
 msgid "lost focus"
 msgstr "foco perdido"
 
 #: NVDAObjects\IAccessible.py:69
 #: NVDAObjects\IAccessible.py:359
-#: NVDAObjects\IAccessible\__init__.py:69
-#: NVDAObjects\IAccessible\__init__.py:472
+#: NVDAObjects\IAccessible\__init__.py:70
+#: NVDAObjects\IAccessible\__init__.py:473
 #: NVDAObjects\IAccessible\sysListView32.py:83
 #: NVDAObjects\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s de %s"
 
 #: NVDAObjects\IAccessible.py:73
-#: NVDAObjects\IAccessible\__init__.py:73
+#: NVDAObjects\IAccessible\__init__.py:74
 msgid "%s items"
 msgstr "%s elementos"
 
 #: NVDAObjects\IAccessible.py:558
 #: NVDAObjects\baseType.py:275
-#: speech.py:253
+#: speech.py:260
 msgid "level %d"
 msgstr "nivel %d"
 
@@ -95,21 +95,10 @@ msgid "not supported"
 msgstr "no soportado"
 
 #: NVDAObjects\IAccessible.py:726
-#: NVDAObjects\IAccessible\__init__.py:756
+#: NVDAObjects\IAccessible\__init__.py:747
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d elementos"
-
-#: NVDAObjects\IAccessible\edit.py:399
-#: NVDAObjects\MSHTML.py:315
-#: NVDAObjects\MSHTML.py:321
-#: speech.py:442
-#: textBuffer.py:537
-#: textBuffer.py:541
-#: textBuffer.py:543
-#: textBuffer.py:549
-msgid "selected %s"
-msgstr "seleccionado %s"
 
 #: NVDAObjects\IAccessible\excel.py:64
 #: appModules\excel.py:80
@@ -172,7 +161,7 @@ msgid "rich %s"
 msgstr "edición %s"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:259
+#: NVDAObjects\JAB\__init__.py:248
 msgid "%d of %d"
 msgstr "%d de %d"
 
@@ -181,18 +170,56 @@ msgstr "%d de %d"
 msgid "protected %s "
 msgstr "protegido %s"
 
+#: NVDAObjects\IAccessible\winword.py:156
+msgid "with %s columns and %s rows"
+msgstr "con %s columnas y %s filas"
+
+#: NVDAObjects\IAccessible\winword.py:284
+#: NVDAObjects\IAccessible\winword.py:300
+#: NVDAObjects\IAccessible\winword.py:316
+#: NVDAObjects\IAccessible\winword.py:332
+msgid "not in table"
+msgstr "no estás en una tabla"
+
+#: NVDAObjects\IAccessible\winword.py:293
+msgid "bottom of column"
+msgstr "final de columna"
+
+#: NVDAObjects\IAccessible\winword.py:309
+msgid "top of column"
+msgstr "principio de columna"
+
+#: NVDAObjects\IAccessible\winword.py:325
+msgid "end of row"
+msgstr "fin de fila"
+
+#: NVDAObjects\IAccessible\winword.py:341
+msgid "beginning of row"
+msgstr "comienzo de fila"
+
 #: NVDAObjects\MSHTML.py:312
 #: NVDAObjects\MSHTML.py:318
-#: speech.py:448
+#: speech.py:474
 #: textBuffer.py:545
 #: textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "no seleccionado %s"
 
-#: NVDAObjects\__init__.py:590
-#: NVDAObjects\__init__.py:601
+#: NVDAObjects\MSHTML.py:315
+#: NVDAObjects\MSHTML.py:321
+#: speech.py:268
+#: speech.py:468
+#: textBuffer.py:537
+#: textBuffer.py:541
+#: textBuffer.py:543
+#: textBuffer.py:549
+msgid "selected %s"
+msgstr "seleccionado %s"
+
+#: NVDAObjects\__init__.py:624
 #: NVDAObjects\__init__.py:635
+#: NVDAObjects\__init__.py:669
 #: textBuffer.py:364
 #: textBuffer.py:391
 #: textBuffer.py:412
@@ -202,9 +229,9 @@ msgstr "no seleccionado %s"
 msgid "top"
 msgstr "início"
 
-#: NVDAObjects\__init__.py:617
-#: NVDAObjects\__init__.py:624
 #: NVDAObjects\__init__.py:651
+#: NVDAObjects\__init__.py:658
+#: NVDAObjects\__init__.py:685
 #: textBuffer.py:369
 #: textBuffer.py:382
 #: textBuffer.py:403
@@ -214,15 +241,15 @@ msgstr "início"
 msgid "bottom"
 msgstr "fin"
 
-#: NVDAObjects\__init__.py:660
-#: NVDAObjects\__init__.py:671
+#: NVDAObjects\__init__.py:694
+#: NVDAObjects\__init__.py:705
 #: NVDAObjects\winword.py:274
 #: appModules\winword.py:284
 msgid "left"
 msgstr "izquierda"
 
-#: NVDAObjects\__init__.py:693
-#: NVDAObjects\__init__.py:709
+#: NVDAObjects\__init__.py:727
+#: NVDAObjects\__init__.py:743
 #: NVDAObjects\winword.py:278
 #: appModules\winword.py:288
 msgid "right"
@@ -270,12 +297,12 @@ msgstr "voz"
 msgid "variant"
 msgstr "variante"
 
-#: api.py:147
-#: api.py:150
+#: api.py:148
+#: api.py:151
 msgid "virtual buffer pass through"
 msgstr "pasar a través del modo virtual"
 
-#: api.py:147
+#: api.py:148
 #: appModules\_default.py:48
 #: appModules\_default.py:101
 #: appModules\_default.py:111
@@ -290,12 +317,12 @@ msgstr "pasar a través del modo virtual"
 #: keyboardHandler.py:48
 #: keyboardHandler.py:50
 #: keyboardHandler.py:52
-#: speech.py:386
-#: speech.py:392
+#: speech.py:409
+#: speech.py:415
 msgid "off"
 msgstr "desactivado"
 
-#: api.py:150
+#: api.py:151
 #: appModules\_default.py:45
 #: appModules\_default.py:104
 #: appModules\_default.py:114
@@ -309,7 +336,7 @@ msgstr "desactivado"
 #: keyboardHandler.py:48
 #: keyboardHandler.py:50
 #: keyboardHandler.py:52
-#: speech.py:381
+#: speech.py:404
 msgid "on"
 msgstr "activado"
 
@@ -805,7 +832,7 @@ msgstr "enviar: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:58
+#: speech.py:64
 msgid "blank"
 msgstr "en blanco"
 
@@ -1438,7 +1465,7 @@ msgstr "panel"
 
 #: controlTypes.py:278
 msgid "password edit"
-msgstr "edición de clave"
+msgstr "edición de contraseña"
 
 #: controlTypes.py:279
 msgid "font chooser"
@@ -1805,7 +1832,7 @@ msgstr "&Formateado de documentos...\tctrl+shift+F"
 #: gui\__init__.py:172
 #: gui\__init__.py:173
 msgid "&Preferences"
-msgstr "&Preferências"
+msgstr "&Preferencias"
 
 #: gui\__init__.py:176
 msgid "NVDA homepage"
@@ -2185,7 +2212,7 @@ msgstr "Descripción: %s"
 msgid "Location: %s"
 msgstr "Situación: %s"
 
-#: mouseHandler.py:140
+#: mouseHandler.py:138
 msgid "%s cursor"
 msgstr "%s cursor"
 
@@ -2193,15 +2220,24 @@ msgstr "%s cursor"
 msgid "end of text"
 msgstr "fin del texto"
 
-#: speech.py:257
+#: speech.py:264
 msgid "contains %s"
 msgstr "contiene %s"
 
-#: speech.py:296
+#: speech.py:310
 msgid "cap %s"
 msgstr "mayus %s"
 
-#: speech.py:450
+#: speech.py:395
+msgid "in"
+msgstr "en"
+
+#: speech.py:400
+#: speech.py:418
+msgid "out of"
+msgstr "fuera de"
+
+#: speech.py:476
 msgid "selection deleted"
 msgstr "selección eliminada"
 
