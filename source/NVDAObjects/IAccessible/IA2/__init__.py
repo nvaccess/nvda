@@ -101,7 +101,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_CHAR)[0:2]
 
 	def _getWordOffsets(self,offset):
-		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_WORD)[0:2]
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IA2Handler.TEXT_BOUNDARY_WORD)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
+
 
 	def _getLineOffsets(self,offset):
 		try:
@@ -162,6 +166,7 @@ class IA2(IAccessible):
 		except:
 			pass
 		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+		self._lastMouseTextOffsets=None
 		if replacedTextInfo:
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
@@ -180,3 +185,28 @@ class IA2(IAccessible):
 			api.setFocusObject(self)
 			api.setNavigatorObject(self)
 
+	def event_mouseMove(self,x,y):
+		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
+		#We must find the real object and cache it
+		obj=getattr(self,'_realMouseObject',None)
+		if not obj:
+			obj=self
+			while obj and not hasattr(obj,'IAccessibleTextObject'):
+				obj=obj.parent
+			if obj:
+				self._realMouseObject=obj
+			else:
+				obj=self
+		mouseEntered=obj._mouseEntered
+		super(IA2,obj).event_mouseMove(x,y)
+		if not hasattr(obj,'IAccessibleTextObject'):
+			return 
+		(left,top,width,height)=obj.location
+		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IA2Handler.IA2Lib.IA2_COORDTYPE_SCREEN_RELATIVE)
+		if obj._lastMouseTextOffsets is None or offset<obj._lastMouseTextOffsets[0] or offset>=obj._lastMouseTextOffsets[1]:   
+			if mouseEntered:
+				speech.cancelSpeech()
+			info=obj.makeTextInfo(textHandler.Bookmark(obj.TextInfo,(offset,offset)))
+			info.expand(textHandler.UNIT_WORD)
+			speech.speakText(info.text)
+			obj._lastMouseTextOffsets=(info._startOffset,info._endOffset)
