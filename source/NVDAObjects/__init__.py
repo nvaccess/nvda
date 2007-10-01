@@ -376,6 +376,12 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 	def _get_description(self):
 		return None
 
+	def _get_actionStrings(self):
+		return []
+
+	def doAction(self,index):
+		return
+
 	def _get_groupName(self):
 		focus=api.getFocusObject()
 		foreground=api.getForegroundObject()

@@ -282,6 +282,20 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
+	def _get_actionStrings(self):
+		try:
+			action=self.IAccessibleObject.accDefaultAction()
+		except:
+			action=None
+		if action:
+			return [action]
+		else:
+			return super(IAccessible,self)._get_actionStrings()
+
+	def doAction(self,index):
+		if index==0:
+			self.IAccessibleObject.accDoDefaultAction()
+
 	def _get_IAccessibleRole(self):
 		try:
 			res=self.IAccessibleObject.accRole(self.IAccessibleChildID)

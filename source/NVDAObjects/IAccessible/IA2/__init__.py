@@ -132,6 +132,10 @@ class IA2(IAccessible):
 		if not windowHandle:
 			pass #windowHandle=IAccessibleObject.WindowHandle
 		try:
+			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleAction)
+		except:
+			pass
+		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
 			self.TextInfo=IA2TextTextInfo
 			replacedTextInfo=True
@@ -176,6 +180,29 @@ class IA2(IAccessible):
 			return IA2RolesToNVDARoles[IA2Role]
 		else:
 			return super(IA2,self)._get_role()
+
+	def _get_actionStrings(self):
+		if not hasattr(self,'IAccessibleActionObject'):
+			return super(IA2,self)._get_actionStrings()
+		actions=[]
+		for index in range(self.IAccessibleActionObject.nActions()):
+			try:
+				name=self.IAccessibleActionObject.localizedName(index)
+			except:
+				name=None
+			if not name:
+				try:
+					name=self.IAccessibleActionObject.name(index)
+				except:
+					name=None
+			if name:
+				actions.append(name)
+		return actions
+
+	def doAction(self,index):
+		if not hasattr(self,'IAccessibleActionObject'):
+			return super(IA2,self).doAction(index)
+		self.IAccessibleActionObject.doAction(index)
 
 	def event_caret(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
