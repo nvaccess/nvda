@@ -64,10 +64,10 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		return [offset,offset+1]
 
 	def _getWordOffsets(self,offset):
-		storyText=self._getStoryText()
-		lineLength=self._getTextLineLength()
-		start=textHandler.findStartOfWord(storyText,offset,lineLength=lineLength)
-		end=textHandler.findEndOfWord(storyText,offset,lineLength=lineLength)
+		lineStart,lineEnd=self._getLineOffsets(offset)
+		lineText=self._getTextRange(lineStart,lineEnd)
+		start=textHandler.findStartOfWord(lineText,offset-lineStart)+lineStart
+		end=textHandler.findEndOfWord(lineText,offset-lineStart)+lineStart
 		return [start,end]
 
 	def _getLineCount(self):
