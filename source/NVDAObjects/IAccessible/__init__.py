@@ -842,6 +842,7 @@ class ToolBarButton(IAccessible):
 
 _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
+	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"IAccessibleWindow",
 	("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Shell_TrayWnd_client",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
