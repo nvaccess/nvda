@@ -94,7 +94,7 @@ IAccessibleStatesToNVDAStates={
 
 IAccessibleRolesToNVDARoles={
 	IAccessibleHandler.ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
-	IAccessibleHandler.ROLE_SYSTEM_CLIENT:controlTypes.ROLE_WINDOW,
+	IAccessibleHandler.ROLE_SYSTEM_CLIENT:controlTypes.ROLE_PANE,
 	IAccessibleHandler.ROLE_SYSTEM_TITLEBAR:controlTypes.ROLE_TITLEBAR,
 	IAccessibleHandler.ROLE_SYSTEM_DIALOG:controlTypes.ROLE_DIALOG,
 	IAccessibleHandler.ROLE_SYSTEM_PANE:controlTypes.ROLE_PANE,
@@ -356,79 +356,69 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_parent(self):
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-		if res:
-			(ia,child)=res
-			obj=IAccessible(IAccessibleObject=ia,IAccessibleChildID=child)
-			if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-				return obj.parent
-			else:
-				return obj
-		else:
-			return super(IAccessible,self)._get_parent()
+		if res and (res[0].accRole(res[1])!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)): 
+			return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		return super(IAccessible,self)._get_parent()
 
 	def _get_next(self):
-		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-		if res:
-			parentObject=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			parentRole=parentObject.IAccessibleRole
-		else:
-			parentObject=None
-			parentRole=None
-		if parentObject and (parentRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-			obj=parentObject
-		else:
-			obj=self
-		res=IAccessibleHandler.accNavigate(obj.IAccessibleObject,obj.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
-		if res:
-			nextObject=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			if nextObject and (nextObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-				nextObject=getNVDAObjectFromEvent(nextObject.windowHandle,-4,0)
-			return nextObject if nextObject and nextObject.IAccessibleRole!=0 else None
-
+		next=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
+		if not next:
+			next=None
+			parent=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
+			if not IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS) and (parent and parent[0].accRole(parent[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW): 
+				parentNext=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_NEXT)
+				if parentNext and parentNext[0].accRole(parentNext[1])>0:
+					next=parentNext
+		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			child=IAccessibleHandler.accChild(next[0],-4)
+			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
+				next=child
+		if next and next[0].accRole(next[1])>0:
+			return IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1])
+ 
 	def _get_previous(self):
-		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-		if res:
-			parentObject=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			parentRole=parentObject.IAccessibleRole
-		else:
-			parentObject=None
-			parentRole=None
-		if parentObject and (parentRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-			obj=parentObject
-		else:
-			obj=self
-		res=IAccessibleHandler.accNavigate(obj.IAccessibleObject,obj.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
-		if res:
-			previousObject=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			if previousObject and (previousObject.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-				previousObject=getNVDAObjectFromEvent(previousObject.windowHandle,-4,0)
-			return previousObject
+		previous=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
+		if not previous:
+			previous=None
+			parent=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
+			if not IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) and (parent and parent[0].accRole(parent[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW): 
+				parentPrevious=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_PREVIOUS)
+				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
+					previous=parentPrevious
+		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			child=IAccessibleHandler.accChild(previous[0],-4)
+			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
+				previous=child
+		if previous and previous[0].accRole(previous[1])>0:
+			return IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1])
 
 	def _get_firstChild(self):
-		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
-		if res:
-			obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-		else:
-			return None
-		if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-			obj=getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
-			return obj
-		else:
-			return None
+		firstChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
+		if not firstChild and self.IAccessibleChildID==0:
+			children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,1)
+			if len(children)>0:
+				firstChild=children[0]
+		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			child=IAccessibleHandler.accChild(firstChild[0],-4)
+			if not child:
+				child=IAccessibleHandler.accNavigate(firstChild[0],firstChild[1],IAccessibleHandler.NAVDIR_FIRSTCHILD)
+			if child and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
+				firstChild=child
+		if firstChild and firstChild[0].accRole(firstChild[1])>0:
+			obj=IAccessible(IAccessibleObject=firstChild[0],IAccessibleChildID=firstChild[1])
+			if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
+				return obj
 
 	def _get_lastChild(self):
-		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
-		if res:
-			obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-		else:
-			return None
-		if obj and (obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW):
-			obj=getNVDAObjectFromEvent(obj.windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
-			return obj
-		else:
-			return None
+		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
+		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			child=IAccessibleHandler.accChild(lastChild[0],-4)
+			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
+				lastChild=child
+		if lastChild and lastChild[0].accRole(lastChild[1])>0:
+			obj=IAccessible(IAccessibleObject=lastChild[0],IAccessibleChildID=lastChild[1])
+			if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
+				return obj
 
 	def _get_children(self):
 		if self.IAccessibleChildID>0:
@@ -519,7 +509,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_gainFocus(self):
 		if self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
 			api.setMenuMode(True)
-			speech.cancelSpeech()
+			#speech.cancelSpeech()
 		else:
 			api.setMenuMode(False)
 		Window.event_gainFocus(self)
@@ -556,16 +546,16 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-class Client(IAccessible):
+class IAccessibleWindow(IAccessible):
 
 	def _get_name(self):
-		name=super(Client,self)._get_name()
+		name=super(IAccessibleWindow,self)._get_name()
 		if not name or (isinstance(name,basestring) and name.isspace()):
 			name=self.windowClassName
 		return name
 
 	def _get_firstChild(self):
-		child=super(Client,self)._get_firstChild()
+		child=super(IAccessibleWindow,self)._get_firstChild()
 		if child:
 			return child
 		if JABHandler.isJavaWindow(self.windowHandle):
@@ -574,7 +564,7 @@ class Client(IAccessible):
 		return None
 
 	def _get_lastChild(self):
-		child=super(Client,self)._get_lastChild()
+		child=super(IAccessibleWindow,self)._get_lastChild()
 		if child:
 			return child
 		if JABHandler.isJavaWindow(self.windowHandle):
@@ -583,7 +573,7 @@ class Client(IAccessible):
 		return None
 
 	def _get_children(self):
-		children=super(Client,self)._get_children()
+		children=super(IAccessibleWindow,self)._get_children()
 		if children:
 			return children
 		children=[]
@@ -786,7 +776,7 @@ class ProgressBar(IAccessible):
 		else:
 			super(ProgressBar,self).event_valueChange()
 
-class InternetExplorerClient(Client):
+class InternetExplorerClient(IAccessible):
 
 	def _get_name(self):
 		return self.windowClassName
@@ -851,7 +841,7 @@ class ToolBarButton(IAccessible):
 ###class mappings
 
 _staticMap={
-	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Client",
+	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
 	("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Shell_TrayWnd_client",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
