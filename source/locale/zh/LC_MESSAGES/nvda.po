@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-09-03 16:12+0800\n"
+"PO-Revision-Date: 2007-10-06 21:41+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "樹狀檢視"
 
 # IAccessibleHandler.py:143
 msgid "sub menu"
-msgstr "有子選單"
+msgstr "子選單"
 
 # IAccessibleHandler.py:190
 # speech.py:213
@@ -76,7 +76,7 @@ msgstr "%d 個項目"
 # textBuffer.py:543
 # textBuffer.py:549
 msgid "selected %s"
-msgstr "選定了 %s"
+msgstr "選取了 %s"
 
 # NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -126,6 +126,30 @@ msgstr "加底線"
 # NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%d of %d"
 msgstr "%d 之 %d"
+
+# textBuffer.py:225
+msgid "with %s columns and %s rows"
+msgstr "有 %d 欄和 %d 行"
+
+# textBuffer.py:219
+msgid "not in table"
+msgstr "不在表格中"
+
+# NVDAObjects\IAccessible\winword.py:286
+msgid "bottom of column"
+msgstr "最下一行了"
+
+# controlTypes.py:109
+msgid "top of column"
+msgstr "最上一行了"
+
+# controlTypes.py:196
+msgid "end of row"
+msgstr "最右一欄了"
+
+# appModules\_default.py:254
+msgid "beginning of row"
+msgstr "最左一欄了"
 
 # NVDAObjects\__init__.py:310
 # NVDAObjects\__init__.py:320
@@ -181,7 +205,7 @@ msgstr "人聲"
 
 # gui\settingsDialogs.py:135
 msgid "variant"
-msgstr "變音"
+msgstr "腔調"
 
 # api.py:145
 # api.py:148
@@ -268,11 +292,11 @@ msgstr "減低目前選項的設定值"
 
 # appModules\_default.py:92
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "切換至下一個可調校的語音選項"
+msgstr "切換至下一個語音選項"
 
 # textBuffer.py:522
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "切換到上一個可調校的語音選項"
+msgstr "切換到上一個語音選項"
 
 # appModules\_default.py:77
 msgid "speak typed characters"
@@ -576,7 +600,7 @@ msgstr "從目前系統游標所在的一行讀到結尾, 並且讓系統游標�
 
 # appModules\_default.py:390
 msgid "reports the object with focus"
-msgstr "讀出焦點所在的項目"
+msgstr "讀出焦點所在項目"
 
 # appModules\_default.py:399
 msgid "no status bar found"
@@ -688,7 +712,7 @@ msgstr "%s 已複製到剪貼簿"
 
 # appModules\_default.py:280
 msgid "Copies name and value of current navigator object to the clipboard"
-msgstr "把目前項目的名稱和內容複製到剪貼簿"
+msgstr "把目前項目的內容複製到剪貼簿"
 
 # appModules\msimn.py:14
 msgid "Attachments"
@@ -923,7 +947,7 @@ msgstr "窗格"
 
 # controlTypes.py:83
 msgid "dialog"
-msgstr "對話盒"
+msgstr "對話方塊"
 
 # controlTypes.py:84
 msgid "check box"
@@ -1499,7 +1523,7 @@ msgstr "連結"
 
 # controlTypes.py:153
 msgid "subMenu"
-msgstr "有子選單"
+msgstr "子選單"
 
 # controlTypes.py:154
 # virtualBuffers\IAccessible\MSHTML.py:287
@@ -1522,6 +1546,7 @@ msgstr "載入程式中, 請稍後"
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
+# synthDrivers\silence.py:14
 # synthDrivers\silence.py:14
 msgid "No speech,  a template synthesizer"
 msgstr "不會說話的合成器"
@@ -1670,7 +1695,7 @@ msgstr ""
 
 # gui\__init__.py:139
 msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&R 恢復之前的設定\tCtrl+R"
+msgstr "恢復之前的設定 &R\tCtrl+R"
 
 # gui\__init__.py:139
 msgid "Reset all setting back to nvda.ini"
@@ -1678,7 +1703,7 @@ msgstr "恢復之前的設定"
 
 # gui\__init__.py:141
 msgid "&Save configuration\tCtrl+S"
-msgstr "&S 儲存設定\tCtrl+S"
+msgstr "儲存設定 &S\tCtrl+S"
 
 # gui\__init__.py:141
 msgid "Write the current configuration to nvda.ini"
@@ -1686,12 +1711,12 @@ msgstr "將現時的設定寫入 nvda.ini"
 
 # gui\__init__.py:143
 msgid "E&xit"
-msgstr "&X 完全關閉 NVDA"
+msgstr "關閉 NVDA &X"
 
 # gui\__init__.py:143
 # gui\__init__.py:233
 msgid "Exit NVDA"
-msgstr "完全關閉 NVDA"
+msgstr "關閉 NVDA"
 
 # gui\__init__.py:145
 # gui\__init__.py:146
@@ -1700,7 +1725,7 @@ msgstr "&NVDA"
 
 # gui\__init__.py:149
 msgid "&User interface...\tCtrl+Shift+U"
-msgstr "&U 使用者介面...\tCtrl+Shift+U"
+msgstr "使用者介面... &U\tCtrl+Shift+U"
 
 # gui\__init__.py:149
 msgid "Change user interface settings"
@@ -1712,11 +1737,11 @@ msgstr "使用的語音合成器"
 
 # gui\__init__.py:152
 msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "&S 語音合成器...\tCtrl+Shift+S"
+msgstr "語音合成器... &S\tCtrl+Shift+S"
 
 # gui\__init__.py:155
 msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "&V 語音設定\tCtrl+Shift+v"
+msgstr "語音設定... &V\tCtrl+Shift+v"
 
 # gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
@@ -1724,7 +1749,7 @@ msgstr "設定朗讀人聲, 速度, 音調和音量"
 
 # gui\__init__.py:158
 msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "&K 鍵盤設定...\tCtrl+K"
+msgstr "鍵盤設定... &K\tCtrl+K"
 
 # gui\__init__.py:158
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
@@ -1732,7 +1757,7 @@ msgstr "修改和鍵盤有關的設定，例如設定是否邊打邊念字元, �
 
 # gui\__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
-msgstr "&M 滑鼠設定...\tCtrl+M"
+msgstr "滑鼠設定... &M\tCtrl+M"
 
 # gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
@@ -1740,7 +1765,7 @@ msgstr "切換是否讀出鼠標形狀和所指物件"
 
 # gui\__init__.py:164
 msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "&O 物件說明...\tCtrl+Shift+o"
+msgstr "物件說明... &O\tCtrl+Shift+o"
 
 # gui\__init__.py:164
 msgid "Change reporting of objects"
@@ -1752,7 +1777,7 @@ msgstr " 修改和虛擬緩衝有關的設定"
 
 # gui\__init__.py:167
 msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "&B 虛擬緩衝...\tCtrl+Shift+B"
+msgstr "虛擬緩衝... &B\tCtrl+Shift+B"
 
 # gui\__init__.py:170
 msgid "Change Settings of document properties"
@@ -1760,12 +1785,12 @@ msgstr "修改文件朗讀的設定"
 
 # gui\__init__.py:170
 msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "&F 文件格式...\tCtrl+Shift+F"
+msgstr "文件格式... &F\tCtrl+Shift+F"
 
 # gui\__init__.py:172
 # gui\__init__.py:173
 msgid "&Preferences"
-msgstr "&P 偏好設定"
+msgstr "偏好設定 (&P)"
 
 # gui\__init__.py:176
 msgid "NVDA homepage"
@@ -1795,7 +1820,7 @@ msgstr "關於 NVDA"
 # gui\__init__.py:183
 # gui\__init__.py:184
 msgid "&Help"
-msgstr "&H 輔助說明"
+msgstr "輔助說明 &H"
 
 # gui\__init__.py:196
 # gui\scriptUI.py:52
@@ -1810,7 +1835,7 @@ msgstr "設定存好了"
 
 # gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
-msgstr "未能儲存設定, 也許 NVDA 使用中的檔案系統是唯讀的"
+msgstr "未能儲存設定, 也許使用了唯讀的檔案系統"
 
 # gui\__init__.py:233
 msgid "Press OK to quit NVDA"
@@ -1870,15 +1895,15 @@ msgstr "連結清單"
 
 # gui\scriptUI.py:120
 msgid "&Activate Link"
-msgstr "&A 啟動連結"
+msgstr "啟動連結 &A"
 
 # gui\scriptUI.py:121
 msgid "&Move to link"
-msgstr "&M 移到連結"
+msgstr "移到連結 &M"
 
 # gui\settingsDialogs.py:25
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&L 選擇語言(需要重新啟動才可套用這個設定)"
+msgstr "選擇語言(需要重新啟動才可套用設定)&L"
 
 # gui\settingsDialogs.py:29
 msgid "Language"
@@ -1886,14 +1911,14 @@ msgstr "語言"
 
 # gui\settingsDialogs.py:38
 msgid "&Hide user interface on startup"
-msgstr "&H 在啟動時隱藏使用者介面"
+msgstr "在啟動時隱藏使用者介面 &H"
 
 # gui\settingsDialogs.py:41
 msgid "&Save configuration on exit"
-msgstr "&S 在結束時儲存設定"
+msgstr "在結束時儲存設定 &S"
 
 msgid "&Warn before exiting NVDA"
-msgstr "&W 在完全關閉 NVDA 前先詢問我"
+msgstr "在關閉 NVDA 前須先確定 &W"
 
 # gui\settingsDialogs.py:59
 msgid "Error in %s language file"
@@ -1913,11 +1938,11 @@ msgstr "修改語言設定"
 
 # gui\settingsDialogs.py:77
 msgid "&Synthesizer"
-msgstr "&S 語音合成器"
+msgstr "語音合成器 &S"
 
 # gui\settingsDialogs.py:112
 msgid "Output &device"
-msgstr "&D 輸出裝置"
+msgstr "輸出裝置 &D"
 
 # gui\settingsDialogs.py:103
 msgid "Could not load the %s synthesizer."
@@ -1929,31 +1954,31 @@ msgstr "語音合成器錯誤"
 
 # gui\settingsDialogs.py:114
 msgid "&Voice"
-msgstr "&V  朗讀人聲"
+msgstr "朗讀人聲 &V"
 
 # gui\settingsDialogs.py:135
 msgid "V&ariant"
-msgstr "&A 腔調"
+msgstr "腔調 &A"
 
 # gui\settingsDialogs.py:129
 msgid "&Rate"
-msgstr "&R 速度"
+msgstr "速度 &R"
 
 # gui\settingsDialogs.py:137
 msgid "&Pitch"
-msgstr "&P 音調"
+msgstr "音調 &P"
 
 # textBuffer.py:534
 msgid "&Inflection"
-msgstr "&I 語調"
+msgstr "語調 &I"
 
 # gui\settingsDialogs.py:145
 msgid "V&olume"
-msgstr "&O 音量"
+msgstr "音量 &O"
 
 # gui\settingsDialogs.py:152
 msgid "&Speak all punctuation"
-msgstr "&S 讀出所有標點符號"
+msgstr "讀出所有標點符號 &S"
 
 # gui\settingsDialogs.py:155
 msgid "Raise pitch for capitals"
@@ -1961,11 +1986,11 @@ msgstr "每當遇到大寫字元時提高音調"
 
 # gui\settingsDialogs.py:155
 msgid "Say &cap before capitals"
-msgstr "&C 每當遇到大寫字元時先說大寫"
+msgstr "每當遇到大寫字元時先說大寫 &S"
 
 # gui\settingsDialogs.py:155
 msgid "&Beep for capitals"
-msgstr "&B 每當遇到大寫字元時發出逼逼聲"
+msgstr "每當遇到大寫字元時發出逼逼聲 &B"
 
 # gui\settingsDialogs.py:264
 msgid "Use CapsLock as an NVDA modifier key"
@@ -1981,116 +2006,116 @@ msgstr "把延伸的 Insert 鍵設為 NVDA 的組合鍵"
 
 # gui\settingsDialogs.py:211
 msgid "Speak typed &characters"
-msgstr "&C 邊打邊念字元"
+msgstr "邊打邊念字元 &C"
 
 # gui\settingsDialogs.py:214
 msgid "Speak typed &words"
-msgstr "&W 邊打邊念字詞"
+msgstr "邊打邊念字詞 &W"
 
 # gui\settingsDialogs.py:217
 msgid "Speak command &keys"
-msgstr "&K 邊打邊念指令"
+msgstr "邊打邊念指令 &K"
 
 # gui\settingsDialogs.py:240
 msgid "Report mouse &shape changes"
-msgstr "&S 報告鼠標型態變更"
+msgstr "報告鼠標型態變更 &S"
 
 # gui\settingsDialogs.py:243
 msgid "Report &object under mouse"
-msgstr "&O 報出鼠標所指物件"
+msgstr "報出鼠標所指物件 &O"
 
 # gui\settingsDialogs.py:359
 msgid "play audio coordinates when mouse moves"
-msgstr "&P 用聲效表示鼠標所在位置」"
+msgstr "用聲效表示鼠標所在位置 &P"
 
 # gui\settingsDialogs.py:265
 msgid "Report &tooltips"
-msgstr "&T 讀出工具提示"
+msgstr "報出工具提示 &T"
 
 # gui\settingsDialogs.py:268
 msgid "Report &help balloons"
-msgstr "&H 讀出輔助氣球說明"
+msgstr "報出輔助氣球說明 &H"
 
 # gui\settingsDialogs.py:271
 msgid "Report object shortcut &keys"
-msgstr "&K 報出項目的快捷鍵"
+msgstr "報出項目的快捷鍵 &K"
 
 # gui\settingsDialogs.py:274
 msgid "Report object &position information"
-msgstr "&P 報出項目排列的位置"
+msgstr "報出項目排列的位置 &P"
 
 # gui\settingsDialogs.py:274
 msgid "Report object &group names"
-msgstr "&G 讀出項目組別的名稱"
+msgstr "報出項目組別的名稱 &G"
 
 # gui\settingsDialogs.py:277
 msgid "Say object &state first"
-msgstr "&S 先說項目的狀態"
+msgstr "先說項目的狀態 &S"
 
 # gui\settingsDialogs.py:280
 msgid "&Beep on progress bar updates"
-msgstr "&B 在進度列更新時發出逼逼聲"
+msgstr "在進度列更新時發出逼逼聲 &B"
 
 # gui\settingsDialogs.py:306
 msgid "&Maximum number of characters on one line"
-msgstr "&M 一行最多的字元數目"
+msgstr "一行最多的字元數目 &M"
 
 # gui\settingsDialogs.py:311
 msgid "&Number of lines per page"
-msgstr "&N 在一頁裡的行數"
+msgstr "在一頁裡的行數 &N"
 
 # gui\settingsDialogs.py:316
 msgid "Report &virtual presentation on focus changes"
-msgstr "&V 每當焦點改變時也讀出相關的描述"
+msgstr "每當焦點改變時也讀出相關的描述 &V"
 
 # gui\settingsDialogs.py:319
 msgid "Update the content &dynamically"
-msgstr "&D 自動更新動態內容"
+msgstr "自動更新動態內容 &D"
 
 # gui\settingsDialogs.py:322
 msgid "Report lin&ks"
-msgstr "&K 說出連結"
+msgstr "說出連結 &K"
 
 # gui\settingsDialogs.py:325
 msgid "Report &lists"
-msgstr "&L 說出清單"
+msgstr "說出清單 &L"
 
 # gui\settingsDialogs.py:328
 msgid "Report list &items"
-msgstr "&I 說出清單項目"
+msgstr "說出清單項目 &I"
 
 # gui\settingsDialogs.py:331
 msgid "Report &headings"
-msgstr "&H 說出標題"
+msgstr "說出標題 &H"
 
 # gui\settingsDialogs.py:334
 # gui\settingsDialogs.py:415
 msgid "Report &tables"
-msgstr "&T 說出表格"
+msgstr "說出表格 &T"
 
 # gui\settingsDialogs.py:337
 msgid "Report &graphics"
-msgstr "&G 說出圖片"
+msgstr "說出圖片 &G"
 
 # gui\settingsDialogs.py:340
 msgid "Report f&orms"
-msgstr "&O 報出表單"
+msgstr "報出表單 &O"
 
 # gui\settingsDialogs.py:343
 msgid "Report form &fields"
-msgstr "&F 報出表單欄位"
+msgstr "報出表單欄位 &F"
 
 # gui\settingsDialogs.py:346
 msgid "Report block &quotes"
-msgstr "&Q 說出引述區"
+msgstr "說出引述區 &Q"
 
 # gui\settingsDialogs.py:349
 msgid "Report &paragraphs"
-msgstr "&P 說出起段"
+msgstr "說出起段 &P"
 
 # gui\settingsDialogs.py:352
 msgid "Report f&rames"
-msgstr "&M 說出框架"
+msgstr "說出框架 &M"
 
 # gui\settingsDialogs.py:474
 msgid "Announce formatting changes after the cursor (can cause a lag)"
@@ -2098,31 +2123,31 @@ msgstr "報出字體名稱、大小及屬性的改變(可能讓系統反應較�
 
 # gui\settingsDialogs.py:397
 msgid "Report font &name"
-msgstr "&N 報出字體名稱"
+msgstr "報出字體名稱 &N"
 
 # gui\settingsDialogs.py:400
 msgid "Report font &size"
-msgstr "&S 報出字體大小"
+msgstr "報出字體大小 &S"
 
 # gui\settingsDialogs.py:403
 msgid "Report font attri&butes"
-msgstr "&B 報出字體屬性"
+msgstr "報出字體屬性 &B"
 
 # gui\settingsDialogs.py:406
 msgid "Report st&yle"
-msgstr "&Y 報出文字型態"
+msgstr "報出文字型態 &Y"
 
 # gui\settingsDialogs.py:409
 msgid "Report &pages"
-msgstr "&P 報出頁數"
+msgstr "報出頁數 &P"
 
 # gui\settingsDialogs.py:412
 msgid "Report &line numbers"
-msgstr "&L 報出行數"
+msgstr "報出行數 &L"
 
 # gui\settingsDialogs.py:418
 msgid "Report &alignment"
-msgstr "&A 報出排列方式"
+msgstr "報出排列方式 &A"
 
 # keyboardHandler.py:80
 msgid "caps lock %s"
@@ -2164,13 +2189,21 @@ msgstr "包含 %s"
 msgid "cap %s"
 msgstr "大寫 %s"
 
+# controlTypes.py:98
+msgid "in"
+msgstr "進入了"
+
+# virtualBuffers\__init__.py:193
+msgid "out of"
+msgstr "離開了"
+
 # NVDAObjects\IAccessible\MSHTML.py:314
 # NVDAObjects\IAccessible\MSHTML.py:320
 # textBuffer.py:545
 # textBuffer.py:547
 # textBuffer.py:551
 msgid "unselected %s"
-msgstr "不選定 %s"
+msgstr "不選取 %s"
 
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
@@ -2187,7 +2220,7 @@ msgstr "第 %d 行"
 
 # textBuffer.py:219
 msgid "out of table"
-msgstr "離開表格範圍"
+msgstr "離開表格"
 
 # textBuffer.py:225
 msgid "table with %d columns and %d rows"
@@ -2269,11 +2302,11 @@ msgstr "手動移到上一段然後把它讀出來"
 
 # textBuffer.py:534
 msgid "no selections"
-msgstr "什麼都沒有選定"
+msgstr "什麼都沒選"
 
 # textBuffer.py:553
 msgid "Moves and reads the current selection"
-msgstr "移到並讀出已選定的文字"
+msgstr "移到並讀出已選取的文字"
 
 # textBuffer.py:559
 msgid "Deletes the character and reads the new current character"
@@ -2285,7 +2318,7 @@ msgstr "讀出並刪除位於現時字元之前的一個字元"
 
 # versionInfo.py:8
 msgid "NonVisual Desktop Access"
-msgstr "不用視力署理桌面"
+msgstr "不用視力在桌面上操作"
 
 # versionInfo.py:10
 msgid "A free and open-source screen reader for MS Windows"
