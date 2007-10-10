@@ -8,11 +8,13 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from keyUtils import key, sendKey
+from keyUtils import sendKey, isKeyWaiting
 from NVDAObjects.IAccessible import IAccessible 
 import appModuleHandler
 import speech
 import locale
+import controlTypes
+import api
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -46,7 +48,7 @@ class appModule(appModuleHandler.appModule):
 
 class winampPlaylistEditor(IAccessible):
 
-	def _get_value(self):
+	def _get_name(self):
 		curIndex=winUser.sendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
 		if curIndex <0:
 			return None
@@ -60,10 +62,18 @@ class winampPlaylistEditor(IAccessible):
 		winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
 
-	def _get_basicText(self):
-		return self._get_value()
+	def _get_role(self):
+		return controlTypes.ROLE_LISTITEM
+
+	def script_changeItem(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isKeyWaiting():
+			api.processPendingEvents()
+			speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 [winampPlaylistEditor.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
+	("ExtendedUp","changeItem"),
+	("ExtendedDown","changeItem"),
+	("extendedPrior","changeItem"),
+	("extendedNext","changeItem"),
 ]]
