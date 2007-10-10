@@ -169,7 +169,9 @@ objectEventHandles=[]
 lastEventParams=None
 
 #Load IAccessible from oleacc.dll
-IAccessible=comtypesClient.GetModule('oleacc.dll').IAccessible
+oleaccModule=comtypesClient.GetModule('oleacc.dll')
+IAccessible=oleaccModule.IAccessible
+IAccIdentity=oleaccModule.IAccIdentity
 pointer_IAccessible=ctypes.POINTER(IAccessible)
 oleAcc=ctypes.windll.oleacc
 
@@ -623,3 +625,9 @@ def initialize():
 def terminate():
 	for handle in objectEventHandles:
 		winUser.unhookWinEvent(handle)
+
+def getIAccIdentityString(pacc,childID):
+	p,s=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
+	p=ctypes.cast(p,ctypes.POINTER(ctypes.c_char*s))
+	return p.contents.raw
+
