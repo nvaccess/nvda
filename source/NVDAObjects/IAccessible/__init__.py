@@ -259,13 +259,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		l=self._hashLimit
 		p=self._hashPrime
 		h=NVDAObject.__hash__(self)
-		h=(h+(hash(self.windowHandle)*p))%l
-		h=(h+(hash(self.IAccessibleObjectID)*p))%l
-		h=(h+(hash(self.IAccessibleChildID)*p))%l
-		location=self.location
-		if location is not None:
-			for d in location:
-				h=(h+(d*p))%l
+		try:
+			h=(h+(hash(IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID))*p))%l
+		except:
+			pass
 		return h
 
 	def _get_name(self):
@@ -482,13 +479,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			self.event_menuStart()
 
 	def _get_groupName(self):
+		return None
 		if self.IAccessibleChildID>0:
 			return None
 		else:
 			return super(IAccessible,self)._get_groupName()
 
 	def reportFocus(self):
-		if self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED:
+		if (self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED):
 			return
 		if self==api.getForegroundObject():
 			return
@@ -597,7 +595,7 @@ class Dialog(IAccessible):
 
 	def event_foreground(self):
 		super(Dialog,self).event_foreground()
-		self.speakDescendantObjects()
+		#self.speakDescendantObjects()
 
 class TrayClockWClass(IAccessible):
 	"""
