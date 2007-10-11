@@ -584,7 +584,7 @@ def handleFocusEvent(window,objectID,childID):
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID and winUser.getClassName(window)!="OUTEXVLB":
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if not obj:
+	if not obj or obj==oldFocus:
 		return
 	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj)
