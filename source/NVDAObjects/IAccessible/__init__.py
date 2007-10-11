@@ -816,13 +816,13 @@ class ToolBar(IAccessible):
 	def event_gainFocus(self):
 		# Sometimes, the toolbar itself receives the focus instead of the focused child.
 		# However, the focused child still has the focused state.
+		super(ToolBar, self).event_gainFocus()
 		for child in self.children:
 			if child.IAccessibleStates & IAccessibleHandler.STATE_SYSTEM_FOCUSED:
 				# Redirect the focus to the focused child.
 				api.setFocusObject(child)
 				child.event_gainFocus()
 				return
-		super(ToolBar, self).event_gainFocus()
 
 class ToolBarButton(IAccessible):
 
