@@ -913,4 +913,5 @@ _staticMap={
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("ThunderRT6TextBox",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 ("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }
