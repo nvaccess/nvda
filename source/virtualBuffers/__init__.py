@@ -27,6 +27,9 @@ def update(obj):
 
 class virtualBuffer(textBuffer.textBufferObject):
 
+	def event_focusEntered(self,obj,nextHandler):
+		pass
+
 	fieldInfoTemplate={
 		"role":controlTypes.ROLE_UNKNOWN,
 		"node":None,
