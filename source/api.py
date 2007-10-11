@@ -79,9 +79,40 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			globalVars.focusObject.event_looseFocus()
 		except:
 			debug.writeException("event_looseFocus in focusObject")
+	oldAncestors=globalVars.focusAncestors
+	ancestors=[]
+	parent=obj.parent
+	while parent:
+		if len(oldAncestors)==0 or parent!=oldAncestors[-1]:
+			ancestors.insert(0,parent)
+			parent=parent.parent
+		else:
+			ancestors=oldAncestors+ancestors
+			break
+	commonLevel=None
+	oldAncestors=globalVars.focusAncestors
+	oldAncestors.append(globalVars.focusObject)
+	for index in range(min(len(oldAncestors),len(ancestors))):
+		if oldAncestors[index]==ancestors[index]:
+			commonLevel=index
+		else:
+			break
+	if commonLevel is None and len(ancestors)>0 and ancestors[0]==globalVars.foregroundObject:
+		commonLevel=0
+	if commonLevel is None:
+		globalVars.focusDifferenceLevel=0
+	else:
+		globalVars.focusDifferenceLevel=commonLevel+1
 	globalVars.focusObject=obj
+	globalVars.focusAncestors=ancestors
 	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
 	return True
+
+def getFocusDifferenceLevel():
+	return globalVars.focusDifferenceLevel
+
+def getFocusAncestors():
+	return globalVars.focusAncestors
 
 def getMouseObject():
 	"""Returns the object that is directly under the mouse"""

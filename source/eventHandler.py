@@ -1,8 +1,16 @@
 import appModuleHandler
+import globalVars
 import virtualBuffers
 import debug
+import controlTypes
 
 def manageEvent(name,obj):
+		#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	if name=="gainFocus":
+		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+			states=parent.states
+			if (parent.name or parent.description) and parent.role not in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_TREEVIEWITEM) and (controlTypes.STATE_UNAVAILABLE not in states) and (controlTypes.STATE_INVISIBLE not in states):
+				manageEvent("focusEntered",parent)
 	manageEvent_appModuleLevel(name,obj)
 
 def manageEvent_appModuleLevel(name,obj):

@@ -33,6 +33,8 @@
 desktopObject=None
 foregroundObject=None
 focusObject=None
+focusAncestors=[]
+focusDifferenceLevel=None
 mouseObject=None
 mouseOldX=None
 mouseOldY=None

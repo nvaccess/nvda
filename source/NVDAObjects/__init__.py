@@ -331,6 +331,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		p=self._hashPrime
 		h=0
 		h=(h+(hash(self.__class__.__name__)*p))%l
+		h=(h+(hash(self.name)*p))%l
 		h=(h+(hash(self.role)*p))%l
 		h=(h+(hash(self.description)*p))%l
 		h=(h+(hash(self.keyboardShortcut)*p))%l
@@ -562,6 +563,9 @@ Tries to force this object to take the focus.
 			if states!=self._oldStates:
 				speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
 				self._oldStates=states
+
+	def event_focusEntered(self):
+		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""
