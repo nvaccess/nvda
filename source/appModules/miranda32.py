@@ -67,58 +67,6 @@ CLM_GETTEXTCOLOR=CLM_FIRST+51   #wParam=FONTID_, returns COLORREF
 MAXSTATUSMSGLEN=256
 CLM_GETSTATUSMSG=CLM_FIRST+105
 
-#Labels for some buttons by control ID
-tsButtonNames={
-	1004:_("Contact picture"),
-	1011:_("View User's History"),
-	1016:_("Time"),
-	1020:_("Quote"),
-	1025:_("Save Message Log As..."),
-	1140:_("Protocol"),
-	1022:_("Name"),
-	1144:_("Toggle toolbar"),
-	1105:_("Smileys"),
-	1106:_("Bold"),
-	1107:_("Italic"),
-	1108:_("Underline"),
-	1110:_("Font face"),
-	1227:_("Retry"),
-	1231:_("Cancel"),
-	1226:_("Send later"),
-	1109:_("Toggle log freeze"),
-	1214:_("Toggle notes"),
-	1299:_("Toggle sidebar"),
-	1212:_("Apparent mode"),
-}
-
-mButtonNames={
-	1070:_("Add Contact Permanently to List"),
-	1009:_("Name"),
-	1071:_("User menu"),
-	5007:_("Smileys"),
-	5010:_("Bold"),
-	5011:_("Italic"),
-	5012:_("Underline"),
-	5017:_("Color"),
-	5019:_("Background color"),
-	5022:_("Chat history"),
-	5013:_("Filter"),
-	5014:_("Configure chatroom"),
-	5016:_("Toggle nicklist"),
-	5023:_("Close"),
-	1007:_("Smileys"),
-	1010:_("Bold"),
-	1011:_("Italic"),
-	1012:_("Underline"),
-	1017:_("Color"),
-	1019:_("Background color"),
-	1022:_("Chat history"),
-	1013:_("Filter"),
-	1014:_("Configure chatroom"),
-	1016:_("Toggle nicklist"),
-	1023:_("Close"),
-}
-
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
@@ -181,12 +129,8 @@ class mirandaIMContactList(IAccessible):
 class mirandaIMButton(IAccessible):
 
 	def _get_name(self):
-		if (self.windowClassName=="MButtonClass") and mButtonNames.has_key(self.windowControlID):
-			return mButtonNames[self.windowControlID]
-		elif (self.windowClassName=="TSButtonClass") and tsButtonNames.has_key(self.windowControlID):
-			return tsButtonNames[self.windowControlID]
-		else:
-			return super(mirandaIMButton,self)._get_name()
+		api.moveMouseToNVDAObject(self)
+		return super(mirandaIMButton,self)._get_name()
 
 	def _get_role(self):
 		return controlTypes.ROLE_BUTTON
