@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1197\n"
+"Project-Id-Version: r1236\n"
 "POT-Creation-Date: 2007-08-14 11:09+Kesäaika\n"
-"PO-Revision-Date: 2007-09-15 10:58+0300\n"
+"PO-Revision-Date: 2007-10-10 15:34+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,22 +53,22 @@ msgstr "ei %s"
 msgid "lost focus"
 msgstr "kohdistus menetetty"
 
-#: NVDAObjects\IAccessible\__init__.py:69
-#: NVDAObjects\IAccessible\__init__.py:472
+#: NVDAObjects\IAccessible\__init__.py:70
+#: NVDAObjects\IAccessible\__init__.py:473
 #: NVDAObjects\IAccessible\sysListView32.py:83
 msgid "%s of %s"
 msgstr "%s kautta %s"
 
-#: NVDAObjects\IAccessible\__init__.py:73
+#: NVDAObjects\IAccessible\__init__.py:74
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: NVDAObjects\IAccessible\__init__.py:746
+#: NVDAObjects\IAccessible\__init__.py:747
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d kohdetta"
 
-#: NVDAObjects\IAccessible\edit.py:431 speech.py:454 textBuffer.py:537
+#: NVDAObjects\IAccessible\edit.py:437 speech.py:454 textBuffer.py:537
 #: textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -87,7 +87,7 @@ msgstr "sisältää kaavan"
 
 #: NVDAObjects\IAccessible\excel.py:97
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "Siirtyy soluun ja lukee sen koordinaatit ja sisällön"
+msgstr "Siirtää soluun ja lukee sen koordinaatit ja sisällön"
 
 #: NVDAObjects\IAccessible\excel.py:101
 msgid "font"
@@ -120,46 +120,46 @@ msgstr "%d kautta %d"
 msgid "with %s columns and %s rows"
 msgstr "jossa %s saraketta ja %s riviä"
 
-#: NVDAObjects\IAccessible\winword.py:277
-#: NVDAObjects\IAccessible\winword.py:293
-#: NVDAObjects\IAccessible\winword.py:309
-#: NVDAObjects\IAccessible\winword.py:325
+#: NVDAObjects\IAccessible\winword.py:284
+#: NVDAObjects\IAccessible\winword.py:300
+#: NVDAObjects\IAccessible\winword.py:316
+#: NVDAObjects\IAccessible\winword.py:332
 msgid "not in table"
 msgstr "ei taulukossa"
 
-#: NVDAObjects\IAccessible\winword.py:286
+#: NVDAObjects\IAccessible\winword.py:293
 msgid "bottom of column"
 msgstr "sarakkeen alareuna"
 
-#: NVDAObjects\IAccessible\winword.py:302
+#: NVDAObjects\IAccessible\winword.py:309
 msgid "top of column"
 msgstr "sarakkeen yläreuna"
 
-#: NVDAObjects\IAccessible\winword.py:318
+#: NVDAObjects\IAccessible\winword.py:325
 msgid "end of row"
 msgstr "rivin loppu"
 
-#: NVDAObjects\IAccessible\winword.py:334
+#: NVDAObjects\IAccessible\winword.py:341
 msgid "beginning of row"
 msgstr "rivin alku"
 
-#: NVDAObjects\__init__.py:625 NVDAObjects\__init__.py:636
-#: NVDAObjects\__init__.py:670 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:624 NVDAObjects\__init__.py:635
+#: NVDAObjects\__init__.py:669 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "yläreuna"
 
-#: NVDAObjects\__init__.py:652 NVDAObjects\__init__.py:659
-#: NVDAObjects\__init__.py:686 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:651 NVDAObjects\__init__.py:658
+#: NVDAObjects\__init__.py:685 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "alareuna"
 
-#: NVDAObjects\__init__.py:695 NVDAObjects\__init__.py:706
+#: NVDAObjects\__init__.py:694 NVDAObjects\__init__.py:705
 msgid "left"
 msgstr "vasen"
 
-#: NVDAObjects\__init__.py:728 NVDAObjects\__init__.py:744
+#: NVDAObjects\__init__.py:727 NVDAObjects\__init__.py:743
 msgid "right"
 msgstr "oikea"
 
@@ -232,7 +232,7 @@ msgid ""
 "tell you what script is associated with it, if any."
 msgstr ""
 "Näppäinohje päälle ja pois. Kun näppäinohje on päällä, NVDA kertoo "
-"näppäimistön näppäintä painettaessa, mikä skripti siihen liittyy."
+"näppäintä painettaessa, mikä skripti siihen liittyy."
 
 #: appModules\_default.py:63
 msgid "Reports the current date and time"
@@ -244,11 +244,11 @@ msgstr "nopeus %d%%"
 
 #: appModules\_default.py:70
 msgid "Increases the speech rate by 5 percent"
-msgstr "Lisää puhenopeutta 5 prosentilla"
+msgstr "Nopeuttaa puhetta 5 prosentilla"
 
 #: appModules\_default.py:77
 msgid "decreases the speech rate by 5 percent"
-msgstr "Vähentää puhenopeutta 5 prosentilla"
+msgstr "hidastaa puhetta 5 prosentilla"
 
 #: appModules\_default.py:82
 msgid "Increases currently active setting in the synth settings ring"
@@ -361,7 +361,7 @@ msgstr "siirry kohdistukseen"
 
 #: appModules\_default.py:183
 msgid "Sets the navigator object to the current focus"
-msgstr "Asettaa navigointiobjektin nykyisen kohdistuksen kohdalle"
+msgstr "Siirtää navigointiobjektin nykyisen kohdistuksen kohdalle"
 
 #: appModules\_default.py:195
 msgid "No parents"
@@ -370,7 +370,8 @@ msgstr "Ei ylemmän tason objekteja"
 #: appModules\_default.py:196
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on."
-msgstr "Asettaa navigointiobjektin nykyistä ylemmän tason objektin kohdalle"
+msgstr ""
+"Siirtää navigointiobjektin nykyistä ylemmän tason objektin kohdalle"
 
 #: appModules\_default.py:208
 msgid "No next"
@@ -380,7 +381,7 @@ msgstr "Ei seuraavaa"
 msgid ""
 "Sets the navigator object to the next object to the one it is currently on"
 msgstr ""
-"Asettaa navigointiobjektin nykyisestä objektista seuraavana olevaan "
+"Siirtää navigointiobjektin nykyisestä objektista seuraavana olevaan "
 "objektiin"
 
 #: appModules\_default.py:221
@@ -392,7 +393,7 @@ msgid ""
 "Sets the navigator object to the previous object to the one it is currently "
 "on"
 msgstr ""
-"Asettaa navigointiobjektin nykyistä objektia edeltävän objektin kohdalle"
+"Siirtää navigointiobjektin nykyistä objektia edeltävän objektin kohdalle"
 
 #: appModules\_default.py:234
 msgid "No children"
@@ -403,12 +404,12 @@ msgid ""
 "Sets the navigator object to the first child object to the one it is "
 "currently on"
 msgstr ""
-"Asettaa navigointiobjektin ensimmäisen alemman tason objektin kohdalle "
+"Siirtää navigointiobjektin ensimmäisen alemman tason objektin kohdalle "
 "nykyisessä objektissa"
 
 #: appModules\_default.py:257
 msgid "end of flow"
-msgstr "Objektipuun loppu"
+msgstr "objektipuun loppu"
 
 #: appModules\_default.py:258
 msgid "Sets the navigator object to the object this object flows to."
@@ -611,7 +612,7 @@ msgstr ""
 
 #: appModules\_default.py:444
 msgid "reports the object with focus"
-msgstr "Ilmoittaa objektin, jossa kohdistus on"
+msgstr "ilmoittaa objektin, jossa kohdistus on"
 
 #: appModules\_default.py:450
 msgid "no status bar found"
@@ -634,11 +635,11 @@ msgstr "Hiiren alla olevan objektin lukeminen päälle ja pois"
 
 #: appModules\_default.py:470
 msgid "Reports the title of the current application or foreground window"
-msgstr "Lukee nykyisen sovelluksen tai edustalla olevan ikkunan nimen"
+msgstr "Lukee nykyisen sovelluksen tai ikkunan nimen"
 
 #: appModules\_default.py:477
 msgid "speaks the current foreground object"
-msgstr "Lukee nykyisen edusobjektin"
+msgstr "Ilmoittaa nykyisen objektin"
 
 #: appModules\_default.py:483
 msgid "Control ID: %s"
@@ -650,7 +651,7 @@ msgstr "Luokka: %s"
 
 #: appModules\_default.py:487
 msgid "internal text: %s"
-msgstr "Sisäinen teksti: %s"
+msgstr "sisäinen teksti: %s"
 
 #: appModules\_default.py:488
 msgid "text: %s"
@@ -954,7 +955,7 @@ msgstr "alkuaalto"
 
 #: characterSymbols.py:53
 msgid "bar"
-msgstr "pystyviiva"
+msgstr "pysty"
 
 #: characterSymbols.py:54
 msgid "right brace"
@@ -974,7 +975,7 @@ msgstr "otsikkopalkki"
 
 #: controlTypes.py:160
 msgid "pane"
-msgstr "ruutu"
+msgstr "paneeli"
 
 #: controlTypes.py:161
 msgid "dialog"
@@ -1195,7 +1196,7 @@ msgstr "valittava valikon osa"
 
 #: controlTypes.py:218
 msgid "date edit"
-msgstr "päiväys muokkaa"
+msgstr "päivämäärän syöttökenttä"
 
 #: controlTypes.py:219
 msgid "icon"
@@ -1431,7 +1432,7 @@ msgstr "paneeli"
 
 #: controlTypes.py:278
 msgid "password edit"
-msgstr "salasana muokkaa"
+msgstr "salasanan syöttökenttä"
 
 #: controlTypes.py:279
 msgid "font chooser"
@@ -1451,7 +1452,7 @@ msgstr "fonttikoko"
 
 #: controlTypes.py:284
 msgid "ITALIC"
-msgstr "kursivoitu"
+msgstr "kursiivi"
 
 #: controlTypes.py:286
 msgid "foreground color"
@@ -1503,11 +1504,11 @@ msgstr "valittu"
 
 #: controlTypes.py:302
 msgid "half checked"
-msgstr "puolivalittu"
+msgstr "puoliksi valittu"
 
 #: controlTypes.py:303
 msgid "read only"
-msgstr "vain luku"
+msgstr "ei muokattava"
 
 #: controlTypes.py:304
 msgid "expanded"
@@ -2090,7 +2091,7 @@ msgstr "Lue objektien &pikanäppäimet"
 
 #: gui\settingsDialogs.py:391
 msgid "Report object &position information"
-msgstr "Lue objektin pa&ikkatiedot"
+msgstr "Lue objektin s&ijaintitiedot"
 
 #: gui\settingsDialogs.py:394
 msgid "Report object &group names"
@@ -2319,7 +2320,7 @@ msgstr "ei alaindeksiä"
 
 #: textBuffer.py:470 textBuffer.py:498 textBuffer.py:506
 msgid "Moves and then reads the current line"
-msgstr "Siirtyy kohdalla olevalle riville ja lukee sen"
+msgstr "Siirtää kohdalla olevalle riville ja lukee sen"
 
 #: textBuffer.py:474
 msgid "reads the current line"
@@ -2327,19 +2328,19 @@ msgstr "lukee nykyisen rivin"
 
 #: textBuffer.py:482
 msgid "Moves and reads the current character"
-msgstr "Siirtyy kohdalla olevaan merkkiin ja lukee sen"
+msgstr "Siirtää kohdalla olevaan merkkiin ja lukee sen"
 
 #: textBuffer.py:490
 msgid "Moves and reads the current word"
-msgstr "Siirtyy kohdalla olevaan sanaan ja lukee sen"
+msgstr "Siirtää kohdalla olevaan sanaan ja lukee sen"
 
 #: textBuffer.py:514
 msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "Siirtyy seuraavaan kappaleeseen ja lukee sen"
+msgstr "Siirtää seuraavaan kappaleeseen ja lukee sen"
 
 #: textBuffer.py:522
 msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "Siirtyy edelliseen kappaleeseen ja lukee sen"
+msgstr "Siirtää edelliseen kappaleeseen ja lukee sen"
 
 #: textBuffer.py:534
 msgid "no selections"
@@ -2347,7 +2348,7 @@ msgstr "ei valintoja"
 
 #: textBuffer.py:553
 msgid "Moves and reads the current selection"
-msgstr "Siirtyy nykyisen valinnan kohdalle ja lukee sen"
+msgstr "Siirtää nykyisen valinnan kohdalle ja lukee sen"
 
 #: textBuffer.py:559
 msgid "Deletes the character and reads the new current character"
@@ -2446,11 +2447,12 @@ msgstr "kautta %s"
 
 #: virtualBuffers\__init__.py:274
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "siirtyy yhden sivun ylös näennäispuskurin nykyisessä dokumentissa"
+msgstr ""
+"siirtää yhden sivun ylös näennäispuskurin nykyisessä dokumentissa"
 
 #: virtualBuffers\__init__.py:289
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "siirtyy yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
+msgstr "siirtää yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
 
 #: virtualBuffers\__init__.py:293
 msgid "activates the current object in the virtual buffer"
