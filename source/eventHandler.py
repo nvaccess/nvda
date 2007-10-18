@@ -10,7 +10,7 @@ def manageEvent(name,obj):
 	if name=="gainFocus":
 		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 			if parent==foregroundObject:
-				break 
+				continue
 			states=parent.states
 			role=parent.role
 			if role not in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION) and (controlTypes.STATE_UNAVAILABLE not in states) and (controlTypes.STATE_INVISIBLE not in states):
