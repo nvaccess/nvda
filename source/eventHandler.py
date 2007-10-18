@@ -4,18 +4,25 @@ import virtualBuffers
 import debug
 import controlTypes
 
-def manageEvent(name,obj):
+def manageEvent(eventName,obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	foregroundObject=globalVars.foregroundObject
-	if name=="gainFocus":
+	if eventName=="gainFocus":
 		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 			if parent==foregroundObject:
 				continue
-			states=parent.states
 			role=parent.role
-			if role not in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION) and (controlTypes.STATE_UNAVAILABLE not in states) and (controlTypes.STATE_INVISIBLE not in states):
-				manageEvent("focusEntered",parent)
-	manageEvent_appModuleLevel(name,obj)
+			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
+				continue
+			name=parent.name
+			description=parent.description
+			if role==controlTypes.ROLE_PANEL and not name and not description:
+				continue
+			states=parent.states
+			if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+				continue
+			manageEvent("focusEntered",parent)
+	manageEvent_appModuleLevel(eventName,obj)
 
 def manageEvent_appModuleLevel(name,obj):
 	appModule=obj.appModule()
