@@ -64,7 +64,6 @@ def setForegroundObject(obj):
 		return False
 	globalVars.foregroundObject=obj
 	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
-	setFocusObject(obj)
 	return True
 
 def setFocusObject(obj,ancestors=None):

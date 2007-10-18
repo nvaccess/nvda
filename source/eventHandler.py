@@ -5,9 +5,12 @@ import debug
 import controlTypes
 
 def manageEvent(name,obj):
-		#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	foregroundObject=globalVars.foregroundObject
 	if name=="gainFocus":
 		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+			if parent==foregroundObject:
+				break 
 			states=parent.states
 			role=parent.role
 			if role not in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION) and (controlTypes.STATE_UNAVAILABLE not in states) and (controlTypes.STATE_INVISIBLE not in states):
