@@ -588,6 +588,7 @@ def handleFocusEvent(window,objectID,childID):
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj or obj==oldFocus:
 		return
+	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
 	if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
 		hasFocusState=True
@@ -595,10 +596,15 @@ def handleFocusEvent(window,objectID,childID):
 		hasFocusState=False
 	parent=obj.parent
 	while parent:
-		ancestors.insert(0,parent)
+		if len(oldAncestors)==0 or parent!=oldAncestors[-1]:
+			ancestors.insert(0,parent)
+			parent=parent.parent
+		else:
+			ancestors=oldAncestors+ancestors
+			break
+	for parent in ancestors:
 		if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
 			hasFocusState=True
-		parent=parent.parent
 	if not hasFocusState:
 		return
 	virtualBuffers.IAccessible.update(obj)
