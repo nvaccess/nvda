@@ -430,10 +430,12 @@ def accNavigate(ia,child,direction):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		else:
-			return None
+			raise RuntimeError
 		return (new_ia,new_child)
 	except:
-		return None
+		pass
+
+
 
 def accLocation(ia,child):
 	try:
@@ -586,8 +588,21 @@ def handleFocusEvent(window,objectID,childID):
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	if not obj or obj==oldFocus:
 		return
+	ancestors=[]
+	if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
+		hasFocusState=True
+	else:
+		hasFocusState=False
+	parent=obj.parent
+	while parent:
+		ancestors.insert(0,parent)
+		if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
+			hasFocusState=True
+		parent=parent.parent
+	if not hasFocusState:
+		return
 	virtualBuffers.IAccessible.update(obj)
-	api.setFocusObject(obj)
+	api.setFocusObject(obj,ancestors=ancestors)
 	eventHandler.manageEvent("gainFocus",obj)
 
 def correctFocus():

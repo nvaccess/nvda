@@ -64,9 +64,10 @@ def setForegroundObject(obj):
 		return False
 	globalVars.foregroundObject=obj
 	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
+	setFocusObject(obj)
 	return True
 
-def setFocusObject(obj):
+def setFocusObject(obj,ancestors=None):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
 Before overriding the last object, this function calls event_looseFocus on the object to notify it that it is loosing focus. 
 @param obj: the object that will be stored as the focus object
@@ -80,15 +81,12 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		except:
 			debug.writeException("event_looseFocus in focusObject")
 	oldAncestors=globalVars.focusAncestors
-	ancestors=[]
-	parent=obj.parent
-	while parent:
-		if len(oldAncestors)==0 or parent!=oldAncestors[-1]:
+	if not ancestors:
+		ancestors=[]
+		parent=obj.parent
+		while parent:
 			ancestors.insert(0,parent)
 			parent=parent.parent
-		else:
-			ancestors=oldAncestors+ancestors
-			break
 	commonLevel=None
 	oldAncestors=globalVars.focusAncestors
 	oldAncestors.append(globalVars.focusObject)

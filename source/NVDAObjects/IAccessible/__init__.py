@@ -53,7 +53,6 @@ def getNVDAObjectFromPoint(x,y):
 def processGeckoDescription(obj):
 	if obj.windowClassName not in ["MozillaWindowClass","MozillaContentWindowClass","MozillaUIWindowClass","MozillaDialogClass"]:
 		return
-	obj.reportFocusNeedsIAccessibleFocusState=False
 	rawDescription=obj.description
 	if not isinstance(rawDescription,basestring):
 		return
@@ -251,8 +250,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		Window.__init__(self,windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
-		if not hasattr(self,"reportFocusNeedsIAccessibleFocusState"):
-			self.reportFocusNeedsIAccessibleFocusState=True
 		self._doneInit=True
 
 	def __hash__(self):
@@ -490,8 +487,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return super(IAccessible,self)._get_groupName()
 
 	def reportFocus(self):
-		if (self.reportFocusNeedsIAccessibleFocusState and not self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_FOCUSED):
-			return
 		if self==api.getForegroundObject():
 			return
 		super(IAccessible,self).reportFocus()
