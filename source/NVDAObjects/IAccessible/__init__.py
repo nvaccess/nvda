@@ -486,11 +486,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		else:
 			return super(IAccessible,self)._get_groupName()
 
-	def reportFocus(self):
-		if self==api.getForegroundObject():
-			return
-		super(IAccessible,self).reportFocus()
-
 	def speakDescendantObjects(self,hashList=None):
 		if hashList is None:
 			hashList=[]

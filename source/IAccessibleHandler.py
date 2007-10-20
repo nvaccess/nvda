@@ -573,7 +573,6 @@ def handleForegroundEvent(window,objectID,childID):
 		return
 	virtualBuffers.IAccessible.update(obj)
 	api.setForegroundObject(obj)
-	eventHandler.manageEvent("foreground",obj)
 
 def handleFocusEvent(window,objectID,childID):
 	#Ignore any events with invalid window handles
