@@ -512,7 +512,6 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 				api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
-				queueHandler.queueFunction(queueHandler.eventQueue,correctFocus)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleOrigChildID):
 				api.setForegroundObject(desktopObject)
@@ -609,15 +608,6 @@ def handleFocusEvent(window,objectID,childID):
 	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj,ancestors=ancestors)
 	eventHandler.manageEvent("gainFocus",obj)
-
-def correctFocus():
-	focusObject=api.findObjectWithFocus()
-	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and not focusObject.IAccessibleStates&STATE_SYSTEM_INVISIBLE and not focusObject.IAccessibleStates&STATE_SYSTEM_OFFSCREEN and focusObject!=api.getFocusObject():
-		handleFocusEvent(focusObject.windowHandle,OBJID_CLIENT,0)
-		manageEvent("gainFocus",focusObject.windowHandle,OBJID_CLIENT,0)
-	else:
-		speech.speakMessage(_("lost focus"))
-		api.setFocusObject(api.getDesktopObject())
 
 #Register internal object event with IAccessible
 cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)

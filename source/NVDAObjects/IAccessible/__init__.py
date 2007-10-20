@@ -519,12 +519,16 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_menuEnd(self):
-		if self.IAccessibleRole not in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP] or self==api.getFocusObject():
-			obj=api.findObjectWithFocus()
-			if isinstance(obj,NVDAObject) and obj!=api.getFocusObject():
-				api.setFocusObject(obj)
-				speech.cancelSpeech()
-				obj.event_gainFocus()
+		if self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP) and self!=api.getFocusObject():
+			return
+		obj = getNVDAObjectFromEvent(winUser.getForegroundWindow(), IAccessibleHandler.OBJID_CLIENT, 0)
+		api.setForegroundObject(obj)
+		obj=api.findObjectWithFocus()
+		if not isinstance(obj,NVDAObject) or obj==api.getFocusObject():
+			return
+		api.setFocusObject(obj)
+		import eventHandler
+		eventHandler.manageEvent("gainFocus", obj)
 
 	def event_selection(self):
 		return self.event_stateChange()
