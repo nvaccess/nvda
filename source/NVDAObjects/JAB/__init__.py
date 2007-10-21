@@ -181,11 +181,8 @@ class JAB(Window):
 		Window.__init__(self,windowHandle=windowHandle)
 		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
-	def __eq__(self,other):
-		if (id(self)==id(other)) or (self.__class__==other.__class__ and self.jabContext==other.jabContext):
-			return True
-		else:
-			return False
+	def _isEqual(self,other):
+		return isinstance(other,JAB) and self.jabContext==other.jabContext
 
 	def __ne__(self,other):
 		if (self.__class__!=other.__class__) or (self.jabContext!=other.jabContext):
@@ -343,7 +340,3 @@ class JAB(Window):
 		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).event_gainFocus()
-
-	def event_foreground(self):
-		super(JAB,self).event_foreground()
-		self.speakDescendantObjects()

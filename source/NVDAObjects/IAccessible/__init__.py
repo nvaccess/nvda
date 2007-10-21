@@ -198,7 +198,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				obj=Window.__new__(IA2Class,windowHandle=windowHandle)
 				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IA2Pacc,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 				return obj
-		if not windowHandle:
+		if True: #not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			return None #We really do need a window handle
@@ -252,15 +252,22 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		processGeckoDescription(self)
 		self._doneInit=True
 
-	def __hash__(self):
-		l=self._hashLimit
-		p=self._hashPrime
-		h=NVDAObject.__hash__(self)
+	def _isEqual(self,other):
+		if not super(IAccessible,self)._isEqual(other):
+			return False
+		if not isinstance(other,IAccessible):
+			return False
 		try:
-			h=(h+(hash(IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID))*p))%l
+			return IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID)==IAccessibleHandler.getIAccIdentityString(other.IAccessibleObject,other.IAccessibleChildID)
 		except:
 			pass
-		return h
+		if self.IAccessibleChildID!=other.IAccessibleChildID:
+			return False
+ 		if self.IAccessibleRole!=other.IAccessibleRole:
+			return False
+		if self.name!=other.name:
+			return False
+		return True
 
 	def _get_name(self):
 		try:

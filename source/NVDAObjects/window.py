@@ -47,8 +47,8 @@ An NVDAObject for a window
 		if hasattr(self.appModule(),'event_NVDAObject_init'):
 			self.appModule().event_NVDAObject_init(self)
 
-	def __hash__(self):
-		return int(self.windowHandle)
+	def _isEqual(self,other):
+		return super(Window,self)._isEqual(other) and isinstance(other,Window) and other.windowHandle==self.windowHandle
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)

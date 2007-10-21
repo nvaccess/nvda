@@ -11,6 +11,7 @@ import IAccessibleHandler
 from keyUtils import sendKey, isKeyWaiting
 from .. import IAccessible
 from ... import NVDAObjectTextInfo
+from ...window import Window
 
 IA2RolesToNVDARoles={
 IA2Handler.ROLE_UNKNOWN:controlTypes.ROLE_UNKNOWN,
@@ -129,8 +130,8 @@ class IA2(IAccessible):
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
 		replacedTextInfo=False
-		if not windowHandle:
-			pass #windowHandle=IAccessibleObject.WindowHandle
+		if True: #not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject) #windowHandle=IAccessibleObject.WindowHandle
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleAction)
 		except:
@@ -173,6 +174,21 @@ class IA2(IAccessible):
 		self._lastMouseTextOffsets=None
 		if replacedTextInfo:
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+
+	def _isEqual(self,other):
+		if not isinstance(other,IA2):
+			return IAccessible._isEqual(self,other)
+		if not Window._isEqual(self,other):
+			return False
+		if ctypes.cast(self.IAccessibleObject,ctypes.c_void_p).value==ctypes.cast(other.IAccessibleObject,ctypes.c_void_p).value:
+			return True
+		if self.IAccessibleObject.UniqueID!=other.IAccessibleObject.UniqueID:
+			return False
+		if self.IAccessibleChildID!=other.IAccessibleChildID:
+			return False
+		if self.IAccessibleRole!=other.IAccessibleRole:
+			return False
+		return True
 
 	def _get_role(self):
 		IA2Role=self.IAccessibleObject.role()

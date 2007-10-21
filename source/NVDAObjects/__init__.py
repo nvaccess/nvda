@@ -318,43 +318,20 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldStates=self.states
 		self._oldName=None
 		self._oldDescription=None
-		self._hashLimit=10000000
-		self._hashPrime=23
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
 		if not hasattr(self,'TextInfo'):
 			self.TextInfo=NVDAObjectTextInfo
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
-	def __hash__(self):
-		l=self._hashLimit
-		p=self._hashPrime
-		h=0
-		h=(h+(hash(self.__class__.__name__)*p))%l
-		h=(h+(hash(self.name)*p))%l
-		h=(h+(hash(self.role)*p))%l
-		h=(h+(hash(self.description)*p))%l
-		h=(h+(hash(self.keyboardShortcut)*p))%l
-		location=self.location
-		if location and (len(location)==4):
-			(left,top,width,height)=location
-			h=(h+(hash(left)*p))%l
-			h=(h+(hash(top)*p))%l
-			h=(h+(hash(width)*p))%l
-			h=(h+(hash(height)*p))%l
-		return h
-
+	def _isEqual(self,other):
+		return True
+ 
 	def __eq__(self,other):
-		if (id(self)==id(other)) or (hash(self)==hash(other)):
-			return True
-		else:
-			return False
-
+		return self is other or self._isEqual(other)
+ 
 	def __ne__(self,other):
-		if (id(self)!=id(other)) and (hash(self)!=hash(other)):
-			return True
-		else:
-			return False
+		return not self.__eq__(other)
 
 	def getScript(self,keyPress):
 		"""
