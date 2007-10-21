@@ -198,7 +198,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				obj=Window.__new__(IA2Class,windowHandle=windowHandle)
 				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IA2Pacc,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 				return obj
-		if True: #not windowHandle:
+		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			return None #We really do need a window handle
@@ -207,7 +207,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
 		except:
 			IAccessibleRole=0
-		debug.writeMessage("new %s, %s"%(windowClassName,IAccessibleRole))
 		classString=None
 		if _staticMap.has_key((windowClassName,IAccessibleRole)):
 			classString=_staticMap[(windowClassName,IAccessibleRole)]
@@ -257,10 +256,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if not isinstance(other,IAccessible):
 			return False
-		try:
-			return IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID)==IAccessibleHandler.getIAccIdentityString(other.IAccessibleObject,other.IAccessibleChildID)
-		except:
-			pass
+		selfIden=self.IAccessibleIdentityString
+		otherIden=other.IAccessibleIdentityString
+		if selfIden and otherIden and selfIden==otherIden:
+			return True
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
 			return False
  		if self.IAccessibleRole!=other.IAccessibleRole:
@@ -297,12 +296,21 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if index==0:
 			self.IAccessibleObject.accDoDefaultAction()
 
+	def _get_IAccessibleIdentityString(self):
+		if not hasattr(self,'_IAccessibleIdentityString'):
+			try:
+				self._IAccessibleIdentityString=IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID)
+			except:
+				self._IAccessibleIdentityString=None
+		return self._IAccessibleIdentityString
+
 	def _get_IAccessibleRole(self):
-		try:
-			res=self.IAccessibleObject.accRole(self.IAccessibleChildID)
-		except:
-			return 0
-		return res if (isinstance(res,basestring) or isinstance(res,int) or isinstance(res,float)) else ""
+		if not hasattr(self,'_IAccessibleRole'):
+			try:
+				self._IAccessibleRole=self.IAccessibleObject.accRole(self.IAccessibleChildID)
+			except:
+				self._IAccessibleRole=None
+		return self._IAccessibleRole
 
 	def _get_role(self):
 		IARole=self.IAccessibleRole
