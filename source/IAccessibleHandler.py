@@ -593,13 +593,17 @@ def handleFocusEvent(window,objectID,childID):
 	else:
 		hasFocusState=False
 	parent=obj.parent
+	matchedOld=False
 	while parent:
-		if len(oldAncestors)==0 or parent!=oldAncestors[-1]:
-			ancestors.insert(0,parent)
-			parent=parent.parent
-		else:
-			ancestors=oldAncestors+ancestors
+		for index in range(len(oldAncestors)):
+			if parent==oldAncestors[index]:
+				ancestors=oldAncestors[0:index+1]+ancestors
+				matchedOld=True
+				break
+		if matchedOld:
 			break
+		ancestors.insert(0,parent)
+		parent=parent.parent
 	for parent in ancestors:
 		if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
 			hasFocusState=True
