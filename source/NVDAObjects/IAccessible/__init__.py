@@ -538,14 +538,16 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_menuEnd(self):
 		if self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP) and self!=api.getFocusObject():
 			return
-		obj = getNVDAObjectFromEvent(winUser.getForegroundWindow(), IAccessibleHandler.OBJID_CLIENT, 0)
-		api.setForegroundObject(obj)
-		obj=api.findObjectWithFocus()
-		if not isinstance(obj,NVDAObject) or obj==api.getFocusObject():
+		api.processPendingEvents()
+		if api.getFocusObject().role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU):
 			return
-		api.setFocusObject(obj)
-		import eventHandler
-		eventHandler.manageEvent("gainFocus", obj)
+		obj=getNVDAObjectFromEvent(winUser.getForegroundWindow(),IAccessibleHandler.OBJID_CLIENT,0)
+		if not obj:
+			return
+		IAccessibleHandler.focus_manageEvent(obj,isForegroundChange=True)
+		obj=api.findObjectWithFocus()
+		IAccessibleHandler.focus_manageEvent(obj)
+
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -619,16 +621,6 @@ class TrayClockWClass(IAccessible):
 
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
-
-class Shell_TrayWnd_client(IAccessible):
-
-	def event_foreground(self):
-		pass
-
-class Progman_client(IAccessible):
-
-	def event_foreground(self):
-		pass
 
 class OutlineItem(IAccessible):
 
@@ -759,7 +751,7 @@ class List(IAccessible):
 		IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			IAccessibleHandler.objectEventCallback(-1,winUser.EVENT_OBJECT_FOCUS,self.windowHandle,self.IAccessibleObjectID,child.IAccessibleChildID,0,0)
+			IAccessibleHandler.focus_manageEvent(child)
 		elif not self.firstChild:
 			speech.speakMessage(_("%d items")%0)
 
@@ -823,6 +815,12 @@ class TaskListIcon(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_ICON
 
+	def reportFocus(self):
+		if controlTypes.STATE_INVISIBLE in self.states:
+			return
+		super(TaskListIcon,self).reportFocus()
+
+
 class ToolBar(IAccessible):
 
 	def event_gainFocus(self):
@@ -832,8 +830,7 @@ class ToolBar(IAccessible):
 		for child in self.children:
 			if child.IAccessibleStates & IAccessibleHandler.STATE_SYSTEM_FOCUSED:
 				# Redirect the focus to the focused child.
-				api.setFocusObject(child)
-				child.event_gainFocus()
+				IAccessibleHandler.focus_manageEvent(child)
 				return
 
 class ToolBarButton(IAccessible):
@@ -853,10 +850,8 @@ class ToolBarButton(IAccessible):
 _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
 	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"IAccessibleWindow",
-	("Shell_TrayWnd",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Shell_TrayWnd_client",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
-	("Progman",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Progman_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",

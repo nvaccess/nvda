@@ -490,7 +490,7 @@ def manageEvent(name,window,objectID,childID):
 	if obj:
 		eventHandler.manageEvent(name,obj)
 
-def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global lastEventParams
 	try:
 		#Ignore certain duplicate events
@@ -522,7 +522,9 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		if eventName=="destroy":
 			return
 		#Ignore events with invalid window handles
-		if not winUser.isWindow(window) and objectID!=OBJID_CURSOR:
+		if not window:
+			window=winUser.getDesktopWindow()
+		elif not winUser.isWindow(window):
 			return
 		windowClassName=winUser.getClassName(window)
 		controlID=winUser.getControlID(window)
@@ -545,11 +547,11 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.eventQueue,handleForegroundEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,forground_winEventCalback,window,objectID,childID)
 			return
 		#Process focus events
 		elif eventName=="gainFocus":
-			queueHandler.queueFunction(queueHandler.eventQueue,handleFocusEvent,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCalback,window,objectID,childID,isForegroundChange=False)
 			return
 		#Process IA2 active descendant events
 		if eventID==IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:
@@ -558,24 +560,24 @@ def objectEventCallback(handle,eventID,window,objectID,childID,threadID,timestam
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
-		debug.writeException("objectEventCallback")
+		debug.writeException("winEventCallback")
 
-def handleForegroundEvent(window,objectID,childID):
+def forground_winEventCalback(window,objectID,childID):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
-	appModuleHandler.update(window)
-	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
-		return JABHandler.event_enterJavaWindow(window)
-	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if not obj:
+	focus=api.getFocusObject()
+	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
+	if winUser.isDescendantWindow(window,focus.windowHandle):
 		return
-	virtualBuffers.IAccessible.update(obj)
-	api.setForegroundObject(obj)
+	return focus_winEventCalback(window,objectID,childID,isForegroundChange=True)
 
-def handleFocusEvent(window,objectID,childID):
+def focus_winEventCalback(window,objectID,childID,isForegroundChange=False):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
+		return
+	#Ignore focus/foreground events on the parent windows of the desktop and taskbar
+	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
@@ -584,14 +586,19 @@ def handleFocusEvent(window,objectID,childID):
 	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID and winUser.getClassName(window)!="OUTEXVLB":
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	focus_manageEvent(obj,isForegroundChange)
+
+def focus_manageEvent(obj,isForegroundChange=False):
+	oldFocus=api.getFocusObject()
 	if not obj or obj==oldFocus:
 		return
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
-	if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
-		hasFocusState=True
-	else:
-		hasFocusState=False
+	if not isForegroundChange:
+		if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
+			hasFocusState=True
+		else:
+			hasFocusState=False
 	parent=obj.parent
 	matchedOld=False
 	while parent:
@@ -604,9 +611,10 @@ def handleFocusEvent(window,objectID,childID):
 			break
 		ancestors.insert(0,parent)
 		parent=parent.parent
-	for parent in ancestors:
-		if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
-			hasFocusState=True
+	if not isForegroundChange:
+		for parent in ancestors:
+			if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
+				hasFocusState=True
 	foundGroup=False
 	for index in range(len(ancestors)):
 		groupObj=findGroupboxObject(ancestors[index])
@@ -618,14 +626,18 @@ def handleFocusEvent(window,objectID,childID):
 		groupObj=findGroupboxObject(obj)
 		if groupObj:
 			ancestors.append(groupObj)
-	if not hasFocusState:
-		return
+	if not isForegroundChange:
+		if not hasFocusState:
+			return
 	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj,ancestors=ancestors)
+	if isForegroundChange:
+		speech.cancelSpeech()
+		api.setForegroundObject(obj)
 	eventHandler.manageEvent("gainFocus",obj)
 
 #Register internal object event with IAccessible
-cObjectEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(objectEventCallback)
+cWinEventCallback=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(winEventCallback)
 
 def initialize():
 	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
@@ -636,12 +648,12 @@ def initialize():
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)
 	api.setMouseObject(desktopObject)
-	objectEventCallback(0,winUser.EVENT_SYSTEM_FOREGROUND,winUser.getForegroundWindow(),OBJID_CLIENT,0,0,0)
+	winEventCallback(0,winUser.EVENT_SYSTEM_FOREGROUND,winUser.getForegroundWindow(),OBJID_CLIENT,0,0,0)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		objectEventCallback(0,winUser.EVENT_OBJECT_FOCUS,focusObject.windowHandle,OBJID_CLIENT,0,0,0)
+		winEventCallback(0,winUser.EVENT_OBJECT_FOCUS,focusObject.windowHandle,OBJID_CLIENT,0,0,0)
 	for eventType in eventMap.keys():
-		handle=winUser.setWinEventHook(eventType,eventType,0,cObjectEventCallback,0,0,0)
+		handle=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if handle:
 			objectEventHandles.append(handle)
 		else:

@@ -9,9 +9,6 @@ def manageEvent(eventName,obj):
 	foregroundObject=globalVars.foregroundObject
 	if eventName=="gainFocus":
 		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
-			if parent==foregroundObject:
-				manageEvent("foreground",parent)
-				continue
 			role=parent.role
 			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
 				continue
