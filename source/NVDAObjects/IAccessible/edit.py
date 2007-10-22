@@ -422,8 +422,7 @@ class Edit(IAccessible):
 	def event_caret(self):
 		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
 		oldInfo=self._editLastSelectionPos
-		#speakSelectionChange must be in interactive queue so it happens after key scripts
-		queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
 		self._editLastSelectionPos=newInfo.copy()
 
 	def script_changeSelection(self,keyPress,nextScript):
