@@ -607,6 +607,17 @@ def handleFocusEvent(window,objectID,childID):
 	for parent in ancestors:
 		if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
 			hasFocusState=True
+	foundGroup=False
+	for index in range(len(ancestors)):
+		groupObj=findGroupboxObject(ancestors[index])
+		if groupObj:
+			foundGroup=True
+			ancestors.insert(index,groupObj)
+			break
+	if not foundGroup:
+		groupObj=findGroupboxObject(obj)
+		if groupObj:
+			ancestors.append(groupObj)
 	if not hasFocusState:
 		return
 	virtualBuffers.IAccessible.update(obj)
@@ -644,4 +655,18 @@ def getIAccIdentityString(pacc,childID):
 	p,s=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
 	p=ctypes.cast(p,ctypes.POINTER(ctypes.c_char*s))
 	return p.contents.raw
+
+def findGroupboxObject(obj):
+	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
+	while prevWindow:
+		if winUser.getClassName(prevWindow)=="Button" and winUser.getWindowStyle(prevWindow)&winUser.BS_GROUPBOX:
+			groupObj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(prevWindow,OBJID_CLIENT,0)
+			try:
+				(left,top,width,height)=obj.location
+				(groupLeft,groupTop,groupWidth,groupHeight)=groupObj.location
+			except:
+				return
+			if groupObj.IAccessibleRole==ROLE_SYSTEM_GROUPING and left>=groupLeft and (left+width)<=(groupLeft+groupWidth) and top>=groupTop and (top+height)<=(groupTop+groupHeight):
+				return groupObj
+		prevWindow=winUser.getPreviousWindow(prevWindow)
 

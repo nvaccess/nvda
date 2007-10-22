@@ -43,6 +43,8 @@ GUI_POPUPMENUMODE=0x00000010
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
 SPIF_SENDCHANGE=2
+WS_GROUP=0x20000
+BS_GROUPBOX=7
 WM_NOTIFY=78
 WM_USER=1024
 #PeekMessage
@@ -56,7 +58,9 @@ GA_ROOT=2
 GA_ROOTOWNER=3
 #getWindowLong
 GWL_ID=-12
+GWL_STYLE=-16
 #getWindow
+GW_HWNDPREV=3
 GW_OWNER=4
 #Window messages
 WM_GETTEXT=13
@@ -282,6 +286,7 @@ def getDesktopWindow():
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
 
+
 def getClientRect(hwnd):
 	return user32.GetClientRect(hwnd)
 
@@ -351,3 +356,9 @@ def getGUIThreadInfo(threadID):
 	info=GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))
 	user32.GetGUIThreadInfo(threadID,byref(info))
 	return info
+
+def getWindowStyle(hwnd):
+	return user32.GetWindowLongW(hwnd,GWL_STYLE)
+
+def getPreviousWindow(hwnd):
+		return user32.GetWindow(hwnd,GW_HWNDPREV)

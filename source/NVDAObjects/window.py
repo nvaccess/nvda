@@ -92,3 +92,6 @@ An NVDAObject for a window
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
 			return self.__class__(windowHandle=parentHandle)
+
+	def _get_windowStyle(self):
+		return winUser.getWindowStyle(self.windowHandle)
