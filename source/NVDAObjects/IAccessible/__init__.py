@@ -256,6 +256,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if not isinstance(other,IAccessible):
 			return False
+		if ctypes.cast(self.IAccessibleObject,ctypes.c_void_p).value==ctypes.cast(other.IAccessibleObject,ctypes.c_void_p).value:
+			return True
 		selfIden=self.IAccessibleIdentityString
 		otherIden=other.IAccessibleIdentityString
 		if selfIden and otherIden and selfIden==otherIden:
