@@ -742,9 +742,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakFormattedText(info)
 
-	def _hasCaretMoved(self, info=None, retryInterval=0.01, timeout=0.03):
-		if not info:
-			info = self.makeTextInfo(textHandler.POSITION_CARET)
+	def _hasCaretMoved(self, info, retryInterval=0.01, timeout=0.03):
 		elapsed = 0
 		while elapsed < timeout:
 			if isKeyWaiting():
@@ -758,9 +756,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return False
 
 	def script_moveByLine(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved()
+		self._hasCaretMoved(info)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -770,9 +769,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakFormattedText(info)
 
 	def script_moveByCharacter(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved()
+		self._hasCaretMoved(info)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -782,9 +782,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved()
+		self._hasCaretMoved(info)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -794,9 +795,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakFormattedText(info)
 
 	def script_moveByParagraph(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved()
+		self._hasCaretMoved(info)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
