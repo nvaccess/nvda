@@ -6,7 +6,6 @@ import controlTypes
 
 def manageEvent(eventName,obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	foregroundObject=globalVars.foregroundObject
 	if eventName=="gainFocus":
 		for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 			role=parent.role

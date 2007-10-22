@@ -547,11 +547,11 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.eventQueue,forground_winEventCalback,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,forground_winEventCallback,window,objectID,childID)
 			return
 		#Process focus events
 		elif eventName=="gainFocus":
-			queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCalback,window,objectID,childID,isForegroundChange=False)
+			queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID,isForegroundChange=False)
 			return
 		#Process IA2 active descendant events
 		if eventID==IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:
@@ -562,7 +562,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	except:
 		debug.writeException("winEventCallback")
 
-def forground_winEventCalback(window,objectID,childID):
+def forground_winEventCallback(window,objectID,childID):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
@@ -570,9 +570,9 @@ def forground_winEventCalback(window,objectID,childID):
 	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
 	if winUser.isDescendantWindow(window,focus.windowHandle):
 		return
-	return focus_winEventCalback(window,objectID,childID,isForegroundChange=True)
+	return focus_winEventCallback(window,objectID,childID,isForegroundChange=True)
 
-def focus_winEventCalback(window,objectID,childID,isForegroundChange=False):
+def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
