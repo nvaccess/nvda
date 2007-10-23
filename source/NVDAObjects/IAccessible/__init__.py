@@ -634,6 +634,14 @@ class Dialog(IAccessible):
  					textList.append(childName)
 		return " ".join(textList)
 
+	def event_gainFocus(self):
+		super(Dialog,self).event_gainFocus()
+		children=self.children
+		for child in children:
+			if child.role==controlTypes.ROLE_PROPERTYPAGE:
+				IAccessibleHandler.focus_manageEvent(child,needsFocusState=False)
+
+
 class PropertyPage(Dialog):
 
 	def _get_role(self):
