@@ -634,6 +634,10 @@ class Dialog(IAccessible):
  					textList.append(childName)
 		return " ".join(textList)
 
+class PropertyPage(Dialog):
+
+	def _get_role(self):
+		return controlTypes.ROLE_PROPERTYPAGE
 
 class TrayClockWClass(IAccessible):
 	"""
@@ -874,6 +878,7 @@ _staticMap={
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	(None,IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE):"PropertyPage",
 	(None,IAccessibleHandler.ROLE_SYSTEM_GROUPING):"Groupbox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
