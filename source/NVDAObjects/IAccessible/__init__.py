@@ -599,6 +599,8 @@ class Groupbox(IAccessible):
 
 	def _get_description(self):
 		next=self.next
+		if next and next.name==self.name and next.role==controlTypes.ROLE_GRAPHIC:
+			next=next.next
 		if next and next.role==controlTypes.ROLE_STATICTEXT:
 			nextNext=next.next
 			if nextNext and nextNext.name!=next.name:
