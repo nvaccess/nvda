@@ -588,13 +588,15 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	focus_manageEvent(obj,isForegroundChange)
 
-def focus_manageEvent(obj,isForegroundChange=False):
+def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
+	if isForegroundChange:
+		needsFocusState=False
 	oldFocus=api.getFocusObject()
 	if not obj or obj==oldFocus:
 		return
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
-	if not isForegroundChange:
+	if needsFocusState:
 		if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
 			hasFocusState=True
 		else:
@@ -611,7 +613,7 @@ def focus_manageEvent(obj,isForegroundChange=False):
 			break
 		ancestors.insert(0,parent)
 		parent=parent.parent
-	if not isForegroundChange:
+	if needsFocusState:
 		for parent in ancestors:
 			if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
 				hasFocusState=True
@@ -626,7 +628,7 @@ def focus_manageEvent(obj,isForegroundChange=False):
 		groupObj=findGroupboxObject(obj)
 		if groupObj:
 			ancestors.append(groupObj)
-	if not isForegroundChange:
+	if needsFocusState:
 		if not hasFocusState:
 			return
 	virtualBuffers.IAccessible.update(obj)
