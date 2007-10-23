@@ -547,7 +547,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		#Process foreground events
 		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.eventQueue,forground_winEventCallback,window,objectID,childID)
+			queueHandler.queueFunction(queueHandler.eventQueue,foreground_winEventCallback,window,objectID,childID)
 			return
 		#Process focus events
 		elif eventName=="gainFocus":
@@ -562,7 +562,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	except:
 		debug.writeException("winEventCallback")
 
-def forground_winEventCallback(window,objectID,childID):
+def foreground_winEventCallback(window,objectID,childID):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
