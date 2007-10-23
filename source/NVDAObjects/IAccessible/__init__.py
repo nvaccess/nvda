@@ -595,6 +595,16 @@ class IAccessibleWindow(IAccessible):
 				children.append(obj)
 		return children
 
+class Groupbox(IAccessible):
+
+	def _get_description(self):
+		next=self.next
+		if next and next.role==controlTypes.ROLE_STATICTEXT:
+			nextNext=next.next
+			if nextNext and nextNext.name!=next.name:
+				return next.name
+		return super(Groupbox,self)._get_description()
+
 class Dialog(IAccessible):
 	"""
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
@@ -615,6 +625,8 @@ class Dialog(IAccessible):
 				childName=children[index].name
 				childStates=children[index].states
 				if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates:
+					continue
+				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
 					continue
 				if childName and ((index+1)>=childCount or children[index+1].role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR) or children[index+1].name!=childName):
  					textList.append(childName)
@@ -860,6 +872,7 @@ _staticMap={
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	(None,IAccessibleHandler.ROLE_SYSTEM_GROUPING):"Groupbox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
