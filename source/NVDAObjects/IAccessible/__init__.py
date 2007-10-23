@@ -630,6 +630,8 @@ class Dialog(IAccessible):
 					continue
 				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
 					continue
+				if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
+					continue
 				if childName and ((index+1)>=childCount or children[index+1].role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR) or children[index+1].name!=childName):
  					textList.append(childName)
 		return " ".join(textList)
