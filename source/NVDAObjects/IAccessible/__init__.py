@@ -610,9 +610,20 @@ class Dialog(IAccessible):
 	def _get_value(self):
 		return None
 
-	def event_foreground(self):
-		super(Dialog,self).event_foreground()
-		#self.speakDescendantObjects()
+	def _get_description(self):
+		children=self.children
+		textList=[]
+		childCount=len(children)
+		for index in range(childCount):
+			if children[index].role==controlTypes.ROLE_STATICTEXT:
+				childName=children[index].name
+				childStates=children[index].states
+				if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates:
+					continue
+				if childName and ((index+1)>=childCount or children[index+1].role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR) or children[index+1].name!=childName):
+ 					textList.append(childName)
+		return " ".join(textList)
+
 
 class TrayClockWClass(IAccessible):
 	"""
@@ -917,4 +928,5 @@ _staticMap={
 	("ThunderRT6TextBox",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 ("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 ("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 }
