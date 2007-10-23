@@ -541,10 +541,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		api.processPendingEvents()
 		if api.getFocusObject().role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU):
 			return
-		obj=getNVDAObjectFromEvent(winUser.getForegroundWindow(),IAccessibleHandler.OBJID_CLIENT,0)
-		if not obj:
-			return
-		IAccessibleHandler.focus_manageEvent(obj,isForegroundChange=True)
 		obj=api.findObjectWithFocus()
 		IAccessibleHandler.focus_manageEvent(obj)
 
