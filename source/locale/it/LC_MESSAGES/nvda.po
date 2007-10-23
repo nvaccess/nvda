@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2007-09-10 19:01+0100\n"
+"PO-Revision-Date: 2007-10-22 14:11+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr "Visualizazione ad albero"
 msgid "sub menu"
 msgstr "Sottomenu'"
 
-#: IAccessibleHandler.py:193
-#: speech.py:227
+#: IAccessibleHandler.py:195
+#: speech.py:234
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
 #: virtualBuffers\IAccessible\MSHTML.py:298
@@ -54,12 +54,8 @@ msgstr "Sottomenu'"
 msgid "not %s"
 msgstr "Non %s"
 
-#: IAccessibleHandler.py:598
-msgid "lost focus"
-msgstr "Focus perso"
-
 #: NVDAObjects\IAccessible\__init__.py:69
-#: NVDAObjects\IAccessible\__init__.py:472
+#: NVDAObjects\IAccessible\__init__.py:492
 #: NVDAObjects\IAccessible\sysListView32.py:83
 msgid "%s of %s"
 msgstr "%s di %s"
@@ -68,19 +64,10 @@ msgstr "%s di %s"
 msgid "%s items"
 msgstr "%s elementi"
 
-#: NVDAObjects\IAccessible\__init__.py:756
+#: NVDAObjects\IAccessible\__init__.py:764
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d elementi"
-
-#: NVDAObjects\IAccessible\edit.py:428
-#: speech.py:454
-#: textBuffer.py:537
-#: textBuffer.py:541
-#: textBuffer.py:543
-#: textBuffer.py:549
-msgid "selected %s"
-msgstr "Selezionato %s"
 
 #: NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -129,7 +116,7 @@ msgid "underline"
 msgstr "Sottolineato"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:256
+#: NVDAObjects\JAB\__init__.py:245
 msgid "%d of %d"
 msgstr "%d di %d"
 
@@ -137,58 +124,58 @@ msgstr "%d di %d"
 msgid "with %s columns and %s rows"
 msgstr "Con %s colonne e %s righe"
 
-#: NVDAObjects\IAccessible\winword.py:277
-#: NVDAObjects\IAccessible\winword.py:293
-#: NVDAObjects\IAccessible\winword.py:309
-#: NVDAObjects\IAccessible\winword.py:325
+#: NVDAObjects\IAccessible\winword.py:284
+#: NVDAObjects\IAccessible\winword.py:300
+#: NVDAObjects\IAccessible\winword.py:316
+#: NVDAObjects\IAccessible\winword.py:332
 msgid "not in table"
 msgstr "Non in tabella"
 
-#: NVDAObjects\IAccessible\winword.py:286
+#: NVDAObjects\IAccessible\winword.py:293
 msgid "bottom of column"
 msgstr "Fine della colonna"
 
-#: NVDAObjects\IAccessible\winword.py:302
+#: NVDAObjects\IAccessible\winword.py:309
 msgid "top of column"
 msgstr "Inizio della colonna"
 
-#: NVDAObjects\IAccessible\winword.py:318
+#: NVDAObjects\IAccessible\winword.py:325
 msgid "end of row"
 msgstr "Fine della riga"
 
-#: NVDAObjects\IAccessible\winword.py:334
+#: NVDAObjects\IAccessible\winword.py:341
 msgid "beginning of row"
 msgstr "Inizio della riga"
 
-#: NVDAObjects\__init__.py:602
-#: NVDAObjects\__init__.py:613
-#: NVDAObjects\__init__.py:647
+#: NVDAObjects\__init__.py:611
+#: NVDAObjects\__init__.py:622
+#: NVDAObjects\__init__.py:656
 #: textBuffer.py:364
 #: textBuffer.py:391
 #: textBuffer.py:412
 #: textBuffer.py:433
-#: virtualBuffers\__init__.py:272
+#: virtualBuffers\__init__.py:275
 msgid "top"
 msgstr "All'inizio"
 
-#: NVDAObjects\__init__.py:629
-#: NVDAObjects\__init__.py:636
-#: NVDAObjects\__init__.py:663
+#: NVDAObjects\__init__.py:638
+#: NVDAObjects\__init__.py:645
+#: NVDAObjects\__init__.py:672
 #: textBuffer.py:369
 #: textBuffer.py:382
 #: textBuffer.py:403
 #: textBuffer.py:424
-#: virtualBuffers\__init__.py:287
+#: virtualBuffers\__init__.py:290
 msgid "bottom"
 msgstr "Alla fine"
 
-#: NVDAObjects\__init__.py:672
-#: NVDAObjects\__init__.py:683
+#: NVDAObjects\__init__.py:681
+#: NVDAObjects\__init__.py:692
 msgid "left"
 msgstr "Sinistra"
 
-#: NVDAObjects\__init__.py:705
-#: NVDAObjects\__init__.py:721
+#: NVDAObjects\__init__.py:714
+#: NVDAObjects\__init__.py:730
 msgid "right"
 msgstr "Destra"
 
@@ -216,12 +203,12 @@ msgstr "Voce"
 msgid "variant"
 msgstr "Variante"
 
-#: api.py:147
-#: api.py:150
+#: api.py:176
+#: api.py:179
 msgid "virtual buffer pass through"
 msgstr "Passa attraverso il buffer virtuale"
 
-#: api.py:147
+#: api.py:176
 #: appModules\_default.py:48
 #: appModules\_default.py:101
 #: appModules\_default.py:111
@@ -236,12 +223,12 @@ msgstr "Passa attraverso il buffer virtuale"
 #: keyboardHandler.py:48
 #: keyboardHandler.py:50
 #: keyboardHandler.py:52
-#: speech.py:395
-#: speech.py:401
+#: speech.py:409
+#: speech.py:415
 msgid "off"
 msgstr "Disattivato"
 
-#: api.py:150
+#: api.py:179
 #: appModules\_default.py:45
 #: appModules\_default.py:104
 #: appModules\_default.py:114
@@ -255,7 +242,7 @@ msgstr "Disattivato"
 #: keyboardHandler.py:48
 #: keyboardHandler.py:50
 #: keyboardHandler.py:52
-#: speech.py:390
+#: speech.py:404
 msgid "on"
 msgstr "Attivato"
 
@@ -751,7 +738,7 @@ msgstr "Inviato: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:58
+#: speech.py:64
 msgid "blank"
 msgstr "Vuoto"
 
@@ -2119,35 +2106,44 @@ msgstr "%s cursore"
 msgid "end of text"
 msgstr "Fine testo"
 
-#: speech.py:253
+#: speech.py:260
 msgid "level %d"
 msgstr "Livello %d"
 
-#: speech.py:257
+#: speech.py:264
 msgid "contains %s"
 msgstr "Contiene %s"
 
-#: speech.py:296
+#: speech.py:268
+#: speech.py:468
+#: textBuffer.py:537
+#: textBuffer.py:541
+#: textBuffer.py:543
+#: textBuffer.py:549
+msgid "selected %s"
+msgstr "Selezionato %s"
+
+#: speech.py:310
 msgid "cap %s"
 msgstr "Cap %s"
 
-#: speech.py:381
+#: speech.py:395
 msgid "in"
 msgstr "In"
 
-#: speech.py:386
-#: speech.py:404
+#: speech.py:400
+#: speech.py:418
 msgid "out of"
 msgstr "Fuori di"
 
-#: speech.py:460
+#: speech.py:474
 #: textBuffer.py:545
 #: textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "Non selezionato %s"
 
-#: speech.py:462
+#: speech.py:476
 msgid "selection deleted"
 msgstr "Selezione cancellata"
 
@@ -2336,169 +2332,169 @@ msgstr "Cliccabile"
 msgid "protected %s"
 msgstr "Protetto %s"
 
-#: virtualBuffers\__init__.py:193
+#: virtualBuffers\__init__.py:196
 msgid "out of %s"
 msgstr "Fuori di %s"
 
-#: virtualBuffers\__init__.py:274
+#: virtualBuffers\__init__.py:277
 msgid "moves one page up in the virtual buffer's current document"
 msgstr "Si sposta di una pagina su nel buffer virtuale del documento corrente"
 
-#: virtualBuffers\__init__.py:289
+#: virtualBuffers\__init__.py:292
 msgid "moves one page down in the virtual buffer's current document"
 msgstr "Si sposta di una pagina giu' nel buffer virtuale del documento corrente"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:296
 msgid "activates the current object in the virtual buffer"
 msgstr "Attiva l'oggetto attuale nel buffer virtuale"
 
-#: virtualBuffers\__init__.py:316
-#: virtualBuffers\__init__.py:327
+#: virtualBuffers\__init__.py:319
+#: virtualBuffers\__init__.py:330
 msgid "no more headings"
 msgstr "Non ci sono piu' intestazioni"
 
-#: virtualBuffers\__init__.py:317
+#: virtualBuffers\__init__.py:320
 msgid "moves to the next heading"
 msgstr "Vai all'intestazione successiva"
 
-#: virtualBuffers\__init__.py:328
+#: virtualBuffers\__init__.py:331
 msgid "moves to the previous heading"
 msgstr "Vai all'intestazione precedente"
 
-#: virtualBuffers\__init__.py:338
-#: virtualBuffers\__init__.py:349
+#: virtualBuffers\__init__.py:341
+#: virtualBuffers\__init__.py:352
 msgid "no more paragraphs"
 msgstr "Non ci sono piu' paragrafi"
 
-#: virtualBuffers\__init__.py:339
+#: virtualBuffers\__init__.py:342
 msgid "moves to the next paragraph"
 msgstr "Vai al paragrafo successivo"
 
-#: virtualBuffers\__init__.py:350
+#: virtualBuffers\__init__.py:353
 msgid "moves to the previous paragraph"
 msgstr "Vai al paragrafo precedente"
 
-#: virtualBuffers\__init__.py:360
-#: virtualBuffers\__init__.py:371
+#: virtualBuffers\__init__.py:363
+#: virtualBuffers\__init__.py:374
 msgid "no more tables"
 msgstr "Non ci sono piu' tabelle"
 
-#: virtualBuffers\__init__.py:361
+#: virtualBuffers\__init__.py:364
 msgid "moves to the next table"
 msgstr "Vai alla tabella successiva"
 
-#: virtualBuffers\__init__.py:372
+#: virtualBuffers\__init__.py:375
 msgid "moves to the previous table"
 msgstr "Vai alla tabella precedente"
 
-#: virtualBuffers\__init__.py:382
-#: virtualBuffers\__init__.py:393
+#: virtualBuffers\__init__.py:385
+#: virtualBuffers\__init__.py:396
 msgid "no more links"
 msgstr "Non ci sono piu' links"
 
-#: virtualBuffers\__init__.py:383
+#: virtualBuffers\__init__.py:386
 msgid "moves to the next link"
 msgstr "Vai al link successivo"
 
-#: virtualBuffers\__init__.py:394
+#: virtualBuffers\__init__.py:397
 msgid "moves to the previous link"
 msgstr "Vai al link precedente"
 
-#: virtualBuffers\__init__.py:404
-#: virtualBuffers\__init__.py:415
+#: virtualBuffers\__init__.py:407
+#: virtualBuffers\__init__.py:418
 msgid "no more lists"
 msgstr "Non ci sono piu' elenchi"
 
-#: virtualBuffers\__init__.py:405
+#: virtualBuffers\__init__.py:408
 msgid "moves to the next list"
 msgstr "Vai all'elenco successivo"
 
-#: virtualBuffers\__init__.py:416
+#: virtualBuffers\__init__.py:419
 msgid "moves to the previous list"
 msgstr "Vai all'elenco precedente"
 
-#: virtualBuffers\__init__.py:426
-#: virtualBuffers\__init__.py:437
+#: virtualBuffers\__init__.py:429
+#: virtualBuffers\__init__.py:440
 msgid "no more list items"
 msgstr "Non ci sono piu' elementi di elenco"
 
-#: virtualBuffers\__init__.py:427
+#: virtualBuffers\__init__.py:430
 msgid "moves to the next list item"
 msgstr "Vai all'elemento di elenco successivo"
 
-#: virtualBuffers\__init__.py:438
+#: virtualBuffers\__init__.py:441
 msgid "moves to the previous list item"
 msgstr "Vai all'elemento di elenco precedente"
 
-#: virtualBuffers\__init__.py:448
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers\__init__.py:451
+#: virtualBuffers\__init__.py:462
 msgid "no more form fields"
 msgstr "Non ci sono piu' campi del form"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers\__init__.py:452
 msgid "Moves to the next form field"
 msgstr "Vai al campo del form successivo"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:463
 msgid "moves to the previous form field"
 msgstr "Vai al campo del form precedente"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:466
 msgid "Find"
 msgstr "Trova"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:466
 msgid "Type the text you wish to find"
 msgstr "Digita il testo che vuoi cercare"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:476
 msgid "Find Error"
 msgstr "Errore di ricerca"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:476
 msgid "text: \"%s\" not found"
 msgstr "Testo: \"%s\" non trovato"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:482
 msgid "find a text pattern from the current cursor's position"
 msgstr "Trova un testo dalla posizione del cursore"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers\__init__.py:486
 msgid "find next occurrence of text"
 msgstr "Trova l'occorrenza del testo successiva"
 
-#: virtualBuffers\__init__.py:502
-#: virtualBuffers\__init__.py:503
+#: virtualBuffers\__init__.py:505
+#: virtualBuffers\__init__.py:506
 msgid "h=headingQuickKey"
 msgstr "H=tasto rapido intestazione"
 
-#: virtualBuffers\__init__.py:504
-#: virtualBuffers\__init__.py:505
+#: virtualBuffers\__init__.py:507
+#: virtualBuffers\__init__.py:508
 msgid "f=formFieldQuickKey"
 msgstr "F=tasto rapido campo del form"
 
-#: virtualBuffers\__init__.py:506
-#: virtualBuffers\__init__.py:507
+#: virtualBuffers\__init__.py:509
+#: virtualBuffers\__init__.py:510
 msgid "p=paragraphQuickKey"
 msgstr "P=tasto rapido paragrafo"
 
-#: virtualBuffers\__init__.py:508
-#: virtualBuffers\__init__.py:509
+#: virtualBuffers\__init__.py:511
+#: virtualBuffers\__init__.py:512
 msgid "t=tableQuickKey"
 msgstr "T=tasto rapido tabella"
 
-#: virtualBuffers\__init__.py:510
-#: virtualBuffers\__init__.py:511
+#: virtualBuffers\__init__.py:513
+#: virtualBuffers\__init__.py:514
 msgid "k=linkQuickKey"
 msgstr "K=tasto rapido link"
 
-#: virtualBuffers\__init__.py:512
-#: virtualBuffers\__init__.py:513
+#: virtualBuffers\__init__.py:515
+#: virtualBuffers\__init__.py:516
 msgid "l=listQuickKey"
 msgstr "L=tasto rapido elenco"
 
-#: virtualBuffers\__init__.py:514
-#: virtualBuffers\__init__.py:515
+#: virtualBuffers\__init__.py:517
+#: virtualBuffers\__init__.py:518
 msgid "i=listItemQuickKey"
 msgstr "I=tasto rapido elemento di elenco"
 
