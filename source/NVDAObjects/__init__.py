@@ -824,9 +824,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 				focus.reviewPosition=focus.makeTextInfo(textHandler.POSITION_CARET)
 
 	def script_delete(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved()
+		self._hasCaretMoved(info)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
