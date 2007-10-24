@@ -622,6 +622,8 @@ class Dialog(IAccessible):
 
 	def _get_description(self):
 		children=self.children
+		if len(children)==1 and children[0].role==controlTypes.ROLE_PANE:
+			children=children[0].children
 		textList=[]
 		childCount=len(children)
 		for index in range(childCount):
