@@ -256,14 +256,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if not isinstance(other,IAccessible):
 			return False
+		if self.IAccessibleChildID!=other.IAccessibleChildID:
+			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
 		selfIden=self.IAccessibleIdentityString
 		otherIden=other.IAccessibleIdentityString
 		if selfIden and otherIden and selfIden==otherIden:
 			return True
-		if self.IAccessibleChildID!=other.IAccessibleChildID:
-			return False
  		if self.IAccessibleRole!=other.IAccessibleRole:
 			return False
 		if self.name!=other.name:

@@ -180,11 +180,11 @@ class IA2(IAccessible):
 			return IAccessible._isEqual(self,other)
 		if not Window._isEqual(self,other):
 			return False
+		if self.IAccessibleChildID!=other.IAccessibleChildID:
+			return False
 		if self.IAccessibleObject==other.IAccessibleObject:
 			return True
 		if self.IAccessibleObject.UniqueID!=other.IAccessibleObject.UniqueID:
-			return False
-		if self.IAccessibleChildID!=other.IAccessibleChildID:
 			return False
 		if self.IAccessibleRole!=other.IAccessibleRole:
 			return False
