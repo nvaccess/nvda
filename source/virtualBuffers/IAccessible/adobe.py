@@ -321,5 +321,5 @@ class Adobe(virtualBuffer):
 		if not obj:
 			return None
 		if getMozillaRole(obj.IAccessibleRole)!=IAccessibleHandler.ROLE_SYSTEM_TEXT or obj.childCount>0 or not obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return ctypes.cast(obj.IAccessibleObject,ctypes.c_void_p).value
+			return hash(obj.IAccessibleObject)
 
