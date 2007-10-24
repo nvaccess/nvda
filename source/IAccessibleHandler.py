@@ -592,12 +592,14 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if isForegroundChange:
 		needsFocusState=False
+	if not obj:
+		return
 	if obj.role==controlTypes.ROLE_UNKNOWN:
 		parent=obj.parent
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
 	oldFocus=api.getFocusObject()
-	if not obj or obj==oldFocus:
+	if obj==oldFocus:
 		return
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
