@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import weakref
 import baseObject
 
 def isFormatEnabled(role,includes=set(),excludes=set()):
@@ -137,9 +138,12 @@ class TextInfo(baseObject.autoPropertyObject):
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
 """
-		self.obj=obj
+		self._NVDAObject=weakref.ref(obj)
 		self.basePosition=position
 
+	def _get_obj(self):
+		return self._NVDAObject()
+ 
 	def _get_text(self):
 		raise NotImplementedError
 

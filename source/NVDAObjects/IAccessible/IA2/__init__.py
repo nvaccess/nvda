@@ -180,7 +180,7 @@ class IA2(IAccessible):
 			return IAccessible._isEqual(self,other)
 		if not Window._isEqual(self,other):
 			return False
-		if ctypes.cast(self.IAccessibleObject,ctypes.c_void_p).value==ctypes.cast(other.IAccessibleObject,ctypes.c_void_p).value:
+		if self.IAccessibleObject==other.IAccessibleObject:
 			return True
 		if self.IAccessibleObject.UniqueID!=other.IAccessibleObject.UniqueID:
 			return False
