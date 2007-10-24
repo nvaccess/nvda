@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import gc
-import comtypesClient
+import comtypes.client
 import datetime
 import time
 import tones

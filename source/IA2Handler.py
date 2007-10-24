@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import comtypesClient
+import comtypes.client
 import ctypes
 import api
 import eventHandler
@@ -12,8 +12,8 @@ import IAccessibleHandler
 import speech
 import NVDAObjects.IAccessible
 
-IServiceProvider=comtypesClient.GetModule('lib/ServProv.tlb').IServiceProvider
-IA2Lib=comtypesClient.GetModule('lib/ia2.tlb')
+IServiceProvider=comtypes.client.GetModule('lib/ServProv.tlb').IServiceProvider
+IA2Lib=comtypes.client.GetModule('lib/ia2.tlb')
 
 TEXT_BOUNDARY_CHAR=0
 TEXT_BOUNDARY_WORD=1

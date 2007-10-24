@@ -146,7 +146,7 @@ stateNames={
 
 import tones
 import ctypes
-import comtypesClient
+import comtypes.client
 import comtypes.automation
 import debug
 import JABHandler
@@ -169,7 +169,7 @@ objectEventHandles=[]
 lastEventParams=None
 
 #Load IAccessible from oleacc.dll
-oleaccModule=comtypesClient.GetModule('oleacc.dll')
+oleaccModule=comtypes.client.GetModule('oleacc.dll')
 IAccessible=oleaccModule.IAccessible
 IAccIdentity=oleaccModule.IAccIdentity
 pointer_IAccessible=ctypes.POINTER(IAccessible)
@@ -259,7 +259,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	for childNum in xrange(len(children)):
 		if isinstance(children[childNum],IAccessible):
 			children[childNum]=(children[childNum],0)
-		elif isinstance(children[childNum],comtypesClient._Dispatch) or isinstance(children[childNum],comtypes.automation.IUnknown):
+		elif isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],comtypes.automation.IUnknown):
 			children[childNum]=(children[childNum].QueryInterface(IAccessible),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
@@ -344,7 +344,7 @@ def accFocus(ia):
 		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
+		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
@@ -362,7 +362,7 @@ def accHitTest(ia,child,x,y):
 		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
+		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
@@ -380,7 +380,7 @@ def accChild(ia,child):
 		if isinstance(res,IAccessible):
 			new_ia=res
 			new_child=0
-		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
+		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
@@ -404,7 +404,7 @@ def accParent(ia,child):
 			if isinstance(res,IAccessible):
 				new_ia=res
 				new_child=0
-			elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
+			elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 				new_ia=res.QueryInterface(IAccessible)
 				new_child=0
 			else:
@@ -426,7 +426,7 @@ def accNavigate(ia,child,direction):
 		elif isinstance(res,int):
 			new_ia=ia
 			new_child=res
-		elif isinstance(res,comtypesClient._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
+		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,comtypes.automation.IUnknown):
 			new_ia=res.QueryInterface(IAccessible)
 			new_child=0
 		else:

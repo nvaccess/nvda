@@ -6,6 +6,13 @@
 
 """NVDA core"""
 
+#Bit of a dance to force comtypes generated interfaces in to our directory
+import comtypes.client
+comtypes.client.gen_dir='.\\comInterfaces'
+import comtypes
+import sys
+sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
+
 import wx
 import time
 import debug

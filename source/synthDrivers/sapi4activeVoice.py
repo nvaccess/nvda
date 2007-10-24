@@ -7,7 +7,7 @@
 import os
 import time
 import pythoncom
-import comtypesClient
+import comtypes.client
 import win32com.client
 import _winreg
 import debug
@@ -46,8 +46,8 @@ class SynthDriver(silence.SynthDriver):
 	def initialize(self):
 		try:
 			self.check()
-			self.tts=comtypesClient.CreateObject(COM_CLASS,)
-			self._ttsEventObj=comtypesClient.GetEvents(self.tts,self)
+			self.tts=comtypes.client.CreateObject(COM_CLASS,)
+			self._ttsEventObj=comtypes.client.GetEvents(self.tts,self)
 			self.tts.InitAudioDestMM(config.conf["speech"]["outputDevice"])
 			self.tts.CallBacksEnabled=1
 			self.tts.Tagged=1
