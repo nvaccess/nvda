@@ -277,7 +277,7 @@ class MSHTML(virtualBuffer):
 			inputType=domNode.getAttribute("type")
 			if inputType=="text":
 				info["role"]=controlTypes.ROLE_EDITABLETEXT
-				text=domNode.getAttribute('value')+" "
+				text=domNode.getAttribute('value') or ""+" "
 			elif inputType=="file":
 				info["role"]=controlTypes.ROLE_EDITABLETEXT
 				info["typeString"]=_("file upload")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
