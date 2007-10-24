@@ -161,6 +161,7 @@ import appModuleHandler
 import config
 import IA2Handler
 import mouseHandler
+import controlTypes
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
@@ -591,6 +592,10 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if isForegroundChange:
 		needsFocusState=False
+	if obj.role==controlTypes.ROLE_UNKNOWN:
+		parent=obj.parent
+		if parent:
+			return focus_manageEvent(parent,isForegroundChange,False)
 	oldFocus=api.getFocusObject()
 	if not obj or obj==oldFocus:
 		return
