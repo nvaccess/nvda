@@ -626,6 +626,12 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 				hasFocusState=True
 	foundGroup=False
 	for index in range(len(ancestors)):
+		role=ancestors[index].role
+		if role==controlTypes.ROLE_WINDOW:
+			continue
+		if role==controlTypes.ROLE_GROUPING:
+			foundGroup=True
+			break
 		groupObj=findGroupboxObject(ancestors[index])
 		if groupObj:
 			foundGroup=True
