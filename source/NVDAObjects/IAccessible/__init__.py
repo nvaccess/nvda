@@ -702,50 +702,16 @@ class MozillaProgressBar(IAccessible):
 		else:
 			super(MozillaProgressBar,self).event_valueChange()
 
-class MozillaUIWindowClass(IAccessible):
-	"""
-	Based on NVDAObject, but on focus events, actions are performed whether or not the object really has focus.
-	mozillaUIWindowClass objects sometimes do not set their focusable state properly.
-	"""
-
-	def __init__(self,*args,**vars):
-		IAccessible.__init__(self,*args,**vars)
-		self.needsFocusState=False
-
-class MozillaUIWindowClass_application(MozillaUIWindowClass):
-	"""
-	Based on MozillaUIwindowClass but:
-	*Value is always empty because otherwise it is a long url to a .shul file that generated the mozilla application.
-	*firstChild is the first child that is not a tooltip or a menu popup since these don't seem to allow getNext etc.
-	*On focus events, the object is not spoken automatically since focus is given to this object when moving from one object to another.
-	"""
+class MozillaUIWindowClass_application(IAccessible):
 
 	def _get_value(self):
 		return None
 
-	def _get_firstChild(self):
-		try:
-			children=self.children
-		except:
-			return None
-		for child in children:
-			try:
-				role=child.IAccessibleRole
-				if role not in [IAccessibleHandler.ROLE_SYSTEM_TOOLTIP,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:
-					return child
-			except:
-				pass
-
 	def event_nameChange(self):
-		if winUser.getForegroundWindow()==self.windowHandle:
+		if self.windowHandle==api.getForegroundObject().windowHandle:
 			speech.speakObjectProperties(self,name=True,reason=speech.REASON_QUERY)
 
 class MozillaDocument(IAccessible):
-
-	def __init__(self,*args,**vars):
-		IAccessible.__init__(self,*args,**vars)
-		self.needsFocusState=False
-
 
 	def _get_value(self):
 		return 
@@ -903,7 +869,7 @@ _staticMap={
 	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit50",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaUIWindowClass",None):"MozillaUIWindowClass",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
