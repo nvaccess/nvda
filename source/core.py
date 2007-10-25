@@ -96,17 +96,18 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def Notify(self):
-				queueHandler.pumpAll()
-				mouseHandler.pumpAll()
+				try:
+					queueHandler.pumpAll()
+					mouseHandler.pumpAll()
+				except:
+					debug.writeException("core loop")
 		pump = CorePump()
 		pump.Start(1)
 	except:
 		debug.writeException("initialization error")
 		return CORE_INITERROR
-	try:
-		app.MainLoop()
-	except:
-		debug.writeException("Main loop error")
+	res=app.MainLoop()
+	if res is not None and res is not 0:
 		endResult=CORE_MAINLOOPERROR
 	try:
 		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
