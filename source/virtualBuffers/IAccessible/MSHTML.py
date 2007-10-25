@@ -70,7 +70,7 @@ class MSHTML(virtualBuffer):
 		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
-		comtypes.client.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+		self._comEvents=comtypes.client.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -197,7 +197,7 @@ class MSHTML(virtualBuffer):
 				comtypes.client.ReleaseEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			except:
 				pass
-			comtypes.client.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+			self._comEvents=comtypes.client.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
 			children.append(domNode.body)
 		else:
 			child=domNode.firstChild
