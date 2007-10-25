@@ -1,10 +1,10 @@
 The NVDA source depends on several other packages to run correctly. Below is a list of the relevant packages along with the URLs where the packages can be obtained.
 Python 2.5:
 http://www.python.org/ 
-Comtypes 0.2.1 (for python 2.5 specifically):
+comtypes (for python 2.5 specifically):
 http://www.sourceforge.net/projects/comtypes/ 
-Note that NVDA cannot function with Comtypes releases after 0.2.1.
-WX Python unicode (for python 2.5):
+Note that NVDA may have problems using versions of comtypes earlier than 0.3.3.
+wxPython unicode (for python 2.5):
 http://www.wxpython.org/ 
 Python Windows Extensions (for python 2.5):
 http://www.sourceforge.net/projects/pywin32/ 
