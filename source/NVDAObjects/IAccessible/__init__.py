@@ -756,7 +756,9 @@ class List(IAccessible):
 		IAccessible.event_gainFocus(self)
 		child=self.activeChild
 		if child and (child.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			IAccessibleHandler.focus_manageEvent(child)
+			api.processPendingEvents()
+			if child!=api.getFocusObject():
+				IAccessibleHandler.focus_manageEvent(child)
 		elif not self.firstChild:
 			speech.speakMessage(_("%d items")%0)
 
@@ -835,7 +837,9 @@ class ToolBar(IAccessible):
 		for child in self.children:
 			if child.IAccessibleStates & IAccessibleHandler.STATE_SYSTEM_FOCUSED:
 				# Redirect the focus to the focused child.
-				IAccessibleHandler.focus_manageEvent(child)
+				api.processPendingEvents()
+				if child!=api.getFocusObject():
+					IAccessibleHandler.focus_manageEvent(child)
 				return
 
 class ToolBarButton(IAccessible):
