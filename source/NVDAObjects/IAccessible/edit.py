@@ -386,7 +386,6 @@ class Edit(IAccessible):
 	def __del__(self):
 		if self.editAPIVersion>=1:
 			winKernel.closeHandle(self.editProcessHandle)
-		super(Edit,self).__del__()
 
 	def _get_value(self):
 		return None
