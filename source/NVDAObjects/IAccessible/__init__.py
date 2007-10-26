@@ -182,8 +182,6 @@ the NVDAObject for IAccessible
 		"""
 Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
 """  
-		if IAccessibleChildID is None and IAccessibleOrigChildID is not None:
-			IAccessibleChildID=IAccessibleOrigChildID
 		if windowHandle and not IAccessibleObject:
 			if IAccessibleChildID is not None and IAccessibleObjectID is not None:
 				(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleObjectID,IAccessibleChildID)
@@ -366,6 +364,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return None
 
 	def _get_parent(self):
+		if self.IAccessibleChildID>0:
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,IAccessibleObjectID=self.IAccessibleObjectID)
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			if res[0].accRole(res[1])!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
