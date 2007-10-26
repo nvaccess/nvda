@@ -452,6 +452,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def _get_activeChild(self):
 		res=IAccessibleHandler.accFocus(self.IAccessibleObject)
 		if res:
+			if res[0]==self.IAccessibleObject:
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],IAccessibleObjectID=self.IAccessibleObjectID)
 			return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	def _get_hasFocus(self):
