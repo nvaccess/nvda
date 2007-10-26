@@ -10,6 +10,7 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
 !define READMEFILE "documentation\en\readme.txt"
+!define IA2DLL "LIB\ia2.dll"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
@@ -53,16 +54,16 @@ InstProgressFlags Smooth
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !InsertMacro MUI_UNPAGE_FINISH
- 
+
  !define MUI_HEADERBITMAP "${NVDASourceDir}\images\icon.png"
  !define MUI_ABORTWARNING
 
- 
+
 ;--------------------------------
  ;Language
 ;Remember the installer language
-!define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
-!define MUI_LANGDLL_REGISTRY_KEY "Software\${PRODUCT}" 
+!define MUI_LANGDLL_REGISTRY_ROOT "HKCU"
+!define MUI_LANGDLL_REGISTRY_KEY "Software\${PRODUCT}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 !insertmacro MUI_LANGUAGE "English" ; default language
@@ -167,7 +168,7 @@ exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -m true"
 	;end:
 	;SendMessage $hmci ${WM_CLOSE} 0 0
 FunctionEnd
- 
+
 Section "install" section_install
 SetShellVarContext all
 SetOutPath "$INSTDIR"
@@ -191,6 +192,8 @@ CreateShortCut "$SMPROGRAMS\${PRODUCT}\WebSite.lnk" "$INSTDIR\${PRODUCT}.url" ""
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\NVDA Info WIKI.lnk" "http://wiki.nvda-project.org" "" "http://wiki.nvda-project.org" 0
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
+UnRegDll $INSTDIR\LIB\ia2.dll
+RegDll $INSTDIR\LIB\ia2.dll
 ;!insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
@@ -207,7 +210,7 @@ WriteUninstaller "$INSTDIR\Uninst.exe"
  SectionEnd
 
 var PreserveConfig
-Function un.onInit 
+Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
@@ -220,7 +223,7 @@ Abort
 InitPluginsDir
 FunctionEnd
 
-Section "Uninstall" 
+Section "Uninstall"
 SetShellVarContext all
 
 ; Warn about configuration file
@@ -315,7 +318,7 @@ System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 end:
 sleep 1000
 StrCmp $PreserveConfig 0 +1 PreserveConfiguration
-;Delete Files 
+;Delete Files
 Delete /RebootOK "$INSTDIR\*.*"
 RMDir /RebootOK /r "$INSTDIR\appModules"
 RMDir /RebootOK /r "$INSTDIR\comInterfaces"
