@@ -610,10 +610,17 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 			hasFocusState=False
 	parent=obj.parent
 	matchedOld=False
+	oldAncestorLen=len(oldAncestors)
 	while parent:
-		for index in range(len(oldAncestors)):
-			if parent==oldAncestors[index]:
-				ancestors=oldAncestors[0:index+1]+ancestors
+		if parent==oldFocus:
+			newAncestors=list(oldAncestors)
+			newAncestors.append(oldFocus)
+			newAncestors.extend(ancestors)
+			ancestors=newAncestors
+			break
+		for index in range(oldAncestorLen):
+			if parent==oldAncestors[(oldAncestorLen-1)-index]:
+				ancestors=oldAncestors[0:oldAncestorLen-index]+ancestors
 				matchedOld=True
 				break
 		if matchedOld:
