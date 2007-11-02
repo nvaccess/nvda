@@ -29,6 +29,7 @@ import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
+import api
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
@@ -43,28 +44,44 @@ default=None
 #regexp to collect the key and script from a line in a keyMap file 
 re_keyScript=re.compile(r'^\s*(?P<key>[\w+]+)\s*=\s*(?P<script>[\w]+)\s*$')
 
-# Initialise WMI; required for getAppName.
-_wmi = win32com.client.GetObject('winmgmts:')
+class TProcessEntry32(ctypes.Structure):
+	_fields_ = [
+("dwSize",ctypes.c_ulong),
+("cntUsage", ctypes.c_ulong),
+("th32ProcessID", ctypes.c_ulong),
+("th32DefaultHeapID", ctypes.c_ulong),
+("th32ModuleID",ctypes.c_ulong),
+("cntThreads",ctypes.c_ulong),
+("th32ParentProcessID",ctypes.c_ulong),
+("pcPriClassBase",ctypes.c_long),
+("dwFlags",ctypes.c_ulong),
+("szExeFile", ctypes.c_char * 259)
+]
 
-def getAppName(window):
+def getAppName(window,includeExt=False):
 	"""Finds out the application name of the given window.
 @param window: the window handle of the application you wish to get the name of.
 @type window: int
+@param includeExt: Optimal parameter when set to true return value will include extension of the application executable.
+@type window: boolean
 @returns: application name
 @rtype: string
 """
-	try:
-		processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))
-		result  =  _wmi.ExecQuery("select * from Win32_Process where ProcessId=%d" % processID[0])
-		if len(result) > 0:
-			appName=result[0].Properties_('Name').Value
-			appName=os.path.splitext(appName)[0].lower()
-			return appName
-		else:
-			return None
-	except:
-		return None
-
+	processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))[0]
+	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
+	FProcessEntry32 = TProcessEntry32()
+	FProcessEntry32.dwSize = ctypes.sizeof(TProcessEntry32)
+	ContinueLoop = winKernel.kernel32.Process32First(FSnapshotHandle, ctypes.byref(FProcessEntry32))
+	appName = str()
+	while ContinueLoop:
+		if FProcessEntry32.th32ProcessID == processID:
+			appName = FProcessEntry32.szExeFile
+			break
+		ContinueLoop = winKernel.kernel32.Process32Next(FSnapshotHandle, ctypes.byref(FProcessEntry32));
+	winKernel.kernel32.CloseHandle(FSnapshotHandle)
+	if not includeExt:
+		appName=os.path.splitext(appName)[0].lower()
+	return appName
 def moduleExists(name):
 	"""Checks if an appModule by the given application name exists.
 @param name: the application name

@@ -57,6 +57,14 @@ class appModule(appModuleHandler.appModule):
 		speech.speakFormattedText(info)
 
 
+	def script_reportCurrentLineSpelling(self,keyPress,nextScript):
+		obj=api.getFocusObject()
+		info=obj.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(textHandler.UNIT_LINE)
+		speech.speakSpelling(info._get_text())
+	script_reportCurrentLineSpelling.__doc__=_("Spells current line.")
+
+
 	def script_dateTime(self,keyPress,nextScript):
 		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
 		speech.speakMessage(text)
@@ -294,9 +302,10 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
+		speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		curObject=curObject.parent
 		while curObject is not None:
-			speech.speakMessage("in")
+			speech.speakMessage(_("inside"))
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 			curObject=curObject.parent
 	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
@@ -478,12 +487,14 @@ class appModule(appModuleHandler.appModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
+		if not isinstance(obj,NVDAObject): 
+			speech.speakMessage(_("no navigator object"))
+			return
 		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
 		speech.speakMessage("%s"%obj)
 		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage(_("Class: %s")%obj.windowClassName)
-		for char in obj.windowClassName:
-			speech.speakSymbol("%s"%char)
+		speech.speakSpelling(obj.windowClassName)
 		speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
 		speech.speakMessage(_("text: %s")%obj.windowText)
 		speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
@@ -580,3 +591,9 @@ class appModule(appModuleHandler.appModule):
 				speech.speakMessage(_("%s copyed to clipboard")%got)
 		return False
 	script_navigatorObject_copyCurrent.__doc__=_("Copies name and value of current navigator object to the clipboard")
+
+	def script_speakApplicationName(self,keyPress,nextScript):
+		s=appModuleHandler.getAppName(api.getForegroundObject().windowHandle,True)
+		speech.speakMessage(_("Currently running application is %s.")%s)
+		speech.speakSpelling(s)
+	script_speakApplicationName.__doc__ = _("Speaks name of current active running application")

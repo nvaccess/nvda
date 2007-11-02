@@ -179,6 +179,9 @@ This function will not speak if L{speechMode} is false.
 	global beenCanceled
 	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
 
+def speakSpelling(text):
+	for char in text: speakSymbol("%s"%char)
+
 def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
 	del globalXMLFieldStack[:]
@@ -487,6 +490,7 @@ def speakTypedCharacters(ch):
 			typedWord="".join([typedWord,ch])
 		elif len(typedWord)>0:
 			speakText(typedWord)
+			debug.writeMessage("typedword: %s"%typedWord)
 			typedWord=""
 	else:
 		typedWord=""
