@@ -16,7 +16,6 @@ import api
 import textHandler
 import config
 import controlTypes
-import baseObject
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
@@ -623,9 +622,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.speakFormattedText(info)
 
 	def script_review_currentLine(self,keyPress,nextScript):
+		from keyboardHandler import lastKeyCount
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
+		if lastKeyCount == 1:
+			speech.speakFormattedText(info)
+		else:
+			speech.speakSpelling(info._get_text())
 
 	def script_review_nextLine(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
@@ -657,9 +660,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.speakFormattedText(info)
 
 	def script_review_currentWord(self,keyPress,nextScript):
+		from keyboardHandler import lastKeyCount
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
-		speech.speakFormattedText(info)
+		if lastKeyCount == 1:
+			speech.speakFormattedText(info)
+		else:
+			speech.speakSpelling(info._get_text())
 
 	def script_review_nextWord(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()

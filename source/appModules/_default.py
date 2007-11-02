@@ -54,16 +54,10 @@ class appModule(appModuleHandler.appModule):
 		obj=api.getFocusObject()
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
-
-
-	def script_reportCurrentLineSpelling(self,keyPress,nextScript):
-		obj=api.getFocusObject()
-		info=obj.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakSpelling(info._get_text())
-	script_reportCurrentLineSpelling.__doc__=_("Spells current line.")
-
+		if keyboardHandler.lastKeyCount == 1:
+			speech.speakFormattedText(info)
+		else:
+			speech.speakSpelling(info._get_text())
 
 	def script_dateTime(self,keyPress,nextScript):
 		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
@@ -161,14 +155,40 @@ class appModule(appModuleHandler.appModule):
 		api.setNavigatorObject(obj)
 		speech.speakObject(obj)
 
+
 	def script_navigatorObject_current(self,keyPress,nextScript):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		speech.speakObject(curObject,reason=speech.REASON_QUERY)
+		if keyboardHandler.lastKeyCount == 1:
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+		elif keyboardHandler.lastKeyCount == 2:
+			speech.speakSpelling("%s %s" % (curObject.name, curObject.value))
+		elif keyboardHandler.lastKeyCount == 3:
+			text=""
+			if curObject.name is not None:
+				text=text+curObject.name
+			if curObject.name is not None and curObject.value is not None:
+				text=text+" "
+			if curObject.value is not None:
+				text=text+curObject.value
+			if text is not None:
+				win32clipboard.OpenClipboard()
+				try:
+					win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
+				finally:
+					win32clipboard.CloseClipboard()
+				win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
+				try:
+					got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+				finally:
+					win32clipboard.CloseClipboard()
+				if got == text:
+					speech.speakMessage(_("%s copied to clipboard")%got)
 		return False
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object") + _("or, if pressed three times,") + _("Copies name and value of current navigator object to the clipboard")
+
 
 	def script_navigatorObject_currentDimensions(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
@@ -447,7 +467,10 @@ class appModule(appModuleHandler.appModule):
 	def script_reportCurrentFocus(self,keyPress,nextScript):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
-			speech.speakObject(focusObject, reason=speech.REASON_QUERY)
+			if keyboardHandler.lastKeyCount == 1:
+				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
+			else:
+				speech.speakSpelling(focusObject.name)
 		else:
 			speech.speakMessage(_("no focus"))
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
@@ -458,7 +481,10 @@ class appModule(appModuleHandler.appModule):
 		if not statusBarObject:
 			speech.speakMessage(_("no status bar found"))
 			return
-		speech.speakObject(statusBarObject,reason=speech.REASON_QUERY)
+		if keyboardHandler.lastKeyCount == 1:
+			speech.speakObject(statusBarObject,reason=speech.REASON_QUERY)
+		else:
+			speech.speakSpelling(statusBarObject.value)
 		api.setNavigatorObject(statusBarObject)
 	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
@@ -563,34 +589,6 @@ class appModule(appModuleHandler.appModule):
 		keyboardHandler.passNextKeyThrough()
 		speech.speakMessage(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
-
-	def script_navigatorObject_copyCurrent(self,keyPress,nextScript):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		text=""
-		if curObject.name is not None:
-			text=text+curObject.name
-		if curObject.name is not None and curObject.value is not None:
-			text=text+" "
-		if curObject.value is not None:
-			text=text+curObject.value
-		if text is not None:
-			win32clipboard.OpenClipboard()
-			try:
-				win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
-			finally:
-				win32clipboard.CloseClipboard()
-			win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-			try:
-				got = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-			finally:
-				win32clipboard.CloseClipboard()
-			if got == text:
-				speech.speakMessage(_("%s copyed to clipboard")%got)
-		return False
-	script_navigatorObject_copyCurrent.__doc__=_("Copies name and value of current navigator object to the clipboard")
 
 	def script_speakApplicationName(self,keyPress,nextScript):
 		s=appModuleHandler.getAppName(api.getForegroundObject().windowHandle,True)

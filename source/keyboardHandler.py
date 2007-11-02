@@ -26,6 +26,8 @@ usedNVDAModifierKey=False
 lastNVDAModifierKey=None
 lastNVDAModifierKeyTime=None
 unPauseByControlUp=False
+lastPressedKey = None
+lastKeyCount = 0
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -56,7 +58,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastKeyCount 
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -108,6 +110,11 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
+		if  lastPressedKey == keyPress:
+			lastKeyCount+= 1
+		else:
+			lastKeyCount= 1				
+		lastPressedKey= keyPress
 		if globalVars.keyboardHelp or (config.conf["keyboard"]["speakCommandKeys"] and not ( not keyPress[0] and config.conf["keyboard"]["speakTypedCharacters"])):
 			labelList=[]
 			if keyPress[0] is not None:
@@ -139,13 +146,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyDownEvent")
-		speech.speakMessage("Error in keyboardHandler.internal_keyDownEvent",wait=True)
+		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"),wait=True)
 		return True
+
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastKeyCount 
 		if injected:
 			return True
 		elif passKeyThroughCount>=1:
@@ -157,6 +165,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,False)
 			unPauseByControlUp=False
 		if NVDAModifierKey and (vkCode,extended)==NVDAModifierKey:
+			if lastKeyCount >1 and usedNVDAModifierKey: lastKeyCount = 0
 			if not usedNVDAModifierKey:
 				lastNVDAModifierKey=NVDAModifierKey
 				lastNVDAModifierKeyTime=time.time()
@@ -172,7 +181,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyUpEvent")
-		speech.speakMessage("Error in keyboardHandler.internal_keyUpEvent",wait=True)
+		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
 		return True
 
 @ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_wchar)
