@@ -14,8 +14,6 @@
 """
 
 from new import instancemethod
-import pythoncom
-import win32com.client
 import datetime
 import re
 import ctypes
@@ -29,7 +27,6 @@ import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
-import api
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
