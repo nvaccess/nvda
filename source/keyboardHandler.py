@@ -27,6 +27,7 @@ lastNVDAModifierKey=None
 lastNVDAModifierKeyTime=None
 unPauseByControlUp=False
 lastPressedKey = None
+lastPressedKeyTime = None
 lastKeyCount = 0
 
 def passNextKeyThrough():
@@ -58,7 +59,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount 
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -110,6 +111,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
+		if (lastKeyCount>=1) and ((time.time()-lastPressedKeyTime)>0.5):
+			lastPressedKey = None
+			lastKeyCount = 0
 		if  lastPressedKey == keyPress:
 			lastKeyCount+= 1
 		else:
@@ -153,7 +157,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount 
+		lastPressedKeyTime=time.time()
 		if injected:
 			return True
 		elif passKeyThroughCount>=1:
@@ -165,7 +170,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,False)
 			unPauseByControlUp=False
 		if NVDAModifierKey and (vkCode,extended)==NVDAModifierKey:
-			if lastKeyCount >1 and usedNVDAModifierKey: lastKeyCount = 0
+			if lastKeyCount >=1 and usedNVDAModifierKey: lastKeyCount = 0
 			if not usedNVDAModifierKey:
 				lastNVDAModifierKey=NVDAModifierKey
 				lastNVDAModifierKeyTime=time.time()

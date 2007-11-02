@@ -164,7 +164,15 @@ class appModule(appModuleHandler.appModule):
 		if keyboardHandler.lastKeyCount == 1:
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		elif keyboardHandler.lastKeyCount == 2:
-			speech.speakSpelling("%s %s" % (curObject.name, curObject.value))
+			text=""
+			if curObject.name is not None:
+				text=text+curObject.name
+			if curObject.name is not None and curObject.value is not None:
+				text=text+" "
+			if curObject.value is not None:
+				text=text+curObject.value
+			if text is not None:
+				speech.speakSpelling("%s" %text)
 		elif keyboardHandler.lastKeyCount == 3:
 			text=""
 			if curObject.name is not None:
@@ -188,7 +196,6 @@ class appModule(appModuleHandler.appModule):
 					speech.speakMessage(_("%s copied to clipboard")%got)
 		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object") + _("or, if pressed three times,") + _("Copies name and value of current navigator object to the clipboard")
-
 
 	def script_navigatorObject_currentDimensions(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
