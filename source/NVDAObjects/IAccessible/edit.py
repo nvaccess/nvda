@@ -166,7 +166,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				o=embedRange.GetEmbeddedObject()
 				o=o.QueryInterface(oleTypes.IOleObject)
 				dataObj=o.GetClipboardData(0)
-				dataObj=pythoncom._univgw.interface(ctypes.cast(dataObj,ctypes.c_void_p).value,pythoncom.IID_IDataObject)
+				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
 				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
 				medium=dataObj.GetData(format)
 				buf=ctypes.create_string_buffer(medium.data)
