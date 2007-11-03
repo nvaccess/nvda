@@ -12,6 +12,7 @@
 from xml.parsers import expat
 import time
 import debug
+import globalVars
 import api
 import controlTypes
 import config
@@ -21,6 +22,7 @@ import re
 import textHandler
 import characterSymbols
 import NVDAObjects
+import queueHandler
 
 speechMode_off=0
 speechMode_beeps=1
@@ -180,7 +182,40 @@ This function will not speak if L{speechMode} is false.
 	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
 
 def speakSpelling(text):
-	for char in text: speakSymbol("%s"%char)
+	global beenCanceled
+	if not isinstance(text,basestring) or len(text)==0:
+		return
+	if speechMode==speechMode_off:
+		return
+	elif speechMode==speechMode_beeps:
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
+		return
+	if isPaused:
+		cancelSpeech()
+	beenCanceled=False
+	lastKeyCount=globalVars.keyCounter
+	if text[0].isupper() and config.conf["speech"][getSynth().name]["beepForCapitals"]:
+		tones.beep(2000,50)
+	for count,char in enumerate(text): 
+		uppercase=char.isupper()
+		char=processSymbol(char)
+		if uppercase and config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
+			char=_("cap %s")%char
+		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
+			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
+			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
+		index=count+1
+		getSynth().speakText(char,index=index)
+		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
+			getSynth().pitch=oldPitch
+		while globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
+			time.sleep(0.05)
+			api.processPendingEvents()
+			queueHandler.flushQueue(queueHandler.interactiveQueue)
+		if globalVars.keyCounter!=lastKeyCount:
+			break
+		if count>0 and uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
+			tones.beep(2000,50)
 
 def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
@@ -279,47 +314,6 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,textInfo=True,reason=reason,index=index)
-
-def speakSymbol(symbol,wait=False,index=None):
-	"""Speaks a given single character.
-This function will not speak if L{speechMode} is false.
-If the character is uppercase, then the pitch of the synthesizer will be altered by a value in nvda.ini and then set back to its origional value. This is to audibly denote capital letters.
-Before passing the symbol to the synthersizer, L{textProcessing.processSymbol} is used to expand the symbol to a  speakable word.
-@param symbol: the symbol to speak
-@type symbol: string
-@param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
-@type wait: boolean
-@param index: the index to mark this current text with 
-@type index: int
-"""
-	if len(symbol)>1:
-		return speakText(symbol,wait=wait,index=index)
-	global beenCanceled
-	if speechMode==speechMode_off:
-		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
-		return
-	if isPaused:
-		cancelSpeech()
-	beenCanceled=False
-	text=processSymbol(symbol)
-	if symbol is not None and len(symbol)==1 and symbol.isupper(): 
-		uppercase=True
-	else:
-		uppercase=False
-	if uppercase:
-		if config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
-			text=_("cap %s")%text
-		if config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
-			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
-	getSynth().speakText(text,wait=wait,index=index)
-	if uppercase:
-		if config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			getSynth().pitch=oldPitch
-		if config.conf["speech"][getSynth().name]["beepForCapitals"]:
-			tones.beep(2000,50)
 
 def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.
@@ -424,7 +418,7 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
 					speakText(item,wait=wait,index=index)
 			else:
-				speech.speakSymbol(item)
+				speech.speakSpelling(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,speakSelectionDeleted=True):
@@ -484,7 +478,7 @@ def speakTypedCharacters(ch):
 	if api.isTypingProtected():
 		ch="*"
 	if config.conf["keyboard"]["speakTypedCharacters"]:
-		speakSymbol(ch)
+		speakSpelling(ch)
 	if config.conf["keyboard"]["speakTypedWords"]: 
 		if ch.isalnum():
 			typedWord="".join([typedWord,ch])

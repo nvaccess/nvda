@@ -699,7 +699,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakMessage(_("left"))
 			reviewInfo=self.reviewPosition.copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(reviewInfo.text)
+			speech.speakSpelling(reviewInfo.text)
 		else:
 			self.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
@@ -721,7 +721,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakMessage(_("right"))
 			reviewInfo=self.reviewPosition.copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSymbol(reviewInfo.text)
+			speech.speakSpelling(reviewInfo.text)
 		else:
 			self.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
@@ -825,7 +825,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			delChar=""
 		sendKey(keyPress)
 		if self._hasCaretMoved(oldInfo):
-			speech.speakSymbol(delChar)
+			speech.speakSpelling(delChar)
 			if globalVars.caretMovesReviewCursor:
 				focus = api.getFocusObject()
 				focus.reviewPosition=focus.makeTextInfo(textHandler.POSITION_CARET)

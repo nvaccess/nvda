@@ -339,7 +339,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def text_speakCharacter(self,offset):
 		self.text_reportNewPresentation(offset)
-		speech.speakSymbol(self.text_getText(offset,offset+1),index=offset)
+		speech.speakSpelling(self.text_getText(offset,offset+1),index=offset)
 
 	def text_speakSentence(self,offset):
 		self.text_reportNewPresentation(offset)
@@ -565,7 +565,7 @@ class textBufferObject(baseObject.scriptableObject):
 			sendKey(keyPress)
 			newPoint=self.text_caretPosition
 			if newPoint<point:
-				speech.speakSymbol(delChar)
+				speech.speakSpelling(delChar)
 		else:
 			sendKey(keyPress)
 			speech.speakText("")
