@@ -194,8 +194,7 @@ def speakSpelling(text):
 		cancelSpeech()
 	beenCanceled=False
 	lastKeyCount=globalVars.keyCounter
-	if text[0].isupper() and config.conf["speech"][getSynth().name]["beepForCapitals"]:
-		tones.beep(2000,50)
+	textLength=len(text)
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
 		char=processSymbol(char)
@@ -208,13 +207,13 @@ def speakSpelling(text):
 		getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
-		while globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
+		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
 			time.sleep(0.05)
 			api.processPendingEvents()
 			queueHandler.flushQueue(queueHandler.interactiveQueue)
 		if globalVars.keyCounter!=lastKeyCount:
 			break
-		if count>0 and uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
+		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
 			tones.beep(2000,50)
 
 def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
