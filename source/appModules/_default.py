@@ -164,9 +164,7 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		if keyboardHandler.lastKeyCount == 1:
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		elif keyboardHandler.lastKeyCount == 2:
+		if keyboardHandler.lastKeyCount == 2:
 			text=""
 			if curObject.name is not None:
 				text=text+curObject.name
@@ -197,6 +195,8 @@ class appModule(appModuleHandler.appModule):
 					win32clipboard.CloseClipboard()
 				if got == text:
 					speech.speakMessage(_("%s copied to clipboard")%got)
+		else:
+			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object") + _("or, if pressed three times,") + _("Copies name and value of current navigator object to the clipboard")
 

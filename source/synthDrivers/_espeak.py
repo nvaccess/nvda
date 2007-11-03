@@ -214,7 +214,11 @@ def setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
 	v.languages=lang
-	espeakDLL.espeak_SetVoiceByProperties(byref(v))
+	try:
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
+	except:
+		v.languages="en"
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 
 def espeak_errcheck(res, func, args):
 	if res != EE_OK:
