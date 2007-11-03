@@ -595,7 +595,7 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if not obj:
 		return
 	if obj.role==controlTypes.ROLE_UNKNOWN:
-		parent=obj.parent
+		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
 	oldFocus=api.getFocusObject()
@@ -608,7 +608,7 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 			hasFocusState=True
 		else:
 			hasFocusState=False
-	parent=obj.parent
+	parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 	matchedOld=False
 	oldAncestorLen=len(oldAncestors)
 	while parent:
@@ -626,7 +626,7 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 		if matchedOld:
 			break
 		ancestors.insert(0,parent)
-		parent=parent.parent
+		parent=NVDAObjects.IAccessible.IAccessible._get_parent(parent)
 	if needsFocusState:
 		for parent in ancestors:
 			if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
