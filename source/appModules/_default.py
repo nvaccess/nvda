@@ -60,7 +60,10 @@ class appModule(appModuleHandler.appModule):
 			speech.speakSpelling(info._get_text())
 
 	def script_dateTime(self,keyPress,nextScript):
-		text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)+", "+winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
+		if keyboardHandler.lastKeyCount == 1:
+			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
+		else:
+			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
 		speech.speakMessage(text)
 	script_dateTime.__doc__=_("Reports the current date and time")
 

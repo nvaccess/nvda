@@ -111,7 +111,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		debug.writeMessage("key press: %s"%keyName(keyPress))
-		if (lastKeyCount>=1) and ((time.time()-lastPressedKeyTime)>0.5):
+		if modifiers is None and lastKeyCount>=1 and ((time.time()-lastPressedKeyTime)>0.5):
 			lastPressedKey = None
 			lastKeyCount = 0
 		if  lastPressedKey == keyPress:

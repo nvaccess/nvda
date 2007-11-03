@@ -339,7 +339,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def text_speakCharacter(self,offset):
 		self.text_reportNewPresentation(offset)
-		speech.speakSpelling(self.text_getText(offset,offset+1),index=offset)
+		speech.speakSpelling(self.text_getText(offset,offset+1))
 
 	def text_speakSentence(self,offset):
 		self.text_reportNewPresentation(offset)
