@@ -708,7 +708,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def script_review_currentCharacter(self,keyPress,nextScript):
 		info=self.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakFormattedText(info,handleSymbols=True)
+		from keyboardHandler import lastKeyCount
+		if lastKeyCount == 1:
+			speech.speakFormattedText(info,handleSymbols=True)
+		else:
+			c = ord(info._get_text())
+			speech.speakMessage("%d," % c)
+			speech.speakSpelling(hex(c))
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
 		lineInfo=self.reviewPosition.copy()
