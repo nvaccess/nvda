@@ -604,4 +604,9 @@ class appModule(appModuleHandler.appModule):
 		s=appModuleHandler.getAppName(api.getForegroundObject().windowHandle,True)
 		speech.speakMessage(_("Currently running application is %s.")%s)
 		speech.speakSpelling(s)
-	script_speakApplicationName.__doc__ = _("Speaks name of current active running application")
+		if appModuleHandler.moduleExists(appModuleHandler.activeModule.appName):
+			mod = appModuleHandler.activeModule.appName
+		else:
+			mod = _("default module")
+		speech.speakMessage(_("and currently loaded module is %s") % mod)
+	script_speakApplicationName.__doc__ = _("Speaks filename of the active application along with name of the currently loaded appmodule")
