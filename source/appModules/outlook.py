@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import time
-import win32com
+import win32com.client
 import appModuleHandler
 import api
 import eventHandler
