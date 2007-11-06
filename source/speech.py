@@ -194,6 +194,8 @@ def speakSpelling(text):
 		cancelSpeech()
 	beenCanceled=False
 	lastKeyCount=globalVars.keyCounter
+	if not text.isspace():
+		text=text.rstrip()
 	textLength=len(text)
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
