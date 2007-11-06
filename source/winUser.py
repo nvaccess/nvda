@@ -362,3 +362,6 @@ def getWindowStyle(hwnd):
 
 def getPreviousWindow(hwnd):
 		return user32.GetWindow(hwnd,GW_HWNDPREV)
+
+def getKeyboardLayout(idThread=0):
+	return user32.GetKeyboardLayout(idThread)

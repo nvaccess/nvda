@@ -17,7 +17,8 @@ import scriptHandler
 import globalVars
 import queueHandler
 import config
-import locale
+import _winreg
+import api
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
@@ -29,6 +30,7 @@ unPauseByControlUp=False
 lastPressedKey = None
 lastPressedKeyTime = None
 lastKeyCount = 0
+isLayoutChanged = False
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -54,12 +56,28 @@ def speakToggleKey(vkCode):
 	elif vkCode==winUser.VK_SCROLL:
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
+def speakKeyboardLayout():
+	s = hex(winUser.LOWORD(winUser.getKeyboardLayout(api.getForegroundObject()._get_windowThreadID())))[2:].rjust(8, "0")
+	key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
+	try:
+		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
+	except:
+		s=None
+	if s is not None and isinstance(s,basestring):
+		buf=ctypes.create_unicode_buffer(256)
+		ctypes.windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
+		s=buf.value
+	else:
+		s = _winreg.QueryValueEx(key, "Layout Text")[0]
+	key.Close()
+	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,s)
+
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount, isLayoutChanged 
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -88,6 +106,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			NVDAModifierKey=(vkCode,extended)
 			return False
 		if vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+			if (winUser.getKeyState(winUser.VK_SHIFT)&32768) and ((winUser.getKeyState(winUser.VK_CONTROL)&32768) or (winUser.getKeyState(winUser.VK_MENU)&32768)):
+				isLayoutChanged = True
 			return True
 		modifierList=[]
 		if NVDAModifierKey:
@@ -157,7 +177,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount, isLayoutChanged 
 		lastPressedKeyTime=time.time()
 		if injected:
 			return True
@@ -181,6 +201,9 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			keyUpIgnoreSet.remove((vkCode,extended))
 			return False
 		elif vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
+			if isLayoutChanged == True: 
+				queueHandler.queueFunction(queueHandler.interactiveQueue,speakKeyboardLayout)
+				isLayoutChanged = False
 			return True
 		else:
 			return True
