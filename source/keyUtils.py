@@ -74,7 +74,7 @@ def sendKey(keyPress):
 				modifier="MENU"
 			if modifier=="win":
 				modifier="LWIN"
-			keyID=vkCodes.byName[modifier]
+			keyID=vkCodes.byName[modifier.upper()]
 			keyList.append((keyID,extended))
 	#Process normal key
 	if keyPress[1] is not None:
@@ -88,7 +88,7 @@ def sendKey(keyPress):
 		if len(k)==1:
 			keyID=ord(k)
 		else:
-			keyID=vkCodes.byName[k]
+			keyID=vkCodes.byName[k.upper()]
 		keyList.append((keyID,extended))
 	if (keyList is None) or (len(keyList)==0):
 		return
