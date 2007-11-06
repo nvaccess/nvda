@@ -761,8 +761,13 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if isKeyWaiting():
 				return False
 			api.processPendingEvents()
-			newInfo = api.getFocusObject().makeTextInfo(textHandler.POSITION_CARET)
-			if newInfo.compareStart(info) != 0:
+			focusObject=api.getFocusObject()
+			if False: #focusObject!=self:
+				return True
+			newInfo = focusObject.makeTextInfo(textHandler.POSITION_CARET)
+			if isinstance(info,textHandler.Bookmark) and newInfo.bookmark!=info:
+				return True
+			if isinstance(info,textHandler.TextInfo) and newInfo.compareStart(info) != 0:
 				return True
 			time.sleep(retryInterval)
 			elapsed += retryInterval
@@ -822,6 +827,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_backspace(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
 		res=testInfo.moveByUnit(textHandler.UNIT_CHARACTER,-1)
 		if res<0:
@@ -830,7 +836,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		else:
 			delChar=""
 		sendKey(keyPress)
-		if self._hasCaretMoved(oldInfo):
+		if self._hasCaretMoved(oldBookmark):
 			speech.speakSpelling(delChar)
 			if globalVars.caretMovesReviewCursor:
 				focus = api.getFocusObject()
