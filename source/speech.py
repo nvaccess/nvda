@@ -184,7 +184,7 @@ This function will not speak if L{speechMode} is false.
 def speakSpelling(text):
 	global beenCanceled
 	if not isinstance(text,basestring) or len(text)==0:
-		return
+		return getSynth().speakText(processSymbol(""))
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
