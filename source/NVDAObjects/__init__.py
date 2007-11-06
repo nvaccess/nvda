@@ -755,19 +755,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakFormattedText(info)
 
-	def _hasCaretMoved(self, info, retryInterval=0.01, timeout=0.03):
+	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		elapsed = 0
 		while elapsed < timeout:
 			if isKeyWaiting():
 				return False
 			api.processPendingEvents()
 			focusObject=api.getFocusObject()
-			if False: #focusObject!=self:
+			if focusObject!=self:
 				return True
-			newInfo = focusObject.makeTextInfo(textHandler.POSITION_CARET)
-			if isinstance(info,textHandler.Bookmark) and newInfo.bookmark!=info:
-				return True
-			if isinstance(info,textHandler.TextInfo) and newInfo.compareStart(info) != 0:
+			newBookmark = focusObject.makeTextInfo(textHandler.POSITION_CARET).bookmark
+			if newBookmark!=bookmark:
 				return True
 			time.sleep(retryInterval)
 			elapsed += retryInterval
@@ -775,9 +773,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_moveByLine(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(info)
+		self._hasCaretMoved(bookmark)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -788,9 +787,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_moveByCharacter(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(info)
+		self._hasCaretMoved(bookmark)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -801,9 +801,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_moveByWord(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(info)
+		self._hasCaretMoved(bookmark)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -814,9 +815,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_moveByParagraph(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(info)
+		self._hasCaretMoved(bookmark)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -844,9 +846,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 
 	def script_delete(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(info)
+		self._hasCaretMoved(bookmark)
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
