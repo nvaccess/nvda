@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2007-11-05 18:04+0100\n"
+"PO-Revision-Date: 2007-11-07 14:19+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgid "sub menu"
 msgstr "Sottomenu'"
 
 #: IAccessibleHandler.py:196
-#: speech.py:271
+#: speech.py:273
 #: virtualBuffers\IAccessible\MSHTML.py:115
 #: virtualBuffers\IAccessible\MSHTML.py:294
 #: virtualBuffers\IAccessible\MSHTML.py:298
@@ -64,7 +64,7 @@ msgstr "%s di %s"
 msgid "%s items"
 msgstr "%s elementi"
 
-#: NVDAObjects\IAccessible\__init__.py:779
+#: NVDAObjects\IAccessible\__init__.py:781
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d elementi"
@@ -220,11 +220,11 @@ msgstr "Passa attraverso il buffer virtuale"
 #: appModules\_default.py:551
 #: appModules\_default.py:561
 #: appModules\_default.py:571
-#: keyboardHandler.py:51
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
-#: speech.py:405
-#: speech.py:411
+#: keyboardHandler.py:57
+#: speech.py:407
+#: speech.py:413
 msgid "off"
 msgstr "Disattivato"
 
@@ -239,10 +239,10 @@ msgstr "Disattivato"
 #: appModules\_default.py:554
 #: appModules\_default.py:564
 #: appModules\_default.py:574
-#: keyboardHandler.py:51
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
-#: speech.py:400
+#: keyboardHandler.py:57
+#: speech.py:402
 msgid "on"
 msgstr "Attivato"
 
@@ -674,60 +674,68 @@ msgstr "Il tasto successivo premuto non viene riconosciuto da nvda ma passa dire
 msgid "Currently running application is %s."
 msgstr "L'applicazione corrente e' %s"
 
-#: appModules\_default.py:607
-msgid "Speaks name of current active running application"
-msgstr "Legge il nome dell'applicazione corrente"
+#: appModules\_default.py:610
+msgid "default module"
+msgstr "Modulo di default"
 
-#: appModules\msimn.py:21
+#: appModules\_default.py:611
+msgid "and currently loaded module is %s"
+msgstr "e il modulo caricato e' %s"
+
+#: appModules\_default.py:612
+msgid "Speaks filename of the active application along with name of the currently loaded appmodule"
+msgstr "Legge il nome del file dell'applicazione corrente ed il modulo caricato"
+
+#: appModules\msimn.py:22
 msgid "Attachments"
 msgstr "Allegati"
 
-#: appModules\msimn.py:22
+#: appModules\msimn.py:23
 msgid "To:"
 msgstr "A:"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:24
 msgid "Newsgroup:"
 msgstr "Newsgroup:"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:25
 msgid "CC:"
 msgstr "Cc:"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:26
 msgid "Subject:"
 msgstr "Oggetto:"
 
-#: appModules\msimn.py:26
-#: appModules\msimn.py:34
+#: appModules\msimn.py:27
+#: appModules\msimn.py:35
 msgid "From:"
 msgstr "Da:"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:28
 msgid "Date:"
 msgstr "Data:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:29
 msgid "Forward to:"
 msgstr "Inoltra a:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:30
 msgid "Answer to:"
 msgstr "Rispondi a"
 
-#: appModules\msimn.py:30
+#: appModules\msimn.py:31
 msgid "Organisation:"
 msgstr "Societa'"
 
-#: appModules\msimn.py:31
+#: appModules\msimn.py:32
 msgid "Distribution:"
 msgstr "Distribuzione:"
 
-#: appModules\msimn.py:32
+#: appModules\msimn.py:33
 msgid "Key words:"
 msgstr "Parole chiave"
 
-#: appModules\msimn.py:33
+#: appModules\msimn.py:34
 msgid "BCC:"
 msgstr "Bcc:"
 
@@ -1490,7 +1498,7 @@ msgstr "Configurazione applicata"
 msgid "Loading subsystems, please wait..."
 msgstr "Caricamento in corso, attendere prego"
 
-#: core.py:95
+#: core.py:97
 msgid "NVDA started"
 msgstr "Nvda attivato"
 
@@ -2094,31 +2102,35 @@ msgstr "Leggi i numeri di &riga"
 msgid "Report &alignment"
 msgstr "Leggi &l'allineamento"
 
-#: keyboardHandler.py:51
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "Caps lock %s"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "Num lock %s"
 
-#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "Scroll lock %s caps lock %s"
 
-#: keyboardHandler.py:139
+#: keyboardHandler.py:77
+msgid "%s keyboard layout"
+msgstr "Layout della tastiera %s"
+
+#: keyboardHandler.py:161
 msgid "Description: %s"
 msgstr "Descrizione: %s"
 
-#: keyboardHandler.py:140
+#: keyboardHandler.py:162
 msgid "Location: %s"
 msgstr "Posizione: %s"
 
-#: keyboardHandler.py:153
+#: keyboardHandler.py:175
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Errore in keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:189
+#: keyboardHandler.py:209
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Errore in keyboardHandler.internal_keyUpEvent"
 
@@ -2130,20 +2142,20 @@ msgstr "%s cursore"
 msgid "end of text"
 msgstr "Fine testo"
 
-#: speech.py:202
+#: speech.py:204
 msgid "cap %s"
 msgstr "Cap %s"
 
-#: speech.py:297
+#: speech.py:299
 msgid "level %d"
 msgstr "Livello %d"
 
-#: speech.py:301
+#: speech.py:303
 msgid "contains %s"
 msgstr "Contiene %s"
 
-#: speech.py:305
-#: speech.py:464
+#: speech.py:307
+#: speech.py:466
 #: textBuffer.py:537
 #: textBuffer.py:541
 #: textBuffer.py:543
@@ -2151,23 +2163,23 @@ msgstr "Contiene %s"
 msgid "selected %s"
 msgstr "Selezionato %s"
 
-#: speech.py:391
+#: speech.py:393
 msgid "in"
 msgstr "In"
 
-#: speech.py:396
-#: speech.py:414
+#: speech.py:398
+#: speech.py:416
 msgid "out of"
 msgstr "Fuori di"
 
-#: speech.py:470
+#: speech.py:472
 #: textBuffer.py:545
 #: textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "Non selezionato %s"
 
-#: speech.py:472
+#: speech.py:474
 msgid "selection deleted"
 msgstr "Selezione cancellata"
 

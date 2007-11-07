@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-06 21:41+0800\n"
+"PO-Revision-Date: 2007-11-07 15:17+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,10 +51,6 @@ msgstr "子選單"
 msgid "not %s"
 msgstr "不是 %s"
 
-# IAccessibleHandler.py:562
-msgid "lost focus"
-msgstr "遺失焦點"
-
 # NVDAObjects\IAccessible\__init__.py:67
 # NVDAObjects\IAccessible\__init__.py:416
 # NVDAObjects\IAccessible\sysListView32.py:14
@@ -68,15 +64,6 @@ msgstr "%s 項目"
 # NVDAObjects\IAccessible\__init__.py:698
 msgid "%d items"
 msgstr "%d 個項目"
-
-# NVDAObjects\IAccessible\MSHTML.py:317
-# NVDAObjects\IAccessible\MSHTML.py:323
-# textBuffer.py:537
-# textBuffer.py:541
-# textBuffer.py:543
-# textBuffer.py:549
-msgid "selected %s"
-msgstr "選取了 %s"
 
 # NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -392,9 +379,21 @@ msgstr "把瀏覽游標移到鼠標"
 msgid "no navigator object"
 msgstr "沒有瀏覽項目"
 
+# appModules\_default.py:576
+msgid "%s copied to clipboard"
+msgstr "%s 已複製到剪貼簿"
+
+# appModules\_default.py:280
+msgid "Copies name and value of current navigator object to the clipboard"
+msgstr "把目前項目的內容複製到剪貼簿"
+
 # appModules\_default.py:131
 msgid "Reports the current navigator object"
 msgstr "讀出目前的瀏覽項目"
+
+# appModules\_default.py:201
+msgid "or, if pressed three times,"
+msgstr "或者當連按三次"
 
 # appModules\_default.py:139
 msgid "No location information for navigator object"
@@ -472,6 +471,10 @@ msgstr "順序讀出上一個項目至上一層項目"
 # appModules\_default.py:211
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "執行瀏覽項目的動作, 例如是按鈕就按下."
+
+# controlTypes.py:103
+msgid "inside"
+msgstr "裡面"
 
 # appModules\_default.py:224
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
@@ -706,13 +709,21 @@ msgstr "讓下一次按鍵直接操作系統"
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "讓下一次按鍵直接操作系統,而不會操作 NVDA"
 
-# appModules\_default.py:576
-msgid "%s copied to clipboard"
-msgstr "%s 已複製到剪貼簿"
+# appModules\_default.py:597
+msgid "Currently running application is %s."
+msgstr "現在應用軟件所屬檔名是 %s"
 
-# appModules\_default.py:280
-msgid "Copies name and value of current navigator object to the clipboard"
-msgstr "把目前項目的內容複製到剪貼簿"
+# appModuleHandler.py:207
+msgid "default module"
+msgstr "預設模組"
+
+# appModules\_default.py:611
+msgid "and currently loaded module is %s"
+msgstr "和載入模組是 %s"
+
+# appModules\_default.py:612
+msgid "Speaks filename of the active application along with name of the currently loaded appmodule"
+msgstr "報出延時應用程式所屬檔名和載入模組"
 
 # appModules\msimn.py:14
 msgid "Attachments"
@@ -1547,7 +1558,6 @@ msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
 # synthDrivers\silence.py:14
-# synthDrivers\silence.py:14
 msgid "No speech,  a template synthesizer"
 msgstr "不會說話的合成器"
 
@@ -2161,6 +2171,10 @@ msgstr "數字鍵盤 %s"
 msgid "scroll lock %s"
 msgstr "捲動鎖定 %s"
 
+# keyboardHandler.py:77
+msgid "%s keyboard layout"
+msgstr "設置鍵盤為 %s"
+
 # keyboardHandler.py:91
 msgid "Description: %s"
 msgstr "描述 %s"
@@ -2168,6 +2182,14 @@ msgstr "描述 %s"
 # keyboardHandler.py:92
 msgid "Location: %s"
 msgstr "位置在 %s"
+
+# keyboardHandler.py:153
+msgid "Error in keyboardHandler.internal_keyDownEvent"
+msgstr "在按鍵按下時發生錯誤"
+
+# keyboardHandler.py:189
+msgid "Error in keyboardHandler.internal_keyUpEvent"
+msgstr "在按鍵放開時發生錯誤"
 
 # controlTypes.py:226
 msgid "%s cursor"
@@ -2177,6 +2199,10 @@ msgstr "%s 光標"
 msgid "end of text"
 msgstr "全部完"
 
+# speech.py:274
+msgid "cap %s"
+msgstr "大寫 %s"
+
 # speech.py:235
 msgid "level %d"
 msgstr "等級 %d"
@@ -2185,9 +2211,14 @@ msgstr "等級 %d"
 msgid "contains %s"
 msgstr "包含 %s"
 
-# speech.py:274
-msgid "cap %s"
-msgstr "大寫 %s"
+# NVDAObjects\IAccessible\MSHTML.py:317
+# NVDAObjects\IAccessible\MSHTML.py:323
+# textBuffer.py:537
+# textBuffer.py:541
+# textBuffer.py:543
+# textBuffer.py:549
+msgid "selected %s"
+msgstr "選取了 %s"
 
 # controlTypes.py:98
 msgid "in"
