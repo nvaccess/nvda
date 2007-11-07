@@ -207,7 +207,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	except:
 		debug.writeException("keyboardHandler.internal_keyUpEvent")
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
-		return True
+	return True
 
 #Register internal key press event with  operating system
 
