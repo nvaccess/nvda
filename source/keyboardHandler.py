@@ -209,18 +209,11 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
 		return True
 
-@ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_wchar)
-def internal_typeCharacterEvent(ch):
-	if ord(ch)>=32:
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,ch)
-
 #Register internal key press event with  operating system
 
 def initialize():
 	"""Initialises keyboard support."""
 	ctypes.cdll.keyHook.initialize(internal_keyDownEvent,internal_keyUpEvent)
-	ctypes.cdll.charHook.initialize(internal_typeCharacterEvent)
 
 def terminate():
 	ctypes.cdll.keyHook.terminate()
-	ctypes.cdll.charHook.terminate()
