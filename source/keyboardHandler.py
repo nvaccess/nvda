@@ -6,6 +6,7 @@
 
 """Keyboard support"""
 
+import locale
 import winUser
 import ctypes
 import time
@@ -30,7 +31,6 @@ unPauseByControlUp=False
 lastPressedKey = None
 lastPressedKeyTime = None
 lastKeyCount = 0
-isLayoutChanged = False
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -56,9 +56,13 @@ def speakToggleKey(vkCode):
 	elif vkCode==winUser.VK_SCROLL:
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
-def speakKeyboardLayout():
-	s = hex(winUser.LOWORD(winUser.getKeyboardLayout(api.getForegroundObject()._get_windowThreadID())))[2:].rjust(8, "0")
-	key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
+def speakKeyboardLayout(layout):
+	try:
+		s = hex(winUser.LOWORD(layout))[2:].rjust(8, "0")
+		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
+	except:
+		s = hex(winUser.HIWORD(layout))[2:].rjust(8, "0")
+		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
 	try:
 		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
 	except:
@@ -70,14 +74,14 @@ def speakKeyboardLayout():
 	else:
 		s = _winreg.QueryValueEx(key, "Layout Text")[0]
 	key.Close()
-	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,s)
+	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("%s keyboard layout")%s)
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount, isLayoutChanged 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount 
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -106,8 +110,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			NVDAModifierKey=(vkCode,extended)
 			return False
 		if vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
-			if (winUser.getKeyState(winUser.VK_SHIFT)&32768) and ((winUser.getKeyState(winUser.VK_CONTROL)&32768) or (winUser.getKeyState(winUser.VK_MENU)&32768)):
-				isLayoutChanged = True
 			return True
 		modifierList=[]
 		if NVDAModifierKey:
@@ -177,7 +179,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount, isLayoutChanged 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount 
 		lastPressedKeyTime=time.time()
 		if injected:
 			return True
@@ -201,11 +203,6 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			keyUpIgnoreSet.remove((vkCode,extended))
 			return False
 		elif vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
-			if isLayoutChanged == True: 
-				queueHandler.queueFunction(queueHandler.interactiveQueue,speakKeyboardLayout)
-				isLayoutChanged = False
-			return True
-		else:
 			return True
 	except:
 		debug.writeException("keyboardHandler.internal_keyUpEvent")

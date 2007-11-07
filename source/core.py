@@ -84,6 +84,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		appModuleHandler.initialize()
 		import JABHandler
 		JABHandler.initialize()
+		import charHook
+		charHook.initialize()
 		import IAccessibleHandler
 		IAccessibleHandler.initialize()
 		import keyboardHandler
@@ -122,6 +124,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		IAccessibleHandler.terminate()
 	except:
 		debug.writeException("IAccessible handler termination")
+	try:
+		charHook.terminate()
+	except:
+		debug.writeException("charHook termination")
 	try:
 		keyboardHandler.terminate()
 	except:
