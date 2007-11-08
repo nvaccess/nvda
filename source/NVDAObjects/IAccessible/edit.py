@@ -224,8 +224,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 			return (charRange.cpMin,charRange.cpMax)
 		else:
-			long=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,0,0)
-			return (winUser.LOWORD(long),winUser.HIWORD(long))
+			res=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,0,0)
+			return (ctypes.c_ushort(winUser.LOWORD(res)).value,ctypes.c_ushort(winUser.HIWORD(res)).value)
 
 	def _setSelectionOffsets(self,start,end):
 		if self.obj.editAPIVersion>=1:
