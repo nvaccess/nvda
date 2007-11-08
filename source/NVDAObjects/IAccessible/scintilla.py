@@ -99,6 +99,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		return buf.value
 
+
 	def _getWordOffsets(self,offset):
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
 		end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,start,0)
@@ -113,7 +114,9 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 	def _getLineOffsets(self,offset):
 		curY=winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,offset)
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0,curY)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,32768,curY)
+		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0xffff,curY)
+		while winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,end)==curY:
+ 			end+=1
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
