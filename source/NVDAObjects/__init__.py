@@ -248,6 +248,10 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			self._startOffset=oldStart
 		if end==False:
 			self._endOffset=oldEnd
+		if num>0 and (self._startOffset<oldStart or self._endOffset<oldEnd):
+			return 0
+		if num<0 and (self._startOffset>oldStart or self._endOffset>oldEnd):
+			return 0
 		return count
 
 	def updateCaret(self):
