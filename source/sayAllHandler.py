@@ -71,54 +71,42 @@ def readText(info,cursor):
 	queueHandler.registerGeneratorObject(readTextHelper_generator(info,cursor))
 
 def readTextHelper_generator(info,cursor):
+	sendCount=0
+	receiveCount=0
 	cursorIndexMap={}
 	startKeyCount=globalVars.keyCounter
-	cursorIndexMap.clear()
 	reader=info.copy()
 	if not reader.isCollapsed:
-		readToLimit=True
 		reader.collapse()
-	else:
-		readToLimit=False
 	keepReading=True
 	keepUpdating=True
 	oldSpokenIndex=None
-	endIndex=None
 	while keepUpdating:
-		if keepReading:
-			bookmark=reader.bookmark
-			index=hash(bookmark)
-			reader.expand(textHandler.UNIT_READINGCHUNK)
-			cursorIndexMap[index]=bookmark
-			speech.speakFormattedText(reader,includeBlankText=False,index=index)
-			if readToLimit:
-				delta=reader.compareEnd(info)
-				if delta>=0:
-					keepReading=False
-					endIndex=index
-				else:
-					reader.collapse(end=True)
-			else:
+		if (sendCount-receiveCount)<=10:
+			if keepReading:
+				bookmark=reader.bookmark
+				index=hash(bookmark)
+				reader.expand(textHandler.UNIT_READINGCHUNK)
+				speech.speakFormattedText(reader,includeBlankText=False,index=index)
+				sendCount+=1
+				cursorIndexMap[index]=(bookmark,sendCount)
 				reader.collapse()
 				delta=reader.moveByUnit(textHandler.UNIT_READINGCHUNK,1)
-				if delta==0:
+				if delta<=0:
 					keepReading=False
-					endIndex=index
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
 			oldSpokenIndex=spokenIndex
-			bookmark=cursorIndexMap.get(spokenIndex,None)
-			if bookmark is not None:
+			data=cursorIndexMap.get(spokenIndex,None)
+			if data is not None:
+				bookmark,receiveCount=data
 				updater=reader.obj.makeTextInfo(bookmark)
 				if cursor==CURSOR_CARET:
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
 					updater.obj.reviewPosition=updater
-		if endIndex is not None and spokenIndex==endIndex:
-			keepUpdating=keepReading=False
-		while speech.isPaused:
+		while speech.isPaused and globalVars.keyCounter==startKeyCount:
 			yield
-			startKeyCount=globalVars.keyCounter
 		if globalVars.keyCounter!=startKeyCount:
 			speech.cancelSpeech()
 			keepUpdating=keepReading=False
