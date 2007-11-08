@@ -169,11 +169,17 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 				o.__dict__[item]=self.__dict__[item]
 		return o
 
-	def compareStart(self,info):
-		return self._startOffset-info._startOffset
+	def compareStart(self,info,useEnd=False):
+		if useEnd:
+			return self._startOffset-info._endOffset
+		else:
+			return self._startOffset-info._startOffset
 
-	def compareEnd(self,info):
-		return self._endOffset-info._endOffset
+	def compareEnd(self,info,useStart=False):
+		if useStart:
+			return self._endOffset-info._startOffset
+		else:
+			return self._endOffset-info._endOffset
 
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)

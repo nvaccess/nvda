@@ -113,11 +113,17 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 
-	def compareStart(self,info):
-		return self._rangeObj.Start-info._rangeObj.Start
+	def compareStart(self,info,useEnd=False):
+		if useEnd:
+			return self._rangeObj.Start-info._rangeObj.End
+		else:
+			return self._rangeObj.Start-info._rangeObj.Start
 
-	def compareEnd(self,info):
-		return self._rangeObj.End-info._rangeObj.End
+	def compareEnd(self,info,useStart=False):
+		if useStart:
+			return self._rangeObj.End-info._rangeObj.Start
+		else:
+			return self._rangeObj.End-info._rangeObj.End
 
 	def _get_isCollapsed(self):
 		if self._rangeObj.Start==self._rangeObj.End:

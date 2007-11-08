@@ -180,19 +180,23 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
-	def compareStart(self,info):
+	def compareStart(self,info,useEnd=False):
 		""" gives the difference in offsets of the start position for this object compared to the start position for the given l{info} object
 @param info: the text info object to compare with
 @type info: L{TextInfo}
+@param useEnd: if True then the start will be compared against the end of the given info, not the start.
+@type useEnd: boolean
 @returns: the start of this text info object relative to the start of the given text info object
 @rtype: int
 """
 		raise NotImplementedError
 
-	def compareEnd(self,info):
+	def compareEnd(self,info,useStart=False):
 		""" gives the difference in offsets of the end position for this object compared to the end position for the given l{info} object
 @param info: the text info object to compare with
 @type info: L{TextInfo}
+@param useStart: if True then the end will be compared against the start of the given info, not the end.
+@type useStart: boolean
 @returns: the end of this text info object relative to the end of the given text info object
 @rtype: int
 """

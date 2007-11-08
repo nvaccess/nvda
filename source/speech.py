@@ -425,6 +425,10 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,speakSelectionDeleted=True):
 	if newInfo.isCollapsed and oldInfo.isCollapsed:
 		return
+	if newInfo.compareStart(oldInfo,useEnd=True)>=0 or newInfo.compareEnd(oldInfo,useStart=True)<=0:
+		separateSelections=True
+	else:
+		separateSelections=False
 	leftDelta=newInfo.compareStart(oldInfo)
 	rightDelta=newInfo.compareEnd(oldInfo)
 	leftSelectedText=None
@@ -432,17 +436,21 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 	rightSelectedText=None
 	rightUnselectedText=None
 	selectionDeleted=False
-	if speakSelected and leftDelta<0 and not newInfo.isCollapsed:
+	if separateSelections and speakSelected and not newInfo.isCollapsed:
+		leftSelectedText=newInfo.text
+	if separateSelections and speakUnselected and not oldInfo.isCollapsed:
+		leftUnselectedText=oldInfo.text
+	if not separateSelections and speakSelected and leftDelta<0 and not newInfo.isCollapsed:
 		tempInfo=newInfo.copy()
 		tempInfo.collapse()
 		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(leftDelta),start=False)
 		leftSelectedText=tempInfo.text
-	if speakSelected and rightDelta>0 and not newInfo.isCollapsed:
+	if not separateSelections and speakSelected and rightDelta>0 and not newInfo.isCollapsed:
 		tempInfo=newInfo.copy()
 		tempInfo.collapse(end=True)
 		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-rightDelta,end=False)
 		rightSelectedText=tempInfo.text
-	if leftDelta>0 and not oldInfo.isCollapsed:
+	if not separateSelections and leftDelta>0 and not oldInfo.isCollapsed:
 		tempInfo=newInfo.copy()
 		tempInfo.collapse()
 		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-leftDelta,end=False)
@@ -450,7 +458,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			selectionDeleted=True
 		else:
 			leftUnselectedText=tempInfo.text
-	if rightDelta<0 and not oldInfo.isCollapsed:
+	if not separateSelections and rightDelta<0 and not oldInfo.isCollapsed:
 		tempInfo=newInfo.copy()
 		tempInfo.collapse(end=True)
 		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(rightDelta),start=False)

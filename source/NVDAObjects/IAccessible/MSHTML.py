@@ -109,15 +109,21 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj.duplicate())
 
-	def compareStart(self,info):
+	def compareStart(self,info,useEnd=False):
 		newOffsets=self._getRangeOffsets()
 		oldOffsets=info._getRangeOffsets()
-		return newOffsets[0]-oldOffsets[0]
+		if useEnd:
+			return newOffsets[0]-oldOffsets[1]
+		else:
+			return newOffsets[0]-oldOffsets[0]
 
-	def compareEnd(self,info):
+	def compareEnd(self,info,useStart=False):
 		newOffsets=self._getRangeOffsets()
 		oldOffsets=info._getRangeOffsets()
-		return newOffsets[1]-oldOffsets[1]
+		if useStart:
+			return newOffsets[1]-oldOffsets[0]
+		else:
+			return newOffsets[1]-oldOffsets[1]
 
 	def _get_text(self):
 		return self._rangeObj.text
