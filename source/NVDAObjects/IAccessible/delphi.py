@@ -46,7 +46,7 @@ class TTabSheet(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_PROPERTYPAGE
 
-class TRxRichEdit(edit.RichEdit20A):
+class TRxRichEdit(edit.RichEdit20):
 
 	def _get_name(self):
 		return None
