@@ -61,11 +61,9 @@ An NVDAObject for a window
 		return name
 
 	def _get_windowControlID(self):
-		if hasattr(self,"_windowControlID"):
-			return self._windowControlID
-		ID=winUser.getControlID(self.windowHandle)
-		self._windowControlID=ID
-		return ID
+		if not hasattr(self,"_windowControlID"):
+			self._windowControlID=winUser.getControlID(self.windowHandle)
+		return self._windowControlID
 
 	def _get_location(self):
 		return winUser.getClientRect(self.windowHandle)
@@ -95,3 +93,8 @@ An NVDAObject for a window
 
 	def _get_windowStyle(self):
 		return winUser.getWindowStyle(self.windowHandle)
+
+	def _get_isWindowUnicode(self):
+		if not hasattr(self,'_isWindowUnicode'):
+			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
+ 		return self._isWindowUnicode

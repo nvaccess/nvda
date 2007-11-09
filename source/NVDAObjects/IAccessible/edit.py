@@ -182,7 +182,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			oldSel=self._getSelectionOffsets()
 			if oldSel[0]!=offset and oldSel[1]!=offset:
 				self._setSelectionOffsets(offset,offset)
-			if self.obj.editAPIUnicode:
+			if self.obj.isWindowUnicode:
 				charFormatStruct=CharFormat2WStruct
 			else:
 				charFormatStruct=CharFormat2AStruct
@@ -257,7 +257,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 		if self.obj.editAPIVersion>=2:
 			info=getTextLengthExStruct()
 			info.flags=GTL_NUMCHARS
-			if self.obj.editAPIUnicode:
+			if self.obj.isWindowUnicode:
 				info.codepage=1200
 			else:
 				info.codepage=0
@@ -279,7 +279,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			if self.obj.editAPIHasITextDocument:
 				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=(end-start)+1
-			if self.obj.editAPIUnicode:
+			if self.obj.isWindowUnicode:
 				bufLen*=2
 				textRange=TextRangeUStruct()
 			else:
@@ -293,13 +293,13 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
 			winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
 			winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			if self.obj.editAPIUnicode:
+			if self.obj.isWindowUnicode:
 				buf=ctypes.create_unicode_buffer(bufLen)
 			else:
 				buf=ctypes.create_string_buffer(bufLen)
 			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			if self.obj.editAPIUnicode:
+			if self.obj.isWindowUnicode:
 				return buf.value
 			else:
 				return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
@@ -463,14 +463,8 @@ class Edit(IAccessible):
 class RichEdit(Edit):
 	editAPIVersion=1
 
-class RichEditA(RichEdit):
-	editAPIUnicode=False
-
 class RichEdit20(RichEdit):
 	editAPIVersion=2
-
-class RichEdit20A(RichEdit20):
-	editAPIUnicode=False
 
 class RichEdit30(RichEdit):
 	editAPIVersion=3
