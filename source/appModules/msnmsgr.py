@@ -1,4 +1,4 @@
-﻿#coding=UTF-8
+#coding=UTF-8
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
@@ -26,6 +26,7 @@ u'Histórico',
 u'HistÃ³ria',
 u'LÆ°á»£c Sá',
 u'è¨˜éŒ',
+u'Historik',
 ])
 
 class appModule(appModuleHandler.appModule):
