@@ -115,7 +115,8 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		curY=winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,offset)
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0,curY)
 		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0xffff,curY)
-		while winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,end)==curY:
+		limit=end+4
+		while winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,end)==curY and end<=limit:
  			end+=1
 		return (start,end)
 
