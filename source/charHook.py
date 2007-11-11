@@ -20,10 +20,9 @@ def handleTypedCharacter(window,wParam,lParam):
 @ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
-		foregroundWindow=api.getForegroundObject().windowHandle
-		if eventID==EVENT_TYPEDCHARACTER and (window==foregroundWindow or winUser.isDescendantWindow(foregroundWindow,window)):
+		if eventID==EVENT_TYPEDCHARACTER:
 			handleTypedCharacter(window,objectID,childID)
-		elif eventID==EVENT_INPUTLANGCHANGE and (window==foregroundWindow or winUser.isDescendantWindow(foregroundWindow,window)):
+		elif eventID==EVENT_INPUTLANGCHANGE:
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
 		debug.writeException("charHook.winEventCallback")
