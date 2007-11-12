@@ -8,7 +8,6 @@ import os
 import time
 import pythoncom
 import comtypes.client
-import win32com.client
 import _winreg
 import debug
 import silence
