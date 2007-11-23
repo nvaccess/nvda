@@ -384,6 +384,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				parentNext=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_NEXT)
 				if parentNext and parentNext[0].accRole(parentNext[1])>0:
 					next=parentNext
+		if next and next[0]==self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],IAccessibleObjectID=self.IAccessibleObjectID)
 		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(next[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -400,6 +402,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				parentPrevious=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_PREVIOUS)
 				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
 					previous=parentPrevious
+		if previous and previous[0]==self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],IAccessibleObjectID=self.IAccessibleObjectID)
 		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(previous[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -413,6 +417,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,1)
 			if len(children)>0:
 				firstChild=children[0]
+		if firstChild and firstChild[0]==self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],IAccessibleObjectID=self.IAccessibleObjectID)
 		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(firstChild[0],-4)
 			if not child:
@@ -426,6 +432,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_lastChild(self):
 		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
+		if lastChild and lastChild[0]==self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],IAccessibleObjectID=self.IAccessibleObjectID)
 		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(lastChild[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -439,10 +447,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.IAccessibleChildID>0:
 			return []
 		childCount= self.IAccessibleObject.accChildCount
+		if childCount==0:
+			return []
 		children=[]
-		if childCount>0:
-			children=[IAccessible(IAccessibleObject=x[0],IAccessibleChildID=x[1]) for x in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount) if x]
-			children=[(getNVDAObjectFromEvent(x.windowHandle,IAccessibleHandler.OBJID_CLIENT,0) if x and x.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_WINDOW else x) for x in children]
+		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
+			if child and child[0]==self.IAccessibleObject:
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],IAccessibleObjectID=self.IAccessibleObjectID))
+			elif child and child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+				children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
