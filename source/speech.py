@@ -206,6 +206,7 @@ def speakSpelling(text):
 			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
+		globalVars.log.info("Speaking \"%s\""%char)
 		getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
@@ -311,6 +312,7 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 	text=" ".join(textList)
 	if len(text)>0 and not text.isspace():
 		text=processText(text)
+		globalVars.log.info("Speaking \"%s\""%text)
 		getSynth().speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):

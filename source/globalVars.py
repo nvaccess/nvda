@@ -51,3 +51,4 @@ focusMovesNavigatorObject=True
 restart=False
 appArgs=None
 settingsRing = None
+log=None

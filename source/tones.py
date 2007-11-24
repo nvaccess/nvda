@@ -11,6 +11,7 @@ import struct
 import math
 from glob import glob
 import config
+import globalVars
 
 piTwo=math.pi*2
 
@@ -20,6 +21,7 @@ amplitude=14000
 player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 
 def beep(hz,length,left=50,right=50):
+	globalVars.log.info("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	hz=float(hz)
 	player.stop()
 	samplesPerCycle=(sampleRate/hz)

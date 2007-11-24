@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import logging
 import os
 import sys
 import codecs
@@ -17,7 +18,7 @@ import optparse
 import win32gui
 import win32con
 import globalVars
-import debug
+import logObj
 import winUser
 
 restartByErrorCount=0
@@ -36,11 +37,10 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		sys.exit(2)
 
 def abortWithError(code):
-	debug.writeException("critical error")
+	globalVars.log.critical("core stop not due to exit/restart",exc_info=True)
 	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 	winUser.setSystemScreenReaderFlag(False)
-	debug.stop()
 	sys.exit(code)
 
 globalVars.startTime=time.time()
@@ -50,11 +50,11 @@ if getattr(sys, "frozen", None):
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
 	os.chdir(sys.prefix)
-	debugFileName='%s\\nvda_debug.log'%tempfile.gettempdir()
+	logFileName='%s\\nvda.log'%tempfile.gettempdir()
 	stderrFileName='%s\\nvda_stderr.log'%tempfile.gettempdir()
 else:
 	os.chdir(sys.path[0])
-	debugFileName='debug.log'
+	logFileName='nvda.log'
 	stderrFileName='stderr.log'
 
 #Localization settings
@@ -67,8 +67,8 @@ except:
 #Process option arguments
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-parser.add_option('-d','--debug-file',dest='debugFileName',default=debugFileName,help="The file where debug messages should be written to")
-parser.add_option('-s','--stderr-file',dest='stderrFileName',default=stderrFileName,help="The file where errors not caught by debug should go")
+parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
+parser.add_option('-l','--log-level',type="int",dest='logLevel',default=logging.WARN,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50)") 
 parser.add_option('-c','--config-file',dest='configFileName',default="./nvda.ini",help="The file where all settings are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
@@ -85,17 +85,25 @@ if win32gui.IsWindow(oldAppWindowHandle):
 
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
-#Initial logging and debugging code
+#Initial logging and logging code
 
-stderrFile=codecs.open(globalVars.appArgs.stderrFileName,"w","utf-8","ignore")
+stderrFile=codecs.open(stderrFileName,"w","utf-8","ignore")
 if stderrFile is None:
 	sys.exit()
 sys.stderr=stderrFile
 sys.stdout=stderrFile
 
+
+import debug
+debug.start("debug.log")
+log=logObj.Logger("NVDA",globalVars.appArgs.logLevel)
+logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w")
+logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
+logHandler.setFormatter(logFormatter)
+log.addHandler(logHandler)
+globalVars.log=log
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
-debug.start(globalVars.appArgs.debugFileName)
 winUser.setSystemScreenReaderFlag(True)
 try:
 	import core
@@ -109,6 +117,7 @@ if res in [core.CORE_MAINLOOPERROR,core.CORE_RESTART]:
 elif res==core.CORE_INITERROR:
 	abortWithError(4)
 winUser.setSystemScreenReaderFlag(False)
-debug.stop()
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+globalVars.log.info("NVDA exit")
+del globalVars.log
