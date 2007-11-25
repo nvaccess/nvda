@@ -6,7 +6,7 @@
 
 import time
 import ctypes
-import comtypesClient
+import comtypes.client
 import comtypes.automation
 import debug
 import winUser
@@ -28,7 +28,7 @@ class NVDAObject_MSHTML(IAccessible.NVDAObject_IAccessible):
 			wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 			lresult=winUser.sendMessage(self.windowHandle,wm,0,0)
 			res=ctypes.windll.oleacc.ObjectFromLresult(lresult,ctypes.byref(domPointer._iid_),0,ctypes.byref(domPointer))
-			return comtypesClient.wrap(domPointer)
+			return comtypes.client.wrap(domPointer)
 
 	def _get_typeString(self):
 		if self.isContentEditable:

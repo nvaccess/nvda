@@ -1,4 +1,4 @@
-#comtypesClient.py
+#comtypes.client.py
 #Origionally from comtypes
 #http://www.sourceforge.net/projects/comtypes/
 #Patched to generate com interfaces in the comInterfaces directory even if it is an executable.
@@ -20,7 +20,7 @@
 #
 ################################################################
 
-# comtypesClient
+# comtypes.client
 
 import sys, os, new, imp
 import weakref

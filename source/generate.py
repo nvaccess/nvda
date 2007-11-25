@@ -12,17 +12,24 @@ This script:
 This should be run prior to executing NVDA from a clean source tree for the first time and before building a binary distribution with py2exe.
 """
 
+#Bit of a dance to force comtypes generated interfaces in to our directory
+import comtypes.client
+comtypes.client.gen_dir='.\\comInterfaces'
+import comtypes
+import sys
+sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
+
 import os
 import sys
 from glob import glob
-import comtypesClient
+import comtypes.client
 import compileall
 
 COM_INTERFACES = (
-	("MS HTML", comtypesClient.GetModule, "mshtml.tlb"),
-	("MS Active Accessibility", comtypesClient.GetModule, "oleacc.dll"),
-	("SAPI 5", comtypesClient.CreateObject, "Sapi.SPVoice"),
-	("SAPI 4", comtypesClient.CreateObject, "ActiveVoice.ActiveVoice"),
+	("MS HTML", comtypes.client.GetModule, "mshtml.tlb"),
+	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
+	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
+	("SAPI 4", comtypes.client.CreateObject, "ActiveVoice.ActiveVoice"),
 )
 COMPILE_DIRS = ("appModules", "synthDrivers")
 
