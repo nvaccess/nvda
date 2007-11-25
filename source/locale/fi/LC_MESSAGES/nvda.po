@@ -1,12 +1,12 @@
-# Suomenkielinen kielitiedosto NVDA:lle
+# Suomenkielinen lokalisointi NVDA:lle
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.5\n"
-"POT-Creation-Date: 2007-08-05 13:50+Kesäaika\n"
-"PO-Revision-Date: 2007-09-15 12:26+0300\n"
+"POT-Creation-Date: 2007-09-15 10:42+Kesäaika\n"
+"PO-Revision-Date: 2007-11-25 12:53+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -762,7 +762,7 @@ msgstr "hattu"
 
 #: characterSymbols.py:50
 msgid "line"
-msgstr "alaviiva"
+msgstr "pysty"
 
 #: characterSymbols.py:51
 msgid "graav"
@@ -774,7 +774,7 @@ msgstr "alkuaalto"
 
 #: characterSymbols.py:53
 msgid "bar"
-msgstr "pysty"
+msgstr "palkki"
 
 #: characterSymbols.py:54
 msgid "right brace"
@@ -784,15 +784,15 @@ msgstr "loppuaalto"
 msgid "tilda"
 msgstr "mato"
 
-#: core.py:48
+#: core.py:55
 msgid "configuration applyed"
 msgstr "asetukset otettu käyttöön"
 
-#: core.py:68
+#: core.py:75
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alajärjestelmiä, odota..."
 
-#: core.py:82
+#: core.py:89
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -915,11 +915,15 @@ msgstr ""
 "valikoissa liikkumiseen ja muutettavien asetusten etsimiseen.Monissa valikon "
 "kohdissa Enterin painaminen tuo näkyviin valintaikkunan, jossa voit muuttaa "
 "yksittäisiä asetuksia. Useimmat muutokset tulevat voimaan heti (kuten "
-"puheen nopeus tai korkeus), joten voit löytää helposti itsellesi "
-"sopivimmat asetukset. Jos kuitenkin suljet valintaikkunan Peruuta-"
-"painikkeella, tekemiäsi muutoksia ei tallenneta.\n"
+"puheen nopeus tai korkeus), joten löydät helposti itsellesi sopivimmat "
+"asetukset. Jos kuitenkin suljet valintaikkunan Peruuta-painikkeella, tekemiä"
+"si muutoksia ei tallenneta.\n"
 "\n"
-"Asetuksia ei oletuksena tallenneta, ellet paina ctrl+s tai valitse NVDA-valikosta 'Tallenna asetukset'. Voit asettaa NVDA:n tallentamaan asetukset automaattisesti suljettaessa menemällä Asetukset-valikossa 'Käyttöliittymä...'-kohtaan, valitsemalla 'Tallenna asetukset suljettaessa' -valintaruudun ja painamalla OK.\n"
+"Asetuksia ei oletuksena tallenneta, ellet paina ctrl+s tai valitse NVDA-"
+"valikosta 'Tallenna asetukset'. Voit asettaa NVDA:n tallentamaan asetukset "
+"automaattisesti suljettaessa menemällä Asetukset-valikossa "
+"'Käyttöliittymä...'-kohtaan, valitsemalla 'Tallenna asetukset suljettaessa' "
+"-valintaruudun ja painamalla OK.\n"
 "\n"
 "Muutamia hyödyllisiä NVDA:n näppäinkomentoja:\n"
 "\n"
@@ -1361,7 +1365,7 @@ msgstr "Ilmoita tyyli"
 
 #: gui\settingsDialogs.py:409
 msgid "Report pages"
-msgstr "Ilmoita sivut"
+msgstr "Ilmoita sivunumerot"
 
 #: gui\settingsDialogs.py:412
 msgid "Report line numbers"
@@ -1475,23 +1479,23 @@ msgstr "alareuna"
 
 #: textBuffer.py:470 textBuffer.py:494 textBuffer.py:502
 msgid "Moves and then reads the current line"
-msgstr "Siirtyy kohdalla olevalle riville ja lukee sen"
+msgstr "Siirtyy ja lukee kohdalla olevan rivin "
 
 #: textBuffer.py:478
 msgid "Moves and reads the current character"
-msgstr "Siirtyy kohdalla olevaan merkkiin ja lukee sen"
+msgstr "Siirtyy ja lukee kohdalla olevan merkin"
 
 #: textBuffer.py:486
 msgid "Moves and reads the current word"
-msgstr "Siirtyy kohdalla olevaan sanaan ja lukee sen"
+msgstr "Siirtyy ja lukee kohdalla olevan sanan"
 
 #: textBuffer.py:510
 msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "Siirtää seuraavaan kappaleeseen ja lukee sen"
+msgstr "Siirtää seuraavan kappaleen kohdalle ja lukee sen"
 
 #: textBuffer.py:518
 msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "Siirtää edelliseen kappaleeseen ja lukee sen"
+msgstr "Siirtää edellisen kappaleen kohdalle ja lukee sen"
 
 #: textBuffer.py:530
 msgid "no selections"
@@ -1499,7 +1503,7 @@ msgstr "ei valintoja"
 
 #: textBuffer.py:549
 msgid "Moves and reads the current selection"
-msgstr "Siirtyy nykyisen valinnan kohdalle ja lukee sen"
+msgstr "Siirtää nykyisen valinnan kohdalle ja lukee sen"
 
 #: textBuffer.py:555
 msgid "Deletes the character and reads the new current character"
@@ -1507,7 +1511,7 @@ msgstr "Poistaa merkin ja lukee uuden kohdalla olevan merkin"
 
 #: textBuffer.py:569
 msgid "Reads the character before the current character and then deletes it"
-msgstr "lukee kohdalla olevaa merkkiä ennen olevan merkin ja poistaa sen"
+msgstr "Lukee kohdalla olevaa merkkiä ennen olevan merkin ja poistaa sen"
 
 #: versionInfo.py:8
 msgid "NonVisual Desktop Access"
@@ -1637,7 +1641,7 @@ msgstr "valintaruutu"
 
 #: virtualBuffers\baseType.py:61
 msgid "radio button"
-msgstr "valintapainike"
+msgstr "valintanappi"
 
 #: virtualBuffers\baseType.py:62
 msgid "edit area"
@@ -1673,7 +1677,7 @@ msgstr "siirtyy yhden sivun alas näennäispuskurin nykyisessä dokumentissa"
 
 #: virtualBuffers\baseType.py:333
 msgid "activates the current object in the virtual buffer"
-msgstr "Aktivoi kohdalla olevan objektin näennäispuskurissa"
+msgstr "aktivoi kohdalla olevan objektin näennäispuskurissa"
 
 #: virtualBuffers\baseType.py:356 virtualBuffers\baseType.py:367
 msgid "no more headings"
@@ -1745,7 +1749,7 @@ msgstr "siirtää seuraavan luettelon osan kohdalle"
 
 #: virtualBuffers\baseType.py:478
 msgid "moves to the previous list item"
-msgstr "Siirtää edellisen luettelon osan kohdalle"
+msgstr "siirtää edellisen luettelon osan kohdalle"
 
 #: virtualBuffers\baseType.py:488 virtualBuffers\baseType.py:499
 msgid "no more form fields"
@@ -1789,7 +1793,7 @@ msgstr "h=otsikko"
 
 #: virtualBuffers\baseType.py:544 virtualBuffers\baseType.py:545
 msgid "f=formFieldQuickKey"
-msgstr "f=lomakekenttä"
+msgstr "f=lomake"
 
 #: virtualBuffers\baseType.py:546 virtualBuffers\baseType.py:547
 msgid "p=paragraphQuickKey"
