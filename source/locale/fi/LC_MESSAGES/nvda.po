@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1344\n"
+"Project-Id-Version: r1365\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2007-11-07 09:53+0200\n"
+"PO-Revision-Date: 2007-11-25 12:46+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgid "not %s"
 msgstr "ei %s"
 
 #: NVDAObjects\IAccessible\__init__.py:69
-#: NVDAObjects\IAccessible\__init__.py:494
+#: NVDAObjects\IAccessible\__init__.py:506
 #: NVDAObjects\IAccessible\sysListView32.py:83
 msgid "%s of %s"
 msgstr "%s kautta %s"
@@ -59,7 +59,7 @@ msgstr "%s kautta %s"
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: NVDAObjects\IAccessible\__init__.py:781
+#: NVDAObjects\IAccessible\__init__.py:793
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d kohdetta"
@@ -107,50 +107,50 @@ msgstr "alleviivaus"
 msgid "%d of %d"
 msgstr "%d kautta %d"
 
-#: NVDAObjects\IAccessible\winword.py:156
+#: NVDAObjects\IAccessible\winword.py:162
 msgid "with %s columns and %s rows"
 msgstr "jossa %s saraketta ja %s riviä"
 
-#: NVDAObjects\IAccessible\winword.py:284
-#: NVDAObjects\IAccessible\winword.py:300
-#: NVDAObjects\IAccessible\winword.py:316
-#: NVDAObjects\IAccessible\winword.py:332
+#: NVDAObjects\IAccessible\winword.py:290
+#: NVDAObjects\IAccessible\winword.py:306
+#: NVDAObjects\IAccessible\winword.py:322
+#: NVDAObjects\IAccessible\winword.py:338
 msgid "not in table"
 msgstr "ei taulukossa"
 
-#: NVDAObjects\IAccessible\winword.py:293
+#: NVDAObjects\IAccessible\winword.py:299
 msgid "bottom of column"
 msgstr "sarakkeen alareuna"
 
-#: NVDAObjects\IAccessible\winword.py:309
+#: NVDAObjects\IAccessible\winword.py:315
 msgid "top of column"
 msgstr "sarakkeen yläreuna"
 
-#: NVDAObjects\IAccessible\winword.py:325
+#: NVDAObjects\IAccessible\winword.py:331
 msgid "end of row"
 msgstr "rivin loppu"
 
-#: NVDAObjects\IAccessible\winword.py:341
+#: NVDAObjects\IAccessible\winword.py:347
 msgid "beginning of row"
 msgstr "rivin alku"
 
-#: NVDAObjects\__init__.py:610 NVDAObjects\__init__.py:621
-#: NVDAObjects\__init__.py:659 textBuffer.py:364 textBuffer.py:391
+#: NVDAObjects\__init__.py:620 NVDAObjects\__init__.py:631
+#: NVDAObjects\__init__.py:669 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:275
 msgid "top"
 msgstr "yläreuna"
 
-#: NVDAObjects\__init__.py:641 NVDAObjects\__init__.py:648
-#: NVDAObjects\__init__.py:679 textBuffer.py:369 textBuffer.py:382
+#: NVDAObjects\__init__.py:651 NVDAObjects\__init__.py:658
+#: NVDAObjects\__init__.py:689 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:290
 msgid "bottom"
 msgstr "alareuna"
 
-#: NVDAObjects\__init__.py:688 NVDAObjects\__init__.py:699
+#: NVDAObjects\__init__.py:698 NVDAObjects\__init__.py:709
 msgid "left"
 msgstr "vasen"
 
-#: NVDAObjects\__init__.py:727 NVDAObjects\__init__.py:743
+#: NVDAObjects\__init__.py:737 NVDAObjects\__init__.py:753
 msgid "right"
 msgstr "oikea"
 
@@ -758,7 +758,7 @@ msgstr "oletusmoduuli"
 
 #: appModules\_default.py:611
 msgid "and currently loaded module is %s"
-msgstr "ja nykyinen ladattu moduuli on %s"
+msgstr "nykyinen ladattu moduuli on %s"
 
 #: appModules\_default.py:612
 msgid ""
@@ -992,7 +992,7 @@ msgstr "otsikkopalkki"
 
 #: controlTypes.py:160
 msgid "pane"
-msgstr "paneeli"
+msgstr "ruutu"
 
 #: controlTypes.py:161
 msgid "dialog"
@@ -2206,7 +2206,7 @@ msgstr "Ilmoita t&yyli"
 
 #: gui\settingsDialogs.py:533
 msgid "Report &pages"
-msgstr "Ilmoita si&vut"
+msgstr "Ilmoita si&vunumerot"
 
 #: gui\settingsDialogs.py:536
 msgid "Report &line numbers"
@@ -2252,7 +2252,7 @@ msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
-#: sayAllHandler.py:147
+#: sayAllHandler.py:135
 msgid "end of text"
 msgstr "tekstin loppu"
 
@@ -2268,7 +2268,7 @@ msgstr "taso %d"
 msgid "contains %s"
 msgstr "sisältää %s"
 
-#: speech.py:307 speech.py:466 textBuffer.py:537 textBuffer.py:541
+#: speech.py:307 speech.py:474 textBuffer.py:537 textBuffer.py:541
 #: textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -2281,11 +2281,11 @@ msgstr "alkaa"
 msgid "out of"
 msgstr "loppui"
 
-#: speech.py:472 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
+#: speech.py:480 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
 msgid "unselected %s"
 msgstr "ei valittu %s"
 
-#: speech.py:474
+#: speech.py:482
 msgid "selection deleted"
 msgstr "valinta poistettu"
 
@@ -2575,7 +2575,7 @@ msgstr "Siirtää seuraavan lomakekentän kohdalle"
 
 #: virtualBuffers\__init__.py:463
 msgid "moves to the previous form field"
-msgstr "Siirtää edellisen lomakekentän kohdalle"
+msgstr "siirtää edellisen lomakekentän kohdalle"
 
 #: virtualBuffers\__init__.py:466
 msgid "Find"
