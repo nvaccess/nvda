@@ -8,7 +8,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible, IAccessibleStatesToNVDAStates
+from NVDAObjects.IAccessible import IAccessible, IAccessibleStatesToNVDAStates, edit
 import appModuleHandler
 import speech
 import debug
@@ -67,11 +67,16 @@ CLM_GETTEXTCOLOR=CLM_FIRST+51   #wParam=FONTID_, returns COLORREF
 MAXSTATUSMSGLEN=256
 CLM_GETSTATUSMSG=CLM_FIRST+105
 
+#other constants
+IDC_LOG=1001
+
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":
 			obj.__class__=mirandaIMContactList
+		elif (IDC_LOG==winUser.getControlID(obj.windowHandle))&(obj.windowClassName=="RichEdit20A"):
+			obj.__class__=edit.RichEdit
 		elif (obj.windowClassName=="MButtonClass")|(obj.windowClassName=="TSButtonClass"):
 			obj.__class__=mirandaIMButton
 		elif obj.windowClassName=="Hyperlink":
