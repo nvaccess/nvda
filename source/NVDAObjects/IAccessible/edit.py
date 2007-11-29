@@ -278,9 +278,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 		if self.obj.editAPIVersion>=2:
 			if self.obj.editAPIHasITextDocument:
 				return self._getTextRangeWithEmbeddedObjects(start,end)
-			bufLen=(end-start)+1
+			bufLen=((end-start)+1)*2
 			if self.obj.isWindowUnicode:
-				bufLen*=2
 				textRange=TextRangeUStruct()
 			else:
 				textRange=TextRangeAStruct()
@@ -291,18 +290,15 @@ class EditTextInfo(NVDAObjectTextInfo):
 			textRange.lpstrText=internalBuf
 			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
+			res=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
 			winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			if self.obj.isWindowUnicode:
-				buf=ctypes.create_unicode_buffer(bufLen)
-			else:
-				buf=ctypes.create_string_buffer(bufLen)
+			buf=(ctypes.c_byte*bufLen)()
 			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			if self.obj.isWindowUnicode:
-				return buf.value
+			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
+				return ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
-				return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
+				return unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
 		else:
 			return self._getStoryText()[start:end]
 
