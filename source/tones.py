@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import nvwave
-import debug
 import os
 import struct
 import math

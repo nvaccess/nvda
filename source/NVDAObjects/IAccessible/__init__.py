@@ -13,7 +13,6 @@ import difflib
 import ctypes
 import comtypes.automation
 import comtypes.client
-import debug
 import appModuleHandler
 from keyUtils import sendKey, key 
 import IAccessibleHandler
@@ -316,7 +315,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		IARole=self.IAccessibleRole
 		if isinstance(IARole,basestring):
 			IARole=IARole.split(',')[0].lower()
-			debug.writeMessage("IARole: %s"%IARole)
+			globalVars.log.info("IARole: %s"%IARole)
 		return IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
 
 	def _get_IAccessibleStates(self):
@@ -674,11 +673,9 @@ class PropertyPage(Dialog):
 		if not name:
 			tc=self.next
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
-#				debug.writeMessage("got tabcontrol")
 				children=tc.children
 				for index in range(len(children)):
 					if (children[index].role==controlTypes.ROLE_TAB) and (controlTypes.STATE_SELECTED in children[index].states):
-#						debug.writeMessage("got tab")
 						name=children[index].name
 						break
 		return name

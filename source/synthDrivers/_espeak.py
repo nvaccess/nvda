@@ -9,8 +9,8 @@ import nvwave
 import threading
 import Queue
 from ctypes import *
-import debug
 import config
+import globalVars
 
 isSpeaking = False
 lastIndex = None
@@ -125,7 +125,7 @@ def callback(wav,numsamples,event):
 			player.feed(string_at(wav, numsamples * sizeof(c_short)))
 		return 0
 	except:
-		debug.writeException("callback")
+		globalVars.log.error("callback")
 
 class BgThread(threading.Thread):
 	def __init__(self):
@@ -142,7 +142,7 @@ class BgThread(threading.Thread):
 				func(*args, **kwargs)
 				bgQueue.task_done()
 		except:
-			debug.writeException("bgThread.run")
+			globalVars.log.error("bgThread.run")
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue

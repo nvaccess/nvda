@@ -55,7 +55,6 @@ def resetConfiguration(reportDone=False):
 		config.save()
 		globalVars.log.debug("config save successfull")
 	except:
-		globalVars.log.debug("Could not save config - probably read-only file system",esc_info=True)
 		pass
 	globalVars.log.info("Reverted to saved configuration")
 	if reportDone:
@@ -77,7 +76,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			config.save()
 			globalVars.log.debug("save config successfull")
 		except:
-			globalVars.log.debug("save config failed - probably read-only file system",esc_info=True)
 			pass
 		try:
 			lang = config.conf["general"]["language"]

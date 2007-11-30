@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import os
-import debug
 import config
 import queueHandler
 import speech
@@ -78,13 +77,13 @@ def setSynth(name):
 			_curSynth.terminate()
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
-		debug.writeMessage("Loaded synthDriver %s"%name)
+		globalVars.log.info("Loaded synthDriver %s"%name)
 		#start or update the synthSettingsRing
 		if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings()
 		else:  globalVars.settingsRing = SynthSettingsRing()
 		return True
 	except:
-		debug.writeException("setSynth")
+		globalVars.log.error("setSynth")
 		if not _curSynth and name not in ['espeak','silence']:
 			setSynth('espeak')
 		elif not _curSynth and name=='espeak':

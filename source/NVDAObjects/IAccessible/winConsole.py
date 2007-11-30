@@ -10,7 +10,6 @@ import ctypes
 import difflib
 import pythoncom
 import globalVars
-import debug
 import queueHandler
 import textHandler
 import tones
@@ -155,7 +154,7 @@ class WinConsole(IAccessible):
 				#Each round of the while loop we wait 10 milliseconds
 				time.sleep(0.01)
 		except:
-			debug.writeException("console monitorThread")
+			globalVars.log.error("console monitorThread")
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)

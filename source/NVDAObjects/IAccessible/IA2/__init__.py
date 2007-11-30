@@ -1,7 +1,6 @@
 import ctypes
 import comtypes
 import winsound
-import debug
 import api
 import speech
 import IA2Handler

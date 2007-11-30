@@ -2,7 +2,6 @@ import globalVars
 import baseObject
 import config
 import speech
-import debug
 from keyUtils import sendKey, key, isKeyWaiting
 import api
 

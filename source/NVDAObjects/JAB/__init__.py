@@ -1,6 +1,5 @@
 import ctypes
 import re
-import debug
 import appModuleHandler
 import speech
 import api
@@ -11,6 +10,7 @@ from ..window import Window
 import textHandler
 from .. import NVDAObjectTextInfo
 import NVDAObjects.IAccessible
+import globalVars
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -210,7 +210,7 @@ class JAB(Window):
 		return self._JABAccContextInfo.states_en_US
 
 	def _get_states(self):
-		debug.writeMessage("states: %s"%self.JABStates)
+		globalVars.log.info("states: %s"%self.JABStates)
 		stateSet=set()
 		stateString=self.JABStates
 		for state in stateString.split(','):

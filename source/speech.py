@@ -11,7 +11,6 @@
 
 from xml.parsers import expat
 import time
-import debug
 import globalVars
 import api
 import controlTypes
@@ -495,7 +494,7 @@ def speakTypedCharacters(ch):
 			typedWord="".join([typedWord,ch])
 		elif len(typedWord)>0:
 			speakText(typedWord)
-			debug.writeMessage("typedword: %s"%typedWord)
+			globalVars.log.info("typedword: %s"%typedWord)
 			typedWord=""
 	else:
 		typedWord=""

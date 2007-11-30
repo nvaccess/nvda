@@ -11,7 +11,6 @@ import winUser
 import ctypes
 import time
 import vkCodes
-import debug
 import speech
 from keyUtils import key, keyName, sendKey
 import scriptHandler
@@ -171,7 +170,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			speakToggleKey(vkCode)
 			return True
 	except:
-		debug.writeException("keyboardHandler.internal_keyDownEvent")
+		globalVars.log.error("")
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"),wait=True)
 		return True
 
@@ -205,7 +204,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		elif vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 	except:
-		debug.writeException("keyboardHandler.internal_keyUpEvent")
+		globalVars.log.error("")
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
 	return True
 

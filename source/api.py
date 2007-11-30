@@ -7,7 +7,7 @@
 """General functions for NVDA"""
 
 import pythoncom
-import debug
+import logging
 import globalVars
 import speech
 import NVDAObjects
@@ -63,7 +63,8 @@ def setForegroundObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
-	debug.writeMessage("setForegroundObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
+	if globalVars.log.getEffectiveLevel()<=logging.INFO:
+		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
 def setFocusObject(obj,ancestors=None):
@@ -78,7 +79,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		try:
 			globalVars.focusObject.event_looseFocus()
 		except:
-			debug.writeException("event_looseFocus in focusObject")
+			globalVars.log.error("event_looseFocus in focusObject")
 	oldAncestors=globalVars.focusAncestors
 	if not ancestors:
 		ancestors=[]
@@ -102,7 +103,8 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		globalVars.focusDifferenceLevel=commonLevel+1
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
-	debug.writeMessage("setFocusObject: %s %s %s %s"%(obj.name,controlTypes.speechRoleLabels[obj.role],obj.value,obj.description))
+	if globalVars.log.getEffectiveLevel()<=logging.INFO:
+		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
 def getFocusDifferenceLevel():
@@ -117,6 +119,8 @@ def getMouseObject():
 
 def setMouseObject(obj):
 	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
+	if globalVars.log.getEffectiveLevel()<=logging.INFO:
+		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.mouseObject=obj
 
 def getDesktopObject():
@@ -125,6 +129,8 @@ def getDesktopObject():
 
 def setDesktopObject(obj):
 	"""Tells NVDA to remember the given object as the desktop object"""
+	if globalVars.log.getEffectiveLevel()<=logging.INFO:
+		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.desktopObject=obj
 
 def getNavigatorObject():
@@ -141,6 +147,8 @@ def setNavigatorObject(obj):
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
+	if globalVars.log.getEffectiveLevel()<=logging.INFO:
+		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 
 def isTypingProtected():

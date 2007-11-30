@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import time
-import debug
+import globalVars
 import winUser
 import queueHandler
 import wx
@@ -50,7 +50,7 @@ def sendKey(keyPress):
 @param keyPress: the key to send
 @type keyPress: NVDA internal key
 """
-	debug.writeMessage("keyboardHandler.sendKey: %s"%keyName(keyPress))
+	globalVars.log.info("%s"%keyName(keyPress))
 	keyList=[]
 	#Process modifier keys
 	if keyPress[0] is not None:

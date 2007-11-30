@@ -9,9 +9,9 @@ import time
 import pythoncom
 import comtypes.client
 import _winreg
-import debug
 import silence
 import config
+import globalVars
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 
@@ -54,7 +54,7 @@ class SynthDriver(silence.SynthDriver):
 			self._lastIndex=None
 			return True
 		except:
-			debug.writeException("initialize")
+			globalVars.log.error("initialize")
 			return False
 
 	def _get_voiceCount(self):

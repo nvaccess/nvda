@@ -18,10 +18,11 @@ import datetime
 import re
 import ctypes
 import os
+import logging
 import baseObject
 import sayAllHandler
 from keyUtils import key
-import debug
+import globalVars
 import speech
 import winUser
 import winKernel
@@ -78,7 +79,9 @@ def getAppName(window,includeExt=False):
 	winKernel.kernel32.CloseHandle(FSnapshotHandle)
 	if not includeExt:
 		appName=os.path.splitext(appName)[0].lower()
+	globalVars.log.debug("appName: %s"%appName)
 	return appName
+
 def moduleExists(name):
 	"""Checks if an appModule by the given application name exists.
 @param name: the application name
@@ -86,7 +89,9 @@ def moduleExists(name):
 @returns: True if it exists, false otherwise.
 @rtype: bool
 """
-	return os.path.isfile('appModules/%s.py'%name)
+	res=os.path.isfile('appModules/%s.py'%name)
+	globalVars.log.debug("Does appModules/%s.py exist: %s"%(name,res))
+	return res
 
 def getKeyMapFileName(appName,layout):
 	"""Finds the file path for the key map file, given the application name and keyboard layout.
@@ -96,10 +101,12 @@ def getKeyMapFileName(appName,layout):
 @rtype: string 
 """
 	if os.path.isfile('appModules/%s_%s.kbd'%(appName,layout)):
+		globalVars.log.debug("Found keymap file for %s at appModules/%s_%s.kbd"%(appName,appName,layout)) 
 		return 'appModules/%s_%s.kbd'%(appName,layout)
 	elif layout!='desktop':
 		return getKeyMapFileName(appName,'desktop')
 	else:
+		globalVars.log.debug("No keymapFile for %s"%appName)
 		return None
 
 def getActiveModule():
@@ -107,7 +114,11 @@ def getActiveModule():
 @returns: the active appModule
 @rtype: appModule
 """
-	return getAppModuleFromWindow(winUser.getForegroundWindow())
+	fg=winUser.getForegroundWindow()
+	mod=getAppModuleFromWindow(fg)
+	if globalVars.log.getEffectiveLevel()<=logging.DEBUG:
+		globalVars.log.debug("Using window %s (%s), got appModule %s"%(fg,winUser.getClassName(fg),mod))
+	return mod
 
 def getAppModuleFromWindow(windowHandle):
 	"""Finds the appModule that is for the given window handle. This window handle can be any window with in an application, not just the app main window.
@@ -117,10 +128,13 @@ def getAppModuleFromWindow(windowHandle):
 @rtype: appModule 
 """
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
+	globalVars.log.debug("appWindow %s, from window %s"%(appWindow,windowHandle))
 	if runningTable.has_key(appWindow):
 		mod=runningTable[appWindow]
+		globalVars.log.debug("found appModle %s"%mod)
 	else:
 		mod=None
+		globalVars.log.debug("no appModule")
 	return mod
 
 def update(windowHandle):
@@ -130,35 +144,40 @@ def update(windowHandle):
 """
 	global activeModule
 	for w in [x for x in runningTable if not winUser.isWindow(x)]:
-		debug.writeMessage("appModuleHandler.update: application %s closed, window %s"%(runningTable[w].appName,w))
 		if isinstance(activeModule,appModule) and w==activeModule.appWindow: 
 			if hasattr(activeModule,"event_appLooseFocus"):
+				globalVars.log.debug("calling appLoseFocus event on appModule %s"%activeModule)
 				activeModule.event_appLooseFocus()
 			activeModule=None
+		globalVars.log.info("application %s closed, window %s"%(runningTable[w].appName,w))
 		del runningTable[w]
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
+	globalVars.log.debug("Using window %s, got appWindow %s"%(windowHandle,appWindow))
 	if appWindow<=0 or not winUser.isWindowVisible(appWindow) or not winUser.isWindowEnabled(appWindow):
+		globalVars.log.debug("bad appWindow")
 		return
 	if not runningTable.has_key(appWindow):
+		globalVars.log.debug("new appWindow")
 		appName=getAppName(appWindow)
 		if not appName:
-			debug.writeMessage("appModuleHandler.update: could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
+			globalVars.log.warning("could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
 			return
-		debug.writeMessage("appModuleHandler.update: Application %s registered, window %s (%s)"%(appName,appWindow,winUser.getClassName(appWindow)))
 		mod=fetchModule(appName)
 		if mod: 
 			mod=mod(appName,appWindow)
 			if mod.__class__!=appModule:
-				debug.writeMessage("Loaded appModule %s, %s"%(mod.appName,mod)) 
+				globalVars.log.info("Loaded appModule %s, %s"%(mod.appName,mod)) 
 			loadKeyMap(appName,mod)
 		runningTable[appWindow]=mod
 	activeAppWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if isinstance(activeModule,appModule) and activeAppWindow!=activeModule.appWindow: 
+		globalVars.log.info("appModule %s lost focus"%activeModule)
 		if hasattr(activeModule,"event_appLooseFocus"):
 			activeModule.event_appLooseFocus()
 		activeModule=None
 	if not activeModule and runningTable.has_key(activeAppWindow):
 		activeModule=runningTable[activeAppWindow]
+		globalVars.log.info("appModule %s gained focus"%activeModule)
 		if hasattr(activeModule,"event_appGainFocus"):
 			activeModule.event_appGainFocus()
 
@@ -182,8 +201,8 @@ def loadKeyMap(appName,mod):
 				mod.bindKey(m.group('key'),m.group('script'))
 				bindCount+=1
 			except:
-				debug.writeException("appModuleHandler.loadKeyMap: error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
-	debug.writeMessage("appModuleHandler.loadKeyMap: added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
+				globalVars.log.error("error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
+	globalVars.log.info("added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
   	return True
 
 def fetchModule(appName):
@@ -198,8 +217,9 @@ def fetchModule(appName):
 		try:
 			mod=__import__(appName,globals(),locals(),[]).appModule
 		except:
-			debug.writeException("appModuleHandler.loadModule: Error in appModule %s"%appName)
+			globalVars.log.error("Error in appModule %s"%appName)
 			speech.speakMessage(_("Error in appModule %s")%appName,wait=True)
+			raise RuntimeError
 	if mod is None:
 		return appModule
 	return mod
@@ -213,7 +233,7 @@ def initialize():
 		default=defaultModClass('_default',winUser.getDesktopWindow())
 	if default:
 		if loadKeyMap('_default',default):
-			debug.writeMessage("appModuleHandler.initialize: loaded default module")
+			globalVars.log.info("loaded default module")
 		else:
 			speech.speakMessage(_("Could not load default module keyMap"),wait=True)
 			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
@@ -234,3 +254,5 @@ class appModule(baseObject.scriptableObject):
 		self.appName=appName
 		self.appWindow=appWindow
 
+	def __repr__(self):
+		return "AppModule (appName %s, appWindow %s) at address %x"%(self.appName,self.appWindow,id(self))

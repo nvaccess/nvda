@@ -3,7 +3,6 @@ import os
 import ctypes
 import locale
 import gettext
-import debug
 
 curLang="en"
 

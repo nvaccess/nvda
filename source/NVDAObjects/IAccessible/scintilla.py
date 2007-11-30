@@ -1,5 +1,4 @@
 import ctypes
-import debug
 import speech
 import textHandler
 import winKernel

@@ -10,7 +10,6 @@ import win32com.client
 import pythoncom
 import IAccessibleHandler
 import speech
-import debug
 from keyUtils import sendKey, key
 import config
 import textHandler

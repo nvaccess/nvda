@@ -13,7 +13,6 @@ import comtypes.automation
 import IAccessibleHandler
 import controlTypes
 import speech
-import debug
 from keyUtils import sendKey, key
 from . import IAccessible
 import appModuleHandler

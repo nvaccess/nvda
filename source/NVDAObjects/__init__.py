@@ -8,7 +8,6 @@
 from new import instancemethod
 import time
 import baseObject
-import debug
 import speech
 from keyUtils import key, sendKey, isKeyWaiting
 import globalVars

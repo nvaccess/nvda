@@ -9,7 +9,6 @@ import ctypes
 import winUser
 import queueHandler
 import api
-import debug
 import speech
 import NVDAObjects.JAB
 import NVDAObjects.IAccessible
@@ -73,7 +72,7 @@ def internal_mouseEvent(msg,x,y,injected):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
 		return True
 	except:
-		debug.writeException("mouseHandler.internal_mouseEvent")
+		globalVars.log.error("")
 
 def executeMouseMoveEvent(x,y):
 	oldMouseObject=api.getMouseObject()
@@ -111,7 +110,7 @@ def executeMouseMoveEvent(x,y):
 		mouseObject.event_mouseMove(x,y)
 		oldMouseObject=mouseObject
 	except:
-		debug.writeException("api.notifyMouseMoved")
+		globalVars.log.error("api.notifyMouseMoved")
 
 #Register internal mouse event
 

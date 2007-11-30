@@ -8,7 +8,6 @@ import time
 import os
 import comtypes.client
 import _winreg
-import debug
 import globalVars
 import silence
 import config

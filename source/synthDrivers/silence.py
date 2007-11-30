@@ -1,6 +1,5 @@
 import os
 import baseObject
-import debug
 
 #The 'silent' synth driver
 #Used both as a template for all other synth drivers

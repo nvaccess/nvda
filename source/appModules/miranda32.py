@@ -11,7 +11,6 @@ import winUser
 from NVDAObjects.IAccessible import IAccessible, IAccessibleStatesToNVDAStates, edit
 import appModuleHandler
 import speech
-import debug
 import controlTypes
 from keyUtils import sendKey, isKeyWaiting
 import api
@@ -100,13 +99,11 @@ class mirandaIMContactList(IAccessible):
 			winKernel.readProcessMemory(processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
 			text="%s %s"%(text,buf2.value)
 		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-#		debug.writeMessage("contact: %s from handle: %d"%(buf.value,hItem))
 		return text
 
 	def _get_role(self):
 		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		iType=winUser.sendMessage(self.windowHandle,CLM_GETITEMTYPE,hItem,0)
-#		debug.writeMessage("contact type: %d"%iType)
 		if iType==CLCIT_DIVIDER|iType==CLCIT_INVALID: #some clists treat invalid as divider
 			return controlTypes.ROLE_SEPARATOR
 		else:

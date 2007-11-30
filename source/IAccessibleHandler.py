@@ -148,7 +148,7 @@ import tones
 import ctypes
 import comtypes.client
 import comtypes.automation
-import debug
+import globalVars
 import JABHandler
 import eventHandler
 import winUser
@@ -561,7 +561,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
-		debug.writeException("winEventCallback")
+		globalVars.log.error("winEventCallback")
 
 def foreground_winEventCallback(window,objectID,childID):
 	#Ignore any events with invalid window handles
@@ -679,7 +679,7 @@ def initialize():
 		if handle:
 			objectEventHandles.append(handle)
 		else:
-			debug.writeError("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
+			globalVars.log.error("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
 
 def terminate():
 	for handle in objectEventHandles:

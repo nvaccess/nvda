@@ -15,7 +15,6 @@ import IAccessibleHandler
 import controlTypes
 import api
 import textHandler
-import debug
 import speech
 import sayAllHandler
 import virtualBuffers
@@ -526,7 +525,7 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(obj,NVDAObject): 
 			speech.speakMessage(_("no navigator object"))
 			return
-		debug.writeMessage("%s %s"%(obj.role,obj.windowHandle))
+		globalVars.log.info("%s %s"%(obj.role,obj.windowHandle))
 		speech.speakMessage("%s"%obj)
 		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
 		speech.speakMessage(_("Class: %s")%obj.windowClassName)
@@ -583,7 +582,7 @@ class appModule(appModuleHandler.appModule):
 		NO_SYSTEM_BATTERY = 0X80
 		sps = winKernel.SYSTEM_POWER_STATUS()
 		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
-			debug.writeError("error accessing system power status")
+			globalVars.log.error("error accessing system power status")
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
 			speech.speakMessage(_("no system battery"))

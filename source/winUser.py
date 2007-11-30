@@ -1,4 +1,3 @@
-import debug
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
@@ -9,7 +8,7 @@ import debug
 
 from ctypes import *
 from ctypes.wintypes import *
-
+import globalVars
 
 #dll handles
 user32=windll.user32
@@ -301,9 +300,9 @@ def sendMessage(hwnd,msg,param1,param2):
 
 def sendMessage2(hwnd,msg,param1,param2):
 	res=c_int()
-	debug.writeMessage("winUser.sendMessage: %s, %s, %s, %s"%(hwnd,msg,param1,param2))
+	globalVars.log.debug("%s, %s, %s, %s"%(hwnd,msg,param1,param2))
 	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,byref(res))
-	debug.writeMessage("winUser.sendMessage: done (%s"%ret)
+	globalVars.log.debug("done (%s"%ret)
 	if ret:
 		return res.value
 	else:

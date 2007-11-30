@@ -9,7 +9,6 @@ import winsound
 import os
 import wx
 import globalVars
-import debug
 import config
 import versionInfo
 import speech
@@ -244,7 +243,7 @@ class MainFrame(wx.Frame):
 				try:
 					config.save()
 				except:
-					debug.writeMessage("Could not save configuration - probably read only file system")
+					globalVars.log.warning("Could not save configuration - probably read only file system")
 			self.Destroy()
 
 	def onInterfaceSettingsCommand(self,evt):
@@ -295,7 +294,7 @@ class MainFrame(wx.Frame):
 			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:
-			debug.writeException("gui.mainFrame.onAbout")
+			globalVars.log.error("gui.mainFrame.onAbout")
 
 def initialize(app):
 	global mainFrame

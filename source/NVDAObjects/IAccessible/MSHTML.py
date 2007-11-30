@@ -10,7 +10,6 @@ import comtypes.client
 import comtypes.automation
 import pythoncom
 import win32com.client
-import debug
 import winUser
 import IAccessibleHandler
 from keyUtils import key, sendKey

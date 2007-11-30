@@ -13,7 +13,6 @@ import win32clipboard
 import oleTypes
 import queueHandler
 import speech
-import debug
 import winKernel
 from IAccessibleHandler import pointer_IAccessible
 import api
