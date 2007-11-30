@@ -154,7 +154,7 @@ class WinConsole(IAccessible):
 				#Each round of the while loop we wait 10 milliseconds
 				time.sleep(0.01)
 		except:
-			globalVars.log.error("console monitorThread")
+			globalVars.log.error("console monitorThread", exc_info=True)
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)

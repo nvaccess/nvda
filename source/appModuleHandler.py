@@ -131,7 +131,7 @@ def getAppModuleFromWindow(windowHandle):
 	globalVars.log.debug("appWindow %s, from window %s"%(appWindow,windowHandle))
 	if runningTable.has_key(appWindow):
 		mod=runningTable[appWindow]
-		globalVars.log.debug("found appModle %s"%mod)
+		globalVars.log.debug("found appModule %s"%mod)
 	else:
 		mod=None
 		globalVars.log.debug("no appModule")

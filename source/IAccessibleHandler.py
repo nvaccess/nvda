@@ -561,7 +561,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
-		globalVars.log.error("winEventCallback")
+		globalVars.log.error("winEventCallback", exc_info=True)
 
 def foreground_winEventCallback(window,objectID,childID):
 	#Ignore any events with invalid window handles

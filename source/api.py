@@ -79,7 +79,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		try:
 			globalVars.focusObject.event_looseFocus()
 		except:
-			globalVars.log.error("event_looseFocus in focusObject")
+			globalVars.log.error("event_looseFocus in focusObject", exc_info=True)
 	oldAncestors=globalVars.focusAncestors
 	if not ancestors:
 		ancestors=[]

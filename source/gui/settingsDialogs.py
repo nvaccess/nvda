@@ -73,7 +73,7 @@ class interfaceSettingsDialog(wx.Dialog):
 			try:
 				languageHandler.setLanguage(newLanguage)
 			except:
-				globalVars.log.error("languageHandler.setLanguage")
+				globalVars.log.error("languageHandler.setLanguage", exc_info=True)
 				wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING).ShowModal()
 				return
 		config.conf["general"]["language"]=newLanguage

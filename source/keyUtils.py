@@ -6,6 +6,7 @@
 
 import time
 import globalVars
+import logging
 import winUser
 import queueHandler
 import wx
@@ -50,7 +51,7 @@ def sendKey(keyPress):
 @param keyPress: the key to send
 @type keyPress: NVDA internal key
 """
-	globalVars.log.info("%s"%keyName(keyPress))
+	if globalVars.log.getEffectiveLevel() <= logging.INFO: globalVars.log.info("%s"%keyName(keyPress))
 	keyList=[]
 	#Process modifier keys
 	if keyPress[0] is not None:

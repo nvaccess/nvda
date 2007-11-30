@@ -125,7 +125,7 @@ def callback(wav,numsamples,event):
 			player.feed(string_at(wav, numsamples * sizeof(c_short)))
 		return 0
 	except:
-		globalVars.log.error("callback")
+		globalVars.log.error("callback", exc_info=True)
 
 class BgThread(threading.Thread):
 	def __init__(self):
@@ -142,7 +142,7 @@ class BgThread(threading.Thread):
 				func(*args, **kwargs)
 				bgQueue.task_done()
 		except:
-			globalVars.log.error("bgThread.run")
+			globalVars.log.error("bgThread.run", exc_info=True)
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue

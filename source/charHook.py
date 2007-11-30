@@ -25,7 +25,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif eventID==EVENT_INPUTLANGCHANGE:
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
-		globalvars.log.error("charHook.winEventCallback")
+		globalVars.log.error("charHook.winEventCallback", exc_info=True)
 
 def initialize():
 	global charHookLib

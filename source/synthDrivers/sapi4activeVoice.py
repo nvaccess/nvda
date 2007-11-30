@@ -54,7 +54,7 @@ class SynthDriver(silence.SynthDriver):
 			self._lastIndex=None
 			return True
 		except:
-			globalVars.log.error("initialize")
+			globalVars.log.error("initialize", exc_info=True)
 			return False
 
 	def _get_voiceCount(self):

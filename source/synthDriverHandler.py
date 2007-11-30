@@ -83,7 +83,7 @@ def setSynth(name):
 		else:  globalVars.settingsRing = SynthSettingsRing()
 		return True
 	except:
-		globalVars.log.error("setSynth")
+		globalVars.log.error("setSynth", exc_info=True)
 		if not _curSynth and name not in ['espeak','silence']:
 			setSynth('espeak')
 		elif not _curSynth and name=='espeak':

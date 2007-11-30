@@ -72,7 +72,7 @@ def internal_mouseEvent(msg,x,y,injected):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
 		return True
 	except:
-		globalVars.log.error("")
+		globalVars.log.error("", exc_info=True)
 
 def executeMouseMoveEvent(x,y):
 	oldMouseObject=api.getMouseObject()
@@ -110,7 +110,7 @@ def executeMouseMoveEvent(x,y):
 		mouseObject.event_mouseMove(x,y)
 		oldMouseObject=mouseObject
 	except:
-		globalVars.log.error("api.notifyMouseMoved")
+		globalVars.log.error("api.notifyMouseMoved", exc_error=True)
 
 #Register internal mouse event
 

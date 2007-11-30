@@ -243,7 +243,7 @@ class MainFrame(wx.Frame):
 				try:
 					config.save()
 				except:
-					globalVars.log.warning("Could not save configuration - probably read only file system")
+					globalVars.log.warning("Could not save configuration - probably read only file system", exc_info=True)
 			self.Destroy()
 
 	def onInterfaceSettingsCommand(self,evt):
@@ -294,7 +294,7 @@ class MainFrame(wx.Frame):
 			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:
-			globalVars.log.error("gui.mainFrame.onAbout")
+			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
 
 def initialize(app):
 	global mainFrame

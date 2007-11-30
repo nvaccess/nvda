@@ -15,6 +15,7 @@ import speech
 from keyUtils import key, keyName, sendKey
 import scriptHandler
 import globalVars
+import logging
 import queueHandler
 import config
 import _winreg
@@ -131,7 +132,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if extended==1:
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
-		globalVars.log.info("key press: %s"%keyName(keyPress))
+		if globalVars.log.getEffectiveLevel() <= logging.INFO: globalVars.log.info("key press: %s"%keyName(keyPress))
 		if modifiers is None and lastKeyCount>=1 and ((time.time()-lastPressedKeyTime)>0.5):
 			lastPressedKey = None
 			lastKeyCount = 0
@@ -170,7 +171,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			speakToggleKey(vkCode)
 			return True
 	except:
-		globalVars.log.error("")
+		globalVars.log.error("", exc_info=TRUE)
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"),wait=True)
 		return True
 
@@ -204,7 +205,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		elif vkCode in [winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT,winUser.VK_MENU,winUser.VK_LMENU,winUser.VK_RMENU,winUser.VK_LWIN,winUser.VK_RWIN]:
 			return True
 	except:
-		globalVars.log.error("")
+		globalVars.log.error("", exc=True)
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
 	return True
 
