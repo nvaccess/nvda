@@ -67,15 +67,15 @@ MAXSTATUSMSGLEN=256
 CLM_GETSTATUSMSG=CLM_FIRST+105
 
 #other constants
-IDC_LOG=1001
+ansilogs=[1001,1006]
 
 class appModule(appModuleHandler.appModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":
 			obj.__class__=mirandaIMContactList
-		elif (IDC_LOG==winUser.getControlID(obj.windowHandle))&(obj.windowClassName=="RichEdit20A"):
-			obj.__class__=edit.RichEdit
+		elif (obj._get_windowControlID() in ansilogs)&(obj.windowClassName=="RichEdit20A"):
+			obj._isWindowUnicode=False
 		elif (obj.windowClassName=="MButtonClass")|(obj.windowClassName=="TSButtonClass"):
 			obj.__class__=mirandaIMButton
 		elif obj.windowClassName=="Hyperlink":
