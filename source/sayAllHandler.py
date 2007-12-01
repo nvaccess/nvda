@@ -86,14 +86,14 @@ def readTextHelper_generator(info,cursor):
 			if keepReading:
 				bookmark=reader.bookmark
 				index=hash(bookmark)
-				reader.expand(textHandler.UNIT_READINGCHUNK)
+				delta=reader.moveByUnit(textHandler.UNIT_READINGCHUNK,1,start=False,end=True)
+				if delta<=0:
+					keepReading=False
+					continue
 				speech.speakFormattedText(reader,includeBlankText=False,index=index)
 				sendCount+=1
 				cursorIndexMap[index]=(bookmark,sendCount)
-				reader.collapse()
-				delta=reader.moveByUnit(textHandler.UNIT_READINGCHUNK,1)
-				if delta<=0:
-					keepReading=False
+				reader.collapse(end=True)
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
 			oldSpokenIndex=spokenIndex
