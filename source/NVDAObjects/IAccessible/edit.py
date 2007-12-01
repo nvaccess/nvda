@@ -12,6 +12,7 @@ import pythoncom
 import win32clipboard
 import oleTypes
 import queueHandler
+import globalVars
 import speech
 import winKernel
 from IAccessibleHandler import pointer_IAccessible
@@ -367,18 +368,12 @@ class Edit(IAccessible):
 	editValueUnit=textHandler.UNIT_LINE
 
 	def __init__(self,*args,**kwargs):
-		if not hasattr(self,'TextInfo'):
-			self.TextInfo=EditTextInfo
-			replacedTextInfo=True
-		else:
-			replacedTextInfo=False
+		self.TextInfo=EditTextInfo
 		super(Edit,self).__init__(*args,**kwargs)
 		self._lastMouseTextOffsets=None
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		if replacedTextInfo:
-			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
-		self._editLastSelectionPos=self.reviewPosition.copy()
+		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_CARET)
 
 
 	def __del__(self):
@@ -421,6 +416,8 @@ class Edit(IAccessible):
 		oldInfo=self._editLastSelectionPos
 		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
 		self._editLastSelectionPos=newInfo.copy()
+		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
+			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)

@@ -313,8 +313,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type isProtected: boolean 
 @ivar text_caretPosition: the caret position in this object's text as an offset from 0
 @type text_caretPosition: int
-@ivar text_reviewPosition: the review cursor's position in the object's text as an offset from 0
-@type text_reviewPosition: int
 @ivar text_characterCount: the number of characters in this object's text
 @type text_characterCount: int
 @ivar _text_lastReportedPresentation: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
@@ -328,9 +326,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._oldDescription=None
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
-		if not hasattr(self,'TextInfo'):
-			self.TextInfo=NVDAObjectTextInfo
-			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+		self.TextInfo=NVDAObjectTextInfo
 
 	def _isEqual(self,other):
 		return True
@@ -610,159 +606,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return self.TextInfo(self,position)
 	def setCaret(self,info):
 		pass
-
-
-	def script_review_top(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_FIRST)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
-
-	def script_review_previousLine(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse()
-		res=info.moveByUnit(textHandler.UNIT_LINE,-1)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_LINE)
-		if res==0:
-			speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
-
-	def script_review_currentLine(self,keyPress,nextScript):
-		from keyboardHandler import lastKeyCount
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		if lastKeyCount == 1:
-			speech.speakFormattedText(info)
-		else:
-			speech.speakSpelling(info._get_text())
-
-	def script_review_nextLine(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse()
-		res=info.moveByUnit(textHandler.UNIT_LINE,1)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_LINE)
-		if res==0:
-			speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
-
-	def script_review_bottom(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_LAST)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
-
-	def script_review_previousWord(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_WORD)
-		info.collapse()
-		res=info.moveByUnit(textHandler.UNIT_WORD,-1)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_WORD)
-		if res==0:
-			speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
-
-	def script_review_currentWord(self,keyPress,nextScript):
-		from keyboardHandler import lastKeyCount
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_WORD)
-		if lastKeyCount == 1:
-			speech.speakFormattedText(info)
-		else:
-			speech.speakSpelling(info._get_text())
-
-	def script_review_nextWord(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_WORD)
-		info.collapse()
-		res=info.moveByUnit(textHandler.UNIT_WORD,1)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_WORD)
-		if res==0:
-			speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
-
-	def script_review_startOfLine(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse()
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakMessage(_("left"))
-		speech.speakFormattedText(info,handleSymbols=True)
-
-	def script_review_previousCharacter(self,keyPress,nextScript):
-		lineInfo=self.reviewPosition.copy()
-		lineInfo.expand(textHandler.UNIT_LINE)
-		charInfo=self.reviewPosition.copy()
-		charInfo.expand(textHandler.UNIT_CHARACTER)
-		charInfo.collapse()
-		res=charInfo.moveByUnit(textHandler.UNIT_CHARACTER,-1)
-		if res==0 or charInfo.compareStart(lineInfo)<0:
-			speech.speakMessage(_("left"))
-			reviewInfo=self.reviewPosition.copy()
-			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSpelling(reviewInfo.text)
-		else:
-			self.reviewPosition=charInfo.copy()
-			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(charInfo,handleSymbols=True)
-
-	def script_review_currentCharacter(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_CHARACTER)
-		from keyboardHandler import lastKeyCount
-		if lastKeyCount == 1:
-			speech.speakFormattedText(info,handleSymbols=True)
-		else:
-			c = ord(info._get_text())
-			speech.speakMessage("%d," % c)
-			speech.speakSpelling(hex(c))
-
-	def script_review_nextCharacter(self,keyPress,nextScript):
-		lineInfo=self.reviewPosition.copy()
-		lineInfo.expand(textHandler.UNIT_LINE)
-		charInfo=self.reviewPosition.copy()
-		charInfo.expand(textHandler.UNIT_CHARACTER)
-		charInfo.collapse()
-		res=charInfo.moveByUnit(textHandler.UNIT_CHARACTER,1)
-		if res==0 or charInfo.compareEnd(lineInfo)>=0:
-			speech.speakMessage(_("right"))
-			reviewInfo=self.reviewPosition.copy()
-			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSpelling(reviewInfo.text)
-		else:
-			self.reviewPosition=charInfo.copy()
-			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(charInfo,handleSymbols=True)
-
-	def script_review_endOfLine(self,keyPress,nextScript):
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse(end=True)
-		info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakMessage(_("right"))
-		speech.speakFormattedText(info,handleSymbols=True)
-
-	def script_review_moveToCaret(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		self.reviewPosition=info.copy()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
-
-	def script_review_moveCaretHere(self,keyPress,nextScript):
-		self.reviewPosition.updateCaret()
-		info=self.reviewPosition.copy()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		elapsed = 0

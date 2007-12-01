@@ -37,6 +37,7 @@ mouseObject=None
 mouseOldX=None
 mouseOldY=None
 navigatorObject=None
+reviewPosition=None
 navigatorTracksFocus=True
 keyboardHelp=False
 virtualBufferPassThrough=False

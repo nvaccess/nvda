@@ -3,6 +3,7 @@ import speech
 import textHandler
 import winKernel
 import winUser
+import globalVars
 import controlTypes
 from . import IAccessible 
 from .. import NVDAObjectTextInfo
@@ -126,15 +127,9 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 class Scintilla(IAccessible):
 
 	def __init__(self,*args,**kwargs):
-		if not hasattr(self,'TextInfo'):
-			self.TextInfo=ScintillaTextInfo
-			replacedTextInfo=True
-		else:
-			replacedTextInfo=False
+		self.TextInfo=ScintillaTextInfo
 		self._lastMouseTextOffsets=None
 		super(Scintilla,self).__init__(*args,**kwargs)
-		if replacedTextInfo:
-			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):

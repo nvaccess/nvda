@@ -11,6 +11,7 @@ import comtypes.automation
 import pythoncom
 import win32com.client
 import winUser
+import globalVars
 import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
@@ -187,7 +188,6 @@ class MSHTML(IAccessible):
 			self._textRangeLineNumBias=ord(biasMark[8])
 			self._textRangeOffsetBias=ord(biasMark[2])
 			self.TextInfo=MSHTMLTextInfo
-			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 			self.role=controlTypes.ROLE_EDITABLETEXT
 			if not api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -207,6 +207,9 @@ class MSHTML(IAccessible):
 		if hasattr(self,'domElement'):
 			self.TextInfo=NVDAObjects.NVDAObjectTextInfo
 
+	def event_caret(self):
+		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
+			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 [MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

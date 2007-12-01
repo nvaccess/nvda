@@ -8,6 +8,7 @@
 
 import pythoncom
 import logging
+import textHandler
 import globalVars
 import speech
 import NVDAObjects
@@ -150,6 +151,7 @@ def setNavigatorObject(obj):
 	if globalVars.log.getEffectiveLevel()<=logging.INFO:
 		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
+	globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.

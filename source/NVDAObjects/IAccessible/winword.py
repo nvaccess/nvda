@@ -9,6 +9,7 @@ import comtypes.automation
 import win32com.client
 import pythoncom
 import IAccessibleHandler
+import glboalVars
 import speech
 from keyUtils import sendKey, key
 import config
@@ -253,15 +254,9 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 class WordDocument(IAccessible):
 
 	def __init__(self,*args,**kwargs):
-		if not hasattr(self,'TextInfo'):
-			self.TextInfo=WordDocumentTextInfo
-			replacedTextInfo=True
-		else:
-			replacedTextInfo=False
+		self.TextInfo=WordDocumentTextInfo
 		super(WordDocument,self).__init__(*args,**kwargs)
 		self.dom=self.getDocumentObjectModel()
-		if replacedTextInfo:
-			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
