@@ -18,8 +18,6 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
-@var menuMode: menu mode switch
-@type menuMode: boolean
 @var keyboardHelp: if true, when pressing a key, the name of the script (if any) bound to that key will be reported, rather than the actual script being executed.
 @type keyboardHelp: boolean
 @var virtualBufferPassThrough: If true, scripts in the current virtualBuffer will be ignored and key presses will go through to the focus object.
@@ -40,7 +38,6 @@ mouseOldX=None
 mouseOldY=None
 navigatorObject=None
 navigatorTracksFocus=True
-menuMode=False
 keyboardHelp=False
 virtualBufferPassThrough=False
 keyCounter=0

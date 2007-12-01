@@ -530,16 +530,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_gainFocus(self):
 		if self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
-			api.setMenuMode(True)
 			parent=self.parent
 			if parent and parent.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
 				speech.cancelSpeech()
-		else:
-			api.setMenuMode(False)
 		Window.event_gainFocus(self)
 
 	def event_menuStart(self):
-		api.setMenuMode(True)
 		focusObject=api.getFocusObject()
 		parentObject=focusObject.parent if focusObject else None
 		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP]:

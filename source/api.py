@@ -162,20 +162,6 @@ def isTypingProtected():
 	else:
 		return False
 
-def setMenuMode(switch):
-	"""Turns on or off menu mode according to the given parameter. Menu mode is used for some objects to work out whether or not menu items should be spoken at a certain time.
-@param switch: True for on, False for off.
-@type switch: boolean
-"""
-	globalVars.menuMode=switch
-
-def getMenuMode():
-	"""Gets the current state of the menu mode. Menu mode is used for some objects to work out whether or not menu items should be spoken at a certain time.
-@returns: True for on, False for off.
-@rtype: boolean
-"""
-	return globalVars.menuMode
-
 def toggleVirtualBufferPassThrough():
 	"""Toggles virtualBufferPassThroughMode on or off. This mode is so that virtualBuffers can either capture, or ignore, key presses.
 This function also speaks the state of the mode as it changes.
