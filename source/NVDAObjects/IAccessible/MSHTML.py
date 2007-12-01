@@ -207,10 +207,6 @@ class MSHTML(IAccessible):
 		if hasattr(self,'domElement'):
 			self.TextInfo=NVDAObjects.NVDAObjectTextInfo
 
-	def event_caret(self):
-		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
-			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
-
 [MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),

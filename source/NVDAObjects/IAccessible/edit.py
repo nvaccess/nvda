@@ -25,6 +25,8 @@ import controlTypes
 from . import IAccessible
 from .. import NVDAObjectTextInfo
 
+ignoreCaretEvents=False
+
 #Edit control window messages
 EM_GETSEL=176
 EM_SETSEL=177
@@ -335,8 +337,12 @@ class EditTextInfo(NVDAObjectTextInfo):
 			return super(EditTextInfo,self)._getWordOffsets(offset)
 
 	def _getLineNumFromOffset(self,offset):
+		global ignoreCaretEvents
 		if self.obj.editAPIVersion>=1:
-			return winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
+			ignoreCaretEvents=True
+			res=winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
+			ignoreCaretEvents=False
+			return res
 		else:
 			return winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
 
@@ -416,8 +422,6 @@ class Edit(IAccessible):
 		oldInfo=self._editLastSelectionPos
 		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
 		self._editLastSelectionPos=newInfo.copy()
-		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
-			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
