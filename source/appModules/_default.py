@@ -533,8 +533,7 @@ class appModule(appModuleHandler.appModule):
 	script_showGui.__doc__=_("Shows the NVDA interface window")
 
 	def script_review_sayAll(self,keyPress,nextScript):
-		o=api.getNavigatorObject()
-		info=o.reviewPosition.copy()
+		info=globalVars.reviewPosition.copy()
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from review cursor  up to end of current text, moving the review cursor as it goes")
 
