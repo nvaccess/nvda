@@ -632,7 +632,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
+			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
 			speech.speakFormattedText(info)
@@ -646,7 +646,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
+			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakFormattedText(info,handleSymbols=True)
@@ -660,7 +660,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
+			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
 			speech.speakFormattedText(info)
@@ -674,7 +674,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
+			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
 			speech.speakFormattedText(info)
@@ -692,9 +692,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		if self._hasCaretMoved(oldBookmark):
 			speech.speakSpelling(delChar)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
-				globalVars.reviewPosition=info.copy()
-				focus.reviewPosition=focus.makeTextInfo(textHandler.POSITION_CARET)
+			focus=api.getFocusObject()
+			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			if globalVars.caretMovesReviewCursor:
+				globalVars.reviewPosition=info
 
 	def script_delete(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -705,7 +706,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if not isKeyWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
-			if globalVars.caretMovesReviewCursor and focus==globalVars.reviewPosition.obj:
+			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakFormattedText(info,handleSymbols=True)
