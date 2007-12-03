@@ -29,13 +29,13 @@ confspec = StringIO("""# NVDA Configuration File
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
-	speakPunctuation = boolean(default=True)
+	speakPunctuation = boolean(default=False)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 outputDevice = integer(default=-1,min=-1)
 
 	[[__many__]]
 		variant = integer(default=0,min=0)
-		rate = integer(default=60,min=0,max=100)
+		rate = integer(default=50,min=0,max=100)
 		pitch = integer(default=50,min=0,max=100)
 		inflection = integer(default=50,min=0,max=100)
 		capPitchChange = integer(default=20,min=-100,max=100)

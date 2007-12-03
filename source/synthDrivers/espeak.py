@@ -34,7 +34,7 @@ class SynthDriver(silence.SynthDriver):
 		_espeak.setVoiceByLanguage(lang)
 		self._voiceList=_espeak.getVoiceList()
 		self._variant=0
-		_espeak.setParameter(_espeak.espeakRATE,230,0)
+		_espeak.setParameter(_espeak.espeakRATE,197,0)
 
 	def speakText(self,text,wait=False,index=None):
 		_espeak.speak(text, index=index, wait=wait)
