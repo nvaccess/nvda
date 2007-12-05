@@ -249,8 +249,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		self._doneInit=True
 
 	def _isEqual(self,other):
-		if not super(IAccessible,self)._isEqual(other):
-			return False
 		if not isinstance(other,IAccessible):
 			return False
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
@@ -261,6 +259,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		otherIden=other.IAccessibleIdentityString
 		if selfIden and otherIden and selfIden==otherIden:
 			return True
+		if not super(IAccessible,self)._isEqual(other):
+			return False
  		if self.IAccessibleRole!=other.IAccessibleRole:
 			return False
 		if self.name!=other.name:
