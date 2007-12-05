@@ -311,6 +311,8 @@ def event_enterJavaWindow(hwnd):
 	eventHandler.manageEvent("foreground",obj)
 
 def isJavaWindow(hwnd):
+	if not isRunning:
+		return False
 	return bridgeDll.isJavaWindow(hwnd)
 
 def initialize():
