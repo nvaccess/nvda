@@ -144,9 +144,9 @@ class MainFrame(wx.Frame):
 		menuBar.Append(menu_NVDA,_("&NVDA"))
 		self.sysTrayMenu.AppendMenu(-1,_("&NVDA"),menu_NVDA)
 		menu_preferences=wx.Menu()
-		id_interfaceSettingsCommand=wx.NewId()
-		menu_preferences.Append(id_interfaceSettingsCommand,_("&User interface...\tCtrl+Shift+U"),_("Change user interface settings"))
-		wx.EVT_MENU(self,id_interfaceSettingsCommand,self.onInterfaceSettingsCommand)
+		id_generalSettingsCommand=wx.NewId()
+		menu_preferences.Append(id_generalSettingsCommand,_("&General settings...\tCtrl+Shift+G"),_("General settings"))
+		wx.EVT_MENU(self,id_generalSettingsCommand,self.onGeneralSettingsCommand)
 		id_SynthesizerCommand=wx.NewId()
 		menu_preferences.Append(id_SynthesizerCommand,_("&Synthesizer...\tCtrl+Shift+S"),_(" the synthesizer to use"))
 		wx.EVT_MENU(self,id_SynthesizerCommand,self.onSynthesizerCommand)
@@ -246,8 +246,8 @@ class MainFrame(wx.Frame):
 					globalVars.log.warning("Could not save configuration - probably read only file system", exc_info=True)
 			self.Destroy()
 
-	def onInterfaceSettingsCommand(self,evt):
-		d=interfaceSettingsDialog(self,-1,_("User interface settings"))
+	def onGeneralSettingsCommand(self,evt):
+		d=generalSettingsDialog(self,-1,_("General settings"))
 		d.Show(True)
 
 	def onSynthesizerCommand(self,evt):

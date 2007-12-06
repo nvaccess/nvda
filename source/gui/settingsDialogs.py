@@ -30,7 +30,7 @@ class WAVEOUTCAPS(Structure):
 		('dwSupport',DWORD),
 	]
 
-class interfaceSettingsDialog(wx.Dialog):
+class generalSettingsDialog(wx.Dialog):
 
  	def __init__(self,parent,ID,title):
 		wx.Dialog.__init__(self,parent,ID,title)
