@@ -426,7 +426,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				firstChild=child
 		if firstChild and firstChild[0].accRole(firstChild[1])>0:
 			obj=IAccessible(IAccessibleObject=firstChild[0],IAccessibleChildID=firstChild[1])
-			if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
+			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
 				return obj
 
 	def _get_lastChild(self):
@@ -439,7 +439,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				lastChild=child
 		if lastChild and lastChild[0].accRole(lastChild[1])>0:
 			obj=IAccessible(IAccessibleObject=lastChild[0],IAccessibleChildID=lastChild[1])
-			if winUser.isDescendantWindow(self.windowHandle,obj.windowHandle) or self.windowHandle==winUser.getDesktopWindow():
+			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
 				return obj
 
 	def _get_children(self):
