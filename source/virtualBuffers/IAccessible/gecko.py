@@ -6,7 +6,7 @@
 
 import time
 import ctypes
-import debug
+import globalVars
 import core
 import tones
 import winUser
@@ -97,7 +97,7 @@ class Gecko(virtualBuffer):
 			return nextHandler()
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
-		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
+		globalVars.log.debug("virtualBuffers.gecko.event_IAccessible_reorder: ID %s"%ID)
 		if ID not in self._IDs:
 			return nextHandler()
 		parentID=self._IDs[ID]['parent']
@@ -107,7 +107,7 @@ class Gecko(virtualBuffer):
 			childNum=zOrder[-1]
 		else:
 			childNum=0
-		debug.writeMessage("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
+		globalVars.log.debug("virtualBuffers.gecko.event_IAccessible_reorder: range %s"%str(r))
 		self.removeID(ID)
 		if parentID is not None:
 			self._IDs[parentID]['children'].insert(childNum,ID)
@@ -156,9 +156,9 @@ class Gecko(virtualBuffer):
 				api.toggleVirtualBufferPassThrough()
 			speech.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
 		self.resetBuffer()
-		debug.writeMessage("virtualBuffers.gecko.loadDocument: load start") 
+		globalVars.log.debug("virtualBuffers.gecko.loadDocument: load start") 
 		self.fillBuffer(self.NVDAObject)
-		debug.writeMessage("virtualBuffers.gecko.loadDocument: load end")
+		globalVars.log.debug("virtualBuffers.gecko.loadDocument: load end")
 		lastLoadTime=time.time()
 		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()

@@ -39,7 +39,6 @@ def resetConfiguration(reportDone=False):
 	import config
 	import speech
 	import languageHandler
-	import debug
 	globalVars.log.debug("terminating speech")
 	speech.terminate()
 	globalVars.log.debug("Reloading config")

@@ -94,8 +94,6 @@ sys.stderr=stderrFile
 sys.stdout=stderrFile
 
 
-import debug
-debug.start("debug.log")
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
 	logLevel=logging.WARN

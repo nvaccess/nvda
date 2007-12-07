@@ -10,7 +10,7 @@ import comtypes.client
 import comtypes.automation
 import core
 import IAccessibleHandler
-import debug
+import globalVars
 import winUser
 import api
 import speech
@@ -51,7 +51,7 @@ class MSHTML(virtualBuffer):
 				if vObj.text_reviewPosition>=textLen:
 					vObj.text_reviewPosition=textLen-1
 			except:
-				debug.writeException("onchange")
+				globalVars.log.error("onchange",exc_info=True)
 
 		def onreadystatechange(self,arg,event):
 			if self.virtualBufferObject.isDocumentComplete():
@@ -164,7 +164,7 @@ class MSHTML(virtualBuffer):
 		return documentComplete
 
 	def fillBuffer(self,domNode,parentID=None,position=None):
-		debug.writeMessage("MSHTML fillBuffer: %s"%domNode.nodeName)
+		globalVars.log.debug("MSHTML fillBuffer: %s"%domNode.nodeName)
 		#We don't want comments in the buffer
 		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
 			return position

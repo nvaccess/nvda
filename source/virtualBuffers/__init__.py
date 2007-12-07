@@ -9,7 +9,6 @@ from textwrap import TextWrapper
 from keyUtils import key
 import speech
 import globalVars
-import debug
 import config
 import textBuffer
 import gui.scriptUI
@@ -64,9 +63,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		if not IDs.has_key(ID):
 			return None
 		children=filter(lambda x: x is not None and IDs.has_key(x),IDs[ID]['children'])
-		#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, children %s"%(ID,children))
 		if len(children)==0:
-			#debug.writeMessage("virtualBuffers.baseType.getFullRangeFromID: ID %s, range %s"%(ID,IDs[ID]['range']))
 			return IDs[ID]['range']
 		else:
 			return [IDs[ID]['range'][0],max([self.getFullRangeFromID(x)[1] for x in children]+[IDs[ID]['range'][1]])]
@@ -301,7 +298,6 @@ class virtualBuffer(textBuffer.textBufferObject):
 		for ID in IDs:
 			info=self._IDs[ID]
 			speech.speakMessage(info["typeString"])
-			debug.writeMessage("ID typeString: %s"%info["typeString"])
 			if callable(info["stateTextFunc"]):
 				speech.speakMessage(info["stateTextFunc"](info["node"]))
 			if callable(info["descriptionFunc"]):
