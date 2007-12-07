@@ -6,6 +6,7 @@
 
 import os
 import wx
+import logging
 from synthDriverHandler import *
 import config
 import languageHandler
@@ -59,6 +60,19 @@ class generalSettingsDialog(wx.Dialog):
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
+		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
+		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level"))
+		logLevelSizer.Add(logLevelLabel)
+		logLevelListID=wx.NewId()
+		self.logLevelNames=[logging._levelNames[x] for x in sorted([x for x in logging._levelNames.keys() if isinstance(x,int) and x>0],reverse=True)]
+		self.logLevelList=wx.Choice(self,languageListID,name=_("Log level"),choices=self.logLevelNames)
+		try:
+			index=self.logLevelNames.index(logging._levelNames[globalVars.log.getEffectiveLevel()])
+			self.logLevelList.SetSelection(index)
+		except:
+			globalVars.log.warn("Could not set log level list to current log level",exc_info=True) 
+		logLevelSizer.Add(self.logLevelList)
+		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
@@ -80,6 +94,9 @@ class generalSettingsDialog(wx.Dialog):
 		config.conf["general"]["hideInterfaceOnStartup"]=self.hideInterfaceCheckBox.IsChecked()
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
+		logLevelName=self.logLevelNames[self.logLevelList.GetSelection()]
+		globalVars.log.setLevel(logging._levelNames[logLevelName])
+		config.conf["general"]["loggingLevel"]=logLevelName
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
