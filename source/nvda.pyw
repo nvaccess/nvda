@@ -68,7 +68,7 @@ except:
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
-parser.add_option('-l','--log-level',type="int",dest='logLevel',default=logging.WARN,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50)") 
+parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_option('-c','--config-file',dest='configFileName',default="./nvda.ini",help="The file where all settings are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
@@ -96,7 +96,10 @@ sys.stdout=stderrFile
 
 import debug
 debug.start("debug.log")
-log=logObj.Logger("NVDA",globalVars.appArgs.logLevel)
+logLevel=globalVars.appArgs.logLevel
+if logLevel<=0:
+	logLevel=logging.WARN
+log=logObj.Logger("NVDA",logLevel)
 logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w")
 logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
 logHandler.setFormatter(logFormatter)

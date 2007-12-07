@@ -24,6 +24,8 @@ confspec = StringIO("""# NVDA Configuration File
 	hideInterfaceOnStartup = boolean(default=False)
 	saveConfigurationOnExit = boolean(default=False)
 	askToExit = boolean(default=true)
+	#log levels are DEBUG, INFO, WARN, ERROR, CRITICAL
+	loggingLevel = string(default="WARN")
 
 # Speech settings
 [speech]

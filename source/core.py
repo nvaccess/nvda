@@ -15,6 +15,7 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 
 import wx
 import time
+import logging
 import globalVars
 import winUser
 
@@ -43,6 +44,13 @@ def resetConfiguration(reportDone=False):
 	speech.terminate()
 	globalVars.log.debug("Reloading config")
 	config.load()
+	#Logging
+	levelName=config.conf["general"]["loggingLevel"].upper()
+	try:
+		logLevel=logging._levelNames[levelName]
+		globalVars.log.setLevel(logLevel)
+	except:
+		globalVars.log.warning("could not set logging to %s"%levelName,exc_info=True)
 	#Language
 	lang = config.conf["general"]["language"]
 	globalVars.log.debug("setting language to %s"%lang)
@@ -77,6 +85,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			globalVars.log.debug("save config successfull")
 		except:
 			pass
+		if globalVars.appArgs.logLevel==0:
+			levelName=config.conf["general"]["loggingLevel"].upper()
+			try:
+				logLevel=logging._levelNames[levelName]
+				globalVars.log.setLevel(logLevel)
+			except:
+				globalVars.log.warning("could not set logging to %s"%levelName,exc_info=True)
 		try:
 			lang = config.conf["general"]["language"]
 			import languageHandler
