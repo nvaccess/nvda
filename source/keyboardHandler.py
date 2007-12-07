@@ -27,7 +27,7 @@ NVDAModifierKey=None
 usedNVDAModifierKey=False
 lastNVDAModifierKey=None
 lastNVDAModifierKeyTime=None
-unPauseByControlUp=False
+unpauseByShiftUp=False
 lastPressedKey = None
 lastPressedKeyTime = None
 lastKeyCount = 0
@@ -81,7 +81,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by pyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKey, lastPressedKeyTime, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp, lastPressedKey, lastPressedKeyTime, lastKeyCount 
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -91,13 +91,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		vkName=vkCodes.byCode.get(vkCode,"").lower()
 		if not vkName and vkCode>=32 and vkCode<128:
 			vkName=unichr(vkCode).lower()
-		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
+		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			if speech.isPaused:
-				unPauseByControlUp=True
+				unpauseByShiftUp=True
 			else:
 				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,True)
 		else:
-			unPauseByControlUp=False
+			unpauseByShiftUp=False
 			globalVars.keyCounter+=1
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
 		if lastNVDAModifierKey and (vkCode,extended)==lastNVDAModifierKey:
@@ -179,7 +179,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unPauseByControlUp, lastPressedKeyTime, lastKeyCount 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp, lastPressedKeyTime, lastKeyCount 
 		lastPressedKeyTime=time.time()
 		if injected:
 			return True
@@ -188,9 +188,9 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			if passKeyThroughCount==0:
 				passKeyThroughCount=-1
 			return True
-		if unPauseByControlUp and vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL):
+		if unpauseByShiftUp and vkCode in (winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,False)
-			unPauseByControlUp=False
+			unpauseByShiftUp=False
 		if NVDAModifierKey and (vkCode,extended)==NVDAModifierKey:
 			if lastKeyCount >=1 and usedNVDAModifierKey: lastKeyCount = 0
 			if not usedNVDAModifierKey:
