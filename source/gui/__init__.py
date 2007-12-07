@@ -34,45 +34,47 @@ This is the NVDA interface window. It enables you to control NVDA's settings, an
 
 To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.
 
-To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.
+To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the OK or Cancel button.
 
 To set the preferences (such as voice settings, key Settings, reading of tooltips etc),
 Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. 
 
-By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.
+By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'general settings...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.
 
 Some usefull key commands when using NVDA are:
 
 General key strokes:
-control - interupt speech
-insert+1 - turns keyboard help on and off
-insert+upArrow - reports the object with focus
-insert+downArrow - starts sayAll (press control or any other key to stop)
-insert+t speak title
-insert+f12 - report time and date
-insert+2 - turn speaking of typed characters on and off
-insert+3 turn speaking of typed words on and off
-insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off
-insert+pageUp - increase rate of speech
-insert+pageDown - decrease rate of speech
-insert+p - turn reading of punctuation on and off
-insert+s - toggle speech modes (off, talk and beeps)
-insert+m - turn  reading of objects under the mouse on and off
-insert+f - report current font (when in a document)
+control - interupt/pause speech
+shift - unpause speech
+NVDA+1 - turns keyboard help on and off
+NVDA+upArrow - reports the object with focus
+NVDA+downArrow - starts sayAll (press control or any other key to stop)
+NVDA+tab - report the object currently in focus
+NVDA+t speak title
+NVDA+f12 - report time and date
+NVDA+2 - turn speaking of typed characters on and off
+NVDA+3 turn speaking of typed words on and off
+NVDA+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off
+NVDA+pageUp - increase rate of speech
+NVDA+pageDown - decrease rate of speech
+NVDA+p - turn reading of punctuation on and off
+NVDA+s - toggle speech modes (off, talk and beeps)
+NVDA+m - turn  reading of objects under the mouse on and off
+NVDA+f - report current font (when in a document)
 
 Object navigation:
-insert+numpadAdd - Where am I
-insert+numpad5 - current object
-shift+insert+numpad5 - dimensions and location of current object
-insert+numpad8 - parent object
-insert+numpad4 - previous object
-insert+numpad6 - next object
-insert+numpad2 - first child object
-insert+numpadMinus - move to focus object
- insert+end - move to statusbar
-insert+numpadDivide - Move mouse to current navigator object
-insert+numpadMultiply - move to mouse
-insert+numpadEnter - activate current object
+NVDA+numpadAdd - Where am I
+NVDA+numpad5 - current object
+shift+NVDA+numpad5 - dimensions and location of current object
+NVDA+numpad8 - parent object
+NVDA+numpad4 - previous object
+NVDA+numpad6 - next object
+NVDA+numpad2 - first child object
+NVDA+numpadMinus - move to focus object
+NVDA+end - move to statusbar
+NVDA+numpadDivide - Move mouse to current navigator object
+NVDA+numpadMultiply - move to mouse
+nvda+numpadEnter - activate current object
 
 Reviewing the current object:
 shift+numpad7 - move to top line
