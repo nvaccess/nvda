@@ -197,7 +197,7 @@ class appModule(appModuleHandler.appModule):
 		else:
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		return False
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object") + _("or, if pressed three times,") + _("Copies name and value of current navigator object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard")
 
 	def script_navigatorObject_currentDimensions(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
