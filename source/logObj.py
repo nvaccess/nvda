@@ -6,15 +6,6 @@ from types import *
 
 moduleCache={}
 
-def getLogLevelNames():
-	return ["debug","info","warning","error","critical"]
-
-def nameToLevel(name):
-	try:
-		return getattr(logging,name.upper())
-	except:
-		return 0
-
 def makeModulePathFromFilePath(path):
 	if path in moduleCache:
 		return moduleCache[path]
