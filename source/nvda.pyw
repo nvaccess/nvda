@@ -20,6 +20,7 @@ import win32con
 import globalVars
 import logObj
 import winUser
+import winKernel
 
 restartByErrorCount=0
 
@@ -42,6 +43,7 @@ def abortWithError(code):
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 	winUser.setSystemScreenReaderFlag(False)
 	sys.exit(code)
+
 
 globalVars.startTime=time.time()
 
@@ -67,6 +69,7 @@ except:
 #Process option arguments
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
+parser.add_option('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_option('-c','--config-file',dest='configFileName',default="./nvda.ini",help="The file where all settings are stored")
@@ -78,17 +81,31 @@ try:
 	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA')
 except:
 	oldAppWindowHandle=0
-if win32gui.IsWindow(oldAppWindowHandle): 
-	if globalVars.appArgs.quit:
+if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle): 
+	processID,threadID=winUser.getWindowThreadProcessID(oldAppWindowHandle)
+	if globalVars.appArgs.quit or globalVars.appArgs.replace:
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
 		timeout=0
-		while win32gui.IsWindow(oldAppWindowHandle) and timeout<15:
+		ok=False
+		while not ok and timeout<3000:
 			win32gui.PumpWaitingMessages()
-			time.sleep(0.1)
+			time.sleep(0.001)
+			if not (oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle)): 
+				h=winKernel.openProcess(winKernel.PROCESS_VM_READ,False,processID)
+				if h<=0:
+					ok=True
+				else:
+					winKernel.closeHandle(h)
 			timeout+=1
-		if win32gui.IsWindow(oldAppWindowHandle): 
+		try:
+			oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA')
+		except:
+			oldAppWindowHandle=0
+		if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle):
 			win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
-	sys.exit(1)
+			sys.exit(1)
+if globalVars.appArgs.quit or oldAppWindowHandle:
+	sys.exit(0)
 
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
