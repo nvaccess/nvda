@@ -81,6 +81,13 @@ except:
 if win32gui.IsWindow(oldAppWindowHandle): 
 	if globalVars.appArgs.quit:
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
+		timeout=0
+		while win32gui.IsWindow(oldAppWindowHandle) and timeout<15:
+			win32gui.PumpWaitingMessages()
+			time.sleep(0.1)
+			timeout+=1
+		if win32gui.IsWindow(oldAppWindowHandle): 
+			win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
 	sys.exit(1)
 
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
