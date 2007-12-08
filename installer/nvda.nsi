@@ -140,6 +140,8 @@ InstallDirRegKey HKLM "Software\${PRODUCT}" ""
 !insertmacro MUI_RESERVEFILE_LANGDLL
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 
+Var oldNVDAWindowHandle
+ Var NVDAInstalled ;"1" if NVDA has been installed
 
 Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
@@ -148,40 +150,31 @@ StrCpy $LANGUAGE $0
 FunctionEnd
 
 Function NVDA_GUIInit
-call isNVDARunning
-pop $1	; TRUE or FALSE
-pop $2	; if true, will contain the handle of NVDA window
-IntCmp $1 1 +1 SpeechInstall
-MessageBox MB_OK $(msg_NVDARunning)
-
-SpeechInstall:
 InitPluginsDir
 CreateDirectory $PLUGINSDIR\_nvda_temp_
 SetOutPath $PLUGINSDIR\_nvda_temp_
 File /r "${NVDASourceDir}\"
+;If NVDA is already running, kill it first before starting new one
+call isNVDARunning
+pop $1	; TRUE or FALSE
+pop $oldNVDAWindowHandle
 ; Shut down NVDA
-System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
-;IntCmp $3 0 SpeechInstall 0 +1
-;MessageBox MB_OK "Could not shut down NVDA process"
-exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -m true"
-
-	;end:
-	;SendMessage $hmci ${WM_CLOSE} 0 0
+IntCmp $1 1 +1 Continue
+MessageBox MB_OK $(msg_NVDARunning)
+Continue:
+Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
 FunctionEnd
 
 Section "install" section_install
 SetShellVarContext all
 SetOutPath "$INSTDIR"
-
 File /r "${NVDASourceDir}\"
-
-
+strcpy $NVDAInstalled "1"
 SectionEnd
 
 Section Shortcuts
 SetShellVarContext all
 SetOutPath "$INSTDIR\"
-
 ;!insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\${PRODUCT}"
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
@@ -209,6 +202,20 @@ WriteRegStr HKCU "Software\${PRODUCT}" "" $INSTDIR
 WriteUninstaller "$INSTDIR\Uninst.exe"
  SectionEnd
 
+Function .onGUIEnd
+intCMP $NVDAInstalled 1 +1 NotInstalled
+Exec "$INSTDIR\${NVDAApp} -r"
+goto End
+NotInstalled:
+call isNVDARunning
+pop $1
+pop $2
+intcmp $1 1 +1 End
+intcmp $2 $oldNVDAWindowHandle End +1
+System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
+end:
+FunctionEnd
+
 var PreserveConfig
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
@@ -220,28 +227,37 @@ FunctionEnd
 Function un.NVDA_GUIInit
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 $(msg_RemoveNVDA)  IDYES +2
 Abort
-InitPluginsDir
 FunctionEnd
 
 Section "Uninstall"
 SetShellVarContext all
-
 ; Warn about configuration file
 IfFileExists "$INSTDIR\nvda.ini" +1 +2
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DefButton2 $(msg_NVDAConfigFound) IDYES +1 IDNO PreserveConfiguration
-StrCpy $PreserveConfig 0
 goto Continue
-
 PreserveConfiguration:
-StrCpy $PreserveConfig 1
-
+CopyFiles /SILENT "$INSTDIR\nvda.ini" "$PLUGINSDIR"
+strcpy $preserveConfig "1"
 Continue:
 Delete "$SMPROGRAMS\${PRODUCT}\*.*"
 RmDir "$SMPROGRAMS\${PRODUCT}"
 Delete $DESKTOP\${PRODUCT}.lnk"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PRODUCT}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
- SectionEnd
+Delete /RebootOK "$INSTDIR\*.*"
+RMDir /RebootOK /r "$INSTDIR\*"
+StrCmp $PreserveConfig 1 +1 NoPreserveConfig 
+CopyFiles /SILENT "$PLUGINSDIR\nvda.ini" "$INSTDIR"
+goto End
+NoPreserveConfig:
+RMDir /RebootOK "$INSTDIR"
+End:
+SectionEnd
+
+Function un.onUninstSuccess
+HideWindow
+MessageBox MB_ICONINFORMATION|MB_OK $(msg_NVDASuccessfullyRemoved)
+FunctionEnd
 
 Function isNVDARunning
 FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"
@@ -251,40 +267,10 @@ push 0
 goto end
 push $0	; push the handle of NVDA window onto the stack
 push 1	; push TRUE onto the stack
-
 end:
-FunctionEnd
-
-Function un.isNVDARunning
-FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"
-;MessageBox MB_OK "Window handle is $0"
-StrCmp $0 "0" +1 +3
-push 0
-goto end
-push $0	; push the handle of NVDA window onto the stack
-push 1	; push TRUE onto the stack
-
-end:
-FunctionEnd
-
-Function RestartNVDA
-call isNVDARunning
-pop $0
-IntCmp $0 0 end +1
-pop $0	; pop window handle from the stack
-;MessageBox MB_OK "handle is $0"
-ExecWait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} --quit" $1
-Exec "$INSTDIR\${NVDAApp}"
-
-end:
-FunctionEnd
-
-Function .onGUIEnd
-Call RestartNVDA
 FunctionEnd
 
 /*
-
 Function PlaySound
 ; Retrieve the file to play
 pop $9
@@ -302,48 +288,3 @@ SendMessage $hmci 0x0465 0 "STR:play"
 nosup:
 FunctionEnd
 */
-
-Function un.onUninstSuccess
-HideWindow
-MessageBox MB_ICONINFORMATION|MB_OK $(msg_NVDASuccessfullyRemoved)
-FunctionEnd
-
-Function un.onGUIEnd
-call un.isNVDARunning
-pop $1
-pop $2
-IntCmp $1 1 +1 end
-System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
-
-end:
-sleep 1000
-StrCmp $PreserveConfig 0 +1 PreserveConfiguration
-;Delete Files
-Delete /RebootOK "$INSTDIR\*.*"
-RMDir /RebootOK /r "$INSTDIR\appModules"
-RMDir /RebootOK /r "$INSTDIR\comInterfaces"
-RMDir /RebootOK /r "$INSTDIR\documentation"
-RMDir /RebootOK /r "$INSTDIR\images"
-RMDir /RebootOK /r "$INSTDIR\lib"
-RMDir /RebootOK /r "$INSTDIR\locale"
-RMDir /RebootOK /r "$INSTDIR\synthDrivers"
-RMDir /RebootOK /r "$INSTDIR\waves"
-;Remove the installation directory
-RMDir /RebootOK "$INSTDIR"
-goto done
-
-PreserveConfiguration:
-CopyFiles /SILENT "$INSTDIR\nvda.ini" "$PLUGINSDIR"
-Delete /RebootOK "$INSTDIR\*.*"
-RMDir /RebootOK /r "$INSTDIR\appModules"
-RMDir /RebootOK /r "$INSTDIR\comInterfaces"
-RMDir /RebootOK /r "$INSTDIR\documentation"
-RMDir /RebootOK /r "$INSTDIR\images"
-RMDir /RebootOK /r "$INSTDIR\lib"
-RMDir /RebootOK /r "$INSTDIR\locale"
-RMDir /RebootOK /r "$INSTDIR\synthDrivers"
-RMDir /RebootOK /r "$INSTDIR\waves"
-CopyFiles /SILENT "$PLUGINSDIR\nvda.ini" "$INSTDIR"
-
-done:
-FunctionEnd
