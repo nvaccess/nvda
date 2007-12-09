@@ -139,6 +139,7 @@ InstallDirRegKey HKLM "Software\${PRODUCT}" ""
 ;Reserve Files
 !insertmacro MUI_RESERVEFILE_LANGDLL
 ReserveFile "${NSISDIR}\Plugins\system.dll"
+ReserveFile "${NSISDIR}\Plugins\banner.dll"
 
 Var oldNVDAWindowHandle
  Var NVDAInstalled ;"1" if NVDA has been installed
@@ -147,6 +148,7 @@ Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
+Banner::show /nounload
 FunctionEnd
 
 Function NVDA_GUIInit
@@ -163,6 +165,7 @@ IntCmp $1 1 +1 Continue
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
+Banner::destroy
 FunctionEnd
 
 Section "install" section_install
