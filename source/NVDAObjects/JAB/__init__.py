@@ -92,7 +92,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 		return max(textInfo.caretIndex,0)
 
 	def _setCaretOffset(self,offset):
-		speech.speakMessage("%s"%offset)
 		self.obj.jabContext.setCaretPosition(offset)
 
 	def _getSelectionOffsets(self):
@@ -121,7 +120,8 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		#Java needs end of range as last character, not one past the last character
-		return self.obj.jabContext.getAccessibleTextRange(start,end-1)
+		text=self.obj.jabContext.getAccessibleTextRange(start,end-1)
+		return text
 
 	def _lineNumFromOffset(self,offset):
 		return -1
@@ -151,6 +151,7 @@ class JAB(Window):
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+		Window.__init__(self,windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText:
 			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
@@ -178,8 +179,6 @@ class JAB(Window):
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 			  	]]
-		Window.__init__(self,windowHandle=windowHandle)
-		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _isEqual(self,other):
 		return isinstance(other,JAB) and self.jabContext==other.jabContext
