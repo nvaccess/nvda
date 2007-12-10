@@ -48,6 +48,7 @@ REASON_QUERY=3
 REASON_CHANGE=4
 REASON_MESSAGE=5
 REASON_SAYALL=6
+REASON_CARET=7
 REASON_DEBUG=7
 
 globalXMLFieldStack=[]
@@ -219,7 +220,7 @@ def speakSpelling(text):
 		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
 			tones.beep(2000,50)
 
-def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
+def speakObjectProperties(obj,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
 	global beenCanceled
 	del globalXMLFieldStack[:]
 	if speechMode==speechMode_off:
@@ -231,10 +232,6 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		cancelSpeech()
 	beenCanceled=False
 	textList=[]
-	if groupName:
-		groupNameText=obj.groupName
-		if isinstance(groupNameText,basestring) and len(groupNameText)>0 and not groupNameText.isspace():
-			textList.append(groupNameText)
 	if name:
 		nameText=obj.name
 		if isinstance(nameText,basestring) and len(nameText)>0 and not nameText.isspace():
@@ -316,8 +313,11 @@ def speakObjectProperties(obj,groupName=False,name=False,role=False,states=False
 		getSynth().speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	speakObjectProperties(obj,groupName=True,name=True,role=True,states=True,value=True,description=True,keyboardShortcut=True,positionString=True,level=True,contains=True,textInfo=True,reason=reason,index=index)
-
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'textInfo':True,'description':True,'keyboardShortcut':True,'positionString':True,'level':True,'contains':True}
+	if reason in (REASON_SAYALL,REASON_CARET,REASON_MOUSE):
+		allowProperties['textInfo']=False
+	speakObjectProperties(obj,reason=reason,index=index,*allowProperties)
+ 
 def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.
 This function will not speak if L{speechMode} is false.
