@@ -15,7 +15,6 @@ import queueHandler
 import globalVars
 import speech
 import winKernel
-from IAccessibleHandler import pointer_IAccessible
 import api
 import winUser
 import textHandler

@@ -47,7 +47,7 @@ class Gecko(virtualBuffer):
 		states=obj.IAccessibleStates
 		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
-				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
+				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
 				self.NVDAObject=obj
 				self.loadDocument()
@@ -82,7 +82,7 @@ class Gecko(virtualBuffer):
 		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
-				speech.speakMessage(IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_BUSY))
+				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
 				return True
 			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
 				self.NVDAObject=obj
@@ -279,11 +279,11 @@ class Gecko(virtualBuffer):
 		elif role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
 			text="%s "%obj.name
 			info["role"]=controlTypes.ROLE_RADIOBUTTON
-			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
 			text="%s "%obj.name
 			info["role"]=controlTypes.ROLE_CHECKBOX
-			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateName(IAccessibleHandler.STATE_SYSTEM_CHECKED)
+			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			val=obj.value
 			if val=="":
@@ -296,7 +296,7 @@ class Gecko(virtualBuffer):
 			text="%s "%obj.value
 			info["role"]=controlTypes.ROLE_COMBOBOX
 		else:
-			info["typeString"]=IAccessibleHandler.getRoleName(role) if isinstance(role,int) else role
+			info["typeString"]=IAccessibleHandler.getRoleText(role) if isinstance(role,int) else role
 		accessKey=obj.keyboardShortcut
 		if accessKey:
 			info["accessKey"]=accessKey
