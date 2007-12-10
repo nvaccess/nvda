@@ -132,18 +132,6 @@ STATE_SYSTEM_VALID=0x1fffffff
 NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 
-roleNames={
-	ROLE_SYSTEM_CLIENT:_("window"),
-	ROLE_SYSTEM_PAGETAB:_("tab"),
-	ROLE_SYSTEM_TEXT:_("edit"),
-	ROLE_SYSTEM_PUSHBUTTON:_("button"),
-	ROLE_SYSTEM_OUTLINE:_("Tree view"),
-}
-
-stateNames={
-	STATE_SYSTEM_HASPOPUP:_("sub menu"),
-}
-
 import tones
 import ctypes
 import comtypes.client
@@ -267,8 +255,6 @@ def accessibleChildren(ia,startIndex,numChildren):
 	return children
 
 def getRoleText(role):
-	if roleNames.has_key(role):
-		return roleNames[role]
 	textLen=oleAcc.GetRoleTextW(role,0,0)
 	if textLen:
 		buf=ctypes.create_unicode_buffer(textLen+2)
@@ -278,8 +264,6 @@ def getRoleText(role):
 		return None
 
 def getStateText(state):
-	if stateNames.has_key(state):
-		return stateNames[state]
 	textLen=oleAcc.GetStateTextW(state,0,0)
 	if textLen:
 		buf=ctypes.create_unicode_buffer(textLen+2)
