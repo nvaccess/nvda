@@ -249,11 +249,9 @@ lastEventParams=None
 lastEvent=None
 
 def normalizeIAccessible(pacc): 
-	if isinstance(pacc,IAccessible):
-		pacc=pacc
-	elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
-	else:
+	elif not isinstance(pacc,IAccessible):
 		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
 	if not isinstance(pacc,IAccessible2):
 		try:
@@ -267,6 +265,7 @@ def normalizeIAccessible(pacc):
 			pacc=POINTER(IAccessible2)(i)
 		except:
 			pass
+	return pacc
 
 def accessibleObjectFromWindow(window,objectID):
 	if not winUser.isWindow(window):
