@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import comtypes.client
 import ctypes
 from comInterfaces.servprov import IServiceProvider
 from comInterfaces.IAccessible2Lib import *
