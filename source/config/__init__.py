@@ -54,7 +54,7 @@ outputDevice = integer(default=-1,min=-1)
 		reportObjectPositionInformation = boolean(default=true)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
-		reportObjectGroupNames = boolean(default=True)
+		reportObjectDescriptions = boolean(default=True)
 		sayStateFirst = boolean(default=False)
 		beepOnProgressBarUpdates = boolean(default=true)
 

@@ -277,17 +277,24 @@ def speakObjectProperties(obj,name=False,role=False,states=False,value=False,des
 		valueText=obj.value
 		if isinstance(valueText,basestring) and len(valueText)>0 and not valueText.isspace():
 			textList.append(valueText)
+	if textInfo and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
+		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		if not info.isCollapsed:
+			textList.append(_("selected %s")%info.text)
+		else:
+			info.expand(textHandler.UNIT_READINGCHUNK)
+			textList.append(info.text)
 	if description:
 		descriptionText=obj.description
 		if not name:
 			nameText=obj.name
 		if descriptionText!=nameText and isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
 			textList.append(descriptionText)
-	if keyboardShortcut and (reason not in (REASON_FOCUS,REASON_SAYALL) or config.conf["presentation"]["reportKeyboardShortcuts"]):
+	if keyboardShortcut:
 		keyboardShortcutText=obj.keyboardShortcut
 		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
 			textList.append(keyboardShortcutText)
-	if positionString and (reason not in (REASON_FOCUS,REASON_SAYALL) or config.conf["presentation"]["reportObjectPositionInformation"]):
+	if positionString:
 		positionStringText=obj.positionString
 		if isinstance(positionStringText,basestring) and len(positionStringText)>0 and not positionStringText.isspace():
 			textList.append(positionStringText)
@@ -299,13 +306,6 @@ def speakObjectProperties(obj,name=False,role=False,states=False,value=False,des
 		containsText=obj.contains
 		if isinstance(containsText,basestring) and len(containsText)>0 and not containsText.isspace():
 			textList.append(_("contains %s")%containsText)
-	if textInfo and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
-		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
-		if not info.isCollapsed:
-			textList.append(_("selected %s")%info.text)
-		else:
-			info.expand(textHandler.UNIT_READINGCHUNK)
-			textList.append(info.text)
 	text=" ".join(textList)
 	if len(text)>0 and not text.isspace():
 		text=processText(text)
@@ -314,9 +314,15 @@ def speakObjectProperties(obj,name=False,role=False,states=False,value=False,des
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'textInfo':True,'description':True,'keyboardShortcut':True,'positionString':True,'level':True,'contains':True}
+	if not config.conf["presentation"]["reportObjectDescriptions"]:
+		allowProperties["description"]=False
+	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
+		allowProperties["keyboardShortcut"]=False
+	if not config.conf["presentation"]["reportObjectPositionInformation"]:
+		allowProperties["positionString"]=False
 	if reason in (REASON_SAYALL,REASON_CARET,REASON_MOUSE):
 		allowProperties['textInfo']=False
-	speakObjectProperties(obj,reason=reason,index=index,*allowProperties)
+	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
  
 def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.
