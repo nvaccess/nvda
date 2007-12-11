@@ -217,8 +217,8 @@ def fetchModule(appName):
 		try:
 			mod=__import__(appName,globals(),locals(),[]).appModule
 		except:
-			globalVars.log.error("Error in appModule %s"%appName)
-			speech.speakMessage(_("Error in appModule %s")%appName,wait=True)
+			globalVars.log.error("Error in appModule %s"%appName,exc_info=True)
+			speech.speakMessage(_("Error in appModule %s")%appName)
 			raise RuntimeError
 	if mod is None:
 		return appModule
