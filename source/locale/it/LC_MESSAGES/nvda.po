@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2007-12-07 14:20+0100\n"
+"PO-Revision-Date: 2007-12-11 14:33+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -13,50 +13,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:136
-#: controlTypes.py:158
-msgid "window"
-msgstr "Finestra"
-
-#: IAccessibleHandler.py:137
-#: characterSymbols.py:20
-#: controlTypes.py:179
-msgid "tab"
-msgstr "Tab"
-
-#: IAccessibleHandler.py:138
-#: controlTypes.py:165
-msgid "edit"
-msgstr "Editazione"
-
-#: IAccessibleHandler.py:139
-#: controlTypes.py:166
-msgid "button"
-msgstr "Pulsante"
-
-#: IAccessibleHandler.py:140
-msgid "Tree view"
-msgstr "Visualizazione ad albero"
-
-#: IAccessibleHandler.py:144
-msgid "sub menu"
-msgstr "Sottomenu'"
-
-#: IAccessibleHandler.py:196
-#: speech.py:274
-#: virtualBuffers\IAccessible\MSHTML.py:115
-#: virtualBuffers\IAccessible\MSHTML.py:294
-#: virtualBuffers\IAccessible\MSHTML.py:298
-#: virtualBuffers\IAccessible\adobe.py:289
-#: virtualBuffers\IAccessible\adobe.py:293
-#: virtualBuffers\IAccessible\gecko.py:282
-#: virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "Non %s"
-
 #: NVDAObjects\IAccessible\__init__.py:68
 #: NVDAObjects\IAccessible\__init__.py:505
-#: NVDAObjects\IAccessible\sysListView32.py:83
+#: NVDAObjects\IAccessible\sysListView32.py:89
 msgid "%s of %s"
 msgstr "%s di %s"
 
@@ -116,7 +75,7 @@ msgid "underline"
 msgstr "Sottolineato"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:245
+#: NVDAObjects\JAB\__init__.py:244
 msgid "%d of %d"
 msgstr "%d di %d"
 
@@ -191,8 +150,8 @@ msgstr "Passa attraverso il buffer virtuale"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:409
 #: speech.py:415
+#: speech.py:421
 msgid "off"
 msgstr "Disattivato"
 
@@ -210,7 +169,7 @@ msgstr "Disattivato"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:404
+#: speech.py:410
 msgid "on"
 msgstr "Attivato"
 
@@ -334,16 +293,8 @@ msgid "%s copied to clipboard"
 msgstr "%s copiato negli appunti"
 
 #: appModules\_default.py:200
-msgid "Copies name and value of current navigator object to the clipboard"
-msgstr "Copia negli appunti il nome e il valore dell'oggetto attuale nel navigatore"
-
-#: appModules\_default.py:200
-msgid "Reports the current navigator object"
-msgstr "Legge l'oggetto attuale nel navigatore"
-
-#: appModules\_default.py:200
-msgid "or, if pressed three times,"
-msgstr "o, se premuto tre volte,"
+msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
+msgstr "Legge l'oggetto attuale nel navigatore o, se premuto tre volte, copia il nome e il valore dell'oggetto attuale negli appumti"
 
 #: appModules\_default.py:208
 msgid "No location information for navigator object"
@@ -762,13 +713,18 @@ msgstr "Inviato: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:66
+#: speech.py:67
 msgid "blank"
 msgstr "Vuoto"
 
 #: characterSymbols.py:19
 msgid "null"
 msgstr "Nullo"
+
+#: characterSymbols.py:20
+#: controlTypes.py:179
+msgid "tab"
+msgstr "Tab"
 
 #: characterSymbols.py:21
 msgid "line feed"
@@ -911,6 +867,10 @@ msgstr "Tilde"
 msgid "unknown object"
 msgstr "Oggetto sconosciuto"
 
+#: controlTypes.py:158
+msgid "window"
+msgstr "Finestra"
+
 #: controlTypes.py:159
 msgid "title bar"
 msgstr "Barra del titolo"
@@ -934,6 +894,14 @@ msgstr "Pulsante radio"
 #: controlTypes.py:164
 msgid "text"
 msgstr "Testo"
+
+#: controlTypes.py:165
+msgid "edit"
+msgstr "Editazione"
+
+#: controlTypes.py:166
+msgid "button"
+msgstr "Pulsante"
 
 #: controlTypes.py:167
 msgid "menu bar"
@@ -1482,7 +1450,7 @@ msgid "subMenu"
 msgstr "Sottomenu'"
 
 #: controlTypes.py:310
-#: virtualBuffers\IAccessible\MSHTML.py:287
+#: virtualBuffers\IAccessible\MSHTML.py:286
 msgid "protected"
 msgstr "Protetto"
 
@@ -1597,55 +1565,57 @@ msgstr ""
 "Per modificare le impostazioni -- come, ad esempio, configurazione della voce  --:\n"
 "premete il tasto alt per attivare la barra dei menu' ed usate le frecce per navigare e trovare le impostazioni che desiderate modificare. Se premete enter sulla maggior parte delle voci si aprira' una finestra di dialogo dove e' possibile cambiare le impostazioni corrispondenti. la maggior parte delle impostazioni vengono modificate in tempo reale (come il cambio di tono e velocita' della voce) in questo modo potrete facilmente trovare le impostazioni che piu' si adattano alle vostre esigenze. Se chiudete la finestra di dialogo senza premere OK la configurazione tornera' come era prima delle vostre modifiche.\n"
 "\n"
-"Per default la configurazione non viene salvata permanentemente per farlo premete Ctrl+s oppure selezionate 'salva configurazione' dal menu' di NVDA. Potete impostare NVDA in modo che salvi automaticamente la configurazione all'uscita, andando in 'interfaccia utente' - preferenze' e selezionando 'salva configurazione all'uscita'.\n"
+"Per default la configurazione non viene salvata permanentemente per farlo premete Ctrl+s oppure selezionate 'salva configurazione' dal menu' di NVDA. Potete impostare NVDA in modo che salvi automaticamente la configurazione all'uscita, andando in 'impostazioni generali' - preferenze' e selezionando 'salva configurazione all'uscita'.\n"
 "\n"
 "Segue un elenco di comandi utili per utilizzare Nvda:\n"
 "\n"
 "Tasti di uso generale:\n"
-"control - interrompe la sintesi\n"
-"insert+1 - attiva o disattiva l'aiuto tastiera\n"
-"insert+freccia in alto - legge l'oggetto attivo\n"
-"insert+freccia in basso - legge il testo partendo dal cursore (premere control o qualsiasi altro tasto per interrompere)\n"
-"insert+t - Legge il titolo della finestra\n"
-"insert+f12 - Legge l'ora e la data\n"
-"insert+2 - Attiva o disattiva la lettura dei caratteri digitati\n"
-"insert+3 - Attiva o disattiva la lettura delle parole digitate\n"
-"insert+4 - Attiva o disattiva la lettura dei tasti di comando come  spazio, frecce, control+shift+tasto, ecc.\n"
-"insert+pageUp - Aumenta la velocita' della voce\n"
-"insert+pageDown - Diminuisce la velocita' della voce\n"
-"insert+p - Attiva o disattiva la lettura della punteggiatura\n"
-"insert+s - Cambia la modalita' della voce (attiva, disattiva o beeps)\n"
-"insert+m - Attiva o disattiva la lettura degli oggetti sotto il mouse\n"
-"insert+f - Legge il tipo di carattere (in un documento)\n"
+"Control - Interrompe/mette in pausa la sintesi\n"
+"Shift - Riattiva la sintesi\n"
+"Nvda+1 - Attiva o disattiva l'aiuto tastiera\n"
+"Nvda+freccia in alto - Legge l'oggetto attivo\n"
+"Nvda+freccia in basso - Legge il testo partendo dal cursore (premere control o qualsiasi altro tasto per interrompere)\n"
+"Nvda+tab - Legge l'oggetto che ha il focus\n"
+"Nvda+t - Legge il titolo della finestra\n"
+"Nvda+f12 - Legge l'ora e la data\n"
+"Nvda+2 - Attiva o disattiva la lettura dei caratteri digitati\n"
+"Nvda+3 - Attiva o disattiva la lettura delle parole digitate\n"
+"Nvda+4 - Attiva o disattiva la lettura dei tasti di comando come  spazio, frecce, control+shift+tasto, ecc.\n"
+"Nvda+pageUp - Aumenta la velocita' della voce\n"
+"Nvda+pageDown - Diminuisce la velocita' della voce\n"
+"Nvda+p - Attiva o disattiva la lettura della punteggiatura\n"
+"Nvda+s - Cambia la modalita' della voce (attiva, disattiva o beeps)\n"
+"Nvda+m - Attiva o disattiva la lettura degli oggetti sotto il mouse\n"
+"Nvda+f - Legge il tipo di carattere (in un documento)\n"
 "\n"
 "Tasti del navigatore di oggetti:\n"
-"insert+piu' del tastierino numerico - Dove sono\n"
-"insert+5 del tastierino numerico - Oggetto corrente\n"
-"shift+insert+5 del tastierino numerico - Posizione e dimensione dell'oggetto attuale\n"
-"insert+8 del tastierino numerico  - Oggetto genitore\n"
-"insert+4 del tastierino numerico - Oggetto precedente\n"
-"insert+6 del tastierino numerico - Oggetto successivo\n"
-"insert+2 del tastierino numerico - Primo oggetto figlio\n"
-"insert+meno del tastierino numerico - Vai all'oggetto attivo\n"
-"insert+end - Vai alla barra di stato\n"
-"insert+barra del tastierino numerico - Porta il mouse nella posizione delll'oggetto attuale\n"
-"insert+asterisco del tastierino numerico - Vai alla posizione del mouse\n"
-"insert+enter del tastierino numerico - Attiva l'oggetto corrente\n"
+"Nvda+piu' del tastierino numerico - Dove sono\n"
+"Nvda+5 del tastierino numerico - Oggetto corrente\n"
+"Shift+Nvda+5 del tastierino numerico - Posizione e dimensione dell'oggetto attuale\n"
+"Nvda+8 del tastierino numerico  - Oggetto genitore\n"
+"Nvda+4 del tastierino numerico - Oggetto precedente\n"
+"Nvda+6 del tastierino numerico - Oggetto successivo\n"
+"Nvda+2 del tastierino numerico - Primo oggetto figlio\n"
+"Nvda+meno del tastierino numerico - Vai all'oggetto attivo\n"
+"Nvda+end - Vai alla barra di stato\n"
+"Nvda+barra del tastierino numerico - Porta il mouse nella posizione delll'oggetto attuale\n"
+"Nvda+piu' del tastierino numerico - Vai alla posizione del mouse\n"
+"Nvda+enter del tastierino numerico - Attiva l'oggetto corrente\n"
 "\n"
 "navigazione all'interno dell'oggetto attuale:\n"
-"shift+7 del tastierino numerico - Vai alla prima riga \n"
+"Shift+7 del tastierino numerico - Vai alla prima riga \n"
 "7 del tastierino numerico - Riga precedente\n"
 "8 del tastierino numerico - Riga corrente\n"
 "9 del tastierino numerico - Riga successiva\n"
-"shift+9 del tastierino numerico - Ultima riga\n"
+"Shift+9 del tastierino numerico - Ultima riga\n"
 "4 del tastierino numerico - Parola precedente\n"
 "5 del tastierino numerico - Parola corrente\n"
 "6 del tastierino numerico - Parola successiva\n"
-"shift+1 del tastierino numerico - Inizio riga\n"
+"Shift+1 del tastierino numerico - Inizio riga\n"
 "1 del tastierino numerico - Carattere precedente\n"
 "2 del tastierino numerico - Carattere corrente\n"
 "3 del tastierino numerico - Carattere successivo\n"
-"shift+3 del tastierino numerico - Fine riga\n"
+"Shift+3 del tastierino numerico - Fine riga\n"
 
 #: gui\__init__.py:140
 msgid "&Revert to saved configuration\tCtrl+R"
@@ -2005,8 +1975,8 @@ msgid "Report object &position information"
 msgstr "Leggi informazioni sulla &posizione dell'oggetto"
 
 #: gui\settingsDialogs.py:410
-msgid "Report object &group names"
-msgstr "Leggi i nomi dei &gruppi degli oggetti"
+msgid "Report object &descriptions"
+msgstr "Leggi le &descrizioni degli oggetti"
 
 #: gui\settingsDialogs.py:413
 msgid "Say object &state first"
@@ -2149,20 +2119,23 @@ msgstr "%s cursore"
 msgid "end of text"
 msgstr "Fine testo"
 
-#: speech.py:204
+#: speech.py:205
 msgid "cap %s"
 msgstr "Cap %s"
 
-#: speech.py:300
-msgid "level %d"
-msgstr "Livello %d"
+#: speech.py:271
+#: virtualBuffers\IAccessible\MSHTML.py:114
+#: virtualBuffers\IAccessible\MSHTML.py:293
+#: virtualBuffers\IAccessible\MSHTML.py:297
+#: virtualBuffers\IAccessible\adobe.py:289
+#: virtualBuffers\IAccessible\adobe.py:293
+#: virtualBuffers\IAccessible\gecko.py:282
+#: virtualBuffers\IAccessible\gecko.py:286
+msgid "not %s"
+msgstr "Non %s"
 
-#: speech.py:304
-msgid "contains %s"
-msgstr "Contiene %s"
-
-#: speech.py:308
-#: speech.py:476
+#: speech.py:283
+#: speech.py:482
 #: textBuffer.py:536
 #: textBuffer.py:540
 #: textBuffer.py:542
@@ -2170,23 +2143,31 @@ msgstr "Contiene %s"
 msgid "selected %s"
 msgstr "Selezionato %s"
 
-#: speech.py:395
+#: speech.py:304
+msgid "level %d"
+msgstr "Livello %d"
+
+#: speech.py:308
+msgid "contains %s"
+msgstr "Contiene %s"
+
+#: speech.py:401
 msgid "in"
 msgstr "In"
 
-#: speech.py:400
-#: speech.py:418
+#: speech.py:406
+#: speech.py:424
 msgid "out of"
 msgstr "Fuori di"
 
-#: speech.py:482
+#: speech.py:488
 #: textBuffer.py:544
 #: textBuffer.py:546
 #: textBuffer.py:550
 msgid "unselected %s"
 msgstr "Non selezionato %s"
 
-#: speech.py:484
+#: speech.py:490
 msgid "selection deleted"
 msgstr "Selezione cancellata"
 
@@ -2322,21 +2303,21 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "o leggete il file copying.txt distribuito con questo software."
 
-#: virtualBuffers\IAccessible\MSHTML.py:136
+#: virtualBuffers\IAccessible\MSHTML.py:135
 #: virtualBuffers\IAccessible\adobe.py:159
 #: virtualBuffers\IAccessible\gecko.py:157
 msgid "loading document %s"
 msgstr "Sto' caricando il documento %s"
 
-#: virtualBuffers\IAccessible\MSHTML.py:144
+#: virtualBuffers\IAccessible\MSHTML.py:143
 #: virtualBuffers\IAccessible\adobe.py:168
 #: virtualBuffers\IAccessible\gecko.py:166
 msgid "done"
 msgstr "Fatto"
 
-#: virtualBuffers\IAccessible\MSHTML.py:239
-#: virtualBuffers\IAccessible\MSHTML.py:242
-#: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\MSHTML.py:238
+#: virtualBuffers\IAccessible\MSHTML.py:241
+#: virtualBuffers\IAccessible\MSHTML.py:248
 #: virtualBuffers\IAccessible\adobe.py:246
 #: virtualBuffers\IAccessible\adobe.py:257
 #: virtualBuffers\IAccessible\gecko.py:239
@@ -2344,8 +2325,8 @@ msgstr "Fatto"
 msgid "with %s items"
 msgstr "Con %s elementi"
 
-#: virtualBuffers\IAccessible\MSHTML.py:245
-#: virtualBuffers\IAccessible\MSHTML.py:252
+#: virtualBuffers\IAccessible\MSHTML.py:244
+#: virtualBuffers\IAccessible\MSHTML.py:251
 #: virtualBuffers\IAccessible\adobe.py:252
 #: virtualBuffers\IAccessible\adobe.py:263
 #: virtualBuffers\IAccessible\gecko.py:245
@@ -2353,8 +2334,8 @@ msgstr "Con %s elementi"
 msgid "bullet"
 msgstr "Puntato"
 
-#: virtualBuffers\IAccessible\MSHTML.py:248
-#: virtualBuffers\IAccessible\MSHTML.py:255
+#: virtualBuffers\IAccessible\MSHTML.py:247
+#: virtualBuffers\IAccessible\MSHTML.py:254
 #: virtualBuffers\IAccessible\adobe.py:256
 #: virtualBuffers\IAccessible\adobe.py:269
 #: virtualBuffers\IAccessible\gecko.py:249
@@ -2362,11 +2343,11 @@ msgstr "Puntato"
 msgid "definition"
 msgstr "Definizione"
 
-#: virtualBuffers\IAccessible\MSHTML.py:283
+#: virtualBuffers\IAccessible\MSHTML.py:282
 msgid "file upload"
 msgstr "Upload file"
 
-#: virtualBuffers\IAccessible\MSHTML.py:316
+#: virtualBuffers\IAccessible\MSHTML.py:315
 msgid "clickable"
 msgstr "Cliccabile"
 
