@@ -51,7 +51,7 @@ setup(
 	windows = ["nvda.pyw"],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"includes": ["nvwave"],
+		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers"],
 	}},
 	zipfile = None,
