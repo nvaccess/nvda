@@ -10,6 +10,7 @@ import comtypes.client
 import comtypes.automation
 import pythoncom
 import win32com.client
+from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
 import IAccessibleHandler
@@ -23,8 +24,6 @@ import NVDAObjects
 
 lastMSHTMLEditGainFocusTimeStamp=0
 
-
-IServiceProvider=comtypes.client.GetModule('lib/Servprov.tlb').IServiceProvider
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 IID_DispHTMLGenericElement=comtypes.GUID('{3050F563-98B5-11CF-BB82-00AA00BDCE0B}')

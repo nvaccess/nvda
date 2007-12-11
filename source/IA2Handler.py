@@ -6,14 +6,14 @@
 
 import comtypes.client
 import ctypes
+from comInterfaces.servprov import IServiceProvider
+from comInterfaces.IAccessible2Lib import *
 import api
 import eventHandler
 import IAccessibleHandler
 import speech
 import NVDAObjects.IAccessible
 
-IServiceProvider=comtypes.client.GetModule('lib/ServProv.tlb').IServiceProvider
-IA2Lib=comtypes.client.GetModule('lib/ia2.tlb')
 
 TEXT_BOUNDARY_CHAR=0
 TEXT_BOUNDARY_WORD=1
@@ -106,16 +106,16 @@ EVENT_SECTION_CHANGED,
 )=range(0x101,0x101+35)
 
 def IA2FromMSAA(pacc):
-	if isinstance(pacc,IA2Lib.IAccessible2):
+	if isinstance(pacc,IAccessible2):
 		return pacc
 	try:
 		try:
-			return pacc.QueryInterface(IA2Lib.IAccessible2) 
+			return pacc.QueryInterface(IAccessible2) 
 		except:
 			pass
 		s=pacc.QueryInterface(IServiceProvider)
-		i=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IA2Lib.IAccessible2._iid_))
-		newPacc=ctypes.POINTER(IA2Lib.IAccessible2)(i)
+		i=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IAccessible2._iid_))
+		newPacc=ctypes.POINTER(IAccessible2)(i)
 		return newPacc
 	except:
 		return None

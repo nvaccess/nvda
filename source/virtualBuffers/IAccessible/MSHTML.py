@@ -11,6 +11,7 @@ import comtypes.automation
 import core
 import IAccessibleHandler
 import globalVars
+import comInterfaces.MSHTML
 import winUser
 import api
 import speech
@@ -58,10 +59,8 @@ class MSHTML(virtualBuffer):
 				self.virtualBufferObject.loadDocument()
 
 	def __init__(self,NVDAObject):
-		#We sometimes need to cast com interfaces to another type so we need access directly to the MSHTML typelib
-		self.MSHTMLLib=comtypes.client.GetModule('mshtml.tlb')
 		#Create a html document com pointer and point it to the com object we receive from the internet explorer_server window
-		#domPointer=ctypes.POINTER(self.MSHTMLLib.DispHTMLDocument)()
+		#domPointer=ctypes.POINTER(comInterfaces.MSHTML.DispHTMLDocument)()
 		domPointer=ctypes.POINTER(comtypes.automation.IDispatch)()
 		wm=winUser.registerWindowMessage(u'WM_HTML_GETOBJECT')
 		lresult=winUser.sendMessage(NVDAObject.windowHandle,wm,0,0)
@@ -70,7 +69,7 @@ class MSHTML(virtualBuffer):
 		virtualBuffer.__init__(self,NVDAObject)
 		#Set up events for the document, plus any sub frames
 		self.domEventsObject=self.domEventsType(self)
-		self._comEvents=comtypes.client.GetEvents(self.dom,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+		self._comEvents=comtypes.client.GetEvents(self.dom,self.domEventsObject,interface=comInterfaces.MSHTML.HTMLDocumentEvents2)
 		if self.isDocumentComplete():
 			self.loadDocument()
 
@@ -166,7 +165,7 @@ class MSHTML(virtualBuffer):
 	def fillBuffer(self,domNode,parentID=None,position=None):
 		globalVars.log.debug("MSHTML fillBuffer: %s"%domNode.nodeName)
 		#We don't want comments in the buffer
-		if isinstance(domNode,ctypes.POINTER(self.MSHTMLLib.DispHTMLCommentElement)):
+		if isinstance(domNode,ctypes.POINTER(comInterfaces.MSHTML.DispHTMLCommentElement)):
 			return position
 		#We don't want non-displayed elements in the buffer 
 		try:
@@ -187,17 +186,17 @@ class MSHTML(virtualBuffer):
 		info['parent']=parentID
 		info['range']=[position,position]
 		children=[]
-		if isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement) or nodeName=="IFRAME":
+		if isinstance(domNode,comInterfaces.MSHTML.DispHTMLFrameElement) or nodeName=="IFRAME":
 			try:
 				children.append(domNode.contentWindow.document)
 			except:
 				pass
-		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
+		elif isinstance(domNode,comInterfaces.MSHTML.DispHTMLDocument):
 			try:
-				comtypes.client.ReleaseEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+				comtypes.client.ReleaseEvents(domNode,self.domEventsObject,interface=comInterfaces.MSHTML.HTMLDocumentEvents2)
 			except:
 				pass
-			self._comEvents=comtypes.client.GetEvents(domNode,self.domEventsObject,interface=self.MSHTMLLib.HTMLDocumentEvents2)
+			self._comEvents=comtypes.client.GetEvents(domNode,self.domEventsObject,interface=comInterfaces.MSHTML.HTMLDocumentEvents2)
 			children.append(domNode.body)
 		else:
 			child=domNode.firstChild
@@ -213,9 +212,9 @@ class MSHTML(virtualBuffer):
 			data=domNode.data
 			if data and not data.isspace():
 				text=data
-		elif isinstance(domNode,self.MSHTMLLib.DispHTMLFrameElement) or nodeName=="IFRAME":
+		elif isinstance(domNode,comInterfaces.MSHTML.DispHTMLFrameElement) or nodeName=="IFRAME":
 			info["role"]=controlTypes.ROLE_FRAME
-		elif isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
+		elif isinstance(domNode,comInterfaces.MSHTML.DispHTMLDocument):
 			info["role"]=controlTypes.ROLE_DOCUMENT
 			text=domNode.title+"\n "
 		elif nodeName=="A":
@@ -331,7 +330,7 @@ class MSHTML(virtualBuffer):
 		if (domNode.nodeName in ["B","BR","CENTER","EM","FONT","I","SPAN","STRONG","SUP","U"]) and not domNode.onclick and domNode.children.length==0:
 			return None
 		#document nodes have broken uniqueIDs so we use its html node's uniqueID
-		if isinstance(domNode,self.MSHTMLLib.DispHTMLDocument):
+		if isinstance(domNode,comInterfaces.MSHTML.DispHTMLDocument):
 			try:
 				domNode=domNode.firstChild
 			except:

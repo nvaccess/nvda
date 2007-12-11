@@ -11,6 +11,7 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import comInterfaces.tom
 import queueHandler
 import globalVars
 import speech
@@ -156,7 +157,7 @@ WB_RIGHTBREAK=7
 class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRangeWithEmbeddedObjects(self,start,end):
-		ptr=ctypes.POINTER(comtypes.client.GetModule('msftedit.dll').ITextDocument)()
+		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
 		r=ptr.Range(self._startOffset,self._endOffset)
 		bufText=r.text

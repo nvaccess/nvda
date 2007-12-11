@@ -132,15 +132,15 @@ class IA2(IAccessible):
 		if True: #not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject) #windowHandle=IAccessibleObject.WindowHandle
 		try:
-			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleAction)
+			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IA2Handler.IAccessibleAction)
 		except:
 			pass
 		try:
-			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleText)
+			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IA2Handler.IAccessibleText)
 			self.TextInfo=IA2TextTextInfo
 			replacedTextInfo=True
 			try:
-				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IA2Handler.IA2Lib.IAccessibleEditableText)
+				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IA2Handler.IAccessibleEditableText)
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
 					("ExtendedDown","moveByLine"),
@@ -244,7 +244,7 @@ class IA2(IAccessible):
 		if not hasattr(obj,'IAccessibleTextObject'):
 			return 
 		(left,top,width,height)=obj.location
-		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IA2Handler.IA2Lib.IA2_COORDTYPE_SCREEN_RELATIVE)
+		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IA2Handler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		if obj._lastMouseTextOffsets is None or offset<obj._lastMouseTextOffsets[0] or offset>=obj._lastMouseTextOffsets[1]:   
 			if mouseEntered:
 				speech.cancelSpeech()
