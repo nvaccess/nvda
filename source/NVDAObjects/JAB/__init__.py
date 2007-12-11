@@ -152,7 +152,7 @@ class JAB(Window):
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		Window.__init__(self,windowHandle=windowHandle)
-		if self._JABAccContextInfo.accessibleText:
+		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
 			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
@@ -218,7 +218,7 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue:
+		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
@@ -334,8 +334,8 @@ class JAB(Window):
 		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
 		super(JAB,self).event_stateChange()
 
-	def event_gainFocus(self):
+	def reportFocus(self):
 		parent=self.parent
-		if self.role in [controlTypes.ROLE_LIST,controlTypes.ROLE_EDITABLETEXT] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
+		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
-		super(JAB,self).event_gainFocus()
+		super(JAB,self).reportFocus()
