@@ -236,7 +236,6 @@ import virtualBuffers
 import NVDAObjects.IAccessible
 import appModuleHandler
 import config
-import IA2Handler
 import mouseHandler
 import controlTypes
 
@@ -273,7 +272,7 @@ def accessibleObjectFromWindow(window,objectID):
 	ptr=POINTER(IAccessible)()
 	res=windll.oleacc.AccessibleObjectFromWindow(window,objectID,byref(IAccessible._iid_),byref(ptr))
 	if res==0:
-		return ptr
+		return normalizeIAccessible(ptr)
 	else:
 		return None
 
@@ -284,12 +283,8 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	varChild=VARIANT()
 	res=windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,byref(pacc),byref(varChild))
 	if res==0:
-		#speech.speakMessage("%s %s"%(childID,varChild.value))
-		#if False or childID<0:
-		#child=childID
-		#else:
 		child=varChild.value
-		return (pacc,child)
+		return (normalizeIAccessible(pacc),child)
 	else:
 		return None
 
@@ -303,7 +298,7 @@ def accessibleObjectFromPoint(x,y):
 			child=0
 		else:
 			child=varChild.value
-		return (pacc,child)
+		return (normalizeIAccessible(pacc),child)
 
 def windowFromAccessibleObject(ia):
 	hwnd=c_int()
@@ -322,10 +317,8 @@ def accessibleChildren(ia,startIndex,numChildren):
 	windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,byref(realCount))
 	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],IAccessible):
-			children[childNum]=(children[childNum],0)
-		elif isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
-			children[childNum]=(children[childNum].QueryInterface(IAccessible),0)
+		if isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
+			children[childNum]=(normalizeIAccessible(children[childNum]),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
 	return children
@@ -402,11 +395,8 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,IAccessible):
-			new_ia=res
-			new_child=0
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=res.QueryInterface(IAccessible)
+		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -420,11 +410,8 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,IAccessible):
-			new_ia=res
-			new_child=0
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=res.QueryInterface(IAccessible)
+		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
 			new_ia=ia
@@ -438,11 +425,8 @@ def accHitTest(ia,child,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,IAccessible):
-			new_ia=res
-			new_child=0
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=res.QueryInterface(IAccessible)
+		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -462,11 +446,8 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,IAccessible):
-				new_ia=res
-				new_child=0
-			elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-				new_ia=res.QueryInterface(IAccessible)
+			if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+				new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
 				new_child=0
 			else:
 				raise ValueError("no IAccessible interface")
@@ -481,14 +462,11 @@ def accNavigate(ia,child,direction):
 	res=None
 	try:
 		res=ia.accNavigate(direction,child)
-		if isinstance(res,IAccessible):
-			new_ia=res
-			new_child=0
-		elif isinstance(res,int):
+		if isinstance(res,int):
 			new_ia=ia
 			new_child=res
 		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=res.QueryInterface(IAccessible)
+			new_ia=normalizeIAccessible(res)
 			new_child=0
 		else:
 			raise RuntimeError
@@ -526,9 +504,9 @@ winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
-IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:"gainFocus",
-IA2Handler.EVENT_TEXT_CARET_MOVED:"caret",
-IA2Handler.EVENT_DOCUMENT_CONTENT_CHANGED:"reorder",
+IA2_EVENT_ACTIVE_DECENDENT_CHANGED:"gainFocus",
+IA2_EVENT_TEXT_CARET_MOVED:"caret",
+IA2_EVENT_DOCUMENT_CONTENT_CHANGED:"reorder",
 }
 
 def manageEvent(name,window,objectID,childID):
@@ -612,10 +590,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Process focus events
 		elif eventName=="gainFocus":
 			queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID,isForegroundChange=False)
-			return
-		#Process IA2 active descendant events
-		if eventID==IA2Handler.EVENT_ACTIVE_DECENDENT_CHANGED:
-			IA2Handler.handleActiveDescendantEvent(window,objectID,childID)
 			return
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)

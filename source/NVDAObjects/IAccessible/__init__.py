@@ -16,7 +16,6 @@ import comtypes.client
 import appModuleHandler
 from keyUtils import sendKey, key 
 import IAccessibleHandler
-import IA2Handler
 import JABHandler
 import winUser
 import winKernel
@@ -189,11 +188,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		elif not windowHandle and not IAccessibleObject:
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
 		if IAccessibleObject:
-			IA2Pacc=IA2Handler.IA2FromMSAA(IAccessibleObject)
-			if IA2Pacc:
+			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2): 
 				IA2Class=__import__("IA2",globals(),locals(),[]).IA2
 				obj=Window.__new__(IA2Class,windowHandle=windowHandle)
-				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IA2Pacc,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
 				return obj
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
