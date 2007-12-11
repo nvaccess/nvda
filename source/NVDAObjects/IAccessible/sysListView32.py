@@ -78,6 +78,12 @@ class ListItem(IAccessible):
 		winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
 
+	def _get_description(self):
+		return None
+
+	def _get_value(self):
+		return super(ListItem,self)._get_description()
+
 	def _get_positionString(self):
 		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
 		return _("%s of %s")%(self.IAccessibleChildID,totalCount)
