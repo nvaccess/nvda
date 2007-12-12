@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2007-12-08 23:54+Russian Standard Time\n"
-"PO-Revision-Date: 2007-12-09 01:00+Moscow\n"
+"POT-Creation-Date: 2007-12-12 23:00+Russian Standard Time\n"
+"PO-Revision-Date: 2007-12-12 23:14+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In coopiration with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -11,56 +11,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#: IAccessibleHandler.py:136 controlTypes.py:158
-msgid "window"
-msgstr "Окно"
-
-#: IAccessibleHandler.py:137 characterSymbols.py:20
-#: controlTypes.py:179
-msgid "tab"
-msgstr "Таб"
-
-#: IAccessibleHandler.py:138 controlTypes.py:165
-msgid "edit"
-msgstr "Редактор"
-
-#: IAccessibleHandler.py:139 controlTypes.py:166
-msgid "button"
-msgstr "Кнопка"
-
-#: IAccessibleHandler.py:140
-msgid "Tree view"
-msgstr "Дерево"
-
-#: IAccessibleHandler.py:144
-msgid "sub menu"
-msgstr "Подменю"
-
-#: IAccessibleHandler.py:196 speech.py:274
-#: virtualBuffers\IAccessible\MSHTML.py:115
-#: virtualBuffers\IAccessible\MSHTML.py:294
-#: virtualBuffers\IAccessible\MSHTML.py:298
-#: virtualBuffers\IAccessible\adobe.py:289
-#: virtualBuffers\IAccessible\adobe.py:293
-#: virtualBuffers\IAccessible\gecko.py:282
-#: virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "Не %s"
-
-#: NVDAObjects\IAccessible\__init__.py:68
-#: NVDAObjects\IAccessible\__init__.py:505
-#: NVDAObjects\IAccessible\sysListView32.py:83
+#: NVDAObjects\IAccessible\__init__.py:67
+#: NVDAObjects\IAccessible\__init__.py:503
+#: NVDAObjects\IAccessible\sysListView32.py:89
 msgid "%s of %s"
 msgstr "%s из %s"
 
-#: NVDAObjects\IAccessible\__init__.py:72
+#: NVDAObjects\IAccessible\__init__.py:71
 msgid "%s items"
 msgstr "%s элементов"
 
-#: NVDAObjects\IAccessible\__init__.py:786
+#: NVDAObjects\IAccessible\__init__.py:784
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d элементов"
@@ -108,7 +69,7 @@ msgid "underline"
 msgstr "Подчёркнутый"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:245
+#: NVDAObjects\JAB\__init__.py:244
 msgid "%d of %d"
 msgstr "%d из %d"
 
@@ -174,7 +135,7 @@ msgstr "Пропуск виртуального буфера"
 #: appModules\_default.py:631 appModules\_default.py:641
 #: appModules\_default.py:651 appModules\_default.py:661
 #: keyboardHandler.py:53 keyboardHandler.py:55
-#: keyboardHandler.py:57 speech.py:409 speech.py:415
+#: keyboardHandler.py:57 speech.py:415 speech.py:421
 msgid "off"
 msgstr "Выключено"
 
@@ -185,7 +146,7 @@ msgstr "Выключено"
 #: appModules\_default.py:644 appModules\_default.py:654
 #: appModules\_default.py:664 keyboardHandler.py:53
 #: keyboardHandler.py:55 keyboardHandler.py:57
-#: speech.py:404
+#: speech.py:410
 msgid "on"
 msgstr "Включено"
 
@@ -904,13 +865,17 @@ msgid "sent: %s"
 msgstr "Отправлено: %s"
 
 #: characterSymbols.py:17 characterSymbols.py:18
-#: speech.py:66
+#: speech.py:67
 msgid "blank"
 msgstr "Чисто"
 
 #: characterSymbols.py:19
 msgid "null"
 msgstr "пусто"
+
+#: characterSymbols.py:20 controlTypes.py:179
+msgid "tab"
+msgstr "Таб"
 
 #: characterSymbols.py:21
 msgid "line feed"
@@ -1052,6 +1017,13 @@ msgstr "Тильда"
 msgid "unknown object"
 msgstr "Неизвестный объект"
 
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#: controlTypes.py:158
+msgid "window"
+msgstr "Окно"
+
 #: controlTypes.py:159
 msgid "title bar"
 msgstr "Заголовок окна"
@@ -1075,6 +1047,14 @@ msgstr "Радиокнопка"
 #: controlTypes.py:164
 msgid "text"
 msgstr "Текст"
+
+#: controlTypes.py:165
+msgid "edit"
+msgstr "Редактор"
+
+#: controlTypes.py:166
+msgid "button"
+msgstr "Кнопка"
 
 #: controlTypes.py:167
 msgid "menu bar"
@@ -1618,7 +1598,7 @@ msgstr "Связано"
 msgid "subMenu"
 msgstr "Подменю"
 
-#: controlTypes.py:310 virtualBuffers\IAccessible\MSHTML.py:287
+#: controlTypes.py:310 virtualBuffers\IAccessible\MSHTML.py:286
 msgid "protected"
 msgstr "Защищено"
 
@@ -1785,9 +1765,9 @@ msgstr ""
 "меню NVDA. Вы можетеотметить флажок, Автосох"
 "ранение конфигурации при выходе. Откройт"
 "е Общие Настройки ... из меню, Параметры и, "
-"нажимая клавишу Таб, найдите флажок "
-"Автосохранение конфигурации при выходе. Нажмите клавишу "
-"Пробел, затем, ok.\n"
+"нажимая клавишу Таб, найдите флажок Автос"
+"охранение конфигурации при выходе. Нажмит"
+"е клавишу Пробел, затем, ok.\n"
 "\n"
 "Некоторые Часто используемые клавиатурны"
 "е команды NVDA:\n"
@@ -1795,23 +1775,22 @@ msgstr ""
 "Общие команды:\n"
 "Контрол - Прервать, приостановить речь\n"
 "Шифт - продолжить приостановленную речь.\n"
-"NVDA+1 - Включает и выключает режим "
-"клавиатурной справки\n"
-"NVDA+Стрелка вверх - Читать объект в "
-"фокусе\n"
+"NVDA+1 - Включает и выключает режим клавиатур"
+"ной справки\n"
+"NVDA+Стрелка вверх - Читать объект в фокусе\n"
 "NVDA+Стрелка вниз - Читать всё, нажмите "
 "Контрол или любую другую клавишу для "
 "прерывания\n"
 "NVDA+Tab - сообщать объект в фокусе\n"
 "NVDA+t - Читать заголовок окна\n"
 "NVDA+f12 - Читать время и дату\n"
-"NVDA+2 - Включает или выключает чтение "
-"символов при вводе\n"
+"NVDA+2 - Включает или выключает чтение символ"
+"ов при вводе\n"
 "NVDA+3 Включает и выключает чтение слов при "
 "вводе\n"
-"NVDA+4 - Включает и выключает чтение "
-"командных клавиш, таких, как пробел, "
-"Контрол, Шифт, стрелки и их сочетаний\n"
+"NVDA+4 - Включает и выключает чтение командны"
+"х клавиш, таких, как пробел, Контрол, Шифт, "
+"стрелки и их сочетаний\n"
 "NVDA+Страница вверх - увеличить скорость "
 "речи\n"
 "NVDA+Страница вниз - Уменьшить скорость "
@@ -1820,8 +1799,8 @@ msgstr ""
 "пунктуации\n"
 "NVDA+s - Переключает режим озвучивания NVDA "
 "между Выключено, Сигналы, Речь\n"
-"NVDA+m - Включает и выключает чтение объекта"
-" под указателем мыши\n"
+"NVDA+m - Включает и выключает чтение объекта "
+"под указателем мыши\n"
 "NVDA+f - Читать параметры текущего шрифта в "
 "документе)\n"
 "\n"
@@ -2256,8 +2235,8 @@ msgid "Report object &position information"
 msgstr "Читать &Позицию объекта"
 
 #: gui\settingsDialogs.py:410
-msgid "Report object &group names"
-msgstr "Читать &Название группы объектов"
+msgid "Report object &descriptions"
+msgstr "читать &описание объекта"
 
 #: gui\settingsDialogs.py:413
 msgid "Say object &state first"
@@ -2405,37 +2384,47 @@ msgstr "%s курсор"
 msgid "end of text"
 msgstr "Конец текста"
 
-#: speech.py:204
+#: speech.py:205
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:300
-msgid "level %d"
-msgstr "Уровень %d"
+#: speech.py:271 virtualBuffers\IAccessible\MSHTML.py:114
+#: virtualBuffers\IAccessible\MSHTML.py:293
+#: virtualBuffers\IAccessible\MSHTML.py:297
+#: virtualBuffers\IAccessible\adobe.py:289
+#: virtualBuffers\IAccessible\adobe.py:293
+#: virtualBuffers\IAccessible\gecko.py:282
+#: virtualBuffers\IAccessible\gecko.py:286
+msgid "not %s"
+msgstr "Не %s"
 
-#: speech.py:304
-msgid "contains %s"
-msgstr "Содержит %s"
-
-#: speech.py:308 speech.py:476 textBuffer.py:536
+#: speech.py:283 speech.py:482 textBuffer.py:536
 #: textBuffer.py:540 textBuffer.py:542 textBuffer.py:548
 msgid "selected %s"
 msgstr "Выделено %s"
 
-#: speech.py:395
+#: speech.py:304
+msgid "level %d"
+msgstr "Уровень %d"
+
+#: speech.py:308
+msgid "contains %s"
+msgstr "Содержит %s"
+
+#: speech.py:401
 msgid "in"
 msgstr "в"
 
-#: speech.py:400 speech.py:418
+#: speech.py:406 speech.py:424
 msgid "out of"
 msgstr "вне"
 
-#: speech.py:482 textBuffer.py:544 textBuffer.py:546
+#: speech.py:488 textBuffer.py:544 textBuffer.py:546
 #: textBuffer.py:550
 msgid "unselected %s"
 msgstr "Не выделено %s"
 
-#: speech.py:484
+#: speech.py:490
 msgid "selection deleted"
 msgstr "Выделение удалено"
 
@@ -2591,21 +2580,21 @@ msgstr ""
 "или из входящего в комплект поставки "
 "программы файла Copying.txt."
 
-#: virtualBuffers\IAccessible\MSHTML.py:136
+#: virtualBuffers\IAccessible\MSHTML.py:135
 #: virtualBuffers\IAccessible\adobe.py:159
 #: virtualBuffers\IAccessible\gecko.py:157
 msgid "loading document %s"
 msgstr "Загрузка документа %s"
 
-#: virtualBuffers\IAccessible\MSHTML.py:144
+#: virtualBuffers\IAccessible\MSHTML.py:143
 #: virtualBuffers\IAccessible\adobe.py:168
 #: virtualBuffers\IAccessible\gecko.py:166
 msgid "done"
 msgstr "Готово"
 
-#: virtualBuffers\IAccessible\MSHTML.py:239
-#: virtualBuffers\IAccessible\MSHTML.py:242
-#: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\MSHTML.py:238
+#: virtualBuffers\IAccessible\MSHTML.py:241
+#: virtualBuffers\IAccessible\MSHTML.py:248
 #: virtualBuffers\IAccessible\adobe.py:246
 #: virtualBuffers\IAccessible\adobe.py:257
 #: virtualBuffers\IAccessible\gecko.py:239
@@ -2613,8 +2602,8 @@ msgstr "Готово"
 msgid "with %s items"
 msgstr "из %s элементов"
 
-#: virtualBuffers\IAccessible\MSHTML.py:245
-#: virtualBuffers\IAccessible\MSHTML.py:252
+#: virtualBuffers\IAccessible\MSHTML.py:244
+#: virtualBuffers\IAccessible\MSHTML.py:251
 #: virtualBuffers\IAccessible\adobe.py:252
 #: virtualBuffers\IAccessible\adobe.py:263
 #: virtualBuffers\IAccessible\gecko.py:245
@@ -2622,8 +2611,8 @@ msgstr "из %s элементов"
 msgid "bullet"
 msgstr "Буллит"
 
-#: virtualBuffers\IAccessible\MSHTML.py:248
-#: virtualBuffers\IAccessible\MSHTML.py:255
+#: virtualBuffers\IAccessible\MSHTML.py:247
+#: virtualBuffers\IAccessible\MSHTML.py:254
 #: virtualBuffers\IAccessible\adobe.py:256
 #: virtualBuffers\IAccessible\adobe.py:269
 #: virtualBuffers\IAccessible\gecko.py:249
@@ -2631,11 +2620,11 @@ msgstr "Буллит"
 msgid "definition"
 msgstr "Определение"
 
-#: virtualBuffers\IAccessible\MSHTML.py:283
+#: virtualBuffers\IAccessible\MSHTML.py:282
 msgid "file upload"
 msgstr "Закачка файла"
 
-#: virtualBuffers\IAccessible\MSHTML.py:316
+#: virtualBuffers\IAccessible\MSHTML.py:315
 msgid "clickable"
 msgstr "По щелчку"
 
@@ -2804,3 +2793,12 @@ msgstr "l=Быстрая клавиша списка"
 #: virtualBuffers\__init__.py:513 virtualBuffers\__init__.py:514
 msgid "i=listItemQuickKey"
 msgstr "i=Быстрая клавиша элемента списка"
+
+#~ msgid "Tree view"
+#~ msgstr "Дерево"
+
+#~ msgid "sub menu"
+#~ msgstr "Подменю"
+
+#~ msgid "Report object &group names"
+#~ msgstr "Читать &Название группы объектов"
