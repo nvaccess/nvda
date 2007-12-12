@@ -138,6 +138,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				wx.Timer.__init__(self,*args,**kwargs)
 			def Notify(self):
 				try:
+					IAccessibleHandler.pumpAll()
 					queueHandler.pumpAll()
 					mouseHandler.pumpAll()
 				except:

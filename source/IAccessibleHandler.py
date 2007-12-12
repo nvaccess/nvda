@@ -221,6 +221,7 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
 import comtypes.client
+import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
 from comInterfaces.servprov import *
@@ -246,6 +247,8 @@ objectEventHandles=[]
 lastEventParams=None
 
 lastEvent=None
+
+focusEventQueue=Queue.Queue(3)
 
 def normalizeIAccessible(pacc): 
 	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
@@ -589,7 +592,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		#Process focus events
 		elif eventName=="gainFocus":
-			queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID,isForegroundChange=False)
+			if focusEventQueue.full():
+				focusEventQueue.get()
+			focusEventQueue.put((window,objectID,childID))
 			return
 		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
@@ -610,6 +615,10 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
+		foregroundWindow=winUser.getForegroundWindow()
+		info=winuser.getGUIThreadInfo(winUser.getWindowThreadProcessID(foregroundWindow)[1])
+		if window!=foregroundWindow and winUser.isDescendantWindow(window,info.hwndFocus) and window!=info.hwndFocus:
+			return
 	#Ignore focus/foreground events on the parent windows of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return
@@ -713,6 +722,12 @@ def initialize():
 			objectEventHandles.append(handle)
 		else:
 			globalVars.log.error("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
+
+def pumpAll():
+	global lastFocusEvent
+	if not focusEventQueue.empty():
+		window,objectID,childID=focusEventQueue.get()
+		queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID)
 
 def terminate():
 	for handle in objectEventHandles:
