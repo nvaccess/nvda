@@ -80,7 +80,7 @@ class SynthDriver(silence.SynthDriver):
 		if not curVoice:
 			return 0
 		for index, voice in enumerate(self._voiceList):
-			if voice == curVoice:
+			if voice.identifier.split('+')[0] == curVoice.identifier.split('+')[0]:
 				return index + 1
 		return 0
 
@@ -114,7 +114,8 @@ class SynthDriver(silence.SynthDriver):
 
 	def _set_variant(self,val):
 		self._variant=val
-		self.voice=self.voice
+		identifier="%s+%s"%(_espeak.getCurrentVoice().identifier,self._variant)
+		_espeak.setVoiceByName(identifier)
 
 	def _get_variantCount(self):
 		return 15
