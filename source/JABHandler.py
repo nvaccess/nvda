@@ -330,3 +330,13 @@ def initialize():
 		return True
 	except:
 		return False
+
+def terminate():
+	global isRunning
+	if not isRunning:
+		return
+		bridgeDll.setFocusGainedFP(None)
+		bridgeDll.setPropertyActiveDescendentChangeFP(None)
+		bridgeDll.setPropertyStateChangeFP(None)
+		bridgeDll.setPropertyCaretChangeFP(None)
+	isRunning=False

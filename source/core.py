@@ -170,6 +170,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		IAccessibleHandler.terminate()
 	except:
 		globalVars.log.warn("Error terminating IAccessible support",exc_info=True)
+	globalVars.log.debug("Terminating Java Access Bridge support")
+	try:
+		JABHandler.terminate()
+	except:
+		globalVars.log.warn("Error terminating Java Access Bridge support",exc_info=True)
 	globalVars.log.debug("Terminating charHook")
 	try:
 		charHook.terminate()
