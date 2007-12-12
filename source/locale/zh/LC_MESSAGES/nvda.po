@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-11-07 15:17+0800\n"
+"PO-Revision-Date: 2007-12-11 21:39+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,45 +11,6 @@ msgstr ""
 "X-Poedit-Language: Traditional Chinese\n"
 "X-Poedit-Country: HONG KONG\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-# IAccessibleHandler.py:135
-# controlTypes.py:80
-msgid "window"
-msgstr "視窗"
-
-# IAccessibleHandler.py:136
-# characterSymbols.py:20
-# controlTypes.py:101
-msgid "tab"
-msgstr "tab"
-
-# IAccessibleHandler.py:137
-# controlTypes.py:87
-msgid "edit"
-msgstr "編輯區"
-
-# IAccessibleHandler.py:138
-# controlTypes.py:88
-msgid "button"
-msgstr "按鈕"
-
-# IAccessibleHandler.py:139
-msgid "Tree view"
-msgstr "樹狀檢視"
-
-# IAccessibleHandler.py:143
-msgid "sub menu"
-msgstr "子選單"
-
-# IAccessibleHandler.py:190
-# speech.py:213
-# virtualBuffers\IAccessible\MSHTML.py:115
-# virtualBuffers\IAccessible\MSHTML.py:294
-# virtualBuffers\IAccessible\MSHTML.py:298
-# virtualBuffers\IAccessible\gecko.py:282
-# virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "不是 %s"
 
 # NVDAObjects\IAccessible\__init__.py:67
 # NVDAObjects\IAccessible\__init__.py:416
@@ -137,38 +98,6 @@ msgstr "最右一欄了"
 # appModules\_default.py:254
 msgid "beginning of row"
 msgstr "最左一欄了"
-
-# NVDAObjects\__init__.py:310
-# NVDAObjects\__init__.py:320
-# NVDAObjects\__init__.py:363
-# NVDAObjects\__init__.py:385
-# textBuffer.py:364
-# textBuffer.py:391
-# textBuffer.py:412
-# textBuffer.py:433
-# virtualBuffers\__init__.py:272
-msgid "top"
-msgstr "頂端"
-
-# NVDAObjects\__init__.py:297
-# NVDAObjects\__init__.py:330
-# NVDAObjects\__init__.py:350
-# NVDAObjects\__init__.py:376
-# textBuffer.py:369
-# textBuffer.py:382
-# textBuffer.py:403
-# textBuffer.py:424
-# virtualBuffers\__init__.py:287
-msgid "bottom"
-msgstr "底部"
-
-# NVDAObjects\IAccessible\winword.py:274
-msgid "left"
-msgstr "左面"
-
-# NVDAObjects\IAccessible\winword.py:278
-msgid "right"
-msgstr "右面"
 
 # gui\settingsDialogs.py:145
 msgid "volume"
@@ -384,16 +313,8 @@ msgid "%s copied to clipboard"
 msgstr "%s 已複製到剪貼簿"
 
 # appModules\_default.py:280
-msgid "Copies name and value of current navigator object to the clipboard"
-msgstr "把目前項目的內容複製到剪貼簿"
-
-# appModules\_default.py:131
-msgid "Reports the current navigator object"
-msgstr "讀出目前的瀏覽項目"
-
-# appModules\_default.py:201
-msgid "or, if pressed three times,"
-msgstr "或者當連按三次"
+msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
+msgstr "報出目前項目的內容, 如果連按三次, 就把內容複製到剪貼簿"
 
 # appModules\_default.py:139
 msgid "No location information for navigator object"
@@ -480,6 +401,18 @@ msgstr "裡面"
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
 msgstr "續層讀出現時瀏覽項目的母項目"
 
+# NVDAObjects\__init__.py:310
+# NVDAObjects\__init__.py:320
+# NVDAObjects\__init__.py:363
+# NVDAObjects\__init__.py:385
+# textBuffer.py:364
+# textBuffer.py:391
+# textBuffer.py:412
+# textBuffer.py:433
+# virtualBuffers\__init__.py:272
+msgid "top"
+msgstr "頂端"
+
 # appModules\_default.py:232
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr "把瀏覽游標移到目前項目的最上行"
@@ -491,6 +424,18 @@ msgstr "把瀏覽游標移到目前項目的上一行"
 # appModules\_default.py:256
 msgid "Reports the line of the current navigator object where the review cursor is situated"
 msgstr "讀出瀏覽游標的一行"
+
+# NVDAObjects\__init__.py:297
+# NVDAObjects\__init__.py:330
+# NVDAObjects\__init__.py:350
+# NVDAObjects\__init__.py:376
+# textBuffer.py:369
+# textBuffer.py:382
+# textBuffer.py:403
+# textBuffer.py:424
+# virtualBuffers\__init__.py:287
+msgid "bottom"
+msgstr "底部"
 
 # appModules\_default.py:264
 msgid "Moves the review cursor to the next line of the current navigator object"
@@ -512,6 +457,10 @@ msgstr "讀出瀏覽游標所在字詞"
 msgid "Moves the review cursor to the next word of the current navigator object"
 msgstr "把瀏覽游標移到目前項目的下一個字詞"
 
+# NVDAObjects\IAccessible\winword.py:274
+msgid "left"
+msgstr "左面"
+
 # appModules\_default.py:320
 msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
 msgstr "把瀏覽游標移到現時一行的開頭"
@@ -523,6 +472,10 @@ msgstr "把瀏覽游標移到前一個字元"
 # appModules\_default.py:304
 msgid "Reports the character of the current navigator object where the review cursor is situated"
 msgstr "讀出瀏覽游標所在字元"
+
+# NVDAObjects\IAccessible\winword.py:278
+msgid "right"
+msgstr "右面"
 
 # appModules\_default.py:312
 msgid "Moves the review cursor to the next character of the current navigator object"
@@ -808,6 +761,12 @@ msgstr "空白"
 msgid "null"
 msgstr "null"
 
+# IAccessibleHandler.py:136
+# characterSymbols.py:20
+# controlTypes.py:101
+msgid "tab"
+msgstr "tab"
+
 # characterSymbols.py:21
 msgid "line feed"
 msgstr "行頭"
@@ -948,6 +907,11 @@ msgstr "小箭頭"
 msgid "unknown object"
 msgstr "不明物件"
 
+# IAccessibleHandler.py:135
+# controlTypes.py:80
+msgid "window"
+msgstr "視窗"
+
 # controlTypes.py:81
 msgid "title bar"
 msgstr "標題列"
@@ -971,6 +935,16 @@ msgstr "單選紐"
 # controlTypes.py:86
 msgid "text"
 msgstr "文字"
+
+# IAccessibleHandler.py:137
+# controlTypes.py:87
+msgid "edit"
+msgstr "編輯區"
+
+# IAccessibleHandler.py:138
+# controlTypes.py:88
+msgid "button"
+msgstr "按鈕"
 
 # controlTypes.py:89
 msgid "menu bar"
@@ -1555,7 +1529,7 @@ msgstr "載入程式中, 請稍後"
 
 # core.py:87
 msgid "NVDA started"
-msgstr "N V D A "
+msgstr "N V D A 已經啟動"
 
 # synthDrivers\silence.py:14
 msgid "No speech,  a template synthesizer"
@@ -1578,45 +1552,47 @@ msgid ""
 "\n"
 "To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
 "\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
+"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the OK or Cancel button.\n"
 "\n"
 "To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
 "Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
 "\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
+"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'general settings...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
 "\n"
 "Some usefull key commands when using NVDA are:\n"
 "\n"
 "General key strokes:\n"
-"control - interupt speech\n"
-"insert+1 - turns keyboard help on and off\n"
-"insert+upArrow - reports the object with focus\n"
-"insert+downArrow - starts sayAll (press control or any other key to stop)\n"
-"insert+t speak title\n"
-"insert+f12 - report time and date\n"
-"insert+2 - turn speaking of typed characters on and off\n"
-"insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
-"insert+pageUp - increase rate of speech\n"
-"insert+pageDown - decrease rate of speech\n"
-"insert+p - turn reading of punctuation on and off\n"
-"insert+s - toggle speech modes (off, talk and beeps)\n"
-"insert+m - turn  reading of objects under the mouse on and off\n"
-"insert+f - report current font (when in a document)\n"
+"control - interupt/pause speech\n"
+"shift - unpause speech\n"
+"NVDA+1 - turns keyboard help on and off\n"
+"NVDA+upArrow - reports the object with focus\n"
+"NVDA+downArrow - starts sayAll (press control or any other key to stop)\n"
+"NVDA+tab - report the object currently in focus\n"
+"NVDA+t speak title\n"
+"NVDA+f12 - report time and date\n"
+"NVDA+2 - turn speaking of typed characters on and off\n"
+"NVDA+3 turn speaking of typed words on and off\n"
+"NVDA+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
+"NVDA+pageUp - increase rate of speech\n"
+"NVDA+pageDown - decrease rate of speech\n"
+"NVDA+p - turn reading of punctuation on and off\n"
+"NVDA+s - toggle speech modes (off, talk and beeps)\n"
+"NVDA+m - turn  reading of objects under the mouse on and off\n"
+"NVDA+f - report current font (when in a document)\n"
 "\n"
 "Object navigation:\n"
-"insert+numpadAdd - Where am I\n"
-"insert+numpad5 - current object\n"
-"shift+insert+numpad5 - dimensions and location of current object\n"
-"insert+numpad8 - parent object\n"
-"insert+numpad4 - previous object\n"
-"insert+numpad6 - next object\n"
-"insert+numpad2 - first child object\n"
-"insert+numpadMinus - move to focus object\n"
-" insert+end - move to statusbar\n"
-"insert+numpadDivide - Move mouse to current navigator object\n"
-"insert+numpadMultiply - move to mouse\n"
-"insert+numpadEnter - activate current object\n"
+"NVDA+numpadAdd - Where am I\n"
+"NVDA+numpad5 - current object\n"
+"shift+NVDA+numpad5 - dimensions and location of current object\n"
+"NVDA+numpad8 - parent object\n"
+"NVDA+numpad4 - previous object\n"
+"NVDA+numpad6 - next object\n"
+"NVDA+numpad2 - first child object\n"
+"NVDA+numpadMinus - move to focus object\n"
+"NVDA+end - move to statusbar\n"
+"NVDA+numpadDivide - Move mouse to current navigator object\n"
+"NVDA+numpadMultiply - move to mouse\n"
+"nvda+numpadEnter - activate current object\n"
 "\n"
 "Reviewing the current object:\n"
 "shift+numpad7 - move to top line\n"
@@ -1658,35 +1634,37 @@ msgstr ""
 "以下是一些常用的按鍵指令：\n"
 "\n"
 "一般按鍵:\n"
-"control - 中斷語音\n"
-"insert+1 - 鍵盤說明開關\n"
-"insert+向上鍵 - 讀出焦點項目\n"
-"insert+向下鍵 – 從現時的一行朗讀到尾（按 control 或任意鍵停止朗讀）\n"
-"insert+t - 讀出目前視窗的標題\n"
-"insert+f12 - 報出現時時間與日期\n"
-"insert+2 - 邊打邊念字元開關\n"
-"insert+3 - 邊打邊念字詞開關\n"
-"insert+4 - 邊打邊念指令（例如空白、游標、control 與 shift 組合）開關\n"
-"Insert+pageup - 加快朗讀速度\n"
-"insert+pagedown - 減慢朗讀速度\n"
-"insert+p - 標點符號朗讀開關\n"
-"insert+s - 切換語音模式（關閉、講話、逼逼聲）\n"
-"insert+m - 鼠標所指物件朗讀開關\n"
-"insert+f - 在文件中報出目前的字形\n"
+"control - 暫停或中斷語音\n"
+"shift - 從暫停的地方繼續朗讀下去\n"
+"NVDA+1 - 鍵盤說明開關\n"
+"NVDA+向上鍵 - 讀出焦點項目\n"
+"NVDA+向下鍵 – 從現時的一行朗讀到尾（按 control 或任意鍵停止朗讀\n"
+"）NVDA+tab - 報出目前瀏覽項目\n"
+"NVDA+t - 讀出目前視窗的標題\n"
+"NVDA+f12 - 報出現時時間與日期\n"
+"NVDA+2 - 邊打邊念字元開關\n"
+"NVDA+3 - 邊打邊念字詞開關\n"
+"NVDA+4 - 邊打邊念指令（例如空白、方向鍵、control 與 shift 組合）開關\n"
+"NVDA+pageup - 加快朗讀速度\n"
+"NVDA+pagedown - 減慢朗讀速度\n"
+"NVDA+p - 標點符號朗讀開關\n"
+"NVDA+s - 切換語音模式（關閉、講話、逼逼聲）\n"
+"NVDA+m - 鼠標所指物件朗讀開關\n"
+"NVDA+f - 在文件中報出目前的字形\n"
 "\n"
 "項目瀏覽:\n"
-"insert+九宮鍵加號 – 讀出現在的位置\n"
-"insert+九宮鍵5 - 目前的項目\n"
-"shift+insert+九宮鍵5 - 目前項目的大小與位置\n"
-"insert+九宮鍵8 - 上一曾項目\n"
-"insert+九宮鍵4 - 前一個項目\n"
-"insert+九宮鍵6 - 下一個項目\n"
-"insert+九宮鍵2 - 下一曾項目\n"
-"insert+九宮鍵減號 - 移到焦點項目\n"
-"insert+end - 移到並讀出狀態列\n"
-"insert+九宮鍵除號 – 把鼠標移到目前的項目\n"
-"insert+九宮鍵乘號 – 把瀏覽游標移到滑鼠游標\n"
-"insert+九宮鍵輸入鍵 – 嘗試啟動目前的物件\n"
+"NVDA+九宮鍵加號 – 讀出現在的位置\n"
+"NVDA+九宮鍵5 - 目前的項目\n"
+"shift+NVDA+九宮鍵5 - 目前項目的大小與位置\n"
+"NVDA+九宮鍵8 - 上一曾項目\n"
+"NVDA+九宮鍵4 - 前一個項目\n"
+"NVDA+九宮鍵6 - 下一個項目\n"
+"NVDA+九宮鍵2 - 下一曾項目\n"
+"NVDA+九宮鍵減號 - 移到焦點項目\n"
+"NVDA+end - 移到並讀出狀態列\n"
+"NVDA+九宮鍵除號 – 把鼠標移到目前的項目\n"
+"NVDA+九宮鍵乘號 – 把瀏覽游標移到滑鼠游標\n"
+"NVDA+九宮鍵輸入鍵 – 嘗試啟動目前的物件\n"
 "\n"
 "瀏覽目前的項目\n"
 "shift+九宮鍵7 - 移到最上行\n"
@@ -1733,13 +1711,13 @@ msgstr "關閉 NVDA"
 msgid "&NVDA"
 msgstr "&NVDA"
 
-# gui\__init__.py:149
-msgid "&User interface...\tCtrl+Shift+U"
-msgstr "使用者介面... &U\tCtrl+Shift+U"
+# gui\__init__.py:155
+msgid "&General settings...\tCtrl+Shift+G"
+msgstr "一般設定... &G\tCtrl+Shift+G"
 
-# gui\__init__.py:149
-msgid "Change user interface settings"
-msgstr "修改使用者介面設定"
+# gui\__init__.py:245
+msgid "General settings"
+msgstr "一般設定"
 
 # gui\__init__.py:152
 msgid " the synthesizer to use"
@@ -1851,10 +1829,6 @@ msgstr "未能儲存設定, 也許使用了唯讀的檔案系統"
 msgid "Press OK to quit NVDA"
 msgstr "按確定離開 NVDA"
 
-# gui\__init__.py:245
-msgid "User interface settings"
-msgstr "使用者介面設定"
-
 # gui\__init__.py:249
 msgid "Synthesizer"
 msgstr "語音合成器"
@@ -1929,6 +1903,14 @@ msgstr "在結束時儲存設定 &S"
 
 msgid "&Warn before exiting NVDA"
 msgstr "在關閉 NVDA 前須先確定 &W"
+
+# gui\settingsDialogs.py:64
+msgid "L&ogging level"
+msgstr "記錄等級 &L"
+
+# gui\settingsDialogs.py:68
+msgid "Log level"
+msgstr "記錄等級"
 
 # gui\settingsDialogs.py:59
 msgid "Error in %s language file"
@@ -2054,9 +2036,9 @@ msgstr "報出項目的快捷鍵 &K"
 msgid "Report object &position information"
 msgstr "報出項目排列的位置 &P"
 
-# gui\settingsDialogs.py:274
-msgid "Report object &group names"
-msgstr "報出項目組別的名稱 &G"
+# appModules\_default.py:412
+msgid "Report object &descriptions"
+msgstr "報出項目詳細資料"
 
 # gui\settingsDialogs.py:277
 msgid "Say object &state first"
@@ -2203,13 +2185,15 @@ msgstr "全部完"
 msgid "cap %s"
 msgstr "大寫 %s"
 
-# speech.py:235
-msgid "level %d"
-msgstr "等級 %d"
-
-# speech.py:239
-msgid "contains %s"
-msgstr "包含 %s"
+# IAccessibleHandler.py:190
+# speech.py:213
+# virtualBuffers\IAccessible\MSHTML.py:115
+# virtualBuffers\IAccessible\MSHTML.py:294
+# virtualBuffers\IAccessible\MSHTML.py:298
+# virtualBuffers\IAccessible\gecko.py:282
+# virtualBuffers\IAccessible\gecko.py:286
+msgid "not %s"
+msgstr "不是 %s"
 
 # NVDAObjects\IAccessible\MSHTML.py:317
 # NVDAObjects\IAccessible\MSHTML.py:323
@@ -2219,6 +2203,14 @@ msgstr "包含 %s"
 # textBuffer.py:549
 msgid "selected %s"
 msgstr "選取了 %s"
+
+# speech.py:235
+msgid "level %d"
+msgstr "等級 %d"
+
+# speech.py:239
+msgid "contains %s"
+msgstr "包含 %s"
 
 # controlTypes.py:98
 msgid "in"
