@@ -50,7 +50,7 @@ def setSynth(name):
 			if newSynth.hasVoice:
 				newSynth.voice=config.conf["speech"][name]["voice"]
 			if newSynth.hasVariant:
-				newSynth._set_variant(config.conf["speech"][name]["variant"])
+				newSynth.variant=config.conf["speech"][name]["variant"]
 			if newSynth.hasRate:
 				newSynth.rate=config.conf["speech"][name]["rate"]
 			if newSynth.hasPitch:
