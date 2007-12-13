@@ -17,9 +17,9 @@ class SynthDriver(silence.SynthDriver):
 
 	def initialize(self):
 		_espeak.initialize()
-		_espeak.setParameter(_espeak.espeakRATE,230,0)
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
+		_espeak.setParameter(_espeak.espeakRATE,200,0)
 		self._voiceList=_espeak.getVoiceList()
 
 	def speakText(self,text,wait=False,index=None):
@@ -55,7 +55,7 @@ class SynthDriver(silence.SynthDriver):
 		if not curVoice:
 			return 0
 		for index, voice in enumerate(self._voiceList):
-			if voice == curVoice:
+			if voice.identifier.split('+')[0] == curVoice.identifier.split('+')[0]:
 				return index + 1
 		return 0
 
