@@ -286,12 +286,10 @@ class Gecko(virtualBuffer):
 			info["stateTextFunc"]=lambda x: IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED) if x.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_CHECKED else _("not %s")%IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED)
 		elif role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			val=obj.value
-			if val=="":
+			if val in ("",None):
 				val="\0"
 			text=val
 			info["role"]=controlTypes.ROLE_EDITABLETEXT
-			if obj.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_PROTECTED:
-				info["typeString"]=_("protected %s")%info["typeString"]
 		elif role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			text="%s "%obj.value
 			info["role"]=controlTypes.ROLE_COMBOBOX
