@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1409\n"
+"Project-Id-Version: 1438\n"
 "POT-Creation-Date: 2007-05-17 17:30+東京 (標準時)\n"
-"PO-Revision-Date: 2007-12-10 14:11+0900\n"
+"PO-Revision-Date: 2007-12-14 12:34+0900\n"
 "Last-Translator: Katsutoshi Tsuji <tsuji-katsutoshi@mitsue.co.jp>\n"
 "Language-Team: JA <nvda-jp@comm.twcu.ac.jp>\n"
 "MIME-Version: 1.0\n"
@@ -14,58 +14,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:136
-#: controlTypes.py:158
-msgid "window"
-msgstr "ウインドウ"
-
-#: IAccessibleHandler.py:137
-#: characterSymbols.py:20
-#: controlTypes.py:179
-msgid "tab"
-msgstr "タブ"
-
-#: IAccessibleHandler.py:138
-#: controlTypes.py:165
-msgid "edit"
-msgstr "エディット"
-
-#: IAccessibleHandler.py:139
-#: controlTypes.py:166
-msgid "button"
-msgstr "ボタン"
-
-#: IAccessibleHandler.py:140
-msgid "Tree view"
-msgstr "ツリービュー"
-
-#: IAccessibleHandler.py:144
-msgid "sub menu"
-msgstr "サブメニュー"
-
-#: IAccessibleHandler.py:196
-#: speech.py:274
-#: virtualBuffers\IAccessible\MSHTML.py:115
-#: virtualBuffers\IAccessible\MSHTML.py:294
-#: virtualBuffers\IAccessible\MSHTML.py:298
-#: virtualBuffers\IAccessible\adobe.py:289
-#: virtualBuffers\IAccessible\adobe.py:293
-#: virtualBuffers\IAccessible\gecko.py:282
-#: virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "%sなし"
-
-#: NVDAObjects\IAccessible\__init__.py:68
-#: NVDAObjects\IAccessible\__init__.py:505
-#: NVDAObjects\IAccessible\sysListView32.py:83
+#: NVDAObjects\IAccessible\__init__.py:67
+#: NVDAObjects\IAccessible\__init__.py:503
+#: NVDAObjects\IAccessible\sysListView32.py:89
 msgid "%s of %s"
 msgstr "%sの%s"
 
-#: NVDAObjects\IAccessible\__init__.py:72
+#: NVDAObjects\IAccessible\__init__.py:71
 msgid "%s items"
 msgstr "%s項目"
 
-#: NVDAObjects\IAccessible\__init__.py:786
+#: NVDAObjects\IAccessible\__init__.py:784
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
 msgid "%d items"
 msgstr "%d個の項目"
@@ -192,8 +151,8 @@ msgstr "仮想バッファパススルー"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:409
 #: speech.py:415
+#: speech.py:421
 msgid "off"
 msgstr "オフ"
 
@@ -211,7 +170,7 @@ msgstr "オフ"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:404
+#: speech.py:410
 msgid "on"
 msgstr "オン"
 
@@ -426,11 +385,6 @@ msgstr "現在のナビゲーターオブジェクトがどこに位置してい
 #: appModules\_default.py:346
 #: appModules\_default.py:358
 #: appModules\_default.py:400
-#: textBuffer.py:363
-#: textBuffer.py:390
-#: textBuffer.py:411
-#: textBuffer.py:432
-#: virtualBuffers\__init__.py:272
 msgid "top"
 msgstr "トップ"
 
@@ -449,11 +403,6 @@ msgstr "現在のナビゲーターオブジェクトでレビューカーソル
 #: appModules\_default.py:380
 #: appModules\_default.py:388
 #: appModules\_default.py:422
-#: textBuffer.py:368
-#: textBuffer.py:381
-#: textBuffer.py:402
-#: textBuffer.py:423
-#: virtualBuffers\__init__.py:287
 msgid "bottom"
 msgstr "ボトム"
 
@@ -696,7 +645,6 @@ msgid "CC:"
 msgstr "CC:"
 
 #: appModules\msimn.py:26
-msgid "Subject:"
 msgstr "件名"
 
 #: appModules\msimn.py:27
@@ -713,7 +661,6 @@ msgid "Forward to:"
 msgstr "Forward to:"
 
 #: appModules\msimn.py:30
-msgid "Answer to:"
 msgstr "Answer to:"
 
 #: appModules\msimn.py:31
@@ -755,13 +702,18 @@ msgstr "sent: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:66
+#: speech.py:67
 msgid "blank"
 msgstr "空行"
 
 #: characterSymbols.py:19
 msgid "null"
 msgstr "ヌル"
+
+#: characterSymbols.py:20
+#: controlTypes.py:179
+msgid "tab"
+msgstr "タブ"
 
 #: characterSymbols.py:21
 msgid "line feed"
@@ -904,6 +856,10 @@ msgstr "チルダ"
 msgid "unknown object"
 msgstr "未定義オブジェクト"
 
+#: controlTypes.py:158
+msgid "window"
+msgstr "ウインドウ"
+
 #: controlTypes.py:159
 msgid "title bar"
 msgstr "タイトルバー"
@@ -927,6 +883,14 @@ msgstr "ラジオボタン"
 #: controlTypes.py:164
 msgid "text"
 msgstr "テキスト"
+
+#: controlTypes.py:165
+msgid "edit"
+msgstr "エディット"
+
+#: controlTypes.py:166
+msgid "button"
+msgstr "ボタン"
 
 #: controlTypes.py:167
 msgid "menu bar"
@@ -1475,7 +1439,7 @@ msgid "subMenu"
 msgstr "サブメニュー"
 
 #: controlTypes.py:310
-#: virtualBuffers\IAccessible\MSHTML.py:287
+#: virtualBuffers\IAccessible\MSHTML.py:286
 msgid "protected"
 msgstr "保護"
 
@@ -1589,11 +1553,10 @@ msgstr ""
 "insert+nを押すことで、このウインドウをいつでも表示できます。NVDAを終了させることなくこのウインドウを閉じるには、alt+f4を押します。\n"
 "\n"
 "NVDAを完全に終了させるには、任意の場所でinsert+qを押すか、このウインドウ内のNVDAのメニューから[終了]を選択してください。いずれの場合もNVDA終了確認のダイアログボックスが表示されますので、OKまたはキャンセルボタンを押して決定してください。\n"
-"\n"
-"音声設定やキーエコー、ツールチップの読み方などの設定を行うには、\n"
+"音声やキーボード、ツールチップの読み方などの設定を行うには、\n"
 "altキーを押してメニューバーに移動し、カーソルキーを使って目的のメニューまで移動してください。多くの項目においてエンターキーを押すことで個別設定を変更するためのダイアログボックスが表示されます。ほとんどの設定（例えば読み上げスピードなど）は変更を適用後すぐに反映されますので、お好みの個別設定を簡単に確認できます。キャンセルボタンでダイアログボックスを終了させた場合は、個別設定は変更を行う前の状態に戻ります。\n"
 "\n"
-"ctrl+sキーを押すかNVDAメニューの中の[設定の保存]を行わない限り、初期状態ではNVDA次回起動時には個別の設定情報は反映されません。NVDAの終了時に、自動的に設定情報を保存することもできます。設定メニューの中にある[一般設定]の中の[終了時、設定情報を保存する]チェックボックスをOnにしてOKボタンを押してください。\n"
+"Ctrl+sキーを押すかNVDAメニューの中の[設定の保存]を行わない限り、初期状態ではNVDA次回起動時には個別の設定情報は反映されません。NVDAの終了時に、自動的に設定情報を保存することもできます。設定メニューの中にある[一般設定]の中の[終了時、設定情報を保存する]チェックボックスをOnにしてOKボタンを押してください。\n"
 "\n"
 "NVDA利用時の便利なキーコマンドは\n"
 "\n"
@@ -1617,7 +1580,7 @@ msgstr ""
 "NVDA+f - 現在のフォントの読み上げ（ドキュメントウインドウ）\n"
 "\n"
 "オブジェクトの操作\n"
-"NVDA+テンキーマイナス - 現在位置の確認\n"
+"NVDA+テンキープラス - 現在位置の確認\n"
 "NVDA+テンキー5 - 現在のオブジェクト\n"
 "shift+NVDA+テンキー5 - 現在のオブジェクトの場所と長さ\n"
 "NVDA+テンキー8 - 親オブジェクト\n"
@@ -1647,7 +1610,7 @@ msgstr ""
 
 #: gui\__init__.py:140
 msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "保存された設定状態に戻す(&R)\tctrl+r"
+msgstr "保存された設定状態に戻す(&R)\tCtrl+r"
 
 #: gui\__init__.py:140
 msgid "Reset all setting back to nvda.ini"
@@ -1655,7 +1618,7 @@ msgstr "すべての設定情報をnvda.iniのものにリセットします"
 
 #: gui\__init__.py:142
 msgid "&Save configuration\tCtrl+S"
-msgstr "設定情報の保存(&S)\tctrl+s"
+msgstr "設定情報の保存(&S)\tCtrl+s"
 
 #: gui\__init__.py:142
 msgid "Write the current configuration to nvda.ini"
@@ -1690,11 +1653,11 @@ msgstr "使用する出力先の選択"
 
 #: gui\__init__.py:153
 msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "出力先の選択(&S)...\tctrl+shift+s"
+msgstr "出力先の選択(&S)...\tCtrl+shift+s"
 
 #: gui\__init__.py:156
 msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "音声設定(&V)...\tctrl+shift+v"
+msgstr "音声設定(&V)...\tCtrl+shift+v"
 
 #: gui\__init__.py:156
 msgid "Choose the voice, rate, pitch and volume  to use"
@@ -1702,7 +1665,7 @@ msgstr "使用する音声、高さ、速さ、音量の選択"
 
 #: gui\__init__.py:159
 msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "キー入力エコー(&K)...\tctrl+k"
+msgstr "キーボード設定(&K)...\tCtrl+k"
 
 #: gui\__init__.py:159
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
@@ -1710,7 +1673,7 @@ msgstr "入力文字、入力単語、またはコマンドキーの読み方の
 
 #: gui\__init__.py:162
 msgid "&Mouse settings...\tCtrl+M"
-msgstr "マウス設定(&M)...\tctrl+m"
+msgstr "マウス設定(&M)...\tCtrl+m"
 
 #: gui\__init__.py:162
 msgid "Change reporting of mouse sape, object under mouse"
@@ -1718,7 +1681,7 @@ msgstr "マウスポインタ形状の変更や、マウスポインタ位置の
 
 #: gui\__init__.py:165
 msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "オブジェクトの説明(&O)...\tctrl+o"
+msgstr "オブジェクトの説明(&O)...\tCtrl+o"
 
 #: gui\__init__.py:165
 msgid "Change reporting of objects"
@@ -1730,7 +1693,7 @@ msgstr "仮想バッファ固有の設定"
 
 #: gui\__init__.py:168
 msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "仮想バッファ(&B)...\tctrl+b"
+msgstr "仮想バッファ(&B)...\tCtrl+b"
 
 #: gui\__init__.py:171
 msgid "Change Settings of document properties"
@@ -1738,7 +1701,7 @@ msgstr "ドキュメントの書式情報の変更に関する設定"
 
 #: gui\__init__.py:171
 msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "書式情報(&F)...\tctrl+f"
+msgstr "書式情報(&F)...\tCtrl+f"
 
 #: gui\__init__.py:173
 #: gui\__init__.py:174
@@ -1928,7 +1891,7 @@ msgstr "高さ(&P)"
 
 #: gui\settingsDialogs.py:221
 msgid "&Inflection"
-msgstr "屈折(&I)"
+msgstr "抑揚(&I)"
 
 #: gui\settingsDialogs.py:230
 msgid "V&olume"
@@ -1952,7 +1915,7 @@ msgstr "大文字にビープ音を付ける(&B)"
 
 #: gui\settingsDialogs.py:328
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "キャップスロックキーをNVDAの制御キーとして使用"
+msgstr "CapsLockキーをNVDAの制御キーとして使用"
 
 #: gui\settingsDialogs.py:331
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -2003,8 +1966,8 @@ msgid "Report object &position information"
 msgstr "オブジェクト位置情報の通知(&P)"
 
 #: gui\settingsDialogs.py:410
-msgid "Report object &group names"
-msgstr "オブジェクトとグループ名の通知(&G)"
+msgid "Report object &descriptions"
+msgstr "オブジェクトの説明の通知"
 
 #: gui\settingsDialogs.py:413
 msgid "Say object &state first"
@@ -2148,6 +2111,16 @@ msgstr "%sカーソル"
 msgid "Sets the navigator object to the object that is directly under the mouse pointer"
 msgstr "ナビゲーターオブジェクトを現在のマウスポインタの位置に合わせます"
 
+#: nvda1151\appModules\_default.py:160
+#: nvda1154\appModules\_default.py:160
+#: nvda1262\appModules\_default.py:163
+#: nvda1279\appModules\_default.py:163
+#: nvda1363\appModules\_default.py:201
+#: nvda1383\appModules\_default.py:200
+#: nvda\appModules\_default.py:201
+msgid "Reports the current navigator object"
+msgstr "現在のナビゲーターオブジェクトの読み上げ"
+
 #: nvda1151\appModules\_default.py:576
 #: nvda1154\appModules\_default.py:576
 #: nvda1262\appModules\_default.py:580
@@ -2155,24 +2128,43 @@ msgstr "ナビゲーターオブジェクトを現在のマウスポインタの
 msgid "%s copyed to clipboard"
 msgstr "%sをクリップボードにコピーしました"
 
+#: nvda1151\appModules\_default.py:578
+#: nvda1154\appModules\_default.py:578
+#: nvda1262\appModules\_default.py:582
+#: nvda1279\appModules\_default.py:582
+#: nvda1363\appModules\_default.py:201
+#: nvda1383\appModules\_default.py:200
+#: nvda\appModules\_default.py:201
+msgid "Copies name and value of current navigator object to the clipboard"
+msgstr "現在のナビゲーターオブジェクト名と状態をクリップボードにコピー"
+
+#: nvda1363\appModules\_default.py:201
+#: nvda1383\appModules\_default.py:200
+#: nvda\appModules\_default.py:201
+msgid "or, if pressed three times,"
+msgstr "または、3回続けて押されたら"
+
 #: sayAllHandler.py:135
 msgid "end of text"
 msgstr "テキスト終了"
 
-#: speech.py:204
+#: speech.py:205
 msgid "cap %s"
 msgstr "キャップ %s"
 
-#: speech.py:300
-msgid "level %d"
-msgstr "レベル%d"
+#: speech.py:271
+#: virtualBuffers\IAccessible\MSHTML.py:114
+#: virtualBuffers\IAccessible\MSHTML.py:293
+#: virtualBuffers\IAccessible\MSHTML.py:297
+#: virtualBuffers\IAccessible\adobe.py:289
+#: virtualBuffers\IAccessible\adobe.py:293
+#: virtualBuffers\IAccessible\gecko.py:282
+#: virtualBuffers\IAccessible\gecko.py:286
+msgid "not %s"
+msgstr "%sなし"
 
-#: speech.py:304
-msgid "contains %s"
-msgstr "%s"
-
-#: speech.py:308
-#: speech.py:476
+#: speech.py:283
+#: speech.py:482
 #: textBuffer.py:536
 #: textBuffer.py:540
 #: textBuffer.py:542
@@ -2180,23 +2172,31 @@ msgstr "%s"
 msgid "selected %s"
 msgstr "%s選択"
 
-#: speech.py:395
+#: speech.py:304
+msgid "level %d"
+msgstr "レベル%d"
+
+#: speech.py:308
+msgid "contains %s"
+msgstr "%s"
+
+#: speech.py:401
 msgid "in"
 msgstr "中"
 
-#: speech.py:400
-#: speech.py:418
+#: speech.py:406
+#: speech.py:424
 msgid "out of"
 msgstr "の外"
 
-#: speech.py:482
+#: speech.py:488
 #: textBuffer.py:544
 #: textBuffer.py:546
 #: textBuffer.py:550
 msgid "unselected %s"
 msgstr "%s未選択"
 
-#: speech.py:484
+#: speech.py:490
 msgid "selection deleted"
 msgstr "選択範囲削除"
 
@@ -2323,26 +2323,26 @@ msgid ""
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "Copyright (C) 2006-2007 NVDAコントリビューターズ <http://www.nvda-project.org/>\n"
-"%(name)sはGNU 一般公衆利用許諾契約書によって保護されています。この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。この規定は、オリジナルのソフトウェアと階量販を含むソフトウェアのコピー、さらにこのソフトウェアのコードを利用したソフトウェアにも適用されます。\n"
+"%(name)sはGNU 一般公衆利用許諾契約書によって保護されています。この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。この規定は、オリジナルのソフトウェアと改良販を含むソフトウェアのコピー、さらにこのソフトウェアのコードを利用したソフトウェアにも適用されます。\n"
 "本ライセンスについての詳細は、いつでもオンラインで:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "にアクセスして確認できるほか、本ソフトウェアとともに配布されているCopying.txtで確認できます。"
 
-#: virtualBuffers\IAccessible\MSHTML.py:136
+#: virtualBuffers\IAccessible\MSHTML.py:135
 #: virtualBuffers\IAccessible\adobe.py:159
 #: virtualBuffers\IAccessible\gecko.py:157
 msgid "loading document %s"
 msgstr "%sドキュメントを読み込み中"
 
-#: virtualBuffers\IAccessible\MSHTML.py:144
+#: virtualBuffers\IAccessible\MSHTML.py:143
 #: virtualBuffers\IAccessible\adobe.py:168
 #: virtualBuffers\IAccessible\gecko.py:166
 msgid "done"
 msgstr "完了"
 
-#: virtualBuffers\IAccessible\MSHTML.py:239
-#: virtualBuffers\IAccessible\MSHTML.py:242
-#: virtualBuffers\IAccessible\MSHTML.py:249
+#: virtualBuffers\IAccessible\MSHTML.py:238
+#: virtualBuffers\IAccessible\MSHTML.py:241
+#: virtualBuffers\IAccessible\MSHTML.py:248
 #: virtualBuffers\IAccessible\adobe.py:246
 #: virtualBuffers\IAccessible\adobe.py:257
 #: virtualBuffers\IAccessible\gecko.py:239
@@ -2350,8 +2350,8 @@ msgstr "完了"
 msgid "with %s items"
 msgstr "%s項目"
 
-#: virtualBuffers\IAccessible\MSHTML.py:245
-#: virtualBuffers\IAccessible\MSHTML.py:252
+#: virtualBuffers\IAccessible\MSHTML.py:244
+#: virtualBuffers\IAccessible\MSHTML.py:251
 #: virtualBuffers\IAccessible\adobe.py:252
 #: virtualBuffers\IAccessible\adobe.py:263
 #: virtualBuffers\IAccessible\gecko.py:245
@@ -2359,8 +2359,8 @@ msgstr "%s項目"
 msgid "bullet"
 msgstr "バレット"
 
-#: virtualBuffers\IAccessible\MSHTML.py:248
-#: virtualBuffers\IAccessible\MSHTML.py:255
+#: virtualBuffers\IAccessible\MSHTML.py:247
+#: virtualBuffers\IAccessible\MSHTML.py:254
 #: virtualBuffers\IAccessible\adobe.py:256
 #: virtualBuffers\IAccessible\adobe.py:269
 #: virtualBuffers\IAccessible\gecko.py:249
@@ -2368,16 +2368,15 @@ msgstr "バレット"
 msgid "definition"
 msgstr "定義"
 
-#: virtualBuffers\IAccessible\MSHTML.py:283
+#: virtualBuffers\IAccessible\MSHTML.py:282
 msgid "file upload"
 msgstr "ファイルアップロード"
 
-#: virtualBuffers\IAccessible\MSHTML.py:316
+#: virtualBuffers\IAccessible\MSHTML.py:315
 msgid "clickable"
 msgstr "クリッカブル"
 
 #: virtualBuffers\IAccessible\adobe.py:301
-#: virtualBuffers\IAccessible\gecko.py:294
 msgid "protected %s"
 msgstr "保護された%s"
 
