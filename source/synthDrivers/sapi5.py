@@ -89,7 +89,7 @@ class SynthDriver(silence.SynthDriver):
 		self.tts=comtypes.client.CreateObject('sapi.SPVoice')
 		if config.conf["speech"]["outputDevice"] >=0:
 			self.tts.audioOutput(self.tts.getAudioOutputs()[config.conf["speech"]["outputDevice"]])
-		self.tts.Voice(self.tts.GetVoices()[value-1])
+		self.tts.Voice=self.tts.GetVoices()[value-1]
 		self._voice=value
 
 
