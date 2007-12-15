@@ -40,7 +40,7 @@ class SynthDriver(silence.SynthDriver):
 		try:
 			self.tts = comtypes.client.CreateObject('sapi.SPVoice')
 			self._pitch=50
-			self._voice=1
+			self.voice=1
 			return True
 		except:
 			return False
