@@ -135,3 +135,34 @@ class LinksListDialog(wx.Dialog, ModalDialog):
 			return response == self.ID_ACTIVATE, sel, self.list.GetItemText(sel)
 		else:
 			return None
+
+class TextEntriesDialog(wx.Dialog, ModalDialog):
+	selfIsDialog = True
+
+	def __init__(self, messages=(), title=_("NVDA"), defaults=(), style=wx.OK|wx.CANCEL, callback=None):
+		ModalDialog.__init__(self, callback)
+		def makeDialog():
+			wx.Dialog.__init__(self, None, -1, title)
+			mainSizer = wx.BoxSizer(wx.VERTICAL)
+			self.edits=[]
+			for counter in range(0,len(messages)):
+				mainSizer.Add(wx.StaticText(self, -1, label=messages[counter]))
+				self.edits.append(wx.TextCtrl(self,wx.NewId()))
+				if len(defaults)>counter:
+					self.edits[counter].SetValue(defaults[counter])
+				mainSizer.Add(self.edits[counter])
+			mainSizer.Add(self.CreateButtonSizer(style), flag=wx.BOTTOM)
+			mainSizer.Fit(self)
+			self.SetSizer(mainSizer)
+			self.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.ID_OK),id=wx.ID_OK)
+			self.edits[0].SetFocus()
+		self.makeDialog = makeDialog
+
+	def getResponse(self, response):
+		if response == wx.ID_OK:
+			value=[]
+			for counter in range(0,len(self.edits)):
+				value.append(self.edits[counter].GetValue())
+			return value
+		else:
+			return None

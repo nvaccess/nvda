@@ -13,9 +13,10 @@ import languageHandler
 import speech
 import gui
 import globalVars
-from wx.lib.masked import textctrl
 from ctypes import *
 from ctypes.wintypes import *
+import userDictHandler
+import scriptUI
 
 MAXPNAMELEN=32
 
@@ -257,7 +258,7 @@ class voiceSettingsDialog(wx.Dialog):
 		self.voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		getSynth().voice=evt.GetSelection()+1
+		changeVoice(getSynth(),evt.GetSelection()+1)
 		rate=getSynth().rate
 		self.rateSlider.SetValue(rate)
 		pitch=getSynth().pitch
@@ -287,7 +288,7 @@ class voiceSettingsDialog(wx.Dialog):
 
 	def onCancel(self,evt):
 		if getSynth().hasVoice:
-			getSynth().voice=config.conf["speech"][getSynth().name]["voice"]
+			changeVoice(getSynth(),config.conf["speech"][getSynth().name]["voice"])
 		if getSynth().hasVariant:
 			getSynth().variant=config.conf["speech"][getSynth().name]["variant"]
 		if getSynth().hasRate:
@@ -577,3 +578,73 @@ class documentFormattingDialog(wx.Dialog):
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		self.Destroy()
+
+class temporaryDictionaryDialog(wx.Dialog):
+
+	def __init__(self,parent,ID,title):
+		wx.Dialog.__init__(self,parent,ID,title)
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		tempDictListID=wx.NewId()
+		self.entries=[]
+		self.tempDictList=wx.ListCtrl(self,tempDictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
+		for entry in userDictHandler.dictionaries["temp"]:
+			self.tempDictList.InsertStringItem(self.tempDictList.GetItemCount(),"%s\t%s"%(entry.pattern,entry.replacement))
+		self.editingIndex=-1
+		settingsSizer.Add(self.tempDictList)
+		addButtonID=wx.NewId()
+		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
+		settingsSizer.Add(addButton)
+		editButtonID=wx.NewId()
+		editButton=wx.Button(self,editButtonID,_("&edit"),wx.DefaultPosition)
+		settingsSizer.Add(editButton)
+		removeButtonID=wx.NewId()
+		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
+		settingsSizer.Add(removeButton)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
+		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
+		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
+		self.tempDictList.SetFocus()
+
+	def onOk(self,evt):
+		del userDictHandler.dictionaries["temp"][:]
+		itemCount=self.tempDictList.GetItemCount()
+		if itemCount>0:
+			for num in range(0,itemCount):
+				temp=self.tempDictList.GetItemText(num).split("\t")
+				userDictHandler.dictionaries["temp"].append(userDictHandler.UserDictEntry(temp[0],temp[1]))
+		self.Destroy()
+
+	def OnAddClick(self,evt):
+		if self.editingIndex==-1:
+			addEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement")),title=_("Add an entry"),callback=self.onDialog)
+			addEntryDialog.run()
+
+	def OnEditClick(self,evt):
+		if (self.tempDictList.GetSelectedItemCount()==1) and (self.editingIndex==-1):
+			self.editingIndex=self.tempDictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
+			editEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement")),title=_("Edit an entry"),defaults=self.tempDictList.GetItemText(self.editingIndex).split("\t"),callback=self.onDialog)
+			editEntryDialog.run()
+
+	def OnRemoveClick(self,evt):
+		index=self.tempDictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
+		if (index!=self.editingIndex)and(self.tempDictList.GetSelectedItemCount()==1):
+			self.tempDictList.DeleteItem(index)
+		self.tempDictList.SetFocus()
+
+	def onDialog(self,texts):
+		if texts is not None:
+			if self.editingIndex>=0:
+				self.tempDictList.SetStringItem(self.editingIndex,0,"%s\t%s"%(texts[0],texts[1]),-1)
+			else:
+				self.tempDictList.InsertStringItem(self.tempDictList.GetItemCount(),"%s\t%s"%(texts[0],texts[1]))
+		self.editingIndex=-1
+		self.tempDictList.SetFocus()
+
+	

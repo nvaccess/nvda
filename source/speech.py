@@ -23,6 +23,7 @@ import textHandler
 import characterSymbols
 import NVDAObjects
 import queueHandler
+import userDictHandler
 
 speechMode_off=0
 speechMode_beeps=1
@@ -31,9 +32,6 @@ speechMode=2
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
-re_capAfterNoCapsInWord=re.compile(r"([a-z])([A-Z])")
-re_singleCapAfterCapsInWord=re.compile(r"([A-Z])([A-Z][a-z])")
-re_numericAfterAlphaInWord=re.compile(r"([a-zA-Z])([0-9])")
 re_sentence_dot=re.compile(r"(\w|\)|\"|')\.(\s|$)")
 re_sentence_comma=re.compile(r"(\w|\)|\"|'),(\s|$)")
 re_sentence_question=re.compile(r"(\w|\))\?(\s|$)")
@@ -68,25 +66,7 @@ def processTextSymbols(text,expandPunctuation=False):
 	#Convert non-breaking spaces to spaces
 	if isinstance(text,basestring):
 		text=text.replace(u'\xa0',u' ')
-	#Limit groups of the same character to 5 or less.
-	trunkatedText=""
-	lastChar=""
-	sameCharCount=0
-	for char in text:
-		if char==lastChar:
-			sameCharCount+=1
-		else:
-			sameCharCount=1
-		if sameCharCount<11:
-			trunkatedText="".join([trunkatedText,char])
-		lastChar=char
-	text=trunkatedText
-	#breaks up words that use a capital letter to denote another word
-	text=re_capAfterNoCapsInWord.sub(r"\1 \2",text)
-	#Like the last one, but this breaks away the last capital letter from an entire group of capital letters imbedded in a word (e.g. NVDAObject) 
-	text=re_singleCapAfterCapsInWord.sub(r"\1 \2",text)
-	#Breaks words that have numbers at the end
-	text=re_numericAfterAlphaInWord.sub(r"\1 \2",text)
+	text = userDictHandler.processText(text)
 	#expands ^ and ~ so they can be used as protector symbols
 	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
 	#Expands any other symbols and removes ^ and ~ protectors
@@ -118,7 +98,7 @@ def processTextSymbols(text,expandPunctuation=False):
 			buf+="~"
 			continue
 		if not protector:
-			if (char not in characterSymbols.blankList) and characterSymbols.names.has_key(char):
+			if (char not in characterSymbols.blankList) and char in characterSymbols.names:
 				buf+=" ^%s~ "%characterSymbols.names[char]
 			else:
 				buf+=char

@@ -104,6 +104,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import gui
 		globalVars.log.debug("Initializing GUI")
 		gui.initialize(app)
+		import userDictHandler
+		globalVars.log.debug("User Dictionary processing")
+		userDictHandler.initialize()
 		import speech
 		globalVars.log.debug("Initializing speech")
 		speech.initialize()

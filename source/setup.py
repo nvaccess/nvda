@@ -64,5 +64,6 @@ setup(
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.png")),
+		("userdicts", glob("userdicts/*.dic")),
 	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers'),
 )

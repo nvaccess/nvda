@@ -10,11 +10,17 @@ import queueHandler
 import speech
 import globalVars
 from  _synthSettingsRing import SynthSettingsRing
+import userDictHandler
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
 __path__=['.\\synthDrivers']
 
 _curSynth=None
+
+def changeVoice(synth, voice):
+	v = synth.getVoiceName(voice)
+	userDictHandler.dictionaries["voice"].load("%s/%s-%s.dic"%(userDictHandler.userDictsPath,synth.name,v))
+	synth.voice = voice
 
 def getSynthList():
 	synthList=[]
@@ -48,7 +54,7 @@ def setSynth(name):
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
 			if newSynth.hasVoice:
-				newSynth.voice=config.conf["speech"][name]["voice"]
+				changeVoice(newSynth,config.conf["speech"][name]["voice"])
 			if newSynth.hasVariant:
 				newSynth.variant=config.conf["speech"][name]["variant"]
 			if newSynth.hasRate:

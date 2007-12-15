@@ -16,6 +16,8 @@ import queueHandler
 import pythoncom
 import core
 from settingsDialogs import *
+import userDictHandler
+import codecs
 
 ### Constants
 appTitle = "NVDA"
@@ -141,6 +143,24 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self,id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
 		menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tCtrl+S"), _("Write the current configuration to nvda.ini"))
 		wx.EVT_MENU(self, wx.ID_SAVE, self.onSaveConfigurationCommand)
+		subMenu_userDicts = wx.Menu()
+		id_reloadDefaultDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_reloadDefaultDictionaryCommand,_("Reload &default dictionary"),_("Loads the user dictionary file"))
+		wx.EVT_MENU(self,id_reloadDefaultDictionaryCommand,self.onReloadDefaultDictionaryCommand)
+		id_editDefaultDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_editDefaultDictionaryCommand,_("&Edit default dictionary in notepad"),_("Opens default user dictionary in notepad and creates it if it does not exist"))
+		wx.EVT_MENU(self,id_editDefaultDictionaryCommand,self.onEditDefaultDictionaryCommand)
+		id_reloadVoiceDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_reloadVoiceDictionaryCommand,_("Reload &voice-specific dictionary"),_("Loads the user dictionary file"))
+		wx.EVT_MENU(self,id_reloadVoiceDictionaryCommand,self.onReloadVoiceDictionaryCommand)
+		id_editVoiceDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_editVoiceDictionaryCommand,_("&Edit Voice dictionary in notepad"),_("Opens Voice user dictionary in notepad and creates it if it does not exist"))
+		wx.EVT_MENU(self,id_editVoiceDictionaryCommand,self.onEditVoiceDictionaryCommand)
+		id_temporaryDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_temporaryDictionaryCommand,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		wx.EVT_MENU(self,id_temporaryDictionaryCommand,self.onTemporaryDictionaryCommand)
+		menu_NVDA.AppendMenu(-1,_("User &dictionaries"),subMenu_userDicts)
+		menu_NVDA.AppendSeparator()
 		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
 		menuBar.Append(menu_NVDA,_("&NVDA"))
@@ -224,6 +244,37 @@ class MainFrame(wx.Frame):
 			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("configuration saved"))
 		except:
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
+
+	def onReloadDefaultDictionaryCommand(self,evt):
+		try:
+			userDictHandler.dictionaries["default"].load(userDictHandler.getFileName("default"))
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Loaded default user dictionary"))
+		except:
+			speech.speakMessage(_("Can't load default user dictionary"),wait=True)
+
+	def onEditDefaultDictionaryCommand(self,evt):
+		pipe=os.popen("notepad %s"%userDictHandler.getFileName("default"))
+		os.pclose(pipe)
+
+	def onReloadVoiceDictionaryCommand(self,evt):
+		try:
+			userDictHandler.dictionaries["voice"].load(userDictHandler.getFileName("voice"))
+			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Loaded voice-specific user dictionary"))
+		except:
+			speech.speakMessage(_("Can't load voice-specific user dictionary"),wait=True)
+
+	def onEditVoiceDictionaryCommand(self,evt):
+		fileName=userDictHandler.getFileName("voice")
+		if not os.path.isfile(fileName): 
+			file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+			file.write("# " + _("nvda voice-specific dictionary"))
+			file.close()
+		pipe=os.popen("notepad %s"%fileName)
+		os.pclose(pipe)
+
+	def onTemporaryDictionaryCommand(self,evt):
+		d=temporaryDictionaryDialog(self,-1,_("Temporary dictionary"))
+		d.Show(True)
 
 	def onExitCommand(self, evt):
 		canExit=False
