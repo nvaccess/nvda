@@ -34,7 +34,7 @@ class UserDict(list):
 			return
 		file = codecs.open(fileName,"r","utf_8_sig",errors="replace")
 		for line in filter(lambda x: not x.startswith('#') and not x.isspace(), file.readlines()):
-			temp = line.replace("\n","").split("\t")
+			temp = line.replace("\n","").replace("\r","").split("\t")
 			if len(temp) ==2:
 				self.append(UserDictEntry(temp[0],temp[1]))
 			else:
