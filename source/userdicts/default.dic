@@ -13,4 +13,4 @@
 #numbers beginning on the zero
 \b(0+)(\d+)	\1 \2
 #Breaks words that have numbers at the end
-([\u\l])(\d+)	\1 \2
+((?:(?=\D)\w)+)(\d+)	\1 \2
