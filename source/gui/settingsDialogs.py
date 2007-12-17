@@ -589,7 +589,9 @@ class DictionaryDialog(wx.Dialog):
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		dictListID=wx.NewId()
-		self.entries=[]
+		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
+		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
+		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
 		self.dictList.InsertColumn(0,_("Pattern"))
 		self.dictList.InsertColumn(1,_("Replacement"))
@@ -597,7 +599,8 @@ class DictionaryDialog(wx.Dialog):
 		for entry in self.tempUserDict:
 			self.dictList.Append((entry.pattern,entry.replacement,entry.comment))
 		self.editingIndex=-1
-		settingsSizer.Add(self.dictList)
+		entriesSizer.Add(self.dictList)
+		settingsSizer.Add(entriesSizer)
 		addButtonID=wx.NewId()
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		settingsSizer.Add(addButton)
