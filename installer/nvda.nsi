@@ -181,11 +181,11 @@ SetOutPath "$INSTDIR\"
 ;!insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\${PRODUCT}"
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\Readme.lnk" "$INSTDIR\${READMEFILE}" "" "$INSTDIR\${READMEFILE}" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\User Guide.lnk" "$INSTDIR\documentation\user guide.txt" "" "$INSTDIR\documentation\Users Guide.txt" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_readme).lnk" "$INSTDIR\${READMEFILE}" "" "$INSTDIR\${READMEFILE}" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_userguide).lnk" "$INSTDIR\documentation\user guide.txt" "" "$INSTDIR\documentation\Users Guide.txt" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\WebSite.lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\NVDA Info WIKI.lnk" "http://wiki.nvda-project.org" "" "http://wiki.nvda-project.org" 0
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_wiki).lnk" "http://wiki.nvda-project.org" "" "http://wiki.nvda-project.org" 0
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 UnRegDll $INSTDIR\LIB\ia2.dll
@@ -195,7 +195,7 @@ SectionEnd
 
 Section Uninstaller
  SetShellVarContext all
-CreateShortCut "$SMPROGRAMS\NVDA\Uninstall.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
+CreateShortCut "$SMPROGRAMS\NVDA\$(shortcut_uninstall).lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayName" "${PRODUCT} ${VERSION}"
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayVersion" "${VERSION}"
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "URLInfoAbout" "http://www.nvda-project.org/"
@@ -249,7 +249,7 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PRODUCT}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
 Delete /RebootOK "$INSTDIR\*.*"
 RMDir /RebootOK /r "$INSTDIR\*"
-StrCmp $PreserveConfig 1 +1 NoPreserveConfig 
+StrCmp $PreserveConfig 1 +1 NoPreserveConfig
 CopyFiles /SILENT "$PLUGINSDIR\nvda.ini" "$INSTDIR"
 goto End
 NoPreserveConfig:
