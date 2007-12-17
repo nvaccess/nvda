@@ -273,7 +273,7 @@ class MainFrame(wx.Frame):
 		os.pclose(pipe)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=temporaryDictionaryDialog(self,-1,_("Temporary dictionary"))
+		d=DictionaryDialog(self,-1,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
 		d.Show(True)
 
 	def onExitCommand(self, evt):

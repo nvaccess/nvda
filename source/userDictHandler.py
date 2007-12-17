@@ -16,10 +16,11 @@ userDictsPath="userdicts"
 
 class UserDictEntry:
 
-	def __init__(self, pattern, replacement):
+	def __init__(self, pattern, replacement,comment):
 		self.pattern = pattern
 		self.compiled = re.compile(pattern)
 		self.replacement = replacement
+		self.comment=comment
 
 	def sub(self, text):
 		return self.compiled.sub(self.replacement, text)
@@ -27,21 +28,43 @@ class UserDictEntry:
 class UserDict(list):
 
 	def load(self, fileName):
+		comment=""
 		del self[:]
 		globalVars.log.debug("Loading user dictionary '%s'..." % fileName)
 		if not os.path.isfile(fileName): 
 			globalVars.log.debug("file '%s' not found." % fileName)
 			return
 		file = codecs.open(fileName,"r","utf_8_sig",errors="replace")
-		for line in filter(lambda x: not x.startswith('#') and not x.isspace(), file.readlines()):
-			temp = line.replace("\n","").replace("\r","").split("\t")
-			if len(temp) ==2:
-				self.append(UserDictEntry(temp[0],temp[1]))
+		for line in file.readlines():
+			if line.isspace():
+				comment=""
+				continue
+			line=line.replace('\n','').replace('\r','')
+			if line.startswith('#'):
+				if comment:
+					comment+=" "
+				comment+=line[1:]
 			else:
-				globalVars.log.warning("can't parse line '%s'" % line)
+				temp=line.split("\t")
+				if len(temp) ==2:
+					self.append(UserDictEntry(temp[0],temp[1],comment))
+					comment=""
+				else:
+					globalVars.log.warning("can't parse line '%s'" % line)
 		globalVars.log.debug("%d loaded records." % len(self))
 		file.close()
+		self.fileName=fileName
 		return
+
+	def save(self,fileName=None):
+		if not fileName:
+			fileName=self.fileName
+		file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+		for entry in self:
+			if entry.comment:
+				file.write("#%s"%entry.comment)
+			file.write("%s\t%s"%(entry.pattern,entry.replacement))
+		file.close()
 
 	def sub(self, text):
 		for entry in self:

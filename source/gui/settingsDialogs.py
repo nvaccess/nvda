@@ -579,19 +579,26 @@ class documentFormattingDialog(wx.Dialog):
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		self.Destroy()
 
-class temporaryDictionaryDialog(wx.Dialog):
+class DictionaryDialog(wx.Dialog):
 
-	def __init__(self,parent,ID,title):
+	def __init__(self,parent,ID,title,userDict):
 		wx.Dialog.__init__(self,parent,ID,title)
+		self.userDict=userDict
+		self.tempUserDict=userDictHandler.UserDict()
+		for entry in self.userDict:
+			self.tempUserDict.append(entry)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
-		tempDictListID=wx.NewId()
+		dictListID=wx.NewId()
 		self.entries=[]
-		self.tempDictList=wx.ListCtrl(self,tempDictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
-		for entry in userDictHandler.dictionaries["temp"]:
-			self.tempDictList.InsertStringItem(self.tempDictList.GetItemCount(),"%s\t%s"%(entry.pattern,entry.replacement))
+		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
+		self.dictList.InsertColumn(0,_("Pattern"))
+		self.dictList.InsertColumn(1,_("Replacement"))
+		self.dictList.InsertColumn(2,_("Comment"))
+		for entry in self.tempUserDict:
+			self.dictList.Append((entry.pattern,entry.replacement,entry.comment))
 		self.editingIndex=-1
-		settingsSizer.Add(self.tempDictList)
+		settingsSizer.Add(self.dictList)
 		addButtonID=wx.NewId()
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		settingsSizer.Add(addButton)
@@ -610,41 +617,43 @@ class temporaryDictionaryDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
-		self.tempDictList.SetFocus()
+		self.dictList.SetFocus()
 
 	def onOk(self,evt):
-		del userDictHandler.dictionaries["temp"][:]
-		itemCount=self.tempDictList.GetItemCount()
-		if itemCount>0:
-			for num in range(0,itemCount):
-				temp=self.tempDictList.GetItemText(num).split("\t")
-				userDictHandler.dictionaries["temp"].append(userDictHandler.UserDictEntry(temp[0],temp[1]))
+		del self.userDict[:]
+		for entry in self.tempUserDict:
+			self.userDict.append(entry)
 		self.Destroy()
 
 	def OnAddClick(self,evt):
 		if self.editingIndex==-1:
-			addEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement")),title=_("Add an entry"),callback=self.onDialog)
+			addEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement"),_("&Comment")),title=_("Add an entry"),callback=self.onDialog)
 			addEntryDialog.run()
 
 	def OnEditClick(self,evt):
-		if (self.tempDictList.GetSelectedItemCount()==1) and (self.editingIndex==-1):
-			self.editingIndex=self.tempDictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
-			editEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement")),title=_("Edit an entry"),defaults=self.tempDictList.GetItemText(self.editingIndex).split("\t"),callback=self.onDialog)
+		if (self.dictList.GetSelectedItemCount()==1) and (self.editingIndex==-1):
+			self.editingIndex=self.dictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
+			editEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement"),_("&Comment")),title=_("Edit an entry"),defaults=(self.tempUserDict[self.editingIndex].pattern,self.tempUserDict[self.editingIndex].replacement,self.tempUserDict[self.editingIndex].comment), callback=self.onDialog)
 			editEntryDialog.run()
 
 	def OnRemoveClick(self,evt):
 		index=self.tempDictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
-		if (index!=self.editingIndex)and(self.tempDictList.GetSelectedItemCount()==1):
-			self.tempDictList.DeleteItem(index)
+		if (index!=self.editingIndex)and(self.dictList.GetSelectedItemCount()==1):
+			self.dictList.DeleteItem(index)
+			del self.userDict[index]
 		self.tempDictList.SetFocus()
 
 	def onDialog(self,texts):
 		if texts is not None:
 			if self.editingIndex>=0:
-				self.tempDictList.SetStringItem(self.editingIndex,0,"%s\t%s"%(texts[0],texts[1]),-1)
+				self.tempUserDict[self.editingIndex].pattern=texts[0]
+				self.tempUserDict[self.editingIndex].replacement=texts[1]
+				self.tempUserDict[self.editingIndex].comment=texts[2]
+				self.dictList.SetStringItem(self.editingIndex,0,texts[0])
+				self.dictList.SetStringItem(self.editingIndex,1,texts[1])
+				self.dictList.SetStringItem(self.editingIndex,2,texts[2])
 			else:
-				self.tempDictList.InsertStringItem(self.tempDictList.GetItemCount(),"%s\t%s"%(texts[0],texts[1]))
+				self.tempUserDict.append(userDictHandler.UserDictEntry(texts[0],texts[1],texts[2]))
+				self.dictList.Append((texts[0],texts[1],texts[2]))
 		self.editingIndex=-1
-		self.tempDictList.SetFocus()
-
-	
+		self.dictList.SetFocus()
