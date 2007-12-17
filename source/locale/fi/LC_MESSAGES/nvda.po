@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1450\n"
+"Project-Id-Version: r1458\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2007-12-16 09:51+0200\n"
+"PO-Revision-Date: 2007-12-17 15:17+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1762,7 +1762,8 @@ msgstr "&Muokkaa oletussanastoa Muistiolla"
 #: gui\__init__.py:151
 msgid ""
 "Opens default user dictionary in notepad and creates it if it does not exist"
-msgstr "Avaa käyttäjän oletussanaston Muistiossa, tai luo sen, jos sitä ei ole"
+msgstr ""
+"Avaa käyttäjän oletussanaston Muistiossa, tai luo sen, jos sitä ei ole"
 
 #: gui\__init__.py:154
 msgid "Reload &voice-specific dictionary"
@@ -1775,7 +1776,9 @@ msgstr "&Muokkaa puheäänikohtaista sanastoa Muistiolla"
 #: gui\__init__.py:157
 msgid ""
 "Opens Voice user dictionary in notepad and creates it if it does not exist"
-msgstr "Avaa käyttäjän puheäänikohtaisen sanaston Muistiossa, tai luo sen, jos sitä ei ole"
+msgstr ""
+"Avaa käyttäjän puheäänikohtaisen sanaston Muistiossa, tai luo sen, jos "
+"sitä ei ole"
 
 #: gui\__init__.py:160
 msgid "&Temporary dictionary..."
@@ -1785,7 +1788,9 @@ msgstr "&Väliaikaissanasto..."
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "Valintaikkuna, jossa voit asettaa väliaikaissanaston lisäämällä sanastomerkintöjä muokkausruutuun"
+msgstr ""
+"Valintaikkuna, jossa voit asettaa väliaikaissanaston lisäämällä "
+"sanastomerkintöjä muokkausruutuun"
 
 #: gui\__init__.py:162
 msgid "User &dictionaries"
@@ -2268,31 +2273,47 @@ msgstr "Ilmoita rivin&umerot"
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
+#: gui\settingsDialogs.py:595
+msgid "Pattern"
+msgstr "Malli"
+
 #: gui\settingsDialogs.py:596
+msgid "Replacement"
+msgstr "Korvaava"
+
+#: gui\settingsDialogs.py:597
+msgid "Comment"
+msgstr "Kommentti"
+
+#: gui\settingsDialogs.py:603
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:606
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:609
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:630
 msgid "Add an entry"
 msgstr "Lisää merkintä"
 
-#: gui\settingsDialogs.py:626 gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
+msgid "&Comment"
+msgstr "&Kommentti"
+
+#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
 msgid "&Pattern"
 msgstr "&Malli"
 
-#: gui\settingsDialogs.py:626 gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
 msgid "&Replacement"
 msgstr "&Korvaava"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:636
 msgid "Edit an entry"
 msgstr "Muokkaa merkintää"
 
