@@ -284,8 +284,8 @@ class MainFrame(wx.Frame):
 				self.onShowGuiCommand(None)
 			self.Raise()
 			self.SetFocus()
-			d = wx.MessageDialog(self, _("Press OK to quit NVDA"), _("Exit NVDA"), wx.OK|wx.CANCEL|wx.ICON_WARNING)
-			if d.ShowModal() == wx.ID_OK:
+			d = wx.MessageDialog(self, _("Press Yes to quit NVDA"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
+			if d.ShowModal() == wx.ID_YES:
 				canExit=True
 			elif not wasShown:
 				self.onHideGuiCommand(None)
