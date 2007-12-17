@@ -585,8 +585,7 @@ class DictionaryDialog(wx.Dialog):
 		wx.Dialog.__init__(self,parent,ID,title)
 		self.userDict=userDict
 		self.tempUserDict=userDictHandler.UserDict()
-		for entry in self.userDict:
-			self.tempUserDict.append(entry)
+		self.tempUserDict.extend(self.userDict)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		dictListID=wx.NewId()
@@ -621,8 +620,7 @@ class DictionaryDialog(wx.Dialog):
 
 	def onOk(self,evt):
 		del self.userDict[:]
-		for entry in self.tempUserDict:
-			self.userDict.append(entry)
+		self.userDict.extend(self.tempUserDict)
 		self.Destroy()
 
 	def OnAddClick(self,evt):

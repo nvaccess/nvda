@@ -39,7 +39,7 @@ class UserDict(list):
 			if line.isspace():
 				comment=""
 				continue
-			line=line.replace('\n','').replace('\r','')
+			line=line.rstrip('\r\n')
 			if line.startswith('#'):
 				if comment:
 					comment+=" "
