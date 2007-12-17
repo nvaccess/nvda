@@ -181,8 +181,8 @@ SetOutPath "$INSTDIR\"
 ;!insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\${PRODUCT}"
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_readme).lnk" "$INSTDIR\${READMEFILE}" "" "$INSTDIR\${READMEFILE}" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_userguide).lnk" "$INSTDIR\documentation\user guide.txt" "" "$INSTDIR\documentation\Users Guide.txt" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_wiki).lnk" "http://wiki.nvda-project.org" "" "http://wiki.nvda-project.org" 0
