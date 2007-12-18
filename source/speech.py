@@ -9,6 +9,7 @@
 @type speechMode: boolean
 """ 
 
+import sgmllib
 from xml.parsers import expat
 import time
 import globalVars
@@ -601,3 +602,113 @@ def speakFormat(data):
 		else:
 			break
 	speakText(" ".join(textList))
+
+class XMLContextParser(object): 
+
+	def __init__(self):
+		self.parser=expat.ParserCreate()
+		self.parser.StartElementHandler=self._startElementHandler
+		#self.parser.EndElementHandler=self._EndElementHandler
+		#self.parser.CharacterDataHandler=self._CharacterDataHandler
+		self._fieldStack=[]
+
+	def _startElementHandler(self,name,attrs):
+		normalizeFieldAttrs(attrs)
+		self._fieldStack.append(attrs)
+
+	def parse(self,XMLContext):
+		self.parser.Parse(XMLContext)
+		return self._fieldStack
+
+class RelativeXMLParser(object):
+
+	def __init__(self):
+		self.parser=sgmllib.SGMLParser()
+		self.parser.unknown_starttag=self._startElementHandler
+		self.parser.unknown_endtag=self._endElementHandler
+		self.parser.handle_data=self._characterDataHandler
+		self._commandList=[]
+
+	def _startElementHandler(self,tag,attrs):
+		newAttrs={}
+		for attr in attrs:
+			newAttrs[attr[0]]=attr[1]
+		attrs=newAttrs
+		normalizeFieldAttrs(attrs)
+		self._commandList.append(("start",attrs))
+
+	def _endElementHandler(self,tag):
+		self._commandList.append(("end",None))
+
+	def _characterDataHandler(self,data):
+		self._commandList.append(("text",data))
+
+	def parse(self,relativeXML):
+		self.parser.feed(relativeXML)
+		return self._commandList
+
+def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,wait=False,index=None):
+		textList=[]
+		#Fetch the last stack, or make a blank one
+		oldStack=getattr(cacheObject,'_speech_XMLCache',[])
+		#Create a new stack from the XML context
+		stackParser=XMLContextParser()
+		newStack=stackParser.parse(XMLContext)
+		#Cache a copy of the new stack for future use
+		if not cacheFinalStack:
+			cacheObject._speech_XMLCache=list(newStack)
+		#Calculate how many fields in the old and new stacks are the same
+		commonFieldCount=0
+		for index in range(min(len(newStack),len(oldStack))):
+			if newStack[index]==oldStack[index]:
+				commonFieldCount+=1
+			else:
+				break
+		#Get speech text for any fields in the old stack that are not in the new stack 
+		for index in range(commonFieldCount,len(oldStack)):
+			textList.append(getFieldSpeech(oldStack[index],"end_removedFromStack",extraDetail))
+		#Get speech text for any fields that are in both stacks, if extra detail is not requested
+		if not extraDetail:
+			for index in range(commonFieldCount):
+				textList.append(getFieldSpeech(newStack[index],"start_inStack",extraDetail))
+		#Get speech text for any fields in the new stack that are not in the old stack
+		for index in range(commonFieldCount,len(newStack)):
+			textList.append(getFieldSpeech(newStack[index],"start_addedToStack",extraDetail))
+		#Fetch a command list for the relative XML
+		commandParser=RelativeXMLParser()
+		commandList=commandParser.parse(relativeXML) if relativeXML is not None else []
+		#Move through the command list, getting speech text for all starts and ends
+		#But also keep newStack up to date as we will need it for the ends
+		for index in range(len(commandList)):
+			if commandList[index][0]=="text":
+				textList.append(commandList[index][1])
+			elif commandList[index][0]=="start":
+				textList.append(getFieldSpeech(commandList[index][1],"start_relative",extraDetail))
+				newStack.append(commandList[index][1])
+			elif commandList[index][0]=="end" and len(newStack)>0:
+				textList.append(getFieldSpeech(newStack[-1],"end_relative",extraDetail))
+				del newStack[-1]
+				if commonFieldCount>len(newStack):
+					commonFieldCount=len(newStack)
+		#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
+		if not extraDetail:
+			for index in reversed(range(min(len(newStack),commonFieldCount))):
+				textList.append(getFieldSpeech(newStack[index],"end_inStack",extraDetail))
+		#Cache a copy of the new stack for future use
+		if cacheFinalStack:
+			cacheObject._speech_XMLCache=list(newStack)
+		text=" ".join(textList)
+		if textList or relativeXML is not None:
+			speech.speakText(text,wait=wait,index=index)
+
+def getFieldSpeech(attrs,fieldType,extraDetail=False):
+		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_LINK:
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
+		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_HEADING:
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
+		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
+			return "in %s"%controlTypes.speechRoleLabels[attrs['role']]
+		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
+			return "out of %s"%controlTypes.speechRoleLabels[attrs['role']]
+		else:
+			return ""
