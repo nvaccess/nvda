@@ -155,7 +155,12 @@ class MainFrame(wx.Frame):
 		wx.EVT_MENU(self,id_reloadVoiceDictionaryCommand,self.onReloadVoiceDictionaryCommand)
 		id_editVoiceDictionaryCommand=wx.NewId()
 		subMenu_userDicts.Append(id_editVoiceDictionaryCommand,_("&Edit Voice dictionary in notepad"),_("Opens Voice user dictionary in notepad and creates it if it does not exist"))
-		wx.EVT_MENU(self,id_editVoiceDictionaryCommand,self.onEditVoiceDictionaryCommand)
+		id_defaultDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_defaultDictionaryCommand,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+		wx.EVT_MENU(self,id_defaultDictionaryCommand,self.onDefaultDictionaryCommand)
+		id_voiceDictionaryCommand=wx.NewId()
+		subMenu_userDicts.Append(id_voiceDictionaryCommand,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+		wx.EVT_MENU(self,id_voiceDictionaryCommand,self.onVoiceDictionaryCommand)
 		id_temporaryDictionaryCommand=wx.NewId()
 		subMenu_userDicts.Append(id_temporaryDictionaryCommand,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		wx.EVT_MENU(self,id_temporaryDictionaryCommand,self.onTemporaryDictionaryCommand)
@@ -271,6 +276,14 @@ class MainFrame(wx.Frame):
 			file.close()
 		pipe=os.popen("notepad %s"%fileName)
 		os.pclose(pipe)
+
+	def onDefaultDictionaryCommand(self,evt):
+		d=DictionaryDialog(self,-1,_("Default dictionary"),userDictHandler.dictionaries["default"])
+		d.Show(True)
+
+	def onVoiceDictionaryCommand(self,evt):
+		d=DictionaryDialog(self,-1,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
+		d.Show(True)
 
 	def onTemporaryDictionaryCommand(self,evt):
 		d=DictionaryDialog(self,-1,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
