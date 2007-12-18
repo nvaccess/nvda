@@ -593,11 +593,11 @@ class DictionaryDialog(wx.Dialog):
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
-		self.dictList.InsertColumn(0,_("Pattern"))
-		self.dictList.InsertColumn(1,_("Replacement"))
-		self.dictList.InsertColumn(2,_("Comment"))
+		self.dictList.InsertColumn(0,_("Comment"))
+		self.dictList.InsertColumn(1,_("Pattern"))
+		self.dictList.InsertColumn(2,_("Replacement"))
 		for entry in self.tempUserDict:
-			self.dictList.Append((entry.pattern,entry.replacement,entry.comment))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList)
 		settingsSizer.Add(entriesSizer)
@@ -652,11 +652,11 @@ class DictionaryDialog(wx.Dialog):
 				self.tempUserDict[self.editingIndex].pattern=texts[0]
 				self.tempUserDict[self.editingIndex].replacement=texts[1]
 				self.tempUserDict[self.editingIndex].comment=texts[2]
-				self.dictList.SetStringItem(self.editingIndex,0,texts[0])
-				self.dictList.SetStringItem(self.editingIndex,1,texts[1])
-				self.dictList.SetStringItem(self.editingIndex,2,texts[2])
+				self.dictList.SetStringItem(self.editingIndex,1,texts[0])
+				self.dictList.SetStringItem(self.editingIndex,2,texts[1])
+				self.dictList.SetStringItem(self.editingIndex,0,texts[2])
 			else:
 				self.tempUserDict.append(userDictHandler.UserDictEntry(texts[0],texts[1],texts[2]))
-				self.dictList.Append((texts[0],texts[1],texts[2]))
+				self.dictList.Append((texts[2],texts[0],texts[1]))
 		self.editingIndex=-1
 		self.dictList.SetFocus()
