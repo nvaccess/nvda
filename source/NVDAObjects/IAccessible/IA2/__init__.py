@@ -222,9 +222,8 @@ class IA2(IAccessible):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
 		focusObject=api.getFocusObject()
-		if not isinstance(focusObject,IA2) or focusObject.IAccessibleObject.uniqueID!=self.IAccessibleObject.UniqueID: 
-			api.setFocusObject(self)
-			api.setNavigatorObject(self)
+		if self!=focusObject and not self.virtualBuffer():
+			IAccessibleHandler.focus_manageEvent(self,needsFocusState=False)
 
 	def event_mouseMove(self,x,y):
 		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
