@@ -28,6 +28,7 @@ class UserDictEntry:
 class UserDict(list):
 
 	def load(self, fileName):
+		self.fileName=fileName
 		comment=""
 		del self[:]
 		globalVars.log.debug("Loading user dictionary '%s'..." % fileName)
@@ -53,7 +54,6 @@ class UserDict(list):
 					globalVars.log.warning("can't parse line '%s'" % line)
 		globalVars.log.debug("%d loaded records." % len(self))
 		file.close()
-		self.fileName=fileName
 		return
 
 	def save(self,fileName=None):
