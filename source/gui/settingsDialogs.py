@@ -622,8 +622,10 @@ class DictionaryDialog(wx.Dialog):
 		self.dictList.SetFocus()
 
 	def onOk(self,evt):
-		del self.userDict[:]
-		self.userDict.extend(self.tempUserDict)
+		if self.tempUserDict!=self.userDict:
+			del self.userDict[:]
+			self.userDict.extend(self.tempUserDict)
+			self.userDict.save()
 		self.Destroy()
 
 	def OnAddClick(self,evt):
