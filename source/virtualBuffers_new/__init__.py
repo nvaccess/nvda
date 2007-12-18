@@ -1,37 +1,17 @@
-from ctypes import *
-from ctypes.wintypes import *
-import debug
 import speech
 import NVDAObjects
 import winUser
 import controlTypes
 import textHandler
-
-testWindow=None
-testVirtualBuffer=None
-
-def update(window):
-	global testWindow, testVirtualBuffer
-	if not testWindow and winUser.getClassName(window)=="Internet Explorer_Server":
-		testWindow=window
-		testVirtualBuffer=VirtualBuffer(window)
-
-def getVirtualBuffer(obj):
-	if obj and (obj.windowHandle==testWindow or winUser.isDescendantWindow(testWindow,obj.windowHandle)):
-		return testVirtualBuffer
-
-VBufLib=cdll.virtualBuffer
+from virtualBuffer_new_wrapper import *
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getSelectionOffsets(self):
-		start=c_int()
-		end=c_int()
-		VBufLib.VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle,byref(start),byref(end))
-		return (start.value,end.value)
+		return VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle)
 
 	def _setSelectionOffsets(self,start,end):
-		VBufLib.VBufStorage_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
+		VBufStorage_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -40,64 +20,39 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufLib.VBufStorage_getBufferTextLength(self.obj.VBufHandle)
+		return VBufStorage_getBufferTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
-		textLength=end-start
-		textBuf=create_unicode_buffer(textLength)
-		VBufLib.VBufStorage_getBufferTextByOffsets(self.obj.VBufHandle,start,end,textBuf)
-		return textBuf.value
+		return VBufStorage_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
 
 	def _getLineOffsets(self,offset):
-		start=c_int()
-		end=c_int()
-		VBufLib.VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset,byref(start),byref(end))
-		return (start.value,end.value)
+		return VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset)
 
 	def _get_XMLContext(self):
-		offset=self._startOffset
-		textLength=VBufLib.VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,offset,None)
-		textBuf=create_unicode_buffer(textLength)
-		VBufLib.VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,offset,textBuf)
-		return textBuf.value
+		return VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,offset)
 
 	def _get_XMLText(self):
 		start=self._startOffset
 		end=self._endOffset
-		textLength=VBufLib.VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end,None)
-		textBuf=create_unicode_buffer(textLength)
-		VBufLib.VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end,textBuf)
-		debug.writeMessage("xml text: %s"%textBuf.value)
-		return textBuf.value
+		return VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
 
 class VirtualBuffer(NVDAObjects.NVDAObject):
 
 	def __init__(self,windowHandle=None):
 		self.TextInfo=VirtualBufferTextInfo
 		self.windowHandle=windowHandle
-		self.VBufHandle=VBufLib.VBufStorage_createBuffer()
+		self.VBufHandle=VBufStorage_createBuffer(0)
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 
 	def __del__(self):
-		VBufLib.VBufStorage_destroyBuffer(self.VBufHandle)
+		VBufStorage_destroyBuffer(self.VBufHandle)
 
 	def fillVBuf(self,ID=None):
-		VBufLib.VBufStorage_addFieldToBuffer(self.VBufHandle,1,0,controlTypes.ROLE_DOCUMENT,None,0,None,None)
-		VBufLib.VBufStorage_addFieldToBuffer(self.VBufHandle,2,1,controlTypes.ROLE_HEADING,None,0,None,None)
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,2,u"NVDA Test Virtual Buffer")
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,1,u"\n\n")
-		VBufLib.VBufStorage_addFieldToBuffer(self.VBufHandle,3,1,controlTypes.ROLE_PARAGRAPH,None,0,None,None)
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,3,u"Click here to visit the ")
-		VBufLib.VBufStorage_addFieldToBuffer(self.VBufHandle,4,3,controlTypes.ROLE_LINK,None,0,None,None)
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,4,u"Community Page")
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,3,u" and check out our email lists.")
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,1,u"\n")
-		VBufLib.VBufStorage_addFieldToBuffer(self.VBufHandle,5,1,controlTypes.ROLE_PARAGRAPH,None,0,None,None)
-		VBufLib.VBufStorage_appendTextToBufferField(self.VBufHandle,5,u"Copyright 2007 NVDA contributers")
- 
+ 		pass
 
-
+	def getFieldSpeech(self,attrs,fieldType,extraDetail=False):
+		pass
 
 	def _caretMovementScriptHelper(self,unit,direction):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -111,10 +66,10 @@ class VirtualBuffer(NVDAObjects.NVDAObject):
 		else:
 			extraDetail=False
 		if unit==textHandler.UNIT_CHARACTER:
-			speech.newSpeakFormattedText(info.XMLContext,None,info.obj,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,self.getFieldSpeech,extraDetail=extraDetail)
 			speech.speakSymbol(info.text)
 		else:
-			speech.newSpeakFormattedText(info.XMLContext,info.XMLText,info.obj,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,self.getFieldspeech,extraDetail=extraDetail)
 
 	def script_moveByCharacter_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1)
