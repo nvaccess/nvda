@@ -640,11 +640,11 @@ class DictionaryDialog(wx.Dialog):
 			editEntryDialog.run()
 
 	def OnRemoveClick(self,evt):
-		index=self.tempDictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
+		index=self.dictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
 		if (index!=self.editingIndex)and(self.dictList.GetSelectedItemCount()==1):
 			self.dictList.DeleteItem(index)
-			del self.userDict[index]
-		self.tempDictList.SetFocus()
+			del self.tempUserDict[index]
+		self.dictList.SetFocus()
 
 	def onDialog(self,texts):
 		if texts is not None:
