@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2007-12-16 18:11+Russian Standard Time\n"
-"PO-Revision-Date: 2007-12-16 18:44+Moscow\n"
+"POT-Creation-Date: 2007-12-18 23:08+Russian Standard Time\n"
+"PO-Revision-Date: 2007-12-18 23:31+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In coopiration with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -135,7 +135,7 @@ msgstr "Пропуск виртуального буфера"
 #: appModules\_default.py:631 appModules\_default.py:641
 #: appModules\_default.py:651 appModules\_default.py:661
 #: keyboardHandler.py:53 keyboardHandler.py:55
-#: keyboardHandler.py:57 speech.py:395 speech.py:401
+#: keyboardHandler.py:57 speech.py:396 speech.py:402
 msgid "off"
 msgstr "Выключено"
 
@@ -146,7 +146,7 @@ msgstr "Выключено"
 #: appModules\_default.py:644 appModules\_default.py:654
 #: appModules\_default.py:664 keyboardHandler.py:53
 #: keyboardHandler.py:55 keyboardHandler.py:57
-#: speech.py:390
+#: speech.py:391
 msgid "on"
 msgstr "Включено"
 
@@ -865,7 +865,7 @@ msgid "sent: %s"
 msgstr "Отправлено: %s"
 
 #: characterSymbols.py:17 characterSymbols.py:18
-#: speech.py:65
+#: speech.py:66
 msgid "blank"
 msgstr "Чисто"
 
@@ -1862,16 +1862,21 @@ msgstr "Перезагрузить &общий словарь"
 
 #: gui\__init__.py:148 gui\__init__.py:154
 msgid "Loads the user dictionary file"
-msgstr "Загружает файл пользовательского словаря"
+msgstr ""
+"Загружает файл пользовательского словаря"
 
 #: gui\__init__.py:151
 msgid "&Edit default dictionary in notepad"
-msgstr "&Редактировать общий словарь в Блокноте"
+msgstr ""
+"&Редактировать общий словарь в Блокноте"
 
 #: gui\__init__.py:151
 msgid ""
 "Opens default user dictionary in notepad and creates it if it does not exist"
-msgstr "Открывает общий пользовательский словарь в Блокноте и создаёт его, если он не существует"
+msgstr ""
+"Открывает общий пользовательский словарь"
+" в Блокноте и создаёт его, если он не "
+"существует"
 
 #: gui\__init__.py:154
 msgid "Reload &voice-specific dictionary"
@@ -1879,70 +1884,104 @@ msgstr "Перезагрузить &Голосовой словарь"
 
 #: gui\__init__.py:157
 msgid "&Edit Voice dictionary in notepad"
-msgstr "Р&едактировать голосовой словарь в Блокноте"
+msgstr ""
+"Р&едактировать голосовой словарь в "
+"Блокноте"
 
 #: gui\__init__.py:157
 msgid ""
 "Opens Voice user dictionary in notepad and creates it if it does not exist"
-msgstr "Открывает пользовательский голосовой словарь в Блокноте и создаёт его, если он не существует"
+msgstr ""
+"Открывает пользовательский голосовой "
+"словарь в Блокноте и создаёт его, если он "
+"не существует"
 
-#: gui\__init__.py:160
+#: gui\__init__.py:159
+msgid "&Default dictionary..."
+msgstr "&Общий словарь..."
+
+#: gui\__init__.py:159
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"общий словарь, добавляя необходимые "
+"статьи в список"
+
+#: gui\__init__.py:162
+msgid "&Voice dictionary..."
+msgstr "&Голосовой словарь......"
+
+#: gui\__init__.py:162
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"голосовой словарь, добавляя необходимые "
+"статьи в список"
+
+#: gui\__init__.py:165
 msgid "&Temporary dictionary..."
 msgstr "&Временный словарь..."
 
-#: gui\__init__.py:160
+#: gui\__init__.py:165
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "Диалог, в котором вы можете сформировать временный словарь, добавляя необходимые статьи"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"временный словарь, добавляя необходимые "
+"статьи"
 
-#: gui\__init__.py:162
+#: gui\__init__.py:167
 msgid "User &dictionaries"
 msgstr "&Пользовательские словари"
 
-#: gui\__init__.py:164
+#: gui\__init__.py:169
 msgid "E&xit"
 msgstr "В&ыход"
 
-#: gui\__init__.py:164 gui\__init__.py:287
+#: gui\__init__.py:169 gui\__init__.py:300
 msgid "Exit NVDA"
 msgstr "Завершение РаботыNVDA"
 
-#: gui\__init__.py:166 gui\__init__.py:167
+#: gui\__init__.py:171 gui\__init__.py:172
 msgid "&NVDA"
 msgstr "&NVDA"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:175
 msgid "&General settings...\tCtrl+Shift+G"
 msgstr "&Общие настройки...\tCtrl+Shift+О"
 
-#: gui\__init__.py:170 gui\__init__.py:303
+#: gui\__init__.py:175 gui\__init__.py:316
 msgid "General settings"
 msgstr "Общие настройки"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:178
 msgid " the synthesizer to use"
 msgstr "Используемый синтезатор"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:178
 msgid "&Synthesizer...\tCtrl+Shift+S"
 msgstr "&Синтезатор...\tCtrl+Shift+S"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:181
 msgid "&Voice settings...\tCtrl+Shift+V"
 msgstr "&Голоса...\tCtrl+Shift+V"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:181
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr ""
 "Выбор голоса, скорости, высоты и громкости"
 " синтезатора"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:184
 msgid "&Keyboard Settings...\tCtrl+K"
 msgstr "&Клавиатура...\tCtrl+K"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:184
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1951,166 +1990,178 @@ msgstr ""
 "вводимых символов, слов и командных "
 "клавиш"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:187
 msgid "&Mouse settings...\tCtrl+M"
 msgstr "&Мышь...\tCtrl+M"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:187
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Изменение чтения формы указателя мыши, "
 "объектов под указателем мыши и т.д."
 
-#: gui\__init__.py:185
+#: gui\__init__.py:190
 msgid "&Object presentation...\tCtrl+Shift+O"
 msgstr "&Представление объектов...\tCtrl+Shift+O"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:190
 msgid "Change reporting of objects"
 msgstr "Изменение чтения объектов"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:193
 msgid "Change virtual buffers specific settings"
 msgstr ""
 "Изменение специальных настроек "
 "виртуальных буферов"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:193
 msgid "Virtual &buffers...\tCtrl+Shift+B"
 msgstr "Виртуальные &буферы...\tCtrl+Shift+B"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:196
 msgid "Change Settings of document properties"
 msgstr ""
 "Изменение чтения форматирования "
 "документов"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:196
 msgid "Document &formatting...\tCtrl+Shift+F"
 msgstr "&Форматирование документа...\tCtrl+Shift+F"
 
-#: gui\__init__.py:193 gui\__init__.py:194
+#: gui\__init__.py:198 gui\__init__.py:199
 msgid "&Preferences"
 msgstr "&Параметры"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:202
 msgid "NVDA homepage"
 msgstr "Домашняя страница NVDA"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:202
 msgid "Opens NVDA homepage in the default browser"
 msgstr ""
 "Открывает домашнюю страницу NVDA в браузер"
 "е, установленном поумолчанию"
 
-#: gui\__init__.py:200
+#: gui\__init__.py:205
 msgid "NVDA wiki"
 msgstr "NVDA wiki"
 
-#: gui\__init__.py:200
+#: gui\__init__.py:205
 msgid "Opens NVDA wiki in the default browser"
 msgstr ""
 "Открывает NVDA wiki в браузере, установленном "
 "поумолчанию"
 
-#: gui\__init__.py:202
+#: gui\__init__.py:207
 msgid "About..."
 msgstr "О программе..."
 
-#: gui\__init__.py:202 gui\__init__.py:347
+#: gui\__init__.py:207 gui\__init__.py:360
 msgid "About NVDA"
 msgstr "О NVDA"
 
-#: gui\__init__.py:204 gui\__init__.py:205
+#: gui\__init__.py:209 gui\__init__.py:210
 msgid "&Help"
 msgstr "&Справка"
 
-#: gui\__init__.py:217 gui\scriptUI.py:52
+#: gui\__init__.py:222 gui\scriptUI.py:52
 #: gui\scriptUI.py:61 gui\scriptUI.py:74
 #: gui\scriptUI.py:142
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:249
 msgid "configuration saved"
 msgstr "Конфигурация сохранена"
 
-#: gui\__init__.py:246
+#: gui\__init__.py:251
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Неудалось сохранить конфигурацию, вероят"
 "но, NVDA запущен из области, доступной толь"
 "ко для чтения"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:256
 msgid "Loaded default user dictionary"
-msgstr ""
+msgstr "Загружен общий пользовательский словарь"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:258
 msgid "Can't load default user dictionary"
-msgstr "Не удалось загрузить общий пользовательский словарь"
+msgstr "Не удалось загрузить общий "
+"пользовательский словарь"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:267
 msgid "Loaded voice-specific user dictionary"
-msgstr "Загружен пользовательский голосовой словарь"
+msgstr ""
+"Загружен пользовательский голосовой "
+"словарь"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:269
 msgid "Can't load voice-specific user dictionary"
-msgstr "Не удалось загрузить пользовательский голосовой словарь"
+msgstr "Не удалось загрузить пользовательский "
+"голосовой словарь"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:275
 msgid "nvda voice-specific dictionary"
 msgstr "Голосовой словарь NVDA"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:281
+msgid "Default dictionary"
+msgstr "Общий словарь"
+
+#: gui\__init__.py:285
+msgid "Voice dictionary (%s)"
+msgstr "Голосовой словарь (%s)"
+
+#: gui\__init__.py:289
 msgid "Temporary dictionary"
 msgstr "Временный словарь"
 
-#: gui\__init__.py:287
-msgid "Press OK to quit NVDA"
-msgstr "Нажмите OK для завершения NVDA"
+#: gui\__init__.py:300
+msgid "Are you sure you want to quit NVDA?"
+msgstr "Вы уверены, что хотите завершить работу NVDA?"
 
-#: gui\__init__.py:307
+#: gui\__init__.py:320
 msgid "Synthesizer"
 msgstr "Синтезатор"
 
-#: gui\__init__.py:311
+#: gui\__init__.py:324
 msgid "Voice settings"
 msgstr "Голоса"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:328
 msgid "Keyboard Settings"
 msgstr "Клавиатура"
 
-#: gui\__init__.py:319
+#: gui\__init__.py:332
 msgid "Mouse settings"
 msgstr "Мышь"
 
-#: gui\__init__.py:323
+#: gui\__init__.py:336
 msgid "Object presentation"
 msgstr "Представление объекта"
 
-#: gui\__init__.py:327
+#: gui\__init__.py:340
 msgid "virtual buffers"
 msgstr "Виртуальные буферы"
 
-#: gui\__init__.py:331
+#: gui\__init__.py:344
 msgid "Document formatting"
 msgstr "Форматирование документа"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "copyright"
 msgstr "Авторское право"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "maintainer"
 msgstr "Разработчик"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "version"
 msgstr "Версия"
 
@@ -2413,31 +2464,51 @@ msgstr "Читать &Номера строк"
 msgid "Report &alignment"
 msgstr "Читать &Выравнивание"
 
+#: gui\settingsDialogs.py:593
+msgid "&Dictionary entries"
+msgstr "&Словарные статьи"
+
 #: gui\settingsDialogs.py:596
+msgid "Comment"
+msgstr "Коментарий"
+
+#: gui\settingsDialogs.py:597
+msgid "Pattern"
+msgstr "&Шаблон"
+
+#: gui\settingsDialogs.py:598
+msgid "Replacement"
+msgstr "&Замена"
+
+#: gui\settingsDialogs.py:605
 msgid "&Add"
 msgstr "&Добавить"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:608
 msgid "&edit"
 msgstr "&Редактировать"
 
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:611
 msgid "&Remove"
 msgstr "У&далить"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:633
 msgid "Add an entry"
 msgstr "Добавить статью"
 
-#: gui\settingsDialogs.py:626 gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
+msgid "&Comment"
+msgstr "&Коментарий"
+
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
 msgid "&Pattern"
 msgstr "&Шаблон"
 
-#: gui\settingsDialogs.py:626 gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
 msgid "&Replacement"
 msgstr "&Замена"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:639
 msgid "Edit an entry"
 msgstr "Редактировать статью"
 
@@ -2481,11 +2552,11 @@ msgstr "%s курсор"
 msgid "end of text"
 msgstr "Конец текста"
 
-#: speech.py:185
+#: speech.py:186
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:251 virtualBuffers\IAccessible\MSHTML.py:114
+#: speech.py:252 virtualBuffers\IAccessible\MSHTML.py:114
 #: virtualBuffers\IAccessible\MSHTML.py:293
 #: virtualBuffers\IAccessible\MSHTML.py:297
 #: virtualBuffers\IAccessible\adobe.py:289
@@ -2495,33 +2566,33 @@ msgstr "большая %s"
 msgid "not %s"
 msgstr "Не %s"
 
-#: speech.py:263 speech.py:462 textBuffer.py:536
+#: speech.py:264 speech.py:463 textBuffer.py:536
 #: textBuffer.py:540 textBuffer.py:542 textBuffer.py:548
 msgid "selected %s"
 msgstr "Выделено %s"
 
-#: speech.py:284
+#: speech.py:285
 msgid "level %d"
 msgstr "Уровень %d"
 
-#: speech.py:288
+#: speech.py:289
 msgid "contains %s"
 msgstr "Содержит %s"
 
-#: speech.py:381
+#: speech.py:382
 msgid "in"
 msgstr "в"
 
-#: speech.py:386 speech.py:404
+#: speech.py:387 speech.py:405
 msgid "out of"
 msgstr "вне"
 
-#: speech.py:468 textBuffer.py:544 textBuffer.py:546
+#: speech.py:469 textBuffer.py:544 textBuffer.py:546
 #: textBuffer.py:550
 msgid "unselected %s"
 msgstr "Не выделено %s"
 
-#: speech.py:470
+#: speech.py:471
 msgid "selection deleted"
 msgstr "Выделение удалено"
 
