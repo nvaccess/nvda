@@ -123,7 +123,22 @@ InstProgressFlags Smooth
 
 ;----------------------------
 ; Language strings
-!include "langstrings.txt"
+!include "locale\cs\langstrings.txt"
+!include "locale\de\langstrings.txt"
+!include "locale\en\langstrings.txt"
+!include "locale\es\langstrings.txt"
+!include "locale\fi\langstrings.txt"
+!include "locale\fr\langstrings.txt"
+!include "locale\hu\langstrings.txt"
+!include "locale\it\langstrings.txt"
+!include "locale\pl\langstrings.txt"
+!include "locale\pt_pt\langstrings.txt"
+!include "locale\pt_br\langstrings.txt"
+!include "locale\ru\langstrings.txt"
+!include "locale\se\langstrings.txt"
+!include "locale\sk\langstrings.txt"
+!include "locale\zh\langstrings.txt"
+!include "locale\zh_tw\langstrings.txt"
 
 ;--------------------------------
 ;Configuration
