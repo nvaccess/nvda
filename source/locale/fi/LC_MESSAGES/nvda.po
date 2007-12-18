@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1458\n"
+"Project-Id-Version: r1483\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2007-12-17 15:17+0200\n"
+"PO-Revision-Date: 2007-12-18 11:37+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -133,7 +133,7 @@ msgstr "näennäispuskurin läpivienti"
 #: appModules\_default.py:593 appModules\_default.py:631
 #: appModules\_default.py:641 appModules\_default.py:651
 #: appModules\_default.py:661 keyboardHandler.py:53 keyboardHandler.py:55
-#: keyboardHandler.py:57 speech.py:395 speech.py:401
+#: keyboardHandler.py:57 speech.py:396 speech.py:402
 msgid "off"
 msgstr "pois"
 
@@ -142,7 +142,7 @@ msgstr "pois"
 #: appModules\_default.py:138 appModules\_default.py:596
 #: appModules\_default.py:634 appModules\_default.py:644
 #: appModules\_default.py:654 appModules\_default.py:664 keyboardHandler.py:53
-#: keyboardHandler.py:55 keyboardHandler.py:57 speech.py:390
+#: keyboardHandler.py:55 keyboardHandler.py:57 speech.py:391
 msgid "on"
 msgstr "päällä"
 
@@ -799,7 +799,7 @@ msgstr "liite"
 msgid "sent: %s"
 msgstr "lähetetty: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:65
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:66
 msgid "blank"
 msgstr "tyhjä"
 
@@ -1780,63 +1780,82 @@ msgstr ""
 "Avaa käyttäjän puheäänikohtaisen sanaston Muistiossa, tai luo sen, jos "
 "sitä ei ole"
 
-#: gui\__init__.py:160
+#: gui\__init__.py:159
+msgid "&Default dictionary..."
+msgstr "&Oletussanasto..."
+
+#: gui\__init__.py:159
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr "Valintaikkuna, jossa voit asettaa oletussanaston lisäämällä listaan sanastomerkintöjä"
+
+#: gui\__init__.py:162
+msgid "&Voice dictionary..."
+msgstr "&Puheäänikohtainen sanasto..."
+
+#: gui\__init__.py:162
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr "Valintaikkuna, jossa voit asettaa puheäänikohtaisen sanaston lisäämällä listaan sanastomerkintöjä"
+
+#: gui\__init__.py:165
 msgid "&Temporary dictionary..."
 msgstr "&Väliaikaissanasto..."
 
-#: gui\__init__.py:160
+#: gui\__init__.py:165
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Valintaikkuna, jossa voit asettaa väliaikaissanaston lisäämällä "
-"sanastomerkintöjä muokkausruutuun"
+"Valintaikkuna, jossa voit asettaa väliaikaissanaston lisäämällä listaan sanastomerkintöjä"
 
-#: gui\__init__.py:162
+#: gui\__init__.py:167
 msgid "User &dictionaries"
 msgstr "Käyttäjän &sanastot"
 
-#: gui\__init__.py:164
+#: gui\__init__.py:169
 msgid "E&xit"
 msgstr "&Lopeta"
 
-#: gui\__init__.py:164 gui\__init__.py:287
+#: gui\__init__.py:169 gui\__init__.py:300
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
-#: gui\__init__.py:166 gui\__init__.py:167
+#: gui\__init__.py:171 gui\__init__.py:172
 msgid "&NVDA"
 msgstr "&NVDA"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:175
 msgid "&General settings...\tCtrl+Shift+G"
 msgstr "&Yleiset...\tCtrl+Shift+G"
 
-#: gui\__init__.py:170 gui\__init__.py:303
+#: gui\__init__.py:175 gui\__init__.py:316
 msgid "General settings"
 msgstr "Yleiset asetukset"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:178
 msgid " the synthesizer to use"
 msgstr " käytettävä syntetisaattori"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:178
 msgid "&Synthesizer...\tCtrl+Shift+S"
 msgstr "&Syntetisaattori...\tCtrl+Shift+S"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:181
 msgid "&Voice settings...\tCtrl+Shift+V"
 msgstr "Puhe...\tCtrl+Shift+V"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:181
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:184
 msgid "&Keyboard Settings...\tCtrl+K"
 msgstr "&Näppäimistö...\tCtrl+K"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:184
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1844,155 +1863,163 @@ msgstr ""
 "Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
 "komentonäppäinten lukeminen"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:187
 msgid "&Mouse settings...\tCtrl+M"
 msgstr "&Hiiri...\tCtrl+M"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:187
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Muuta hiirikohdistimen muutosten ja hiiren alla olevan objektin lukuasetuksia"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:190
 msgid "&Object presentation...\tCtrl+Shift+O"
 msgstr "&Objektien lukeminen...\tCtrl+Shift+O"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:190
 msgid "Change reporting of objects"
 msgstr "Muuta objektien lukuasetuksia"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:193
 msgid "Change virtual buffers specific settings"
 msgstr "Muuta näennäispuskureiden asetuksia"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:193
 msgid "Virtual &buffers...\tCtrl+Shift+B"
 msgstr "Näennäis&puskurit...\tCtrl+Shift+B"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:196
 msgid "Change Settings of document properties"
 msgstr "Muuta dokumenttien ominaisuusasetuksia"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:196
 msgid "Document &formatting...\tCtrl+Shift+F"
 msgstr "Dokumenttien &muotoilu...\tCtrl+Shift+F"
 
-#: gui\__init__.py:193 gui\__init__.py:194
+#: gui\__init__.py:198 gui\__init__.py:199
 msgid "&Preferences"
 msgstr "&Asetukset"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:202
 msgid "NVDA homepage"
 msgstr "NVDA:n kotisivu"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:202
 msgid "Opens NVDA homepage in the default browser"
 msgstr "Avaa NVDA:n kotisivun oletusselaimessa"
 
-#: gui\__init__.py:200
+#: gui\__init__.py:205
 msgid "NVDA wiki"
 msgstr "NVDA-wiki"
 
-#: gui\__init__.py:200
+#: gui\__init__.py:205
 msgid "Opens NVDA wiki in the default browser"
 msgstr "Avaa NVDA-wikin oletusselaimessa"
 
-#: gui\__init__.py:202
+#: gui\__init__.py:207
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:202 gui\__init__.py:347
+#: gui\__init__.py:207 gui\__init__.py:360
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
-#: gui\__init__.py:204 gui\__init__.py:205
+#: gui\__init__.py:209 gui\__init__.py:210
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:217 gui\scriptUI.py:52 gui\scriptUI.py:61
+#: gui\__init__.py:222 gui\scriptUI.py:52 gui\scriptUI.py:61
 #: gui\scriptUI.py:74 gui\scriptUI.py:142
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:249
 msgid "configuration saved"
 msgstr "asetukset tallennettu"
 
-#: gui\__init__.py:246
+#: gui\__init__.py:251
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Asetuksia ei voitu tallentaa - tiedostojärjestelmä luultavasti vain luku -"
 "tyyppiä"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:256
 msgid "Loaded default user dictionary"
 msgstr "Käyttäjän oletussanasto ladattu"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:258
 msgid "Can't load default user dictionary"
 msgstr "Käyttäjän oletussanastoa ei voi ladata"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:267
 msgid "Loaded voice-specific user dictionary"
 msgstr "Käyttäjän puheäänikohtainen sanasto ladattu"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:269
 msgid "Can't load voice-specific user dictionary"
 msgstr "Käyttäjän puheäänikohtaista sanastoa ei voi ladata"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:275
 msgid "nvda voice-specific dictionary"
 msgstr "NVDA:n puheäänikohtainen sanasto"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:281
+msgid "Default dictionary"
+msgstr "Oletussanasto"
+
+#: gui\__init__.py:285
+msgid "Voice dictionary (%s)"
+msgstr "Puheäänikohtainen sanasto (%s)"
+
+#: gui\__init__.py:289
 msgid "Temporary dictionary"
 msgstr "Väliaikaissanasto"
 
-#: gui\__init__.py:287
-msgid "Press OK to quit NVDA"
-msgstr "Sulje NVDA painamalla OK"
+#: gui\__init__.py:300
+msgid "Are you sure you want to quit NVDA?"
+msgstr "Oletko varma, että haluat sulkea NVDA:n?"
 
-#: gui\__init__.py:307
+#: gui\__init__.py:320
 msgid "Synthesizer"
 msgstr "Syntetisaattori"
 
-#: gui\__init__.py:311
+#: gui\__init__.py:324
 msgid "Voice settings"
 msgstr "Puheasetukset"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:328
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
-#: gui\__init__.py:319
+#: gui\__init__.py:332
 msgid "Mouse settings"
 msgstr "Hiiriasetukset"
 
-#: gui\__init__.py:323
+#: gui\__init__.py:336
 msgid "Object presentation"
 msgstr "Objektien lukeminen"
 
-#: gui\__init__.py:327
+#: gui\__init__.py:340
 msgid "virtual buffers"
 msgstr "näennäispuskurit"
 
-#: gui\__init__.py:331
+#: gui\__init__.py:344
 msgid "Document formatting"
 msgstr "Dokumenttien muotoilu"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "copyright"
 msgstr "tekijänoikeus"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "maintainer"
 msgstr "ylläpitäjä"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "url"
 msgstr "URL-osoite"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:359
 msgid "version"
 msgstr "versio"
 
@@ -2273,47 +2300,51 @@ msgstr "Ilmoita rivin&umerot"
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:595
-msgid "Pattern"
-msgstr "Malli"
+#: gui\settingsDialogs.py:593
+msgid "&Dictionary entries"
+msgstr "&Sanastomerkinnät"
 
 #: gui\settingsDialogs.py:596
-msgid "Replacement"
-msgstr "Korvaava"
-
-#: gui\settingsDialogs.py:597
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:603
+#: gui\settingsDialogs.py:597
+msgid "Pattern"
+msgstr "Korvattava"
+
+#: gui\settingsDialogs.py:598
+msgid "Replacement"
+msgstr "Korvaava"
+
+#: gui\settingsDialogs.py:605
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:608
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:609
+#: gui\settingsDialogs.py:611
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:630
+#: gui\settingsDialogs.py:633
 msgid "Add an entry"
 msgstr "Lisää merkintä"
 
-#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
 msgid "&Pattern"
-msgstr "&Malli"
+msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:630 gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:633 gui\settingsDialogs.py:639
 msgid "&Replacement"
-msgstr "&Korvaava"
+msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:639
 msgid "Edit an entry"
 msgstr "Muokkaa merkintää"
 
@@ -2357,11 +2388,11 @@ msgstr "%s kohdistin"
 msgid "end of text"
 msgstr "tekstin loppu"
 
-#: speech.py:185
+#: speech.py:186
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:251 virtualBuffers\IAccessible\MSHTML.py:114
+#: speech.py:252 virtualBuffers\IAccessible\MSHTML.py:114
 #: virtualBuffers\IAccessible\MSHTML.py:293
 #: virtualBuffers\IAccessible\MSHTML.py:297
 #: virtualBuffers\IAccessible\adobe.py:289
@@ -2371,32 +2402,32 @@ msgstr "iso %s"
 msgid "not %s"
 msgstr "ei %s"
 
-#: speech.py:263 speech.py:462 textBuffer.py:536 textBuffer.py:540
+#: speech.py:264 speech.py:463 textBuffer.py:536 textBuffer.py:540
 #: textBuffer.py:542 textBuffer.py:548
 msgid "selected %s"
 msgstr "valittu %s"
 
-#: speech.py:284
+#: speech.py:285
 msgid "level %d"
 msgstr "taso %d"
 
-#: speech.py:288
+#: speech.py:289
 msgid "contains %s"
 msgstr "sisältää %s"
 
-#: speech.py:381
+#: speech.py:382
 msgid "in"
 msgstr "alkaa"
 
-#: speech.py:386 speech.py:404
+#: speech.py:387 speech.py:405
 msgid "out of"
 msgstr "loppuu"
 
-#: speech.py:468 textBuffer.py:544 textBuffer.py:546 textBuffer.py:550
+#: speech.py:469 textBuffer.py:544 textBuffer.py:546 textBuffer.py:550
 msgid "unselected %s"
 msgstr "ei valittu %s"
 
-#: speech.py:470
+#: speech.py:471
 msgid "selection deleted"
 msgstr "valinta poistettu"
 
