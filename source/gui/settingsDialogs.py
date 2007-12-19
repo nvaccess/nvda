@@ -584,8 +584,12 @@ class DictionaryDialog(wx.Dialog):
 	def __init__(self,parent,ID,title,userDict):
 		wx.Dialog.__init__(self,parent,ID,title)
 		self.userDict=userDict
+		self.oldUserDict=userDictHandler.UserDict()
+		self.oldUserDict.extend(self.userDict)
 		self.tempUserDict=userDictHandler.UserDict()
 		self.tempUserDict.extend(self.userDict)
+		del self.userDict[:]
+		self.hasChanged=False
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		dictListID=wx.NewId()
@@ -616,15 +620,19 @@ class DictionaryDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
 		self.dictList.SetFocus()
 
+	def onCancel(self,evt):
+		self.userDict.extend(self.oldUserDict)
+		self.Destroy()
+
 	def onOk(self,evt):
-		if self.tempUserDict!=self.userDict:
-			del self.userDict[:]
-			self.userDict.extend(self.tempUserDict)
+		self.userDict.extend(self.tempUserDict)
+		if self.hasChanged:
 			self.userDict.save()
 		self.Destroy()
 
@@ -644,14 +652,14 @@ class DictionaryDialog(wx.Dialog):
 		if (index!=self.editingIndex)and(self.dictList.GetSelectedItemCount()==1):
 			self.dictList.DeleteItem(index)
 			del self.tempUserDict[index]
+			self.hasChanged=True
 		self.dictList.SetFocus()
 
 	def onDialog(self,texts):
+		self.hasChanged=True
 		if texts is not None:
 			if self.editingIndex>=0:
-				self.tempUserDict[self.editingIndex].pattern=texts[0]
-				self.tempUserDict[self.editingIndex].replacement=texts[1]
-				self.tempUserDict[self.editingIndex].comment=texts[2]
+				self.tempUserDict[self.editingIndex]=userDictHandler.UserDictEntry(texts[0],texts[1],texts[2])
 				self.dictList.SetStringItem(self.editingIndex,1,texts[0])
 				self.dictList.SetStringItem(self.editingIndex,2,texts[1])
 				self.dictList.SetStringItem(self.editingIndex,0,texts[2])
