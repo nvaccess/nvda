@@ -7,6 +7,7 @@
 """Module that contains the base NVDA object type"""
 from new import instancemethod
 import time
+import weakref
 import baseObject
 import speech
 from keyUtils import key, sendKey, isKeyWaiting
@@ -15,6 +16,8 @@ import api
 import textHandler
 import config
 import controlTypes
+import appModuleHandler
+import virtualBufferHandler
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
@@ -327,6 +330,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
 		self.TextInfo=NVDAObjectTextInfo
+		if hasattr(self.appModule,'event_NVDAObject_init'):
+			self.appModule.event_NVDAObject_init(self)
 
 	def _isEqual(self,other):
 		return True
@@ -345,6 +350,24 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 """ 
 		if self._keyMap.has_key(keyPress):
 			return instancemethod(self._keyMap[keyPress],self,self.__class__)
+
+	def _get_virtualBuffer(self):
+		if not hasattr(self,'_virtualBufferRef'):
+			v=virtualBufferHandler.getVirtualBuffer(self)
+			if v:
+				self._virtualBufferRef=weakref.ref(v)
+				return v
+		else:
+			return self._virtualBufferRef()
+
+	def _get_appModule(self):
+		if not hasattr(self,'_appModuleRef'):
+			a=appModuleHandler.getAppModuleForNVDAObject(self)
+			if a:
+				self._appModuleRef=weakref.ref(a)
+				return a
+		else:
+			return self._appModuleRef()
 
 	def _get_name(self):
 		return None

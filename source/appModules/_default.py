@@ -544,7 +544,7 @@ class appModule(appModuleHandler.appModule):
 
 	def script_sayAll(self,keyPress,nextScript):
 		o=api.getFocusObject()
-		v=virtualBuffers.getVirtualBuffer(o)
+		v=o.virtualBuffer
 		if v and not api.isVirtualBufferPassThrough():
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:

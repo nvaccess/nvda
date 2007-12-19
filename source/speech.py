@@ -494,7 +494,7 @@ silentRolesOnFocus=frozenset([
 ])
 
 silentPositiveStatesOnFocus={
-	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE]),
+	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY]),
 	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_LINK:frozenset([controlTypes.STATE_LINKED]),

@@ -120,6 +120,12 @@ def getActiveModule():
 		globalVars.log.debug("Using window %s (%s), got appModule %s"%(fg,winUser.getClassName(fg),mod))
 	return mod
 
+def getAppModuleForNVDAObject(obj):
+	if not isinstance(obj,NVDAObjects.window.Window):
+		return
+	return getAppModuleFromWindow(obj.windowHandle)
+
+
 def getAppModuleFromWindow(windowHandle):
 	"""Finds the appModule that is for the given window handle. This window handle can be any window with in an application, not just the app main window.
 @param windowHandle: window who's appModule you want to find

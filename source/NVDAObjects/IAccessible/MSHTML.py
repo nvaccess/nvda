@@ -188,8 +188,6 @@ class MSHTML(IAccessible):
 			self._textRangeOffsetBias=ord(biasMark[2])
 			self.TextInfo=MSHTMLTextInfo
 			self.role=controlTypes.ROLE_EDITABLETEXT
-			if not api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
 		else:
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()

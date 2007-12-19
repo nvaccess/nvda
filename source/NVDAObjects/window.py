@@ -6,8 +6,6 @@
 
 import weakref
 import ctypes
-import virtualBuffers
-import appModuleHandler
 import winUser
 import speech
 from NVDAObjects import NVDAObject
@@ -30,22 +28,10 @@ An NVDAObject for a window
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
-		NVDAObject.__init__(self)
 		if windowClassName:
 			self.windowClassName=windowClassName
 		self.windowHandle=windowHandle
-		if not hasattr(self,'appModule'):
-			try:
-				self.appModule=weakref.ref(appModuleHandler.getAppModuleFromWindow(windowHandle))
-			except:
-				self.appModule=lambda: None
-		virtualBuffer=virtualBuffers.getVirtualBuffer(self)
-		if virtualBuffer is not None:
-			self.virtualBuffer=weakref.ref(virtualBuffer)
-		else:
-			self.virtualBuffer=lambda: None
-		if hasattr(self.appModule(),'event_NVDAObject_init'):
-			self.appModule().event_NVDAObject_init(self)
+		NVDAObject.__init__(self)
 
 	def _isEqual(self,other):
 		return super(Window,self)._isEqual(other) and isinstance(other,Window) and other.windowHandle==self.windowHandle

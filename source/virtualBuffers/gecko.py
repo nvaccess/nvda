@@ -16,7 +16,8 @@ import api
 import config
 import controlTypes
 import NVDAObjects
-from .. import virtualBuffer
+import NVDAObjects.IAccessible
+from . import virtualBuffer
 
 NAVRELATION_EMBEDS=0x1009 
 
@@ -33,14 +34,24 @@ class Gecko(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
-		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.NVDAObject.windowHandle,0,0)
+		#(pacc,child)=IAccessibleHandler.accessibleObjectFromEvent(self.rootNVDAObject.windowHandle,0,0)
 		#(pacc,child)=IAccessibleHandler.accNavigate(NVDAObject.IAccessibleObject,NVDAObject._accChild,NAVRELATION_EMBEDS)
 		#newObj=NVDAObjects.IAccessible.IAccessible(pacc,child)
 		#if newObj:
-		#	self.NVDAObject=newObj
-		speech.speakMessage("gecko virtualBuffer %s %s"%(self.NVDAObject.name,_("document")))
+		#	self.rootNVDAObject=newObj
+		speech.speakMessage("gecko virtualBuffer %s %s"%(self.rootNVDAObject.name,_("document")))
 		if self.isDocumentComplete():
 			self.loadDocument()
+
+	def isNVDAObjectInVirtualBuffer(self,obj):
+		root=self.rootNVDAObject
+		if root and obj and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(root.windowHandle,obj.windowHandle): 
+			return True
+
+	def isAlive(self):
+		root=self.rootNVDAObject
+		if root and winUser.isWindow(root.windowHandle):
+			return True
 
 	def event_gainFocus(self,obj,nextHandler):
 		role=getMozillaRole(obj.IAccessibleRole)
@@ -48,8 +59,8 @@ class Gecko(virtualBuffer):
 		if role==IAccessibleHandler.ROLE_SYSTEM_DOCUMENT:
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
 				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
-			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
-				self.NVDAObject=obj
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.rootNVDAObject): 
+				self.rootNVDAObject=obj
 				self.loadDocument()
 			return nextHandler()
 		ID=self.getNVDAObjectID(obj)
@@ -84,8 +95,8 @@ class Gecko(virtualBuffer):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
 				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
 				return True
-			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
-				self.NVDAObject=obj
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.rootNVDAObject):
+				self.rootNVDAObject=obj
 				self.loadDocument()
 				return True
 		return nextHandler()
@@ -93,7 +104,7 @@ class Gecko(virtualBuffer):
 	def event_reorder(self,obj,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
 			return nextHandler() 
-		if self.NVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
+		if self.rootNVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
@@ -141,8 +152,8 @@ class Gecko(virtualBuffer):
 			obj.setFocus()
 
 	def isDocumentComplete(self):
-		role=self.NVDAObject.role
-		states=self.NVDAObject.IAccessibleStates
+		role=self.rootNVDAObject.role
+		states=self.rootNVDAObject.IAccessibleStates
 		if (role==controlTypes.ROLE_DOCUMENT) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY) and (states&IAccessibleHandler.STATE_SYSTEM_READONLY):
 			return True
 		else:
@@ -150,17 +161,17 @@ class Gecko(virtualBuffer):
 
 	def loadDocument(self):
 		global lastLoadTime
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			speech.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
+			speech.speakMessage(_("loading document %s")%self.rootNVDAObject.name+"...")
 		self.resetBuffer()
 		globalVars.log.debug("virtualBuffers.gecko.loadDocument: load start") 
-		self.fillBuffer(self.NVDAObject)
+		self.fillBuffer(self.rootNVDAObject)
 		globalVars.log.debug("virtualBuffers.gecko.loadDocument: load end")
 		lastLoadTime=time.time()
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
 			self.text_reviewPosition=0
 			speech.speakMessage(_("done"))

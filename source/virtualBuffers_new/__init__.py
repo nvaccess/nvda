@@ -1,3 +1,4 @@
+import weakref
 import speech
 import NVDAObjects
 import winUser
@@ -38,15 +39,21 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 class VirtualBuffer(NVDAObjects.NVDAObject):
 
-	def __init__(self,windowHandle=None):
+	def __init__(self,rootNVDAObject):
 		self.TextInfo=VirtualBufferTextInfo
-		self.windowHandle=windowHandle
+		self._rootNVDAObject=weakref.ref(rootNVDAObject)
 		self.VBufHandle=VBufStorage_createBuffer(0)
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
+
+	def isNVDAObjectInVirtualBuffer(self,obj):
+		pass
+
+	def isAlive(self):
+		pass
 
 	def fillVBuf(self,ID=None):
  		pass

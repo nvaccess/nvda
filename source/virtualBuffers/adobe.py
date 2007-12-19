@@ -16,7 +16,8 @@ import api
 import config
 import controlTypes
 import NVDAObjects
-from .. import virtualBuffer
+import NVDAObjects.IAccessible
+from . import virtualBuffer
 
 NAVRELATION_EMBEDS=0x1009 
 
@@ -33,9 +34,19 @@ class Adobe(virtualBuffer):
 
 	def __init__(self,NVDAObject):
 		virtualBuffer.__init__(self,NVDAObject)
-		speech.speakMessage("adobe virtualBuffer %s %s"%(self.NVDAObject.name,_("document")))
+		speech.speakMessage("adobe virtualBuffer %s %s"%(self.rootNVDAObject.name,_("document")))
 		if self.isDocumentComplete():
 			self.loadDocument()
+
+	def isNVDAObjectInVirtualBuffer(self,obj):
+		root=self.rootNVDAObject
+		if root and obj and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(root.windowHandle,obj.windowHandle): 
+			return True
+
+	def isAlive(self):
+		root=self.rootNVDAObject
+		if root and winUser.isWindow(root.windowHandle):
+			return True
 
 	def event_gainFocus(self,obj,nextHandler):
 		role=getMozillaRole(obj.IAccessibleRole)
@@ -43,8 +54,8 @@ class Adobe(virtualBuffer):
 		if role in [IAccessibleHandler.ROLE_SYSTEM_DOCUMENT,"Page"]:
 			if (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
 				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
-			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject): 
-				self.NVDAObject=obj
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.rootNVDAObject): 
+				self.rootNVDAObject=obj
 				#self.loadDocument()
 			return nextHandler()
 		ID=self.getNVDAObjectID(obj)
@@ -63,8 +74,8 @@ class Adobe(virtualBuffer):
 		return nextHandler()
 
 	def event_valueChange(self,obj,nextHandler):
-		if self.NVDAObject.role==0:
-			self.NVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.NVDAObject.windowHandle,-4,0)
+		if self.rootNVDAObject.role==0:
+			self.rootNVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.rootNVDAObject.windowHandle,-4,0)
 			self.loadDocument()
 
 		speech.speakObject(obj)
@@ -86,8 +97,8 @@ class Adobe(virtualBuffer):
 			if states&IAccessibleHandler.STATE_SYSTEM_BUSY:
 				speech.speakMessage(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_BUSY))
 				return True
-			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.NVDAObject):
-				self.NVDAObject=obj
+			elif self.getNVDAObjectID(obj)!=self.getNVDAObjectID(self.rootNVDAObject):
+				self.rootNVDAObject=obj
 				self.loadDocument()
 				return True
 		return nextHandler()
@@ -95,7 +106,7 @@ class Adobe(virtualBuffer):
 	def event_reorder(self,obj,nextHandler):
 		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
 			return nextHandler() 
-		if self.NVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
+		if self.rootNVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
@@ -143,8 +154,8 @@ class Adobe(virtualBuffer):
 			obj.setFocus()
 
 	def isDocumentComplete(self):
-		role=self.NVDAObject.role
-		states=self.NVDAObject.IAccessibleStates
+		role=self.rootNVDAObject.role
+		states=self.rootNVDAObject.IAccessibleStates
 		if (role in [controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE]) and not (states&IAccessibleHandler.STATE_SYSTEM_BUSY):
 			return True
 		else:
@@ -152,17 +163,17 @@ class Adobe(virtualBuffer):
 
 	def loadDocument(self):
 		global lastLoadTime
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
-			speech.speakMessage(_("loading document %s")%self.NVDAObject.name+"...")
+			speech.speakMessage(_("loading document %s")%self.rootNVDAObject.name+"...")
 		self.resetBuffer()
 		globalVars.log.debug("virtualBuffers.adobe.loadDocument: load start") 
-		self.fillBuffer(self.NVDAObject)
+		self.fillBuffer(self.rootNVDAObject)
 		globalVars.log.debug("virtualBuffers.adobe.loadDocument: load end")
 		lastLoadTime=time.time()
-		if winUser.getAncestor(self.NVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
+		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
 			self.text_reviewPosition=0
 			speech.speakMessage(_("done"))

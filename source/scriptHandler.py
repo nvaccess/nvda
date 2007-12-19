@@ -15,7 +15,7 @@ def findScript_appModuleLevel(keyPress):
 	focusObject=api.getFocusObject()
 	if not focusObject:
 		return None
-	appModule=focusObject.appModule()
+	appModule=focusObject.appModule
 	func=appModule.getScript(keyPress) if appModule else None
 	if func:
 		nextFunc=lambda keyPress=keyPress: findScript_defaultAppModuleLevel(keyPress)
@@ -39,7 +39,7 @@ def findScript_defaultAppModuleLevel(keyPress):
 	return findScript_virtualBufferLevel(keyPress)
 
 def findScript_virtualBufferLevel(keyPress):
-	virtualBuffer=api.getFocusObject().virtualBuffer()
+	virtualBuffer=api.getFocusObject().virtualBuffer
 	if virtualBuffer and not api.isVirtualBufferPassThrough():
 		func=virtualBuffer.getScript(keyPress)
 		if func:

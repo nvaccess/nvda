@@ -18,7 +18,8 @@ import speech
 import config
 import controlTypes
 import NVDAObjects
-from .. import virtualBuffer
+import NVDAObjects.IAccessible
+from . import virtualBuffer
 
 
 class MSHTML(virtualBuffer):
@@ -73,13 +74,21 @@ class MSHTML(virtualBuffer):
 		if self.isDocumentComplete():
 			self.loadDocument()
 
+	def isNVDAObjectInVirtualBuffer(self,obj):
+		root=self.rootNVDAObject
+		if root and obj and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(root.windowHandle,obj.windowHandle): 
+			return True
+
+	def isAlive(self):
+		root=self.rootNVDAObject
+		if root and winUser.isWindow(root.windowHandle):
+			return True
+
 	def event_gainFocus(self,obj,nextHandler):
 		try:
 			nodeName=self.dom.activeElement.nodeName
 		except:
 			return nextHandler()
-		if (self.dom.body.isContentEditable is False) and (nodeName not in ["INPUT","SELECT","TEXTAREA"]) and api.isVirtualBufferPassThrough():
-			api.toggleVirtualBufferPassThrough()
 		domNode=self.dom.activeElement
 		ID=self.getDomNodeID(domNode)
 		r=self.getFullRangeFromID(ID)
@@ -113,7 +122,7 @@ class MSHTML(virtualBuffer):
 				domNode.click()
 				speech.speakMessage("%s"%(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
-				if not api.isVirtualBufferPassThrough() and not ((nodeName=="INPUT") and (domNode.getAttribute('type') in["checkbox","radio"])): 
+				if not api.isVirtualBufferPassThrough():
 					api.toggleVirtualBufferPassThrough()
 				domNode.focus()
 			elif inputType in ["button","image","reset","submit"]:
@@ -128,7 +137,7 @@ class MSHTML(virtualBuffer):
 	def loadDocument(self):
 		if self.dom.body.isContentEditable is True: #This is an editable document and will not be managed by this virtualBuffer
 			return
-		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+		if winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			speech.cancelSpeech()
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
@@ -136,7 +145,7 @@ class MSHTML(virtualBuffer):
 		self.resetBuffer()
 		self.fillBuffer(self.dom)
 		self.text_reviewPosition=0
-		if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+		if winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			speech.cancelSpeech()
 			self.text_reviewPosition=0
 			time.sleep(0.01)
@@ -147,14 +156,14 @@ class MSHTML(virtualBuffer):
 	def isDocumentComplete(self):
 		documentComplete=True
 		if self.dom.readyState!="complete":
-			if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+			if winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,api.getFocusObject().windowHandle):
 				speech.cancelSpeech()
 				speech.speakMessage(str(self.dom.readyState))
 			documentComplete=False
 		for frameNum in range(self.dom.frames.length):
 			try:
 				if self.dom.frames.item(frameNum).document.readyState!="complete":
-					if winUser.isDescendantWindow(self.NVDAObject.windowHandle,api.getFocusObject().windowHandle):
+					if winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,api.getFocusObject().windowHandle):
 						speech.cancelSpeech()
 						speech.speakMessage(str(self.dom.frames.item(frameNum).document.readyState))
 					documentComplete=False

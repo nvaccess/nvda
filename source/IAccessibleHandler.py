@@ -233,7 +233,6 @@ import winUser
 import speech
 import api
 import queueHandler
-import virtualBuffers
 import NVDAObjects.IAccessible
 import appModuleHandler
 import config
@@ -693,7 +692,6 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if needsFocusState:
 		if not hasFocusState:
 			return
-	virtualBuffers.IAccessible.update(obj)
 	api.setFocusObject(obj,ancestors=ancestors)
 	if isForegroundChange:
 		speech.cancelSpeech()

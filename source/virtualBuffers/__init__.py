@@ -6,6 +6,7 @@
 
 from new import instancemethod
 from textwrap import TextWrapper
+import weakref
 from keyUtils import key
 import speech
 import globalVars
@@ -14,17 +15,14 @@ import textBuffer
 import gui.scriptUI
 import controlTypes
 import NVDAObjects
-import IAccessible
-
-def getVirtualBuffer(obj):
-	if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-		return IAccessible.getVirtualBuffer(obj)
-
-def update(obj):
-	if isinstance(obj,NVDAObjects.window.Window):
-		IAccessible.update(obj)
 
 class virtualBuffer(textBuffer.textBufferObject):
+
+	def isNVDAObjectInVirtualBuffer(self,obj):
+		pass
+
+	def isAlive(self):
+		pass
 
 	def event_focusEntered(self,obj,nextHandler):
 		pass
@@ -45,13 +43,12 @@ class virtualBuffer(textBuffer.textBufferObject):
 	def __init__(self,NVDAObject):
 		textBuffer.textBufferObject.__init__(self)
 		self.needsLoad=True
-		self.NVDAObject=NVDAObject
+		self.rootNVDAObject=NVDAObject
 		self._IDs={}
 		self._textBuf=""
 		self._lastReportedIDList=[]
 		self._lastFindText=""
 		self._findInProgress=False
-
 
 	def getIDFromPosition(self,pos):
 		IDs=self._IDs

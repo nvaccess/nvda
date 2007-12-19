@@ -21,7 +21,7 @@ def manageEvent(eventName,obj):
 	manageEvent_appModuleLevel(eventName,obj)
 
 def manageEvent_appModuleLevel(name,obj):
-	appModule=obj.appModule()
+	appModule=obj.appModule
 	if hasattr(appModule,"event_%s"%name):
 		getattr(appModule,"event_%s"%name)(obj,lambda: manageEvent_defaultAppModuleLevel(name,obj)) 
 	else:
@@ -35,7 +35,7 @@ def manageEvent_defaultAppModuleLevel(name,obj):
 		manageEvent_virtualBufferLevel(name,obj)
 
 def manageEvent_virtualBufferLevel(name,obj):
-	virtualBuffer=obj.virtualBuffer()
+	virtualBuffer=obj.virtualBuffer
 	if hasattr(virtualBuffer,'event_%s'%name):
 		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: manageEvent_NVDAObjectLevel(name,obj))
 	else:

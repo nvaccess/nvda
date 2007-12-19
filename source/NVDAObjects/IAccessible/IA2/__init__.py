@@ -128,8 +128,7 @@ class IA2(IAccessible):
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
 		replacedTextInfo=False
-		if True: #not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject) #windowHandle=IAccessibleObject.WindowHandle
+		windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except:
@@ -222,7 +221,7 @@ class IA2(IAccessible):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.virtualBuffer():
+		if self!=focusObject and not self.virtualBuffer:
 			IAccessibleHandler.focus_manageEvent(self,needsFocusState=False)
 
 	def event_mouseMove(self,x,y):
