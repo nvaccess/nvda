@@ -69,6 +69,8 @@ def setSynth(name):
 		else:
 			if newSynth.hasVoice:
 				config.conf["speech"][name]["voice"]=newSynth.voice
+				#We need to call changeVoice here so voice dictionries can be managed
+				changeVoice(newSynth,newSynth.voice)
 			if newSynth.hasVariant:
 				config.conf["speech"][name]["variant"]=newSynth.variant
 			if newSynth.hasRate:
