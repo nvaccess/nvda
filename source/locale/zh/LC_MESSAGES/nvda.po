@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-12-11 21:39+0800\n"
+"PO-Revision-Date: 2007-12-19 22:25+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1163,8 +1163,6 @@ msgstr "日期編輯區"
 # appModules\_default.py:454
 # appModules\_default.py:464
 # appModules\_default.py:474
-# keyboardHandler.py:80
-# keyboardHandler.py:83
 msgid "icon"
 msgstr "圖像"
 
@@ -1697,6 +1695,34 @@ msgstr "儲存設定 &S\tCtrl+S"
 msgid "Write the current configuration to nvda.ini"
 msgstr "將現時的設定寫入 nvda.ini"
 
+# gui\__init__.py:159
+msgid "&Default dictionary..."
+msgstr "預設字庫... &D"
+
+# gui\__init__.py:159
+msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
+msgstr "打開編輯預設字庫的對話方塊"
+
+# gui\__init__.py:162
+msgid "&Voice dictionary..."
+msgstr "語音字庫... &V"
+
+# gui\__init__.py:162
+msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
+msgstr "打開編輯語音字庫的對話方塊"
+
+# gui\__init__.py:165
+msgid "&Temporary dictionary..."
+msgstr "臨時字庫... &T"
+
+# gui\__init__.py:165
+msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
+msgstr "打開編輯臨時字庫的對話方塊"
+
+# gui\__init__.py:167
+msgid "User &dictionaries"
+msgstr " 讀音修正字庫 &d"
+
 # gui\__init__.py:143
 msgid "E&xit"
 msgstr "關閉 NVDA &X"
@@ -1825,9 +1851,21 @@ msgstr "設定存好了"
 msgid "Could not save configuration - probably read only file system"
 msgstr "未能儲存設定, 也許使用了唯讀的檔案系統"
 
+# gui\__init__.py:281
+msgid "Default dictionary"
+msgstr "預設字庫"
+
+# gui\__init__.py:285
+msgid "Voice dictionary (%s)"
+msgstr "語音字庫 %s"
+
+# gui\__init__.py:289
+msgid "Temporary dictionary"
+msgstr "臨時字庫"
+
 # gui\__init__.py:233
-msgid "Press OK to quit NVDA"
-msgstr "按確定離開 NVDA"
+msgid "Are you sure you want to quit NVDA?"
+msgstr "是否結束 NVDA 的工作呢?"
 
 # gui\__init__.py:249
 msgid "Synthesizer"
@@ -2141,6 +2179,58 @@ msgstr "報出行數 &L"
 msgid "Report &alignment"
 msgstr "報出排列方式 &A"
 
+# gui\settingsDialogs.py:593
+msgid "&Dictionary entries"
+msgstr "字庫項目 &D"
+
+# controlTypes.py:131
+# virtualBuffers\IAccessible\gecko.py:41
+msgid "Comment"
+msgstr "註釋"
+
+# gui\settingsDialogs.py:597
+msgid "Pattern"
+msgstr "原來文字"
+
+# gui\settingsDialogs.py:598
+msgid "Replacement"
+msgstr "代替文字"
+
+# gui\settingsDialogs.py:605
+msgid "&Add"
+msgstr "新增 &A"
+
+# IAccessibleHandler.py:137
+# controlTypes.py:87
+msgid "&edit"
+msgstr "編輯　&E"
+
+# gui\settingsDialogs.py:611
+msgid "&Remove"
+msgstr "移除 &R"
+
+# gui\settingsDialogs.py:633
+msgid "Add an entry"
+msgstr "新增一個字庫項目"
+
+# controlTypes.py:131
+# virtualBuffers\IAccessible\gecko.py:41
+msgid "&Comment"
+msgstr "註釋　&C"
+
+# gui\settingsDialogs.py:129
+msgid "&Pattern"
+msgstr "原來文字　&P"
+
+# gui\settingsDialogs.py:633
+# gui\settingsDialogs.py:639
+msgid "&Replacement"
+msgstr "代替文字 &R"
+
+# gui\settingsDialogs.py:639
+msgid "Edit an entry"
+msgstr "編輯一個字庫項目"
+
 # keyboardHandler.py:80
 msgid "caps lock %s"
 msgstr "大寫鎖 %s"
@@ -2400,10 +2490,6 @@ msgstr "上載檔案"
 msgid "clickable"
 msgstr "可點擊"
 
-# virtualBuffers\IAccessible\gecko.py:294
-msgid "protected %s"
-msgstr "保密 %s"
-
 # virtualBuffers\__init__.py:193
 msgid "out of %s"
 msgstr "離開 %s"
@@ -2569,4 +2655,8 @@ msgstr "l=清單快速鍵"
 # virtualBuffers\__init__.py:515
 msgid "i=listItemQuickKey"
 msgstr "i=清單項目快速鍵"
+
+# virtualBuffers\IAccessible\gecko.py:294
+msgid "protected %s"
+msgstr "保密 %s"
 
