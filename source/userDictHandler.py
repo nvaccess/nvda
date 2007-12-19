@@ -73,6 +73,8 @@ class UserDict(list):
 		return text
 
 def processText(text):
+	if not globalVars.userDictionaryProcessing:
+		return text
 	for entry in dictionaries.values():
 		text=entry.sub(text)
 	return text

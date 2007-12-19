@@ -584,12 +584,9 @@ class DictionaryDialog(wx.Dialog):
 	def __init__(self,parent,ID,title,userDict):
 		wx.Dialog.__init__(self,parent,ID,title)
 		self.userDict=userDict
-		self.oldUserDict=userDictHandler.UserDict()
-		self.oldUserDict.extend(self.userDict)
 		self.tempUserDict=userDictHandler.UserDict()
 		self.tempUserDict.extend(self.userDict)
-		del self.userDict[:]
-		self.hasChanged=False
+		globalVars.userDictionaryProcessing=False
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		dictListID=wx.NewId()
@@ -627,12 +624,14 @@ class DictionaryDialog(wx.Dialog):
 		self.dictList.SetFocus()
 
 	def onCancel(self,evt):
-		self.userDict.extend(self.oldUserDict)
+		globalVars.userDictionaryProcessing=True
 		self.Destroy()
 
 	def onOk(self,evt):
-		self.userDict.extend(self.tempUserDict)
-		if self.hasChanged:
+		globalVars.userDictionaryProcessing=True
+		if self.tempUserDict!=self.userDict:
+			del self.userDict[:]
+			self.userDict.extend(self.tempUserDict)
 			self.userDict.save()
 		self.Destroy()
 
@@ -652,11 +651,9 @@ class DictionaryDialog(wx.Dialog):
 		if (index!=self.editingIndex)and(self.dictList.GetSelectedItemCount()==1):
 			self.dictList.DeleteItem(index)
 			del self.tempUserDict[index]
-			self.hasChanged=True
 		self.dictList.SetFocus()
 
 	def onDialog(self,texts):
-		self.hasChanged=True
 		if texts is not None:
 			if self.editingIndex>=0:
 				self.tempUserDict[self.editingIndex]=userDictHandler.UserDictEntry(texts[0],texts[1],texts[2])
