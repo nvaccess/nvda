@@ -699,7 +699,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 			cacheObject._speech_XMLCache=list(newStack)
 		text=" ".join(textList)
 		if textList or relativeXML is not None:
-			speech.speakText(text,wait=wait,index=index)
+			speakText(text,wait=wait,index=index)
 
 def getFieldSpeech(attrs,fieldType,extraDetail=False):
 		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_LINK:

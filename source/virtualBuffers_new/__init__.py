@@ -1,4 +1,5 @@
 import weakref
+import baseObject
 import speech
 import NVDAObjects
 import winUser
@@ -9,7 +10,8 @@ from virtualBuffer_new_wrapper import *
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getSelectionOffsets(self):
-		return VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle)
+		start,end=VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle)
+		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
 		VBufStorage_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
@@ -24,30 +26,35 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return VBufStorage_getBufferTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
-		return VBufStorage_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		text=VBufStorage_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		return text
 
 	def _getLineOffsets(self,offset):
 		return VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset)
 
 	def _get_XMLContext(self):
-		return VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,offset)
+		return VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
 
 	def _get_XMLText(self):
 		start=self._startOffset
 		end=self._endOffset
-		return VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		text=VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		return text
 
-class VirtualBuffer(NVDAObjects.NVDAObject):
+class VirtualBuffer(baseObject.scriptableObject):
 
 	def __init__(self,rootNVDAObject):
 		self.TextInfo=VirtualBufferTextInfo
-		self._rootNVDAObject=weakref.ref(rootNVDAObject)
+		self.rootNVDAObject=rootNVDAObject
 		self.VBufHandle=VBufStorage_createBuffer(0)
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
+
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		pass
@@ -60,6 +67,7 @@ class VirtualBuffer(NVDAObjects.NVDAObject):
 
 	def getFieldSpeech(self,attrs,fieldType,extraDetail=False):
 		pass
+
 
 	def _caretMovementScriptHelper(self,unit,direction):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -74,9 +82,9 @@ class VirtualBuffer(NVDAObjects.NVDAObject):
 			extraDetail=False
 		if unit==textHandler.UNIT_CHARACTER:
 			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,self.getFieldSpeech,extraDetail=extraDetail)
-			speech.speakSymbol(info.text)
+			speech.speakSpelling(info.text)
 		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,self.getFieldspeech,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,self.getFieldSpeech,extraDetail=extraDetail)
 
 	def script_moveByCharacter_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1)
@@ -102,7 +110,7 @@ class VirtualBuffer(NVDAObjects.NVDAObject):
 		info.collapse()
 		info.expand(textHandler.UNIT_CHARACTER)
 		info.updateCaret()
-		speech.speakSymbol(info.text)
+		speech.speakSpelling(info.text)
 
 	def script_endOfLine(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -111,7 +119,7 @@ class VirtualBuffer(NVDAObjects.NVDAObject):
 		info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
 		info.expand(textHandler.UNIT_CHARACTER)
 		info.updateCaret()
-		speech.speakSymbol(info.text)
+		speech.speakSpelling(info.text)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
