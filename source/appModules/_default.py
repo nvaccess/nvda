@@ -545,9 +545,11 @@ class appModule(appModuleHandler.appModule):
 	def script_sayAll(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
-		if v and not api.isVirtualBufferPassThrough():
+		if v and not hasattr(v,'TextInfo') and not api.isVirtualBufferPassThrough():
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
+			if v:
+				o=v
 			info=o.makeTextInfo(textHandler.POSITION_CARET)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
