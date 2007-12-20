@@ -12,6 +12,8 @@ import globalVars
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
+	hasXML=True
+
 	def _getSelectionOffsets(self):
 		start,end=VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle)
 		return (start,end)
@@ -77,10 +79,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 		pass
 
 
-	def getFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		pass
-
-
 	def _caretMovementScriptHelper(self,unit,direction):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(unit)
@@ -93,10 +91,10 @@ class VirtualBuffer(baseObject.scriptableObject):
 		else:
 			extraDetail=False
 		if unit==textHandler.UNIT_CHARACTER:
-			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,self.getFieldSpeech,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 			speech.speakSpelling(info.text)
 		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,self.getFieldSpeech,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 
 	def script_moveByCharacter_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1)

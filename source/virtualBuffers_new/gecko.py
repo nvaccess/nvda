@@ -1,4 +1,4 @@
-from . import VirtualBuffer
+from . import VirtualBuffer, VirtualBufferTextInfo
 from virtualBuffer_new_wrapper import *
 import controlTypes
 import NVDAObjects.IAccessible
@@ -7,7 +7,29 @@ import speech
 import IAccessibleHandler
 import globalVars
 
+class GeckoTextInfo(VirtualBufferTextInfo):
+
+	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
+		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_LINK): 
+			return "link"
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible2::role']==str(IAccessibleHandler.IA2_ROLE_HEADING):
+			return "heading"
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):
+			return "button"
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_GRAPHIC): 
+			return "graphic"
+		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
+			return "in %s"%attrs['IAccessible2::role']
+		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
+			return "out of %s"%attrs['IAccessible2::role']
+		else:
+			return ""
+
 class Gecko(VirtualBuffer):
+
+	def __init__(self,rootNVDAObject):
+		super(Gecko,self).__init__(rootNVDAObject)
+		self.TextInfo=GeckoTextInfo
 
 	def _fillVBufHelper(self,pacc=None,accChildID=0,parentNode=None,previousNode=None):
 		if not pacc:
@@ -89,20 +111,3 @@ class Gecko(VirtualBuffer):
 		root=self.rootNVDAObject
 		if root and winUser.isWindow(root.windowHandle):
 			return True
-
-	def getFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_LINK): 
-			return "link"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible2::role']==str(IAccessibleHandler.IA2_ROLE_HEADING):
-			return "heading"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):
-			return "button"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_GRAPHIC): 
-			return "graphic"
-		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
-			return "in %s"%attrs['IAccessible2::role']
-		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
-			return "out of %s"%attrs['IAccessible2::role']
-		else:
-			return ""
-

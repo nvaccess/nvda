@@ -135,10 +135,18 @@ class TextInfo(baseObject.autoPropertyObject):
 @type isCollapsed: bool
 @ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
 @type text: string
+@ivar hasXML: if true then the XMLContext and XMLText properties can be used to get text with fields
+@type hasXML: bool
+@ivar XMLContext: a string of xml denoting the ancestor hierarchy of fields
+@type XMLContext: string
+@ivar XMLText: a string of text contained in the range of the object, marked up with xml to denote fields 
+@type XMLText: string
 @ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
 @type bookmark: L{Bookmark}
 """
  
+	hasXML=False
+
 	def __init__(self,obj,position):
 		"""
 @param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
@@ -154,6 +162,25 @@ class TextInfo(baseObject.autoPropertyObject):
  
 	def _get_text(self):
 		raise NotImplementedError
+
+	def _get_XMLContext(self):
+		pass
+
+	def _get_XMLText(self):
+		pass
+
+	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
+		"""
+@param attrs: a dictionary of attributes for a particular xml field
+@type attrs: dict
+@param fieldType: one of the XML fieldType constants
+@type fieldtype: string
+@param extraDetail: if true then extra detail is being requested, more fields should return speech data
+@type extraDetail: bool
+@returns: The text to speak
+@rtype: string
+ """
+		pass
 
 	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
 		"""
