@@ -11,53 +11,6 @@ from .. import IAccessible
 from ... import NVDAObjectTextInfo
 from ...window import Window
 
-IA2RolesToNVDARoles={
-IAccessibleHandler.IA2_ROLE_UNKNOWN:controlTypes.ROLE_UNKNOWN,
-IAccessibleHandler.IA2_ROLE_CANVAS:controlTypes.ROLE_CANVAS,
-IAccessibleHandler.IA2_ROLE_CAPTION:controlTypes.ROLE_CAPTION,
-IAccessibleHandler.IA2_ROLE_CHECK_MENU_ITEM:controlTypes.ROLE_CHECKMENUITEM,
-IAccessibleHandler.IA2_ROLE_COLOR_CHOOSER:controlTypes.ROLE_COLORCHOOSER,
-IAccessibleHandler.IA2_ROLE_DATE_EDITOR:controlTypes.ROLE_DATEEDITOR,
-IAccessibleHandler.IA2_ROLE_DESKTOP_ICON:controlTypes.ROLE_DESKTOPICON,
-IAccessibleHandler.IA2_ROLE_DESKTOP_PANE:controlTypes.ROLE_DESKTOPPANE,
-IAccessibleHandler.IA2_ROLE_DIRECTORY_PANE:controlTypes.ROLE_DIRECTORYPANE,
-IAccessibleHandler.IA2_ROLE_EDITBAR:controlTypes.ROLE_EDITBAR,
-IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT:controlTypes.ROLE_EMBEDDEDOBJECT,
-IAccessibleHandler.IA2_ROLE_ENDNOTE:controlTypes.ROLE_ENDNOTE,
-IAccessibleHandler.IA2_ROLE_FILE_CHOOSER:controlTypes.ROLE_FILECHOOSER,
-IAccessibleHandler.IA2_ROLE_FONT_CHOOSER:controlTypes.ROLE_FONTCHOOSER,
-IAccessibleHandler.IA2_ROLE_FOOTER:controlTypes.ROLE_FOOTER,
-IAccessibleHandler.IA2_ROLE_FOOTNOTE:controlTypes.ROLE_FOOTNOTE,
-IAccessibleHandler.IA2_ROLE_FORM:controlTypes.ROLE_FORM,
-IAccessibleHandler.IA2_ROLE_FRAME:controlTypes.ROLE_FRAME,
-IAccessibleHandler.IA2_ROLE_GLASS_PANE:controlTypes.ROLE_GLASSPANE,
-IAccessibleHandler.IA2_ROLE_HEADER:controlTypes.ROLE_HEADER,
-IAccessibleHandler.IA2_ROLE_HEADING:controlTypes.ROLE_HEADING,
-IAccessibleHandler.IA2_ROLE_ICON:controlTypes.ROLE_ICON,
-IAccessibleHandler.IA2_ROLE_IMAGE_MAP:controlTypes.ROLE_IMAGEMAP,
-IAccessibleHandler.IA2_ROLE_INPUT_METHOD_WINDOW:controlTypes.ROLE_INPUTWINDOW,
-IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME:controlTypes.ROLE_INTERNALFRAME,
-IAccessibleHandler.IA2_ROLE_LABEL:controlTypes.ROLE_LABEL,
-IAccessibleHandler.IA2_ROLE_LAYERED_PANE:controlTypes.ROLE_LAYEREDPANE,
-IAccessibleHandler.IA2_ROLE_NOTE:controlTypes.ROLE_NOTE,
-IAccessibleHandler.IA2_ROLE_OPTION_PANE:controlTypes.ROLE_OPTIONPANE,
-IAccessibleHandler.IA2_ROLE_PAGE:controlTypes.ROLE_PAGE,
-IAccessibleHandler.IA2_ROLE_PARAGRAPH:controlTypes.ROLE_PARAGRAPH,
-IAccessibleHandler.IA2_ROLE_RADIO_MENU_ITEM:controlTypes.ROLE_RADIOMENUITEM,
-IAccessibleHandler.IA2_ROLE_REDUNDANT_OBJECT:controlTypes.ROLE_REDUNDANTOBJECT,
-IAccessibleHandler.IA2_ROLE_ROOT_PANE:controlTypes.ROLE_ROOTPANE,
-IAccessibleHandler.IA2_ROLE_RULER:controlTypes.ROLE_RULER,
-IAccessibleHandler.IA2_ROLE_SCROLL_PANE:controlTypes.ROLE_SCROLLPANE,
-IAccessibleHandler.IA2_ROLE_SECTION:controlTypes.ROLE_SECTION,
-IAccessibleHandler.IA2_ROLE_SHAPE:controlTypes.ROLE_SHAPE,
-IAccessibleHandler.IA2_ROLE_SPLIT_PANE:controlTypes.ROLE_SPLITPANE,
-IAccessibleHandler.IA2_ROLE_TEAR_OFF_MENU:controlTypes.ROLE_TEAROFFMENU,
-IAccessibleHandler.IA2_ROLE_TERMINAL:controlTypes.ROLE_TERMINAL,
-IAccessibleHandler.IA2_ROLE_TEXT_FRAME:controlTypes.ROLE_TEXTFRAME,
-IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON:controlTypes.ROLE_TOGGLEBUTTON,
-IAccessibleHandler.IA2_ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
-}
-
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
@@ -189,8 +142,8 @@ class IA2(IAccessible):
 
 	def _get_role(self):
 		IA2Role=self.IAccessibleObject.role()
-		if IA2Role>IAccessibleHandler.IA2_ROLE_UNKNOWN and IA2RolesToNVDARoles.has_key(IA2Role):
-			return IA2RolesToNVDARoles[IA2Role]
+		if IA2Role>IAccessibleHandler.IA2_ROLE_UNKNOWN and IAccessibleHandler.IAccessibleRolesToNVDARoles.has_key(IA2Role):
+			return IAccessibleHandler.IAccessibleRolesToNVDARoles[IA2Role]
 		else:
 			return super(IA2,self)._get_role()
 
