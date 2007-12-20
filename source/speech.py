@@ -613,7 +613,6 @@ class XMLContextParser(object):
 		self._fieldStack=[]
 
 	def _startElementHandler(self,name,attrs):
-		normalizeFieldAttrs(attrs)
 		self._fieldStack.append(attrs)
 
 	def parse(self,XMLContext):
@@ -634,7 +633,6 @@ class RelativeXMLParser(object):
 		for attr in attrs:
 			newAttrs[attr[0]]=attr[1]
 		attrs=newAttrs
-		normalizeFieldAttrs(attrs)
 		self._commandList.append(("start",attrs))
 
 	def _endElementHandler(self,tag):
@@ -666,14 +664,15 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 				break
 		#Get speech text for any fields in the old stack that are not in the new stack 
 		for index in range(commonFieldCount,len(oldStack)):
-			textList.append(getFieldSpeech(oldStack[index],"end_removedFromStack",extraDetail))
+			textList.append(getFieldSpeechFunc(oldStack[index],"end_removedFromStack",extraDetail))
 		#Get speech text for any fields that are in both stacks, if extra detail is not requested
 		if not extraDetail:
 			for index in range(commonFieldCount):
-				textList.append(getFieldSpeech(newStack[index],"start_inStack",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[index],"start_inStack",extraDetail))
 		#Get speech text for any fields in the new stack that are not in the old stack
 		for index in range(commonFieldCount,len(newStack)):
-			textList.append(getFieldSpeech(newStack[index],"start_addedToStack",extraDetail))
+			textList.append(getFieldSpeechFunc(newStack[index],"start_addedToStack",extraDetail))
+			commonFieldCount+=1
 		#Fetch a command list for the relative XML
 		commandParser=RelativeXMLParser()
 		commandList=commandParser.parse(relativeXML) if relativeXML is not None else []
@@ -683,21 +682,21 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 			if commandList[index][0]=="text":
 				textList.append(commandList[index][1])
 			elif commandList[index][0]=="start":
-				textList.append(getFieldSpeech(commandList[index][1],"start_relative",extraDetail))
+				textList.append(getFieldSpeechFunc(commandList[index][1],"start_relative",extraDetail))
 				newStack.append(commandList[index][1])
 			elif commandList[index][0]=="end" and len(newStack)>0:
-				textList.append(getFieldSpeech(newStack[-1],"end_relative",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail))
 				del newStack[-1]
 				if commonFieldCount>len(newStack):
 					commonFieldCount=len(newStack)
 		#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
 		if not extraDetail:
 			for index in reversed(range(min(len(newStack),commonFieldCount))):
-				textList.append(getFieldSpeech(newStack[index],"end_inStack",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[index],"end_inStack",extraDetail))
 		#Cache a copy of the new stack for future use
 		if cacheFinalStack:
 			cacheObject._speech_XMLCache=list(newStack)
-		text=" ".join(textList)
+		text=" ".join([x for x in textList if x and isinstance(x,basestring)])
 		if textList or relativeXML is not None:
 			speakText(text,wait=wait,index=index)
 
