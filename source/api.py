@@ -108,7 +108,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 	globalVars.focusAncestors=ancestors
 	if not obj.virtualBuffer:
 		virtualBufferObject=None
-		for o in reversed(globalVars.focusAncestors[globalVars.focusDifferenceLevel:]+[globalVars.focusObject]):
+		for o in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]+[globalVars.focusObject]:
 			virtualBufferObject=virtualBufferHandler.update(o)
 			if virtualBufferObject:
 				break
