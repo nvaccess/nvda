@@ -1,4 +1,6 @@
 import weakref
+import time
+import winsound
 import baseObject
 import speech
 import NVDAObjects
@@ -6,6 +8,7 @@ import winUser
 import controlTypes
 import textHandler
 from virtualBuffer_new_wrapper import *
+import globalVars
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -62,8 +65,17 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def isAlive(self):
 		pass
 
-	def fillVBuf(self,ID=None):
- 		pass
+	def fillVBuf(self):
+		winsound.Beep(440,30)
+		startTime=time.time()
+		self._fillVBufHelper()
+		endTime=time.time()
+		winsound.Beep(880,30)
+		globalVars.log.warning("load took %s seconds"%(endTime-startTime))
+
+	def _fillVBufHelper(self):
+		pass
+
 
 	def getFieldSpeech(self,attrs,fieldType,extraDetail=False):
 		pass
