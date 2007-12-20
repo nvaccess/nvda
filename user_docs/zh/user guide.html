@@ -1,0 +1,2077 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=big5">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="user%20guide_files/filelist.xml">
+<title>Nonvisual Desktop Access (NVDA)</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>YK Tam</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Anyone</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>120</o:TotalTime>
+  <o:Created>2007-04-04T11:24:00Z</o:Created>
+  <o:LastSaved>2007-12-20T15:23:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1221</o:Words>
+  <o:Characters>6966</o:Characters>
+  <o:Company>BC</o:Company>
+  <o:Lines>58</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>8171</o:CharactersWithSpaces>
+  <o:Version>11.8132</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>75</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:PunctuationKerning/>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 3 0 0 0 0 0 0 0;
+	mso-font-alt:PMingLiU;
+	mso-font-charset:136;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 137232384 22 0 1048577 0;}
+@font-face
+	{font-family:"\@PMingLiU";
+	panose-1:2 2 3 0 0 0 0 0 0 0;
+	mso-font-charset:136;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 137232384 22 0 1048577 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;
+	font-weight:bold;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:\5167\6587;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.a, li.a, div.a
+	{mso-style-name:\5167\6587;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:PMingLiU;
+	mso-font-kerning:1.0pt;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:18.0pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.a0
+	{mso-style-name:\8868\683C\5167\6587;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-GB link=blue vlink=purple style='tab-interval:24.0pt;text-justify-trim:
+punctuation'>
+
+<div class=Section1 style='layout-grid:18.0pt'>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman";mso-ansi-language:
+EN-US'>用戶指南</span><span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><!--[if supportFields]><span
+lang=EN-US style='mso-ansi-language:EN-US'><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>TOC \o &quot;1-2&quot; \h \z \u <span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='mso-ansi-language:EN-US'><span class=MsoHyperlink><span
+style='mso-no-proof:yes'><a href="#_Toc163475852">1. <span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>簡介：</span><span style='color:windowtext;display:none;
+mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475852 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>2<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350032000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475853">2. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>系統要求：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475853 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>3<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350033000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475854">3. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下載及安裝：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475854 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>3<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350034000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475855">4. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>程式的運行：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475855 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350035000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475856">5. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>選項設定：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475856 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350036000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475857">5.1. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>用戶者介面選項</span>(User Interface
+settings)<span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475857 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350037000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475858">5.2. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>朗讀引擎</span>(Synthesizers)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475858 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350038000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475859">5.3. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>語音設定</span>(Voice settings)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475859 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800350039000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475860">5.4. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>輸入鍵朗讀</span>(Keyboard echo)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475860 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360030000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475861">5.5. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>滑鼠設定</span>(Mouse settings)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475861 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360031000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475862">5.6. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>會報項目情況</span>(Object Presentation)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475862 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360032000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475863">5.7. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>忘記已經更改的設定</span>(revert to saved
+configuration)<span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475863 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360033000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475864">5.8. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>儲存設定</span>(Save configuration)<span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475864 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360034000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475865">6. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在畫面上瀏覽：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475865 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360035000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475866">6.1. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>使用焦點來瀏覽：</span><span style='color:
+windowtext;display:none;mso-hide:screen;text-decoration:none;text-underline:
+none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475866 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360036000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475867">6.2. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>樹狀項目分佈：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475867 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360037000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475868">7. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>虛擬空間「</span>Virtual
+Buffers<span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>」：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475868 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>7<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360038000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475869">8. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>鍵盤按鍵：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475869 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>7<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800360039000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475870">8.1. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>一般操作：</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475870 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>7<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800370030000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475871">8.2. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>在各項目之間的操作：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475871 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>8<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800370031000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475872">8.3. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>在一個項目內的操作：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475872 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>8<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800370032000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='text-indent:12.0pt;mso-char-indent-count:1.0;
+tab-stops:right lined 414.8pt'><span class=MsoHyperlink><span lang=EN-US
+style='mso-ansi-language:EN-US;mso-no-proof:yes'><a href="#_Toc163475873">8.4. <span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>在網頁瀏覽器的操作：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475873 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>9<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800370033000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoToc1 style='tab-stops:right lined 414.8pt'><span
+class=MsoHyperlink><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+yes'><a href="#_Toc163475874">9. <span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>進度列：</span><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-tab-count:1 lined'>__ </span></span><!--[if supportFields]><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc163475874 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
+style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
+text-underline:none'>9<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100360033003400370035003800370034000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
+lang=EN-US style='mso-ansi-language:EN-US;font-weight:normal;font-style:normal;
+mso-no-proof:yes'><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if supportFields]><span lang=EN-US style='mso-ansi-language:
+EN-US'><span style='mso-element:field-end'></span></span><![endif]--><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<span lang=EN-US style='font-size:12.0pt;font-family:"Times New Roman";
+mso-fareast-font-family:PMingLiU;mso-font-kerning:1.0pt;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-TW;mso-bidi-language:AR-SA'><br clear=all
+style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>視窗桌面屏幕朗讀程式</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>(N V D A)</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>一個免費、開放源代碼和不需視力，在視窗系統桌面上操作的軟件。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>修正、維護及原創者︰米高蓋倫</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>(Michael Curran)</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>，並得到占士達</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>(James <span class=SpellE>Teh</span>)</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和各界人仕的協助。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475852"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>1. </span></b></a><span style='mso-bookmark:_Toc163475852'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>簡介：</span></b></span><span style='mso-bookmark:_Toc163475852'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>雖然在其他平台，例如</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> <span class=SpellE>Linus</span> </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>的作業系統上，已經有了免費的屏幕朗讀軟件；但現時使用視窗</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> Windows </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的作業系統，就得要購買定價高達一千美元的屏幕朗讀軟件。由於價格不易負擔，而對於解決失明和視障人士，使用視窗系統的免費軟件又付諸闕如；</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>就是在這樣的情況下催生出來。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>由於整個程式都是採用</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> Python</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>這種開放和具備容易上手掌握的編程語言來編寫，所以非常容易在</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>NVDA</span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>這個屏幕朗讀軟件裡面進行添加和改動它的功能，以切合使用者的特殊需要。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>NVDA</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>屏幕朗讀軟件中包含了軟件的開放源代碼，任何人士都可以自由發揮，切合個人的需要而加以修改。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>nvda</span></span><span lang=ZH-TW style='font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的操作，跟任何你習慣的其他讀屏軟件相當類似。它的主要功能包括︰</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>利用</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> MSAA </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>技術，找出控制項目的名稱、功能、狀態、說明、數值、輔助和索引；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>透過視窗的程式介面</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>(API)</span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>能夠讀出編輯區窗格內的字元、選段和全部文字；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>可採用物件檢視器</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>(OLE/COM)</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>來找出文件內容；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>能透過</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> MSAA </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>找出多種境況上的改變，例如︰焦點的改變、執行中項目的改變、物件的產生和消除等等；同時亦能於任何時間，對</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> MSAA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的操控屬性改變作出反應；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>可透過</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> internet <span class=SpellE>Explorer_server</span>
+windows </span><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>來獲取網頁資料；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>能回應鍵盤的操控；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* IS </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>組件模塊式結構</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>(</span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>區動器和支援程式以模組型式編寫設計</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>)</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>* </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>能夠朗讀</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> DOS </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>模式下的窗格內容；</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>由於一些上述優點，所以在執行</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>時，都無須安裝或更新任何系統檔案或驅動程式。另一方面，只要系統已經安裝好適當的中文朗讀引擎，它就能朗讀中文。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>現時的</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>還是在初步試用階段，有很多不足之處有待改善；例如它只能夠支援</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> SAPI5 </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的朗讀引擎，還未支援點字輸出，而且許多的中文輸入法還未能支援。程式的主介面呢，現時已經有好幾個語言可供用家選擇，但可惜未有簡體中文的份兒。隨著這軟件被更多人使用，上述的問題將會逐漸改善過來。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475853"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>2. </span></b></a><span style='mso-bookmark:_Toc163475853'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>系統要求：</span></b></span><span style='mso-bookmark:_Toc163475853'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>你的電腦內痊最小要具備</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> 256 Mega-bytes </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>的記憶體，</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>1 GHZ </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>運算速度的中央署理器，當然更多記憶體和更高速的中央署理器，運行起來會更加理想。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>NVDA </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>可在</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> 32 </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>位元的視窗</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>XP, 2003 </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>及</span><span lang=ZH-TW> </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>Vista </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>系統上運作，至於</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> 64 </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>位元則暫時仍未支援。雖然相信軟件可以在視窗</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> 2000 </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下使用</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>，但目前暫時未有足夠數目的用家來加以證實。不過在視窗</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> 95, 98 </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>及</span><span lang=EN-US style='mso-ansi-language:EN-US'> ME
+</span><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>方面，就不能使用</span><span lang=EN-US
+style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>了。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>NVDA </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>可支援大部分內建在視窗的應用程式，包括：</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> Windows </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的檔案總管、控制台、小算盤及音量控制等。</span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>在網頁瀏覽器方面，可支援</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> Internet Explorer </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> 6 </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>或</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> 7 </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>版本，也可支援</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> Fire Fox </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>瀏覽器，而且支援效果比</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> Internet Explorer </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>甚或來得更理想。另外也支援電郵軟件</span><span
+lang=ZH-TW style='font-size:11.5pt;mso-ansi-language:EN-US'> </span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>Outlook express </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>，至於文字處理軟件如</span><span
+lang=ZH-TW style='font-size:11.5pt;mso-ansi-language:EN-US'> </span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>Microsoft Word, </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>試算表軟件</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> Microsoft Excel, </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>通訊軟件</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> <span
+class=SpellE>Skype</span> </span><span lang=ZH-TW style='font-size:11.5pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>等也有基本的支援。</span><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475854"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>3. </span></b></a><span style='mso-bookmark:_Toc163475854'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>下載及安裝：</span></b></span><span style='mso-bookmark:_Toc163475854'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>要下載最新版本，可以到</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的官方網站：</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><a href="http://www.nvda-project.org/">http://www.nvda-project.org</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>就可找到程式，下載後不需安裝，把它解壓縮後就可以直接使用了。為了方便日後執行</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>，你可依照以下步驟來建立啟動的捷徑：</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.1. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>瀏覽至新資料夾內的</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> nvda.exe</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>檔案</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.2. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>按</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> shift+f10 </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>跳出快顯選單</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.3. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>選擇「傳送到</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(n)</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>」選單</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.4. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>啟動項目選單裡面的「桌面當作捷徑」項目</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.5. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>瀏覽至桌面的「捷徑</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> -<span
+style='mso-spacerun:yes'>&nbsp; </span>nvda.exe</span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>」</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3.6. </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可以把這個捷徑重新命名和設定快速鍵；又或複製至「開始」選單的「啟動」資料夾，使得程式在每次開機後都會自動執行；總之，如何取捨悉隨尊便。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>這是一套可攜式軟件，你可把整個資料夾複製到隨身碟或</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> USB </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>手指裝置中，然後就可以在其他電腦使用。當然如果要朗讀中文，那麼電腦內必須先安裝有</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> SAPI5 </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>所兼容的中文朗讀引擎。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475855"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>4. </span></b></a><span style='mso-bookmark:_Toc163475855'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>程式的運行：</span></b></span><span style='mso-bookmark:_Toc163475855'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當需要使用</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>時，正在使用其他屏幕朗讀軟件的朋友，請先把它關閉，然後啟動這個程式的捷徑，或在相關的資料夾內執行</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> nvda.exe </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>即可。啟動的時間，視乎電腦的速度而定，如果是從</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> USB </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>手指裝置或</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> CD </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>光碟上執行，啟動的時間就會比在硬盤上執行，較為長一點。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>啟動後，會聽到電腦發出由低至高的音調，然後會說出「</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>NVDA Started</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>」，如果等待良久還聽不到以上所描述的聲音，就表示發生了問題，你可向有關方面反映，回報問題的方法，可參閱</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的官方網站</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><a href="http://www.nvda-project.org/">http://www.nvda-project.org</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當程式成功啟動後，會有</span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>一個</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的應用視窗跳出來，裡面有簡單介紹、設定方法及常用鍵盤說明，可以使用方向鍵來閱讀該些資料。另外也可以結束</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的工作，或將程式的設定修改並儲存。如果要把</span><span
+lang=ZH-TW style='font-size:11.5pt'> </span><span lang=EN-US style='font-size:
+11.5pt;mso-ansi-language:EN-US'>NVDA </span><span lang=ZH-TW style='font-size:
+11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>這個應用視窗隱藏起來，可在視窗內按</span><span lang=EN-US style='font-size:
+11.5pt;mso-ansi-language:EN-US'> alt+F4</span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>，如果要跳出這個視窗，閱讀說明或修改設定，可按</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> <span
+class=SpellE>insert+n</span></span><span lang=ZH-TW style='font-size:11.5pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>。</span><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475856"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>5. </span></b></a><span style='mso-bookmark:_Toc163475856'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>選項設定：</span></b></span><span style='mso-bookmark:_Toc163475856'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>用家可在</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>的應用視窗打開</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>「</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>Preferences(<span class=SpellE>alt+p</span>)</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>」選單，更改以下選項：</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475857"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.1. </span></b></a><span style='mso-bookmark:_Toc163475857'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>用戶者介面選項</span></b></span><span style='mso-bookmark:_Toc163475857'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(User Interface settings)</span></b></span><span
+style='mso-bookmark:_Toc163475857'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475857'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可設定以下選項：</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>程式介面使用哪一個語言。</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>是否在每次啟動</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>後也跳出它的介面視窗。</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在離開前是否自動儲存設定等。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475858"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.2. </span></b></a><span style='mso-bookmark:_Toc163475858'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>朗讀引擎</span></b></span><span style='mso-bookmark:_Toc163475858'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Synthesizers)</span></b></span><span
+style='mso-bookmark:_Toc163475858'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475858'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可設定使用哪一個朗讀引擎，但現時只能夠使用</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> SAPI5 </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>所兼容的朗讀引擎。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475859"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.3. </span></b></a><span style='mso-bookmark:_Toc163475859'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>語音設定</span></b></span><span style='mso-bookmark:_Toc163475859'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Voice settings)</span></b></span><span
+style='mso-bookmark:_Toc163475859'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475859'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可讓你設定採用哪一個朗讀人聲、朗讀音量、音調高低和速度等。另外也可設定遇到標點符號時，是否朗讀標點；遇到大寫的英文字母時，是否先說出「</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>cap</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>」等。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475860"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.4. </span></b></a><span style='mso-bookmark:_Toc163475860'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>輸入鍵朗讀</span></b></span><span style='mso-bookmark:_Toc163475860'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Keyboard echo)</span></b></span><span
+style='mso-bookmark:_Toc163475860'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475860'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可設定在按鍵時，是否讀出</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>單個英文字母、整個英文字、功能鍵及按鍵組合。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>上述「輸入鍵」朗讀的設定，可隨時使用快速鍵來更改，請參考下面「鍵盤按鍵」的部份。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475861"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.5. </span></b></a><span style='mso-bookmark:_Toc163475861'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>滑鼠設定</span></b></span><span style='mso-bookmark:_Toc163475861'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Mouse settings)</span></b></span><span
+style='mso-bookmark:_Toc163475861'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475861'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>滑鼠游標的型態在不同環境之下有不同的改變，例如在載入程式時是一個型態，遇到可編輯的文字框時又是另一個型態。你可設定每當滑鼠游標的型態有所改變時，是否說出這些改變。另外也可設定當滑鼠游標移到不同的物件上，把該物件說出來。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475862"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.6. </span></b></a><span style='mso-bookmark:_Toc163475862'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會報項目情況</span></b></span><span style='mso-bookmark:_Toc163475862'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Object Presentation)</span></b></span><span
+style='mso-bookmark:_Toc163475862'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475862'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可設定以下選項：</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當游標之下的項目有工具提示時，是否說出來。</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>如果出現氣球說明文字時，是否說出來。</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>是否先把控制項的狀況說出來，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>(</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>例如「已核取」、「已選取」及「以按下」等」</span><span lang=EN-US
+style='mso-ansi-language:EN-US'>)</span><span lang=ZH-TW style='font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>，才說出該控制項的名稱和種類。</span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在出現進度列時是否播放</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> beep </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>聲。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當完成上述的選項後，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會馬上套用已經更改的設定。你也可以在「</span><span lang=EN-US style='mso-ansi-language:
+EN-US'>NVDA(<span class=SpellE>alt+n</span>)</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>」選單執行下面其中一項：</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475863"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.7. </span></b></a><span style='mso-bookmark:_Toc163475863'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>忘記已經更改的設定</span></b></span><span style='mso-bookmark:_Toc163475863'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(revert to saved configuration)</span></b></span><span
+style='mso-bookmark:_Toc163475863'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475863'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>即表示套用先前的設定，並且放棄任何曾經更改的設定。你也可以在</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的應用視窗內按</span><span lang=EN-US style='mso-ansi-language:
+EN-US'> <span class=SpellE>CTRL+r</span> </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>來執行這項功能。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475864"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>5.8. </span></b></a><span style='mso-bookmark:_Toc163475864'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>儲存設定</span></b></span><span style='mso-bookmark:_Toc163475864'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>(Save configuration)</span></b></span><span
+style='mso-bookmark:_Toc163475864'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:14.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>：</span></b></span><span
+style='mso-bookmark:_Toc163475864'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:14.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>可讓</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>把你更改的設定儲存至資料夾內的「</span><span lang=EN-US style='mso-ansi-language:
+EN-US'>nvda.ini</span><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>」檔案內，在下次執行程式後自動套用該些設定。但如果資料夾是位於</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> CD </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>光碟等唯讀媒體中，那就無法儲存新的設定了，當然程式屆時會提醒你。要執行此項儲存設定功能，也可在</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>的應用視窗內按</span><span lang=EN-US style='mso-ansi-language:
+EN-US'> <span class=SpellE>CTRL+s</span></span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475865"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>6. </span></b></a><span style='mso-bookmark:_Toc163475865'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在畫面上瀏覽：</span></b></span><span style='mso-bookmark:_Toc163475865'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475866"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>6.1. </span></b></a><span style='mso-bookmark:_Toc163475866'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>使用焦點來瀏覽：</span></b></span><span style='mso-bookmark:_Toc163475866'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>我們較常用的瀏覽方法，是使用鍵盤按鍵來移動焦點，例如在對話盒裡，按</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> tab </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>到下一個控制項目，或按</span><span lang=EN-US style='mso-ansi-language:
+EN-US'> <span class=SpellE>Shift+tab</span> </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>到上一個，也可按</span><span lang=EN-US style='mso-ansi-language:
+EN-US'> <span class=SpellE>Alt+tab</span> </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>到另一個執行中的應用視窗。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在每一次移動焦點後，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會盡量說出焦點之下的項目類型、名稱、狀態、有關描述等資料，情況跟使用其他讀屏軟件一樣。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475867"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>6.2. </span></b></a><span style='mso-bookmark:_Toc163475867'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>樹狀項目分佈：</span></b></span><span style='mso-bookmark:_Toc163475867'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>現時來說，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>未有使用任何畫面擷取程式來獲取整個畫面顯示的資料，所以大家有須要清楚了解下面所描述的情況。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>畫面上每個東西都是一個獨立的「項目</span><span
+lang=EN-US style='mso-ansi-language:EN-US'>(objects)</span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>」。桌面是一個大項目，其中包含的每個應用視窗都分別是它的子項目。反過來說，桌面就是各視窗的母項目。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>視窗內的標題列、選單列、工具列、可編輯的文字框、狀態列及對話盒等各項，也分別屬於該視窗的子項目。也是反過來說，該視窗就是以上各項的母項目。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>對話盒內的清單組合框、核取方塊、下拉式方塊及選項按鈕等各項，也分別是該對話盒的子項目。反過來說對話盒就是上述東西的母項目。而上述的控制項可能藏有一些屬於它的子項目，例如選項按鈕中的每個選項。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>驟眼看來，屏幕畫面上每個項目的分佈，並不像上面所述的一樣，但是這個樹狀項目分佈得相當有系統和條理清晰。在使用</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>時請大家盡量想像出上述的結構畫面，而無須理會實際上畫面顯示的情況。用家可能要花一點時間來適應，一旦了解清楚，就能更有系統地在畫面上尋找東西。由於一些程式編寫員，會各自設計了不同的物件分佈方式，間中或會遇到一些未符合上述分佈情況的應用視窗。總的來說在大部分情況下都是合用的。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475868"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>7. </span></b></a><span style='mso-bookmark:_Toc163475868'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>虛擬空間「</span></b></span><span style='mso-bookmark:_Toc163475868'><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>Virtual Buffers</span></b></span><span
+style='mso-bookmark:_Toc163475868'><b style='mso-bidi-font-weight:normal'><span
+lang=ZH-TW style='font-size:20.0pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>」：</span></b></span><span
+style='mso-bookmark:_Toc163475868'></span><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='font-size:20.0pt;mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在使用網頁瀏覽器的時候，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會使用虛擬空間來展示網頁內容。虛擬空間模式能讓我們更方便的閱讀內容。你可在虛擬空間內，使用方向鍵來遊走並閱讀資料。每當遇到特別的項目，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>也會把該項目的種類及名稱等資料說清楚。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當遇到超連結或按鈕時，可案輸入鍵或空格鍵來啟動它。當遇到例如可編輯的文字框、選項按鈕及下拉式方塊等表單欄位是，可按輸入鍵轉到實際的顯示畫面，然後更改該欄位的設定值；你也可使用空格鍵更改該欄位的設定值或轉到實際的顯示畫面。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>現階段來說，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會在</span><span lang=ZH-TW> </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>Internet Explorer </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>及</span><span lang=EN-US style='mso-ansi-language:EN-US'> <span
+class=SpellE>Mozilla</span> <span class=SpellE>Firefox</span> </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>上使用虛擬空間模式。一些內含</span><span lang=ZH-TW>
+</span><span lang=EN-US style='mso-ansi-language:EN-US'>JavaScript </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>的網頁，其網頁內容或會隨時自動更新，目前要配合</span><span
+lang=ZH-TW> </span><span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>Firefox</span></span><span lang=EN-US style='mso-ansi-language:EN-US'> </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>才可應付這些網頁。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在虛擬空間模式下，</span><span
+lang=ZH-TW> </span><span lang=EN-US style='mso-ansi-language:EN-US'>NVDA </span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>需要一些時間來獲取網頁資料，用家請耐心等待，遇到較大型的網頁，獲取資料的時間會較長。當載入程序完成後，</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>會說出「</span><span lang=EN-US style='mso-ansi-language:EN-US'>done</span><span
+lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>」，並且讀出網頁內容。在下一節將會提供一些快捷鍵，讓大家在瀏覽網頁時，可輕易地跳至特定的項目。</span><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475869"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>8. </span></b></a><span style='mso-bookmark:_Toc163475869'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>鍵盤按鍵：</span></b></span><span style='mso-bookmark:_Toc163475869'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475870"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>8.1. </span></b></a><span style='mso-bookmark:_Toc163475870'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>一般操作：</span></b></span><span style='mso-bookmark:_Toc163475870'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下面說的數字鍵，都是在鍵盤</span><span
+lang=EN-US style='mso-ansi-language:EN-US'> q </span><span lang=ZH-TW
+style='font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>之上的一組數字鍵。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>control – </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>停止發聲。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>向上鍵</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出游標所在的項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>insert+t</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>讀出現時視窗標題。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+F12 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出現時日期及時間。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+1 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>開啟或關閉按鍵說明。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+2 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>開啟或關閉讀出輸入符號。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+3 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>開啟或關閉讀出輸入的整個字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+4 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>開啟或關閉讀出功能鍵及其組合，例如</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> control, Shift </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>或方向鍵等。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+PageUp</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>增加朗讀速度。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+pageDown</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>減低朗讀速度。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+p</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>開啟或關閉讀出標點符號。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+s</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>開啟語音或</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> beep </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>聲，又或關閉語音。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+m</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>開啟或關閉讀出滑鼠游標所在的物件。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+f</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>讀出游標所在的字型。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+b</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>讀出對話盒的內容。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+n</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>跳出</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>的應用視窗。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+q</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>關閉整個</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>軟件。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475871"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>8.2. </span></b></a><span style='mso-bookmark:_Toc163475871'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在各項目之間的操作：</span></b></span><span style='mso-bookmark:_Toc163475871'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下面提及的按鍵，都是指鍵盤右面的按鍵。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+5 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出現時項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+8 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移到並讀出母項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+4 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出同一組內的上一個項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+6 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出同一組內的下一個項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+2 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出子項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>減號</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出焦點項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>Insert+enter</span></span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span lang=ZH-TW
+style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>嘗試啟動現時項目。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>除號</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>把滑鼠游標移至現時項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>乘號</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出滑鼠游標所在的項目。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475872"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>8.3. </span></b></a><span style='mso-bookmark:_Toc163475872'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在一個項目內的操作：</span></b></span><span style='mso-bookmark:_Toc163475872'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>以下使用的數字鍵，都是鍵盤右面的數字鍵。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Shift+7 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出項目最頂的一行文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>7 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出上一行文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>8 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出現時的一行文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>9 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出下一行文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Shift+9 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出項目最後的一行文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>4 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出上一個英文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>5 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出現時的英文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>6 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出下一個英文字。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Shift+1 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至現時這一行的開頭。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>1 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出上一個英文字母。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>2 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>讀出現時的英文字母。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>3 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至並讀出下一個英文字母。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Shift+3 - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:
+PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>移至這一行的最尾。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>向下鍵</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在現時游標的一行讀至最尾。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475873"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'>8.4. </span></b></a><span style='mso-bookmark:_Toc163475873'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:14.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在網頁瀏覽器的操作：</span></b></span><span style='mso-bookmark:_Toc163475873'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:14.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>以下的按鍵，按</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> shift+ </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>其按鍵會向後的位置朗讀，例如︰按</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> k - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>會移到並讀出下一個超連結；按</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> <span
+class=SpellE>shift+k</span> </span><span lang=ZH-TW style='font-size:11.5pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>就返回上一個超連結</span><span lang=EN-US style='font-size:11.5pt;
+mso-ansi-language:EN-US'>)</span><span lang=ZH-TW style='font-size:11.5pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>。另外大部分按鍵只可在虛擬空間模式下使用。</span><span lang=EN-US
+style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>F - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個表單欄位</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(form field)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>L - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個列表</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(list)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>I - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個列表中的項目</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(list item)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>H - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個標題</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(heading)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>K - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個超連結</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(link)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>P - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一段文字</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(paragraph)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>T - </span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>下一個表格</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'>(table)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>向下鍵</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在現時游標的一行讀至最尾。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'>Insert+</span><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>空格鍵</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> - </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在一般模式或虛擬空間模式之間轉換。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-outline-level:1'><a name="_Toc163475874"><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'>9. </span></b></a><span style='mso-bookmark:_Toc163475874'><b
+style='mso-bidi-font-weight:normal'><span lang=ZH-TW style='font-size:20.0pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>進度列：</span></b></span><span style='mso-bookmark:_Toc163475874'></span><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:20.0pt;
+mso-ansi-language:EN-US'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>每當系統在忙碌中，多數會出現進度列，表示工作的進度情況。例如在複製體積教大檔案的時候、載入網頁期間或檢查新郵件時也會發現它的蹤跡。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>當有進度列出現時，</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> NVDA </span><span
+lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>會發出由低至高的</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'> beep <span
+class=SpellE>beep</span></span><span lang=ZH-TW style='font-size:11.5pt;
+font-family:PMingLiU;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>聲音調，以表示進度走了多少百分比。一開始時聲調比較低，直至接近完成時，聲調會提高。</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:11.5pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=ZH-TW style='font-size:11.5pt;font-family:PMingLiU;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>傳部完</span><span
+lang=EN-US style='font-size:11.5pt;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
