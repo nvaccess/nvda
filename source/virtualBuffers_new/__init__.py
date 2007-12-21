@@ -5,6 +5,7 @@ import baseObject
 import speech
 import NVDAObjects
 import winUser
+import sayAllHandler
 import controlTypes
 import textHandler
 from virtualBuffer_new_wrapper import *
@@ -48,8 +49,8 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 class VirtualBuffer(baseObject.scriptableObject):
 
-	def __init__(self,rootNVDAObject):
-		self.TextInfo=VirtualBufferTextInfo
+	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
+		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
 		self.VBufHandle=VBufStorage_createBuffer(0)
 		self.fillVBuf()
@@ -68,12 +69,17 @@ class VirtualBuffer(baseObject.scriptableObject):
 		pass
 
 	def fillVBuf(self):
-		winsound.Beep(440,30)
+		VBufStorage_clearBuffer(self.VBufHandle)
 		startTime=time.time()
+		speech.cancelSpeech()
+		speech.speakMessage(_("Loading document..."))
 		self._fillVBufHelper()
 		endTime=time.time()
-		winsound.Beep(880,30)
 		globalVars.log.warning("load took %s seconds"%(endTime-startTime))
+		speech.cancelSpeech()
+		speech.speakMessage(_("Done"))
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 	def _fillVBufHelper(self):
 		pass
