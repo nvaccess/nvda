@@ -24,14 +24,31 @@ class GeckoTextInfo(VirtualBufferTextInfo):
 		role=attrs['role']
 		if role.isdigit():
 			role=int(role)
+		states=int(attrs['states'])
+		try:
+			childCount=int(attrs['childCount'])
+		except:
+			childCount=0
 		if not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_LINK: 
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.IA2_ROLE_HEADING:
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC: 
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
+		elif not extraDetail and fieldType=="start_addedToStack" and role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
+			return _("bullet")
+		elif not extraDetail and fieldType=="start_addedToStack" and role==IAccessibleHandler.ROLE_SYSTEM_LIST:
+			return _("%s with %s items")%(controlTypes.speechRoleLabels[controlTypes.ROLE_LIST],childCount)
+		elif not extraDetail and fieldType=="end_removedFromStack" and role==IAccessibleHandler.ROLE_SYSTEM_LIST:
+			return _("out of %s")%controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
+		elif not extraDetail and fieldType=="start_addedToStack" and role in ("frame",IAccessibleHandler.IA2_ROLE_FRAME):
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
+		elif not extraDetail and fieldType=="end_removedFromStack" and role in ("frame",IAccessibleHandler.IA2_ROLE_FRAME):
+			return _("out of %s")%controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
 		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
 			return _("in %s")%controlTypes.speechRoleLabels[IAccessibleHandler.IAccessibleRolesToNVDARoles.get(role,0)]
 		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
@@ -49,17 +66,17 @@ class Gecko(VirtualBuffer):
 			pacc=self.rootNVDAObject.IAccessibleObject
 		if not parentNode:
 			parentNode=self.VBufHandle
-		parentParentNode=parentNode
 		attrs={}
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
 			ID=pacc.uniqueID
 			attrs['role']=str(pacc.role())
 		else:
+			attrs['level']='0'
 			ID=hash(pacc)
 			attrs['role']=str(pacc.accRole(accChildID))
 		attrs['states']=str(pacc.accState(accChildID))
-		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs)
-		previousNode=None
+		children=[] #will be strings  or pacc,childID tuples
+		paccChildCount=0
 		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2):
 			try:
 				paccText=pacc.QueryInterface(IAccessibleHandler.IAccessibleText)
@@ -73,7 +90,7 @@ class Gecko(VirtualBuffer):
 				text=paccText.text(0,-1)
 				text=text.replace('\n',"").replace('\r',"")
 			except:
-				globalVars.log.warning("error in IAccessibleText::text",exc_info=True)
+				globalVars.log.warning("error in IAccessibleText::text, role %s"%pacc.role(),exc_info=True)
 				text=""
 		if paccText and text:
 			try:
@@ -81,37 +98,45 @@ class Gecko(VirtualBuffer):
 			except:
 				globalVars.log.warning("no IAccessibleHypertext",exc_info=True)
 				paccHypertext=None
-			count=0
+			offset=0
 			plainText=u""
 			for ch in text:
 				if ord(ch)!=0xfffc:
 					plainText+=ch
 				elif paccHypertext:
-					if plainText:
-						previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%wrapText(plainText)))
+					if plainText and not plainText.isspace():
+						children.append(unicode(u"%s\n"%wrapText(plainText)))
 					plainText=u""
 					try:
-						paccHyperlink=paccHypertext.hyperlink(paccHypertext.hyperlinkIndex(count))
+						index=paccHypertext.hyperlinkIndex(offset)
+						paccHyperlink=paccHypertext.hyperlink(index)
 					except:
 						paccHyperlink=None
 					if paccHyperlink:
 						newPacc=IAccessibleHandler.normalizeIAccessible(paccHyperlink)
-						previousNode=self._fillVBufHelper(newPacc,0,parentNode,previousNode)
-				count+=1
-			if plainText:
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%wrapText(plainText)))
+						children.append((newPacc,0))
+						paccChildCount+=1
+				offset+=1
+			if plainText and (paccChildCount==0 and not plainText.isspace()):
+				children.append(unicode(u"%s\n"%wrapText(plainText)))
 		elif accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
-			for newPacc,newAccChildID in children:
-				previousNode=self._fillVBufHelper(newPacc,newAccChildID,parentNode,previousNode)
+			paccChildCount=len(children)
 		else:
-			text=pacc.accName(accChildID)
+			text=pacc.accValue(accChildID)
 			if not text:
-				text=pacc.accValue(accChildID)
-			if not text:
-				text=pacc.accDescription(accChildID)
+				text=pacc.accName(accChildID)
 			if text:
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,u"%s\n"%wrapText(text))
+				children.append(u"%s\n"%wrapText(text))
+		attrs['childCount']=str(paccChildCount)
+		del pacc
+		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs)
+		previousNode=None
+		for child in children:
+			if isinstance(child,basestring):
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child)
+			elif isinstance(child,tuple) and len(child)==2:
+				previousNode=self._fillVBufHelper(child[0],child[1],parentNode,previousNode)
 		return parentNode
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
