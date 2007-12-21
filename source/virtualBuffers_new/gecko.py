@@ -1,3 +1,4 @@
+from textwrap import TextWrapper
 from . import VirtualBuffer, VirtualBufferTextInfo
 from virtualBuffer_new_wrapper import *
 import controlTypes
@@ -8,6 +9,14 @@ import IAccessibleHandler
 import globalVars
 import api
 import textHandler
+import config
+
+def wrapText(text):
+	maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
+	if len(text)>maxLineLength:
+		wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
+		text=wrapper.fill(text)
+	return text
 
 class GeckoTextInfo(VirtualBufferTextInfo):
 
@@ -79,7 +88,7 @@ class Gecko(VirtualBuffer):
 					plainText+=ch
 				elif paccHypertext:
 					if plainText:
-						previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%plainText))
+						previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%wrapText(plainText)))
 					plainText=u""
 					try:
 						paccHyperlink=paccHypertext.hyperlink(paccHypertext.hyperlinkIndex(count))
@@ -90,7 +99,7 @@ class Gecko(VirtualBuffer):
 						previousNode=self._fillVBufHelper(newPacc,0,parentNode,previousNode)
 				count+=1
 			if plainText:
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%plainText))
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,unicode(u"%s\n"%wrapText(plainText)))
 		elif accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
 			for newPacc,newAccChildID in children:
@@ -102,7 +111,7 @@ class Gecko(VirtualBuffer):
 			if not text:
 				text=pacc.accDescription(accChildID)
 			if text:
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,u"%s\n"%text)
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,u"%s\n"%wrapText(text))
 		return parentNode
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
