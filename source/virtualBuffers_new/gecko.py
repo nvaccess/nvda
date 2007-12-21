@@ -6,30 +6,34 @@ import winUser
 import speech
 import IAccessibleHandler
 import globalVars
+import api
+import textHandler
 
 class GeckoTextInfo(VirtualBufferTextInfo):
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_LINK): 
-			return "link"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible2::role']==str(IAccessibleHandler.IA2_ROLE_HEADING):
-			return "heading"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):
-			return "button"
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['IAccessible::accRole']==str(IAccessibleHandler.ROLE_SYSTEM_GRAPHIC): 
-			return "graphic"
+		role=attrs['role']
+		if role.isdigit():
+			role=int(role)
+		if not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_LINK: 
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.IA2_ROLE_HEADING:
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC: 
+			return controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
 		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
-			return "in %s"%attrs['IAccessible2::role']
+			return _("in %s")%controlTypes.speechRoleLabels[IAccessibleHandler.IAccessibleRolesToNVDARoles.get(role,0)]
 		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
-			return "out of %s"%attrs['IAccessible2::role']
+			return _("out of %s")%controlTypes.speechRoleLabels[IAccessibleHandler.IAccessibleRolesToNVDARoles.get(role,0)]
 		else:
 			return ""
 
 class Gecko(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
-		super(Gecko,self).__init__(rootNVDAObject)
-		self.TextInfo=GeckoTextInfo
+		super(Gecko,self).__init__(rootNVDAObject,TextInfo=GeckoTextInfo)
 
 	def _fillVBufHelper(self,pacc=None,accChildID=0,parentNode=None,previousNode=None):
 		if not pacc:
@@ -40,12 +44,11 @@ class Gecko(VirtualBuffer):
 		attrs={}
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
 			ID=pacc.uniqueID
-			attrs['IAccessible2::role']=str(pacc.role())
+			attrs['role']=str(pacc.role())
 		else:
-			ID=id(pacc)
-			attrs['IAccessible2::role']=str(0)
-		attrs['IAccessible::accRole']=str(pacc.accRole(accChildID))
-		attrs['IAccessible::accState']=str(pacc.accState(accChildID))
+			ID=hash(pacc)
+			attrs['role']=str(pacc.accRole(accChildID))
+		attrs['states']=str(pacc.accState(accChildID))
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs)
 		previousNode=None
 		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2):
@@ -111,3 +114,25 @@ class Gecko(VirtualBuffer):
 		root=self.rootNVDAObject
 		if root and winUser.isWindow(root.windowHandle):
 			return True
+
+	def event_focusEntered(self,obj,nextHandler):
+		pass
+
+	def event_gainFocus(self,obj,nextHandler):
+		api.setNavigatorObject(obj)
+		role=obj.role
+		states=obj.states
+		if role==controlTypes.ROLE_DOCUMENT:
+			if controlTypes.STATE_BUSY in states:
+				speech.speakMessage(controlTypes.speechRoleLabels[controlTypes.STATE_BUSY])
+			elif obj!=self.rootNVDAObject:
+				self.rootNVDAObject=obj
+				self.fillVBuf()
+		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else hash(obj.IAccessibleObject)
+		try:
+			start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
+		except:
+			return nextHandler()
+		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,self,info.getXMLFieldSpeech)
+		VBufStorage_setBufferSelectionOffsets(self.VBufHandle,start,end)
