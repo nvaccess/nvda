@@ -137,6 +137,18 @@ class VirtualBuffer(baseObject.scriptableObject):
 		info.updateCaret()
 		speech.speakSpelling(info.text)
 
+	def script_topOfDocument(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_FIRST)
+		info.updateCaret()
+		info.expand(textHandler.UNIT_LINE)
+		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+
+	def script_bottomOfDocument(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_LAST)
+		info.updateCaret()
+		info.expand(textHandler.UNIT_LINE)
+		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
 	("ExtendedDown","moveByLine_forward"),
@@ -146,4 +158,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("Control+ExtendedRight","moveByWord_forward"),
 	("ExtendedHome","startOfLine"),
 	("ExtendedEnd","endOfLine"),
+	("control+ExtendedHome","topOfDocument"),
+	("control+ExtendedEnd","bottomOfDocument"),
 ]]
