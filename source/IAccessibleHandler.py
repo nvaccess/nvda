@@ -525,7 +525,7 @@ def accFocus(ia):
 	try:
 		res=ia.accFocus
 		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
+			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -540,7 +540,7 @@ def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
 		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
+			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
 			new_ia=ia
@@ -555,7 +555,7 @@ def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
 		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
+			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
 			new_ia=ia
@@ -576,7 +576,7 @@ def accParent(ia,child):
 		if not child:
 			res=ia.accParent
 			if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-				new_ia=normalizeIAccessible(res).QueryInterface(IAccessible)
+				new_ia=normalizeIAccessible(res)
 				new_child=0
 			else:
 				raise ValueError("no IAccessible interface")
