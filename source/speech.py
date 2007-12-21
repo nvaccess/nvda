@@ -663,7 +663,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 			else:
 				break
 		#Get speech text for any fields in the old stack that are not in the new stack 
-		for count in range(commonFieldCount,len(oldStack)):
+		for count in reversed(range(commonFieldCount,len(oldStack))):
 			textList.append(getFieldSpeechFunc(oldStack[count],"end_removedFromStack",extraDetail))
 		#Get speech text for any fields that are in both stacks, if extra detail is not requested
 		if not extraDetail:
