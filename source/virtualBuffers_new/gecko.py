@@ -157,11 +157,11 @@ class Gecko(VirtualBuffer):
 		role=obj.role
 		states=obj.states
 		if role==controlTypes.ROLE_DOCUMENT:
-			if controlTypes.STATE_BUSY in states:
-				speech.speakMessage(controlTypes.speechRoleLabels[controlTypes.STATE_BUSY])
-			elif obj!=self.rootNVDAObject:
+			nextHandler()
+			if not IAccessibleHandler.STATE_SYSTEM_BUSY in states and obj!=self.rootNVDAObject:
 				self.rootNVDAObject=obj
 				self.fillVBuf()
+			return
 		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else hash(obj.IAccessibleObject)
 		try:
 			start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
