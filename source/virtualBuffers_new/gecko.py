@@ -31,7 +31,7 @@ class GeckoTextInfo(VirtualBufferTextInfo):
 			childCount=0
 		if not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_LINK: 
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.IA2_ROLE_HEADING:
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role in (IAccessibleHandler.IA2_ROLE_HEADING,"h1","h2","h3","h4","h5","h6"):
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
@@ -123,9 +123,9 @@ class Gecko(VirtualBuffer):
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
 			paccChildCount=len(children)
 		else:
-			text=pacc.accValue(accChildID)
+			text=pacc.accName(accChildID)
 			if not text:
-				text=pacc.accName(accChildID)
+				text=pacc.accValue(accChildID)
 			if text:
 				children.append(u"%s\n"%wrapText(text))
 		attrs['childCount']=str(paccChildCount)
