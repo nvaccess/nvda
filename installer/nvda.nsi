@@ -16,6 +16,7 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
 !define NVDASourceDir "..\source\dist"
+!define NVDAConfig "nvda.ini"
 
 ;Include Modern UI Macro's
 !include "MUI.nsh"
@@ -160,6 +161,9 @@ Var oldNVDAWindowHandle
  Var NVDAInstalled ;"1" if NVDA has been installed
 
 Function .onInit
+; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
+IfFileExists "$PROGRAMFILES\NVDA" 0
+Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
@@ -243,18 +247,18 @@ StrCpy $LANGUAGE $0
 FunctionEnd
 
 Function un.NVDA_GUIInit
-MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 $(msg_RemoveNVDA)  IDYES +2
+MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON1 $(msg_RemoveNVDA)  IDYES +2
 Abort
 FunctionEnd
 
 Section "Uninstall"
 SetShellVarContext all
 ; Warn about configuration file
-IfFileExists "$INSTDIR\nvda.ini" +1 +2
+IfFileExists "$INSTDIR\${NVDAConfig}" +1 +2
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DefButton2 $(msg_NVDAConfigFound) IDYES +1 IDNO PreserveConfiguration
 goto Continue
 PreserveConfiguration:
-CopyFiles /SILENT "$INSTDIR\nvda.ini" "$PLUGINSDIR"
+CopyFiles /SILENT "$INSTDIR\${NVDAConfig}" "$PLUGINSDIR\${NVDAConfig}"
 strcpy $preserveConfig "1"
 Continue:
 Delete "$SMPROGRAMS\${PRODUCT}\*.*"
@@ -263,9 +267,10 @@ Delete $DESKTOP\${PRODUCT}.lnk"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PRODUCT}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
 Delete /RebootOK "$INSTDIR\*.*"
-RMDir /RebootOK /r "$INSTDIR\*"
+RMDir /RebootOK /r "$INSTDIR\*.*"
 StrCmp $PreserveConfig 1 +1 NoPreserveConfig
-CopyFiles /SILENT "$PLUGINSDIR\nvda.ini" "$INSTDIR"
+CreateDirectory $INSTDIR
+CopyFiles /SILENT "$PLUGINSDIR\${NVDAConfig}" "$INSTDIR\${NVDAConfig}"
 goto End
 NoPreserveConfig:
 RMDir /RebootOK "$INSTDIR"
