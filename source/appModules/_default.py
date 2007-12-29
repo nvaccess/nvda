@@ -51,10 +51,17 @@ class appModule(appModuleHandler.appModule):
 
 	def script_reportCurrentLine(self,keyPress,nextScript):
 		obj=api.getFocusObject()
+		virtualBuffer=obj.virtualBuffer
+		if hasattr(virtualBuffer,'TextInfo'):
+			obj=virtualBuffer
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
 		if keyboardHandler.lastKeyCount == 1:
-			speech.speakFormattedText(info)
+			if info.hasXML:
+				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+			else:
+				speech.speakFormattedText(info)
+			speech.speakMessage("%s, %s"%(info._startOffset,info._endOffset))
 		else:
 			speech.speakSpelling(info._get_text())
 
