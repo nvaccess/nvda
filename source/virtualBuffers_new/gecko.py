@@ -26,6 +26,12 @@ class GeckoTextInfo(VirtualBufferTextInfo):
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
+			stateText=controlTypes.speechStateLabels[controlTypes.STATE_CHECKED] if states&IAccessibleHandler.STATE_SYSTEM_CHECKED else ""
+			return "%s %s"%(controlTypes.speechRoleLabels[controlTypes.ROLE_RADIOBUTTON],stateText)
+		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
+			stateText=controlTypes.speechStateLabels[controlTypes.STATE_CHECKED] if states&IAccessibleHandler.STATE_SYSTEM_CHECKED else ""
+			return "%s %s"%(controlTypes.speechRoleLabels[controlTypes.ROLE_CHECKBOX],stateText)
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
