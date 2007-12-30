@@ -1,4 +1,5 @@
 import weakref
+from textwrap import TextWrapper
 import time
 import winsound
 import baseObject
@@ -10,6 +11,7 @@ import controlTypes
 import textHandler
 from virtualBuffer_new_wrapper import *
 import globalVars
+import config
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -68,6 +70,19 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def isAlive(self):
 		pass
 
+	def _calculateLineBreaks(self,text):
+		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
+		lastBreak=0
+		lineBreakOffsets=[]
+		for offset in range(len(text)):
+			if offset-lastBreak>maxLineLength and offset>0 and text[offset-1].isspace() and not text[offset].isspace():
+				lineBreakOffsets.append(offset)
+				lastBreak=offset
+		return lineBreakOffsets
+
+	def _fillVBufHelper(self):
+		pass
+
 	def fillVBuf(self):
 		VBufStorage_clearBuffer(self.VBufHandle)
 		startTime=time.time()
@@ -80,9 +95,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 		speech.speakMessage(_("Done"))
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
-
-	def _fillVBufHelper(self):
-		pass
 
 	def activatePosition(self,ID):
 		pass

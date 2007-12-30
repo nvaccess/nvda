@@ -1,4 +1,3 @@
-from textwrap import TextWrapper
 from . import VirtualBuffer, VirtualBufferTextInfo
 from virtualBuffer_new_wrapper import *
 import controlTypes
@@ -9,14 +8,6 @@ import IAccessibleHandler
 import globalVars
 import api
 import textHandler
-import config
-
-def wrapText(text):
-	maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
-	if len(text)>maxLineLength:
-		wrapper = TextWrapper(width=maxLineLength, expand_tabs=False, replace_whitespace=False, break_long_words=False)
-		text=wrapper.fill(text)
-	return text
 
 class GeckoTextInfo(VirtualBufferTextInfo):
 
@@ -114,7 +105,7 @@ class Gecko(VirtualBuffer):
 					plainText+=ch
 				else:
 					if plainText:
-						children.append(unicode(wrapText(plainText)))
+						children.append((plainText,self._calculateLineBreaks(plainText)))
 					plainText=u""
 					try:
 						index=paccHypertext.hyperlinkIndex(offset)
@@ -127,7 +118,7 @@ class Gecko(VirtualBuffer):
 						paccChildCount+=1
 				offset+=1
 			if plainText:
-				children.append(unicode(wrapText(plainText)))
+				children.append((plainText,self._calculateLineBreaks(plainText)))
 		elif role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
 			paccChildCount=len(children)
@@ -140,15 +131,15 @@ class Gecko(VirtualBuffer):
 			else:
 				text=value
 			if text:
-				children.append(wrapText(text))
+				children.append((text,self._calculateLineBreaks(text)))
 		attrs['childCount']=str(paccChildCount)
 		del pacc
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
 		previousNode=None
 		for child in children:
-			if isinstance(child,basestring):
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child,None)
-			elif isinstance(child,tuple) and len(child)==2:
+			if isinstance(child,tuple) and len(child)==2 and isinstance(child[0],basestring):
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child[0],child[1])
+			else:
 				previousNode=self._fillVBufHelper(child[0],child[1],parentNode,previousNode)
 		return parentNode
 
