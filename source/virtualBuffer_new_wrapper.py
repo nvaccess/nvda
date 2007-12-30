@@ -10,7 +10,7 @@ dll=cdll.virtualBuffer_new
 
 def dllErrorCheck(res,func,args):
 	if res<0:
-		raise RuntimeError("error in %s, code %s"%(func,res))
+		raise RuntimeError("error in %s with args of %s, code %s"%(func.__name__,args,res))
 	return res
 
 VBufStorage_createBuffer=dll.VBufStorage_createBuffer
@@ -31,18 +31,31 @@ VBufStorage_clearBuffer.errcheck=dllErrorCheck
 VBufStorage_splitTextNodeAtOffset=dll.VBufStorage_splitTextNodeAtOffset
 VBufStorage_splitTextNodeAtOffset.errcheck=dllErrorCheck
 
-def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs):
+def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
 	if not isinstance(attribs,dict) or len(attribs)==0:
 		raiseValueError("attribs must be of type dict containing 1 or more entries")
 	cAttribs=(attribute_t*len(attribs))()
 	for index,name in enumerate(attribs.keys()):
 		cAttribs[index].name=name
 		cAttribs[index].value=attribs[name]
-	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,ID,cAttribs,len(cAttribs))
+	isBlock=1 if isBlock else 0
+	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,ID,cAttribs,len(cAttribs),isBlock)
 
 dll.VBufStorage_addTagNodeToBuffer.errcheck=dllErrorCheck
 
-VBufStorage_addTextNodeToBuffer=dll.VBufStorage_addTextNodeToBuffer
+def VBufStorage_addTextNodeToBuffer(parent, previous, ID,text,lineBreakOffsets=[]):
+	if lineBreakOffsets and len(lineBreakOffsets)>0:
+		cLineBreakOffsets=(c_int*len(lineBreakOffsets))()
+		for index,offset in enumerate(lineBreakOffsets):
+			cLineBreakOffsets[index]=offset
+		cNumLineBreaks=len(lineBreakOffsets)
+	else:
+		cLineBreakOffsets=None
+		cNumLineBreaks=0
+	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,ID,text,cLineBreakOffsets,cNumLineBreaks)
+
+dll.VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
+
 VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
 
 VBufStorage_removeNodeFromBuffer=dll.VBufStorage_removeNodeFromBuffer
@@ -99,6 +112,8 @@ def VBufStorage_getXMLContextAtBufferOffset(buf,offset):
 dll.VBufStorage_getXMLContextAtBufferOffset.errcheck=dllErrorCheck
 
 def VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset):
+	if endOffset<=startOffset:
+		return ""
 	textLength=dll.VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset,None)
 	textBuf=create_unicode_buffer(textLength)
 	dll.VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset,textBuf)

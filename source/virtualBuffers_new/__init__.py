@@ -52,7 +52,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
-		self.VBufHandle=VBufStorage_createBuffer(0)
+		self.VBufHandle=VBufStorage_createBuffer()
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 
@@ -84,6 +84,13 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def _fillVBufHelper(self):
 		pass
 
+	def activatePosition(self,ID):
+		pass
+
+	def script_activatePosition(self,keyPress,nextScript):
+		start,end=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
+		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,start)
+		self.activatePosition(ID)
 
 	def _caretMovementScriptHelper(self,unit,direction):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -124,8 +131,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse()
-		info.expand(textHandler.UNIT_CHARACTER)
 		info.updateCaret()
+		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakSpelling(info.text)
 
 	def script_endOfLine(self,keyPress,nextScript):
@@ -133,8 +140,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse(end=True)
 		info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
-		info.expand(textHandler.UNIT_CHARACTER)
 		info.updateCaret()
+		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakSpelling(info.text)
 
 	def script_topOfDocument(self,keyPress,nextScript):
@@ -160,4 +167,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("ExtendedEnd","endOfLine"),
 	("control+ExtendedHome","topOfDocument"),
 	("control+ExtendedEnd","bottomOfDocument"),
+	("Return","activatePosition"),
+	("Space","activatePosition"),
 ]]
