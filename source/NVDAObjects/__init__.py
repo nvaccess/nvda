@@ -287,7 +287,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @ivar role: The object's chosen role. (NVDA uses the set of IAccessible role constants for roles, however sometimes if there is no suitable role, this can be a string)
 @type role: int or string
 @ivar states: The object's states. (NVDA uses state constants for its states)
-@type states: frozenset
+@type states: set
 @ivar description: The object's description. (e.g. Further info to describe the button's action to go with the label) 
 @type description: string
 @ivar positionString: a description of where the object is in relation to other objects around it. (e.g. a list item might say 2 of 5).
@@ -418,7 +418,7 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 		return None
 
 	def _get_states(self):
-		return frozenset()
+		return set()
 
 	def _get_level(self):
 		return None

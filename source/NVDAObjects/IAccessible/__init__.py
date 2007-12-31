@@ -226,11 +226,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return res if isinstance(res,int) else 0
 
 	def _get_states(self):
-		newStates=[]
-		for state in api.createStateList(self.IAccessibleStates):
-			if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(state):
-				newStates.append(IAccessibleHandler.IAccessibleStatesToNVDAStates[state])
-		return frozenset(newStates)
+		IAccessibleStates=self.IAccessibleObject.accState(self.IAccessibleChildID)
+		return set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 
 	def _get_description(self):
 		try:
