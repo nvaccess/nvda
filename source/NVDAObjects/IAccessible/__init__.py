@@ -71,25 +71,6 @@ def processGeckoDescription(obj):
 		obj.contains=_("%s items")%groups[0]
 	obj.description=""
 
-IAccessibleStatesToNVDAStates={
-	IAccessibleHandler.STATE_SYSTEM_UNAVAILABLE:controlTypes.STATE_UNAVAILABLE,
-	IAccessibleHandler.STATE_SYSTEM_FOCUSED:controlTypes.STATE_FOCUSED,
-	IAccessibleHandler.STATE_SYSTEM_SELECTED:controlTypes.STATE_SELECTED,
-	IAccessibleHandler.STATE_SYSTEM_BUSY:controlTypes.STATE_BUSY,
-	IAccessibleHandler.STATE_SYSTEM_PRESSED:controlTypes.STATE_PRESSED,
-	IAccessibleHandler.STATE_SYSTEM_CHECKED:controlTypes.STATE_CHECKED,
-	IAccessibleHandler.STATE_SYSTEM_MIXED:controlTypes.STATE_HALFCHECKED,
-	IAccessibleHandler.STATE_SYSTEM_READONLY:controlTypes.STATE_READONLY,
-	IAccessibleHandler.STATE_SYSTEM_EXPANDED:controlTypes.STATE_EXPANDED,
-	IAccessibleHandler.STATE_SYSTEM_COLLAPSED:controlTypes.STATE_COLLAPSED,
-	IAccessibleHandler.STATE_SYSTEM_INVISIBLE:controlTypes.STATE_INVISIBLE,
-	IAccessibleHandler.STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
-	IAccessibleHandler.STATE_SYSTEM_LINKED:controlTypes.STATE_LINKED,
-	IAccessibleHandler.STATE_SYSTEM_HASPOPUP:controlTypes.STATE_HASPOPUP,
-	IAccessibleHandler.STATE_SYSTEM_HASSUBMENU:controlTypes.STATE_HASPOPUP,
-	IAccessibleHandler.STATE_SYSTEM_PROTECTED:controlTypes.STATE_PROTECTED,
-}
-
 class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
@@ -247,8 +228,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def _get_states(self):
 		newStates=[]
 		for state in api.createStateList(self.IAccessibleStates):
-			if IAccessibleStatesToNVDAStates.has_key(state):
-				newStates.append(IAccessibleStatesToNVDAStates[state])
+			if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(state):
+				newStates.append(IAccessibleHandler.IAccessibleStatesToNVDAStates[state])
 		return frozenset(newStates)
 
 	def _get_description(self):
