@@ -21,7 +21,8 @@ class GeckoTextInfo(VirtualBufferTextInfo):
 		except:
 			childCount=0
 		if not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_LINK: 
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
+			visitedText=controlTypes.speechStateLabels[controlTypes.STATE_VISITED] if states&IAccessibleHandler.STATE_SYSTEM_TRAVERSED else ""
+			return "%s %s"%(visitedText,controlTypes.speechRoleLabels[controlTypes.ROLE_LINK])
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role in (IAccessibleHandler.IA2_ROLE_HEADING,"h1","h2","h3","h4","h5","h6"):
 			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
 		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
