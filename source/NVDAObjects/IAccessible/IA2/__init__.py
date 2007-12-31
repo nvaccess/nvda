@@ -147,6 +147,10 @@ class IA2(IAccessible):
 		else:
 			return super(IA2,self)._get_role()
 
+	def _get_states(self):
+		IA2States=[y for y in [IAccessibleHandler.IAccessible2StatesToNVDAStates.get(x,None) for x in api.createStateList(self.IAccessibleObject.states)] if y]
+		return super(IA2,self)._get_states()|frozenset(IA2States)
+
 	def _get_actionStrings(self):
 		if not hasattr(self,'IAccessibleActionObject'):
 			return super(IA2,self)._get_actionStrings()
