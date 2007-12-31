@@ -8,7 +8,8 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible, IAccessibleStatesToNVDAStates, edit
+from NVDAObjects.IAccessible import IAccessible
+from IAccessibleHandler import IAccessibleStatesToNVDAStates
 import appModuleHandler
 import speech
 import controlTypes
