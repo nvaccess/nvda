@@ -61,9 +61,19 @@ class appModule(appModuleHandler.appModule):
 				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
 			else:
 				speech.speakFormattedText(info)
-			speech.speakMessage("%s, %s"%(info._startOffset,info._endOffset))
 		else:
 			speech.speakSpelling(info._get_text())
+
+	def script_reportCurrentSelection(self,keyPress,nextScript):
+		obj=api.getFocusObject()
+		virtualBuffer=obj.virtualBuffer
+		if hasattr(virtualBuffer,'TextInfo'):
+			obj=virtualBuffer
+		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		if info.isCollapsed:
+			speech.speakMessage(_("no selection"))
+		else:
+			speech.speakMessage(_("selected %s")%info.text)
 
 	def script_dateTime(self,keyPress,nextScript):
 		if keyboardHandler.lastKeyCount == 1:
