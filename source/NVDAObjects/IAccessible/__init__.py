@@ -226,7 +226,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return res if isinstance(res,int) else 0
 
 	def _get_states(self):
-		IAccessibleStates=self.IAccessibleObject.accState(self.IAccessibleChildID)
+		try:
+			IAccessibleStates=self.IAccessibleStates
+		except:
+			globalVars.log.warning("could not get IAccessible states",exc_info=True)
+			return set()
 		return set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 
 	def _get_description(self):
