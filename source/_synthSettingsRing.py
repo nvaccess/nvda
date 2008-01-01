@@ -41,6 +41,11 @@ class VoiceSynthSetting(SynthSetting):
 		SynthSetting.decrease(self)
 		return self.valueName
 
+	def _set_value(self,value):
+		"""overrided to use code that supports updating user dicts when changing voice"""
+		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),value)
+		config.conf["speech"][synthDriverHandler.getSynth().name][self.name]=value
+		
 	def _get_valueName(self):
 		return synthDriverHandler.getSynth().getVoiceName(self.value)
 
