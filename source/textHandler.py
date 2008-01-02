@@ -207,25 +207,23 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
-	def compareStart(self,info,useEnd=False):
-		""" gives the difference in offsets of the start position for this object compared to the start position for the given l{info} object
-@param info: the text info object to compare with
-@type info: L{TextInfo}
-@param useEnd: if True then the start will be compared against the end of the given info, not the start.
-@type useEnd: boolean
+	def compareEndPoints(self,other,which):
+		""" gives the difference in offsets of one end of this object to one end of the other object.
+@param other: the text info object to compare with
+@type other: L{TextInfo}
+@param which: one of the strings startToStart startToEnd endToStart endToEnd
+@TYPE WHICH: STRING
 @returns: the start of this text info object relative to the start of the given text info object
 @rtype: int
 """
 		raise NotImplementedError
 
-	def compareEnd(self,info,useStart=False):
-		""" gives the difference in offsets of the end position for this object compared to the end position for the given l{info} object
-@param info: the text info object to compare with
-@type info: L{TextInfo}
-@param useStart: if True then the end will be compared against the start of the given info, not the end.
-@type useStart: boolean
-@returns: the end of this text info object relative to the end of the given text info object
-@rtype: int
+	def setEndPoint(self,other,which):
+		"""Sets one end of this object to one end of the other object
+@param other: the text info object to get the end from 
+@type other: L{TextInfo}
+@param which: one of the strings startToStart startToEnd endToStart endToEnd
+@TYPE WHICH: STRING
 """
 		raise NotImplementedError
 

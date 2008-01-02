@@ -171,17 +171,34 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 				o.__dict__[item]=self.__dict__[item]
 		return o
 
-	def compareStart(self,info,useEnd=False):
-		if useEnd:
-			return self._startOffset-info._endOffset
+	def compareEndPoints(self,other,which):
+		if which=="startToStart":
+			diff=self._startOffset-other._startOffset
+		elif which=="startToEnd":
+			diff=self._startOffset-other._endOffset
+		elif which=="endToStart":
+			diff=self._endOffset-other._startOffset
+		elif which=="endToEnd":
+			diff=self._endOffset-other._endOffset
 		else:
-			return self._startOffset-info._startOffset
+			raise ValueError("bad argument - which: %s"%which)
+		if diff<0:
+			diff=-1
+		elif diff>0:
+			diff=1
+		return diff
 
-	def compareEnd(self,info,useStart=False):
-		if useStart:
-			return self._endOffset-info._startOffset
+	def setEndPoint(self,other,which):
+		if which=="startToStart":
+			self._startOffset=other._startOffset
+		elif which=="startToEnd":
+			self._startOffset=other._endOffset
+		elif which=="endToStart":
+			self._endOffset=other._startOffset
+		elif which=="endToEnd":
+			self._endOffset=other._endOffset
 		else:
-			return self._endOffset-info._endOffset
+			raise ValueError("bad argument - which: %s"%which)
 
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)

@@ -412,64 +412,44 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,speakSelectionDeleted=True):
+	selectedTextList=[]
+	unselectedTextList=[]
 	if newInfo.isCollapsed and oldInfo.isCollapsed:
 		return
-	if newInfo.compareStart(oldInfo,useEnd=True)>=0 or newInfo.compareEnd(oldInfo,useStart=True)<=0:
-		separateSelections=True
+	if newInfo.compareEndPoints(oldInfo,"startToEnd")>=0 or newInfo.compareEndPoints(oldInfo,"endToStart")<=0:
+		if speakSelected and not newInfo.isCollapsed:
+			selectedTextList.append(newInfo.text)
+		if speakUnselected and not oldInfo.isCollapsed:
+			unselectedTextList.append(oldInfo.text)
 	else:
-		separateSelections=False
-	leftDelta=newInfo.compareStart(oldInfo)
-	rightDelta=newInfo.compareEnd(oldInfo)
-	leftSelectedText=None
-	leftUnselectedText=None
-	rightSelectedText=None
-	rightUnselectedText=None
-	selectionDeleted=False
-	if separateSelections and speakSelected and not newInfo.isCollapsed:
-		leftSelectedText=newInfo.text
-	if separateSelections and speakUnselected and not oldInfo.isCollapsed:
-		leftUnselectedText=oldInfo.text
-	if not separateSelections and speakSelected and leftDelta<0 and not newInfo.isCollapsed:
-		tempInfo=newInfo.copy()
-		tempInfo.collapse()
-		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(leftDelta),start=False)
-		leftSelectedText=tempInfo.text
-	if not separateSelections and speakSelected and rightDelta>0 and not newInfo.isCollapsed:
-		tempInfo=newInfo.copy()
-		tempInfo.collapse(end=True)
-		tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-rightDelta,end=False)
-		rightSelectedText=tempInfo.text
-	if not separateSelections and leftDelta>0 and not oldInfo.isCollapsed:
-		tempInfo=newInfo.copy()
-		tempInfo.collapse()
-		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,0-leftDelta,end=False)
-		if res!=(0-leftDelta):
-			selectionDeleted=True
-		else:
-			leftUnselectedText=tempInfo.text
-	if not separateSelections and rightDelta<0 and not oldInfo.isCollapsed:
-		tempInfo=newInfo.copy()
-		tempInfo.collapse(end=True)
-		res=tempInfo.moveByUnit(textHandler.UNIT_CHARACTER,abs(rightDelta),start=False)
-		if res!=abs(rightDelta):
-			selectionDeleted=True
-		else:
-			rightUnselectedText=tempInfo.text
+		leftDiff=newInfo.compareEndPoints(oldInfo,"startToStart")
+		rightDiff=newInfo.compareEndPoints(oldInfo,"endToEnd")
+		if speakSelected and leftDiff<0 and not newInfo.isCollapsed:
+			tempInfo=newInfo.copy()
+			tempInfo.setEndPoint(oldInfo,"endToStart")
+			selectedTextList.append(tempInfo.text)
+		if speakSelected and rightDiff>0 and not newInfo.isCollapsed:
+			tempInfo=newInfo.copy()
+			tempInfo.setEndPoint(oldInfo,"startToEnd")
+			selectedTextList.append(tempInfo.text)
+		if leftDiff>0 and not oldInfo.isCollapsed:
+			tempInfo=oldInfo.copy()
+			tempInfo.setEndPoint(newInfo,"endToStart")
+			unselectedTextList.append(tempInfo.text)
+		if rightDiff<0 and not oldInfo.isCollapsed:
+			tempInfo=oldInfo.copy()
+			tempInfo.setEndPoint(newInfo,"startToEnd")
+			unselectedTextList.append(tempInfo.text)
 	if speakSelected:
-		for selected in (leftSelectedText,rightSelectedText):
-			if isinstance(selected,basestring):
-				if  len(selected)==1:
-					selected=processSymbol(selected)
-				speakMessage(_("selected %s")%selected)
+		for text in selectedTextList:
+			if  len(text)==1:
+				text=processSymbol(text)
+			speakMessage(_("selected %s")%text)
 	if speakUnselected:
-		for unselected in (leftUnselectedText,rightUnselectedText):
-			if isinstance(unselected,basestring):
-				if  len(unselected)==1:
-					unselected=processSymbol(unselected)
-				speakMessage(_("unselected %s")%unselected)
-	if speakSelectionDeleted and selectionDeleted:
-		speech.speakMessage(_("selection deleted"))
-
+		for text in unselectedTextList:
+			if  len(text)==1:
+				text=processSymbol(text)
+			speakMessage(_("unselected %s")%text)
 
 def speakTypedCharacters(ch):
 	global typedWord

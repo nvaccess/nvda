@@ -69,7 +69,7 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			self._rangeObj.collapse()
 		elif position==textHandler.POSITION_FIRST:
 			self._rangeObj.move("textedit",-1)
-		elif position==textHandler.POSITION_FIRST:
+		elif position==textHandler.POSITION_LAST:
 			self._rangeObj.expand("textedit")
 			self.collapse(True)
 			self._rangeObj.move("character",-1)
@@ -96,11 +96,11 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			raise NotImplementedError("unit: %s"%unit)
 
 	def _get_isCollapsed(self):
-		start,end=self._getRangeOffsets()
-		if start==end:
+		if self._rangeObj.compareEndPoints("startToEnd",self._rangeObj)==0:
 			return True
 		else:
 			return False
+
 
 	def collapse(self,end=False):
 		self._rangeObj.collapse(not end)
@@ -108,21 +108,11 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj.duplicate())
 
-	def compareStart(self,info,useEnd=False):
-		newOffsets=self._getRangeOffsets()
-		oldOffsets=info._getRangeOffsets()
-		if useEnd:
-			return newOffsets[0]-oldOffsets[1]
-		else:
-			return newOffsets[0]-oldOffsets[0]
+	def compareEndPoints(self,other,which):
+		return self._rangeObj.compareEndPoints(which,other._rangeObj)
 
-	def compareEnd(self,info,useStart=False):
-		newOffsets=self._getRangeOffsets()
-		oldOffsets=info._getRangeOffsets()
-		if useStart:
-			return newOffsets[1]-oldOffsets[0]
-		else:
-			return newOffsets[1]-oldOffsets[1]
+	def setEndPoint(self,other,which):
+		self._rangeObj.setEndPoint(which,other._rangeObj)
 
 	def _get_text(self):
 		return self._rangeObj.text

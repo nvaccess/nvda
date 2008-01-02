@@ -113,17 +113,34 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 
-	def compareStart(self,info,useEnd=False):
-		if useEnd:
-			return self._rangeObj.Start-info._rangeObj.End
+	def compareEndPoints(self,other,which):
+		if which=="startToStart":
+			diff=self._rangeObj.Start-other._rangeObj.Start
+		elif which=="startToEnd":
+			diff=self._rangeObj.Start-other._rangeObj.End
+		elif which=="endToStart":
+			diff=self._rangeObj.End-other._rangeObj.Start
+		elif which=="endToEnd":
+			diff=self._rangeObj.End-other._rangeObj.End
 		else:
-			return self._rangeObj.Start-info._rangeObj.Start
+			raise ValueError("bad argument - which: %s"%which)
+		if diff<0:
+			diff=-1
+		elif diff>0:
+			diff=1
+		return diff
 
-	def compareEnd(self,info,useStart=False):
-		if useStart:
-			return self._rangeObj.End-info._rangeObj.Start
+	def setEndPoint(self,other,which):
+		if which=="startToStart":
+			self._rangeObj.Start=other._rangeObj.Start
+		elif which=="startToEnd":
+			self._rangeObj.Start=other._rangeObj.End
+		elif which=="endToStart":
+			self._rangeObj.End=other._rangeObj.Start
+		elif which=="endToEnd":
+			self._rangeObj.End=other._rangeObj.End
 		else:
-			return self._rangeObj.End-info._rangeObj.End
+			raise ValueError("bad argument - which: %s"%which)
 
 	def _get_isCollapsed(self):
 		if self._rangeObj.Start==self._rangeObj.End:
