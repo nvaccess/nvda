@@ -457,7 +457,7 @@ class appModule(appModuleHandler.appModule):
 		charInfo.expand(textHandler.UNIT_CHARACTER)
 		charInfo.collapse()
 		res=charInfo.moveByUnit(textHandler.UNIT_CHARACTER,-1)
-		if res==0 or charInfo.compareStart(lineInfo)<0:
+		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			speech.speakMessage(_("left"))
 			reviewInfo=globalVars.reviewPosition.copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
@@ -487,7 +487,7 @@ class appModule(appModuleHandler.appModule):
 		charInfo.expand(textHandler.UNIT_CHARACTER)
 		charInfo.collapse()
 		res=charInfo.moveByUnit(textHandler.UNIT_CHARACTER,1)
-		if res==0 or charInfo.compareEnd(lineInfo)>=0:
+		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			speech.speakMessage(_("right"))
 			reviewInfo=globalVars.reviewPosition.copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
