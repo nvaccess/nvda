@@ -104,34 +104,37 @@ class VirtualBuffer(baseObject.scriptableObject):
 		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,start)
 		self.activatePosition(ID)
 
-	def _caretMovementScriptHelper(self,unit,direction):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(unit)
+	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
+		info=self.makeTextInfo(posConstant)
 		info.collapse()
-		info.moveByUnit(unit,direction)
-		info.updateCaret()
+		if posUnit is not None:
+			info.expand(posUnit)
+			info.collapse(end=posUnitEnd)
+			if posUnitEnd:
+				info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
 		info.expand(unit)
-		if unit in (textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD):
-			extraDetail=True
+		if direction is not None:
+			info.collapse()
+			info.moveByUnit(unit,direction)
+			info.expand(unit)
+		info.updateCaret()
+		if unit!=textHandler.UNIT_CHARACTER:
+			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 		else:
-			extraDetail=False
-		if unit==textHandler.UNIT_CHARACTER:
 			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 			speech.speakSpelling(info.text)
-		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 
 	def script_moveByCharacter_back(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True)
 
 	def script_moveByCharacter_forward(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,1)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,1,extraDetail=True)
 
 	def script_moveByWord_back(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,-1)
+		self._caretMovementScriptHelper(textHandler.UNIT_WORD,-1,extraDetail=True)
 
 	def script_moveByWord_forward(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,1)
+		self._caretMovementScriptHelper(textHandler.UNIT_WORD,1,extraDetail=True)
 
 	def script_moveByLine_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-1)
@@ -140,33 +143,16 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,1)
 
 	def script_startOfLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse()
-		info.updateCaret()
-		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakSpelling(info.text)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,extraDetail=True)
 
 	def script_endOfLine(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.expand(textHandler.UNIT_LINE)
-		info.collapse(end=True)
-		info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
-		info.updateCaret()
-		info.expand(textHandler.UNIT_CHARACTER)
-		speech.speakSpelling(info.text)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,posUnitEnd=True,extraDetail=True)
 
 	def script_topOfDocument(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_FIRST)
-		info.updateCaret()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_FIRST)
 
 	def script_bottomOfDocument(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_LAST)
-		info.updateCaret()
-		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_LAST)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
