@@ -208,12 +208,12 @@ class TextInfo(baseObject.autoPropertyObject):
 		raise NotImplementedError
 
 	def compareEndPoints(self,other,which):
-		""" gives the difference in offsets of one end of this object to one end of the other object.
+		""" compares an end of this object to an end of another object
 @param other: the text info object to compare with
 @type other: L{TextInfo}
 @param which: one of the strings startToStart startToEnd endToStart endToEnd
 @TYPE WHICH: STRING
-@returns: the start of this text info object relative to the start of the given text info object
+@returns: -1 if this end is before other end, or 1 if this end is after other end or 0 if this end and other end are the same. 
 @rtype: int
 """
 		raise NotImplementedError
