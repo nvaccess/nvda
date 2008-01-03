@@ -86,6 +86,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 
 	def fillVBuf(self):
 		VBufStorage_clearBuffer(self.VBufHandle)
+		if hasattr(self,'_speech_XMLCache'):
+			del self._speech_XMLCache
 		startTime=time.time()
 		speech.cancelSpeech()
 		speech.speakMessage(_("Loading document..."))
