@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2007-09-13 4:05:23 -0500\n"
+"PO-Revision-Date: 2008-01-02 9:39:52 -0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1503,6 +1503,32 @@ msgstr "konfiguráció &mentése\tcontrol+s"
 msgid "Write the current configuration to nvda.ini"
 msgstr "a konfiguráció lementése a nvda.ini fájlba"
 
+#: gui\__init__.py:148
+msgid "&Default dictionary..."
+msgstr "&alapértelmezett szótár"
+
+#: gui\__init__.py:148
+msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
+msgstr "párbeszédpanel ahol az alapértelmezett szótárt betudja állitani új szavak hozzáadásával"
+
+#: gui\__init__.py:151
+msgid "&Voice dictionary..."
+msgstr "&kiejtési szótár"
+
+#: gui\__init__.py:151
+msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
+msgstr "párbeszédpanel ahol a beszéd kiejtési szótárt betudja állitani új szavak hozzáadásával"
+
+
+#: gui\__init__.py:151
+msgid "&Temporary dictionary..."
+msgstr "&ideiglenes szótár"
+
+#: gui\__init__.py:156
+msgid "User &dictionaries"
+msgstr "Felhasználói & szótárak"
+
+
 #: gui\__init__.py:143
 msgid "E&xit"
 msgstr "&kilépés"
@@ -1516,8 +1542,8 @@ msgid "&NVDA"
 msgstr "&NVDA"
 
 #: gui\__init__.py:149
-msgid "&User interface...\tCtrl+Shift+U"
-msgstr "&felhasználói felület...\tCtrl+shift+u"
+msgid "&General settings...\tCtrl+Shift+G"
+msgstr "&álltalános opciók...\tCtrl+shift+g"
 
 #: gui\__init__.py:149
 msgid "Change user interface settings"
@@ -1629,8 +1655,8 @@ msgid "Press OK to quit NVDA"
 msgstr "Az OK gombbal kiléphet a nvda programból."
 
 #: gui\__init__.py:251
-msgid "User interface settings"
-msgstr "A felhasználói felület beállitásai"
+msgid "General settings"
+msgstr "álltalános beállitások"
 
 #: gui\__init__.py:255
 msgid "Synthesizer"
@@ -1937,6 +1963,61 @@ msgstr "Sorszámok bemondása"
 #: gui\settingsDialogs.py:498
 msgid "Report &alignment"
 msgstr "Igazítás jelzése"
+
+
+
+#: gui\settingsDialogs.py:594
+msgid "&Dictionary entries"
+msgstr "Szótár Bejegyzések" 
+
+#: gui\settingsDialogs.py:597
+msgid "Comment"
+msgstr "Megjegyzés"
+
+#: gui\settingsDialogs.py:598
+msgid "Pattern"
+msgstr "minta"
+
+#: gui\settingsDialogs.py:599
+msgid "Replacement"
+msgstr "helyetesítés ezzel"
+
+#: gui\settingsDialogs.py:606
+msgid "&Add"
+msgstr "&hozzáadás"
+
+#: gui\settingsDialogs.py:609
+msgid "&edit"
+msgstr "&szerkeztés"
+
+#: gui\settingsDialogs.py:612
+msgid "&Remove"
+msgstr "&törlés"
+
+#: gui\settingsDialogs.py:640
+msgid "Add an entry"
+msgstr "Bejegyzés hozzáadása" 
+
+#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:646
+msgid "&Comment"
+msgstr "&megjegyzés"
+
+#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:646
+msgid "&Pattern"
+msgstr "&minta"
+
+#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:646
+msgid "&Replacement"
+msgstr "&helyetesítés"
+
+
+#: gui\settingsDialogs.py:646
+msgid "Edit an entry"
+msgstr "Bejegyzés szerkeztése"
+
 
 #: keyboardHandler.py:49
 msgid "caps lock %s"
