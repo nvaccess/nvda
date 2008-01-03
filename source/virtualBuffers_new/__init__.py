@@ -12,6 +12,7 @@ import textHandler
 from virtualBuffer_new_wrapper import *
 import globalVars
 import config
+import api
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -90,10 +91,11 @@ class VirtualBuffer(baseObject.scriptableObject):
 		speech.speakMessage(_("Loading document..."))
 		self._fillVBufHelper()
 		endTime=time.time()
-		globalVars.log.warning("load took %s seconds"%(endTime-startTime))
+		globalVars.log.debug("load took %s seconds"%(endTime-startTime))
 		speech.cancelSpeech()
 		speech.speakMessage(_("Done"))
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		api.processPendingEvents()
+		info=self.makeTextInfo(textHandler.POSITION_FIRST)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 	def activatePosition(self,ID):
@@ -154,6 +156,9 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def script_bottomOfDocument(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_LAST)
 
+	def script_refreshBuffer(self,keyPress,nextScript):
+		self.fillVBuf()
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
 	("ExtendedDown","moveByLine_forward"),
@@ -167,4 +172,5 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("control+ExtendedEnd","bottomOfDocument"),
 	("Return","activatePosition"),
 	("Space","activatePosition"),
+	("NVDA+f5","refreshBuffer"),
 ]]
