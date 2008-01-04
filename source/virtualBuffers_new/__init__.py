@@ -1,3 +1,5 @@
+import win32clipboard
+import win32con
 import weakref
 from textwrap import TextWrapper
 import time
@@ -58,6 +60,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self.VBufHandle=VBufStorage_createBuffer()
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
+		self._lastSelectionMovedStart=False
+
 
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
@@ -161,6 +165,110 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def script_refreshBuffer(self,keyPress,nextScript):
 		self.fillVBuf()
 
+	def _selectionMovementScriptHelper(self,unit=None,direction=None,toPosition=None):
+		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		if toPosition:
+			newInfo=self.makeTextInfo(toPosition)
+			if newInfo.compareEndPoints(oldInfo,"startToStart")>0:
+				newInfo.setEndPoint(oldInfo,"startToStart")
+			if newInfo.compareEndPoints(oldInfo,"endToEnd")<0:
+				newInfo.setEndPoint(oldInfo,"endToEnd")
+		elif unit:
+			newInfo=oldInfo.copy()
+			if self._lastSelectionMovedStart:
+				newInfo.move(unit,direction,endPoint="start")
+			else:
+				newInfo.move(unit,direction,endPoint="end")
+		newInfo.updateSelection()
+		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+			self._lastSelectionMovedStart=True
+		else:
+			self._lastSelectionMovedStart=False
+		if newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
+			self._lastSelectionMovedStart=False
+		speech.speakSelectionChange(oldInfo,newInfo)
+
+	def script_selectCharacter_forward(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
+
+	def script_selectCharacter_back(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=-1)
+
+	def script_selectCharacter_forward(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
+
+	def script_selectCharacter_back(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=-1)
+
+	def script_selectWord_forward(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_WORD,direction=1)
+
+	def script_selectWord_back(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_WORD,direction=-1)
+
+	def script_selectLine_forward(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=1)
+
+	def script_selectLine_back(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
+
+	def script_selectToBeginningOfLine(self,keyPress,nextScript):
+		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		tempInfo=curInfo.copy()
+		tempInfo.expand(textHandler.UNIT_LINE)
+		if curInfo.compareEndPoints(tempInfo,"startToStart")>0:
+			self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
+
+	def script_selectToEndOfLine(self,keyPress,nextScript):
+		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		tempInfo=curInfo.copy()
+		curInfo.expand(textHandler.UNIT_CHARACTER)
+		tempInfo.expand(textHandler.UNIT_LINE)
+		if curInfo.compareEndPoints(tempInfo,"endToEnd")<0:
+			self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=1)
+
+	def script_selectToTopOfDocument(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_FIRST)
+
+	def script_selectToBottomOfDocument(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_LAST)
+
+	def script_selectAll(self,keyPress,nextScript):
+		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_ALL)
+
+	def script_copyToClipboard(self,keyPress,nextScript):
+		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		if info.isCollapsed:
+			speech.speakMessage(_("no selection"))
+			return
+		#To handle line lengths properly, grab each line separately
+		lineInfo=info.copy()
+		lineInfo.collapse()
+		textList=[]
+		while lineInfo.compareEndPoints(info,"startToEnd")<0:
+			lineInfo.expand(textHandler.UNIT_LINE)
+			chunkInfo=lineInfo.copy()
+			if chunkInfo.compareEndPoints(info,"startToStart")<0:
+				chunkInfo.setEndPoint(info,"startToStart")
+			if chunkInfo.compareEndPoints(info,"endToEnd")>0:
+				chunkInfo.setEndPoint(info,"endToEnd")
+			textList.append(chunkInfo.text)
+			lineInfo.collapse(end=True)
+		text="\n".join(textList).replace('\n\n','\n')
+		win32clipboard.OpenClipboard()
+		try:
+			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
+		finally:
+			win32clipboard.CloseClipboard()
+		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
+		try:
+			got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+		finally:
+			win32clipboard.CloseClipboard()
+		if got == text:
+			speech.speakMessage(_("copied to clipboard"))
+
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
 	("ExtendedDown","moveByLine_forward"),
@@ -175,4 +283,16 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
+	("shift+extendedRight","selectCharacter_forward"),
+	("shift+extendedLeft","selectCharacter_back"),
+	("control+shift+extendedRight","selectWord_forward"),
+	("control+shift+extendedLeft","selectWord_back"),
+	("shift+extendedDown","selectLine_forward"),
+	("shift+extendedUp","selectLine_back"),
+	("shift+extendedEnd","selectToEndOfLine"),
+	("shift+extendedHome","selectToBeginningOfLine"),
+	("control+shift+extendedEnd","selectToBottomOfDocument"),
+	("control+shift+extendedHome","selectToTopOfDocument"),
+	("control+a","selectAll"),
+	("control+c","copyToClipboard"),
 ]]
