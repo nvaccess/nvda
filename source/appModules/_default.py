@@ -18,7 +18,7 @@ import textHandler
 import speech
 import sayAllHandler
 import virtualBuffers
-from NVDAObjects import NVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from synthDriverHandler import *
 import gui
@@ -27,8 +27,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-import win32clipboard
-import win32con
 import ctypes
 
 class appModule(appModuleHandler.appModule):
@@ -180,37 +178,26 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		if keyboardHandler.lastKeyCount == 2:
-			text=""
-			if curObject.name is not None:
-				text=text+curObject.name
-			if curObject.name is not None and curObject.value is not None:
-				text=text+" "
-			if curObject.value is not None:
-				text=text+curObject.value
-			if text is not None:
-				speech.speakSpelling("%s" %text)
-		elif keyboardHandler.lastKeyCount == 3:
-			text=""
-			if curObject.name is not None:
-				text=text+curObject.name
-			if curObject.name is not None and curObject.value is not None:
-				text=text+" "
-			if curObject.value is not None:
-				text=text+curObject.value
-			if text is not None:
-				win32clipboard.OpenClipboard()
-				try:
-					win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
-				finally:
-					win32clipboard.CloseClipboard()
-				win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-				try:
-					got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-				finally:
-					win32clipboard.CloseClipboard()
-				if got == text:
-					speech.speakMessage(_("%s copied to clipboard")%got)
+		if keyboardHandler.lastKeyCount in range(2,4):
+			textList=[]
+			if isinstance(curObject.name,basestring) and len(curObject.name)>0 and not curObject.name.isspace():
+				textList.append(curObject.name)
+			if isinstance(curObject.value,basestring) and len(curObject.value)>0 and not curObject.value.isspace():
+				textList.append(curObject.value)
+			if curObject.TextInfo!=NVDAObjectTextInfo:
+				info=curObject.makeTextInfo(textHandler.POSITION_SELECTION)
+				if not info.isCollapsed:
+					textList.append(info.text)
+				else:
+					info.expand(textHandler.UNIT_READINGCHUNK)
+					textList.append(info.text)
+			text=" ".join(textList)
+			if len(text)>0 and not text.isspace():
+				if keyboardHandler.lastKeyCount == 2:
+					speech.speakSpelling(text)
+				else:
+					if api.copyToClip(text):
+						speech.speakMessage(_("%s copied to clipboard")%text)
 		else:
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		return False
@@ -635,15 +622,19 @@ class appModule(appModuleHandler.appModule):
 		if not isinstance(obj,NVDAObject): 
 			speech.speakMessage(_("no navigator object"))
 			return
-		globalVars.log.info("%s %s"%(obj.role,obj.windowHandle))
-		speech.speakMessage("%s"%obj)
-		speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
-		speech.speakMessage(_("Class: %s")%obj.windowClassName)
-		speech.speakSpelling(obj.windowClassName)
-		speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
-		speech.speakMessage(_("text: %s")%obj.windowText)
-		speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
-	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers: control id, class and internal text")	
+		if keyboardHandler.lastKeyCount ==2:
+			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
+				speech.speakMessage(_("copied to clipboard"))
+		else:
+			globalVars.log.info("%s %s"%(obj.role,obj.windowHandle))
+			speech.speakMessage("%s"%obj)
+			speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
+			speech.speakMessage(_("Class: %s")%obj.windowClassName)
+			speech.speakSpelling(obj.windowClassName)
+			speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
+			speech.speakMessage(_("text: %s")%obj.windowText)
+			speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
+	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")	
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:

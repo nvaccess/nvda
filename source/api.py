@@ -19,6 +19,8 @@ import wx
 import core
 import queueHandler
 import controlTypes
+import win32clipboard
+import win32con
 
 #User functions
 
@@ -208,3 +210,25 @@ def processPendingEvents():
 	wx.Yield()
 	pythoncom.PumpWaitingMessages()
 	queueHandler.flushQueue(queueHandler.eventQueue)
+
+def copyToClip(text):
+	"""Copies the given text to the windows clipboard.
+@returns: True if it succeeds, False otherwise.
+@rtype: boolean
+@param text: the text which will be copied to the clipboard
+@type obj: string
+"""
+	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
+		win32clipboard.OpenClipboard()
+		try:
+			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
+		finally:
+			win32clipboard.CloseClipboard()
+		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
+		try:
+			got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+		finally:
+			win32clipboard.CloseClipboard()
+		if got == text:
+			return True
+	return False

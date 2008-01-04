@@ -853,4 +853,5 @@ _staticMap={
 ("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 ("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 ("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
+("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }

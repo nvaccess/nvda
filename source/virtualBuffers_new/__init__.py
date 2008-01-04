@@ -1,5 +1,3 @@
-import win32clipboard
-import win32con
 import weakref
 from textwrap import TextWrapper
 import time
@@ -255,17 +253,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 			textList.append(chunkInfo.text)
 			lineInfo.collapse(end=True)
 		text="\n".join(textList).replace('\n\n','\n')
-		win32clipboard.OpenClipboard()
-		try:
-			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
-		finally:
-			win32clipboard.CloseClipboard()
-		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-		try:
-			got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-		finally:
-			win32clipboard.CloseClipboard()
-		if got == text:
+		if api.copyToClip(text):
 			speech.speakMessage(_("copied to clipboard"))
 
 
