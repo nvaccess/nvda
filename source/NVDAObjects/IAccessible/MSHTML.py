@@ -117,18 +117,18 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 	def _get_text(self):
 		return self._rangeObj.text
 
-	def moveByUnit(self,unit,num,start=True,end=True):
+	def move(self,unit,direction, endPoint=None):
 		if unit in [textHandler.UNIT_READINGCHUNK,textHandler.UNIT_LINE]:
 			unit=textHandler.UNIT_SENTENCE
 		if unit==textHandler.UNIT_STORY:
 			unit="textedit"
-		if start and not end:
+		if endPoint=="start":
 			moveFunc=self._rangeObj.moveStart
-		elif end and not start:
+		elif endPoint=="end":
 			moveFunc=self._rangeObj.moveEnd
 		else:
 			moveFunc=self._rangeObj.move
-		res=moveFunc(unit,num)
+		res=moveFunc(unit,direction)
 		return res
 
 	def updateCaret(self):

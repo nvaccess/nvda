@@ -112,6 +112,23 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getReadingChunkOffsets(self,offset):
 		return self._getSentenceOffsets(offset)
 
+	def _getUnitOffsets(self,unit,offset):
+		if unit==textHandler.UNIT_CHARACTER:
+			offsetsFunc=self._getCharacterOffsets
+		elif unit==textHandler.UNIT_WORD:
+			offsetsFunc=self._getWordOffsets
+		elif unit==textHandler.UNIT_LINE:
+			offsetsFunc=self._getLineOffsets
+		elif unit==textHandler.UNIT_SENTENCE:
+			offsetsFunc=self._getSentenceOffsets
+		elif unit==textHandler.UNIT_PARAGRAPH:
+			offsetsFunc=self._getParagraphOffsets
+		elif unit==textHandler.UNIT_READINGCHUNK:
+			offsetsFunc=self._getReadingChunkOffsets
+		else:
+			raise ValueError("unknown unit: %s"%unit)
+		return offsetsFunc(offset)
+
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
 		if position==textHandler.POSITION_FIRST:
@@ -146,23 +163,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			self._startOffset=self._endOffset
 
 	def expand(self,unit):
-		if unit==textHandler.UNIT_CHARACTER:
-			(self._startOffset,self._endOffset)=self._getCharacterOffsets(self._startOffset)
-		elif unit==textHandler.UNIT_WORD:
-				(self._startOffset,self._endOffset)=self._getWordOffsets(self._startOffset)
-		elif unit==textHandler.UNIT_LINE:
-			(self._startOffset,self._endOffset)=self._getLineOffsets(self._startOffset)
-		elif unit==textHandler.UNIT_SENTENCE:
-			(self._startOffset,self._endOffset)=self._getSentenceOffsets(self._startOffset)
-		elif unit==textHandler.UNIT_PARAGRAPH:
-			(self._startOffset,self._endOffset)=self._getParagraphOffsets(self._startOffset)
-		elif unit==textHandler.UNIT_STORY:
-			self._startOffset=0
-			self._endOffset=self._getStoryLength()
-		elif unit==textHandler.UNIT_READINGCHUNK:
-			(self._startOffset,self._endOffset)=self._getReadingChunkOffsets(self._startOffset)
-		elif unit is not None:
-			raise NotImplementedError("unit: %s not supported"%unit)
+		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
 
 	def copy(self):
 		o=self.__class__(self.obj,self.bookmark)
@@ -246,37 +247,46 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def moveByUnit(self,unit,num,start=True,end=True):
-		oldStart=self._startOffset
-		oldEnd=self._endOffset
+	def move(self,unit,direction,endPoint=None):
+		if direction==0:
+			return 0;
+		if endPoint=="end":
+			offset=self._endOffset
+		elif endPoint=="start":
+			offset=self._startOffset
+		else:
+			self.collapse()
+			offset=self._startOffset
+		lastOffset=None
+		count=0
 		lowLimit=0
 		highLimit=self._getStoryLength()
-		count=0
-		if num<0:
-			while self._startOffset>lowLimit and count>num:
-				self._startOffset-=1
-				self.expand(unit)
-				self.collapse()
-				count-=1
- 		elif num>0:
-			while self._startOffset<highLimit and count<num:
-				lastStart=self._startOffset
-				lastEnd=self._endOffset
-				self.expand(unit)
-				self.collapse(end=True)
-				count+=1
-				if start and self._startOffset>=highLimit:
-					count-=1
-					self._startOffset=self._endOffset=lastStart
-					break
-		if start==False:
-			self._startOffset=oldStart
-		if end==False:
-			self._endOffset=oldEnd
-		if num>0 and (self._startOffset<oldStart or self._endOffset<oldEnd):
-			return 0
-		if num<0 and (self._startOffset>oldStart or self._endOffset>oldEnd):
-			return 0
+		while count!=direction and (lastOffset is None or (direction>0 and offset>lastOffset) or (direction<0 and offset<lastOffset)) and (offset<highLimit or direction<0) and (offset>lowLimit or direction>0):
+			lastOffset=offset
+			if direction<0 and offset>lowLimit:
+				offset-=1
+			newStart,newEnd=self._getUnitOffsets(unit,offset)
+			if direction<0:
+				offset=newStart
+			elif direction>0:
+				offset=newEnd
+			count=count+1 if direction>0 else count-1
+		if endPoint=="start":
+			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
+				return 0
+			self._startOffset=offset
+		elif endPoint=="end":
+			if (direction>0 and offset<=self._endOffset) or (direction<0 and offset>=self._endOffset) or offset<lowLimit or offset>highLimit:
+				return 0
+			self._endOffset=offset
+		else:
+			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
+				return 0
+			self._startOffset=self._endOffset=offset
+		if self._startOffset>self._endOffset:
+			tempOffset=self._startOffset
+			self._startOffset=self._endOffset
+			self._endOffset=tempOffset
 		return count
 
 	def updateCaret(self):
@@ -723,7 +733,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
-		res=testInfo.moveByUnit(textHandler.UNIT_CHARACTER,-1)
+		res=testInfo.move(textHandler.UNIT_CHARACTER,-1)
 		if res<0:
 			testInfo.expand(textHandler.UNIT_CHARACTER)
 			delChar=testInfo.text

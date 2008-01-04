@@ -258,6 +258,16 @@ class TextInfo(baseObject.autoPropertyObject):
 	def _get_bookmark(self):
 		raise NotImplementedError
 
+	def move(self,unit,direction,endPoint=None):
+		"""Moves one or both of the endpoints of this object by the given unit and direction.
+@param unit: the unit to move by
+@type unit: string
+@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
+@type: int
+@param: endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+"""
+		raise NotImplementedError
+
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
 @param text: the text to search

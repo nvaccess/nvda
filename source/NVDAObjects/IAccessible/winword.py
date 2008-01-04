@@ -246,16 +246,16 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			fieldList.append(curRangeObj.text)
 		return fieldList
 
-	def moveByUnit(self,unit,num,start=True,end=True):
+	def move(self,unit,direction,endPoint=None):
 		if unit==textHandler.UNIT_LINE:
 			unit=textHandler.UNIT_SENTENCE
 		if unit in NVDAUnitsToWordUnits:
 			unit=NVDAUnitsToWordUnits[unit]
 		else:
 			raise NotImplementedError("unit: %s"%unit)
-		if start and not end:
+		if endPoint=="start":
 			moveFunc=self._rangeObj.MoveStart
-		elif end and not start:
+		elif endPoint=="end":
 			moveFunc=self._rangeObj.MoveEnd
 		else:
 			moveFunc=self._rangeObj.Move

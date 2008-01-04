@@ -115,11 +115,11 @@ class VirtualBuffer(baseObject.scriptableObject):
 			info.expand(posUnit)
 			info.collapse(end=posUnitEnd)
 			if posUnitEnd:
-				info.moveByUnit(textHandler.UNIT_CHARACTER,-1)
+				info.move(textHandler.UNIT_CHARACTER,-1)
 		info.expand(unit)
 		if direction is not None:
 			info.collapse()
-			info.moveByUnit(unit,direction)
+			info.move(unit,direction)
 			info.expand(unit)
 		info.updateCaret()
 		if unit!=textHandler.UNIT_CHARACTER:

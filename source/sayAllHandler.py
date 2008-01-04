@@ -86,7 +86,7 @@ def readTextHelper_generator(info,cursor):
 			if keepReading:
 				bookmark=reader.bookmark
 				index=hash(bookmark)
-				delta=reader.moveByUnit(textHandler.UNIT_READINGCHUNK,1,start=False,end=True)
+				delta=reader.move(textHandler.UNIT_READINGCHUNK,1,endPoint="end")
 				if delta<=0:
 					keepReading=False
 					continue
