@@ -65,7 +65,7 @@ VBufStorage_removeDescendantsFromBufferNode=dll.VBufStorage_removeDescendantsFro
 VBufStorage_removeDescendantsFromBufferNode.errcheck=dllErrorCheck
 
 VBufStorage_getFieldIDFromBufferOffset=dll.VBufStorage_getFieldIDFromBufferOffset
-VBufStorage_getFieldIDFromBufferOffset.errcheck=dllErrorCheck
+#VBufStorage_getFieldIDFromBufferOffset.errcheck=dllErrorCheck
 
 def VBufStorage_getBufferOffsetsFromFieldID(buf, ID):
 	start=c_int()
