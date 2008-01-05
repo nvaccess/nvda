@@ -24,12 +24,15 @@ def registerGeneratorObject(generatorObj):
 	globalVars.log.debug("Adding generator %s"%lastGeneratorObjID)
 	generators[lastGeneratorObjID]=generatorObj
 
-def queueFunction(queue,func,*args,**vars):
+def queueFunction(queue,func,*args,**kwargs):
 	if not queue.full():
-		queue.put_nowait((func,args,vars))
+		queue.put_nowait((func,args,kwargs))
 	else:
-		globalVars.log.warn("Queue full when trying to add func %s to %s"%(func.__name__,queue.__name__))
-		pass #raise RuntimeError('Queue full')
+		argsText=",".join([str(x) for x in args])
+		kwargsText=",".join(["%s=%s"%(x,y) for x,y in kwargs.items()])
+		funcText="%s(%s)"%(func.__name__,",".join([x for x in (argsText,kwargsText) if x]))
+		queueText=queue.__name__
+		globalVars.log.warn("Queue full when trying to add function %s to %s"%(funcText,queueText))
 
 def isRunningGenerators():
 	res=len(generators)>0
