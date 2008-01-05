@@ -13,6 +13,8 @@ EVENT_INPUTLANGCHANGE=0X1001
 
 charHookLib=None
 
+winEventHookID=None
+
 def handleTypedCharacter(window,wParam,lParam):
 	if wParam>=32:
 		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(wParam))
@@ -28,12 +30,13 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		globalVars.log.error("charHook.winEventCallback", exc_info=True)
 
 def initialize():
-	global charHookLib
+	global charHookLib, winEventHookID
 	charHookLib=ctypes.windll.charHook
 	charHookLib.initialize()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
 	global charHookLib
+	winUser.unHookWinEvent(winEventHookID)
 	charHookLib.terminate()
 	del charHookLib
