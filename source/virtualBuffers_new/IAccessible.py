@@ -9,7 +9,7 @@ import globalVars
 import api
 import textHandler
 
-class GeckoTextInfo(VirtualBufferTextInfo):
+class IAccessibleTextInfo(VirtualBufferTextInfo):
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
 		role=attrs['role']
@@ -56,10 +56,10 @@ class GeckoTextInfo(VirtualBufferTextInfo):
 		else:
 			return ""
 
-class Gecko(VirtualBuffer):
+class IAccessible(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
-		super(Gecko,self).__init__(rootNVDAObject,TextInfo=GeckoTextInfo)
+		super(IAccessible,self).__init__(rootNVDAObject,TextInfo=IAccessibleTextInfo)
 
 	def _fillVBufHelper(self,pacc=None,accChildID=0,parentNode=None,previousNode=None):
 		if not pacc:
