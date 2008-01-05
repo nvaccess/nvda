@@ -32,7 +32,7 @@ def update(obj):
 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName.startswith('Mozilla') and obj.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in obj.states:
 		classString="gecko.Gecko"
 	#Adobe documents with IAccessible
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName=="AVL_AVView" and obj.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in obj.states:
+ 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName=="AVL_AVView" and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in obj.states:
 		classString="adobe.Adobe"
 	#MSHTML
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in obj.states: 
