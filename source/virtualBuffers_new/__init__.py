@@ -183,6 +183,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 				newInfo.setEndPoint(oldInfo,"endToEnd")
 		elif unit:
 			newInfo=oldInfo.copy()
+		if unit:
 			if self._lastSelectionMovedStart:
 				newInfo.move(unit,direction,endPoint="start")
 			else:
@@ -239,7 +240,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_FIRST)
 
 	def script_selectToBottomOfDocument(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_LAST)
+		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_LAST,unit=textHandler.UNIT_CHARACTER,direction=1)
 
 	def script_selectAll(self,keyPress,nextScript):
 		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_ALL)
