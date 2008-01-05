@@ -185,9 +185,14 @@ class Gecko(VirtualBuffer):
 			except:
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
-			speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech)
-			newInfo.collapse()
-			newInfo.updateCaret()
+			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
+			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
+			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
+			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
+			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
+				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech)
+				newInfo.collapse()
+				newInfo.updateCaret()
 
 
 	def activatePosition(self,ID):
@@ -198,16 +203,19 @@ class Gecko(VirtualBuffer):
 		pacc.accDoDefaultAction(accChildID)
 
 	def _caretMovedToID(self,ID):
-		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
 		try:
+			pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
 			pacc.accSelect(1,accChildID)
 		except:
 			pass
 
 	def _activateID(self,ID):
-		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
-		role=pacc.accRole(accChildID)
-		if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
-			api.toggleVirtualBufferPassThrough()
-		else:
-			pacc.accDoDefaultAction(accChildID)
+		try:
+			pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
+			role=pacc.accRole(accChildID)
+			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
+				api.toggleVirtualBufferPassThrough()
+			else:
+				pacc.accDoDefaultAction(accChildID)
+		except:
+			pass
