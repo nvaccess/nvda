@@ -321,16 +321,11 @@ lastEvent=None
 
 focusEventQueue=Queue.Queue(3)
 
-def normalizeIAccessible(pacc): 
+def normalizeIAccessible(pacc):
 	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
 	elif not isinstance(pacc,IAccessible):
 		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
-	if not isinstance(pacc,IAccessible2):
-		try:
-			pacc=pacc.QueryInterface(IAccessible2)
-		except:
-			pass
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
