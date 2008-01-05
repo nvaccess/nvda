@@ -69,14 +69,15 @@ class Gecko(VirtualBuffer):
 		attrs={}
 		isBlockElement=True
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
-			ID=pacc.uniqueID
+			ID=-pacc.uniqueID
+			globalVars.log.debug("ID %s"%ID)
 			role=pacc.role()
 			globalVars.log.debug("IA2 attribs %s"%pacc.attributes)
 			objAttributes=pacc.attributes
 			if role!=IAccessibleHandler.ROLE_SYSTEM_CELL and objAttributes.find("formatting:block")<0:
 				isBlockElement=False
 		else:
-			ID=hash(pacc)
+			ID=-hash(pacc)
 			role=pacc.accRole(accChildID)
 		states=pacc.accState(accChildID)
 		attrs['role']=str(role)
@@ -174,11 +175,39 @@ class Gecko(VirtualBuffer):
 				self.rootNVDAObject=obj
 				self.fillVBuf()
 			return
-		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else hash(obj.IAccessibleObject)
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+		ID=-obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else -hash(obj.IAccessibleObject)
+		if ID!=oldID and ID!=0:
+			try:
+				start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
+			except:
+				return nextHandler()
+			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+			speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech)
+			newInfo.collapse()
+			newInfo.updateCaret()
+
+
+	def activatePosition(self,ID):
+		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
+		speech.speakMessage("pacc: %s"%pacc)
+		speech.speakMessage("accChildID: %s"%accChildID)
+		speech.speakMessage("name: %s"%pacc.accName(accChildID))
+		pacc.accDoDefaultAction(accChildID)
+
+	def _caretMovedToID(self,ID):
+		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
 		try:
-			start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
+			pacc.accSelect(1,accChildID)
 		except:
-			return nextHandler()
-		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
-		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,self,info.getXMLFieldSpeech)
-		VBufStorage_setBufferSelectionOffsets(self.VBufHandle,start,end)
+			pass
+
+	def _activateID(self,ID):
+		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
+		role=pacc.accRole(accChildID)
+		if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
+			api.toggleVirtualBufferPassThrough()
+		else:
+			pacc.accDoDefaultAction(accChildID)
