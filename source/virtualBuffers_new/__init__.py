@@ -60,7 +60,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 		super(VirtualBuffer,self).__init__()
 		self._lastSelectionMovedStart=False
 
-
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
 
@@ -102,17 +101,25 @@ class VirtualBuffer(baseObject.scriptableObject):
 		info=self.makeTextInfo(textHandler.POSITION_FIRST)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
-	def activatePosition(self,ID):
+	def _activateID(self,ID):
+		pass
+
+	def _activateContextMenuForID(self,ID):
+		pass
+
+	def _caretMovedToID(self,ID):
 		pass
 
 	def script_activatePosition(self,keyPress,nextScript):
 		start,end=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
 		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,start)
-		self.activatePosition(ID)
+		if ID!=0:
+			self._activateID(ID)
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
 		info=self.makeTextInfo(posConstant)
 		info.collapse()
+		oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,info._startOffset)
 		if posUnit is not None:
 			info.expand(posUnit)
 			info.collapse(end=posUnitEnd)
@@ -129,6 +136,9 @@ class VirtualBuffer(baseObject.scriptableObject):
 		else:
 			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
 			speech.speakSpelling(info.text)
+		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,info._startOffset)
+		if ID!=0 and ID!=oldID:
+			self._caretMovedToID(ID)
 
 	def script_moveByCharacter_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True)
