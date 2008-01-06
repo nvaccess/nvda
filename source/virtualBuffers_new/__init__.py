@@ -86,6 +86,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 		pass
 
 	def fillVBuf(self):
+		if api.isVirtualBufferPassThrough():
+			api.toggleVirtualBufferPassThrough()
 		VBufStorage_clearBuffer(self.VBufHandle)
 		if hasattr(self,'_speech_XMLCache'):
 			del self._speech_XMLCache
