@@ -37,6 +37,6 @@ def initialize():
 
 def terminate():
 	global charHookLib
-	winUser.unHookWinEvent(winEventHookID)
+	winUser.unhookWinEvent(winEventHookID)
 	charHookLib.terminate()
 	del charHookLib
