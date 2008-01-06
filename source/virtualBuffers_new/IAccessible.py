@@ -69,7 +69,7 @@ class IAccessible(VirtualBuffer):
 		attrs={}
 		isBlockElement=True
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
-			ID=-pacc.uniqueID
+			ID=pacc.uniqueID
 			globalVars.log.debug("ID %s"%ID)
 			role=pacc.role()
 			globalVars.log.debug("IA2 attribs %s"%pacc.attributes)
@@ -178,7 +178,7 @@ class IAccessible(VirtualBuffer):
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
-		ID=-obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else -hash(obj.IAccessibleObject)
+		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else -hash(obj.IAccessibleObject)
 		if ID!=oldID and ID!=0:
 			try:
 				start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
