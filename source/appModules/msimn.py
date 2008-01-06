@@ -54,7 +54,7 @@ class appModule(appModuleHandler.appModule):
 		#Force focus to move to something sane when landing on an outlook express message window
 		if obj.windowClassName=="ATH_Note" and obj.IAccessibleObjectID==IAccessibleHandler.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
-			if obj==api.getFocusObject():
+			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
 				return sendKey(key("SHIFT+TAB"))
 		ignore=False
 		focusRole=obj.role
