@@ -36,8 +36,8 @@ def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
 	if not accHandle:
 		return None
-	(pacc,child)=accHandle
-	obj=IAccessible(windowHandle=hwnd,IAccessibleObject=pacc,IAccessibleChildID=child,IAccessibleObjectID=objectID,IAccessibleOrigChildID=childID)
+	(pacc,accChildID)=accHandle
+	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID,event_windowHandle=hwnd,event_objectID=objectID,event_childID=childID)
 	return obj
 
 def getNVDAObjectFromPoint(x,y):
@@ -78,22 +78,19 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	def __new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+	def __new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
 """  
 		if windowHandle and not IAccessibleObject:
-			if IAccessibleChildID is not None and IAccessibleObjectID is not None:
-				(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleObjectID,IAccessibleChildID)
-			else:
-				(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
+			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
 		elif not windowHandle and not IAccessibleObject:
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
 		if IAccessibleObject:
 			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2): 
 				IA2Class=__import__("IA2",globals(),locals(),[]).IA2
 				obj=Window.__new__(IA2Class,windowHandle=windowHandle)
-				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 				return obj
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
@@ -123,10 +120,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		obj=Window.__new__(newClass,windowHandle=windowHandle)
 		obj.windowClassName=windowClassName
 		obj.IAccessibleRole=IAccessibleRole
-		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 		return obj
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
@@ -141,8 +138,9 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
-		self.IAccessibleObjectID=IAccessibleObjectID
-		self.IAccessibleOrigChildID=IAccessibleOrigChildID
+		self.event_windowHandle=event_windowHandle
+		self.event_objectID=event_objectID
+		self.event_childID=event_childID
 		Window.__init__(self,windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
@@ -155,11 +153,19 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
+		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
+			return False
+		if self.event_objectID is not None and other.event_objectID is not None and self.event_objectID!=other.event_objectID:
+			return False
+		if self.event_childID is not None and other.event_childID is not None and self.event_childID!=other.event_childID:
+			return False
+		if not super(IAccessible,self)._isEqual(other):
+			return False
 		selfIden=self.IAccessibleIdentityString
 		otherIden=other.IAccessibleIdentityString
 		if selfIden and otherIden and selfIden==otherIden:
 			return True
-		if not super(IAccessible,self)._isEqual(other):
+		if self.location!=other.location:
 			return False
  		if self.IAccessibleRole!=other.IAccessibleRole:
 			return False
@@ -265,7 +271,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,IAccessibleObjectID=self.IAccessibleObjectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0)
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			if res[0].accRole(res[1])!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
@@ -285,7 +291,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentNext and parentNext[0].accRole(parentNext[1])>0:
 					next=parentNext
 		if next and next[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],IAccessibleObjectID=self.IAccessibleObjectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_objectID=self.event_objectID)
 		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(next[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -303,7 +309,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
 					previous=parentPrevious
 		if previous and previous[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],IAccessibleObjectID=self.IAccessibleObjectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_objectID=self.event_objectID)
 		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(previous[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -318,7 +324,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			if len(children)>0:
 				firstChild=children[0]
 		if firstChild and firstChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],IAccessibleObjectID=self.IAccessibleObjectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_objectID=self.event_objectID)
 		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(firstChild[0],-4)
 			if not child:
@@ -333,7 +339,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def _get_lastChild(self):
 		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
 		if lastChild and lastChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],IAccessibleObjectID=self.IAccessibleObjectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_objectID=self.event_objectID)
 		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(lastChild[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -352,7 +358,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		children=[]
 		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
 			if child and child[0]==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],IAccessibleObjectID=self.IAccessibleObjectID))
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_objectID=self.event_objectID))
 			elif child and child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 				children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
@@ -365,7 +371,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		res=IAccessibleHandler.accFocus(self.IAccessibleObject)
 		if res:
 			if res[0]==self.IAccessibleObject:
-				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],IAccessibleObjectID=self.IAccessibleObjectID)
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_objectID=self.event_objectID)
 			return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	def _get_hasFocus(self):

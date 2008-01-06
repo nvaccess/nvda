@@ -80,9 +80,10 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 class IA2(IAccessible):
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,IAccessibleOrigChildID=None,IAccessibleObjectID=None):
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		replacedTextInfo=False
-		windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject) #windowHandle=IAccessibleObject.windowHandle
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except:
@@ -121,25 +122,15 @@ class IA2(IAccessible):
 				pass
 		except:
 			pass
-		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,IAccessibleOrigChildID=IAccessibleOrigChildID,IAccessibleObjectID=IAccessibleObjectID)
+		IAccessible.__init__(self,windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 		self._lastMouseTextOffsets=None
 		if replacedTextInfo:
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _isEqual(self,other):
-		if not isinstance(other,IA2):
-			return IAccessible._isEqual(self,other)
-		if not Window._isEqual(self,other):
-			return False
-		if self.IAccessibleChildID!=other.IAccessibleChildID:
-			return False
-		if self.IAccessibleObject==other.IAccessibleObject:
+		if isinstance(other,IA2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and super(IAccessible,self)._isEqual(other): 
 			return True
-		if self.IAccessibleObject.UniqueID!=other.IAccessibleObject.UniqueID:
-			return False
-		if self.IAccessibleRole!=other.IAccessibleRole:
-			return False
-		return True
+		return super(IA2,self)._isEqual(other)
 
 	def _get_role(self):
 		IA2Role=self.IAccessibleObject.role()
@@ -186,8 +177,15 @@ class IA2(IAccessible):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.virtualBuffer:
-			IAccessibleHandler.focus_manageEvent(self,needsFocusState=False)
+		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info.expand(textHandler.UNIT_CHARACTER)
+			try:
+				char=ord(info.text)
+			except:
+				char=0
+			if char!=0xfffc:
+				IAccessibleHandler.focus_manageEvent(self)
 
 	def event_mouseMove(self,x,y):
 		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so

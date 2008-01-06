@@ -587,13 +587,16 @@ def manageEvent(name,window,objectID,childID):
 	focusObject=api.getFocusObject()
 	obj=None
 	for testObject in [o for o in [focusObject,foregroundObject,desktopObject] if o]:
-		if isinstance(testObject,NVDAObjects.IAccessible.IAccessible) and window==testObject.windowHandle and objectID==testObject.IAccessibleObjectID and childID==testObject.IAccessibleOrigChildID:
+		if isinstance(testObject,NVDAObjects.IAccessible.IAccessible) and window==testObject.event_windowHandle and objectID==testObject.event_objectID and childID==testObject.event_childID: 
 			obj=testObject
 			break
 	if obj is None and name not in ["hide","locationChange"]:
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 		if not obj:
 			return
+		if obj==focusObject:
+			obj=focusObject
+			del testObject
 	if obj:
 		eventHandler.manageEvent(name,obj)
 
@@ -615,12 +618,12 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			objectID=OBJID_CLIENT
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
-			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.windowHandle) and (objectID==focusObject.IAccessibleObjectID) and (childID==focusObject.IAccessibleOrigChildID):
+			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle) and (objectID==focusObject.event_objectID) and (childID==focusObject.event_childID):
 				#api.setFocusObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				return
-			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.windowHandle) and (objectID==foregroundObject.IAccessibleObjectID) and (childID==foregroundObject.IAccessibleOrigChildID):
+			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.event_windowHandle) and (objectID==foregroundObject.event_objectID) and (childID==foregroundObject.event_childID):
 				api.setForegroundObject(desktopObject)
 				api.setMouseObject(desktopObject)
 				api.setNavigatorObject(desktopObject)
@@ -639,9 +642,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getAncestor(window,winUser.GA_ROOTOWNER))=="Notepad++":
 			return
 		if objectID==OBJID_CARET and eventName=="locationChange":
-			if window==focusObject.windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
+			if window==focusObject.event_windowHandle and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 				eventName="caret"
-				objectID=focusObject.IAccessibleObjectID
+				objectID=focusObject.event_objectID
 				childID=focusObject.IAccessibleChildID
 			else:
 				return
@@ -673,7 +676,7 @@ def foreground_winEventCallback(window,objectID,childID):
 		return
 	focus=api.getFocusObject()
 	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
-	if winUser.isDescendantWindow(window,focus.windowHandle):
+	if winUser.isDescendantWindow(window,focus.event_windowHandle):
 		return
 	return focus_winEventCallback(window,objectID,childID,isForegroundChange=True)
 
@@ -692,7 +695,7 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
 	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.windowHandle and objectID==oldFocus.IAccessibleObjectID and childID==oldFocus.IAccessibleOrigChildID and winUser.getClassName(window)!="OUTEXVLB":
+	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and winUser.getClassName(window)!="OUTEXVLB":
 		return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	focus_manageEvent(obj,isForegroundChange)
