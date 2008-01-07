@@ -39,7 +39,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return text
 
 	def _getLineOffsets(self,offset):
-		return VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset)
+		return VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.obj._useScreenLayout)
 
 	def _get_XMLContext(self):
 		return VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
@@ -59,6 +59,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 		self._lastSelectionMovedStart=False
+		self._useScreenLayout=True
 
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
@@ -269,6 +270,10 @@ class VirtualBuffer(baseObject.scriptableObject):
 		if api.copyToClip(text):
 			speech.speakMessage(_("copied to clipboard"))
 
+	def script_toggleScreenLayout(self,keyPress,nextScript):
+		self._useScreenLayout=not self._useScreenLayout
+		onOff=_("on") if self._useScreenLayout else _("off")
+		speech.speakMessage(_("use screen layout %s")%onOff)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
@@ -296,4 +301,5 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("control+shift+extendedHome","selectToTopOfDocument"),
 	("control+a","selectAll"),
 	("control+c","copyToClipboard"),
+	("NVDA+v","toggleScreenLayout"),
 ]]

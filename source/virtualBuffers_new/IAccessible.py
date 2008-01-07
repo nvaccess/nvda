@@ -113,7 +113,7 @@ class IAccessible(VirtualBuffer):
 					plainText+=ch
 				else:
 					if plainText:
-						children.append((plainText,self._calculateLineBreaks(plainText)))
+						children.append(plainText)
 					plainText=u""
 					try:
 						index=paccHypertext.hyperlinkIndex(offset)
@@ -126,7 +126,7 @@ class IAccessible(VirtualBuffer):
 						paccChildCount+=1
 				offset+=1
 			if plainText:
-				children.append((plainText,self._calculateLineBreaks(plainText)))
+				children.append(plainText)
 		elif role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
 			paccChildCount=len(children)
@@ -139,14 +139,14 @@ class IAccessible(VirtualBuffer):
 			else:
 				text=value
 			if text:
-				children.append((text,self._calculateLineBreaks(text)))
+				children.append(text)
 		attrs['childCount']=str(paccChildCount)
 		del pacc
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
 		previousNode=None
 		for child in children:
-			if isinstance(child,tuple) and len(child)==2 and isinstance(child[0],basestring):
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child[0],child[1])
+			if isinstance(child,basestring):
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child)
 			else:
 				previousNode=self._fillVBufHelper(child[0],child[1],parentNode,previousNode)
 		return parentNode

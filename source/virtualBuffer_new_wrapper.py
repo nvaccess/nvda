@@ -43,16 +43,8 @@ def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
 
 dll.VBufStorage_addTagNodeToBuffer.errcheck=dllErrorCheck
 
-def VBufStorage_addTextNodeToBuffer(parent, previous, ID,text,lineBreakOffsets=[]):
-	if lineBreakOffsets and len(lineBreakOffsets)>0:
-		cLineBreakOffsets=(c_int*len(lineBreakOffsets))()
-		for index,offset in enumerate(lineBreakOffsets):
-			cLineBreakOffsets[index]=offset
-		cNumLineBreaks=len(lineBreakOffsets)
-	else:
-		cLineBreakOffsets=None
-		cNumLineBreaks=0
-	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,ID,text,cLineBreakOffsets,cNumLineBreaks)
+def VBufStorage_addTextNodeToBuffer(parent, previous, ID,text):
+	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,ID,text)
 
 dll.VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
 
@@ -64,8 +56,12 @@ VBufStorage_removeNodeFromBuffer.errcheck=dllErrorCheck
 VBufStorage_removeDescendantsFromBufferNode=dll.VBufStorage_removeDescendantsFromBufferNode
 VBufStorage_removeDescendantsFromBufferNode.errcheck=dllErrorCheck
 
-VBufStorage_getFieldIDFromBufferOffset=dll.VBufStorage_getFieldIDFromBufferOffset
-#VBufStorage_getFieldIDFromBufferOffset.errcheck=dllErrorCheck
+def VBufStorage_getFieldIDFromBufferOffset(buf,offset):
+	ID=c_int()
+	dll.VBufStorage_getFieldIDFromBufferOffset(buf,offset,byref(ID))
+	return ID.value
+
+dll.VBufStorage_getFieldIDFromBufferOffset.errcheck=dllErrorCheck
 
 def VBufStorage_getBufferOffsetsFromFieldID(buf, ID):
 	start=c_int()
@@ -85,7 +81,9 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,attribs):
 		for valIndex,val in enumerate(attribs[name]):
 			vals[valIndex]=val
 		cAttribs[index].value=vals
-	return dll.VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,cAttribs,len(cAttribs))
+	foundID=c_int()
+	dll.VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,cAttribs,len(cAttribs),byref(foundID))
+	return foundID.value
 
 dll.VBufStorage_findBufferFieldIDByProperties.errcheck=dllErrorCheck
 
@@ -121,10 +119,11 @@ def VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset):
 
 dll.VBufStorage_getXMLBufferTextByOffsets.errcheck=dllErrorCheck
 
-def VBufStorage_getBufferLineOffsets(buf,offset):
+def VBufStorage_getBufferLineOffsets(buf,offset,maxLineLength=0,useScreenLayout=True):
 	startOffset=c_int()
 	endOffset=c_int()
-	dll.VBufStorage_getBufferLineOffsets(buf,offset,byref(startOffset),byref(endOffset))
+	cUseScreenLayout=1 if useScreenLayout else 0
+	dll.VBufStorage_getBufferLineOffsets(buf,offset,maxLineLength,cUseScreenLayout,byref(startOffset),byref(endOffset))
 	return (startOffset.value,endOffset.value)
 
 dll.VBufStorage_getBufferLineOffsets.errcheck=dllErrorCheck
