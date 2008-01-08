@@ -275,6 +275,31 @@ class VirtualBuffer(baseObject.scriptableObject):
 		onOff=_("on") if self._useScreenLayout else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
 
+	def _searchableAttributesForNodeType(self,nodeType):
+		pass
+
+	def _jumpToNodeType(self,nodeType,direction):
+		attribs=self._searchableAttribsForNodeType(nodeType)
+		if attribs:
+			startOffset,endOffset=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
+			#speech.speakMessage("startID: %s, attribs: %s"%(startID,attribs))
+			newID=VBufStorage_findBufferFieldIDByProperties(self.VBufHandle,direction,startOffset,attribs)
+		if not newID or not attribs:
+			speech.speakMessage(_("no %s %s")%(direction,nodeType))
+			return
+		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,newID)
+		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
+		info.updateCaret()
+		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+
+	def script_nextHeading(self,keyPress,nextScript):
+		self._jumpToNodeType("heading","next")
+
+	def script_previousHeading(self,keyPress,nextScript):
+		self._jumpToNodeType("heading","previous")
+
+
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
 	("ExtendedDown","moveByLine_forward"),
@@ -302,4 +327,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("control+a","selectAll"),
 	("control+c","copyToClipboard"),
 	("NVDA+v","toggleScreenLayout"),
+	("h","nextHeading"),
+	("shift+h","previousHeading"),
 ]]

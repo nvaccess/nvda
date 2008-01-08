@@ -1,10 +1,15 @@
 from ctypes import *
 
+VBUF_FINDDIRECTION_NEXT=1
+VBUF_FINDDIRECTION_PREVIOUS=2
+
+VBUF_ERROR_NOTFOUND=-7
+
 class attribute_t(Structure):
 	_fields_=[('name',c_wchar_p),('value',c_wchar_p)]
 
 class multyValueAttribute_t(Structure):
-	_fields_=[('name',c_wchar_p),('value',POINTER(c_wchar_p))]
+	_fields_=[('name',c_wchar_p),('value',POINTER(c_wchar_p)),('numValues',c_int)]
 
 dll=cdll.virtualBuffer_new
 
@@ -71,7 +76,13 @@ def VBufStorage_getBufferOffsetsFromFieldID(buf, ID):
 
 dll.VBufStorage_getBufferOffsetsFromFieldID.errcheck=dllErrorCheck
 
-def VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,attribs):
+def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs):
+	if direction=="next":
+		direction=VBUF_FINDDIRECTION_NEXT
+	elif direction=="previous":
+		direction=VBUF_FINDDIRECTION_PREVIOUS
+	else:
+		raise ValueError("bad direction: %s"%str(direction))
 	if not isinstance(attribs,dict) or len(attribs)==0:
 		raiseValueError("attribs must be of type dict containing 1 or more entries")
 	cAttribs=(multyValueAttribute_t*len(attribs))()
@@ -81,11 +92,14 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,attribs):
 		for valIndex,val in enumerate(attribs[name]):
 			vals[valIndex]=val
 		cAttribs[index].value=vals
+		cAttribs[index].numValues=len(attribs[name])
 	foundID=c_int()
-	dll.VBufStorage_findBufferFieldIDByProperties(buf,direction,startID,cAttribs,len(cAttribs),byref(foundID))
+	res=dll.VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,cAttribs,len(cAttribs),byref(foundID))
+	if res==VBUF_ERROR_NOTFOUND:
+		return 0
+	elif res<0:
+		raise RuntimeError("VBufStorage_findBufferFieldIDByProperties returned code %d"%res)
 	return foundID.value
-
-dll.VBufStorage_findBufferFieldIDByProperties.errcheck=dllErrorCheck
 
 VBufStorage_getBufferTextLength=dll.VBufStorage_getBufferTextLength
 

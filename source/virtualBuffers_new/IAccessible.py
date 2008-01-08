@@ -219,3 +219,10 @@ class IAccessible(VirtualBuffer):
 				pacc.accDoDefaultAction(accChildID)
 		except:
 			pass
+
+	def _searchableAttribsForNodeType(self,nodeType):
+		if nodeType=="heading":
+			return {"role":["heading","h1","h2","h3","h4","h5","h6",str(IAccessibleHandler.IA2_ROLE_HEADING)]}
+		else:
+			return None
+
