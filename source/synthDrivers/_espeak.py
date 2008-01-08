@@ -122,7 +122,10 @@ def callback(wav,numsamples,event):
 		if not isSpeaking:
 			return 1
 		if numsamples > 0:
-			player.feed(string_at(wav, numsamples * sizeof(c_short)))
+			try:
+				player.feed(string_at(wav, numsamples * sizeof(c_short)))
+			except:
+				globalVars.log.warn("Error feeding audio to nvWave",exc_info=True)
 		return 0
 	except:
 		globalVars.log.error("callback", exc_info=True)
