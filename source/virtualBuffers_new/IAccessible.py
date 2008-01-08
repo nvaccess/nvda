@@ -221,8 +221,10 @@ class IAccessible(VirtualBuffer):
 			pass
 
 	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType=="heading":
+		if nodeType==_("heading"):
 			return {"role":["heading","h1","h2","h3","h4","h5","h6",str(IAccessibleHandler.IA2_ROLE_HEADING)]}
+		elif nodeType==_("link"):
+			return {"role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)]}
 		else:
 			return None
 

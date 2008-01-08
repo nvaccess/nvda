@@ -118,6 +118,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,start)
 		if ID!=0:
 			self._activateID(ID)
+	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
 		info=self.makeTextInfo(posConstant)
@@ -293,11 +294,20 @@ class VirtualBuffer(baseObject.scriptableObject):
 		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
 
 	def script_nextHeading(self,keyPress,nextScript):
-		self._jumpToNodeType("heading","next")
+		self._jumpToNodeType(_("heading"),_("next"))
+	script_nextHeading.__doc__ = _("moves to the next heading")
 
 	def script_previousHeading(self,keyPress,nextScript):
-		self._jumpToNodeType("heading","previous")
+		self._jumpToNodeType(_("heading"),_("previous"))
+	script_previousHeading.__doc__ = _("moves to the previous heading")
 
+	def script_nextLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("link"),_("next"))
+	script_nextLink.__doc__ = _("moves to the next link")
+
+	def script_previousLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("link"),_("previous"))
+	script_previousLink.__doc__ = _("moves to the previous link")
 
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
@@ -329,4 +339,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("NVDA+v","toggleScreenLayout"),
 	("h","nextHeading"),
 	("shift+h","previousHeading"),
+	("k","nextLink"),
+	("shift+k","previousLink"),
 ]]
