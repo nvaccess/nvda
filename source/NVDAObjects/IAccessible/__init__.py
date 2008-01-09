@@ -784,6 +784,16 @@ class ToolBarButton(IAccessible):
 		# Therefore, move the mouse out of the way.
 		winUser.setCursorPos(1, 1)
 
+class MenuItem(IAccessible):
+
+	def _get_description(self):
+		name=self.name
+		description=super(MenuItem,self)._get_description()
+		if description!=name:
+			return description
+		else:
+			return None
+
 ###class mappings
 
 _staticMap={
@@ -856,8 +866,10 @@ _staticMap={
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("ThunderRT6TextBox",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
+	("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
+	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 }
