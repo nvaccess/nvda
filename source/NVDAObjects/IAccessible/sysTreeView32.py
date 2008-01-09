@@ -1,5 +1,6 @@
 from ctypes import *
 from ctypes.wintypes import *
+import api
 import winKernel
 import winUser
 import controlTypes
@@ -137,7 +138,11 @@ class TreeViewItem(IAccessible):
 			return _("%d items")%count
 
 	def event_stateChange(self):
-		newStates=(self.states-self._oldStates)
+		if id(self)==id(api.getFocusObject()) and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
+			announceContains=True
+		else:
+			announceContains=False
 		super(self.__class__,self).event_stateChange()
-		if controlTypes.STATE_EXPANDED in newStates:
-			speech.speakObjectProperties(self,contains=True)
+		if announceContains:
+			speech.speakObjectProperties(self,reason=speech.REASON_MESSAGE,contains=True)
+

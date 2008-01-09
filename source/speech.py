@@ -49,6 +49,7 @@ REASON_MESSAGE=5
 REASON_SAYALL=6
 REASON_CARET=7
 REASON_DEBUG=8
+REASON_ONLYCACHE=9
 
 globalXMLFieldStack=[]
 XMLFIELD_COMMON=1
@@ -201,7 +202,7 @@ def speakSpelling(text):
 		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
 			tones.beep(2000,50)
 
-def speakObjectProperties(obj,name=False,role=False,states=False,value=False,description=False,keyboardShortcut=False,positionString=False,level=False,contains=False,textInfo=False,reason=REASON_QUERY,index=None):
+def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
 	global beenCanceled
 	del globalXMLFieldStack[:]
 	if speechMode==speechMode_off:
@@ -212,99 +213,56 @@ def speakObjectProperties(obj,name=False,role=False,states=False,value=False,des
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	textList=[]
-	if name:
-		nameText=obj.name
-		if isinstance(nameText,basestring) and len(nameText)>0 and not nameText.isspace():
-			textList.append(nameText)
-	if role:
-		roleNum=obj.role
-		if isinstance(roleNum,int) and (reason not in (REASON_FOCUS,REASON_SAYALL) or roleNum not in silentRolesOnFocus):
-			textList.append(controlTypes.speechRoleLabels[roleNum])
-	stateList=[]
-	if states:
-		stateSet=obj.states
-		oldStateSet=obj._oldStates
-		positiveStateSet=stateSet
-		oldPositiveStateSet=oldStateSet
-		negativeStateSet=set()
-		oldNegativeStateSet=set()
-		if not role:
-			roleNum=obj.role
-		if reason==REASON_CHANGE:
-			positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
-			oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
-			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnStateChange.has_key(roleNum):
-				positiveStateSet=positiveStateSet-silentPositiveStatesOnStateChange[roleNum]
-				oldPositiveStateSet=oldPositiveStateSet-silentPositiveStatesOnStateChange[roleNum]
-			textList.extend([controlTypes.speechStateLabels[state] for state in (positiveStateSet-oldPositiveStateSet)])
-		elif reason in (REASON_FOCUS,REASON_SAYALL):
-			positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
-			if roleNum!=controlTypes.ROLE_UNKNOWN and silentPositiveStatesOnFocus.has_key(roleNum):
-				positiveStateSet=positiveStateSet-silentPositiveStatesOnFocus[roleNum]
-			stateList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
-		else:
-			stateList.extend([controlTypes.speechStateLabels[state] for state in positiveStateSet])
-		if spokenNegativeStates.has_key(roleNum):
-			negativeStateSet=negativeStateSet|(spokenNegativeStates[roleNum]-stateSet)
-			if reason==REASON_CHANGE:
-				oldNegativeStateSet=oldNegativeStateSet|(spokenNegativeStates[roleNum]-oldStateSet)
-		stateList.extend([_("not %s")%controlTypes.speechStateLabels[state] for state in (negativeStateSet-oldNegativeStateSet)])
-	if config.conf["presentation"]["sayStateFirst"]:
-		textList.insert(0," ".join(stateList))
+	#Fetch the values for all wanted properties
+	newPropertyValues={}
+	for name,value in allowedProperties.items():
+		if value:
+			newPropertyValues[name]=getattr(obj,name)
+	#Fetched the cached properties and update them with the new ones
+	oldCachedPropertyValues=getattr(obj,'_speakObjectPropertiesCache',{}).copy()
+	cachedPropertyValues=oldCachedPropertyValues.copy()
+	cachedPropertyValues.update(newPropertyValues)
+	obj._speakObjectPropertiesCache=cachedPropertyValues
+	#If we should only cache we can stop here
+	if reason==REASON_ONLYCACHE:
+		return
+	#If only speaking change, then filter out all values that havn't changed
+	if reason==REASON_CHANGE:
+		for name in list(newPropertyValues):
+			if name in oldCachedPropertyValues and newPropertyValues[name]==oldCachedPropertyValues[name]:
+				del newPropertyValues[name]
+			elif name=="states": #states need specific handling
+				oldStates=oldCachedPropertyValues[name]
+				newStates=newPropertyValues[name]
+				newPropertyValues['states']=newStates-oldStates
+				newPropertyValues['negativeStates']=oldStates-newStates
+	#Get the speech text for the properties we want to speak, and then speak it
+	#properties such as states need to know the role to speak properly, give it as a _ name
+	if 'role' not in newPropertyValues:
+		newPropertyValues['_role']=obj.role
 	else:
-		textList.append(" ".join(stateList))
-	if value:
-		valueText=obj.value
-		if isinstance(valueText,basestring) and len(valueText)>0 and not valueText.isspace():
-			textList.append(valueText)
-	if textInfo and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
-		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
-		if not info.isCollapsed:
-			textList.append(_("selected %s")%info.text)
-		else:
-			info.expand(textHandler.UNIT_READINGCHUNK)
-			textList.append(info.text)
-	if description:
-		descriptionText=obj.description
-		if not name:
-			nameText=obj.name
-		if descriptionText!=nameText and isinstance(descriptionText,basestring) and len(descriptionText)>0 and not descriptionText.isspace():
-			textList.append(descriptionText)
-	if keyboardShortcut:
-		keyboardShortcutText=obj.keyboardShortcut
-		if isinstance(keyboardShortcutText,basestring) and len(keyboardShortcutText)>0 and not keyboardShortcutText.isspace():
-			textList.append(keyboardShortcutText)
-	if positionString:
-		positionStringText=obj.positionString
-		if isinstance(positionStringText,basestring) and len(positionStringText)>0 and not positionStringText.isspace():
-			textList.append(positionStringText)
-	if level:
-		levelNum=obj.level
-		if isinstance(levelNum,int):
-			textList.append(_("level %d")%levelNum)
-	if contains:
-		containsText=obj.contains
-		if isinstance(containsText,basestring) and len(containsText)>0 and not containsText.isspace():
-			textList.append(_("contains %s")%containsText)
-	text=" ".join(textList)
-	if len(text)>0 and not text.isspace():
-		text=processText(text)
-		if globalVars.log.getEffectiveLevel() <= logging.INFO: globalVars.log.info("Speaking \"%s\""%text)
-		getSynth().speakText(text,index=index)
+		newPropertyValues['_role']=newPropertyValues['role']
+	text=getSpeechTextForProperties(reason,**newPropertyValues)
+	if text:
+		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'textInfo':True,'description':True,'keyboardShortcut':True,'positionString':True,'level':True,'contains':True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionString':True,'level':True,'contains':True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
 		allowProperties["keyboardShortcut"]=False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
 		allowProperties["positionString"]=False
-	if reason in (REASON_SAYALL,REASON_CARET,REASON_MOUSE):
-		allowProperties['textInfo']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
- 
+ 	if reason not in (REASON_SAYALL,REASON_CARET,REASON_MOUSE) and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
+		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		if not info.isCollapsed:
+			speakMessage(_("selected %s")%info.text)
+		else:
+			info.expand(textHandler.UNIT_READINGCHUNK)
+			speakMessage(info.text)
+
 def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
 	"""Speaks some given text.
 This function will not speak if L{speechMode} is false.
@@ -467,28 +425,29 @@ def speakTypedCharacters(ch):
 	else:
 		typedWord=""
 
-silentRolesOnFocus=frozenset([
+silentRolesOnFocus=set([
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
 silentPositiveStatesOnFocus={
-	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY]),
-	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_TREEVIEWITEM:frozenset([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_LINK:frozenset([controlTypes.STATE_LINKED]),
+	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY]),
+	controlTypes.ROLE_LISTITEM:set([controlTypes.STATE_SELECTED]),
+	controlTypes.ROLE_TREEVIEWITEM:set([controlTypes.STATE_SELECTED]),
+	controlTypes.ROLE_LINK:set([controlTypes.STATE_LINKED]),
 }
 
 silentPositiveStatesOnStateChange={
-	controlTypes.ROLE_UNKNOWN:frozenset([controlTypes.STATE_FOCUSED]),
-	controlTypes.ROLE_CHECKBOX:frozenset([controlTypes.STATE_PRESSED]),
+	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED]),
+	controlTypes.ROLE_CHECKBOX:set([controlTypes.STATE_PRESSED]),
 }
 
 spokenNegativeStates={
-	controlTypes.ROLE_LISTITEM:frozenset([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_CHECKBOX: frozenset([controlTypes.STATE_CHECKED]),
-	controlTypes.ROLE_RADIOBUTTON: frozenset([controlTypes.STATE_CHECKED]),
+	controlTypes.ROLE_UNKNOWN:set(),
+	controlTypes.ROLE_LISTITEM:set([controlTypes.STATE_SELECTED]),
+	controlTypes.ROLE_CHECKBOX: set([controlTypes.STATE_CHECKED]),
+	controlTypes.ROLE_RADIOBUTTON: set([controlTypes.STATE_CHECKED]),
 }
 
 class XMLFieldParser(object):
@@ -691,3 +650,55 @@ def getFieldSpeech(attrs,fieldType,extraDetail=False):
 			return "out of %s"%controlTypes.speechRoleLabels[attrs['role']]
 		else:
 			return ""
+
+def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
+	textList=[]
+	if 'name' in propertyValues:
+		textList.append(propertyValues['name'])
+		del propertyValues['name']
+	if 'role' in propertyValues:
+		role=propertyValues['role']
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or  role not in silentRolesOnFocus:
+			textList.append(controlTypes.speechRoleLabels[role])
+		del propertyValues['role']
+	elif '_role' in propertyValues:
+		role=propertyValues['_role']
+	else:
+		role=controlTypes.ROLE_UNKNOWN
+	if 'value' in propertyValues:
+		textList.append(propertyValues['value'])
+		del propertyValues['value']
+	if 'states' in propertyValues:
+		states=propertyValues['states']
+		positiveStates=states
+		if reason in (REASON_SAYALL,REASON_CARET,REASON_FOCUS):
+			positiveStates=(positiveStates-silentPositiveStatesOnFocus.get(role,set()))-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
+		elif reason==REASON_CHANGE:
+			positiveStates=(positiveStates-silentPositiveStatesOnStateChange.get(role,set()))-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
+		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
+		del propertyValues['states']
+	else:
+		states=set()
+	if 'negativeStates' in propertyValues:
+		negativeStates=propertyValues['negativeStates']
+		negativeStates=(negativeStates&(spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN]))
+		del propertyValues['negativeStates']
+	elif reason!=REASON_CHANGE:
+		negativeStates=((spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN])-states)
+	else:
+		negativeStates=set()
+	textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
+	if 'description' in propertyValues:
+		textList.append(propertyValues['description'])
+		del propertyValues['description']
+	if 'keyboardShortcut' in propertyValues:
+		textList.append(propertyValues['keyboardShortcut'])
+		del propertyValues['keyboardShortcut']
+	if 'positionString' in propertyValues:
+		textList.append(propertyValues['positionString'])
+		del propertyValues['positionString']
+	for name,value in propertyValues.items():
+		if not name.startswith('_') and value is not None:
+			textList.append(name)
+			textList.append(str(value))
+	return " ".join([x for x in textList if x])

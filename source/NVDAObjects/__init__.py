@@ -350,10 +350,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 """
 
 	def __init__(self):
-		self._oldValue=None
-		self._oldStates=self.states
-		self._oldName=None
-		self._oldDescription=None
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
 		self.TextInfo=NVDAObjectTextInfo
@@ -585,15 +581,9 @@ Tries to force this object to take the focus.
 			speech.speakObject(self,reason=speech.REASON_MOUSE)
 		self._mouseEntered=True
 
-
-
-
 	def event_stateChange(self):
 		if id(self)==id(api.getFocusObject()):
-			states=self.states
-			if states!=self._oldStates:
-				speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
-				self._oldStates=states
+			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
 
 	def event_focusEntered(self):
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
@@ -614,22 +604,16 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_valueChange(self):
-		value=self.value
-		if id(self)==id(api.getFocusObject()) and value!=self._oldValue:
+		if id(self)==id(api.getFocusObject()):
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
-			self._oldValue=value
 
 	def event_nameChange(self):
-		name=self.name
-		if id(self)==id(api.getFocusObject()) and name!=self._oldName:
+		if id(self)==id(api.getFocusObject()):
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
-			self._oldName=name
 
 	def event_descriptionChange(self):
-		description=self.description
-		if id(self)==id(api.getFocusObject()) and description!=self._oldDescription:
+		if id(self)==id(api.getFocusObject()):
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
-			self._oldDescription=description
 
 	def _get_basicText(self):
 		basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
