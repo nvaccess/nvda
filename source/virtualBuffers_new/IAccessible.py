@@ -194,13 +194,13 @@ class IAccessible(VirtualBuffer):
 			pass
 
 	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType==_("heading"):
+		if nodeType=="heading":
 			return {"IAccessible::role":["heading","h1","h2","h3","h4","h5","h6",str(IAccessibleHandler.IA2_ROLE_HEADING)]}
-		elif nodeType==_("link"):
+		elif nodeType=="link":
 			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)]}
-		elif nodeType==_("visitedLink"):
+		elif nodeType=="visitedLink":
 			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:"1",}
-		elif nodeType==_("unvisitedLink"):
+		elif nodeType=="unvisitedLink":
 			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:"0",}
 		else:
 			return None

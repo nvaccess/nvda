@@ -317,46 +317,54 @@ class VirtualBuffer(baseObject.scriptableObject):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if attribs:
 			startOffset,endOffset=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
-			#speech.speakMessage("startID: %s, attribs: %s"%(startID,attribs))
 			newID=VBufStorage_findBufferFieldIDByProperties(self.VBufHandle,direction,startOffset,attribs)
 		if not newID or not attribs:
-			speech.speakMessage(_("no %s %s")%(direction,nodeType))
-			return
+			return False
 		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,newID)
 		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_CARET)
+		self._caretMovedToID(newID)
+		return True
 
 	def script_nextHeading(self,keyPress,nextScript):
-		self._jumpToNodeType(_("heading"),_("next"))
+		if not self._jumpToNodeType("heading","next"):
+			speech.speakMessage(_("no next heading"))
 	script_nextHeading.__doc__ = _("moves to the next heading")
 
 	def script_previousHeading(self,keyPress,nextScript):
-		self._jumpToNodeType(_("heading"),_("previous"))
+		if not self._jumpToNodeType("heading","previous"):
+			speech.speakMessage(_("no previous heading"))
 	script_previousHeading.__doc__ = _("moves to the previous heading")
 
 	def script_nextLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("link"),_("next"))
+		if not self._jumpToNodeType("link","next"):
+			speech.speakMessage(_("no next link"))
 	script_nextLink.__doc__ = _("moves to the next link")
 
 	def script_previousLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("link"),_("previous"))
+		if not self._jumpToNodeType("link","previous"):
+			speech.speakMessage(_("no previous link"))
 	script_previousLink.__doc__ = _("moves to the previous link")
 
 	def script_nextVisitedLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("visitedLink"),_("next"))
+		if not self._jumpToNodeType("visitedLink","next"):
+			speech.speakMessage(_("no next visited link"))
 	script_nextLink.__doc__ = _("moves to the next visited link")
 
 	def script_previousVisitedLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("visitedLink"),_("previous"))
+		if not self._jumpToNodeType("visitedLink","previous"):
+			speech.speakMessage(_("no previous visited link"))
 	script_previousLink.__doc__ = _("moves to the previous visited link")
 
 	def script_nextUnvisitedLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("unvisitedLink"),_("next"))
+		if not self._jumpToNodeType("unvisitedLink","next"):
+			speech.speakMessage(_("no next unvisited link"))
 	script_nextLink.__doc__ = _("moves to the next unvisited link")
 
 	def script_previousUnvisitedLink(self,keyPress,nextScript):
-		self._jumpToNodeType(_("unvisitedLink"),_("previous"))
+		if not self._jumpToNodeType("unvisitedLink","previous"):
+			speech.speakMessage(_("no previous unvisited link"))
 	script_previousLink.__doc__ = _("moves to the previous unvisited link")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
