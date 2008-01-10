@@ -11,50 +11,18 @@ import textHandler
 
 class IAccessibleTextInfo(VirtualBufferTextInfo):
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		role=attrs['role']
-		if role.isdigit():
-			role=int(role)
-		states=int(attrs['states'])
-		try:
-			childCount=int(attrs['childCount'])
-		except:
-			childCount=0
-		if not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_LINK: 
-			visitedText=controlTypes.speechStateLabels[controlTypes.STATE_VISITED] if states&IAccessibleHandler.STATE_SYSTEM_TRAVERSED else ""
-			return "%s %s"%(visitedText,controlTypes.speechRoleLabels[controlTypes.ROLE_LINK])
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role in (IAccessibleHandler.IA2_ROLE_HEADING,"h1","h2","h3","h4","h5","h6"):
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_BUTTON]
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON:
-			stateText=controlTypes.speechStateLabels[controlTypes.STATE_CHECKED] if states&IAccessibleHandler.STATE_SYSTEM_CHECKED else ""
-			return "%s %s"%(controlTypes.speechRoleLabels[controlTypes.ROLE_RADIOBUTTON],stateText)
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON:
-			stateText=controlTypes.speechStateLabels[controlTypes.STATE_CHECKED] if states&IAccessibleHandler.STATE_SYSTEM_CHECKED else ""
-			return "%s %s"%(controlTypes.speechRoleLabels[controlTypes.ROLE_CHECKBOX],stateText)
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_COMBOBOX]
-		elif not extraDetail and fieldType in ("end_relative","end_inStack") and role==IAccessibleHandler.ROLE_SYSTEM_GRAPHIC: 
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_GRAPHIC]
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==IAccessibleHandler.ROLE_SYSTEM_LISTITEM:
-			return _("bullet")
-		elif not extraDetail and fieldType=="start_addedToStack" and role==IAccessibleHandler.ROLE_SYSTEM_LIST:
-			return _("%s with %s items")%(controlTypes.speechRoleLabels[controlTypes.ROLE_LIST],childCount)
-		elif not extraDetail and fieldType=="end_removedFromStack" and role==IAccessibleHandler.ROLE_SYSTEM_LIST:
-			return _("out of %s")%controlTypes.speechRoleLabels[controlTypes.ROLE_LIST]
-		elif not extraDetail and fieldType=="start_addedToStack" and role in ("frame",IAccessibleHandler.IA2_ROLE_FRAME):
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
-		elif not extraDetail and fieldType=="end_removedFromStack" and role in ("frame",IAccessibleHandler.IA2_ROLE_FRAME):
-			return _("out of %s")%controlTypes.speechRoleLabels[controlTypes.ROLE_FRAME]
-		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
-			return _("in %s")%controlTypes.speechRoleLabels[IAccessibleHandler.IAccessibleRolesToNVDARoles.get(role,0)]
-		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
-			return _("out of %s")%controlTypes.speechRoleLabels[IAccessibleHandler.IAccessibleRolesToNVDARoles.get(role,0)]
-		else:
-			return ""
+	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
+		hasIAccessible2=bool(attrs['iaccessible2'])
+		accRole=attrs['iaccessible::role']
+		accRole=int(accRole) if accRole.isdigit() else accRole
+		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible::state_%s'%x]) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		if hasIAccessible2:
+			states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible2::state_%s'%x]) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		attrs['role']=role
+		attrs['states']=states
+		return super(IAccessibleTextInfo,self).getXMLFieldSpeech(attrs,fieldType,extraDetail=extraDetail,reason=reason)
+
 
 class IAccessible(VirtualBuffer):
 
@@ -69,21 +37,28 @@ class IAccessible(VirtualBuffer):
 		attrs={}
 		isBlockElement=True
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
+			IAccessible2=1
 			ID=pacc.uniqueID
-			globalVars.log.debug("ID %s"%ID)
 			role=pacc.role()
-			globalVars.log.debug("IA2 attribs %s"%pacc.attributes)
+			IAccessible2States=pacc.states
 			objAttributes=pacc.attributes
 			if role!=IAccessibleHandler.ROLE_SYSTEM_CELL and objAttributes.find("formatting:block")<0:
 				isBlockElement=False
 		else:
+			IAccessible2=0
 			ID=-hash(pacc)
 			role=pacc.accRole(accChildID)
 		states=pacc.accState(accChildID)
-		attrs['role']=str(role)
-		attrs['states']=str(states)
+		keyboardShortcut=pacc.accKeyboardShortcut(accChildID)
+		attrs['IAccessible2']=str(IAccessible2)
+		attrs['IAccessible::role']=str(role)
+		for bitPos in xrange(32):
+			state=1<<bitPos;
+			attrs["IAccessible::state_%d"%state]=str((state&states)>>bitPos)
+			if IAccessible2:
+				attrs["IAccessible2::state_%d"%state]=str((state&IAccessible2States)>>bitPos)
+		attrs['keyboardShortcut']=keyboardShortcut if keyboardShortcut else ""
 		children=[] #will be strings  or pacc,childID tuples
-		paccChildCount=0
 		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2) and role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
 			try:
 				paccText=pacc.QueryInterface(IAccessibleHandler.IAccessibleText)
@@ -123,13 +98,11 @@ class IAccessible(VirtualBuffer):
 					if paccHyperlink:
 						newPacc=IAccessibleHandler.normalizeIAccessible(paccHyperlink)
 						children.append((newPacc,0))
-						paccChildCount+=1
 				offset+=1
 			if plainText:
 				children.append(plainText)
 		elif role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
-			paccChildCount=len(children)
 		else:
 			name=pacc.accName(accChildID)
 			value=pacc.accValue(accChildID)
@@ -140,7 +113,6 @@ class IAccessible(VirtualBuffer):
 				text=value
 			if text:
 				children.append(text)
-		attrs['childCount']=str(paccChildCount)
 		del pacc
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
 		previousNode=None
@@ -222,9 +194,13 @@ class IAccessible(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType==_("heading"):
-			return {"role":["heading","h1","h2","h3","h4","h5","h6",str(IAccessibleHandler.IA2_ROLE_HEADING)]}
+			return {"IAccessible::role":["heading","h1","h2","h3","h4","h5","h6",str(IAccessibleHandler.IA2_ROLE_HEADING)]}
 		elif nodeType==_("link"):
-			return {"role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)]}
+			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)]}
+		elif nodeType==_("visitedLink"):
+			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:"1",}
+		elif nodeType==_("unvisitedLink"):
+			return {"IAccessible::role":["link",str(IAccessibleHandler.ROLE_SYSTEM_LINK)],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:"0",}
 		else:
 			return None
 

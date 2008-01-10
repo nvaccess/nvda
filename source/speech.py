@@ -432,10 +432,9 @@ silentRolesOnFocus=set([
 ])
 
 silentPositiveStatesOnFocus={
-	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY]),
+	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY,controlTypes.STATE_LINKED]),
 	controlTypes.ROLE_LISTITEM:set([controlTypes.STATE_SELECTED]),
 	controlTypes.ROLE_TREEVIEWITEM:set([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_LINK:set([controlTypes.STATE_LINKED]),
 }
 
 silentPositiveStatesOnStateChange={
@@ -552,7 +551,10 @@ class XMLContextParser(object):
 		self._fieldStack=[]
 
 	def _startElementHandler(self,name,attrs):
-		self._fieldStack.append(attrs)
+		newAttrs={}
+		for name,value in attrs.items():
+			newAttrs[name.lower()]=value
+		self._fieldStack.append(newAttrs)
 
 	def parse(self,XMLContext):
 		self.parser.Parse(XMLContext)
@@ -584,7 +586,7 @@ class RelativeXMLParser(object):
 		self.parser.feed(relativeXML)
 		return self._commandList
 
-def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,wait=False,index=None):
+def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,reason=REASON_QUERY,wait=False,index=None):
 		textList=[]
 		#Fetch the last stack, or make a blank one
 		oldStack=getattr(cacheObject,'_speech_XMLCache',[])
@@ -603,14 +605,14 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 				break
 		#Get speech text for any fields in the old stack that are not in the new stack 
 		for count in reversed(range(commonFieldCount,len(oldStack))):
-			textList.append(getFieldSpeechFunc(oldStack[count],"end_removedFromStack",extraDetail))
+			textList.append(getFieldSpeechFunc(oldStack[count],"end_removedFromStack",extraDetail,reason=reason))
 		#Get speech text for any fields that are in both stacks, if extra detail is not requested
 		if not extraDetail:
 			for count in range(commonFieldCount):
-				textList.append(getFieldSpeechFunc(newStack[count],"start_inStack",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[count],"start_inStack",extraDetail,reason=reason))
 		#Get speech text for any fields in the new stack that are not in the old stack
 		for count in range(commonFieldCount,len(newStack)):
-			textList.append(getFieldSpeechFunc(newStack[count],"start_addedToStack",extraDetail))
+			textList.append(getFieldSpeechFunc(newStack[count],"start_addedToStack",extraDetail,reason=reason))
 			commonFieldCount+=1
 		#Fetch a command list for the relative XML
 		commandParser=RelativeXMLParser()
@@ -621,17 +623,17 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 			if commandList[count][0]=="text":
 				textList.append(commandList[count][1])
 			elif commandList[count][0]=="start":
-				textList.append(getFieldSpeechFunc(commandList[count][1],"start_relative",extraDetail))
+				textList.append(getFieldSpeechFunc(commandList[count][1],"start_relative",extraDetail,reason=reason))
 				newStack.append(commandList[count][1])
 			elif commandList[count][0]=="end" and len(newStack)>0:
-				textList.append(getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail,reason=reason))
 				del newStack[-1]
 				if commonFieldCount>len(newStack):
 					commonFieldCount=len(newStack)
 		#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
 		if not extraDetail:
 			for count in reversed(range(min(len(newStack),commonFieldCount))):
-				textList.append(getFieldSpeechFunc(newStack[count],"end_inStack",extraDetail))
+				textList.append(getFieldSpeechFunc(newStack[count],"end_inStack",extraDetail,reason=reason))
 		#Cache a copy of the new stack for future use
 		if cacheFinalStack:
 			cacheObject._speech_XMLCache=list(newStack)

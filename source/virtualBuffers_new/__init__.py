@@ -50,6 +50,40 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		text=VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
+	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
+		childCount=int(attrs['_childcount'])
+		indexInParent=int(attrs['_indexinparent'])
+		parentChildCount=int(attrs['_parentchildcount'])
+		role=attrs['role']
+		states=attrs['states']
+		keyboardShortcut=attrs['keyboardshortcut']
+		roleText=speech.getSpeechTextForProperties(reason=reason,role=role)
+		stateText=speech.getSpeechTextForProperties(reason=reason,states=states,_role=role)
+		keyboardShortcutText=speech.getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
+		if not extraDetail and fieldType in ("end_relative","end_inStack") and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC):
+			return " ".join([x for x in stateText,roleText,keyboardShortcutText if x])
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states: 
+			return " ".join([x for x in stateText,roleText,keyboardShortcutText if x])
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_COMBOBOX:
+			return " ".join([x for x in stateText,roleText,keyboardShortcutText if x])
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_LISTITEM:
+			return _("bullet")
+		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+			return roleText+_("with %s items")%childCount
+		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+			return _("out of %s")%roleText
+		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_FRAME:
+			return " ".join([x for x in stateText,roleText,keyboardShortcutText if x])
+		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_FRAME:
+			return _("out of %s")%roleText
+		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
+			return _("in %s")%roleText
+		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
+			return _("out of %s")%roleText
+		else:
+			return ""
+
+
 class VirtualBuffer(baseObject.scriptableObject):
 
 	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
@@ -136,9 +170,9 @@ class VirtualBuffer(baseObject.scriptableObject):
 			info.expand(unit)
 		info.updateCaret()
 		if unit!=textHandler.UNIT_CHARACTER:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
 		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail)
+			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
 			speech.speakSpelling(info.text)
 		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,info._startOffset)
 		if ID!=0 and ID!=oldID:
@@ -291,7 +325,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,newID)
 		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
 		info.updateCaret()
-		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_CARET)
 
 	def script_nextHeading(self,keyPress,nextScript):
 		self._jumpToNodeType(_("heading"),_("next"))
@@ -309,6 +343,21 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self._jumpToNodeType(_("link"),_("previous"))
 	script_previousLink.__doc__ = _("moves to the previous link")
 
+	def script_nextVisitedLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("visitedLink"),_("next"))
+	script_nextLink.__doc__ = _("moves to the next visited link")
+
+	def script_previousVisitedLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("visitedLink"),_("previous"))
+	script_previousLink.__doc__ = _("moves to the previous visited link")
+
+	def script_nextUnvisitedLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("unvisitedLink"),_("next"))
+	script_nextLink.__doc__ = _("moves to the next unvisited link")
+
+	def script_previousUnvisitedLink(self,keyPress,nextScript):
+		self._jumpToNodeType(_("unvisitedLink"),_("previous"))
+	script_previousLink.__doc__ = _("moves to the previous unvisited link")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
@@ -341,4 +390,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("shift+h","previousHeading"),
 	("k","nextLink"),
 	("shift+k","previousLink"),
+	("v","nextVisitedLink"),
+	("shift+v","previousVisitedLink"),
+	("u","nextUnvisitedLink"),
+	("shift+u","previousUnvisitedLink"),
 ]]
