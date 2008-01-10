@@ -360,12 +360,22 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def script_nextUnvisitedLink(self,keyPress,nextScript):
 		if not self._jumpToNodeType("unvisitedLink","next"):
 			speech.speakMessage(_("no next unvisited link"))
-	script_nextLink.__doc__ = _("moves to the next unvisited link")
+	script_nextUnvisitedLink.__doc__ = _("moves to the next unvisited link")
 
 	def script_previousUnvisitedLink(self,keyPress,nextScript):
 		if not self._jumpToNodeType("unvisitedLink","previous"):
 			speech.speakMessage(_("no previous unvisited link"))
-	script_previousLink.__doc__ = _("moves to the previous unvisited link")
+	script_previousUnvisitedLink.__doc__ = _("moves to the previous unvisited link")
+
+	def script_nextFormField(self,keyPress,nextScript):
+		if not self._jumpToNodeType("formField","next"):
+			speech.speakMessage(_("no next form field"))
+	script_nextFormField.__doc__ = _("moves to the next form field")
+
+	def script_previousFormField(self,keyPress,nextScript):
+		if not self._jumpToNodeType("formField","previous"):
+			speech.speakMessage(_("no previous form field"))
+	script_previousFormField.__doc__ = _("moves to the next unvisited form field")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
@@ -402,4 +412,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 	("shift+v","previousVisitedLink"),
 	("u","nextUnvisitedLink"),
 	("shift+u","previousUnvisitedLink"),
+	("f","nextFormField"),
+	("shift+f","previousFormField"),
 ]]
