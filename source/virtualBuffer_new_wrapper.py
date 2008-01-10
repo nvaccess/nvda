@@ -43,7 +43,7 @@ def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
 	for index,name in enumerate(attribs.keys()):
 		cAttribs[index].name=name
 		val=attribs[name]
-		cAttribs[index].value=str(val) if val is not None else ""
+		cAttribs[index].value=unicode(val) if val is not None else ""
 	isBlock=1 if isBlock else 0
 	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,ID,cAttribs,len(cAttribs),isBlock)
 
@@ -83,7 +83,7 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs)
 	elif direction=="previous":
 		direction=VBUF_FINDDIRECTION_PREVIOUS
 	else:
-		raise ValueError("bad direction: %s"%str(direction))
+		raise ValueError("bad direction: %s"%unicode(direction))
 	if not isinstance(attribs,dict) or len(attribs)==0:
 		raiseValueError("attribs must be of type dict containing 1 or more entries")
 	cAttribs=(multyValueAttribute_t*len(attribs))()
@@ -91,7 +91,7 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs)
 		cAttribs[index].name=name
 		vals=(c_wchar_p*len(attribs[name]))()
 		for valIndex,val in enumerate(attribs[name]):
-			vals[valIndex]=str(val) if val is not None else ""
+			vals[valIndex]=unicode(val) if val is not None else ""
 		cAttribs[index].value=vals
 		cAttribs[index].numValues=len(attribs[name])
 	foundID=c_int()

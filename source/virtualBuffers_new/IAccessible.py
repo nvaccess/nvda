@@ -51,13 +51,13 @@ class IAccessible(VirtualBuffer):
 			role=pacc.accRole(accChildID)
 		states=pacc.accState(accChildID)
 		keyboardShortcut=pacc.accKeyboardShortcut(accChildID)
-		attrs['IAccessible2']=str(IAccessible2)
-		attrs['IAccessible::role']=str(role)
+		attrs['IAccessible2']=unicode(IAccessible2)
+		attrs['IAccessible::role']=unicode(role)
 		for bitPos in xrange(32):
 			state=1<<bitPos;
-			attrs["IAccessible::state_%d"%state]=str((state&states)>>bitPos)
+			attrs["IAccessible::state_%d"%state]=unicode((state&states)>>bitPos)
 			if IAccessible2:
-				attrs["IAccessible2::state_%d"%state]=str((state&IAccessible2States)>>bitPos)
+				attrs["IAccessible2::state_%d"%state]=unicode((state&IAccessible2States)>>bitPos)
 		attrs['keyboardShortcut']=keyboardShortcut if keyboardShortcut else ""
 		children=[] #will be strings  or pacc,childID tuples
 		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2) and role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:

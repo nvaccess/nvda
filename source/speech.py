@@ -702,5 +702,5 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	for name,value in propertyValues.items():
 		if not name.startswith('_') and value is not None:
 			textList.append(name)
-			textList.append(str(value))
+			textList.append(unicode(value))
 	return " ".join([x for x in textList if x])
