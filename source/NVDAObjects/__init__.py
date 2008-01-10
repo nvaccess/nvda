@@ -319,10 +319,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type description: string
 @ivar positionString: a description of where the object is in relation to other objects around it. (e.g. a list item might say 2 of 5).
 @type positionString: string
-@ivar level: the object's level. Example: a tree view item has a level of 5
-@type level: int
-@ivar contains: a description of the object's content. Example: a tree view item contains '4 items'
-@type contains: string
 @ivar location: The object's location. (A tuple of left, top, width, depth).
 @type location: 4-tuple (int)
 @ivar next: gets the next logical NVDA object in the tree
@@ -442,12 +438,6 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 
 	def _get_states(self):
 		return set()
-
-	def _get_level(self):
-		return None
-
-	def _get_contains(self):
-		return None
 
 	def _get_location(self):
 		return (0,0,0,0)

@@ -247,7 +247,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionString':True,'level':True,'contains':True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionString':True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:

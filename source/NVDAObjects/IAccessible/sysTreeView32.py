@@ -7,6 +7,8 @@ import controlTypes
 import speech
 from . import IAccessible
 
+oldLevel=None
+
 TV_FIRST=0x1100
 
 #Window messages
@@ -41,7 +43,7 @@ class TVItemStruct(Structure):
 
 class TreeViewItem(IAccessible):
 
-	def _get_level(self):
+	def _get_treeLevel(self):
 		return int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 
 	def _get_value(self):
@@ -132,11 +134,6 @@ class TreeViewItem(IAccessible):
 			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
 		return _("%d of %d")%(index,numItems)
 
-	def _get_contains(self):
-		count=self.childCount
-		if (controlTypes.STATE_EXPANDED in self.states) and count>0:
-			return _("%d items")%count
-
 	def event_stateChange(self):
 		if id(self)==id(api.getFocusObject()) and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
 			announceContains=True
@@ -144,5 +141,12 @@ class TreeViewItem(IAccessible):
 			announceContains=False
 		super(self.__class__,self).event_stateChange()
 		if announceContains:
-			speech.speakObjectProperties(self,reason=speech.REASON_MESSAGE,contains=True)
+			speech.speakMessage(_("%s items")%self.childCount)
 
+	def event_gainFocus(self):
+		global oldLevel
+		newLevel=self.treeLevel
+ 		if newLevel!=oldLevel and id(self)==id(api.getFocusObject()):
+			speech.speakMessage(_("level %d")%newLevel)
+			oldLevel=newLevel
+		super(self.__class__,self).event_gainFocus()

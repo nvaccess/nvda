@@ -593,13 +593,6 @@ class TrayClockWClass(IAccessible):
 
 class OutlineItem(IAccessible):
 
-	def _get_level(self):
-		val=super(OutlineItem,self)._get_value()
-		try:
-			return int(val)
-		except:
-			return 0
-
 	def _get_value(self):
 		val=super(OutlineItem,self)._get_value()
 		try:
