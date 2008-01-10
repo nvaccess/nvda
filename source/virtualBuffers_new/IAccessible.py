@@ -178,7 +178,8 @@ class IAccessible(VirtualBuffer):
 	def _caretMovedToID(self,ID):
 		try:
 			pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
-			pacc.accSelect(1,accChildID)
+			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
+				pacc.accSelect(1,accChildID)
 		except:
 			pass
 
