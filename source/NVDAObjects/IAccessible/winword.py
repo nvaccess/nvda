@@ -259,7 +259,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			moveFunc=self._rangeObj.MoveEnd
 		else:
 			moveFunc=self._rangeObj.Move
-		res=moveFunc(unit,num)
+		res=moveFunc(unit,direction)
 		return res
 
 	def _get_bookmark(self):
