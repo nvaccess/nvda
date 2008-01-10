@@ -12,7 +12,7 @@ import textHandler
 class IAccessibleTextInfo(VirtualBufferTextInfo):
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		hasIAccessible2=bool(attrs['iaccessible2'])
+		hasIAccessible2=int(attrs['iaccessible2'])
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
