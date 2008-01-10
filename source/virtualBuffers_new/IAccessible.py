@@ -19,9 +19,10 @@ class IAccessibleTextInfo(VirtualBufferTextInfo):
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible::state_%s'%x]) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if hasIAccessible2:
 			states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible2::state_%s'%x]) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		attrs['role']=role
-		attrs['states']=states
-		return super(IAccessibleTextInfo,self).getXMLFieldSpeech(attrs,fieldType,extraDetail=extraDetail,reason=reason)
+		newAttrs=attrs.copy()
+		newAttrs['role']=role
+		newAttrs['states']=states
+		return super(IAccessibleTextInfo,self).getXMLFieldSpeech(newAttrs,fieldType,extraDetail=extraDetail,reason=reason)
 
 
 class IAccessible(VirtualBuffer):
