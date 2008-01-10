@@ -91,7 +91,7 @@ def readTextHelper_generator(info,cursor):
 					keepReading=False
 					continue
 				if reader.hasXML:
-					speech.speakFormattedTextWithXML(reader.XMLContext,reader.XMLText,reader.obj,reader.getXMLFieldSpeech,index=index)
+					speech.speakFormattedTextWithXML(reader.XMLContext,reader.XMLText,reader.obj,reader.getXMLFieldSpeech,index=index,reason=speech.REASON_SAYALL)
 				else:
 					speech.speakFormattedText(reader,includeBlankText=False,index=index)
 				sendCount+=1
