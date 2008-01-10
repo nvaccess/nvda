@@ -42,7 +42,8 @@ def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
 	cAttribs=(attribute_t*len(attribs))()
 	for index,name in enumerate(attribs.keys()):
 		cAttribs[index].name=name
-		cAttribs[index].value=attribs[name]
+		val=attribs[name]
+		cAttribs[index].value=str(val) if val is not None else ""
 	isBlock=1 if isBlock else 0
 	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,ID,cAttribs,len(cAttribs),isBlock)
 
@@ -90,7 +91,7 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs)
 		cAttribs[index].name=name
 		vals=(c_wchar_p*len(attribs[name]))()
 		for valIndex,val in enumerate(attribs[name]):
-			vals[valIndex]=val
+			vals[valIndex]=str(val) if val is not None else ""
 		cAttribs[index].value=vals
 		cAttribs[index].numValues=len(attribs[name])
 	foundID=c_int()
