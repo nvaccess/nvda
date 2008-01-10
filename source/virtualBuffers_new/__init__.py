@@ -375,7 +375,7 @@ class VirtualBuffer(baseObject.scriptableObject):
 	def script_previousFormField(self,keyPress,nextScript):
 		if not self._jumpToNodeType("formField","previous"):
 			speech.speakMessage(_("no previous form field"))
-	script_previousFormField.__doc__ = _("moves to the next unvisited form field")
+	script_previousFormField.__doc__ = _("moves to the next form field")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine_back"),
