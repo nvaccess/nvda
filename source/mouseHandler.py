@@ -116,7 +116,10 @@ def executeMouseMoveEvent(x,y):
 
 def initialize():
 	(x,y)=winUser.getCursorPos()
-	api.setMouseObject(NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y))
+	mouseObj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
+	if not mouseObj:
+		mouseObj=api.getDesktopObject()
+	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
 	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
 
