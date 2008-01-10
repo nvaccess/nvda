@@ -56,7 +56,7 @@ class appModule(appModuleHandler.appModule):
 		info.expand(textHandler.UNIT_LINE)
 		if keyboardHandler.lastKeyCount == 1:
 			if info.hasXML:
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech)
+				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_CARET)
 			else:
 				speech.speakFormattedText(info)
 		else:

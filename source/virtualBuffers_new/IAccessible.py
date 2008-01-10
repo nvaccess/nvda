@@ -163,7 +163,7 @@ class IAccessible(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
-				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech)
+				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_CARET)
 				newInfo.collapse()
 				newInfo.updateCaret()
 
