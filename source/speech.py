@@ -638,7 +638,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 		if cacheFinalStack:
 			cacheObject._speech_XMLCache=list(newStack)
 		text=" ".join([x for x in textList if x and isinstance(x,basestring)])
-		if textList or relativeXML is not None:
+		if (textList or relativeXML is not None) and (reason!=speech.REASON_SAYALL or extraDetail or not text.isspace()):
 			speakText(text,wait=wait,index=index)
 
 def getFieldSpeech(attrs,fieldType,extraDetail=False):
