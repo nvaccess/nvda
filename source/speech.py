@@ -680,12 +680,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
 		del propertyValues['states']
 	else:
-		states=set()
+		states=None
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
 		negativeStates=(negativeStates&(spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN]))
 		del propertyValues['negativeStates']
-	elif reason!=REASON_CHANGE:
+	elif reason!=REASON_CHANGE and states is not None:
 		negativeStates=((spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN])-states)
 	else:
 		negativeStates=set()
