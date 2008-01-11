@@ -178,6 +178,12 @@ class VirtualBuffer(baseObject.scriptableObject):
 		if ID!=0 and ID!=oldID:
 			self._caretMovedToID(ID)
 
+	def script_pageUp(self,keyPress,nextScript):
+		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+
+	def script_pageDown(self,keyPress,nextScript):
+		self._caretMovementScriptHelper(textHandler.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+
 	def script_moveByCharacter_back(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True)
 
@@ -378,6 +384,8 @@ class VirtualBuffer(baseObject.scriptableObject):
 	script_previousFormField.__doc__ = _("moves to the next form field")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("extendedPrior","pageUp"),
+	("extendedNext","pageDown"),
 	("ExtendedUp","moveByLine_back"),
 	("ExtendedDown","moveByLine_forward"),
 	("ExtendedLeft","moveByCharacter_back"),
