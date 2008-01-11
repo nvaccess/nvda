@@ -228,8 +228,8 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		return
 	#If only speaking change, then filter out all values that havn't changed
 	if reason==REASON_CHANGE:
-		for name in list(newPropertyValues):
-			if name in oldCachedPropertyValues and newPropertyValues[name]==oldCachedPropertyValues[name]:
+		for name in set(newPropertyValues.keys())&set(oldCachedPropertyValues.keys()):
+			if newPropertyValues[name]==oldCachedPropertyValues[name]:
 				del newPropertyValues[name]
 			elif name=="states": #states need specific handling
 				oldStates=oldCachedPropertyValues[name]
