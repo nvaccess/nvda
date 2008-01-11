@@ -150,7 +150,10 @@ class IAccessible(VirtualBuffer):
 			return
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+		try:
+			oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+		except:
+			oldID=0
 		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else -hash(obj.IAccessibleObject)
 		if ID!=oldID and ID!=0:
 			try:
