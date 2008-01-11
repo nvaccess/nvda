@@ -112,8 +112,10 @@ class IAccessible(VirtualBuffer):
 				text=name
 			else:
 				text=value
-			if text:
+			if text and not (role==IAccessibleHandler.ROLE_SYSTEM_CELL and text.isspace()):
 				children.append(text)
+			elif not text and role in (IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON):
+				children.append(u" ")
 		del pacc
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
 		previousNode=None
@@ -166,7 +168,7 @@ class IAccessible(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
-				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_CARET)
+				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
 
