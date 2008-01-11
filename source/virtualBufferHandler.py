@@ -23,19 +23,25 @@ def getVirtualBuffer(obj):
 
 def update(obj):
 	for index in range(len(runningTable)):
-		if not runningTable[index].isAlive():
-			del runningTable[index]
+		try:
+			if not runningTable[index].isAlive():
+				del runningTable[index]
+		except:
+			globalVars.log.warning("Error trying to remove old virtualBuffer at index %s"%index,exc_info=True)
 	#Gecko with IAccessible2 support
-	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and obj.windowClassName=='MozillaContentWindowClass' and obj.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in obj.states:
+	windowClassName=obj.windowClassName
+	role=obj.role
+	states=obj.states
+	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName=='MozillaContentWindowClass' and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
  		classString="gecko.Gecko"
 	#Gecko only with IAccessible support
-	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName.startswith('Mozilla') and obj.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in obj.states:
+	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY in states:
 		classString="gecko.Gecko"
 	#Adobe documents with IAccessible
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName=="AVL_AVView" and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in obj.states:
+ 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
 		classString="adobe.Adobe"
 	#MSHTML
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in obj.states: 
+ 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in states: 
 		info=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(obj.windowHandle)[1])
 		if not info.flags&winUser.GUI_CARETBLINKING or info.hwndCaret!=obj.windowHandle:
 			classString="MSHTML.MSHTML"
