@@ -133,7 +133,10 @@ class IA2(IAccessible):
 		return super(IA2,self)._isEqual(other)
 
 	def _get_role(self):
-		IA2Role=self.IAccessibleObject.role()
+		try:
+			IA2Role=self.IAccessibleObject.role()
+		except:
+			IA2Role=0
 		if IA2Role>IAccessibleHandler.IA2_ROLE_UNKNOWN and IAccessibleHandler.IAccessibleRolesToNVDARoles.has_key(IA2Role):
 			return IAccessibleHandler.IAccessibleRolesToNVDARoles[IA2Role]
 		else:
