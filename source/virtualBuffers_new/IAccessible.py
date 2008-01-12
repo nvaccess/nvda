@@ -41,6 +41,8 @@ class IAccessible(VirtualBuffer):
 			IAccessible2=1
 			ID=pacc.uniqueID
 			role=pacc.role()
+			if not role:
+				role=pacc.accRole(accChildID)
 			IAccessible2States=pacc.states
 			objAttributes=pacc.attributes
 			if role!=IAccessibleHandler.ROLE_SYSTEM_CELL and objAttributes.find("formatting:block")<0:
@@ -60,7 +62,7 @@ class IAccessible(VirtualBuffer):
 				attrs["IAccessible2::state_%d"%state]=unicode((state&IAccessible2States)>>bitPos)
 		attrs['keyboardShortcut']=keyboardShortcut if keyboardShortcut else ""
 		children=[] #will be strings  or pacc,childID tuples
-		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2) and role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
+		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2) and role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and (role!=IAccessibleHandler.ROLE_SYSTEM_LIST or IAccessibleHandler.STATE_SYSTEM_READONLY&states):
 			try:
 				paccText=pacc.QueryInterface(IAccessibleHandler.IAccessibleText)
 			except:
@@ -102,7 +104,7 @@ class IAccessible(VirtualBuffer):
 				offset+=1
 			if plainText:
 				children.append(plainText)
-		elif role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and accChildID==0 and pacc.accChildCount>0:
+		elif role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and (role!=IAccessibleHandler.ROLE_SYSTEM_LIST or IAccessibleHandler.STATE_SYSTEM_READONLY&states) and accChildID==0 and pacc.accChildCount>0:
 			children=IAccessibleHandler.accessibleChildren(pacc,0,pacc.accChildCount)
 		else:
 			name=pacc.accName(accChildID)
@@ -114,7 +116,7 @@ class IAccessible(VirtualBuffer):
 				text=value
 			if text and not (role==IAccessibleHandler.ROLE_SYSTEM_CELL and text.isspace()):
 				children.append(text)
-			elif not text and role in (IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON):
+			elif not text and role in (IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_LIST):
 				children.append(u" ")
 		del pacc
 		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
