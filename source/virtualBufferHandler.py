@@ -35,7 +35,7 @@ def update(obj):
 	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName=='MozillaContentWindowClass' and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
  		classString="gecko.Gecko"
 	#Gecko only with IAccessible support
-	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY in states:
+	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
 		classString="gecko.Gecko"
 	#Adobe documents with IAccessible
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
