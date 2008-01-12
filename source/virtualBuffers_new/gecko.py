@@ -1,3 +1,4 @@
+import controlTypes
 from .IAccessible import IAccessible
 
 class Gecko(IAccessible):
