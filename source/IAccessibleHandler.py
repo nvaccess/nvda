@@ -266,6 +266,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
+	"iframe":controlTypes.ROLE_INTERNALFRAME,
 	"page":controlTypes.ROLE_PAGE,
 	"form":controlTypes.ROLE_FORM,
 	"div":controlTypes.ROLE_SECTION,
