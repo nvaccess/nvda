@@ -273,7 +273,7 @@ speechRoleLabels={
 	ROLE_IPADDRESS:_("IP address"),
 	ROLE_DESKTOPICON:_("desktop icon"),
 	ROLE_ALERT:_("alert"),
-	ROLE_INTERNALFRAME:_("internal frame"),
+	ROLE_INTERNALFRAME:_("IFrame"),
 	ROLE_DESKTOPPANE:_("desktop pane"),
 	ROLE_OPTIONPANE:_("option pane"),
 	ROLE_COLORCHOOSER:_("color chooser"),
