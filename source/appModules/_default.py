@@ -462,9 +462,12 @@ class appModule(appModuleHandler.appModule):
 		if lastKeyCount == 1:
 			speech.speakFormattedText(info,handleSymbols=True)
 		else:
-			c = ord(info._get_text())
-			speech.speakMessage("%d," % c)
-			speech.speakSpelling(hex(c))
+			try:
+				c = ord(info._get_text())
+				speech.speakMessage("%d," % c)
+				speech.speakSpelling(hex(c))
+			except:
+				speech.speakFormattedText(info,handleSymbols=True)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated")
 
 	def script_review_nextCharacter(self,keyPress,nextScript):
