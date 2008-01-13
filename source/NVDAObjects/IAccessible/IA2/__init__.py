@@ -24,7 +24,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
 
 	def _getSelectionOffsets(self):
-		if self.obj.IAccessibleTextObject.nSelections>0:
+		try:
+			nSelections=self.obj.IAccessibleTextObject.nSelections
+		except:
+			nSelections=0
+		if nSelections:
 			(start,end)=self.obj.IAccessibleTextObject.Selection[0]
 		else:
 			start=self._getCaretOffset()
