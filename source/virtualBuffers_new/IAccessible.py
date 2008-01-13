@@ -51,6 +51,8 @@ class IAccessible(VirtualBuffer):
 			IAccessible2=0
 			ID=-hash(pacc)
 			role=pacc.accRole(accChildID)
+		if role=="embed":
+			return
 		states=pacc.accState(accChildID)
 		keyboardShortcut=pacc.accKeyboardShortcut(accChildID)
 		attrs['IAccessible2']=unicode(IAccessible2)
@@ -61,6 +63,16 @@ class IAccessible(VirtualBuffer):
 			if IAccessible2:
 				attrs["IAccessible2::state_%d"%state]=unicode((state&IAccessible2States)>>bitPos)
 		attrs['keyboardShortcut']=keyboardShortcut if keyboardShortcut else ""
+		if IAccessible2:
+			for attrib in objAttributes.split(';'):
+				split=attrib.find(':')
+				if split>=0:
+					name=attrib[0:split]
+					value=attrib[split+1:]
+				else:
+					name=attrib
+					value=""
+			attrs['IAccessible2::attribute_%s'%name]=value
 		children=[] #will be strings  or pacc,childID tuples
 		if not accChildID and isinstance(pacc,IAccessibleHandler.IAccessible2) and role!=IAccessibleHandler.ROLE_SYSTEM_COMBOBOX and (role!=IAccessibleHandler.ROLE_SYSTEM_LIST or IAccessibleHandler.STATE_SYSTEM_READONLY&states):
 			try:
