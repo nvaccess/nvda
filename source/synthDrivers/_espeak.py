@@ -1,9 +1,16 @@
+#synthDrivers/_espeak.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import time
 import nvwave
 import threading
 import Queue
 from ctypes import *
-import debug
+import config
+import globalVars
 
 isSpeaking = False
 lastIndex = None
@@ -14,7 +21,7 @@ espeakDLL=None
 
 #Parameter bounds
 minRate=80
-maxRate=370
+maxRate=390
 minPitch=0
 maxPitch=99
 
@@ -26,6 +33,7 @@ espeakEVENT_MARK=3
 espeakEVENT_PLAY=4
 espeakEVENT_END=5
 espeakEVENT_MSG_TERMINATED=6
+espeakEVENT_PHONEME=7
 
 #position types
 POS_CHARACTER=1
@@ -56,15 +64,17 @@ espeakPITCH=3
 espeakRANGE=4
 espeakPUNCTUATION=5
 espeakCAPITALS=6
-espeakEMPHASIS=7
-espeakLINELENGTH=8
-espeakVOICETYPE=9
+espeakWORDGAP=7
+espeakOPTIONS=8   # reserved for misc. options.  not yet used
+espeakINTONATION=9
+espeakRESERVED1=10
+espeakRESERVED2=11
 
 #error codes
 EE_OK=0
-EE_INTERNAL_ERROR=-1
-EE_BUFFER_FULL=1
-EE_NOT_FOUND=2
+#EE_INTERNAL_ERROR=-1
+#EE_BUFFER_FULL=1
+#EE_NOT_FOUND=2
 
 class espeak_EVENT_id(Union):
 	_fields_=[
@@ -104,17 +114,23 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
 def callback(wav,numsamples,event):
-	global player, isSpeaking, lastIndex
-	lastIndex = event.contents.user_data
-	if not wav:
-		player.sync()
-		isSpeaking = False
+	try:
+		global player, isSpeaking, lastIndex
+		lastIndex = event.contents.user_data
+		if not wav:
+			player.sync()
+			isSpeaking = False
+			return 0
+		if not isSpeaking:
+			return 1
+		if numsamples > 0:
+			try:
+				player.feed(string_at(wav, numsamples * sizeof(c_short)))
+			except:
+				globalVars.log.warn("Error feeding audio to nvWave",exc_info=True)
 		return 0
-	if not isSpeaking:
-		return 1
-	if numsamples > 0:
-		player.feed(string_at(wav, numsamples * sizeof(c_short)))
-	return 0
+	except:
+		globalVars.log.error("callback", exc_info=True)
 
 class BgThread(threading.Thread):
 	def __init__(self):
@@ -128,12 +144,10 @@ class BgThread(threading.Thread):
 				func, args, kwargs = bgQueue.get()
 				if not func:
 					break
-				res=func(*args, **kwargs)
-				if res!=EE_OK:
-					raise OSError("%s, %d"%(str(func),res))
+				func(*args, **kwargs)
 				bgQueue.task_done()
 		except:
-			debug.writeException("bgThread.run")
+			globalVars.log.error("bgThread.run", exc_info=True)
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue
@@ -156,14 +170,22 @@ def stop():
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
-	while not bgQueue.empty():
-		item = bgQueue.get_nowait()
-		if item[0] == espeakDLL.espeak_SetParameter:
-			params.append(item)
+	try:
+		while True:
+			item = bgQueue.get_nowait()
+			if item[0] == espeakDLL.espeak_SetParameter:
+				params.append(item)
+	except Queue.Empty:
+		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
+		pass
 	for item in params:
 		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
+
+def pause(switch):
+	global player
+	player.pause(switch)
 
 def setParameter(param,value,relative):
 	_bgExec(espeakDLL.espeak_SetParameter,param,value,relative)
@@ -172,13 +194,11 @@ def getParameter(param,current):
 	return espeakDLL.espeak_GetParameter(param,current)
 
 def getVoiceList():
-	begin=espeakDLL.espeak_ListVoices(None)
-	count=0
+	voices=espeakDLL.espeak_ListVoices(None)
 	voiceList=[]
-	while True:
-		if not begin[count]: break
- 		voiceList.append(begin[count].contents)
-		count+=1
+	for voice in voices:
+		if not voice: break
+ 		voiceList.append(voice.contents)
 	return voiceList
 
 def getCurrentVoice():
@@ -190,32 +210,40 @@ def getCurrentVoice():
 
 def setVoice(voice):
 	# For some weird reason, espeak_EspeakSetVoiceByProperties throws an integer divide by zero exception.
-	res=espeakDLL.espeak_SetVoiceByName(voice.identifier)
-	if res!=EE_OK:
-		raise OSError("espeak_SetVoiceByName %d"%res)
+	espeakDLL.espeak_SetVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	res=espeakDLL.espeak_SetVoiceByName(name)
-	if res!=EE_OK:
-		raise OSError("espeak_SetVoiceByName, %d"%res)
+	espeakDLL.espeak_SetVoiceByName(name)
 
 def setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
 	v.languages=lang
-	res=espeakDLL.espeak_SetVoiceByProperties(byref(v))
-	if res!=EE_OK:
-		raise RuntimeError("espeakDLL.setVoiceByProperties: %d"%res)
+	try:
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
+	except:
+		v.languages="en"
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
+
+def espeak_errcheck(res, func, args):
+	if res != EE_OK:
+		raise RuntimeError("%s: code %d" % (func.__name__, res))
+	return res
 
 def initialize():
 	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetVoiceByName.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetVoiceByProperties.errcheck=espeak_errcheck
+	espeakDLL.espeak_SetParameter.errcheck=espeak_errcheck
+	espeakDLL.espeak_Terminate.errcheck=espeak_errcheck
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers")
+	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16)
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
 	bgThread=BgThread()
@@ -226,9 +254,7 @@ def terminate():
 	stop()
 	bgQueue.put((None, None, None))
 	bgThread.join()
-	res=espeakDLL.espeak_Terminate()
-	if res!=EE_OK:
-		raise OSError("espeak_Terminate %d"%res)
+	espeakDLL.espeak_Terminate()
 	bgThread=None
 	bgQueue=None
 	player.close()
