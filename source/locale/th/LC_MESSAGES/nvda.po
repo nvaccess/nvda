@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1493\n"
 "POT-Creation-Date: 2007-11-17 17:39+SE Asia Standard Time\n"
-"PO-Revision-Date: 2007-12-19 08:29 +0700\n"
+"PO-Revision-Date: 2008-01-14 11:02 +0700\n"
 "Last-Translator: Amorn Kiattikhunrat <thainvda@gmail.com>\n"
 "Language-Team: Amorn <thainvda@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -265,15 +265,15 @@ msgstr "เปิดและปิดการพูดการเว้นวรรค NVDA จะพูดสัญลักษณ์การเว้นวรรคถ้าอยู่ในสถานะ
 
 #: appModules\_default.py:144
 msgid "Move mouse to navigator"
-msgstr "เลื่อนเม้าส์ไปที่ Navigator"
+msgstr "เลื่อนเม้าส์ไปยังตัวนำทาง"
 
 #: appModules\_default.py:152
 msgid "Moves the mouse pointer to the current navigator object."
-msgstr "เลื่อนพ้อยเตอร์เม้าส์ไป navigator object ปัจจุบัน"
+msgstr "เลื่อนเม้าส์ไปยังตัวนำทางปัจจุบัน"
 
 #: appModules\_default.py:155
 msgid "Move navigator object to mouse"
-msgstr "เลื่อน navigator object ไปที่เม้าส์"
+msgstr "เลื่อนตัวนำทางไปที่เม้าส์"
 
 #: appModules\_default.py:164
 #: appModules\_default.py:205
@@ -287,11 +287,11 @@ msgstr "เลื่อน navigator object ไปที่เม้าส์"
 #: appModules\_default.py:332
 #: appModules\_default.py:617
 msgid "no navigator object"
-msgstr "ไม่มี navigator object"
+msgstr "ไม่มีตัวนำทาง"
 
 #: appModules\_default.py:208
 msgid "No location information for navigator object"
-msgstr "ไม่พบรายละเอียดตำแหน่งของ navigator object"
+msgstr "ไม่พบรายละเอียดตำแหน่งของตัวนำทาง"
 
 #: appModules\_default.py:210
 msgid "%d wide by %d high, located %d from left and %d from top"
@@ -308,15 +308,15 @@ msgstr " ไม่พบจุดโฟกัส"
 
 #: appModules\_default.py:218
 msgid "move to focus"
-msgstr "เลื่อนไปสู่จุดโฟกัส"
+msgstr "เลื่อนไปยังจุดโฟกัส"
 
 #: appModules\_default.py:220
 msgid "Sets the navigator object to the current focus"
-msgstr "ตั้งให้ navigator object นี้เป็นจุดโฟกัสปัจจุบัน"
+msgstr "ตั้งให้ตัวนำทางนี้เป็นจุดโฟกัสปัจจุบัน"
 
 #: appModules\_default.py:232
 msgid "No parents"
-msgstr "No parents"
+msgstr "ไม่มีวัตถุหลัก"
 
 #: appModules\_default.py:233
 msgid "Sets the navigator object to the parent of the object it is currently on."
@@ -340,7 +340,7 @@ msgstr "Sets the navigator object to the previous object to the one it is curren
 
 #: appModules\_default.py:271
 msgid "No children"
-msgstr "No children"
+msgstr "ไม่มีวัตถุรอง"
 
 #: appModules\_default.py:272
 msgid "Sets the navigator object to the first child object to the one it is currently on"
@@ -441,7 +441,7 @@ msgstr "แสดงหน้าต่าง NVDA"
 
 #: appModules\_default.py:576
 msgid "reports the object with focus"
-msgstr "รายงาน object ที่ถูกโฟกัส"
+msgstr "รายงานวัตถุที่ถูกโฟกัส"
 
 #: appModules\_default.py:582
 msgid "no status bar found"
@@ -509,7 +509,7 @@ msgstr "Toggles on and off the movement of the review cursor due to the caret mo
 
 #: appModules\_default.py:666
 msgid "focus moves navigator object"
-msgstr "โฟกัสการเคลื่อนที่ของ navigator object"
+msgstr "โฟกัสการเคลื่อนที่ของตัวนำทางวัตถุ"
 
 #: appModules\_default.py:667
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
@@ -1366,33 +1366,33 @@ msgstr ""
 "NVDA+f - รายงานฟ้อนต์ปัจจุบัน (ในเอกสาร)\n"
 "\n"
 "Object navigation:\n"
-"NVDA+numpadAdd - ฉันอยู่ที่ไหน\n"
-"NVDA+numpad5 - วัตถุปัจจุบัน\n"
-"shift+NVDA+numpad5 - ขนาดหรือขอบเขต และตำแหน่งของวัตถุปัจจุบัน\n"
-"NVDA+numpad8 - parent object\n"
-"NVDA+numpad4 - previous object\n"
-"NVDA+numpad6 - วัตถุถัดไป\n"
-"NVDA+numpad2 - first child object\n"
-"NVDA+numpadMinus - เลื่อนไปยังวัตถุที่ถูกโฟกัส\n"
+"NVDA+ปุ่มตัวเลข บวก - ฉันอยู่ที่ไหน\n"
+"NVDA+ปุ่มตัวเลข 5 - วัตถุปัจจุบัน\n"
+"shift+NVDA+ปุ่มตัวเลข 5 - ขนาดหรือขอบเขต และตำแหน่งของวัตถุปัจจุบัน\n"
+"NVDA+ปุ่มตัวเลข 8 - parent object\n"
+"NVDA+ปุ่มตัวเลข 4 - previous object\n"
+"NVDA+ปุ่มตัวเลข 6 - วัตถุถัดไป\n"
+"NVDA+ปุ่มตัวเลข 2 - first child object\n"
+"NVDA+ปุ่มตัวเลข ลบ - เลื่อนไปยังวัตถุที่ถูกโฟกัส\n"
 "NVDA+end - เลื่อนไปยังแถบสถานะ\n"
-"NVDA+numpadDivide - เลื่อนเม้าส์ไปยัง navigator object ปัจจุบัน\n"
-"NVDA+numpadMultiply - เลื่อนไปหาเม้าส์\n"
-"nvda+numpadEnter - activate current object\n"
+"NVDA+ปุ่มตัวเลข หาร - เลื่อนเม้าส์ไปยัง navigator object ปัจจุบัน\n"
+"NVDA+ปุ่มตัวเลข คูณ - เลื่อนไปหาเม้าส์\n"
+"nvda+ปุ่มตัวเลข Enter - activate current object\n"
 "\n"
 "Reviewing the current object:\n"
-"shift+numpad7 - เลื่อนไปยังบรรทัดบนสุด\n"
-"numpad7 - บรรทัดก่อนหน้า\n"
-"numpad8 - บรรทัดปัจจุบัน\n"
-"numpad9 - บรรทัดต่อไป\n"
-"shift+numpad9 - บรรทัดล่างสุด\n"
-"numpad4 - คำก่อนหน้า\n"
-"numpad5 - คำปัจจุบัน\n"
-"numpad6 - คำถัดไป\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - ตัวอักษรก่อนหน้า\n"
-"numpad2 - ตัวอักษรปัจจุบัน\n"
-"numpad3 - ตัวอักษรถัดไป\n"
-"shift+numpad3 - จบบรรทัด\n"
+"shift+ปุ่มตัวเลข 7 - เลื่อนไปยังบรรทัดบนสุด\n"
+"ปุ่มตัวเลข 7 - บรรทัดก่อนหน้า\n"
+"ปุ่มตัวเลข 8 - บรรทัดปัจจุบัน\n"
+"ปุ่มตัวเลข 9 - บรรทัดต่อไป\n"
+"shift+ปุ่มตัวเลข 9 - บรรทัดล่างสุด\n"
+"ปุ่มตัวเลข 4 - คำก่อนหน้า\n"
+"ปุ่มตัวเลข 5 - คำปัจจุบัน\n"
+"ปุ่มตัวเลข 6 - คำถัดไป\n"
+"shift+ปุ่มตัวเลข 1 - start of line\n"
+"ปุ่มตัวเลข 1 - ตัวอักษรก่อนหน้า\n"
+"ปุ่มตัวเลข 2 - ตัวอักษรปัจจุบัน\n"
+"ปุ่มตัวเลข 3 - ตัวอักษรถัดไป\n"
+"shift+ปุ่มตัวเลข 3 - จบบรรทัด\n"
 
 #: gui\__init__.py:142
 msgid "&Revert to saved configuration\tCtrl+R"
@@ -1772,15 +1772,15 @@ msgstr "รายงานตัวช่วยเหลือแบบบอลลูน"
 
 #: gui\settingsDialogs.py:405
 msgid "Report object shortcut &keys"
-msgstr "รายงาน shortcut keys"
+msgstr "รายงานแป้นลัด"
 
 #: gui\settingsDialogs.py:408
 msgid "Report object &position information"
-msgstr "รายงานพิกัดและรายละเอียดของวัตถุ"
+msgstr "รายงานตำแหน่งและรายละเอียดของวัตถุ"
 
 #: gui\settingsDialogs.py:414
 msgid "Say object &state first"
-msgstr "พูดลักษณะของวัตถุก่อนทุกครั้ง"
+msgstr "บอกสถานะของวัตถุก่อนทุกครั้ง"
 
 #: gui\settingsDialogs.py:417
 msgid "&Beep on progress bar updates"
@@ -2047,12 +2047,7 @@ msgid ""
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
-msgstr ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
-"For further details, you can view the licence online at:\n"
-"http://www.gnu.org/licenses/gpl.html\n"
-"Or see the file Copying.txt that came with this software."
+msgstr "NVDA เป็นลิขสิทธิ์ของ Michael Curran ที่ถูกคุ้มครองด้วย General Public License(GNU) คุณสามารถเข้าร่วมหรือทำการเปลี่ยนแปลงซอฟต์แวร์นี้ตามที่คุณต้องการและสามารถเผยแพร่ออกสู่สาธารณะได้ รวมทั้งสามารถแก้ไข source code ให้เหมาะสมกับผู้ใช้ใดๆที่ต้องการใช้ซอฟต์แวร์นี้ ซึ่งการอนุญาตนี้มีผลกับ source code เดิมและ source code ที่ถูกแก้ไขดัดแปลง รวมทั้งซอฟต์แวร์อื่นๆก็สามารถใช้ code ของซอฟต์แวร์นี้ได้ รายละเอียดนอกจากนี้คุณสามารถไปดูได้ที่ http://www.gnu.org/licenses/gpl.html หรือดูที่ Copying.txt ซึ่งมาพร้อมกับโปรแกรมนี้"
 
 #: virtualBuffers\IAccessible\MSHTML.py:144
 #: virtualBuffers\IAccessible\adobe.py:170
