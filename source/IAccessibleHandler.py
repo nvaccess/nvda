@@ -677,7 +677,7 @@ def foreground_winEventCallback(window,objectID,childID):
 		return
 	focus=api.getFocusObject()
 	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
-	if winUser.isDescendantWindow(window,focus.event_windowHandle):
+	if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,focus.event_windowHandle):
 		return
 	return focus_winEventCallback(window,objectID,childID,isForegroundChange=True)
 
