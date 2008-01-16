@@ -21,8 +21,8 @@ def dllErrorCheck(res,func,args):
 VBufStorage_createBuffer=dll.VBufStorage_createBuffer
 VBufStorage_createBuffer.errcheck=dllErrorCheck
 
-VBufStorage_getBufferNodeWithID=dll.VBufStorage_getBufferNodeWithID
-VBufStorage_getBufferNodeWithID.errcheck=dllErrorCheck
+VBufStorage_getBufferNodeWithIdentifier=dll.VBufStorage_getBufferNodeWithIdentifier
+VBufStorage_getBufferNodeWithIdentifier.errcheck=dllErrorCheck
 
 VBufStorage_mergeBuffer=dll.VBufStorage_mergeBuffer
 VBufStorage_mergeBuffer.errcheck=dllErrorCheck
@@ -36,7 +36,7 @@ VBufStorage_clearBuffer.errcheck=dllErrorCheck
 VBufStorage_splitTextNodeAtOffset=dll.VBufStorage_splitTextNodeAtOffset
 VBufStorage_splitTextNodeAtOffset.errcheck=dllErrorCheck
 
-def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
+def VBufStorage_addTagNodeToBuffer(parent, previous, docHandle,ID,attribs,isBlock=True):
 	if not isinstance(attribs,dict) or len(attribs)==0:
 		raiseValueError("attribs must be of type dict containing 1 or more entries")
 	cAttribs=(attribute_t*len(attribs))()
@@ -45,12 +45,12 @@ def VBufStorage_addTagNodeToBuffer(parent, previous, ID,attribs,isBlock=True):
 		val=attribs[name]
 		cAttribs[index].value=unicode(val) if val is not None else ""
 	isBlock=1 if isBlock else 0
-	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,ID,cAttribs,len(cAttribs),isBlock)
+	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,docHandle,ID,cAttribs,len(cAttribs),isBlock)
 
 dll.VBufStorage_addTagNodeToBuffer.errcheck=dllErrorCheck
 
-def VBufStorage_addTextNodeToBuffer(parent, previous, ID,text):
-	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,ID,text)
+def VBufStorage_addTextNodeToBuffer(parent, previous, docHandle, ID,text):
+	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,docHandle,ID,text)
 
 dll.VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
 
@@ -62,22 +62,23 @@ VBufStorage_removeNodeFromBuffer.errcheck=dllErrorCheck
 VBufStorage_removeDescendantsFromBufferNode=dll.VBufStorage_removeDescendantsFromBufferNode
 VBufStorage_removeDescendantsFromBufferNode.errcheck=dllErrorCheck
 
-def VBufStorage_getFieldIDFromBufferOffset(buf,offset):
+def VBufStorage_getFieldIdentifierFromBufferOffset(buf,offset):
+	docHandle=c_int()
 	ID=c_int()
-	dll.VBufStorage_getFieldIDFromBufferOffset(buf,offset,byref(ID))
-	return ID.value
+	dll.VBufStorage_getFieldIdentifierFromBufferOffset(buf,offset,byref(docHandle),byref(ID))
+	return docHandle.value,ID.value
 
-dll.VBufStorage_getFieldIDFromBufferOffset.errcheck=dllErrorCheck
+dll.VBufStorage_getFieldIdentifierFromBufferOffset.errcheck=dllErrorCheck
 
-def VBufStorage_getBufferOffsetsFromFieldID(buf, ID):
+def VBufStorage_getBufferOffsetsFromFieldIdentifier(buf, docHandle, ID):
 	start=c_int()
 	end=c_int()
-	dll.VBufStorage_getBufferOffsetsFromFieldID(buf,ID,byref(start),byref(end))
+	dll.VBufStorage_getBufferOffsetsFromFieldIdentifier(buf,docHandle,ID,byref(start),byref(end))
 	return (start.value,end.value)
 
-dll.VBufStorage_getBufferOffsetsFromFieldID.errcheck=dllErrorCheck
+dll.VBufStorage_getBufferOffsetsFromFieldIdentifier.errcheck=dllErrorCheck
 
-def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs):
+def VBufStorage_findBufferFieldIdentifierByProperties(buf,direction,startOffset,attribs):
 	if direction=="next":
 		direction=VBUF_FINDDIRECTION_NEXT
 	elif direction=="previous":
@@ -91,16 +92,17 @@ def VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,attribs)
 		cAttribs[index].name=name
 		vals=(c_wchar_p*len(attribs[name]))()
 		for valIndex,val in enumerate(attribs[name]):
-			vals[valIndex]=unicode(val) if val is not None else ""
+			vals[valIndex]=unicode(val) if val is not None else None
 		cAttribs[index].value=vals
 		cAttribs[index].numValues=len(attribs[name])
+	foundDocHandle=c_int()
 	foundID=c_int()
-	res=dll.VBufStorage_findBufferFieldIDByProperties(buf,direction,startOffset,cAttribs,len(cAttribs),byref(foundID))
+	res=dll.VBufStorage_findBufferFieldIdentifierByProperties(buf,direction,startOffset,cAttribs,len(cAttribs),byref(foundDocHandle),byref(foundID))
 	if res==VBUF_ERROR_NOTFOUND:
-		return 0
+		return None
 	elif res<0:
-		raise RuntimeError("VBufStorage_findBufferFieldIDByProperties returned code %d"%res)
-	return foundID.value
+		raise RuntimeError("VBufStorage_findBufferFieldIdentifierByProperties returned code %d"%res)
+	return foundDocHandle.value,foundID.value
 
 VBufStorage_getBufferTextLength=dll.VBufStorage_getBufferTextLength
 

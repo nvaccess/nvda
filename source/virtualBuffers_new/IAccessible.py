@@ -16,9 +16,9 @@ class IAccessibleTextInfo(VirtualBufferTextInfo):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible::state_%s'%x]) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if hasIAccessible2:
-			states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs['iaccessible2::state_%s'%x]) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+			states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		newAttrs=attrs.copy()
 		newAttrs['role']=role
 		newAttrs['states']=states
@@ -39,6 +39,7 @@ class IAccessible(VirtualBuffer):
 		isBlockElement=True
 		if isinstance(pacc,IAccessibleHandler.IAccessible2):
 			IAccessible2=1
+			docHandle=IAccessibleHandler.windowFromAccessibleObject(pacc)
 			ID=pacc.uniqueID
 			role=pacc.role()
 			if not role:
@@ -49,6 +50,7 @@ class IAccessible(VirtualBuffer):
 				isBlockElement=False
 		else:
 			IAccessible2=0
+			docHandle=IAccessibleHandler.windowFromAccessibleObject(pacc)
 			ID=-hash(pacc)
 			role=pacc.accRole(accChildID)
 		if role=="embed":
@@ -59,9 +61,10 @@ class IAccessible(VirtualBuffer):
 		attrs['IAccessible::role']=unicode(role)
 		for bitPos in xrange(32):
 			state=1<<bitPos;
-			attrs["IAccessible::state_%d"%state]=unicode((state&states)>>bitPos)
-			if IAccessible2:
-				attrs["IAccessible2::state_%d"%state]=unicode((state&IAccessible2States)>>bitPos)
+			if state&states:
+				attrs["IAccessible::state_%d"%state]="1"
+			if IAccessible2 and state&IAccessible2States:
+					attrs["IAccessible2::state_%d"%state]="1"
 		attrs['keyboardShortcut']=keyboardShortcut if keyboardShortcut else ""
 		if IAccessible2:
 			for attrib in objAttributes.split(';'):
@@ -131,11 +134,11 @@ class IAccessible(VirtualBuffer):
 			elif not text and role in (IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_LIST):
 				children.append(u" ")
 		del pacc
-		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,ID,attrs,isBlockElement)
+		parentNode=VBufStorage_addTagNodeToBuffer(parentNode,previousNode,docHandle,ID,attrs,isBlockElement)
 		previousNode=None
 		for child in children:
 			if isinstance(child,basestring):
-				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,0,child)
+				previousNode=VBufStorage_addTextNodeToBuffer(parentNode,previousNode,docHandle,0,child)
 			else:
 				previousNode=self._fillVBufHelper(child[0],child[1],parentNode,previousNode)
 		return parentNode
@@ -143,8 +146,12 @@ class IAccessible(VirtualBuffer):
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		root=self.rootNVDAObject
-		if root and obj and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(root.windowHandle,obj.windowHandle): 
-			return True
+		w=obj.windowHandle
+		while w:
+			if w==root.windowHandle:
+				return True
+			w=winUser.getAncestor(w,winUser.GA_PARENT)
+		return False
 
 	def isAlive(self):
 		root=self.rootNVDAObject
@@ -159,21 +166,21 @@ class IAccessible(VirtualBuffer):
 		role=obj.role
 		states=obj.states
 		if role==controlTypes.ROLE_DOCUMENT:
-			nextHandler()
-			if not IAccessibleHandler.STATE_SYSTEM_BUSY in states and obj!=self.rootNVDAObject:
+			if not IAccessibleHandler.STATE_SYSTEM_BUSY in states and obj!=self.rootNVDAObject and (not self.isNVDAObjectInVirtualBuffer(obj) or self.rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT): 
 				self.rootNVDAObject=obj
 				self.fillVBuf()
 			return
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
-			oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+			oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
 		except:
-			oldID=0
+			oldDocHandle=oldID=0
+		docHandle=obj.windowHandle
 		ID=obj.IAccessibleObject.uniqueID if isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) else -hash(obj.IAccessibleObject)
-		if ID!=oldID and ID!=0:
+		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
 			try:
-				start,end=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,ID)
+				start,end=VBufStorage_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			except:
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
@@ -187,24 +194,17 @@ class IAccessible(VirtualBuffer):
 				newInfo.updateCaret()
 
 
-	def activatePosition(self,ID):
-		pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
-		speech.speakMessage("pacc: %s"%pacc)
-		speech.speakMessage("accChildID: %s"%accChildID)
-		speech.speakMessage("name: %s"%pacc.accName(accChildID))
-		pacc.accDoDefaultAction(accChildID)
-
-	def _caretMovedToID(self,ID):
+	def _caretMovedToField(self,docHandle,ID):
 		try:
-			pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
+			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
 			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
 				pacc.accSelect(1,accChildID)
 		except:
 			pass
 
-	def _activateID(self,ID):
+	def _activateField(self,docHandle,ID):
 		try:
-			pacc,accChildID=IAccessibleHandler.accChild(self.rootNVDAObject.IAccessibleObject,ID)
+			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessiblehandler.OBJID_CLIENT,ID)
 			role=pacc.accRole(accChildID)
 			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
 				api.toggleVirtualBufferPassThrough()
@@ -221,7 +221,7 @@ class IAccessible(VirtualBuffer):
 		elif nodeType=="visitedLink":
 			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
 		elif nodeType=="unvisitedLink":
-			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[0]}
+			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[0]}
 		else:

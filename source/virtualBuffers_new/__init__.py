@@ -141,26 +141,25 @@ class VirtualBuffer(baseObject.scriptableObject):
 		info=self.makeTextInfo(textHandler.POSITION_FIRST)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
-	def _activateID(self,ID):
+	def _activateField(self,docHandle,ID):
 		pass
 
-	def _activateContextMenuForID(self,ID):
+	def _activateContextMenuForField(self,docHandle,ID):
 		pass
 
-	def _caretMovedToID(self,ID):
+	def _caretMovedToField(self,dochandle,ID):
 		pass
 
 	def script_activatePosition(self,keyPress,nextScript):
 		start,end=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
-		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,start)
-		if ID!=0:
-			self._activateID(ID)
+		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
+		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
 		info=self.makeTextInfo(posConstant)
 		info.collapse()
-		oldID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,info._startOffset)
+		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,info._startOffset)
 		if posUnit is not None:
 			info.expand(posUnit)
 			info.collapse(end=posUnitEnd)
@@ -177,9 +176,9 @@ class VirtualBuffer(baseObject.scriptableObject):
 		else:
 			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
 			speech.speakSpelling(info.text)
-		ID=VBufStorage_getFieldIDFromBufferOffset(self.VBufHandle,info._startOffset)
-		if ID!=0 and ID!=oldID:
-			self._caretMovedToID(ID)
+		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,info._startOffset)
+		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
+			self._caretMovedToField(docHandle,ID)
 
 	def script_pageUp(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
@@ -326,14 +325,17 @@ class VirtualBuffer(baseObject.scriptableObject):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if attribs:
 			startOffset,endOffset=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
-			newID=VBufStorage_findBufferFieldIDByProperties(self.VBufHandle,direction,startOffset,attribs)
+			try:
+				newDocHandle,newID=VBufStorage_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
+			except:
+				return False
 		if not newID or not attribs:
 			return False
-		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldID(self.VBufHandle,newID)
+		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,newDocHandle,newID)
 		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
-		self._caretMovedToID(newID)
+		self._caretMovedToField(newDocHandle,newID)
 		return True
 
 	def script_nextHeading(self,keyPress,nextScript):
