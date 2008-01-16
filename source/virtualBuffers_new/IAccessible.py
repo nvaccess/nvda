@@ -204,7 +204,7 @@ class IAccessible(VirtualBuffer):
 
 	def _activateField(self,docHandle,ID):
 		try:
-			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessiblehandler.OBJID_CLIENT,ID)
+			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
 			role=pacc.accRole(accChildID)
 			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
 				api.toggleVirtualBufferPassThrough()
