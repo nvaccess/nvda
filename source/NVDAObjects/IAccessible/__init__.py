@@ -387,7 +387,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			pass
 
 	def _get_statusBar(self):
-		windowClasses=(u'msctls_statusbar32',u'TTntStatusBar.UnicodeClass')
+		windowClasses=(u'msctls_statusbar32',u'TTntStatusBar.UnicodeClass',u'ATL:msctls_statusbar32')
 		curWindow=self.windowHandle
 		statusWindow=0
 		while not statusWindow and curWindow:
@@ -865,4 +865,5 @@ _staticMap={
 	("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
+	("ATL:msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 }
