@@ -132,6 +132,7 @@ STATE_SYSTEM_VALID=0x1fffffff
 NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 
+import time
 from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
@@ -153,6 +154,8 @@ import appModuleHandler
 import config
 import mouseHandler
 import controlTypes
+
+propertyChangeEventCache={}
 
 IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -666,7 +669,12 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				focusEventQueue.get()
 			focusEventQueue.put((window,objectID,childID))
 			return
-		#Start this event on its way through appModules, virtualBuffers and NVDAObjects
+		elif eventName.endswith("Change") or eventName=="reorder":
+			k=(eventName,window,objectID,childID)
+			if not k in propertyChangeEventCache:
+				propertyChangeEventCache[k]=time.time()
+			return
+		#Its a generic event which should just be queued
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
 	except:
 		globalVars.log.error("winEventCallback", exc_info=True)
@@ -797,6 +805,11 @@ def pumpAll():
 	if not focusEventQueue.empty():
 		window,objectID,childID=focusEventQueue.get()
 		queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID)
+	t=time.time()
+	for k,v in list(propertyChangeEventCache.items()):
+		if (t-v)>=0.1:
+			manageEvent(*k)
+			del propertyChangeEventCache[k]
 
 def terminate():
 	for handle in objectEventHandles:
