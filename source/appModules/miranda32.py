@@ -75,7 +75,7 @@ class appModule(appModuleHandler.appModule):
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":
 			obj.__class__=mirandaIMContactList
-		elif (obj._get_windowControlID() in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
+		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 		elif (obj.windowClassName=="MButtonClass")|(obj.windowClassName=="TSButtonClass"):
 			obj.__class__=mirandaIMButton
