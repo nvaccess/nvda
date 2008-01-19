@@ -672,6 +672,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif eventName.endswith("Change") or eventName=="reorder":
 			k=(eventName,window,objectID,childID)
 			if not k in propertyChangeEventCache:
+				queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,*k)
 				propertyChangeEventCache[k]=time.time()
 			return
 		#Its a generic event which should just be queued
@@ -806,9 +807,8 @@ def pumpAll():
 		window,objectID,childID=focusEventQueue.get()
 		queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID)
 	t=time.time()
-	for k,v in list(propertyChangeEventCache.items()):
+	for k,v in propertyChangeEventCache.items():
 		if (t-v)>=0.1:
-			manageEvent(*k)
 			del propertyChangeEventCache[k]
 
 def terminate():
