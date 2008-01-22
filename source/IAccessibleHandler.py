@@ -155,7 +155,9 @@ import config
 import mouseHandler
 import controlTypes
 
-propertyChangeEventCache={}
+#A set to cache property change events
+#values stored as (eventName,window,objectID,childID)
+propertyChangeEventCache=set()
 
 IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -600,7 +602,6 @@ def manageEvent(name,window,objectID,childID):
 			return
 		if obj==focusObject:
 			obj=focusObject
-			del testObject
 	if obj:
 		eventHandler.manageEvent(name,obj)
 
@@ -670,10 +671,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			focusEventQueue.put((window,objectID,childID))
 			return
 		elif eventName.endswith("Change") or eventName=="reorder":
-			k=(eventName,window,objectID,childID)
-			if not k in propertyChangeEventCache:
-				queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,*k)
-				propertyChangeEventCache[k]=time.time()
+			propertyChangeEventCache.add((eventName,window,objectID,childID))
 			return
 		#Its a generic event which should just be queued
 		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
@@ -806,10 +804,10 @@ def pumpAll():
 	if not focusEventQueue.empty():
 		window,objectID,childID=focusEventQueue.get()
 		queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID)
-	t=time.time()
-	for k,v in propertyChangeEventCache.items():
-		if (t-v)>=0.1:
-			del propertyChangeEventCache[k]
+	s=propertyChangeEventCache.copy()
+	propertyChangeEventCache.clear()
+	for v in s: 
+		manageEvent(*v)
 
 def terminate():
 	for handle in objectEventHandles:
