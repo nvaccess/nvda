@@ -273,7 +273,6 @@ class WordDocument(IAccessible):
 	def __init__(self,*args,**kwargs):
 		self.TextInfo=WordDocumentTextInfo
 		super(WordDocument,self).__init__(*args,**kwargs)
-		self.dom=self.getDocumentObjectModel()
 
 	def __del__(self):
 		self.destroyObjectModel(self.dom)
@@ -281,17 +280,19 @@ class WordDocument(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
-	def getDocumentObjectModel(self):
-		ptr=ctypes.c_void_p()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
-			raise OSError("No native object model")
-		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-		o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
-		t=o.GetTypeInfo()
-		a=t.GetTypeAttr()
-		oleRepr=win32com.client.build.DispatchItem(attr=a)
-		return win32com.client.CDispatch(o,oleRepr)
- 
+	def _get_dom(self):
+		if not hasattr(self,'_dom'): 
+			ptr=ctypes.c_void_p()
+			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
+				raise OSError("No native object model")
+			#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
+			o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
+			t=o.GetTypeInfo()
+			a=t.GetTypeAttr()
+			oleRepr=win32com.client.build.DispatchItem(attr=a)
+			self._dom=win32com.client.CDispatch(o,oleRepr)
+ 		return self._dom
+
 	def destroyObjectModel(self,om):
 		pass
 
