@@ -804,7 +804,7 @@ def pumpAll():
 	global lastFocusEvent
 	if not focusEventQueue.empty():
 		window,objectID,childID=focusEventQueue.get()
-		queueHandler.queueFunction(queueHandler.eventQueue,focus_winEventCallback,window,objectID,childID)
+		focus_winEventCallback(window,objectID,childID)
 	s=propertyChangeEventCache.copy()
 	propertyChangeEventCache.clear()
 	for v in s: 
