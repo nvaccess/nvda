@@ -658,7 +658,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			if not config.conf["mouse"]["reportMouseShapeChanges"]:
 				return
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
-			queueHandler.queueFunction(queueHandler.eventQueue,mouseHandler.updateMouseShape,obj.name)
+			if obj:
+				queueHandler.queueFunction(queueHandler.eventQueue,mouseHandler.updateMouseShape,obj.name)
 			return
 		#Process foreground events
 		if eventName=="foreground":
