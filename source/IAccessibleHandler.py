@@ -603,6 +603,8 @@ def manageEvent(name,window,objectID,childID):
 		if obj==focusObject:
 			obj=focusObject
 	if obj:
+		globalVars.log.warning("event %s, %s, %s, %s"%(name,window,objectID,childID))
+		globalVars.log.warning("event object: %s, %s"%(obj.name,controlTypes.speechRoleLabels[obj.role])) 
 		eventHandler.manageEvent(name,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
@@ -670,7 +672,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				focusEventQueue.get()
 			focusEventQueue.put((window,objectID,childID))
 			return
-		elif eventName.endswith("Change") or eventName=="reorder":
+		elif eventName.endswith("Change") or eventName in ("reorder","caret"):
 			propertyChangeEventCache.add((eventName,window,objectID,childID))
 			return
 		#Its a generic event which should just be queued
