@@ -603,8 +603,6 @@ def manageEvent(name,window,objectID,childID):
 		if obj==focusObject:
 			obj=focusObject
 	if obj:
-		globalVars.log.warning("event %s, %s, %s, %s"%(name,window,objectID,childID))
-		globalVars.log.warning("event object: %s, %s"%(obj.name,controlTypes.speechRoleLabels[obj.role])) 
 		eventHandler.manageEvent(name,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
