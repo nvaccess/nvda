@@ -93,7 +93,7 @@ InstProgressFlags Smooth
 !insertmacro MUI_LANGUAGE "Croatian"
 ;!insertmacro MUI_LANGUAGE "Bulgarian"
 !insertmacro MUI_LANGUAGE "Hungarian"
-;!insertmacro MUI_LANGUAGE "Thai"
+!insertmacro MUI_LANGUAGE "Thai"
 ;!insertmacro MUI_LANGUAGE "Romanian"
 ;!insertmacro MUI_LANGUAGE "Latvian"
 ;!insertmacro MUI_LANGUAGE "Macedonian"
@@ -139,6 +139,7 @@ InstProgressFlags Smooth
 !include "locale\ru\langstrings.txt"
 !include "locale\se\langstrings.txt"
 !include "locale\sk\langstrings.txt"
+!include "locale\th\langstrings.txt"
 !include "locale\zh\langstrings.txt"
 !include "locale\zh_tw\langstrings.txt"
 
