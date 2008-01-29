@@ -185,6 +185,22 @@ class IA2(IAccessible):
 			return
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
+			inDocument=None
+			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
+				if ancestor.role==controlTypes.ROLE_DOCUMENT:
+					inDocument=ancestor
+					break
+			if not inDocument:
+				return
+			parent=self
+			caretInDocument=False
+			while parent:
+				if parent==inDocument:
+ 					caretInDocument=True
+					break
+				parent=parent.parent
+			if not caretInDocument:
+				return
 			info=self.makeTextInfo(textHandler.POSITION_CARET)
 			info.expand(textHandler.UNIT_CHARACTER)
 			try:
