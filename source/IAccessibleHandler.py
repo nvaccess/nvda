@@ -710,19 +710,19 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	focus_manageEvent(obj,isForegroundChange)
 
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
-	if isForegroundChange:
-		api.setForegroundObject(obj)
-		speech.cancelSpeech()
-		needsFocusState=False
 	if not obj:
 		return
 	if obj.role==controlTypes.ROLE_UNKNOWN:
 		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
+	if isForegroundChange:
+		api.setForegroundObject(obj)
+		speech.cancelSpeech()
+		needsFocusState=False
 	if not isForegroundChange:
 		activeChild=obj.activeChild
-		if activeChild and obj.activeChild!=obj:
+		if activeChild and obj.activeChild!=obj and activeChild.role!=controlTypes.ROLE_UNKNOWN:
 			return focus_manageEvent(activeChild,False)
 	oldFocus=api.getFocusObject()
 	if obj==oldFocus:
