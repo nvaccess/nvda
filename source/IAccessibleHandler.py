@@ -711,6 +711,8 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if isForegroundChange:
+		api.setForegroundObject(obj)
+		speech.cancelSpeech()
 		needsFocusState=False
 	if not obj:
 		return
@@ -718,6 +720,10 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
+	if not isForegroundChange:
+		activeChild=obj.activeChild
+		if activeChild and obj.activeChild!=obj:
+			return focus_manageEvent(activeChild,False)
 	oldFocus=api.getFocusObject()
 	if obj==oldFocus:
 		return
@@ -772,10 +778,10 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 		if not hasFocusState:
 			return
 	api.setFocusObject(obj,ancestors=ancestors)
-	if isForegroundChange:
-		speech.cancelSpeech()
-		api.setForegroundObject(obj)
-	eventHandler.manageEvent("gainFocus",obj)
+	if isForegroundChange and obj.childCount>0:
+		eventHandler.manageEvent("focusEntered",obj)
+	else:
+		eventHandler.manageEvent("gainFocus",obj)
 
 #Register internal object event with IAccessible
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)

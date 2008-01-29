@@ -576,7 +576,7 @@ Tries to force this object to take the focus.
 			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
 
 	def event_focusEntered(self):
-		speech.speakObject(self,reason=speech.REASON_FOCUS)
+		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""
