@@ -721,7 +721,10 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 		speech.cancelSpeech()
 		needsFocusState=False
 	if not isForegroundChange:
-		activeChild=obj.activeChild
+		if obj.role not in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_MENUITEM):
+			activeChild=obj.activeChild
+		else:
+			activeChild=None
 		if activeChild and obj.activeChild!=obj and activeChild.role!=controlTypes.ROLE_UNKNOWN:
 			return focus_manageEvent(activeChild,False)
 	oldFocus=api.getFocusObject()
