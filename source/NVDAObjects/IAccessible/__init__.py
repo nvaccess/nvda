@@ -28,9 +28,9 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject
 import NVDAObjects.JAB
 
-re_gecko_level=re.compile('.*L([0-9]+)')
-re_gecko_position=re.compile('.*([0-9]+) of ([0-9]+)')
-re_gecko_contains=re.compile('.*with ([0-9]+)')
+re_gecko_level=re.compile('.*?L([0-9]+).*')
+re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
+re_gecko_contains=re.compile('.*?with ([0-9]+).*')
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -49,7 +49,7 @@ def getNVDAObjectFromPoint(x,y):
 	return obj
 
 def processGeckoDescription(obj):
-	if obj.windowClassName not in ["MozillaWindowClass","MozillaContentWindowClass","MozillaUIWindowClass","MozillaDialogClass"]:
+	if not obj.windowClassName.startswith('Mozilla'):
 		return
 	rawDescription=obj.description
 	if not isinstance(rawDescription,basestring):
@@ -60,15 +60,22 @@ def processGeckoDescription(obj):
 	m=re_gecko_level.match(rawDescription)
 	groups=m.groups() if m else []
 	if len(groups)>=1:
-		obj.level=int(groups[0])
+		level=_("level %s")%groups[0]
+	else:
+		level=None
 	m=re_gecko_position.match(rawDescription)
 	groups=m.groups() if m else []
 	if len(groups)==2:
-		obj.positionString=_("%s of %s")%(groups[0],groups[1])
+		positionString=_("%s of %s")%(groups[0],groups[1])
+	else:
+		positionString=None
 	m=re_gecko_contains.match(rawDescription)
 	groups=m.groups() if m else []
 	if len(groups)>=1:
-		obj.contains=_("%s items")%groups[0]
+		contains=_("contains %s items")%groups[0]
+	else:
+		contains=None
+		obj.positionString=" ".join([x for x in level,positionString,contains if x])
 	obj.description=""
 
 class IAccessible(Window):
