@@ -180,6 +180,10 @@ class IA2(IAccessible):
 			return super(IA2,self).doAction(index)
 		self.IAccessibleActionObject.doAction(index)
 
+	def _get_value(self):
+		if not hasattr(self,'IAccessibleTextObject'):
+			return super(IA2,self)._get_value()
+
 	def event_caret(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
