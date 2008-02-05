@@ -158,6 +158,7 @@ STATE_MODAL=0X40000
 STATE_AUTOCOMPLETE=0x80000
 STATE_MULTILINE=0X100000
 STATE_ICONIFIED=0x200000
+STATE_SELECTABLE=0x400000
 
 speechRoleLabels={
 	ROLE_UNKNOWN:_("unknown object"),
@@ -321,4 +322,5 @@ speechStateLabels={
 	STATE_AUTOCOMPLETE:_("has auto complete"),
 	STATE_MULTILINE:_("multi line"),
 	STATE_ICONIFIED:_("iconified"),
+	STATE_SELECTABLE:_("selectable"),
 }

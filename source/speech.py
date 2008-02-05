@@ -215,7 +215,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 	beenCanceled=False
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
-	for name,value in allowedProperties.items():
+	for name,value in allowedProperties.iteritems():
 		if value:
 			newPropertyValues[name]=getattr(obj,name)
 	#Fetched the cached properties and update them with the new ones
@@ -228,7 +228,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		return
 	#If only speaking change, then filter out all values that havn't changed
 	if reason==REASON_CHANGE:
-		for name in set(newPropertyValues.keys())&set(oldCachedPropertyValues.keys()):
+		for name in set(newPropertyValues)&set(oldCachedPropertyValues):
 			if newPropertyValues[name]==oldCachedPropertyValues[name]:
 				del newPropertyValues[name]
 			elif name=="states": #states need specific handling
@@ -238,10 +238,9 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 				newPropertyValues['negativeStates']=oldStates-newStates
 	#Get the speech text for the properties we want to speak, and then speak it
 	#properties such as states need to know the role to speak properly, give it as a _ name
-	if 'role' not in newPropertyValues:
-		newPropertyValues['_role']=obj.role
-	else:
-		newPropertyValues['_role']=newPropertyValues['role']
+	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+	# The real states are needed also, as the states entry might be filtered.
+	newPropertyValues['_states']=obj.states
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
 		speakText(text,index=index)
@@ -431,23 +430,40 @@ silentRolesOnFocus=set([
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
-silentPositiveStatesOnFocus={
-	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED,controlTypes.STATE_INVISIBLE,controlTypes.STATE_READONLY,controlTypes.STATE_LINKED]),
-	controlTypes.ROLE_LISTITEM:set([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_TREEVIEWITEM:set([controlTypes.STATE_SELECTED]),
-}
+def processPositiveStates(role, states, reason, positiveStates):
+	positiveStates = positiveStates.copy()
+	# The user never cares about certain states.
+	positiveStates.discard(controlTypes.STATE_SELECTABLE)
+	if reason == REASON_QUERY:
+		return positiveStates
+	positiveStates.discard(controlTypes.STATE_FOCUSED)
+	if reason == REASON_FOCUS:
+		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
+		if controlTypes.STATE_SELECTABLE in states:
+			positiveStates.discard(controlTypes.STATE_SELECTED)
+	if role == controlTypes.ROLE_CHECKBOX:
+		positiveStates.discard(controlTypes.STATE_PRESSED)
+	return positiveStates
 
-silentPositiveStatesOnStateChange={
-	controlTypes.ROLE_UNKNOWN:set([controlTypes.STATE_FOCUSED]),
-	controlTypes.ROLE_CHECKBOX:set([controlTypes.STATE_PRESSED]),
-}
-
-spokenNegativeStates={
-	controlTypes.ROLE_UNKNOWN:set(),
-	controlTypes.ROLE_LISTITEM:set([controlTypes.STATE_SELECTED]),
-	controlTypes.ROLE_CHECKBOX: set([controlTypes.STATE_CHECKED]),
-	controlTypes.ROLE_RADIOBUTTON: set([controlTypes.STATE_CHECKED]),
-}
+def processNegativeStates(role, states, reason, negativeStates):
+	speakNegatives = set()
+	# Add the negative selected state if the control is selectable,
+	# but only if it is either focused or this is something other than a change event.
+	# The condition stops "not selected" from being spoken in some broken controls
+	# when the state change for the previous focus is issued before the focus change.
+	if controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+		speakNegatives.add(controlTypes.STATE_SELECTED)
+	if role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON):
+		speakNegatives.add(controlTypes.STATE_CHECKED)
+	if reason == REASON_CHANGE:
+		# We were given states which have changed to negative.
+		# Return only those supplied negative states which should be spoken;
+		# i.e. the states in both sets.
+		return negativeStates & speakNegatives
+	else:
+		# This is not a state change; only positive states were supplied.
+		# Return all negative states which should be spoken, excluding the positive states.
+		return speakNegatives - states
 
 class XMLFieldParser(object):
 
@@ -670,26 +686,22 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'value' in propertyValues:
 		textList.append(propertyValues['value'])
 		del propertyValues['value']
+	realStates=propertyValues['_states']
 	if 'states' in propertyValues:
 		states=propertyValues['states']
-		positiveStates=states
-		if reason in (REASON_SAYALL,REASON_CARET,REASON_FOCUS):
-			positiveStates=(positiveStates-silentPositiveStatesOnFocus.get(role,set()))-silentPositiveStatesOnFocus[controlTypes.ROLE_UNKNOWN]
-		elif reason==REASON_CHANGE:
-			positiveStates=(positiveStates-silentPositiveStatesOnStateChange.get(role,set()))-silentPositiveStatesOnStateChange[controlTypes.ROLE_UNKNOWN]
+		positiveStates=processPositiveStates(role,realStates,reason,states)
 		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
 		del propertyValues['states']
 	else:
 		states=None
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
-		negativeStates=(negativeStates&(spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN]))
 		del propertyValues['negativeStates']
-	elif reason!=REASON_CHANGE and states is not None:
-		negativeStates=((spokenNegativeStates.get(role,set())|spokenNegativeStates[controlTypes.ROLE_UNKNOWN])-states)
 	else:
-		negativeStates=set()
-	textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
+		negativeStates=None
+	if negativeStates is not None or (reason != REASON_CHANGE and states is not None):
+		negativeStates=processNegativeStates(role, realStates, reason, negativeStates)
+		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 		del propertyValues['description']
