@@ -437,7 +437,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
-	if reason == REASON_FOCUS:
+	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
 		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
 		if role == controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
@@ -686,14 +686,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'value' in propertyValues:
 		textList.append(propertyValues['value'])
 		del propertyValues['value']
-	realStates=propertyValues['_states']
-	if 'states' in propertyValues:
-		states=propertyValues['states']
+	states=propertyValues.get('states')
+	realStates=propertyValues.get('_states',states)
+	if states is not None:
 		positiveStates=processPositiveStates(role,realStates,reason,states)
 		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
 		del propertyValues['states']
-	else:
-		states=None
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
 		del propertyValues['negativeStates']
