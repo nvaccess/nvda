@@ -439,7 +439,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
 	if reason == REASON_FOCUS:
 		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
-		if controlTypes.STATE_SELECTABLE in states:
+		if role == controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
 	if role == controlTypes.ROLE_CHECKBOX:
 		positiveStates.discard(controlTypes.STATE_PRESSED)

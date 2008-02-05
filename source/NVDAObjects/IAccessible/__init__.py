@@ -795,11 +795,6 @@ class MenuItem(IAccessible):
 		else:
 			return None
 
-	def _get_states(self):
-		states = super(MenuItem, self)._get_states()
-		states.discard(controlTypes.STATE_SELECTABLE)
-		return states
-
 ###class mappings
 
 _staticMap={
