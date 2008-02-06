@@ -9,7 +9,6 @@ from ctypes.wintypes import *
 import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible
-from IAccessibleHandler import IAccessibleStatesToNVDAStates
 import appModuleHandler
 import speech
 import controlTypes
@@ -111,17 +110,14 @@ class mirandaIMContactList(IAccessible):
 			return controlTypes.ROLE_TREEVIEWITEM
 
 	def _get_states(self):
-		newStates=[]
-		for state in api.createStateList(self.IAccessibleStates):
-			if IAccessibleStatesToNVDAStates.has_key(state):
-				newStates.append(IAccessibleStatesToNVDAStates[state])
+		newStates=super(mirandaIMContactList,self)._get_states()
 		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		state=winUser.sendMessage(self.windowHandle,CLM_GETEXPAND,hItem,0)
 		if state==CLE_EXPAND:
-			newStates.append(controlTypes.STATE_EXPANDED)
+			newStates.add(controlTypes.STATE_EXPANDED)
 		elif state==CLE_COLLAPSE:
-			newStates.append(controlTypes.STATE_COLLAPSED)
-		return frozenset(newStates)
+			newStates.add(controlTypes.STATE_COLLAPSED)
+		return newStates
 
 	def script_changeItem(self,keyPress,nextScript):
 		sendKey(keyPress)
