@@ -451,7 +451,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# but only if it is either focused or this is something other than a change event.
 	# The condition stops "not selected" from being spoken in some broken controls
 	# when the state change for the previous focus is issued before the focus change.
-	if controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+	if role == controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
 	if role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
