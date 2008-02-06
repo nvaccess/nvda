@@ -683,16 +683,6 @@ class List(IAccessible):
 		if child:
 			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
-	def event_gainFocus(self):
-		IAccessible.event_gainFocus(self)
-		child=self.activeChild
-		if child and (child.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_LISTITEM):
-			api.processPendingEvents()
-			if child!=api.getFocusObject():
-				IAccessibleHandler.focus_manageEvent(child)
-		elif not self.firstChild:
-			speech.speakMessage(_("%d items")%0)
-
 class ComboBox(IAccessible):
 
 	def speakDescendantObjects(self,hashList=None):
@@ -758,20 +748,6 @@ class TaskListIcon(IAccessible):
 			return
 		super(TaskListIcon,self).reportFocus()
 
-
-class ToolBar(IAccessible):
-
-	def event_gainFocus(self):
-		# Sometimes, the toolbar itself receives the focus instead of the focused child.
-		# However, the focused child still has the focused state.
-		super(ToolBar, self).event_gainFocus()
-		for child in self.children:
-			if child.IAccessibleStates & IAccessibleHandler.STATE_SYSTEM_FOCUSED:
-				# Redirect the focus to the focused child.
-				api.processPendingEvents()
-				if child!=api.getFocusObject():
-					IAccessibleHandler.focus_manageEvent(child)
-				return
 
 class ToolBarButton(IAccessible):
 
@@ -858,7 +834,6 @@ _staticMap={
 	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TTntStatusBar.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
-	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_TOOLBAR):"ToolBar",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"ToolBarButton",
 	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
