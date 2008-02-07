@@ -177,6 +177,40 @@ class CursorManager(baseObject.AutoPropertyObject):
 		if api.copyToClip(text):
 			speech.speakMessage(_("copied to clipboard"))
 
+	def bindToStandardKeys(self):
+		"""Bind the standard navigation, selection and copy keys on L{obj} to this cursor manager.
+		"""
+		for keyName, func in (
+			("extendedPrior",self.script_pageUp),
+			("extendedNext",self.script_pageDown),
+			("ExtendedUp",self.script_moveByLine_back),
+			("ExtendedDown",self.script_moveByLine_forward),
+			("ExtendedLeft",self.script_moveByCharacter_back),
+			("ExtendedRight",self.script_moveByCharacter_forward),
+			("Control+ExtendedLeft",self.script_moveByWord_back),
+			("Control+ExtendedRight",self.script_moveByWord_forward),
+			("ExtendedHome",self.script_startOfLine),
+			("ExtendedEnd",self.script_endOfLine),
+			("control+ExtendedHome",self.script_topOfDocument),
+			("control+ExtendedEnd",self.script_bottomOfDocument),
+			("Return",self.script_activatePosition),
+			("Space",self.script_activatePosition),
+			("NVDA+f5",self.script_refreshBuffer),
+			("shift+extendedRight",self.script_selectCharacter_forward),
+			("shift+extendedLeft",self.script_selectCharacter_back),
+			("control+shift+extendedRight",self.script_selectWord_forward),
+			("control+shift+extendedLeft",self.script_selectWord_back),
+			("shift+extendedDown",self.script_selectLine_forward),
+			("shift+extendedUp",self.script_selectLine_back),
+			("shift+extendedEnd",self.script_selectToEndOfLine),
+			("shift+extendedHome",self.script_selectToBeginningOfLine),
+			("control+shift+extendedEnd",self.script_selectToBottomOfDocument),
+			("control+shift+extendedHome",self.script_selectToTopOfDocument),
+			("control+a",self.script_selectAll),
+			("control+c",self.script_copyToClipboard),
+		):
+			self.obj.bindKeyToFunc_runtime(keyName, func)
+
 class ReviewCursorManager(CursorManager):
 
 	def __init__(self, obj, startSelection):
