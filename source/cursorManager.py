@@ -186,7 +186,7 @@ class ReviewCursorManager(CursorManager):
 	def makeTextInfo(self, position):
 		if position in (POSITION_CARET, POSITION_SELECTION):
 			return self._selection
-	return super(ReviewCursorManager, self).makeTextInfo(position)
+		return super(ReviewCursorManager, self).makeTextInfo(position)
 	def _get_selection(self):
 		return self._selection
 
