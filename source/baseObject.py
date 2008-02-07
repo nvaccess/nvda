@@ -35,11 +35,16 @@ class scriptableObject(autoPropertyObject):
 
 	def bindKey_runtime(self,keyName,scriptName):
 		scriptName="script_%s"%scriptName
-		if not hasattr(self.__class__,scriptName):
+    		func=getattr(self.__class__,scriptName,None)
+		if func:
+            			self.bindKeyToFunc_runTime(keyName,func)
+      		else:
 			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
+
+	def bindKeyToFunc_runtime(self,keyName,func):
 		if not self.__dict__.has_key('_keyMap'):
 			self._keyMap=getattr(self.__class__,'_keyMap',{}).copy()
-		self._keyMap[key(keyName)]=getattr(self.__class__,scriptName)
+		self._keyMap[key(keyName)]=func
 
 
 	_keyMap={}
@@ -50,6 +55,9 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 @param keyPress: The key you wish to retreave the script for
 @type keyPress: key
 """ 
-		if self._keyMap.has_key(keyPress):
+		if keyPress in self._keyMap:
 			func=self._keyMap[keyPress]
-			return instancemethod(func,self,self.__class__)
+      			if func.im_self:
+            				return func
+      			else:
+				return instancemethod(func,self,self.__class__)
