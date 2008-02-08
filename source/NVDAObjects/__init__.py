@@ -361,15 +361,6 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	def __ne__(self,other):
 		return not self.__eq__(other)
 
-	def getScript(self,keyPress):
-		"""
-Returns a script (instance method) if one is assigned to the keyPress given.
-@param keyPress: The key you wish to retreave the script for
-@type keyPress: key
-""" 
-		if self._keyMap.has_key(keyPress):
-			return instancemethod(self._keyMap[keyPress],self,self.__class__)
-
 	def _get_virtualBuffer(self):
 		if not hasattr(self,'_virtualBufferRef'):
 			v=virtualBufferHandler.getVirtualBuffer(self)
