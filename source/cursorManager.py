@@ -69,9 +69,13 @@ class CursorManager(baseObject.autoPropertyObject):
 			info.expand(unit)
 		self.caret = info
 		if unit!=textHandler.UNIT_CHARACTER:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
+			if info.hasXML:
+				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
+			else:
+				speech.speakFormattedText(info)
 		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
+			if info.hasXML:
+				speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
 			speech.speakSpelling(info.text)
 
 	def script_pageUp(self,keyPress,nextScript):
