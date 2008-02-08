@@ -5,51 +5,50 @@
 #See the file COPYING for more details.
 
 """
-Base implementation of cursor managers.
+Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
 
-import weakref
 import baseObject
 import textHandler
 import api
 import speech
 
-class CursorManager(baseObject.autoPropertyObject):
+class CursorManager(baseObject.scriptableObject):
 	"""
-	Provides caret navigation and selection commands for a virtual text range.
+	A mix-in providing caret navigation and selection commands for the object's virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
-	This base cursor manager requires that the text range to which it is linked stores its own caret and selection information.
-	@ivar obj: The object to which this instance is linked.
-	@type obj: L{baseObject.scriptableObject} providing a C{makeTextInfo(position)} method
+	This base cursor manager requires that the text range being used stores its own caret and selection information.
+
+	This is a mix-in class; i.e. it should be inherited alongside another L{baseObject.scriptableObject}.
+	The class into which it is inherited must provide a C{makeTextInfo(position)} method.
+
 	@ivar caret: The current caret position.
 	@type caret: L{textHandler.TextInfo}
 	@ivar selection: The current selection range.
 	@type selection: L{textHandler.TextInfo}
 	"""
 	
-	def __init__(self, obj):
+	def __init__(self, *args, **kwargs):
+		super(CursorManager, self).__init__(*args, **kwargs)
+		self.initCursorManager()
+
+	def initCursorManager(self):
+		"""Initialise this cursor manager.
+		This must be called before the cursor manager functionality can be used.
+		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
 		"""
-		@param obj: The object to which this instance will be linked.
-		@type obj: L{baseObject.scriptableObject} providing a C{makeTextInfo(position)} method
-		"""
-		self._obj = weakref.ref(obj)
 		self._lastSelectionMovedStart=False
-
-	def _get_obj(self):
-		return self._obj()
-
-	def makeTextInfo(self, position):
-		return self.obj.makeTextInfo(position)
+		self.bindToStandardKeys()
 
 	def _get_caret(self):
-		return self.obj.makeTextInfo(textHandler.POSITION_CARET)
+		return self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _set_caret(self, info):
 		info.updateCaret()
 
 	def _get_selection(self):
-		return self.obj.makeTextInfo(textHandler.POSITION_SELECTIONT)
+		return self.makeTextInfo(textHandler.POSITION_SELECTIONT)
 
 	def _set_selection(self, info):
 		info.updateSelection()
@@ -209,7 +208,7 @@ class CursorManager(baseObject.autoPropertyObject):
 			speech.speakMessage(_("copied to clipboard"))
 
 	def bindToStandardKeys(self):
-		"""Bind the standard navigation, selection and copy keys on L{obj} to this cursor manager.
+		"""Bind the standard navigation, selection and copy keys to the cursor manager scripts.
 		"""
 		for keyName, func in (
 			("extendedPrior",self.script_pageUp),
@@ -237,7 +236,7 @@ class CursorManager(baseObject.autoPropertyObject):
 			("control+a",self.script_selectAll),
 			("control+c",self.script_copyToClipboard),
 		):
-			self.obj.bindKeyToFunc_runtime(keyName, func)
+			self.bindKeyToFunc_runtime(keyName, func)
 
 class ReviewCursorManager(CursorManager):
 	"""
@@ -245,15 +244,16 @@ class ReviewCursorManager(CursorManager):
 	This cursor manager maintains its own caret and selection information.
 	Thus, the underlying text range need not support updating the caret or selection.
 	"""
-	
-	def __init__(self, obj, startSelection):
-		super(ReviewCursorManager, self).__init__(obj)
-		self._selection = startSelection
-	
+
+	def initCursorManager(self):
+		super(ReviewCursorManager, self).initCursorManager()
+		self._selection = super(ReviewCursorManager, self).makeTextInfo(textHandler.POSITION_CARET)
+
 	def makeTextInfo(self, position):
 		if position in (textHandler.POSITION_CARET, textHandler.POSITION_SELECTION):
 			return self._selection
 		return super(ReviewCursorManager, self).makeTextInfo(position)
+
 	def _get_selection(self):
 		return self._selection
 

@@ -86,17 +86,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		else:
 			return ""
 
-
-class VirtualBufferCursorManager(cursorManager.CursorManager):
-	
-	def _caretMovementScriptHelper(self, *args, **kwargs):
-		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,self.caret._startOffset)
-		super(VirtualBufferCursorManager, self)._caretMovementScriptHelper(*args, **kwargs)
-		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,self.caret._startOffset)
-		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
-			self.obj._caretMovedToField(docHandle,ID)
-
-class VirtualBuffer(baseObject.scriptableObject):
+class VirtualBuffer(cursorManager.CursorManager):
 
 	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
 		self.TextInfo=TextInfo
@@ -105,8 +95,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
 		self._useScreenLayout=True
-		self._cursorManager = VirtualBufferCursorManager(self)
-		self._cursorManager.bindToStandardKeys()
 
 	def __del__(self):
 		VBufStorage_destroyBuffer(self.VBufHandle)
@@ -165,6 +153,13 @@ class VirtualBuffer(baseObject.scriptableObject):
 		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
+
+	def _caretMovementScriptHelper(self, *args, **kwargs):
+		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.caret._startOffset)
+		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
+		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.caret._startOffset)
+		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
+			self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress,nextScript):
 		self.fillVBuf()
