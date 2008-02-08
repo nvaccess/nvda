@@ -13,8 +13,9 @@ import weakref
 import baseObject
 import textHandler
 import api
+import speech
 
-class CursorManager(baseObject.AutoPropertyObject):
+class CursorManager(baseObject.autoPropertyObject):
 	"""
 	Provides caret navigation and selection commands for a virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
@@ -42,13 +43,13 @@ class CursorManager(baseObject.AutoPropertyObject):
 		return self.obj.makeTextInfo(position)
 
 	def _get_caret(self):
-		return self.obj.makeTextInfo(POSITION_CARETT)
+		return self.obj.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _set_caret(self, info):
 		info.updateCaret()
 
 	def _get_selection(self):
-		return self.obj.makeTextInfo(POSITION_SELECTIONT)
+		return self.obj.makeTextInfo(textHandler.POSITION_SELECTIONT)
 
 	def _set_selection(self, info):
 		info.updateSelection()
@@ -219,9 +220,6 @@ class CursorManager(baseObject.AutoPropertyObject):
 			("ExtendedEnd",self.script_endOfLine),
 			("control+ExtendedHome",self.script_topOfDocument),
 			("control+ExtendedEnd",self.script_bottomOfDocument),
-			("Return",self.script_activatePosition),
-			("Space",self.script_activatePosition),
-			("NVDA+f5",self.script_refreshBuffer),
 			("shift+extendedRight",self.script_selectCharacter_forward),
 			("shift+extendedLeft",self.script_selectCharacter_back),
 			("control+shift+extendedRight",self.script_selectWord_forward),
@@ -249,7 +247,7 @@ class ReviewCursorManager(CursorManager):
 		self._selection = startSelection
 	
 	def makeTextInfo(self, position):
-		if position in (POSITION_CARET, POSITION_SELECTION):
+		if position in (textHandler.POSITION_CARET, textHandler.POSITION_SELECTION):
 			return self._selection
 		return super(ReviewCursorManager, self).makeTextInfo(position)
 	def _get_selection(self):
