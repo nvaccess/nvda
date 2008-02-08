@@ -36,7 +36,7 @@ class appModule(appModuleHandler.appModule):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			obj.__class__=MSNHistory
 			# This is necessary because we're reassigning __class__ and the __init__ for the new class doesn't get called.
-			obj.cursorManagerInit()
+			obj.initCursorManager()
 
 class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
