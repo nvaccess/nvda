@@ -1,11 +1,37 @@
+#cursorManager.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
+"""
+Base implementation of cursor managers.
+A cursor manager provides caret navigation and selection commands for a virtual text range.
+"""
+
 import weakref
 import baseObject
 import textHandler
 import api
 
 class CursorManager(baseObject.AutoPropertyObject):
-
+	"""
+	Provides caret navigation and selection commands for a virtual text range.
+	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
+	This base cursor manager requires that the text range to which it is linked stores its own caret and selection information.
+	@ivar obj: The object to which this instance is linked.
+	@type obj: L{baseObject.scriptableObject} providing a C{makeTextInfo(position)} method
+	@ivar caret: The current caret position.
+	@type caret: L{textHandler.TextInfo}
+	@ivar selection: The current selection range.
+	@type selection: L{textHandler.TextInfo}
+	"""
+	
 	def __init__(self, obj):
+		"""
+		@param obj: The object to which this instance will be linked.
+		@type obj: L{baseObject.scriptableObject} providing a C{makeTextInfo(position)} method
+		"""
 		self._obj = weakref.ref(obj)
 		self._lastSelectionMovedStart=False
 
@@ -212,7 +238,12 @@ class CursorManager(baseObject.AutoPropertyObject):
 			self.obj.bindKeyToFunc_runtime(keyName, func)
 
 class ReviewCursorManager(CursorManager):
-
+	"""
+	A cursor manager used for review.
+	This cursor manager maintains its own caret and selection information.
+	Thus, the underlying text range need not support updating the caret or selection.
+	"""
+	
 	def __init__(self, obj, startSelection):
 		super(ReviewCursorManager, self).__init__(obj)
 		self._selection = startSelection
