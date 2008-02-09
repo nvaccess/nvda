@@ -45,7 +45,7 @@ class CursorManager(baseObject.scriptableObject):
 	def _set_selection(self, info):
 		info.updateSelection()
 
-	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
+	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False):
 		info=self.makeTextInfo(posConstant)
 		info.collapse(end=not self._lastSelectionMovedStart)
 		if posUnit is not None:
@@ -153,14 +153,16 @@ class CursorManager(baseObject.scriptableObject):
 		self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
 
 	def script_selectToBeginningOfLine(self,keyPress,nextScript):
-		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		curInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		curInfo.collapse()
 		tempInfo=curInfo.copy()
 		tempInfo.expand(textHandler.UNIT_LINE)
 		if curInfo.compareEndPoints(tempInfo,"startToStart")>0:
 			self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
 
 	def script_selectToEndOfLine(self,keyPress,nextScript):
-		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		curInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		curInfo.collapse()
 		tempInfo=curInfo.copy()
 		curInfo.expand(textHandler.UNIT_CHARACTER)
 		tempInfo.expand(textHandler.UNIT_LINE)
@@ -238,7 +240,7 @@ class ReviewCursorManager(CursorManager):
 
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()
-		self._selection = super(ReviewCursorManager, self).makeTextInfo(textHandler.POSITION_CARET)
+		self._selection = super(ReviewCursorManager, self).makeTextInfo(textHandler.POSITION_SELECTION)
 
 	def makeTextInfo(self, position):
 		if position == textHandler.POSITION_SELECTION:
