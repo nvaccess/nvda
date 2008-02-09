@@ -23,12 +23,10 @@ class CursorManager(baseObject.scriptableObject):
 	This is a mix-in class; i.e. it should be inherited alongside another L{baseObject.scriptableObject}.
 	The class into which it is inherited must provide a C{makeTextInfo(position)} method.
 
-	@ivar caret: The current caret position.
-	@type caret: L{textHandler.TextInfo}
-	@ivar selection: The current selection range.
+	@ivar selection: The current caret/selection range.
 	@type selection: L{textHandler.TextInfo}
 	"""
-	
+
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
 		self.initCursorManager()
@@ -41,32 +39,25 @@ class CursorManager(baseObject.scriptableObject):
 		self._lastSelectionMovedStart=False
 		self.bindToStandardKeys()
 
-	def _get_caret(self):
-		return self.makeTextInfo(textHandler.POSITION_CARET)
-
-	def _set_caret(self, info):
-		info.updateCaret()
-
 	def _get_selection(self):
-		return self.makeTextInfo(textHandler.POSITION_SELECTIONT)
+		return self.makeTextInfo(textHandler.POSITION_SELECTION)
 
 	def _set_selection(self, info):
 		info.updateSelection()
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
 		info=self.makeTextInfo(posConstant)
-		info.collapse()
+		info.collapse(end=not self._lastSelectionMovedStart)
 		if posUnit is not None:
 			info.expand(posUnit)
 			info.collapse(end=posUnitEnd)
 			if posUnitEnd:
 				info.move(textHandler.UNIT_CHARACTER,-1)
-		info.expand(unit)
 		if direction is not None:
-			info.collapse()
+			info.collapse(end=posUnitEnd)
 			info.move(unit,direction)
-			info.expand(unit)
-		self.caret = info
+		self.selection=info.copy()
+		info.expand(unit)
 		if unit!=textHandler.UNIT_CHARACTER:
 			if info.hasXML:
 				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
@@ -250,7 +241,7 @@ class ReviewCursorManager(CursorManager):
 		self._selection = super(ReviewCursorManager, self).makeTextInfo(textHandler.POSITION_CARET)
 
 	def makeTextInfo(self, position):
-		if position in (textHandler.POSITION_CARET, textHandler.POSITION_SELECTION):
+		if position == textHandler.POSITION_SELECTION:
 			return self._selection
 		return super(ReviewCursorManager, self).makeTextInfo(position)
 
@@ -259,6 +250,3 @@ class ReviewCursorManager(CursorManager):
 
 	def _set_selection(self, info):
 		self._selection = info
-
-	_get_caret = _get_selection
-	_set_caret = _set_selection

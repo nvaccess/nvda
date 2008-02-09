@@ -59,7 +59,7 @@ class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def event_gainFocus(self):
 		super(MSNHistory,self).event_gainFocus()
-		self.caret=self.makeTextInfo(textHandler.POSITION_LAST)
+		self.selection=self.makeTextInfo(textHandler.POSITION_LAST)
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)

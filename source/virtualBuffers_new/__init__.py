@@ -155,9 +155,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
-		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.caret._startOffset)
+		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.caret._startOffset)
+		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
 			self._caretMovedToField(docHandle,ID)
 
