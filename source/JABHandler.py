@@ -332,11 +332,13 @@ def initialize():
 		return False
 
 def terminate():
-	global isRunning
+	global isRunning, bridgeDll
 	if not isRunning:
 		return
-		bridgeDll.setFocusGainedFP(None)
-		bridgeDll.setPropertyActiveDescendentChangeFP(None)
-		bridgeDll.setPropertyStateChangeFP(None)
-		bridgeDll.setPropertyCaretChangeFP(None)
+	bridgeDll.setFocusGainedFP(None)
+	bridgeDll.setPropertyActiveDescendentChangeFP(None)
+	bridgeDll.setPropertyStateChangeFP(None)
+	bridgeDll.setPropertyCaretChangeFP(None)
+	windll.kernel32.FreeLibrary(bridgeDll._handle)
+	cdll.WINDOWSACCESSBRIDGE=bridgeDll=None
 	isRunning=False
