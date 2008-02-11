@@ -37,7 +37,7 @@ class scriptableObject(autoPropertyObject):
 		scriptName="script_%s"%scriptName
     		func=getattr(self.__class__,scriptName,None)
 		if func:
-            			self.bindKeyToFunc_runTime(keyName,func)
+            			self.bindKeyToFunc_runtime(keyName,func)
       		else:
 			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
 
