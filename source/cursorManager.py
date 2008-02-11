@@ -198,33 +198,33 @@ class CursorManager(baseObject.scriptableObject):
 	def bindToStandardKeys(self):
 		"""Bind the standard navigation, selection and copy keys to the cursor manager scripts.
 		"""
-		for keyName, func in (
-			("extendedPrior",self.script_pageUp),
-			("extendedNext",self.script_pageDown),
-			("ExtendedUp",self.script_moveByLine_back),
-			("ExtendedDown",self.script_moveByLine_forward),
-			("ExtendedLeft",self.script_moveByCharacter_back),
-			("ExtendedRight",self.script_moveByCharacter_forward),
-			("Control+ExtendedLeft",self.script_moveByWord_back),
-			("Control+ExtendedRight",self.script_moveByWord_forward),
-			("ExtendedHome",self.script_startOfLine),
-			("ExtendedEnd",self.script_endOfLine),
-			("control+ExtendedHome",self.script_topOfDocument),
-			("control+ExtendedEnd",self.script_bottomOfDocument),
-			("shift+extendedRight",self.script_selectCharacter_forward),
-			("shift+extendedLeft",self.script_selectCharacter_back),
-			("control+shift+extendedRight",self.script_selectWord_forward),
-			("control+shift+extendedLeft",self.script_selectWord_back),
-			("shift+extendedDown",self.script_selectLine_forward),
-			("shift+extendedUp",self.script_selectLine_back),
-			("shift+extendedEnd",self.script_selectToEndOfLine),
-			("shift+extendedHome",self.script_selectToBeginningOfLine),
-			("control+shift+extendedEnd",self.script_selectToBottomOfDocument),
-			("control+shift+extendedHome",self.script_selectToTopOfDocument),
-			("control+a",self.script_selectAll),
-			("control+c",self.script_copyToClipboard),
+		for keyName, scriptName in (
+			("extendedPrior","pageUp"),
+			("extendedNext","pageDown"),
+			("ExtendedUp","moveByLine_back"),
+			("ExtendedDown","moveByLine_forward"),
+			("ExtendedLeft","moveByCharacter_back"),
+			("ExtendedRight","moveByCharacter_forward"),
+			("Control+ExtendedLeft","moveByWord_back"),
+			("Control+ExtendedRight","moveByWord_forward"),
+			("ExtendedHome","startOfLine"),
+			("ExtendedEnd","endOfLine"),
+			("control+ExtendedHome","topOfDocument"),
+			("control+ExtendedEnd","bottomOfDocument"),
+			("shift+extendedRight","selectCharacter_forward"),
+			("shift+extendedLeft","selectCharacter_back"),
+			("control+shift+extendedRight","selectWord_forward"),
+			("control+shift+extendedLeft","selectWord_back"),
+			("shift+extendedDown","selectLine_forward"),
+			("shift+extendedUp","selectLine_back"),
+			("shift+extendedEnd","selectToEndOfLine"),
+			("shift+extendedHome","selectToBeginningOfLine"),
+			("control+shift+extendedEnd","selectToBottomOfDocument"),
+			("control+shift+extendedHome","selectToTopOfDocument"),
+			("control+a","selectAll"),
+			("control+c","copyToClipboard"),
 		):
-			self.bindKeyToFunc_runtime(keyName, func)
+			self.bindKey_runtime(keyName, scriptName)
 
 class ReviewCursorManager(CursorManager):
 	"""
