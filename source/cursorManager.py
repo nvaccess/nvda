@@ -13,6 +13,7 @@ import baseObject
 import textHandler
 import api
 import speech
+import config
 
 class CursorManager(baseObject.scriptableObject):
 	"""
