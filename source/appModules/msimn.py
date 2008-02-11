@@ -52,3 +52,4 @@ class appModule(appModuleHandler.appModule):
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
 				return sendKey(key("SHIFT+TAB"))
+		return nextHandler()
