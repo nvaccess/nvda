@@ -54,9 +54,10 @@ class CursorManager(baseObject.scriptableObject):
 			if posUnitEnd:
 				info.move(textHandler.UNIT_CHARACTER,-1)
 		if direction is not None:
+			info.expand(unit)
 			info.collapse(end=posUnitEnd)
 			info.move(unit,direction)
-		self.selection=info.copy()
+		self.selection=info
 		info.expand(unit)
 		if unit!=textHandler.UNIT_CHARACTER:
 			if info.hasXML:
@@ -127,12 +128,6 @@ class CursorManager(baseObject.scriptableObject):
 		if newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
 			self._lastSelectionMovedStart=False
 		speech.speakSelectionChange(oldInfo,newInfo)
-
-	def script_selectCharacter_forward(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
-
-	def script_selectCharacter_back(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=-1)
 
 	def script_selectCharacter_forward(self,keyPress,nextScript):
 		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
@@ -244,11 +239,11 @@ class ReviewCursorManager(CursorManager):
 
 	def makeTextInfo(self, position):
 		if position == textHandler.POSITION_SELECTION:
-			return self._selection
+			return self.selection
 		return super(ReviewCursorManager, self).makeTextInfo(position)
 
 	def _get_selection(self):
-		return self._selection
+		return self._selection.copy()
 
 	def _set_selection(self, info):
-		self._selection = info
+		self._selection = info.copy()
