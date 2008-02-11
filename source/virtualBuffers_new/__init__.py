@@ -1,5 +1,4 @@
 import weakref
-from textwrap import TextWrapper
 import time
 import winsound
 import baseObject
@@ -13,6 +12,7 @@ from virtualBuffer_new_wrapper import *
 import globalVars
 import config
 import api
+import cursorManager
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -86,8 +86,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		else:
 			return ""
 
-
-class VirtualBuffer(baseObject.scriptableObject):
+class VirtualBuffer(cursorManager.CursorManager):
 
 	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
 		self.TextInfo=TextInfo
@@ -95,7 +94,6 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self.VBufHandle=VBufStorage_createBuffer()
 		self.fillVBuf()
 		super(VirtualBuffer,self).__init__()
-		self._lastSelectionMovedStart=False
 		self._useScreenLayout=True
 
 	def __del__(self):
@@ -156,162 +154,15 @@ class VirtualBuffer(baseObject.scriptableObject):
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
-	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_CARET,posUnit=None,posUnitEnd=False,extraDetail=False):
-		info=self.makeTextInfo(posConstant)
-		info.collapse()
-		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,info._startOffset)
-		if posUnit is not None:
-			info.expand(posUnit)
-			info.collapse(end=posUnitEnd)
-			if posUnitEnd:
-				info.move(textHandler.UNIT_CHARACTER,-1)
-		info.expand(unit)
-		if direction is not None:
-			info.collapse()
-			info.move(unit,direction)
-			info.expand(unit)
-		info.updateCaret()
-		if unit!=textHandler.UNIT_CHARACTER:
-			speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
-		else:
-			speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
-			speech.speakSpelling(info.text)
-		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,info._startOffset)
+	def _caretMovementScriptHelper(self, *args, **kwargs):
+		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
+		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
+		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
 			self._caretMovedToField(docHandle,ID)
 
-	def script_pageUp(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
-
-	def script_pageDown(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
-
-	def script_moveByCharacter_back(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True)
-
-	def script_moveByCharacter_forward(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,1,extraDetail=True)
-
-	def script_moveByWord_back(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,-1,extraDetail=True)
-
-	def script_moveByWord_forward(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,1,extraDetail=True)
-
-	def script_moveByLine_back(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-1)
-
-	def script_moveByLine_forward(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,1)
-
-	def script_startOfLine(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,extraDetail=True)
-
-	def script_endOfLine(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,posUnitEnd=True,extraDetail=True)
-
-	def script_topOfDocument(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_FIRST)
-
-	def script_bottomOfDocument(self,keyPress,nextScript):
-		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_LAST)
-
 	def script_refreshBuffer(self,keyPress,nextScript):
 		self.fillVBuf()
-
-	def _selectionMovementScriptHelper(self,unit=None,direction=None,toPosition=None):
-		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		if toPosition:
-			newInfo=self.makeTextInfo(toPosition)
-			if newInfo.compareEndPoints(oldInfo,"startToStart")>0:
-				newInfo.setEndPoint(oldInfo,"startToStart")
-			if newInfo.compareEndPoints(oldInfo,"endToEnd")<0:
-				newInfo.setEndPoint(oldInfo,"endToEnd")
-		elif unit:
-			newInfo=oldInfo.copy()
-		if unit:
-			if self._lastSelectionMovedStart:
-				newInfo.move(unit,direction,endPoint="start")
-			else:
-				newInfo.move(unit,direction,endPoint="end")
-		newInfo.updateSelection()
-		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
-			self._lastSelectionMovedStart=True
-		else:
-			self._lastSelectionMovedStart=False
-		if newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
-			self._lastSelectionMovedStart=False
-		speech.speakSelectionChange(oldInfo,newInfo)
-
-	def script_selectCharacter_forward(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
-
-	def script_selectCharacter_back(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=-1)
-
-	def script_selectCharacter_forward(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=1)
-
-	def script_selectCharacter_back(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_CHARACTER,direction=-1)
-
-	def script_selectWord_forward(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_WORD,direction=1)
-
-	def script_selectWord_back(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_WORD,direction=-1)
-
-	def script_selectLine_forward(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=1)
-
-	def script_selectLine_back(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
-
-	def script_selectToBeginningOfLine(self,keyPress,nextScript):
-		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		tempInfo=curInfo.copy()
-		tempInfo.expand(textHandler.UNIT_LINE)
-		if curInfo.compareEndPoints(tempInfo,"startToStart")>0:
-			self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=-1)
-
-	def script_selectToEndOfLine(self,keyPress,nextScript):
-		curInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		tempInfo=curInfo.copy()
-		curInfo.expand(textHandler.UNIT_CHARACTER)
-		tempInfo.expand(textHandler.UNIT_LINE)
-		if curInfo.compareEndPoints(tempInfo,"endToEnd")<0:
-			self._selectionMovementScriptHelper(unit=textHandler.UNIT_LINE,direction=1)
-
-	def script_selectToTopOfDocument(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_FIRST)
-
-	def script_selectToBottomOfDocument(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_LAST,unit=textHandler.UNIT_CHARACTER,direction=1)
-
-	def script_selectAll(self,keyPress,nextScript):
-		self._selectionMovementScriptHelper(toPosition=textHandler.POSITION_ALL)
-
-	def script_copyToClipboard(self,keyPress,nextScript):
-		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		if info.isCollapsed:
-			speech.speakMessage(_("no selection"))
-			return
-		#To handle line lengths properly, grab each line separately
-		lineInfo=info.copy()
-		lineInfo.collapse()
-		textList=[]
-		while lineInfo.compareEndPoints(info,"startToEnd")<0:
-			lineInfo.expand(textHandler.UNIT_LINE)
-			chunkInfo=lineInfo.copy()
-			if chunkInfo.compareEndPoints(info,"startToStart")<0:
-				chunkInfo.setEndPoint(info,"startToStart")
-			if chunkInfo.compareEndPoints(info,"endToEnd")>0:
-				chunkInfo.setEndPoint(info,"endToEnd")
-			textList.append(chunkInfo.text)
-			lineInfo.collapse(end=True)
-		text="\n".join(textList).replace('\n\n','\n')
-		if api.copyToClip(text):
-			speech.speakMessage(_("copied to clipboard"))
 
 	def script_toggleScreenLayout(self,keyPress,nextScript):
 		self._useScreenLayout=not self._useScreenLayout
@@ -389,33 +240,9 @@ class VirtualBuffer(baseObject.scriptableObject):
 	script_previousFormField.__doc__ = _("moves to the next form field")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedPrior","pageUp"),
-	("extendedNext","pageDown"),
-	("ExtendedUp","moveByLine_back"),
-	("ExtendedDown","moveByLine_forward"),
-	("ExtendedLeft","moveByCharacter_back"),
-	("ExtendedRight","moveByCharacter_forward"),
-	("Control+ExtendedLeft","moveByWord_back"),
-	("Control+ExtendedRight","moveByWord_forward"),
-	("ExtendedHome","startOfLine"),
-	("ExtendedEnd","endOfLine"),
-	("control+ExtendedHome","topOfDocument"),
-	("control+ExtendedEnd","bottomOfDocument"),
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
-	("shift+extendedRight","selectCharacter_forward"),
-	("shift+extendedLeft","selectCharacter_back"),
-	("control+shift+extendedRight","selectWord_forward"),
-	("control+shift+extendedLeft","selectWord_back"),
-	("shift+extendedDown","selectLine_forward"),
-	("shift+extendedUp","selectLine_back"),
-	("shift+extendedEnd","selectToEndOfLine"),
-	("shift+extendedHome","selectToBeginningOfLine"),
-	("control+shift+extendedEnd","selectToBottomOfDocument"),
-	("control+shift+extendedHome","selectToTopOfDocument"),
-	("control+a","selectAll"),
-	("control+c","copyToClipboard"),
 	("NVDA+v","toggleScreenLayout"),
 	("h","nextHeading"),
 	("shift+h","previousHeading"),

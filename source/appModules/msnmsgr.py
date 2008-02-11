@@ -12,6 +12,7 @@ import controlTypes
 import textHandler
 import appModuleHandler
 import speech
+import cursorManager
 
 lastMSNHistoryValue=None
 possibleHistoryWindowNames=frozenset([
@@ -34,8 +35,10 @@ class appModule(appModuleHandler.appModule):
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			obj.__class__=MSNHistory
+			# This is necessary because we're reassigning __class__ and the __init__ for the new class doesn't get called.
+			obj.initCursorManager()
 
-class MSNHistory(IAccessible):
+class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def _get_basicText(self):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
@@ -56,9 +59,7 @@ class MSNHistory(IAccessible):
 
 	def event_gainFocus(self):
 		super(MSNHistory,self).event_gainFocus()
-		self.reviewPosition=self.makeTextInfo(textHandler.POSITION_LAST)
-
+		self.selection=self.makeTextInfo(textHandler.POSITION_LAST)
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
-
