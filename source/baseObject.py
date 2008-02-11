@@ -35,7 +35,7 @@ class scriptableObject(autoPropertyObject):
 
 	def bindKey_runtime(self,keyName,scriptName):
 		scriptName="script_%s"%scriptName
-    		func=getattr(self.__class__,scriptName,None)
+    		func=getattr(self,scriptName,None)
 		if func:
             			self.bindKeyToFunc_runtime(keyName,func)
       		else:
