@@ -1,4 +1,4 @@
-#py
+#IAccessiblehandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -610,9 +610,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global lastEventParams
 	try:
 		#Ignore certain duplicate events
-		if lastEventParams is not None and eventID==winUser.EVENT_OBJECT_FOCUS and lastEventParams==(eventID,window,objectID,childID):
-			return
-		lastEventParams=(eventID,window,objectID,childID)
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
@@ -625,8 +622,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle) and (objectID==focusObject.event_objectID) and (childID==focusObject.event_childID):
-				#api.setFocusObject(desktopObject)
-				api.setNavigatorObject(desktopObject)
+				parent=api.getFocusAncestors()[-1]
+				api.setFocusObject(parent)
 				api.setMouseObject(desktopObject)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.event_windowHandle) and (objectID==foregroundObject.event_objectID) and (childID==foregroundObject.event_childID):
@@ -704,9 +701,12 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
-	oldFocus=api.getFocusObject()
-	if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and winUser.getClassName(window)!="OUTEXVLB":
-		return
+	if winUser.getClassName(window)=="SysListView32" and childID>0:
+		childID=0
+	if False:
+		oldFocus=api.getFocusObject()
+		if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and winUser.getClassName(window)!="OUTEXVLB":
+			return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	focus_manageEvent(obj,isForegroundChange)
 
@@ -730,6 +730,9 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 			return focus_manageEvent(activeChild,False)
 	oldFocus=api.getFocusObject()
 	if obj==oldFocus:
+		#Grab event params from this obj though as they may be more correct than oldFocus due to activeChild hack
+		if None in (oldFocus.event_windowHandle,oldFocus.event_objectID,oldFocus.event_childID) and None not in (obj.event_windowHandle,obj.event_objectID,obj.event_childID):
+			oldFocus.event_windowHandle,oldFocus.event_objectID,oldFocus.event_childID=(obj.event_windowHandle,obj.event_objectID,obj.event_childID)
 		return
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]

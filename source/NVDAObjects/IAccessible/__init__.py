@@ -170,8 +170,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		selfIden=self.IAccessibleIdentityString
 		otherIden=other.IAccessibleIdentityString
-		if selfIden and otherIden and selfIden==otherIden:
-			return True
+		if selfIden!=otherIden:
+			return False
 		if self.location!=other.location:
 			return False
  		if self.IAccessibleRole!=other.IAccessibleRole:
@@ -298,7 +298,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentNext and parentNext[0].accRole(parentNext[1])>0:
 					next=parentNext
 		if next and next[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_objectID=self.event_objectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1])
 		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(next[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -316,7 +316,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
 					previous=parentPrevious
 		if previous and previous[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_objectID=self.event_objectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1])
 		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(previous[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -331,7 +331,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			if len(children)>0:
 				firstChild=children[0]
 		if firstChild and firstChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_objectID=self.event_objectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1])
 		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(firstChild[0],-4)
 			if not child:
@@ -346,7 +346,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def _get_lastChild(self):
 		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
 		if lastChild and lastChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_objectID=self.event_objectID)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1])
 		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(lastChild[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -365,7 +365,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		children=[]
 		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
 			if child and child[0]==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_objectID=self.event_objectID))
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
 			elif child and child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 				children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
@@ -379,7 +379,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			res=IAccessibleHandler.accFocus(self.IAccessibleObject)
 			if res:
 				if res[0]==self.IAccessibleObject:
-					return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_objectID=self.event_objectID)
+					return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	def _get_hasFocus(self):
@@ -751,7 +751,7 @@ class TaskListIcon(IAccessible):
 
 class ToolBarButton(IAccessible):
 
-	def event_gainFocus(self):
+	def old_event_gainFocus(self):
 		super(ToolBarButton, self).event_gainFocus()
 		# If the mouse is on another toolbar control, some toolbars will rudely
 		# bounce the focus back to the object under the mouse after a brief pause.
