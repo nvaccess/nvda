@@ -703,10 +703,6 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 		return JABHandler.event_enterJavaWindow(window)
 	if winUser.getClassName(window)=="SysListView32" and childID>0:
 		childID=0
-	if False:
-		oldFocus=api.getFocusObject()
-		if oldFocus and isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and winUser.getClassName(window)!="OUTEXVLB":
-			return
 	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
 	focus_manageEvent(obj,isForegroundChange)
 
