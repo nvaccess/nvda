@@ -52,7 +52,7 @@ setup(
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
-		"packages": ["NVDAObjects","virtualBuffers"],
+		"packages": ["NVDAObjects","virtualBuffers_old"],
 	}},
 	zipfile = None,
 	data_files=[
