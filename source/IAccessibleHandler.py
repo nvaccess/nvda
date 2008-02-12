@@ -321,11 +321,6 @@ IAccessible2StatesToNVDAStates={
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
 
-#Keep track of the last event
-lastEventParams=None
-
-lastEvent=None
-
 focusEventQueue=Queue.Queue(3)
 
 def normalizeIAccessible(pacc):
@@ -607,9 +602,7 @@ def manageEvent(name,window,objectID,childID):
 		eventHandler.manageEvent(name,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	global lastEventParams
 	try:
-		#Ignore certain duplicate events
 		focusObject=api.getFocusObject()
 		foregroundObject=api.getForegroundObject()
 		desktopObject=api.getDesktopObject()
@@ -701,9 +694,24 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		return JABHandler.event_enterJavaWindow(window)
-	if winUser.getClassName(window)=="SysListView32" and childID>0:
-		childID=0
-	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	#We can't trust MSAA focus events with a childID greater than 0, just use 0 and retreave its activeChild
+	#We can only do this if there are no focus events pending or else we'll get issues with keyboard silencing focus announcement
+	if childID>0 and focusEventQueue.empty() and queueHandler.interactiveQueue.empty():
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,0)
+		if obj:
+			activeChild=obj.activeChild
+			if obj!=activeChild:
+				obj=activeChild
+			else:
+				obj=None
+	else:
+		obj=None
+	if not obj:
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	if obj and childID==0 and queueHandler.interactiveQueue.empty():
+		activeChild=obj.activeChild
+		if activeChild and activeChild.IAccessibleChildID>0 and activeChild!=obj:
+			obj=activeChild
 	focus_manageEvent(obj,isForegroundChange)
 
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
@@ -717,18 +725,12 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 		api.setForegroundObject(obj)
 		speech.cancelSpeech()
 		needsFocusState=False
-	if not isForegroundChange:
-		if obj.role not in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_MENUITEM):
-			activeChild=obj.activeChild
-		else:
-			activeChild=None
-		if activeChild and obj.activeChild!=obj and activeChild.role!=controlTypes.ROLE_UNKNOWN:
-			return focus_manageEvent(activeChild,False)
+	else:
+		foregroundObject=api.getForegroundObject()
+		if foregroundObject.windowClassName=="MozillaUIWindowClass" and obj==foregroundObject:
+			return
 	oldFocus=api.getFocusObject()
 	if obj==oldFocus:
-		#Grab event params from this obj though as they may be more correct than oldFocus due to activeChild hack
-		if None in (oldFocus.event_windowHandle,oldFocus.event_objectID,oldFocus.event_childID) and None not in (obj.event_windowHandle,obj.event_objectID,obj.event_childID):
-			oldFocus.event_windowHandle,oldFocus.event_objectID,oldFocus.event_childID=(obj.event_windowHandle,obj.event_objectID,obj.event_childID)
 		return
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
