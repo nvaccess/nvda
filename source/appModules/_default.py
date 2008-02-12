@@ -17,7 +17,6 @@ import api
 import textHandler
 import speech
 import sayAllHandler
-import virtualBuffers
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from synthDriverHandler import *

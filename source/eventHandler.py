@@ -1,6 +1,5 @@
 import appModuleHandler
 import globalVars
-import virtualBuffers
 import controlTypes
 
 def manageEvent(eventName,obj):

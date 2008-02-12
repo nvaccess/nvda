@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import appModuleHandler
-import virtualBuffers
 import api
 
 def findScript(keyPress):
