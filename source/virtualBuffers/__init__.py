@@ -3,6 +3,7 @@ import time
 import os
 import winsound
 import baseObject
+from keyUtils import isKeyWaiting
 import speech
 import NVDAObjects
 import winUser
@@ -156,11 +157,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
-		oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
+		noKeyWaiting=not isKeyWaiting()
+		if noKeyWaiting:
+			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
-		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
-			self._caretMovedToField(docHandle,ID)
+		if noKeyWaiting:
+			docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
+			if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
+				self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress,nextScript):
 		self.fillVBuf()
