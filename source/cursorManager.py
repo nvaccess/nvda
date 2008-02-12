@@ -94,6 +94,12 @@ class CursorManager(baseObject.scriptableObject):
 	def script_moveByLine_forward(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,1)
 
+	def script_moveByParagraph_back(self,keyPress,nextScript):
+		self._caretMovementScriptHelper(textHandler.UNIT_PARAGRAPH,-1)
+
+	def script_moveByParagraph_forward(self,keyPress,nextScript):
+		self._caretMovementScriptHelper(textHandler.UNIT_PARAGRAPH,1)
+
 	def script_startOfLine(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,extraDetail=True)
 
@@ -208,6 +214,8 @@ class CursorManager(baseObject.scriptableObject):
 			("ExtendedRight","moveByCharacter_forward"),
 			("Control+ExtendedLeft","moveByWord_back"),
 			("Control+ExtendedRight","moveByWord_forward"),
+			("Control+ExtendedUp","moveByParagraph_back"),
+			("Control+ExtendedDown","moveByParagraph_forward"),
 			("ExtendedHome","startOfLine"),
 			("ExtendedEnd","endOfLine"),
 			("control+ExtendedHome","topOfDocument"),
