@@ -5,80 +5,39 @@ VBUF_FINDDIRECTION_PREVIOUS=2
 
 VBUF_ERROR_NOTFOUND=-7
 
-class attribute_t(Structure):
-	_fields_=[('name',c_wchar_p),('value',c_wchar_p)]
-
 class multyValueAttribute_t(Structure):
 	_fields_=[('name',c_wchar_p),('value',POINTER(c_wchar_p)),('numValues',c_int)]
 
-dll=cdll.virtualBuffer_new
+dll=cdll.virtualBuffer
 
 def dllErrorCheck(res,func,args):
 	if res<0:
 		raise RuntimeError("error in %s with args of %s, code %s"%(func.__name__,args,res))
 	return res
 
-VBufStorage_createBuffer=dll.VBufStorage_createBuffer
-VBufStorage_createBuffer.errcheck=dllErrorCheck
+VBufClient_createBuffer=dll.VBufClient_createBuffer
+VBufClient_createBuffer.errcheck=dllErrorCheck
 
-VBufStorage_getBufferNodeWithIdentifier=dll.VBufStorage_getBufferNodeWithIdentifier
-VBufStorage_getBufferNodeWithIdentifier.errcheck=dllErrorCheck
+VBufClient_destroyBuffer=dll.VBufClient_destroyBuffer
+VBufClient_destroyBuffer.errcheck=dllErrorCheck
 
-VBufStorage_mergeBuffer=dll.VBufStorage_mergeBuffer
-VBufStorage_mergeBuffer.errcheck=dllErrorCheck
-
-VBufStorage_destroyBuffer=dll.VBufStorage_destroyBuffer
-VBufStorage_destroyBuffer.errcheck=dllErrorCheck
-
-VBufStorage_clearBuffer=dll.VBufStorage_clearBuffer
-VBufStorage_clearBuffer.errcheck=dllErrorCheck
-
-VBufStorage_splitTextNodeAtOffset=dll.VBufStorage_splitTextNodeAtOffset
-VBufStorage_splitTextNodeAtOffset.errcheck=dllErrorCheck
-
-def VBufStorage_addTagNodeToBuffer(parent, previous, docHandle,ID,attribs,isBlock=True):
-	if not isinstance(attribs,dict) or len(attribs)==0:
-		raiseValueError("attribs must be of type dict containing 1 or more entries")
-	cAttribs=(attribute_t*len(attribs))()
-	for index,name in enumerate(attribs.keys()):
-		cAttribs[index].name=name
-		val=attribs[name]
-		cAttribs[index].value=unicode(val) if val is not None else ""
-	isBlock=1 if isBlock else 0
-	return dll.VBufStorage_addTagNodeToBuffer(parent,previous,docHandle,ID,cAttribs,len(cAttribs),isBlock)
-
-dll.VBufStorage_addTagNodeToBuffer.errcheck=dllErrorCheck
-
-def VBufStorage_addTextNodeToBuffer(parent, previous, docHandle, ID,text):
-	return dll.VBufStorage_addTextNodeToBuffer(parent,previous,docHandle,ID,text)
-
-dll.VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
-
-VBufStorage_addTextNodeToBuffer.errcheck=dllErrorCheck
-
-VBufStorage_removeNodeFromBuffer=dll.VBufStorage_removeNodeFromBuffer
-VBufStorage_removeNodeFromBuffer.errcheck=dllErrorCheck
-
-VBufStorage_removeDescendantsFromBufferNode=dll.VBufStorage_removeDescendantsFromBufferNode
-VBufStorage_removeDescendantsFromBufferNode.errcheck=dllErrorCheck
-
-def VBufStorage_getFieldIdentifierFromBufferOffset(buf,offset):
+def VBufClient_getFieldIdentifierFromBufferOffset(buf,offset):
 	docHandle=c_int()
 	ID=c_int()
-	dll.VBufStorage_getFieldIdentifierFromBufferOffset(buf,offset,byref(docHandle),byref(ID))
+	dll.VBufClient_getFieldIdentifierFromBufferOffset(buf,offset,byref(docHandle),byref(ID))
 	return docHandle.value,ID.value
 
-dll.VBufStorage_getFieldIdentifierFromBufferOffset.errcheck=dllErrorCheck
+dll.VBufClient_getFieldIdentifierFromBufferOffset.errcheck=dllErrorCheck
 
-def VBufStorage_getBufferOffsetsFromFieldIdentifier(buf, docHandle, ID):
+def VBufClient_getBufferOffsetsFromFieldIdentifier(buf, docHandle, ID):
 	start=c_int()
 	end=c_int()
-	dll.VBufStorage_getBufferOffsetsFromFieldIdentifier(buf,docHandle,ID,byref(start),byref(end))
+	dll.VBufClient_getBufferOffsetsFromFieldIdentifier(buf,docHandle,ID,byref(start),byref(end))
 	return (start.value,end.value)
 
-dll.VBufStorage_getBufferOffsetsFromFieldIdentifier.errcheck=dllErrorCheck
+dll.VBufClient_getBufferOffsetsFromFieldIdentifier.errcheck=dllErrorCheck
 
-def VBufStorage_findBufferFieldIdentifierByProperties(buf,direction,startOffset,attribs):
+def VBufClient_findBufferFieldIdentifierByProperties(buf,direction,startOffset,attribs):
 	if direction=="next":
 		direction=VBUF_FINDDIRECTION_NEXT
 	elif direction=="previous":
@@ -97,63 +56,63 @@ def VBufStorage_findBufferFieldIdentifierByProperties(buf,direction,startOffset,
 		cAttribs[index].numValues=len(attribs[name])
 	foundDocHandle=c_int()
 	foundID=c_int()
-	res=dll.VBufStorage_findBufferFieldIdentifierByProperties(buf,direction,startOffset,cAttribs,len(cAttribs),byref(foundDocHandle),byref(foundID))
+	res=dll.VBufClient_findBufferFieldIdentifierByProperties(buf,direction,startOffset,cAttribs,len(cAttribs),byref(foundDocHandle),byref(foundID))
 	if res==VBUF_ERROR_NOTFOUND:
 		return None
 	elif res<0:
-		raise RuntimeError("VBufStorage_findBufferFieldIdentifierByProperties returned code %d"%res)
+		raise RuntimeError("VBufClient_findBufferFieldIdentifierByProperties returned code %d"%res)
 	return foundDocHandle.value,foundID.value
 
-VBufStorage_getBufferTextLength=dll.VBufStorage_getBufferTextLength
+VBufClient_getBufferTextLength=dll.VBufClient_getBufferTextLength
 
-VBufStorage_getBufferFieldCount=dll.VBufStorage_getBufferFieldCount
+VBufClient_getBufferFieldCount=dll.VBufClient_getBufferFieldCount
 
-VBufStorage_findBufferText=dll.VBufStorage_findBufferText
-VBufStorage_findBufferText.errcheck=dllErrorCheck
+VBufClient_findBufferText=dll.VBufClient_findBufferText
+VBufClient_findBufferText.errcheck=dllErrorCheck
 
-def VBufStorage_getBufferTextByOffsets(buf,startOffset,endOffset):
+def VBufClient_getBufferTextByOffsets(buf,startOffset,endOffset):
 	text=create_unicode_buffer((endOffset-startOffset)+1)
-	dll.VBufStorage_getBufferTextByOffsets(buf,startOffset,endOffset,text)
+	dll.VBufClient_getBufferTextByOffsets(buf,startOffset,endOffset,text)
 	return text.value
 
-dll.VBufStorage_getBufferTextByOffsets.errcheck=dllErrorCheck
+dll.VBufClient_getBufferTextByOffsets.errcheck=dllErrorCheck
 
-def VBufStorage_getXMLContextAtBufferOffset(buf,offset):
-	textLength=dll.VBufStorage_getXMLContextAtBufferOffset(buf,offset,None)
+def VBufClient_getXMLContextAtBufferOffset(buf,offset):
+	textLength=dll.VBufClient_getXMLContextAtBufferOffset(buf,offset,None,0)
 	textBuf=create_unicode_buffer(textLength)
-	dll.VBufStorage_getXMLContextAtBufferOffset(buf,offset,textBuf)
+	dll.VBufClient_getXMLContextAtBufferOffset(buf,offset,textBuf,textLength)
 	return textBuf.value
 
-dll.VBufStorage_getXMLContextAtBufferOffset.errcheck=dllErrorCheck
+dll.VBufClient_getXMLContextAtBufferOffset.errcheck=dllErrorCheck
 
-def VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset):
+def VBufClient_getXMLBufferTextByOffsets(buf,startOffset,endOffset):
 	if endOffset<=startOffset:
 		return ""
-	textLength=dll.VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset,None)
+	textLength=dll.VBufClient_getXMLBufferTextByOffsets(buf,startOffset,endOffset,None,0)
 	textBuf=create_unicode_buffer(textLength)
-	dll.VBufStorage_getXMLBufferTextByOffsets(buf,startOffset,endOffset,textBuf)
+	dll.VBufClient_getXMLBufferTextByOffsets(buf,startOffset,endOffset,textBuf,textLength)
 	return textBuf.value
 
-dll.VBufStorage_getXMLBufferTextByOffsets.errcheck=dllErrorCheck
+dll.VBufClient_getXMLBufferTextByOffsets.errcheck=dllErrorCheck
 
-def VBufStorage_getBufferLineOffsets(buf,offset,maxLineLength=0,useScreenLayout=True):
+def VBufClient_getBufferLineOffsets(buf,offset,maxLineLength=0,useScreenLayout=True):
 	startOffset=c_int()
 	endOffset=c_int()
 	cUseScreenLayout=1 if useScreenLayout else 0
-	dll.VBufStorage_getBufferLineOffsets(buf,offset,maxLineLength,cUseScreenLayout,byref(startOffset),byref(endOffset))
+	dll.VBufClient_getBufferLineOffsets(buf,offset,maxLineLength,cUseScreenLayout,byref(startOffset),byref(endOffset))
 	return (startOffset.value,endOffset.value)
 
-dll.VBufStorage_getBufferLineOffsets.errcheck=dllErrorCheck
+dll.VBufClient_getBufferLineOffsets.errcheck=dllErrorCheck
 
 
-def VBufStorage_getBufferSelectionOffsets(buf):
+def VBufClient_getBufferSelectionOffsets(buf):
 	startOffset=c_int()
 	endOffset=c_int()
-	dll.VBufStorage_getBufferSelectionOffsets(buf,byref(startOffset),byref(endOffset))
+	dll.VBufClient_getBufferSelectionOffsets(buf,byref(startOffset),byref(endOffset))
 	return (startOffset.value,endOffset.value)
 
-dll.VBufStorage_getBufferSelectionOffsets.errcheck=dllErrorCheck
+dll.VBufClient_getBufferSelectionOffsets.errcheck=dllErrorCheck
 
-VBufStorage_setBufferSelectionOffsets=dll.VBufStorage_setBufferSelectionOffsets
-VBufStorage_setBufferSelectionOffsets.errcheck=dllErrorCheck
+VBufClient_setBufferSelectionOffsets=dll.VBufClient_setBufferSelectionOffsets
+VBufClient_setBufferSelectionOffsets.errcheck=dllErrorCheck
 
