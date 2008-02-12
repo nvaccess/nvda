@@ -58,19 +58,24 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		childCount=int(attrs['_childcount'])
 		indexInParent=int(attrs['_indexinparent'])
 		parentChildCount=int(attrs['_parentchildcount'])
+		if reason==speech.REASON_FOCUS:
+			name=attrs.get('name',"")
+		else:
+			name=""
 		role=attrs['role']
 		states=attrs['states']
 		keyboardShortcut=attrs['keyboardshortcut']
 		roleText=speech.getSpeechTextForProperties(reason=reason,role=role)
 		stateText=speech.getSpeechTextForProperties(reason=reason,states=states,_role=role)
 		keyboardShortcutText=speech.getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
+		nameText=speech.getSpeechTextForProperties(reason=reason,name=name)
 		if not extraDetail and ((reason==speech.REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (speech.REASON_CARET,speech.REASON_SAYALL) and fieldType in ("start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC):
 			if role==controlTypes.ROLE_LINK:
 				return " ".join([x for x in stateText,roleText,keyboardShortcutText])
 			else:
-				return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
+				return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states: 
-			return " ".join([x for x in stateText,roleText,keyboardShortcutText if x])
+			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 			return roleText+_("with %s items")%childCount
 		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
