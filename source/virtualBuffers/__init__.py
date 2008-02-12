@@ -9,7 +9,7 @@ import winUser
 import sayAllHandler
 import controlTypes
 import textHandler
-from virtualBuffer_new_wrapper import *
+from virtualBuffer_lib import *
 import globalVars
 import config
 import api
@@ -41,6 +41,9 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.obj._useScreenLayout)
+
+	def _getParagraphOffsets(self,offset):
+		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
 
 	def _get_XMLContext(self):
 		return VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
@@ -89,25 +92,22 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 class VirtualBuffer(cursorManager.CursorManager):
 
-	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
+	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
+		self.backendLibPath=unicode(os.path.abspath(backendLibPath))
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
-		import time
-		t=time.time()
-		self.holder=VBufClient_createBuffer
-		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,unicode(os.path.abspath(self.backendPath)))
-		u=time.time()
-		globalVars.log.warning("new virtualBuffer took %s"%(u-t))
-		globalVars.log.warning("created buffer at %s"%self.VBufHandle)
-		globalVars.log.warning("at offset 0: docHandle %s, ID %s"%VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,0))
-		#globalVars.log.warning("with dochandle of 0 and ID of 1, offsets are %s and %s"%VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,0,1))
-		globalVars.log.warning("text length %s"%VBufClient_getBufferTextLength(self.VBufHandle))
-		globalVars.log.warning("text: \"%s\""%VBufClient_getXMLBufferTextByOffsets(self.VBufHandle,0,VBufClient_getBufferTextLength(self.VBufHandle)))
-
 		super(VirtualBuffer,self).__init__()
 		self._useScreenLayout=True
+		self.loadBuffer()
 
 	def __del__(self):
+		self.unloadBuffer()
+
+	def loadBuffer(self):
+		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
+		sayAllHandler.readText(self.makeTextInfo(textHandler.POSITION_CARET),sayAllHandler.CURSOR_CARET)
+
+	def unloadBuffer(self):
 		VBufClient_destroyBuffer(self.VBufHandle)
 
 	def makeTextInfo(self,position):
