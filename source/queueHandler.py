@@ -17,12 +17,20 @@ generators={}
 lastGeneratorObjID=0
 
 def registerGeneratorObject(generatorObj):
-	global lastGeneratorObjID
+	global generators,lastGeneratorObjID
 	if not isinstance(generatorObj,types.GeneratorType):
 		raise TypeError('Arg 2 must be a generator object, not %s'%type(generatorObj))
 	lastGeneratorObjID+=1
-	globalVars.log.debug("Adding generator %s"%lastGeneratorObjID)
+	globalVars.log.debug("Adding generator %d"%lastGeneratorObjID)
 	generators[lastGeneratorObjID]=generatorObj
+	return lastGeneratorObjID
+
+def cancelGeneratorObject(generatorObjID):
+	global generators
+	try:
+		del generators[generatorObjID]
+	except KeyError:
+		pass
 
 def queueFunction(queue,func,*args,**kwargs):
 	if not queue.full():
@@ -57,9 +65,9 @@ def isPendingItems(queue=None):
 	return res
 
 def pumpAll():
-	for ID in generators.keys():
+	for ID in generators:
 		try:
-			globalVars.log.debug("pumping generator %s"%ID)
+			globalVars.log.debug("pumping generator %d"%ID)
 			generators[ID].next()
 		except StopIteration:
 			globalVars.log.debug("generator %s finished"%ID)
