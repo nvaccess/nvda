@@ -110,6 +110,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.unloadBuffer()
 
 	def loadBuffer(self):
+		if api.isVirtualBufferPassThrough():
+			api.toggleVirtualBufferPassThrough()
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
 		sayAllHandler.readText(self.makeTextInfo(textHandler.POSITION_CARET),sayAllHandler.CURSOR_CARET)
 
