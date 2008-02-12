@@ -1,5 +1,6 @@
 import weakref
 import time
+import os
 import winsound
 import baseObject
 import speech
@@ -19,11 +20,11 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	hasXML=True
 
 	def _getSelectionOffsets(self):
-		start,end=VBufStorage_getBufferSelectionOffsets(self.obj.VBufHandle)
+		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
-		VBufStorage_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
+		VBufClient_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -32,22 +33,22 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufStorage_getBufferTextLength(self.obj.VBufHandle)
+		return VBufClient_getBufferTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
-		text=VBufStorage_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
 	def _getLineOffsets(self,offset):
-		return VBufStorage_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.obj._useScreenLayout)
+		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.obj._useScreenLayout)
 
 	def _get_XMLContext(self):
-		return VBufStorage_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
+		return VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
 
 	def _get_XMLText(self):
 		start=self._startOffset
 		end=self._endOffset
-		text=VBufStorage_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		text=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
@@ -91,13 +92,23 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def __init__(self,rootNVDAObject,TextInfo=VirtualBufferTextInfo):
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
-		self.VBufHandle=VBufStorage_createBuffer()
-		self.fillVBuf()
+		import time
+		t=time.time()
+		self.holder=VBufClient_createBuffer
+		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,unicode(os.path.abspath(self.backendPath)))
+		u=time.time()
+		globalVars.log.warning("new virtualBuffer took %s"%(u-t))
+		globalVars.log.warning("created buffer at %s"%self.VBufHandle)
+		globalVars.log.warning("at offset 0: docHandle %s, ID %s"%VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,0))
+		#globalVars.log.warning("with dochandle of 0 and ID of 1, offsets are %s and %s"%VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,0,1))
+		globalVars.log.warning("text length %s"%VBufClient_getBufferTextLength(self.VBufHandle))
+		globalVars.log.warning("text: \"%s\""%VBufClient_getXMLBufferTextByOffsets(self.VBufHandle,0,VBufClient_getBufferTextLength(self.VBufHandle)))
+
 		super(VirtualBuffer,self).__init__()
 		self._useScreenLayout=True
 
 	def __del__(self):
-		VBufStorage_destroyBuffer(self.VBufHandle)
+		VBufClient_destroyBuffer(self.VBufHandle)
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
@@ -107,6 +118,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def isAlive(self):
 		pass
+
+	def _get_windowHandle(self):
+		return self.rootNVDAObject.windowHandle
 
 	def _calculateLineBreaks(self,text):
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
@@ -121,24 +135,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _fillVBufHelper(self):
 		pass
 
-	def fillVBuf(self):
-		if api.isVirtualBufferPassThrough():
-			api.toggleVirtualBufferPassThrough()
-		VBufStorage_clearBuffer(self.VBufHandle)
-		if hasattr(self,'_speech_XMLCache'):
-			del self._speech_XMLCache
-		startTime=time.time()
-		speech.cancelSpeech()
-		speech.speakMessage(_("Loading document..."))
-		self._fillVBufHelper()
-		endTime=time.time()
-		globalVars.log.debug("load took %s seconds"%(endTime-startTime))
-		speech.cancelSpeech()
-		speech.speakMessage(_("Done"))
-		api.processPendingEvents()
-		info=self.makeTextInfo(textHandler.POSITION_FIRST)
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
-
 	def _activateField(self,docHandle,ID):
 		pass
 
@@ -149,15 +145,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		pass
 
 	def script_activatePosition(self,keyPress,nextScript):
-		start,end=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
-		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
+		start,end=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
-		oldDocHandle,oldID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
+		oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-		docHandle,ID=VBufStorage_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
+		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
 			self._caretMovedToField(docHandle,ID)
 
@@ -175,14 +171,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _jumpToNodeType(self,nodeType,direction):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if attribs:
-			startOffset,endOffset=VBufStorage_getBufferSelectionOffsets(self.VBufHandle)
+			startOffset,endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
 			try:
-				newDocHandle,newID=VBufStorage_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
+				newDocHandle,newID=VBufClient_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
 			except:
 				return False
 		if not newID or not attribs:
 			return False
-		startOffset,endOffset=VBufStorage_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,newDocHandle,newID)
+		startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,newDocHandle,newID)
 		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
