@@ -522,6 +522,7 @@ class appModule(appModuleHandler.appModule):
 			name=_("beeps")
 		elif newMode==speech.speechMode_talk:
 			name=_("talk")
+		speech.cancelSpeech()
 		speech.speakMessage(_("speech mode %s")%name)
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")

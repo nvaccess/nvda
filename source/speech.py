@@ -135,6 +135,9 @@ def processText(text):
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
 	global beenCanceled, isPaused
+	# Import only for this function to avoid circular import.
+	import sayAllHandler
+	sayAllHandler.stop()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:

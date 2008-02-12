@@ -16,12 +16,27 @@ import time
 CURSOR_CARET=0
 CURSOR_REVIEW=1
 
+_generatorID = None
+
+def _startGenerator(generator):
+	global _generatorID
+	stop()
+	_generatorID = queueHandler.registerGeneratorObject(generator)
+
+def stop():
+	"""Stop say all if a say all is in progress.
+	"""
+	global _generatorID
+	if _generatorID is None:
+		return
+	queueHandler.cancelGeneratorObject(_generatorID)
+	_generatorID = None
+
 def readObjects(obj):
-	queueHandler.registerGeneratorObject(readObjectsHelper_generator(obj))
+	_startGenerator(readObjectsHelper_generator(obj))
 
 def readObjectsHelper_generator(obj):
 	levelsIndexMap={}
-	startKeyCount=globalVars.keyCounter
 	updateObj=obj
 	keepReading=True
 	keepUpdating=True
@@ -29,9 +44,6 @@ def readObjectsHelper_generator(obj):
 	lastSpokenIndex=0
 	endIndex=0
 	while keepUpdating:
-		if globalVars.keyCounter>startKeyCount:
-			speech.cancelSpeech()
-			break
 		while speech.isPaused:
 			yield
 			continue
@@ -68,13 +80,12 @@ def readObjectsHelper_generator(obj):
 		yield
 
 def readText(info,cursor):
-	queueHandler.registerGeneratorObject(readTextHelper_generator(info,cursor))
+	_startGenerator(readTextHelper_generator(info,cursor))
 
 def readTextHelper_generator(info,cursor):
 	sendCount=0
 	receiveCount=0
 	cursorIndexMap={}
-	startKeyCount=globalVars.keyCounter
 	reader=info.copy()
 	if not reader.isCollapsed:
 		reader.collapse()
@@ -108,22 +119,18 @@ def readTextHelper_generator(info,cursor):
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
 					globalVars.reviewPosition=updater
-		while speech.isPaused and globalVars.keyCounter==startKeyCount:
+		while speech.isPaused:
 			yield
-		if globalVars.keyCounter!=startKeyCount:
-			speech.cancelSpeech()
-			keepUpdating=keepReading=False
 		yield
 
 def sayAll(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor):
-	queueHandler.registerGeneratorObject(sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor))
+	_startGenerator(sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor))
 
 def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getText,func_beforeSpeakChunk,func_updateCursor):
 	curPos=fromOffset
-	lastKeyCount=globalVars.keyCounter
 	updateGen=updateCursor_generator(fromOffset,toOffset,func_updateCursor)
 	loopCount=0
-	while lastKeyCount==globalVars.keyCounter:
+	while True:
 		if (curPos is not None) and (curPos<toOffset):
 			nextRange=func_nextChunkOffsets(curPos)
 			if nextRange is None:
