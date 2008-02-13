@@ -8,6 +8,7 @@ import time
 import winsound
 import os
 import wx
+from wx.lib import newevent
 import globalVars
 import config
 import versionInfo
@@ -93,12 +94,12 @@ numpad2 - current character
 numpad3 - next character
 shift+numpad3 - end of line
 """)%vars(versionInfo)
-
  
 iconPath="%s/images/icon.png"%os.getcwd()
-evt_externalCommand = wx.NewEventType()
-id_onShowGuiCommand=wx.NewId()
-id_onAbortCommand=wx.NewId()
+
+ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
+id_showGuiCommand=wx.NewId()
+id_abortCommand=wx.NewId()
 evt_externalExecute = wx.NewEventType()
 
 ### Globals
@@ -106,7 +107,7 @@ mainFrame = None
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
-		wx.PyCommandEvent.__init__(self, evt_externalExecute, -1)
+		super(ExternalExecuteEvent, self).__init__(evt_externalExecute, wx.ID_ANY)
 		self._func = func
 		self._args = args
 		self._kwargs = kwargs
@@ -125,81 +126,64 @@ class ExternalExecuteEvent(wx.PyCommandEvent):
 class MainFrame(wx.Frame):
 
 	def __init__(self):
-		style=wx.DEFAULT_FRAME_STYLE
-		style-=(style&wx.MAXIMIZE_BOX)
-		style-=(style&wx.MINIMIZE_BOX)
-		style+=wx.FRAME_NO_TASKBAR
-		wx.Frame.__init__(self, None, wx.ID_ANY, appTitle, wx.DefaultPosition,(500,500), style)
-		wx.EVT_COMMAND(self,id_onAbortCommand,evt_externalCommand,self.onAbortCommand)
-		wx.EVT_COMMAND(self,wx.ID_EXIT,evt_externalCommand,self.onExitCommand)
-		wx.EVT_COMMAND(self,id_onShowGuiCommand,evt_externalCommand,self.onShowGuiCommand)
-		wx.EVT_COMMAND(self,-1,evt_externalExecute,lambda evt: evt.run())
-		wx.EVT_CLOSE(self,self.onHideGuiCommand)
+		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
+		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(500,500), style=style)
+		self.Bind(evt_externalCommand, self.onAbortCommand, id=id_abortCommand)
+		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
+		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
+		wx.EVT_COMMAND(self,wx.ID_ANY,evt_externalExecute,lambda evt: evt.run())
+		self.Bind(wx.EVT_CLOSE, self.onHideGuiCommand)
 		menuBar=wx.MenuBar()
 		self.sysTrayMenu=wx.Menu()
 		menu_NVDA = wx.Menu()
-		id_onRevertToSavedConfigurationCommand=wx.NewId()
-		menu_NVDA.Append(id_onRevertToSavedConfigurationCommand,_("&Revert to saved configuration\tCtrl+R"),_("Reset all setting back to nvda.ini"))
-		wx.EVT_MENU(self,id_onRevertToSavedConfigurationCommand,self.onRevertToSavedConfigurationCommand)
-		menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tCtrl+S"), _("Write the current configuration to nvda.ini"))
-		wx.EVT_MENU(self, wx.ID_SAVE, self.onSaveConfigurationCommand)
+		item = menu_NVDA.Append(wx.ID_ANY, _("&Revert to saved configuration\tCtrl+R"),_("Reset all settings to saved state"))
+		self.Bind(wx.EVT_MENU, self.onRevertToSavedConfigurationCommand, item)
+		item = menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tCtrl+S"), _("Write the current configuration to nvda.ini"))
+		self.Bind(wx.EVT_MENU, self.onSaveConfigurationCommand, item)
 		subMenu_userDicts = wx.Menu()
-		id_defaultDictionaryCommand=wx.NewId()
-		subMenu_userDicts.Append(id_defaultDictionaryCommand,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
-		wx.EVT_MENU(self,id_defaultDictionaryCommand,self.onDefaultDictionaryCommand)
-		id_voiceDictionaryCommand=wx.NewId()
-		subMenu_userDicts.Append(id_voiceDictionaryCommand,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
-		wx.EVT_MENU(self,id_voiceDictionaryCommand,self.onVoiceDictionaryCommand)
-		id_temporaryDictionaryCommand=wx.NewId()
-		subMenu_userDicts.Append(id_temporaryDictionaryCommand,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
-		wx.EVT_MENU(self,id_temporaryDictionaryCommand,self.onTemporaryDictionaryCommand)
-		menu_NVDA.AppendMenu(-1,_("User &dictionaries"),subMenu_userDicts)
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+		self.Bind(wx.EVT_MENU, self.onDefaultDictionaryCommand, item)
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+		self.Bind(wx.EVT_MENU, self.onVoiceDictionaryCommand, item)
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		self.Bind(wx.EVT_MENU, self.onTemporaryDictionaryCommand, item)
+		menu_NVDA.AppendMenu(wx.ID_ANY,_("User &dictionaries"),subMenu_userDicts)
 		menu_NVDA.AppendSeparator()
-		menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
-		wx.EVT_MENU(self, wx.ID_EXIT, self.onExitCommand)
+		item = menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
+		self.Bind(wx.EVT_MENU, self.onExitCommand, item)
 		menuBar.Append(menu_NVDA,_("&NVDA"))
-		self.sysTrayMenu.AppendMenu(-1,_("&NVDA"),menu_NVDA)
+		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&NVDA"),menu_NVDA)
 		menu_preferences=wx.Menu()
-		id_generalSettingsCommand=wx.NewId()
-		menu_preferences.Append(id_generalSettingsCommand,_("&General settings...\tCtrl+Shift+G"),_("General settings"))
-		wx.EVT_MENU(self,id_generalSettingsCommand,self.onGeneralSettingsCommand)
-		id_SynthesizerCommand=wx.NewId()
-		menu_preferences.Append(id_SynthesizerCommand,_("&Synthesizer...\tCtrl+Shift+S"),_(" the synthesizer to use"))
-		wx.EVT_MENU(self,id_SynthesizerCommand,self.onSynthesizerCommand)
-		id_VoiceCommand=wx.NewId()
-		menu_preferences.Append(id_VoiceCommand,_("&Voice settings...\tCtrl+Shift+V"),_("Choose the voice, rate, pitch and volume  to use"))
-		wx.EVT_MENU(self,id_VoiceCommand,self.onVoiceCommand)
-		id_onKeyboardSettingsCommand=wx.NewId()
-		menu_preferences.Append(id_onKeyboardSettingsCommand,_("&Keyboard Settings...\tCtrl+K"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
-		wx.EVT_MENU(self,id_onKeyboardSettingsCommand,self.onKeyboardSettingsCommand)
-		id_mouseSettingsCommand=wx.NewId()
-		menu_preferences.Append(id_mouseSettingsCommand,_("&Mouse settings...\tCtrl+M"),_("Change reporting of mouse sape, object under mouse"))
-		wx.EVT_MENU(self,id_mouseSettingsCommand,self.onMouseSettingsCommand)
-		id_objectPresentationCommand=wx.NewId()
-		menu_preferences.Append(id_objectPresentationCommand,_("&Object presentation...\tCtrl+Shift+O"),_("Change reporting of objects")) 
-		wx.EVT_MENU(self,id_objectPresentationCommand,self.onObjectPresentationCommand)
-		id_virtualBuffersCommand=wx.NewId()
-		menu_preferences.Append(id_virtualBuffersCommand,_("Virtual &buffers...\tCtrl+Shift+B"),_("Change virtual buffers specific settings")) 
-		wx.EVT_MENU(self,id_virtualBuffersCommand,self.onVirtualBuffersCommand)
-		id_documentFormattingCommand=wx.NewId()
-		menu_preferences.Append(id_documentFormattingCommand,_("Document &formatting...\tCtrl+Shift+F"),_("Change Settings of document properties")) 
-		wx.EVT_MENU(self,id_documentFormattingCommand,self.onDocumentFormattingCommand)
+		item = menu_preferences.Append(wx.ID_ANY,_("&General settings...\tCtrl+Shift+G"),_("General settings"))
+		self.Bind(wx.EVT_MENU, self.onGeneralSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer...\tCtrl+Shift+S"),_(" the synthesizer to use"))
+		self.Bind(wx.EVT_MENU, self.onSynthesizerCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings...\tCtrl+Shift+V"),_("Choose the voice, rate, pitch and volume  to use"))
+		self.Bind(wx.EVT_MENU, self.onVoiceCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings...\tCtrl+K"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
+		self.Bind(wx.EVT_MENU, self.onKeyboardSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings...\tCtrl+M"),_("Change reporting of mouse sape, object under mouse"))
+		self.Bind(wx.EVT_MENU, self.onMouseSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation...\tCtrl+Shift+O"),_("Change reporting of objects")) 
+		self.Bind(wx.EVT_MENU, self.onObjectPresentationCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers...\tCtrl+Shift+B"),_("Change virtual buffers specific settings")) 
+		self.Bind(wx.EVT_MENU, self.onVirtualBuffersCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting...\tCtrl+Shift+F"),_("Change Settings of document properties")) 
+		self.Bind(wx.EVT_MENU, self.onDocumentFormattingCommand, item)
 		menuBar.Append(menu_preferences,_("&Preferences"))
-		self.sysTrayMenu.AppendMenu(-1,_("&Preferences"),menu_preferences)
+		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 		menu_help = wx.Menu()
-		id_homePageCommand=wx.NewId()
-		menu_help.Append(id_homePageCommand, _("NVDA homepage"), _("Opens NVDA homepage in the default browser"))
-		wx.EVT_MENU(self, id_homePageCommand, self.onHomePageCommand)
-		id_nvdaWikiCommand=wx.NewId()
-		menu_help.Append(id_nvdaWikiCommand, _("NVDA wiki"), _("Opens NVDA wiki in the default browser"))
-		wx.EVT_MENU(self, id_nvdaWikiCommand, self.onNvdaWikiCommand)
-		menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
-		wx.EVT_MENU(self, wx.ID_ABOUT, self.onAboutCommand)
+		item = menu_help.Append(wx.ID_ANY, _("NVDA homepage"), _("Opens NVDA homepage in the default browser"))
+		self.Bind(wx.EVT_MENU, self.onHomePageCommand, item)
+		item = menu_help.Append(wx.ID_ANY, _("NVDA wiki"), _("Opens NVDA wiki in the default browser"))
+		self.Bind(wx.EVT_MENU, self.onNvdaWikiCommand, item)
+		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
+		self.Bind(wx.EVT_MENU, self.onAboutCommand, item)
 		menuBar.Append(menu_help,_("&Help"))
-		self.sysTrayMenu.AppendMenu(-1,_("&Help"),menu_help)
+		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.SetMenuBar(menuBar)
 		sizer=wx.BoxSizer(wx.VERTICAL)
-		textCtrl=wx.TextCtrl(self,-1,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
+		textCtrl=wx.TextCtrl(self,wx.ID_ANY,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
 		sizer.Add(textCtrl)
 		sizer.Fit(self)
 		self.SetSizer(sizer)
@@ -214,7 +198,6 @@ class MainFrame(wx.Frame):
 		self.Show(True)
 		if globalVars.appArgs.minimal or config.conf["general"]["hideInterfaceOnStartup"]:
 			self.Show(False)
-
 
 	def onAbortCommand(self,evt):
 		self.Destroy()
@@ -330,17 +313,17 @@ def initialize(app):
 	app.SetTopWindow(mainFrame)
 
 def showGui():
- 	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onShowGuiCommand))
+ 	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
 
 def quit():
-	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, wx.ID_EXIT))
+	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
 
 def abort():
-	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))
+	wx.PostEvent(mainFrame, ExternalCommandEvent(id_abortCommand))
 
 def restart():
 	globalVars.restart=True
-	mainFrame.GetEventHandler().AddPendingEvent(wx.PyCommandEvent(evt_externalCommand, id_onAbortCommand))
+	wx.PostEvent(mainFrame, ExternalCommandEvent(id_abortCommand))
 
 def execute(func, callback=None, *args, **kwargs):
 	"""Execute a function in the GUI thread.
@@ -353,4 +336,4 @@ def execute(func, callback=None, *args, **kwargs):
 	@param args: Arguments for the function.
 	@param kwargs: Keyword arguments for the function.
 """
-	mainFrame.GetEventHandler().AddPendingEvent(ExternalExecuteEvent(func, args, kwargs, callback))
+	wx.PostEvent(mainFrame, ExternalExecuteEvent(func, args, kwargs, callback))
