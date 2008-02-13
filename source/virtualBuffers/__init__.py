@@ -7,6 +7,7 @@ from keyUtils import isKeyWaiting
 import speech
 import NVDAObjects
 import winUser
+import api
 import sayAllHandler
 import controlTypes
 import textHandler
@@ -104,16 +105,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self._useScreenLayout=True
-		self.loadBuffer()
-
-	def __del__(self):
-		self.unloadBuffer()
 
 	def loadBuffer(self):
-		if api.isVirtualBufferPassThrough():
-			api.toggleVirtualBufferPassThrough()
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
-		sayAllHandler.readText(self.makeTextInfo(textHandler.POSITION_CARET),sayAllHandler.CURSOR_CARET)
+		focusObject=api.getFocusObject()
+		if focusObject.virtualBuffer==self:
+			if api.isVirtualBufferPassThrough():
+				api.toggleVirtualBufferPassThrough()
+			speech.cancelSpeech()
+			info=self.makeTextInfo(textHandler.POSITION_FIRST)
+			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 	def unloadBuffer(self):
 		VBufClient_destroyBuffer(self.VBufHandle)
