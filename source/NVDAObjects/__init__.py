@@ -362,13 +362,14 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		return not self.__eq__(other)
 
 	def _get_virtualBuffer(self):
-		if not hasattr(self,'_virtualBufferRef'):
+		v=getattr(self,'_virtualBufferRef',None)
+		if v:
+			v=v()
+		if not v:
 			v=virtualBufferHandler.getVirtualBuffer(self)
 			if v:
 				self._virtualBufferRef=weakref.ref(v)
-				return v
-		else:
-			return self._virtualBufferRef()
+		return v
 
 	def _get_appModule(self):
 		if not hasattr(self,'_appModuleRef'):
