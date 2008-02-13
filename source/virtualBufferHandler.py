@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import gc
 import os
 import globalVars
 import winUser
@@ -14,26 +15,23 @@ import NVDAObjects.IAccessible.IA2
 import controlTypes
 import NVDAObjects.window
 
-runningTable=[]
+runningTable=set()
 
 def getVirtualBuffer(obj):
 	for v in runningTable:
 		if v.isNVDAObjectInVirtualBuffer(obj):
-				return v
+			return v
 
 def update(obj):
-	for index in range(len(runningTable)):
-		try:
-			if not runningTable[index].isAlive():
-				del runningTable[index]
-		except:
-			globalVars.log.warning("Error trying to remove old virtualBuffer at index %s"%index,exc_info=True)
-	#Gecko with IAccessible2 support
+	for v in list(runningTable):
+		if not v.isAlive():
+			killVirtualBuffer(v)
 	windowClassName=obj.windowClassName
 	role=obj.role
 	states=obj.states
-	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName=='MozillaContentWindowClass' and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
- 		classString="virtualBuffers_old.gecko.Gecko"
+	#Gecko with IAccessible2 support
+	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
+		classString="virtualBuffers_old.gecko.Gecko"
 	#Gecko only with IAccessible support
 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
 		classString="virtualBuffers_old.gecko.Gecko"
@@ -57,5 +55,12 @@ def update(obj):
 	newClass=getattr(mod,classString)
 	globalVars.log.debug("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,obj.windowClassName))
 	virtualBufferObject=newClass(obj)
-	runningTable.append(virtualBufferObject)
+	runningTable.add(virtualBufferObject)
+	if hasattr(virtualBufferObject,'unloadBuffer'):
+		virtualBufferObject.loadBuffer()
 	return virtualBufferObject
+
+def killVirtualBuffer(virtualBufferObject):
+	runningTable.remove(virtualBufferObject)
+	if hasattr(virtualBufferObject,'unloadBuffer'):
+		virtualBufferObject.unloadBuffer()
