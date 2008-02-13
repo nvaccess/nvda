@@ -65,15 +65,22 @@ def isPendingItems(queue=None):
 	return res
 
 def pumpAll():
-	for ID in generators:
+	# This dict can mutate during iteration, so use keys().
+	for ID in generators.keys():
+		# KeyError could occur within the generator itself, so retrieve the generator first.
+		try:
+			gen = generators[ID]
+		except KeyError:
+			# Generator was cancelled. This is fine.
+			continue
 		try:
 			globalVars.log.debug("pumping generator %d"%ID)
-			generators[ID].next()
+			gen.next()
 		except StopIteration:
 			globalVars.log.debug("generator %s finished"%ID)
 			del generators[ID]
 		except:
-			globalVars.log.error("error in generator %s"%ID,exc_info=True)
+			globalVars.log.error("error in generator %d"%ID,exc_info=True)
 			del generators[ID]
 	flushQueue(interactiveQueue)
 	flushQueue(eventQueue)
