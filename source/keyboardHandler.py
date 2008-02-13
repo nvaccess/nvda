@@ -171,8 +171,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			speakToggleKey(vkCode)
 			return True
 	except:
-		globalVars.log.error("", exc_info=TRUE)
-		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"),wait=True)
+		globalVars.log.error("kinternal_keyDownEvent", exc_info=True)
+		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"))
 		return True
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
