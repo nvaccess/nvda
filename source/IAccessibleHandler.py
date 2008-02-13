@@ -311,6 +311,7 @@ IAccessibleStatesToNVDAStates={
 IAccessible2StatesToNVDAStates={
 	IA2_STATE_REQUIRED:controlTypes.STATE_REQUIRED,
 	IA2_STATE_DEFUNCT:controlTypes.STATE_DEFUNCT,
+	IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
 	IA2_STATE_INVALID_ENTRY:controlTypes.STATE_INVALID_ENTRY,
 	IA2_STATE_MODAL:controlTypes.STATE_MODAL,
 	IA2_STATE_SUPPORTS_AUTOCOMPLETION:controlTypes.STATE_AUTOCOMPLETE,
@@ -717,7 +718,7 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if not obj:
 		return
-	if obj.role==controlTypes.ROLE_UNKNOWN:
+	if obj.role==controlTypes.ROLE_UNKNOWN or controlTypes.STATE_DEFUNCT in obj.states:
 		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
