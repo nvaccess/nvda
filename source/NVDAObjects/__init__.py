@@ -365,6 +365,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		v=getattr(self,'_virtualBufferRef',None)
 		if v:
 			v=v()
+			if v and not v in virtualBufferHandler.runningTable:
+				v=None
+
 		if not v:
 			v=virtualBufferHandler.getVirtualBuffer(self)
 			if v:
