@@ -57,8 +57,13 @@ class Gecko_ia2(VirtualBuffer):
 		api.setNavigatorObject(obj)
 		role=obj.role
 		states=obj.states
+		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+			self.busyFlag=True
+		else:
+			self.busyFlag=False
 		if obj==self.rootNVDAObject:
-			return speech.speakObjectProperties(obj,name=True,role=True)
+			return speech.speakObjectProperties(obj,name=True)
 		if sayAllHandler.isRunning():
 			speech.cancelSpeech()
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -119,12 +124,12 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def event_stateChange(self,obj,nextHandler):
+		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+			self.busyFlag=True
 		if not self.isAlive():
 			return virtualBufferHandler.killVirtualBuffer(self)
 		if self.rootNVDAObject and self.busyFlag and not controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 			self.unloadBuffer()
 			self.loadBuffer()
 			self.busyFlag=False
-		elif self.rootNVDAObject and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			speech.speakObjectProperties(self.rootNVDAObject,states=True)
-			self.busyFlag=True
