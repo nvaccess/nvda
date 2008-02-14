@@ -5,8 +5,11 @@ VBUF_FINDDIRECTION_PREVIOUS=2
 
 VBUF_ERROR_NOTFOUND=-7
 
+class attributeValue_t(Structure):
+	_fields_=[('value',c_wchar_p),('valueLength',c_int)]
+
 class multyValueAttribute_t(Structure):
-	_fields_=[('name',c_wchar_p),('value',POINTER(c_wchar_p)),('numValues',c_int)]
+	_fields_=[('name',c_wchar_p),('nameLength',c_int),('values',POINTER(attributeValue_t)),('numValues',c_int)]
 
 dll=cdll.virtualBuffer
 
@@ -49,10 +52,13 @@ def VBufClient_findBufferFieldIdentifierByProperties(buf,direction,startOffset,a
 	cAttribs=(multyValueAttribute_t*len(attribs))()
 	for index,name in enumerate(attribs.keys()):
 		cAttribs[index].name=name
-		vals=(c_wchar_p*len(attribs[name]))()
+		cAttribs[index].nameLength=len(name)+1
+		vals=(attributeValue_t*len(attribs[name]))()
 		for valIndex,val in enumerate(attribs[name]):
-			vals[valIndex]=unicode(val) if val is not None else None
-		cAttribs[index].value=vals
+			val=unicode(val) if val is not None else None
+			vals[valIndex].value=val
+			vals[valIndex].valueLength=len(val)+1 if isinstance(val,basestring) else 0
+		cAttribs[index].values=vals
 		cAttribs[index].numValues=len(attribs[name])
 	foundDocHandle=c_int()
 	foundID=c_int()
