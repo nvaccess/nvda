@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import time
-import winsound
 import os
 import wx
 from wx.lib import newevent
@@ -14,11 +13,9 @@ import config
 import versionInfo
 import speech
 import queueHandler
-import pythoncom
 import core
 from settingsDialogs import *
 import userDictHandler
-import codecs
 
 ### Constants
 appTitle = "NVDA"
