@@ -718,7 +718,7 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if not obj:
 		return
-	if obj.role==controlTypes.ROLE_UNKNOWN or controlTypes.STATE_DEFUNCT in obj.states:
+	if obj.role==controlTypes.ROLE_UNKNOWN:
 		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
 			return focus_manageEvent(parent,isForegroundChange,False)
