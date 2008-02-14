@@ -61,6 +61,9 @@ def update(obj):
 	return virtualBufferObject
 
 def killVirtualBuffer(virtualBufferObject):
-	runningTable.remove(virtualBufferObject)
+	try:
+		runningTable.remove(virtualBufferObject)
+	except KeyError:
+		return
 	if hasattr(virtualBufferObject,'unloadBuffer'):
 		virtualBufferObject.unloadBuffer()
