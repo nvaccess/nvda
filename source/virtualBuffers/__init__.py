@@ -109,7 +109,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
 		focusObject=api.getFocusObject()
-		if focusObject.virtualBuffer==self:
+		if focusObject==self.rootNVDAObject:
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			speech.cancelSpeech()
@@ -141,9 +141,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 				lastBreak=offset
 		return lineBreakOffsets
 
-	def _fillVBufHelper(self):
-		pass
-
 	def _activateField(self,docHandle,ID):
 		pass
 
@@ -170,7 +167,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 				self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress,nextScript):
-		self.fillVBuf()
+		self.unloadBuffer()
+		self.loadBuffer()
+		speech.speakMessage(_("Refreshed"))
+
 
 	def script_toggleScreenLayout(self,keyPress,nextScript):
 		self._useScreenLayout=not self._useScreenLayout
