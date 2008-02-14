@@ -113,6 +113,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if api.isVirtualBufferPassThrough():
 				api.toggleVirtualBufferPassThrough()
 			speech.cancelSpeech()
+			if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+				return
 			info=self.makeTextInfo(textHandler.POSITION_FIRST)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
