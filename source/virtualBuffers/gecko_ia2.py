@@ -106,26 +106,17 @@ class Gecko_ia2(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="heading":
-			return {"IAccessible::role":["heading","h1","h2","h3","h4","h5","h6",IAccessibleHandler.IA2_ROLE_HEADING]}
+			return {"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="link":
-			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK]}
+			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
 		elif nodeType=="visitedLink":
-			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
+			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
 		elif nodeType=="unvisitedLink":
-			return {"IAccessible::role":["link",IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
+			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
 		else:
 			return None
-
-	def IA2DocumentLoadedEvent(self,handle,eventID,window,objectID,childID,threadID,timestamp):
-		return
-		if self.rootNVDAObject.role==controlTypes.ROLE_UNKNOWN or window==self.rootNVDAObject.windowHandle and childID==self.rootNVDAObject.uniqueID:
-			import winsound
-			winsound.Beep(880,60)
-			self.unloadBuffer()
-			self.rootNVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-			self.loadBuffer()
 
 	def event_stateChange(self,obj,nextHandler):
 		if not self.isAlive():
