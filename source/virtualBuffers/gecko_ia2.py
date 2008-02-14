@@ -5,6 +5,7 @@ import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
+import sayAllHandler
 import speech
 import IAccessibleHandler
 import globalVars
@@ -56,8 +57,10 @@ class Gecko_ia2(VirtualBuffer):
 		api.setNavigatorObject(obj)
 		role=obj.role
 		states=obj.states
-		if role==controlTypes.ROLE_DOCUMENT:
-			return speech.speakObjectProperties(obj,role=True)
+		if obj==self.rootNVDAObject:
+			return speech.speakObjectProperties(obj,name=True,role=True)
+		if sayAllHandler.isRunning():
+			speech.cancelSpeech()
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
