@@ -32,6 +32,16 @@ def stop():
 	queueHandler.cancelGeneratorObject(_generatorID)
 	_generatorID = None
 
+def isRunning():
+	"""Determine whether say all is currently running.
+	@return: C{True} if say all is currently running, C{False} if not.
+	@rtype: bool
+	@note: If say all completes and there is no call to L{stop} (which is called from L{speech.cancelSpeech}), this will incorrectly return C{True}.
+		This should not matter, but is worth noting nevertheless.
+	"""
+	global _generatorID
+	return _generatorID is not None
+
 def readObjects(obj):
 	_startGenerator(readObjectsHelper_generator(obj))
 
