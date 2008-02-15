@@ -113,6 +113,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		for o in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]+[globalVars.focusObject]:
 			virtualBufferObject=virtualBufferHandler.update(o)
 			if virtualBufferObject:
+				obj.virtualBuffer=virtualBufferObject
 				break
 	if globalVars.log.getEffectiveLevel()<=logging.INFO:
 		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))

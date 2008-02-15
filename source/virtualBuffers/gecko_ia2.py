@@ -35,8 +35,10 @@ class Gecko_ia2(VirtualBuffer):
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not isinstance(obj,NVDAObjects.IAccessible.IA2.IA2):
 			return False
-		root=self.rootNVDAObject
-		w=obj.windowHandle
+		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
+			return False
+		return True
+
 		while w:
 			if w==root.windowHandle:
 				return True
@@ -47,6 +49,8 @@ class Gecko_ia2(VirtualBuffer):
 		root=self.rootNVDAObject
 		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN: 
 			return True
+		else:
+			return False
 
 	def event_focusEntered(self,obj,nextHandler):
 		pass
@@ -60,6 +64,7 @@ class Gecko_ia2(VirtualBuffer):
 		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
 			self.busyFlag=True
+			return
 		else:
 			self.busyFlag=False
 		if obj==self.rootNVDAObject:
