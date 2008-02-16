@@ -72,7 +72,10 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getSentenceOffsets(self,offset):
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)[0:2]
+			start,end=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)[0:2]
+			if start==end:
+				raise NotImplementedError
+			return (start,end)
 		except:
 			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
 
