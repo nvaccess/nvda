@@ -18,6 +18,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		IA2Attributes=attrs.get('iaccessible2::attributes',"")
+		if IA2Attributes.lower().find('tag:blockquote')>=0:
+			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		newAttrs=attrs.copy()
