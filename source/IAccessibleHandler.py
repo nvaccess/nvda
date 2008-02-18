@@ -616,7 +616,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Remove any objects that are being hidden or destroyed
 		if eventName in ["hide","destroy"]:
 			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle) and (objectID==focusObject.event_objectID) and (childID==focusObject.event_childID):
-				parent=api.getFocusAncestors()[-1]
+				try:
+					parent=api.getFocusAncestors()[-1]
+				except:
+					parent=desktopObject
 				api.setFocusObject(parent)
 				api.setMouseObject(desktopObject)
 				return
