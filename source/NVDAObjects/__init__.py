@@ -7,6 +7,7 @@
 """Module that contains the base NVDA object type"""
 from new import instancemethod
 import time
+import re
 import weakref
 import baseObject
 import speech
@@ -288,6 +289,20 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			self._startOffset=self._endOffset
 			self._endOffset=tempOffset
 		return count
+
+	def find(self,text,caseSensitive=False,reverse=False):
+		if not reverse:
+			inText=self._getTextRange(self._startOffset+1,self._getStoryLength())
+		else:
+			inText=self._getTextRange(0,self._startOffset)[::-1]
+		m=re.search(re.escape(text),inText,re.IGNORECASE)
+		if not m:
+			return False
+		offset=m.start()
+		if reverse:
+			offset=self._startOffset-offset
+		self._startOffset=self._endOffset=offset
+		return True
 
 	def updateCaret(self):
 		return self._setCaretOffset(self._startOffset)
