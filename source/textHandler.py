@@ -268,6 +268,19 @@ class TextInfo(baseObject.autoPropertyObject):
 """
 		raise NotImplementedError
 
+	def find(self,text,caseSensitive=False,reverse=False):
+		"""Locates the given text and positions this TextInfo object at the start.
+@param text: the text to search for
+@type text: string
+@param caceSensitive: true if case sensitivity search should be used, False if not
+@type caseSensitive: bool
+@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
+@type reverse: bool
+@returns: True if text is found, false otherwise
+@rtype: bool
+""" 
+		raise NotImplementedError
+
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
 @param text: the text to search
