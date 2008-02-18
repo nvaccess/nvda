@@ -10,6 +10,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 """
 
 import baseObject
+import gui.scriptUI
 import textHandler
 import api
 import speech
@@ -38,6 +39,8 @@ class CursorManager(baseObject.scriptableObject):
 		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
 		"""
 		self._lastSelectionMovedStart=False
+		self._lastFindText=""
+		self._inFind=False
 		self.bindToStandardKeys()
 
 	def _get_selection(self):
@@ -69,6 +72,32 @@ class CursorManager(baseObject.scriptableObject):
 			if info.hasXML:
 				speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
 			speech.speakSpelling(info.text)
+
+	def doFindTextDialog(self):
+		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindTextDialogHelper)
+		self._inFind=True
+		findDialog.run()
+
+	def doFindTextDialogHelper(self,text):
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		res=info.find(text)
+		if res:
+			self.selection=info
+			speech.cancelSpeech()
+			info.expand(textHandler.UNIT_LINE)
+			if info.hasXML:
+				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=False,reason=speech.REASON_CARET)
+			else:
+				speech.speakFormattedText(info)
+		else:
+			errorDialog=gui.scriptUI.MessageDialog(_("text: \"%s\" not found")%text,title=_("Find Error"))
+			errorDialog.run()
+		self._lastFindText=text
+		self._inFind=False
+
+	def script_find(self,keyPress,nextScript): 
+		self.doFindTextDialog()
+	script_find.__doc__ = _("find a text pattern from the current cursor's position")
 
 	def script_pageUp(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
@@ -232,6 +261,7 @@ class CursorManager(baseObject.scriptableObject):
 			("control+shift+extendedHome","selectToTopOfDocument"),
 			("control+a","selectAll"),
 			("control+c","copyToClipboard"),
+			("NVDA+f3","find"),
 		):
 			self.bindKey_runtime(keyName, scriptName)
 
