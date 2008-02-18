@@ -59,6 +59,8 @@ class Gecko_ia2(VirtualBuffer):
 		pass
 
 	def event_gainFocus(self,obj,nextHandler):
+		if self._inFind:
+			return
 		if not self.isAlive():
 			return virtualBufferHandler.killVirtualBuffer(self)
 		api.setNavigatorObject(obj)
