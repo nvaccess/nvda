@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2008-02-13 14:09+0100\n"
+"PO-Revision-Date: 2008-02-19 16:55+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -137,12 +137,12 @@ msgstr "Voce"
 msgid "variant"
 msgstr "Variante"
 
-#: api.py:182
-#: api.py:185
+#: api.py:183
+#: api.py:186
 msgid "virtual buffer pass through"
 msgstr "Passa attraverso il buffer virtuale"
 
-#: api.py:182
+#: api.py:183
 #: appModules\_default.py:44
 #: appModules\_default.py:119
 #: appModules\_default.py:129
@@ -159,11 +159,11 @@ msgstr "Passa attraverso il buffer virtuale"
 #: keyboardHandler.py:57
 #: speech.py:356
 #: speech.py:362
-#: virtualBuffers\__init__.py:177
+#: virtualBuffers\__init__.py:184
 msgid "off"
 msgstr "Disattivato"
 
-#: api.py:185
+#: api.py:186
 #: appModules\_default.py:41
 #: appModules\_default.py:122
 #: appModules\_default.py:132
@@ -178,7 +178,7 @@ msgstr "Disattivato"
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: speech.py:351
-#: virtualBuffers\__init__.py:177
+#: virtualBuffers\__init__.py:184
 msgid "on"
 msgstr "Attivato"
 
@@ -203,7 +203,7 @@ msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard w
 msgstr "Attiva o disattiva l'aiuto tastiera"
 
 #: appModules\_default.py:71
-#: cursorManager.py:186
+#: cursorManager.py:215
 msgid "no selection"
 msgstr "Nessuna selezione"
 
@@ -568,7 +568,7 @@ msgid "speaks the current foreground object"
 msgstr "Legge l'oggetto in primo piano"
 
 #: appModules\_default.py:630
-#: cursorManager.py:203
+#: cursorManager.py:232
 msgid "copied to clipboard"
 msgstr "Copiato negli appunti"
 
@@ -1529,7 +1529,32 @@ msgstr "Caricamento in corso, attendere prego"
 msgid "NVDA started"
 msgstr "Nvda attivato"
 
-#: gui\__init__.py:25
+#: cursorManager.py:77
+#: virtualBuffers_old\__init__.py:459
+msgid "Find"
+msgstr "Trova"
+
+#: cursorManager.py:77
+#: virtualBuffers_old\__init__.py:459
+msgid "Type the text you wish to find"
+msgstr "Digita il testo che vuoi cercare"
+
+#: cursorManager.py:93
+#: virtualBuffers_old\__init__.py:469
+msgid "Find Error"
+msgstr "Errore di ricerca"
+
+#: cursorManager.py:93
+#: virtualBuffers_old\__init__.py:469
+msgid "text: \"%s\" not found"
+msgstr "Testo: \"%s\" non trovato"
+
+#: cursorManager.py:100
+#: virtualBuffers_old\__init__.py:475
+msgid "find a text pattern from the current cursor's position"
+msgstr "Trova un testo dalla posizione del cursore"
+
+#: gui\__init__.py:22
 msgid ""
 "NVDA - Quick Start document\n"
 "\n"
@@ -1676,165 +1701,165 @@ msgstr ""
 "3 del tastierino numerico - Carattere successivo\n"
 "Shift+3 del tastierino numerico - Fine riga\n"
 
-#: gui\__init__.py:139
+#: gui\__init__.py:136
 msgid "&Revert to saved configuration\tCtrl+R"
 msgstr "&Torna alla configurazione salvata\tctrl+r"
 
-#: gui\__init__.py:139
+#: gui\__init__.py:136
 msgid "Reset all settings to saved state"
 msgstr "Riporta tutte le impostazioni a quelle salvate"
 
-#: gui\__init__.py:141
+#: gui\__init__.py:138
 msgid "&Save configuration\tCtrl+S"
 msgstr "&Salva configurazione\tctrl+s"
 
-#: gui\__init__.py:141
+#: gui\__init__.py:138
 msgid "Write the current configuration to nvda.ini"
 msgstr "Salva la configurazione nel file nvda.ini"
 
-#: gui\__init__.py:144
+#: gui\__init__.py:141
 msgid "&Default dictionary..."
 msgstr "Dizionario di &default..."
 
-#: gui\__init__.py:144
+#: gui\__init__.py:141
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Dialogo dove potete creare il dizionario di default aggiungendo voci all'elenco"
 
-#: gui\__init__.py:146
+#: gui\__init__.py:143
 msgid "&Voice dictionary..."
 msgstr "Dizionario specifico per la &voce..."
 
-#: gui\__init__.py:146
+#: gui\__init__.py:143
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Dialogo dove potete creare un dizionario specifico per la voce aggiungendo voci all'elenco"
 
-#: gui\__init__.py:148
+#: gui\__init__.py:145
 msgid "&Temporary dictionary..."
 msgstr "Dizionario &temporaneo..."
 
-#: gui\__init__.py:148
+#: gui\__init__.py:145
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Dialogo dove potete creare un dizionario tempporaneo aggiungendo voci"
 
-#: gui\__init__.py:150
+#: gui\__init__.py:147
 msgid "User &dictionaries"
 msgstr "&Dizionari"
 
-#: gui\__init__.py:152
+#: gui\__init__.py:149
 msgid "E&xit"
 msgstr "E&sci"
 
-#: gui\__init__.py:152
-#: gui\__init__.py:245
+#: gui\__init__.py:149
+#: gui\__init__.py:242
 msgid "Exit NVDA"
 msgstr "Esci da nvda"
 
-#: gui\__init__.py:154
-#: gui\__init__.py:155
+#: gui\__init__.py:151
+#: gui\__init__.py:152
 msgid "&NVDA"
 msgstr "&Nvda"
 
-#: gui\__init__.py:157
+#: gui\__init__.py:154
 msgid "&General settings...\tCtrl+Shift+G"
 msgstr "&Impostazioni generali...\tctrl+shift+g"
 
-#: gui\__init__.py:157
-#: gui\__init__.py:261
+#: gui\__init__.py:154
+#: gui\__init__.py:258
 msgid "General settings"
 msgstr "Impostazioni generali"
 
-#: gui\__init__.py:159
+#: gui\__init__.py:156
 msgid " the synthesizer to use"
 msgstr " il sintetizzatore da usare"
 
-#: gui\__init__.py:159
+#: gui\__init__.py:156
 msgid "&Synthesizer...\tCtrl+Shift+S"
 msgstr "&Sintetizzatore...\tctrl+shift+s"
 
-#: gui\__init__.py:161
+#: gui\__init__.py:158
 msgid "&Voice settings...\tCtrl+Shift+V"
 msgstr "&Impostazioni voce...\tctrl+shift+v"
 
-#: gui\__init__.py:161
+#: gui\__init__.py:158
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Scegli la voce, la velocita', il tono e il volume da usare"
 
-#: gui\__init__.py:163
+#: gui\__init__.py:160
 msgid "&Keyboard Settings...\tCtrl+K"
 msgstr "&Impostazioni tastiera...\tctrl+k"
 
-#: gui\__init__.py:163
+#: gui\__init__.py:160
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "Configura le impostazioni della tastiera, la lettura dei caratteri digitati, delle parole o dei tasti di comando"
 
-#: gui\__init__.py:165
+#: gui\__init__.py:162
 msgid "&Mouse settings...\tCtrl+M"
 msgstr "&Impostazioni mouse...\tctrl+m"
 
-#: gui\__init__.py:165
+#: gui\__init__.py:162
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "Configura la lettura degli oggetti sotto il mouse e altre impostazioni"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:164
 msgid "&Object presentation...\tCtrl+Shift+O"
 msgstr "&Presentazione oggetti...\tctrl+shift+o"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:164
 msgid "Change reporting of objects"
 msgstr "Configura la lettura degli oggetti"
 
-#: gui\__init__.py:169
+#: gui\__init__.py:166
 msgid "Change virtual buffers specific settings"
 msgstr "Cambia le impostazioni del buffer virtuale"
 
-#: gui\__init__.py:169
+#: gui\__init__.py:166
 msgid "Virtual &buffers...\tCtrl+Shift+B"
 msgstr "&Buffer virtuale...\tctrl+shift+b"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:168
 msgid "Change Settings of document properties"
 msgstr "Cambia le impostazioni delle proprieta' del documento"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:168
 msgid "Document &formatting...\tCtrl+Shift+F"
 msgstr "&Formattazione documento...\tctrl+f"
 
-#: gui\__init__.py:173
-#: gui\__init__.py:174
+#: gui\__init__.py:170
+#: gui\__init__.py:171
 msgid "&Preferences"
 msgstr "&Preferenze"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:173
 msgid "NVDA homepage"
 msgstr "Home page di nvda"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:173
 msgid "Opens NVDA homepage in the default browser"
 msgstr "Apre la home page di nvda"
 
-#: gui\__init__.py:178
+#: gui\__init__.py:175
 msgid "NVDA wiki"
 msgstr "Wiki di nvda"
 
-#: gui\__init__.py:178
+#: gui\__init__.py:175
 msgid "Opens NVDA wiki in the default browser"
 msgstr "Apre il wiki di nvda"
 
-#: gui\__init__.py:180
+#: gui\__init__.py:177
 msgid "About..."
 msgstr "Informazioni su..."
 
-#: gui\__init__.py:180
-#: gui\__init__.py:305
+#: gui\__init__.py:177
+#: gui\__init__.py:302
 msgid "About NVDA"
 msgstr "Informazioni su nvda"
 
-#: gui\__init__.py:182
-#: gui\__init__.py:183
+#: gui\__init__.py:179
+#: gui\__init__.py:180
 msgid "&Help"
 msgstr "&Aiuto"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:192
 #: gui\scriptUI.py:52
 #: gui\scriptUI.py:61
 #: gui\scriptUI.py:74
@@ -1842,71 +1867,71 @@ msgstr "&Aiuto"
 msgid "NVDA"
 msgstr "Nvda"
 
-#: gui\__init__.py:221
+#: gui\__init__.py:218
 msgid "configuration saved"
 msgstr "Configurazione salvata"
 
-#: gui\__init__.py:223
+#: gui\__init__.py:220
 msgid "Could not save configuration - probably read only file system"
 msgstr "Non posso salvare la configurazione, probabilmente il file e' di sola lettura"
 
-#: gui\__init__.py:226
+#: gui\__init__.py:223
 msgid "Default dictionary"
 msgstr "Dizionario di default"
 
-#: gui\__init__.py:230
+#: gui\__init__.py:227
 msgid "Voice dictionary (%s)"
 msgstr "Dizionario specifico per la voce (%s)"
 
-#: gui\__init__.py:234
+#: gui\__init__.py:231
 msgid "Temporary dictionary"
 msgstr "Dizionario temporaneo"
 
-#: gui\__init__.py:245
+#: gui\__init__.py:242
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Siete sicuri di voler uscire da Nvda?"
 
-#: gui\__init__.py:265
+#: gui\__init__.py:262
 msgid "Synthesizer"
 msgstr "Sintetizzatore"
 
-#: gui\__init__.py:269
+#: gui\__init__.py:266
 msgid "Voice settings"
 msgstr "Impostazioni voce"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:270
 msgid "Keyboard Settings"
 msgstr "Impostazioni tastiera"
 
-#: gui\__init__.py:277
+#: gui\__init__.py:274
 msgid "Mouse settings"
 msgstr "Impostazioni mouse"
 
-#: gui\__init__.py:281
+#: gui\__init__.py:278
 msgid "Object presentation"
 msgstr "Presentazione oggetti"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:282
 msgid "virtual buffers"
 msgstr "Buffer virtuale"
 
-#: gui\__init__.py:289
+#: gui\__init__.py:286
 msgid "Document formatting"
 msgstr "Formattazione documento"
 
-#: gui\__init__.py:304
+#: gui\__init__.py:301
 msgid "copyright"
 msgstr "Copyright"
 
-#: gui\__init__.py:304
+#: gui\__init__.py:301
 msgid "maintainer"
 msgstr "Autore"
 
-#: gui\__init__.py:304
+#: gui\__init__.py:301
 msgid "url"
 msgstr "Url"
 
-#: gui\__init__.py:304
+#: gui\__init__.py:301
 msgid "version"
 msgstr "Versione"
 
@@ -2266,7 +2291,7 @@ msgstr "Errore in keyboardHandler.internal_keyUpEvent"
 msgid "%s cursor"
 msgstr "%s cursore"
 
-#: sayAllHandler.py:145
+#: sayAllHandler.py:155
 msgid "end of text"
 msgstr "Fine testo"
 
@@ -2445,13 +2470,14 @@ msgid "with %s items"
 msgstr "Con %s elementi"
 
 #: virtualBuffers\__init__.py:84
-#: virtualBuffers\__init__.py:92
+#: virtualBuffers\__init__.py:88
 #: virtualBuffers\__init__.py:96
+#: virtualBuffers\__init__.py:100
 #: virtualBuffers_old\__init__.py:190
 msgid "out of %s"
 msgstr "Fuori di %s"
 
-#: virtualBuffers\__init__.py:88
+#: virtualBuffers\__init__.py:92
 #: virtualBuffers_old\MSHTML.py:253
 #: virtualBuffers_old\MSHTML.py:260
 #: virtualBuffers_old\adobe.py:263
@@ -2461,97 +2487,101 @@ msgstr "Fuori di %s"
 msgid "bullet"
 msgstr "Puntato"
 
-#: virtualBuffers\__init__.py:94
+#: virtualBuffers\__init__.py:98
 msgid "in %s"
 msgstr "In %s"
 
-#: virtualBuffers\__init__.py:160
+#: virtualBuffers\__init__.py:164
 #: virtualBuffers_old\__init__.py:290
 msgid "activates the current object in the virtual buffer"
 msgstr "Attiva l'oggetto attuale nel buffer virtuale"
 
-#: virtualBuffers\__init__.py:178
+#: virtualBuffers\__init__.py:179
+msgid "Refreshed"
+msgstr "Aggiornato"
+
+#: virtualBuffers\__init__.py:185
 msgid "use screen layout %s"
 msgstr "Usa il layout dello schermo %s"
 
-#: virtualBuffers\__init__.py:202
+#: virtualBuffers\__init__.py:209
 msgid "no next heading"
 msgstr "Nessuna intestazione successiva"
 
-#: virtualBuffers\__init__.py:203
+#: virtualBuffers\__init__.py:210
 #: virtualBuffers_old\__init__.py:313
 msgid "moves to the next heading"
 msgstr "Vai all'intestazione successiva"
 
-#: virtualBuffers\__init__.py:207
+#: virtualBuffers\__init__.py:214
 msgid "no previous heading"
 msgstr "Nessuna intestazione precedente"
 
-#: virtualBuffers\__init__.py:208
+#: virtualBuffers\__init__.py:215
 #: virtualBuffers_old\__init__.py:324
 msgid "moves to the previous heading"
 msgstr "Vai all'intestazione precedente"
 
-#: virtualBuffers\__init__.py:212
+#: virtualBuffers\__init__.py:219
 msgid "no next link"
 msgstr "Nessun link successivo"
 
-#: virtualBuffers\__init__.py:213
+#: virtualBuffers\__init__.py:220
 #: virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "Vai al link successivo"
 
-#: virtualBuffers\__init__.py:217
+#: virtualBuffers\__init__.py:224
 msgid "no previous link"
 msgstr "Nessun link precedente"
 
-#: virtualBuffers\__init__.py:218
+#: virtualBuffers\__init__.py:225
 #: virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "Vai al link precedente"
 
-#: virtualBuffers\__init__.py:222
+#: virtualBuffers\__init__.py:229
 msgid "no next visited link"
 msgstr "Nessun link visitato successivo\""
 
-#: virtualBuffers\__init__.py:223
+#: virtualBuffers\__init__.py:230
 msgid "moves to the next visited link"
 msgstr "Vai al link visitato successivo"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:234
 msgid "no previous visited link"
 msgstr "Nessun link visitato precedente"
 
-#: virtualBuffers\__init__.py:228
+#: virtualBuffers\__init__.py:235
 msgid "moves to the previous visited link"
 msgstr "Vai al link visitato precedente"
 
-#: virtualBuffers\__init__.py:232
+#: virtualBuffers\__init__.py:239
 msgid "no next unvisited link"
 msgstr "Nessun link non visitato successivo"
 
-#: virtualBuffers\__init__.py:233
+#: virtualBuffers\__init__.py:240
 msgid "moves to the next unvisited link"
 msgstr "Vai al link non visitato successivo"
 
-#: virtualBuffers\__init__.py:237
+#: virtualBuffers\__init__.py:244
 msgid "no previous unvisited link"
 msgstr "Nessun link non visitato precedente"
 
-#: virtualBuffers\__init__.py:238
+#: virtualBuffers\__init__.py:245
 msgid "moves to the previous unvisited link"
 msgstr "Vai al link non visitato precedente"
 
-#: virtualBuffers\__init__.py:242
+#: virtualBuffers\__init__.py:249
 msgid "no next form field"
 msgstr "Nessun campo del form successivo"
 
-#: virtualBuffers\__init__.py:243
-#: virtualBuffers\__init__.py:248
+#: virtualBuffers\__init__.py:250
+#: virtualBuffers\__init__.py:255
 msgid "moves to the next form field"
 msgstr "Vai al campo del form successivo"
 
-#: virtualBuffers\__init__.py:247
+#: virtualBuffers\__init__.py:254
 msgid "no previous form field"
 msgstr "Nessun campo del form precedente"
 
@@ -2666,26 +2696,6 @@ msgstr "Vai al campo del form successivo"
 #: virtualBuffers_old\__init__.py:456
 msgid "moves to the previous form field"
 msgstr "Vai al campo del form precedente"
-
-#: virtualBuffers_old\__init__.py:459
-msgid "Find"
-msgstr "Trova"
-
-#: virtualBuffers_old\__init__.py:459
-msgid "Type the text you wish to find"
-msgstr "Digita il testo che vuoi cercare"
-
-#: virtualBuffers_old\__init__.py:469
-msgid "Find Error"
-msgstr "Errore di ricerca"
-
-#: virtualBuffers_old\__init__.py:469
-msgid "text: \"%s\" not found"
-msgstr "Testo: \"%s\" non trovato"
-
-#: virtualBuffers_old\__init__.py:475
-msgid "find a text pattern from the current cursor's position"
-msgstr "Trova un testo dalla posizione del cursore"
 
 #: virtualBuffers_old\__init__.py:479
 msgid "find next occurrence of text"
