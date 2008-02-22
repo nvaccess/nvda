@@ -165,3 +165,5 @@ class Gecko_ia2(VirtualBuffer):
 			self.unloadBuffer()
 			self.loadBuffer()
 			self.busyFlag=False
+		if obj!=self.rootNVDAObject:
+			return nextHandler()
