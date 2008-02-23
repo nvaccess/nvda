@@ -174,3 +174,28 @@ class Gecko_ia2(VirtualBuffer):
 		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 			return
 		super(Gecko_ia2,self).loadBuffer()
+
+	def event_scrollingStart(self,obj,nexthandler):
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+		except:
+			oldDocHandle=oldID=0
+		docHandle=obj.IAccessibleObject.windowHandle
+		ID=obj.IAccessibleObject.uniqueID
+		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
+			try:
+				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
+			except:
+				#globalVars.log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
+				return nextHandler()
+			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
+			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
+			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
+			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
+			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
+				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				newInfo.collapse()
+				newInfo.updateCaret()
