@@ -85,6 +85,8 @@ class Gecko_ia2(VirtualBuffer):
 			self.busyFlag=False
 		if obj==self.rootNVDAObject:
 			return speech.speakObjectProperties(obj,name=True)
+		if self.VBufHandle is None:
+			return nextHandler()
 		if sayAllHandler.isRunning():
 			speech.cancelSpeech()
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -167,3 +169,8 @@ class Gecko_ia2(VirtualBuffer):
 			self.busyFlag=False
 		if obj!=self.rootNVDAObject:
 			return nextHandler()
+
+	def loadBuffer(self):
+		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			return
+		super(Gecko_ia2,self).loadBuffer()

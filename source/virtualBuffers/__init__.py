@@ -3,7 +3,7 @@ import time
 import os
 import winsound
 import baseObject
-from keyUtils import isKeyWaiting
+from keyUtils import isKeyWaiting, sendKey
 import speech
 import NVDAObjects
 import winUser
@@ -109,6 +109,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self._useScreenLayout=True
+		self.VBufHandle=None
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
@@ -124,10 +125,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 	def unloadBuffer(self):
-		VBufClient_destroyBuffer(self.VBufHandle)
+		if self.VBufHandle is not None:
+			VBufClient_destroyBuffer(self.VBufHandle)
+			self.VbufHandle=None
 
 	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
+		if self.VBufHandle is not None:
+			return self.TextInfo(self,position)
+		else:
+			return NVDAObjects.NVDAObjectTextInfo(self,position)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		pass
@@ -158,12 +164,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		pass
 
 	def script_activatePosition(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		start,end=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
 		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
+		if self.VBufHandle is None:
+			return 
 		noKeyWaiting=not isKeyWaiting()
 		if noKeyWaiting:
 			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
@@ -174,10 +184,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 				self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		self.unloadBuffer()
 		self.loadBuffer()
 		speech.speakMessage(_("Refreshed"))
-
 
 	def script_toggleScreenLayout(self,keyPress,nextScript):
 		self._useScreenLayout=not self._useScreenLayout
@@ -205,51 +216,71 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return True
 
 	def script_nextHeading(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("heading","next"):
 			speech.speakMessage(_("no next heading"))
 	script_nextHeading.__doc__ = _("moves to the next heading")
 
 	def script_previousHeading(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("heading","previous"):
 			speech.speakMessage(_("no previous heading"))
 	script_previousHeading.__doc__ = _("moves to the previous heading")
 
 	def script_nextLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("link","next"):
 			speech.speakMessage(_("no next link"))
 	script_nextLink.__doc__ = _("moves to the next link")
 
 	def script_previousLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("link","previous"):
 			speech.speakMessage(_("no previous link"))
 	script_previousLink.__doc__ = _("moves to the previous link")
 
 	def script_nextVisitedLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("visitedLink","next"):
 			speech.speakMessage(_("no next visited link"))
 	script_nextLink.__doc__ = _("moves to the next visited link")
 
 	def script_previousVisitedLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("visitedLink","previous"):
 			speech.speakMessage(_("no previous visited link"))
 	script_previousLink.__doc__ = _("moves to the previous visited link")
 
 	def script_nextUnvisitedLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("unvisitedLink","next"):
 			speech.speakMessage(_("no next unvisited link"))
 	script_nextUnvisitedLink.__doc__ = _("moves to the next unvisited link")
 
 	def script_previousUnvisitedLink(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("unvisitedLink","previous"):
 			speech.speakMessage(_("no previous unvisited link"))
 	script_previousUnvisitedLink.__doc__ = _("moves to the previous unvisited link")
 
 	def script_nextFormField(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("formField","next"):
 			speech.speakMessage(_("no next form field"))
 	script_nextFormField.__doc__ = _("moves to the next form field")
 
 	def script_previousFormField(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
 		if not self._jumpToNodeType("formField","previous"):
 			speech.speakMessage(_("no previous form field"))
 	script_previousFormField.__doc__ = _("moves to the next form field")
