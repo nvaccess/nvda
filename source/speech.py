@@ -576,7 +576,10 @@ class XMLContextParser(object):
 		self._fieldStack.append(newAttrs)
 
 	def parse(self,XMLContext):
-		self.parser.Parse(XMLContext)
+		try:
+			self.parser.Parse(XMLContext)
+		except:
+			globalVars.log.warn("XML: %s"%XMLContext,exc_info=True)
 		return self._fieldStack
 
 class RelativeXMLParser(object):
@@ -611,6 +614,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 		oldStack=getattr(cacheObject,'_speech_XMLCache',[])
 		#Create a new stack from the XML context
 		stackParser=XMLContextParser()
+		globalVars.log.warning("type: %s"%type(XMLContext))
 		newStack=stackParser.parse(XMLContext)
 		#Cache a copy of the new stack for future use
 		if not cacheFinalStack:
@@ -713,7 +717,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(propertyValues['positionString'])
 		del propertyValues['positionString']
 	for name,value in propertyValues.items():
-		if not name.startswith('_') and value is not None:
+		if not name.startswith('_') and value is not None and value is not "":
 			textList.append(name)
 			textList.append(unicode(value))
 	return " ".join([x for x in textList if x])

@@ -18,14 +18,27 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		IA2Attributes=attrs.get('iaccessible2::attributes',"")
-		if IA2Attributes.lower().find('tag:blockquote')>=0:
+		_IA2Attributes=attrs.get('iaccessible2::attributes',"")
+		IA2Attributes={}
+		for attrib in _IA2Attributes.split(';'):
+			nameValue=attrib.split(':')
+			name=nameValue[0].lower()
+			if len(nameValue)>1:
+				value=nameValue[1]
+			else:
+				value=""
+			if value is not "":
+				IA2Attributes[name]=value
+		if IA2Attributes.get('tag',"").lower()=="blockquote":
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		level=IA2Attributes.get('level',"")
 		newAttrs=attrs.copy()
 		newAttrs['role']=role
 		newAttrs['states']=states
+		if level is not "" and level is not None:
+			newAttrs['level']=level
 		return super(Gecko_ia2_TextInfo,self).getXMLFieldSpeech(newAttrs,fieldType,extraDetail=extraDetail,reason=reason)
 
 class Gecko_ia2(VirtualBuffer):
