@@ -94,8 +94,6 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			return _("out of %s")%roleText
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role in (controlTypes.ROLE_LIST,controlTypes.ROLE_COMBOBOX):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_LISTITEM:
-			return _("bullet")
 		elif not extraDetail and fieldType=="start_addedToStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType=="end_removedFromStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME):

@@ -53,4 +53,5 @@ None:_("blank"),
 "|":_("bar"),
 "}":_("right brace"),
 "~":_("tilda"),
+u"\u2022":_("bullet"),
 }
