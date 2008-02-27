@@ -31,14 +31,14 @@ class SynthSetting(baseObject.autoPropertyObject):
 class VoiceSynthSetting(SynthSetting):
 
 	def __init__(self):
-		SynthSetting.__init__(self,"voice",1,synthDriverHandler.getSynth().voiceCount)
+		super(VoiceSynthSetting,self).__init__("voice",1,synthDriverHandler.getSynth().voiceCount)
 
 	def increase(self):
-		SynthSetting.increase(self)
+		super(VoiceSynthSetting,self).increase()
 		return self.valueName		
 
 	def decrease(self):
-		SynthSetting.decrease(self)
+		super(VoiceSynthSetting,self).decrease()
 		return self.valueName
 
 	def _set_value(self,value):
@@ -48,6 +48,32 @@ class VoiceSynthSetting(SynthSetting):
 		
 	def _get_valueName(self):
 		return synthDriverHandler.getSynth().getVoiceName(self.value)
+
+class VariantSynthSetting(SynthSetting):
+
+	def __init__(self):
+		super(VariantSynthSetting,self).__init__("variant",0,synthDriverHandler.getSynth().variantCount-1)
+
+	def increase(self):
+		super(VariantSynthSetting,self).increase()
+		return self.valueName		
+
+	def decrease(self):
+		super(VariantSynthSetting,self).decrease()
+		return self.valueName
+
+	def _get_value(self):
+		currentVariant=synthDriverHandler.getSynth().variant
+		for x in range(0,synthDriverHandler.getSynth().variantCount):
+			if currentVariant==synthDriverHandler.getSynth().getVariantIdentifier(x):
+				break
+		return x
+
+	def _set_value(self,value):
+		synthDriverHandler.getSynth().variant=synthDriverHandler.getSynth().getVariantIdentifier(value)
+
+	def _get_valueName(self):
+		return synthDriverHandler.getSynth().getVariantName(self.value)
 
 class SynthSettingsRing(baseObject.autoPropertyObject):
 	"""
@@ -74,10 +100,12 @@ class SynthSettingsRing(baseObject.autoPropertyObject):
 		return None
 
 	def _get_currentSettingValue(self):
-		if self.settings[self._current].name is not "voice":
-			return self.settings[self._current].value
-		else:
+		if self.settings[self._current].name is "voice":
 			return synthDriverHandler.getSynth().getVoiceName(self.settings[self._current].value)
+		elif self.settings[self._current].name is "variant":
+			return synthDriverHandler.getSynth().getVariantName(self.settings[self._current].value)
+		else:
+			return self.settings[self._current].value
 
 	def _set_currentSettingValue(self,value):
 		if self._current is not None: 
@@ -116,7 +144,7 @@ class SynthSettingsRing(baseObject.autoPropertyObject):
 		if synth.hasPitch: list.append(SynthSetting("pitch", step=5))
 		if synth.hasInflection: list.append(SynthSetting("inflection",step = 5))
 		if synth.hasVoice: list.append(VoiceSynthSetting())
-		if synth.hasVariant: list.append(SynthSetting("variant",0,synth.variantCount-1))
+		if synth.hasVariant: list.append(VariantSynthSetting())
 		if len(list) == 0:
 			self._current = None
 			self.settings = None

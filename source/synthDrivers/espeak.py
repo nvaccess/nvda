@@ -9,7 +9,6 @@ import Queue
 import threading
 import languageHandler
 import silence
-import globalVars
 
 class SynthDriver(silence.SynthDriver):
 
@@ -117,9 +116,7 @@ class SynthDriver(silence.SynthDriver):
 	def _set_variant(self,val):
 		self._variant=val
 		identifier=_espeak.getCurrentVoice().identifier.split('+')[0]
-		globalVars.log.warning("variant: is %s"%self._variant)
 		if self._variant =="none":
-			globalVars.log.warning("variant: voice is %s"%identifier)
 			_espeak.setVoiceByName(identifier.split('+')[0])
 		else:
 			identifier="%s+%s"%(identifier,self._variant)
