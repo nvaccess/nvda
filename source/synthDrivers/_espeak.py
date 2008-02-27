@@ -269,15 +269,16 @@ def getVariantDict():
 	dir='synthDrivers\\espeak-data\\voices\\!v'
 	variantDict={"none":_("none")}
 	for fileName in os.listdir(dir):
-		file=codecs.open("%s\\%s"%(dir,fileName))
-		for line in file.readlines():
-			if line.startswith('name '):
-				temp=line.split(" ")
-				if len(temp) ==2:
-					name=temp[1].rstrip(whitespace)
-					break
-			name=None
-		file.close()
+		if os.path.isfile("%s\\%s"%(dir,fileName)):
+			file=codecs.open("%s\\%s"%(dir,fileName))
+			for line in file.readlines():
+				if line.startswith('name '):
+					temp=line.split(" ")
+					if len(temp) ==2:
+						name=temp[1].rstrip(whitespace)
+						break
+				name=None
+			file.close()
 		if name is not None:
 			variantDict[fileName]=name
 	return variantDict
