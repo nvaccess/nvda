@@ -11,6 +11,10 @@ import Queue
 from ctypes import *
 import config
 import globalVars
+import os
+import codecs
+from string import whitespace
+
 
 isSpeaking = False
 lastIndex = None
@@ -21,7 +25,7 @@ espeakDLL=None
 
 #Parameter bounds
 minRate=80
-maxRate=370
+maxRate=390
 minPitch=0
 maxPitch=99
 
@@ -64,9 +68,11 @@ espeakPITCH=3
 espeakRANGE=4
 espeakPUNCTUATION=5
 espeakCAPITALS=6
-espeakEMPHASIS=7
-espeakLINELENGTH=8
-espeakVOICETYPE=9
+espeakWORDGAP=7
+espeakOPTIONS=8   # reserved for misc. options.  not yet used
+espeakINTONATION=9
+espeakRESERVED1=10
+espeakRESERVED2=11
 
 #error codes
 EE_OK=0
@@ -258,3 +264,21 @@ def terminate():
 	player.close()
 	player=None
 	espeakDLL=None
+
+def getVariantDict():
+	dir='synthDrivers\\espeak-data\\voices\\!v'
+	variantDict={"none":_("none")}
+	for fileName in os.listdir(dir):
+		file=codecs.open("%s\\%s"%(dir,fileName))
+		for line in file.readlines():
+			if line.startswith('name '):
+				temp=line.split(" ")
+				if len(temp) ==2:
+					name=temp[1].rstrip(whitespace)
+					break
+			name=None
+		file.close()
+		if name is not None:
+			variantDict[fileName]=name
+	return variantDict
+
