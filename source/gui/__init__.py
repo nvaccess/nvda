@@ -61,6 +61,10 @@ class MainFrame(wx.Frame):
 		self.Show(True)
 		self.Show(False)
 
+	def Destroy(self):
+		self.sysTrayIcon.Destroy()
+		super(MainFrame, self).Destroy()
+
 	def onAbortCommand(self,evt):
 		self.Destroy()
 
@@ -208,6 +212,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 
 		self.Bind(wx.EVT_TASKBAR_RIGHT_UP, self.onActivate)
+
+	def Destroy(self):
+		self.menu.Destroy()
+		super(SysTrayIcon, self).Destroy()
 
 	def onActivate(self, evt):
 		self.PopupMenu(self.menu)
