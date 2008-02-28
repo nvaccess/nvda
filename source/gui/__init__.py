@@ -82,15 +82,15 @@ class MainFrame(wx.Frame):
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onDefaultDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,wx.ID_ANY,_("Default dictionary"),userDictHandler.dictionaries["default"])
+		d=DictionaryDialog(None,_("Default dictionary"),userDictHandler.dictionaries["default"])
 		d.Show(True)
 
 	def onVoiceDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,wx.ID_ANY,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
+		d=DictionaryDialog(None,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
 		d.Show(True)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,wx.ID_ANY,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
+		d=DictionaryDialog(None,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
 		d.Show(True)
 
 	def onExitCommand(self, evt):
@@ -110,35 +110,35 @@ class MainFrame(wx.Frame):
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):
-		d=generalSettingsDialog(None,wx.ID_ANY,_("General settings"))
+		d=GeneralSettingsDialog(None)
 		d.Show(True)
 
 	def onSynthesizerCommand(self,evt):
-		d=synthesizerDialog(None,wx.ID_ANY,_("Synthesizer"))
+		d=SynthesizerDialog(None)
 		d.Show(True)
 
 	def onVoiceCommand(self,evt):
-		d=voiceSettingsDialog(None,wx.ID_ANY,_("Voice settings"))
+		d=VoiceSettingsDialog(None)
 		d.Show(True)
 
 	def onKeyboardSettingsCommand(self,evt):
-		d=keyboardSettingsDialog(None,wx.ID_ANY,_("Keyboard Settings"))
+		d=KeyboardSettingsDialog(None)
 		d.Show(True)
 
 	def onMouseSettingsCommand(self,evt):
-		d=mouseSettingsDialog(None,wx.ID_ANY,_("Mouse settings"))
+		d=MouseSettingsDialog(None)
 		d.Show(True)
 
 	def onObjectPresentationCommand(self,evt):
-		d=objectPresentationDialog(None,wx.ID_ANY,_("Object presentation"))
+		d=ObjectPresentationDialog(None)
 		d.Show(True)
 
 	def onVirtualBuffersCommand(self,evt):
-		d=virtualBuffersDialog(None,wx.ID_ANY,_("virtual buffers"))
+		d=VirtualBuffersDialog(None)
 		d.Show(True)
 
 	def onDocumentFormattingCommand(self,evt):
-		d=documentFormattingDialog(None,wx.ID_ANY,_("Document formatting"))
+		d=DocumentFormattingDialog(None)
 		d.Show(True)
 
 	def onHomePageCommand(self,evt):
