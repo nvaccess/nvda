@@ -98,6 +98,8 @@ class Gecko_ia2(VirtualBuffer):
 			self.busyFlag=False
 		if obj==self.rootNVDAObject:
 			return speech.speakObjectProperties(obj,name=True)
+		if role==controlTypes.ROLE_DOCUMENT:
+			return
 		if self.VBufHandle is None:
 			return nextHandler()
 		if sayAllHandler.isRunning():

@@ -191,10 +191,12 @@ class voiceSettingsDialog(wx.Dialog):
 			variantListSizer=wx.BoxSizer(wx.HORIZONTAL)
 			variantListLabel=wx.StaticText(self,-1,label=_("V&ariant"))
 			variantListID=wx.NewId()
-			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=["%s"%x for x in range(getSynth().variantCount)])
-			variantIndex=getSynth().variant
-			print "variant: %s, %s"%(type(variantIndex),variantIndex)
-			self.variantList.SetSelection(variantIndex)
+			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=[getSynth().getVariantName(x) for x in range(0,getSynth().variantCount)])
+			currentVariant=getSynth().variant
+			for x in range(0,getSynth().variantCount):
+				if currentVariant==getSynth().getVariantIdentifier(x):
+					break
+			self.variantList.SetSelection(x)
 			self.variantList.Bind(wx.EVT_CHOICE,self.onVariantChange)
 			variantListSizer.Add(variantListLabel)
 			variantListSizer.Add(self.variantList)
@@ -268,7 +270,7 @@ class voiceSettingsDialog(wx.Dialog):
 
 	def onVariantChange(self,evt):
 		val=evt.GetSelection()
-		getSynth().variant=val
+		getSynth().variant=getSynth().getVariantIdentifier(val)
 
 	def onRateChange(self,evt):
 		val=evt.GetSelection()
@@ -305,7 +307,7 @@ class voiceSettingsDialog(wx.Dialog):
 		if getSynth().hasVoice:
 			config.conf["speech"][getSynth().name]["voice"]=self.voiceList.GetSelection()+1
 		if getSynth().hasVariant:
-			config.conf["speech"][getSynth().name]["variant"]=self.variantList.GetSelection()
+			config.conf["speech"][getSynth().name]["variant"]=getSynth().getVariantIdentifier(self.variantList.GetSelection())
 		if getSynth().hasRate:
 			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
 		if getSynth().hasPitch:

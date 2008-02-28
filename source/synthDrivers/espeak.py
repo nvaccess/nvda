@@ -33,7 +33,8 @@ class SynthDriver(silence.SynthDriver):
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._voiceList=_espeak.getVoiceList()
-		self._variant=0
+		self._variantDict=_espeak.getVariantDict()
+		self._variant="none"
 		_espeak.setParameter(_espeak.espeakRATE,197,0)
 
 	def speakText(self,text,wait=False,index=None):
@@ -87,7 +88,7 @@ class SynthDriver(silence.SynthDriver):
 	def _set_voice(self, index):
 		if index == 0:
 			return
-		if self._variant>0:
+		if self._variant !="none":
 			identifier="%s+%s"%(self._voiceList[index - 1].identifier,self._variant)
 		else:
 			identifier=self._voiceList[index - 1].identifier
@@ -115,7 +116,9 @@ class SynthDriver(silence.SynthDriver):
 	def _set_variant(self,val):
 		self._variant=val
 		identifier=_espeak.getCurrentVoice().identifier.split('+')[0]
-		if self._variant>0:
+		if self._variant =="none":
+			_espeak.setVoiceByName(identifier.split('+')[0])
+		else:
 			identifier="%s+%s"%(identifier,self._variant)
 		try:
 			_espeak.setVoiceByName(identifier)
@@ -123,4 +126,10 @@ class SynthDriver(silence.SynthDriver):
 			_espeak.setVoiceByName(identifier.split('+')[0])
 
 	def _get_variantCount(self):
-		return 15
+		return len(self._variantDict)
+
+	def getVariantName(self,num):
+		return self._variantDict.values()[num]
+
+	def getVariantIdentifier(self,num):
+		return self._variantDict.keys()[num]

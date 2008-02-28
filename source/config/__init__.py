@@ -36,7 +36,7 @@ confspec = StringIO("""# NVDA Configuration File
 outputDevice = integer(default=-1,min=-1)
 
 	[[__many__]]
-		variant = integer(default=0,min=0)
+		variant = string
 		rate = integer(default=50,min=0,max=100)
 		pitch = integer(default=50,min=0,max=100)
 		inflection = integer(default=50,min=0,max=100)

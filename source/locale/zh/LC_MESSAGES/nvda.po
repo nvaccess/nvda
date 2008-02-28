@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-11 07:22+0800\n"
+"PO-Revision-Date: 2008-02-27 20:33+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -12,19 +12,22 @@ msgstr ""
 "X-Poedit-Country: HONG KONG\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+# textBuffer.py:213
+msgid "level %s"
+msgstr "第 %s 層"
+
 # NVDAObjects\IAccessible\__init__.py:67
 # NVDAObjects\IAccessible\__init__.py:416
 # NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%s of %s"
 msgstr "%s 之 %s"
 
-# NVDAObjects\IAccessible\__init__.py:71
-msgid "%s items"
-msgstr "%s 項目"
-
-# NVDAObjects\IAccessible\__init__.py:698
-msgid "%d items"
-msgstr "%d 個項目"
+# virtualBuffers\IAccessible\MSHTML.py:239
+# virtualBuffers\IAccessible\MSHTML.py:242
+# virtualBuffers\IAccessible\MSHTML.py:249
+# virtualBuffers\IAccessible\gecko.py:250
+msgid "contains %s items"
+msgstr "有 %s 個項目"
 
 # NVDAObjects\IAccessible\excel.py:64
 msgid "through"
@@ -74,6 +77,10 @@ msgstr "加底線"
 # NVDAObjects\IAccessible\sysListView32.py:14
 msgid "%d of %d"
 msgstr "%d 之 %d"
+
+# NVDAObjects\IAccessible\__init__.py:71
+msgid "%s items"
+msgstr "%s 項目"
 
 # textBuffer.py:213
 msgid "level %d"
@@ -924,6 +931,13 @@ msgstr "關大括號"
 msgid "tilda"
 msgstr "小箭頭"
 
+# virtualBuffers\IAccessible\MSHTML.py:245
+# virtualBuffers\IAccessible\MSHTML.py:252
+# virtualBuffers\IAccessible\gecko.py:245
+# virtualBuffers\IAccessible\gecko.py:256
+msgid "bullet"
+msgstr "小圓球"
+
 # controlTypes.py:79
 msgid "unknown object"
 msgstr "不明物件"
@@ -1390,7 +1404,7 @@ msgid "alert"
 msgstr "警告"
 
 # controlTypes.py:111
-msgid "internal frame"
+msgid "IFrame"
 msgstr "內部框架"
 
 # controlTypes.py:194
@@ -1576,6 +1590,11 @@ msgstr "多行"
 msgid "iconified"
 msgstr "圖像化"
 
+# NVDAObjects\IAccessible\excel.py:64
+# controlTypes.py:142
+msgid "selectable"
+msgstr "可選取的"
+
 # core.py:44
 msgid "configuration applied"
 msgstr "設定已套用"
@@ -1587,6 +1606,30 @@ msgstr "載入程式中, 請稍後"
 # core.py:87
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
+
+# virtualBuffers\__init__.py:463
+msgid "Find"
+msgstr "尋找"
+
+# virtualBuffers\__init__.py:463
+msgid "Type the text you wish to find"
+msgstr "請打入要找尋的文字"
+
+# virtualBuffers\__init__.py:473
+msgid "Find Error"
+msgstr "未能找到"
+
+# virtualBuffers\__init__.py:473
+msgid "text: \"%s\" not found"
+msgstr "不能找到 %s"
+
+# virtualBuffers\__init__.py:479
+msgid "find a text pattern from the current cursor's position"
+msgstr "從目前游標位置開始尋找文字"
+
+# characterSymbols.py:25
+msgid "none"
+msgstr "無"
 
 # synthDrivers\silence.py:14
 msgid "No speech,  a template synthesizer"
@@ -1743,8 +1786,8 @@ msgid "&Revert to saved configuration\tCtrl+R"
 msgstr "恢復之前的設定 &R\tCtrl+R"
 
 # gui\__init__.py:139
-msgid "Reset all setting back to nvda.ini"
-msgstr "恢復之前的設定"
+msgid "Reset all settings to saved state"
+msgstr "回復所有設定到已儲存的狀態"
 
 # gui\__init__.py:141
 msgid "&Save configuration\tCtrl+S"
@@ -2488,15 +2531,9 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "或者參閱包含在本程式之內的 copying.txt 檔案。"
 
-# virtualBuffers\IAccessible\MSHTML.py:136
-# virtualBuffers\IAccessible\gecko.py:157
-msgid "loading document %s"
-msgstr " 正在載入文件 %s"
-
-# virtualBuffers\IAccessible\MSHTML.py:144
-# virtualBuffers\IAccessible\gecko.py:166
-msgid "done"
-msgstr "完成"
+# virtualBuffers\__init__.py:193
+msgid "out of %s"
+msgstr "離開 %s"
 
 # virtualBuffers\IAccessible\MSHTML.py:239
 # virtualBuffers\IAccessible\MSHTML.py:242
@@ -2504,198 +2541,6 @@ msgstr "完成"
 # virtualBuffers\IAccessible\gecko.py:250
 msgid "with %s items"
 msgstr "有 %s 個項目"
-
-# virtualBuffers\IAccessible\MSHTML.py:245
-# virtualBuffers\IAccessible\MSHTML.py:252
-# virtualBuffers\IAccessible\gecko.py:245
-# virtualBuffers\IAccessible\gecko.py:256
-msgid "bullet"
-msgstr "小圓球"
-
-# virtualBuffers\IAccessible\MSHTML.py:248
-# virtualBuffers\IAccessible\MSHTML.py:255
-# virtualBuffers\IAccessible\gecko.py:249
-# virtualBuffers\IAccessible\gecko.py:262
-msgid "definition"
-msgstr "定義"
-
-# virtualBuffers\IAccessible\MSHTML.py:283
-msgid "file upload"
-msgstr "上載檔案"
-
-# virtualBuffers\IAccessible\MSHTML.py:316
-msgid "clickable"
-msgstr "可點擊"
-
-# virtualBuffers\__init__.py:193
-msgid "out of %s"
-msgstr "離開 %s"
-
-# virtualBuffers\__init__.py:274
-msgid "moves one page up in the virtual buffer's current document"
-msgstr "往上翻一頁"
-
-# virtualBuffers\__init__.py:289
-msgid "moves one page down in the virtual buffer's current document"
-msgstr "往下翻一頁"
-
-# virtualBuffers\__init__.py:293
-msgid "activates the current object in the virtual buffer"
-msgstr "嘗試啟動目前的項目"
-
-# virtualBuffers\__init__.py:316
-# virtualBuffers\__init__.py:327
-msgid "no more headings"
-msgstr "沒有標題了"
-
-# virtualBuffers\__init__.py:317
-msgid "moves to the next heading"
-msgstr "移到下一個標題"
-
-# virtualBuffers\__init__.py:328
-msgid "moves to the previous heading"
-msgstr "移到上一個標題"
-
-# virtualBuffers\__init__.py:338
-# virtualBuffers\__init__.py:349
-msgid "no more paragraphs"
-msgstr "沒有段落了"
-
-# virtualBuffers\__init__.py:339
-msgid "moves to the next paragraph"
-msgstr "移到下一段"
-
-# virtualBuffers\__init__.py:350
-msgid "moves to the previous paragraph"
-msgstr "移到上一段"
-
-# virtualBuffers\__init__.py:360
-# virtualBuffers\__init__.py:371
-msgid "no more tables"
-msgstr "沒有表格了"
-
-# virtualBuffers\__init__.py:361
-msgid "moves to the next table"
-msgstr "移到下一個表格"
-
-# virtualBuffers\__init__.py:372
-msgid "moves to the previous table"
-msgstr "移到上一個表格"
-
-# virtualBuffers\__init__.py:382
-# virtualBuffers\__init__.py:393
-msgid "no more links"
-msgstr "沒有連結了"
-
-# virtualBuffers\__init__.py:383
-msgid "moves to the next link"
-msgstr "移到下一個連結"
-
-# virtualBuffers\__init__.py:394
-msgid "moves to the previous link"
-msgstr "移到上一個連結"
-
-# virtualBuffers\__init__.py:404
-# virtualBuffers\__init__.py:415
-msgid "no more lists"
-msgstr "沒有清單了"
-
-# virtualBuffers\__init__.py:405
-msgid "moves to the next list"
-msgstr "移到下一個清單"
-
-# virtualBuffers\__init__.py:416
-msgid "moves to the previous list"
-msgstr "移到上一個清單"
-
-# virtualBuffers\__init__.py:426
-# virtualBuffers\__init__.py:437
-msgid "no more list items"
-msgstr "沒有清單項目了"
-
-# virtualBuffers\__init__.py:427
-msgid "moves to the next list item"
-msgstr "移到下一個清單項目"
-
-# virtualBuffers\__init__.py:438
-msgid "moves to the previous list item"
-msgstr "移到上一個清單項目"
-
-# virtualBuffers\__init__.py:448
-# virtualBuffers\__init__.py:459
-msgid "no more form fields"
-msgstr "沒有表單欄位了"
-
-# virtualBuffers\__init__.py:449
-msgid "Moves to the next form field"
-msgstr "移到下一個表單欄位"
-
-# virtualBuffers\__init__.py:460
-msgid "moves to the previous form field"
-msgstr "移到上一個表單欄位"
-
-# virtualBuffers\__init__.py:463
-msgid "Find"
-msgstr "尋找"
-
-# virtualBuffers\__init__.py:463
-msgid "Type the text you wish to find"
-msgstr "請打入要找尋的文字"
-
-# virtualBuffers\__init__.py:473
-msgid "Find Error"
-msgstr "未能找到"
-
-# virtualBuffers\__init__.py:473
-msgid "text: \"%s\" not found"
-msgstr "不能找到 %s"
-
-# virtualBuffers\__init__.py:479
-msgid "find a text pattern from the current cursor's position"
-msgstr "從目前游標位置開始尋找文字"
-
-# virtualBuffers\__init__.py:483
-msgid "find next occurrence of text"
-msgstr "尋找下一個相同的文字"
-
-# virtualBuffers\__init__.py:502
-# virtualBuffers\__init__.py:503
-msgid "h=headingQuickKey"
-msgstr "h=標題快速鍵"
-
-# virtualBuffers\__init__.py:504
-# virtualBuffers\__init__.py:505
-msgid "f=formFieldQuickKey"
-msgstr "f=表單欄位快速鍵"
-
-# virtualBuffers\__init__.py:506
-# virtualBuffers\__init__.py:507
-msgid "p=paragraphQuickKey"
-msgstr "p=段落快速鍵"
-
-# virtualBuffers\__init__.py:508
-# virtualBuffers\__init__.py:509
-msgid "t=tableQuickKey"
-msgstr "t=表格快速鍵"
-
-# virtualBuffers\__init__.py:510
-# virtualBuffers\__init__.py:511
-msgid "k=linkQuickKey"
-msgstr "k=連結快速鍵"
-
-# virtualBuffers\__init__.py:512
-# virtualBuffers\__init__.py:513
-msgid "l=listQuickKey"
-msgstr "l=清單快速鍵"
-
-# virtualBuffers\__init__.py:514
-# virtualBuffers\__init__.py:515
-msgid "i=listItemQuickKey"
-msgstr "i=清單項目快速鍵"
-
-# virtualBuffers\IAccessible\gecko.py:294
-msgid "protected %s"
-msgstr "保密 %s"
 
 # IAccessibleHandler.py:190
 # speech.py:213
@@ -2707,15 +2552,13 @@ msgstr "保密 %s"
 msgid "in %s"
 msgstr "在 %s"
 
-# virtualBuffers\IAccessible\MSHTML.py:136
-# virtualBuffers\IAccessible\gecko.py:157
-msgid "Loading document..."
-msgstr "正在載入文件..."
+# virtualBuffers\__init__.py:293
+msgid "activates the current object in the virtual buffer"
+msgstr "嘗試啟動目前的項目"
 
-# virtualBuffers\IAccessible\MSHTML.py:144
-# virtualBuffers\IAccessible\gecko.py:166
-msgid "Done"
-msgstr "完成"
+# controlTypes.py:144
+msgid "Refreshed"
+msgstr "重新整理"
 
 # virtualBuffers_new\__init__.py:277
 msgid "use screen layout %s"
@@ -2726,18 +2569,34 @@ msgstr "套用畫面顯示 %s"
 msgid "no next heading"
 msgstr "沒有下一個標題了"
 
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading"
+msgstr "移到下一個標題"
+
 # virtualBuffers\__init__.py:328
 msgid "no previous heading"
 msgstr "沒有上一個標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading"
+msgstr "移到上一個標題"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
 msgid "no next link"
 msgstr "沒有下一個連結了"
 
+# virtualBuffers\__init__.py:383
+msgid "moves to the next link"
+msgstr "移到下一個連結"
+
 # appModules\_default.py:189
 msgid "no previous link"
 msgstr "沒有上一個連結了"
+
+# virtualBuffers\__init__.py:394
+msgid "moves to the previous link"
+msgstr "移到上一個連結"
 
 # virtualBuffers_new\__init__.py:352
 msgid "no next visited link"
@@ -2784,4 +2643,155 @@ msgstr "移到下一個表單欄位"
 # virtualBuffers\__init__.py:459
 msgid "no previous form field"
 msgstr "沒有上一個表單欄位了"
+
+# virtualBuffers\IAccessible\MSHTML.py:136
+# virtualBuffers\IAccessible\gecko.py:157
+msgid "loading document %s"
+msgstr " 正在載入文件 %s"
+
+# virtualBuffers\IAccessible\MSHTML.py:144
+# virtualBuffers\IAccessible\gecko.py:166
+msgid "done"
+msgstr "完成"
+
+# virtualBuffers\IAccessible\MSHTML.py:248
+# virtualBuffers\IAccessible\MSHTML.py:255
+# virtualBuffers\IAccessible\gecko.py:249
+# virtualBuffers\IAccessible\gecko.py:262
+msgid "definition"
+msgstr "定義"
+
+# virtualBuffers\IAccessible\MSHTML.py:283
+msgid "file upload"
+msgstr "上載檔案"
+
+# virtualBuffers\IAccessible\MSHTML.py:316
+msgid "clickable"
+msgstr "可點擊"
+
+# virtualBuffers\__init__.py:274
+msgid "moves one page up in the virtual buffer's current document"
+msgstr "往上翻一頁"
+
+# virtualBuffers\__init__.py:289
+msgid "moves one page down in the virtual buffer's current document"
+msgstr "往下翻一頁"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no more headings"
+msgstr "沒有標題了"
+
+# virtualBuffers\__init__.py:338
+# virtualBuffers\__init__.py:349
+msgid "no more paragraphs"
+msgstr "沒有段落了"
+
+# virtualBuffers\__init__.py:339
+msgid "moves to the next paragraph"
+msgstr "移到下一段"
+
+# virtualBuffers\__init__.py:350
+msgid "moves to the previous paragraph"
+msgstr "移到上一段"
+
+# virtualBuffers\__init__.py:360
+# virtualBuffers\__init__.py:371
+msgid "no more tables"
+msgstr "沒有表格了"
+
+# virtualBuffers\__init__.py:361
+msgid "moves to the next table"
+msgstr "移到下一個表格"
+
+# virtualBuffers\__init__.py:372
+msgid "moves to the previous table"
+msgstr "移到上一個表格"
+
+# virtualBuffers\__init__.py:382
+# virtualBuffers\__init__.py:393
+msgid "no more links"
+msgstr "沒有連結了"
+
+# virtualBuffers\__init__.py:404
+# virtualBuffers\__init__.py:415
+msgid "no more lists"
+msgstr "沒有清單了"
+
+# virtualBuffers\__init__.py:405
+msgid "moves to the next list"
+msgstr "移到下一個清單"
+
+# virtualBuffers\__init__.py:416
+msgid "moves to the previous list"
+msgstr "移到上一個清單"
+
+# virtualBuffers\__init__.py:426
+# virtualBuffers\__init__.py:437
+msgid "no more list items"
+msgstr "沒有清單項目了"
+
+# virtualBuffers\__init__.py:427
+msgid "moves to the next list item"
+msgstr "移到下一個清單項目"
+
+# virtualBuffers\__init__.py:438
+msgid "moves to the previous list item"
+msgstr "移到上一個清單項目"
+
+# virtualBuffers\__init__.py:448
+# virtualBuffers\__init__.py:459
+msgid "no more form fields"
+msgstr "沒有表單欄位了"
+
+# virtualBuffers\__init__.py:449
+msgid "Moves to the next form field"
+msgstr "移到下一個表單欄位"
+
+# virtualBuffers\__init__.py:460
+msgid "moves to the previous form field"
+msgstr "移到上一個表單欄位"
+
+# virtualBuffers\__init__.py:483
+msgid "find next occurrence of text"
+msgstr "尋找下一個相同的文字"
+
+# virtualBuffers\__init__.py:502
+# virtualBuffers\__init__.py:503
+msgid "h=headingQuickKey"
+msgstr "h=標題快速鍵"
+
+# virtualBuffers\__init__.py:504
+# virtualBuffers\__init__.py:505
+msgid "f=formFieldQuickKey"
+msgstr "f=表單欄位快速鍵"
+
+# virtualBuffers\__init__.py:506
+# virtualBuffers\__init__.py:507
+msgid "p=paragraphQuickKey"
+msgstr "p=段落快速鍵"
+
+# virtualBuffers\__init__.py:508
+# virtualBuffers\__init__.py:509
+msgid "t=tableQuickKey"
+msgstr "t=表格快速鍵"
+
+# virtualBuffers\__init__.py:510
+# virtualBuffers\__init__.py:511
+msgid "k=linkQuickKey"
+msgstr "k=連結快速鍵"
+
+# virtualBuffers\__init__.py:512
+# virtualBuffers\__init__.py:513
+msgid "l=listQuickKey"
+msgstr "l=清單快速鍵"
+
+# virtualBuffers\__init__.py:514
+# virtualBuffers\__init__.py:515
+msgid "i=listItemQuickKey"
+msgstr "i=清單項目快速鍵"
+
+# virtualBuffers\IAccessible\gecko.py:294
+msgid "protected %s"
+msgstr "保密 %s"
 

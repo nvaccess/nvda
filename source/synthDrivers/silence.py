@@ -92,7 +92,7 @@ class SynthDriver(baseObject.autoPropertyObject):
 		pass
 
 	def _get_variant(self):
-		return 1
+		return "none"
 
 	def _set_variant(self,val):
 		pass
