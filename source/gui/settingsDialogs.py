@@ -32,12 +32,72 @@ class WAVEOUTCAPS(Structure):
 		('dwSupport',DWORD),
 	]
 
-class generalSettingsDialog(wx.Dialog):
+class SettingsDialog(wx.Dialog):
+	"""A settings dialog.
+	A settings dialog consists of one or more settings controls and OK and Cancel buttons.
+	Action may be taken in response to the OK or Cancel buttons.
 
- 	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
+	To use this dialog:
+		* Set L{title} to the title of the dialog.
+		* Override L{makeSettings} to populate a given sizer with the settings controls.
+		* Optionally, override L{postInit} to perform actions after the dialog is created, such as setting the focus.
+		* Optionally, extend one or both of L{onOk} or L{onCancel} to perform actions in response to the OK or Cancel buttons, respectively.
+
+	@ivar title: The title of the dialog.
+	@type title: str
+	"""
+	title = ""
+
+	def __init__(self, parent):
+		"""
+		@param parent: The parent for this dialog; C{None} for no parent.
+		@type parent: wx.Window
+		"""
+		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(settingsSizer)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		self.postInit()
+
+	def makeSettings(self, sizer):
+		"""Populate the dialog with settings controls.
+		Subclasses must override this method.
+		@param sizer: The sizer to which to add the settings controls.
+		@type sizer: wx.Sizer
+		"""
+		raise NotImplementedError
+
+	def postInit(self):
+		"""Called after the dialog has been created.
+		For example, this might be used to set focus to the desired control.
+		Sub-classes may override this method.
+		"""
+
+	def onOk(self, evt):
+		"""Take action in response to the OK button being pressed.
+		Sub-classes may extend this method.
+		This base method should always be called to clean up the dialog.
+		"""
+		self.Destroy()
+
+	def onCancel(self, evt):
+		"""Take action in response to the Cancel button being pressed.
+		Sub-classes may extend this method.
+		This base method should always be called to clean up the dialog.
+		"""
+		self.Destroy()
+
+class GeneralSettingsDialog(SettingsDialog):
+	title = _("General settings")
+
+ 	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
 		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect)"))
 		languageSizer.Add(languageLabel)
@@ -74,12 +134,8 @@ class generalSettingsDialog(wx.Dialog):
 			globalVars.log.warn("Could not set log level list to current log level",exc_info=True) 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.languageList.SetFocus()
 
 	def onOk(self,evt):
@@ -102,14 +158,12 @@ class generalSettingsDialog(wx.Dialog):
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
 				queueHandler.queueFunction(queueHandler.interactiveQueue,gui.restart)
-		self.Destroy()
+		super(GeneralSettingsDialog, self).onOk(evt)
 
-class synthesizerDialog(wx.Dialog):
+class SynthesizerDialog(SettingsDialog):
+	title = _("Synthesizer")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		synthListLabel=wx.StaticText(self,-1,label=_("&Synthesizer"))
 		synthListID=wx.NewId()
@@ -148,13 +202,8 @@ class synthesizerDialog(wx.Dialog):
 		deviceListSizer.Add(deviceListLabel)
 		deviceListSizer.Add(self.deviceList)
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
@@ -163,14 +212,12 @@ class synthesizerDialog(wx.Dialog):
 		if not setSynth(newSynth):
 			wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING).ShowModal()
 			return 
-		self.Destroy()
+		super(SynthesizerDialog, self).onOk(evt)
 
-class voiceSettingsDialog(wx.Dialog):
+class VoiceSettingsDialog(SettingsDialog):
+	title = _("Voice settings")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		if getSynth().hasVoice:
 			voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
 			voiceListLabel=wx.StaticText(self,-1,label=_("&Voice"))
@@ -249,14 +296,8 @@ class voiceSettingsDialog(wx.Dialog):
 		self.beepForCapsCheckBox = wx.CheckBox(self, wx.NewId(), label = _("&Beep for capitals"))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=wx.BoxSizer(wx.HORIZONTAL)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
@@ -301,7 +342,7 @@ class voiceSettingsDialog(wx.Dialog):
 			getSynth().inflection=config.conf["speech"][getSynth().name]["inflection"]
 		if getSynth().hasVolume:
 			getSynth().volume=config.conf["speech"][getSynth().name]["volume"]
-		self.Destroy()
+		super(VoiceSettingsDialog, self).onCancel(evt)
 
 	def onOk(self,evt):
 		if getSynth().hasVoice:
@@ -320,14 +361,12 @@ class voiceSettingsDialog(wx.Dialog):
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		self.Destroy()
+		super(VoiceSettingsDialog, self).onOk(evt)
 
-class keyboardSettingsDialog(wx.Dialog):
+class KeyboardSettingsDialog(SettingsDialog):
+	title = _("Keyboard Settings")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		settingsSizer.Add(self.capsAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
@@ -346,12 +385,8 @@ class keyboardSettingsDialog(wx.Dialog):
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.capsAsNVDAModifierCheckBox.SetFocus()
 
 	def onOk(self,evt):
@@ -361,14 +396,12 @@ class keyboardSettingsDialog(wx.Dialog):
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
-		self.Destroy()
+		super(KeyboardSettingsDialog, self).onOk(evt)
 
-class mouseSettingsDialog(wx.Dialog):
+class MouseSettingsDialog(SettingsDialog):
+	title = _("Mouse settings")
 
- 	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+ 	def makeSettings(self, settingsSizer):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
@@ -378,26 +411,20 @@ class mouseSettingsDialog(wx.Dialog):
 		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
 		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
 		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.shapeCheckBox.SetFocus()
 
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["reportObjectUnderMouse"]=self.objectCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
-		self.Destroy()
+		super(MouseSettingsDialog, self).onOk(evt)
 
-class objectPresentationDialog(wx.Dialog):
+class ObjectPresentationDialog(SettingsDialog):
+	title = _("Object presentation")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		self.tooltipCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tooltips"))
 		self.tooltipCheckBox.SetValue(config.conf["presentation"]["reportTooltips"])
 		settingsSizer.Add(self.tooltipCheckBox,border=10,flag=wx.BOTTOM)
@@ -419,12 +446,8 @@ class objectPresentationDialog(wx.Dialog):
 		self.progressBeepCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Beep on progress bar updates"))
 		self.progressBeepCheckBox.SetValue(config.conf["presentation"]["beepOnProgressBarUpdates"])
 		settingsSizer.Add(self.progressBeepCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
 
 	def onOk(self,evt):
@@ -435,14 +458,12 @@ class objectPresentationDialog(wx.Dialog):
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["sayStateFirst"]=self.stateFirstCheckBox.IsChecked()
 		config.conf["presentation"]["beepOnProgressBarUpdates"]=self.progressBeepCheckBox.IsChecked()
-		self.Destroy()
+		super(ObjectPresentationDialog, self).onOk(evt)
 
-class virtualBuffersDialog(wx.Dialog):
+class VirtualBuffersDialog(SettingsDialog):
+	title = _("virtual buffers")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
 		settingsSizer.Add(maxLengthLabel)
 		self.maxLengthEdit=wx.TextCtrl(self,wx.NewId())
@@ -492,12 +513,8 @@ class virtualBuffersDialog(wx.Dialog):
 		self.framesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report f&rames"))
 		self.framesCheckBox.SetValue(config.conf["virtualBuffers"]["reportFrames"])
 		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.maxLengthEdit.SetFocus()
 
 	def onOk(self,evt):
@@ -526,14 +543,12 @@ class virtualBuffersDialog(wx.Dialog):
 		config.conf["virtualBuffers"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportParagraphs"]=self.paragraphsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportFrames"]=self.framesCheckBox.IsChecked()
-		self.Destroy()
+		super(VirtualBuffersDialog, self).onOk(evt)
 
-class documentFormattingDialog(wx.Dialog):
+class DocumentFormattingDialog(SettingsDialog):
+	title = _("Document formatting")
 
-	def __init__(self,parent,ID,title):
-		wx.Dialog.__init__(self,parent,ID,title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+	def makeSettings(self, settingsSizer):
 		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Announce formatting changes after the cursor (can cause a lag)"))
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
@@ -561,12 +576,8 @@ class documentFormattingDialog(wx.Dialog):
 		self.alignmentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &alignment"))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 		settingsSizer.Add(self.alignmentCheckBox,border=10,flag=wx.BOTTOM)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+
+	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
 
 	def onOk(self,evt):
@@ -579,18 +590,19 @@ class documentFormattingDialog(wx.Dialog):
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
-		self.Destroy()
+		super(DocumentFormattingDialog, self).onOk(evt)
 
-class DictionaryDialog(wx.Dialog):
+class DictionaryDialog(SettingsDialog):
 
-	def __init__(self,parent,ID,title,userDict):
-		wx.Dialog.__init__(self,parent,ID,title)
-		self.userDict=userDict
+	def __init__(self,parent,title,userDict):
+		self.title = title
+		self.userDict = userDict
 		self.tempUserDict=userDictHandler.UserDict()
 		self.tempUserDict.extend(self.userDict)
 		globalVars.userDictionaryProcessing=False
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		super(DictionaryDialog, self).__init__(parent)
+
+	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
 		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
@@ -613,21 +625,16 @@ class DictionaryDialog(wx.Dialog):
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
 		settingsSizer.Add(removeButton)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
-		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
+
+	def postInit(self):
 		self.dictList.SetFocus()
 
 	def onCancel(self,evt):
 		globalVars.userDictionaryProcessing=True
-		self.Destroy()
+		super(DictionaryDialog, self).onCancel(evt)
 
 	def onOk(self,evt):
 		globalVars.userDictionaryProcessing=True
@@ -635,7 +642,7 @@ class DictionaryDialog(wx.Dialog):
 			del self.userDict[:]
 			self.userDict.extend(self.tempUserDict)
 			self.userDict.save()
-		self.Destroy()
+		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
 		if self.editingIndex==-1:

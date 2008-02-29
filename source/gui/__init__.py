@@ -16,82 +16,10 @@ import queueHandler
 import core
 from settingsDialogs import *
 import userDictHandler
+#import winUser
 
 ### Constants
 appTitle = "NVDA"
-quickStartMessage=_("""NVDA - Quick Start document
-
-NVDA (%(description)s)
-Version: %(version)s
-URL: %(url)s
-Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.
-
---- Copyright Info ---
-%(copyrightInfo)s
-----------------------
-
-This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.
-
-To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.
-
-To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the OK or Cancel button.
-
-To set the preferences (such as voice settings, key Settings, reading of tooltips etc),
-Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. 
-
-By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'general settings...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.
-
-Some usefull key commands when using NVDA are:
-
-General key strokes:
-control - interupt/pause speech
-shift - unpause speech
-NVDA+1 - turns keyboard help on and off
-NVDA+upArrow - reports the object with focus
-NVDA+downArrow - starts sayAll (press control or any other key to stop)
-NVDA+tab - report the object currently in focus
-NVDA+t speak title
-NVDA+f12 - report time and date
-NVDA+2 - turn speaking of typed characters on and off
-NVDA+3 turn speaking of typed words on and off
-NVDA+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off
-NVDA+pageUp - increase rate of speech
-NVDA+pageDown - decrease rate of speech
-NVDA+p - turn reading of punctuation on and off
-NVDA+s - toggle speech modes (off, talk and beeps)
-NVDA+m - turn  reading of objects under the mouse on and off
-NVDA+f - report current font (when in a document)
-
-Object navigation:
-NVDA+numpadAdd - Where am I
-NVDA+numpad5 - current object
-shift+NVDA+numpad5 - dimensions and location of current object
-NVDA+numpad8 - parent object
-NVDA+numpad4 - previous object
-NVDA+numpad6 - next object
-NVDA+numpad2 - first child object
-NVDA+numpadMinus - move to focus object
-NVDA+end - move to statusbar
-NVDA+numpadDivide - Move mouse to current navigator object
-NVDA+numpadMultiply - move to mouse
-nvda+numpadEnter - activate current object
-
-Reviewing the current object:
-shift+numpad7 - move to top line
-numpad7 - previous line
-numpad8 - current line
-numpad9 - next line
-shift+numpad9 - bottom line
-numpad4 - previous word
-numpad5 - current word
-numpad6 - next word
-shift+numpad1 - start of line
-numpad1 - previous character
-numpad2 - current character
-numpad3 - next character
-shift+numpad3 - end of line
-""")%vars(versionInfo)
- 
 iconPath="%s/images/icon.png"%os.getcwd()
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
@@ -129,85 +57,19 @@ class MainFrame(wx.Frame):
 		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
 		wx.EVT_COMMAND(self,wx.ID_ANY,evt_externalExecute,lambda evt: evt.run())
-		self.Bind(wx.EVT_CLOSE, self.onHideGuiCommand)
-		menuBar=wx.MenuBar()
-		self.sysTrayMenu=wx.Menu()
-		menu_NVDA = wx.Menu()
-		item = menu_NVDA.Append(wx.ID_ANY, _("&Revert to saved configuration\tCtrl+R"),_("Reset all settings to saved state"))
-		self.Bind(wx.EVT_MENU, self.onRevertToSavedConfigurationCommand, item)
-		item = menu_NVDA.Append(wx.ID_SAVE, _("&Save configuration\tCtrl+S"), _("Write the current configuration to nvda.ini"))
-		self.Bind(wx.EVT_MENU, self.onSaveConfigurationCommand, item)
-		subMenu_userDicts = wx.Menu()
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
-		self.Bind(wx.EVT_MENU, self.onDefaultDictionaryCommand, item)
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
-		self.Bind(wx.EVT_MENU, self.onVoiceDictionaryCommand, item)
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
-		self.Bind(wx.EVT_MENU, self.onTemporaryDictionaryCommand, item)
-		menu_NVDA.AppendMenu(wx.ID_ANY,_("User &dictionaries"),subMenu_userDicts)
-		menu_NVDA.AppendSeparator()
-		item = menu_NVDA.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
-		self.Bind(wx.EVT_MENU, self.onExitCommand, item)
-		menuBar.Append(menu_NVDA,_("&NVDA"))
-		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&NVDA"),menu_NVDA)
-		menu_preferences=wx.Menu()
-		item = menu_preferences.Append(wx.ID_ANY,_("&General settings...\tCtrl+Shift+G"),_("General settings"))
-		self.Bind(wx.EVT_MENU, self.onGeneralSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer...\tCtrl+Shift+S"),_(" the synthesizer to use"))
-		self.Bind(wx.EVT_MENU, self.onSynthesizerCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings...\tCtrl+Shift+V"),_("Choose the voice, rate, pitch and volume  to use"))
-		self.Bind(wx.EVT_MENU, self.onVoiceCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings...\tCtrl+K"),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
-		self.Bind(wx.EVT_MENU, self.onKeyboardSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings...\tCtrl+M"),_("Change reporting of mouse sape, object under mouse"))
-		self.Bind(wx.EVT_MENU, self.onMouseSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation...\tCtrl+Shift+O"),_("Change reporting of objects")) 
-		self.Bind(wx.EVT_MENU, self.onObjectPresentationCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers...\tCtrl+Shift+B"),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, self.onVirtualBuffersCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting...\tCtrl+Shift+F"),_("Change Settings of document properties")) 
-		self.Bind(wx.EVT_MENU, self.onDocumentFormattingCommand, item)
-		menuBar.Append(menu_preferences,_("&Preferences"))
-		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
-		menu_help = wx.Menu()
-		item = menu_help.Append(wx.ID_ANY, _("NVDA homepage"), _("Opens NVDA homepage in the default browser"))
-		self.Bind(wx.EVT_MENU, self.onHomePageCommand, item)
-		item = menu_help.Append(wx.ID_ANY, _("NVDA wiki"), _("Opens NVDA wiki in the default browser"))
-		self.Bind(wx.EVT_MENU, self.onNvdaWikiCommand, item)
-		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
-		self.Bind(wx.EVT_MENU, self.onAboutCommand, item)
-		menuBar.Append(menu_help,_("&Help"))
-		self.sysTrayMenu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
-		self.SetMenuBar(menuBar)
-		sizer=wx.BoxSizer(wx.VERTICAL)
-		textCtrl=wx.TextCtrl(self,wx.ID_ANY,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
-		sizer.Add(textCtrl)
-		sizer.Fit(self)
-		self.SetSizer(sizer)
-		textCtrl.AppendText(quickStartMessage)
-		textCtrl.SetSelection(0,0)
-		icon=wx.Icon(iconPath,wx.BITMAP_TYPE_PNG)
-		self.SetIcon(icon)
-		self.sysTrayButton=wx.TaskBarIcon()
-		self.sysTrayButton.SetIcon(icon,_("NVDA"))
-		self.sysTrayButton.Bind(wx.EVT_TASKBAR_LEFT_DCLICK,self.onShowGuiCommand)
-		self.Center()
+		self.sysTrayIcon = SysTrayIcon(self)
 		self.Show(True)
-		if globalVars.appArgs.minimal or config.conf["general"]["hideInterfaceOnStartup"]:
-			self.Show(False)
+		self.Show(False)
+
+	def Destroy(self):
+		self.sysTrayIcon.Destroy()
+		super(MainFrame, self).Destroy()
 
 	def onAbortCommand(self,evt):
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
-		self.Center()
-		self.Show(True)
-		self.Raise()
-		#self.sysTrayButton.PopupMenu(self.sysTrayMenu)
-
-	def onHideGuiCommand(self,evt):
-		time.sleep(0.01)
-		self.Show(False)
+		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.interactiveQueue,core.resetConfiguration,reportDone=True)
@@ -220,30 +82,23 @@ class MainFrame(wx.Frame):
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onDefaultDictionaryCommand(self,evt):
-		d=DictionaryDialog(self,-1,_("Default dictionary"),userDictHandler.dictionaries["default"])
+		d=DictionaryDialog(None,_("Default dictionary"),userDictHandler.dictionaries["default"])
 		d.Show(True)
 
 	def onVoiceDictionaryCommand(self,evt):
-		d=DictionaryDialog(self,-1,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
+		d=DictionaryDialog(None,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
 		d.Show(True)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=DictionaryDialog(self,-1,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
+		d=DictionaryDialog(None,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
 		d.Show(True)
 
 	def onExitCommand(self, evt):
 		canExit=False
 		if config.conf["general"]["askToExit"]:
-			wasShown=self.IsShown()
-			if not wasShown:
-				self.onShowGuiCommand(None)
-			self.Raise()
-			self.SetFocus()
-			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
+			d = wx.MessageDialog(None, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
-			elif not wasShown:
-				self.onHideGuiCommand(None)
 		else:
 			canExit=True
 		if canExit:
@@ -255,35 +110,35 @@ class MainFrame(wx.Frame):
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):
-		d=generalSettingsDialog(self,-1,_("General settings"))
+		d=GeneralSettingsDialog(None)
 		d.Show(True)
 
 	def onSynthesizerCommand(self,evt):
-		d=synthesizerDialog(self,-1,_("Synthesizer"))
+		d=SynthesizerDialog(None)
 		d.Show(True)
 
 	def onVoiceCommand(self,evt):
-		d=voiceSettingsDialog(self,-1,_("Voice settings"))
+		d=VoiceSettingsDialog(None)
 		d.Show(True)
 
 	def onKeyboardSettingsCommand(self,evt):
-		d=keyboardSettingsDialog(self,-1,_("Keyboard Settings"))
+		d=KeyboardSettingsDialog(None)
 		d.Show(True)
 
 	def onMouseSettingsCommand(self,evt):
-		d=mouseSettingsDialog(self,-1,_("Mouse settings"))
+		d=MouseSettingsDialog(None)
 		d.Show(True)
 
 	def onObjectPresentationCommand(self,evt):
-		d=objectPresentationDialog(self,-1,_("Object presentation"))
+		d=ObjectPresentationDialog(None)
 		d.Show(True)
 
 	def onVirtualBuffersCommand(self,evt):
-		d=virtualBuffersDialog(self,-1,_("virtual buffers"))
+		d=VirtualBuffersDialog(None)
 		d.Show(True)
 
 	def onDocumentFormattingCommand(self,evt):
-		d=documentFormattingDialog(self,-1,_("Document formatting"))
+		d=DocumentFormattingDialog(None)
 		d.Show(True)
 
 	def onHomePageCommand(self,evt):
@@ -299,10 +154,76 @@ class MainFrame(wx.Frame):
 %s: %s
 %s: %s <%s>
 %s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("maintainer"),versionInfo.maintainer,versionInfo.maintainer_email,_("copyright"),versionInfo.copyrightInfo)
-			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
+			d = wx.MessageDialog(None, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:
 			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
+
+class SysTrayIcon(wx.TaskBarIcon):
+
+	def __init__(self, frame):
+		super(SysTrayIcon, self).__init__()
+		icon=wx.Icon(iconPath,wx.BITMAP_TYPE_PNG)
+		self.SetIcon(icon, appTitle)
+
+		self.menu=wx.Menu()
+		menu_preferences=wx.Menu()
+		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
+		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_(" the synthesizer to use"))
+		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume  to use"))
+		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
+		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse sape, object under mouse"))
+		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
+		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers..."),_("Change virtual buffers specific settings")) 
+		self.Bind(wx.EVT_MENU, frame.onVirtualBuffersCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
+		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
+		subMenu_userDicts = wx.Menu()
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
+		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+		menu_preferences.AppendMenu(wx.ID_ANY,_("User &dictionaries"),subMenu_userDicts)
+		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+		menu_help = wx.Menu()
+		item = menu_help.Append(wx.ID_ANY, _("NVDA homepage"), _("Opens NVDA homepage in the default browser"))
+		self.Bind(wx.EVT_MENU, frame.onHomePageCommand, item)
+		item = menu_help.Append(wx.ID_ANY, _("NVDA wiki"), _("Opens NVDA wiki in the default browser"))
+		self.Bind(wx.EVT_MENU, frame.onNvdaWikiCommand, item)
+		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
+		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
+		self.menu.AppendSeparator()
+		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
+		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
+		item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
+		self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+		self.menu.AppendSeparator()
+		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
+		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
+
+		self.Bind(wx.EVT_TASKBAR_RIGHT_UP, self.onActivate)
+
+	def Destroy(self):
+		self.menu.Destroy()
+		super(SysTrayIcon, self).Destroy()
+
+	def onActivate(self, evt):
+		self.PopupMenu(self.menu)
+		# Showing and hiding our main frame seems to cause Windows to switch to the previous foreground window.
+		# If we don't do this and no dialog was displayed, the user will be dumped in the invisible system tray window, which is bad.
+		# It is even worse than expected because the user can close the system tray window, breaking the system tray icon.
+		# Even if a dialog is displayed, this does no harm.
+		mainFrame.Show()
+		mainFrame.Hide()
 
 def initialize(app):
 	global mainFrame
