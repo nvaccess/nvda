@@ -13,8 +13,6 @@ import config
 import globalVars
 import os
 import codecs
-from string import whitespace
-
 
 isSpeaking = False
 lastIndex = None
@@ -275,7 +273,7 @@ def getVariantDict():
 				if line.startswith('name '):
 					temp=line.split(" ")
 					if len(temp) ==2:
-						name=temp[1].rstrip(whitespace)
+						name=temp[1].rstrip()
 						break
 				name=None
 			file.close()

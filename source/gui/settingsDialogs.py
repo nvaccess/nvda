@@ -112,9 +112,6 @@ class GeneralSettingsDialog(SettingsDialog):
 			pass
 		languageSizer.Add(self.languageList)
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
-		self.hideInterfaceCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Hide user interface on startup"))
-		self.hideInterfaceCheckBox.SetValue(config.conf["general"]["hideInterfaceOnStartup"])
-		settingsSizer.Add(self.hideInterfaceCheckBox,border=10,flag=wx.BOTTOM)
 		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
@@ -148,7 +145,6 @@ class GeneralSettingsDialog(SettingsDialog):
 				wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING).ShowModal()
 				return
 		config.conf["general"]["language"]=newLanguage
-		config.conf["general"]["hideInterfaceOnStartup"]=self.hideInterfaceCheckBox.IsChecked()
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		logLevelName=self.logLevelNames[self.logLevelList.GetSelection()]

@@ -21,7 +21,6 @@ confspec = StringIO("""# NVDA Configuration File
 
 [general]
 	language = string(default="Windows")
-	hideInterfaceOnStartup = boolean(default=False)
 	saveConfigurationOnExit = boolean(default=False)
 	askToExit = boolean(default=true)
 	#log levels are DEBUG, INFO, WARN, ERROR, CRITICAL
