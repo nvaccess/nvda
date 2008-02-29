@@ -79,6 +79,9 @@ class CursorManager(baseObject.scriptableObject):
 		findDialog.run()
 
 	def doFindTextDialogHelper(self,text):
+		if not text:
+			self._inFind=False
+			return
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		res=info.find(text)
 		if res:
@@ -90,14 +93,21 @@ class CursorManager(baseObject.scriptableObject):
 			else:
 				speech.speakFormattedText(info)
 		else:
-			errorDialog=gui.scriptUI.MessageDialog(_("text: \"%s\" not found")%text,title=_("Find Error"))
+			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
 			errorDialog.run()
 		self._lastFindText=text
 		self._inFind=False
 
 	def script_find(self,keyPress,nextScript): 
 		self.doFindTextDialog()
-	script_find.__doc__ = _("find a text pattern from the current cursor's position")
+	script_find.__doc__ = _("find a text string from the current cursor position")
+
+	def script_findNext(self, keyPress, nextScript):
+		if not self._lastFindText:
+			self.doFindTextDialog()
+			return
+		self.doFindTextDialogHelper(self._lastFindText)
+	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_pageUp(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
@@ -261,7 +271,8 @@ class CursorManager(baseObject.scriptableObject):
 			("control+shift+extendedHome","selectToTopOfDocument"),
 			("control+a","selectAll"),
 			("control+c","copyToClipboard"),
-			("NVDA+f3","find"),
+			("NVDA+Control+f","find"),
+			("NVDA+f3","findNext"),
 		):
 			self.bindKey_runtime(keyName, scriptName)
 
