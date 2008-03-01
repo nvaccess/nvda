@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1738\n"
+"Project-Id-Version: r1747\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-02-27 11:28+0200\n"
+"PO-Revision-Date: 2008-03-01 09:06+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -106,27 +106,27 @@ msgstr "rivin loppu"
 msgid "beginning of row"
 msgstr "rivin alku"
 
-#: _synthSettingsRing.py:60
+#: _synthSettingsRing.py:86
 msgid "volume"
 msgstr "voimakkuus"
 
-#: _synthSettingsRing.py:61
+#: _synthSettingsRing.py:87
 msgid "rate"
 msgstr "nopeus"
 
-#: _synthSettingsRing.py:62
+#: _synthSettingsRing.py:88
 msgid "pitch"
 msgstr "korkeus"
 
-#: _synthSettingsRing.py:63
+#: _synthSettingsRing.py:89
 msgid "inflection"
 msgstr "rauhallisuus"
 
-#: _synthSettingsRing.py:64
+#: _synthSettingsRing.py:90
 msgid "voice"
 msgstr "puheääni"
 
-#: _synthSettingsRing.py:65
+#: _synthSettingsRing.py:91
 msgid "variant"
 msgstr "muunnelma"
 
@@ -180,7 +180,7 @@ msgstr ""
 "inohje on käytössä, NVDA kertoo näppäintä painettaessa, mikä toiminto "
 "siihen liittyy."
 
-#: appModules\_default.py:71 cursorManager.py:215
+#: appModules\_default.py:71 cursorManager.py:225
 msgid "no selection"
 msgstr "ei valintaa"
 
@@ -635,7 +635,7 @@ msgstr "Lukee nykyisen sovelluksen tai ikkunan nimen"
 msgid "speaks the current foreground object"
 msgstr "Ilmoittaa nykyisen objektin"
 
-#: appModules\_default.py:630 cursorManager.py:232
+#: appModules\_default.py:630 cursorManager.py:242
 msgid "copied to clipboard"
 msgstr "kopioitu leikepöydälle"
 
@@ -1625,296 +1625,105 @@ msgstr "Etsi"
 msgid "Type the text you wish to find"
 msgstr "Kirjoita etsittävä teksti"
 
-#: cursorManager.py:93 virtualBuffers_old\__init__.py:469
+#: cursorManager.py:96
+msgid "text \"%s\" not found"
+msgstr "tekstiä \"%s\" ei löydy"
+
+#: cursorManager.py:96 virtualBuffers_old\__init__.py:469
 msgid "Find Error"
 msgstr "Virhe"
 
-#: cursorManager.py:93 virtualBuffers_old\__init__.py:469
-msgid "text: \"%s\" not found"
-msgstr "Tekstiä \"%s\" ei löydy"
+#: cursorManager.py:103
+msgid "find a text string from the current cursor position"
+msgstr "etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
-#: cursorManager.py:100 virtualBuffers_old\__init__.py:475
-msgid "find a text pattern from the current cursor's position"
-msgstr "Etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
-
-#: gui\__init__.py:22
+#: cursorManager.py:110
 msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's "
-"settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window "
-"without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose "
-"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
-"box asking you if you want to exit, and you can either press the OK or "
-"Cancel button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of "
-"tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to "
-"navigate the menus and find the settings you want to change. Pressing enter "
-"on many of the menu items will bring up a dialog box in which you can change "
-"the individual settings. Most settings will take effect straight away (such "
-"as changing the rate or pitch of the voice) so you can easily find what "
-"settings most suit you. However, if you cancel out of the dialog box the "
-"settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you "
-"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
-"NVDA to automatically save the settings on exit by going to 'general "
-"settings...' in the Preferences menu and checking the 'Save configuration on "
-"exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt/pause speech\n"
-"shift - unpause speech\n"
-"NVDA+1 - turns keyboard help on and off\n"
-"NVDA+upArrow - reports the object with focus\n"
-"NVDA+downArrow - starts sayAll (press control or any other key to stop)\n"
-"NVDA+tab - report the object currently in focus\n"
-"NVDA+t speak title\n"
-"NVDA+f12 - report time and date\n"
-"NVDA+2 - turn speaking of typed characters on and off\n"
-"NVDA+3 turn speaking of typed words on and off\n"
-"NVDA+4 - turn speaking of typed command keys (such as space, arrows, control "
-"and shift combinations) on and off\n"
-"NVDA+pageUp - increase rate of speech\n"
-"NVDA+pageDown - decrease rate of speech\n"
-"NVDA+p - turn reading of punctuation on and off\n"
-"NVDA+s - toggle speech modes (off, talk and beeps)\n"
-"NVDA+m - turn  reading of objects under the mouse on and off\n"
-"NVDA+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"NVDA+numpadAdd - Where am I\n"
-"NVDA+numpad5 - current object\n"
-"shift+NVDA+numpad5 - dimensions and location of current object\n"
-"NVDA+numpad8 - parent object\n"
-"NVDA+numpad4 - previous object\n"
-"NVDA+numpad6 - next object\n"
-"NVDA+numpad2 - first child object\n"
-"NVDA+numpadMinus - move to focus object\n"
-"NVDA+end - move to statusbar\n"
-"NVDA+numpadDivide - Move mouse to current navigator object\n"
-"NVDA+numpadMultiply - move to mouse\n"
-"nvda+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr ""
-"NVDA - Pikaohje\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Versio: %(version)s\n"
-"Osoite: %(url)s\n"
-"Lähetä ehdotukset ja vikailmoitukset osoitteeseen: %(maintainer)s <%"
-"(maintainer_email)s>.\n"
-"\n"
-"--- Tekijänoikeustiedot ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"Tämä on käyttöliittymä, jolla voit säätää NVDA:n asetuksia ja myös "
-"sulkea sen kokonaan.\n"
-"\n"
-"Voit tuoda tämän ikkunan näkyviin milloin tahansa painamalla insert+n. "
-"Sulkeaksesi ikkunan sulkematta NVDA:ta, paina alt+f4 ollessasi tässä "
-"ikkunassa.\n"
-"\n"
-"Sulkeaksesi NVDA:n kokonaan, paina joko insert+q missä tahansa ikkunassa, "
-"tai valitse 'Sulje' tämän ikkunan NVDA-valikosta. NVDA tuo tällöin nä"
-"kyviin valintaikkunan, jossa kysytään, haluatko sulkea. Voit painaa joko "
-"Kyllä- tai Ei-painiketta.\n"
-"\n"
-"Muuttaaksesi asetuksia (kuten puheasetuksia, näppäinkaiutusta, työ"
-"kaluvihjeiden lukemista jne),\n"
-"siirry Alt-näppäimellä valikkoriville ja käytä nuolinäppäimiä "
-"valikoissa liikkumiseen ja muutettavien asetusten etsimiseen. Monissa "
-"valikon kohdissa Enterin painaminen tuo näkyviin valintaikkunan, jossa voit "
-"muuttaa yksittäisiä asetuksia. Useimmat muutokset tulevat voimaan heti "
-"(kuten puheen nopeus tai korkeus), joten löydät helposti itsellesi "
-"sopivimmat asetukset. Jos kuitenkin suljet valintaikkunan Peruuta-"
-"painikkeella, tekemiäsi muutoksia ei tallenneta.\n"
-"\n"
-"Asetuksia ei oletuksena tallenneta, ellet paina ctrl+s tai valitse NVDA-"
-"valikosta 'Tallenna asetukset'. Voit asettaa NVDA:n tallentamaan asetukset "
-"automaattisesti suljettaessa menemällä Asetukset-valikossa "
-"'Käyttöliittymä...'-kohtaan, valitsemalla 'Tallenna asetukset suljettaessa' "
-"-valintaruudun ja painamalla OK.\n"
-"\n"
-"Muutamia hyödyllisiä NVDA:n näppäinkomentoja:\n"
-"\n"
-"Yleiset näppäinkomennot:\n"
-"Control - keskeytä/tauota puhe\n"
-"Shift - jatka puhetta\n"
-"NVDA+1 - näppäinohje käyttöön/pois käytöstä\n"
-"NVDA+nuoli ylös - lukee objektin, jossa kohdistus on\n"
-"NVDA+nuoli alas - käynnistää Lue kaikki -toiminnon (keskeytä painamalla "
-"Ctrl tai mitä tahansa muuta näppäintä)\n"
-"NVDA+t - lue ikkunan nimi\n"
-"NVDA+F12 - lue kellonaika ja päiväys\n"
-"NVDA+2 - kirjoitettujen merkkien lukeminen käyttöön/pois käytöstä\n"
-"NVDA+3 - kirjoitettujen sanojen lukeminen käyttöön/pois käytöstä\n"
-"NVDA+4 - komentonäppäinten (kuten välilyönti-, nuolinäppäin-, Control- "
-"ja Shift-yhdistelmien) lukeminen käyttöön/pois käytöstä\n"
-"NVDA+Page up - nopeuta puhetta\n"
-"NVDA+Page down - hidasta puhetta\n"
-"NVDA+p - välimerkkien lukeminen käyttöön/pois käytöstä\n"
-"NVDA+s - Vaihda puhetilaa (pois käytöstä, puhe ja äänimerkit)\n"
-"NVDA+m - hiirikohdistimen alla olevien objektien lukeminen käyttöön/pois "
-"käytöstä\n"
-"NVDA+f - ilmoita nykyinen fontti (esim. avoimessa Word-asiakirjassa)\n"
-"\n"
-"Navigointikomennot:\n"
-"NVDA+numeroryhmän plus - Missä olen\n"
-"NVDA+numeroryhmän 5 - nykyinen objekti\n"
-"Shift+NVDA+numeroryhmän 5 - Nykyisen objektin mitat ja sijainti\n"
-"NVDA+numeroryhmän 8 - ylemmän tason objekti\n"
-"NVDA+numeroryhmän 4 - edellinen objekti\n"
-"NVDA+numeroryhmän 6 - seuraava objekti\n"
-"NVDA+numeroryhmän 2 - ensimmäinen alemman tason objekti\n"
-"NVDA+numeroryhmän miinus - siirry objektiin, jossa kohdistus on\n"
-"NVDA+end - siirry tilariville\n"
-"NVDA+numeroryhmän kautta - Siirrä hiiri nykyisen navigointiobjektin "
-"kohdalle\n"
-"NVDA+numeroryhmän tähti - siirry hiiren kohdalle\n"
-"NVDA+numeroryhmän Enter - aktivoi nykyinen objekti\n"
-"\n"
-"Objektien tarkastelu:\n"
-"Shift+numeroryhmän 7 - siirrä ylimmälle riville\n"
-"Numeroryhmän 7 - edellinen rivi\n"
-"Numeroryhmän 8 - nykyinen rivi\n"
-"Numeroryhmän 9 - seuraava rivi\n"
-"Shift+numeroryhmän 9 - alin rivi\n"
-"Numeroryhmän 4 - edellinen sana\n"
-"Numeroryhmän 5 - nykyinen sana\n"
-"Numeroryhmän 6 - seuraava sana\n"
-"Shift+numeroryhmän 1 - rivin alku\n"
-"Numeroryhmän 1 - edellinen merkki\n"
-"Numeroryhmän 2 - nykyinen merkki\n"
-"Numeroryhmän 3 - seuraava merkki\n"
-"Shift+numeroryhmän 3 - rivin loppu\n"
+"etsi aiemmin annetun merkkijonon seuraava esiintymä kohdistimen nykyisestä "
+"paikasta lähtien"
 
-#: gui\__init__.py:136
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&Palaa tallennettuihin asetuksiin\tCtrl+R"
+#: gui\__init__.py:80
+msgid "configuration saved"
+msgstr "asetukset tallennettu"
 
-#: gui\__init__.py:136
-msgid "Reset all settings to saved state"
-msgstr "Nollaa asetukset tallennettuihin arvoihinsa"
-
-#: gui\__init__.py:138
-msgid "&Save configuration\tCtrl+S"
-msgstr "&Tallenna asetukset\tCtrl+S"
-
-#: gui\__init__.py:138
-msgid "Write the current configuration to nvda.ini"
-msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
-
-#: gui\__init__.py:141
-msgid "&Default dictionary..."
-msgstr "&Oletussanasto..."
-
-#: gui\__init__.py:141
-msgid ""
-"dialog where you can set default dictionary by adding dictionary entries to "
-"the list"
-msgstr "Valintaikkuna, jossa voit lisätä sanastomerkintöjä oletussanastoon"
-
-#: gui\__init__.py:143
-msgid "&Voice dictionary..."
-msgstr "&Puheäänikohtainen sanasto..."
-
-#: gui\__init__.py:143
-msgid ""
-"dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
+#: gui\__init__.py:82
+msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Valintaikkuna, jossa voit lisätä sanastomerkintöjä puheäänikohtaiseen "
-"sanastoon"
+"Asetuksia ei voitu tallentaa - tiedostojärjestelmä luultavasti vain luku -"
+"tyyppiä"
 
-#: gui\__init__.py:145
-msgid "&Temporary dictionary..."
-msgstr "&Tilapäissanasto..."
+#: gui\__init__.py:85
+msgid "Default dictionary"
+msgstr "Oletussanasto"
 
-#: gui\__init__.py:145
-msgid ""
-"dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"Valintaikkuna, jossa voit lisätä sanastomerkintöjä tilapäissanastoon"
+#: gui\__init__.py:89
+msgid "Voice dictionary (%s)"
+msgstr "Puheäänikohtainen sanasto (%s)"
 
-#: gui\__init__.py:147
-msgid "User &dictionaries"
-msgstr "Käyttäjän &sanastot"
+#: gui\__init__.py:93
+msgid "Temporary dictionary"
+msgstr "Tilapäissanasto"
 
-#: gui\__init__.py:149
-msgid "E&xit"
-msgstr "&Lopeta"
+#: gui\__init__.py:99
+msgid "Are you sure you want to quit NVDA?"
+msgstr "Oletko varma, että haluat sulkea NVDA:n?"
 
-#: gui\__init__.py:149 gui\__init__.py:242
+#: gui\__init__.py:99 gui\__init__.py:210
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
-#: gui\__init__.py:151 gui\__init__.py:152
-msgid "&NVDA"
-msgstr "&NVDA"
+#: gui\__init__.py:156
+msgid "copyright"
+msgstr "tekijänoikeus"
 
-#: gui\__init__.py:154
-msgid "&General settings...\tCtrl+Shift+G"
-msgstr "&Yleiset...\tCtrl+Shift+G"
+#: gui\__init__.py:156
+msgid "maintainer"
+msgstr "ylläpitäjä"
 
-#: gui\__init__.py:154 gui\__init__.py:258
+#: gui\__init__.py:156
+msgid "url"
+msgstr "URL-osoite"
+
+#: gui\__init__.py:156
+msgid "version"
+msgstr "versio"
+
+#: gui\__init__.py:157 gui\__init__.py:201
+msgid "About NVDA"
+msgstr "Tietoja NVDA:sta"
+
+#: gui\__init__.py:171
+msgid "&General settings..."
+msgstr "&Yleiset..."
+
+#: gui\__init__.py:171 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Yleiset asetukset"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:173
 msgid " the synthesizer to use"
 msgstr " käytettävä syntetisaattori"
 
-#: gui\__init__.py:156
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "&Syntetisaattori...\tCtrl+Shift+S"
+#: gui\__init__.py:173
+msgid "&Synthesizer..."
+msgstr "&Syntetisaattori..."
 
-#: gui\__init__.py:158
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "Puhe...\tCtrl+Shift+V"
+#: gui\__init__.py:175
+msgid "&Voice settings..."
+msgstr "&Puhe..."
 
-#: gui\__init__.py:158
+#: gui\__init__.py:175
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
-#: gui\__init__.py:160
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "&Näppäimistö...\tCtrl+K"
+#: gui\__init__.py:177
+msgid "&Keyboard Settings..."
+msgstr "&Näppäimistö..."
 
-#: gui\__init__.py:160
+#: gui\__init__.py:177
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1922,145 +1731,128 @@ msgstr ""
 "Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
 "komentonäppäinten lukeminen"
 
-#: gui\__init__.py:162
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "&Hiiri...\tCtrl+M"
+#: gui\__init__.py:179
+msgid "&Mouse settings..."
+msgstr "&Hiiri..."
 
-#: gui\__init__.py:162
+#: gui\__init__.py:179
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Muuta hiirikohdistimen muutosten ja hiiren alla olevan objektin lukuasetuksia"
 
-#: gui\__init__.py:164
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "&Objektien lukeminen...\tCtrl+Shift+O"
+#: gui\__init__.py:181
+msgid "&Object presentation..."
+msgstr "&Objektien lukeminen..."
 
-#: gui\__init__.py:164
+#: gui\__init__.py:181
 msgid "Change reporting of objects"
 msgstr "Muuta objektien lukuasetuksia"
 
-#: gui\__init__.py:166
+#: gui\__init__.py:183
 msgid "Change virtual buffers specific settings"
 msgstr "Muuta näennäispuskureiden asetuksia"
 
-#: gui\__init__.py:166
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "Näennäis&puskurit...\tCtrl+Shift+B"
+#: gui\__init__.py:183
+msgid "Virtual &buffers..."
+msgstr "Näennäisp&uskurit..."
 
-#: gui\__init__.py:168
+#: gui\__init__.py:185
 msgid "Change Settings of document properties"
 msgstr "Muuta dokumenttien ominaisuusasetuksia"
 
-#: gui\__init__.py:168
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "Dokumenttien &muotoilu...\tCtrl+Shift+F"
+#: gui\__init__.py:185
+msgid "Document &formatting..."
+msgstr "&Dokumenttien muotoilu..."
 
-#: gui\__init__.py:170 gui\__init__.py:171
+#: gui\__init__.py:188
+msgid "&Default dictionary..."
+msgstr "&Oletussanasto..."
+
+#: gui\__init__.py:188
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr "Valintaikkuna, jossa voit lisätä sanastomerkintöjä oletussanastoon"
+
+#: gui\__init__.py:190
+msgid "&Voice dictionary..."
+msgstr "&Puheäänikohtainen sanasto..."
+
+#: gui\__init__.py:190
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Valintaikkuna, jossa voit lisätä sanastomerkintöjä puheäänikohtaiseen "
+"sanastoon"
+
+#: gui\__init__.py:192
+msgid "&Temporary dictionary..."
+msgstr "&Tilapäissanasto..."
+
+#: gui\__init__.py:192
+msgid ""
+"dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Valintaikkuna, jossa voit lisätä sanastomerkintöjä tilapäissanastoon"
+
+#: gui\__init__.py:194
+msgid "User &dictionaries"
+msgstr "Käyttäjän &sanastot"
+
+#: gui\__init__.py:195
 msgid "&Preferences"
 msgstr "&Asetukset"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:197
 msgid "NVDA homepage"
 msgstr "NVDA:n kotisivu"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:197
 msgid "Opens NVDA homepage in the default browser"
 msgstr "Avaa NVDA:n kotisivun oletusselaimessa"
 
-#: gui\__init__.py:175
+#: gui\__init__.py:199
 msgid "NVDA wiki"
 msgstr "NVDA-wiki"
 
-#: gui\__init__.py:175
+#: gui\__init__.py:199
 msgid "Opens NVDA wiki in the default browser"
 msgstr "Avaa NVDA-wikin oletusselaimessa"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:201
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:177 gui\__init__.py:302
-msgid "About NVDA"
-msgstr "Tietoja NVDA:sta"
-
-#: gui\__init__.py:179 gui\__init__.py:180
+#: gui\__init__.py:203
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:192 gui\scriptUI.py:52 gui\scriptUI.py:61
-#: gui\scriptUI.py:74 gui\scriptUI.py:142
+#: gui\__init__.py:205
+msgid "&Revert to saved configuration"
+msgstr "&Palaa tallennettuihin asetuksiin"
+
+#: gui\__init__.py:205
+msgid "Reset all settings to saved state"
+msgstr "Nollaa asetukset tallennettuihin arvoihinsa"
+
+#: gui\__init__.py:207
+msgid "&Save configuration"
+msgstr "&Tallenna asetukset"
+
+#: gui\__init__.py:207
+msgid "Write the current configuration to nvda.ini"
+msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
+
+#: gui\__init__.py:210
+msgid "E&xit"
+msgstr "&Lopeta"
+
+#: gui\scriptUI.py:52 gui\scriptUI.py:61 gui\scriptUI.py:74
+#: gui\scriptUI.py:142
 msgid "NVDA"
 msgstr "NVDA"
-
-#: gui\__init__.py:218
-msgid "configuration saved"
-msgstr "asetukset tallennettu"
-
-#: gui\__init__.py:220
-msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Asetuksia ei voitu tallentaa - tiedostojärjestelmä luultavasti vain luku -"
-"tyyppiä"
-
-#: gui\__init__.py:223
-msgid "Default dictionary"
-msgstr "Oletussanasto"
-
-#: gui\__init__.py:227
-msgid "Voice dictionary (%s)"
-msgstr "Puheäänikohtainen sanasto (%s)"
-
-#: gui\__init__.py:231
-msgid "Temporary dictionary"
-msgstr "Tilapäissanasto"
-
-#: gui\__init__.py:242
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Oletko varma, että haluat sulkea NVDA:n?"
-
-#: gui\__init__.py:262
-msgid "Synthesizer"
-msgstr "Syntetisaattori"
-
-#: gui\__init__.py:266
-msgid "Voice settings"
-msgstr "Puheasetukset"
-
-#: gui\__init__.py:270
-msgid "Keyboard Settings"
-msgstr "Näppäimistöasetukset"
-
-#: gui\__init__.py:274
-msgid "Mouse settings"
-msgstr "Hiiriasetukset"
-
-#: gui\__init__.py:278
-msgid "Object presentation"
-msgstr "Objektien lukeminen"
-
-#: gui\__init__.py:282
-msgid "virtual buffers"
-msgstr "näennäispuskurit"
-
-#: gui\__init__.py:286
-msgid "Document formatting"
-msgstr "Dokumenttien muotoilu"
-
-#: gui\__init__.py:301
-msgid "copyright"
-msgstr "tekijänoikeus"
-
-#: gui\__init__.py:301
-msgid "maintainer"
-msgstr "ylläpitäjä"
-
-#: gui\__init__.py:301
-msgid "url"
-msgstr "URL-osoite"
-
-#: gui\__init__.py:301
-msgid "version"
-msgstr "versio"
 
 #: gui\scriptUI.py:109
 msgid "Links List"
@@ -2074,43 +1866,39 @@ msgstr "&Avaa linkki"
 msgid "&Move to link"
 msgstr "&Siirry linkin kohdalle"
 
-#: gui\settingsDialogs.py:42
+#: gui\settingsDialogs.py:102
 msgid "&Language (requires restart to fully take affect)"
 msgstr "&Kieli (vaatii uudelleenkäynnistyksen)"
 
-#: gui\settingsDialogs.py:46
+#: gui\settingsDialogs.py:106
 msgid "Language"
 msgstr "Kieli"
 
-#: gui\settingsDialogs.py:55
-msgid "&Hide user interface on startup"
-msgstr "&Piilota käyttöliittymä käynnistettäessä"
-
-#: gui\settingsDialogs.py:58
+#: gui\settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
 
-#: gui\settingsDialogs.py:61
+#: gui\settingsDialogs.py:118
 msgid "&Warn before exiting NVDA"
 msgstr "&Vahvista NVDA:n sulkeminen"
 
-#: gui\settingsDialogs.py:65
+#: gui\settingsDialogs.py:122
 msgid "L&ogging level"
 msgstr "L&okitaso"
 
-#: gui\settingsDialogs.py:69
+#: gui\settingsDialogs.py:126
 msgid "Log level"
 msgstr "Lokitaso"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:145
 msgid "Error in %s language file"
 msgstr "Virhe kielitiedostossa %s"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:145
 msgid "Language Error"
 msgstr "Virhe"
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:154
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2121,269 +1909,297 @@ msgstr ""
 "uudelleen painamalla Enter, tai paina Peruuta tallentaaksesi asetukset ja "
 "käynnistääksesi NVDA:n uudelleen myöhemmin."
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:154
 msgid "Language Configuration Change"
 msgstr "Kieliasetuksen muutos"
 
-#: gui\settingsDialogs.py:114
+#: gui\settingsDialogs.py:160
+msgid "Synthesizer"
+msgstr "Syntetisaattori"
+
+#: gui\settingsDialogs.py:164
 msgid "&Synthesizer"
 msgstr "&Syntetisaattori"
 
-#: gui\settingsDialogs.py:129
+#: gui\settingsDialogs.py:179
 msgid "Output &device"
 msgstr "&Käytettävä äänikortti"
 
-#: gui\settingsDialogs.py:164
+#: gui\settingsDialogs.py:209
 msgid "Could not load the %s synthesizer."
 msgstr "Syntetisaattoria %s ei voitu ladata."
 
-#: gui\settingsDialogs.py:164
+#: gui\settingsDialogs.py:209
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:214
+msgid "Voice settings"
+msgstr "Puheasetukset"
+
+#: gui\settingsDialogs.py:219
 msgid "&Voice"
 msgstr "&Puheääni"
 
-#: gui\settingsDialogs.py:192
+#: gui\settingsDialogs.py:235
 msgid "V&ariant"
 msgstr "&Muunnelma"
 
-#: gui\settingsDialogs.py:206
+#: gui\settingsDialogs.py:249
 msgid "&Rate"
 msgstr "&Nopeus"
 
-#: gui\settingsDialogs.py:215
+#: gui\settingsDialogs.py:258
 msgid "&Pitch"
 msgstr "&Korkeus"
 
-#: gui\settingsDialogs.py:224
+#: gui\settingsDialogs.py:267
 msgid "&Inflection"
 msgstr "&Rauhallisuus"
 
-#: gui\settingsDialogs.py:233
+#: gui\settingsDialogs.py:276
 msgid "V&olume"
 msgstr "&Voimakkuus"
 
-#: gui\settingsDialogs.py:240
+#: gui\settingsDialogs.py:283
 msgid "&Speak all punctuation"
 msgstr "&Lue kaikki välimerkit"
 
-#: gui\settingsDialogs.py:243
+#: gui\settingsDialogs.py:286
 msgid "Raise pitch for capitals"
 msgstr "Nosta äänenkorkeutta isojen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:246
+#: gui\settingsDialogs.py:289
 msgid "Say &cap before capitals"
 msgstr "Sano &iso ennen isoja kirjaimia"
 
-#: gui\settingsDialogs.py:249
+#: gui\settingsDialogs.py:292
 msgid "&Beep for capitals"
 msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:331
+#: gui\settingsDialogs.py:363
+msgid "Keyboard Settings"
+msgstr "Näppäimistöasetukset"
+
+#: gui\settingsDialogs.py:366
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lock -näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:334
+#: gui\settingsDialogs.py:369
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:337
+#: gui\settingsDialogs.py:372
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:340
+#: gui\settingsDialogs.py:375
 msgid "Speak typed &characters"
 msgstr "Lue &kirjoitetut merkit"
 
-#: gui\settingsDialogs.py:343
+#: gui\settingsDialogs.py:378
 msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
-#: gui\settingsDialogs.py:346
+#: gui\settingsDialogs.py:381
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
-#: gui\settingsDialogs.py:372
+#: gui\settingsDialogs.py:398
+msgid "Mouse settings"
+msgstr "Hiiriasetukset"
+
+#: gui\settingsDialogs.py:401
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muutoksista"
 
-#: gui\settingsDialogs.py:375
+#: gui\settingsDialogs.py:404
 msgid "Report &object under mouse"
 msgstr "Lue hiiren alla oleva &objekti"
 
-#: gui\settingsDialogs.py:378
+#: gui\settingsDialogs.py:407
 msgid "play audio coordinates when mouse moves"
 msgstr "Ilmoita hiirikohdistimen &koordinaatit äänimerkeillä"
 
-#: gui\settingsDialogs.py:401
+#: gui\settingsDialogs.py:421
+msgid "Object presentation"
+msgstr "Objektien lukeminen"
+
+#: gui\settingsDialogs.py:424
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui\settingsDialogs.py:404
+#: gui\settingsDialogs.py:427
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui\settingsDialogs.py:407
+#: gui\settingsDialogs.py:430
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui\settingsDialogs.py:410
+#: gui\settingsDialogs.py:433
 msgid "Report object &position information"
 msgstr "Lue objektien s&ijaintitiedot"
 
-#: gui\settingsDialogs.py:413
+#: gui\settingsDialogs.py:436
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui\settingsDialogs.py:416
+#: gui\settingsDialogs.py:439
 msgid "Say object &state first"
 msgstr "Lue &ensin objektin tila"
 
-#: gui\settingsDialogs.py:419
+#: gui\settingsDialogs.py:442
 msgid "&Beep on progress bar updates"
 msgstr "Anna &äänimerkki edistymispalkin päivittyessä"
 
-#: gui\settingsDialogs.py:446
+#: gui\settingsDialogs.py:460
+msgid "virtual buffers"
+msgstr "näennäispuskurit"
+
+#: gui\settingsDialogs.py:463
 msgid "&Maximum number of characters on one line"
 msgstr "&Merkkien maksimimäärä rivillä"
 
-#: gui\settingsDialogs.py:451
+#: gui\settingsDialogs.py:468
 msgid "&Number of lines per page"
 msgstr "&Rivejä sivulla"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:473
 msgid "Report &virtual presentation on focus changes"
 msgstr "Ilmoita koh&distuksen muuttuessa"
 
-#: gui\settingsDialogs.py:459
+#: gui\settingsDialogs.py:476
 msgid "Update the content &dynamically"
 msgstr "Päivitä sisältöä &dynaamisesti"
 
-#: gui\settingsDialogs.py:462
+#: gui\settingsDialogs.py:479
 msgid "Report lin&ks"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:465
+#: gui\settingsDialogs.py:482
 msgid "Report &lists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:468
+#: gui\settingsDialogs.py:485
 msgid "Report list &items"
 msgstr "Ilmoita luettelon &osat"
 
-#: gui\settingsDialogs.py:471
+#: gui\settingsDialogs.py:488
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:474 gui\settingsDialogs.py:558
+#: gui\settingsDialogs.py:491 gui\settingsDialogs.py:569
 msgid "Report &tables"
 msgstr "Ilmoita taulu&kot"
 
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:494
 msgid "Report &graphics"
 msgstr "Ilmoita ku&vat"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:497
 msgid "Report f&orms"
 msgstr "Ilmoita lom&akkeet"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:500
 msgid "Report form &fields"
 msgstr "Ilmoita lomakek&entät"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:503
 msgid "Report block &quotes"
 msgstr "Ilmoita sisennykse&t joissa kappaleenvaihto"
 
-#: gui\settingsDialogs.py:489
+#: gui\settingsDialogs.py:506
 msgid "Report &paragraphs"
 msgstr "Ilmoita ka&ppaleet"
 
-#: gui\settingsDialogs.py:492
+#: gui\settingsDialogs.py:509
 msgid "Report f&rames"
 msgstr "Ilmoita ke&hykset"
 
-#: gui\settingsDialogs.py:537
+#: gui\settingsDialogs.py:545
+msgid "Document formatting"
+msgstr "Dokumenttien muotoilu"
+
+#: gui\settingsDialogs.py:548
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (saattaa aiheuttaa "
 "hidastumista)"
 
-#: gui\settingsDialogs.py:540
+#: gui\settingsDialogs.py:551
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:554
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:546
+#: gui\settingsDialogs.py:557
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:549
+#: gui\settingsDialogs.py:560
 msgid "Report st&yle"
 msgstr "Ilmoita t&yyli"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:563
 msgid "Report &pages"
 msgstr "Ilmoita si&vunumerot"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:566
 msgid "Report &line numbers"
 msgstr "Ilmoita rivin&umerot"
 
-#: gui\settingsDialogs.py:561
+#: gui\settingsDialogs.py:572
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:604
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:607
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:608
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:609
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:616
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:619
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:614
+#: gui\settingsDialogs.py:622
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:645
 msgid "Add an entry"
 msgstr "Lisää merkintä"
 
-#: gui\settingsDialogs.py:642 gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:642 gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:642 gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:651
 msgid "Edit an entry"
 msgstr "Muokkaa merkintää"
 
@@ -2450,7 +2266,7 @@ msgstr "ei valittu %s"
 msgid "not %s"
 msgstr "ei %s"
 
-#: synthDrivers\_espeak.py:270
+#: synthDrivers\_espeak.py:268
 msgid "none"
 msgstr "ei mitään"
 
@@ -2793,6 +2609,14 @@ msgstr "Siirtää seuraavan lomakekentän kohdalle"
 #: virtualBuffers_old\__init__.py:456
 msgid "moves to the previous form field"
 msgstr "siirtää edellisen lomakekentän kohdalle"
+
+#: virtualBuffers_old\__init__.py:469
+msgid "text: \"%s\" not found"
+msgstr "Tekstiä \"%s\" ei löydy"
+
+#: virtualBuffers_old\__init__.py:475
+msgid "find a text pattern from the current cursor's position"
+msgstr "Etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
 #: virtualBuffers_old\__init__.py:479
 msgid "find next occurrence of text"
