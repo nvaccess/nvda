@@ -1,12 +1,12 @@
 # NVDA ภาษาไทย
-# Copyright (C) 2006-2007 NVDA Contributers
+# Copyright (C) 2006-2008 NVDA Contributers <http://www.nvda-project.org/>
 # Michael Curran <mick@kulgan.net> 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1654\n"
+"Project-Id-Version: r1747\n"
 "POT-Creation-Date: 2007-11-17 17:39+SE Asia Standard Time\n"
-"PO-Revision-Date: 2008-01-14 11:02 +0700\n"
+"PO-Revision-Date: 2008-03-03 08:32 +0700\n"
 "Last-Translator: Amorn Kiattikhunrat <thainvda@gmail.com>\n"
 "Language-Team: Thai Team <thainvda@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1394,17 +1394,17 @@ msgstr ""
 "ปุ่มตัวเลข 3 - ตัวอักษรถัดไป\n"
 "shift+ปุ่มตัวเลข 3 - ท้ายบรรทัด\n"
 
-#: gui\__init__.py:142
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "กลับสู่การตั้งค่าเดิม\tCtrl+R"
+#: gui\__init__.py:205
+msgid "&Revert to saved configuration"
+msgstr "กลับสู่การตั้งค่าเดิม"
 
 #: gui\__init__.py:142
 msgid "Reset all setting back to nvda.ini"
 msgstr "รีเซตการตั้งค่าทั้งหมดให้ตรงกับ NVDA.ini"
 
-#: gui\__init__.py:144
-msgid "&Save configuration\tCtrl+S"
-msgstr "บันทึกการตั้งค่า\tCtrl+S"
+#: gui\__init__.py:207
+msgid "&Save configuration"
+msgstr "บันทึกการตั้งค่า"
 
 #: gui\__init__.py:144
 msgid "Write the current configuration to nvda.ini"
@@ -1452,45 +1452,45 @@ msgstr "ตั้งค่าพจนานุกรมเสียง"
 msgid "Voice dictionary (%s)"
 msgstr "พจนานุกรมเสียง (%s)"
 
-#: gui\__init__.py:164
-msgid "&General settings...\tCtrl+Shift+G"
-msgstr "ตั้งค่าทั่วไป"
+#: gui\__init__.py:171
+msgid "&General settings..."
+msgstr "ตั้งค่าทั่วไป..."
 
 #: gui\__init__.py:167
 msgid " the synthesizer to use"
 msgstr "ตัวสังเคราะห์เสียงที่ใช้"
 
 #: gui\__init__.py:167
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "ตัวสังเคราะห์เสียง...\tCtrl+Shift+S"
+msgid "&Synthesizer..."
+msgstr "ตัวสังเคราะห์เสียง..."
 
 #: gui\__init__.py:170
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "ตั้งค่าเสียง...\tCtrl+Shift+V"
+msgid "&Voice settings..."
+msgstr "ตั้งค่าเสียง..."
 
 #: gui\__init__.py:170
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "เลือกเสียง อัตราเร็ว ระดับเสียง และความดังของเสียง"
 
 #: gui\__init__.py:173
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "ตั้งค่าแป้นพิมพ์"
+msgid "&Keyboard Settings..."
+msgstr "ตั้งค่าแป้นพิมพ์..."
 
 #: gui\__init__.py:173
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "ตั้งค่าแป้นพิมพ์, ให้พูดคำที่ตัวอักษรที่พิมพ์ คำที่พิมพ์หรือคำสั่ง "
 
 #: gui\__init__.py:176
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "ตั้งค่าเม้าส์...\tCtrl+M"
+msgid "&Mouse settings..."
+msgstr "ตั้งค่าเม้าส์..."
 
 #: gui\__init__.py:176
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "เปลี่ยนการรายงานวัตถุที่เม้าส์ชี้"
 
 #: gui\__init__.py:179
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "การแสดงวัตถุ...\tCtrl+Shift+O"
+msgid "&Object presentation..."
+msgstr "การแสดงวัตถุ..."
 
 #: gui\__init__.py:179
 msgid "Change reporting of objects"
@@ -1501,16 +1501,16 @@ msgid "Change virtual buffers specific settings"
 msgstr "Change virtual buffers specific settings"
 
 #: gui\__init__.py:182
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "Virtual &buffers...\tCtrl+Shift+B"
+msgid "Virtual &buffers..."
+msgstr "Virtual &buffers..."
 
 #: gui\__init__.py:185
 msgid "Change Settings of document properties"
 msgstr "เปลี่ยนการตั้งค่าคุณสมบัติของเอกสาร"
 
 #: gui\__init__.py:185
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "เอกสารและรูปแบบเอกสาร...\tCtrl+Shift+F"
+msgid "Document &formatting..."
+msgstr "เอกสารและรูปแบบเอกสาร..."
 
 #: gui\__init__.py:187
 #: gui\__init__.py:188
@@ -1569,8 +1569,8 @@ msgstr "ไม่สามารถบันทึกการตั้งค่าได้ อาจเป็นเพราะไฟล์สามารถอ่านได้เท่านั้น"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "คุณแน่ใจหรือไม่ที่จะออกจาก NVDA"
 
-#: gui\__init__.py:164
-#: gui\__init__.py:278
+#: gui\__init__.py:171 
+#: gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "ตั้งค่าทั่วไป"
 
@@ -1785,6 +1785,10 @@ msgstr "บอกสถานะของวัตถุก่อนทุกครั้ง"
 #: gui\settingsDialogs.py:417
 msgid "&Beep on progress bar updates"
 msgstr "ให้สัญญาณเสียง ปิ๊บ ในขณะที่แถบบอกความคืบหน้าอั๊บเด่ท"
+
+#: gui\settingsDialogs.py:436
+msgid "Report object &descriptions"
+msgstr "รายงานคำอธิบายวัตถุ"
 
 #: gui\settingsDialogs.py:444
 msgid "&Maximum number of characters on one line"
