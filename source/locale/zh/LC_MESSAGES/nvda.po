@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-02-27 20:33+0800\n"
+"PO-Revision-Date: 2008-03-02 23:22+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1616,16 +1616,20 @@ msgid "Type the text you wish to find"
 msgstr "請打入要找尋的文字"
 
 # virtualBuffers\__init__.py:473
+msgid "text \"%s\" not found"
+msgstr "找不到, %s, 的目標文字"
+
+# virtualBuffers\__init__.py:473
 msgid "Find Error"
 msgstr "未能找到"
 
-# virtualBuffers\__init__.py:473
-msgid "text: \"%s\" not found"
-msgstr "不能找到 %s"
+# virtualBuffers\__init__.py:479
+msgid "find a text string from the current cursor position"
+msgstr "從目前游標位置開始尋找文字"
 
 # virtualBuffers\__init__.py:479
-msgid "find a text pattern from the current cursor's position"
-msgstr "從目前游標位置開始尋找文字"
+msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "從目前游標位置開始尋找上一次輸入過的文字"
 
 # characterSymbols.py:25
 msgid "none"
@@ -1635,167 +1639,119 @@ msgstr "無"
 msgid "No speech,  a template synthesizer"
 msgstr "不會說話的合成器"
 
-# gui\__init__.py:23
-msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the OK or Cancel button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'general settings...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt/pause speech\n"
-"shift - unpause speech\n"
-"NVDA+1 - turns keyboard help on and off\n"
-"NVDA+upArrow - reports the object with focus\n"
-"NVDA+downArrow - starts sayAll (press control or any other key to stop)\n"
-"NVDA+tab - report the object currently in focus\n"
-"NVDA+t speak title\n"
-"NVDA+f12 - report time and date\n"
-"NVDA+2 - turn speaking of typed characters on and off\n"
-"NVDA+3 turn speaking of typed words on and off\n"
-"NVDA+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
-"NVDA+pageUp - increase rate of speech\n"
-"NVDA+pageDown - decrease rate of speech\n"
-"NVDA+p - turn reading of punctuation on and off\n"
-"NVDA+s - toggle speech modes (off, talk and beeps)\n"
-"NVDA+m - turn  reading of objects under the mouse on and off\n"
-"NVDA+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"NVDA+numpadAdd - Where am I\n"
-"NVDA+numpad5 - current object\n"
-"shift+NVDA+numpad5 - dimensions and location of current object\n"
-"NVDA+numpad8 - parent object\n"
-"NVDA+numpad4 - previous object\n"
-"NVDA+numpad6 - next object\n"
-"NVDA+numpad2 - first child object\n"
-"NVDA+numpadMinus - move to focus object\n"
-"NVDA+end - move to statusbar\n"
-"NVDA+numpadDivide - Move mouse to current navigator object\n"
-"NVDA+numpadMultiply - move to mouse\n"
-"nvda+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
-msgstr ""
-"NVDA - 快速入門說明\n"
-"\n"
-"NVDA (%(description)s)\n"
-"版本: %(version)s\n"
-"網址: %(url)s\n"
-"請把錯誤與建議寄到: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- 版權資訊 ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"這是 NVDA 的界面視窗。在這裡您可以控制 NVDA 的設定，也可以完全退出 NVDA.\n"
-"\n"
-"隨時想開啟這個事窗可以按 insert+n. 要關閉這個視窗但不結束 NVDA 的工作可按 Alt+F4.\n"
-"\n"
-"要完全退出 NVDA 可以在任何地方按 insert+q, 或著在本視窗的 NVDA 選單中選擇退出, NVDA 會跳出一個對話方塊問您是否要退出，您可以按是或否按鈕。\n"
-"\n"
-"要做偏好設定（例如語音設定、邊打邊念、朗讀工具提示等，\n"
-"可以按 alt 鍵移到選單列然後用方向鍵尋訪選單並找到您要修改的設定。有許多選單項目按輸入鍵會帶出對話方塊讓您修改個別的設定。大部分的設定會立刻生效（例如修改語音的速度和音調）所以您可以很輕易地發現哪些設定最適合您。然而如果您取消對話方塊，那些修改的設定就會恢復原狀。\n"
-"\n"
-"NVDA 內定不會把設定保持到下次啟動，除非按 ctrl+s 或在 NVDA 選單中選擇「儲存設定」。您可以設定 NVDA 退出時自動儲存設定，作法是到偏好設定選單裡的「使用者介面...」勾選「退出時儲存設定」核取方塊並按確定。\n"
-"\n"
-"以下是一些常用的按鍵指令：\n"
-"\n"
-"一般按鍵:\n"
-"control - 暫停或中斷語音\n"
-"shift - 從暫停的地方繼續朗讀下去\n"
-"NVDA+1 - 鍵盤說明開關\n"
-"NVDA+向上鍵 - 讀出焦點項目\n"
-"NVDA+向下鍵 – 從現時的一行朗讀到尾（按 control 或任意鍵停止朗讀\n"
-"）NVDA+tab - 報出目前瀏覽項目\n"
-"NVDA+t - 讀出目前視窗的標題\n"
-"NVDA+f12 - 報出現時時間與日期\n"
-"NVDA+2 - 邊打邊念字元開關\n"
-"NVDA+3 - 邊打邊念字詞開關\n"
-"NVDA+4 - 邊打邊念指令（例如空白、方向鍵、control 與 shift 組合）開關\n"
-"NVDA+pageup - 加快朗讀速度\n"
-"NVDA+pagedown - 減慢朗讀速度\n"
-"NVDA+p - 標點符號朗讀開關\n"
-"NVDA+s - 切換語音模式（關閉、講話、逼逼聲）\n"
-"NVDA+m - 鼠標所指物件朗讀開關\n"
-"NVDA+f - 在文件中報出目前的字形\n"
-"\n"
-"項目瀏覽:\n"
-"NVDA+九宮鍵加號 – 讀出現在的位置\n"
-"NVDA+九宮鍵5 - 目前的項目\n"
-"shift+NVDA+九宮鍵5 - 目前項目的大小與位置\n"
-"NVDA+九宮鍵8 - 上一曾項目\n"
-"NVDA+九宮鍵4 - 前一個項目\n"
-"NVDA+九宮鍵6 - 下一個項目\n"
-"NVDA+九宮鍵2 - 下一曾項目\n"
-"NVDA+九宮鍵減號 - 移到焦點項目\n"
-"NVDA+end - 移到並讀出狀態列\n"
-"NVDA+九宮鍵除號 – 把鼠標移到目前的項目\n"
-"NVDA+九宮鍵乘號 – 把瀏覽游標移到滑鼠游標\n"
-"NVDA+九宮鍵輸入鍵 – 嘗試啟動目前的物件\n"
-"\n"
-"瀏覽目前的項目\n"
-"shift+九宮鍵7 - 移到最上行\n"
-"九宮鍵7 - 前一行\n"
-"九宮鍵8 - 目前行\n"
-"九宮鍵9 - 下一行\n"
-"shift+九宮鍵9 - 移到最下行\n"
-"九宮鍵4 - 前一個字詞\n"
-"九宮鍵5 - 目前字詞\n"
-"九宮鍵6 - 下一個字詞\n"
-"shift+九宮鍵1 - 行首\n"
-"九宮鍵1 - 前一個字元\n"
-"九宮鍵2 - 目前字元\n"
-"九宮鍵3 - 下個字元\n"
-"shift+九宮鍵3 - 行尾\n"
+# gui\__init__.py:223
+msgid "configuration saved"
+msgstr "設定存好了"
 
-# gui\__init__.py:139
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "恢復之前的設定 &R\tCtrl+R"
+# gui\__init__.py:225
+msgid "Could not save configuration - probably read only file system"
+msgstr "未能儲存設定, 也許使用了唯讀的檔案系統"
 
-# gui\__init__.py:139
-msgid "Reset all settings to saved state"
-msgstr "回復所有設定到已儲存的狀態"
+# gui\__init__.py:281
+msgid "Default dictionary"
+msgstr "預設字庫"
 
-# gui\__init__.py:141
-msgid "&Save configuration\tCtrl+S"
-msgstr "儲存設定 &S\tCtrl+S"
+# gui\__init__.py:285
+msgid "Voice dictionary (%s)"
+msgstr "語音字庫 %s"
 
-# gui\__init__.py:141
-msgid "Write the current configuration to nvda.ini"
-msgstr "將現時的設定寫入 nvda.ini"
+# gui\__init__.py:289
+msgid "Temporary dictionary"
+msgstr "臨時字庫"
+
+# gui\__init__.py:233
+msgid "Are you sure you want to quit NVDA?"
+msgstr "是否結束 NVDA 的工作呢?"
+
+# gui\__init__.py:143
+# gui\__init__.py:233
+msgid "Exit NVDA"
+msgstr "關閉 NVDA"
+
+# gui\__init__.py:288
+msgid "copyright"
+msgstr "版權"
+
+# gui\__init__.py:288
+msgid "maintainer"
+msgstr "維護者"
+
+# gui\__init__.py:288
+msgid "url"
+msgstr "網址"
+
+# gui\__init__.py:288
+msgid "version"
+msgstr "版本"
+
+# gui\__init__.py:181
+# gui\__init__.py:289
+msgid "About NVDA"
+msgstr "關於 NVDA"
+
+# gui\__init__.py:245
+msgid "&General settings..."
+msgstr "一般設定... &G"
+
+# gui\__init__.py:245
+msgid "General settings"
+msgstr "一般設定"
+
+# gui\__init__.py:152
+msgid " the synthesizer to use"
+msgstr "使用的語音合成器"
+
+# gui\settingsDialogs.py:77
+msgid "&Synthesizer..."
+msgstr "語音合成器... &S"
+
+# gui\__init__.py:253
+msgid "&Voice settings..."
+msgstr "語音設定... &V"
+
+# gui\__init__.py:155
+msgid "Choose the voice, rate, pitch and volume  to use"
+msgstr "設定朗讀人聲, 速度, 音調和音量"
+
+# gui\__init__.py:257
+msgid "&Keyboard Settings..."
+msgstr "鍵盤設定... &K"
+
+# gui\__init__.py:158
+msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+msgstr "修改和鍵盤有關的設定，例如設定是否邊打邊念字元, 字詞或指令"
+
+# gui\__init__.py:261
+msgid "&Mouse settings..."
+msgstr "滑鼠設定... &M"
+
+# gui\__init__.py:161
+msgid "Change reporting of mouse sape, object under mouse"
+msgstr "切換是否讀出鼠標形狀和所指物件"
+
+# gui\__init__.py:265
+msgid "&Object presentation..."
+msgstr "項目說明... &O"
+
+# gui\__init__.py:164
+msgid "Change reporting of objects"
+msgstr "修改項目朗讀設定"
+
+# gui\__init__.py:167
+msgid "Change virtual buffers specific settings"
+msgstr " 修改和虛擬緩衝有關的設定"
+
+# gui\__init__.py:269
+msgid "Virtual &buffers..."
+msgstr "虛擬緩衝... &B"
+
+# gui\__init__.py:170
+msgid "Change Settings of document properties"
+msgstr "修改文件朗讀的設定"
+
+# gui\__init__.py:273
+msgid "Document &formatting..."
+msgstr "文件格式... &D"
 
 # gui\__init__.py:159
 msgid "&Default dictionary..."
@@ -1825,84 +1781,6 @@ msgstr "打開編輯臨時字庫的對話方塊"
 msgid "User &dictionaries"
 msgstr " 讀音修正字庫 &d"
 
-# gui\__init__.py:143
-msgid "E&xit"
-msgstr "關閉 NVDA &X"
-
-# gui\__init__.py:143
-# gui\__init__.py:233
-msgid "Exit NVDA"
-msgstr "關閉 NVDA"
-
-# gui\__init__.py:145
-# gui\__init__.py:146
-msgid "&NVDA"
-msgstr "&NVDA"
-
-# gui\__init__.py:155
-msgid "&General settings...\tCtrl+Shift+G"
-msgstr "一般設定... &G\tCtrl+Shift+G"
-
-# gui\__init__.py:245
-msgid "General settings"
-msgstr "一般設定"
-
-# gui\__init__.py:152
-msgid " the synthesizer to use"
-msgstr "使用的語音合成器"
-
-# gui\__init__.py:152
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "語音合成器... &S\tCtrl+Shift+S"
-
-# gui\__init__.py:155
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "語音設定... &V\tCtrl+Shift+v"
-
-# gui\__init__.py:155
-msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "設定朗讀人聲, 速度, 音調和音量"
-
-# gui\__init__.py:158
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "鍵盤設定... &K\tCtrl+K"
-
-# gui\__init__.py:158
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "修改和鍵盤有關的設定，例如設定是否邊打邊念字元, 字詞或指令"
-
-# gui\__init__.py:161
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "滑鼠設定... &M\tCtrl+M"
-
-# gui\__init__.py:161
-msgid "Change reporting of mouse sape, object under mouse"
-msgstr "切換是否讀出鼠標形狀和所指物件"
-
-# gui\__init__.py:164
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "物件說明... &O\tCtrl+Shift+o"
-
-# gui\__init__.py:164
-msgid "Change reporting of objects"
-msgstr "修改項目朗讀設定"
-
-# gui\__init__.py:167
-msgid "Change virtual buffers specific settings"
-msgstr " 修改和虛擬緩衝有關的設定"
-
-# gui\__init__.py:167
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "虛擬緩衝... &B\tCtrl+Shift+B"
-
-# gui\__init__.py:170
-msgid "Change Settings of document properties"
-msgstr "修改文件朗讀的設定"
-
-# gui\__init__.py:170
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "文件格式... &F\tCtrl+Shift+F"
-
 # gui\__init__.py:172
 # gui\__init__.py:173
 msgid "&Preferences"
@@ -1928,15 +1806,30 @@ msgstr "在預設瀏覽器開啟 NVDA 百科主頁"
 msgid "About..."
 msgstr "關於..."
 
-# gui\__init__.py:181
-# gui\__init__.py:289
-msgid "About NVDA"
-msgstr "關於 NVDA"
-
 # gui\__init__.py:183
 # gui\__init__.py:184
 msgid "&Help"
 msgstr "輔助說明 &H"
+
+# gui\__init__.py:139
+msgid "&Revert to saved configuration"
+msgstr "恢復至貯存了的設定 &R"
+
+# gui\__init__.py:139
+msgid "Reset all settings to saved state"
+msgstr "回復所有設定到已儲存的狀態"
+
+# gui\__init__.py:141
+msgid "&Save configuration"
+msgstr "貯存設定 &S"
+
+# gui\__init__.py:141
+msgid "Write the current configuration to nvda.ini"
+msgstr "將現時的設定寫入 nvda.ini"
+
+# gui\__init__.py:143
+msgid "E&xit"
+msgstr "關閉 NVDA &X"
 
 # gui\__init__.py:196
 # gui\scriptUI.py:52
@@ -1944,74 +1837,6 @@ msgstr "輔助說明 &H"
 # gui\scriptUI.py:74
 msgid "NVDA"
 msgstr "NVDA"
-
-# gui\__init__.py:223
-msgid "configuration saved"
-msgstr "設定存好了"
-
-# gui\__init__.py:225
-msgid "Could not save configuration - probably read only file system"
-msgstr "未能儲存設定, 也許使用了唯讀的檔案系統"
-
-# gui\__init__.py:281
-msgid "Default dictionary"
-msgstr "預設字庫"
-
-# gui\__init__.py:285
-msgid "Voice dictionary (%s)"
-msgstr "語音字庫 %s"
-
-# gui\__init__.py:289
-msgid "Temporary dictionary"
-msgstr "臨時字庫"
-
-# gui\__init__.py:233
-msgid "Are you sure you want to quit NVDA?"
-msgstr "是否結束 NVDA 的工作呢?"
-
-# gui\__init__.py:249
-msgid "Synthesizer"
-msgstr "語音合成器"
-
-# gui\__init__.py:253
-msgid "Voice settings"
-msgstr "語音設定"
-
-# gui\__init__.py:257
-msgid "Keyboard Settings"
-msgstr "鍵盤設定"
-
-# gui\__init__.py:261
-msgid "Mouse settings"
-msgstr "滑鼠設定"
-
-# gui\__init__.py:265
-msgid "Object presentation"
-msgstr "項目說明"
-
-# gui\__init__.py:269
-msgid "virtual buffers"
-msgstr "虛擬緩衝"
-
-# gui\__init__.py:273
-msgid "Document formatting"
-msgstr "文件格式"
-
-# gui\__init__.py:288
-msgid "copyright"
-msgstr "版權"
-
-# gui\__init__.py:288
-msgid "maintainer"
-msgstr "維護者"
-
-# gui\__init__.py:288
-msgid "url"
-msgstr "網址"
-
-# gui\__init__.py:288
-msgid "version"
-msgstr "版本"
 
 # gui\scriptUI.py:109
 msgid "Links List"
@@ -2032,10 +1857,6 @@ msgstr "選擇語言(需要重新啟動才可套用設定)&L"
 # gui\settingsDialogs.py:29
 msgid "Language"
 msgstr "語言"
-
-# gui\settingsDialogs.py:38
-msgid "&Hide user interface on startup"
-msgstr "在啟動時隱藏使用者介面 &H"
 
 # gui\settingsDialogs.py:41
 msgid "&Save configuration on exit"
@@ -2068,6 +1889,10 @@ msgstr "為了讓修改過的語言設定生效, 必須儲存設定並重新啟�
 msgid "Language Configuration Change"
 msgstr "修改語言設定"
 
+# gui\__init__.py:249
+msgid "Synthesizer"
+msgstr "語音合成器"
+
 # gui\settingsDialogs.py:77
 msgid "&Synthesizer"
 msgstr "語音合成器 &S"
@@ -2083,6 +1908,10 @@ msgstr "未能載入 %s 語音合成器"
 # gui\settingsDialogs.py:103
 msgid "Synthesizer Error"
 msgstr "語音合成器錯誤"
+
+# gui\__init__.py:253
+msgid "Voice settings"
+msgstr "語音設定"
 
 # gui\settingsDialogs.py:114
 msgid "&Voice"
@@ -2124,6 +1953,10 @@ msgstr "每當遇到大寫字元時先說大寫 &S"
 msgid "&Beep for capitals"
 msgstr "每當遇到大寫字元時發出逼逼聲 &B"
 
+# gui\__init__.py:257
+msgid "Keyboard Settings"
+msgstr "鍵盤設定"
+
 # gui\settingsDialogs.py:264
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "把 CapsLock 鍵設為 NVDA 的組合鍵"
@@ -2148,6 +1981,10 @@ msgstr "邊打邊念字詞 &W"
 msgid "Speak command &keys"
 msgstr "邊打邊念指令 &K"
 
+# gui\__init__.py:261
+msgid "Mouse settings"
+msgstr "滑鼠設定"
+
 # gui\settingsDialogs.py:240
 msgid "Report mouse &shape changes"
 msgstr "報告鼠標型態變更 &S"
@@ -2159,6 +1996,10 @@ msgstr "報出鼠標所指物件 &O"
 # gui\settingsDialogs.py:359
 msgid "play audio coordinates when mouse moves"
 msgstr "用聲效表示鼠標所在位置 &P"
+
+# gui\__init__.py:265
+msgid "Object presentation"
+msgstr "項目說明"
 
 # gui\settingsDialogs.py:265
 msgid "Report &tooltips"
@@ -2187,6 +2028,10 @@ msgstr "先說項目的狀態 &S"
 # gui\settingsDialogs.py:280
 msgid "&Beep on progress bar updates"
 msgstr "在進度列更新時發出逼逼聲 &B"
+
+# gui\__init__.py:269
+msgid "virtual buffers"
+msgstr "虛擬緩衝"
 
 # gui\settingsDialogs.py:306
 msgid "&Maximum number of characters on one line"
@@ -2248,6 +2093,10 @@ msgstr "說出起段 &P"
 # gui\settingsDialogs.py:352
 msgid "Report f&rames"
 msgstr "說出框架 &M"
+
+# gui\__init__.py:273
+msgid "Document formatting"
+msgstr "文件格式"
 
 # gui\settingsDialogs.py:474
 msgid "Announce formatting changes after the cursor (can cause a lag)"
@@ -2751,6 +2600,14 @@ msgstr "移到下一個表單欄位"
 # virtualBuffers\__init__.py:460
 msgid "moves to the previous form field"
 msgstr "移到上一個表單欄位"
+
+# virtualBuffers\__init__.py:473
+msgid "text: \"%s\" not found"
+msgstr "不能找到 %s"
+
+# virtualBuffers\__init__.py:479
+msgid "find a text pattern from the current cursor's position"
+msgstr "從目前游標位置開始尋找文字"
 
 # virtualBuffers\__init__.py:483
 msgid "find next occurrence of text"

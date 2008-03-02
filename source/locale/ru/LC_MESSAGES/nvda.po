@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2008-02-10 17:57+Russian Standard Time\n"
-"PO-Revision-Date: 2008-02-10 19:45+Moscow\n"
+"POT-Creation-Date: 2008-03-02 18:15+Russian Standard Time\n"
+"PO-Revision-Date: 2008-03-02 18:35+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In cooperation with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -107,54 +107,54 @@ msgstr "Конец строки"
 msgid "beginning of row"
 msgstr "Начало строки"
 
-#: _synthSettingsRing.py:60
+#: _synthSettingsRing.py:86
 msgid "volume"
 msgstr "Громкость"
 
-#: _synthSettingsRing.py:61
+#: _synthSettingsRing.py:87
 msgid "rate"
 msgstr "Скорость"
 
-#: _synthSettingsRing.py:62
+#: _synthSettingsRing.py:88
 msgid "pitch"
 msgstr "Высота"
 
-#: _synthSettingsRing.py:63
+#: _synthSettingsRing.py:89
 msgid "inflection"
 msgstr "Интонация"
 
-#: _synthSettingsRing.py:64
+#: _synthSettingsRing.py:90
 msgid "voice"
 msgstr "Голос"
 
-#: _synthSettingsRing.py:65
+#: _synthSettingsRing.py:91
 msgid "variant"
 msgstr "Вариант"
 
-#: api.py:182 api.py:185
+#: api.py:183 api.py:186
 msgid "virtual buffer pass through"
 msgstr "Пропуск виртуального буфера"
 
-#: api.py:182 appModules\_default.py:45
-#: appModules\_default.py:120 appModules\_default.py:130
-#: appModules\_default.py:140 appModules\_default.py:150
-#: appModules\_default.py:521 appModules\_default.py:602
+#: api.py:183 appModules\_default.py:44
+#: appModules\_default.py:119 appModules\_default.py:129
+#: appModules\_default.py:139 appModules\_default.py:149
+#: appModules\_default.py:520 appModules\_default.py:602
 #: appModules\_default.py:644 appModules\_default.py:654
 #: appModules\_default.py:664 appModules\_default.py:674
 #: keyboardHandler.py:53 keyboardHandler.py:55
-#: keyboardHandler.py:57 speech.py:353 speech.py:359
-#: virtualBuffers_new\__init__.py:318
+#: keyboardHandler.py:57 speech.py:356 speech.py:362
+#: virtualBuffers\__init__.py:199
 msgid "off"
 msgstr "Выключено"
 
-#: api.py:185 appModules\_default.py:42
-#: appModules\_default.py:123 appModules\_default.py:133
-#: appModules\_default.py:143 appModules\_default.py:153
+#: api.py:186 appModules\_default.py:41
+#: appModules\_default.py:122 appModules\_default.py:132
+#: appModules\_default.py:142 appModules\_default.py:152
 #: appModules\_default.py:605 appModules\_default.py:647
 #: appModules\_default.py:657 appModules\_default.py:667
 #: appModules\_default.py:677 keyboardHandler.py:53
 #: keyboardHandler.py:55 keyboardHandler.py:57
-#: speech.py:348 virtualBuffers_new\__init__.py:318
+#: speech.py:351 virtualBuffers\__init__.py:199
 msgid "on"
 msgstr "Включено"
 
@@ -173,11 +173,11 @@ msgid "Could not load default module "
 msgstr ""
 "Не удалось загрузить модуль поумолчанию"
 
-#: appModules\_default.py:47
+#: appModules\_default.py:46
 msgid "keyboard help %s"
 msgstr "Клавиатурная справка %s"
 
-#: appModules\_default.py:48
+#: appModules\_default.py:47
 msgid ""
 "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
 "tell you what script is associated with it, if any."
@@ -187,78 +187,78 @@ msgstr ""
 "нажатии клавиш, читается описание "
 "соответствующей команды"
 
-#: appModules\_default.py:72 virtualBuffers_new\__init__.py:297
+#: appModules\_default.py:71 cursorManager.py:225
 msgid "no selection"
 msgstr "Нет выделения"
 
-#: appModules\_default.py:74 speech.py:260 speech.py:404
+#: appModules\_default.py:73 speech.py:263 speech.py:407
 #: textBuffer.py:536 textBuffer.py:540 textBuffer.py:542
 #: textBuffer.py:548
 msgid "selected %s"
 msgstr "Выделено %s"
 
-#: appModules\_default.py:82
+#: appModules\_default.py:81
 msgid "Reports the current date and time"
 msgstr "читает текущую дату и время"
 
-#: appModules\_default.py:88 appModules\_default.py:95
+#: appModules\_default.py:87 appModules\_default.py:94
 msgid "rate %d%%"
 msgstr "Скорость %d процентов"
 
-#: appModules\_default.py:89
+#: appModules\_default.py:88
 msgid "Increases the speech rate by 5 percent"
 msgstr ""
 "Увеличивает скорость речи на 5 процентов"
 
-#: appModules\_default.py:96
+#: appModules\_default.py:95
 msgid "decreases the speech rate by 5 percent"
 msgstr "Уменьшает скорость речи на 5 процентов"
 
-#: appModules\_default.py:101
+#: appModules\_default.py:100
 msgid "Increases currently active setting in the synth settings ring"
 msgstr ""
 "Увеличивает значение активного параметра"
 " в кольце настроек синтезатора"
 
-#: appModules\_default.py:106
+#: appModules\_default.py:105
 msgid "Decreases currently active setting in the synth settings ring"
 msgstr ""
 "Уменьшает значение активного параметра в "
 "кольце настроек синтезатора"
 
-#: appModules\_default.py:111
+#: appModules\_default.py:110
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
 "Переходит к следующему параметру в кольц"
 "е настроек синтезатора"
 
-#: appModules\_default.py:116
+#: appModules\_default.py:115
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
 "Переходит к предыдущему параметру в кольц"
 "е настроек синтезатора"
 
-#: appModules\_default.py:125
+#: appModules\_default.py:124
 msgid "speak typed characters"
 msgstr "читать вводимые символы"
 
-#: appModules\_default.py:126
+#: appModules\_default.py:125
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Переключает чтение символов при вводе"
 
-#: appModules\_default.py:135
+#: appModules\_default.py:134
 msgid "speak typed words"
 msgstr "читать вводимые слова"
 
-#: appModules\_default.py:136
+#: appModules\_default.py:135
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Переключает чтение слов при вводе"
 
-#: appModules\_default.py:145
+#: appModules\_default.py:144
 msgid "speak command keys"
 msgstr "читать командные клавиши"
 
-#: appModules\_default.py:146
+#: appModules\_default.py:145
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
@@ -266,11 +266,11 @@ msgstr ""
 "Переключает озвучивание клавиш, не "
 "являющихся символами"
 
-#: appModules\_default.py:155
+#: appModules\_default.py:154
 msgid "speak punctuation"
 msgstr "читать пунктуацию"
 
-#: appModules\_default.py:156
+#: appModules\_default.py:155
 msgid ""
 "Toggles on and off the speaking of punctuation. When on NVDA will say the "
 "names of punctuation symbols, when off it will be up to the synthesizer as "
@@ -281,38 +281,38 @@ msgstr ""
 "пунктуации, при Выключено, озвучивание "
 "зависит от активного синтезатора"
 
-#: appModules\_default.py:159
+#: appModules\_default.py:158
 msgid "Move mouse to navigator"
 msgstr "Привести мышь к навигатору"
 
-#: appModules\_default.py:164
+#: appModules\_default.py:163
 msgid "object has no location"
 msgstr "У объекта нет расположения"
 
-#: appModules\_default.py:167
+#: appModules\_default.py:166
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr ""
 "Перемещает указатель мыши к текущему "
 "объекту навигатора."
 
-#: appModules\_default.py:170
+#: appModules\_default.py:169
 msgid "Move navigator object to mouse"
 msgstr "Привести навигатор к мыши"
 
-#: appModules\_default.py:179 appModules\_default.py:209
-#: appModules\_default.py:229 appModules\_default.py:242
-#: appModules\_default.py:255 appModules\_default.py:268
-#: appModules\_default.py:281 appModules\_default.py:304
-#: appModules\_default.py:327 appModules\_default.py:336
+#: appModules\_default.py:178 appModules\_default.py:208
+#: appModules\_default.py:228 appModules\_default.py:241
+#: appModules\_default.py:254 appModules\_default.py:267
+#: appModules\_default.py:280 appModules\_default.py:303
+#: appModules\_default.py:326 appModules\_default.py:335
 #: appModules\_default.py:626
 msgid "no navigator object"
 msgstr "Нет объекта навигатора"
 
-#: appModules\_default.py:200
+#: appModules\_default.py:199
 msgid "%s copied to clipboard"
 msgstr "%s скопировано в буфер обмена"
 
-#: appModules\_default.py:204
+#: appModules\_default.py:203
 msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
@@ -322,64 +322,64 @@ msgstr ""
 "значение объекта навигатора в буфер "
 "обмена"
 
-#: appModules\_default.py:212
+#: appModules\_default.py:211
 msgid "No location information for navigator object"
 msgstr ""
 "Нет информации о расположении объекта "
 "навигатора"
 
-#: appModules\_default.py:214
+#: appModules\_default.py:213
 msgid "%d wide by %d high, located %d from left and %d from top"
 msgstr ""
 "ширина: %d, высота: %d, Расположен %d слева и %d "
 "сверху"
 
-#: appModules\_default.py:215
+#: appModules\_default.py:214
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr ""
 "Сообщает высоту, ширину и расположение "
 "объекта навигатора"
 
-#: appModules\_default.py:220 appModules\_default.py:584
+#: appModules\_default.py:219 appModules\_default.py:584
 msgid "no focus"
 msgstr "Нет фокуса"
 
-#: appModules\_default.py:222
+#: appModules\_default.py:221
 msgid "move to focus"
 msgstr "Привести к фокусу"
 
-#: appModules\_default.py:224
+#: appModules\_default.py:223
 msgid "Sets the navigator object to the current focus"
 msgstr ""
 "Устанавливает объект навигатора на фокус"
 
-#: appModules\_default.py:236
+#: appModules\_default.py:235
 msgid "No parents"
 msgstr "Нет родительского"
 
-#: appModules\_default.py:237
+#: appModules\_default.py:236
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on."
 msgstr ""
 "Приводит навигатор к родительскому "
 "объекту, относительно текущего"
 
-#: appModules\_default.py:249
+#: appModules\_default.py:248
 msgid "No next"
 msgstr "Нет следующего"
 
-#: appModules\_default.py:250
+#: appModules\_default.py:249
 msgid ""
 "Sets the navigator object to the next object to the one it is currently on"
 msgstr ""
 "устанавливает навигатор на следующий "
 "объект, относительно текущего"
 
-#: appModules\_default.py:262
+#: appModules\_default.py:261
 msgid "No previous"
 msgstr "Нет предыдущего"
 
-#: appModules\_default.py:263
+#: appModules\_default.py:262
 msgid ""
 "Sets the navigator object to the previous object to the one it is currently "
 "on"
@@ -387,11 +387,11 @@ msgstr ""
 "Устанавливает навигатор на предыдущий "
 "объект, относительно текущего"
 
-#: appModules\_default.py:275
+#: appModules\_default.py:274
 msgid "No children"
 msgstr "Нет дочернего"
 
-#: appModules\_default.py:276
+#: appModules\_default.py:275
 msgid ""
 "Sets the navigator object to the first child object to the one it is "
 "currently on"
@@ -399,27 +399,27 @@ msgstr ""
 "Устанавливает навигатор на первый "
 "дочерний объект, относительно текущего"
 
-#: appModules\_default.py:298
+#: appModules\_default.py:297
 msgid "end of flow"
 msgstr "Конец потока"
 
-#: appModules\_default.py:299
+#: appModules\_default.py:298
 msgid "Sets the navigator object to the object this object flows to."
 msgstr ""
 "Устанавливает навигатор на объект потока"
 ", к которому принадлежит текущий объект"
 
-#: appModules\_default.py:321
+#: appModules\_default.py:320
 msgid "Beginning of flow"
 msgstr "Начало потока"
 
-#: appModules\_default.py:322
+#: appModules\_default.py:321
 msgid "Sets the navigator object to the object this object flows from."
 msgstr ""
 "Устанавливает навигатор на объект, "
 "породивший поток текущего объекта"
 
-#: appModules\_default.py:330
+#: appModules\_default.py:329
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -428,11 +428,11 @@ msgstr ""
 "его объекта навигатора, например,нажимает"
 " его, если это кнопка"
 
-#: appModules\_default.py:341
+#: appModules\_default.py:340
 msgid "inside"
 msgstr "Внутри"
 
-#: appModules\_default.py:344
+#: appModules\_default.py:343
 msgid ""
 "Reports where the current navigator object is by reporting each of its "
 "ancestors"
@@ -441,27 +441,27 @@ msgstr ""
 "навигатора в иерархии, озвучивая его "
 "родительские объекты"
 
-#: appModules\_default.py:350 appModules\_default.py:362
-#: appModules\_default.py:404 textBuffer.py:363
+#: appModules\_default.py:349 appModules\_default.py:361
+#: appModules\_default.py:403 textBuffer.py:363
 #: textBuffer.py:390 textBuffer.py:411 textBuffer.py:432
-#: virtualBuffers\__init__.py:269
+#: virtualBuffers_old\__init__.py:269
 msgid "top"
 msgstr "Верхний"
 
-#: appModules\_default.py:352
+#: appModules\_default.py:351
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на первую "
 "строку объекта навигатора"
 
-#: appModules\_default.py:364
+#: appModules\_default.py:363
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущую строку объекта навигатора"
 
-#: appModules\_default.py:374
+#: appModules\_default.py:373
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated"
@@ -469,35 +469,35 @@ msgstr ""
 "читает строку под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:384 appModules\_default.py:392
-#: appModules\_default.py:426 textBuffer.py:368
+#: appModules\_default.py:383 appModules\_default.py:391
+#: appModules\_default.py:425 textBuffer.py:368
 #: textBuffer.py:381 textBuffer.py:402 textBuffer.py:423
-#: virtualBuffers\__init__.py:284
+#: virtualBuffers_old\__init__.py:284
 msgid "bottom"
 msgstr "Нижний"
 
-#: appModules\_default.py:386
+#: appModules\_default.py:385
 msgid ""
 "Moves the review cursor to the next line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующую строку объекта навигатора"
 
-#: appModules\_default.py:394
+#: appModules\_default.py:393
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "последнюю строку объекта навигатора"
 
-#: appModules\_default.py:406
+#: appModules\_default.py:405
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущее слово объекта навигатора"
 
-#: appModules\_default.py:416
+#: appModules\_default.py:415
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated"
@@ -505,18 +505,18 @@ msgstr ""
 "читает слово под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:428
+#: appModules\_default.py:427
 msgid ""
 "Moves the review cursor to the next word of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующее слово объекта навигатора"
 
-#: appModules\_default.py:436 appModules\_default.py:448
+#: appModules\_default.py:435 appModules\_default.py:447
 msgid "left"
 msgstr "Левый"
 
-#: appModules\_default.py:438
+#: appModules\_default.py:437
 msgid ""
 "Moves the review cursor to the start of the line where it is situated, in "
 "the current navigator object"
@@ -524,7 +524,7 @@ msgstr ""
 "Перемещает просмотровый курсор к началу "
 "текущей строки объекта навигатора"
 
-#: appModules\_default.py:456
+#: appModules\_default.py:455
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object"
@@ -532,7 +532,7 @@ msgstr ""
 "Перемещает просмотровый курсор на "
 "предыдущий символ объекта навигатора"
 
-#: appModules\_default.py:471
+#: appModules\_default.py:470
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated"
@@ -540,18 +540,18 @@ msgstr ""
 "Читает символ под просмотровым курсором "
 "объекта навигатора"
 
-#: appModules\_default.py:481 appModules\_default.py:498
+#: appModules\_default.py:480 appModules\_default.py:497
 msgid "right"
 msgstr "Правый"
 
-#: appModules\_default.py:489
+#: appModules\_default.py:488
 msgid ""
 "Moves the review cursor to the next character of the current navigator object"
 msgstr ""
 "Перемещает просмотровый курсор на "
 "следующий символ объекта навигатора"
 
-#: appModules\_default.py:500
+#: appModules\_default.py:499
 msgid ""
 "Moves the review cursor to the end of the line where it is situated, in the "
 "current navigator object"
@@ -559,7 +559,7 @@ msgstr ""
 "Перемещает просмотровый курсор к концу "
 "текущей строки объекта навигатора"
 
-#: appModules\_default.py:507
+#: appModules\_default.py:506
 msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
@@ -568,7 +568,7 @@ msgstr ""
 "системному курсору текущего объекта "
 "навигатора"
 
-#: appModules\_default.py:514
+#: appModules\_default.py:513
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -577,11 +577,11 @@ msgstr ""
 "просмотровому курсору текущего объекта "
 "навигатора"
 
-#: appModules\_default.py:523
+#: appModules\_default.py:522
 msgid "beeps"
 msgstr "Сигналы"
 
-#: appModules\_default.py:525
+#: appModules\_default.py:524
 msgid "talk"
 msgstr "Речь"
 
@@ -677,7 +677,7 @@ msgstr ""
 msgid "speaks the current foreground object"
 msgstr "читает объект на переднем плане"
 
-#: appModules\_default.py:630 virtualBuffers_new\__init__.py:314
+#: appModules\_default.py:630 cursorManager.py:242
 msgid "copied to clipboard"
 msgstr "Скопировано в буфер обмена"
 
@@ -817,55 +817,55 @@ msgstr ""
 "активного приложения и загруженного для "
 "него модуля."
 
-#: appModules\msimn.py:22
+#: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "Вложения"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:20
 msgid "To:"
 msgstr "Кому:"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:21
 msgid "Newsgroup:"
 msgstr "Группа новостей:"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:22
 msgid "CC:"
 msgstr "Копия:"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:23
 msgid "Subject:"
 msgstr "Тема:"
 
-#: appModules\msimn.py:27 appModules\msimn.py:35
+#: appModules\msimn.py:24 appModules\msimn.py:32
 msgid "From:"
 msgstr "От:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:25
 msgid "Date:"
 msgstr "Дата:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:26
 msgid "Forward to:"
 msgstr "Переслать:"
 
-#: appModules\msimn.py:30
+#: appModules\msimn.py:27
 msgid "Answer to:"
 msgstr "ответить:"
 
-#: appModules\msimn.py:31
+#: appModules\msimn.py:28
 msgid "Organisation:"
 msgstr "Организация:"
 
-#: appModules\msimn.py:32
+#: appModules\msimn.py:29
 msgid "Distribution:"
 msgstr "Дистрибуция:"
 
-#: appModules\msimn.py:33
+#: appModules\msimn.py:30
 msgid "Key words:"
 msgstr "Ключевые слова:"
 
-#: appModules\msimn.py:34
+#: appModules\msimn.py:31
 msgid "BCC:"
 msgstr "Слепая копия:"
 
@@ -1037,6 +1037,15 @@ msgstr "Правая фигурная скобка"
 #: characterSymbols.py:55
 msgid "tilda"
 msgstr "Тильда"
+
+#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:253
+#: virtualBuffers_old\MSHTML.py:260
+#: virtualBuffers_old\adobe.py:263
+#: virtualBuffers_old\adobe.py:274
+#: virtualBuffers_old\gecko.py:256
+#: virtualBuffers_old\gecko.py:267
+msgid "bullet"
+msgstr "Буллит"
 
 #: controlTypes.py:164
 msgid "unknown object"
@@ -1245,8 +1254,8 @@ msgstr "Тело таблицы"
 msgid "table footer"
 msgstr "Нижний колонтитул таблицы"
 
-#: controlTypes.py:216 virtualBuffers\adobe.py:37
-#: virtualBuffers\gecko.py:42
+#: controlTypes.py:216 virtualBuffers_old\adobe.py:37
+#: virtualBuffers_old\gecko.py:42
 msgid "document"
 msgstr "Документ"
 
@@ -1623,7 +1632,7 @@ msgstr "Связано"
 msgid "subMenu"
 msgstr "Подменю"
 
-#: controlTypes.py:317 virtualBuffers\MSHTML.py:295
+#: controlTypes.py:317 virtualBuffers_old\MSHTML.py:295
 msgid "protected"
 msgstr "Защищено"
 
@@ -1673,328 +1682,118 @@ msgstr ""
 msgid "NVDA started"
 msgstr "NVDA готов"
 
-#: gui\__init__.py:24
+#: cursorManager.py:77 virtualBuffers_old\__init__.py:459
+msgid "Find"
+msgstr "Поиск"
+
+#: cursorManager.py:77 virtualBuffers_old\__init__.py:459
+msgid "Type the text you wish to find"
+msgstr "Введите текст для поиска"
+
+#: cursorManager.py:96
+msgid "text \"%s\" not found"
+msgstr "Текст \"%s\" не найден"
+
+#: cursorManager.py:96 virtualBuffers_old\__init__.py:469
+msgid "Find Error"
+msgstr "Ошибка поиска"
+
+#: cursorManager.py:103
+msgid "find a text string from the current cursor position"
+msgstr "Поиск текстовой последовательности с "
+"текущей позиции курсора"
+
+#: cursorManager.py:110
 msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's "
-"settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window "
-"without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose "
-"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
-"box asking you if you want to exit, and you can either press the OK or "
-"Cancel button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of "
-"tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to "
-"navigate the menus and find the settings you want to change. Pressing enter "
-"on many of the menu items will bring up a dialog box in which you can change "
-"the individual settings. Most settings will take effect straight away (such "
-"as changing the rate or pitch of the voice) so you can easily find what "
-"settings most suit you. However, if you cancel out of the dialog box the "
-"settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you "
-"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
-"NVDA to automatically save the settings on exit by going to 'general "
-"settings...' in the Preferences menu and checking the 'Save configuration on "
-"exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt/pause speech\n"
-"shift - unpause speech\n"
-"NVDA+1 - turns keyboard help on and off\n"
-"NVDA+upArrow - reports the object with focus\n"
-"NVDA+downArrow - starts sayAll (press control or any other key to stop)\n"
-"NVDA+tab - report the object currently in focus\n"
-"NVDA+t speak title\n"
-"NVDA+f12 - report time and date\n"
-"NVDA+2 - turn speaking of typed characters on and off\n"
-"NVDA+3 turn speaking of typed words on and off\n"
-"NVDA+4 - turn speaking of typed command keys (such as space, arrows, control "
-"and shift combinations) on and off\n"
-"NVDA+pageUp - increase rate of speech\n"
-"NVDA+pageDown - decrease rate of speech\n"
-"NVDA+p - turn reading of punctuation on and off\n"
-"NVDA+s - toggle speech modes (off, talk and beeps)\n"
-"NVDA+m - turn  reading of objects under the mouse on and off\n"
-"NVDA+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"NVDA+numpadAdd - Where am I\n"
-"NVDA+numpad5 - current object\n"
-"shift+NVDA+numpad5 - dimensions and location of current object\n"
-"NVDA+numpad8 - parent object\n"
-"NVDA+numpad4 - previous object\n"
-"NVDA+numpad6 - next object\n"
-"NVDA+numpad2 - first child object\n"
-"NVDA+numpadMinus - move to focus object\n"
-"NVDA+end - move to statusbar\n"
-"NVDA+numpadDivide - Move mouse to current navigator object\n"
-"NVDA+numpadMultiply - move to mouse\n"
-"nvda+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr "Поиск следующего вхождения текстовой последовательности с "
+"текущей позиции курсора"
+
+#: gui\__init__.py:80
+msgid "configuration saved"
+msgstr "Конфигурация сохранена"
+
+#: gui\__init__.py:82
+msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Быстрое знакомство с NVDA \n"
-"\n"
-"NVDA (%(description)s)\n"
-"Версия: %(version)s\n"
-"URL: %(url)s\n"
-"Пожалуйста, направляйте замечания и "
-"предложения по: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Правовая информация ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"Это окно интерфейса NVDA . Здесь вы можете "
-"настраивать параметры NVDA и, также, можете "
-"завершить работу программы.\n"
-"\n"
-"Для вызова этого окна в любое время нажмит"
-"е insert+n. Для закрытия окна интерфейса, без "
-"завершения работы NVDA, нажмите alt+f4.\n"
-"\n"
-"Для завершения работы NVDA, в любое время,"
-"нажмите insert+q или выберите Выход из меню "
-"окна интерфейса NVDA , т.е. этого окна. NVDA "
-"покажет диалог с вопросом о завершении "
-"работы программы и вы сможете нажать "
-"кнопку OK или Отмена.\n"
-"\n"
-"Для изменения таких параметров, как "
-"Настройки Голоса, Эхо Клавиатуры, Чтение "
-"Подсказок,\n"
-"Используйте клавишу alt для активации Меню"
-", затем, клавиши со стрелками для "
-"перемещения по пунктам меню. Нажатие "
-"клавиши Ввод на большинстве пунктов да"
-"нного меню вызовет появление диалогов "
-"параметров, где вы сможете изменить "
-"индивидуальные настройки. Многие "
-"настройки применяются сразу, например, "
-"изменение скорости голоса активного "
-"синтезатора и т.д., поэтому, вы легко "
-"сможете подобрать желаемые значения. Одна"
-"ко, если вы нажмёте кнопку Отмена и "
-"закроете диалог, сделанные вами изменения"
-" настроек не будут приняты и значения "
-"параметров вернутся к предыдущему "
-"состоянию. \n"
-"\n"
-"Поумолчанию, настройки сохраняются толь"
-"ко на текущую сессию работы NVDA. Чтобы сох"
-"ранить настройки конфигурации, нажмите ctrl"
-"+s или выберите Сохранить Конфигурацию из "
-"меню NVDA. Вы можетеотметить флажок, Автосох"
-"ранение конфигурации при выходе. Откройт"
-"е Общие Настройки ... из меню, Параметры и, "
-"нажимая клавишу Таб, найдите флажок Автос"
-"охранение конфигурации при выходе. Нажмит"
-"е клавишу Пробел, затем, ok.\n"
-"\n"
-"Некоторые Часто используемые клавиатурны"
-"е команды NVDA:\n"
-"\n"
-"Общие команды:\n"
-"Контрол - Прервать, приостановить речь\n"
-"Шифт - продолжить приостановленную речь.\n"
-"NVDA+1 - Включает и выключает режим клавиатур"
-"ной справки\n"
-"NVDA+Стрелка вверх - Читать объект в фокусе\n"
-"NVDA+Стрелка вниз - Читать всё, нажмите "
-"Контрол или любую другую клавишу для "
-"прерывания\n"
-"NVDA+Tab - сообщать объект в фокусе\n"
-"NVDA+t - Читать заголовок окна\n"
-"NVDA+f12 - Читать время и дату\n"
-"NVDA+2 - Включает или выключает чтение символ"
-"ов при вводе\n"
-"NVDA+3 Включает и выключает чтение слов при "
-"вводе\n"
-"NVDA+4 - Включает и выключает чтение командны"
-"х клавиш, таких, как пробел, Контрол, Шифт, "
-"стрелки и их сочетаний\n"
-"NVDA+Страница вверх - увеличить скорость "
-"речи\n"
-"NVDA+Страница вниз - Уменьшить скорость "
-"речи\n"
-"NVDA+p - Включает и выключает чтение "
-"пунктуации\n"
-"NVDA+s - Переключает режим озвучивания NVDA "
-"между Выключено, Сигналы, Речь\n"
-"NVDA+m - Включает и выключает чтение объекта "
-"под указателем мыши\n"
-"NVDA+f - Читать параметры текущего шрифта в "
-"документе)\n"
-"\n"
-"Объектный навигатор, Numpad обозначает цифр"
-"овой блок клавиатуры:\n"
-"NVDA+numpad+- Где я\n"
-"NVDA+numpad5 - Текущий объект\n"
-"Шифт+NVDA+numpad5 - Размеры и расположение текущ"
-"его объекта\n"
-"NVDA+numpad8 - Родительский объект\n"
-"NVDA+numpad4 - Предыдущий объект\n"
-"NVDA+numpad6 - Следующий объект\n"
-"NVDA+numpad2 - Первый дочерний объект\n"
-"NVDA+numpadMinus - Перейти к объекту в фокусе\n"
-"NVDA+end - Перейти к строке состояния\n"
-"NVDA+numpadКосая черта - Привести указатель "
-"мыши к текущему объекту навигатора\n"
-"NVDA+numpadЗвёздочка - Привести навигатор к "
-"указателю мыши\n"
-"NVDA+numpadВвод - Задействовать текущий "
-"объект\n"
-"\n"
-"Просмотр текущего объекта:\n"
-"Шифт+numpad7 - Перейти на верхнюю строку\n"
-"numpad7 - Предыдущая строка\n"
-"numpad8 - Текущая строка\n"
-"numpad9 - Следующая строка\n"
-"Шифт+numpad9 - Нижняя строка\n"
-"numpad4 - Предыдущее слово\n"
-"numpad5 - Текущее слово\n"
-"numpad6 - Следующее слово\n"
-"Шифт+numpad1 - Начало строки\n"
-"numpad1 - Предыдущий символ\n"
-"numpad2 - Текущий символ\n"
-"numpad3 - Следующий символ\n"
-"Шифт+numpad3 - Конец строки\n"
+"Неудалось сохранить конфигурацию, вероят"
+"но, NVDA запущен из области, доступной толь"
+"ко для чтения"
 
-#: gui\__init__.py:142
-msgid "&Revert to saved configuration\tCtrl+R"
+#: gui\__init__.py:85
+msgid "Default dictionary"
+msgstr "Общий словарь"
+
+#: gui\__init__.py:89
+msgid "Voice dictionary (%s)"
+msgstr "Голосовой словарь (%s)"
+
+#: gui\__init__.py:93
+msgid "Temporary dictionary"
+msgstr "Временный словарь"
+
+#: gui\__init__.py:99
+msgid "Are you sure you want to quit NVDA?"
 msgstr ""
-"&Вернуться к сохранённой конфигурации\tCtrl"
-"+R"
+"Вы уверены, что хотите завершить работу "
+"NVDA?"
 
-#: gui\__init__.py:142
-msgid "Reset all setting back to nvda.ini"
-msgstr "Сбросить все настройки по nvda.ini"
-
-#: gui\__init__.py:144
-msgid "&Save configuration\tCtrl+S"
-msgstr "&Сохранить конфигурацию\tCtrl+S"
-
-#: gui\__init__.py:144
-msgid "Write the current configuration to nvda.ini"
-msgstr "Записать текущую конфигурацию в nvda.ini"
-
-#: gui\__init__.py:148
-msgid "&Default dictionary..."
-msgstr "&Общий словарь..."
-
-#: gui\__init__.py:148
-msgid ""
-"dialog where you can set default dictionary by adding dictionary entries to "
-"the list"
-msgstr ""
-"Диалог, в котором вы можете сформировать "
-"общий словарь, добавляя необходимые "
-"статьи в список"
-
-#: gui\__init__.py:151
-msgid "&Voice dictionary..."
-msgstr "&Голосовой словарь......"
-
-#: gui\__init__.py:151
-msgid ""
-"dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"Диалог, в котором вы можете сформировать "
-"голосовой словарь, добавляя необходимые "
-"статьи в список"
-
-#: gui\__init__.py:154
-msgid "&Temporary dictionary..."
-msgstr "&Временный словарь..."
-
-#: gui\__init__.py:154
-msgid ""
-"dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"Диалог, в котором вы можете сформировать "
-"временный словарь, добавляя необходимые "
-"статьи"
-
-#: gui\__init__.py:156
-msgid "User &dictionaries"
-msgstr "&Пользовательские словари"
-
-#: gui\__init__.py:158
-msgid "E&xit"
-msgstr "В&ыход"
-
-#: gui\__init__.py:158 gui\__init__.py:262
+#: gui\__init__.py:99 gui\__init__.py:210
 msgid "Exit NVDA"
 msgstr "Завершение РаботыNVDA"
 
-#: gui\__init__.py:160 gui\__init__.py:161
-msgid "&NVDA"
-msgstr "&NVDA"
+#: gui\__init__.py:156
+msgid "copyright"
+msgstr "Авторское право"
 
-#: gui\__init__.py:164
-msgid "&General settings...\tCtrl+Shift+G"
-msgstr "&Общие настройки...\tCtrl+Shift+О"
+#: gui\__init__.py:156
+msgid "maintainer"
+msgstr "Разработчик"
 
-#: gui\__init__.py:164 gui\__init__.py:278
+#: gui\__init__.py:156
+msgid "url"
+msgstr "url"
+
+#: gui\__init__.py:156
+msgid "version"
+msgstr "Версия"
+
+#: gui\__init__.py:157 gui\__init__.py:201
+msgid "About NVDA"
+msgstr "О NVDA"
+
+#: gui\__init__.py:171
+msgid "&General settings..."
+msgstr "&Общие настройки..."
+
+#: gui\__init__.py:171 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Общие настройки"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:173
 msgid " the synthesizer to use"
 msgstr "Используемый синтезатор"
 
-#: gui\__init__.py:167
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "&Синтезатор...\tCtrl+Shift+S"
+#: gui\__init__.py:173
+msgid "&Synthesizer..."
+msgstr "&Синтезатор..."
 
-#: gui\__init__.py:170
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "&Голоса...\tCtrl+Shift+V"
+#: gui\__init__.py:175
+msgid "&Voice settings..."
+msgstr "&Голоса..."
 
-#: gui\__init__.py:170
+#: gui\__init__.py:175
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr ""
 "Выбор голоса, скорости, высоты и громкости"
 " синтезатора"
 
-#: gui\__init__.py:173
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "&Клавиатура...\tCtrl+K"
+#: gui\__init__.py:177
+msgid "&Keyboard Settings..."
+msgstr "&Клавиатура..."
 
-#: gui\__init__.py:173
+#: gui\__init__.py:177
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -2003,33 +1802,33 @@ msgstr ""
 "вводимых символов, слов и командных "
 "клавиш"
 
-#: gui\__init__.py:176
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "&Мышь...\tCtrl+M"
+#: gui\__init__.py:179
+msgid "&Mouse settings..."
+msgstr "&Мышь..."
 
-#: gui\__init__.py:176
+#: gui\__init__.py:179
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Изменение чтения формы указателя мыши, "
 "объектов под указателем мыши и т.д."
 
-#: gui\__init__.py:179
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "&Представление объектов...\tCtrl+Shift+O"
+#: gui\__init__.py:181
+msgid "&Object presentation..."
+msgstr "&Представление объекта..."
 
-#: gui\__init__.py:179
+#: gui\__init__.py:181
 msgid "Change reporting of objects"
 msgstr "Изменение чтения объектов"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:183
 msgid "Change virtual buffers specific settings"
 msgstr ""
 "Изменение специальных настроек "
 "виртуальных буферов"
 
-#: gui\__init__.py:182
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "Виртуальные &буферы...\tCtrl+Shift+B"
+#: gui\__init__.py:183
+msgid "Virtual &buffers..."
+msgstr "Виртуальные &буферы..."
 
 #: gui\__init__.py:185
 msgid "Change Settings of document properties"
@@ -2038,123 +1837,108 @@ msgstr ""
 "документов"
 
 #: gui\__init__.py:185
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "&Форматирование документа...\tCtrl+Shift+F"
+msgid "Document &formatting..."
+msgstr "&Форматирование документа..."
 
-#: gui\__init__.py:187 gui\__init__.py:188
+#: gui\__init__.py:188
+msgid "&Default dictionary..."
+msgstr "&Общий словарь..."
+
+#: gui\__init__.py:188
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"общий словарь, добавляя необходимые "
+"статьи в список"
+
+#: gui\__init__.py:190
+msgid "&Voice dictionary..."
+msgstr "&Голосовой словарь......"
+
+#: gui\__init__.py:190
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"голосовой словарь, добавляя необходимые "
+"статьи в список"
+
+#: gui\__init__.py:192
+msgid "&Temporary dictionary..."
+msgstr "&Временный словарь..."
+
+#: gui\__init__.py:192
+msgid ""
+"dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Диалог, в котором вы можете сформировать "
+"временный словарь, добавляя необходимые "
+"статьи"
+
+#: gui\__init__.py:194
+msgid "User &dictionaries"
+msgstr "&Пользовательские словари"
+
+#: gui\__init__.py:195
 msgid "&Preferences"
 msgstr "&Параметры"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:197
 msgid "NVDA homepage"
 msgstr "Домашняя страница NVDA"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:197
 msgid "Opens NVDA homepage in the default browser"
 msgstr ""
 "Открывает домашнюю страницу NVDA в браузер"
 "е, установленном поумолчанию"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:199
 msgid "NVDA wiki"
 msgstr "NVDA wiki"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:199
 msgid "Opens NVDA wiki in the default browser"
 msgstr ""
 "Открывает NVDA wiki в браузере, установленном "
 "поумолчанию"
 
-#: gui\__init__.py:196
+#: gui\__init__.py:201
 msgid "About..."
 msgstr "О программе..."
 
-#: gui\__init__.py:196 gui\__init__.py:322
-msgid "About NVDA"
-msgstr "О NVDA"
-
-#: gui\__init__.py:198 gui\__init__.py:199
+#: gui\__init__.py:203
 msgid "&Help"
 msgstr "&Справка"
 
-#: gui\__init__.py:211 gui\scriptUI.py:52
-#: gui\scriptUI.py:61 gui\scriptUI.py:74
-#: gui\scriptUI.py:142
+#: gui\__init__.py:205
+msgid "&Revert to saved configuration"
+msgstr "&Вернуться к сохранённой конфигурации"
+
+#: gui\__init__.py:205
+msgid "Reset all settings to saved state"
+msgstr "Сбросить все настройки к сохранённому состоянию"
+
+#: gui\__init__.py:207
+msgid "&Save configuration"
+msgstr "&Сохранить конфигурацию"
+
+#: gui\__init__.py:207
+msgid "Write the current configuration to nvda.ini"
+msgstr "Записать текущую конфигурацию в nvda.ini"
+
+#: gui\__init__.py:210
+msgid "E&xit"
+msgstr "В&ыход"
+
+#: gui\scriptUI.py:52 gui\scriptUI.py:61
+#: gui\scriptUI.py:74 gui\scriptUI.py:142
 msgid "NVDA"
 msgstr "NVDA"
-
-#: gui\__init__.py:238
-msgid "configuration saved"
-msgstr "Конфигурация сохранена"
-
-#: gui\__init__.py:240
-msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Неудалось сохранить конфигурацию, вероят"
-"но, NVDA запущен из области, доступной толь"
-"ко для чтения"
-
-#: gui\__init__.py:243
-msgid "Default dictionary"
-msgstr "Общий словарь"
-
-#: gui\__init__.py:247
-msgid "Voice dictionary (%s)"
-msgstr "Голосовой словарь (%s)"
-
-#: gui\__init__.py:251
-msgid "Temporary dictionary"
-msgstr "Временный словарь"
-
-#: gui\__init__.py:262
-msgid "Are you sure you want to quit NVDA?"
-msgstr ""
-"Вы уверены, что хотите завершить работу "
-"NVDA?"
-
-#: gui\__init__.py:282
-msgid "Synthesizer"
-msgstr "Синтезатор"
-
-#: gui\__init__.py:286
-msgid "Voice settings"
-msgstr "Голоса"
-
-#: gui\__init__.py:290
-msgid "Keyboard Settings"
-msgstr "Клавиатура"
-
-#: gui\__init__.py:294
-msgid "Mouse settings"
-msgstr "Мышь"
-
-#: gui\__init__.py:298
-msgid "Object presentation"
-msgstr "Представление объекта"
-
-#: gui\__init__.py:302
-msgid "virtual buffers"
-msgstr "Виртуальные буферы"
-
-#: gui\__init__.py:306
-msgid "Document formatting"
-msgstr "Форматирование документа"
-
-#: gui\__init__.py:321
-msgid "copyright"
-msgstr "Авторское право"
-
-#: gui\__init__.py:321
-msgid "maintainer"
-msgstr "Разработчик"
-
-#: gui\__init__.py:321
-msgid "url"
-msgstr "url"
-
-#: gui\__init__.py:321
-msgid "version"
-msgstr "Версия"
 
 #: gui\scriptUI.py:109
 msgid "Links List"
@@ -2168,48 +1952,44 @@ msgstr "&Активировать ссылку"
 msgid "&Move to link"
 msgstr "&Перейти к ссылке"
 
-#: gui\settingsDialogs.py:42
+#: gui\settingsDialogs.py:102
 msgid "&Language (requires restart to fully take affect)"
 msgstr ""
 "&Язык (для применения требуется перезапус"
 "к)"
 
-#: gui\settingsDialogs.py:46
+#: gui\settingsDialogs.py:106
 msgid "Language"
 msgstr "Язык"
 
-#: gui\settingsDialogs.py:55
-msgid "&Hide user interface on startup"
-msgstr "&Скрывать окно интерфейса при запуске"
-
-#: gui\settingsDialogs.py:58
+#: gui\settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr ""
 "&Автосохранение конфигурации при выходе"
 
-#: gui\settingsDialogs.py:61
+#: gui\settingsDialogs.py:118
 msgid "&Warn before exiting NVDA"
 msgstr ""
 "&Спрашивать подтверждение при завершении "
 "NVDA"
 
-#: gui\settingsDialogs.py:65
+#: gui\settingsDialogs.py:122
 msgid "L&ogging level"
 msgstr "Уровень записи в файл &отчёта"
 
-#: gui\settingsDialogs.py:69
+#: gui\settingsDialogs.py:126
 msgid "Log level"
 msgstr "Уровень отчёта"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:145
 msgid "Error in %s language file"
 msgstr "Ошибка в %s языковом файле"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:145
 msgid "Language Error"
 msgstr "Ошибка языка"
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:154
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2221,285 +2001,313 @@ msgstr ""
 " нажмите Отмена для выхода из диалога и "
 "последующего выполнения действий вручную"
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:154
 msgid "Language Configuration Change"
 msgstr "Изменение настроек языка"
 
-#: gui\settingsDialogs.py:114
+#: gui\settingsDialogs.py:160
+msgid "Synthesizer"
+msgstr "Синтезатор"
+
+#: gui\settingsDialogs.py:164
 msgid "&Synthesizer"
 msgstr "&Синтезатор"
 
-#: gui\settingsDialogs.py:129
+#: gui\settingsDialogs.py:179
 msgid "Output &device"
 msgstr "&Устройство вывода"
 
-#: gui\settingsDialogs.py:164
+#: gui\settingsDialogs.py:209
 msgid "Could not load the %s synthesizer."
 msgstr "Неудалось загрузить синтезатор %s."
 
-#: gui\settingsDialogs.py:164
+#: gui\settingsDialogs.py:209
 msgid "Synthesizer Error"
 msgstr "Ошибка синтезатора"
 
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:214
+msgid "Voice settings"
+msgstr "Голоса"
+
+#: gui\settingsDialogs.py:219
 msgid "&Voice"
 msgstr "&Голос"
 
-#: gui\settingsDialogs.py:192
+#: gui\settingsDialogs.py:235
 msgid "V&ariant"
 msgstr "В&ариант"
 
-#: gui\settingsDialogs.py:204
+#: gui\settingsDialogs.py:249
 msgid "&Rate"
 msgstr "&Скорость"
 
-#: gui\settingsDialogs.py:213
+#: gui\settingsDialogs.py:258
 msgid "&Pitch"
 msgstr "&Высота"
 
-#: gui\settingsDialogs.py:222
+#: gui\settingsDialogs.py:267
 msgid "&Inflection"
 msgstr "&Интонация"
 
-#: gui\settingsDialogs.py:231
+#: gui\settingsDialogs.py:276
 msgid "V&olume"
 msgstr "Гр&омкость"
 
-#: gui\settingsDialogs.py:238
+#: gui\settingsDialogs.py:283
 msgid "&Speak all punctuation"
 msgstr "&Читать всю пунктуацию"
 
-#: gui\settingsDialogs.py:241
+#: gui\settingsDialogs.py:286
 msgid "Raise pitch for capitals"
 msgstr ""
 "Изменять высоту голоса для заглавных букв"
 
-#: gui\settingsDialogs.py:244
+#: gui\settingsDialogs.py:289
 msgid "Say &cap before capitals"
 msgstr ""
 "Говорить \"&Большая\" перед заглавными "
 "буквами"
 
-#: gui\settingsDialogs.py:247
+#: gui\settingsDialogs.py:292
 msgid "&Beep for capitals"
 msgstr "&Сигнал перед заглавными буквами"
 
-#: gui\settingsDialogs.py:329
+#: gui\settingsDialogs.py:363
+msgid "Keyboard Settings"
+msgstr "Клавиатура"
+
+#: gui\settingsDialogs.py:366
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr ""
 "Использовать CapsLock  как клавишу-"
 "модификатор NVDA"
 
-#: gui\settingsDialogs.py:332
+#: gui\settingsDialogs.py:369
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr ""
 "Использовать Insert на цифровом блоке как "
 "клавишу-модификатор NVDA"
 
-#: gui\settingsDialogs.py:335
+#: gui\settingsDialogs.py:372
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr ""
 "Использовать обычный Insert как клавишу-"
 "модификатор NVDA"
 
-#: gui\settingsDialogs.py:338
+#: gui\settingsDialogs.py:375
 msgid "Speak typed &characters"
 msgstr "Читать &Символы при вводе"
 
-#: gui\settingsDialogs.py:341
+#: gui\settingsDialogs.py:378
 msgid "Speak typed &words"
 msgstr "Читать &Слова при вводе"
 
-#: gui\settingsDialogs.py:344
+#: gui\settingsDialogs.py:381
 msgid "Speak command &keys"
 msgstr "Читать &Командные клавиши"
 
-#: gui\settingsDialogs.py:370
+#: gui\settingsDialogs.py:398
+msgid "Mouse settings"
+msgstr "Мышь"
+
+#: gui\settingsDialogs.py:401
 msgid "Report mouse &shape changes"
 msgstr ""
 "Читать изменение &Формы указателя мыши"
 
-#: gui\settingsDialogs.py:373
+#: gui\settingsDialogs.py:404
 msgid "Report &object under mouse"
 msgstr "Читать &Объект под указателем мыши"
 
-#: gui\settingsDialogs.py:376
+#: gui\settingsDialogs.py:407
 msgid "play audio coordinates when mouse moves"
 msgstr ""
 "Изменяющийся сигнал при перемещении мыши"
 
-#: gui\settingsDialogs.py:399
+#: gui\settingsDialogs.py:421
+msgid "Object presentation"
+msgstr "Представление объекта"
+
+#: gui\settingsDialogs.py:424
 msgid "Report &tooltips"
 msgstr "Читать &Подсказки"
 
-#: gui\settingsDialogs.py:402
+#: gui\settingsDialogs.py:427
 msgid "Report &help balloons"
 msgstr ""
 "Читать &Всплывающие системные сообщения"
 
-#: gui\settingsDialogs.py:405
+#: gui\settingsDialogs.py:430
 msgid "Report object shortcut &keys"
 msgstr "Читать &Горячие клавиши объекта"
 
-#: gui\settingsDialogs.py:408
+#: gui\settingsDialogs.py:433
 msgid "Report object &position information"
 msgstr "Читать &Позицию объекта"
 
-#: gui\settingsDialogs.py:411
+#: gui\settingsDialogs.py:436
 msgid "Report object &descriptions"
 msgstr "читать &описание объекта"
 
-#: gui\settingsDialogs.py:414
+#: gui\settingsDialogs.py:439
 msgid "Say object &state first"
 msgstr "Вначале читать &Состояние объекта"
 
-#: gui\settingsDialogs.py:417
+#: gui\settingsDialogs.py:442
 msgid "&Beep on progress bar updates"
 msgstr ""
 "Звуковой &сигнал обновления индикаторов "
 "выполнения"
 
-#: gui\settingsDialogs.py:444
+#: gui\settingsDialogs.py:460
+msgid "virtual buffers"
+msgstr "Виртуальные буферы"
+
+#: gui\settingsDialogs.py:463
 msgid "&Maximum number of characters on one line"
 msgstr "&Максимальное число символов в строке"
 
-#: gui\settingsDialogs.py:449
+#: gui\settingsDialogs.py:468
 msgid "&Number of lines per page"
 msgstr "&Число строк на странице"
 
-#: gui\settingsDialogs.py:454
+#: gui\settingsDialogs.py:473
 msgid "Report &virtual presentation on focus changes"
 msgstr ""
 "Читать &Виртуальное представление при "
 "изменении фокуса"
 
-#: gui\settingsDialogs.py:457
+#: gui\settingsDialogs.py:476
 msgid "Update the content &dynamically"
 msgstr "&Динамически обновлять контент"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:479
 msgid "Report lin&ks"
 msgstr "Читать &Ссылки"
 
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:482
 msgid "Report &lists"
 msgstr "Читать &Списки"
 
-#: gui\settingsDialogs.py:466
+#: gui\settingsDialogs.py:485
 msgid "Report list &items"
 msgstr "Читать &Элементы списка"
 
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:488
 msgid "Report &headings"
 msgstr "Читать &Заголовки"
 
-#: gui\settingsDialogs.py:472 gui\settingsDialogs.py:556
+#: gui\settingsDialogs.py:491 gui\settingsDialogs.py:569
 msgid "Report &tables"
 msgstr "Читать &Таблицы"
 
-#: gui\settingsDialogs.py:475
+#: gui\settingsDialogs.py:494
 msgid "Report &graphics"
 msgstr "Читать &Графику"
 
-#: gui\settingsDialogs.py:478
+#: gui\settingsDialogs.py:497
 msgid "Report f&orms"
 msgstr "Читать &Формы"
 
-#: gui\settingsDialogs.py:481
+#: gui\settingsDialogs.py:500
 msgid "Report form &fields"
 msgstr "Читать &Поля форм"
 
-#: gui\settingsDialogs.py:484
+#: gui\settingsDialogs.py:503
 msgid "Report block &quotes"
 msgstr "Читать &Цитаты"
 
-#: gui\settingsDialogs.py:487
+#: gui\settingsDialogs.py:506
 msgid "Report &paragraphs"
 msgstr "Читать &Абзацы"
 
-#: gui\settingsDialogs.py:490
+#: gui\settingsDialogs.py:509
 msgid "Report f&rames"
 msgstr "Читать &Фреймы"
 
-#: gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:545
+msgid "Document formatting"
+msgstr "Форматирование документа"
+
+#: gui\settingsDialogs.py:548
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Читать изменения формата после курсора "
 "(может вызвать отставание"
 
-#: gui\settingsDialogs.py:538
+#: gui\settingsDialogs.py:551
 msgid "Report font &name"
 msgstr "Читать название &Шрифта"
 
-#: gui\settingsDialogs.py:541
+#: gui\settingsDialogs.py:554
 msgid "Report font &size"
 msgstr "Читать &Размер шрифта"
 
-#: gui\settingsDialogs.py:544
+#: gui\settingsDialogs.py:557
 msgid "Report font attri&butes"
 msgstr "Читать &Атрибуты шрифта"
 
-#: gui\settingsDialogs.py:547
+#: gui\settingsDialogs.py:560
 msgid "Report st&yle"
 msgstr "Читать &Стиль"
 
-#: gui\settingsDialogs.py:550
+#: gui\settingsDialogs.py:563
 msgid "Report &pages"
 msgstr "Читать &Страницы"
 
-#: gui\settingsDialogs.py:553
+#: gui\settingsDialogs.py:566
 msgid "Report &line numbers"
 msgstr "Читать &Номера строк"
 
-#: gui\settingsDialogs.py:559
+#: gui\settingsDialogs.py:572
 msgid "Report &alignment"
 msgstr "Читать &Выравнивание"
 
-#: gui\settingsDialogs.py:594
+#: gui\settingsDialogs.py:604
 msgid "&Dictionary entries"
 msgstr "&Словарные статьи"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:607
 msgid "Comment"
 msgstr "Коментарий"
 
-#: gui\settingsDialogs.py:598
+#: gui\settingsDialogs.py:608
 msgid "Pattern"
 msgstr "&Шаблон"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:609
 msgid "Replacement"
 msgstr "&Замена"
 
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:616
 msgid "&Add"
 msgstr "&Добавить"
 
-#: gui\settingsDialogs.py:609
+#: gui\settingsDialogs.py:619
 msgid "&edit"
 msgstr "&Редактировать"
 
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:622
 msgid "&Remove"
 msgstr "У&далить"
 
-#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:645
 msgid "Add an entry"
 msgstr "Добавить статью"
 
-#: gui\settingsDialogs.py:640 gui\settingsDialogs.py:646
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Comment"
 msgstr "&Коментарий"
 
-#: gui\settingsDialogs.py:640 gui\settingsDialogs.py:646
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Pattern"
 msgstr "&Шаблон"
 
-#: gui\settingsDialogs.py:640 gui\settingsDialogs.py:646
+#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
 msgid "&Replacement"
 msgstr "&Замена"
 
-#: gui\settingsDialogs.py:646
+#: gui\settingsDialogs.py:651
 msgid "Edit an entry"
 msgstr "Редактировать статью"
 
@@ -2539,33 +2347,40 @@ msgstr "Ошибка в keyboardHandler.internal_keyUpEvent"
 msgid "%s cursor"
 msgstr "%s курсор"
 
-#: sayAllHandler.py:138
+#: sayAllHandler.py:155
 msgid "end of text"
 msgstr "Конец текста"
 
-#: speech.py:187
+#: speech.py:190
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:339
+#: speech.py:342
 msgid "in"
 msgstr "в"
 
-#: speech.py:344 speech.py:362
+#: speech.py:347 speech.py:365
 msgid "out of"
 msgstr "вне"
 
-#: speech.py:409 textBuffer.py:544 textBuffer.py:546
+#: speech.py:412 textBuffer.py:544 textBuffer.py:546
 #: textBuffer.py:550
 msgid "unselected %s"
 msgstr "Не выделено %s"
 
-#: speech.py:702 virtualBuffers\MSHTML.py:123
-#: virtualBuffers\MSHTML.py:302 virtualBuffers\MSHTML.py:306
-#: virtualBuffers\adobe.py:300 virtualBuffers\adobe.py:304
-#: virtualBuffers\gecko.py:293 virtualBuffers\gecko.py:297
+#: speech.py:709 virtualBuffers_old\MSHTML.py:123
+#: virtualBuffers_old\MSHTML.py:302
+#: virtualBuffers_old\MSHTML.py:306
+#: virtualBuffers_old\adobe.py:300
+#: virtualBuffers_old\adobe.py:304
+#: virtualBuffers_old\gecko.py:293
+#: virtualBuffers_old\gecko.py:297
 msgid "not %s"
 msgstr "Не %s"
+
+#: synthDrivers\_espeak.py:268
+msgid "none"
+msgstr "Ничего"
 
 #: synthDrivers\silence.py:20
 msgid "No speech,  a template synthesizer"
@@ -2719,298 +2534,297 @@ msgstr ""
 "или из входящего в комплект поставки "
 "программы файла Copying.txt."
 
-#: virtualBuffers\MSHTML.py:144 virtualBuffers\adobe.py:170
-#: virtualBuffers\gecko.py:168
-msgid "loading document %s"
-msgstr "Загрузка документа %s"
-
-#: virtualBuffers\MSHTML.py:152 virtualBuffers\adobe.py:179
-#: virtualBuffers\gecko.py:177
-msgid "done"
-msgstr "Готово"
-
-#: virtualBuffers\MSHTML.py:247 virtualBuffers\MSHTML.py:250
-#: virtualBuffers\MSHTML.py:257 virtualBuffers\adobe.py:257
-#: virtualBuffers\adobe.py:268 virtualBuffers\gecko.py:250
-#: virtualBuffers\gecko.py:261 virtualBuffers_new\__init__.py:71
-msgid "with %s items"
-msgstr "из %s элементов"
-
-#: virtualBuffers\MSHTML.py:253 virtualBuffers\MSHTML.py:260
-#: virtualBuffers\adobe.py:263 virtualBuffers\adobe.py:274
-#: virtualBuffers\gecko.py:256 virtualBuffers\gecko.py:267
-#: virtualBuffers_new\__init__.py:77
-msgid "bullet"
-msgstr "Буллит"
-
-#: virtualBuffers\MSHTML.py:256 virtualBuffers\MSHTML.py:263
-#: virtualBuffers\adobe.py:267 virtualBuffers\adobe.py:280
-#: virtualBuffers\gecko.py:260 virtualBuffers\gecko.py:273
-msgid "definition"
-msgstr "Определение"
-
-#: virtualBuffers\MSHTML.py:291
-msgid "file upload"
-msgstr "Закачка файла"
-
-#: virtualBuffers\MSHTML.py:324
-msgid "clickable"
-msgstr "По щелчку"
-
-#: virtualBuffers\__init__.py:190
-#: virtualBuffers_new\__init__.py:73
-#: virtualBuffers_new\__init__.py:81
-#: virtualBuffers_new\__init__.py:85
+#: virtualBuffers\__init__.py:86 virtualBuffers\__init__.py:90
+#: virtualBuffers\__init__.py:94 virtualBuffers\__init__.py:100
+#: virtualBuffers\__init__.py:104
+#: virtualBuffers_old\__init__.py:190
 msgid "out of %s"
 msgstr "вне %s"
 
-#: virtualBuffers\__init__.py:271
-msgid "moves one page up in the virtual buffer's current document"
-msgstr ""
-"переходит на одну страницу вверх по "
-"документу в виртуальном буфере"
+#: virtualBuffers\__init__.py:88
+#: virtualBuffers_old\MSHTML.py:247
+#: virtualBuffers_old\MSHTML.py:250
+#: virtualBuffers_old\MSHTML.py:257
+#: virtualBuffers_old\adobe.py:257
+#: virtualBuffers_old\adobe.py:268
+#: virtualBuffers_old\gecko.py:250
+#: virtualBuffers_old\gecko.py:261
+msgid "with %s items"
+msgstr "из %s элементов"
 
-#: virtualBuffers\__init__.py:286
-msgid "moves one page down in the virtual buffer's current document"
-msgstr ""
-"переходит на одну страницу вниз по "
-"документу в виртуальном буфере"
+#: virtualBuffers\__init__.py:102
+msgid "in %s"
+msgstr "в %s"
 
-#: virtualBuffers\__init__.py:290
-#: virtualBuffers_new\__init__.py:157
+#: virtualBuffers\__init__.py:176
+#: virtualBuffers_old\__init__.py:290
 msgid "activates the current object in the virtual buffer"
 msgstr ""
 "Задействует текущий объект в виртуальном "
 "буфере"
 
-#: virtualBuffers\__init__.py:312 virtualBuffers\__init__.py:323
-msgid "no more headings"
-msgstr "Больше нет заголовков"
+#: virtualBuffers\__init__.py:195
+msgid "Refreshed"
+msgstr "Обновлено"
 
-#: virtualBuffers\__init__.py:313
-#: virtualBuffers_new\__init__.py:344
-msgid "moves to the next heading"
-msgstr "переходит на следующий заголовок"
-
-#: virtualBuffers\__init__.py:324
-#: virtualBuffers_new\__init__.py:349
-msgid "moves to the previous heading"
-msgstr "переходит на предыдущий заголовок"
-
-#: virtualBuffers\__init__.py:334 virtualBuffers\__init__.py:345
-msgid "no more paragraphs"
-msgstr "Больше нет абзацев"
-
-#: virtualBuffers\__init__.py:335
-msgid "moves to the next paragraph"
-msgstr "переходит на следующий абзац"
-
-#: virtualBuffers\__init__.py:346
-msgid "moves to the previous paragraph"
-msgstr "переходит на предыдущий абзац"
-
-#: virtualBuffers\__init__.py:356 virtualBuffers\__init__.py:367
-msgid "no more tables"
-msgstr "Больше нет таблиц"
-
-#: virtualBuffers\__init__.py:357
-msgid "moves to the next table"
-msgstr "переходит на следующую таблицу"
-
-#: virtualBuffers\__init__.py:368
-msgid "moves to the previous table"
-msgstr "переходит на предыдущую таблицу"
-
-#: virtualBuffers\__init__.py:378 virtualBuffers\__init__.py:389
-msgid "no more links"
-msgstr "Больше нет ссылок"
-
-#: virtualBuffers\__init__.py:379
-#: virtualBuffers_new\__init__.py:354
-msgid "moves to the next link"
-msgstr "переходит на следующую ссылку"
-
-#: virtualBuffers\__init__.py:390
-#: virtualBuffers_new\__init__.py:359
-msgid "moves to the previous link"
-msgstr "переходит на предыдущую ссылку"
-
-#: virtualBuffers\__init__.py:400 virtualBuffers\__init__.py:411
-msgid "no more lists"
-msgstr "Больше нет списков"
-
-#: virtualBuffers\__init__.py:401
-msgid "moves to the next list"
-msgstr "переходит на следующий список"
-
-#: virtualBuffers\__init__.py:412
-msgid "moves to the previous list"
-msgstr "переходит на предыдущий список"
-
-#: virtualBuffers\__init__.py:422 virtualBuffers\__init__.py:433
-msgid "no more list items"
-msgstr "Больше нет элементов списка"
-
-#: virtualBuffers\__init__.py:423
-msgid "moves to the next list item"
-msgstr "переходит на следующий элемент списка"
-
-#: virtualBuffers\__init__.py:434
-msgid "moves to the previous list item"
-msgstr ""
-"переходит на предыдущий элемент списка"
-
-#: virtualBuffers\__init__.py:444 virtualBuffers\__init__.py:455
-msgid "no more form fields"
-msgstr "Больше нет полей формы"
-
-#: virtualBuffers\__init__.py:445
-msgid "Moves to the next form field"
-msgstr "переходит на следующее поле формы"
-
-#: virtualBuffers\__init__.py:456
-msgid "moves to the previous form field"
-msgstr "переходит на предыдущее поле формы"
-
-#: virtualBuffers\__init__.py:459
-msgid "Find"
-msgstr "Поиск"
-
-#: virtualBuffers\__init__.py:459
-msgid "Type the text you wish to find"
-msgstr "Введите текст для поиска"
-
-#: virtualBuffers\__init__.py:469
-msgid "Find Error"
-msgstr "Ошибка поиска"
-
-#: virtualBuffers\__init__.py:469
-msgid "text: \"%s\" not found"
-msgstr "Текст \"%s\" не найден"
-
-#: virtualBuffers\__init__.py:475
-msgid "find a text pattern from the current cursor's position"
-msgstr ""
-"Поиск текстовой последовательности с "
-"текущей позиции курсора"
-
-#: virtualBuffers\__init__.py:479
-msgid "find next occurrence of text"
-msgstr "Найти следующее вхождение текста"
-
-#: virtualBuffers\__init__.py:498 virtualBuffers\__init__.py:499
-msgid "h=headingQuickKey"
-msgstr "h=Быстрая клавиша заголовка"
-
-#: virtualBuffers\__init__.py:500 virtualBuffers\__init__.py:501
-msgid "f=formFieldQuickKey"
-msgstr "f=быстрая клавиша поля формы"
-
-#: virtualBuffers\__init__.py:502 virtualBuffers\__init__.py:503
-msgid "p=paragraphQuickKey"
-msgstr "p=Быстрая клавиша абзаца"
-
-#: virtualBuffers\__init__.py:504 virtualBuffers\__init__.py:505
-msgid "t=tableQuickKey"
-msgstr "t=Быстрая клавиша таблицы"
-
-#: virtualBuffers\__init__.py:506 virtualBuffers\__init__.py:507
-msgid "k=linkQuickKey"
-msgstr "k=Быстрая клавиша ссылки"
-
-#: virtualBuffers\__init__.py:508 virtualBuffers\__init__.py:509
-msgid "l=listQuickKey"
-msgstr "l=Быстрая клавиша списка"
-
-#: virtualBuffers\__init__.py:510 virtualBuffers\__init__.py:511
-msgid "i=listItemQuickKey"
-msgstr "i=Быстрая клавиша элемента списка"
-
-#: virtualBuffers\adobe.py:312
-msgid "protected %s"
-msgstr "Защищено %s"
-
-#: virtualBuffers_new\__init__.py:83
-msgid "in %s"
-msgstr "в %s"
-
-#: virtualBuffers_new\__init__.py:134
-msgid "Loading document..."
-msgstr "Загрузка документа..."
-
-#: virtualBuffers_new\__init__.py:139
-msgid "Done"
-msgstr "Готово"
-
-#: virtualBuffers_new\__init__.py:319
+#: virtualBuffers\__init__.py:200
 msgid "use screen layout %s"
 msgstr ""
 "Использовать экранное представление %s"
 
-#: virtualBuffers_new\__init__.py:343
+#: virtualBuffers\__init__.py:226
 msgid "no next heading"
 msgstr "Нет следующего заголовка"
 
-#: virtualBuffers_new\__init__.py:348
+#: virtualBuffers\__init__.py:227
+#: virtualBuffers_old\__init__.py:313
+msgid "moves to the next heading"
+msgstr "переходит на следующий заголовок"
+
+#: virtualBuffers\__init__.py:233
 msgid "no previous heading"
 msgstr "Нет предыдущего заголовка"
 
-#: virtualBuffers_new\__init__.py:353
+#: virtualBuffers\__init__.py:234
+#: virtualBuffers_old\__init__.py:324
+msgid "moves to the previous heading"
+msgstr "переходит на предыдущий заголовок"
+
+#: virtualBuffers\__init__.py:240
 msgid "no next link"
 msgstr "Нет следующей ссылки"
 
-#: virtualBuffers_new\__init__.py:358
+#: virtualBuffers\__init__.py:241
+#: virtualBuffers_old\__init__.py:379
+msgid "moves to the next link"
+msgstr "переходит на следующую ссылку"
+
+#: virtualBuffers\__init__.py:247
 msgid "no previous link"
 msgstr "Нет предыдущей ссылки"
 
-#: virtualBuffers_new\__init__.py:363
+#: virtualBuffers\__init__.py:248
+#: virtualBuffers_old\__init__.py:390
+msgid "moves to the previous link"
+msgstr "переходит на предыдущую ссылку"
+
+#: virtualBuffers\__init__.py:254
 msgid "no next visited link"
 msgstr "Нет следующей посещённой ссылки"
 
-#: virtualBuffers_new\__init__.py:364
+#: virtualBuffers\__init__.py:255
 msgid "moves to the next visited link"
 msgstr ""
 "переходит на следующую посещённую ссылку"
 
-#: virtualBuffers_new\__init__.py:368
+#: virtualBuffers\__init__.py:261
 msgid "no previous visited link"
 msgstr "Нет предыдущей посещённой ссылки"
 
-#: virtualBuffers_new\__init__.py:369
+#: virtualBuffers\__init__.py:262
 msgid "moves to the previous visited link"
 msgstr ""
 "переходит на предыдущую посещённую "
 "ссылку"
 
-#: virtualBuffers_new\__init__.py:373
+#: virtualBuffers\__init__.py:268
 msgid "no next unvisited link"
 msgstr "Нет следующей не посещённой ссылки"
 
-#: virtualBuffers_new\__init__.py:374
+#: virtualBuffers\__init__.py:269
 msgid "moves to the next unvisited link"
 msgstr ""
 "переходит на следующую не посещённую "
 "ссылку"
 
-#: virtualBuffers_new\__init__.py:378
+#: virtualBuffers\__init__.py:275
 msgid "no previous unvisited link"
 msgstr "Нет предыдущей не посещённой ссылки"
 
-#: virtualBuffers_new\__init__.py:379
+#: virtualBuffers\__init__.py:276
 msgid "moves to the previous unvisited link"
 msgstr ""
 "переходит на предыдущую не посещённую "
 "ссылку"
 
-#: virtualBuffers_new\__init__.py:383
+#: virtualBuffers\__init__.py:282
 msgid "no next form field"
 msgstr "Нет следующего поля формы"
 
-#: virtualBuffers_new\__init__.py:384
-#: virtualBuffers_new\__init__.py:389
+#: virtualBuffers\__init__.py:283 virtualBuffers\__init__.py:290
 msgid "moves to the next form field"
 msgstr "переходит на следующее поле формы"
 
-#: virtualBuffers_new\__init__.py:388
+#: virtualBuffers\__init__.py:289
 msgid "no previous form field"
 msgstr "Нет предыдущего поля формы"
+
+#: virtualBuffers_old\MSHTML.py:144
+#: virtualBuffers_old\adobe.py:170
+#: virtualBuffers_old\gecko.py:168
+msgid "loading document %s"
+msgstr "Загрузка документа %s"
+
+#: virtualBuffers_old\MSHTML.py:152
+#: virtualBuffers_old\adobe.py:179
+#: virtualBuffers_old\gecko.py:177
+msgid "done"
+msgstr "Готово"
+
+#: virtualBuffers_old\MSHTML.py:256
+#: virtualBuffers_old\MSHTML.py:263
+#: virtualBuffers_old\adobe.py:267
+#: virtualBuffers_old\adobe.py:280
+#: virtualBuffers_old\gecko.py:260
+#: virtualBuffers_old\gecko.py:273
+msgid "definition"
+msgstr "Определение"
+
+#: virtualBuffers_old\MSHTML.py:291
+msgid "file upload"
+msgstr "Закачка файла"
+
+#: virtualBuffers_old\MSHTML.py:324
+msgid "clickable"
+msgstr "По щелчку"
+
+#: virtualBuffers_old\__init__.py:271
+msgid "moves one page up in the virtual buffer's current document"
+msgstr ""
+"переходит на одну страницу вверх по "
+"документу в виртуальном буфере"
+
+#: virtualBuffers_old\__init__.py:286
+msgid "moves one page down in the virtual buffer's current document"
+msgstr ""
+"переходит на одну страницу вниз по "
+"документу в виртуальном буфере"
+
+#: virtualBuffers_old\__init__.py:312
+#: virtualBuffers_old\__init__.py:323
+msgid "no more headings"
+msgstr "Больше нет заголовков"
+
+#: virtualBuffers_old\__init__.py:334
+#: virtualBuffers_old\__init__.py:345
+msgid "no more paragraphs"
+msgstr "Больше нет абзацев"
+
+#: virtualBuffers_old\__init__.py:335
+msgid "moves to the next paragraph"
+msgstr "переходит на следующий абзац"
+
+#: virtualBuffers_old\__init__.py:346
+msgid "moves to the previous paragraph"
+msgstr "переходит на предыдущий абзац"
+
+#: virtualBuffers_old\__init__.py:356
+#: virtualBuffers_old\__init__.py:367
+msgid "no more tables"
+msgstr "Больше нет таблиц"
+
+#: virtualBuffers_old\__init__.py:357
+msgid "moves to the next table"
+msgstr "переходит на следующую таблицу"
+
+#: virtualBuffers_old\__init__.py:368
+msgid "moves to the previous table"
+msgstr "переходит на предыдущую таблицу"
+
+#: virtualBuffers_old\__init__.py:378
+#: virtualBuffers_old\__init__.py:389
+msgid "no more links"
+msgstr "Больше нет ссылок"
+
+#: virtualBuffers_old\__init__.py:400
+#: virtualBuffers_old\__init__.py:411
+msgid "no more lists"
+msgstr "Больше нет списков"
+
+#: virtualBuffers_old\__init__.py:401
+msgid "moves to the next list"
+msgstr "переходит на следующий список"
+
+#: virtualBuffers_old\__init__.py:412
+msgid "moves to the previous list"
+msgstr "переходит на предыдущий список"
+
+#: virtualBuffers_old\__init__.py:422
+#: virtualBuffers_old\__init__.py:433
+msgid "no more list items"
+msgstr "Больше нет элементов списка"
+
+#: virtualBuffers_old\__init__.py:423
+msgid "moves to the next list item"
+msgstr "переходит на следующий элемент списка"
+
+#: virtualBuffers_old\__init__.py:434
+msgid "moves to the previous list item"
+msgstr ""
+"переходит на предыдущий элемент списка"
+
+#: virtualBuffers_old\__init__.py:444
+#: virtualBuffers_old\__init__.py:455
+msgid "no more form fields"
+msgstr "Больше нет полей формы"
+
+#: virtualBuffers_old\__init__.py:445
+msgid "Moves to the next form field"
+msgstr "переходит на следующее поле формы"
+
+#: virtualBuffers_old\__init__.py:456
+msgid "moves to the previous form field"
+msgstr "переходит на предыдущее поле формы"
+
+#: virtualBuffers_old\__init__.py:469
+msgid "text: \"%s\" not found"
+msgstr "Текст \"%s\" не найден"
+
+#: virtualBuffers_old\__init__.py:475
+msgid "find a text pattern from the current cursor's position"
+msgstr ""
+"Поиск текстовой последовательности с "
+"текущей позиции курсора"
+
+#: virtualBuffers_old\__init__.py:479
+msgid "find next occurrence of text"
+msgstr "Найти следующее вхождение текста"
+
+#: virtualBuffers_old\__init__.py:498
+#: virtualBuffers_old\__init__.py:499
+msgid "h=headingQuickKey"
+msgstr "h=Быстрая клавиша заголовка"
+
+#: virtualBuffers_old\__init__.py:500
+#: virtualBuffers_old\__init__.py:501
+msgid "f=formFieldQuickKey"
+msgstr "f=быстрая клавиша поля формы"
+
+#: virtualBuffers_old\__init__.py:502
+#: virtualBuffers_old\__init__.py:503
+msgid "p=paragraphQuickKey"
+msgstr "p=Быстрая клавиша абзаца"
+
+#: virtualBuffers_old\__init__.py:504
+#: virtualBuffers_old\__init__.py:505
+msgid "t=tableQuickKey"
+msgstr "t=Быстрая клавиша таблицы"
+
+#: virtualBuffers_old\__init__.py:506
+#: virtualBuffers_old\__init__.py:507
+msgid "k=linkQuickKey"
+msgstr "k=Быстрая клавиша ссылки"
+
+#: virtualBuffers_old\__init__.py:508
+#: virtualBuffers_old\__init__.py:509
+msgid "l=listQuickKey"
+msgstr "l=Быстрая клавиша списка"
+
+#: virtualBuffers_old\__init__.py:510
+#: virtualBuffers_old\__init__.py:511
+msgid "i=listItemQuickKey"
+msgstr "i=Быстрая клавиша элемента списка"
+
+#: virtualBuffers_old\adobe.py:312
+msgid "protected %s"
+msgstr "Защищено %s"
