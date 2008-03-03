@@ -16,7 +16,6 @@ import queueHandler
 import core
 from settingsDialogs import *
 import userDictHandler
-#import winUser
 
 ### Constants
 appTitle = "NVDA"
