@@ -36,7 +36,7 @@ class UserDict(list):
 			globalVars.log.debug("file '%s' not found." % fileName)
 			return
 		file = codecs.open(fileName,"r","utf_8_sig",errors="replace")
-		for line in file.readlines():
+		for line in file:
 			if line.isspace():
 				comment=""
 				continue
