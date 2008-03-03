@@ -642,17 +642,27 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 		commandList=commandParser.parse(relativeXML) if relativeXML is not None else []
 		#Move through the command list, getting speech text for all starts and ends
 		#But also keep newStack up to date as we will need it for the ends
+		# Add any text to a separate list, as it must be handled differently.
+		relativeTextList=[]
 		for count in range(len(commandList)):
 			if commandList[count][0]=="text":
-				textList.append(commandList[count][1])
+				relativeTextList.append(commandList[count][1])
 			elif commandList[count][0]=="start":
-				textList.append(getFieldSpeechFunc(commandList[count][1],"start_relative",extraDetail,reason=reason))
+				relativeTextList.append(getFieldSpeechFunc(commandList[count][1],"start_relative",extraDetail,reason=reason))
 				newStack.append(commandList[count][1])
 			elif commandList[count][0]=="end" and len(newStack)>0:
-				textList.append(getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail,reason=reason))
+				relativeTextList.append(getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail,reason=reason))
 				del newStack[-1]
 				if commonFieldCount>len(newStack):
 					commonFieldCount=len(newStack)
+		if relativeTextList:
+			text=" ".join(relativeTextList)
+			# We are handling relative XML. Any actual text content will be produced here.
+			# Therefore, if no speakable text was produced, this should be reported as blank, unless we're doing a say all.
+			if reason != REASON_SAYALL and (not text or text.isspace()):
+				textList.append(_("blank"))
+			else:
+				textList.append(text)
 		#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
 		if not extraDetail:
 			for count in reversed(range(min(len(newStack),commonFieldCount))):
@@ -660,8 +670,9 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 		#Cache a copy of the new stack for future use
 		if cacheFinalStack:
 			cacheObject._speech_XMLCache=list(newStack)
-		text=" ".join([x for x in textList if x and isinstance(x,basestring)])
-		if (textList or relativeXML is not None) and (reason!=speech.REASON_SAYALL or extraDetail or not text.isspace()):
+		text=" ".join(textList)
+		# Only speak if there is speakable text. Reporting of blank text is handled above.
+		if text and not text.isspace():
 			speakText(text,wait=wait,index=index)
 
 def getFieldSpeech(attrs,fieldType,extraDetail=False):
