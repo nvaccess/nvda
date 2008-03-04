@@ -222,6 +222,7 @@ def copyToClip(text):
 	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
 		win32clipboard.OpenClipboard()
 		try:
+			win32clipboard.EmptyClipboard()
 			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
 		finally:
 			win32clipboard.CloseClipboard()
