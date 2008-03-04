@@ -80,20 +80,9 @@ class Gecko_ia2(VirtualBuffer):
 		role=obj.role
 		states=obj.states
 		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			try:
-				newRoot=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.rootNVDAObject.windowHandle,-4,self.rootNVDAObject.IAccessibleObject.uniqueID)
-			except:
-				return virtualBufferHandler.killVirtualBuffer(self)
-			if newRoot and controlTypes.STATE_BUSY not in newRoot.states:
-				self.rootNVDAObject=newRoot
-				self.unloadBuffer()
-				self.loadBuffer()
-				self.busyFlag=False
-				return self.event_gainFocus(obj,nextHandler)
-			else:
-				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-				self.busyFlag=True
-				return
+			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+			self.busyFlag=True
+			return nextHandler()
 		else:
 			self.busyFlag=False
 		if obj==self.rootNVDAObject:
@@ -165,19 +154,9 @@ class Gecko_ia2(VirtualBuffer):
 
 	def event_stateChange(self,obj,nextHandler):
 		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			try:
-				newRoot=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.rootNVDAObject.windowHandle,-4,ID)
-			except:
-				return virtualBufferHandler.killVirtualBuffer(self)
-			if newRoot and controlTypes.STATE_BUSY not in newRoot.states:
-				self.rootNVDAObject=newRoot
-				self.unloadBuffer()
-				self.loadBuffer()
-				self.busyFlag=False
-				return self.event_stateChange(obj,nextHandler)
-			else:
-				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-				self.busyFlag=True
+			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+			self.busyFlag=True
+			return
 		if not self.isAlive():
 			return virtualBufferHandler.killVirtualBuffer(self)
 		if self.rootNVDAObject and self.busyFlag and not controlTypes.STATE_BUSY in self.rootNVDAObject.states:
