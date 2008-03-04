@@ -132,7 +132,9 @@ class Gecko_ia2(VirtualBuffer):
 		try:
 			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
 			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
-				pacc.accSelect(1,accChildID)
+				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
+				obj.setFocus()
+				api.setNavigatorObject(obj)
 		except:
 			pass
 
