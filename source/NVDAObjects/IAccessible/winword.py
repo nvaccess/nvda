@@ -274,9 +274,6 @@ class WordDocument(IAccessible):
 		self.TextInfo=WordDocumentTextInfo
 		super(WordDocument,self).__init__(*args,**kwargs)
 
-	def __del__(self):
-		self.destroyObjectModel(self.dom)
-
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
@@ -292,9 +289,6 @@ class WordDocument(IAccessible):
 			oleRepr=win32com.client.build.DispatchItem(attr=a)
 			self._dom=win32com.client.CDispatch(o,oleRepr)
  		return self._dom
-
-	def destroyObjectModel(self,om):
-		pass
 
 	def script_nextRow(self,keyPress,nextScript):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
