@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r1595\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2008-02-29 17:20+Central Europe Standard Time\n"
+"PO-Revision-Date: 2008-03-04 17:00+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk peter.v@datagate.sk>\n"
 "MIME-Version: 1.0\n"
@@ -75,13 +75,11 @@ msgid "underline"
 msgstr "podčiarknutie"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:135
-#: NVDAObjects\IAccessible\treeView20WndClass.py:135
 #: NVDAObjects\JAB\__init__.py:244
 msgid "%d of %d"
 msgstr "%d z %d"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:144
-#: NVDAObjects\IAccessible\treeView20WndClass.py:144
 msgid "%s items"
 msgstr "%s položiek"
 
@@ -93,26 +91,26 @@ msgstr "úroveň %d"
 msgid "with %s columns and %s rows"
 msgstr "má %s stĺpcov a %s riadkov"
 
-#: NVDAObjects\IAccessible\winword.py:302
-#: NVDAObjects\IAccessible\winword.py:318
-#: NVDAObjects\IAccessible\winword.py:334
-#: NVDAObjects\IAccessible\winword.py:350
+#: NVDAObjects\IAccessible\winword.py:296
+#: NVDAObjects\IAccessible\winword.py:312
+#: NVDAObjects\IAccessible\winword.py:328
+#: NVDAObjects\IAccessible\winword.py:344
 msgid "not in table"
 msgstr "nie v tabuľke"
 
-#: NVDAObjects\IAccessible\winword.py:311
+#: NVDAObjects\IAccessible\winword.py:305
 msgid "bottom of column"
 msgstr "spodok stĺpca"
 
-#: NVDAObjects\IAccessible\winword.py:327
+#: NVDAObjects\IAccessible\winword.py:321
 msgid "top of column"
 msgstr "vrchol stĺpca"
 
-#: NVDAObjects\IAccessible\winword.py:343
+#: NVDAObjects\IAccessible\winword.py:337
 msgid "end of row"
 msgstr "koniec riadka"
 
-#: NVDAObjects\IAccessible\winword.py:359
+#: NVDAObjects\IAccessible\winword.py:353
 msgid "beginning of row"
 msgstr "začiatok riadka"
 
@@ -888,7 +886,7 @@ msgstr "odoslané: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:67
+#: speech.py:67 speech.py:663
 msgid "blank"
 msgstr "prázdny"
 
@@ -1047,6 +1045,10 @@ msgstr "vlnovka"
 #: virtualBuffers_old\gecko.py:267
 msgid "bullet"
 msgstr "odrážka"
+
+#: characterSymbols.py:57
+msgid "dot dot dot"
+msgstr "bodka bodka bodka"
 
 #: controlTypes.py:164
 msgid "unknown object"
@@ -1723,90 +1725,92 @@ msgstr "Začne vyhľadávanie zadaného textu od aktuálnej pozície kurzora"
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "Hľadá ďalší výskyt pred tým zadaného textu od aktuálnej pozície kurzora"
+msgstr ""
+"Hľadá ďalší výskyt pred tým zadaného textu od aktuálnej pozície "
+"kurzora"
 
-#: gui\__init__.py:80
+#: gui\__init__.py:79
 msgid "configuration saved"
 msgstr "nastavenia uložené"
 
-#: gui\__init__.py:82
+#: gui\__init__.py:81
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Nemôžem uložiť nastavenia. Pravdepodobne je NVDA spustený z systému "
 "len na čítanie"
 
-#: gui\__init__.py:85
+#: gui\__init__.py:84
 msgid "Default dictionary"
 msgstr "Predvolený slovník"
 
-#: gui\__init__.py:89
+#: gui\__init__.py:88
 msgid "Voice dictionary (%s)"
 msgstr "Slovník pre aktuálny hlas (%s)"
 
-#: gui\__init__.py:93
+#: gui\__init__.py:92
 msgid "Temporary dictionary"
 msgstr "Dočasný slovník"
 
-#: gui\__init__.py:99
+#: gui\__init__.py:98
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Ste si istý, že chcete ukončiť NVDA?"
 
-#: gui\__init__.py:99
-#: gui\__init__.py:210
+#: gui\__init__.py:98
+#: gui\__init__.py:209
 msgid "Exit NVDA"
 msgstr "ukončiť nvda"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "copyright"
 msgstr "copiright"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "maintainer"
 msgstr "správca"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "version"
 msgstr "verzia"
 
-#: gui\__init__.py:157
-#: gui\__init__.py:201
+#: gui\__init__.py:156
+#: gui\__init__.py:200
 msgid "About NVDA"
 msgstr "O NVDA"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:170
 msgid "&General settings..."
 msgstr "Všeobecné &nastavenia"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:170
 #: gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Všeobecné nastavenia"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid " the synthesizer to use"
 msgstr "používaný hlasový výstup"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid "&Synthesizer..."
 msgstr "&Hlasový výstup"
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "&Voice settings..."
 msgstr "Nastavenia h&lasu"
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "nastaví hlas, jeho tempo výšku a hlasitosť"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid "&Keyboard Settings..."
 msgstr "Nastavenia &klávesnice"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1814,43 +1818,43 @@ msgstr ""
 "nastavuje rozloženie klávesov, čítanie znakov, slov alebo klávesových "
 "príkazov"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "&Mouse settings..."
 msgstr "Nastavenia &myši"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "nastavuje oznamovanie objektov pod myšou"
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "&Object presentation..."
 msgstr "Prezentácia &objektov"
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "Change reporting of objects"
 msgstr "mení oznamovanie objektov"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Change virtual buffers specific settings"
 msgstr "zmení nastavenia špecifické pre vyrtuálne buffery"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Virtual &buffers..."
 msgstr "&Virtuálne buffery"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Change Settings of document properties"
 msgstr "zmení oznamovanie vlastností dokumentu"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Document &formatting..."
 msgstr "&Formátovanie dokumentov"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid "&Default dictionary..."
 msgstr "Pre&dvolený slovník"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -1858,11 +1862,11 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť predvolený slovník pridávaním "
 "položiek do zoznamu."
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid "&Voice dictionary..."
 msgstr "Slo&vník pre aktuálny hlas..."
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -1870,11 +1874,11 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť slovník pre aktuálny hlas "
 "pridávaním položiek do zoznamu"
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid "&Temporary dictionary..."
 msgstr "D&očasný slovník..."
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -1882,55 +1886,55 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť dočasný slovník pridávaním "
 "položiek do zoznamu"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:193
 msgid "User &dictionaries"
 msgstr "Používateľské &slovníky"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:194
 msgid "&Preferences"
 msgstr "&Možnosti"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "NVDA homepage"
 msgstr "&Domovská stránka NVDA"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "Opens NVDA homepage in the default browser"
 msgstr "otvorí domovskú stránku NVDA v predvolenom prehliadači"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "NVDA wiki"
 msgstr "NVDA wiki"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "Opens NVDA wiki in the default browser"
 msgstr "otvorí NVDA wiki v predvolenom prehliadači"
 
-#: gui\__init__.py:201
+#: gui\__init__.py:200
 msgid "About..."
 msgstr "&O programe..."
 
-#: gui\__init__.py:203
+#: gui\__init__.py:202
 msgid "&Help"
 msgstr "&Pomocník"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "&Revert to saved configuration"
 msgstr "&Návrat k uloženým nastaveniam"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "Reset all settings to saved state"
 msgstr "Obnoviť uložené nastavenia"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "&Save configuration"
 msgstr "&Uložiť nastavenia"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "Write the current configuration to nvda.ini"
 msgstr "zapíše nastavenia do súboru nvda.ini"
 
-#: gui\__init__.py:210
+#: gui\__init__.py:209
 msgid "E&xit"
 msgstr "U&končiť"
 
@@ -2352,7 +2356,7 @@ msgstr "mimo"
 msgid "unselected %s"
 msgstr "nevybrané %s"
 
-#: speech.py:709
+#: speech.py:720
 #: virtualBuffers_old\MSHTML.py:123
 #: virtualBuffers_old\MSHTML.py:302
 #: virtualBuffers_old\MSHTML.py:306
@@ -2488,7 +2492,7 @@ msgstr ""
 
 #: versionInfo.py:14
 msgid ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
 "or change this software in any way you like as long as you distribute the "
 "licence along with the software, and make all source code available to "

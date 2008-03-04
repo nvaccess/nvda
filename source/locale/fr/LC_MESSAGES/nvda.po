@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1746\n"
+"Project-Id-Version: r1754\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-02-29 19:20+0200\n"
+"PO-Revision-Date: 2008-03-03 19:00+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -825,7 +825,7 @@ msgstr "pièces jointes"
 msgid "sent: %s"
 msgstr "envoyé: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:67
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:67 speech.py:663
 msgid "blank"
 msgstr "vide"
 
@@ -1637,85 +1637,85 @@ msgstr ""
 "trouver l'occurrence suivante du texte recherché à partir de la position "
 "courante du curseur"
 
-#: gui\__init__.py:80
+#: gui\__init__.py:79
 msgid "configuration saved"
 msgstr "Configuration sauvegardée"
 
-#: gui\__init__.py:82
+#: gui\__init__.py:81
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Sauvegarde de la configuration impossible: système de fichiers probablement "
 "protégé en écriture"
 
-#: gui\__init__.py:85
+#: gui\__init__.py:84
 msgid "Default dictionary"
 msgstr "Dictionnaire par &défaut"
 
-#: gui\__init__.py:89
+#: gui\__init__.py:88
 msgid "Voice dictionary (%s)"
 msgstr "Dictionnaire de la voix %s"
 
-#: gui\__init__.py:93
+#: gui\__init__.py:92
 msgid "Temporary dictionary"
 msgstr "Dictionnaire temporaire"
 
-#: gui\__init__.py:99
+#: gui\__init__.py:98
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Êtes-vous sûr de vouloir quitter NVDA ?"
 
-#: gui\__init__.py:99 gui\__init__.py:210
+#: gui\__init__.py:98 gui\__init__.py:209
 msgid "Exit NVDA"
 msgstr "quitter NVDA"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "copyright"
 msgstr "Copyright"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "maintainer"
 msgstr "support"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "version"
 msgstr "version"
 
-#: gui\__init__.py:157 gui\__init__.py:201
+#: gui\__init__.py:156 gui\__init__.py:200
 msgid "About NVDA"
 msgstr "A propos dde NVDA"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:170
 msgid "&General settings..."
 msgstr "Paramètres &généraux"
 
-#: gui\__init__.py:171 gui\settingsDialogs.py:98
+#: gui\__init__.py:170 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Paramètres généraux"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid " the synthesizer to use"
 msgstr "Le synthétiseur à utiliser"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid "&Synthesizer..."
 msgstr "&Synthétiseur..."
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "&Voice settings..."
 msgstr "Paramètres &vocaux..."
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Choisir la voix, le débit, la hauteur et le volume à utiliser"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid "&Keyboard Settings..."
 msgstr "Paramètres du &clavier..."
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1723,43 +1723,43 @@ msgstr ""
 "Configurer la définition du clavier, l'écho clavier (caractères, mots ou "
 "touches de commande)"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "&Mouse settings..."
-msgstr "Paramètres de la &souris..."
+msgstr "Para&mètres de la souris..."
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "Modifier l'annonce de la forme de la souris, de l'objet sous la souris"
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "&Object presentation..."
 msgstr "Présentation des &objets..."
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "Change reporting of objects"
 msgstr "Modifier l'annonce des objets"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Change virtual buffers specific settings"
 msgstr "Modifier les paramètres spécifiques du tampon virtuel"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Virtual &buffers..."
-msgstr "tampon &virtuel..."
+msgstr "&tampon virtuel..."
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Change Settings of document properties"
 msgstr "modifier l'annonce des propriétés d'un document"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Document &formatting..."
-msgstr "format du &document..."
+msgstr "&format du document..."
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid "&Default dictionary..."
 msgstr "Dictionnaire par &défaut"
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -1767,11 +1767,11 @@ msgstr ""
 "Dialogue permettant d'enrichir le dictionnaire par défaut en ajoutant des "
 "entrées dans la liste"
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid "&Voice dictionary..."
 msgstr "Dictionnaire de la &voix"
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -1779,11 +1779,11 @@ msgstr ""
 "Dialogue permettant d'enrichir le dictionnaire de la voix en ajoutant des "
 "entrées dans la liste"
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid "&Temporary dictionary..."
 msgstr "Dictionnaire &temporaire"
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -1791,56 +1791,56 @@ msgstr ""
 "Dialogue permettant d'enrichir le dictionnaire temporaire en ajoutant des "
 "entrées dans la zone d'édition"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:193
 msgid "User &dictionaries"
 msgstr "&Dictionnaire de l'utilisateur"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:194
 msgid "&Preferences"
 msgstr "&Préférences"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "NVDA homepage"
 msgstr "Page d'accueil de NVDA"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "Opens NVDA homepage in the default browser"
 msgstr ""
 "Ouvrir la page d'accueil de NVDA dans le navigateur internet par défaut"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "NVDA wiki"
 msgstr "Wiki NVDA"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "Opens NVDA wiki in the default browser"
 msgstr "Ouvrir le Wiki NVDA dans le navigateur internet par défaut"
 
-#: gui\__init__.py:201
+#: gui\__init__.py:200
 msgid "About..."
 msgstr "A propos..."
 
-#: gui\__init__.py:203
+#: gui\__init__.py:202
 msgid "&Help"
 msgstr "&Aide"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "&Revert to saved configuration"
 msgstr "&Retour à la configuration sauvegardée"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "Reset all settings to saved state"
 msgstr "Remettre tous les paramètres à l'état sauvegardé"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "&Save configuration"
 msgstr "&Sauvegarde de la configuration"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "Write the current configuration to nvda.ini"
 msgstr "Enregistrer la configuration courante dans nvda.ini"
 
-#: gui\__init__.py:210
+#: gui\__init__.py:209
 msgid "E&xit"
 msgstr "E&xit"
 
@@ -2250,7 +2250,7 @@ msgstr "hors de"
 msgid "unselected %s"
 msgstr "non sélectionné %s"
 
-#: speech.py:709 virtualBuffers_old\MSHTML.py:123
+#: speech.py:720 virtualBuffers_old\MSHTML.py:123
 #: virtualBuffers_old\MSHTML.py:302 virtualBuffers_old\MSHTML.py:306
 #: virtualBuffers_old\adobe.py:300 virtualBuffers_old\adobe.py:304
 #: virtualBuffers_old\gecko.py:293 virtualBuffers_old\gecko.py:297
@@ -2375,7 +2375,7 @@ msgstr "Une revue d'écran gratuite et open-source pour MS Windows"
 
 #: versionInfo.py:14
 msgid ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
 "or change this software in any way you like as long as you distribute the "
 "licence along with the software, and make all source code available to "
