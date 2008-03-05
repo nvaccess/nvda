@@ -700,7 +700,7 @@ class Outline(IAccessible):
 class ProgressBar(IAccessible):
 
 	def event_valueChange(self):
-		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
+		if config.conf["presentation"]["beepOnProgressBarUpdates"] and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			val=self.value
 			if val!=globalVars.lastProgressValue:
 				baseFreq=110
