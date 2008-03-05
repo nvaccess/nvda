@@ -471,7 +471,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 class XMLContextParser(object): 
 
 	def __init__(self):
-		self.parser=expat.ParserCreate()
+		self.parser=expat.ParserCreate('utf-8')
 		self.parser.StartElementHandler=self._startElementHandler
 		#self.parser.EndElementHandler=self._EndElementHandler
 		#self.parser.CharacterDataHandler=self._CharacterDataHandler
@@ -485,7 +485,7 @@ class XMLContextParser(object):
 
 	def parse(self,XMLContext):
 		try:
-			self.parser.Parse(XMLContext)
+			self.parser.Parse(XMLContext.encode('utf-8'))
 		except:
 			globalVars.log.warn("XML: %s"%XMLContext,exc_info=True)
 		return self._fieldStack
