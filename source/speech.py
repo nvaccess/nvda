@@ -634,6 +634,11 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'positionString' in propertyValues:
 		textList.append(propertyValues['positionString'])
 		del propertyValues['positionString']
+	if 'level' in propertyValues:
+		levelNo=propertyValues['level']
+		del propertyValues['level']
+		if levelNo is not None:
+			textList.append(_("level %s")%levelNo)
 	for name,value in propertyValues.items():
 		if not name.startswith('_') and value is not None and value is not "":
 			textList.append(name)
