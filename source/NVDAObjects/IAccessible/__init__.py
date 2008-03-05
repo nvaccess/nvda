@@ -463,11 +463,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_menuEnd(self):
 		oldFocus=api.getFocusObject()
-		if self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP) and self!=api.getFocusObject():
+		if self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP) and self!=oldFocus:
 			return
 		api.processPendingEvents()
 		focusObject=api.getFocusObject()
-		if focusObject.role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU) or focusObject!=oldFocus:
+		if (focusObject.role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU) or focusObject!=oldFocus) and focusObject!=api.getDesktopObject():
 			return
 		obj=api.findObjectWithFocus()
 		IAccessibleHandler.focus_manageEvent(obj)
