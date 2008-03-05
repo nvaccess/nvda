@@ -614,7 +614,6 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 		oldStack=getattr(cacheObject,'_speech_XMLCache',[])
 		#Create a new stack from the XML context
 		stackParser=XMLContextParser()
-		globalVars.log.warning("type: %s"%type(XMLContext))
 		newStack=stackParser.parse(XMLContext)
 		#Cache a copy of the new stack for future use
 		if not cacheFinalStack:
