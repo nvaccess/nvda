@@ -108,7 +108,8 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		globalVars.focusDifferenceLevel=commonLevel+1
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
-	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
+	oldVirtualBuffer=obj.virtualBuffer
+	if not oldVirtualBuffer or not oldVirtualBuffer.isAlive() or oldVirtualBuffer.rootNVDAObject not in [obj]+ancestors:
 		virtualBufferObject=None
 		for o in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]+[globalVars.focusObject]:
 			virtualBufferObject=virtualBufferHandler.update(o)
