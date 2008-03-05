@@ -55,7 +55,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			return ""
 
 	def _getCharacterOffsets(self,offset):
-		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+
 
 	def _getWordOffsets(self,offset):
 		try:
