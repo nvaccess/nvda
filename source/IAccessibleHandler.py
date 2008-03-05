@@ -688,6 +688,9 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
+	# Ignore focus events on invisible windows.
+	if not isForegroundChange and not winUser.isWindowVisible(window):
+		return
 		foregroundWindow=winUser.getForegroundWindow()
 		info=winuser.getGUIThreadInfo(winUser.getWindowThreadProcessID(foregroundWindow)[1])
 		if window!=foregroundWindow and winUser.isDescendantWindow(window,info.hwndFocus) and window!=info.hwndFocus:
