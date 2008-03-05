@@ -84,15 +84,15 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType in ("end_removedFromStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 			return _("out of %s")%roleText
-		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+		elif not extraDetail and fieldType=="start_addedToStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 			return roleText+_("with %s items")%childCount
-		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+		elif not extraDetail and fieldType=="end_removedFromStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 			return _("out of %s")%roleText
 		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 			return roleText
 		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role in (controlTypes.ROLE_LIST,controlTypes.ROLE_COMBOBOX):
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role==controlTypes.ROLE_COMBOBOX):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType=="start_addedToStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
