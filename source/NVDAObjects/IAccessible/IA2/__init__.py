@@ -191,6 +191,13 @@ class IA2(IAccessible):
 		if not hasattr(self,'IAccessibleTextObject'):
 			return super(IA2,self)._get_value()
 
+	def event_alert(self):
+		speech.cancelSpeech()
+		speech.speakObject(self)
+		self.speakDescendantObjects()
+
+
+
 	def event_caret(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
