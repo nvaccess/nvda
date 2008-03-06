@@ -583,12 +583,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 					commonFieldCount=len(newStack)
 
 		text=" ".join(relativeTextList)
-		# We are handling relative XML. Any actual text content will be produced here.
-		# Therefore, if no speakable text was produced here, this is blank content.
-		# However, we don't want to report blank if we are doing a say all or if we are entering any new fields.
-		if reason != REASON_SAYALL and len(textList)==textListRemovedEndLen and (not text or text.isspace()):
-			textList.append(_("blank"))
-		elif text:
+		if text and not text.isspace():
 			textList.append(text)
 
 	#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
@@ -597,6 +592,10 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 			text=getFieldSpeechFunc(newStack[count],"end_inStack",extraDetail,reason=reason)
 			if text:
 				textList.append(text)
+
+	# If we are handling content and we are only exiting fields (i.e. we aren't entering any new fields and there is no text), blank should be reported, unless we are doing a say all.
+	if relativeXML is not None and reason != REASON_SAYALL and len(textList)==textListRemovedEndLen:
+		textList.append(_("blank"))
 
 	#Cache a copy of the new stack for future use
 	if cacheFinalStack:
