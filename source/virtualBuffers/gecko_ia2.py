@@ -53,7 +53,18 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
+		ID=obj.IAccessibleObject.uniqueID
+		try:
+			self.rootNVDAObject.IAccessibleObject.accChild(ID)
+		except:
+			return False
 		return True
+		globalVars.log.warning("child: %s"%(child,),exc_info=True)
+		return True
+		if child and obj==NVDAObjects.IAccessible.IAccessible(IAccessibleObject=child,IAccessibleChildID=0):
+			return True
+		else:
+			return False
 
 		while w:
 			if w==root.windowHandle:
@@ -153,6 +164,8 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def event_stateChange(self,obj,nextHandler):
+		if obj==self.rootNVDAObject:
+			self.rootNVDAObject=obj
 		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
 			self.busyFlag=True
