@@ -16,6 +16,7 @@ import globalVars
 import config
 import api
 import cursorManager
+from gui import scriptUI
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -219,6 +220,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self._caretMovedToField(newDocHandle,newID)
 		return True
 
+	def _iterNodesByType(self,nodeType,direction="next",startOffset=-1):
+		attribs=self._searchableAttribsForNodeType(nodeType)
+		if not attribs:
+			return
+
+		while True:
+			try:
+				docHandle,ID=VBufClient_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
+			except:
+				return
+			if not ID:
+				return
+
+			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
+			yield docHandle, ID, startOffset, endOffset
+
 	def script_nextHeading(self,keyPress,nextScript):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
@@ -289,6 +306,41 @@ class VirtualBuffer(cursorManager.CursorManager):
 			speech.speakMessage(_("no previous form field"))
 	script_previousFormField.__doc__ = _("moves to the next form field")
 
+	def script_linksList(self, keyPress, nextScript):
+		if self.VBufHandle is None:
+			return
+
+		nodes = []
+		caretOffset, _ignored = VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		defaultIndex = None
+		for docHandle, ID, startOffset, endOffset in self._iterNodesByType("link"):
+			if defaultIndex is None:
+				if startOffset <= caretOffset and caretOffset < endOffset:
+					# The caret is inside this link, so make it the default selection.
+					defaultIndex = len(nodes)
+				elif startOffset > caretOffset:
+					# The caret wasn't inside a link, so set the default selection to be the next link.
+					defaultIndex = len(nodes)
+			text = self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset))).text
+			nodes.append((text, docHandle, ID, startOffset, endOffset))
+
+		def action(args):
+			if args is None:
+				return
+			activate, index, text = args
+			text, docHandle, ID, startOffset, endOffset = nodes[index]
+			if activate:
+				self._activateField(docHandle, ID)
+			else:
+				info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
+				info.updateCaret()
+				speech.cancelSpeech()
+				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				self._caretMovedToField(docHandle,ID)
+
+		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
+	script_linksList.__doc__ = _("displays a list of links")
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -304,4 +356,5 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("shift+u","previousUnvisitedLink"),
 	("f","nextFormField"),
 	("shift+f","previousFormField"),
+	("NVDA+control+k","linksList"),
 ]]
