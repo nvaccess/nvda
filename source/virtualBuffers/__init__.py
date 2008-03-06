@@ -356,5 +356,5 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("shift+u","previousUnvisitedLink"),
 	("f","nextFormField"),
 	("shift+f","previousFormField"),
-	("NVDA+control+k","linksList"),
+	("NVDA+f7","linksList"),
 ]]
