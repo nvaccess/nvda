@@ -59,18 +59,6 @@ class Gecko_ia2(VirtualBuffer):
 		except:
 			return False
 		return True
-		globalVars.log.warning("child: %s"%(child,),exc_info=True)
-		return True
-		if child and obj==NVDAObjects.IAccessible.IAccessible(IAccessibleObject=child,IAccessibleChildID=0):
-			return True
-		else:
-			return False
-
-		while w:
-			if w==root.windowHandle:
-				return True
-			w=winUser.getAncestor(w,winUser.GA_PARENT)
-		return False
 
 	def isAlive(self):
 		root=self.rootNVDAObject
