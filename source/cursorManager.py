@@ -237,7 +237,7 @@ class CursorManager(baseObject.scriptableObject):
 				chunkInfo.setEndPoint(info,"endToEnd")
 			textList.append(chunkInfo.text)
 			lineInfo.collapse(end=True)
-		text="\n".join(textList).replace('\n\n','\n')
+		text="\r\n".join(textList).replace('\r\n\r\n','\r\n')
 		if api.copyToClip(text):
 			speech.speakMessage(_("copied to clipboard"))
 
