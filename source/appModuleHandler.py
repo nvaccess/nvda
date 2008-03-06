@@ -34,6 +34,8 @@ runningTable={}
 activeModule=None
 #variable to hold the default appModule instance
 default=None
+#: The process ID of NVDA itself.
+NVDAProcessID=None
 
 #regexp to collect the key and script from a line in a keyMap file 
 re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
@@ -60,8 +62,10 @@ def getAppName(window,includeExt=False):
 	@type window: bool
 	@returns: application name
 	@rtype: str
-"""
+	"""
 	processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))[0]
+	if processID==NVDAProcessID:
+		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
 	FProcessEntry32 = TProcessEntry32()
 	FProcessEntry32.dwSize = ctypes.sizeof(TProcessEntry32)
@@ -230,7 +234,8 @@ def fetchModule(appName):
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global default
+	global NVDAProcessID,default
+	NVDAProcessID=os.getpid()
 	defaultModClass=fetchModule('_default')
 	if defaultModClass:
 		default=defaultModClass('_default',winUser.getDesktopWindow())

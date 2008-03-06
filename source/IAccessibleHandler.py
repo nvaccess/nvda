@@ -685,7 +685,7 @@ def foreground_winEventCallback(window,objectID,childID):
 		return
 	return focus_winEventCallback(window,objectID,childID,isForegroundChange=True)
 
-def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
+def focus_winEventCallback(window,objectID,childID,isForegroundChange=False,needsFocusState=True):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
 		return
@@ -720,7 +720,7 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False):
 		activeChild=obj.activeChild
 		if activeChild and activeChild.IAccessibleChildID>0 and activeChild!=obj:
 			obj=activeChild
-	focus_manageEvent(obj,isForegroundChange)
+	focus_manageEvent(obj,isForegroundChange,needsFocusState)
 
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if not obj:
