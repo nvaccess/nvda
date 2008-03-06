@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2008-03-02 18:15+Russian Standard Time\n"
-"PO-Revision-Date: 2008-03-02 18:35+Moscow\n"
+"POT-Creation-Date: 2008-03-06 21:10+Russian Standard Time\n"
+"PO-Revision-Date: 2008-03-06 21:31+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In cooperation with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:63
+#: NVDAObjects\IAccessible\__init__.py:63 speech.py:665
 msgid "level %s"
 msgstr "Уровень %s"
 
@@ -29,7 +29,7 @@ msgstr "Содержит %s элементов"
 msgid "through"
 msgstr "по"
 
-#: NVDAObjects\IAccessible\excel.py:63 controlTypes.py:305
+#: NVDAObjects\IAccessible\excel.py:63 controlTypes.py:307
 msgid "selected"
 msgstr "Выделено"
 
@@ -51,7 +51,7 @@ msgstr "Шрифт"
 msgid "point"
 msgstr "Размер"
 
-#: NVDAObjects\IAccessible\excel.py:103 controlTypes.py:290
+#: NVDAObjects\IAccessible\excel.py:103 controlTypes.py:291
 #: textBuffer.py:265 textBuffer.py:317
 msgid "bold"
 msgstr "Полужирный"
@@ -62,7 +62,7 @@ msgid "italic"
 msgstr "Курсив"
 
 #: NVDAObjects\IAccessible\excel.py:107 characterSymbols.py:50
-#: controlTypes.py:292 textBuffer.py:279
+#: controlTypes.py:293 textBuffer.py:279
 #: textBuffer.py:321
 msgid "underline"
 msgstr "Подчёркнутый"
@@ -84,26 +84,26 @@ msgstr "Уровень %d"
 msgid "with %s columns and %s rows"
 msgstr "из %d столбцов и %d строк"
 
-#: NVDAObjects\IAccessible\winword.py:302
-#: NVDAObjects\IAccessible\winword.py:318
-#: NVDAObjects\IAccessible\winword.py:334
-#: NVDAObjects\IAccessible\winword.py:350
+#: NVDAObjects\IAccessible\winword.py:296
+#: NVDAObjects\IAccessible\winword.py:312
+#: NVDAObjects\IAccessible\winword.py:328
+#: NVDAObjects\IAccessible\winword.py:344
 msgid "not in table"
 msgstr "Вне таблицы"
 
-#: NVDAObjects\IAccessible\winword.py:311
+#: NVDAObjects\IAccessible\winword.py:305
 msgid "bottom of column"
 msgstr "Конец столбца"
 
-#: NVDAObjects\IAccessible\winword.py:327
+#: NVDAObjects\IAccessible\winword.py:321
 msgid "top of column"
 msgstr "Начало Столбца"
 
-#: NVDAObjects\IAccessible\winword.py:343
+#: NVDAObjects\IAccessible\winword.py:337
 msgid "end of row"
 msgstr "Конец строки"
 
-#: NVDAObjects\IAccessible\winword.py:359
+#: NVDAObjects\IAccessible\winword.py:353
 msgid "beginning of row"
 msgstr "Начало строки"
 
@@ -143,7 +143,7 @@ msgstr "Пропуск виртуального буфера"
 #: appModules\_default.py:664 appModules\_default.py:674
 #: keyboardHandler.py:53 keyboardHandler.py:55
 #: keyboardHandler.py:57 speech.py:356 speech.py:362
-#: virtualBuffers\__init__.py:199
+#: virtualBuffers\__init__.py:200
 msgid "off"
 msgstr "Выключено"
 
@@ -154,21 +154,21 @@ msgstr "Выключено"
 #: appModules\_default.py:657 appModules\_default.py:667
 #: appModules\_default.py:677 keyboardHandler.py:53
 #: keyboardHandler.py:55 keyboardHandler.py:57
-#: speech.py:351 virtualBuffers\__init__.py:199
+#: speech.py:351 virtualBuffers\__init__.py:200
 msgid "on"
 msgstr "Включено"
 
-#: appModuleHandler.py:227
+#: appModuleHandler.py:228
 msgid "Error in appModule %s"
 msgstr "Ошибка в модуле %s"
 
-#: appModuleHandler.py:244
+#: appModuleHandler.py:246
 msgid "Could not load default module keyMap"
 msgstr ""
 "Не удалось загрузить набор клавиатурных "
 "команд поумолчанию"
 
-#: appModuleHandler.py:247
+#: appModuleHandler.py:249
 msgid "Could not load default module "
 msgstr ""
 "Не удалось загрузить модуль поумолчанию"
@@ -890,7 +890,7 @@ msgid "sent: %s"
 msgstr "Отправлено: %s"
 
 #: characterSymbols.py:17 characterSymbols.py:18
-#: speech.py:67
+#: speech.py:67 speech.py:598
 msgid "blank"
 msgstr "Чисто"
 
@@ -898,7 +898,7 @@ msgstr "Чисто"
 msgid "null"
 msgstr "пусто"
 
-#: characterSymbols.py:20 controlTypes.py:186
+#: characterSymbols.py:20 controlTypes.py:187
 msgid "tab"
 msgstr "Таб"
 
@@ -1014,7 +1014,7 @@ msgstr "Обратная косая черта"
 msgid "right bracket"
 msgstr "Правая квадратная скобка"
 
-#: characterSymbols.py:49 controlTypes.py:256
+#: characterSymbols.py:49 controlTypes.py:257
 msgid "caret"
 msgstr "Крышка"
 
@@ -1047,624 +1047,628 @@ msgstr "Тильда"
 msgid "bullet"
 msgstr "Буллит"
 
-#: controlTypes.py:164
+#: characterSymbols.py:57
+msgid "dot dot dot"
+msgstr "Точка точка точка"
+
+#: controlTypes.py:165
 msgid "unknown object"
 msgstr "Неизвестный объект"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#: controlTypes.py:165
+#: controlTypes.py:166
 msgid "window"
 msgstr "Окно"
 
-#: controlTypes.py:166
+#: controlTypes.py:167
 msgid "title bar"
 msgstr "Заголовок окна"
 
-#: controlTypes.py:167
+#: controlTypes.py:168
 msgid "pane"
 msgstr "Область"
 
-#: controlTypes.py:168
+#: controlTypes.py:169
 msgid "dialog"
 msgstr "Диалог"
 
-#: controlTypes.py:169
+#: controlTypes.py:170
 msgid "check box"
 msgstr "Флажок"
 
-#: controlTypes.py:170
+#: controlTypes.py:171
 msgid "radio button"
 msgstr "Радиокнопка"
 
-#: controlTypes.py:171
+#: controlTypes.py:172
 msgid "text"
 msgstr "Текст"
 
-#: controlTypes.py:172
+#: controlTypes.py:173
 msgid "edit"
 msgstr "Редактор"
 
-#: controlTypes.py:173
+#: controlTypes.py:174
 msgid "button"
 msgstr "Кнопка"
 
-#: controlTypes.py:174
+#: controlTypes.py:175
 msgid "menu bar"
 msgstr "Строка меню"
 
-#: controlTypes.py:175
+#: controlTypes.py:176
 msgid "menu item"
 msgstr "Элемент меню"
 
-#: controlTypes.py:176
+#: controlTypes.py:177
 msgid "popup menu"
 msgstr "Всплывающее меню"
 
-#: controlTypes.py:177
+#: controlTypes.py:178
 msgid "combo box"
 msgstr "Комбинированный список"
 
-#: controlTypes.py:178
+#: controlTypes.py:179
 msgid "list"
 msgstr "Список"
 
-#: controlTypes.py:179
+#: controlTypes.py:180
 msgid "list item"
 msgstr "Элемент списка"
 
-#: controlTypes.py:180
+#: controlTypes.py:181
 msgid "graphic"
 msgstr "Графика"
 
-#: controlTypes.py:181
+#: controlTypes.py:182
 msgid "help balloon"
 msgstr "Всплывающее системное сообщение"
 
-#: controlTypes.py:182
+#: controlTypes.py:183
 msgid "tool tip"
 msgstr "Подсказка"
 
-#: controlTypes.py:183
+#: controlTypes.py:184
 msgid "link"
 msgstr "Ссылка"
 
-#: controlTypes.py:184
+#: controlTypes.py:185
 msgid "tree view"
 msgstr "Дерево"
 
-#: controlTypes.py:185
+#: controlTypes.py:186
 msgid "tree view item"
 msgstr "Элемент дерева"
 
-#: controlTypes.py:187
+#: controlTypes.py:188
 msgid "tab control"
 msgstr "Вкладка"
 
-#: controlTypes.py:188
+#: controlTypes.py:189
 msgid "slider"
 msgstr "Ползунок"
 
-#: controlTypes.py:189
+#: controlTypes.py:190
 msgid "progress bar"
 msgstr "Индикатор выполнения"
 
-#: controlTypes.py:190
+#: controlTypes.py:191
 msgid "scroll bar"
 msgstr "Прокрутка"
 
-#: controlTypes.py:191
+#: controlTypes.py:192
 msgid "status bar"
 msgstr "Строка состояния"
 
-#: controlTypes.py:192
+#: controlTypes.py:193
 msgid "table"
 msgstr "Таблица"
 
-#: controlTypes.py:193
+#: controlTypes.py:194
 msgid "cell"
 msgstr "Ячейка"
 
-#: controlTypes.py:194
+#: controlTypes.py:195
 msgid "column"
 msgstr "Столбец"
 
-#: controlTypes.py:195
+#: controlTypes.py:196
 msgid "row"
 msgstr "Строка"
 
-#: controlTypes.py:196
+#: controlTypes.py:197
 msgid "frame"
 msgstr "Фрейм"
 
-#: controlTypes.py:197
+#: controlTypes.py:198
 msgid "tool bar"
 msgstr "Панель инструментов"
 
-#: controlTypes.py:198
+#: controlTypes.py:199
 msgid "column header"
 msgstr "Заголовок столбца"
 
-#: controlTypes.py:199
+#: controlTypes.py:200
 msgid "row header"
 msgstr "Заголовок строки"
 
-#: controlTypes.py:200
+#: controlTypes.py:201
 msgid "drop down button"
 msgstr "Нажатая кнопка"
 
-#: controlTypes.py:201
+#: controlTypes.py:202
 msgid "clock"
 msgstr "Часы"
 
-#: controlTypes.py:202
+#: controlTypes.py:203
 msgid "separator"
 msgstr "Разделитель"
 
-#: controlTypes.py:203
+#: controlTypes.py:204
 msgid "form"
 msgstr "Форма"
 
-#: controlTypes.py:204
+#: controlTypes.py:205
 msgid "heading"
 msgstr "Заголовок"
 
-#: controlTypes.py:205
+#: controlTypes.py:206
 msgid "heading 1"
 msgstr "Заголовок 1"
 
-#: controlTypes.py:206
+#: controlTypes.py:207
 msgid "heading 2"
 msgstr "Заголовок 2"
 
-#: controlTypes.py:207
+#: controlTypes.py:208
 msgid "heading 3"
 msgstr "Заголовок 3"
 
-#: controlTypes.py:208
+#: controlTypes.py:209
 msgid "heading 4"
 msgstr "Заголовок 4"
 
-#: controlTypes.py:209
+#: controlTypes.py:210
 msgid "heading 5"
 msgstr "Заголовок 5"
 
-#: controlTypes.py:210
+#: controlTypes.py:211
 msgid "heading 6"
 msgstr "Заголовок 6"
 
-#: controlTypes.py:211
+#: controlTypes.py:212
 msgid "paragraph"
 msgstr "абзац"
 
-#: controlTypes.py:212
+#: controlTypes.py:213
 msgid "block quote"
 msgstr "Цитата"
 
-#: controlTypes.py:213
+#: controlTypes.py:214
 msgid "table header"
 msgstr "Заголовок таблицы"
 
-#: controlTypes.py:214
+#: controlTypes.py:215
 msgid "table body"
 msgstr "Тело таблицы"
 
-#: controlTypes.py:215
+#: controlTypes.py:216
 msgid "table footer"
 msgstr "Нижний колонтитул таблицы"
 
-#: controlTypes.py:216 virtualBuffers_old\adobe.py:37
+#: controlTypes.py:217 virtualBuffers_old\adobe.py:37
 #: virtualBuffers_old\gecko.py:42
 msgid "document"
 msgstr "Документ"
 
-#: controlTypes.py:217
+#: controlTypes.py:218
 msgid "animation"
 msgstr "Анимация"
 
-#: controlTypes.py:218
+#: controlTypes.py:219
 msgid "application"
 msgstr "Приложение"
 
-#: controlTypes.py:219
+#: controlTypes.py:220
 msgid "box"
 msgstr "Блок"
 
-#: controlTypes.py:220
+#: controlTypes.py:221
 msgid "grouping"
 msgstr "Группировка"
 
-#: controlTypes.py:221
+#: controlTypes.py:222
 msgid "property page"
 msgstr "Страница свойств"
 
-#: controlTypes.py:222
+#: controlTypes.py:223
 msgid "canvas"
 msgstr "Подложка"
 
-#: controlTypes.py:223
+#: controlTypes.py:224
 msgid "caption"
 msgstr "Подпись"
 
-#: controlTypes.py:224
+#: controlTypes.py:225
 msgid "check menu item"
 msgstr "Элемент меню отмечен"
 
-#: controlTypes.py:225
+#: controlTypes.py:226
 msgid "date edit"
 msgstr "Редактор даты"
 
-#: controlTypes.py:226
+#: controlTypes.py:227
 msgid "icon"
 msgstr "Значок"
 
-#: controlTypes.py:227
+#: controlTypes.py:228
 msgid "directory pane"
 msgstr "Область папок"
 
-#: controlTypes.py:228
+#: controlTypes.py:229
 msgid "embedded object"
 msgstr "Встроенный объект"
 
-#: controlTypes.py:229
+#: controlTypes.py:230
 msgid "end note"
 msgstr "Пояснение"
 
-#: controlTypes.py:230
+#: controlTypes.py:231
 msgid "footer"
 msgstr "Нижний колонтитул"
 
-#: controlTypes.py:231
+#: controlTypes.py:232
 msgid "foot note"
 msgstr "Сноска"
 
-#: controlTypes.py:232
+#: controlTypes.py:233
 msgid "glass pane"
 msgstr "Стеклянная область"
 
-#: controlTypes.py:233
+#: controlTypes.py:234
 msgid "header"
 msgstr "Заголовок"
 
-#: controlTypes.py:234
+#: controlTypes.py:235
 msgid "image map"
 msgstr "Рисунок"
 
-#: controlTypes.py:235
+#: controlTypes.py:236
 msgid "input window"
 msgstr "Окно ввода"
 
-#: controlTypes.py:236
+#: controlTypes.py:237
 msgid "label"
 msgstr "Ярлык"
 
-#: controlTypes.py:237
+#: controlTypes.py:238
 msgid "note"
 msgstr "Заметка"
 
-#: controlTypes.py:238
+#: controlTypes.py:239
 msgid "page"
 msgstr "Страница"
 
-#: controlTypes.py:239
+#: controlTypes.py:240
 msgid "radio menu item"
 msgstr "Элемент радиоменю"
 
-#: controlTypes.py:240
+#: controlTypes.py:241
 msgid "layered pane"
 msgstr "Многослойное окно"
 
-#: controlTypes.py:241
+#: controlTypes.py:242
 msgid "redundant object"
 msgstr "Избыточный объект"
 
-#: controlTypes.py:242
+#: controlTypes.py:243
 msgid "root pane"
 msgstr "Корневая область"
 
-#: controlTypes.py:243
+#: controlTypes.py:244
 msgid "edit bar"
 msgstr "Строка редактирования"
 
-#: controlTypes.py:244
+#: controlTypes.py:245
 msgid "terminal"
 msgstr "Терминал"
 
-#: controlTypes.py:245
+#: controlTypes.py:246
 msgid "rich edit"
 msgstr "Многострочный редактор"
 
-#: controlTypes.py:246
+#: controlTypes.py:247
 msgid "ruler"
 msgstr "Линейка"
 
-#: controlTypes.py:247
+#: controlTypes.py:248
 msgid "scroll pane"
 msgstr "Область прокрутки"
 
-#: controlTypes.py:248
+#: controlTypes.py:249
 msgid "section"
 msgstr "Секция"
 
-#: controlTypes.py:249
+#: controlTypes.py:250
 msgid "shape"
 msgstr "Очертание"
 
-#: controlTypes.py:250
+#: controlTypes.py:251
 msgid "split pane"
 msgstr "Разделённая область"
 
-#: controlTypes.py:251
+#: controlTypes.py:252
 msgid "view port"
 msgstr "Смотровое окно"
 
-#: controlTypes.py:252
+#: controlTypes.py:253
 msgid "tear off menu"
 msgstr "Разрывное меню"
 
-#: controlTypes.py:253
+#: controlTypes.py:254
 msgid "text frame"
 msgstr "Текстовый фрейм"
 
-#: controlTypes.py:254
+#: controlTypes.py:255
 msgid "toggle button"
 msgstr "Кнопкапереключатель"
 
-#: controlTypes.py:255
+#: controlTypes.py:256
 msgid "border"
 msgstr "Рамка"
 
-#: controlTypes.py:257
+#: controlTypes.py:258
 msgid "character"
 msgstr "Символ"
 
-#: controlTypes.py:258
+#: controlTypes.py:259
 msgid "chart"
 msgstr "Схема"
 
-#: controlTypes.py:259
+#: controlTypes.py:260
 msgid "cursor"
 msgstr "Курсор"
 
-#: controlTypes.py:260
+#: controlTypes.py:261
 msgid "diagram"
 msgstr "Диаграмма"
 
-#: controlTypes.py:261
+#: controlTypes.py:262
 msgid "dial"
 msgstr "Наборный диск"
 
-#: controlTypes.py:262
+#: controlTypes.py:263
 msgid "drop list"
 msgstr "Сбросить список"
 
-#: controlTypes.py:263
+#: controlTypes.py:264
 msgid "split button"
 msgstr "Разделённая кнопка"
 
-#: controlTypes.py:264
+#: controlTypes.py:265
 msgid "menu button"
 msgstr "Кнопка меню"
 
-#: controlTypes.py:265
+#: controlTypes.py:266
 msgid "drop down button grid"
 msgstr "Нажатая кнопка ячейки"
 
-#: controlTypes.py:266
+#: controlTypes.py:267
 msgid "equation"
 msgstr "Уравнение"
 
-#: controlTypes.py:267
+#: controlTypes.py:268
 msgid "grip"
 msgstr "Ячейка"
 
-#: controlTypes.py:268
+#: controlTypes.py:269
 msgid "hot key field"
 msgstr "Поле Горячей клавиши"
 
-#: controlTypes.py:269
+#: controlTypes.py:270
 msgid "indicator"
 msgstr "Индикатор"
 
-#: controlTypes.py:270
+#: controlTypes.py:271
 msgid "spin button"
 msgstr "Кнопка вращения"
 
-#: controlTypes.py:271
+#: controlTypes.py:272
 msgid "sound"
 msgstr "Звук"
 
-#: controlTypes.py:272
+#: controlTypes.py:273
 msgid "white space"
 msgstr "Белое пространство"
 
-#: controlTypes.py:273
+#: controlTypes.py:274
 msgid "tree view button"
 msgstr "Кнопка дерева"
 
-#: controlTypes.py:274
+#: controlTypes.py:275
 msgid "IP address"
 msgstr "IP адрес"
 
-#: controlTypes.py:275
+#: controlTypes.py:276
 msgid "desktop icon"
 msgstr "Значок рабочего стола"
 
-#: controlTypes.py:276
+#: controlTypes.py:277 controlTypes.py:301
 msgid "alert"
 msgstr "Предупреждение"
 
-#: controlTypes.py:277
+#: controlTypes.py:278
 msgid "IFrame"
 msgstr "IФрейм"
 
-#: controlTypes.py:278
+#: controlTypes.py:279
 msgid "desktop pane"
 msgstr "Область рабочего стола"
 
-#: controlTypes.py:279
+#: controlTypes.py:280
 msgid "option pane"
 msgstr "Область параметра"
 
-#: controlTypes.py:280
+#: controlTypes.py:281
 msgid "color chooser"
 msgstr "Выбор цвета"
 
-#: controlTypes.py:281
+#: controlTypes.py:282
 msgid "file chooser"
 msgstr "Выбор файла"
 
-#: controlTypes.py:282
+#: controlTypes.py:283
 msgid "filler"
 msgstr "Заполнитель"
 
-#: controlTypes.py:283
+#: controlTypes.py:284
 msgid "menu"
 msgstr "Меню"
 
-#: controlTypes.py:284
+#: controlTypes.py:285
 msgid "panel"
 msgstr "Панель"
 
-#: controlTypes.py:285
+#: controlTypes.py:286
 msgid "password edit"
 msgstr "Редактор пароля"
 
-#: controlTypes.py:286
+#: controlTypes.py:287
 msgid "font chooser"
 msgstr "Выбор шрифта"
 
-#: controlTypes.py:287
+#: controlTypes.py:288
 msgid "line"
 msgstr "Строка"
 
-#: controlTypes.py:288
+#: controlTypes.py:289
 msgid "font name"
 msgstr "Название шрифта"
 
-#: controlTypes.py:289
+#: controlTypes.py:290
 msgid "font size"
 msgstr "Размер шрифта"
 
-#: controlTypes.py:291
+#: controlTypes.py:292
 msgid "ITALIC"
 msgstr "Курсив"
 
-#: controlTypes.py:293
+#: controlTypes.py:294
 msgid "foreground color"
 msgstr "Цвет шрифта"
 
-#: controlTypes.py:294
+#: controlTypes.py:295
 msgid "background color"
 msgstr "Цвет фона"
 
-#: controlTypes.py:295 textBuffer.py:286
+#: controlTypes.py:296 textBuffer.py:286
 #: textBuffer.py:293 textBuffer.py:323
 msgid "superscript"
 msgstr "Надстрочный"
 
-#: controlTypes.py:296 textBuffer.py:325
+#: controlTypes.py:297 textBuffer.py:325
 msgid "subscript"
 msgstr "Подстрочный"
 
-#: controlTypes.py:297
+#: controlTypes.py:298
 msgid "style"
 msgstr "Стиль"
 
-#: controlTypes.py:298
+#: controlTypes.py:299
 msgid "indent"
 msgstr "Отступ"
 
-#: controlTypes.py:299
+#: controlTypes.py:300
 msgid "alignment"
 msgstr "Выравнивание"
 
-#: controlTypes.py:303
+#: controlTypes.py:305
 msgid "unavailable"
 msgstr "Недоступно"
 
-#: controlTypes.py:304
+#: controlTypes.py:306
 msgid "focused"
 msgstr "Активно"
 
-#: controlTypes.py:306
+#: controlTypes.py:308
 msgid "busy"
 msgstr "Занято"
 
-#: controlTypes.py:307
+#: controlTypes.py:309
 msgid "pressed"
 msgstr "Нажато"
 
-#: controlTypes.py:308
+#: controlTypes.py:310
 msgid "checked"
 msgstr "Отмечено"
 
-#: controlTypes.py:309
+#: controlTypes.py:311
 msgid "half checked"
 msgstr "Частично отмечено"
 
-#: controlTypes.py:310
+#: controlTypes.py:312
 msgid "read only"
 msgstr "Только для чтения"
 
-#: controlTypes.py:311
+#: controlTypes.py:313
 msgid "expanded"
 msgstr "открыто"
 
-#: controlTypes.py:312
+#: controlTypes.py:314
 msgid "collapsed"
 msgstr "Закрыто"
 
-#: controlTypes.py:313
+#: controlTypes.py:315
 msgid "invisible"
 msgstr "Невидимо"
 
-#: controlTypes.py:314
+#: controlTypes.py:316
 msgid "visited"
 msgstr "Посещённая"
 
-#: controlTypes.py:315
+#: controlTypes.py:317
 msgid "linked"
 msgstr "Связано"
 
-#: controlTypes.py:316
+#: controlTypes.py:318
 msgid "subMenu"
 msgstr "Подменю"
 
-#: controlTypes.py:317 virtualBuffers_old\MSHTML.py:295
+#: controlTypes.py:319 virtualBuffers_old\MSHTML.py:295
 msgid "protected"
 msgstr "Защищено"
 
-#: controlTypes.py:318
+#: controlTypes.py:320
 msgid "required"
 msgstr "Требуется"
 
-#: controlTypes.py:319
+#: controlTypes.py:321
 msgid "defunct"
 msgstr "не существующий"
 
-#: controlTypes.py:320
+#: controlTypes.py:322
 msgid "invalid entry"
 msgstr "Неверный ввод"
 
-#: controlTypes.py:321
+#: controlTypes.py:323
 msgid "modal"
 msgstr "Модальный"
 
-#: controlTypes.py:322
+#: controlTypes.py:324
 msgid "has auto complete"
 msgstr "Содержит автозаполнение"
 
-#: controlTypes.py:323
+#: controlTypes.py:325
 msgid "multi line"
 msgstr "Многострочный"
 
-#: controlTypes.py:324
+#: controlTypes.py:326
 msgid "iconified"
 msgstr "Обозначенный"
 
-#: controlTypes.py:325
+#: controlTypes.py:327
 msgid "selectable"
 msgstr "Доступно для выделения"
 
@@ -1700,100 +1704,103 @@ msgstr "Ошибка поиска"
 
 #: cursorManager.py:103
 msgid "find a text string from the current cursor position"
-msgstr "Поиск текстовой последовательности с "
+msgstr ""
+"Поиск текстовой последовательности с "
 "текущей позиции курсора"
 
 #: cursorManager.py:110
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "Поиск следующего вхождения текстовой последовательности с "
-"текущей позиции курсора"
+msgstr ""
+"Поиск следующего вхождения текстовой "
+"последовательности с текущей позиции "
+"курсора"
 
-#: gui\__init__.py:80
+#: gui\__init__.py:79
 msgid "configuration saved"
 msgstr "Конфигурация сохранена"
 
-#: gui\__init__.py:82
+#: gui\__init__.py:81
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Неудалось сохранить конфигурацию, вероят"
 "но, NVDA запущен из области, доступной толь"
 "ко для чтения"
 
-#: gui\__init__.py:85
+#: gui\__init__.py:84
 msgid "Default dictionary"
 msgstr "Общий словарь"
 
-#: gui\__init__.py:89
+#: gui\__init__.py:88
 msgid "Voice dictionary (%s)"
 msgstr "Голосовой словарь (%s)"
 
-#: gui\__init__.py:93
+#: gui\__init__.py:92
 msgid "Temporary dictionary"
 msgstr "Временный словарь"
 
-#: gui\__init__.py:99
+#: gui\__init__.py:98
 msgid "Are you sure you want to quit NVDA?"
 msgstr ""
 "Вы уверены, что хотите завершить работу "
 "NVDA?"
 
-#: gui\__init__.py:99 gui\__init__.py:210
+#: gui\__init__.py:98 gui\__init__.py:209
 msgid "Exit NVDA"
 msgstr "Завершение РаботыNVDA"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "copyright"
 msgstr "Авторское право"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "maintainer"
 msgstr "Разработчик"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:155
 msgid "version"
 msgstr "Версия"
 
-#: gui\__init__.py:157 gui\__init__.py:201
+#: gui\__init__.py:156 gui\__init__.py:200
 msgid "About NVDA"
 msgstr "О NVDA"
 
-#: gui\__init__.py:171
+#: gui\__init__.py:170
 msgid "&General settings..."
 msgstr "&Общие настройки..."
 
-#: gui\__init__.py:171 gui\settingsDialogs.py:98
+#: gui\__init__.py:170 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Общие настройки"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid " the synthesizer to use"
 msgstr "Используемый синтезатор"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:172
 msgid "&Synthesizer..."
 msgstr "&Синтезатор..."
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "&Voice settings..."
 msgstr "&Голоса..."
 
-#: gui\__init__.py:175
+#: gui\__init__.py:174
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr ""
 "Выбор голоса, скорости, высоты и громкости"
 " синтезатора"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid "&Keyboard Settings..."
 msgstr "&Клавиатура..."
 
-#: gui\__init__.py:177
+#: gui\__init__.py:176
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1802,49 +1809,49 @@ msgstr ""
 "вводимых символов, слов и командных "
 "клавиш"
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "&Mouse settings..."
 msgstr "&Мышь..."
 
-#: gui\__init__.py:179
+#: gui\__init__.py:178
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Изменение чтения формы указателя мыши, "
 "объектов под указателем мыши и т.д."
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "&Object presentation..."
 msgstr "&Представление объекта..."
 
-#: gui\__init__.py:181
+#: gui\__init__.py:180
 msgid "Change reporting of objects"
 msgstr "Изменение чтения объектов"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Change virtual buffers specific settings"
 msgstr ""
 "Изменение специальных настроек "
 "виртуальных буферов"
 
-#: gui\__init__.py:183
+#: gui\__init__.py:182
 msgid "Virtual &buffers..."
 msgstr "Виртуальные &буферы..."
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Change Settings of document properties"
 msgstr ""
 "Изменение чтения форматирования "
 "документов"
 
-#: gui\__init__.py:185
+#: gui\__init__.py:184
 msgid "Document &formatting..."
 msgstr "&Форматирование документа..."
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid "&Default dictionary..."
 msgstr "&Общий словарь..."
 
-#: gui\__init__.py:188
+#: gui\__init__.py:187
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -1853,11 +1860,11 @@ msgstr ""
 "общий словарь, добавляя необходимые "
 "статьи в список"
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid "&Voice dictionary..."
 msgstr "&Голосовой словарь......"
 
-#: gui\__init__.py:190
+#: gui\__init__.py:189
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -1866,11 +1873,11 @@ msgstr ""
 "голосовой словарь, добавляя необходимые "
 "статьи в список"
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid "&Temporary dictionary..."
 msgstr "&Временный словарь..."
 
-#: gui\__init__.py:192
+#: gui\__init__.py:191
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -1879,59 +1886,61 @@ msgstr ""
 "временный словарь, добавляя необходимые "
 "статьи"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:193
 msgid "User &dictionaries"
 msgstr "&Пользовательские словари"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:194
 msgid "&Preferences"
 msgstr "&Параметры"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "NVDA homepage"
 msgstr "Домашняя страница NVDA"
 
-#: gui\__init__.py:197
+#: gui\__init__.py:196
 msgid "Opens NVDA homepage in the default browser"
 msgstr ""
 "Открывает домашнюю страницу NVDA в браузер"
 "е, установленном поумолчанию"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "NVDA wiki"
 msgstr "NVDA wiki"
 
-#: gui\__init__.py:199
+#: gui\__init__.py:198
 msgid "Opens NVDA wiki in the default browser"
 msgstr ""
 "Открывает NVDA wiki в браузере, установленном "
 "поумолчанию"
 
-#: gui\__init__.py:201
+#: gui\__init__.py:200
 msgid "About..."
 msgstr "О программе..."
 
-#: gui\__init__.py:203
+#: gui\__init__.py:202
 msgid "&Help"
 msgstr "&Справка"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "&Revert to saved configuration"
 msgstr "&Вернуться к сохранённой конфигурации"
 
-#: gui\__init__.py:205
+#: gui\__init__.py:204
 msgid "Reset all settings to saved state"
-msgstr "Сбросить все настройки к сохранённому состоянию"
+msgstr ""
+"Сбросить все настройки к сохранённому "
+"состоянию"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "&Save configuration"
 msgstr "&Сохранить конфигурацию"
 
-#: gui\__init__.py:207
+#: gui\__init__.py:206
 msgid "Write the current configuration to nvda.ini"
 msgstr "Записать текущую конфигурацию в nvda.ini"
 
-#: gui\__init__.py:210
+#: gui\__init__.py:209
 msgid "E&xit"
 msgstr "В&ыход"
 
@@ -2327,19 +2336,19 @@ msgstr "scroll lock %s"
 msgid "%s keyboard layout"
 msgstr "Раскладка %s"
 
-#: keyboardHandler.py:161
+#: keyboardHandler.py:162
 msgid "Description: %s"
 msgstr "Описание: %s"
 
-#: keyboardHandler.py:162
+#: keyboardHandler.py:163
 msgid "Location: %s"
 msgstr "Размещение: %s"
 
-#: keyboardHandler.py:175
+#: keyboardHandler.py:176
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:210
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyUpEvent"
 
@@ -2368,7 +2377,7 @@ msgstr "вне"
 msgid "unselected %s"
 msgstr "Не выделено %s"
 
-#: speech.py:709 virtualBuffers_old\MSHTML.py:123
+#: speech.py:651 virtualBuffers_old\MSHTML.py:123
 #: virtualBuffers_old\MSHTML.py:302
 #: virtualBuffers_old\MSHTML.py:306
 #: virtualBuffers_old\adobe.py:300
@@ -2505,7 +2514,7 @@ msgstr ""
 
 #: versionInfo.py:14
 msgid ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
 "or change this software in any way you like as long as you distribute the "
 "licence along with the software, and make all source code available to "
@@ -2515,33 +2524,33 @@ msgid ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Авторское право (C) 2006-2007 NVDA Contributors <http://www."
+"Авторское право (C) 2006-2008 NVDA Contributors <http://www."
 "nvda-project.org/>\n"
 "%(name)s защищается GNU General Public License. Вы можете "
-"свободно распространять и изменять да"
-"нное программное обеспечение, если "
-"соблюдаете лицензионное соглашение и сох"
-"раняете файл лицензии в не изменнённом "
+"свободно распространять и изменять"
+"данное программное обеспечение, если "
+"соблюдаете лицензионное соглашение и"
+"сохраняете файл лицензии в не изменнённом "
 "виде в программе при распространении, "
 "позволяя и другим получать доступ к "
 "оригиналу.Также, разрешается изменять "
 "программное обеспечение, использующее "
-"код, взятый из данного пакета и его част"
-"ей.\n"
-"Получить дополнительную информацию по да"
-"нной лицензии вы можете на сайте:\n"
+"код, взятый из данного пакета и его"
+"частей.\n"
+"Получить дополнительную информацию по"
+"данной лицензии вы можете на сайте:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "или из входящего в комплект поставки "
 "программы файла Copying.txt."
 
-#: virtualBuffers\__init__.py:86 virtualBuffers\__init__.py:90
-#: virtualBuffers\__init__.py:94 virtualBuffers\__init__.py:100
-#: virtualBuffers\__init__.py:104
+#: virtualBuffers\__init__.py:87 virtualBuffers\__init__.py:91
+#: virtualBuffers\__init__.py:95 virtualBuffers\__init__.py:101
+#: virtualBuffers\__init__.py:105
 #: virtualBuffers_old\__init__.py:190
 msgid "out of %s"
 msgstr "вне %s"
 
-#: virtualBuffers\__init__.py:88
+#: virtualBuffers\__init__.py:89
 #: virtualBuffers_old\MSHTML.py:247
 #: virtualBuffers_old\MSHTML.py:250
 #: virtualBuffers_old\MSHTML.py:257
@@ -2552,112 +2561,116 @@ msgstr "вне %s"
 msgid "with %s items"
 msgstr "из %s элементов"
 
-#: virtualBuffers\__init__.py:102
+#: virtualBuffers\__init__.py:103
 msgid "in %s"
 msgstr "в %s"
 
-#: virtualBuffers\__init__.py:176
+#: virtualBuffers\__init__.py:177
 #: virtualBuffers_old\__init__.py:290
 msgid "activates the current object in the virtual buffer"
 msgstr ""
 "Задействует текущий объект в виртуальном "
 "буфере"
 
-#: virtualBuffers\__init__.py:195
+#: virtualBuffers\__init__.py:196
 msgid "Refreshed"
 msgstr "Обновлено"
 
-#: virtualBuffers\__init__.py:200
+#: virtualBuffers\__init__.py:201
 msgid "use screen layout %s"
 msgstr ""
 "Использовать экранное представление %s"
 
-#: virtualBuffers\__init__.py:226
+#: virtualBuffers\__init__.py:243
 msgid "no next heading"
 msgstr "Нет следующего заголовка"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:244
 #: virtualBuffers_old\__init__.py:313
 msgid "moves to the next heading"
 msgstr "переходит на следующий заголовок"
 
-#: virtualBuffers\__init__.py:233
+#: virtualBuffers\__init__.py:250
 msgid "no previous heading"
 msgstr "Нет предыдущего заголовка"
 
-#: virtualBuffers\__init__.py:234
+#: virtualBuffers\__init__.py:251
 #: virtualBuffers_old\__init__.py:324
 msgid "moves to the previous heading"
 msgstr "переходит на предыдущий заголовок"
 
-#: virtualBuffers\__init__.py:240
+#: virtualBuffers\__init__.py:257
 msgid "no next link"
 msgstr "Нет следующей ссылки"
 
-#: virtualBuffers\__init__.py:241
+#: virtualBuffers\__init__.py:258
 #: virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "переходит на следующую ссылку"
 
-#: virtualBuffers\__init__.py:247
+#: virtualBuffers\__init__.py:264
 msgid "no previous link"
 msgstr "Нет предыдущей ссылки"
 
-#: virtualBuffers\__init__.py:248
+#: virtualBuffers\__init__.py:265
 #: virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "переходит на предыдущую ссылку"
 
-#: virtualBuffers\__init__.py:254
+#: virtualBuffers\__init__.py:271
 msgid "no next visited link"
 msgstr "Нет следующей посещённой ссылки"
 
-#: virtualBuffers\__init__.py:255
+#: virtualBuffers\__init__.py:272
 msgid "moves to the next visited link"
 msgstr ""
 "переходит на следующую посещённую ссылку"
 
-#: virtualBuffers\__init__.py:261
+#: virtualBuffers\__init__.py:278
 msgid "no previous visited link"
 msgstr "Нет предыдущей посещённой ссылки"
 
-#: virtualBuffers\__init__.py:262
+#: virtualBuffers\__init__.py:279
 msgid "moves to the previous visited link"
 msgstr ""
 "переходит на предыдущую посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:268
+#: virtualBuffers\__init__.py:285
 msgid "no next unvisited link"
 msgstr "Нет следующей не посещённой ссылки"
 
-#: virtualBuffers\__init__.py:269
+#: virtualBuffers\__init__.py:286
 msgid "moves to the next unvisited link"
 msgstr ""
 "переходит на следующую не посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:275
+#: virtualBuffers\__init__.py:292
 msgid "no previous unvisited link"
 msgstr "Нет предыдущей не посещённой ссылки"
 
-#: virtualBuffers\__init__.py:276
+#: virtualBuffers\__init__.py:293
 msgid "moves to the previous unvisited link"
 msgstr ""
 "переходит на предыдущую не посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:282
+#: virtualBuffers\__init__.py:299
 msgid "no next form field"
 msgstr "Нет следующего поля формы"
 
-#: virtualBuffers\__init__.py:283 virtualBuffers\__init__.py:290
+#: virtualBuffers\__init__.py:300 virtualBuffers\__init__.py:307
 msgid "moves to the next form field"
 msgstr "переходит на следующее поле формы"
 
-#: virtualBuffers\__init__.py:289
+#: virtualBuffers\__init__.py:306
 msgid "no previous form field"
 msgstr "Нет предыдущего поля формы"
+
+#: virtualBuffers\__init__.py:342
+msgid "displays a list of links"
+msgstr "Показывает список ссылок"
 
 #: virtualBuffers_old\MSHTML.py:144
 #: virtualBuffers_old\adobe.py:170

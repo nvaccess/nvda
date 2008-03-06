@@ -1,13 +1,13 @@
-# Slovenská lokalizácia NVDA
+# SlovenskĂˇ lokalizĂˇcia NVDA
 # Copyright (C) 2006-2008 NVDA contributers <http://www.nvda-project.org>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1595\n"
+"Project-Id-Version: r1788\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2008-03-04 17:00+Central Europe Standard Time\n"
-"Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
+"PO-Revision-Date: 2008-03-06 17:20+Central Europe Standard Time\n"
+"Last-Translator: Peter VĂˇgner <peter.v@datagate.sk>\n"
 "Language-Team: sk peter.v@datagate.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 #: NVDAObjects\IAccessible\__init__.py:63
+#: speech.py:665
 msgid "level %s"
 msgstr "úroveň %s"
 
@@ -33,7 +34,7 @@ msgid "through"
 msgstr "cez"
 
 #: NVDAObjects\IAccessible\excel.py:63
-#: controlTypes.py:305
+#: controlTypes.py:307
 msgid "selected"
 msgstr "vybraté"
 
@@ -54,7 +55,7 @@ msgid "point"
 msgstr "bodov"
 
 #: NVDAObjects\IAccessible\excel.py:103
-#: controlTypes.py:290
+#: controlTypes.py:291
 #: textBuffer.py:265
 #: textBuffer.py:317
 msgid "bold"
@@ -68,7 +69,7 @@ msgstr "kurzíva"
 
 #: NVDAObjects\IAccessible\excel.py:107
 #: characterSymbols.py:50
-#: controlTypes.py:292
+#: controlTypes.py:293
 #: textBuffer.py:279
 #: textBuffer.py:321
 msgid "underline"
@@ -158,7 +159,7 @@ msgstr "režim prepúšťania"
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: speech.py:356 speech.py:362
-#: virtualBuffers\__init__.py:199
+#: virtualBuffers\__init__.py:200
 msgid "off"
 msgstr "vypnuté"
 
@@ -177,19 +178,19 @@ msgstr "vypnuté"
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: speech.py:351
-#: virtualBuffers\__init__.py:199
+#: virtualBuffers\__init__.py:200
 msgid "on"
 msgstr "zapnuté"
 
-#: appModuleHandler.py:227
+#: appModuleHandler.py:228
 msgid "Error in appModule %s"
 msgstr "chyba v aplikačnom module %s"
 
-#: appModuleHandler.py:244
+#: appModuleHandler.py:246
 msgid "Could not load default module keyMap"
 msgstr "nemôžem načítať predvolenú mapu klávesov modulu"
 
-#: appModuleHandler.py:247
+#: appModuleHandler.py:249
 msgid "Could not load default module "
 msgstr "nemôžem načítať predvolený modul"
 
@@ -886,7 +887,7 @@ msgstr "odoslané: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:67 speech.py:663
+#: speech.py:67 speech.py:598
 msgid "blank"
 msgstr "prázdny"
 
@@ -895,7 +896,7 @@ msgid "null"
 msgstr "nič"
 
 #: characterSymbols.py:20
-#: controlTypes.py:186
+#: controlTypes.py:187
 msgid "tab"
 msgstr "tab"
 
@@ -1012,7 +1013,7 @@ msgid "right bracket"
 msgstr "hranatá zatvoriť"
 
 #: characterSymbols.py:49
-#: controlTypes.py:256
+#: controlTypes.py:257
 msgid "caret"
 msgstr "striežka"
 
@@ -1050,639 +1051,640 @@ msgstr "odrážka"
 msgid "dot dot dot"
 msgstr "bodka bodka bodka"
 
-#: controlTypes.py:164
+#: controlTypes.py:165
 msgid "unknown object"
 msgstr "neznámy objekt"
 
-#: controlTypes.py:165
+#: controlTypes.py:166
 msgid "window"
 msgstr "okno"
 
-#: controlTypes.py:166
+#: controlTypes.py:167
 msgid "title bar"
 msgstr "názov okna"
 
-#: controlTypes.py:167
+#: controlTypes.py:168
 msgid "pane"
 msgstr "panel"
 
-#: controlTypes.py:168
+#: controlTypes.py:169
 msgid "dialog"
 msgstr "dialóg"
 
-#: controlTypes.py:169
+#: controlTypes.py:170
 msgid "check box"
 msgstr "začiarkavacie políčko"
 
-#: controlTypes.py:170
+#: controlTypes.py:171
 msgid "radio button"
 msgstr "prepínač"
 
-#: controlTypes.py:171
+#: controlTypes.py:172
 msgid "text"
 msgstr "text"
 
-#: controlTypes.py:172
+#: controlTypes.py:173
 msgid "edit"
 msgstr "editačné"
 
-#: controlTypes.py:173
+#: controlTypes.py:174
 msgid "button"
 msgstr "tlačidlo"
 
-#: controlTypes.py:174
+#: controlTypes.py:175
 msgid "menu bar"
 msgstr "panel ponúk"
 
-#: controlTypes.py:175
+#: controlTypes.py:176
 msgid "menu item"
 msgstr "položka menu"
 
-#: controlTypes.py:176
+#: controlTypes.py:177
 msgid "popup menu"
 msgstr "kontext menu"
 
-#: controlTypes.py:177
+#: controlTypes.py:178
 msgid "combo box"
 msgstr "zoznamový rámik"
 
-#: controlTypes.py:178
+#: controlTypes.py:179
 msgid "list"
 msgstr "zoznam"
 
-#: controlTypes.py:179
+#: controlTypes.py:180
 msgid "list item"
 msgstr "položka zoznamu"
 
-#: controlTypes.py:180
+#: controlTypes.py:181
 msgid "graphic"
 msgstr "grafika"
 
-#: controlTypes.py:181
+#: controlTypes.py:182
 msgid "help balloon"
 msgstr "bublinková nápoveda"
 
-#: controlTypes.py:182
+#: controlTypes.py:183
 msgid "tool tip"
 msgstr "nástrojová nápoveda"
 
-#: controlTypes.py:183
+#: controlTypes.py:184
 msgid "link"
 msgstr "odkaz"
 
-#: controlTypes.py:184
+#: controlTypes.py:185
 msgid "tree view"
 msgstr "stromové zobrazenie"
 
-#: controlTypes.py:185
+#: controlTypes.py:186
 msgid "tree view item"
 msgstr "položka stromového zobrazenia"
 
-#: controlTypes.py:187
+#: controlTypes.py:188
 msgid "tab control"
 msgstr "záložka"
 
-#: controlTypes.py:188
+#: controlTypes.py:189
 msgid "slider"
 msgstr "posuvník"
 
-#: controlTypes.py:189
+#: controlTypes.py:190
 msgid "progress bar"
 msgstr "indikátor priebehu"
 
-#: controlTypes.py:190
+#: controlTypes.py:191
 msgid "scroll bar"
 msgstr "posúvač"
 
-#: controlTypes.py:191
+#: controlTypes.py:192
 msgid "status bar"
 msgstr "stavový riadok"
 
-#: controlTypes.py:192
+#: controlTypes.py:193
 msgid "table"
 msgstr "tabuľka"
 
-#: controlTypes.py:193
+#: controlTypes.py:194
 msgid "cell"
 msgstr "bunka"
 
-#: controlTypes.py:194
+#: controlTypes.py:195
 msgid "column"
 msgstr "stĺpec"
 
-#: controlTypes.py:195
+#: controlTypes.py:196
 msgid "row"
 msgstr "riadok"
 
-#: controlTypes.py:196
+#: controlTypes.py:197
 msgid "frame"
 msgstr "rámik"
 
-#: controlTypes.py:197
+#: controlTypes.py:198
 msgid "tool bar"
 msgstr "panel nástrojov"
 
-#: controlTypes.py:198
+#: controlTypes.py:199
 msgid "column header"
 msgstr "hlavička stĺpca"
 
-#: controlTypes.py:199
+#: controlTypes.py:200
 msgid "row header"
 msgstr "hlavička riadka"
 
-#: controlTypes.py:200
+#: controlTypes.py:201
 msgid "drop down button"
 msgstr "tlačidlo s kontextovou ponukou"
 
-#: controlTypes.py:201
+#: controlTypes.py:202
 msgid "clock"
 msgstr "hodiny"
 
-#: controlTypes.py:202
+#: controlTypes.py:203
 msgid "separator"
 msgstr "oddeľovač"
 
-#: controlTypes.py:203
+#: controlTypes.py:204
 msgid "form"
 msgstr "formulár"
 
-#: controlTypes.py:204
+#: controlTypes.py:205
 msgid "heading"
 msgstr "nadpis"
 
-#: controlTypes.py:205
+#: controlTypes.py:206
 msgid "heading 1"
 msgstr "nadpis úrovne 1"
 
-#: controlTypes.py:206
+#: controlTypes.py:207
 msgid "heading 2"
 msgstr "nadpis úrovne 2"
 
-#: controlTypes.py:207
+#: controlTypes.py:208
 msgid "heading 3"
 msgstr "nadpis úrovne 3"
 
-#: controlTypes.py:208
+#: controlTypes.py:209
 msgid "heading 4"
 msgstr "nadpis úrovne 4"
 
-#: controlTypes.py:209
+#: controlTypes.py:210
 msgid "heading 5"
 msgstr "nadpis úrovne 5"
 
-#: controlTypes.py:210
+#: controlTypes.py:211
 msgid "heading 6"
 msgstr "nadpis úrovne 6"
 
-#: controlTypes.py:211
+#: controlTypes.py:212
 msgid "paragraph"
 msgstr "odsek"
 
-#: controlTypes.py:212
+#: controlTypes.py:213
 msgid "block quote"
 msgstr "citácia"
 
-#: controlTypes.py:213
+#: controlTypes.py:214
 msgid "table header"
 msgstr "hlavička tabuľky"
 
-#: controlTypes.py:214
+#: controlTypes.py:215
 msgid "table body"
 msgstr "telo tabuľky"
 
-#: controlTypes.py:215
+#: controlTypes.py:216
 msgid "table footer"
 msgstr "päta tabuľky"
 
-#: controlTypes.py:216
+#: controlTypes.py:217
 #: virtualBuffers_old\adobe.py:37
 #: virtualBuffers_old\gecko.py:42
 msgid "document"
 msgstr "dokument"
 
-#: controlTypes.py:217
+#: controlTypes.py:218
 msgid "animation"
 msgstr "animácia"
 
-#: controlTypes.py:218
+#: controlTypes.py:219
 msgid "application"
 msgstr "aplikácia"
 
-#: controlTypes.py:219
+#: controlTypes.py:220
 msgid "box"
 msgstr "pole"
 
-#: controlTypes.py:220
+#: controlTypes.py:221
 msgid "grouping"
 msgstr "zoskupenie"
 
-#: controlTypes.py:221
+#: controlTypes.py:222
 msgid "property page"
 msgstr "strana vlastností"
 
-#: controlTypes.py:222
+#: controlTypes.py:223
 msgid "canvas"
 msgstr "plátno"
 
-#: controlTypes.py:223
+#: controlTypes.py:224
 msgid "caption"
 msgstr "titulok"
 
-#: controlTypes.py:224
+#: controlTypes.py:225
 msgid "check menu item"
 msgstr "začiarkavacia položka menu"
 
-#: controlTypes.py:225
+#: controlTypes.py:226
 msgid "date edit"
 msgstr "dátum"
 
-#: controlTypes.py:226
+#: controlTypes.py:227
 msgid "icon"
 msgstr "ikona"
 
-#: controlTypes.py:227
+#: controlTypes.py:228
 msgid "directory pane"
 msgstr "panel adresárov"
 
-#: controlTypes.py:228
+#: controlTypes.py:229
 msgid "embedded object"
 msgstr "vnorený objekt"
 
-#: controlTypes.py:229
+#: controlTypes.py:230
 msgid "end note"
 msgstr "koncová poznámka"
 
-#: controlTypes.py:230
+#: controlTypes.py:231
 msgid "footer"
 msgstr "zápätie"
 
-#: controlTypes.py:231
+#: controlTypes.py:232
 msgid "foot note"
 msgstr "poznámka pod čiarou"
 
-#: controlTypes.py:232
+#: controlTypes.py:233
 msgid "glass pane"
 msgstr "sklená tabuľa"
 
-#: controlTypes.py:233
+#: controlTypes.py:234
 msgid "header"
 msgstr "hlavička"
 
-#: controlTypes.py:234
+#: controlTypes.py:235
 msgid "image map"
 msgstr "obrázková mapa"
 
-#: controlTypes.py:235
+#: controlTypes.py:236
 msgid "input window"
 msgstr "vstupné okno"
 
-#: controlTypes.py:236
+#: controlTypes.py:237
 msgid "label"
 msgstr "menovka"
 
-#: controlTypes.py:237
+#: controlTypes.py:238
 msgid "note"
 msgstr "poznámka"
 
-#: controlTypes.py:238
+#: controlTypes.py:239
 msgid "page"
 msgstr "strana"
 
-#: controlTypes.py:239
+#: controlTypes.py:240
 msgid "radio menu item"
 msgstr "prepínacia položka menu"
 
-#: controlTypes.py:240
+#: controlTypes.py:241
 msgid "layered pane"
 msgstr "vrstvený panel"
 
-#: controlTypes.py:241
+#: controlTypes.py:242
 msgid "redundant object"
 msgstr "nadbytočný objekt"
 
-#: controlTypes.py:242
+#: controlTypes.py:243
 msgid "root pane"
 msgstr "panel vrchnej úrovne"
 
-#: controlTypes.py:243
+#: controlTypes.py:244
 msgid "edit bar"
 msgstr "panel úprav"
 
-#: controlTypes.py:244
+#: controlTypes.py:245
 msgid "terminal"
 msgstr "terminál"
 
-#: controlTypes.py:245
+#: controlTypes.py:246
 msgid "rich edit"
 msgstr "rich editačné"
 
-#: controlTypes.py:246
+#: controlTypes.py:247
 msgid "ruler"
 msgstr "pravídko"
 
-#: controlTypes.py:247
+#: controlTypes.py:248
 msgid "scroll pane"
 msgstr "posúvny panel"
 
-#: controlTypes.py:248
+#: controlTypes.py:249
 msgid "section"
 msgstr "odsek"
 
-#: controlTypes.py:249
+#: controlTypes.py:250
 msgid "shape"
 msgstr "obdlžník"
 
-#: controlTypes.py:250
+#: controlTypes.py:251
 msgid "split pane"
 msgstr "deliaci panel"
 
-#: controlTypes.py:251
+#: controlTypes.py:252
 #, fuzzy
 msgid "view port"
 msgstr ""
 
-#: controlTypes.py:252
+#: controlTypes.py:253
 #, fuzzy
 msgid "tear off menu"
 msgstr ""
 
-#: controlTypes.py:253
+#: controlTypes.py:254
 msgid "text frame"
 msgstr "textový rámik"
 
-#: controlTypes.py:254
+#: controlTypes.py:255
 msgid "toggle button"
 msgstr "prepínacie tlačidlo"
 
-#: controlTypes.py:255
+#: controlTypes.py:256
 msgid "border"
 msgstr "okraj"
 
-#: controlTypes.py:257
+#: controlTypes.py:258
 msgid "character"
 msgstr "znak"
 
-#: controlTypes.py:258
+#: controlTypes.py:259
 msgid "chart"
 msgstr "poradie"
 
-#: controlTypes.py:259
+#: controlTypes.py:260
 msgid "cursor"
 msgstr "kurzor"
 
-#: controlTypes.py:260
+#: controlTypes.py:261
 msgid "diagram"
 msgstr "diagram"
 
-#: controlTypes.py:261
+#: controlTypes.py:262
 #, fuzzy
 msgid "dial"
 msgstr ""
 
-#: controlTypes.py:262
+#: controlTypes.py:263
 #, fuzzy
 msgid "drop list"
 msgstr ""
 
-#: controlTypes.py:263
+#: controlTypes.py:264
 #, fuzzy
 msgid "split button"
 msgstr "tlačidlo"
 
-#: controlTypes.py:264
+#: controlTypes.py:265
 #, fuzzy
 msgid "menu button"
 msgstr "tlačidlo menu"
 
-#: controlTypes.py:265
+#: controlTypes.py:266
 #, fuzzy
 msgid "drop down button grid"
 msgstr ""
 
-#: controlTypes.py:266
+#: controlTypes.py:267
 #, fuzzy
 msgid "equation"
 msgstr ""
 
-#: controlTypes.py:267
+#: controlTypes.py:268
 #, fuzzy
 msgid "grip"
 msgstr ""
 
-#: controlTypes.py:268
+#: controlTypes.py:269
 msgid "hot key field"
 msgstr "klávesové pole"
 
-#: controlTypes.py:269
+#: controlTypes.py:270
 msgid "indicator"
 msgstr "indikátor"
 
-#: controlTypes.py:270
+#: controlTypes.py:271
 #, fuzzy
 msgid "spin button"
 msgstr ""
 
-#: controlTypes.py:271
+#: controlTypes.py:272
 msgid "sound"
 msgstr "zvuk"
 
-#: controlTypes.py:272
+#: controlTypes.py:273
 msgid "white space"
 msgstr "prázdne miesto"
 
-#: controlTypes.py:273
+#: controlTypes.py:274
 msgid "tree view button"
 msgstr "tlačidlo stromového zobrazenia"
 
-#: controlTypes.py:274
+#: controlTypes.py:275
 msgid "IP address"
 msgstr "IP adresa"
 
-#: controlTypes.py:275
+#: controlTypes.py:276
 msgid "desktop icon"
 msgstr "ikona pracovnej plochy"
 
-#: controlTypes.py:276
+#: controlTypes.py:277
+#: controlTypes.py:301
 msgid "alert"
 msgstr "upozornenie"
 
-#: controlTypes.py:277
+#: controlTypes.py:278
 msgid "IFrame"
 msgstr "vnorený rámik"
 
-#: controlTypes.py:278
+#: controlTypes.py:279
 msgid "desktop pane"
 msgstr "panel pracovnej plochy"
 
-#: controlTypes.py:279
+#: controlTypes.py:280
 msgid "option pane"
 msgstr "panel možností"
 
-#: controlTypes.py:280
+#: controlTypes.py:281
 msgid "color chooser"
 msgstr "výber farby"
 
-#: controlTypes.py:281
+#: controlTypes.py:282
 msgid "file chooser"
 msgstr "výber súboru"
 
-#: controlTypes.py:282
+#: controlTypes.py:283
 msgid "filler"
 msgstr "výplň"
 
-#: controlTypes.py:283
+#: controlTypes.py:284
 msgid "menu"
 msgstr "ponuka"
 
-#: controlTypes.py:284
+#: controlTypes.py:285
 msgid "panel"
 msgstr "panel"
 
-#: controlTypes.py:285
+#: controlTypes.py:286
 msgid "password edit"
 msgstr "heslové editačné"
 
-#: controlTypes.py:286
+#: controlTypes.py:287
 msgid "font chooser"
 msgstr "výber písma"
 
-#: controlTypes.py:287
+#: controlTypes.py:288
 msgid "line"
 msgstr "riadok"
 
-#: controlTypes.py:288
+#: controlTypes.py:289
 msgid "font name"
 msgstr "názov písma"
 
-#: controlTypes.py:289
+#: controlTypes.py:290
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:291
+#: controlTypes.py:292
 msgid "ITALIC"
 msgstr "kurzíva"
 
-#: controlTypes.py:293
+#: controlTypes.py:294
 msgid "foreground color"
 msgstr "farba popredia"
 
-#: controlTypes.py:294
+#: controlTypes.py:295
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:295
+#: controlTypes.py:296
 #: textBuffer.py:286
 #: textBuffer.py:293
 #: textBuffer.py:323
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:296
+#: controlTypes.py:297
 #: textBuffer.py:325
 msgid "subscript"
 msgstr "dolný index"
 
-#: controlTypes.py:297
+#: controlTypes.py:298
 msgid "style"
 msgstr "štýl"
 
-#: controlTypes.py:298
+#: controlTypes.py:299
 msgid "indent"
 msgstr "odsadenie"
 
-#: controlTypes.py:299
+#: controlTypes.py:300
 msgid "alignment"
 msgstr "zarovnanie"
 
-#: controlTypes.py:303
+#: controlTypes.py:305
 msgid "unavailable"
 msgstr "nedostupné"
 
-#: controlTypes.py:304
+#: controlTypes.py:306
 msgid "focused"
 msgstr "má fokus"
 
-#: controlTypes.py:306
+#: controlTypes.py:308
 msgid "busy"
 msgstr "zaneprázdnené"
 
-#: controlTypes.py:307
+#: controlTypes.py:309
 msgid "pressed"
 msgstr "stlačené"
 
-#: controlTypes.py:308
+#: controlTypes.py:310
 msgid "checked"
 msgstr "začiarknuté"
 
-#: controlTypes.py:309
+#: controlTypes.py:311
 msgid "half checked"
 msgstr "čiastočne začiarknuté"
 
-#: controlTypes.py:310
+#: controlTypes.py:312
 msgid "read only"
 msgstr "iba na čítanie"
 
-#: controlTypes.py:311
+#: controlTypes.py:313
 msgid "expanded"
 msgstr "otvorené"
 
-#: controlTypes.py:312
+#: controlTypes.py:314
 msgid "collapsed"
 msgstr "zatvorené"
 
-#: controlTypes.py:313
+#: controlTypes.py:315
 msgid "invisible"
 msgstr "neviditeľný"
 
-#: controlTypes.py:314
+#: controlTypes.py:316
 msgid "visited"
 msgstr "navštívený"
 
-#: controlTypes.py:315
+#: controlTypes.py:317
 msgid "linked"
 msgstr "prepojené"
 
-#: controlTypes.py:316
+#: controlTypes.py:318
 msgid "subMenu"
 msgstr "podmenu"
 
-#: controlTypes.py:317
+#: controlTypes.py:319
 #: virtualBuffers_old\MSHTML.py:295
 msgid "protected"
 msgstr "heslové"
 
-#: controlTypes.py:318
+#: controlTypes.py:320
 msgid "required"
 msgstr "povinné"
 
-#: controlTypes.py:319
+#: controlTypes.py:321
 #, fuzzy
 msgid "defunct"
 msgstr ""
 
-#: controlTypes.py:320
+#: controlTypes.py:322
 msgid "invalid entry"
 msgstr "neplatná položka"
 
-#: controlTypes.py:321
+#: controlTypes.py:323
 #, fuzzy
 msgid "modal"
 msgstr "dialóg"
 
-#: controlTypes.py:322
+#: controlTypes.py:324
 msgid "has auto complete"
 msgstr "podporuje automatické dopĺňanie"
 
-#: controlTypes.py:323
+#: controlTypes.py:325
 msgid "multi line"
 msgstr "viacriadkové"
 
-#: controlTypes.py:324
+#: controlTypes.py:326
 #, fuzzy
 msgid "iconified"
 msgstr "ikona"
 
-#: controlTypes.py:325
+#: controlTypes.py:327
 msgid "selectable"
 msgstr "podporuje výber položiek"
 
@@ -2314,19 +2316,19 @@ msgstr "skrollok %s"
 msgid "%s keyboard layout"
 msgstr "rozloženie klávesnice %s"
 
-#: keyboardHandler.py:161
+#: keyboardHandler.py:162
 msgid "Description: %s"
 msgstr "popis: %s"
 
-#: keyboardHandler.py:162
+#: keyboardHandler.py:163
 msgid "Location: %s"
 msgstr "umiestnenie: %s"
 
-#: keyboardHandler.py:175
+#: keyboardHandler.py:176
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Chyba v keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:210
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Chyba v keyboardHandler.internal_keyUpEvent"
 
@@ -2356,7 +2358,7 @@ msgstr "mimo"
 msgid "unselected %s"
 msgstr "nevybrané %s"
 
-#: speech.py:720
+#: speech.py:651
 #: virtualBuffers_old\MSHTML.py:123
 #: virtualBuffers_old\MSHTML.py:302
 #: virtualBuffers_old\MSHTML.py:306
@@ -2515,16 +2517,16 @@ msgstr ""
 "http://www.inzertko.sk/admini/gnu_gpl_sk.htm\n"
 "alebo si prečítajte súbor Copying.txt dodaný spolu s týmto programom."
 
-#: virtualBuffers\__init__.py:86
-#: virtualBuffers\__init__.py:90
-#: virtualBuffers\__init__.py:94
-#: virtualBuffers\__init__.py:100
-#: virtualBuffers\__init__.py:104
+#: virtualBuffers\__init__.py:87
+#: virtualBuffers\__init__.py:91
+#: virtualBuffers\__init__.py:95
+#: virtualBuffers\__init__.py:101
+#: virtualBuffers\__init__.py:105
 #: virtualBuffers_old\__init__.py:190
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: virtualBuffers\__init__.py:88
+#: virtualBuffers\__init__.py:89
 #: virtualBuffers_old\MSHTML.py:247
 #: virtualBuffers_old\MSHTML.py:250
 #: virtualBuffers_old\MSHTML.py:257
@@ -2535,103 +2537,107 @@ msgstr "mimo %s"
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: virtualBuffers\__init__.py:102
+#: virtualBuffers\__init__.py:103
 msgid "in %s"
 msgstr "%s"
 
-#: virtualBuffers\__init__.py:176
+#: virtualBuffers\__init__.py:177
 #: virtualBuffers_old\__init__.py:290
 msgid "activates the current object in the virtual buffer"
 msgstr "aktivuje aktuálny objekt virtuálneho bufferu"
 
-#: virtualBuffers\__init__.py:195
+#: virtualBuffers\__init__.py:196
 msgid "Refreshed"
 msgstr "obnovené"
 
-#: virtualBuffers\__init__.py:200
+#: virtualBuffers\__init__.py:201
 msgid "use screen layout %s"
 msgstr "zachovať vzhľad ako na obrazovke %s"
 
-#: virtualBuffers\__init__.py:226
+#: virtualBuffers\__init__.py:243
 msgid "no next heading"
 msgstr "žiadny ďalší nadpis"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:244
 #: virtualBuffers_old\__init__.py:313
 msgid "moves to the next heading"
 msgstr "presunie sa na nasledujúci nadpis"
 
-#: virtualBuffers\__init__.py:233
+#: virtualBuffers\__init__.py:250
 msgid "no previous heading"
 msgstr "žiadny predchádzajúci nadpis"
 
-#: virtualBuffers\__init__.py:234
+#: virtualBuffers\__init__.py:251
 #: virtualBuffers_old\__init__.py:324
 msgid "moves to the previous heading"
 msgstr "presunie sa na predchádzajúci nadpis"
 
-#: virtualBuffers\__init__.py:240
+#: virtualBuffers\__init__.py:257
 msgid "no next link"
 msgstr "žiadny ďalší odkaz"
 
-#: virtualBuffers\__init__.py:241
+#: virtualBuffers\__init__.py:258
 #: virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "presunie sa na nasledujúci odkaz"
 
-#: virtualBuffers\__init__.py:247
+#: virtualBuffers\__init__.py:264
 msgid "no previous link"
 msgstr "žiadny predchádzajúci odkaz"
 
-#: virtualBuffers\__init__.py:248
+#: virtualBuffers\__init__.py:265
 #: virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "presunie sa na predchádzajúci odkaz"
 
-#: virtualBuffers\__init__.py:254
+#: virtualBuffers\__init__.py:271
 msgid "no next visited link"
 msgstr "žiadny ďalší navštívený odkaz"
 
-#: virtualBuffers\__init__.py:255
+#: virtualBuffers\__init__.py:272
 msgid "moves to the next visited link"
 msgstr "presunie sa na nasledujúci navštívený odkaz"
 
-#: virtualBuffers\__init__.py:261
+#: virtualBuffers\__init__.py:278
 msgid "no previous visited link"
 msgstr "žiadny predchádzajúci navštívený odkaz"
 
-#: virtualBuffers\__init__.py:262
+#: virtualBuffers\__init__.py:279
 msgid "moves to the previous visited link"
 msgstr "presunie sa na predchádzajúci navštívený odkaz"
 
-#: virtualBuffers\__init__.py:268
+#: virtualBuffers\__init__.py:285
 msgid "no next unvisited link"
 msgstr "žiadny ďalší nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:269
+#: virtualBuffers\__init__.py:286
 msgid "moves to the next unvisited link"
 msgstr "presunie sa na nasledujúci nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:275
+#: virtualBuffers\__init__.py:292
 msgid "no previous unvisited link"
 msgstr "žiadny predchádzajúci nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:276
+#: virtualBuffers\__init__.py:293
 msgid "moves to the previous unvisited link"
 msgstr "presunie sa na predchádzajúci nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:282
+#: virtualBuffers\__init__.py:299
 msgid "no next form field"
 msgstr "žiadny ďalší prvok formulára"
 
-#: virtualBuffers\__init__.py:283
-#: virtualBuffers\__init__.py:290
+#: virtualBuffers\__init__.py:300
+#: virtualBuffers\__init__.py:307
 msgid "moves to the next form field"
 msgstr "presunie sa na predchádzajúci prvok formulára"
 
-#: virtualBuffers\__init__.py:289
+#: virtualBuffers\__init__.py:306
 msgid "no previous form field"
 msgstr "žiadny predchádzajúci prvok formulára"
+
+#: virtualBuffers\__init__.py:342
+msgid "displays a list of links"
+msgstr "zobrazí zoznam odkazov"
 
 #: virtualBuffers_old\MSHTML.py:144
 #: virtualBuffers_old\adobe.py:170
