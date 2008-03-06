@@ -88,9 +88,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if passKeyThroughCount>=0:
 			passKeyThroughCount+=1
 			return True
-		vkName=vkCodes.byCode.get(vkCode,"").lower()
-		if not vkName and vkCode>=32 and vkCode<128:
-			vkName=unichr(vkCode).lower()
+		vkName=None
+		vkChar=ctypes.windll.user32.MapVirtualKeyW(vkCode,winUser.MAPVK_VK_TO_CHAR)
+		if vkChar>32 and vkChar<128:
+			vkChar=unichr(vkChar)
+			if not vkChar.isspace():
+				vkName=vkChar.lower()
+		if vkName is None:
+			vkName=vkCodes.byCode.get(vkCode,"").lower()
 		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			if speech.isPaused:
 				unpauseByShiftUp=True

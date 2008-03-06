@@ -40,7 +40,7 @@ activeModule=None
 default=None
 
 #regexp to collect the key and script from a line in a keyMap file 
-re_keyScript=re.compile(r'^\s*(?P<key>[\w+]+)\s*=\s*(?P<script>[\w]+)\s*$')
+re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
 
 class TProcessEntry32(ctypes.Structure):
 	_fields_ = [
