@@ -90,8 +90,11 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			return True
 		vkName=vkCodes.byCode.get(vkCode,"").lower()
 		vkChar=ctypes.windll.user32.MapVirtualKeyW(vkCode,winUser.MAPVK_VK_TO_CHAR)
-		if (vkName.startswith('oem') or vkName=="") and vkChar>32 and vkChar<128:
-			vkName=unichr(vkChar).lower()
+		if vkName.startswith('oem') or not vkName:
+			if 32<vkCode<128:
+				vkName=unichr(vkCode).lower()
+			elif 32<vkChar<128:
+				vkName=unichr(vkChar).lower()
 		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			if speech.isPaused:
 				unpauseByShiftUp=True
