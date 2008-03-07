@@ -808,10 +808,17 @@ def initialize():
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)
 	api.setMouseObject(desktopObject)
-	winEventCallback(0,winUser.EVENT_SYSTEM_FOREGROUND,winUser.getForegroundWindow(),OBJID_CLIENT,0,0,0)
+	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
+	if foregroundObject:
+		api.setForegroundObject(foregroundObject)
+		queueHandler.queueFunction(queueHandler.eventQueue,focus_manageEvent,foregroundObject,needsFocusState=False)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		winEventCallback(0,winUser.EVENT_OBJECT_FOCUS,focusObject.windowHandle,OBJID_CLIENT,0,0,0)
+		queueHandler.queueFunction(queueHandler.eventQueue,focus_manageEvent,focusObject)
+
+
+
+
 	for eventType in eventMap.keys():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if handle:

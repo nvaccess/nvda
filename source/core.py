@@ -133,8 +133,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.initialize()
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
-			speech.speakMessage(_("NVDA started"),wait=True)
-			speech.speakMessage(_("You can press insert+n to activate the NVDA menu at any time"),wait=True)
+			speech.speakMessage(_("NVDA started"))
+			speech.speakMessage(_("You can press insert+n to activate the NVDA menu at any time"))
 
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
