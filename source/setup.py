@@ -34,8 +34,6 @@ setup(
 	name = name,
 	version=version,
 	description=description,
-	maintainer=maintainer,
-	maintainer_email=maintainer_email,
 	url=url,
 	classifiers=[
 'Development Status :: 3 - Alpha',

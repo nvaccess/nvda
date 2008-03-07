@@ -151,8 +151,7 @@ class MainFrame(wx.Frame):
 			aboutInfo="""%s
 %s: %s
 %s: %s
-%s: %s <%s>
-%s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("maintainer"),versionInfo.maintainer,versionInfo.maintainer_email,_("copyright"),versionInfo.copyrightInfo)
+%s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("copyright"),versionInfo.copyrightInfo)
 			d = wx.MessageDialog(None, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
 		except:
