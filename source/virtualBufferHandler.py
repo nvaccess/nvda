@@ -31,7 +31,7 @@ def update(obj):
 	states=obj.states
 	#Gecko with IAccessible2 support
 	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
-		classString="virtualBuffers_old.gecko.Gecko"
+		classString="virtualBuffers.gecko_ia2.Gecko_ia2"
 	#Gecko only with IAccessible support
 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
 		classString="virtualBuffers_old.gecko.Gecko"
