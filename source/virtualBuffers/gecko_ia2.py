@@ -49,16 +49,17 @@ class Gecko_ia2(VirtualBuffer):
 
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
-		if not isinstance(obj,NVDAObjects.IAccessible.IA2.IA2):
+		if not isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
-		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
-			return False
-		ID=obj.IAccessibleObject.uniqueID
-		try:
-			self.rootNVDAObject.IAccessibleObject.accChild(ID)
-		except:
-			return False
-		return True
+		if self.rootNVDAObject.windowHandle==obj.windowHandle:
+			ID=obj.IAccessibleObject.uniqueID
+			try:
+				self.rootNVDAObject.IAccessibleObject.accChild(ID)
+			except:
+				return False
+			return True
+		else:
+			return True
 
 	def isAlive(self):
 		root=self.rootNVDAObject
