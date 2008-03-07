@@ -12,6 +12,8 @@ from comtypes import *
 import traceback
 import config
 
+S_OK=0
+
 ###comtypes class definitions
 
 SVFN_LEN = 262
