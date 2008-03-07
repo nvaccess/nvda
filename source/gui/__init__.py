@@ -6,6 +6,7 @@
 
 import time
 import os
+import sys
 import wx
 from wx.lib import newevent
 import globalVars
@@ -16,10 +17,12 @@ import queueHandler
 import core
 from settingsDialogs import *
 import userDictHandler
+import languageHandler
 
 ### Constants
 appTitle = "NVDA"
-iconPath="%s/images/icon.png"%os.getcwd()
+NVDA_PATH = os.getcwd()
+ICON_PATH=os.path.join(NVDA_PATH, "images", "icon.png")
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
 id_showGuiCommand=wx.NewId()
@@ -46,6 +49,44 @@ class ExternalExecuteEvent(wx.PyCommandEvent):
 		for n in xrange(20):
 			yield None
 		self._callback(ret)
+
+def getDocFilePath(fileName, localized=True):
+	if not getDocFilePath.rootPath:
+		if hasattr(sys, "frozen"):
+			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "documentation")
+		else:
+			getDocFilePath.rootPath = os.path.abspath(os.path.join("..", "user_docs"))
+
+	if localized:
+		lang = languageHandler.getLanguage()
+		tryLangs = [lang]
+		if "_" in lang:
+			# This locale has a sub-locale, but documentation might not exist for the sub-locale, so try stripping it.
+			tryLangs.append(lang.split("_")[0])
+		# If all else fails, use English.
+		tryLangs.append("en")
+
+		fileName, fileExt = os.path.splitext(fileName)
+		for tryLang in tryLangs:
+			tryDir = os.path.join(getDocFilePath.rootPath, tryLang)
+			if not os.path.isdir(tryDir):
+				continue
+
+			# Some out of date translations might include .txt files which are now .html files in newer translations.
+			# Therefore, ignore the extension and try both .html and .txt.
+			for tryExt in ("html", "txt"):
+				tryPath = os.path.join(tryDir, "%s.%s" % (fileName, tryExt))
+				if os.path.isfile(tryPath):
+					return tryPath
+
+	else:
+		# Not localized.
+		if not hasattr(sys, "frozen") and fileName in ("copying.txt", "contributors.txt"):
+			# If running from source, these two files are in the root dir.
+			return os.path.join(NVDA_PATH, "..", fileName)
+		else:
+			return os.path.join(getDocFilePath.rootPath, fileName)
+getDocFilePath.rootPath = None
 
 class MainFrame(wx.Frame):
 
@@ -140,12 +181,6 @@ class MainFrame(wx.Frame):
 		d=DocumentFormattingDialog(None)
 		d.Show(True)
 
-	def onHomePageCommand(self,evt):
-		os.startfile("http://www.nvda-project.org")
-
-	def onNvdaWikiCommand(self,evt):
-		os.startfile("http://wiki.nvda-project.org")
-
 	def onAboutCommand(self,evt):
 		try:
 			aboutInfo="""%s
@@ -161,7 +196,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
-		icon=wx.Icon(iconPath,wx.BITMAP_TYPE_PNG)
+		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_PNG)
 		self.SetIcon(icon, appTitle)
 
 		self.menu=wx.Menu()
@@ -191,11 +226,26 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("User &dictionaries"),subMenu_userDicts)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+
 		menu_help = wx.Menu()
-		item = menu_help.Append(wx.ID_ANY, _("NVDA homepage"), _("Opens NVDA homepage in the default browser"))
-		self.Bind(wx.EVT_MENU, frame.onHomePageCommand, item)
-		item = menu_help.Append(wx.ID_ANY, _("NVDA wiki"), _("Opens NVDA wiki in the default browser"))
-		self.Bind(wx.EVT_MENU, frame.onNvdaWikiCommand, item)
+		item = menu_help.Append(wx.ID_ANY, _("User guide"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("user guide.html")), item)
+		item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
+		item = menu_help.Append(wx.ID_ANY, _("What's &new"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt", False)), item)
+		subMenu = wx.Menu()
+		item = subMenu.Append(wx.ID_ANY, _("Home page"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+		item = subMenu.Append(wx.ID_ANY, _("Wiki"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://wiki.nvda-project.org/"), item)
+		item = subMenu.Append(wx.ID_ANY, _("Trac (issue tracker)"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://trac.nvda-project.org/"), item)
+		menu_help.AppendMenu(wx.ID_ANY, _("Web resources"), subMenu)
+		item = menu_help.Append(wx.ID_ANY, _("License"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
+		item = menu_help.Append(wx.ID_ANY, _("Contributors"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
