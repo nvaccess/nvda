@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1806\n"
+"Project-Id-Version: r1817\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-03-07 17:29+0200\n"
+"PO-Revision-Date: 2008-03-08 10:48+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1679,7 +1679,7 @@ msgstr "Tilapäissanasto"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Oletko varma, että haluat sulkea NVDA:n?"
 
-#: gui\__init__.py:139 gui\__init__.py:258
+#: gui\__init__.py:139 gui\__init__.py:256
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
@@ -1695,7 +1695,7 @@ msgstr "URL-osoite"
 msgid "version"
 msgstr "versio"
 
-#: gui\__init__.py:190 gui\__init__.py:249
+#: gui\__init__.py:190 gui\__init__.py:247
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
@@ -1826,50 +1826,46 @@ msgid "Home page"
 msgstr "Kotisivu"
 
 #: gui\__init__.py:240
-msgid "Wiki"
-msgstr "Wiki"
-
-#: gui\__init__.py:242
 msgid "Trac (issue tracker)"
 msgstr "Trac (ongelmienseuranta)"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:242
 msgid "Web resources"
 msgstr "Web-resurssit"
 
-#: gui\__init__.py:245
+#: gui\__init__.py:243
 msgid "License"
 msgstr "Lisenssi"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:245
 msgid "Contributors"
 msgstr "Avustajat"
 
-#: gui\__init__.py:249
+#: gui\__init__.py:247
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:251
+#: gui\__init__.py:249
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:251
 msgid "&Revert to saved configuration"
 msgstr "&Palaa tallennettuihin asetuksiin"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:251
 msgid "Reset all settings to saved state"
 msgstr "Nollaa asetukset tallennettuihin arvoihinsa"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:253
 msgid "&Save configuration"
 msgstr "&Tallenna asetukset"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:253
 msgid "Write the current configuration to nvda.ini"
 msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 
-#: gui\__init__.py:258
+#: gui\__init__.py:256
 msgid "E&xit"
 msgstr "&Lopeta"
 
@@ -2474,66 +2470,82 @@ msgid "moves to the previous heading"
 msgstr "siirtää edellisen otsikon kohdalle"
 
 #: virtualBuffers\__init__.py:257
+msgid "no next table"
+msgstr "ei seuraavaa taulukkoa"
+
+#: virtualBuffers\__init__.py:258 virtualBuffers_old\__init__.py:357
+msgid "moves to the next table"
+msgstr "siirtää seuraavan taulukon kohdalle"
+
+#: virtualBuffers\__init__.py:264
+msgid "no previous table"
+msgstr "ei edellistä taulukkoa"
+
+#: virtualBuffers\__init__.py:265 virtualBuffers_old\__init__.py:368
+msgid "moves to the previous table"
+msgstr "siirtää edellisen taulukon kohdalle"
+
+#: virtualBuffers\__init__.py:271
 msgid "no next link"
 msgstr "ei seuraavaa linkkiä"
 
-#: virtualBuffers\__init__.py:258 virtualBuffers_old\__init__.py:379
+#: virtualBuffers\__init__.py:272 virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "siirtää seuraavan linkin kohdalle"
 
-#: virtualBuffers\__init__.py:264
+#: virtualBuffers\__init__.py:278
 msgid "no previous link"
 msgstr "ei edellistä linkkiä"
 
-#: virtualBuffers\__init__.py:265 virtualBuffers_old\__init__.py:390
+#: virtualBuffers\__init__.py:279 virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "siirtää edellisen linkin kohdalle"
 
-#: virtualBuffers\__init__.py:271
+#: virtualBuffers\__init__.py:285
 msgid "no next visited link"
 msgstr "ei seuraavaa avattua linkkiä"
 
-#: virtualBuffers\__init__.py:272
+#: virtualBuffers\__init__.py:286
 msgid "moves to the next visited link"
 msgstr "siirtää seuraavan avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:278
+#: virtualBuffers\__init__.py:292
 msgid "no previous visited link"
 msgstr "ei edellistä avattua linkkiä"
 
-#: virtualBuffers\__init__.py:279
+#: virtualBuffers\__init__.py:293
 msgid "moves to the previous visited link"
 msgstr "siirtää edellisen avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:285
+#: virtualBuffers\__init__.py:299
 msgid "no next unvisited link"
 msgstr "ei seuraavaa avaamatonta linkkiä"
 
-#: virtualBuffers\__init__.py:286
+#: virtualBuffers\__init__.py:300
 msgid "moves to the next unvisited link"
 msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:292
+#: virtualBuffers\__init__.py:306
 msgid "no previous unvisited link"
 msgstr "ei edellistä avaamatonta linkkiä"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:307
 msgid "moves to the previous unvisited link"
 msgstr "siirtää edellisen avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:299
+#: virtualBuffers\__init__.py:313
 msgid "no next form field"
 msgstr "ei seuraavaa lomakekenttää"
 
-#: virtualBuffers\__init__.py:300 virtualBuffers\__init__.py:307
+#: virtualBuffers\__init__.py:314 virtualBuffers\__init__.py:321
 msgid "moves to the next form field"
 msgstr "siirtää seuraavan lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:306
+#: virtualBuffers\__init__.py:320
 msgid "no previous form field"
 msgstr "ei edellistä lomakekenttää"
 
-#: virtualBuffers\__init__.py:342
+#: virtualBuffers\__init__.py:356
 msgid "displays a list of links"
 msgstr "näyttää linkkilistan"
 
@@ -2589,14 +2601,6 @@ msgstr "siirtää edellisen kappaleen kohdalle"
 #: virtualBuffers_old\__init__.py:356 virtualBuffers_old\__init__.py:367
 msgid "no more tables"
 msgstr "ei enempää taulukoita"
-
-#: virtualBuffers_old\__init__.py:357
-msgid "moves to the next table"
-msgstr "siirtää seuraavan taulukon kohdalle"
-
-#: virtualBuffers_old\__init__.py:368
-msgid "moves to the previous table"
-msgstr "siirtää edellisen taulukon kohdalle"
 
 #: virtualBuffers_old\__init__.py:378 virtualBuffers_old\__init__.py:389
 msgid "no more links"
