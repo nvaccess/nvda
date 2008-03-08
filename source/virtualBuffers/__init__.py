@@ -250,6 +250,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 			speech.speakMessage(_("no previous heading"))
 	script_previousHeading.__doc__ = _("moves to the previous heading")
 
+	def script_nextTable(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
+		if not self._jumpToNodeType("table","next"):
+			speech.speakMessage(_("no next table"))
+	script_nextTable.__doc__ = _("moves to the next table")
+
+	def script_previousTable(self,keyPress,nextScript):
+		if self.VBufHandle is None:
+			return sendKey(keyPress)
+		if not self._jumpToNodeType("table","previous"):
+			speech.speakMessage(_("no previous table"))
+	script_previousTable.__doc__ = _("moves to the previous table")
+
 	def script_nextLink(self,keyPress,nextScript):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
@@ -348,6 +362,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("NVDA+v","toggleScreenLayout"),
 	("h","nextHeading"),
 	("shift+h","previousHeading"),
+	("t","nextTable"),
+	("shift+t","previousTable"),
 	("k","nextLink"),
 	("shift+k","previousLink"),
 	("v","nextVisitedLink"),

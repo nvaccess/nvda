@@ -141,6 +141,8 @@ class Gecko_ia2(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="heading":
 			return {"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
+		if nodeType=="table":
+			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
 		elif nodeType=="link":
 			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
 		elif nodeType=="visitedLink":
