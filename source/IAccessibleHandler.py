@@ -621,7 +621,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 					parent=api.getFocusAncestors()[-1]
 				except:
 					parent=desktopObject
-				api.setFocusObject(parent)
+				globalVars.focusObject=parent
 				api.setMouseObject(desktopObject)
 				return
 			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.event_windowHandle) and (objectID==foregroundObject.event_objectID) and (childID==foregroundObject.event_childID):
