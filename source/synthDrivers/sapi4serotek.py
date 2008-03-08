@@ -100,6 +100,7 @@ class SynthDriver(silence.SynthDriver):
 		self.tts.voice=self.tts.voices[value-1][0]
 
 	def speakText(self,text,wait=False,index=None):
+		text="%s\0"%text
 		self.waitFlag=wait
 		if index is not None:
 			self.tts.addIndexMark(self.onIndexMark,[index],{})
