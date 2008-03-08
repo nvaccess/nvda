@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1806\n"
+"Project-Id-Version: r1815\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-03-07 16:45+0200\n"
+"PO-Revision-Date: 2008-03-08 08:20+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1671,7 +1671,7 @@ msgstr "Dictionnaire temporaire"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Êtes-vous sûr de vouloir quitter NVDA ?"
 
-#: gui\__init__.py:139 gui\__init__.py:258
+#: gui\__init__.py:139 gui\__init__.py:256
 msgid "Exit NVDA"
 msgstr "quitter NVDA"
 
@@ -1687,7 +1687,7 @@ msgstr "url"
 msgid "version"
 msgstr "version"
 
-#: gui\__init__.py:190 gui\__init__.py:249
+#: gui\__init__.py:190 gui\__init__.py:247
 msgid "About NVDA"
 msgstr "A propos dde NVDA"
 
@@ -1820,50 +1820,46 @@ msgid "Home page"
 msgstr "Page d'accueil"
 
 #: gui\__init__.py:240
-msgid "Wiki"
-msgstr "Wiki"
-
-#: gui\__init__.py:242
 msgid "Trac (issue tracker)"
 msgstr "Trace (suivi des problèmes)"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:242
 msgid "Web resources"
 msgstr "Ressources web"
 
-#: gui\__init__.py:245
+#: gui\__init__.py:243
 msgid "License"
 msgstr "Licence"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:245
 msgid "Contributors"
 msgstr "Contributeurs"
 
-#: gui\__init__.py:249
+#: gui\__init__.py:247
 msgid "About..."
 msgstr "A propos..."
 
-#: gui\__init__.py:251
+#: gui\__init__.py:249
 msgid "&Help"
 msgstr "&Aide"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:251
 msgid "&Revert to saved configuration"
 msgstr "&Retour à la configuration sauvegardée"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:251
 msgid "Reset all settings to saved state"
 msgstr "Remettre tous les paramètres à l'état sauvegardé"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:253
 msgid "&Save configuration"
 msgstr "&Sauvegarde de la configuration"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:253
 msgid "Write the current configuration to nvda.ini"
 msgstr "Enregistrer la configuration courante dans nvda.ini"
 
-#: gui\__init__.py:258
+#: gui\__init__.py:256
 msgid "E&xit"
 msgstr "E&xit"
 
@@ -2466,66 +2462,82 @@ msgid "moves to the previous heading"
 msgstr "aller au titre précédent"
 
 #: virtualBuffers\__init__.py:257
+msgid "no next table"
+msgstr "plus de tableau"
+
+#: virtualBuffers\__init__.py:258 virtualBuffers_old\__init__.py:357
+msgid "moves to the next table"
+msgstr "aller au tableau suivant"
+
+#: virtualBuffers\__init__.py:264
+msgid "no previous table"
+msgstr "plus de tableau"
+
+#: virtualBuffers\__init__.py:265 virtualBuffers_old\__init__.py:368
+msgid "moves to the previous table"
+msgstr "aller au tableau précédent"
+
+#: virtualBuffers\__init__.py:271
 msgid "no next link"
 msgstr "plus de lien"
 
-#: virtualBuffers\__init__.py:258 virtualBuffers_old\__init__.py:379
+#: virtualBuffers\__init__.py:272 virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "Aller au lien suivant"
 
-#: virtualBuffers\__init__.py:264
+#: virtualBuffers\__init__.py:278
 msgid "no previous link"
 msgstr "plus de lien"
 
-#: virtualBuffers\__init__.py:265 virtualBuffers_old\__init__.py:390
+#: virtualBuffers\__init__.py:279 virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "aller au lien précédent"
 
-#: virtualBuffers\__init__.py:271
+#: virtualBuffers\__init__.py:285
 msgid "no next visited link"
 msgstr "plus de lien visité"
 
-#: virtualBuffers\__init__.py:272
+#: virtualBuffers\__init__.py:286
 msgid "moves to the next visited link"
 msgstr "Aller au lien visité suivant"
 
-#: virtualBuffers\__init__.py:278
+#: virtualBuffers\__init__.py:292
 msgid "no previous visited link"
 msgstr "Plus de lien visité"
 
-#: virtualBuffers\__init__.py:279
+#: virtualBuffers\__init__.py:293
 msgid "moves to the previous visited link"
 msgstr "aller au lien visité précédent"
 
-#: virtualBuffers\__init__.py:285
+#: virtualBuffers\__init__.py:299
 msgid "no next unvisited link"
 msgstr "plus de lien non visité"
 
-#: virtualBuffers\__init__.py:286
+#: virtualBuffers\__init__.py:300
 msgid "moves to the next unvisited link"
 msgstr "Aller au lien non visité suivant"
 
-#: virtualBuffers\__init__.py:292
+#: virtualBuffers\__init__.py:306
 msgid "no previous unvisited link"
 msgstr "plus de lien non visité"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:307
 msgid "moves to the previous unvisited link"
 msgstr "aller au lien non visité précédent"
 
-#: virtualBuffers\__init__.py:299
+#: virtualBuffers\__init__.py:313
 msgid "no next form field"
 msgstr "plus de champ de formulaire"
 
-#: virtualBuffers\__init__.py:300 virtualBuffers\__init__.py:307
+#: virtualBuffers\__init__.py:314 virtualBuffers\__init__.py:321
 msgid "moves to the next form field"
 msgstr "Aller au champ de formulaire suivant"
 
-#: virtualBuffers\__init__.py:306
+#: virtualBuffers\__init__.py:320
 msgid "no previous form field"
 msgstr "plus de champ de formulaire"
 
-#: virtualBuffers\__init__.py:342
+#: virtualBuffers\__init__.py:356
 msgid "displays a list of links"
 msgstr "Affiche une liste de liens"
 
@@ -2580,14 +2592,6 @@ msgstr "aller au paragraphe précédent"
 #: virtualBuffers_old\__init__.py:356 virtualBuffers_old\__init__.py:367
 msgid "no more tables"
 msgstr "plus de tableau"
-
-#: virtualBuffers_old\__init__.py:357
-msgid "moves to the next table"
-msgstr "aller au tableau suivant"
-
-#: virtualBuffers_old\__init__.py:368
-msgid "moves to the previous table"
-msgstr "aller au tableau précédent"
 
 #: virtualBuffers_old\__init__.py:378 virtualBuffers_old\__init__.py:389
 msgid "no more links"
