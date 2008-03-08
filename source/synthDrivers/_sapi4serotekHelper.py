@@ -261,8 +261,10 @@ class SAPI4(object):
         modeID = mode.gModeID
         if self._ttsAttrs:
             oldRate = self.rate
+            oldAveragePitch = self.averagePitch
         else:
             oldRate = None
+            oldAveragePitch = None
         self._noticeAudioStop = False
         self._sink = None
         self._sinkID = None
@@ -288,6 +290,11 @@ class SAPI4(object):
         if oldRate is not None:
             try:
                 self.rate = oldRate
+            except:
+                pass
+        if oldAveragePitch is not None:
+            try:
+                self.averagePitch = oldAveragePitch
             except:
                 pass
 
