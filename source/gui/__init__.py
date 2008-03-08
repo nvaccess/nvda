@@ -237,8 +237,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 		subMenu = wx.Menu()
 		item = subMenu.Append(wx.ID_ANY, _("Home page"))
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-		item = subMenu.Append(wx.ID_ANY, _("Wiki"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://wiki.nvda-project.org/"), item)
 		item = subMenu.Append(wx.ID_ANY, _("Trac (issue tracker)"))
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://trac.nvda-project.org/"), item)
 		menu_help.AppendMenu(wx.ID_ANY, _("Web resources"), subMenu)
