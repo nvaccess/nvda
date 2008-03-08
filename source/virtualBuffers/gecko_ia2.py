@@ -131,7 +131,7 @@ class Gecko_ia2(VirtualBuffer):
 		try:
 			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
 			role=pacc.accRole(accChildID)
-			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST):
+			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_SLIDER):
 				api.toggleVirtualBufferPassThrough()
 			else:
 				pacc.accDoDefaultAction(accChildID)
