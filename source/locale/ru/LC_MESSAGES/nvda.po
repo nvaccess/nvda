@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2008-03-06 21:10+Russian Standard Time\n"
-"PO-Revision-Date: 2008-03-06 21:31+Moscow\n"
+"POT-Creation-Date: 2008-03-09 10:50+Russian Standard Time\n"
+"PO-Revision-Date: 2008-03-09 11:37+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In cooperation with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -1686,6 +1686,10 @@ msgstr ""
 msgid "NVDA started"
 msgstr "NVDA готов"
 
+#: core.py:137
+msgid "You can press insert+n to activate the NVDA menu at any time"
+msgstr "Нажмите Инсерт плюс эн для вызова меню NVDA"
+
 #: cursorManager.py:77 virtualBuffers_old\__init__.py:459
 msgid "Find"
 msgstr "Поиск"
@@ -1717,90 +1721,86 @@ msgstr ""
 "последовательности с текущей позиции "
 "курсора"
 
-#: gui\__init__.py:79
+#: gui\__init__.py:120
 msgid "configuration saved"
 msgstr "Конфигурация сохранена"
 
-#: gui\__init__.py:81
+#: gui\__init__.py:122
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Неудалось сохранить конфигурацию, вероят"
 "но, NVDA запущен из области, доступной толь"
 "ко для чтения"
 
-#: gui\__init__.py:84
+#: gui\__init__.py:125
 msgid "Default dictionary"
 msgstr "Общий словарь"
 
-#: gui\__init__.py:88
+#: gui\__init__.py:129
 msgid "Voice dictionary (%s)"
 msgstr "Голосовой словарь (%s)"
 
-#: gui\__init__.py:92
+#: gui\__init__.py:133
 msgid "Temporary dictionary"
 msgstr "Временный словарь"
 
-#: gui\__init__.py:98
+#: gui\__init__.py:139
 msgid "Are you sure you want to quit NVDA?"
 msgstr ""
 "Вы уверены, что хотите завершить работу "
 "NVDA?"
 
-#: gui\__init__.py:98 gui\__init__.py:209
+#: gui\__init__.py:139 gui\__init__.py:256
 msgid "Exit NVDA"
 msgstr "Завершение РаботыNVDA"
 
-#: gui\__init__.py:155
+#: gui\__init__.py:189
 msgid "copyright"
 msgstr "Авторское право"
 
-#: gui\__init__.py:155
-msgid "maintainer"
-msgstr "Разработчик"
-
-#: gui\__init__.py:155
+#: gui\__init__.py:189
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:155
+#: gui\__init__.py:189
 msgid "version"
 msgstr "Версия"
 
-#: gui\__init__.py:156 gui\__init__.py:200
+#: gui\__init__.py:190 gui\__init__.py:247
 msgid "About NVDA"
 msgstr "О NVDA"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:204
 msgid "&General settings..."
 msgstr "&Общие настройки..."
 
-#: gui\__init__.py:170 gui\settingsDialogs.py:98
+#: gui\__init__.py:204 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Общие настройки"
 
-#: gui\__init__.py:172
+#: gui\__init__.py:206
 msgid " the synthesizer to use"
 msgstr "Используемый синтезатор"
 
-#: gui\__init__.py:172
+#: gui\__init__.py:206
 msgid "&Synthesizer..."
 msgstr "&Синтезатор..."
 
-#: gui\__init__.py:174
+#: gui\__init__.py:208
 msgid "&Voice settings..."
 msgstr "&Голоса..."
 
-#: gui\__init__.py:174
+#: gui\__init__.py:208
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr ""
 "Выбор голоса, скорости, высоты и громкости"
 " синтезатора"
 
-#: gui\__init__.py:176
+#: gui\__init__.py:210
 msgid "&Keyboard Settings..."
 msgstr "&Клавиатура..."
 
-#: gui\__init__.py:176
+#: gui\__init__.py:210
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1809,49 +1809,49 @@ msgstr ""
 "вводимых символов, слов и командных "
 "клавиш"
 
-#: gui\__init__.py:178
+#: gui\__init__.py:212
 msgid "&Mouse settings..."
 msgstr "&Мышь..."
 
-#: gui\__init__.py:178
+#: gui\__init__.py:212
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Изменение чтения формы указателя мыши, "
 "объектов под указателем мыши и т.д."
 
-#: gui\__init__.py:180
+#: gui\__init__.py:214
 msgid "&Object presentation..."
 msgstr "&Представление объекта..."
 
-#: gui\__init__.py:180
+#: gui\__init__.py:214
 msgid "Change reporting of objects"
 msgstr "Изменение чтения объектов"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:216
 msgid "Change virtual buffers specific settings"
 msgstr ""
 "Изменение специальных настроек "
 "виртуальных буферов"
 
-#: gui\__init__.py:182
+#: gui\__init__.py:216
 msgid "Virtual &buffers..."
 msgstr "Виртуальные &буферы..."
 
-#: gui\__init__.py:184
+#: gui\__init__.py:218
 msgid "Change Settings of document properties"
 msgstr ""
 "Изменение чтения форматирования "
 "документов"
 
-#: gui\__init__.py:184
+#: gui\__init__.py:218
 msgid "Document &formatting..."
 msgstr "&Форматирование документа..."
 
-#: gui\__init__.py:187
+#: gui\__init__.py:221
 msgid "&Default dictionary..."
 msgstr "&Общий словарь..."
 
-#: gui\__init__.py:187
+#: gui\__init__.py:221
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -1860,11 +1860,11 @@ msgstr ""
 "общий словарь, добавляя необходимые "
 "статьи в список"
 
-#: gui\__init__.py:189
+#: gui\__init__.py:223
 msgid "&Voice dictionary..."
 msgstr "&Голосовой словарь......"
 
-#: gui\__init__.py:189
+#: gui\__init__.py:223
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -1873,11 +1873,11 @@ msgstr ""
 "голосовой словарь, добавляя необходимые "
 "статьи в список"
 
-#: gui\__init__.py:191
+#: gui\__init__.py:225
 msgid "&Temporary dictionary..."
 msgstr "&Временный словарь..."
 
-#: gui\__init__.py:191
+#: gui\__init__.py:225
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -1886,61 +1886,73 @@ msgstr ""
 "временный словарь, добавляя необходимые "
 "статьи"
 
-#: gui\__init__.py:193
+#: gui\__init__.py:227
 msgid "User &dictionaries"
 msgstr "&Пользовательские словари"
 
-#: gui\__init__.py:194
+#: gui\__init__.py:228
 msgid "&Preferences"
 msgstr "&Параметры"
 
-#: gui\__init__.py:196
-msgid "NVDA homepage"
-msgstr "Домашняя страница NVDA"
+#: gui\__init__.py:231
+msgid "User guide"
+msgstr "Руководство пользователя"
 
-#: gui\__init__.py:196
-msgid "Opens NVDA homepage in the default browser"
-msgstr ""
-"Открывает домашнюю страницу NVDA в браузер"
-"е, установленном поумолчанию"
+#: gui\__init__.py:233
+msgid "Key Command Quick Reference"
+msgstr "Список клавиатурных команд"
 
-#: gui\__init__.py:198
-msgid "NVDA wiki"
-msgstr "NVDA wiki"
+#: gui\__init__.py:235
+msgid "What's &new"
+msgstr "Что &нового"
 
-#: gui\__init__.py:198
-msgid "Opens NVDA wiki in the default browser"
-msgstr ""
-"Открывает NVDA wiki в браузере, установленном "
-"поумолчанию"
+#: gui\__init__.py:238
+msgid "Home page"
+msgstr "Домашняя страница"
 
-#: gui\__init__.py:200
+#: gui\__init__.py:240
+msgid "Trac (issue tracker)"
+msgstr "Обратная связь"
+
+#: gui\__init__.py:242
+msgid "Web resources"
+msgstr "Веб-ресурсы"
+
+#: gui\__init__.py:243
+msgid "License"
+msgstr "Лицензионное соглашение"
+
+#: gui\__init__.py:245
+msgid "Contributors"
+msgstr "Помощники"
+
+#: gui\__init__.py:247
 msgid "About..."
 msgstr "О программе..."
 
-#: gui\__init__.py:202
+#: gui\__init__.py:249
 msgid "&Help"
 msgstr "&Справка"
 
-#: gui\__init__.py:204
+#: gui\__init__.py:251
 msgid "&Revert to saved configuration"
 msgstr "&Вернуться к сохранённой конфигурации"
 
-#: gui\__init__.py:204
+#: gui\__init__.py:251
 msgid "Reset all settings to saved state"
 msgstr ""
 "Сбросить все настройки к сохранённому "
 "состоянию"
 
-#: gui\__init__.py:206
+#: gui\__init__.py:253
 msgid "&Save configuration"
 msgstr "&Сохранить конфигурацию"
 
-#: gui\__init__.py:206
+#: gui\__init__.py:253
 msgid "Write the current configuration to nvda.ini"
 msgstr "Записать текущую конфигурацию в nvda.ini"
 
-#: gui\__init__.py:209
+#: gui\__init__.py:256
 msgid "E&xit"
 msgstr "В&ыход"
 
@@ -2336,19 +2348,19 @@ msgstr "scroll lock %s"
 msgid "%s keyboard layout"
 msgstr "Раскладка %s"
 
-#: keyboardHandler.py:162
+#: keyboardHandler.py:165
 msgid "Description: %s"
 msgstr "Описание: %s"
 
-#: keyboardHandler.py:163
+#: keyboardHandler.py:166
 msgid "Location: %s"
 msgstr "Размещение: %s"
 
-#: keyboardHandler.py:176
+#: keyboardHandler.py:179
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:210
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyUpEvent"
 
@@ -2512,7 +2524,7 @@ msgstr ""
 "Свободная программа речевого доступа к "
 "экрану под Windows с открытым исходным кодом"
 
-#: versionInfo.py:14
+#: versionInfo.py:12
 msgid ""
 "Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
@@ -2527,18 +2539,18 @@ msgstr ""
 "Авторское право (C) 2006-2008 NVDA Contributors <http://www."
 "nvda-project.org/>\n"
 "%(name)s защищается GNU General Public License. Вы можете "
-"свободно распространять и изменять"
-"данное программное обеспечение, если "
-"соблюдаете лицензионное соглашение и"
-"сохраняете файл лицензии в не изменнённом "
+"свободно распространять и изменятьда"
+"нное программное обеспечение, если "
+"соблюдаете лицензионное соглашение исох"
+"раняете файл лицензии в не изменнённом "
 "виде в программе при распространении, "
 "позволяя и другим получать доступ к "
 "оригиналу.Также, разрешается изменять "
 "программное обеспечение, использующее "
-"код, взятый из данного пакета и его"
-"частей.\n"
-"Получить дополнительную информацию по"
-"данной лицензии вы можете на сайте:\n"
+"код, взятый из данного пакета и егочаст"
+"ей.\n"
+"Получить дополнительную информацию пода"
+"нной лицензии вы можете на сайте:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "или из входящего в комплект поставки "
 "программы файла Copying.txt."
@@ -2600,75 +2612,93 @@ msgid "moves to the previous heading"
 msgstr "переходит на предыдущий заголовок"
 
 #: virtualBuffers\__init__.py:257
+msgid "no next table"
+msgstr "Нет следующей таблиц"
+
+#: virtualBuffers\__init__.py:258
+#: virtualBuffers_old\__init__.py:357
+msgid "moves to the next table"
+msgstr "переходит на следующую таблицу"
+
+#: virtualBuffers\__init__.py:264
+msgid "no previous table"
+msgstr "Нет предыдущей таблицы"
+
+#: virtualBuffers\__init__.py:265
+#: virtualBuffers_old\__init__.py:368
+msgid "moves to the previous table"
+msgstr "переходит на предыдущую таблицу"
+
+#: virtualBuffers\__init__.py:271
 msgid "no next link"
 msgstr "Нет следующей ссылки"
 
-#: virtualBuffers\__init__.py:258
+#: virtualBuffers\__init__.py:272
 #: virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "переходит на следующую ссылку"
 
-#: virtualBuffers\__init__.py:264
+#: virtualBuffers\__init__.py:278
 msgid "no previous link"
 msgstr "Нет предыдущей ссылки"
 
-#: virtualBuffers\__init__.py:265
+#: virtualBuffers\__init__.py:279
 #: virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "переходит на предыдущую ссылку"
 
-#: virtualBuffers\__init__.py:271
+#: virtualBuffers\__init__.py:285
 msgid "no next visited link"
 msgstr "Нет следующей посещённой ссылки"
 
-#: virtualBuffers\__init__.py:272
+#: virtualBuffers\__init__.py:286
 msgid "moves to the next visited link"
 msgstr ""
 "переходит на следующую посещённую ссылку"
 
-#: virtualBuffers\__init__.py:278
+#: virtualBuffers\__init__.py:292
 msgid "no previous visited link"
 msgstr "Нет предыдущей посещённой ссылки"
 
-#: virtualBuffers\__init__.py:279
+#: virtualBuffers\__init__.py:293
 msgid "moves to the previous visited link"
 msgstr ""
 "переходит на предыдущую посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:285
+#: virtualBuffers\__init__.py:299
 msgid "no next unvisited link"
 msgstr "Нет следующей не посещённой ссылки"
 
-#: virtualBuffers\__init__.py:286
+#: virtualBuffers\__init__.py:300
 msgid "moves to the next unvisited link"
 msgstr ""
 "переходит на следующую не посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:292
+#: virtualBuffers\__init__.py:306
 msgid "no previous unvisited link"
 msgstr "Нет предыдущей не посещённой ссылки"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:307
 msgid "moves to the previous unvisited link"
 msgstr ""
 "переходит на предыдущую не посещённую "
 "ссылку"
 
-#: virtualBuffers\__init__.py:299
+#: virtualBuffers\__init__.py:313
 msgid "no next form field"
 msgstr "Нет следующего поля формы"
 
-#: virtualBuffers\__init__.py:300 virtualBuffers\__init__.py:307
+#: virtualBuffers\__init__.py:314 virtualBuffers\__init__.py:321
 msgid "moves to the next form field"
 msgstr "переходит на следующее поле формы"
 
-#: virtualBuffers\__init__.py:306
+#: virtualBuffers\__init__.py:320
 msgid "no previous form field"
 msgstr "Нет предыдущего поля формы"
 
-#: virtualBuffers\__init__.py:342
+#: virtualBuffers\__init__.py:356
 msgid "displays a list of links"
 msgstr "Показывает список ссылок"
 
@@ -2735,14 +2765,6 @@ msgstr "переходит на предыдущий абзац"
 #: virtualBuffers_old\__init__.py:367
 msgid "no more tables"
 msgstr "Больше нет таблиц"
-
-#: virtualBuffers_old\__init__.py:357
-msgid "moves to the next table"
-msgstr "переходит на следующую таблицу"
-
-#: virtualBuffers_old\__init__.py:368
-msgid "moves to the previous table"
-msgstr "переходит на предыдущую таблицу"
 
 #: virtualBuffers_old\__init__.py:378
 #: virtualBuffers_old\__init__.py:389
