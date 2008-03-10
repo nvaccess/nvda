@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1817\n"
+"Project-Id-Version: r1823\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-03-08 10:48+0200\n"
+"PO-Revision-Date: 2008-03-10 12:41+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "sisältää kaavan"
 
 #: NVDAObjects\IAccessible\excel.py:96
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "Siirtää soluun ja lukee sen koordinaatit ja sisällön"
+msgstr "Siirtyy soluun ja lukee sen koordinaatit ja sisällön"
 
 #: NVDAObjects\IAccessible\excel.py:100
 msgid "font"
@@ -120,7 +120,7 @@ msgstr "korkeus"
 
 #: _synthSettingsRing.py:89
 msgid "inflection"
-msgstr "rauhallisuus"
+msgstr "sävy"
 
 #: _synthSettingsRing.py:90
 msgid "voice"
@@ -252,8 +252,8 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Ottaa käyttöön ja poistaa käytöstä muiden kuin kirjainnäppäinten "
-"puhumisen"
+"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen "
+"jotka eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
 
 #: appModules\_default.py:154
 msgid "speak punctuation"
@@ -279,7 +279,7 @@ msgstr "objektilla ei ole sijaintia"
 
 #: appModules\_default.py:166
 msgid "Moves the mouse pointer to the current navigator object."
-msgstr "Siirtää hiiriosoittimen nykyisen navigointiobjektin kohdalle."
+msgstr "Siirtää hiiriosoittimen nykyiseen navigointiobjektiin."
 
 #: appModules\_default.py:169
 msgid "Move navigator object to mouse"
@@ -312,7 +312,7 @@ msgstr "Ei sijaintitietoja navigointiobjektille"
 
 #: appModules\_default.py:213
 msgid "%d wide by %d high, located %d from left and %d from top"
-msgstr "%d leveä %d korkea, sijainti %d vasemmalta ja %d yläreunasta"
+msgstr "%d leveä ja %d korkea, sijainti %d vasemmalta ja %d yläreunasta"
 
 #: appModules\_default.py:214
 msgid "Reports the hight, width and position of the current navigator object"
@@ -324,7 +324,7 @@ msgstr "ei kohdistusta"
 
 #: appModules\_default.py:221
 msgid "move to focus"
-msgstr "siirry kohdistukseen"
+msgstr "siirrä kohdistukseen"
 
 #: appModules\_default.py:223
 msgid "Sets the navigator object to the current focus"
@@ -594,13 +594,15 @@ msgstr ""
 
 #: appModules\_default.py:550
 msgid "reads from navigator object "
-msgstr "lukee navigointiobjektista"
+msgstr ""
+"lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa "
+"järjestyksessä"
 
 #: appModules\_default.py:562
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien "
-"siirtäen samalla kohdistinta"
+"siirtäen samalla järjestelmäkohdistinta"
 
 #: appModules\_default.py:585
 msgid "reports the object with focus"
@@ -677,7 +679,7 @@ msgstr ""
 
 #: appModules\_default.py:659
 msgid "report dynamic content changes"
-msgstr "ilmoita dynaamisen sisällön muutoksista"
+msgstr "ilmoita dynaamisen sisällön muutokset"
 
 #: appModules\_default.py:660
 msgid ""
@@ -745,7 +747,7 @@ msgstr ""
 
 #: appModules\_default.py:708
 msgid "Currently running application is %s."
-msgstr "Nykyinen käynnissä oleva sovellus on %s."
+msgstr "Nykyinen sovellus on %s."
 
 #: appModules\_default.py:713
 msgid "default module"
@@ -1551,11 +1553,11 @@ msgstr "ei muokattava"
 
 #: controlTypes.py:313
 msgid "expanded"
-msgstr "laajennettu"
+msgstr "avattu"
 
 #: controlTypes.py:314
 msgid "collapsed"
-msgstr "tiivistetty"
+msgstr "suljettu"
 
 #: controlTypes.py:315
 msgid "invisible"
@@ -1660,7 +1662,7 @@ msgstr "asetukset tallennettu"
 #: gui\__init__.py:122
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Asetuksia ei voitu tallentaa - tiedostojärjestelmä luultavasti vain luku -"
+"Asetuksia ei voitu tallentaa, tiedostojärjestelmä luultavasti vain luku -"
 "tyyppiä"
 
 #: gui\__init__.py:125
@@ -1975,7 +1977,7 @@ msgstr "&Korkeus"
 
 #: gui\settingsDialogs.py:267
 msgid "&Inflection"
-msgstr "&Rauhallisuus"
+msgstr "&Sävy"
 
 #: gui\settingsDialogs.py:276
 msgid "V&olume"
@@ -2031,7 +2033,7 @@ msgstr "Hiiriasetukset"
 
 #: gui\settingsDialogs.py:401
 msgid "Report mouse &shape changes"
-msgstr "Ilmoita &hiirikohdistimen muutoksista"
+msgstr "Ilmoita &hiirikohdistimen muutokset"
 
 #: gui\settingsDialogs.py:404
 msgid "Report &object under mouse"
@@ -2059,7 +2061,7 @@ msgstr "Lue objektien &pikanäppäimet"
 
 #: gui\settingsDialogs.py:433
 msgid "Report object &position information"
-msgstr "Lue objektien s&ijaintitiedot"
+msgstr "Lue objektien p&aikkatiedot"
 
 #: gui\settingsDialogs.py:436
 msgid "Report object &descriptions"
@@ -2161,7 +2163,7 @@ msgstr "Ilmoita fontin mää&ritteet"
 
 #: gui\settingsDialogs.py:560
 msgid "Report st&yle"
-msgstr "Ilmoita t&yyli"
+msgstr "Ilmoita t&yylimääritteet"
 
 #: gui\settingsDialogs.py:563
 msgid "Report &pages"
@@ -2356,7 +2358,7 @@ msgstr "ei alaindeksiä"
 
 #: textBuffer.py:469 textBuffer.py:497 textBuffer.py:505
 msgid "Moves and then reads the current line"
-msgstr "Siirtää kohdalla olevalle riville ja lukee sen"
+msgstr "Lukee kohdalla olevan rivin"
 
 #: textBuffer.py:473
 msgid "reads the current line"
@@ -2364,11 +2366,11 @@ msgstr "lukee nykyisen rivin"
 
 #: textBuffer.py:481
 msgid "Moves and reads the current character"
-msgstr "Siirtää kohdalla olevaan merkkiin ja lukee sen"
+msgstr "Lukee kohdalla olevan merkin"
 
 #: textBuffer.py:489
 msgid "Moves and reads the current word"
-msgstr "Siirtää kohdalla olevaan sanaan ja lukee sen"
+msgstr "Lukee kohdalla olevan sanan"
 
 #: textBuffer.py:513
 msgid "Manually moves to the next paragraph and then speaks it"
@@ -2384,7 +2386,7 @@ msgstr "ei valintoja"
 
 #: textBuffer.py:552
 msgid "Moves and reads the current selection"
-msgstr "Siirtää nykyisen valinnan kohdalle ja lukee sen"
+msgstr "Lukee nykyisen valinnan"
 
 #: textBuffer.py:558
 msgid "Deletes the character and reads the new current character"
@@ -2416,7 +2418,7 @@ msgid ""
 msgstr ""
 "Copyright (C) 2006-2008 NVDA-avustajat <http://www.nvda-project.org/>\n"
 "%(name)s on suojattu GNU GPL-lisenssillä. Voit vapaasti jakaa tai muuttaa "
-"tätä ohjelmistoa, kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin "
+"tätä ohjelmistoa, jos jaat lisenssiä sen mukana ja pidät lähdekoodin "
 "kaikkien saatavilla. Tämä koskee sekä muokattuja että alkuperäisiä "
 "ohjelmistokopioita, lisäksi kaikkia tämän ohjelmiston koodia käyttäviä "
 "ohjelmistoja.\n"
