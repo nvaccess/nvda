@@ -174,7 +174,7 @@ speechRoleLabels={
 	ROLE_BUTTON:_("button"),
 	ROLE_MENUBAR:_("menu bar"),
 	ROLE_MENUITEM:_("menu item"),
-	ROLE_POPUPMENU:_("popup menu"),
+	ROLE_POPUPMENU:_("menu"),
 	ROLE_COMBOBOX:_("combo box"),
 	ROLE_LIST:_("list"),
 	ROLE_LISTITEM:_("list item"),
