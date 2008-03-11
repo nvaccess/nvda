@@ -704,7 +704,7 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False,need
 		return JABHandler.event_enterJavaWindow(window)
 	#We can't trust MSAA focus events with a childID greater than 0, just use 0 and retreave its activeChild
 	#We can only do this if there are no focus events pending or else we'll get issues with keyboard silencing focus announcement
-	if winUser.getClassName(window)=="SysListView32" and childID>0 and focusEventQueue.empty() and queueHandler.interactiveQueue.empty():
+	if winUser.getClassName(window)!="ToolbarWindow32" and childID>0 and focusEventQueue.empty() and queueHandler.interactiveQueue.empty():
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,0)
 		if obj:
 			activeChild=obj.activeChild
