@@ -1,0 +1,87 @@
+NVDA - Kurztasten - und Befehlsreferenz
+
+Viele der nachfolgenden Befehle verwenden die sog. nvda-Taste. Dies ist standardmäßig die Einfügetaste der erweiterten Tastatur. Laptop-Benutzer können NVDA jedoch auch so konfigurieren, dass beispielsweise die Dauergroßschreibtaste als nvda-taste benutzt wird.
+
+allgemeine Tastenkombinationen:
+STRG - Sprache abbrechen/unterbrechen
+umschalt - sprache fortsetzen
+NVDA+1 - Schaltet die tastaturhilfe an oder aus
+Dieser befehl schaltet die tastaturhilfe ein oder aus. Wenn die Tastaturhilfe eingeschaltet ist, können Sie eine beliebige Tastenkombination drücken, um deren Bedeutung zu erfahren.
+NVDA+b - liest den Inhalt des aktuellen Fensters vor. 
+NVDA+n - zeigt das NVDA-Menü an. Von hier aus könnnen Sie sämtliche Einstellungen von NVDA ändern. 
+NVDA+Ende - list die Statuszeile der aktuellen Anwendung.
+NVDA+Tab - spricht das Objekt, das den Fokus hat.
+NVDA+Pfeil auf - spricht das aktuelle Objekt
+NVDA+Pfeil ab - liest den text ab der Cursorposition (drücken Sie eine beliebige Taste, um abzubrechen)
+NVDA+t - liest die Titelzeile der aktiven Anwendung
+NVDA+f12 - liest das Datum und die Uhrzeit
+NVDA+2 - schaltet das Sprechen eingegebener zeichen ein oder aus
+NVDA+3 - Schaltet das Sprechen eingegebener Wörter ein oder aus
+NVDA+4 - Schaltet das Sprechen von Funktionstasten (Pfeiltasten, Strg, umschalt usw.) an oder aus
+NVDA+Bild auf - erhöht die Sprechgeschwindigkeit
+NVDA+Bild ab - verringert die Sprechgeschwindigkeit
+NVDA+p - Schaltet das Lesen von Satzzeichen an oder aus
+NVDA+s - Schaltet den Sprachmodus um (aus, Signaltöne oder sprache)
+NVDA+m - Schaltet das Lesen des Objekts unter der Maus an oder aus
+NVDA+f - sagt die Schriftart an, wenn Sie sich in einem Dokument befinden
+strg+nvda+f1 - sagt den namen der aktuellen Anwendung an.
+
+objektweise Navigation:
+die folgenden tasten beziehen sich auf den Nummernblock und funktionieren nur, wenn Numlock ausgeschaltet ist:
+NVDA+plus - Position innerhalb der Objekthierarchie ansagen
+NVDA+5 - aktuelles Objekt lesen
+umschalt+NVDA+5 - Sagt Größe und Position des aktuellen Objekts an
+strg+umschalt+nvda+5 - benennt das aktuelle Objekt und all seine Vorfahren bis hinauf zum Desktop
+
+NVDA+8 - springt zum übergeordneten Objekt
+NVDA+4 - springt zum vorigen Objekt
+NVDA+6 - springt zum nächsten Objekt
+NVDA+2 - springt zum ersten untergeordneten Objekt
+NVDA+Minus - zieht den navigator zum Fokus
+NVDA+Schrägstrich - Zieht die Maus zum Navigator
+NVDA+stern - Zieht den Navigator zur Maus
+NVDA+eingabe - aktiviert das aktuelle Objekt
+NVDA+Plus - spricht rekursiv alle Objekte nach dem aktuellen Objekt.
+Minus - bewegt den NVDA-internen Cursor zum Systemcursor.
+strg+Minus - bewegt den Systemcursor zum NVDA-internen Cursor
+PLUS - verwendet den nvda-internen Cursor und liest den inhalt des aktuellen Objekts ab dessen Position.
+nvda-u - schaltet die Aktualisierung von Fortschrittsbalken ein oder aus.
+nvda-umschalt+b - fragt den Energiestand des Akkus und seinen Status ab.
+NVDA+5 - Schaltet die Ansage dynamischer Änderungen an oder aus.
+NVDA+6 - schaltet die Kopplung des nvda-internen Cursors an den Systemcursor an oder aus.
+nvda+7 - schaltet die Kopplung des navigators an den Fokus an oder aus.
+NVDA+F2 - reicht die nächste Taste(nkombination) die sie drücken, an die aktive Anwendung durch.
+umschalt+nvda+pfeil auf - liest den markierten Text vor, wenn sie sich in einem Eingabefeld befinden.
+strg+nvda+pfeil links/rechts - wählt die vorige/nächste Einstellung im Synthesizer-Einstellungsring
+strg+nvda+pfeil hoch/runter - erhöht/verringert die aktuelle Einstellung im Synthesizer-einstellungsring.
+
+Befehle in virtuellen Puffern:
+nvda+leertaste - Schaltet die Behandlung von Tastenkombinationen durch virtuelle Puffer ein oder aus.
+strg+nvda+f - startet eine Textsuche in einem virtuellen Puffer
+nvda+f3 - sucht das nächste Vorkommen des Textes
+nvda+f7 -ruft die Linkliste auf
+nvda+f5 - aktualisiert den Inhalt des virtuellen Puffers
+
+Schnelltasten in virtuellen Puffern (verwenden Sie diese Tasten zusammen mit Umschalt, um zum vorigen Objekt zu springen.
+h: Überschrift
+l: Liste
+i: Listeneintrag
+k: Link
+t: Tabelle
+f: Formularfeld
+
+
+das aktuelle Objekt lesen:
+umschalt+7 - springt zur ersten Zeile
+7 - springt eine Zeile nach oben
+8 - liest die aktuelle Zeile
+9 - springt zur nächsten Zeile
+umschalt+9 - springt zur letzten Zeile
+4 - wechselt zum vorigen Wort
+5 - liest das aktuelle Wort
+6 - wechselt zum nächsten Wort
+umschalt+1 - springt zum Zeilenanfang
+1 - wechselt zum vorigen Zeichen
+2 - liest das aktuelle Zeichen
+3 - wechselt zum nächsten Zeichen
+umschalt+3 - springt zum Zeilenende

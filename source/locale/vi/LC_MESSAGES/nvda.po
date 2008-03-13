@@ -5,642 +5,762 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
-"POT-Creation-Date: 2007-05-29 04:46+SE Asia Standard Time\n"
-"PO-Revision-Date: 2007-07-06 23:04+0700\n"
-"Last-Translator: Dang Hoai Phuc <danghoaiphuc@yahoo.com>\n"
+"POT-Creation-Date: 2008-03-13 09:26+SE Asia Standard Time\n"
+"PO-Revision-Date: 2008-03-13 09:58+0700\n"
+"Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
 "Language-Team: Dang Hoai Phuc <danghoaiphuc@yahoo.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Poedit-Language: Vietnamese\n"
 "X-Poedit-Country: VIET NAM\n"
 
-#: IAccessibleHandler.py:136
-#: controlTypes.py:133
-msgid "window"
-msgstr "cửa sổ"
+#: NVDAObjects\IAccessible\__init__.py:63
+#: speech.py:665
+msgid "level %s"
+msgstr "cấp %s"
 
-#: IAccessibleHandler.py:137
-#: characterSymbols.py:20
-#: controlTypes.py:154
-msgid "tab"
-msgstr "tab"
-
-#: IAccessibleHandler.py:138
-#: controlTypes.py:140
-msgid "edit"
-msgstr "soạn thảo"
-
-#: IAccessibleHandler.py:139
-#: controlTypes.py:141
-msgid "button"
-msgstr "nút"
-
-#: IAccessibleHandler.py:140
-msgid "Tree view"
-msgstr " cây thư mục"
-
-#: IAccessibleHandler.py:144
-msgid "sub menu"
-msgstr "trình đơn phụ"
-
-#: IAccessibleHandler.py:192
-#: speech.py:215
-#: virtualBuffers\IAccessible\MSHTML.py:115
-#: virtualBuffers\IAccessible\MSHTML.py:294
-#: virtualBuffers\IAccessible\MSHTML.py:298
-#: virtualBuffers\IAccessible\adobe.py:289
-#: virtualBuffers\IAccessible\adobe.py:293
-#: virtualBuffers\IAccessible\gecko.py:282
-#: virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "không %s"
-
-#: IAccessibleHandler.py:573
-msgid "lost focus"
-msgstr "mất focus"
-
-#: NVDAObjects\IAccessible\__init__.py:67
-#: NVDAObjects\IAccessible\__init__.py:435
-#: NVDAObjects\IAccessible\sysListView32.py:83
+#: NVDAObjects\IAccessible\__init__.py:69
+#: NVDAObjects\IAccessible\__init__.py:420
+#: NVDAObjects\IAccessible\sysListView32.py:89
 msgid "%s of %s"
 msgstr "%s của %s"
 
-#: NVDAObjects\IAccessible\__init__.py:71
-msgid "%s items"
-msgstr "%s mục"
+#: NVDAObjects\IAccessible\__init__.py:75
+msgid "contains %s items"
+msgstr "gồm %s mục"
 
-#: NVDAObjects\IAccessible\__init__.py:694
-#: NVDAObjects\IAccessible\sysTreeView32.py:137
-msgid "%d items"
-msgstr "%d mục"
-
-#: NVDAObjects\IAccessible\excel.py:64
+#: NVDAObjects\IAccessible\excel.py:63
 msgid "through"
 msgstr "qua"
 
-#: NVDAObjects\IAccessible\excel.py:64
-#: controlTypes.py:248
+#: NVDAObjects\IAccessible\excel.py:63
+#: controlTypes.py:307
 msgid "selected"
 msgstr "chọn"
 
-#: NVDAObjects\IAccessible\excel.py:68
+#: NVDAObjects\IAccessible\excel.py:67
 msgid "has formula"
 msgstr "có công thức"
 
-#: NVDAObjects\IAccessible\excel.py:97
+#: NVDAObjects\IAccessible\excel.py:96
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr " di chuyển đến một ô và đọc nội dung ô. "
+msgstr "Di chuyển đến một ô, đọc tọa độ và nội dung ô đó"
+
+#: NVDAObjects\IAccessible\excel.py:100
+msgid "font"
+msgstr "phông"
 
 #: NVDAObjects\IAccessible\excel.py:101
-msgid "font"
-msgstr "Phông chữ"
-
-#: NVDAObjects\IAccessible\excel.py:102
 msgid "point"
 msgstr "chấm"
 
-#: NVDAObjects\IAccessible\excel.py:104
-#: textBuffer.py:266
-#: textBuffer.py:318
+#: NVDAObjects\IAccessible\excel.py:103
+#: controlTypes.py:291
+#: textBuffer.py:265
+#: textBuffer.py:317
 msgid "bold"
 msgstr "in đậm"
 
-#: NVDAObjects\IAccessible\excel.py:106
-#: textBuffer.py:273
-#: textBuffer.py:320
+#: NVDAObjects\IAccessible\excel.py:105
+#: textBuffer.py:272
+#: textBuffer.py:319
 msgid "italic"
 msgstr "in nghiêng"
 
-#: NVDAObjects\IAccessible\excel.py:108
-#: textBuffer.py:280
-#: textBuffer.py:322
+#: NVDAObjects\IAccessible\excel.py:107
+#: characterSymbols.py:50
+#: controlTypes.py:293
+#: textBuffer.py:279
+#: textBuffer.py:321
 msgid "underline"
 msgstr "gạch dưới"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:132
+#: NVDAObjects\IAccessible\sysTreeView32.py:135
+#: NVDAObjects\JAB\__init__.py:244
 msgid "%d of %d"
 msgstr "%d của %d"
 
-#: NVDAObjects\__init__.py:435
-#: NVDAObjects\__init__.py:446
-#: NVDAObjects\__init__.py:480
-#: textBuffer.py:364
-#: textBuffer.py:391
-#: textBuffer.py:412
-#: textBuffer.py:433
-#: virtualBuffers\__init__.py:272
-msgid "top"
-msgstr "đầu"
+#: NVDAObjects\IAccessible\sysTreeView32.py:144
+msgid "%s items"
+msgstr "%s mục"
 
-#: NVDAObjects\__init__.py:462
-#: NVDAObjects\__init__.py:469
-#: NVDAObjects\__init__.py:496
-#: textBuffer.py:369
-#: textBuffer.py:382
-#: textBuffer.py:403
-#: textBuffer.py:424
-#: virtualBuffers\__init__.py:287
-msgid "bottom"
-msgstr "cuối"
+#: NVDAObjects\IAccessible\sysTreeView32.py:150
+msgid "level %d"
+msgstr "Cấp: %d"
 
-#: NVDAObjects\__init__.py:505
-#: NVDAObjects\__init__.py:516
-msgid "left"
-msgstr "trái"
+#: NVDAObjects\IAccessible\winword.py:179
+msgid "with %s columns and %s rows"
+msgstr "gồm %s cột và %s dòng"
 
-#: NVDAObjects\__init__.py:538
-#: NVDAObjects\__init__.py:554
-msgid "right"
-msgstr "phải"
+#: NVDAObjects\IAccessible\winword.py:296
+#: NVDAObjects\IAccessible\winword.py:312
+#: NVDAObjects\IAccessible\winword.py:328
+#: NVDAObjects\IAccessible\winword.py:344
+msgid "not in table"
+msgstr "không trong bảng"
 
-#: NVDAObjects\__init__.py:671
-#: textBuffer.py:537
-#: textBuffer.py:541
-#: textBuffer.py:543
-#: textBuffer.py:549
-msgid "selected %s"
-msgstr "%s chọn"
+#: NVDAObjects\IAccessible\winword.py:305
+msgid "bottom of column"
+msgstr "cuối cột"
 
-#: NVDAObjects\__init__.py:673
-#: textBuffer.py:545
-#: textBuffer.py:547
-#: textBuffer.py:551
-msgid "unselected %s"
-msgstr "%s không chọn"
+#: NVDAObjects\IAccessible\winword.py:321
+msgid "top of column"
+msgstr "đầu cột"
 
-#: api.py:147
-#: api.py:150
+#: NVDAObjects\IAccessible\winword.py:337
+msgid "end of row"
+msgstr "cuối dòng"
+
+#: NVDAObjects\IAccessible\winword.py:353
+msgid "beginning of row"
+msgstr "đầu dòng"
+
+#: _synthSettingsRing.py:86
+msgid "volume"
+msgstr "âm lượng"
+
+#: _synthSettingsRing.py:87
+msgid "rate"
+msgstr "tốc độ"
+
+#: _synthSettingsRing.py:88
+msgid "pitch"
+msgstr "độ cao"
+
+#: _synthSettingsRing.py:89
+msgid "inflection"
+msgstr "sự uốn chuyển"
+
+#: _synthSettingsRing.py:90
+msgid "voice"
+msgstr "giọng"
+
+#: _synthSettingsRing.py:91
+msgid "variant"
+msgstr "biến thể"
+
+#: api.py:183
+#: api.py:186
 msgid "virtual buffer pass through"
 msgstr "bộ đệm ảo bỏ qua"
 
-#: api.py:147
-#: appModules\_default.py:42
-#: appModules\_default.py:71
-#: appModules\_default.py:81
-#: appModules\_default.py:91
-#: appModules\_default.py:101
-#: appModules\_default.py:300
-#: appModules\_default.py:364
-#: appModules\_default.py:399
-#: appModules\_default.py:409
-#: appModules\_default.py:419
-#: appModules\_default.py:429
-#: keyboardHandler.py:48
-#: keyboardHandler.py:50
-#: keyboardHandler.py:52
+#: api.py:183
+#: appModules\_default.py:44
+#: appModules\_default.py:119
+#: appModules\_default.py:129
+#: appModules\_default.py:139
+#: appModules\_default.py:149
+#: appModules\_default.py:520
+#: appModules\_default.py:602
+#: appModules\_default.py:644
+#: appModules\_default.py:654
+#: appModules\_default.py:664
+#: appModules\_default.py:674
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
+#: speech.py:356
+#: speech.py:362
+#: virtualBuffers\__init__.py:200
 msgid "off"
 msgstr "tắt"
 
-#: api.py:150
-#: appModules\_default.py:39
-#: appModules\_default.py:74
-#: appModules\_default.py:84
-#: appModules\_default.py:94
-#: appModules\_default.py:104
-#: appModules\_default.py:367
-#: appModules\_default.py:402
-#: appModules\_default.py:412
-#: appModules\_default.py:422
-#: appModules\_default.py:432
-#: keyboardHandler.py:48
-#: keyboardHandler.py:50
-#: keyboardHandler.py:52
+#: api.py:186
+#: appModules\_default.py:41
+#: appModules\_default.py:122
+#: appModules\_default.py:132
+#: appModules\_default.py:142
+#: appModules\_default.py:152
+#: appModules\_default.py:605
+#: appModules\_default.py:647
+#: appModules\_default.py:657
+#: appModules\_default.py:667
+#: appModules\_default.py:677
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
+#: speech.py:351
+#: virtualBuffers\__init__.py:200
 msgid "on"
 msgstr "bật"
 
-#: appModuleHandler.py:188
+#: appModuleHandler.py:228
 msgid "Error in appModule %s"
 msgstr "Lỗi trong Mô Đun Ứng Dụng %s"
 
-#: appModuleHandler.py:204
+#: appModuleHandler.py:246
 msgid "Could not load default module keyMap"
 msgstr "Không thể tải mô đun bảng phím tắt mặc định"
 
-#: appModuleHandler.py:207
+#: appModuleHandler.py:249
 msgid "Could not load default module "
 msgstr "Không thể tải mô đun mặc định"
 
-#: appModules\_default.py:44
+#: appModules\_default.py:46
 msgid "keyboard help %s"
 msgstr " %s giúp đỡ bàn phím"
 
-#: appModules\_default.py:45
+#: appModules\_default.py:47
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "Bật tắt giúp đỡ bàn phím. Khi bật, sẽ đọc tập lệnh gán với phím đó nếu có."
 
-#: appModules\_default.py:53
+#: appModules\_default.py:71
+#: cursorManager.py:225
+msgid "no selection"
+msgstr "không có vùng chọn"
+
+#: appModules\_default.py:73
+#: speech.py:263
+#: speech.py:407
+#: textBuffer.py:536
+#: textBuffer.py:540
+#: textBuffer.py:542
+#: textBuffer.py:548
+msgid "selected %s"
+msgstr "%s chọn"
+
+#: appModules\_default.py:81
 msgid "Reports the current date and time"
 msgstr "Thông báo ngày giờ"
 
-#: appModules\_default.py:59
-#: appModules\_default.py:66
+#: appModules\_default.py:87
+#: appModules\_default.py:94
 msgid "rate %d%%"
 msgstr "tốc độ %d%%"
 
-#: appModules\_default.py:60
+#: appModules\_default.py:88
 msgid "Increases the speech rate by 5 percent"
 msgstr "tăng tốc độ đọc 5 phần trăm. "
 
-#: appModules\_default.py:67
+#: appModules\_default.py:95
 msgid "decreases the speech rate by 5 percent"
 msgstr "Giảm tốc độ đọc 5 phần trăm"
 
-#: appModules\_default.py:76
+#: appModules\_default.py:100
+msgid "Increases currently active setting in the synth settings ring"
+msgstr "Tăng cấu hình hoạt động hiện tại trong vòng cấu hình bộ đọc"
+
+#: appModules\_default.py:105
+msgid "Decreases currently active setting in the synth settings ring"
+msgstr "Giảm cấu hình hoạt động hiện tại trong dãy cấu hình bộ đọc"
+
+#: appModules\_default.py:110
+msgid "Moves to the next available setting in the synth settings ring"
+msgstr "Chuyển đến cấu hình có sẵn kế tiếp trong dãy cấu hình bộ đọc"
+
+#: appModules\_default.py:115
+msgid "Moves to the previous available setting in the synth settings ring"
+msgstr "Chuyển đến cấu hình có sẵn trước trong dãy cấu hình bộ đọc"
+
+#: appModules\_default.py:124
 msgid "speak typed characters"
 msgstr "đọc ký tự được gõ"
 
-#: appModules\_default.py:77
+#: appModules\_default.py:125
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Bật tắt đọc ký tự được gõ"
 
-#: appModules\_default.py:86
+#: appModules\_default.py:134
 msgid "speak typed words"
 msgstr "đọc từ được gõ"
 
-#: appModules\_default.py:87
+#: appModules\_default.py:135
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Bật tắt đọc từ được gõ"
 
-#: appModules\_default.py:96
+#: appModules\_default.py:144
 msgid "speak command keys"
 msgstr "đọc các phím lệnh"
 
-#: appModules\_default.py:97
+#: appModules\_default.py:145
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "Bạt tắt đọc phím được gõ, không phải là các ký tự riêng biệt. "
 
-#: appModules\_default.py:106
+#: appModules\_default.py:154
 msgid "speak punctuation"
 msgstr "Đọc dấu câu"
 
-#: appModules\_default.py:107
+#: appModules\_default.py:155
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
 msgstr "Bật tắt đọc dấu câu.  Khi bật, NVDA sẽ đọc tên của ký hiệu; khi tắt, sẽ  đọc theo bộ tổng hợp âm. speaks punctuation "
 
-#: appModules\_default.py:110
+#: appModules\_default.py:158
 msgid "Move mouse to navigator"
 msgstr "Di chuyển chuột đến điều hướng"
 
-#: appModules\_default.py:112
+#: appModules\_default.py:163
+msgid "object has no location"
+msgstr "đối tượng không có vị trí"
+
+#: appModules\_default.py:166
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "Chuyển con trỏ chuột đến đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:115
+#: appModules\_default.py:169
 msgid "Move navigator object to mouse"
 msgstr "Di chuyển đối tượng điều hướng đến chuột"
 
-#: appModules\_default.py:121
-msgid "Sets the navigator object to the object that is directly under the mouse pointer"
-msgstr "Chỉ đối tượng điều hướng đến đối tượng ngay dưới con trỏ chuột."
-
-#: appModules\_default.py:126
-#: appModules\_default.py:135
-#: appModules\_default.py:155
-#: appModules\_default.py:168
-#: appModules\_default.py:181
-#: appModules\_default.py:194
-#: appModules\_default.py:207
-#: appModules\_default.py:216
+#: appModules\_default.py:178
+#: appModules\_default.py:208
+#: appModules\_default.py:228
+#: appModules\_default.py:241
+#: appModules\_default.py:254
+#: appModules\_default.py:267
+#: appModules\_default.py:280
+#: appModules\_default.py:303
+#: appModules\_default.py:326
+#: appModules\_default.py:335
+#: appModules\_default.py:626
 msgid "no navigator object"
 msgstr "Không có đối tượng điều hướng"
 
-#: appModules\_default.py:130
-msgid "Reports the current navigator object"
-msgstr "Thông báo đối tượng điều hướng hiện hành"
+#: appModules\_default.py:199
+msgid "%s copied to clipboard"
+msgstr "đã chép $s lên bộ nhớ tạm"
 
-#: appModules\_default.py:138
+#: appModules\_default.py:203
+msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
+msgstr "Thông báo đối tượng điều hướng hiện hành hoặc, nếu nhấn ba lần sẽ chép tên và giá trị của đối tượng điều hướng hiện hành lên bộ nhớ tạm"
+
+#: appModules\_default.py:211
 msgid "No location information for navigator object"
 msgstr "Không có thông tin vị trí cho đối tượng điều hướng"
 
-#: appModules\_default.py:140
+#: appModules\_default.py:213
 msgid "%d wide by %d high, located %d from left and %d from top"
 msgstr "rộng %d trên độ cao %d, đướng tại %d từ trái và %d từ đầu"
 
-#: appModules\_default.py:141
+#: appModules\_default.py:214
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Thông báo đô cao, độ rộng và vị trí của đối tượng điều hướng hiện hành"
 
-#: appModules\_default.py:146
-#: appModules\_default.py:346
+#: appModules\_default.py:219
+#: appModules\_default.py:584
 msgid "no focus"
 msgstr " không có focus"
 
-#: appModules\_default.py:148
+#: appModules\_default.py:221
 msgid "move to focus"
 msgstr "chuyển đến focus"
 
-#: appModules\_default.py:150
+#: appModules\_default.py:223
 msgid "Sets the navigator object to the current focus"
 msgstr "chỉ đối tượng điều hướng đến focus hiện hành "
 
-#: appModules\_default.py:162
+#: appModules\_default.py:235
 msgid "No parents"
 msgstr "Không có cấp cha"
 
-#: appModules\_default.py:163
+#: appModules\_default.py:236
 msgid "Sets the navigator object to the parent of the object it is currently on."
 msgstr "Chuyển đối tượng điều hướng đến cấp cha của đối tượng đang đứng."
 
-#: appModules\_default.py:175
+#: appModules\_default.py:248
 msgid "No next"
 msgstr "Không có kế tiếp"
 
-#: appModules\_default.py:176
+#: appModules\_default.py:249
 msgid "Sets the navigator object to the next object to the one it is currently on"
 msgstr "Chuyển đối tượng điều hướng đến đối tượng kế đối tượng đang đứng."
 
-#: appModules\_default.py:188
+#: appModules\_default.py:261
 msgid "No previous"
 msgstr "Không có về trước"
 
-#: appModules\_default.py:189
+#: appModules\_default.py:262
 msgid "Sets the navigator object to the previous object to the one it is currently on"
 msgstr "Chuyển đối tượng điều hướng đến đối tượng đứng trước đối tượng đang đứng. "
 
-#: appModules\_default.py:201
+#: appModules\_default.py:274
 msgid "No children"
 msgstr "Không có cấp con"
 
-#: appModules\_default.py:202
+#: appModules\_default.py:275
 msgid "Sets the navigator object to the first child object to the one it is currently on"
 msgstr "Chuyển đối tượng điều hướng đến đối tượng con thứ nhất của đối tượng đang đứng."
 
-#: appModules\_default.py:210
+#: appModules\_default.py:297
+msgid "end of flow"
+msgstr "Kết thúc cột báo"
+
+#: appModules\_default.py:298
+msgid "Sets the navigator object to the object this object flows to."
+msgstr "Chuyển đối tượng điều hướng đến đối tượng mà đối tượng hiện hành đang đến."
+
+#: appModules\_default.py:320
+msgid "Beginning of flow"
+msgstr "Bắt đầu cột báo"
+
+#: appModules\_default.py:321
+msgid "Sets the navigator object to the object this object flows from."
+msgstr "Chuyển đối tượng điều hướng đến đối tượng mà đối tượng hiện hành được chuyển đến.chuye"
+
+#: appModules\_default.py:329
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "Thực hiện công việc mặc định cho đối tượng điều hướng (Ví dụ: được nhấn nếu là một nút)"
 
-#: appModules\_default.py:223
+#: appModules\_default.py:340
+msgid "inside"
+msgstr "trong"
+
+#: appModules\_default.py:343
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
 msgstr "Thông báo vị trí đối tượng điều hướng hiện hành bằng cách thông báo cấp cha của đối tượng đó."
 
-#: appModules\_default.py:228
+#: appModules\_default.py:349
+#: appModules\_default.py:361
+#: appModules\_default.py:403
+#: textBuffer.py:363
+#: textBuffer.py:390
+#: textBuffer.py:411
+#: textBuffer.py:432
+#: virtualBuffers_old\__init__.py:269
+msgid "top"
+msgstr "đầu"
+
+#: appModules\_default.py:351
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến dòng đầu của đối tượng điều hướng hiện hành"
 
-#: appModules\_default.py:233
+#: appModules\_default.py:363
 msgid "Moves the review cursor to the previous line of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến dòng trước  của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:238
+#: appModules\_default.py:373
 msgid "Reports the line of the current navigator object where the review cursor is situated"
 msgstr "Thông báo dòng của đối tượng điều hướng hiện hành nơi con trỏ xem lại đứng"
 
-#: appModules\_default.py:243
+#: appModules\_default.py:383
+#: appModules\_default.py:391
+#: appModules\_default.py:425
+#: textBuffer.py:368
+#: textBuffer.py:381
+#: textBuffer.py:402
+#: textBuffer.py:423
+#: virtualBuffers_old\__init__.py:284
+msgid "bottom"
+msgstr "cuối"
+
+#: appModules\_default.py:385
 msgid "Moves the review cursor to the next line of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến dòng kế của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:248
+#: appModules\_default.py:393
 msgid "Moves the review cursor to the bottom line of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến dòng cuối của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:253
+#: appModules\_default.py:405
 msgid "Moves the review cursor to the previous word of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến từ trước của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:258
+#: appModules\_default.py:415
 msgid "Speaks the word of the current navigator object where the review cursor is situated"
 msgstr "Đọc từ của đối tượng điều hướng hiện hành  nơi mà con trỏ xem lại đứng."
 
-#: appModules\_default.py:263
+#: appModules\_default.py:427
 msgid "Moves the review cursor to the next word of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến  từ kế của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:268
+#: appModules\_default.py:435
+#: appModules\_default.py:447
+msgid "left"
+msgstr "trái"
+
+#: appModules\_default.py:437
 msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến đầu dòng mà  nó đứng, trong đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:273
+#: appModules\_default.py:455
 msgid "Moves the review cursor to the previous character of the current navigator object"
 msgstr " Chuyển con trỏ xem lại đến ký tự trước của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:278
+#: appModules\_default.py:470
 msgid "Reports the character of the current navigator object where the review cursor is situated"
 msgstr "Thông báo ký tự của đối tượng điều hướng hiện hành, nơi con trỏ xem lại đứng."
 
-#: appModules\_default.py:283
+#: appModules\_default.py:480
+#: appModules\_default.py:497
+msgid "right"
+msgstr "phải"
+
+#: appModules\_default.py:488
 msgid "Moves the review cursor to the next character of the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến ký tự kế của đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:288
+#: appModules\_default.py:499
 msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
 msgstr "Chuyển con trỏ xem lại đến cuối dòng nó được đặt, trong đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:293
+#: appModules\_default.py:506
 msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
 msgstr " Chuyển con trỏ xem lại đến vị trí dấu nháy hệ thống, trong đối tượng điều hướng hiện hành."
 
-#: appModules\_default.py:302
+#: appModules\_default.py:513
+msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
+msgstr "Di chuyển dấu nháy hệ thống đến vị trí con trỏ xem lại, tại đối tượng điều hướng hiện hành."
+
+#: appModules\_default.py:522
 msgid "beeps"
 msgstr "Bíp"
 
-#: appModules\_default.py:304
+#: appModules\_default.py:524
 msgid "talk"
 msgstr "Nói"
 
-#: appModules\_default.py:305
+#: appModules\_default.py:526
 msgid "speech mode %s"
 msgstr "Chế độ đọc %s"
 
-#: appModules\_default.py:307
+#: appModules\_default.py:528
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "Chuyển đổi giữa các chế độ đọc: Tắt, Bíp và Nói. Khi tắt, NVDA không đọc; Bíp, NVDA sẽ bíp thay vì đọc; Nói, NVDA sẽ đọc bình thường."
 
-#: appModules\_default.py:311
+#: appModules\_default.py:532
 msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
 msgstr "Bật tắt chế độ Bỏ Qua Bộ Đệm Ảo. Khi bật, phím sẽ không gửi qua bộ đệm ảo, để có thể tương tác với các điều khiển  không thông qua bộ đệm ảo. "
 
-#: appModules\_default.py:315
+#: appModules\_default.py:536
 msgid "Quits NVDA!"
 msgstr "Đóng NVDA!"
 
-#: appModules\_default.py:319
+#: appModules\_default.py:540
 msgid "Shows the NVDA interface window"
 msgstr "Hiện thị cửa sổ giao diện NVDA"
 
-#: appModules\_default.py:332
-msgid "reads from cursor up to end of current text"
-msgstr "Đọc từ con trỏ đến cuối văn bản hiện hành."
+#: appModules\_default.py:545
+msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
+msgstr "Đọc từ con trỏ xem lại đến cuối văn bản hiện hành, và di chuyển con trỏ xem lại khi đọc"
 
-#: appModules\_default.py:347
+#: appModules\_default.py:550
+msgid "reads from navigator object "
+msgstr "Đọc từ đối tượng điều hướng"
+
+#: appModules\_default.py:562
+msgid "reads from system caret up to end of text, moving the caret as it goes"
+msgstr "Đọc từ dấu nháy hệ thống đến cuối văn bản, di chuyển dấu nháy khi đọc."
+
+#: appModules\_default.py:585
 msgid "reports the object with focus"
 msgstr "Thông báo đối tượng có focus"
 
-#: appModules\_default.py:352
-msgid "no foreground object"
-msgstr "Không có đối tượng tiền cảnh"
-
-#: appModules\_default.py:356
+#: appModules\_default.py:591
+#: appModules\mplayerc.py:30
 msgid "no status bar found"
 msgstr "Không tìm thấy thanh trạng thái"
 
-#: appModules\_default.py:360
+#: appModules\_default.py:598
+#: appModules\mplayerc.py:37
 msgid "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr "Đọc thanh trạng thái của ứng dụng và di chuyển con trỏ điều hướng đến "
 
-#: appModules\_default.py:369
+#: appModules\_default.py:607
 msgid "Report object under mouse"
 msgstr "Thông báo đối tượng dưới chuột"
 
-#: appModules\_default.py:370
+#: appModules\_default.py:608
 msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr "Bật t T thông báo các đối tượng dưới chuột"
 
-#: appModules\_default.py:376
+#: appModules\_default.py:614
 msgid "Reports the title of the current application or foreground window"
 msgstr "thông báo tiêu đề của ứng dụng hiện hành hoặc cửa sổ tiền cảnh"
 
-#: appModules\_default.py:383
+#: appModules\_default.py:621
 msgid "speaks the current foreground object"
 msgstr "Đọc đối tượng tiền cảnh hiện hành"
 
-#: appModules\_default.py:389
+#: appModules\_default.py:630
+#: cursorManager.py:242
+msgid "copied to clipboard"
+msgstr "đã chép lên bộ nhớ tạm"
+
+#: appModules\_default.py:634
 msgid "Control ID: %s"
 msgstr "ID Điều Khiển: %s"
 
-#: appModules\_default.py:390
+#: appModules\_default.py:635
 msgid "Class: %s"
 msgstr "Lớp: %s"
 
-#: appModules\_default.py:393
+#: appModules\_default.py:637
 msgid "internal text: %s"
 msgstr "Văn bản trong: %s"
 
-#: appModules\_default.py:394
+#: appModules\_default.py:638
 msgid "text: %s"
 msgstr "văn bản: %s"
 
-#: appModules\_default.py:395
-msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "Thông báo một số thông tin của đối tượng điều hướng hiện hành như Control Id, Class và Internal text.  Tính năng này hữu ích cho những người phát triển."
+#: appModules\_default.py:640
+msgid "reports some info about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
+msgstr "Thông báo vài thông tin về đối tượng điều hướng hiện hành, chủ yếu giúp cho việc lập trình. Nhấn 2 lần để chép Control ID, Window Class và Internal Text lên bộ nhớ tạm."
 
-#: appModules\_default.py:404
+#: appModules\_default.py:649
 msgid "Beep on progress bar updates"
 msgstr "Bíp khi thanh tiến độ cặp nhật"
 
-#: appModules\_default.py:405
+#: appModules\_default.py:650
 msgid "Toggles on and off the beeping on progress bar updates"
 msgstr "Bật tắt  bíp khi thanh tiến độ cặp nhật"
 
-#: appModules\_default.py:414
+#: appModules\_default.py:659
 msgid "report dynamic content changes"
 msgstr "thông báo các thay đổi nội dung động"
 
-#: appModules\_default.py:415
+#: appModules\_default.py:660
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Bật tắt thông báo các thay đổi nội dung động như trong cửa sổ giao tiếp Dos."
 
-#: appModules\_default.py:424
+#: appModules\_default.py:669
 msgid "caret moves review cursor"
 msgstr "dấu nháy di chuyển con trỏ xem lại"
 
-#: appModules\_default.py:425
+#: appModules\_default.py:670
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Bật tắt sự di chuyển của con trỏ xem lại theo việc di chuyển dấu nháy."
 
-#: appModules\_default.py:434
+#: appModules\_default.py:679
 msgid "focus moves navigator object"
 msgstr "Focus di chuyển đối tượng điều hướng"
 
-#: appModules\_default.py:435
+#: appModules\_default.py:680
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Bật tắt sự di chuyển của đối tượng điều hướng theo các thay đổi của fo cus."
 
-#: appModules\_default.py:447
+#: appModules\_default.py:692
 msgid "no system battery"
 msgstr "không có pin hệ thống"
 
-#: appModules\_default.py:449
+#: appModules\_default.py:694
 msgid "%d percent"
 msgstr "phần trăm %d"
 
-#: appModules\_default.py:450
+#: appModules\_default.py:695
 msgid "AC power on"
 msgstr "AC power on"
 
-#: appModules\_default.py:452
+#: appModules\_default.py:697
 msgid "%d hours and %d minutes remaining"
 msgstr "Còn %d giờ %d phút"
 
-#: appModules\_default.py:454
+#: appModules\_default.py:699
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "Thông báo trạng thái pin và thời gian còn lại khi AC chưa cắm"
 
-#: appModules\_default.py:458
+#: appModules\_default.py:703
 msgid "Pass next key through"
 msgstr "Bỏ qua phím kế"
 
-#: appModules\_default.py:459
+#: appModules\_default.py:704
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "NVDA sẽ không sử lý phím kế khi được nhấn mà sẽ gửi đến Window."
 
-#: appModules\msimn.py:20
+#: appModules\_default.py:708
+msgid "Currently running application is %s."
+msgstr "Ứng dụng hiện đang chạy là %s."
+
+#: appModules\_default.py:713
+msgid "default module"
+msgstr "Mô đun mặc định"
+
+#: appModules\_default.py:714
+msgid "and currently loaded module is %s"
+msgstr "và tiện ích hiện đang được tải là %s."
+
+#: appModules\_default.py:715
+msgid "Speaks filename of the active application along with name of the currently loaded appmodule"
+msgstr "Đọc tên tập tin của ứng dụng hoạt động và tiện ích của ứng dụng được tải"
+
+#: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "Đính kèm"
 
-#: appModules\msimn.py:21
+#: appModules\msimn.py:20
 msgid "To:"
 msgstr "Đến:"
 
-#: appModules\msimn.py:22
+#: appModules\msimn.py:21
 msgid "Newsgroup:"
 msgstr "Nhóm Tin:"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:22
 msgid "CC:"
 msgstr "CC:"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:23
 msgid "Subject:"
 msgstr "Chủ đề:"
 
-#: appModules\msimn.py:25
-#: appModules\msimn.py:33
+#: appModules\msimn.py:24
+#: appModules\msimn.py:32
 msgid "From:"
 msgstr "Từ:"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:25
 msgid "Date:"
 msgstr "Ngày:"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:26
 msgid "Forward to:"
 msgstr "Chuyển Đến:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:27
 msgid "Answer to:"
 msgstr "Trả Lời Đến:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:28
 msgid "Organisation:"
 msgstr "Tổ chức:"
 
-#: appModules\msimn.py:30
+#: appModules\msimn.py:29
 msgid "Distribution:"
 msgstr "Phân phối:"
 
-#: appModules\msimn.py:31
+#: appModules\msimn.py:30
 msgid "Key words:"
 msgstr "Tư Khóa:"
 
-#: appModules\msimn.py:32
+#: appModules\msimn.py:31
 msgid "BCC:"
 msgstr "BCC:"
 
-#: appModules\msnmsgr.py:20
-msgid "History"
-msgstr "Lược Sử"
+#: appModules\outlook.py:30
+#: appModules\outlook.py:43
+msgid "subject: %s"
+msgstr "Chủ đề: %s"
+
+#: appModules\outlook.py:31
+msgid "received: %s"
+msgstr "Nhận: %s"
+
+#: appModules\outlook.py:35
+msgid "unread"
+msgstr "Chưa đọc"
+
+#: appModules\outlook.py:37
+msgid "attachment"
+msgstr "đính kèm"
+
+#: appModules\outlook.py:44
+msgid "sent: %s"
+msgstr "Gửi: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:55
+#: speech.py:67
+#: speech.py:598
 msgid "blank"
 msgstr "dòng trắng"
 
 #: characterSymbols.py:19
 msgid "null"
 msgstr "Rỗng"
+
+#: characterSymbols.py:20
+#: controlTypes.py:187
+msgid "tab"
+msgstr "tab"
 
 #: characterSymbols.py:21
 msgid "line feed"
@@ -755,13 +875,9 @@ msgid "right bracket"
 msgstr "đóng ngoặc vuông"
 
 #: characterSymbols.py:49
-#: controlTypes.py:224
+#: controlTypes.py:257
 msgid "caret"
 msgstr "dấu mũ"
-
-#: characterSymbols.py:50
-msgid "line"
-msgstr "dòng"
 
 #: characterSymbols.py:51
 msgid "graav"
@@ -783,842 +899,893 @@ msgstr "đóng ngoặc nhọn"
 msgid "tilda"
 msgstr "ngã"
 
-#: controlTypes.py:132
+#: characterSymbols.py:56
+#: virtualBuffers_old\MSHTML.py:253
+#: virtualBuffers_old\MSHTML.py:260
+#: virtualBuffers_old\adobe.py:263
+#: virtualBuffers_old\adobe.py:274
+#: virtualBuffers_old\gecko.py:256
+#: virtualBuffers_old\gecko.py:267
+msgid "bullet"
+msgstr "chấm tròn"
+
+#: characterSymbols.py:57
+msgid "dot dot dot"
+msgstr "chấm chấm chấm"
+
+#: controlTypes.py:165
 msgid "unknown object"
 msgstr "đối tượng không nhận biết "
 
-#: controlTypes.py:134
+#: controlTypes.py:166
+msgid "window"
+msgstr "cửa sổ"
+
+#: controlTypes.py:167
 msgid "title bar"
 msgstr "Thanh tiêu đề"
 
-#: controlTypes.py:135
+#: controlTypes.py:168
 msgid "pane"
 msgstr "ô"
 
-#: controlTypes.py:136
+#: controlTypes.py:169
 msgid "dialog"
 msgstr "hộp thoại"
 
-#: controlTypes.py:137
+#: controlTypes.py:170
 msgid "check box"
 msgstr "hộp kiểm"
 
-#: controlTypes.py:138
+#: controlTypes.py:171
 msgid "radio button"
 msgstr "Nút radio"
 
-#: controlTypes.py:139
+#: controlTypes.py:172
 msgid "text"
 msgstr "văn bản"
 
-#: controlTypes.py:142
+#: controlTypes.py:173
+msgid "edit"
+msgstr "soạn thảo"
+
+#: controlTypes.py:174
+msgid "button"
+msgstr "nút"
+
+#: controlTypes.py:175
 msgid "menu bar"
 msgstr "thanh trình đơn"
 
-#: controlTypes.py:143
+#: controlTypes.py:176
 msgid "menu item"
 msgstr "trình mục"
 
-#: controlTypes.py:144
-msgid "popup menu"
-msgstr "Trình đơn bật lên"
+#: controlTypes.py:177
+#: controlTypes.py:284
+msgid "menu"
+msgstr "trình đơn"
 
-#: controlTypes.py:145
+#: controlTypes.py:178
 msgid "combo box"
 msgstr "Hộp kết hợp"
 
-#: controlTypes.py:146
+#: controlTypes.py:179
 msgid "list"
 msgstr "danh sách"
 
-#: controlTypes.py:147
+#: controlTypes.py:180
 msgid "list item"
 msgstr "mục trong danh sách"
 
-#: controlTypes.py:148
+#: controlTypes.py:181
 msgid "graphic"
 msgstr "hình"
 
-#: controlTypes.py:149
+#: controlTypes.py:182
 msgid "help balloon"
 msgstr "Bong bóng giúp đỡ"
 
-#: controlTypes.py:150
+#: controlTypes.py:183
 msgid "tool tip"
 msgstr "mẹo công cụ"
 
-#: controlTypes.py:151
+#: controlTypes.py:184
 msgid "link"
 msgstr "liên kết"
 
-#: controlTypes.py:152
+#: controlTypes.py:185
 msgid "tree view"
 msgstr "cây thư mục"
 
-#: controlTypes.py:153
+#: controlTypes.py:186
 msgid "tree view item"
 msgstr " mục trong cây thư mục"
 
-#: controlTypes.py:155
+#: controlTypes.py:188
 msgid "tab control"
 msgstr "tab điều khiển"
 
-#: controlTypes.py:156
+#: controlTypes.py:189
 msgid "slider"
 msgstr "thanh trượt"
 
-#: controlTypes.py:157
+#: controlTypes.py:190
 msgid "progress bar"
 msgstr "thanh tiến độ"
 
-#: controlTypes.py:158
+#: controlTypes.py:191
 msgid "scroll bar"
 msgstr "thanh cuộn"
 
-#: controlTypes.py:159
+#: controlTypes.py:192
 msgid "status bar"
 msgstr "thanh trạng thái"
 
-#: controlTypes.py:160
+#: controlTypes.py:193
 msgid "table"
 msgstr "bảng"
 
-#: controlTypes.py:161
+#: controlTypes.py:194
 msgid "cell"
 msgstr "ô"
 
-#: controlTypes.py:162
+#: controlTypes.py:195
 msgid "column"
 msgstr "cột"
 
-#: controlTypes.py:163
+#: controlTypes.py:196
 msgid "row"
 msgstr "dòng"
 
-#: controlTypes.py:164
+#: controlTypes.py:197
 msgid "frame"
 msgstr "khung"
 
-#: controlTypes.py:165
+#: controlTypes.py:198
 msgid "tool bar"
 msgstr "thanh công cụ"
 
-#: controlTypes.py:166
+#: controlTypes.py:199
 msgid "column header"
 msgstr "tiêu đề cột"
 
-#: controlTypes.py:167
+#: controlTypes.py:200
 msgid "row header"
 msgstr "tiêu đề dòng"
 
-#: controlTypes.py:168
+#: controlTypes.py:201
 msgid "drop down button"
 msgstr "nút liệt kê"
 
-#: controlTypes.py:169
+#: controlTypes.py:202
 msgid "clock"
 msgstr "đồng hồ"
 
-#: controlTypes.py:170
+#: controlTypes.py:203
 msgid "separator"
 msgstr "phân cách"
 
-#: controlTypes.py:171
+#: controlTypes.py:204
 msgid "form"
 msgstr "biểu mẫu"
 
-#: controlTypes.py:172
+#: controlTypes.py:205
 msgid "heading"
 msgstr "tiêu đề"
 
-#: controlTypes.py:173
+#: controlTypes.py:206
 msgid "heading 1"
 msgstr "tiêu đề 1"
 
-#: controlTypes.py:174
+#: controlTypes.py:207
 msgid "heading 2"
 msgstr "Tiêu đề 2"
 
-#: controlTypes.py:175
+#: controlTypes.py:208
 msgid "heading 3"
 msgstr "tiêu đề 3"
 
-#: controlTypes.py:176
+#: controlTypes.py:209
 msgid "heading 4"
 msgstr "tiêu đề 4"
 
-#: controlTypes.py:177
+#: controlTypes.py:210
 msgid "heading 5"
 msgstr " tiêu đề 5"
 
-#: controlTypes.py:178
+#: controlTypes.py:211
 msgid "heading 6"
 msgstr "tiêu đề 6"
 
-#: controlTypes.py:179
+#: controlTypes.py:212
 msgid "paragraph"
 msgstr "đoạn"
 
-#: controlTypes.py:180
+#: controlTypes.py:213
 msgid "block quote"
 msgstr " Khối nháy kép"
 
-#: controlTypes.py:181
+#: controlTypes.py:214
 msgid "table header"
 msgstr "tiêu đề bảng"
 
-#: controlTypes.py:182
+#: controlTypes.py:215
 msgid "table body"
 msgstr "phần Nội dung bảng"
 
-#: controlTypes.py:183
+#: controlTypes.py:216
 msgid "table footer"
 msgstr "Phần chân bảng"
 
-#: controlTypes.py:184
-#: virtualBuffers\IAccessible\adobe.py:36
-#: virtualBuffers\IAccessible\gecko.py:41
+#: controlTypes.py:217
+#: virtualBuffers_old\adobe.py:37
+#: virtualBuffers_old\gecko.py:42
 msgid "document"
 msgstr "tài liệu"
 
-#: controlTypes.py:185
+#: controlTypes.py:218
 msgid "animation"
 msgstr "hoạt ảnh"
 
-#: controlTypes.py:186
+#: controlTypes.py:219
 msgid "application"
 msgstr "ứng dụng"
 
-#: controlTypes.py:187
+#: controlTypes.py:220
 msgid "box"
 msgstr "hộp"
 
-#: controlTypes.py:188
+#: controlTypes.py:221
 msgid "grouping"
 msgstr "nhóm"
 
-#: controlTypes.py:189
+#: controlTypes.py:222
 msgid "property page"
 msgstr "trang thuộc tính"
 
-#: controlTypes.py:190
+#: controlTypes.py:223
 msgid "canvas"
 msgstr "canvas"
 
-#: controlTypes.py:191
+#: controlTypes.py:224
 msgid "caption"
 msgstr "phụ đề"
 
-#: controlTypes.py:192
+#: controlTypes.py:225
 msgid "check menu item"
 msgstr "chọn trình mục"
 
-#: controlTypes.py:193
+#: controlTypes.py:226
 msgid "date edit"
 msgstr "ngày soạn thảo"
 
-#: controlTypes.py:194
+#: controlTypes.py:227
 msgid "icon"
 msgstr "biểu tượng"
 
-#: controlTypes.py:195
+#: controlTypes.py:228
 msgid "directory pane"
 msgstr "Ô thư mục"
 
-#: controlTypes.py:196
+#: controlTypes.py:229
 msgid "embedded object"
 msgstr "đối tượng nhúng"
 
-#: controlTypes.py:197
+#: controlTypes.py:230
 msgid "end note"
 msgstr "kết chú thích"
 
-#: controlTypes.py:198
+#: controlTypes.py:231
 msgid "footer"
 msgstr "chân trang"
 
-#: controlTypes.py:199
+#: controlTypes.py:232
 msgid "foot note"
 msgstr "Phông chữchú thích cuối"
 
-#: controlTypes.py:200
+#: controlTypes.py:233
 msgid "glass pane"
 msgstr "ô kính"
 
-#: controlTypes.py:201
+#: controlTypes.py:234
 msgid "header"
 msgstr "đầu trang"
 
-#: controlTypes.py:202
+#: controlTypes.py:235
 msgid "image map"
 msgstr "Biểu đồ hình"
 
-#: controlTypes.py:203
+#: controlTypes.py:236
 msgid "input window"
 msgstr "cửa sổ nhập dữ liệu"
 
-#: controlTypes.py:204
+#: controlTypes.py:237
 msgid "label"
 msgstr "nhãn"
 
-#: controlTypes.py:205
+#: controlTypes.py:238
 msgid "note"
 msgstr "chú thích"
 
-#: controlTypes.py:206
+#: controlTypes.py:239
 msgid "page"
 msgstr "trang"
 
-#: controlTypes.py:207
+#: controlTypes.py:240
 msgid "radio menu item"
 msgstr "trình mục radio"
 
-#: controlTypes.py:208
+#: controlTypes.py:241
 msgid "layered pane"
 msgstr "ô sắp lớp"
 
-#: controlTypes.py:209
+#: controlTypes.py:242
 msgid "redundant object"
 msgstr "đối tượng thừa"
 
-#: controlTypes.py:210
+#: controlTypes.py:243
 msgid "root pane"
 msgstr "ô gốc"
 
-#: controlTypes.py:211
+#: controlTypes.py:244
 msgid "edit bar"
 msgstr "thanh soạn thảo"
 
-#: controlTypes.py:212
+#: controlTypes.py:245
 msgid "terminal"
 msgstr "trạm cuối"
 
-#: controlTypes.py:213
+#: controlTypes.py:246
 msgid "rich edit"
 msgstr "soạn thảo định dạng"
 
-#: controlTypes.py:214
+#: controlTypes.py:247
 msgid "ruler"
 msgstr "thước kẻ"
 
-#: controlTypes.py:215
+#: controlTypes.py:248
 msgid "scroll pane"
 msgstr "ô cuộn"
 
-#: controlTypes.py:216
+#: controlTypes.py:249
 msgid "section"
 msgstr "phần"
 
-#: controlTypes.py:217
+#: controlTypes.py:250
 msgid "shape"
 msgstr "hình dạng"
 
-#: controlTypes.py:218
+#: controlTypes.py:251
 msgid "split pane"
 msgstr "ô phân cách"
 
-#: controlTypes.py:219
+#: controlTypes.py:252
 msgid "view port"
 msgstr "xem cổng"
 
-#: controlTypes.py:220
+#: controlTypes.py:253
 msgid "tear off menu"
 msgstr "trình đơn phân chia"
 
-#: controlTypes.py:221
+#: controlTypes.py:254
 msgid "text frame"
 msgstr "khung văn bản"
 
-#: controlTypes.py:222
+#: controlTypes.py:255
 msgid "toggle button"
 msgstr "nút bật tắt"
 
-#: controlTypes.py:223
+#: controlTypes.py:256
 msgid "border"
 msgstr "đường viền"
 
-#: controlTypes.py:225
+#: controlTypes.py:258
 msgid "character"
 msgstr "ký tự"
 
-#: controlTypes.py:226
+#: controlTypes.py:259
 msgid "chart"
 msgstr "biểu đồ"
 
-#: controlTypes.py:227
+#: controlTypes.py:260
 msgid "cursor"
 msgstr "con trỏ"
 
-#: controlTypes.py:228
+#: controlTypes.py:261
 msgid "diagram"
 msgstr "sơ đồ"
 
-#: controlTypes.py:229
+#: controlTypes.py:262
 msgid "dial"
 msgstr "quay số"
 
-#: controlTypes.py:230
+#: controlTypes.py:263
 msgid "drop list"
 msgstr "danh sách liệt kê"
 
-#: controlTypes.py:231
+#: controlTypes.py:264
 msgid "split button"
 msgstr "nút tách"
 
-#: controlTypes.py:232
+#: controlTypes.py:265
 msgid "menu button"
 msgstr "nút trình đơn"
 
-#: controlTypes.py:233
+#: controlTypes.py:266
 msgid "drop down button grid"
 msgstr "khung lưới nút liệt kê"
 
-#: controlTypes.py:234
+#: controlTypes.py:267
 msgid "equation"
 msgstr "phương trình"
 
-#: controlTypes.py:235
+#: controlTypes.py:268
 msgid "grip"
 msgstr "grip"
 
-#: controlTypes.py:236
+#: controlTypes.py:269
 msgid "hot key field"
 msgstr "trường phím nóng"
 
-#: controlTypes.py:237
+#: controlTypes.py:270
 msgid "indicator"
 msgstr "chỉ báo"
 
-#: controlTypes.py:238
+#: controlTypes.py:271
 msgid "spin button"
 msgstr "nút quay"
 
-#: controlTypes.py:239
+#: controlTypes.py:272
 msgid "sound"
 msgstr "âm thanh"
 
-#: controlTypes.py:240
+#: controlTypes.py:273
 msgid "white space"
 msgstr "khoảng trắng"
 
-#: controlTypes.py:241
+#: controlTypes.py:274
 msgid "tree view button"
 msgstr "nút cây thư mục"
 
-#: controlTypes.py:242
+#: controlTypes.py:275
 msgid "IP address"
 msgstr "Địa chỉ IP"
 
-#: controlTypes.py:246
+#: controlTypes.py:276
+msgid "desktop icon"
+msgstr "biểu tượng desktop"
+
+#: controlTypes.py:277
+#: controlTypes.py:301
+msgid "alert"
+msgstr "cảnh giác"
+
+#: controlTypes.py:278
+msgid "IFrame"
+msgstr "IFrame"
+
+#: controlTypes.py:279
+msgid "desktop pane"
+msgstr "ô desktop"
+
+#: controlTypes.py:280
+msgid "option pane"
+msgstr "ô chọn lựa"
+
+#: controlTypes.py:281
+msgid "color chooser"
+msgstr "chọn dùng màu"
+
+#: controlTypes.py:282
+msgid "file chooser"
+msgstr "chọn dùng tập tin"
+
+#: controlTypes.py:283
+msgid "filler"
+msgstr "bộ điền"
+
+#: controlTypes.py:285
+msgid "panel"
+msgstr "bảng"
+
+#: controlTypes.py:286
+msgid "password edit"
+msgstr "soạn mật mã"
+
+#: controlTypes.py:287
+msgid "font chooser"
+msgstr "chọn dùng phông"
+
+#: controlTypes.py:288
+msgid "line"
+msgstr "dòng"
+
+#: controlTypes.py:289
+msgid "font name"
+msgstr "tên phông"
+
+#: controlTypes.py:290
+msgid "font size"
+msgstr "kích cỡ phông"
+
+#: controlTypes.py:292
+msgid "ITALIC"
+msgstr "In Nghiêng"
+
+#: controlTypes.py:294
+msgid "foreground color"
+msgstr "màu chữ"
+
+#: controlTypes.py:295
+msgid "background color"
+msgstr "màu nền"
+
+#: controlTypes.py:296
+#: textBuffer.py:286
+#: textBuffer.py:293
+#: textBuffer.py:323
+msgid "superscript"
+msgstr "In trên"
+
+#: controlTypes.py:297
+#: textBuffer.py:325
+msgid "subscript"
+msgstr "in dưới"
+
+#: controlTypes.py:298
+msgid "style"
+msgstr "kiểu"
+
+#: controlTypes.py:299
+msgid "indent"
+msgstr "thụt lề"
+
+#: controlTypes.py:300
+msgid "alignment"
+msgstr "canh lề"
+
+#: controlTypes.py:305
 msgid "unavailable"
 msgstr "không sẵn sàng "
 
-#: controlTypes.py:247
+#: controlTypes.py:306
 msgid "focused"
 msgstr "có focus"
 
-#: controlTypes.py:249
+#: controlTypes.py:308
 msgid "busy"
 msgstr "bận"
 
-#: controlTypes.py:250
+#: controlTypes.py:309
 msgid "pressed"
 msgstr "được nhấn"
 
-#: controlTypes.py:251
+#: controlTypes.py:310
 msgid "checked"
 msgstr "chọn"
 
-#: controlTypes.py:252
+#: controlTypes.py:311
 msgid "half checked"
 msgstr "chọn nửa"
 
-#: controlTypes.py:253
+#: controlTypes.py:312
 msgid "read only"
 msgstr "chỉ đọc"
 
-#: controlTypes.py:254
+#: controlTypes.py:313
 msgid "expanded"
 msgstr "mở"
 
-#: controlTypes.py:255
+#: controlTypes.py:314
 msgid "collapsed"
 msgstr "đóng"
 
-#: controlTypes.py:256
+#: controlTypes.py:315
 msgid "invisible"
 msgstr "ẩn"
 
-#: controlTypes.py:257
+#: controlTypes.py:316
 msgid "visited"
 msgstr "đã vào"
 
-#: controlTypes.py:258
+#: controlTypes.py:317
 msgid "linked"
 msgstr "được liên kết"
 
-#: controlTypes.py:259
+#: controlTypes.py:318
 msgid "subMenu"
 msgstr "trình đơn phụ"
 
-#: controlTypes.py:260
-#: virtualBuffers\IAccessible\MSHTML.py:287
+#: controlTypes.py:319
+#: virtualBuffers_old\MSHTML.py:295
 msgid "protected"
 msgstr "được bảo vệ"
 
-#: controlTypes.py:261
+#: controlTypes.py:320
 msgid "required"
 msgstr "yêu cầu"
 
-#: core.py:45
+#: controlTypes.py:321
+msgid "defunct"
+msgstr "không hoạt động"
+
+#: controlTypes.py:322
+msgid "invalid entry"
+msgstr "ô nhập không hợp lệ"
+
+#: controlTypes.py:323
+msgid "modal"
+msgstr "modal"
+
+#: controlTypes.py:324
+msgid "has auto complete"
+msgstr "hoàn tất tự động"
+
+#: controlTypes.py:325
+msgid "multi line"
+msgstr "nhiều dòng"
+
+#: controlTypes.py:326
+msgid "iconified"
+msgstr "iconified"
+
+#: controlTypes.py:327
+msgid "selectable"
+msgstr "có thể chọn"
+
+#: core.py:69
 msgid "configuration applied"
 msgstr "đã lưu cấu hình"
 
-#: core.py:72
+#: core.py:115
 msgid "Loading subsystems, please wait..."
 msgstr "Đang tải các hệ thống phụ, vui lòng chờ!"
 
-#: core.py:85
+#: core.py:136
 msgid "NVDA started"
 msgstr "NVDA sẵn sàng"
 
-#: gui\__init__.py:23
-msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt speech\n"
-"insert+1 - turns keyboard help on and off\n"
-"insert+upArrow - reports the object with focus\n"
-"insert+downArrow - starts sayAll (press control or any other key to stop)\n"
-"insert+t speak title\n"
-"insert+f12 - report time and date\n"
-"insert+2 - turn speaking of typed characters on and off\n"
-"insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
-"insert+pageUp - increase rate of speech\n"
-"insert+pageDown - decrease rate of speech\n"
-"insert+p - turn reading of punctuation on and off\n"
-"insert+s - toggle speech modes (off, talk and beeps)\n"
-"insert+m - turn  reading of objects under the mouse on and off\n"
-"insert+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"insert+numpadAdd - Where am I\n"
-"insert+numpad5 - current object\n"
-"shift+insert+numpad5 - dimensions and location of current object\n"
-"insert+numpad8 - parent object\n"
-"insert+numpad4 - previous object\n"
-"insert+numpad6 - next object\n"
-"insert+numpad2 - first child object\n"
-"insert+numpadMinus - move to focus object\n"
-" insert+end - move to statusbar\n"
-"insert+numpadDivide - Move mouse to current navigator object\n"
-"insert+numpadMultiply - move to mouse\n"
-"insert+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
-msgstr ""
-"NVDA - Tài liệu tóm tắt\n"
-"\n"
-" NVDA (%(description)s)\n"
-"Phiên bản: %(version)s\n"
-" URL: %(url)s\n"
-"Vui lòng gửi lỗi và đề nghị đến: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Thông tin bản quyền---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"Đây là cửa sổ giao diện, Nó cho phép bạn cấu hình NVDA và cũng cho phép bạn tắt.\n"
-"\n"
-"Nhấn Insert+n để mở cửa sổ này bất kỳ khi nào và Alt+f4 để đóng cửa sổ mà không đóng NVDA.\n"
-"\n"
-" Bạn có thể nhấn Insert+q để đóng NVDA hoặc chọn Đóng trong thực đơn của NVDA. Nó sẽ xuất hiện hộp thoại xác nhận, bạn có thể chọn Ok để đóng hoặc Cancel để hủy bỏ.\n"
-"\n"
-"Để cấu hình các tùy chọn như giọng đọc, chuột, chế độ đọc phím...,\n"
-"Nhấn phím alt để mở thực đơn và dùng phím mũi tên để chọn mục bạn muốn thay đổi. Nó sẽ hiện ra hộp thoại gồm các tùy chọn cho phép bạn thay đổi.\n"
-"\n"
-"Mặc định NVDA sẽ không lưu lại các  cấu hình bạn đã thay đổi  khi đóng NVDA. Bạn phải nhấn Control+s để lưu lại cấu hình  hoặc có thể vào thực đơn Tùy Chọn và check vào mục Lưu Lại Cấu Hình khi Đóng NVDA.\n"
-"\n"
-"Một số phím lệnh hữu ích giúp bạn sử dụng NVDA:\n"
-"\n"
-"Các phím lệnh chung:\n"
-"control - ngưng đọc\n"
-"insert+1 - bật tắt giúp đỡ bàn phím\n"
-"insert+Mũi tên lên - thông báo đối tượng có focus\n"
-"insert+Mũi tên xuống - đọc tất cả và ngưng đọc khi nhấn phím control hoặc  bất kỳ phím nào\n"
-"insert+t - đọc tiêu đề\n"
-"insert+f12 - Thông báo ngày giờ\n"
-"insert+2 - Bật tắt đọc ký tự được gõ\n"
-"insert+3  bật tắt đọc từ được gõ\n"
-"insert+4 - bật tắt đọc phím lệnh khi nhấn như tổ hợp phí khoảng trắng, control, shift, mũi tên.\n"
-"insert+Trang trước - Tăng tốc độ đọc\n"
-"insert+Trang sau - Giảm tốc độ đọc\n"
-"insert+p - Bật tắt đọc dấu câu\n"
-"insert+s - Chuyển đổi chế độ đọc (Tắt, Nói và Bíp)\n"
-"insert+m - Bật tắt đọc đối tượng dưới chuột.\n"
-"insert+f - Thông báo phông chữ khi đứng trong tài liệu\n"
-"\n"
-"Đối tượng:\n"
-"insert++ (bàn phím số) - vị trí đối tượng\n"
-"insert+5 (bàn phím số) - đối tượng hiện hành\n"
-"shift+insert+5 (bàn phím số) - Hướng và vị trí của đối tượng hiện hành\n"
-"insert+8 (bàn phím số) - Đối tượng cấp cha\n"
-"insert+4 (bàn phím số) - Đối tượng trước\n"
-"insert+6 (bàn phím số) - Đối tượng kế\n"
-"insert+2 (bàn phím số) - Đối tượng con thứ nhất\n"
-"insert+- (bàn phím số) - Chuyển đến đối tượng có focus\n"
-" insert+Cuối Dòng - Chuyển đến thanh trạng thái\n"
-"insert+/ (bàn phím số) - Chuyển chuột đến đối tượng điều hướng\n"
-"insert+* (bàn phím số) - Chuyển đến chuột\n"
-"insert+Enter (bàn phím số) - Kích hoạt đối tượng hiện hành\n"
-"\n"
-"Xem lại đối tượng hiện hànht:\n"
-"shift+7 (bàn phím số) - Chuền về dòng đầu\n"
-"7 (bàn phím số) - Dòng trước\n"
-"8 (bàn phím số) - Dòng hiện tại\n"
-"9 (bàn phím số) - Dòng kế\n"
-" shift+9 (bàn phím số) - Dòng cuối\n"
-"4 (bàn phím số) - Từ trước\n"
-"5 (bàn phím số) - Từ hiện tại\n"
-"6 (bàn phím số) - Từ kế\n"
-"shift+1 (bàn phím số) - Đầu dòng\n"
-"1 (bàn phím số) - Ký tự trước\n"
-"2 (bàn phím số) - Ký tự hiện tại\n"
-"3 (bàn phím số) - Ký tự kế\n"
-"shift+3 (bàn phím số) - Cuối dòng\n"
+#: core.py:137
+msgid "You can press insert+n to activate the NVDA menu at any time"
+msgstr "Bạn có thể nhấn Insert+N để kích hoạt trình đơn NVDA trong mọi lúc."
 
-#: gui\__init__.py:139
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&Phục hồi cấu hình đã lưu\tCtrl+R"
+#: cursorManager.py:77
+#: virtualBuffers_old\__init__.py:459
+msgid "Find"
+msgstr "Tìm"
 
-#: gui\__init__.py:139
-msgid "Reset all setting back to nvda.ini"
-msgstr "Phục hồi lại các thiết lập trong NVDA.ini"
+#: cursorManager.py:77
+#: virtualBuffers_old\__init__.py:459
+msgid "Type the text you wish to find"
+msgstr "Nhập văn bản muốn tìm"
 
-#: gui\__init__.py:141
-msgid "&Save configuration\tCtrl+S"
-msgstr "&Lưu cấu hình\tCtrl+S"
+#: cursorManager.py:96
+msgid "text \"%s\" not found"
+msgstr "không tìm thấy văn bản \"%s\""
 
-#: gui\__init__.py:141
-msgid "Write the current configuration to nvda.ini"
-msgstr "Ghi cấu hình hiện tại vào NVDA.ini"
+#: cursorManager.py:96
+#: virtualBuffers_old\__init__.py:469
+msgid "Find Error"
+msgstr "tìm thấy lỗi"
 
-#: gui\__init__.py:143
-msgid "E&xit"
-msgstr "Đón&g"
+#: cursorManager.py:103
+msgid "find a text string from the current cursor position"
+msgstr "Tìm chuỗi văn bản từ vị trí con trỏ hiện hành"
 
-#: gui\__init__.py:143
-#: gui\__init__.py:235
-msgid "Exit NVDA"
-msgstr "Đóng NVDA"
+#: cursorManager.py:110
+msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "Tìm chuỗi văn bản đã nhập trước từ vị trí con trỏ hiện hành"
 
-#: gui\__init__.py:145
-#: gui\__init__.py:146
-msgid "&NVDA"
-msgstr "&NVDA"
-
-#: gui\__init__.py:149
-msgid "&User interface...\tCtrl+Shift+U"
-msgstr "&Giao diện người dùng...\tCtrl+Shift+U"
-
-#: gui\__init__.py:149
-msgid "Change user interface settings"
-msgstr "Thay đổi các thiết lập giao diện người dùng"
-
-#: gui\__init__.py:152
-msgid " the synthesizer to use"
-msgstr "Sử dụng bộ tổng hợp"
-
-#: gui\__init__.py:152
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "&Bộ tổng hợp...\tCtrl+Shift+S"
-
-#: gui\__init__.py:155
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "&Thiết lập giọng đọc...\tCtrl+Shift+V"
-
-#: gui\__init__.py:155
-msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "Chọn giọng, tốc độ, độ cao và âm lượng sử dụng"
-
-#: gui\__init__.py:158
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "Cấu Hình Bàn &Phím"
-
-#: gui\__init__.py:158
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Cấu hình kiểu bàn phím, đọc ký tự được gõ, từ hoặc phím lệnh."
-
-#: gui\__init__.py:161
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "Cấu hình &chuột...\tCtrl+M"
-
-#: gui\__init__.py:161
-msgid "Change reporting of mouse sape, object under mouse"
-msgstr "Thay đổi thông báo chuột và đối tượng dưới chuột"
-
-#: gui\__init__.py:164
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "Trình &bày đối tượng...\tCtrl+Shift+O"
-
-#: gui\__init__.py:164
-msgid "Change reporting of objects"
-msgstr "Thay đổi thông báo các đối tượng"
-
-#: gui\__init__.py:167
-msgid "Change virtual buffers specific settings"
-msgstr "Thay đổi các thiết lập cho bộ đệm ảo"
-
-#: gui\__init__.py:167
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "Bộ &nhớ đệm ảo...\tCtrl+Shift+B"
-
-#: gui\__init__.py:170
-msgid "Change Settings of document properties"
-msgstr "Thay Đổi Thiết Lập Cho Thuộc Tính Tài Liệu"
-
-#: gui\__init__.py:170
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "Định dạng tài &liệu...\tCtrl+Shift+F"
-
-#: gui\__init__.py:172
-#: gui\__init__.py:173
-msgid "&Preferences"
-msgstr "&Tùy Chọn"
-
-#: gui\__init__.py:176
-msgid "NVDA homepage"
-msgstr "Trang nhà NVDA"
-
-#: gui\__init__.py:176
-msgid "Opens NVDA homepage in the default browser"
-msgstr "Mở trang nhà NVDA với trình duyệt mặc định"
-
-#: gui\__init__.py:179
-msgid "NVDA wiki"
-msgstr "NVDA wiki"
-
-#: gui\__init__.py:179
-msgid "Opens NVDA wiki in the default browser"
-msgstr "Mở NVDA Wiki với trình duyệt mặc định"
-
-#: gui\__init__.py:181
-msgid "About..."
-msgstr "Thông Tin..."
-
-#: gui\__init__.py:181
-#: gui\__init__.py:295
-msgid "About NVDA"
-msgstr "Về NVDA"
-
-#: gui\__init__.py:183
-#: gui\__init__.py:184
-msgid "&Help"
-msgstr "&Giúp Đỡ"
-
-#: gui\__init__.py:196
-#: gui\scriptUI.py:52
-#: gui\scriptUI.py:61
-#: gui\scriptUI.py:74
-msgid "NVDA"
-msgstr "NVDA"
-
-#: gui\__init__.py:223
+#: gui\__init__.py:120
 msgid "configuration saved"
 msgstr "đã lưu cấu hình"
 
-#: gui\__init__.py:225
+#: gui\__init__.py:122
 msgid "Could not save configuration - probably read only file system"
 msgstr "Không thể lưu cấu hình - lỗi có thể do tập tin có thuộc tính chỉ đọc"
 
-#: gui\__init__.py:235
-msgid "Press OK to quit NVDA"
-msgstr "Nhấn Ok để đóng NVDA"
+#: gui\__init__.py:125
+msgid "Default dictionary"
+msgstr "Từ điển mặc định"
 
-#: gui\__init__.py:251
-msgid "User interface settings"
-msgstr "Các thiết lập giao diện người dùng"
+#: gui\__init__.py:129
+msgid "Voice dictionary (%s)"
+msgstr "Từ điển giọng (%s)"
 
-#: gui\__init__.py:255
-msgid "Synthesizer"
-msgstr "Bộ tổng hợp"
+#: gui\__init__.py:133
+msgid "Temporary dictionary"
+msgstr "Từ điển tạm"
 
-#: gui\__init__.py:259
-msgid "Voice settings"
-msgstr "Thiết lập giọng đọc"
+#: gui\__init__.py:139
+msgid "Are you sure you want to quit NVDA?"
+msgstr "Bạn muốn đóng NVDA?"
 
-#: gui\__init__.py:263
-msgid "Keyboard Settings"
-msgstr "Cấu Hình Bàn Phím"
+#: gui\__init__.py:139
+#: gui\__init__.py:256
+msgid "Exit NVDA"
+msgstr "Đóng NVDA"
 
-#: gui\__init__.py:267
-msgid "Mouse settings"
-msgstr "Thiết lập chuột"
-
-#: gui\__init__.py:271
-msgid "Object presentation"
-msgstr "Trình bày đối tượng"
-
-#: gui\__init__.py:275
-msgid "virtual buffers"
-msgstr "Bộ đệm ảo"
-
-#: gui\__init__.py:279
-msgid "Document formatting"
-msgstr "Định dạng tài liệu"
-
-#: gui\__init__.py:294
+#: gui\__init__.py:189
 msgid "copyright"
 msgstr "bản quyền"
 
-#: gui\__init__.py:294
-msgid "maintainer"
-msgstr " bảo trì"
-
-#: gui\__init__.py:294
+#: gui\__init__.py:189
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:189
 msgid "version"
 msgstr "Phiên bản"
+
+#: gui\__init__.py:190
+#: gui\__init__.py:247
+msgid "About NVDA"
+msgstr "Về NVDA"
+
+#: gui\__init__.py:204
+msgid "&General settings..."
+msgstr "&Cài đặt chung..."
+
+#: gui\__init__.py:204
+#: gui\settingsDialogs.py:98
+msgid "General settings"
+msgstr "Thiết lập chung"
+
+#: gui\__init__.py:206
+msgid " the synthesizer to use"
+msgstr "Sử dụng bộ tổng hợp"
+
+#: gui\__init__.py:206
+msgid "&Synthesizer..."
+msgstr "&Bộ đọc..."
+
+#: gui\__init__.py:208
+msgid "&Voice settings..."
+msgstr "Thiết lập giọng đọcCài đặt &giọng đọc..."
+
+#: gui\__init__.py:208
+msgid "Choose the voice, rate, pitch and volume  to use"
+msgstr "Chọn giọng, tốc độ, độ cao và âm lượng sử dụng"
+
+#: gui\__init__.py:210
+msgid "&Keyboard Settings..."
+msgstr "Cài đặt bàn &phím..."
+
+#: gui\__init__.py:210
+msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+msgstr "Cấu hình kiểu bàn phím, đọc ký tự được gõ, từ hoặc phím lệnh."
+
+#: gui\__init__.py:212
+msgid "&Mouse settings..."
+msgstr "Cài đặt &chuột..."
+
+#: gui\__init__.py:212
+msgid "Change reporting of mouse sape, object under mouse"
+msgstr "Thay đổi thông báo chuột và đối tượng dưới chuột"
+
+#: gui\__init__.py:214
+msgid "&Object presentation..."
+msgstr "Trình bày đối &tượng..."
+
+#: gui\__init__.py:214
+msgid "Change reporting of objects"
+msgstr "Thay đổi thông báo các đối tượng"
+
+#: gui\__init__.py:216
+msgid "Change virtual buffers specific settings"
+msgstr "Thay đổi các thiết lập cho bộ đệm ảo"
+
+#: gui\__init__.py:216
+msgid "Virtual &buffers..."
+msgstr "Bộ đệm &ảo..."
+
+#: gui\__init__.py:218
+msgid "Change Settings of document properties"
+msgstr "Thay Đổi Thiết Lập Cho Thuộc Tính Tài Liệu"
+
+#: gui\__init__.py:218
+msgid "Document &formatting..."
+msgstr "Định dạng tài &liệu..."
+
+#: gui\__init__.py:221
+msgid "&Default dictionary..."
+msgstr "&Từ điển mặc định..."
+
+#: gui\__init__.py:221
+msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
+msgstr "Hộp thoại cho phép bạn thiết lập từ điển mặc định bằng cách thêm các mục từ vào danh sách từ."
+
+#: gui\__init__.py:223
+msgid "&Voice dictionary..."
+msgstr "Từ điển &giọng..."
+
+#: gui\__init__.py:223
+msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
+msgstr "Hộp thoại cho phép bạn thiết lập từ điển cho giọng đọc cụ thể bằng cách thêm mục từ vào danh sách."
+
+#: gui\__init__.py:225
+msgid "&Temporary dictionary..."
+msgstr "&Từ điển tạm..."
+
+#: gui\__init__.py:225
+msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
+msgstr "Hộp thoại cho phép bạn thiết lập từ điển tạm bằng cách thêm các mục từ vào hộp soạn thảo"
+
+#: gui\__init__.py:227
+msgid "User &dictionaries"
+msgstr "Từ điển &người dùng"
+
+#: gui\__init__.py:228
+msgid "&Preferences"
+msgstr "&Tùy Chọn"
+
+#: gui\__init__.py:231
+msgid "User guide"
+msgstr "Hướng dẫn sử dụng"
+
+#: gui\__init__.py:233
+msgid "Key Command Quick Reference"
+msgstr "Tài liệu tóm tắt phím lệnh"
+
+#: gui\__init__.py:235
+msgid "What's &new"
+msgstr "Tính năng &mới"
+
+#: gui\__init__.py:238
+msgid "Home page"
+msgstr "Trang chủ"
+
+#: gui\__init__.py:240
+msgid "Trac (issue tracker)"
+msgstr "Theo dõi (issue tracker)"
+
+#: gui\__init__.py:242
+msgid "Web resources"
+msgstr "Các nguồn web"
+
+#: gui\__init__.py:243
+msgid "License"
+msgstr "Giấy phép"
+
+#: gui\__init__.py:245
+msgid "Contributors"
+msgstr "Người đóng góp"
+
+#: gui\__init__.py:247
+msgid "About..."
+msgstr "Thông Tin..."
+
+#: gui\__init__.py:249
+msgid "&Help"
+msgstr "&Giúp Đỡ"
+
+#: gui\__init__.py:251
+msgid "&Revert to saved configuration"
+msgstr "&Phục hồi cấu hình đã lưu"
+
+#: gui\__init__.py:251
+msgid "Reset all settings to saved state"
+msgstr "Phục hồi lại các thiết lập như trạng thái đã lưu"
+
+#: gui\__init__.py:253
+msgid "&Save configuration"
+msgstr "&Lưu cấu hình"
+
+#: gui\__init__.py:253
+msgid "Write the current configuration to nvda.ini"
+msgstr "Ghi cấu hình hiện tại vào NVDA.ini"
+
+#: gui\__init__.py:256
+msgid "E&xit"
+msgstr "Đón&g"
+
+#: gui\scriptUI.py:52
+#: gui\scriptUI.py:61
+#: gui\scriptUI.py:74
+#: gui\scriptUI.py:142
+msgid "NVDA"
+msgstr "NVDA"
 
 #: gui\scriptUI.py:109
 msgid "Links List"
@@ -1632,396 +1799,520 @@ msgstr " Kích hoạt  liên kết"
 msgid "&Move to link"
 msgstr "Di chuyển đến liên kết"
 
-#: gui\settingsDialogs.py:25
+#: gui\settingsDialogs.py:102
 msgid "&Language (requires restart to fully take affect)"
 msgstr "Ngôn ngữ (yêu cầu khởi động lại để được cặp nhật toàn bộ)"
 
-#: gui\settingsDialogs.py:29
+#: gui\settingsDialogs.py:106
 msgid "Language"
 msgstr "Ngôn ngữ"
 
-#: gui\settingsDialogs.py:38
-msgid "&Hide user interface on startup"
-msgstr "ẩn giao diện người dùng khi khởi động"
-
-#: gui\settingsDialogs.py:41
+#: gui\settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr "&Lưu cấu hình khi đóng"
 
-#: gui\settingsDialogs.py:44
+#: gui\settingsDialogs.py:118
 msgid "&Warn before exiting NVDA"
 msgstr "&Cảnh báo trước khi đóng NVDA"
 
-#: gui\settingsDialogs.py:62
+#: gui\settingsDialogs.py:122
+msgid "L&ogging level"
+msgstr "Cấp độ l&ogging"
+
+#: gui\settingsDialogs.py:126
+msgid "Log level"
+msgstr "Cấp độ log"
+
+#: gui\settingsDialogs.py:145
 msgid "Error in %s language file"
 msgstr "Lỗi trong tập tin ngôn ngữ %s"
 
-#: gui\settingsDialogs.py:62
+#: gui\settingsDialogs.py:145
 msgid "Language Error"
 msgstr "lỗi ngôn ngữ"
 
-#: gui\settingsDialogs.py:69
+#: gui\settingsDialogs.py:154
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Để ngôn ngữ mới được sử dụng, bạn phải lưu lại cấu hình và khởi động lại NVDA. Chọn OK để khởi động lại NVDA hoặc chọn Cancel để hủy bỏ."
 
-#: gui\settingsDialogs.py:69
+#: gui\settingsDialogs.py:154
 msgid "Language Configuration Change"
 msgstr "Thay đổi cấu hình ngôn ngữ"
 
-#: gui\settingsDialogs.py:81
+#: gui\settingsDialogs.py:160
+msgid "Synthesizer"
+msgstr "Bộ tổng hợp"
+
+#: gui\settingsDialogs.py:164
 msgid "&Synthesizer"
 msgstr "&Bộ đọc"
 
-#: gui\settingsDialogs.py:107
+#: gui\settingsDialogs.py:179
+msgid "Output &device"
+msgstr "Thiết Bị &Xuất"
+
+#: gui\settingsDialogs.py:209
 msgid "Could not load the %s synthesizer."
 msgstr "Không thể tải bộ đọc %s"
 
-#: gui\settingsDialogs.py:107
+#: gui\settingsDialogs.py:209
 msgid "Synthesizer Error"
 msgstr "lỗi bộ đọc"
 
-#: gui\settingsDialogs.py:119
+#: gui\settingsDialogs.py:214
+msgid "Voice settings"
+msgstr "Thiết lập giọng đọc"
+
+#: gui\settingsDialogs.py:219
 msgid "&Voice"
 msgstr "&Giọng"
 
-#: gui\settingsDialogs.py:135
+#: gui\settingsDialogs.py:235
 msgid "V&ariant"
 msgstr "&Biến Thể"
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:249
 msgid "&Rate"
 msgstr "&Tốc độ"
 
-#: gui\settingsDialogs.py:156
+#: gui\settingsDialogs.py:258
 msgid "&Pitch"
 msgstr "Độ &Cao"
 
-#: gui\settingsDialogs.py:165
+#: gui\settingsDialogs.py:267
 msgid "&Inflection"
 msgstr "Sự Uốn &Chuyển"
 
-#: gui\settingsDialogs.py:174
+#: gui\settingsDialogs.py:276
 msgid "V&olume"
 msgstr "Âm &Lượng"
 
-#: gui\settingsDialogs.py:181
+#: gui\settingsDialogs.py:283
 msgid "&Speak all punctuation"
 msgstr "Đọc tất cả dấu câu"
 
-#: gui\settingsDialogs.py:184
+#: gui\settingsDialogs.py:286
 msgid "Raise pitch for capitals"
 msgstr "Tăng cao độ đối với ký tự hoa"
 
-#: gui\settingsDialogs.py:187
+#: gui\settingsDialogs.py:289
 msgid "Say &cap before capitals"
 msgstr "Đọc Cap trước các chữ hoa"
 
-#: gui\settingsDialogs.py:190
+#: gui\settingsDialogs.py:292
 msgid "&Beep for capitals"
 msgstr "&Bíp khi gặp ký tự hoa"
 
-#: gui\settingsDialogs.py:272
+#: gui\settingsDialogs.py:363
+msgid "Keyboard Settings"
+msgstr "Cấu Hình Bàn Phím"
+
+#: gui\settingsDialogs.py:366
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Dùng Khóa Hoa làm phím chuản NVDA"
 
-#: gui\settingsDialogs.py:275
+#: gui\settingsDialogs.py:369
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Dùng Insert (bàn phím số) làm phím chuẩn NVDA"
 
-#: gui\settingsDialogs.py:278
+#: gui\settingsDialogs.py:372
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Dùng Insert mở rộng làm phím chuẩn NVDA"
 
-#: gui\settingsDialogs.py:281
+#: gui\settingsDialogs.py:375
 msgid "Speak typed &characters"
 msgstr "Đọc ký tự được gõ"
 
-#: gui\settingsDialogs.py:284
+#: gui\settingsDialogs.py:378
 msgid "Speak typed &words"
 msgstr "Đọc từ được gõ"
 
-#: gui\settingsDialogs.py:287
+#: gui\settingsDialogs.py:381
 msgid "Speak command &keys"
 msgstr "Đọc phím lệnh"
 
-#: gui\settingsDialogs.py:313
+#: gui\settingsDialogs.py:398
+msgid "Mouse settings"
+msgstr "Thiết lập chuột"
+
+#: gui\settingsDialogs.py:401
 msgid "Report mouse &shape changes"
 msgstr "Thông báo ảnh chuột khi thay đổi"
 
-#: gui\settingsDialogs.py:316
+#: gui\settingsDialogs.py:404
 msgid "Report &object under mouse"
 msgstr "Thông báo đối tượng dưới chuột"
 
-#: gui\settingsDialogs.py:338
+#: gui\settingsDialogs.py:407
+msgid "play audio coordinates when mouse moves"
+msgstr "nghe tọa độ audio khi chuột di chuyển"
+
+#: gui\settingsDialogs.py:421
+msgid "Object presentation"
+msgstr "Trình bày đối tượng"
+
+#: gui\settingsDialogs.py:424
 msgid "Report &tooltips"
 msgstr "Thông báo mẹo công cụ"
 
-#: gui\settingsDialogs.py:341
+#: gui\settingsDialogs.py:427
 msgid "Report &help balloons"
 msgstr "Thông báo bong bóng giúp đỡ"
 
-#: gui\settingsDialogs.py:344
+#: gui\settingsDialogs.py:430
 msgid "Report object shortcut &keys"
 msgstr "Thông báo phím tắt của đối tượng"
 
-#: gui\settingsDialogs.py:347
+#: gui\settingsDialogs.py:433
 msgid "Report object &position information"
 msgstr "Thông báo thông tin &vị trí đối tượng"
 
-#: gui\settingsDialogs.py:350
-msgid "Report object &group names"
-msgstr "thông báo tên nhóm của đối tượng"
+#: gui\settingsDialogs.py:436
+msgid "Report object &descriptions"
+msgstr "Thông báo các &mô tả đối tượng"
 
-#: gui\settingsDialogs.py:353
+#: gui\settingsDialogs.py:439
 msgid "Say object &state first"
 msgstr "Đọc trạng thái đối tượng trước"
 
-#: gui\settingsDialogs.py:356
+#: gui\settingsDialogs.py:442
 msgid "&Beep on progress bar updates"
 msgstr "Bíp khi thanh tiến độ được cặp nhật"
 
-#: gui\settingsDialogs.py:383
+#: gui\settingsDialogs.py:460
+msgid "virtual buffers"
+msgstr "Bộ đệm ảo"
+
+#: gui\settingsDialogs.py:463
 msgid "&Maximum number of characters on one line"
 msgstr "Số ký tự tối đa trên dòng"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:468
 msgid "&Number of lines per page"
 msgstr "Số dòng trên trang"
 
-#: gui\settingsDialogs.py:393
+#: gui\settingsDialogs.py:473
 msgid "Report &virtual presentation on focus changes"
 msgstr "Thông báo trình bày bộ nhớ ảo khi focus thay đổi"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:476
 msgid "Update the content &dynamically"
 msgstr "Cặp nhật nội dung động"
 
-#: gui\settingsDialogs.py:399
+#: gui\settingsDialogs.py:479
 msgid "Report lin&ks"
 msgstr "Thông báo liên kết"
 
-#: gui\settingsDialogs.py:402
+#: gui\settingsDialogs.py:482
 msgid "Report &lists"
 msgstr "Thông báo danh sách"
 
-#: gui\settingsDialogs.py:405
+#: gui\settingsDialogs.py:485
 msgid "Report list &items"
 msgstr "Thông báo mục của danh sách"
 
-#: gui\settingsDialogs.py:408
+#: gui\settingsDialogs.py:488
 msgid "Report &headings"
 msgstr "Thông báo tiêu để"
 
-#: gui\settingsDialogs.py:411
-#: gui\settingsDialogs.py:492
+#: gui\settingsDialogs.py:491
+#: gui\settingsDialogs.py:569
 msgid "Report &tables"
 msgstr "Thông báo bảng"
 
-#: gui\settingsDialogs.py:414
+#: gui\settingsDialogs.py:494
 msgid "Report &graphics"
 msgstr "Thông báo hình  ảnh"
 
-#: gui\settingsDialogs.py:417
+#: gui\settingsDialogs.py:497
 msgid "Report f&orms"
 msgstr "Thông báo biểu mẫu"
 
-#: gui\settingsDialogs.py:420
+#: gui\settingsDialogs.py:500
 msgid "Report form &fields"
 msgstr "Thông báo các trường của biểu mẫu"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:503
 msgid "Report block &quotes"
 msgstr "Thông báo khối nháy kép"
 
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:506
 msgid "Report &paragraphs"
 msgstr "Thông báo đoạn"
 
-#: gui\settingsDialogs.py:429
+#: gui\settingsDialogs.py:509
 msgid "Report f&rames"
 msgstr "Thông báo khung"
 
-#: gui\settingsDialogs.py:474
+#: gui\settingsDialogs.py:545
+msgid "Document formatting"
+msgstr "Định dạng tài liệu"
+
+#: gui\settingsDialogs.py:548
+msgid "Announce formatting changes after the cursor (can cause a lag)"
+msgstr "Thông báo định dạng thay đổi sau con trỏ (có thể gây độ trễ)"
+
+#: gui\settingsDialogs.py:551
 msgid "Report font &name"
 msgstr "Thông báo tên phông chữ"
 
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:554
 msgid "Report font &size"
 msgstr "Thông báo kích cỡ phông chữ"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:557
 msgid "Report font attri&butes"
 msgstr "Thông báo thuộc tính phông chữ"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:560
 msgid "Report st&yle"
 msgstr "Thông báo kiểu"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:563
 msgid "Report &pages"
 msgstr "Thông báo trang"
 
-#: gui\settingsDialogs.py:489
+#: gui\settingsDialogs.py:566
 msgid "Report &line numbers"
 msgstr "thông báo số dòng"
 
-#: gui\settingsDialogs.py:495
+#: gui\settingsDialogs.py:572
 msgid "Report &alignment"
 msgstr "Thông báo lề"
 
-#: keyboardHandler.py:48
+#: gui\settingsDialogs.py:604
+msgid "&Dictionary entries"
+msgstr "Các mục &từ"
+
+#: gui\settingsDialogs.py:607
+msgid "Comment"
+msgstr "Nhận xét"
+
+#: gui\settingsDialogs.py:608
+msgid "Pattern"
+msgstr "Mẫu"
+
+#: gui\settingsDialogs.py:609
+msgid "Replacement"
+msgstr "Thay thế"
+
+#: gui\settingsDialogs.py:616
+msgid "&Add"
+msgstr "&Thêm vào"
+
+#: gui\settingsDialogs.py:619
+msgid "&edit"
+msgstr "&soạn thảo"
+
+#: gui\settingsDialogs.py:622
+msgid "&Remove"
+msgstr "&Gỡ bỏ"
+
+#: gui\settingsDialogs.py:645
+msgid "Add an entry"
+msgstr "Thêm mục từ"
+
+#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:651
+msgid "&Comment"
+msgstr "&Nhận xét"
+
+#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:651
+msgid "&Pattern"
+msgstr "&Mẫu"
+
+#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:651
+msgid "&Replacement"
+msgstr "Th&ay thế"
+
+#: gui\settingsDialogs.py:651
+msgid "Edit an entry"
+msgstr "Sửa mục từ"
+
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr " Khóa hoa %s"
 
-#: keyboardHandler.py:50
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "Khóa số %s"
 
-#: keyboardHandler.py:52
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "khóa cuộn %s"
 
-#: keyboardHandler.py:119
+#: keyboardHandler.py:77
+msgid "%s keyboard layout"
+msgstr "Kiểu bàn phím %s"
+
+#: keyboardHandler.py:165
 msgid "Description: %s"
 msgstr "Mô tả: %s"
 
-#: keyboardHandler.py:120
+#: keyboardHandler.py:166
 msgid "Location: %s"
 msgstr "Vị trí: %s"
 
-#: sayAllHandler.py:31
+#: keyboardHandler.py:179
+msgid "Error in keyboardHandler.internal_keyDownEvent"
+msgstr "Lỗi trong keyboardHandler.internal_keyDownEvent"
+
+#: keyboardHandler.py:213
+msgid "Error in keyboardHandler.internal_keyUpEvent"
+msgstr "Lỗi trong keyboardHandler.internal_keyUpEvent"
+
+#: mouseHandler.py:140
+msgid "%s cursor"
+msgstr "con trỏ %s"
+
+#: sayAllHandler.py:155
 msgid "end of text"
 msgstr "kết thúc văn bản"
 
-#: speech.py:241
-msgid "level %d"
-msgstr "Cấp: %d"
-
-#: speech.py:245
-msgid "contains %s"
-msgstr "gồm %s"
-
-#: speech.py:280
+#: speech.py:190
 msgid "cap %s"
 msgstr "cap %s"
 
-#: synthDrivers\silence.py:21
+#: speech.py:342
+msgid "in"
+msgstr "trong"
+
+#: speech.py:347
+#: speech.py:365
+msgid "out of"
+msgstr "ngoài"
+
+#: speech.py:412
+#: textBuffer.py:544
+#: textBuffer.py:546
+#: textBuffer.py:550
+msgid "unselected %s"
+msgstr "%s không chọn"
+
+#: speech.py:651
+#: virtualBuffers_old\MSHTML.py:123
+#: virtualBuffers_old\MSHTML.py:302
+#: virtualBuffers_old\MSHTML.py:306
+#: virtualBuffers_old\adobe.py:300
+#: virtualBuffers_old\adobe.py:304
+#: virtualBuffers_old\gecko.py:293
+#: virtualBuffers_old\gecko.py:297
+msgid "not %s"
+msgstr "không %s"
+
+#: synthDrivers\_espeak.py:268
+msgid "none"
+msgstr "không"
+
+#: synthDrivers\silence.py:20
 msgid "No speech,  a template synthesizer"
 msgstr "Không đọc - bộ đọc mẫu"
 
-#: textBuffer.py:207
+#: textBuffer.py:206
 msgid "page %d"
 msgstr "Trang %d"
 
-#: textBuffer.py:213
+#: textBuffer.py:212
 msgid "line %d"
 msgstr "dòng %d"
 
-#: textBuffer.py:219
+#: textBuffer.py:218
 msgid "out of table"
 msgstr "hết bảng"
 
-#: textBuffer.py:225
+#: textBuffer.py:224
 msgid "table with %d columns and %d rows"
 msgstr "Bảng gồm %d cột và %d dòng"
 
-#: textBuffer.py:231
+#: textBuffer.py:230
 msgid "row %d"
 msgstr "dòng %d"
 
-#: textBuffer.py:236
+#: textBuffer.py:235
 msgid "column %d"
 msgstr "cột %d"
 
-#: textBuffer.py:242
-#: textBuffer.py:310
+#: textBuffer.py:241
+#: textBuffer.py:309
 msgid "style %s"
 msgstr "kiểu %s"
 
-#: textBuffer.py:248
-#: textBuffer.py:312
+#: textBuffer.py:247
+#: textBuffer.py:311
 msgid "alignment %s"
 msgstr "canh lề %s"
 
-#: textBuffer.py:254
-#: textBuffer.py:314
+#: textBuffer.py:253
+#: textBuffer.py:313
 msgid "font name %s"
 msgstr "tên phông %s"
 
-#: textBuffer.py:260
-#: textBuffer.py:316
+#: textBuffer.py:259
+#: textBuffer.py:315
 msgid "font size %d"
 msgstr "kích cỡ phông %d"
 
-#: textBuffer.py:268
+#: textBuffer.py:267
 msgid "not bold"
 msgstr "Không in đậm"
 
-#: textBuffer.py:275
+#: textBuffer.py:274
 msgid "not italic"
 msgstr "Không in nghiêng"
 
-#: textBuffer.py:282
+#: textBuffer.py:281
 msgid "not underline"
 msgstr "không gạch dưới"
 
-#: textBuffer.py:287
-#: textBuffer.py:294
-#: textBuffer.py:324
-msgid "superscript"
-msgstr "In trên"
-
-#: textBuffer.py:289
+#: textBuffer.py:288
 msgid "not superscript"
 msgstr "không in trên"
 
-#: textBuffer.py:296
+#: textBuffer.py:295
 msgid "not subscript"
 msgstr "không in dưới"
 
-#: textBuffer.py:326
-msgid "subscript"
-msgstr "in dưới"
-
-#: textBuffer.py:470
-#: textBuffer.py:498
-#: textBuffer.py:506
+#: textBuffer.py:469
+#: textBuffer.py:497
+#: textBuffer.py:505
 msgid "Moves and then reads the current line"
 msgstr "Di chuyển và đọc dòng hiện tại"
 
-#: textBuffer.py:474
+#: textBuffer.py:473
 msgid "reads the current line"
 msgstr "đọc dòng hiện tại"
 
-#: textBuffer.py:482
+#: textBuffer.py:481
 msgid "Moves and reads the current character"
 msgstr "di chuyển và đọc ký tự hiện tại"
 
-#: textBuffer.py:490
+#: textBuffer.py:489
 msgid "Moves and reads the current word"
 msgstr "di chuyển và đọc từ hiện tại"
 
-#: textBuffer.py:514
+#: textBuffer.py:513
 msgid "Manually moves to the next paragraph and then speaks it"
 msgstr "Tự di chuyển đến đoạn kế và đọc"
 
-#: textBuffer.py:522
+#: textBuffer.py:521
 msgid "Manually moves to the previous paragraph and then speaks it"
 msgstr "tự di chuyển đến đoạn trước và đọc"
 
-#: textBuffer.py:534
+#: textBuffer.py:533
 msgid "no selections"
 msgstr "không có chọn"
 
-#: textBuffer.py:553
+#: textBuffer.py:552
 msgid "Moves and reads the current selection"
 msgstr "di chuyển và đọc vùng chọn hiện tại"
 
-#: textBuffer.py:559
+#: textBuffer.py:558
 msgid "Deletes the character and reads the new current character"
 msgstr "Xóa ký tự và đọc ký tự mới hiện tại"
 
-#: textBuffer.py:573
+#: textBuffer.py:572
 msgid "Reads the character before the current character and then deletes it"
 msgstr "Đọc ký tự trước ký tự hiện tại và xóa "
 
@@ -2033,234 +2324,309 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "phần mềm đọc màn hình miễn phí và mã nguồn mở cho Windows"
 
-#: versionInfo.py:14
+#: versionInfo.py:12
 msgid ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Bản quyền (C) 2006-2007 Cộng Đồng Phát Triển NVDA <http://www.nvda-project.org/>\n"
-"%(name)s được ghi trong giấy phép cộng đồng chung GNU. Bạn có thể tự do để chỉnh sửa và chia sẻ phần mềm này miễn là bạn phải kèm theo giấy phép này với phần mềm; và để mã nguồn cho bất cứ ai nếu họ cần. Điều này được áp dụng cho tất cả phiên bản gốc, chỉnh sửa và các phần mềm có sử dụng mã của phần mềm này.\n"
-"Để biết thêm thông tin, bạn có thể xem thông tin giấy thép tại:\n"
-"http://www.gnu.org/licenses/gpl.html\n"
-"hoặc xem tập tin Copying.txt đi kèm với phần mềm này."
+"Bản quyền (C) 2006-2008 người đóng góp cho NVDA <http://www.nvda-project.org/>\n"
+"%(name)s được bảo vệ bởi giấy phép cộng đồng chung GNU. Bạn hoàn tàon tự do thay đổi và chia sẻ bất kỳ dưới hình thức nào miễn là bạn phải k32m theo giấy phép với phần mềm, và để mã nguồn mở cho mọi người. Điều này áp dụng cho phần mềm nguyên bản và chỉnh sửa cộng với các phần mềm sử dụng mã của phần mềm này."
 
-#: virtualBuffers\IAccessible\MSHTML.py:136
-#: virtualBuffers\IAccessible\adobe.py:159
-#: virtualBuffers\IAccessible\gecko.py:157
-msgid "loading document %s"
-msgstr "tải tài liệu %s"
-
-#: virtualBuffers\IAccessible\MSHTML.py:144
-#: virtualBuffers\IAccessible\adobe.py:168
-#: virtualBuffers\IAccessible\gecko.py:166
-msgid "done"
-msgstr "hoàn tất"
-
-#: virtualBuffers\IAccessible\MSHTML.py:239
-#: virtualBuffers\IAccessible\MSHTML.py:242
-#: virtualBuffers\IAccessible\MSHTML.py:249
-#: virtualBuffers\IAccessible\adobe.py:257
-#: virtualBuffers\IAccessible\gecko.py:250
-msgid "with %s items"
-msgstr " với %s mục"
-
-#: virtualBuffers\IAccessible\MSHTML.py:245
-#: virtualBuffers\IAccessible\MSHTML.py:252
-#: virtualBuffers\IAccessible\adobe.py:252
-#: virtualBuffers\IAccessible\adobe.py:263
-#: virtualBuffers\IAccessible\gecko.py:245
-#: virtualBuffers\IAccessible\gecko.py:256
-msgid "bullet"
-msgstr "chấm đen"
-
-#: virtualBuffers\IAccessible\MSHTML.py:248
-#: virtualBuffers\IAccessible\MSHTML.py:255
-#: virtualBuffers\IAccessible\adobe.py:256
-#: virtualBuffers\IAccessible\adobe.py:269
-#: virtualBuffers\IAccessible\gecko.py:249
-#: virtualBuffers\IAccessible\gecko.py:262
-msgid "definition"
-msgstr "định nghĩa"
-
-#: virtualBuffers\IAccessible\MSHTML.py:283
-msgid "file upload"
-msgstr "tải tập tin lên"
-
-#: virtualBuffers\IAccessible\MSHTML.py:316
-msgid "clickable"
-msgstr "có thể kích"
-
-#: virtualBuffers\IAccessible\adobe.py:301
-#: virtualBuffers\IAccessible\gecko.py:294
-msgid "protected %s"
-msgstr "%s được bảo vệ"
-
-#: virtualBuffers\__init__.py:193
+#: virtualBuffers\__init__.py:87
+#: virtualBuffers\__init__.py:91
+#: virtualBuffers\__init__.py:95
+#: virtualBuffers\__init__.py:101
+#: virtualBuffers\__init__.py:105
+#: virtualBuffers_old\__init__.py:190
 msgid "out of %s"
 msgstr "hết %s"
 
-#: virtualBuffers\__init__.py:274
-msgid "moves one page up in the virtual buffer's current document"
-msgstr "Di chuyển lên một trang trong bộ đệm ảo c ủa tài liệu hiện tại"
+#: virtualBuffers\__init__.py:89
+#: virtualBuffers_old\MSHTML.py:247
+#: virtualBuffers_old\MSHTML.py:250
+#: virtualBuffers_old\MSHTML.py:257
+#: virtualBuffers_old\adobe.py:257
+#: virtualBuffers_old\adobe.py:268
+#: virtualBuffers_old\gecko.py:250
+#: virtualBuffers_old\gecko.py:261
+msgid "with %s items"
+msgstr "với %s mục"
 
-#: virtualBuffers\__init__.py:289
-msgid "moves one page down in the virtual buffer's current document"
-msgstr "Di chuyển xuống một trang trong bộ đệm ảo của tài liệu hiện tại "
+#: virtualBuffers\__init__.py:103
+msgid "in %s"
+msgstr "trong %s"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:177
+#: virtualBuffers_old\__init__.py:290
 msgid "activates the current object in the virtual buffer"
 msgstr "Kích hoạt đối tượng hiện hành trong bộ đệm ảo "
 
-#: virtualBuffers\__init__.py:316
-#: virtualBuffers\__init__.py:327
-msgid "no more headings"
-msgstr "hết tiêu đề"
+#: virtualBuffers\__init__.py:196
+msgid "Refreshed"
+msgstr "Đã làm tươi"
 
-#: virtualBuffers\__init__.py:317
+#: virtualBuffers\__init__.py:201
+msgid "use screen layout %s"
+msgstr "Sử dụng trình bày màn hình %s"
+
+#: virtualBuffers\__init__.py:243
+msgid "no next heading"
+msgstr "Không có tiêu đề kế"
+
+#: virtualBuffers\__init__.py:244
+#: virtualBuffers_old\__init__.py:313
 msgid "moves to the next heading"
 msgstr "Chuyển đến tiếu đề kế"
 
-#: virtualBuffers\__init__.py:328
+#: virtualBuffers\__init__.py:250
+msgid "no previous heading"
+msgstr "không có tiêu đề trước"
+
+#: virtualBuffers\__init__.py:251
+#: virtualBuffers_old\__init__.py:324
 msgid "moves to the previous heading"
 msgstr "C huyển về tiếu đề trước"
 
-#: virtualBuffers\__init__.py:338
-#: virtualBuffers\__init__.py:349
-msgid "no more paragraphs"
-msgstr "hết đoạn"
+#: virtualBuffers\__init__.py:257
+msgid "no next table"
+msgstr "không có bảng kế"
 
-#: virtualBuffers\__init__.py:339
-msgid "moves to the next paragraph"
-msgstr "chuyển đến đoạn kế"
-
-#: virtualBuffers\__init__.py:350
-msgid "moves to the previous paragraph"
-msgstr "chuyển về đoạn trước"
-
-#: virtualBuffers\__init__.py:360
-#: virtualBuffers\__init__.py:371
-msgid "no more tables"
-msgstr "hết bảng"
-
-#: virtualBuffers\__init__.py:361
+#: virtualBuffers\__init__.py:258
+#: virtualBuffers_old\__init__.py:357
 msgid "moves to the next table"
 msgstr "chuyển đến bảng kế"
 
-#: virtualBuffers\__init__.py:372
+#: virtualBuffers\__init__.py:264
+msgid "no previous table"
+msgstr "không có bảng trước"
+
+#: virtualBuffers\__init__.py:265
+#: virtualBuffers_old\__init__.py:368
 msgid "moves to the previous table"
 msgstr "chuyển về bảng trước"
 
-#: virtualBuffers\__init__.py:382
-#: virtualBuffers\__init__.py:393
-msgid "no more links"
-msgstr "hết liên kết"
+#: virtualBuffers\__init__.py:271
+msgid "no next link"
+msgstr "không có liên kết kế"
 
-#: virtualBuffers\__init__.py:383
+#: virtualBuffers\__init__.py:272
+#: virtualBuffers_old\__init__.py:379
 msgid "moves to the next link"
 msgstr "chuyển  đến liên kết kế"
 
-#: virtualBuffers\__init__.py:394
+#: virtualBuffers\__init__.py:278
+msgid "no previous link"
+msgstr "không có liên kết trước"
+
+#: virtualBuffers\__init__.py:279
+#: virtualBuffers_old\__init__.py:390
 msgid "moves to the previous link"
 msgstr "chuyển về liên kết trước"
 
-#: virtualBuffers\__init__.py:404
-#: virtualBuffers\__init__.py:415
+#: virtualBuffers\__init__.py:285
+msgid "no next visited link"
+msgstr "không có liên kết đã xem kế"
+
+#: virtualBuffers\__init__.py:286
+msgid "moves to the next visited link"
+msgstr "chuyển  đến liên kết đã xem kế"
+
+#: virtualBuffers\__init__.py:292
+msgid "no previous visited link"
+msgstr "không có liên kết đã xem trước"
+
+#: virtualBuffers\__init__.py:293
+msgid "moves to the previous visited link"
+msgstr "chuyển về liên kết đã xem trước"
+
+#: virtualBuffers\__init__.py:299
+msgid "no next unvisited link"
+msgstr "Không có liên kết chưa xem kế tiếp"
+
+#: virtualBuffers\__init__.py:300
+msgid "moves to the next unvisited link"
+msgstr "chuyển  đến liên kết chưa xem kế"
+
+#: virtualBuffers\__init__.py:306
+msgid "no previous unvisited link"
+msgstr "Không có liên kết chưa xem trước"
+
+#: virtualBuffers\__init__.py:307
+msgid "moves to the previous unvisited link"
+msgstr "chuyển về liên kết chưa xem trước"
+
+#: virtualBuffers\__init__.py:313
+msgid "no next form field"
+msgstr "không có trường biểu mẫu kế"
+
+#: virtualBuffers\__init__.py:314
+#: virtualBuffers\__init__.py:321
+msgid "moves to the next form field"
+msgstr "chuyển đến trường biểu mẫu kế"
+
+#: virtualBuffers\__init__.py:320
+msgid "no previous form field"
+msgstr "không có trường biểu mẫu trước"
+
+#: virtualBuffers\__init__.py:356
+msgid "displays a list of links"
+msgstr "Hiển thị danh sách liên kết"
+
+#: virtualBuffers_old\MSHTML.py:144
+#: virtualBuffers_old\adobe.py:170
+#: virtualBuffers_old\gecko.py:168
+msgid "loading document %s"
+msgstr "tải tài liệu %s"
+
+#: virtualBuffers_old\MSHTML.py:152
+#: virtualBuffers_old\adobe.py:179
+#: virtualBuffers_old\gecko.py:177
+msgid "done"
+msgstr "hoàn tất"
+
+#: virtualBuffers_old\MSHTML.py:256
+#: virtualBuffers_old\MSHTML.py:263
+#: virtualBuffers_old\adobe.py:267
+#: virtualBuffers_old\adobe.py:280
+#: virtualBuffers_old\gecko.py:260
+#: virtualBuffers_old\gecko.py:273
+msgid "definition"
+msgstr "định nghĩa"
+
+#: virtualBuffers_old\MSHTML.py:291
+msgid "file upload"
+msgstr "tải tập tin lên"
+
+#: virtualBuffers_old\MSHTML.py:324
+msgid "clickable"
+msgstr "có thể kích"
+
+#: virtualBuffers_old\__init__.py:271
+msgid "moves one page up in the virtual buffer's current document"
+msgstr "Di chuyển lên một trang trong bộ đệm ảo c ủa tài liệu hiện tại"
+
+#: virtualBuffers_old\__init__.py:286
+msgid "moves one page down in the virtual buffer's current document"
+msgstr "Di chuyển xuống một trang trong bộ đệm ảo của tài liệu hiện tại "
+
+#: virtualBuffers_old\__init__.py:312
+#: virtualBuffers_old\__init__.py:323
+msgid "no more headings"
+msgstr "hết tiêu đề"
+
+#: virtualBuffers_old\__init__.py:334
+#: virtualBuffers_old\__init__.py:345
+msgid "no more paragraphs"
+msgstr "hết đoạn"
+
+#: virtualBuffers_old\__init__.py:335
+msgid "moves to the next paragraph"
+msgstr "chuyển đến đoạn kế"
+
+#: virtualBuffers_old\__init__.py:346
+msgid "moves to the previous paragraph"
+msgstr "chuyển về đoạn trước"
+
+#: virtualBuffers_old\__init__.py:356
+#: virtualBuffers_old\__init__.py:367
+msgid "no more tables"
+msgstr "hết bảng"
+
+#: virtualBuffers_old\__init__.py:378
+#: virtualBuffers_old\__init__.py:389
+msgid "no more links"
+msgstr "hết liên kết"
+
+#: virtualBuffers_old\__init__.py:400
+#: virtualBuffers_old\__init__.py:411
 msgid "no more lists"
 msgstr "hết danh sách"
 
-#: virtualBuffers\__init__.py:405
+#: virtualBuffers_old\__init__.py:401
 msgid "moves to the next list"
 msgstr "chuyển đến danh sách kế"
 
-#: virtualBuffers\__init__.py:416
+#: virtualBuffers_old\__init__.py:412
 msgid "moves to the previous list"
 msgstr "chuyển về danh sách trước"
 
-#: virtualBuffers\__init__.py:426
-#: virtualBuffers\__init__.py:437
+#: virtualBuffers_old\__init__.py:422
+#: virtualBuffers_old\__init__.py:433
 msgid "no more list items"
 msgstr "hết mục của danh sách"
 
-#: virtualBuffers\__init__.py:427
+#: virtualBuffers_old\__init__.py:423
 msgid "moves to the next list item"
 msgstr " chuyển đến mục danh sách kế"
 
-#: virtualBuffers\__init__.py:438
+#: virtualBuffers_old\__init__.py:434
 msgid "moves to the previous list item"
 msgstr "chuyển về mục danh sách trước"
 
-#: virtualBuffers\__init__.py:448
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers_old\__init__.py:444
+#: virtualBuffers_old\__init__.py:455
 msgid "no more form fields"
 msgstr "hết trường trong biểu mẫu"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers_old\__init__.py:445
 msgid "Moves to the next form field"
 msgstr "chuyển đến trường kế"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers_old\__init__.py:456
 msgid "moves to the previous form field"
 msgstr "chuyển về trường trước"
 
-#: virtualBuffers\__init__.py:463
-msgid "Find"
-msgstr "Tìm"
-
-#: virtualBuffers\__init__.py:463
-msgid "Type the text you wish to find"
-msgstr "Nhập văn bản muốn tìm"
-
-#: virtualBuffers\__init__.py:473
-msgid "Find Error"
-msgstr "tìm thấy lỗi"
-
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers_old\__init__.py:469
 msgid "text: \"%s\" not found"
 msgstr "Chuỗi: \"%s\"  không tìm thấy"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers_old\__init__.py:475
 msgid "find a text pattern from the current cursor's position"
 msgstr "tìm một văn bản mẫu từ vị trí con trỏ hiện tại"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers_old\__init__.py:479
 msgid "find next occurrence of text"
 msgstr "Tìm tiếp"
 
-#: virtualBuffers\__init__.py:502
-#: virtualBuffers\__init__.py:503
+#: virtualBuffers_old\__init__.py:498
+#: virtualBuffers_old\__init__.py:499
 msgid "h=headingQuickKey"
 msgstr "h=headingQuickKey"
 
-#: virtualBuffers\__init__.py:504
-#: virtualBuffers\__init__.py:505
+#: virtualBuffers_old\__init__.py:500
+#: virtualBuffers_old\__init__.py:501
 msgid "f=formFieldQuickKey"
 msgstr "f=formFieldQuickKey"
 
-#: virtualBuffers\__init__.py:506
-#: virtualBuffers\__init__.py:507
+#: virtualBuffers_old\__init__.py:502
+#: virtualBuffers_old\__init__.py:503
 msgid "p=paragraphQuickKey"
 msgstr "p=paragraphQuickKey"
 
-#: virtualBuffers\__init__.py:508
-#: virtualBuffers\__init__.py:509
+#: virtualBuffers_old\__init__.py:504
+#: virtualBuffers_old\__init__.py:505
 msgid "t=tableQuickKey"
 msgstr "t=tableQuickKey"
 
-#: virtualBuffers\__init__.py:510
-#: virtualBuffers\__init__.py:511
+#: virtualBuffers_old\__init__.py:506
+#: virtualBuffers_old\__init__.py:507
 msgid "k=linkQuickKey"
 msgstr "k=linkQuickKey"
 
-#: virtualBuffers\__init__.py:512
-#: virtualBuffers\__init__.py:513
+#: virtualBuffers_old\__init__.py:508
+#: virtualBuffers_old\__init__.py:509
 msgid "l=listQuickKey"
 msgstr "l=listQuickKey"
 
-#: virtualBuffers\__init__.py:514
-#: virtualBuffers\__init__.py:515
+#: virtualBuffers_old\__init__.py:510
+#: virtualBuffers_old\__init__.py:511
 msgid "i=listItemQuickKey"
 msgstr "i=listItemQuickKey"
+
+#: virtualBuffers_old\adobe.py:312
+msgid "protected %s"
+msgstr "%s được bảo vệ"
 

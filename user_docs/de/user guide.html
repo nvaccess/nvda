@@ -1,0 +1,840 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>NVDA Benutzerhandbuch</title>
+<meta name=author content=Besitzer>
+</head>
+<body>
+ <big>NVDA Benutzerhandbuch</big><br>
+<big>zuletzt ge&auml;ndert: 27. Mai 2007.</big><br>
+<big>&Uuml;bersetzt 10.03.2008 von David Parduhn <a href="mailto:xkill85@gmx.net">&lt;xkill85@gmx.net&gt;</a></big><br>
+<h2>Inhaltsverzeichnis</h2>
+<ul>
+<li><a href="#1">Einf&uuml;hrung</a></li>
+<ul>
+<li><a href="#1.1">&Uuml;berblick</a></li>
+<li><a href="#1.2">Lizenz</a></li>
+</ul>
+<li><a href="#2">Systemanforderungen</a></li>
+<li><a href="#3">NVDA besorgen</a></li>
+<ul>
+<li><a href="#3.1"></a>besorgen des Quellcodes</li>
+</ul>
+<li><a href="#4">NVDA installieren</a></li>
+<ul>
+<li><a href="#4.1">die installationsdatei</a></li>
+<li><a href="#4.2">die portable Version</a></li>
+<li><a href="#4.3">der Quellcode</a></li>
+</ul>
+<li><a href="#5">NVDA starten</a></li>
+<li><a href="#6">das Kontextmen&uuml;</a></li>
+<ul>
+<li><a href="#6.1">anzeigen des Kontextmen&uuml;s</a></li>
+<li><a href="#6.2">speichern und Laden der Einstellungen</a></li>
+</ul>
+<li><a href="#7">mit NVDA navigieren</a></li>
+<ul>
+<li><a href="#7.1">navigieren mit dem Fokus</a></li>
+<li><a href="#7.2">objektorientierte Navigation</a></li>
+<li><a href="#7.3">Text im aktuellen Objekt lesen</a></li>
+<li><a href="#7.4">Mit dem Systemcursor navigieren</a></li>
+<li><a href="#7.5">Navigieren mit der Maus</a></li>
+</ul>
+<li><a href="#8">virtuelle Puffer</a></li>
+<ul>
+<li><a href="#8.1">Schnelltasten f&uuml;r virtuelle Puffer</a></li>
+<li><a href="#8.2">Formulare und der Modus „tasten durch virtuellen Puffer durchlassen“</a></li>
+</ul>
+<li><a href="#9">Signalt&ouml;ne f&uuml;r Fortschrittsanzeigen</a></li>
+<li><a href="#10">Signalt&ouml;ne als Sprachausgabe</a></li>
+<li><a href="#11">Der synthesizer-Einstellungsring</a></li>
+<li><a href="#12">Konfigurieren von NVDA</a></li>
+<ul>
+<li><a href="#12.1">einstellungen  f&uuml;r die Benutzeroberfl&auml;che</a></li>
+<li><a href="#12.2">sprachausgaben</a></li>
+<li><a href="#12.3">Stimmeneinstellungen</a></li>
+<li><a href="#12.4">Tastatur</a></li>
+<li><a href="#12.5">Mauseinstellungen</a></li>
+<li><a href="#12.6">Objektpr&auml;sentation</a></li>
+<li><a href="#12.7">virtuelle Puffer</a></li>
+<li><a href="#12.8">Dokumentformatierungen</a></li>
+</ul>
+<li><a href="#13">das Benutzerw&ouml;rterbuch</a></li>
+</ul>
+<h2 id="1">Einf&uuml;hrung</h2>
+
+<h3 id="1.1">&Uuml;berblick</h3>
+<p>NVDA ist ein Bildschirmleser, der es blinden und stark
+sehbehinderten erm&ouml;glicht, Windows-Betriebssysteme zu verwenden. Indem NVDA das
+Betriebssystem danach abfragt, welche Fenster auf dem Bildschirm zu sehen sind,
+welches Steuerelement grade ausgew&auml;hlt ist und wo &Auml;nderungen passieren, kann
+NVDA dem Anwender schnell und leicht verst&auml;ndlich &uuml;ber synthetische Sprache
+mitteilen, was auf dem Bildschirm vor sich geht. NVDA unterst&uuml;tzt (stand
+September 2007) sapi5-Synthesizer; der modulare Aufbau von NVDA erlaubt die
+Unterst&uuml;tzung weiterer Sprachausgaben. Sollten Sie nicht &uuml;ber
+sapi5-Sprachausgaben in ihrer landessprache verf&uuml;gen, k&ouml;nnen Sie auch den mit
+NVDA mitgelieferten Synthesizer espeak verwenden. Dieser Synthesizer wird auch
+bei der Installation verwendet (siehe unten) NVDA verwendet eine Mischung aus
+msaa- und programmspezifischen Objektaufrufen und verzichtet dabei auf Video
+intercept- oder grafikkartentreiber. Der Vorteil hierbei ist, dass NVDA auf
+vielen Systemen unabh&auml;ngig von der Grafikkarte oder vom eingestellten
+Grafikmodus funktioniert. Au&szlig;erdem installiert NVDA keinerlei Dateien oder
+Treiber, die f&uuml;r den Erststart einen Neustart des Systems erfordern. NVDA
+unterst&uuml;tzt momentan noch keine Braillezeilen, es wird jedoch daran gearbeitet.
+F&uuml;r NVDA‘s meldungen und Benutzeroberfl&auml;che sind &Uuml;bersetzungen in einigen
+Sprachen verf&uuml;gbar, weitere kommen in n&auml;chster Zukunft hinzu. NVDA kann Text in
+vielen Sprachen lesen, solange sie einen sapi5-Synthesizer oder eine
+espeak-Stimme in der entsprechenden Sprache besitzen. Die folgende &Uuml;bersicht
+zeigt, f&uuml;r welche Sprachen Meldungsdateien, Dokumentationen und espeak-Stimmen
+verf&uuml;gbar sind:
+</p>
+<table summary="Aufstellung aller Sprachen, in denen NVDA Bzw. eine Espeak-Stimme verf&uuml;gbar ist">
+ <tr>
+  <th scope=column>Sprache</th>
+  <th scope=column>Meldungsdatei</th>
+  <th scope=column">Dokumentation</th>
+  <th scope=column>Espeak-Stimme</th>
+ </tr>
+ <tr>
+  <th scope="row">  Afrikaans</th>
+  <td> ja</td>
+  <td>nein</td>
+  <td> ja</td>
+ </tr>
+ <tr>
+  <th scope="row">Tschechisch</th>
+  <td> ja </td>
+  <td>  ja </td>
+  <td> ja</td>
+ </tr>
+ <tr>
+  <th scope="row">Walisisch</th>
+  <td> nein</td>
+  <td> nein </td>
+  <td>  ja </td>
+ </tr>
+ <tr>
+  <th scope="row"> Deutsch </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Griechisch  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Esperanto  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+ <th scope="row">  Spanisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Finisch  </th>
+  <td>  ja  </td>
+  <td> ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Franz&ouml;sisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Hindi  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Kroatisch  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Ungarisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Isl&auml;ndisch  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Italienisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Latein  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+  <tr>
+  <th scope="row">  Niederl&auml;ndisch  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+   <th scope="row">  Norwegisch  </th>
+  <td>  nein  </td>
+  <td> nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Polnisch  </td>
+  <td>  Ja  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Portugiesisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+ <th scope="row">  Rom&auml;nisch  </td>
+   <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Russisch  </th>
+  <td>  ja  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Slowakisch  </th>
+  <td>  ja  </td>
+  <td>  ja  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Schwedisch  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+  <tr>
+  <th scope="row">  Swahihi  </th>
+  <td>  nein  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+ <th scope="row">  Vietnamesisch  </th>
+  <td>  ja  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+ <tr>
+  <th scope="row">  Chinesisch  </th>
+  <td>  ja  </td>
+  <td>  nein  </td>
+  <td>  ja  </td>
+ </tr>
+</table>
+
+<p>NVDA befindet sich noch im Entwicklungsstadium. Er ist
+au&szlig;erdem quelloffen, was bedeutet, dass jeder den Quellcode herunterladen lesen
+und sogar &auml;ndern kann, um NVDA an seine Bed&uuml;rfnisse anzupassen. Es kann jedoch
+vorkommen, dass NVDA fehler enth&auml;lt oder dass es nicht auf allen Systemen
+einwandfrei funktioniert. Aber wenn mehr und mehr Anwender NVDA ausprobieren
+und programmfehler an die Entwickler melden, sollte sich NVDA weiterentwickeln
+und blinden und sehbehinderten Windows-anwendern eine voll ausgereifte
+kostenlose L&ouml;sung bieten. NVDA arbeitet mit vielen Programmen zusammen. wie gut
+ein Programm mit NVDA harmoniert, h&auml;ngt davon ab, wie zug&auml;nglich dieses
+Programm ist. Von grundlegenden Windows-Funktionen abgesehen harmoniert NVDA
+mit Wordpad, dem Editor, Outlook Express und Internet Explorer. Er bietet
+au&szlig;erdem grundlegende Unterst&uuml;tzung f&uuml;r Microsoft Word 2000/xp/2003, und
+Microsoft Excel 2000/xp/2003. Mit Office 2007 wurde NVDA noch nicht getestet.
+NVDA bietet au&szlig;erdem umfangreiche Unterst&uuml;tzung f&uuml;r Mozilla Firefox (version 2
+und h&ouml;her). F&uuml;r optimale Zusammenarbeit mit NVDA ist Firefox sogar der
+empfohlene Browser. Diese Anleitung versteht sich nicht als komplettes Handbuch
+f&uuml;r die Bedienung von NVDA und Windows, bietet jedoch gen&uuml;gend Informationen,
+um in NVDA einzusteigen und sich dessen Funktionen selbst zu erschlie&szlig;en.
+</p>
+<h3 id="1.2">Lizenz</h3>
+
+<p>NVDA steht unter der GNU General Public License.
+Sie sind berechtigt, diese Software nach belieben
+weiterzugeben und zu &auml;ndern, solange sie die software zusammen mit einer Kopie
+dieser Lizenz weitergeben und den Quellcode an jeden weitergeben, der ihn haben
+m&ouml;chte. Dies bezieht sich sowohl auf das Original als auch auf die von Ihnen
+modifizierte Kopie und s&auml;mtliche Software, die Codefragmente von nvda
+verwendet.
+F&uuml;r mehr Informationen k&ouml;nnen sie die Lizenz in englischer
+Sprache auch unter
+<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>
+lesen.
+Alternativ k&ouml;nnen Sie die Datei copying.txt lesen, die mit
+dieser Software geliefert wurde.&nbsp;
+</p>
+<h2 id="2">Systemanforderungen</h2>
+<p>NVDA l&auml;uft auf Windows 2000, XP und Windows Vista.
+NVDA funktioniert nicht mit Windows 95/98/me. NVDA Release
+425 wurde auf Windows xp x64 erfolgreich getestet und funktioniert stabil. f&uuml;r
+ein reibungsloses Funktionieren von NVDA wird ein Rechner mit mindestens 1 ghz
+Taktfrequenz und 256mb Ram empfohlen. NVDA wird zwar auch auf langsameren
+Rechnern funktionieren, Wenn dann allerdings noch rechenintensive Aufgaben wie
+das Laden von Webseiten hinzukommen, k&ouml;nnte das den Rechner und/oder NVDA in
+die Knie zwingen.
+
+</p>
+<h2 id="3">NVDA besorgen</h2>
+<p>Sie k&ouml;nnen NVDA von der Webseite <a
+href="http://www.NVDA-project.org/">http://www.NVDA-project.org/</a>
+herunterladen. Auf der Seite „Downloads“ finden Sie einen Verweis auf die
+neueste Version von NVDA. NVDA releases werden nach Revisionen durchnumeriert.
+Diese Revisionsnummer spiegelt wieder, wie oft der Quellcode ge&auml;ndert wurde.
+Dass eine Revision auf der Webseite ver&ouml;ffentlicht wurde, bedeutet jedoch
+nicht, dass sie komplett fehlerfrei ist. Es bedeutet lediglich, dass die
+aktuelle Version von NVDA auf den Systemen der Entwickler einwandfrei l&auml;uft und
+die Entwickler der Meinung sind, dass NVDA vom Rest der Welt getestet werden
+sollte.
+</p>
+<h3 id="3.1">die Entwicklerversionen</h3>
+<p>
+F&uuml;r experimentierfreudige Anwender gibt es unter <a href="http://www.nvda-project.org/snapshots">http://www.nvda-project.org/snapshots</a> in unregelm&auml;&szlig;igen Abst&auml;nden Schnappsch&uuml;sse des aktuellen Entwicklungsstandes von Nvda. Diese momentaufnahmen sind dort entweder als Installationsdatei (*.exe) oder als portable Version (*.zip) zu bekommen. Weitere Informationen zum Umgang it Insatllationsdateien finden Sie im Kapitel <a href="#4.1">&quot;die Installationsversion&quot;</a>
+Weitere Informationen zum Umgang mit den portablen Versionen finden Sie im Kapitel <a href="#4.2">&quot;die portablen Versionen&quot;</a>.
+</p>
+
+<h3 id="4.4">der Quellcode</h3>
+<p>
+Wer immer auf dem aktuellen Stand sein will, kann auch den Quellcode von NVDA herunterladen und ausf&uuml;hren. Sie ben&ouml;tigen dazu allerdings  einen svn-client wie tortoisesvn. Erstellen Sie nach der Installation von tortoisesvn ein leeres Verzeichnis und w&auml;hlen sie im Kontextmen&uuml; dieses Verzeichnisses den Befehl "svn auschecken".
+Tragen Sie in das Feld trunk-url folgendes ein: http://svn.nvda-project.org/nvda/trunk. Best&auml;tigen Sie den Dialog anschlie&szlig;end mit "ok". Der Quellcode von NVDA wird nun in den ausgew&auml;hlten Ordner heruntergeladen.  Weitere Informationen zum Umgang mit dem Quellcode finden Sie im Kapitel <a href="#4.3">asf&uuml;hren des Quellcodes</a>
+</p>
+<h2 id="4">NVDA installieren</h2>
+
+<h3 id="4.1">die installationsdatei</h3>
+
+<p>Seit Version 0.5 bietet NVDA neben der portablen Version
+auch noch eine sprechende Installation an. Hierbei wird der ebenfalls
+quelloffene und freie Sprachsynthesizer espeak verwendet, der in vielen
+Sprachen verf&uuml;gbar ist. Wenn sie das installationsprogramm starten, wird der
+NVDA tempor&auml;r ausgepackt und gestartet. Au&szlig;erdem wird espeak in der Sprache
+eingebunden, die im System eingestellt ist. Beispiel: Wenn Sie ein deutsches
+Windows haben, erscheint der Installationsassistent in Form deutschsprachiger
+Dialoge, die von einer deutschen Espeak-stimme gesprochen werden. Nach der
+Installation wird der NVDA gestartet und steht ab sofort &uuml;ber die
+Tastenkombination strg+alt+n zur Verf&uuml;gung.}
+</p>
+<h3 id="4.2">die portable Version</h3>
+
+<p>Laden Sie das Archiv herunter und entpacken Sie es in ein
+beliebiges Verzeichnis auf ihrem System. Sie werden NVDA wahrscheinlich von
+einer Festplatte ihres Systems aus starten, es ist jedoch auch m&ouml;glich, einen
+usb-stick oder sogar eine cd-rom als Zielort f&uuml;r NVDA zu verwenden.
+</p>
+
+<h3 id="4.3">Installation und Ausf&uuml;hren des Quellcodes</h3>
+<p>
+Um nvda aus dem Qellcode heraus ausf&uuml;hren zu k&ouml;nnen, ben&ouml;tigen Sie einige Palete, die im Folgenden mit Direktlinks zum Herunterladen aufgelistet werden Laden Sie all diese Pakete herunter und installieren Sie sie, bevor Sie nvda ausf&uuml;hren.
+<ul>
+<li><a href="http://www.python.org/">Python 2.5</a> (http://www.python.org/)</li>
+<li><a href="http://www.sourceforge.net/projects/comtypes/">comtypes f&uuml;r python 2.5</a> (http://www.sourceforge.net/projects/comtypes/)</li>
+<li><a href="http://www.wxpython.org/">wxPython unicode (f&uuml;r python 2.5)</a> (http://www.wxpython.org/)</li>
+<li><a href="http://www.sourceforge.net/projects/pywin32/">Python Windows-Erweiterungen f&uuml;r python 2.5</a> (http://www.sourceforge.net/projects/pywin32/)</li>
+<li><a href="http://trac.nvda-project.org/wiki/MiscellaneousDependencies">einige Pakete, die verschiedene Abh&auml;ngigkeiten von NVDA aufl&ouml;sen</a> (http://trac.nvda-project.org/wiki/MiscellaneousDependencies)</li>
+</ul>
+Wenn sie alle pakete heruntergeladen und installiert haben, k&ouml;nnen Sie sich eine Verkn&uuml;pfung zur Datei source\nvda.pyw erstellen, um schneller Zugriff auf den NVDA zu haben.
+</p>
+
+
+<h2 id="5">NVDA starten</h2>
+
+<p>Um NVDA zu starten, f&uuml;hren Sie die Datei NVDA.exe im
+Installationsverzeichnis aus. Wenn Sie NVDA starten, h&ouml;ren Sie als erstes eine
+ansteigende Tonfolge und anschlie&szlig;end die Meldung „NVDA gestartet“. Abh&auml;ngig
+davon, wie schnell ihr Rechner ist und von welcher Art Medium sie NVDA starten,
+kann der Start einige Zeit dauern. Wenn der Start l&auml;nger dauert, h&ouml;ren Sie die
+Meldung „lade Untersysteme, bitte warten...“. Wenn sie stattdessen eine
+absteigende Tonfolge oder gar den Windows-fehler-sound h&ouml;ren, ist bei NVDA ein
+Fehler aufgetreten und sie sollten den Entwicklern einen Fehlerbericht
+schicken. F&uuml;r n&auml;here Informationen hier&uuml;ber sehen sie auf der NVDA-Webseite
+nach. Wurde NVDA erfolgreich gestartet, wird ein Symbol im Infobereich angezeigt,
+mit dessen Kontextmen&uuml; sie die Einstellungen &auml;ndern oder NVDA beenden k&ouml;nnen.
+</p>
+<h2 id="6">das Kontexten&uuml;</h2>
+
+<p>
+Das Men&uuml; des nvda-symbols ist die zentrale Schaltstelle, um Einstellungen an nvda zu &auml;ndern oder nvda unsgesamt zu beenden.
+</p>
+<h3 id="6.1">anzeigen des nvda-Kontextmen&uuml;s</h3>
+
+Mit der Tastenkombination nvda+n k&ouml;nnen Sie sich das Kontextmen&uuml; des nvda-Symbols anzeigen lassen. Von hier as k&ouml;nnen Sie alle Einstellungen von NVDA bequem &uuml;ber Dialogfelder &auml;ndern.
+</p>
+<h3 id="6.2">speichern und Laden der Einstellungen</h3>
+<p>
+NVDA speichert seine Einstellungen in einer Datei namens
+NVDA.ini in seinem Verzeichnis. Sie werden diese Datei wahrscheinlich nicht
+editieren m&uuml;ssen, f&uuml;r erfahrene Anwender bietet sie jedoch die M&ouml;glichkeit
+Einstellungen zu &auml;ndern, f&uuml;r die es in der Benutzeroberfl&auml;che (noch) keine
+Dialogfelder gibt. NVDA speichert seine einstellungen nicht automatisch, sodass
+sie zu ihren originaleinstellungen zur&uuml;ckkehren, wenn sie das Programm neu
+starten. Um die Einstellungen zu speichern, w&uuml;hlen Sie aus de Kontextmen&uuml; des nvda-symbols den Befehl Konfigration speichern. Wenn sie NVDA auf einem schreibgesch&uuml;tzten
+Dateisystem gespeichert haben (wie beispielsweise eine cd), kann er die
+Einstellungen nicht speichern und wird sie auch in einem Meldungsfenster
+diesbez&uuml;glich informieren. Wenn Sie einmal etwas falsch eingestellt haben
+sollten, k&ouml;nnen Sie &uuml;ber den Befehl &quot;zur gespeicherten
+Konfiguration zur&uuml;ckkehren&quot; im Kontextmen&uuml; des nvda-symbols die
+gespeicherte Konfiguration wiederherstellen.
+</p>
+<h2 id="7">mit NVDA navigieren</h2>
+
+<h3 id="7.1">navigieren mit dem Fokus</h3>
+<p>
+die gebr&auml;uchlichste Art, sich innerhalb von Windows zu
+bewegen ist die Verwendung von Standard-Tastenkombinationen wie tab,
+umschalt+tab, Pfeiltasten um zwischen Objekten zu wechseln oder alt+tab, um
+zwischen Anwendungen umzuschalten. Wenn Sie auf diese Weise navigieren, wird
+NVDA ansagen, welches Objekt den Fokus hat. Erh&auml;lt ein Objekt den Fokus, so
+wird NVDA dessen Namen, Typ, Wert, Beschreibung, Tastenkombination und Position
+angeben. Die Objekttypbezeichnungen k&ouml;nnen sich jedoch von denen anderer
+Bildschirmleser unterscheiden.
+</p>
+<h3 id="7.2">objektorientierte Navigation</h3>
+<p>
+Wenn sie sich im Betriebssystem umsehen wollen, ohne den
+Fokus zu bewegen, k&ouml;nnen Sie die Objektorientierte Navigation von NVDA
+verwenden. Dies erm&ouml;glicht Ihnen, sich in einer baumartigen Struktur zwischen
+den Objekten zu bewegen. Die Baumstruktur beginnt mit dem desktop, dem die
+einzelnen laufenden Anwendungen untergeordnet sind. Die Anwendungsfenster
+k&ouml;nnen ebenfalls Unterfenster enthalten. Die Baumstruktur kann bei manchen
+Anwendungen sehr umfangreich werden, dennoch werden Sie aufgrund der logischen
+anordnung der Objekte die ben&ouml;tigten Informationen schnell finden. Dies
+repr&auml;sentiert weniger die Anordnung der Objekte auf dem Bildschirm als vielmehr
+die logische Anordnung innerhalb des Programms. Es wird zwar eine Weile dauern,
+bis sie sich eingearbeitet haben, sie werden sich aber nach einer gewissen Zeit
+schnell und einfach durch die objekthierarchie bewegen k&ouml;nnen. NVDA bietet im
+Moment keine M&ouml;glichkeit, Bildschirmorientiert zwischen den Objekten zu
+navigieren. Dies ist dem Umstand geschuldet, dass sich NVDA nicht in die
+Grafikdarstellung hineinh&auml;ngt und keinen Intercept-Treiber besitzt. Trotzdem
+sollten Sie ein logischeres Verst&auml;ndnis &uuml;ber den Aufbau einer Anwendung
+erlangen, als wenn man versucht, den Bildschirminhalt abzubilden. Nicht alle anwendungen
+haben eine perfekte Baumstruktur; es liegt jedoch am Entwickler jeder einzelnen
+Anwendung. die meisten Anwendungen scheinen jedoch eine ordentliche
+Baumstruktur zu haben. Um zwischen den Objekten zu navigieren, verwenden Sie
+die folgenden Tasten:
+</p>
+<table summary="Tastenkombinationen f&uuml;r objektweise Navigation">
+ <tr>
+  <th scope="column">  Zweck  </th>
+  <th scope="column">   Tastenkombination  </th>
+ </tr>
+ <tr>
+  <td>  aktuelles Objekt ansagen  </td>
+  <td>   einf&uuml;gen+5 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  Gr&ouml;&szlig;e und Position des aktuellen Objekts ansagen  </td>
+  <td>   einf&uuml;gen+Umschalt+5 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  zum &uuml;bergeordneten objekt wechseln  </td>
+  <td>   einf&uuml;gen+8 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  zum vorigen Objekt auf gleicher Ebene wechseln  </td>
+  <td>   einf&uuml;gen+4 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  rekursiv zum vorigen Objekt bewegen  </td>
+  <td>   einf&uuml;gen+Umschalt+4 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+   <td>  zum n&auml;chsten Objekt bewegen  </td>
+  <td>   einf&uuml;gen+6 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  rekursiv zum n&auml;chsten Objekt bewegen  </td>
+  <td>  einf&uuml;gen+Umschalt+6 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  zum ersten untergeordneten Objekt wechseln  </td>
+  <td>   einf&uuml;gen+2 (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  zum Fokus bewegen  </td>
+  <td>   einf&uuml;gen+Minus (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  Objekt rekursiv lesen  </td>
+  <td>   einf&uuml;gen+plus (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  aktuelles Objekt aktivieren  </td>
+  <td>   einf&uuml;gen+Eingabe (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  die Maus zum aktuellen Objekt bewegen  </td>
+  <td>   einf&uuml;gen+Schr&auml;gstrich (Zehnertastatur)  </td>
+ </tr>
+ <tr>
+  <td>  zur Maus bewegen  </td>
+  <td>   einf&uuml;gen+Stern (Zehnertastatur)  </td>
+ </tr>
+</table>
+Anmerkungen:
+<ol start="1" type="1">
+<li>Die Verwendung des Ziffernblocks erfordert, dass Numlock ausgeschaltet ist.</li>
+<li>Die Gr&ouml;&szlig;en- und Positionsangaben erfolgen in Pixeln mit absoluten Koordinaten d.h. der Koordinatenursprung liegt in der linken oberen Bildschirmecke.</li>
+<li>Rekursiv bedeutet, dass beim Dr&uuml;cken der Navigationstasten versucht wird, in das aktuelle Objekt abzusteigen.</li>
+</ol>
+<h3 id="7.3">Text im aktuellen Objekt lesen</h3>
+<p>
+manchmal m&ouml;chten Sie vielleicht wissen, wie ein bestimmtes
+Wort geschrieben wird oder sie m&ouml;chten eine bestimmte Passage wortweise lesen. Um
+den Text innerhalb eines Objekts zu lesen, k&ouml;nnen Sie die tasten des
+Nummernblocks verwenden:
+</p>
+<table summary="tastenkombinationen zum Bewegen innerhalb eines Objekts">
+ <tr>
+  <th scope="column">  Zweck  </th>
+  <th scope="column">   Tastenkombination  </th>
+ </tr>
+ <tr>
+  <td>  zur ersten Zeile springen  </td>
+  <td>   umschalt+7  </td>
+ </tr>
+ <tr>
+  <td>  zur vorigen Zeile springen  </td>
+  <td>   7  </td>
+ </tr>
+ <tr>
+  <td>  aktuelle Zeile vorlesen  </td>
+  <td>   8  </td>
+ </tr>
+ <tr>
+  <td>  zur n&auml;chsten Zeile springen  </td>
+  <td>   9  </td>
+ </tr>
+ <tr>
+  <td>  zur letzten Zeile springen  </td>
+  <td>   umschalt+9  </td>
+ </tr>
+ <tr>
+  <td>  voriges Wort lesen  </td>
+  <td>   4  </td>
+ </tr>
+ <tr>
+  <td>  aktuelles Wort lesen  </td>
+  <td>   5  </td>
+ </tr>
+ <tr>
+  <td>  n&auml;chstes Wort lesen  </td>
+  <td>   6  </td>
+ </tr>
+ <tr>
+  <td>  zum Zeilenanfang springen  </td>
+  <td>   umschalt+1  </td>
+ </tr>
+ <tr>
+  <td>  voriges Zeichen lesen  </td>
+  <td>   1  </td>
+ </tr>
+ <tr>
+  <td>  aktuelles zeichen lesen  </td>
+  <td> 2  </td>
+ </tr>
+ <tr>
+  <td>  n&auml;chstes zeichen lesen  </td>
+  <td>   3  </td>
+ </tr>
+ <tr>
+  <td>  zum Zeilenende springen  </td>
+  <td>   umschalt+3  </td>
+ </tr>
+ <tr>
+  <td>  den gesamten text lesen  </td>
+  <td>   Plus  </td>
+ </tr>
+ <tr>
+  <td>  zum Systemcursor springen  </td>
+  <td>   Minus  </td>
+ </tr>
+ <tr>
+  <td>  den Systemcursor an die aktuelle Position ziehen  </td>
+  <td>  strg+minus  </td>
+ </tr>
+</table>
+Anmerkung: Um die Tasten des Nummernblocks zu verwenden, muss Numlock ausgeschaltet sein. Normalerweise wird
+der text innerhalb eines objekts aus dessen Namen, Wert und Beschreibung
+zusammengesetzt. F&uuml;r Objekte, die tats&auml;chlich text enthalten, wird wirklich der
+in einem Objekt enthaltene Text gelesen. Dies gilt zum Beispiel f&uuml;r
+eingabefelder. Beispielsweise wird ein Eintrag eines Listenfeldes Text
+enthalten, der sich aus dessen namen, Wert und Beschreibung zusammensetzt. Bei
+einem Eingabefeld oder einem Dos-fenster wird der tats&auml;chlich enthaltene Text
+ausgegeben.
+<h3 id="7.4">Mit dem Systemcursor navigieren</h3>
+<p>
+Wenn ein Eingabefeld den Fokus hat, k&ouml;nnen Sie sich mit
+den &uuml;blichen Tasten durch das Eingabefeld bewegen und den Text editieren. NVDA
+wird hierbei ansagen, wenn Sie sich durch das Eingabefeld bewegen, text
+markieren oder die Markierung aufheben. Wenn sie sich innerhalb eines
+Eingabefeldes bewegen, wird auch der NVDA-interne Cursor mitgezogen (siehe
+voriger Abschnitt). Sie k&ouml;nnen auch einf&uuml;gen+pfeil ab verwenden, um sich den
+gesamten Inhalt eines objekts vorlesen zu lassen. Im Unterschied zu numplus
+wird hier jedoch der systemcursor mitgezogen.
+</p>
+<h3 id="7.5">Navigieren mit der Maus</h3>
+<p>
+NVDA kann so eingestellt werden, dass es bei Mausbewegung
+das Objekt liest, &uuml;ber dem sich die Maus befindet. Auf diese Art k&ouml;nnen auch
+blinde Computerbenutzer einen Eindruck vom Aufbau des Bildschirminhalts
+bekommen, indem sie die Maus benutzen. Im Moment kann NVDA nur das Objekt
+lesen, das sich unter der Maus befindet; eine Navigation mit Hilfe des Mauszeigers
+ist dagegen noch nicht implementiert.
+
+Seit Revision 1156 besitzt NVDA eine zus&auml;tzliche Funktion,
+die es erm&ouml;glicht, sich mit der Maus aufdem Bildschirm zuorientieren. Hierdurch
+k&ouml;nnennunauchblindeComputerbenutzer dieaktuellePositiondesMauszeigers
+ermitteln. Dies wird durch Abspielen eines Signaltones beim Bewegen des
+Mauszeigers erreicht. Dies geschieht nach folgenden Regeln:
+</p>
+Wenn Sie den Mauszeiger horizontal bewegen, wandert der Signalton entsprechend im Stereofeld.
+Wenn Sie den Mauszeiger vertikal bewegen, ver&auml;ndert der Signalton seine Frequenz
+Wenn Sie den Mauszeiger nach oben bewegen, wird der Signalton entsprechend h&ouml;her
+Wenn Sie den Mauszeiger nach unten bewegen, wird der Signalton tiefer.
+Trifft der Mauszeiger auf helle Bzw. dunkle Bereiche des Bildschirms, ver&auml;ndert der Signalton seine Lautst&auml;rke.
+Trifft der Mauszeiger auf helle Bildschirmbereiche, wird der Signalton lauter
+Trifft der Mauszeiger auf dunkle Bildschirmbereiche, wird der Signalton leiser.
+
+<h2 id="8">virtuelle Puffer</h2>
+<p>Komplexe Dokumente wie Webseiten werden in NVDA innerhalb
+virtueller Puffer pr&auml;sentiert. Ein virtueller Puffer ist eine textliche
+Repr&auml;sentation eines Dokuments, die ihnen erlaubt, sich mit den Pfeiltasten
+durch das Dokument zu bewegen oder bestimmte Formularfelder zu lesen. Von der
+Navigation mit den Pfeiltasten einmal abgesehen k&ouml;nnen sie auch Eingabe oder
+die leertaste auf einem Formularfeld dr&uuml;cken, um es zu aktivieren. Dies gilt
+f&uuml;r Links, Kontrollfelder, Schaltfl&auml;chen und auswahlschalter. Dr&uuml;cken Sie die
+Leertaste auf einem Kombinationsfeld, so k&ouml;nnen Sie einen Eintrag ausw&auml;hlen.
+Wenn sie sich auf einem solchen formularfeld befinden, wird NVDA dessen Typ und
+Namen ansagen, auch wenn diese Informationen nicht im virtuellen Puffer
+angezeigt werden. Dies hat zur Folge, dass Sie sich trotz der
+Zusatzinformationen normal durch den text bewegen k&ouml;nnen. Im Moment verwendet
+NVDA virtuelle Puffer sowohl f&uuml;r Internet Explorer als auch f&uuml;r Mozilla
+Firefox. Virtuelle Puffer haben die F&auml;higkeit, ausdr&uuml;cklich aktualisiert zu
+werden, im Augenblick macht jedoch nur Firefox von diesem Leistungsmerkmal
+gebrauch. Obwohl im Internet Explorer die meisten Webseiten korrekt angezeigt
+werden, kann Firefox besser mit seiten umgehen, die sich z.B. mit Hilfe von
+Javascript dynamisch aktualisieren. Aufgrund der Komplexit&auml;t virtueller Puffer
+kann es eine Weile dauern, bis NVDA eine Webseite geladen hat. die meisten
+Webseiten werden zwar schnell geladen, es gibt jedoch auch Seiten, die 5 oder
+mehr Sekunden zum Laden ben&ouml;tigen.
+</p>
+<h3 id="8.1">Schnelltasten f&uuml;r virtuelle Puffer</h3>
+<p>
+Um eine schnellere Navigation zu erm&ouml;glichen, stellt NVDA
+Schnelltasten f&uuml;r das springen zu Objekten eines bestimmten Typs zur Verf&uuml;gung.
+Ohne irgendwelche Umschalttasten gedr&uuml;ckt springen sie zum n&auml;chsten objekt, mit
+Umschalt springen sie zum vorigen Objekt.
+</p>
+<table summary="Schnelltasten f&uuml;r virtuelle Puffer">
+ <tr>
+  <th scope="column">  Element  </th>
+  <th scope="column">   Schnelltaste  </th>
+ </tr>
+ <tr>
+  <td>  &Uuml;berschrift  </td>
+  <td>   h  </td>
+ </tr>
+ <tr>
+  <td>  Listenfeld  </td>
+  <td>   l  </td>
+ </tr>
+ <tr>
+  <td>  Listeneintrag  </td>
+  <td>   i  </td>
+ </tr>
+ <tr>
+   <td>  Tabelle  </td>
+  <td>   t  </td>
+ </tr>
+ <tr>
+  <td>  Verweis  </td>
+  <td>   k  </td>
+ </tr>
+ <tr>
+  <td>  Absatz  </td>
+  <td>   p  </td>
+ </tr>
+ <tr>
+  <td>  Formularfeld  </td>
+  <td>   f  </td>
+ </tr>
+</table>
+<h3 id="8.2">Formulare und der Modus „tasten durch virtuellenPuffer durchlassen“</h3>
+<p>manchmal m&ouml;chten Sie vielleicht Formulare ausf&uuml;llen, ohne
+dass die Schnelltasten des virtuellen Puffers im weg sind. Der Modus
+„virtuellen Puffer durchlassen“ l&ouml;st genau dieses Problem und kann mit
+einf&uuml;gen+leertaste umgeschaltet werden. Generell gilt: Wenn sie auf einem
+Formularfeld Enter dr&uuml;cken, wird der Modus aktiviert. Wenn die Seite neu
+geladen wird, wird er wieder ausgeschaltet.
+
+
+</p>
+<h2 id="9">Signalt&ouml;ne f&uuml;r Fortschrittsanzeigen</h2>
+<p>
+Fortschrittsbalken dienen dazu, anzuzeigen, wie weit eine
+Aufgabe in windows fortgeschritten ist. Das gilt beispielsweise f&uuml;r das
+Kopieren von dateien im Windows-Explorer, f&uuml;r das Laden von Webseiten im
+Internet explorer oder f&uuml;r das Pr&uuml;fen auf neue E-Mails mit Outlook Express.
+NVDA kann durch Signalt&ouml;ne anzeigen, wie weit ein Fortschrittsbalken ausgef&uuml;llt
+ist. Je h&ouml;her der Signalton wird, desto n&auml;her r&uuml;ckt der Fortschrittsbalken der
+100%-Marke. Sie werden schnell ein gef&uuml;hl daf&uuml;r entwickeln, wie 0% oder 100%
+klingen und so sagen k&ouml;nnen, wie weit ein Fortschrittsbalken ausgef&uuml;llt ist.
+</p>
+<h2 id="10">Signalt&ouml;ne als Sprachausgabe</h2>
+<p>
+In diesem Modus wird NVDA Signalt&ouml;ne ausgeben, anstatt den
+Bildschirminhalt zu sprechen. Dies ist beispielsweise sinvoll, wenn Sie
+Programme einsetzen, die den Bildschirminhalt sehr oft aktualisieren. Beispiele
+hierf&uuml;r sind cd-Brennprogramme f&uuml;r dos oder das Kopieren von Dateien in einem
+Dos-Fenster. Anstatt jeden Dateinamen oder jedes fortschreitende Prozent beim
+Brennen zu h&ouml;ren und die Ansage mit strg abzubrechen k&ouml;nnen Sie einf&uuml;gen+s
+dr&uuml;cken, um in den Modus „Signalt&ouml;ne als Sprachausgabe“ umschalten. Alles was
+sie dann noch von NVDA h&ouml;ren, sind kurze, hohe Piept&ouml;ne. mit einf&uuml;gen+s
+schalten Sie wieder zur&uuml;ck auf die normale sprachausgabe.
+</p>
+<h2 id="11">Der synthesizer-Einstellungsring</h2>
+<p>
+Alternativ zum Dialogfeld einstellungen/Sprachausgabe k&ouml;nnen Sie die
+Einstellungen f&uuml;r den Synthesizer auch zur Laufzeit &auml;ndern. Hierzu dient der
+sog. Synthesizer-einstellungsring. Er besteht aus Tastenkombinationen mit dem
+NVDA-Modifikator, strg und den Pfeiltasten. NVDA+Strg+Pfeil links/rechts w&auml;hlen
+hierbei eine einstellung aus und nvda+strg+Pfeil auf/ab &auml;ndern die gew&auml;hlte
+Einstellung. Die einstellungen, die sie mit dem Synthesizer-einstellungsring
+&auml;ndern, werden gespeichert, wenn sie im Dialog Benutzeroberfl&auml;che die Option
+„Einstellungen beim Beenden speichern“ aktiviert haben.
+
+
+</p>
+<h2 id="12">Konfigurieren von NVDA</h2>
+<h3 id="12.1">einstellungen f&uuml;r die benutzeroberfl&auml;che</h3>
+<p>
+Dieses Dialogfeld befindet sich im Men&uuml; einstellungen.Es
+erlaubt Ihnen einerseits die Sprache von NVDA-Dialogen und -Meldungen
+einzustellen und andererseits festzulegen, ob das NVDA-Fenster beim Start
+angezeigt oder die Konfiguration beim Beenden automatisch gespeichert werden
+soll.
+
+</p>
+<h3 id="12.2">sprachausgaben</h3>
+<p>
+Dieses Dialogfeld befindet sich im Men&uuml; einstellungen und
+erm&ouml;glicht die Wahl der zu verwendenden Sprachausgabe. Momentan wird sapi5
+unterst&uuml;tzt. Eine Unterst&uuml;tzung des quelloffenen und freien Sprachsynthesizers
+espeak ist ebenfalls enthalten.
+
+</p>
+<h3 id="12.3">Stimmeneinstellungen</h3>
+<p>
+Unter einstellungen/Stimmeneinstellungen finden Sie einen
+Dialog, in dem Sie NVDA mitteilen k&ouml;nnen, mit welcher Stimme sie arbeiten
+m&ouml;chten. Hier finden Sie au&szlig;erdem Einstellm&ouml;glichkeiten f&uuml;r Stimmh&ouml;he,
+Geschwindigkeit und Lautst&auml;rke. Die Geschwindigkeit kann au&szlig;erdem mit den
+Tasten einf&uuml;gen+bild-auf und einf&uuml;gen+bild-ab geregelt werden. Bild auf erh&ouml;ht die
+Geschwindigkeit um 5%, bild ab verringert sie um 5%. Au&szlig;erdem gibt es noch zwei
+weitere Optionen: „Satzzeichen sprechen“ und „gro&szlig;‘ vor gro&szlig;buchstaben
+ansagen“. „Satzzeichen sprechen“ steuert hierbei, ob NVDA die Satzzeichen
+aussprechen oder nur zur Steuerung der Satzmelodie verwenden soll. „Gro&szlig; bei
+Gro&szlig;buchstaben ansagen“ bestimmt, ob NVDA das Wort „Gro&szlig;“ vor alleinstehenden
+Gro&szlig;buchstaben sagen soll. Normalerweise wird NVDA bei Gro&szlig;buchstaben die
+Stimme anheben. Es gibt jedoch Sprachausgaben, die dies nicht unterst&uuml;tzen. F&uuml;r
+solche Sprachausgaben kann es sinnvoll sein, diese Option einzuschalten.
+Alternativ k&ouml;nnen Sie auch die Option „Signalt&ouml;ne bei Gro&szlig;buchstaben ausgeben“
+aktivieren, um zu erreichen, dass ein hoher Signalton abgespielt werden soll, wenn
+Sie beim Navigieren auf einen Gro&szlig;buchstaben sto&szlig;en.
+
+</p>
+<h3 id="12.4">Tastatur</h3>
+<p>
+NVDA kann w&auml;hrend der Eingabe Zeichen, W&ouml;rter und
+Tastenkombinationen ansagen. All diese Optionen finden Sie im Dialogfeld
+„Tastatur“ im Men&uuml; einstellungen. Um diese Einstellungen zur laufzeit zu
+&auml;ndern, benutzen Sie die Tastenkombinationen einf&uuml;gen+2 (Zeichen sprechen),
+einf&uuml;gen+3 (W&ouml;rter sprechen) und einf&uuml;gen+4 (Funktionstasten sprechen).
+Au&szlig;erdem k&ouml;nnen Sie hier einstellen, welche Tasten als NVDA-Modifikator
+verwendet werden sollen d.h. mit welchen Tasten Sie NVDA-spezifische
+Tastenkombinationen dr&uuml;cken m&ouml;chten. Standardm&auml;&szlig;ig sind hier beide
+Einf&uuml;getasten aktiviert. Sie k&ouml;nnen Hier Caps Lock, Einf&uuml;gen sowie die
+Einf&uuml;gen-Taste des Nummernblocks unabh&auml;ngig voneinander aktivieren oder deaktivieren.
+
+
+</p>
+<h3 id="12.5">Mauseinstellungen</h3>
+<p>
+Sie k&ouml;nnen NVDA so einstellen, dass er ansagt, wenn sich
+die Form des Mauszeigers &auml;ndert (so z.B. wenn ein Programm geladen wird, wenn
+Sie die Maus bewegen oder wennsich der mauszeiger in einem eingabefeld
+befindet). Au&szlig;erdem k&ouml;nnen Sie NVDA so einstellen, dass er den Namen des
+objekts ansagt, das sich unter dem Mauszeiger befindet, wenn Sie die maus
+bewegen. Diese Optionen finden Sie im Dialogfeld „Mauseinstellungen“ im Men&uuml;
+einstellungen. Seit Revision 1156 finden sie hier eine zus&auml;tzliche Option, die
+angibt, ob beim Bewegen des Mauszeigers Signalt&ouml;ne abgespielt werden sollen
+oder nicht. Weitere Informationen zu dieser neuen Funktion finden Sie im
+Abschnitt „navigieren mit der Maus“.
+
+</p>
+<h3 id="12.6">Objektpr&auml;sentation</h3>
+<p>
+Die Optionen in diesem Dialogfeld bestimmen, wie NVDA mit
+windows-Objekten umgeht. In diesem Dialog k&ouml;nnen sie folgendes einstellen:
+
+</p>
+<ul>
+<li>ob NVDA Tooltips und Hilfesprechblasen vorlesen soll</li>
+<li>ob der Status eines objekts (aktiviert, markiert gedr&uuml;ckt etc) vor dessen Namen angesagt werden soll</li>
+<li>ob mit Hilfe von Signalt&ouml;nen angezeigt werden soll, dass sich ein Fortschrittsbalken bewegt</li>
+</ul>
+Weitere Informationen &uuml;ber die Navigation innerhalb von Windows finden Sie im Abschnitt „objektweise Navigation“.
+
+<h3 id="12.7">virtuelle Puffer</h3>
+<p>
+In diesem Dialogfeld legen Sie fest, welche Objekte
+welchen Typs beim Navigieren durch virtuelle Puffer angek&uuml;ndigt werden sollen.
+Wenn Sie beispielsweise „tabellen ansagen“ aktiviert haben und beim Navigieren
+durch virtuelle Puffer auf eine Tabelle treffen, so wird „tabelle mit X Spalten
+und y Reihen“ angesagt. Ist die option nicht aktiv, so wird stillschweigend in
+die Tabelle gewechselt. Derartige Objekttypansagen k&ouml;nnen hier f&uuml;r viele
+html-Objekte wie z.B. Abs&auml;tze, Formulare, Formularfelder, Verweise, Aufz&auml;hlungslisten
+etc. aktiviert werden. Weitere Informationen zu virtuellen Puffern finden Sie
+im Abschnit „virtuelle Puffer“.
+
+&nbsp;
+</p>
+<h3 id="12.8">Dokumentformatierungen</h3>
+<p>
+mit Hilfe dieses Dialogs k&ouml;nnen Sie die Redseeligkeit von
+NVDA beim Navigieren durch Dokumente beeiflussen. Hier kann Z.B. aktiviert
+werden, ob Schriftart, Schriftgr&ouml;&szlig;e oder Schriftattribute angesagt werden
+sollen. 
+
+</p>
+<h2 id="13">das Benutzerw&ouml;rterbuch</h2>
+<p>
+Seit einiger Zeit kann nvda mit Hilfe eines Benutzerw&ouml;rterbuches die Sprachausgaben bei der richtigen Assprache bestimmter Asdr&uuml;cke unterst&uuml;tzen. Hierzu werden regul&auml;re Ausdr&uuml;cke verwendet, was wesentlich flexibler ist als das starre Zweisen von Ersatzw&ouml;rtern, wie es beispielsweise i W&ouml;rterbuchmanager von Jaws f&uuml;r Windows praktiziert wDie W&ouml;rterbucheintr&auml;ge k&ouml;nnen entweder global (Standardw&ouml;rterbuch) oder stimmenweise (Stimmenw&ouml;rterbuch) hinterlegt werden. Au&szlig;erdem k&ouml;nnen Sie mite bei der richtigen Assprache bestimmter Asdr&uuml;cke nterst&uuml;tzen. Dies kann entweder global im Standardw&ouml;rterbuch erfolgen oder sie legen ein stimmenspezifisches W&ouml;rterbuch an. Die Bentzerw&ouml;rterb&uuml;cher sind i Men&uuml; des nvda-symbols zu finden. 
+</p>
+</body>
+</html>
