@@ -109,7 +109,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 class VirtualBuffer(cursorManager.CursorManager):
 
 	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
-		self.backendLibPath=unicode(os.path.abspath(backendLibPath))
+		self.backendLibPath=os.path.abspath(backendLibPath)
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
