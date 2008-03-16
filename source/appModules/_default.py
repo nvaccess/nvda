@@ -27,6 +27,7 @@ import winUser
 import appModuleHandler
 import winKernel
 import ctypes
+from gui import mainFrame
 
 class appModule(appModuleHandler.appModule):
 
@@ -713,3 +714,45 @@ class appModule(appModuleHandler.appModule):
 			mod = _("default module")
 		speech.speakMessage(_("and currently loaded module is %s") % mod)
 	script_speakApplicationName.__doc__ = _("Speaks filename of the active application along with name of the currently loaded appmodule")
+
+	def script_activateGeneralSettingsDialog(self,keyPress,nextScript):
+		mainFrame.onGeneralSettingsCommand(None)
+	script_activateGeneralSettingsDialog.__doc__ = _("Shows NVDA general settings dialog")
+
+	def script_activateSynthesizerDialog(self,keyPress,nextScript):
+		mainFrame.onSynthesizerCommand(None)
+	script_activateSynthesizerDialog.__doc__ = _("Shows NVDA synthesizer dialog")
+
+	def script_activateVoiceDialog(self,keyPress,nextScript):
+		mainFrame.onVoiceCommand(None)
+	script_activateVoiceDialog.__doc__ = _("Shows NVDA voice settings dialog")
+
+	def script_activateKeyboardSettingsDialog(self,keyPress,nextScript):
+		mainFrame.onKeyboardSettingsCommand(None)
+	script_activateKeyboardSettingsDialog.__doc__ = _("Shows NVDA keyboard settings dialog")
+
+	def script_activateMouseSettingsDialog(self,keyPress,nextScript):
+		mainFrame.onMouseSettingsCommand(None)
+	script_activateMouseSettingsDialog.__doc__ = _("Shows NVDA mouse settings dialog")
+
+	def script_activateObjectPresentationDialog(self,keyPress,nextScript):
+		mainFrame. onObjectPresentationCommand(None)
+	script_activateObjectPresentationDialog.__doc__ = _("Shows NVDA object presentation settings dialog")
+
+	def script_activateVirtualBuffersDialog(self,keyPress,nextScript):
+		mainFrame.onVirtualBuffersCommand(None)
+	script_activateVirtualBuffersDialog.__doc__ = _("Shows NVDA virtual buffers settings dialog")
+
+	def script_activateDocumentFormattingDialog(self,keyPress,nextScript):
+		mainFrame.onDocumentFormattingCommand(None)
+	script_activateDocumentFormattingDialog.__doc__ = _("Shows NVDA document formatting settings dialog")
+
+
+	def script_saveConfiguration(self,keyPress,nextScript):
+		mainFrame.onSaveConfigurationCommand(None)
+	script_saveConfiguration.__doc__ = _("Saves current NVDA configuration to file")
+
+	def script_revertToSavedConfiguration(self,keyPress,nextScript):
+		mainFrame.onRevertToSavedConfigurationCommand(None)
+	script_revertToSavedConfiguration.__doc__ = _("loads NVDA configuration from file, overriding current changes")
+
