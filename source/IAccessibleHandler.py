@@ -5,6 +5,9 @@
 #See the file COPYING for more details.
 
 #Constants
+#OLE constants
+REGCLS_MULTIPLEUSE=1
+CLSCTX_LOCAL_SERVER=4
 #IAccessible Object IDs
 OBJID_WINDOW=0
 OBJID_SYSMENU=-1
@@ -136,6 +139,7 @@ import time
 from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
+from comtypes.server import *
 import comtypes.client
 import Queue
 from comInterfaces.Accessibility import *
@@ -154,6 +158,11 @@ import appModuleHandler
 import config
 import mouseHandler
 import controlTypes
+
+_IA2Dll=None
+_IA2ClassFactory=None
+_IA2RegCooky=None
+
 
 #A set to cache property change events
 #values stored as (eventName,window,objectID,childID)
@@ -800,6 +809,25 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
+	global _IA2Dll, _IA2ClassFactory, _IA2RegCooky
+	#Load the IA2 proxy dll
+	_IA2Dll=oledll.LoadLibrary('lib/ia2.dll')
+	#Instanciate a class object for the IA2 proxy dll
+	_IA2ClassFactory=POINTER(IClassFactory)()
+	_IA2Dll.DllGetClassObject(byref(IAccessible2._iid_),byref(IUnknown._iid_),byref(_IA2ClassFactory))
+	#Register this class object in this process
+	regCooky=c_long()
+	oledll.ole32.CoRegisterClassObject(byref(IAccessible2._iid_),_IA2ClassFactory,CLSCTX_LOCAL_SERVER,REGCLS_MULTIPLEUSE,byref(regCooky))
+	_IA2RegCooky=regCooky.value
+	#Register all the IAccessible2 interfaces we want to use in this process
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessible2._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleText._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleEditableText._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHypertext._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleImage._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleValue._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleAction._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleRelation._iid_),byref(IAccessible2._iid_))
 	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
 	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
 		raise OSError("can not get desktop object")
@@ -815,10 +843,6 @@ def initialize():
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 		queueHandler.queueFunction(queueHandler.eventQueue,focus_manageEvent,focusObject)
-
-
-
-
 	for eventType in eventMap.keys():
 		handle=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if handle:
