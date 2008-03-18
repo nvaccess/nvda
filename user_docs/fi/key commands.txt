@@ -4,198 +4,198 @@ Monet näistä komennoista käyttävät NVDA-näppäintä, joka on joko laskinnäppäimist
 
 Yleiset komennot
 
-NVDA+1: keyboardHelp
-Tämä komento ottaa käyttöön näppäinohjetilan, jossa voit painaa mitä tahansa näppäinyhdistelmää, jolloin NVDA kertoo kyseisen näppäinyhdistelmän ja minkä toiminnon se suorittaa. Poista näppäinohje käytöstä painamalla uudelleen NVDA+1.
+NVDA+1: näppäinohje
+Tämä komento ottaa käyttöön näppäinohjeen, jossa NVDA kertoo mitä tahansa näppäinyhdistelmää painettaessa kyseisen näppäinyhdistelmän ja minkä toiminnon se suorittaa. Poista näppäinohje käytöstä painamalla uudelleen NVDA+1.
 
-NVDA+t: title
-Kertoo aktiivisena olevan sovelluksen nimen.
+NVDA+t: nimi
+Kertoo aktiivisen ikkunan nimen.
 
-NVDA+b: speakForeground
+NVDA+b: lue ikkuna
 Lukee aktiivisen sovelluksen sisällön. Hyödyllinen valintaikkunoiden lukemiseen.
 
-NVDA+n: showGui
+NVDA+n: NVDA-valikko
 Paina tätä näppäinyhdistelmää avataksesi valikon, josta pääset NVDA:n asetuksiin.
 
-NVDA+q: quit
-Kun painat tätä näppäinyhdistelmää, sinulta kysytään, haluatko sulkea NVDA:n. Sulje NVDA painamalla Kyllä, peruuta sulkeminen painamalla Ei.
+NVDA+q: lopeta
+Kun painat tätä näppäinyhdistelmää, sinulta kysytään, haluatko sulkea NVDA:n. Sulje painamalla Kyllä, peruuta sulkeminen painamalla Ei.
 
-NVDA+s: speechMode
+NVDA+s: puhetila
 Vaihtaa kolmen puhetilan välillä (puhe, äänimerkit ja pois käytöstä).
 
-NVDA+F12: dateTime
+NVDA+F12: aika ja päiväys
 Kertoo kellonajan, painamalla kaksi kertaa nopeasti kertoo päiväyksen.
 
-NVDA+page up: increaseRate
+NVDA+page up: nopeuta puhetta
 Nopeuttaa puhetta 5 prosentilla.
 
-NVDA+page down: decreaseRate
+NVDA+page down: hidasta puhetta
 Hidastaa puhetta 5 prosentilla.
 
-NVDA+2: toggleSpeakTypedCharacters
+NVDA+2: lue kirjoitetut merkit
 Ottaa käyttöön tai poistaa käytöstä kirjoitettujen merkkien lukemisen.
 
-NVDA+3: toggleSpeakTypedWords
+NVDA+3: lue kirjoitetut sanat
 Ottaa käyttöön tai poistaa käytöstä kirjoitettujen sanojen lukemisen.
 
-NVDA+4: toggleSpeakCommandKeys
+NVDA+4: lue komentonäppäimet
 Ottaa käyttöön tai poistaa käytöstä minkä tahansa näppäinten lukemisen.
 
-NVDA+p: toggleSpeakPunctuation
+NVDA+p: lue välimerkit
 Ottaa käyttöön tai poistaa käytöstä välimerkkisymbolien lukemisen.
 
-NVDA+End: reportStatusLine
+NVDA+End: lue tilarivi
 Lukee nykyisen sovelluksen tilarivin, jos sellainen löytyy.
 
-NVDA+laskinnäppäimistön /: moveMouseToNavigatorObject
+NVDA+laskinnäppäimistön /: siirrä hiiri navigointiobjektiin
 Siirrä hiirikohdistin nykyiseen navigointiobjektiin
  
-NVDA+laskinnäppäimistön *: moveNavigatorObjectToMouse
+NVDA+laskinnäppäimistön *: siirrä navigointiobjekti hiiren kohdalle
 Siirtää navigointiobjektin hiirikohdistimen alla olevaan objektiin
 
-NVDA+sarkain: reportCurrentFocus
+NVDA+sarkain: lue nykyinen kohdistus
 Kertoo objektin, jossa kohdistus on.
 
-NVDA+laskinnäppäimistön 5: navigatorObject_current
+NVDA+laskinnäppäimistön 5: lue nykyinen navigointiobjekti
 Kertoo nykyisen navigointiobjektin.
 
-Shift+NVDA+laskinnäppäimistön 5: navigatorObject_currentDimensions
+Shift+NVDA+laskinnäppäimistön 5: navigointiobjektin koko ja sijainti
 Kertoo nykyisen navigointiobjektin koon ja sijainnin.
  
-Control+Shift+NVDA+laskinnäppäimistön 5: navigatorObject_where
+Control+Shift+NVDA+laskinnäppäimistön 5: missä olen
 Kertoo, missä navigointiobjekti on.
 
-NVDA+laskinnäppäimistön miinus: navigatorObject_toFocus
+NVDA+laskinnäppäimistön miinus: siirrä navigointiobjekti kohdistukseen
 Siirtää navigointiobjektin siihen objektiin, jossa kohdistus on.
 
-NVDA+laskinnäppäimistön 8: navigatorObject_parent
+NVDA+laskinnäppäimistön 8: ylemmän tason objekti
 Siirtää navigointiobjektin sitä ylemmän tason objektiin (ts. objektiin, jossa navigointiobjekti on).
 
-NVDA+laskinnäppäimistön 2: navigatorObject_firstChild
+NVDA+laskinnäppäimistön 2: ensimmäinen alemman tason objekti
 Siirtää navigointiobjektin sen ensimmäiseen alemman tason objektiin (ts. ensimmäiseen navigointiobjektin sisällä olevaan objektiin)
 
-NVDA+laskinnäppäimistön 4: navigatorObject_previous
+NVDA+laskinnäppäimistön 4: edellinen objekti
 Siirtää navigointiobjektin siitä edellisenä olevaan objektiin (ts. navigointiobjektia ennen olevaan saman tason objektiin).
 
-Shift+NVDA+laskinnäppäimistön 4: navigatorObject_previousInFlow
+Shift+NVDA+laskinnäppäimistön 4: edellinen objektipuun objekti
 Siirtää navigointiobjektin siitä edellisenä navigointipuussa olevaan objektiin (ts. navigointiobjektia ennen olevaan, ei välttämättä saman tason objektiin).
 
-NVDA+laskinnäppäimistön 6: navigatorObject_next
+NVDA+laskinnäppäimistön 6: seuraava objekti
 Siirtää navigointiobjektin siitä seuraavana olevaan objektiin (ts. navigointiobjektin jälkeiseen saman tason objektiin).
 
-Shift+NVDA+laskinnäppäimistön 6: navigatorObject_nextInFlow
+Shift+NVDA+laskinnäppäimistön 6: seuraava objektipuun objekti
 Siirtää navigointiobjektin siitä seuraavana objektipuussa olevaan objektiin (ts. navigointiobjektin jälkeiseen, ei välttämättä saman tason objektiin).
 
-NVDA+laskinnäppäimistön Enter: navigatorObject_doDefaultAction
+NVDA+laskinnäppäimistön Enter: suorita oletustoiminto objektille
 Suorittaa oletustoiminnon navigointiobjektille (esim. painaa painiketta tai aktivoi luettelon osan).
 
-NVDA+laskinnäppäimistön plus: navigatorObject_sayAll
+NVDA+laskinnäppäimistön plus: lue kaikki objektit
 Lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa järjestyksessä.
 
-Laskinnäppäimistön miinus: review_moveToCaret
+Laskinnäppäimistön miinus: siirrä tarkastelukohdistin järjestelmäkohdistimen kohdalle
 Siirtää tarkastelukohdistimen järjestelmäkohdistimen kohdalle.
 
-Control+laskinnäppäimistön miinus: review_moveCaretHere
+Control+laskinnäppäimistön miinus: siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle
 Siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle
 
-Laskinnäppäimistön 1: review_previousCharacter
+Laskinnäppäimistön 1: edellinen merkki
 Siirtää tarkastelukohdistimen edellisen merkin kohdalle
 
-Shift+laskinnäppäimistön 1: review_startOfLine
+Shift+laskinnäppäimistön 1: rivin alku
 Siirtää tarkastelukohdistimen rivin alkuun
 
-Laskinnäppäimistön 2: review_currentCharacter
+Laskinnäppäimistön 2: nykyinen merkki
 Lukee tarkastelukohdistimen kohdalla olevan merkin
 
-Laskinnäppäimistön 3: review_nextCharacter
+Laskinnäppäimistön 3: seuraava merkki
 Siirtää tarkastelukohdistimen seuraavan merkin kohdalle
 
-Shift+laskinnäppäimistön 3: review_endOfLine
+Shift+laskinnäppäimistön 3: rivin loppu
 Siirtää tarkastelukohdistimen rivin loppuun
 
-Laskinnäppäimistön 4: review_previousWord
+Laskinnäppäimistön 4: edellinen sana
 Siirtää tarkastelukohdistimen edellisen sanan kohdalle
 
-Laskinnäppäimistön 5: review_currentWord
+Laskinnäppäimistön 5: nykyinen sana
 Lukee tarkastelukohdistimen kohdalla olevan sanan
 
-Laskinnäppäimistön 6: review_nextWord
+Laskinnäppäimistön 6: seuraava sana
 Siirtää tarkastelukohdistimen seuraavan sanan kohdalle
 
-Laskinnäppäimistön 7: review_previousLine
+Laskinnäppäimistön 7: edellinen rivi
 Siirtää tarkastelukohdistimen edelliselle riville
 
-Shift+laskinnäppäimistön 7: review_top
+Shift+laskinnäppäimistön 7: ylin rivi
 Siirtää tarkastelukohdistimen ensimmäiselle riville
  
-Laskinnäppäimistön 8: review_currentLine
+Laskinnäppäimistön 8: nykyinen rivi
 Lukee tarkastelukohdistimen kohdalla olevan rivin
 
-Laskinnäppäimistön 9: review_nextLine
+Laskinnäppäimistön 9: seuraava rivi
 Siirtää tarkastelukohdistimen seuraavalle riville
 
-Shift+laskinnäppäimistön 9: review_bottom
+Shift+laskinnäppäimistön 9: alin rivi
 Siirtää tarkastelukohdistimen viimeiselle riville
 
-NVDA+nuoli alas: sayAll
+NVDA+nuoli alas: lue kaikki
 Lukee kaiken asiakirjan tai muokkaussäätimen tekstin nykyisestä paikasta lähtien.
 
-Laskinnäppäimistön plus: review_sayAll
+Laskinnäppäimistön plus: lue kaikki tarkastelukohdistimesta lähtien
 Lukee kaiken tekstin tarkastelukohdistimen nykyisestä paikasta lähtien.
 
-NVDA+f: reportFormatting
+NVDA+f: lue muotoilutiedot
 Kertoo asiakirjan muotoilutietoja kohdistimen nykyisestä paikasta.
 
-NVDA+m: toggleReportObjectUnderMouse
+NVDA+m: lue hiiren alla oleva objekti
 Ottaa käyttöön ja poistaa käytöstä hiirikohdistimen alla olevan objektin lukemisen.
 
-Control+NVDA+f1: speakApplicationName
+Control+NVDA+f1: lue sovelluksen nimi
 Kertoo aktiivisen sovelluksen nimen ja tavaa sen. Ilmoittaa myös käytössä olevan NVDA-sovellusmoduulin.
 
-NVDA+u: toggleBeepOnProgressBarUpdates
+NVDA+u: äänimerkit edistymispalkin päivittyessä
 Ottaa käyttöön ja poistaa käytöstä äänimerkin, joka ilmaisee edistymispalkin päivittymistä.
 
-NVDA+shift+b: say_battery_status
+NVDA+shift+b: akun tila
 Kertoo akun varauksen tason ja onko verkkovirta käytössä.
 
-NVDA+5: toggleReportDynamicContentChanges
+NVDA+5: ilmoita dynaamisen sisällön muutokset
 Ottaa käyttöön ja poistaa käytöstä sisältömuutosten automaattisen lukemisen (kuten uuden tekstin lukemisen DOS-ikkunoissa).
 
-NVDA+6: toggleCaretMovesReviewCursor
+NVDA+6: järjestelmäkohdistin siirtää tarkastelukohdistinta
 Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen automaattisen siirtämisen järjestelmäkohdistimen liikkuessa.
 
-NVDA+7: toggleFocusMovesNavigatorObject
+NVDA+7: kohdistus siirtää navigointiobjektia
 Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen kohdistuksen muuttuessa.
  
-NVDA+f2: passNextKeyThrough
+NVDA+f2: päästä läpi seuraava näppäinpainallus
 Kun painat tätä näppäintä, NVDA antaa seuraavan näppäinpainalluksen suoraan käyttöjärjestelmän käsiteltäväksi suorittamatta näppäimen mahdollista NVDA-komentoa.
 
-Shift+NVDA+nuoli ylös: reportCurrentSelection
+Shift+NVDA+nuoli ylös: lue valittu teksti
 Lukee valitun tekstin muokkaussäätimissä ja asiakirjoissa. Jos valintaa ei ole, siitä ilmoitetaan.
 
-NVDA+nuoli ylös: reportCurrentLine
-Kertoo nykyisen rivin muokkaussäätimissä ja asiakirjoissa.
+NVDA+nuoli ylös: lue nykyinen rivi
+Lukee nykyisen rivin muokkaussäätimissä ja asiakirjoissa.
 
-Control+NVDA+nuoli vasemmalle: previousSetting
+Control+NVDA+nuoli vasemmalle: edellinen asetus
 Ilmoittaa edellisen puheasetuksen ja siirtyy siihen.
  
-Control+NVDA+nuoli oikealle: nextSetting
+Control+NVDA+nuoli oikealle: seuraava asetus
 Ilmoittaa seuraavan puheasetuksen ja siirtyy siihen
 
-Control+NVDA+nuoli ylös: increaseSetting
+Control+NVDA+nuoli ylös: nosta asetusta
 Nostaa nykyistä puheasetusta
 
-Control+NVDA+nuoli alas: decreaseSetting
+Control+NVDA+nuoli alas: laske asetusta
 Laskee nykyistä puheasetusta
 
 Näennäispuskurin komennot Firefox 3:lle (jotkin näistä saattavat toimia myös Internet Explorerissa tai Firefox 2:ssa):
 
-NVDA+välilyönti: toggleVirtualBufferPassThrough
+NVDA+välilyönti: näennäispuskurin läpivienti
 Ottaa käyttöön tai poistaa käytöstä näennäispuskurin läpivientitilan.
 
 control+NVDA+f: etsi (control+f Firefox 2:ssa ja Internet Explorerissa)
 NVDA+f3: etsi seuraava
-NVDA+f7: linkkilista (ei Firefox 2:ssa tai internet explorerissa)
-NVDA+f5: päivitä näennäispuskuri (ei Firefox 2:ssa tai Internet Explorerissa)
+NVDA+f7: linkkilista (ei toimi Firefox 2:ssa tai internet explorerissa)
+NVDA+f5: päivitä näennäispuskuri (ei toimi Firefox 2:ssa tai Internet Explorerissa)
 
 Näennäispuskurin pikanäppäimet seuraavaan elementtiin siirtymiseksi (käytä shiftiä näiden näppäinten kanssa siirtyäksesi edelliseen):
 h: otsikko
