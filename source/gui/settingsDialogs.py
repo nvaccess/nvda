@@ -539,6 +539,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportParagraphs"]=self.paragraphsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportFrames"]=self.framesCheckBox.IsChecked()
+		speech.updateUserDisabledRoles()
 		super(VirtualBuffersDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):

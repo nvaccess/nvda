@@ -433,6 +433,39 @@ silentRolesOnFocus=set([
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
+userDisabledRoles=[]
+
+def updateUserDisabledRoles():
+	del userDisabledRoles[:]
+	if not config.conf["virtualBuffers"]["reportLinks"]:
+		userDisabledRoles.append(controlTypes.ROLE_LINK)
+	if not config.conf["virtualBuffers"]["reportLists"]:
+		userDisabledRoles.append(controlTypes.ROLE_LIST)
+	if not config.conf["virtualBuffers"]["reportHeadings"]:
+		userDisabledRoles.append(controlTypes.ROLE_HEADING)
+	if not config.conf["virtualBuffers"]["reportTables"]:
+		userDisabledRoles.append(controlTypes.ROLE_TABLE)
+	if not config.conf["virtualBuffers"]["reportGraphics"]:
+		userDisabledRoles.append(controlTypes.ROLE_GRAPHIC)
+	if not config.conf["virtualBuffers"]["reportForms"]:
+		userDisabledRoles.append(controlTypes.ROLE_FORM)
+	if not config.conf["virtualBuffers"]["reportFormFields"]:
+		userDisabledRoles.append(controlTypes.ROLE_BUTTON)
+		userDisabledRoles.append(controlTypes.ROLE_RADIOBUTTON)
+		userDisabledRoles.append(controlTypes.ROLE_CHECKBOX)
+		userDisabledRoles.append(controlTypes.ROLE_COMBOBOX)
+		userDisabledRoles.append(controlTypes.ROLE_TREEVIEW)
+		userDisabledRoles.append(controlTypes.ROLE_EDITABLETEXT)
+	if not config.conf["virtualBuffers"]["reportBlockQuotes"]:
+		userDisabledRoles.append(controlTypes.ROLE_BLOCKQUOTE)
+	if not config.conf["virtualBuffers"]["reportParagraphs"]:
+		userDisabledRoles.append(controlTypes.ROLE_PARAGRAPH)
+	if not config.conf["virtualBuffers"]["reportFrames"]:
+		userDisabledRoles.append(controlTypes.ROLE_FRAME)
+		userDisabledRoles.append(controlTypes.ROLE_INTERNALFRAME)
+
+updateUserDisabledRoles()
+
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
@@ -625,7 +658,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		del propertyValues['name']
 	if 'role' in propertyValues:
 		role=propertyValues['role']
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or  role not in silentRolesOnFocus:
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role not in silentRolesOnFocus and role not in userDisabledRoles):
 			textList.append(controlTypes.speechRoleLabels[role])
 		del propertyValues['role']
 	elif '_role' in propertyValues:
