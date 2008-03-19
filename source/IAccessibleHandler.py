@@ -168,8 +168,6 @@ import controlTypes
 _IA2Dll=None
 _IA2ClassFactory=None
 _IA2RegCooky=None
-#_IA2DllIID=IID("{3799e084-fd55-4e07-ae9c-5a2f9b884602}")
-_IA2DllIID=IID("{01C20F2B-3DD2-400F-949F-AD00BDAB1D41}")
 
 #A set to cache property change events
 #values stored as (eventName,window,objectID,childID)
