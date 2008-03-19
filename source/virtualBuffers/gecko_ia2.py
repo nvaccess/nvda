@@ -140,19 +140,22 @@ class Gecko_ia2(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="heading":
-			return {"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
-		if nodeType=="table":
-			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
+			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
+		elif nodeType=="table":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
 		elif nodeType=="link":
-			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
 		elif nodeType=="visitedLink":
-			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
 		elif nodeType=="unvisitedLink":
-			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
-			return {"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
 		else:
 			return None
+		# We should never consider invisible nodes.
+		attrs["IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_INVISIBLE]=[None]
+		return attrs
 
 	def event_stateChange(self,obj,nextHandler):
 		if obj==self.rootNVDAObject:
