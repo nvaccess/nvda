@@ -33,6 +33,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
+			role=controlTypes.ROLE_TEXTFRAME
 		level=IA2Attributes.get('level',"")
 		newAttrs=attrs.copy()
 		newAttrs['role']=role
@@ -144,11 +147,11 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="table":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
 		elif nodeType=="link":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1]}
 		elif nodeType=="visitedLink":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
 		elif nodeType=="unvisitedLink":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
 		else:
