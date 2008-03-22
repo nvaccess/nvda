@@ -589,6 +589,32 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		super(DocumentFormattingDialog, self).onOk(evt)
 
+class DictionaryEntryDialog(wx.Dialog):
+
+	def __init__(self,parent):
+		super(DictionaryEntryDialog,self).__init__(parent,title=_("Edit dictionary entry"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Pattern")))
+		self.patternTextCtrl=wx.TextCtrl(self,wx.NewId())
+		settingsSizer.Add(self.patternTextCtrl)
+		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Replacement")))
+		self.replacementTextCtrl=wx.TextCtrl(self,wx.NewId())
+		settingsSizer.Add(self.replacementTextCtrl)
+		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Comment")))
+		self.commentTextCtrl=wx.TextCtrl(self,wx.NewId())
+		settingsSizer.Add(self.commentTextCtrl)
+		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
+		settingsSizer.Add(self.caseSensitiveCheckBox)
+		self.regexpCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Regular &expression"))
+		settingsSizer.Add(self.regexpCheckBox)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.patternTextCtrl.SetFocus()
+
 class DictionaryDialog(SettingsDialog):
 
 	def __init__(self,parent,title,userDict):
@@ -608,8 +634,10 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(0,_("Comment"))
 		self.dictList.InsertColumn(1,_("Pattern"))
 		self.dictList.InsertColumn(2,_("Replacement"))
+		self.dictList.InsertColumn(3,_("case sensitive"))
+		self.dictList.InsertColumn(4,_("Regular expression"))
 		for entry in self.tempUserDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,str(entry.caseSensitive),str(entry.regexp)))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList)
 		settingsSizer.Add(entriesSizer)
@@ -642,32 +670,46 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
-		if self.editingIndex==-1:
-			addEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement"),_("&Comment")),title=_("Add an entry"),callback=self.onDialog)
-			addEntryDialog.run()
+		entryDialog=DictionaryEntryDialog(self)
+		if entryDialog.ShowModal()==wx.ID_OK:
+			self.tempUserDict.append(userDictHandler.UserDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
+			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),str(bool(entryDialog.caseSensitiveCheckBox.GetValue())),str(bool(entryDialog.regexpCheckBox.GetValue()))))
+			index=self.dictList.GetFirstSelected()
+			while index>=0:
+				self.dictList.Select(index,on=0)
+				index=self.dictList.GetNextSelected(index)
+			addedIndex=self.dictList.GetItemCount()-1
+			self.dictList.Select(addedIndex)
+			self.dictList.Focus(addedIndex)
+			self.dictList.SetFocus()
+		entryDialog.Destroy()
 
 	def OnEditClick(self,evt):
-		if (self.dictList.GetSelectedItemCount()==1) and (self.editingIndex==-1):
-			self.editingIndex=self.dictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
-			editEntryDialog=scriptUI.TextEntriesDialog((_("&Pattern"),_("&Replacement"),_("&Comment")),title=_("Edit an entry"),defaults=(self.tempUserDict[self.editingIndex].pattern,self.tempUserDict[self.editingIndex].replacement,self.tempUserDict[self.editingIndex].comment), callback=self.onDialog)
-			editEntryDialog.run()
+		if self.dictList.GetSelectedItemCount()!=1:
+			return
+		editIndex=self.dictList.GetFirstSelected()
+		if editIndex<0:
+			return
+		entryDialog=DictionaryEntryDialog(self)
+		entryDialog.patternTextCtrl.SetValue(self.tempUserDict[editIndex].pattern)
+		entryDialog.replacementTextCtrl.SetValue(self.tempUserDict[editIndex].replacement)
+		entryDialog.commentTextCtrl.SetValue(self.tempUserDict[editIndex].comment)
+		entryDialog.caseSensitiveCheckBox.SetValue(self.tempUserDict[editIndex].caseSensitive)
+		entryDialog.regexpCheckBox.SetValue(self.tempUserDict[editIndex].regexp)
+		if entryDialog.ShowModal()==wx.ID_OK:
+			self.tempUserDict[editIndex]=userDictHandler.UserDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue()))
+			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
+			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
+			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
+			self.dictList.SetStringItem(editIndex,3,str(bool(entryDialog.caseSensitiveCheckBox.GetValue())))
+			self.dictList.SetStringItem(editIndex,4,str(bool(entryDialog.regexpCheckBox.GetValue())))
+			self.dictList.SetFocus()
+		entryDialog.Destroy()
 
 	def OnRemoveClick(self,evt):
-		index=self.dictList.GetNextItem(-1,wx.LIST_NEXT_ALL,wx.LIST_STATE_SELECTED)
-		if (index!=self.editingIndex)and(self.dictList.GetSelectedItemCount()==1):
+		index=self.dictList.GetFirstSelected()
+		while index>=0:
 			self.dictList.DeleteItem(index)
 			del self.tempUserDict[index]
-		self.dictList.SetFocus()
-
-	def onDialog(self,texts):
-		if texts is not None:
-			if self.editingIndex>=0:
-				self.tempUserDict[self.editingIndex]=userDictHandler.UserDictEntry(texts[0],texts[1],texts[2])
-				self.dictList.SetStringItem(self.editingIndex,1,texts[0])
-				self.dictList.SetStringItem(self.editingIndex,2,texts[1])
-				self.dictList.SetStringItem(self.editingIndex,0,texts[2])
-			else:
-				self.tempUserDict.append(userDictHandler.UserDictEntry(texts[0],texts[1],texts[2]))
-				self.dictList.Append((texts[2],texts[0],texts[1]))
-		self.editingIndex=-1
+			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()

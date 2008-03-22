@@ -1,15 +1,13 @@
-#General NVDA dictionary
-#syntax: record fields divided by tab character
-
-#Limit groups of the same character to 5 or less.
-([\W])\1{5,}	\1\1\1\1\1
+﻿#Limit groups of the same character to 5 or less.
+([\W])\1{5,}	\1\1\1\1\1	1	1
 #break up words that use a capital letter to denote another word
-([a-z])([A-Z])	\1 \2
+([a-z])([A-Z])	\1 \2	1	1
 #Break away a word starting with a capital from a fully uppercase word
-([A-Z])([A-Z][a-z])	\1 \2
+([A-Z])([A-Z][a-z])	\1 \2	1	1
 #telephone numbers
-\b(\d{3})\-(\d{2})(\d{2})\W	\1 \2 \3
+\b(\d{3})\-(\d{2})(\d{2})\W	\1 \2 \3	1	1
 #numbers beginning on the zero
-\b(0+)(\d+)	\1 \2
+\b(0+)(\d+)	\1 \2	1	1
 #Break words that have numbers at the end
-((?:(?=\D)\w)+)(\d+)	\1 \2
+((?:(?=\D)\w)+)(\d+)	\1 \2	1	1
+

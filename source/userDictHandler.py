@@ -16,14 +16,19 @@ userDictsPath="userdicts"
 
 class UserDictEntry:
 
-	def __init__(self, pattern, replacement,comment):
+	def __init__(self, pattern, replacement,comment,caseSensitive=True,regexp=False):
 		self.pattern = pattern
-		self.compiled = re.compile(pattern)
+		flags=re.IGNORECASE if not caseSensitive else 0
+		tempPattern=pattern if regexp else re.escape(pattern)
+		self.compiled = re.compile(tempPattern,flags)
 		self.replacement = replacement
 		self.comment=comment
+		self.caseSensitive=caseSensitive
+		self.regexp=regexp
 
 	def sub(self, text):
-		return self.compiled.sub(self.replacement, text)
+		replacement=self.replacement
+		return self.compiled.sub(replacement, text)
 
 class UserDict(list):
 
@@ -47,8 +52,8 @@ class UserDict(list):
 				comment+=line[1:]
 			else:
 				temp=line.split("\t")
-				if len(temp) ==2:
-					self.append(UserDictEntry(temp[0],temp[1],comment))
+				if len(temp) ==4:
+					self.append(UserDictEntry(temp[0],temp[1],comment,bool(int(temp[2])),bool(int(temp[3]))))
 					comment=""
 				else:
 					globalVars.log.warning("can't parse line '%s'" % line)
@@ -64,7 +69,7 @@ class UserDict(list):
 			for entry in self:
 				if entry.comment:
 					file.write("#%s\r\n"%entry.comment)
-				file.write("%s\t%s\r\n"%(entry.pattern,entry.replacement))
+				file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
 			file.close()
 
 	def sub(self, text):
