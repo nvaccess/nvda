@@ -1,4 +1,4 @@
-#userDictHandler.py
+#speechDictHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -11,10 +11,10 @@ import codecs
 import synthDriverHandler
 
 dictionaries = {}
-dictTypes = ("temp", "voice", "default") # ordered by their priority E.G. voice specific user dictionary is processed before the default
-userDictsPath="userdicts"
+dictTypes = ("temp", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
+speechDictsPath="speechdicts"
 
-class UserDictEntry:
+class SpeechDictEntry:
 
 	def __init__(self, pattern, replacement,comment,caseSensitive=True,regexp=False):
 		self.pattern = pattern
@@ -30,13 +30,13 @@ class UserDictEntry:
 		replacement=self.replacement
 		return self.compiled.sub(replacement, text)
 
-class UserDict(list):
+class SpeechDict(list):
 
 	def load(self, fileName):
 		self.fileName=fileName
 		comment=""
 		del self[:]
-		globalVars.log.debug("Loading user dictionary '%s'..." % fileName)
+		globalVars.log.debug("Loading speech dictionary '%s'..." % fileName)
 		if not os.path.isfile(fileName): 
 			globalVars.log.debug("file '%s' not found." % fileName)
 			return
@@ -53,7 +53,7 @@ class UserDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(UserDictEntry(temp[0],temp[1],comment,bool(int(temp[2])),bool(int(temp[3]))))
+					self.append(SpeechDictEntry(temp[0],temp[1],comment,bool(int(temp[2])),bool(int(temp[3]))))
 					comment=""
 				else:
 					globalVars.log.warning("can't parse line '%s'" % line)
@@ -78,7 +78,7 @@ class UserDict(list):
 		return text
 
 def processText(text):
-	if not globalVars.userDictionaryProcessing:
+	if not globalVars.speechDictionaryProcessing:
 		return text
 	for entry in dictionaries.values():
 		text=entry.sub(text)
@@ -86,14 +86,14 @@ def processText(text):
 
 def getFileName(type):
 	if type is "default":
-		return "%s/default.dic"%userDictsPath
+		return "%s/default.dic"%speechDictsPath
 	elif type is "voice":
 		s=synthDriverHandler.getSynth()
-		return "%s/%s-%s.dic"%(userDictsPath,s.name,s.getVoiceName(s.voice))
+		return "%s/%s-%s.dic"%(speechDictsPath,s.name,s.getVoiceName(s.voice))
 	return None
 
 def initialize():
 	for type in dictTypes:
-		dictionaries[type]=UserDict()
+		dictionaries[type]=SpeechDict()
 	dictionaries["default"].load(getFileName("default"))
 

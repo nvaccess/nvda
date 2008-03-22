@@ -16,7 +16,7 @@ import speech
 import queueHandler
 import core
 from settingsDialogs import *
-import userDictHandler
+import speechDictHandler
 import languageHandler
 
 ### Constants
@@ -122,15 +122,15 @@ class MainFrame(wx.Frame):
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
 	def onDefaultDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Default dictionary"),userDictHandler.dictionaries["default"])
+		d=DictionaryDialog(None,_("Default dictionary"),speechDictHandler.dictionaries["default"])
 		d.Show(True)
 
 	def onVoiceDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Voice dictionary (%s)")%userDictHandler.dictionaries["voice"].fileName,userDictHandler.dictionaries["voice"])
+		d=DictionaryDialog(None,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
 		d.Show(True)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Temporary dictionary"),userDictHandler.dictionaries["temp"])
+		d=DictionaryDialog(None,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 		d.Show(True)
 
 	def onExitCommand(self, evt):
@@ -217,14 +217,14 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onVirtualBuffersCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
-		subMenu_userDicts = wx.Menu()
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+		subMenu_speechDicts = wx.Menu()
+		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
 		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
 		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		item = subMenu_userDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
-		menu_preferences.AppendMenu(wx.ID_ANY,_("User &dictionaries"),subMenu_userDicts)
+		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_help = wx.Menu()

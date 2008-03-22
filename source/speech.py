@@ -24,7 +24,7 @@ import textHandler
 import characterSymbols
 import NVDAObjects
 import queueHandler
-import userDictHandler
+import speechDictHandler
 
 speechMode_off=0
 speechMode_beeps=1
@@ -68,7 +68,7 @@ def processTextSymbols(text,expandPunctuation=False):
 	#Convert non-breaking spaces to spaces
 	if isinstance(text,basestring):
 		text=text.replace(u'\xa0',u' ')
-	text = userDictHandler.processText(text)
+	text = speechDictHandler.processText(text)
 	#expands ^ and ~ so they can be used as protector symbols
 	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
 	#Expands any other symbols and removes ^ and ~ protectors

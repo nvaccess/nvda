@@ -15,7 +15,7 @@ import gui
 import globalVars
 from ctypes import *
 from ctypes.wintypes import *
-import userDictHandler
+import speechDictHandler
 import scriptUI
 
 MAXPNAMELEN=32
@@ -617,12 +617,12 @@ class DictionaryEntryDialog(wx.Dialog):
 
 class DictionaryDialog(SettingsDialog):
 
-	def __init__(self,parent,title,userDict):
+	def __init__(self,parent,title,speechDict):
 		self.title = title
-		self.userDict = userDict
-		self.tempUserDict=userDictHandler.UserDict()
-		self.tempUserDict.extend(self.userDict)
-		globalVars.userDictionaryProcessing=False
+		self.speechDict = speechDict
+		self.tempSpeechDict=speechDictHandler.SpeechDict()
+		self.tempSpeechDict.extend(self.speechDict)
+		globalVars.speechDictionaryProcessing=False
 		super(DictionaryDialog, self).__init__(parent)
 
 	def makeSettings(self, settingsSizer):
@@ -636,7 +636,7 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(2,_("Replacement"))
 		self.dictList.InsertColumn(3,_("case sensitive"))
 		self.dictList.InsertColumn(4,_("Regular expression"))
-		for entry in self.tempUserDict:
+		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,str(entry.caseSensitive),str(entry.regexp)))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList)
@@ -658,21 +658,21 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.SetFocus()
 
 	def onCancel(self,evt):
-		globalVars.userDictionaryProcessing=True
+		globalVars.speechDictionaryProcessing=True
 		super(DictionaryDialog, self).onCancel(evt)
 
 	def onOk(self,evt):
-		globalVars.userDictionaryProcessing=True
-		if self.tempUserDict!=self.userDict:
-			del self.userDict[:]
-			self.userDict.extend(self.tempUserDict)
-			self.userDict.save()
+		globalVars.speechDictionaryProcessing=True
+		if self.tempSpeechDict!=self.speechDict:
+			del self.speechDict[:]
+			self.speechDict.extend(self.tempSpeechDict)
+			self.speechDict.save()
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
 		entryDialog=DictionaryEntryDialog(self)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempUserDict.append(userDictHandler.UserDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
+			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
 			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),str(bool(entryDialog.caseSensitiveCheckBox.GetValue())),str(bool(entryDialog.regexpCheckBox.GetValue()))))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
@@ -691,13 +691,13 @@ class DictionaryDialog(SettingsDialog):
 		if editIndex<0:
 			return
 		entryDialog=DictionaryEntryDialog(self)
-		entryDialog.patternTextCtrl.SetValue(self.tempUserDict[editIndex].pattern)
-		entryDialog.replacementTextCtrl.SetValue(self.tempUserDict[editIndex].replacement)
-		entryDialog.commentTextCtrl.SetValue(self.tempUserDict[editIndex].comment)
-		entryDialog.caseSensitiveCheckBox.SetValue(self.tempUserDict[editIndex].caseSensitive)
-		entryDialog.regexpCheckBox.SetValue(self.tempUserDict[editIndex].regexp)
+		entryDialog.patternTextCtrl.SetValue(self.tempSpeechDict[editIndex].pattern)
+		entryDialog.replacementTextCtrl.SetValue(self.tempSpeechDict[editIndex].replacement)
+		entryDialog.commentTextCtrl.SetValue(self.tempSpeechDict[editIndex].comment)
+		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
+		entryDialog.regexpCheckBox.SetValue(self.tempSpeechDict[editIndex].regexp)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempUserDict[editIndex]=userDictHandler.UserDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue()))
+			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue()))
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
@@ -710,6 +710,6 @@ class DictionaryDialog(SettingsDialog):
 		index=self.dictList.GetFirstSelected()
 		while index>=0:
 			self.dictList.DeleteItem(index)
-			del self.tempUserDict[index]
+			del self.tempSpeechDict[index]
 			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()

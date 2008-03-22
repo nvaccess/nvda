@@ -50,4 +50,4 @@ restart=False
 appArgs=None
 settingsRing = None
 log=None
-userDictionaryProcessing=True
+speechDictionaryProcessing=True
