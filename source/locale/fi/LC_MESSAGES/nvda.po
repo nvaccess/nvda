@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1840\n"
+"Project-Id-Version: r1848\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-03-18 16:57+0200\n"
+"PO-Revision-Date: 2008-03-23 09:38+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1847,8 +1847,8 @@ msgstr ""
 "Valintaikkuna, jossa voit lisätä sanastomerkintöjä tilapäissanastoon"
 
 #: gui\__init__.py:227
-msgid "User &dictionaries"
-msgstr "Käyttäjän &sanastot"
+msgid "Speech &dictionaries"
+msgstr "P&uhesanastot"
 
 #: gui\__init__.py:228
 msgid "&Preferences"
@@ -2220,53 +2220,65 @@ msgstr "Ilmoita rivin&umerot"
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:605
-msgid "&Dictionary entries"
-msgstr "&Sanastomerkinnät"
+#: gui\settingsDialogs.py:595
+msgid "Edit dictionary entry"
+msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:608
-msgid "Comment"
-msgstr "Kommentti"
-
-#: gui\settingsDialogs.py:609
-msgid "Pattern"
-msgstr "Korvattava"
-
-#: gui\settingsDialogs.py:610
-msgid "Replacement"
-msgstr "Korvaava"
-
-#: gui\settingsDialogs.py:617
-msgid "&Add"
-msgstr "&Lisää"
-
-#: gui\settingsDialogs.py:620
-msgid "&edit"
-msgstr "&Muokkaa"
-
-#: gui\settingsDialogs.py:623
-msgid "&Remove"
-msgstr "&Poista"
-
-#: gui\settingsDialogs.py:646
-msgid "Add an entry"
-msgstr "Lisää merkintä"
-
-#: gui\settingsDialogs.py:646 gui\settingsDialogs.py:652
-msgid "&Comment"
-msgstr "&Kommentti"
-
-#: gui\settingsDialogs.py:646 gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:598
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:646 gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:601
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:652
-msgid "Edit an entry"
-msgstr "Muokkaa merkintää"
+#: gui\settingsDialogs.py:604
+msgid "&Comment"
+msgstr "&Kommentti"
+
+#: gui\settingsDialogs.py:607
+msgid "Case &sensitive"
+msgstr "Sama &kirjainkoko"
+
+#: gui\settingsDialogs.py:609
+msgid "Regular &expression"
+msgstr "Säännöllinen l&auseke"
+
+#: gui\settingsDialogs.py:631
+msgid "&Dictionary entries"
+msgstr "&Sanastomerkinnät"
+
+#: gui\settingsDialogs.py:634
+msgid "Comment"
+msgstr "Kommentti"
+
+#: gui\settingsDialogs.py:635
+msgid "Pattern"
+msgstr "Korvattava"
+
+#: gui\settingsDialogs.py:636
+msgid "Replacement"
+msgstr "Korvaava"
+
+#: gui\settingsDialogs.py:637
+msgid "case sensitive"
+msgstr "Sama kirjainkoko"
+
+#: gui\settingsDialogs.py:638
+msgid "Regular expression"
+msgstr "Säännöllinen lauseke"
+
+#: gui\settingsDialogs.py:645
+msgid "&Add"
+msgstr "&Lisää"
+
+#: gui\settingsDialogs.py:648
+msgid "&edit"
+msgstr "&Muokkaa"
+
+#: gui\settingsDialogs.py:651
+msgid "&Remove"
+msgstr "&Poista"
 
 #: keyboardHandler.py:53
 msgid "caps lock %s"
