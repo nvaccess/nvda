@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-03-17 09:00+0800\n"
+"PO-Revision-Date: 2008-03-23 20:30+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -371,7 +371,7 @@ msgstr "沒有上一層級物件了"
 
 # appModules\_default.py:164
 msgid "Sets the navigator object to the parent of the object it is currently on."
-msgstr "把瀏覽游標移到目前項目的上一層級物件"
+msgstr "把瀏覽游標移到目前項目上一層級的物件"
 
 # appModules\_default.py:176
 msgid "No next"
@@ -379,7 +379,7 @@ msgstr "沒有下一個物件了"
 
 # appModules\_default.py:177
 msgid "Sets the navigator object to the next object to the one it is currently on"
-msgstr "把瀏覽游標移到同一層級的下一個物件"
+msgstr "把瀏覽游標移到目前項目同一層級的下一個物件"
 
 # appModules\_default.py:189
 msgid "No previous"
@@ -387,7 +387,7 @@ msgstr "沒有上一個物件了"
 
 # appModules\_default.py:190
 msgid "Sets the navigator object to the previous object to the one it is currently on"
-msgstr "把瀏覽游標移到同一層級的上一個物件"
+msgstr "把瀏覽游標移到目前項目同一層級的上一個物件"
 
 # appModules\_default.py:202
 msgid "No children"
@@ -395,7 +395,7 @@ msgstr "沒有下一層級物件了"
 
 # appModules\_default.py:203
 msgid "Sets the navigator object to the first child object to the one it is currently on"
-msgstr "把瀏覽游標移到目前項目的下一層級物件"
+msgstr "把瀏覽游標移到目前項目下一層級的物件"
 
 # controlTypes.py:196
 msgid "end of flow"
@@ -403,7 +403,7 @@ msgstr "流程完結"
 
 # appModules\_default.py:164
 msgid "Sets the navigator object to the object this object flows to."
-msgstr "瀏覽游標向下移動並讀出所有和目前項目相關的物件"
+msgstr "瀏覽游標移到目前項目流程的下一個物件"
 
 # appModules\_default.py:254
 msgid "Beginning of flow"
@@ -411,7 +411,7 @@ msgstr "開始流程"
 
 # appModules\_default.py:164
 msgid "Sets the navigator object to the object this object flows from."
-msgstr "瀏覽游標向上移動並讀出所有和目前項目相關的物件"
+msgstr "瀏覽游標移到目前項目流程的上一個物件"
 
 # appModules\_default.py:211
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
@@ -547,7 +547,7 @@ msgstr "顯示 NVDA 介面視窗"
 
 # appModules\_default.py:375
 msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "從目前瀏覽游標所在的一行讀到結尾, 並且讓瀏覽游標跟著走"
+msgstr "從目前瀏覽游標所在的一行讀到現時可見文字的結尾, 並且讓瀏覽游標跟著走"
 
 # appModules\_default.py:127
 # appModules\_default.py:136
@@ -572,7 +572,7 @@ msgstr "從目前瀏覽游標所在的一行讀到結尾, 並且讓瀏覽游標�
 # appModules\_default.py:327
 # appModules\_default.py:335
 msgid "reads from navigator object "
-msgstr "從目前瀏覽項目開始讀下去"
+msgstr "從目前項目開始繼續讀出所有流程之內的物件"
 
 # appModules\_default.py:375
 msgid "reads from system caret up to end of text, moving the caret as it goes"
@@ -1818,8 +1818,8 @@ msgid "dialog where you can set temporary dictionary by adding dictionary entrie
 msgstr "打開編輯臨時字庫的對話方塊"
 
 # gui\__init__.py:167
-msgid "User &dictionaries"
-msgstr " 讀音修正字庫 &d"
+msgid "Speech &dictionaries"
+msgstr "讀音修正字庫 &d"
 
 # gui\__init__.py:172
 # gui\__init__.py:173
@@ -2186,6 +2186,32 @@ msgstr "報出行數 &L"
 msgid "Report &alignment"
 msgstr "報出排列方式 &A"
 
+# gui\settingsDialogs.py:639
+msgid "Edit dictionary entry"
+msgstr "編輯字庫項目"
+
+# gui\settingsDialogs.py:129
+msgid "&Pattern"
+msgstr "原來文字　&P"
+
+# gui\settingsDialogs.py:633
+# gui\settingsDialogs.py:639
+msgid "&Replacement"
+msgstr "代替文字 &R"
+
+# controlTypes.py:131
+# virtualBuffers\IAccessible\gecko.py:41
+msgid "&Comment"
+msgstr "註釋　&C"
+
+# gui\settingsDialogs.py:607
+msgid "Case &sensitive"
+msgstr "大小寫需相符 &S"
+
+# gui\settingsDialogs.py:609
+msgid "Regular &expression"
+msgstr "替代樣板 &E"
+
 # gui\settingsDialogs.py:593
 msgid "&Dictionary entries"
 msgstr "字庫項目 &D"
@@ -2203,6 +2229,14 @@ msgstr "原來文字"
 msgid "Replacement"
 msgstr "代替文字"
 
+# gui\settingsDialogs.py:637
+msgid "case sensitive"
+msgstr "大小寫需相符"
+
+# gui\settingsDialogs.py:638
+msgid "Regular expression"
+msgstr "替代樣板"
+
 # gui\settingsDialogs.py:605
 msgid "&Add"
 msgstr "新增 &A"
@@ -2215,28 +2249,6 @@ msgstr "編輯　&E"
 # gui\settingsDialogs.py:611
 msgid "&Remove"
 msgstr "移除 &R"
-
-# gui\settingsDialogs.py:633
-msgid "Add an entry"
-msgstr "新增一個字庫項目"
-
-# controlTypes.py:131
-# virtualBuffers\IAccessible\gecko.py:41
-msgid "&Comment"
-msgstr "註釋　&C"
-
-# gui\settingsDialogs.py:129
-msgid "&Pattern"
-msgstr "原來文字　&P"
-
-# gui\settingsDialogs.py:633
-# gui\settingsDialogs.py:639
-msgid "&Replacement"
-msgstr "代替文字 &R"
-
-# gui\settingsDialogs.py:639
-msgid "Edit an entry"
-msgstr "編輯一個字庫項目"
 
 # keyboardHandler.py:80
 msgid "caps lock %s"

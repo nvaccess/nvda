@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1827\n"
+"Project-Id-Version: r1849\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2008-03-16 22:06+0100\n"
+"PO-Revision-Date: 2008-03-23 19:04+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español en Tifloclub <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #: NVDAObjects\IAccessible\__init__.py:63
-#: speech.py:665
+#: speech.py:698
 msgid "level %s"
 msgstr "nivel %s"
 
@@ -791,7 +791,7 @@ msgstr "enviar: %s"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: speech.py:67
-#: speech.py:598
+#: speech.py:631
 msgid "blank"
 msgstr "en blanco"
 
@@ -1765,8 +1765,8 @@ msgid "dialog where you can set temporary dictionary by adding dictionary entrie
 msgstr "diálogo donde puedes ajustar un diccionario temporal añadiendo entradas de diccionario al cuadro de edición"
 
 #: gui\__init__.py:227
-msgid "User &dictionaries"
-msgstr "&Diccionarios de usuario"
+msgid "Speech &dictionaries"
+msgstr "&Diccionarios por Voces"
 
 #: gui\__init__.py:228
 msgid "&Preferences"
@@ -2068,7 +2068,7 @@ msgid "Report &headings"
 msgstr "Anunciar en&cabezados"
 
 #: gui\settingsDialogs.py:491
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:570
 msgid "Report &tables"
 msgstr "Anunciar &tablas"
 
@@ -2096,92 +2096,101 @@ msgstr "Anunciar &párrafos"
 msgid "Report f&rames"
 msgstr "Anunciar &marcos"
 
-#: gui\settingsDialogs.py:545
+#: gui\settingsDialogs.py:546
 msgid "Document formatting"
 msgstr "Formateado de documentos"
 
-#: gui\settingsDialogs.py:548
+#: gui\settingsDialogs.py:549
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Anunciar cambios de formato después del cursor (puede provocar un retraso)"
 
-#: gui\settingsDialogs.py:551
+#: gui\settingsDialogs.py:552
 msgid "Report font &name"
 msgstr "Anunciar &nombre de la fuente"
 
-#: gui\settingsDialogs.py:554
+#: gui\settingsDialogs.py:555
 msgid "Report font &size"
 msgstr "Anunciar tama&ño de la fuente"
 
-#: gui\settingsDialogs.py:557
+#: gui\settingsDialogs.py:558
 msgid "Report font attri&butes"
 msgstr "Anunciar &atributos de la fuente"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:561
 msgid "Report st&yle"
 msgstr "Anunciar e&stilo"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:564
 msgid "Report &pages"
 msgstr "Anunciar pá&ginas"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:567
 msgid "Report &line numbers"
 msgstr "Anunciar &números de línea"
 
-#: gui\settingsDialogs.py:572
+#: gui\settingsDialogs.py:573
 msgid "Report &alignment"
 msgstr "Anunciar &alineamiento"
 
-#: gui\settingsDialogs.py:604
-msgid "&Dictionary entries"
-msgstr "Entradas del &Diccionario"
+#: gui\settingsDialogs.py:595
+msgid "Edit dictionary entry"
+msgstr "Edición de entrada de diccionario"
 
-#: gui\settingsDialogs.py:607
-msgid "Comment"
-msgstr "Comentario"
-
-#: gui\settingsDialogs.py:608
-msgid "Pattern"
-msgstr "Término original"
-
-#: gui\settingsDialogs.py:609
-msgid "Replacement"
-msgstr "Reemplazar por"
-
-#: gui\settingsDialogs.py:616
-msgid "&Add"
-msgstr "&Añadir"
-
-#: gui\settingsDialogs.py:619
-msgid "&edit"
-msgstr "&editar"
-
-#: gui\settingsDialogs.py:622
-msgid "&Remove"
-msgstr "&Eliminar"
-
-#: gui\settingsDialogs.py:645
-msgid "Add an entry"
-msgstr "Añadir una entrada"
-
-#: gui\settingsDialogs.py:645
-#: gui\settingsDialogs.py:651
-msgid "&Comment"
-msgstr "&Comentario"
-
-#: gui\settingsDialogs.py:645
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:598
 msgid "&Pattern"
 msgstr "&Patrón"
 
-#: gui\settingsDialogs.py:645
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:601
 msgid "&Replacement"
 msgstr "&Reemplazar"
 
+#: gui\settingsDialogs.py:604
+msgid "&Comment"
+msgstr "&Comentario"
+
+#: gui\settingsDialogs.py:607
+msgid "Case &sensitive"
+msgstr "&Sensible a las mayúsculas"
+
+#: gui\settingsDialogs.py:609
+msgid "Regular &expression"
+msgstr "&Expresión regular"
+
+#: gui\settingsDialogs.py:631
+msgid "&Dictionary entries"
+msgstr "Entradas del &Diccionario"
+
+#: gui\settingsDialogs.py:634
+msgid "Comment"
+msgstr "Comentario"
+
+#: gui\settingsDialogs.py:635
+msgid "Pattern"
+msgstr "Término original"
+
+#: gui\settingsDialogs.py:636
+msgid "Replacement"
+msgstr "Reemplazar por"
+
+#: gui\settingsDialogs.py:637
+msgid "case sensitive"
+msgstr "sensible a las mayúsculas"
+
+#: gui\settingsDialogs.py:638
+msgid "Regular expression"
+msgstr "Expresión regular"
+
+#: gui\settingsDialogs.py:645
+msgid "&Add"
+msgstr "&Añadir"
+
+#: gui\settingsDialogs.py:648
+msgid "&edit"
+msgstr "&editar"
+
 #: gui\settingsDialogs.py:651
-msgid "Edit an entry"
-msgstr "Edita una entrada"
+msgid "&Remove"
+msgstr "&Eliminar"
 
 #: keyboardHandler.py:53
 msgid "caps lock %s"
@@ -2243,7 +2252,7 @@ msgstr "fuera de"
 msgid "unselected %s"
 msgstr "no seleccionado %s"
 
-#: speech.py:651
+#: speech.py:684
 #: virtualBuffers\MSHTML.py:123
 #: virtualBuffers\MSHTML.py:302
 #: virtualBuffers\MSHTML.py:306
