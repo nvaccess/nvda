@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3815\n"
+"Project-Id-Version: r1850\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-03-16 19:00+0200\n"
+"PO-Revision-Date: 2008-03-24 14:15+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:63 speech.py:665
+#: NVDAObjects\IAccessible\__init__.py:63 speech.py:698
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -791,7 +791,9 @@ msgstr "Enregistrer la configuration courante de NVDA dans un fichier"
 
 #: appModules\_default.py:757
 msgid "loads NVDA configuration from file, overriding current changes"
-msgstr "Recharge la configuration de NVDA depuis un fichier, annulant les changements en cours"
+msgstr ""
+"Recharge la configuration de NVDA depuis un fichier, annulant les "
+"changements en cours"
 
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -865,7 +867,7 @@ msgstr "pièces jointes"
 msgid "sent: %s"
 msgstr "envoyé: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:67 speech.py:598
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:67 speech.py:631
 msgid "blank"
 msgstr "vide"
 
@@ -1832,8 +1834,8 @@ msgstr ""
 "entrées dans la zone d'édition"
 
 #: gui\__init__.py:227
-msgid "User &dictionaries"
-msgstr "&Dictionnaire de l'utilisateur"
+msgid "Speech &dictionaries"
+msgstr "&Dictionnaire de prononciation"
 
 #: gui\__init__.py:228
 msgid "&Preferences"
@@ -2135,7 +2137,7 @@ msgstr "Annoncer les &éléments de listes"
 msgid "Report &headings"
 msgstr "Annoncer les &titres"
 
-#: gui\settingsDialogs.py:491 gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:491 gui\settingsDialogs.py:570
 msgid "Report &tables"
 msgstr "Annoncer les ta&bleaux"
 
@@ -2163,91 +2165,103 @@ msgstr "Annoncer les &paragraphes"
 msgid "Report f&rames"
 msgstr "Annoncer les c&adres"
 
-#: gui\settingsDialogs.py:545
+#: gui\settingsDialogs.py:546
 msgid "Document formatting"
 msgstr "format du document"
 
-#: gui\settingsDialogs.py:548
+#: gui\settingsDialogs.py:549
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Annonce les changements de format après le curseur (peut dégrader les "
 "performances)"
 
-#: gui\settingsDialogs.py:551
+#: gui\settingsDialogs.py:552
 msgid "Report font &name"
 msgstr "annoncer le &nom de la police"
 
-#: gui\settingsDialogs.py:554
+#: gui\settingsDialogs.py:555
 msgid "Report font &size"
 msgstr "annoncer la &taille de la police"
 
-#: gui\settingsDialogs.py:557
+#: gui\settingsDialogs.py:558
 msgid "Report font attri&butes"
 msgstr "annoncer les &attributs de la police"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:561
 msgid "Report st&yle"
 msgstr "annoncer le st&yle"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:564
 msgid "Report &pages"
 msgstr "annoncer la &page"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:567
 msgid "Report &line numbers"
 msgstr "annoncer le numéro de &ligne"
 
-#: gui\settingsDialogs.py:572
+#: gui\settingsDialogs.py:573
 msgid "Report &alignment"
 msgstr "annoncer l'&alignement"
 
-#: gui\settingsDialogs.py:604
-msgid "&Dictionary entries"
-msgstr "Entrées du &dictionnaire"
+#: gui\settingsDialogs.py:595
+msgid "Edit dictionary entry"
+msgstr "éditer une entrée du dictionnaire"
 
-#: gui\settingsDialogs.py:607
-msgid "Comment"
-msgstr "Commentaire"
-
-#: gui\settingsDialogs.py:608
-msgid "Pattern"
-msgstr "Mot réel"
-
-#: gui\settingsDialogs.py:609
-msgid "Replacement"
-msgstr "Remplacement"
-
-#: gui\settingsDialogs.py:616
-msgid "&Add"
-msgstr "&Ajouter"
-
-#: gui\settingsDialogs.py:619
-msgid "&edit"
-msgstr "&éditer"
-
-#: gui\settingsDialogs.py:622
-msgid "&Remove"
-msgstr "&Supprimer"
-
-#: gui\settingsDialogs.py:645
-msgid "Add an entry"
-msgstr "ajouter une entrée"
-
-#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
-msgid "&Comment"
-msgstr "&Commentaire"
-
-#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:598
 msgid "&Pattern"
 msgstr "&Mot réel"
 
-#: gui\settingsDialogs.py:645 gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:601
 msgid "&Replacement"
 msgstr "&Remplacement"
 
+#: gui\settingsDialogs.py:604
+msgid "&Comment"
+msgstr "&Commentaire"
+
+#: gui\settingsDialogs.py:607
+msgid "Case &sensitive"
+msgstr "Tenir compte de la &casse"
+
+#: gui\settingsDialogs.py:609
+msgid "Regular &expression"
+msgstr "&Expression normale"
+
+#: gui\settingsDialogs.py:631
+msgid "&Dictionary entries"
+msgstr "Entrées du &dictionnaire"
+
+#: gui\settingsDialogs.py:634
+msgid "Comment"
+msgstr "Commentaire"
+
+#: gui\settingsDialogs.py:635
+msgid "Pattern"
+msgstr "Mot réel"
+
+#: gui\settingsDialogs.py:636
+msgid "Replacement"
+msgstr "Remplacement"
+
+#: gui\settingsDialogs.py:637
+msgid "case sensitive"
+msgstr "Tenir compte de la casse"
+
+#: gui\settingsDialogs.py:638
+msgid "Regular expression"
+msgstr "Expression normale"
+
+#: gui\settingsDialogs.py:645
+msgid "&Add"
+msgstr "&Ajouter"
+
+#: gui\settingsDialogs.py:648
+msgid "&edit"
+msgstr "&éditer"
+
 #: gui\settingsDialogs.py:651
-msgid "Edit an entry"
-msgstr "éditer une entrée"
+msgid "&Remove"
+msgstr "&Supprimer"
 
 #: keyboardHandler.py:53
 msgid "caps lock %s"
@@ -2305,7 +2319,7 @@ msgstr "hors de"
 msgid "unselected %s"
 msgstr "non sélectionné %s"
 
-#: speech.py:651 virtualBuffers_old\MSHTML.py:123
+#: speech.py:684 virtualBuffers_old\MSHTML.py:123
 #: virtualBuffers_old\MSHTML.py:302 virtualBuffers_old\MSHTML.py:306
 #: virtualBuffers_old\adobe.py:300 virtualBuffers_old\adobe.py:304
 #: virtualBuffers_old\gecko.py:293 virtualBuffers_old\gecko.py:297
