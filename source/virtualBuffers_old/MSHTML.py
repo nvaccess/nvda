@@ -293,7 +293,8 @@ class MSHTML(virtualBuffer):
 			elif inputType=="password":
 				info["role"]=controlTypes.ROLE_EDITABLETEXT
 				info["typeString"]=_("protected")+" "+controlTypes.speechRoleLabels[controlTypes.ROLE_EDITABLETEXT]
-				text="*"*len(domNode.getAttribute('value'))+" "
+				if domNode.getAttribute('value'):
+					text="*"*len(domNode.getAttribute('value'))+" "
 			elif inputType in ["button","image","reset","submit"]:
 				info["role"]=controlTypes.ROLE_BUTTON
 				text=domNode.getAttribute('value')
