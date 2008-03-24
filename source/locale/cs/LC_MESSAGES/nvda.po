@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: r1698\n"
-"POT-Creation-Date: 2007-05-22 07:35+StĂ¸ednĂ­ Evropa (bĂ¬ÂžnĂ˝ Ă¨as)\n"
+"POT-Creation-Date: 2007-05-22 07:35+Středná Evropa (bĂ¬ÂžnĂ˝ čas)\n"
 "PO-Revision-Date: 2008-02-12 20:49+0100\n"
-"Last-Translator: TomĂˇĹˇ ValĹŻĹˇek <tvalusek@seznam.cz>\n"
+"Last-Translator: Tomáš Valúšek <tvalusek@seznam.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-Language: Czech\n"
 "X-Poedit-Country: CZECH REPUBLIC\n"
 
-#: NVDAObjects\IAccessible\__init__.py:64
+#: NVDAObjects\IAcce#: NVDAObjects\IAccessible\__init__.py:64
 #: speech.py:698
 msgid "level %s"
 msgstr "úroveň %s"
@@ -141,11 +141,11 @@ msgstr "&Hlas"
 msgid "variant"
 msgstr "verze"
 
-#: api.py:186 api.py:189
+#: api.py:183 api.py:186
 msgid "virtual buffer pass through"
 msgstr "Propustit přes virtuální dokument"
 
-#: api.py:186
+#: api.py:183
 #: appModules\_default.py:46
 #: appModules\_default.py:121
 #: appModules\_default.py:131
@@ -165,7 +165,7 @@ msgstr "Propustit přes virtuální dokument"
 msgid "off"
 msgstr "vypnuto"
 
-#: api.py:189
+#: api.py:186
 #: appModules\_default.py:43
 #: appModules\_default.py:124
 #: appModules\_default.py:134
@@ -824,7 +824,6 @@ msgid "Shows NVDA object presentation settings dialog"
 msgstr "Vyvolá dialog prezentace objektů"
 
 #: appModules\_default.py:745
-#, fuzzy
 msgid "Shows NVDA virtual buffers settings dialog"
 msgstr "Zobrazí okno s nastavením virtuálního dokumentu"
 
@@ -1765,14 +1764,6 @@ msgid ""
 "current cursor's position"
 msgstr "Najít další výskyt textu od pozice kurzoru"
 
-#: synthDrivers\_espeak.py:268
-msgid "none"
-msgstr "žádny"
-
-#: synthDrivers\silence.py:20
-msgid "No speech,  a template synthesizer"
-msgstr "Ticho, vzorový hlasový výstup"
-
 #: gui\__init__.py:120
 msgid "configuration saved"
 msgstr "nastavení uloženo"
@@ -1927,8 +1918,8 @@ msgstr ""
 "položek do seznamu"
 
 #: gui\__init__.py:227
-msgid "User &dictionaries"
-msgstr "uživatelské &slovníky"
+msgid "Speech &dictionaries"
+msgstr "Řečové &slovníky"
 
 #: gui\__init__.py:228
 msgid "&Preferences"
@@ -2300,56 +2291,65 @@ msgstr "Hlásit čísla řá&dků"
 msgid "Report &alignment"
 msgstr "Hlásit &zarovnání"
 
-#: gui\settingsDialogs.py:605
-msgid "&Dictionary entries"
-msgstr "Položky slovníku"
+#: gui\settingsDialogs.py:595
+msgid "Edit dictionary entry"
+msgstr "Upravit položku slovníku"
 
-#: gui\settingsDialogs.py:608
-msgid "Comment"
-msgstr "komentář"
-
-#: gui\settingsDialogs.py:609
-msgid "Pattern"
-msgstr "aktuální výraz"
-
-#: gui\settingsDialogs.py:610
-msgid "Replacement"
-msgstr "nahradit"
-
-#: gui\settingsDialogs.py:617
-msgid "&Add"
-msgstr "&přidat"
-
-#: gui\settingsDialogs.py:620
-msgid "&edit"
-msgstr "&upravit"
-
-#: gui\settingsDialogs.py:623
-msgid "&Remove"
-msgstr "&odstranit"
-
-#: gui\settingsDialogs.py:646
-msgid "Add an entry"
-msgstr "Přidat položku"
-
-#: gui\settingsDialogs.py:646
-#: gui\settingsDialogs.py:652
-msgid "&Comment"
-msgstr "&Komentář"
-
-#: gui\settingsDialogs.py:646
-#: gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:598
 msgid "&Pattern"
 msgstr "&aktuální výraz"
 
-#: gui\settingsDialogs.py:646
-#: gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:601
 msgid "&Replacement"
 msgstr "&nahradit"
 
-#: gui\settingsDialogs.py:652
-msgid "Edit an entry"
-msgstr "Upravit položku"
+#: gui\settingsDialogs.py:604
+msgid "&Comment"
+msgstr "&Komentář"
+
+#: gui\settingsDialogs.py:607
+msgid "Case &sensitive"
+msgstr "Rozlišovat velká a malá písmena"
+
+#: gui\settingsDialogs.py:609
+msgid "Regular &expression"
+msgstr "Regulární výraz"
+
+#: gui\settingsDialogs.py:631
+msgid "&Dictionary entries"
+msgstr "Položky slovníku"
+
+#: gui\settingsDialogs.py:634
+msgid "Comment"
+msgstr "komentář"
+
+#: gui\settingsDialogs.py:635
+msgid "Pattern"
+msgstr "aktuální výraz"
+
+#: gui\settingsDialogs.py:636
+msgid "Replacement"
+msgstr "nahradit"
+
+#: gui\settingsDialogs.py:637
+msgid "case sensitive"
+msgstr "Rozlišovat velká a malá písmena"
+
+#: gui\settingsDialogs.py:638
+msgid "Regular expression"
+msgstr "Regulární výraz"
+
+#: gui\settingsDialogs.py:645
+msgid "&Add"
+msgstr "&přidat"
+
+#: gui\settingsDialogs.py:648
+msgid "&edit"
+msgstr "&upravit"
+
+#: gui\settingsDialogs.py:651
+msgid "&Remove"
+msgstr "&odstranit"
 
 #: keyboardHandler.py:53
 msgid "caps lock %s"
@@ -2419,6 +2419,14 @@ msgstr "nevybráno %s"
 #: virtualBuffers_old\gecko.py:297
 msgid "not %s"
 msgstr "ne %s"
+
+#: synthDrivers\_espeak.py:268
+msgid "none"
+msgstr "žádny"
+
+#: synthDrivers\silence.py:20
+msgid "No speech,  a template synthesizer"
+msgstr "Ticho, vzorový hlasový výstup"
 
 #: textBuffer.py:206
 msgid "page %d"
@@ -2612,9 +2620,8 @@ msgid "moves to the previous heading"
 msgstr "přesune se na předchozí nadpis"
 
 #: virtualBuffers\__init__.py:257
-#, fuzzy
 msgid "no next table"
-msgstr "žádné další tabulky"
+msgstr "žádná další tabulka"
 
 #: virtualBuffers\__init__.py:258
 #: virtualBuffers_old\__init__.py:357
@@ -2622,9 +2629,8 @@ msgid "moves to the next table"
 msgstr "přesune se na následující tabulku"
 
 #: virtualBuffers\__init__.py:264
-#, fuzzy
 msgid "no previous table"
-msgstr "žádný předchozí odkaz"
+msgstr "žádná předchozí tabulka"
 
 #: virtualBuffers\__init__.py:265
 #: virtualBuffers_old\__init__.py:368
