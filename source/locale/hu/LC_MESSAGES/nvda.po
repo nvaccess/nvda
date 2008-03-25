@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2008-01-02 9:39:52 -0500\n"
+"PO-Revision-Date: 2008-03-25 3:24:52 -0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -47,11 +47,22 @@ msgstr "nem %s"
 msgid "lost focus"
 msgstr "nem találom az aktív elemet"
 
+
+#: NVDAObjects\IAccessible\__init__.py:63
+#: speech.py:698
+msgid "level %s"
+msgstr "színt %s"
+
+
 #: NVDAObjects\IAccessible\__init__.py:67
 #: NVDAObjects\IAccessible\__init__.py:437
 #: NVDAObjects\IAccessible\sysListView32.py:83
 msgid "%s of %s"
 msgstr "%s per %s"
+
+#: NVDAObjects\IAccessible\__init__.py:75
+msgid "contains %s items"
+msgstr "%s elemet tartalmaz"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:132
 #: NVDAObjects\JAB\__init__.py:248
@@ -61,6 +72,62 @@ msgstr "%d per %d"
 #: NVDAObjects\IAccessible\__init__.py:71
 msgid "%s items"
 msgstr "%s elem"
+
+#: NVDAObjects\IAccessible\sysTreeView32.py:150
+msgid "level %d"
+msgstr "fok %d"
+
+#: NVDAObjects\IAccessible\winword.py:179
+msgid "with %s columns and %s rows"
+msgstr "%s oszloppal és %s sorral"
+
+
+#: NVDAObjects\IAccessible\winword.py:296
+#: NVDAObjects\IAccessible\winword.py:312
+#: NVDAObjects\IAccessible\winword.py:328
+#: NVDAObjects\IAccessible\winword.py:344
+msgid "not in table"
+msgstr "nem egy táblázatban áll"
+
+#: NVDAObjects\IAccessible\winword.py:305
+msgid "bottom of column"
+msgstr "oszlop alja"
+
+#: NVDAObjects\IAccessible\winword.py:321
+msgid "top of column"
+msgstr "oszlop teteje "
+
+#: NVDAObjects\IAccessible\winword.py:337
+msgid "end of row"
+msgstr "sór vége"
+
+#: NVDAObjects\IAccessible\winword.py:353
+msgid "beginning of row"
+msgstr "sór eleje"
+
+#: _synthSettingsRing.py:86
+msgid "volume"
+msgstr "hangero"
+
+#: _synthSettingsRing.py:87
+msgid "rate"
+msgstr "sebesség"
+
+#: _synthSettingsRing.py:88
+msgid "pitch"
+msgstr "hangmagasság"
+#: _synthSettingsRing.py:89
+msgid "inflection"
+msgstr "intonáció"
+
+#: _synthSettingsRing.py:90
+msgid "voice"
+msgstr "hangkarakter"
+
+#: _synthSettingsRing.py:91
+msgid "variant"
+msgstr "hangnem"
+
 
 #: NVDAObjects\IAccessible\__init__.py:696
 #: NVDAObjects\IAccessible\sysTreeView32.py:137
@@ -82,6 +149,16 @@ msgstr "képletet tartalmaz"
 #: NVDAObjects\IAccessible\excel.py:97
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "a kurzort egy adott cellára állítja, és kimondja a cella kordinátáit és tartalmát" 
+
+
+#: NVDAObjects\IAccessible\excel.py:100
+msgid "font"
+msgstr "betütípus"
+
+#: NVDAObjects\IAccessible\excel.py:101
+msgid "point"
+msgstr "pont"
+
 
 #: NVDAObjects\__init__.py:527 NVDAObjects\__init__.py:538
 #: NVDAObjects\__init__.py:572 textBuffer.py:364 textBuffer.py:391
@@ -214,6 +291,11 @@ msgstr "az egérmutató ráállítása a navigátorkurzor alatti elemre"
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "Az egérmutatót arra az elemre állítja, amelyen a navigátorkurzor áll."
 
+#: appModules\_default.py:164
+msgid "object has no location"
+msgstr "az elem helye nem található"
+
+
 #: appModules\_default.py:120
 msgid "Move navigator object to mouse"
 msgstr "a navigátorkurzor ráállítása az egérmutató alatti elemre"
@@ -229,9 +311,14 @@ msgstr "A navigátorkurzort az egérmutató alatti elemre állítja."
 msgid "no navigator object"
 msgstr "Nincs elem a navigátorkurzor alatt!"
 
+#: appModules\_default.py:200
+msgid "%s copied to clipboard"
+msgstr "%s vágólapra másolva"
+
+
 #: appModules\_default.py:135
-msgid "Reports the current navigator object"
-msgstr "Kimondja a navigátorkurzor alatti elem nevét."
+msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
+msgstr "Kimondja a navigátorkurzor alatti elem nevét vagy ha a parancs háromszor gyorsan le van nyomva, a navigátor elem nevét és értékét a vágólapra másolja"
 
 #: appModules\_default.py:143
 msgid "No location information for navigator object"
@@ -289,9 +376,33 @@ msgstr "Ennek az elemnek nincs gyermekeleme."
 msgid "Sets the navigator object to the first child object to the one it is currently on"
 msgstr "Rááll a navigátorkurzor alatti elem elsõ gyermekelemére."
 
+#: appModules\_default.py:298
+msgid "end of flow"
+msgstr "folyam vége"
+
+#: appModules\_default.py:299
+msgid "Sets the navigator object to the object this object flows to."
+msgstr "a navigátor kurzort ennek az elemnek folyamára állítja"
+
+
+#: appModules\_default.py:321
+msgid "Beginning of flow"
+msgstr "folyam eleje"
+
+#: appModules\_default.py:322
+msgid "Sets the navigator object to the object this object flows from."
+msgstr "a navigátor kurzort ennek az elemnek folyam elejére állítja"
+
+
 #: appModules\_default.py:215
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "A navigátorkurzor alatti elemen végrehajtja az alapértelmezett parancsot. Pl: lenyomja, ha az egy gomb."
+
+
+#: appModules\_default.py:341
+msgid "inside"
+msgstr "belül"
+
 
 #: appModules\_default.py:228
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
@@ -392,6 +503,10 @@ msgstr "Elõhozza az nvda fõablakát."
 #: appModules\_default.py:336
 msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "Az átnézõkurzortól a szöveg végéig olvas, és az átnézõkurzort is mozgatja közben."
+
+#: appModules\_default.py:551
+msgid "reads from navigator object "
+msgstr "a navigátor kurzortól olvas"
 
 #: appModules\_default.py:347
 msgid "reads from system caret up to end of text, moving the caret as it goes"
@@ -513,6 +628,59 @@ msgstr "a következõ billentyûparancsot figyelmen kívül hagyom"
 #: appModules\_default.py:479
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "A következõ billentyûparancsot nem az NVDA hajtja végre, hanem az aktív alkalmazás." 
+
+#: appModules\_default.py:709
+msgid "Currently running application is %s."
+msgstr "a jelenleg aktív alkalmazás neve %s"
+
+#: appModules\_default.py:714
+msgid "default module"
+msgstr "alapértelmezett modul"
+
+#: appModules\_default.py:715
+msgid "and currently loaded module is %s"
+msgstr "és a jelenleg betöltött modul neve %s"
+
+#: appModules\_default.py:716
+msgid "Speaks filename of the active application along with name of the currently loaded appmodule"
+msgstr "bejelenti az aktív alkalmazás és betöltött appmodul névét"
+
+#: appModules\_default.py:720
+msgid "Shows NVDA general settings dialog"
+msgstr "az NVDA álltalános beállitásait megjeleniti"
+
+#: appModules\_default.py:724
+msgid "Shows NVDA synthesizer dialog"
+msgstr "az NVDA szintetizátor beállításait megjeleniti"
+
+#: appModules\_default.py:728
+msgid "Shows NVDA voice settings dialog"
+msgstr "az NVDA hang beállításait megjeleniti"
+
+#: appModules\_default.py:732
+msgid "Shows NVDA keyboard settings dialog"
+msgstr "az NVDA billentyuzet beállításait megjeleniti"
+
+#: appModules\_default.py:736
+msgid "Shows NVDA mouse settings dialog"
+msgstr "az NVDA egér beállításait megjeleniti"
+
+#: appModules\_default.py:740
+msgid "Shows NVDA object presentation settings dialog"
+msgstr "az NVDA objektum jelzés beállítasait megjeleniti"
+
+#: appModules\_default.py:744
+msgid "Shows NVDA virtual buffers settings dialog"
+msgstr "az NVDA virtuális buffer beállításait megjeleniti"
+
+#: appModules\_default.py:753
+msgid "Saves current NVDA configuration to file"
+msgstr "lementi a jelen konfigurációt"
+
+#: appModules\_default.py:757
+msgid "loads NVDA configuration from file, overriding current changes"
+msgstr "az NVDA konfiguráció fájlt betölti, minden jelen változás felülírásával"
+
 
 #: appModules\msimn.py:21
 msgid "Attachments"
@@ -714,6 +882,28 @@ msgstr "végkapcsos"
 msgid "tilda"
 msgstr "tilde"
 
+#: characterSymbols.py:56
+#: virtualBuffers\MSHTML.py:253
+#: virtualBuffers\MSHTML.py:260
+#: virtualBuffers\adobe.py:263
+#: virtualBuffers\adobe.py:274
+#: virtualBuffers\gecko.py:256
+#: virtualBuffers\gecko.py:267
+#: virtualBuffers_new\__init__.py:77
+#: virtualBuffers_old\MSHTML.py:253
+#: virtualBuffers_old\MSHTML.py:260
+#: virtualBuffers_old\adobe.py:263
+#: virtualBuffers_old\adobe.py:274
+#: virtualBuffers_old\gecko.py:256
+#: virtualBuffers_old\gecko.py:267
+msgid "bullet"
+msgstr "pont"
+
+#: characterSymbols.py:57
+msgid "dot dot dot"
+msgstr "pont pont pont"
+
+
 #: controlTypes.py:157
 msgid "unknown object"
 msgstr "ismeretlen elem"
@@ -856,7 +1046,7 @@ msgstr "elválasztó"
 
 #: controlTypes.py:196
 msgid "form"
-msgstr "ûrlap"
+msgstr "ürlap"
 
 #: controlTypes.py:197
 msgid "heading"
@@ -1298,6 +1488,31 @@ msgstr "védett"
 msgid "required"
 msgstr "szükséges"
 
+
+#: controlTypes.py:318
+msgid "defunct"
+msgstr "defunct"
+
+#: controlTypes.py:319
+msgid "invalid entry"
+msgstr "érvénytelen bejegyzés"
+
+#: controlTypes.py:320
+msgid "modal"
+msgstr "modál"
+
+#: controlTypes.py:321
+msgid "has auto complete"
+msgstr "Automatikus kiegészítés"
+
+#: controlTypes.py:322
+msgid "multi line"
+msgstr "több soros terület"
+
+#: controlTypes.py:323
+msgid "iconified"
+msgstr "ikonositott"
+
 #: core.py:45
 msgid "configuration applied"
 msgstr "A beállítások életbe léptek." 
@@ -1310,194 +1525,21 @@ msgstr "A rendszer betöltése folyamatban, kérem várjon..."
 msgid "NVDA started"
 msgstr "az NVDA elindult"
 
-#: gui\__init__.py:23
-msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt speech\n"
-"insert+1 - turns keyboard help on and off\n"
-"insert+upArrow - reports the object with focus\n"
-"insert+downArrow - starts sayAll (press control or any other key to stop)\n"
-"insert+t speak title\n"
-"insert+f12 - report time and date\n"
-"insert+2 - turn speaking of typed characters on and off\n"
-"insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
-"insert+pageUp - increase rate of speech\n"
-"insert+pageDown - decrease rate of speech\n"
-"insert+p - turn reading of punctuation on and off\n"
-"insert+s - toggle speech modes (off, talk and beeps)\n"
-"insert+m - turn  reading of objects under the mouse on and off\n"
-"insert+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"insert+numpadAdd - Where am I\n"
-"insert+numpad5 - current object\n"
-"shift+insert+numpad5 - dimensions and location of current object\n"
-"insert+numpad8 - parent object\n"
-"insert+numpad4 - previous object\n"
-"insert+numpad6 - next object\n"
-"insert+numpad2 - first child object\n"
-"insert+numpadMinus - move to focus object\n"
-" insert+end - move to statusbar\n"
-"insert+numpadDivide - Move mouse to current navigator object\n"
-"insert+numpadMultiply - move to mouse\n"
-"insert+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
-msgstr ""
+#: core.py:137
+msgid "You can press insert+n to activate the NVDA menu at any time"
+msgstr "Bármikor az inzert + n paranccsal az NVDA menüt aktiválhatja"
 
-"NVDA gyors felhasználói útmutató. \n"
-
-"NVDA (%(description)s)\n"
-"verzió: %(version)s\n"
-"honlap: %(url)s\n"
-"hibákat és ötleteket küldje a : %(maintainer)s <%"
-"(maintainer_email)s> e-mail címre.\n"
-"\n"
-"--- copyright információ ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"ez a NVDA fõablaka. Itt módosíthatja a program beállításait, és innen léphet ki a programból."
-"\n"
-"Az ablakot az Insert-m kombinációval bármikor aktivizálhatja."
-
-"Ha ki akar lépni ebböl az ablakból, anélkül, hogy az nvda-t bezárná, akkor használja az alt+ f4 parancsot."
-"\n"
-"Ha teljesen kiakarna  lépni az NVDa alkalmazásból, akkor vagy az inzert +Q parancsot használja, vagy nyomja meg az alt gombot, és a nyilakkal válassza ki a kilépés parancsot."
-
-"a program kilépés elõtt egy párbeszédpanelben megkérdezi, hogy bisztos e ebben. Itt vagy az Ok gombbal kiléphet, vagy a" 
-"mégse gombbal vissza tud térni a windows rendszerbe."
-"\n"
-"Ha módosítani szeretne az NVDA beállításain (pl. hangkarakter, beszédsebesség, segítõ buborékok felolvasásának" 
-"engedélyezése stb.), akkor nyomja meg az Alt gombot és a jobbra-balra nyilakkal keresse meg a Beállítások menüt. Ezután"
-" a le-fel nyilakkal válassza ki a módosítandó beállítást."
-"\n"
-"A beállítások nagy részét párbeszédpanelekben változtathatja meg. Egyes beállitások, mint a sebesség megváltoztatása," 
-"azonnal életbe lépnek.  Néhány esetben újra kell inditani az NVDA programot ahhoz, hogy egy új" 
-"beállítás érvénybe lépjen. A Kontrol +S billentyûvel tudja menteni a beálitásokat, ez a parancs az NVDA ablakában bárhol"
-"mûködik, és az NVDA menüjében is megtalálható. Sõt, az is lehetséges, hogy az NVDA kilépéskor " 
-"automatikusan mentse a beállításokat, ha ezt az opciót bekapcsoljuk. \n"
-"\n"
-"Az alábbiakban egy pár hasznos NVDA billentyûparancsot sorolunk fel. \n"
-"\n"
-
-"Álltalános parancsok: \n"
-"Kontrol - beszéd megszakítása \n"
-"Inzert 1 - billentyûzet segítség mód ki/bekapcsolása. \n"
-"Inzert felnyíl: Az aktív elem  kimondása. \n"
-" inzert lenyíl: folyamatos felolvasás: a NVDA elkezdi olvasni a képernyõt. A kontrol billentyûvel ezt meg lehet szakítani. \n"
-"Inzert + t - Az aktuális ablak címének kimondása. \n"
-"Inzert+b - felolvassa az aktuális ablak teljes tartalmát. \n"
-"Inzert + f12 - Az idõ és dátum kimondása. \n"
-"Inzert + 2 - gépeléskor a karakterenkénti olvasás ki/bekapcsolása. \n"
-"Inzert +3 - gépeléskor a szavankénti olvasási mód ki, vagy bekapcsoása. \n"
-"inzert +4 - parancsbillentyûk kimondásának ki- vagy bekapcsolása.\n" 
-"inzert +pageup - beszéd gyorsítása. \n"
-"Inzert +pagedown - beszéd lassítása. \n"
-"Inzert +P -  írásjelekk kimondásának engedélyezése/tiltása. \n"
-
-"Inzert +S -  Beszéd mód váltása (Nincs, normál, És hangjel) \n"
-
-"Inzert +M -  Az  Egérmutató alatt lévõ elemek felolvasását ki/bekapcsolja. \n" 
-"Inzert +F - betûtípusjellemzõk  kimondása (egy dokumentumban) \n"
-
-"Vezérlõelemek közti navigálás"
-" \n"
-"inzert + numerikus  plusz - hol vagyok a képernyõn? \n"
-"inzert + 5 - elem típus kimondása. \n"
-"inzert + shift + numerikus 5 - elem méretének és helyének lekérdezése. \n" 
-"inzert + numerikus 8 - ráállás a szülõ elemre \n" 
-"inzert +numerikus 2 - ráállás az elsõ  gyermekelemre. \n" 
-"inzert +numerikus 4 - elozo  elem. \n"
-"inzert +numerikus 6 - következo elem. \n"
-"inzert +numerikus mínusz - az aktív elemre áll \n"
-
-"inzert + end - rááll az aktív ablak állapotsorára \n"
-"inzert +numerikus csillag - az egérmutató alatti elemre áll \n"
-"Inzert+numerikus per - az egérmutatót az aktuális elemre viszi \n"
-"inzert +numerikus enter - az aktuális elem aktiválása. \n"
-"\n"
-
-"Az elõzõ parancsokkal kiválasztott elem tartalmának átnézése \n"
-
-"shift + numerikus 7 - elsõ sor. \n"
-"numerikus 7 - elõzõ sor \n"
-"numpad 8 - az aktuális sor felolvasása. \n"
-"numerikus 9 - következö sor. \n"
-"shift + numerikus 9 - utolsó sor \n"
-
-
-"Numerikus 4 - elozo  szó \n"
-"Numpad 5 - Aktuális szó felolvasása \n"
-"Numerikus 6 - következö szó \n"
-"Shift + numerikus 1 - sor eleje \n"
-"Numerikus 1 - elozo  karakter \n"
-"numerikus 2 - aktuális karakter felolvasása \n"
-"Numerikus 3 - következõ karakter \n"
-"shift +numerikus 3 - sor vége \n"
-"\n"
-
-"vegyes parancsok"
-"\n"
-"inzert + shift- b - az akkumulátor állapotának lekérdezése.\n" 
-
-"kontrol+ f - szöveg keresés, internet explorer és mozilla firefox böngészökben.  \n"
-"inzert +f2 - billentyûparancs figyelmen kívül hagyása. A NVDA átadja azt a billentyûkombinációt, amit ezután lenyom,  az"
-"aktív alkalmazásnak, és nem hajtja végre. Hasznos amikor egy olyan billentyûparancsot szeretne használni, amit a nvda már használ."
-
-"\n"
-
-"köszönjük, hogy az NVDA-t választotta képernyõolvasójának!" 
-
-#: gui\__init__.py:117
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "lementett konfiguráció &visszaállitása\tctrl+r"
+#: gui\__init__.py:251
+msgid "&Revert to saved configuration"
+msgstr "lementett konfiguráció &visszaállitása"
 
 #: gui\__init__.py:117
 msgid "Reset all setting back to nvda.ini"
 msgstr "az nvda.iniben tárolt beállitások visszaállitása"
 
-#: source\gui\__init__.py:141
-msgid "&Save configuration\tCtrl+S"
-msgstr "konfiguráció &mentése\tcontrol+s"
+#: source\gui\__init__.py:253
+msgid "&Save configuration"
+msgstr "konfiguráció &mentése"
 
 #: gui\__init__.py:141
 msgid "Write the current configuration to nvda.ini"
@@ -1522,11 +1564,15 @@ msgstr "párbeszédpanel ahol a beszéd kiejtési szótárt betudja állitani új szavak
 
 #: gui\__init__.py:151
 msgid "&Temporary dictionary..."
-msgstr "&ideiglenes szótár"
+msgstr "&ideiglenes szótár..."
+
+#: gui\__init__.py:225
+msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
+msgstr "párbeszédpanel ahol az ideiglenes kiejtési szótárt betudja állitani új szavak hozzáadásával"
 
 #: gui\__init__.py:156
-msgid "User &dictionaries"
-msgstr "Felhasználói & szótárak"
+msgid "speech &dictionaries"
+msgstr "beszéd & szótárak"
 
 
 #: gui\__init__.py:143
@@ -1542,8 +1588,8 @@ msgid "&NVDA"
 msgstr "&NVDA"
 
 #: gui\__init__.py:149
-msgid "&General settings...\tCtrl+Shift+G"
-msgstr "&álltalános opciók...\tCtrl+shift+g"
+msgid "&General settings..."
+msgstr "&álltalános opciók..."
 
 #: gui\__init__.py:149
 msgid "Change user interface settings"
@@ -1554,36 +1600,36 @@ msgid " the synthesizer to use"
 msgstr "a használt szintetizátor"
 
 #: gui\__init__.py:152
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "&szintetizátor...\tCtrl+shift+s"
+msgid "&Synthesizer..."
+msgstr "&szintetizátor..."
 
 #: gui\__init__.py:155
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "&beszéd ...\tKontrol+shift+v"
+msgid "&Voice settings..."
+msgstr "&beszéd ..."
 
 #: gui\__init__.py:155
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "a hangkarakter, a beszédsebesség, a hangmagasság és a hangerõ beállitása"
 
 #: gui\__init__.py:158
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "billentyû&zet...\tCtrl+K"
+msgid "&Keyboard Settings..."
+msgstr "billentyû&zet..."
 
 #: gui\__init__.py:158
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "A billentyûkiosztás konfigurálása, gépeléskor karakterenkénti, vagy szavankénti olvasás választása, parancsbillentyûk kimondásának engedélyezése"
 
 #: gui\__init__.py:161
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "&egér beállitások...\tCtrl+m"
+msgid "&Mouse settings..."
+msgstr "&egér beállitások..."
 
 #: gui\__init__.py:161
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "az egérmutató alakjának, és a mutató alatti elem bemondásának beállítása"
 
 #: gui\__init__.py:164
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "&objektumok jelzése...\tCtrl+shift+o"
+msgid "&Object presentation..."
+msgstr "&objektumok jelzése..."
 
 #: gui\__init__.py:164
 msgid "Change reporting of objects"
@@ -1594,28 +1640,49 @@ msgid "Change virtual buffers specific settings"
 msgstr "a virtuális ablakokkal kapcsolatos beállítások elvégzése"
 
 #: gui\__init__.py:167
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "virtuálisa &blakok ...\tCtrl+shift+b"
+msgid "Virtual &buffers..."
+msgstr "virtuálisa &blakok ..."
 
 #: gui\__init__.py:170
 msgid "Change Settings of document properties"
 msgstr "a dokumentumtulajdonságok beállításai"
 
 #: gui\__init__.py:170
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "dokumentum &formázás ...\tCtrl+shift+f" 
+msgid "Document &formatting..."
+msgstr "dokumentum &formázás ..." 
 
 #: gui\__init__.py:172 gui\__init__.py:173
 msgid "&Preferences"
 msgstr "&beállitások"
 
-#: gui\__init__.py:176
-msgid "NVDA homepage"
-msgstr "az NVDA honlapja"
+#: gui\__init__.py:231
+msgid "User guide"
+msgstr "felhasználói kézikönyv"
+
+#: gui\__init__.py:233
+msgid "Key Command Quick Reference"
+msgstr "fontos parancsok listája"
+
+#: gui\__init__.py:235
+msgid "What's &new"
+msgstr "új&donságok"
+
 
 #: gui\__init__.py:176
-msgid "Opens NVDA homepage in the default browser"
-msgstr "Megnyitja az NVDA honlapját az alapértelmezett böngészõben."
+msgid "homepage"
+msgstr "az NVDA fõoldala"
+
+#: gui\__init__.py:242
+msgid "Web resources"
+msgstr "internetes forrrások"
+
+#: gui\__init__.py:243
+msgid "License"
+msgstr "licensszerzödés"
+
+#: gui\__init__.py:245
+msgid "Contributors"
+
 
 #: gui\__init__.py:179
 msgid "NVDA wiki"
@@ -1651,8 +1718,10 @@ msgid "Could not save configuration - probably read only file system"
 msgstr" A beállításokat nem lehetett lementeni - lehet, hogy írásvédett fájl rendszert használ."
 
 #: gui\__init__.py:235
-msgid "Press OK to quit NVDA"
-msgstr "Az OK gombbal kiléphet a nvda programból."
+
+msgid "Are you sure you want to quit NVDA?"
+msgstr "biztos, hogy kilép az NVDA programból?"
+
 
 #: gui\__init__.py:251
 msgid "General settings"
@@ -1733,6 +1802,10 @@ msgstr "a beállítások automatikus mentése &kilépéskor"
 #: gui\settingsDialogs.py:44
 msgid "&Warn before exiting NVDA"
 msgstr "&Figyelmeztetõ üzenet megjelenítése kilépés elõtt"
+
+#: gui\settingsDialogs.py:122
+msgid "L&ogging level"
+msgstr "nap&lózás színt"
 
 #: gui\settingsDialogs.py:62
 msgid "Error in %s language file"
@@ -1859,6 +1932,10 @@ msgstr "objektum &gyorsbillentyûk bemondása"
 #: gui\settingsDialogs.py:347
 msgid "Report object &position information"
 msgstr "&Objektumok heyének bemondása"
+
+#: gui\settingsDialogs.py:411
+msgid "Report object &descriptions"
+msgstr "objektum &magyarázat bejelentése"
 
 #: gui\settingsDialogs.py:350
 msgid "Report object &group names"
@@ -2073,7 +2150,7 @@ msgstr "táblázat vége"
 
 #: textBuffer.py:225
 msgid "table with %d columns and %d rows"
-msgstr "%d sorból és %d oszlopból álló táblázat"
+msgstr "%d oszlopból és %d sórból álló táblázat"
 
 #: textBuffer.py:231
 msgid "row %d"
@@ -2208,6 +2285,134 @@ msgstr "A virtuális ablakban lévõ dokumentumban egyet elõrelapoz"
 #: virtualBuffers\__init__.py:293
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivizálja az aktuális elemet a virtuális ablakban."
+
+#: virtualBuffers\__init__.py:196
+msgid "Refreshed"
+msgstr "felfrissítve"
+
+#: virtualBuffers\__init__.py:201
+#: virtualBuffers_new\__init__.py:170
+msgid "use screen layout %s"
+msgstr "képernyo kiosztás %s használata"
+
+#: virtualBuffers_new\__init__.py:194
+msgid "no next heading"
+msgstr "nincs következo címsor"
+
+#: virtualBuffers\__init__.py:244
+#: virtualBuffers_new\__init__.py:195
+#: virtualBuffers_old\__init__.py:313
+msgid "moves to the next heading"
+msgstr "átlép a következo címsorra"
+
+#: virtualBuffers\__init__.py:250
+#: virtualBuffers_new\__init__.py:199
+msgid "no previous heading"
+msgstr "nincs elözo címsor"
+
+#: virtualBuffers\__init__.py:251
+#: virtualBuffers_new\__init__.py:200
+#: virtualBuffers_old\__init__.py:324
+msgid "moves to the previous heading"
+msgstr "átlép az elözo csímsorra"
+
+#: virtualBuffers\__init__.py:257
+msgid "no next table"
+msgstr "nincs következo táblázat"
+
+#: virtualBuffers\__init__.py:258
+#: virtualBuffers_old\__init__.py:357
+msgid "moves to the next table"
+msgstr "átlép a következo táblázatra"
+
+#: virtualBuffers\__init__.py:264
+msgid "no previous table"
+msgstr "nincs elozo táblázat"
+
+#: virtualBuffers\__init__.py:265
+#: virtualBuffers_old\__init__.py:368
+msgid "moves to the previous table"
+msgstr "átlép az elozo táblázatra"
+
+#: virtualBuffers\__init__.py:271
+#: virtualBuffers_new\__init__.py:204
+msgid "no next link"
+msgstr "nincs következo hivatkozás"
+
+#: virtualBuffers\__init__.py:272
+#: virtualBuffers_new\__init__.py:205
+#: virtualBuffers_old\__init__.py:379
+msgid "moves to the next link"
+msgstr "átlép a következo hivatkozásra"
+
+#: virtualBuffers\__init__.py:278
+#: virtualBuffers_new\__init__.py:209
+msgid "no previous link"
+msgstr "nincs elozo hivatkozás"
+
+#: virtualBuffers\__init__.py:279
+#: virtualBuffers_new\__init__.py:210
+#: virtualBuffers_old\__init__.py:390
+msgid "moves to the previous link"
+msgstr "nincs következo meglátogatott hivatkozás"
+
+
+#: virtualBuffers\__init__.py:286
+#: virtualBuffers_new\__init__.py:215
+msgid "moves to the next visited link"
+msgstr "átlép a kovetkezo meglátogatott hivatkozásra"
+
+
+#: virtualBuffers\__init__.py:292
+#: virtualBuffers_new\__init__.py:219
+msgid "no previous visited link"
+msgstr "nincs elozo meglátogatott hivatkozás"
+
+
+#: virtualBuffers\__init__.py:293
+#: virtualBuffers_new\__init__.py:220
+msgid "moves to the previous visited link"
+msgstr "átlép az elozo meglátogatott hivatkozásra"
+
+#: virtualBuffers\__init__.py:313
+#: virtualBuffers_new\__init__.py:234
+msgid "no next form field"
+msgstr "nincsen következo ürlap"
+
+#: virtualBuffers\__init__.py:314
+#: virtualBuffers\__init__.py:321
+#: virtualBuffers_new\__init__.py:235
+#: virtualBuffers_new\__init__.py:240
+msgid "moves to the next form field"
+msgstr "átlép a következo ürlap mezore"
+
+#: virtualBuffers\__init__.py:320
+#: virtualBuffers_new\__init__.py:239
+msgid "no previous form field"
+msgstr "nincsen elozo ürlap mezo"
+#: virtualBuffers\__init__.py:356
+msgid "displays a list of links"
+msgstr "megjelenít egy listát az oldalon lévo hivatkozásokkal"
+
+#: virtualBuffers\adobe.py:312
+#: virtualBuffers_old\adobe.py:312
+msgid "protected %s"
+msgstr "védett %s"
+#: virtualBuffers_new\__init__.py:132
+msgid "Loading document..."
+msgstr "a dokument betöltése folyamatban..."
+
+#: virtualBuffers_new\__init__.py:137
+msgid "Done"
+msgstr "kész"
+
+#: virtualBuffers_old\__init__.py:271
+msgid "moves one page up in the virtual buffer's current document"
+msgstr "egy oldalt fellép a virtuális buffer jelen dokumentumában"
+
+#: virtualBuffers_old\__init__.py:286
+msgid "moves one page down in the virtual buffer's current document"
+msgstr "lelép egy oldalt a virtuális buffer aktív dokumentumában"
 
 #: virtualBuffers\__init__.py:316 virtualBuffers\__init__.py:327
 msgid "no more headings"
