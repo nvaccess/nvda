@@ -43,7 +43,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return text
 
 	def _getLineOffsets(self,offset):
-		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.obj._useScreenLayout)
+		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"])
 
 	def _getParagraphOffsets(self,offset):
 		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
@@ -113,7 +113,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
-		self._useScreenLayout=True
 		self.VBufHandle=None
 
 	def loadBuffer(self):
@@ -196,8 +195,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		speech.speakMessage(_("Refreshed"))
 
 	def script_toggleScreenLayout(self,keyPress,nextScript):
-		self._useScreenLayout=not self._useScreenLayout
-		onOff=_("on") if self._useScreenLayout else _("off")
+		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
+		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
 
 	def _searchableAttributesForNodeType(self,nodeType):

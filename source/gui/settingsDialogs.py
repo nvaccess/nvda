@@ -470,6 +470,10 @@ class VirtualBuffersDialog(SettingsDialog):
 		self.pageLinesEdit=wx.TextCtrl(self,wx.NewId())
 		self.pageLinesEdit.SetValue(str(config.conf["virtualBuffers"]["linesPerPage"]))
 		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
+		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use &screen layout (when supported)"))
+		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
+		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+
 		self.presentationfocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &virtual presentation on focus changes"))
 		self.presentationfocusCheckBox.SetValue(config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"])
 		settingsSizer.Add(self.presentationfocusCheckBox,border=10,flag=wx.BOTTOM)
@@ -526,6 +530,7 @@ class VirtualBuffersDialog(SettingsDialog):
 			newPageLines=0
 		if newPageLines >=5 and newPageLines <=150:
 			config.conf["virtualBuffers"]["linesPerPage"]=newPageLines
+		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=self.presentationfocusCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["updateContentDynamically"]=self.updateCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportLinks"]=self.linksCheckBox.IsChecked()

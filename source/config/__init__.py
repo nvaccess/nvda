@@ -75,6 +75,7 @@ outputDevice = integer(default=-1,min=-1)
 [virtualBuffers]
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
+	useScreenLayout = boolean(default=True)
 	reportVirtualPresentationOnFocusChanges = boolean(default=true)
 	updateContentDynamically = boolean(default=true)
 	reportLinks = boolean(default=true)
