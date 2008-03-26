@@ -29,6 +29,8 @@ class CursorManager(baseObject.scriptableObject):
 	@type selection: L{textHandler.TextInfo}
 	"""
 
+	_lastFindText=""
+
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
 		self.initCursorManager()
@@ -39,7 +41,6 @@ class CursorManager(baseObject.scriptableObject):
 		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
 		"""
 		self._lastSelectionMovedStart=False
-		self._lastFindText=""
 		self._inFind=False
 		self.bindToStandardKeys()
 
@@ -95,7 +96,7 @@ class CursorManager(baseObject.scriptableObject):
 		else:
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
 			errorDialog.run()
-		self._lastFindText=text
+		CursorManager._lastFindText=text
 		self._inFind=False
 
 	def script_find(self,keyPress,nextScript): 
