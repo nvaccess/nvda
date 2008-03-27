@@ -36,7 +36,14 @@ class appModule(appModuleHandler.appModule):
 		speech.cancelSpeech()
 
 	def event_switchEnd(self,obj,nextHandler):
+		oldFocus = api.getFocusObject()
+		api.processPendingEvents()
+		if oldFocus != api.getFocusObject():
+			return
+		# Task switcher is gone, but no foreground or focus event was fired.
+		# We must therefore find and restore the correct focus.
 		speech.cancelSpeech()
+		IAccessibleHandler.focus_manageEvent(api.findObjectWithFocus())
 
 	def script_keyboardHelp(self,keyPress,nextScript):
 		if not globalVars.keyboardHelp:

@@ -647,7 +647,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		if eventName=="destroy":
 			return
 		#Ignore events with invalid window handles
-		if not window:
+		if not window or eventName == "switchEnd":
 			window=winUser.getDesktopWindow()
 		elif not winUser.isWindow(window):
 			return
