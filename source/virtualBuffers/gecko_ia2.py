@@ -119,6 +119,10 @@ class Gecko_ia2(VirtualBuffer):
 				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
+		else:
+			# The virtual buffer caret was already at the focused node, so we don't speak it.
+			# However, we still want to update the speech property cache so that property changes will be spoken properly.
+			speech.speakObject(obj,speech.REASON_ONLYCACHE)
 
 	def _caretMovedToField(self,docHandle,ID):
 		try:

@@ -257,7 +257,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
 		allowProperties["positionString"]=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
- 	if reason not in (REASON_SAYALL,REASON_CARET,REASON_MOUSE) and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
+ 	if reason not in (REASON_SAYALL,REASON_CARET,REASON_MOUSE,REASON_ONLYCACHE) and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
 		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 		if not info.isCollapsed:
 			speakMessage(_("selected %s")%info.text)
