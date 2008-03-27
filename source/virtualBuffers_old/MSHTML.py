@@ -20,6 +20,7 @@ import controlTypes
 import NVDAObjects
 import NVDAObjects.IAccessible
 from . import virtualBuffer
+import virtualBufferHandler
 
 
 class MSHTML(virtualBuffer):
@@ -113,8 +114,9 @@ class MSHTML(virtualBuffer):
 			return
 		nodeName=domNode.nodeName
 		if nodeName in ["SELECT","TEXTAREA"]:
-			if not api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			if not self.passThrough:
+				self.passThrough=True
+				virtualBufferHandler.reportPassThrough(self)
 			domNode.focus()
 		elif nodeName =="INPUT":
 			inputType=domNode.getAttribute('type')
@@ -122,8 +124,9 @@ class MSHTML(virtualBuffer):
 				domNode.click()
 				speech.speakMessage("%s"%(IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED) if domNode.checked else _("not %s")%IAccessibleHandler.getStateText(IAccessibleHandler.STATE_SYSTEM_CHECKED)))
 			elif inputType in ["file","text","password"]:
-				if not api.isVirtualBufferPassThrough():
-					api.toggleVirtualBufferPassThrough()
+				if not self.passThrough:
+					self.passThrough=True
+					virtualBufferHandler.reportPassThrough(self)
 				domNode.focus()
 			elif inputType in ["button","image","reset","submit"]:
 				domNode.click()
@@ -139,8 +142,9 @@ class MSHTML(virtualBuffer):
 			return
 		if winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,api.getFocusObject().windowHandle):
 			speech.cancelSpeech()
-			if api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			if self.passThrough:
+				self.passThrough=False
+				virtualBufferHandler.reportPassThrough(self)
 			speech.speakMessage(_("loading document %s")%self.dom.title+"...")
 		self.resetBuffer()
 		self.fillBuffer(self.dom)

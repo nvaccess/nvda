@@ -18,6 +18,7 @@ import controlTypes
 import NVDAObjects
 import NVDAObjects.IAccessible
 from . import virtualBuffer
+import virtualBufferHandler
 
 NAVRELATION_EMBEDS=0x1009 
 
@@ -69,7 +70,7 @@ class Gecko(virtualBuffer):
 		r=self.getFullRangeFromID(ID)
 		if ((self.text_reviewPosition<r[0]) or (self.text_reviewPosition>=r[1])):
 			self.text_reviewPosition=r[0]
-		if not api.isVirtualBufferPassThrough() and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
+		if not self.passThrough and config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]:
 			self.reportLabel(self.getIDFromPosition(self.text_reviewPosition))
 			self.text_reportNewPresentation(self.text_reviewPosition)
 			speech.speakText(self.text_getText(r[0],r[1]))
@@ -135,8 +136,9 @@ class Gecko(virtualBuffer):
 		role=getMozillaRole(obj.IAccessibleRole)
 		states=obj.IAccessibleStates
 		if (role==IAccessibleHandler.ROLE_SYSTEM_TEXT and not states&IAccessibleHandler.STATE_SYSTEM_READONLY) or role==IAccessibleHandler.ROLE_SYSTEM_COMBOBOX:
-			if not api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			if not self.passThrough:
+				self.passThrough=True
+				virtualBufferHandler.reportPassThrough(self)
 			obj.setFocus()
 		else:
 			obj.doDefaultAction()
@@ -163,8 +165,9 @@ class Gecko(virtualBuffer):
 		global lastLoadTime
 		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()
-			if api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			if self.passThrough:
+				self.passThrough=False
+				virtualBufferHandler.reportPassThrough(self)
 			speech.speakMessage(_("loading document %s")%self.rootNVDAObject.name+"...")
 		self.resetBuffer()
 		globalVars.log.debug("virtualBuffers.gecko.loadDocument: load start") 

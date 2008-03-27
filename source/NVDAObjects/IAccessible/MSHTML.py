@@ -21,6 +21,7 @@ import speech
 import controlTypes
 from . import IAccessible
 import NVDAObjects
+import virtualBufferHandler
 
 lastMSHTMLEditGainFocusTimeStamp=0
 
@@ -179,8 +180,10 @@ class MSHTML(IAccessible):
 			self.TextInfo=MSHTMLTextInfo
 			self.role=controlTypes.ROLE_EDITABLETEXT
 		else:
-			if api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			vbuf=self.virtualBuffer
+			if vbuf and vbuf.passThrough:
+				vbuf.passThrough=True
+				virtualBufferHandler.reportPassThrough(vbuf)
 		IAccessible.event_gainFocus(self)
 
 	def reportFocus(self):

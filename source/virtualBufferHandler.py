@@ -14,6 +14,7 @@ import NVDAObjects.IAccessible
 import NVDAObjects.IAccessible.IA2
 import controlTypes
 import NVDAObjects.window
+import speech
 
 runningTable=set()
 
@@ -67,3 +68,13 @@ def killVirtualBuffer(virtualBufferObject):
 		return
 	if hasattr(virtualBufferObject,'unloadBuffer'):
 		virtualBufferObject.unloadBuffer()
+
+def reportPassThrough(virtualBuffer):
+	"""Speaks the state of virtualBufferPassThroughMode if it has changed.
+	@param virtualBuffer: The current virtual buffer.
+	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
+	"""
+	if virtualBuffer.passThrough != reportPassThrough.last:
+		speech.speakMessage(_("virtual buffer pass through") + " " + (_("on") if virtualBuffer.passThrough else _("off")))
+		reportPassThrough.last = virtualBuffer.passThrough
+reportPassThrough.last = False

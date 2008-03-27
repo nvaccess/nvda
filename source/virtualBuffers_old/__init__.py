@@ -49,6 +49,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 		self._lastReportedIDList=[]
 		self._lastFindText=""
 		self._findInProgress=False
+		self.passThrough=False
 
 	def getIDFromPosition(self,pos):
 		IDs=self._IDs

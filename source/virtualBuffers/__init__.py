@@ -17,6 +17,7 @@ import config
 import api
 import cursorManager
 from gui import scriptUI
+import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -114,13 +115,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
+		self.passThrough=False
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
 		focusObject=api.getFocusObject()
 		if focusObject==self.rootNVDAObject:
-			if api.isVirtualBufferPassThrough():
-				api.toggleVirtualBufferPassThrough()
+			if self.passThrough:
+				self.passThrough=False
+				virtualBufferHandler.reportPassThrough(self)
 			speech.cancelSpeech()
 			if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])

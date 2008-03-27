@@ -115,6 +115,8 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			if virtualBufferObject:
 				obj.virtualBuffer=virtualBufferObject
 				break
+	if obj.virtualBuffer:
+		virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
 	if globalVars.log.getEffectiveLevel()<=logging.INFO:
 		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
@@ -174,24 +176,6 @@ def isTypingProtected():
 		return True
 	else:
 		return False
-
-def toggleVirtualBufferPassThrough():
-	"""Toggles virtualBufferPassThroughMode on or off. This mode is so that virtualBuffers can either capture, or ignore, key presses.
-This function also speaks the state of the mode as it changes.
-"""
-	if globalVars.virtualBufferPassThrough:
-		speech.speakMessage(_("virtual buffer pass through")+" "+_("off"))
-		globalVars.virtualBufferPassThrough=False
-	else:
-		speech.speakMessage(_("virtual buffer pass through")+" "+_("on"))
-		globalVars.virtualBufferPassThrough=True
-
-def isVirtualBufferPassThrough():
-	"""Gets the current state of the virtualBuffer pass through mode. This mode is so that virtualBuffers can either capture, or ignore, key presses.
-@returns: true if on or false if off.
-@rtype: boolean
- """
-	return globalVars.virtualBufferPassThrough
 
 def createStateList(states):
 	"""Breaks down the given integer in to a list of numbers that are 2 to the power of their position.""" 

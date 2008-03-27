@@ -28,6 +28,7 @@ import appModuleHandler
 import winKernel
 import ctypes
 from gui import mainFrame
+import virtualBufferHandler
 
 class appModule(appModuleHandler.appModule):
 
@@ -529,7 +530,11 @@ class appModule(appModuleHandler.appModule):
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress,nextScript):
-		api.toggleVirtualBufferPassThrough()
+		vbuf = api.getFocusObject().virtualBuffer
+		if not vbuf:
+			return
+		vbuf.passThrough = not vbuf.passThrough
+		virtualBufferHandler.reportPassThrough(vbuf)
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key.")
 
 	def script_quit(self,keyPress,nextScript):
@@ -553,7 +558,7 @@ class appModule(appModuleHandler.appModule):
 	def script_sayAll(self,keyPress,nextScript):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
-		if v and not hasattr(v,'TextInfo') and not api.isVirtualBufferPassThrough():
+		if v and not hasattr(v,'TextInfo') and not v.passThrough:
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
 			if v:

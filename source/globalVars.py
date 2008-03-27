@@ -20,8 +20,6 @@
 @type navigatorTracksFocus: boolean
 @var keyboardHelp: if true, when pressing a key, the name of the script (if any) bound to that key will be reported, rather than the actual script being executed.
 @type keyboardHelp: boolean
-@var virtualBufferPassThrough: If true, scripts in the current virtualBuffer will be ignored and key presses will go through to the focus object.
-@type virtualBufferPassThrough: boolean
 @var keyCounter: gets incrimented each time a key is pressed.
 @type keycounter: boolean
 @var lastProgresssValue: Stores the last value from a progress bar
@@ -40,7 +38,6 @@ navigatorObject=None
 reviewPosition=None
 navigatorTracksFocus=True
 keyboardHelp=False
-virtualBufferPassThrough=False
 keyCounter=0
 lastProgressValue=0
 reportDynamicContentChanges=True

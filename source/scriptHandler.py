@@ -39,7 +39,7 @@ def findScript_defaultAppModuleLevel(keyPress):
 
 def findScript_virtualBufferLevel(keyPress):
 	virtualBuffer=api.getFocusObject().virtualBuffer
-	if virtualBuffer and not api.isVirtualBufferPassThrough():
+	if virtualBuffer and not virtualBuffer.passThrough:
 		func=virtualBuffer.getScript(keyPress)
 		if func:
 			nextFunc=lambda keyPress=keyPress: findScript_NVDAObjectLevel(keyPress)
