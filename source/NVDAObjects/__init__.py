@@ -11,7 +11,8 @@ import re
 import weakref
 import baseObject
 import speech
-from keyUtils import key, sendKey, isKeyWaiting
+from keyUtils import key, sendKey
+from scriptHandler import isScriptWaiting
 import globalVars
 import api
 import textHandler
@@ -653,7 +654,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		elapsed = 0
 		while elapsed < timeout:
-			if isKeyWaiting():
+			if isScriptWaiting():
 				return False
 			api.processPendingEvents()
 			focusObject=api.getFocusObject()
@@ -672,7 +673,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
 			if globalVars.caretMovesReviewCursor:
@@ -686,7 +687,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
 			if globalVars.caretMovesReviewCursor:
@@ -700,7 +701,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
 			if globalVars.caretMovesReviewCursor:
@@ -714,7 +715,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
 			if globalVars.caretMovesReviewCursor:
@@ -746,7 +747,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
 			if globalVars.caretMovesReviewCursor:
@@ -757,7 +758,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)

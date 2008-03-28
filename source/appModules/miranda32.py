@@ -12,7 +12,8 @@ from NVDAObjects.IAccessible import IAccessible
 import appModuleHandler
 import speech
 import controlTypes
-from keyUtils import sendKey, isKeyWaiting
+from keyUtils import sendKey
+from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
 
@@ -121,7 +122,7 @@ class mirandaIMContactList(IAccessible):
 
 	def script_changeItem(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 

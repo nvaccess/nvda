@@ -210,6 +210,9 @@ class WinConsole(IAccessible):
 	def event_nameChange(self):
 		pass
 
+	def event_foreground(self):
+		self.event_gainFocus()
+
 	def event_gainFocus(self):
 		super(WinConsole,self).event_gainFocus()
 		self.connectConsole()

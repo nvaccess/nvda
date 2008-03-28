@@ -19,7 +19,8 @@ import winKernel
 import api
 import winUser
 import textHandler
-from keyUtils import key, sendKey, isKeyWaiting
+from keyUtils import key, sendKey
+from scriptHandler import isScriptWaiting
 import IAccessibleHandler
 import controlTypes
 from . import IAccessible
@@ -426,7 +427,7 @@ class Edit(IAccessible):
 	def script_changeSelection(self,keyPress,nextScript):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)

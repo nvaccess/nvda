@@ -3,7 +3,8 @@ import time
 import os
 import winsound
 import baseObject
-from keyUtils import isKeyWaiting, sendKey
+from keyUtils import sendKey
+from scriptHandler import isScriptWaiting
 import speech
 import NVDAObjects
 import winUser
@@ -181,7 +182,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _caretMovementScriptHelper(self, *args, **kwargs):
 		if self.VBufHandle is None:
 			return 
-		noKeyWaiting=not isKeyWaiting()
+		noKeyWaiting=not isScriptWaiting()
 		if noKeyWaiting:
 			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)

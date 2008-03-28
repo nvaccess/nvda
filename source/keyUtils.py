@@ -103,13 +103,6 @@ def sendKey(keyPress):
 	keyList.reverse()
 	for k in keyList:
 		winUser.keybd_event(k[0],0,k[1]+2,0)
-	if not isKeyWaiting():
+	if not queueHandler.isPendingItems(queueHandler.eventQueue):
 		time.sleep(0.01)
 		wx.Yield()
-
-def isKeyWaiting():
-	"""Determines whether a script key is waiting to be handled.
-	@returns: C{True} if a script key is waiting to be handled, C{False} otherwise.
-	@rtype: boolean
-"""
-	return queueHandler.isPendingItems(queueHandler.interactiveQueue)

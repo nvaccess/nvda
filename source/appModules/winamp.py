@@ -8,7 +8,8 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from keyUtils import sendKey, isKeyWaiting
+from keyUtils import sendKey
+from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
 import appModuleHandler
 import speech
@@ -67,7 +68,7 @@ class winampPlaylistEditor(IAccessible):
 
 	def script_changeItem(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 

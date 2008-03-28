@@ -635,6 +635,12 @@ class appModule(appModuleHandler.appModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
 		obj=api.getNavigatorObject()
+		import ctypes
+		import winUser
+		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
+		w=ctypes.windll.user32.GetAncestor(w,3)
+		className=winUser.getClassName(w)
+		speech.speakMessage("%s, %s"%(w,className))
 		if not isinstance(obj,NVDAObject): 
 			speech.speakMessage(_("no navigator object"))
 			return

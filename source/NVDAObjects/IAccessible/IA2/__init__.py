@@ -7,7 +7,7 @@ import speech
 import textHandler
 import controlTypes
 import IAccessibleHandler
-from keyUtils import sendKey, isKeyWaiting
+from keyUtils import sendKey
 from .. import IAccessible
 from ... import NVDAObjectTextInfo
 from ...window import Window

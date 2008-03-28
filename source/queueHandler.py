@@ -9,8 +9,6 @@ from Queue import Queue
 import globalVars
 
 MAX_ITEMS=500
-interactiveQueue=Queue(MAX_ITEMS)
-interactiveQueue.__name__="interactiveQueue"
 eventQueue=Queue(MAX_ITEMS)
 eventQueue.__name__="eventQueue"
 generators={}
@@ -55,13 +53,12 @@ def flushQueue(queue):
 			except:
 				globalVars.log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
 
-def isPendingItems(queue=None):
-	if (queue is None  and (not eventQueue.empty() or not interactiveQueue.empty())) or not queue.empty():
+def isPendingItems(queue):
+	if not queue.empty():
 		res=True
 	else:
 		res=False
-	queueString="%s"%queue.__name__ if queue is not None else "all queues"
-	globalVars.log.debug("pending events in %s: %s"%(queueString,res))
+	globalVars.log.debug("pending events in %s: %s"%(queue.__name__,res))
 	return res
 
 def pumpAll():
@@ -82,5 +79,4 @@ def pumpAll():
 		except:
 			globalVars.log.error("error in generator %d"%ID,exc_info=True)
 			del generators[ID]
-	flushQueue(interactiveQueue)
 	flushQueue(eventQueue)

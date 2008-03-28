@@ -6,6 +6,9 @@
 
 import appModuleHandler
 import api
+import queueHandler
+
+numScriptsQueued=0
 
 def findScript(keyPress):
 		return findScript_appModuleLevel(keyPress)
@@ -71,3 +74,16 @@ def getScriptLocation(script):
 
 def getScriptDescription(script):
 	return script.__doc__
+
+def queueScript(script,keyPress):
+	global numScriptsQueued
+	numScriptsQueued+=1
+	queueHandler.queueFunction(queueHandler.eventQueue,executeScript,script,keyPress)
+
+def executeScript(script,keyPress):
+	global numScriptsQueued
+	numScriptsQueued-=1
+	script(keyPress)
+
+def isScriptWaiting():
+	return bool(numScriptsQueued)

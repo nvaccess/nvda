@@ -35,15 +35,12 @@ def findObjectWithFocus():
 @returns: object with focus
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	prevObj=getDesktopObject()
-	obj=prevObj.activeChild
+	obj=getDesktopObject()
+	prevObj=None
 	while obj and obj!=prevObj:
 		prevObj=obj
 		obj=obj.activeChild
-	if isinstance(prevObj,NVDAObjects.NVDAObject) and prevObj.hasFocus:
-		return prevObj
-	else:
-		return None
+	return prevObj
 
 def getFocusObject():
 	"""

@@ -69,7 +69,7 @@ def internal_mouseEvent(msg,x,y,injected):
 		if msg==WM_MOUSEMOVE and config.conf["mouse"]["reportObjectUnderMouse"]:
 			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 		return True
 	except:
 		globalVars.log.error("", exc_info=True)

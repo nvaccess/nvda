@@ -112,12 +112,12 @@ class MainFrame(wx.Frame):
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		queueHandler.queueFunction(queueHandler.interactiveQueue,core.resetConfiguration,reportDone=True)
+		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,reportDone=True)
 
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("configuration saved"))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration saved"))
 		except:
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 

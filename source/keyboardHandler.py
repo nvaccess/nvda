@@ -50,11 +50,11 @@ def isNVDAModifierKey(vkCode,extended):
 def speakToggleKey(vkCode):
 	toggleState=bool(not winUser.getKeyState(vkCode)&1)
 	if vkCode==winUser.VK_CAPITAL:
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("caps lock %s")%(_("on") if toggleState else _("off")))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("caps lock %s")%(_("on") if toggleState else _("off")))
 	elif vkCode==winUser.VK_NUMLOCK:
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("num lock %s")%(_("on") if toggleState else _("off")))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("num lock %s")%(_("on") if toggleState else _("off")))
 	elif vkCode==winUser.VK_SCROLL:
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
 def speakKeyboardLayout(layout):
 	try:
@@ -74,7 +74,7 @@ def speakKeyboardLayout(layout):
 	else:
 		s = _winreg.QueryValueEx(key, "Layout Text")[0]
 	key.Close()
-	queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("%s keyboard layout")%s)
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%s keyboard layout")%s)
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
@@ -99,11 +99,11 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			if speech.isPaused:
 				unpauseByShiftUp=True
 			else:
-				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,True)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.pauseSpeech,True)
 		else:
 			unpauseByShiftUp=False
 			globalVars.keyCounter+=1
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 		if lastNVDAModifierKey and (vkCode,extended)==lastNVDAModifierKey:
 			lastNVDAModifierKey=None
 			if (time.time()-lastNVDAModifierKeyTime)<0.5:
@@ -154,18 +154,18 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				labelList.append(unichr(ch))
 			else:
 				labelList.append(keyPress[1])
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,"+".join(labelList))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"+".join(labelList))
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
 			scriptLocation=scriptHandler.getScriptLocation(script)
 			scriptDescription=scriptHandler.getScriptDescription(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
-				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,"%s"%scriptName.replace('_',' '))
-				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
-				queueHandler.queueFunction(queueHandler.interactiveQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"%s"%scriptName.replace('_',' '))
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
 			else:
-				queueHandler.queueFunction(queueHandler.interactiveQueue,script,keyPress)
+				scriptHandler.queueScript(script,keyPress)
 		if script or globalVars.keyboardHelp:
 			keyUpIgnoreSet.add((vkCode,extended))
 			if NVDAModifierKey:
@@ -193,7 +193,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 				passKeyThroughCount=-1
 			return True
 		if unpauseByShiftUp and vkCode in (winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
-			queueHandler.queueFunction(queueHandler.interactiveQueue,speech.pauseSpeech,False)
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.pauseSpeech,False)
 			unpauseByShiftUp=False
 		if NVDAModifierKey and (vkCode,extended)==NVDAModifierKey:
 			if lastKeyCount >=1 and usedNVDAModifierKey: lastKeyCount = 0

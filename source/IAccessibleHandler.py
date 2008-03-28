@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from __future__ import with_statement
+
 #Constants
 #OLE constants
 REGCLS_SINGLEUSE = 0       # class object only generates one instance
@@ -141,6 +143,9 @@ STATE_SYSTEM_VALID=0x1fffffff
 NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 
+import threading
+import heapq
+import itertools
 import time
 from ctypes import *
 from ctypes.wintypes import *
@@ -171,7 +176,9 @@ _IA2RegCooky=None
 
 #A set to cache property change events
 #values stored as (eventName,window,objectID,childID)
-propertyChangeEventCache=set()
+propertyChangeEventCache={}
+
+focusEventQueue=Queue.Queue(4)
 
 IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -336,7 +343,9 @@ IAccessible2StatesToNVDAStates={
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 objectEventHandles=[]
 
-focusEventQueue=Queue.Queue(3)
+eventCounter=itertools.count()
+eventHeap=[]
+eventLock=threading.Lock()
 
 def normalizeIAccessible(pacc):
 	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
@@ -671,54 +680,61 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			if obj:
 				queueHandler.queueFunction(queueHandler.eventQueue,mouseHandler.updateMouseShape,obj.name)
 			return
-		#Process foreground events
-		if eventName=="foreground":
-			queueHandler.queueFunction(queueHandler.eventQueue,foreground_winEventCallback,window,objectID,childID)
-			return
 		#Process focus events
 		elif eventName=="gainFocus":
 			if focusEventQueue.full():
 				focusEventQueue.get()
-			focusEventQueue.put((window,objectID,childID))
+			focusEventQueue.put((eventCounter.next(),window,objectID,childID))
 			return
 		elif eventName.endswith("Change") or eventName in ("reorder","caret"):
-			propertyChangeEventCache.add((eventName,window,objectID,childID))
+			propertyChangeEventCache[(eventName,window,objectID,childID)]=eventCounter.next()
 			return
 		#Its a generic event which should just be queued
-		queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,eventName,window,objectID,childID)
+		with eventLock:
+			heapq.heappush(eventHeap,(eventCounter.next(),eventName,window,objectID,childID))
 	except:
 		globalVars.log.error("winEventCallback", exc_info=True)
 
 def foreground_winEventCallback(window,objectID,childID):
-	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
-		return
-	focus=api.getFocusObject()
-	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
-	if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,focus.event_windowHandle):
-		return
-	return focus_winEventCallback(window,objectID,childID,isForegroundChange=True)
+		return False
+	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
+		return False
+	appModuleHandler.update(window)
+	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+		JABHandler.event_enterJavaWindow(window)
+		return True
+	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
+	if not obj:
+		return False
+	api.setForegroundObject(obj)
+	api.setFocusObject(obj)
+	speech.cancelSpeech()
+	eventHandler.manageEvent("foreground",obj)
 
 def focus_winEventCallback(window,objectID,childID,isForegroundChange=False,needsFocusState=True):
 	#Ignore any events with invalid window handles
 	if not winUser.isWindow(window):
-		return
+		return False
 	# Ignore focus events on invisible windows.
 	if not isForegroundChange and not winUser.isWindowVisible(window):
-		return
+		return False
 		foregroundWindow=winUser.getForegroundWindow()
 		info=winuser.getGUIThreadInfo(winUser.getWindowThreadProcessID(foregroundWindow)[1])
 		if window!=foregroundWindow and winUser.isDescendantWindow(window,info.hwndFocus) and window!=info.hwndFocus:
-			return
+			return False
+	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
+	focus=api.getFocusObject()
 	#Ignore focus/foreground events on the parent windows of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
-		return
+		return False
 	appModuleHandler.update(window)
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
-		return JABHandler.event_enterJavaWindow(window)
+		JABHandler.event_enterJavaWindow(window)
+		return True
 	#We can't trust MSAA focus events with a childID greater than 0, just use 0 and retreave its activeChild
 	#We can only do this if there are no focus events pending or else we'll get issues with keyboard silencing focus announcement
-	if winUser.getClassName(window)!="ToolbarWindow32" and childID>0 and focusEventQueue.empty() and queueHandler.interactiveQueue.empty():
+	if winUser.getClassName(window)!="ToolbarWindow32" and childID>0:
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,0)
 		if obj:
 			activeChild=obj.activeChild
@@ -730,15 +746,15 @@ def focus_winEventCallback(window,objectID,childID,isForegroundChange=False,need
 		obj=None
 	if not obj:
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if obj and childID==0 and queueHandler.interactiveQueue.empty():
+	if obj and childID==0:
 		activeChild=obj.activeChild
 		if activeChild and activeChild.IAccessibleChildID>0 and activeChild!=obj:
 			obj=activeChild
-	focus_manageEvent(obj,isForegroundChange,needsFocusState)
+	return focus_manageEvent(obj,isForegroundChange,needsFocusState)
 
 def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	if not obj:
-		return
+		return False
 	if obj.role==controlTypes.ROLE_UNKNOWN:
 		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
 		if parent:
@@ -750,10 +766,10 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	else:
 		foregroundObject=api.getForegroundObject()
 		if foregroundObject.windowClassName=="MozillaUIWindowClass" and obj==foregroundObject:
-			return
+			return False
 	oldFocus=api.getFocusObject()
 	if obj==oldFocus:
-		return
+		return True #even though its not used, we still  need to communicate its ok
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
 	if needsFocusState:
@@ -803,12 +819,20 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 			ancestors.append(groupObj)
 	if needsFocusState:
 		if not hasFocusState:
-			return
+			return False
 	api.setFocusObject(obj,ancestors=ancestors)
 	if isForegroundChange and obj.childCount>0:
 		eventHandler.manageEvent("focusEntered",obj)
 	else:
 		eventHandler.manageEvent("gainFocus",obj)
+	return True
+
+def processFocusWinEvents(focusEventList):
+	for focusEvent in focusEventList[::-1]:
+		if focus_winEventCallback(*focusEvent):
+			break
+
+
 
 #Register internal object event with IAccessible
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
@@ -860,13 +884,35 @@ def initialize():
 
 def pumpAll():
 	global lastFocusEvent
-	if not focusEventQueue.empty():
-		window,objectID,childID=focusEventQueue.get()
-		focus_winEventCallback(window,objectID,childID)
+	currentFocusEvents=[]
 	s=propertyChangeEventCache.copy()
 	propertyChangeEventCache.clear()
-	for v in s: 
-		manageEvent(*v)
+	with eventLock:
+		for count in range(focusEventQueue.qsize()):
+			try:
+				item=focusEventQueue.get_nowait()
+				heapq.heappush(eventHeap,(item[0],"gainFocus")+item[1:])
+			except:
+				globalVars.log.warn("focus queue",exc_info=True)
+				pass
+	with eventLock:
+		for v in s: 
+			heapq.heappush(eventHeap,(s[v],)+v)
+	with eventLock:
+		for count in range(len(eventHeap)):
+			item=heapq.heappop(eventHeap)
+			if item[1]=="gainFocus":
+				currentFocusEvents.append(item[2:])
+			else:
+				if len(currentFocusEvents)>0:
+					queueHandler.queueFunction(queueHandler.eventQueue,processFocusWinEvents,currentFocusEvents)
+					currentFocusEvents=[]
+				if item[1]=="foreground":
+					queueHandler.queueFunction(queueHandler.eventQueue,foreground_winEventCallback,*item[2:])
+				else:
+					queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,*(item[1:]))
+		if len(currentFocusEvents)>0:
+			queueHandler.queueFunction(queueHandler.eventQueue,processFocusWinEvents,currentFocusEvents)
 
 def terminate():
 	for handle in objectEventHandles:

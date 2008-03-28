@@ -2,7 +2,8 @@ import globalVars
 import baseObject
 import config
 import speech
-from keyUtils import sendKey, key, isKeyWaiting
+from keyUtils import sendKey, key
+from scriptHandler import isScriptWaiting
 import api
 
 class textBufferObject(baseObject.scriptableObject):
@@ -462,7 +463,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def script_text_moveByLine(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			self.text_speakLine(self.text_caretPosition)
 		if globalVars.caretMovesReviewCursor:
 			self.text_reviewPosition=self.text_caretPosition
@@ -474,7 +475,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def script_text_moveByCharacter(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			self.text_speakCharacter(self.text_caretPosition)
 		if globalVars.caretMovesReviewCursor:
 			self.text_reviewPosition=self.text_caretPosition
@@ -482,7 +483,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def script_text_moveByWord(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			self.text_speakWord(self.text_caretPosition)
 		if globalVars.caretMovesReviewCursor:
 			self.text_reviewPosition=self.text_caretPosition
@@ -490,7 +491,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def script_text_moveBySentence(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			self.text_speakSentence(self.text_caretPosition)
 		if globalVars.caretMovesReviewCursor:
 			self.text_reviewPosition=self.text_caretPosition
@@ -498,7 +499,7 @@ class textBufferObject(baseObject.scriptableObject):
 
 	def script_text_moveByParagraph(self,keyPress,nextScript):
 		sendKey(keyPress)
-		if not isKeyWaiting():
+		if not isScriptWaiting():
 			self.text_speakParagraph(self.text_caretPosition)
 		if globalVars.caretMovesReviewCursor:
 			self.text_reviewPosition=self.text_caretPosition

@@ -66,7 +66,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def isAlive(self):
 		root=self.rootNVDAObject
-		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN: 
+		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN and controlTypes.STATE_READONLY in self.rootNVDAObject.states: 
 			return True
 		else:
 			return False

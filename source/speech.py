@@ -199,7 +199,7 @@ def speakSpelling(text):
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
 			time.sleep(0.05)
 			api.processPendingEvents()
-			queueHandler.flushQueue(queueHandler.interactiveQueue)
+			queueHandler.flushQueue(queueHandler.eventQueue)
 		if globalVars.keyCounter!=lastKeyCount:
 			break
 		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:

@@ -153,7 +153,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
-				queueHandler.queueFunction(queueHandler.interactiveQueue,gui.restart)
+				queueHandler.queueFunction(queueHandler.eventQueue,gui.restart)
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
