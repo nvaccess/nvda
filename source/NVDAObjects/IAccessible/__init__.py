@@ -570,6 +570,8 @@ class Dialog(IAccessible):
 			if child.role==controlTypes.ROLE_PROPERTYPAGE:
 				IAccessibleHandler.focus_manageEvent(child,needsFocusState=False)
 
+	def event_foreground(self):
+		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 class PropertyPage(Dialog):
 

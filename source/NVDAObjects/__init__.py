@@ -611,7 +611,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 """
 		speech.cancelSpeech()
 		api.setNavigatorObject(self)
-		speech.speakObject(self,reason=speech.REASON_FOCUS)
+		speech.speakObjectProperties(self,name=True,role=True,reason=speech.REASON_FOCUS)
 
 	def event_valueChange(self):
 		if id(self)==id(api.getFocusObject()):
