@@ -53,9 +53,11 @@ class Gecko_ia2(VirtualBuffer):
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
-		if obj.windowClassName.startswith('Mozilla'):
+		if obj.windowClassName.startswith('Mozilla') and winUser.getWindowStyle(obj.windowHandle)&winUser.WS_POPUP:
 			parent=obj.parent
-			if parent and parent.role==controlTypes.ROLE_LIST:
+			while parent and parent.windowHandle==obj.windowHandle:
+				parent=parent.parent
+			if parent:
 				obj=parent.parent
 		if not isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
