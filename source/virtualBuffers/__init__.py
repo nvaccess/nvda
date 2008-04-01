@@ -116,14 +116,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self.passThrough=False
+		self.passThrough=True
+
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
+		self.passThrough=False
 		focusObject=api.getFocusObject()
 		if focusObject==self.rootNVDAObject:
 			if self.passThrough:
-				self.passThrough=False
 				virtualBufferHandler.reportPassThrough(self)
 			speech.cancelSpeech()
 			if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
@@ -134,6 +135,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
+			self.passThrough=True
 			VBufClient_destroyBuffer(self.VBufHandle)
 			self.VbufHandle=None
 

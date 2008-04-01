@@ -1,3 +1,4 @@
+import time
 import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 from virtualBuffer_lib import *
@@ -48,8 +49,19 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=u"VBufBackend_gecko_ia2.dll",TextInfo=Gecko_ia2_TextInfo)
-		self.busyFlag=True if controlTypes.STATE_BUSY in self.rootNVDAObject.states else False
 
+	def _set_rootNVDAObject(self,obj):
+		self._rootWindowHandle=obj.windowHandle
+		self._rootUniqueID=obj.IAccessibleObject.uniqueID
+		self._rootNVDAObject=obj
+		self._rootTime=time.time()
+
+	def _get_rootNVDAObject(self):
+		curTime=time.time()
+		if curTime-self._rootTime<0.25:
+			self._rootNVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self._rootWindowHandle,IAccessibleHandler.OBJID_CLIENT,self._rootUniqueID)
+			self._rootTime=curTime
+		return self._rootNVDAObject
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -73,7 +85,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def isAlive(self):
 		root=self.rootNVDAObject
-		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN and controlTypes.STATE_READONLY in self.rootNVDAObject.states: 
+		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN: 
 			return True
 		else:
 			return False
@@ -87,22 +99,20 @@ class Gecko_ia2(VirtualBuffer):
 		if not self.isAlive():
 			return virtualBufferHandler.killVirtualBuffer(self)
 		api.setNavigatorObject(obj)
-		role=obj.role
-		states=obj.states
-		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+		states=self.rootNVDAObject.states
+		if controlTypes.STATE_BUSY in states:
 			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-			self.busyFlag=True
+			if self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
+				self.unloadBuffer()
 			return nextHandler()
-		else:
-			self.busyFlag=False
+		elif self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
+			return self.unloadBuffer()
+		elif self.VBufHandle is None:
+			self.loadBuffer()
 		if obj==self.rootNVDAObject:
 			return speech.speakObjectProperties(obj,name=True)
-		if role==controlTypes.ROLE_DOCUMENT:
+		if obj.role==controlTypes.ROLE_DOCUMENT:
 			return
-		if self.VBufHandle is None:
-			return nextHandler()
-		if sayAllHandler.isRunning():
-			speech.cancelSpeech()
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
@@ -123,6 +133,8 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
+				if sayAllHandler.isRunning():
+					speech.cancelSpeech()
 				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
@@ -173,23 +185,23 @@ class Gecko_ia2(VirtualBuffer):
 		return attrs
 
 	def event_stateChange(self,obj,nextHandler):
-		if obj==self.rootNVDAObject:
-			self.rootNVDAObject=obj
-		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-			self.busyFlag=True
-			return
 		if not self.isAlive():
 			return virtualBufferHandler.killVirtualBuffer(self)
-		if self.rootNVDAObject and self.busyFlag and not controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			self.unloadBuffer()
-			self.loadBuffer()
-			self.busyFlag=False
-		if obj!=self.rootNVDAObject:
+		states=self.rootNVDAObject.states
+		if controlTypes.STATE_BUSY in states:
+			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+			if self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
+				self.unloadBuffer()
 			return nextHandler()
+		elif self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
+			return self.unloadBuffer()
+		elif self.VBufHandle is None:
+			self.loadBuffer()
+		return nextHandler()
 
 	def loadBuffer(self):
-		if controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+		states=self.rootNVDAObject.states
+		if controlTypes.STATE_BUSY in states or controlTypes.STATE_READONLY not in states:
 			return
 		super(Gecko_ia2,self).loadBuffer()
 
