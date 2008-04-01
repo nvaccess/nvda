@@ -142,6 +142,7 @@ STATE_SYSTEM_VALID=0x1fffffff
 #Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
+NAVRELATION_NODE_CHILD_OF=0x1005
 
 import threading
 import heapq
