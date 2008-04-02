@@ -136,7 +136,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.VBufHandle is not None:
 			self.passThrough=True
 			VBufClient_destroyBuffer(self.VBufHandle)
-			self.VbufHandle=None
+			self.VBufHandle=None
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
