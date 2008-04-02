@@ -113,6 +113,8 @@ class Gecko_ia2(VirtualBuffer):
 			return speech.speakObjectProperties(obj,name=True)
 		if obj.role==controlTypes.ROLE_DOCUMENT:
 			return
+		if self.VBufHandle is None:
+			return nextHandler()
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
@@ -206,6 +208,8 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2,self).loadBuffer()
 
 	def event_scrollingStart(self,obj,nextHandler):
+		if self.VBufHandle is None:
+			return nextHandler()
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:

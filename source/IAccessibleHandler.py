@@ -662,6 +662,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		windowClassName=winUser.getClassName(window)
 		controlID=winUser.getControlID(window)
+		if windowClassName.startswith('Mozilla') and eventName in ("show","hide","reorder"):
+			return
 		#A hack to fix a bug in Notepad++ where focus is constantly given to some strange list
 		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getAncestor(window,winUser.GA_ROOTOWNER))=="Notepad++":
 			return

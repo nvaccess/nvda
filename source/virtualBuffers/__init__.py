@@ -118,7 +118,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.VBufHandle=None
 		self.passThrough=True
 
-
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootNVDAObject.windowHandle,self.backendLibPath)
 		self.passThrough=False
@@ -140,10 +139,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.VbufHandle=None
 
 	def makeTextInfo(self,position):
-		if self.VBufHandle is not None:
-			return self.TextInfo(self,position)
-		else:
-			return NVDAObjects.NVDAObjectTextInfo(self,position)
+		return self.TextInfo(self,position)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		pass
