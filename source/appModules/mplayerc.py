@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import appModuleHandler
-from NVDAObjects.IAccessible import IAccessible, StatusBar, getNVDAObjectFromEvent
+from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 import controlTypes
 import api
 import IAccessibleHandler
@@ -36,16 +36,24 @@ class appModule(appModuleHandler.appModule):
 		api.setNavigatorObject(statusBarObject)
 	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
-class MPCStatusBar(StatusBar):
+class MPCStatusBar(IAccessible):
+
+	def _get_firstChild(self):
+		return None
+
+	def _get_lastChild(self):
+		return None
+
+	def _get_children(self):
+		return []
 
 	def _get_role(self):
 		return controlTypes.ROLE_STATUSBAR
 
 	def _get_value(self):
-		oldValue=super(StatusBar,self)._get_value()
-		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in super(StatusBar,self)._get_children() if x.role == controlTypes.ROLE_GRAPHIC])
+		oldValue=super(MPCStatusBar,self)._get_value()
+		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in super(MPCStatusBar,self)._get_children() if x.role == controlTypes.ROLE_GRAPHIC])
 		if valueFromChildren:
 			return valueFromChildren
 		else:
 			return oldValue
-
