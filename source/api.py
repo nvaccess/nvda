@@ -14,6 +14,7 @@ import globalVars
 import speech
 import virtualBufferHandler
 import NVDAObjects
+import NVDAObjects.IAccessible
 import winUser
 import wx
 import core
@@ -218,3 +219,34 @@ def copyToClip(text):
 		if got == text:
 			return True
 	return False
+
+def getStatusBar():
+	"""Obtain the status bar for the current foreground object.
+	@return: The status bar object or C{None} if no status bar was found.
+	@rtype: L{NVDAObjects.NVDAObject}
+	"""
+	# The status bar is usually at the bottom of the screen.
+	# Therefore, get the object at the bottom left of the foreground object using screen coordinates.
+	foreground = getForegroundObject()
+	left, top, width, height = foreground.location
+	bottom = top + height - 1
+	obj = NVDAObjects.IAccessible.getNVDAObjectFromPoint(left, bottom)
+
+	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
+	while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
+		obj = obj.parent
+
+	return obj
+
+def getStatusBarText(obj):
+	"""Get the text from a status bar.
+	This includes the name of the status bar and the names and values of all of its children.
+	@param obj: The status bar.
+	@type obj: L{NVDAObjects.NVDAObject}
+	@return: The status bar text.
+	@rtype: str
+	"""
+	text = obj.name
+	if text is None:
+		text = ""
+	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())

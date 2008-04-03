@@ -598,26 +598,11 @@ class appModule(appModuleHandler.appModule):
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
 
 	def script_reportStatusLine(self,keyPress,nextScript):
-		import NVDAObjects.IAccessible
-		# The status bar is usually at the bottom of the screen.
-		# Therefore, get the object at the bottom left of the foreground object using screen coordinates.
-		foreground = api.getForegroundObject()
-		left, top, width, height = foreground.location
-		bottom = top + height - 1
-		obj = NVDAObjects.IAccessible.getNVDAObjectFromPoint(left, bottom)
-
-		# We may have landed in a child of the status bar, so search the ancestry for a status bar.
-		while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
-			obj = obj.parent
-
+		obj = api.getStatusBar()
 		if not obj:
 			speech.speakMessage(_("no status bar found"))
 			return
-
-		text = obj.name
-		if text is None:
-			text = ""
-		text += " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
+		text = api.getStatusBarText(obj)
 
 		if keyboardHandler.lastKeyCount == 1:
 			speech.speakMessage(text)
