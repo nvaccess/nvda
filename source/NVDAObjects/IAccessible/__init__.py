@@ -372,10 +372,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return []
 		children=[]
 		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
-			if child and child[0]==self.IAccessibleObject:
+			if child[0]==self.IAccessibleObject:
 				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
-			elif child and child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			elif child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 				children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
+			else:
+				children.append(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1]))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
@@ -401,21 +403,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			self.IAccessibleObject.accSelect(1,self.IAccessibleChildID)
 		except:
 			pass
-
-	def _get_statusBar(self):
-		windowClasses=(u'msctls_statusbar32',u'TTntStatusBar.UnicodeClass',u'ATL:msctls_statusbar32')
-		curWindow=self.windowHandle
-		statusWindow=0
-		while not statusWindow and curWindow:
-			for windowClass in windowClasses:
-				statusWindow=ctypes.windll.user32.FindWindowExW(curWindow,0,windowClass,0)
-				if statusWindow:
-					break
-			curWindow=winUser.getAncestor(curWindow,winUser.GA_PARENT)
-		if statusWindow:
-			return getNVDAObjectFromEvent(statusWindow,IAccessibleHandler.OBJID_CLIENT,0)
-		else:
-			return None
 
 	def _get_positionString(self):
 		position=""
@@ -721,25 +708,6 @@ class InternetExplorerClient(IAccessible):
 	def _get_description(self):
 		return None
 
-class StatusBar(IAccessible):
-
-	def _get_value(self):
-		oldValue=super(StatusBar,self)._get_value()
-		valueFromChildren=" ".join([" ".join([y for y in (x.name,x.value) if y and not y.isspace()]) for x in super(StatusBar,self)._get_children() if x.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_STATICTEXT)])
-		if valueFromChildren:
-			return valueFromChildren
-		else:
-			return oldValue
-
-	def _get_firstChild(self):
-		return None
-
-	def _get_lastChild(self):
-		return None
-
-	def _get_children(self):
-		return []
-
 class SysLink(IAccessible):
 
 	def reportFocus(self):
@@ -821,7 +789,6 @@ _staticMap={
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
-	("msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TMaskEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
@@ -840,7 +807,6 @@ _staticMap={
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TTntStatusBar.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"ToolBarButton",
 	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
@@ -855,5 +821,4 @@ _staticMap={
 	("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
-	("ATL:msctls_statusbar32",IAccessibleHandler.ROLE_SYSTEM_STATUSBAR):"StatusBar",
 }
