@@ -139,8 +139,12 @@ class IA2(IAccessible):
 			self.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
 
 	def _isEqual(self,other):
-		if isinstance(other,IA2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and super(IAccessible,self)._isEqual(other): 
-			return True
+		try:
+			if isinstance(other,IA2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and self.IAccessibleObject.windowHandle==other.IAccessibleObject.windowHandle:
+				return True
+		except:
+			pass
+
 		return super(IA2,self)._isEqual(other)
 
 	def _get_role(self):
