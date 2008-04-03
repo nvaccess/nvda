@@ -383,21 +383,30 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		return not self.__eq__(other)
 
 	def _get_virtualBuffer(self):
-		if hasattr(self,'_virtualBufferRef'):
-			v=self._virtualBufferRef()
+		if hasattr(self,'_virtualBuffer'):
+			v=self._virtualBuffer
+			if isinstance(v,weakref.ref):
+				v=v()
 			if v and v in virtualBufferHandler.runningTable:
 				return v
 			else:
+				self._virtualBuffer=None
 				return None
 		else:
 			v=virtualBufferHandler.getVirtualBuffer(self)
 			if v:
-				self._virtualBufferRef=weakref.ref(v)
+				self._virtualBuffer=weakref.ref(v)
 			return v
 
 	def _set_virtualBuffer(self,obj):
 		if obj:
-			self._virtualBufferRef=weakref.ref(obj)
+			self._virtualBuffer=weakref.ref(obj)
+		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
+			self._virtualBuffer=None
+
+
+
+
 
 	def _get_appModule(self):
 		if not hasattr(self,'_appModuleRef'):
