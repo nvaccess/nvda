@@ -106,12 +106,14 @@ class Gecko_ia2(VirtualBuffer):
 		else:
 			wasSayAll=False
 		if obj==self.rootNVDAObject:
+			if self.passThrough:
+				return nextHandler()
 			speech.cancelSpeech()
 			speech.speakObjectProperties(obj,name=True,role=True)
 			info=self.makeTextInfo(textHandler.POSITION_FIRST)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			return 
-		if obj.role==controlTypes.ROLE_DOCUMENT:
+		if obj.role==controlTypes.ROLE_DOCUMENT and not self.passThrough:
 			return
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -136,14 +138,20 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
-				speech.cancelSpeech()
-				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				if not self.passThrough:
+					speech.cancelSpeech()
+					speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				else:
+					nextHandler()
 				newInfo.collapse()
 				newInfo.updateCaret()
 		else:
 			# The virtual buffer caret was already at the focused node, so we don't speak it.
 			# However, we still want to update the speech property cache so that property changes will be spoken properly.
-			speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			if not self.passThrough:
+				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			else:
+				return nextHandler()
 
 	def _caretMovedToField(self,docHandle,ID):
 		try:
