@@ -110,7 +110,7 @@ def executeMouseMoveEvent(x,y):
 		mouseObject.event_mouseMove(x,y)
 		oldMouseObject=mouseObject
 	except:
-		globalVars.log.error("api.notifyMouseMoved", exc_error=True)
+		globalVars.log.error("api.notifyMouseMoved", exc_info=True)
 
 #Register internal mouse event
 
