@@ -65,7 +65,7 @@ class Gecko_ia2(VirtualBuffer):
 				parent=parent.parent
 			if parent:
 				obj=parent.parent
-		if not isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
+		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
 			ID=obj.IAccessibleObject.uniqueID

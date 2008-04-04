@@ -8,6 +8,7 @@ import weakref
 import re
 import os
 import tones
+import textHandler
 import time
 import difflib
 import ctypes
@@ -25,7 +26,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import NVDAObjects.JAB
 
 re_gecko_level=re.compile('.*?L([0-9]+).*')
@@ -78,6 +79,83 @@ def processGeckoDescription(obj):
 		obj.positionString=" ".join([x for x in level,positionString,contains if x])
 	obj.description=""
 
+class IA2TextTextInfo(NVDAObjectTextInfo):
+
+	def _getCaretOffset(self):
+		try:
+			return self.obj.IAccessibleTextObject.CaretOffset
+		except:
+			return 0
+
+	def _setCaretOffset(self,offset):
+		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
+
+	def _getSelectionOffsets(self):
+		try:
+			nSelections=self.obj.IAccessibleTextObject.nSelections
+		except:
+			nSelections=0
+		if nSelections:
+			(start,end)=self.obj.IAccessibleTextObject.Selection[0]
+		else:
+			start=self._getCaretOffset()
+			end=start
+		return [min(start,end),max(start,end)]
+
+	def _setSelectionOffsets(self,start,end):
+		for selIndex in range(self.obj.IAccessibleTextObject.NSelections):
+			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
+		self.obj.IAccessibleTextObject.AddSelection(start,end)
+
+	def _getStoryLength(self):
+		if not hasattr(self,'_storyLength'):
+			self._storyLength=self.obj.IAccessibleTextObject.NCharacters
+		return self._storyLength
+
+	def _getLineCount(self):
+			return -1
+
+	def _getTextRange(self,start,end):
+		try:
+			return self.obj.IAccessibleTextObject.Text(start,end)
+		except:
+			return ""
+
+	def _getCharacterOffsets(self,offset):
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+
+
+	def _getWordOffsets(self,offset):
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
+
+
+	def _getLineOffsets(self,offset):
+		try:
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)[0:2]
+		except:
+			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
+
+	def _getSentenceOffsets(self,offset):
+		try:
+			start,end=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)[0:2]
+			if start==end:
+				raise NotImplementedError
+			return (start,end)
+		except:
+			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
+
+	def _getParagraphOffsets(self,offset):
+		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)[0:2]
+
+	def _lineNumFromOffset(self,offset):
+		return -1
+
 class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
@@ -93,19 +171,16 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
 		elif not windowHandle and not IAccessibleObject:
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
-		if IAccessibleObject:
-			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2): 
-				IA2Class=__import__("IA2",globals(),locals(),[]).IA2
-				obj=Window.__new__(IA2Class,windowHandle=windowHandle)
-				obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
-				return obj
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			return None #We really do need a window handle
 		windowClassName=winUser.getClassName(windowHandle)
 		try:
-			IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
+			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+				IAccessibleRole=IAccessibleObject.role()
+			else:
+				IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
 		except:
 			IAccessibleRole=0
 		classString=None
@@ -151,6 +226,45 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		Window.__init__(self,windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
+		try:
+			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
+		except:
+			pass
+		try:
+			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
+			self.TextInfo=IA2TextTextInfo
+			replacedTextInfo=True
+			try:
+				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleEditableText)
+				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
+					("ExtendedUp","moveByLine"),
+					("ExtendedDown","moveByLine"),
+					("ExtendedLeft","moveByCharacter"),
+					("ExtendedRight","moveByCharacter"),
+					("Control+ExtendedLeft","moveByWord"),
+					("Control+ExtendedRight","moveByWord"),
+					("Shift+ExtendedRight","changeSelection"),
+					("Shift+ExtendedLeft","changeSelection"),
+					("Shift+ExtendedHome","changeSelection"),
+					("Shift+ExtendedEnd","changeSelection"),
+					("Shift+ExtendedUp","changeSelection"),
+					("Shift+ExtendedDown","changeSelection"),
+					("Control+Shift+ExtendedLeft","changeSelection"),
+					("Control+Shift+ExtendedRight","changeSelection"),
+					("ExtendedHome","moveByCharacter"),
+					("ExtendedEnd","moveByCharacter"),
+					("control+extendedHome","moveByLine"),
+					("control+extendedEnd","moveByLine"),
+					("control+shift+extendedHome","changeSelection"),
+					("control+shift+extendedEnd","changeSelection"),
+					("ExtendedDelete","delete"),
+					("Back","backspace"),
+				]]
+			except:
+				pass
+		except:
+			pass
+		self._lastMouseTextOffsets=None
 		self._doneInit=True
 
 	def _isEqual(self,other):
@@ -160,6 +274,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
+		try:
+			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and self.IAccessibleObject.windowHandle==other.IAccessibleObject.windowHandle:
+				return True
+		except:
+			pass
 		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
 			return False
 		if self.event_objectID is not None and other.event_objectID is not None and self.event_objectID!=other.event_objectID:
@@ -243,8 +362,20 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			IAccessibleStates=self.IAccessibleStates
 		except:
 			globalVars.log.warning("could not get IAccessible states",exc_info=True)
-			return set()
-		return set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+			states=set()
+		else:
+			states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+		if not hasattr(self.IAccessibleObject,'states'):
+			return states
+		try:
+			IAccessible2States=self.IAccessibleObject.states
+		except:
+			globalVars.log.warning("could not get IAccessible2 states",exc_info=True)
+			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
+		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
+			states.remove(controlTypes.STATE_HASPOPUP)
+		return states
 
 	def _get_description(self):
 		try:
@@ -414,6 +545,72 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentChildCount>=childID:
 					position=_("%s of %s")%(childID,parentChildCount)
 		return position
+
+	def event_valueChange(self):
+		if hasattr(self,'IAccessibleTextObject'):
+			return
+		return super(IAccessible,self).event_valueChange()
+
+	def event_alert(self):
+		speech.cancelSpeech()
+		speech.speakObject(self)
+		self.speakDescendantObjects()
+
+	def event_caret(self):
+		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
+			return
+		focusObject=api.getFocusObject()
+		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
+			inDocument=None
+			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
+				if ancestor.role==controlTypes.ROLE_DOCUMENT:
+					inDocument=ancestor
+					break
+			if not inDocument:
+				return
+			parent=self
+			caretInDocument=False
+			while parent:
+				if parent==inDocument:
+ 					caretInDocument=True
+					break
+				parent=parent.parent
+			if not caretInDocument:
+				return
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info.expand(textHandler.UNIT_CHARACTER)
+			try:
+				char=ord(info.text)
+			except:
+				char=0
+			if char!=0xfffc:
+				IAccessibleHandler.focus_manageEvent(self)
+
+	def event_mouseMove(self,x,y):
+		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
+		#We must find the real object and cache it
+		obj=getattr(self,'_realMouseObject',None)
+		if not obj:
+			obj=self
+			while obj and not hasattr(obj,'IAccessibleTextObject'):
+				obj=obj.parent
+			if obj:
+				self._realMouseObject=obj
+			else:
+				obj=self
+		mouseEntered=obj._mouseEntered
+		super(IAccessible,obj).event_mouseMove(x,y)
+		if not hasattr(obj,'IAccessibleTextObject'):
+			return 
+		(left,top,width,height)=obj.location
+		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		if obj._lastMouseTextOffsets is None or offset<obj._lastMouseTextOffsets[0] or offset>=obj._lastMouseTextOffsets[1]:   
+			if mouseEntered:
+				speech.cancelSpeech()
+			info=obj.makeTextInfo(textHandler.Bookmark(obj.TextInfo,(offset,offset)))
+			info.expand(textHandler.UNIT_WORD)
+			speech.speakText(info.text)
+			obj._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def event_show(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP:

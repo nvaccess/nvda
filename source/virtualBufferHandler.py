@@ -11,10 +11,10 @@ import winUser
 import NVDAObjects
 import NVDAObjects.window
 import NVDAObjects.IAccessible
-import NVDAObjects.IAccessible.IA2
 import controlTypes
 import NVDAObjects.window
 import speech
+import IAccessibleHandler
 
 runningTable=set()
 
@@ -31,7 +31,7 @@ def update(obj):
 	role=obj.role
 	states=obj.states
 	#Gecko with IAccessible2 support
-	if isinstance(obj,NVDAObjects.IAccessible.IA2.IA2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT:
+	if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT:
 		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and windowClassName=="MozillaContentWindowClass":
 			classString="virtualBuffers.gecko_ia2.Gecko_ia2"
 		else:
