@@ -1,4 +1,3 @@
-import time
 import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 from virtualBuffer_lib import *
@@ -49,19 +48,14 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=u"VBufBackend_gecko_ia2.dll",TextInfo=Gecko_ia2_TextInfo)
-
-	def _set_rootNVDAObject(self,obj):
-		self._rootWindowHandle=obj.windowHandle
-		self._rootUniqueID=obj.IAccessibleObject.uniqueID
-		self._rootNVDAObject=obj
-		self._rootTime=time.time()
-
-	def _get_rootNVDAObject(self):
-		curTime=time.time()
-		if curTime-self._rootTime<0.25:
-			self._rootNVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self._rootWindowHandle,IAccessibleHandler.OBJID_CLIENT,self._rootUniqueID)
-			self._rootTime=curTime
-		return self._rootNVDAObject
+		rootWindowHandle=getattr(self.rootNVDAObject,'event_windowHandle',0)
+		if not rootWindowHandle:
+			rootWindowHandle=self.rootNVDAObject.windowHandle
+		self.rootWindowHandle=rootWindowHandle
+		try:
+			self.rootID=self.rootNVDAObject.IAccessibleObject.uniqueID
+		except:
+			self.rootID=0
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -85,10 +79,17 @@ class Gecko_ia2(VirtualBuffer):
 
 	def isAlive(self):
 		root=self.rootNVDAObject
-		if root and winUser.isWindow(root.windowHandle) and controlTypes.STATE_DEFUNCT not in root.states and root.role!=controlTypes.ROLE_UNKNOWN: 
-			return True
-		else:
+		if not root:
 			return False
+		states=root.states
+		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states or controlTypes.STATE_BUSY in states: 
+			return False
+		try:
+			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,IAccessibleHandler.OBJID_CLIENT,root.IAccessibleObject.uniqueID):
+				return False
+		except:
+			return False
+		return True
 
 	def event_focusEntered(self,obj,nextHandler):
 		pass
@@ -96,33 +97,33 @@ class Gecko_ia2(VirtualBuffer):
 	def event_gainFocus(self,obj,nextHandler):
 		if self._inFind:
 			return
-		if not self.isAlive():
-			return virtualBufferHandler.killVirtualBuffer(self)
 		api.setNavigatorObject(obj)
-		states=self.rootNVDAObject.states
-		if controlTypes.STATE_BUSY in states:
-			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-			if self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
-				self.unloadBuffer()
-			return nextHandler()
-		elif self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
-			return self.unloadBuffer()
-		elif self.VBufHandle is None:
-			self.loadBuffer()
-		if obj==self.rootNVDAObject:
-			return speech.speakObjectProperties(obj,name=True)
-		if obj.role==controlTypes.ROLE_DOCUMENT:
-			return
 		if self.VBufHandle is None:
 			return nextHandler()
+		if sayAllHandler.isRunning():
+			sayAllHandler.stop()
+			wasSayAll=True
+		else:
+			wasSayAll=False
+		if obj==self.rootNVDAObject:
+			speech.cancelSpeech()
+			speech.speakObjectProperties(obj,name=True,role=True)
+			info=self.makeTextInfo(textHandler.POSITION_FIRST)
+			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+			return 
+		if obj.role==controlTypes.ROLE_DOCUMENT:
+			return
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
 			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
 		except:
 			oldDocHandle=oldID=0
-		docHandle=obj.IAccessibleObject.windowHandle
-		ID=obj.IAccessibleObject.uniqueID
+		try:
+			docHandle=obj.IAccessibleObject.windowHandle
+			ID=obj.IAccessibleObject.uniqueID
+		except:
+			return nextHandler()
 		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
@@ -135,8 +136,7 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<0 or startToEnd>0:  
-				if sayAllHandler.isRunning():
-					speech.cancelSpeech()
+				speech.cancelSpeech()
 				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
@@ -188,24 +188,8 @@ class Gecko_ia2(VirtualBuffer):
 
 	def event_stateChange(self,obj,nextHandler):
 		if not self.isAlive():
-			return virtualBufferHandler.killVirtualBuffer(self)
-		states=self.rootNVDAObject.states
-		if controlTypes.STATE_BUSY in states:
-			speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
-			if self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
-				self.unloadBuffer()
-			return nextHandler()
-		elif self.VBufHandle is not None and controlTypes.STATE_READONLY not in states:
-			return self.unloadBuffer()
-		elif self.VBufHandle is None:
-			self.loadBuffer()
+			return virtualBufferHandler.killVirtualBuffer()
 		return nextHandler()
-
-	def loadBuffer(self):
-		states=self.rootNVDAObject.states
-		if controlTypes.STATE_BUSY in states or controlTypes.STATE_READONLY not in states:
-			return
-		super(Gecko_ia2,self).loadBuffer()
 
 	def event_scrollingStart(self,obj,nextHandler):
 		if self.VBufHandle is None:

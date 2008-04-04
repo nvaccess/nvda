@@ -14,12 +14,14 @@ class multyValueAttribute_t(Structure):
 dll=cdll.virtualBuffer
 
 def dllErrorCheck(res,func,args):
-	if res<0:
+	if res<0 or (func==VBufClient_createBuffer and res==0):
 		raise RuntimeError("error in %s with args of %s, code %s"%(func.__name__,args,res))
+
 	return res
 
 VBufClient_createBuffer=dll.VBufClient_createBuffer
 VBufClient_createBuffer.errcheck=dllErrorCheck
+
 
 VBufClient_destroyBuffer=dll.VBufClient_destroyBuffer
 VBufClient_destroyBuffer.errcheck=dllErrorCheck

@@ -602,7 +602,7 @@ winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
 IA2_EVENT_TEXT_CARET_MOVED:"caret",
-IA2_EVENT_DOCUMENT_CONTENT_CHANGED:"reorder",
+IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 }
 
 def manageEvent(name,window,objectID,childID):
@@ -624,6 +624,11 @@ def manageEvent(name,window,objectID,childID):
 		if obj==focusObject:
 			obj=focusObject
 	if obj:
+		if name=="documentLoadComplete" and (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()):
+			import virtualBufferHandler
+			v=virtualBufferHandler.update(obj)
+			if v:
+				obj.virtualBuffer=v
 		eventHandler.manageEvent(name,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
