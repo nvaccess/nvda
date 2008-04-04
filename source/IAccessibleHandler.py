@@ -629,6 +629,9 @@ def manageEvent(name,window,objectID,childID):
 			v=virtualBufferHandler.update(obj)
 			if v:
 				obj.virtualBuffer=v
+				#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
+				api.getFocusObject().virtualBuffer
+
 		eventHandler.manageEvent(name,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
