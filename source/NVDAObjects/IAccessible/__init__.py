@@ -810,20 +810,6 @@ class ConsoleWindowClass(IAccessible):
 	def event_nameChange(self):
 		pass
 
-class MozillaProgressBar(IAccessible):
-
-	def event_valueChange(self):
-		if config.conf["presentation"]["beepOnProgressBarUpdates"] and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			val=self.value
-			if val=="" or val is None:
-				return
-			if val!=globalVars.lastProgressValue:
-				baseFreq=110
-				tones.beep(baseFreq*(1+(float(val[:-1])/6.25)),40)
-				globalVars.lastProgressValue=val
-		else:
-			super(MozillaProgressBar,self).event_valueChange()
-
 class MozillaUIWindowClass_application(IAccessible):
 
 	def _get_value(self):
@@ -974,15 +960,13 @@ _staticMap={
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"MozillaProgressBar",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"MozillaProgressBar",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
 	("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SHELLDLL_DefView_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",
-	("msctls_progress32",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
+	(None,IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
