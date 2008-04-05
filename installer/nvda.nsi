@@ -169,7 +169,7 @@ Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
-Banner::show /nounload
+;Banner::show /nounload
 FunctionEnd
 
 Function NVDA_GUIInit
@@ -186,7 +186,7 @@ IntCmp $1 1 +1 Continue
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
-Banner::destroy
+;Banner::destroy
 FunctionEnd
 
 Section "install" section_install
