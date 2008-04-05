@@ -496,21 +496,24 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				return obj
 
 	def _get_children(self):
-		if self.IAccessibleChildID>0:
+		try:
+			if self.IAccessibleChildID>0:
+				return []
+			childCount= self.IAccessibleObject.accChildCount
+			if childCount==0:
+				return []
+			children=[]
+			for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
+				if child[0]==self.IAccessibleObject:
+					children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
+				elif child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+					children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
+				else:
+					children.append(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1]))
+			children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
+			return children
+		except:
 			return []
-		childCount= self.IAccessibleObject.accChildCount
-		if childCount==0:
-			return []
-		children=[]
-		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
-			if child[0]==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
-			elif child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-				children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
-			else:
-				children.append(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1]))
-		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
-		return children
 
 	def doDefaultAction(self):
 		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)
@@ -732,9 +735,6 @@ class Dialog(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_DIALOG
 
-	def _get_value(self):
-		return None
-
 	def _get_description(self):
 		children=self.children
 		if len(children)==1 and children[0].role==controlTypes.ROLE_PANE:
@@ -759,8 +759,8 @@ class Dialog(IAccessible):
 		super(Dialog,self).event_gainFocus()
 		children=self.children
 		for child in children:
-			if child.role==controlTypes.ROLE_PROPERTYPAGE:
-				IAccessibleHandler.focus_manageEvent(child,needsFocusState=False)
+			if child.role==controlTypes.ROLE_PROPERTYPAGE and controlTypes.STATE_INVISIBLE not in child.states:
+				speech.speakObject(child,reason=speech.REASON_FOCUS)
 
 	def event_foreground(self):
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
@@ -937,6 +937,7 @@ _staticMap={
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
+	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE):"PropertyPage",
 	(None,IAccessibleHandler.ROLE_SYSTEM_GROUPING):"Groupbox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
@@ -951,11 +952,6 @@ _staticMap={
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
-	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
