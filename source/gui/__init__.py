@@ -31,6 +31,9 @@ evt_externalExecute = wx.NewEventType()
 
 ### Globals
 mainFrame = None
+#: A list of top level windows excluding L{mainFrame} which are currently instantiated and which should be destroyed on exit.
+#: @type: list
+topLevelWindows = []
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
@@ -102,7 +105,10 @@ class MainFrame(wx.Frame):
 		self.Show(False)
 
 	def Destroy(self):
+		global topLevelWindows
 		self.sysTrayIcon.Destroy()
+		for window in topLevelWindows:
+			window.Destroy()
 		super(MainFrame, self).Destroy()
 
 	def onAbortCommand(self,evt):
