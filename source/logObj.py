@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 import inspect
 import winsound
@@ -47,11 +48,13 @@ def getCodePath(f):
 
 class Logger(logging.Logger):
 
-	def _log(self, level, msg, args, exc_info=None, extra=None):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None):
 		if not extra:
 			extra={}
-		f=inspect.currentframe().f_back.f_back
-		extra["codepath"]=getCodePath(f)
+		if not codepath:
+			f=inspect.currentframe().f_back.f_back
+			codepath=getCodePath(f)
+		extra["codepath"] = codepath
 		return logging.Logger._log(self,level, msg, args, exc_info, extra)
 
 class FileHandler(logging.FileHandler):
@@ -60,3 +63,36 @@ class FileHandler(logging.FileHandler):
 		if record.levelno>=logging.ERROR:
 			winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
 		return logging.FileHandler.handle(self,record)
+
+class StreamRedirector(object):
+	"""Redirects an output stream to a logger.
+	"""
+
+	def __init__(self, name, logger, level):
+		"""Constructor.
+		@param name: The name of the stream to be used in the log output.
+		@param logger: The logger to which to log.
+		@type logger: L{Logger}
+		@param level: The level at which to log.
+		@type level: int
+		"""
+		self.name = name
+		self.logger = logger
+		self.level = level
+
+	def write(self, text):
+		text = text.rstrip()
+		if not text:
+			return
+		self.logger.log(self.level, text, codepath=self.name)
+
+	def flush(self):
+		pass
+
+def redirectStdout(logger):
+	"""Redirect stdout and stderr to a given logger.
+	@param logger: The logger to which to redirect.
+	@type logger: L{Logger}
+	"""
+	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
+	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)

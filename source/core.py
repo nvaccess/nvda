@@ -99,7 +99,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		except:
 			globalVars.log.warning("Could not set language to %s"%lang)
 		globalVars.log.debug("Creating wx application instance")
-		app = wx.App()
+		app = wx.App(redirect=False)
 		import queueHandler
 		import gui
 		globalVars.log.debug("Initializing GUI")

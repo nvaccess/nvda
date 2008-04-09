@@ -53,11 +53,9 @@ if getattr(sys, "frozen", None):
 	sys.path.append(sys.prefix)
 	os.chdir(sys.prefix)
 	logFileName='%s\\nvda.log'%tempfile.gettempdir()
-	stderrFileName='%s\\nvda_stderr.log'%tempfile.gettempdir()
 else:
 	os.chdir(sys.path[0])
 	logFileName='nvda.log'
-	stderrFileName='stderr.log'
 
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
@@ -111,13 +109,6 @@ if globalVars.appArgs.quit or oldAppWindowHandle:
 #import pychecker.checker
 #Initial logging and logging code
 
-stderrFile=codecs.open(stderrFileName,"w","utf-8","ignore")
-if stderrFile is None:
-	sys.exit()
-sys.stderr=stderrFile
-sys.stdout=stderrFile
-
-
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
 	logLevel=logging.WARN
@@ -126,6 +117,7 @@ logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w")
 logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
 logHandler.setFormatter(logFormatter)
 log.addHandler(logHandler)
+logObj.redirectStdout(log)
 globalVars.log=log
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
