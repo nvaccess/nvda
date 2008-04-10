@@ -664,9 +664,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		if eventName=="destroy":
 			return
 		#Ignore events with invalid window handles
-		if not window or eventName == "switchEnd":
+		isWindow = winUser.isWindow(window)
+		if not window or eventName == "switchEnd" or (not isWindow and eventName == "menuEnd"):
 			window=winUser.getDesktopWindow()
-		elif not winUser.isWindow(window):
+		elif not isWindow:
 			return
 		windowClassName=winUser.getClassName(window)
 		controlID=winUser.getControlID(window)
