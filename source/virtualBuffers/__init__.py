@@ -131,6 +131,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if self.passThrough:
 				self.passThrough=False
 				virtualBufferHandler.reportPassThrough(self)
+			speech.speakObjectProperties(self.rootNVDAObject,name=True,role=True)
 			info=self.makeTextInfo(textHandler.POSITION_FIRST)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 

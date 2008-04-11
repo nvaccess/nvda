@@ -100,18 +100,9 @@ class Gecko_ia2(VirtualBuffer):
 		api.setNavigatorObject(obj)
 		if self.VBufHandle is None:
 			return nextHandler()
-		if sayAllHandler.isRunning():
-			sayAllHandler.stop()
-			wasSayAll=True
-		else:
-			wasSayAll=False
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
-			speech.cancelSpeech()
-			speech.speakObjectProperties(obj,name=True,role=True)
-			info=self.makeTextInfo(textHandler.POSITION_FIRST)
-			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			return 
 		if obj.role==controlTypes.ROLE_DOCUMENT and not self.passThrough:
 			return
