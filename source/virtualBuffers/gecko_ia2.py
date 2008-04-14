@@ -192,7 +192,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def event_stateChange(self,obj,nextHandler):
 		if not self.isAlive():
-			return virtualBufferHandler.killVirtualBuffer()
+			return virtualBufferHandler.killVirtualBuffer(self)
 		return nextHandler()
 
 	def event_scrollingStart(self,obj,nextHandler):
