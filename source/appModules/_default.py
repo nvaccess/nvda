@@ -58,7 +58,7 @@ class appModule(appModuleHandler.appModule):
 	def script_reportCurrentLine(self,keyPress,nextScript):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo'):
+		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
@@ -73,7 +73,7 @@ class appModule(appModuleHandler.appModule):
 	def script_reportCurrentSelection(self,keyPress,nextScript):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo'):
+		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
 		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 		if info.isCollapsed:
@@ -568,7 +568,7 @@ class appModule(appModuleHandler.appModule):
 		if v and not hasattr(v,'TextInfo') and not v.passThrough:
 			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
 		else:
-			if v:
+			if hasattr(v,'TextInfo') and not v.passThrough:
 				o=v
 			info=o.makeTextInfo(textHandler.POSITION_CARET)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
