@@ -114,6 +114,7 @@ class ConsoleUI(wx.Frame):
 		else:
 			return False
 		self.inputHistoryPos = newIndex
+		self.inputCtrl.SetInsertionPointEnd()
 		return True
 
 	def onInputChar(self, evt):
