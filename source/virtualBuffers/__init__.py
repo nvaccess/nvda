@@ -206,23 +206,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
 
-	def _jumpToNodeType(self,nodeType,direction):
-		attribs=self._searchableAttribsForNodeType(nodeType)
-		if attribs:
-			startOffset,endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
-			try:
-				newDocHandle,newID=VBufClient_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
-			except:
-				return False
-		if not newID or not attribs:
-			return False
-		startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,newDocHandle,newID)
-		info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
-		info.updateCaret()
-		speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
-		self._caretMovedToField(newDocHandle,newID)
-		return True
-
 	def _iterNodesByType(self,nodeType,direction="next",startOffset=-1):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
@@ -239,89 +222,37 @@ class VirtualBuffer(cursorManager.CursorManager):
 			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			yield docHandle, ID, startOffset, endOffset
 
-	def script_nextHeading(self,keyPress,nextScript):
+	def _quickNavScript(self, keyPress, nextScript, nodeType, direction, errorMessage):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		if not self._jumpToNodeType("heading","next"):
-			speech.speakMessage(_("no next heading"))
-	script_nextHeading.__doc__ = _("moves to the next heading")
+		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		try:
+			docHandle, ID, startOffset, endOffset = self._iterNodesByType(nodeType, direction, startOffset).next()
+		except StopIteration:
+			speech.speakMessage(errorMessage)
+			return
+		info = self.makeTextInfo(textHandler.Bookmark(self.TextInfo, (startOffset, endOffset)))
+		info.updateCaret()
+		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
+		self._caretMovedToField(docHandle, ID)
 
-	def script_previousHeading(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("heading","previous"):
-			speech.speakMessage(_("no previous heading"))
-	script_previousHeading.__doc__ = _("moves to the previous heading")
-
-	def script_nextTable(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("table","next"):
-			speech.speakMessage(_("no next table"))
-	script_nextTable.__doc__ = _("moves to the next table")
-
-	def script_previousTable(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("table","previous"):
-			speech.speakMessage(_("no previous table"))
-	script_previousTable.__doc__ = _("moves to the previous table")
-
-	def script_nextLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("link","next"):
-			speech.speakMessage(_("no next link"))
-	script_nextLink.__doc__ = _("moves to the next link")
-
-	def script_previousLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("link","previous"):
-			speech.speakMessage(_("no previous link"))
-	script_previousLink.__doc__ = _("moves to the previous link")
-
-	def script_nextVisitedLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("visitedLink","next"):
-			speech.speakMessage(_("no next visited link"))
-	script_nextLink.__doc__ = _("moves to the next visited link")
-
-	def script_previousVisitedLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("visitedLink","previous"):
-			speech.speakMessage(_("no previous visited link"))
-	script_previousLink.__doc__ = _("moves to the previous visited link")
-
-	def script_nextUnvisitedLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("unvisitedLink","next"):
-			speech.speakMessage(_("no next unvisited link"))
-	script_nextUnvisitedLink.__doc__ = _("moves to the next unvisited link")
-
-	def script_previousUnvisitedLink(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("unvisitedLink","previous"):
-			speech.speakMessage(_("no previous unvisited link"))
-	script_previousUnvisitedLink.__doc__ = _("moves to the previous unvisited link")
-
-	def script_nextFormField(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("formField","next"):
-			speech.speakMessage(_("no next form field"))
-	script_nextFormField.__doc__ = _("moves to the next form field")
-
-	def script_previousFormField(self,keyPress,nextScript):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
-		if not self._jumpToNodeType("formField","previous"):
-			speech.speakMessage(_("no previous form field"))
-	script_previousFormField.__doc__ = _("moves to the next form field")
+	@classmethod
+	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError):
+		scriptSuffix = nodeType[0].upper() + nodeType[1:]
+		scriptName = "next%s" % scriptSuffix
+		funcName = "script_%s" % scriptName
+		script = lambda self, keyPress, nextScript: self._quickNavScript(keyPress, nextScript, nodeType, "next", nextError)
+		script.__doc__ = nextDoc
+		script.__name__ = funcName
+		setattr(cls, funcName, script)
+		cls.bindKey(key, scriptName)
+		scriptName = "previous%s" % scriptSuffix
+		funcName = "script_%s" % scriptName
+		script = lambda self, keyPress, nextScript: self._quickNavScript(keyPress, nextScript, nodeType, "previous", prevError)
+		script.__doc__ = prevDoc
+		script.__name__ = funcName
+		setattr(cls, funcName, script)
+		cls.bindKey("shift+%s" % key, scriptName)
 
 	def script_linksList(self, keyPress, nextScript):
 		if self.VBufHandle is None:
@@ -363,17 +294,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
 	("NVDA+v","toggleScreenLayout"),
-	("h","nextHeading"),
-	("shift+h","previousHeading"),
-	("t","nextTable"),
-	("shift+t","previousTable"),
-	("k","nextLink"),
-	("shift+k","previousLink"),
-	("v","nextVisitedLink"),
-	("shift+v","previousVisitedLink"),
-	("u","nextUnvisitedLink"),
-	("shift+u","previousUnvisitedLink"),
-	("f","nextFormField"),
-	("shift+f","previousFormField"),
 	("NVDA+f7","linksList"),
 ]]
+
+# Add quick navigation scripts.
+qn = VirtualBuffer.addQuickNav
+qn("heading", key="h", nextDoc=_("moves to the next heading"), nextError=_("no next heading"),
+	prevDoc=_("moves to the previous heading"), prevError=_("no previous heading"))
+qn("table", key="t", nextDoc=_("moves to the next table"), nextError=_("no next table"),
+	prevDoc=_("moves to the previous table"), prevError=_("no previous table"))
+qn("link", key="k", nextDoc=_("moves to the next link"), nextError=_("no next link"),
+	prevDoc=_("moves to the previous link"), prevError=_("no previous link"))
+qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextError=_("no next visited link"),
+	prevDoc=_("moves to the previous visited link"), prevError=_("no previous visited link"))
+qn("unvisitedLink", key="u", nextDoc=_("moves to the next unvisited link"), nextError=_("no next unvisited link"),
+	prevDoc=_("moves to the previous unvisited link"), prevError=_("no previous unvisited link"))
+qn("formField", key="f", nextDoc=_("moves to the next form field"), nextError=_("no next form field"),
+	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"))
+del qn
