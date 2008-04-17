@@ -89,20 +89,6 @@ class appModule(appModuleHandler.appModule):
 		speech.speakMessage(text)
 	script_dateTime.__doc__=_("Reports the current date and time")
 
-	def script_increaseRate(self,keyPress,nextScript):
-		rate=min(getSynth().rate+5, 100)
-		getSynth().rate=rate
-		config.conf["speech"][getSynth().name]["rate"]=rate
-		speech.speakMessage(_("rate %d%%")%rate)
-	script_increaseRate.__doc__=_("Increases the speech rate by 5 percent")
-
-	def script_decreaseRate(self,keyPress,nextScript):
-		rate=max(0, getSynth().rate-5)
-		getSynth().rate=rate
-		config.conf["speech"][getSynth().name]["rate"]=rate
-		speech.speakMessage(_("rate %d%%")%rate)
-	script_decreaseRate.__doc__=_("decreases the speech rate by 5 percent")
-
 	def script_increaseSetting(self,keyPress,nextScript):
 		#val = globalVars.settingsRing.increase()
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
