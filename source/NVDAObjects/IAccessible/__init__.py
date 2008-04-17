@@ -875,13 +875,13 @@ class Outline(IAccessible):
 			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
 class ProgressBar(IAccessible):
+	BASE_BEEP_FREQ=110
 
 	def event_valueChange(self):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"] and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			val=self.value
 			if val!=globalVars.lastProgressValue:
-				baseFreq=110
-				tones.beep(int(baseFreq*(1+(float(val[:-1])/6.25))),40)
+				tones.beep(self.BASE_BEEP_FREQ*2**(float(val[:-1])/25.0),40)
 				globalVars.lastProgressValue=val
 		else:
 			super(ProgressBar,self).event_valueChange()
