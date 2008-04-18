@@ -19,7 +19,7 @@ Name "NVDA (Non-visual Desktop Access), v${VERSION}"
 !define NVDAConfig "nvda.ini"
 
 ;Include Modern UI Macro's
-!include "MUI.nsh"
+!include "MUI2.nsh"
 !include "WinMessages.nsh"
 SetCompressor /SOLID LZMA
 CRCCheck On
