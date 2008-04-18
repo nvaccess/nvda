@@ -8,7 +8,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, PropertyPage
 import appModuleHandler
 import speech
 import controlTypes
@@ -16,6 +16,7 @@ from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
+import IAccessibleHandler
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -83,6 +84,8 @@ class appModule(appModuleHandler.appModule):
 			obj.__class__=mirandaIMHyperlink
 		elif obj.windowClassName=="ColourPicker":
 			obj.role=controlTypes.ROLE_COLORCHOOSER
+		elif obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE:
+			obj.__class__=MPropertyPage
 
 class mirandaIMContactList(IAccessible):
 
@@ -149,6 +152,20 @@ class mirandaIMHyperlink(mirandaIMButton):
 
 	def doDefaultAction(self):
 		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONDOWN,0,0)
+
+class MPropertyPage(PropertyPage):
+
+	def _get_name(self):
+		name=super(MPropertyPage,self)._get_name()
+		if not name:
+			tc=self.next
+			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
+				children=tc.children
+				for index in range(len(children)):
+					if (children[index].role==controlTypes.ROLE_TAB) and (controlTypes.STATE_SELECTED in children[index].states):
+						name=children[index].name
+						break
+		return name
 
 [mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","changeItem"),

@@ -770,18 +770,6 @@ class PropertyPage(Dialog):
 	def _get_role(self):
 		return controlTypes.ROLE_PROPERTYPAGE
 
-	def _get_name(self):
-		name=super(PropertyPage,self)._get_name()
-		if not name:
-			tc=self.next
-			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
-				children=tc.children
-				for index in range(len(children)):
-					if (children[index].role==controlTypes.ROLE_TAB) and (controlTypes.STATE_SELECTED in children[index].states):
-						name=children[index].name
-						break
-		return name
-
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
