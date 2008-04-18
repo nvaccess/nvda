@@ -624,7 +624,7 @@ def manageEvent(name,window,objectID,childID):
 		if obj==focusObject:
 			obj=focusObject
 	if obj:
-		if name=="documentLoadComplete" and (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()):
+		if name=="documentLoadComplete" and (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):
 			import virtualBufferHandler
 			v=virtualBufferHandler.update(obj)
 			if v:
