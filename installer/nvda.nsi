@@ -6,7 +6,7 @@
 ;--------------------------------
 
 !define VERSION "SVN-trunk"
-Name "NVDA (Non-visual Desktop Access), v${VERSION}"
+Name "NVDA"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
 !define READMEFILE "documentation\en\readme.txt"
@@ -45,11 +45,18 @@ InstProgressFlags Smooth
 !define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
 !define MUI_CUSTOMPAGECOMMANDS
 
+  ;Start Menu Folder Page Configuration
+Var StartMenuFolder
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM" 
+!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${PRODUCT}"
+!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+
 ;--------------------------------
 ;Pages
 !InsertMacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\copying.txt"
 !insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -199,19 +206,18 @@ SectionEnd
 Section Shortcuts
 SetShellVarContext all
 SetOutPath "$INSTDIR\"
-;!insertmacro MUI_STARTMENU_WRITE_BEGIN application
-CreateDirectory "$SMPROGRAMS\${PRODUCT}"
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
+!insertmacro MUI_STARTMENU_WRITE_BEGIN application
+CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_wiki).lnk" "http://wiki.nvda-project.org" "" "http://wiki.nvda-project.org" 0
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
+!insertmacro MUI_STARTMENU_WRITE_END
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 UnRegDll $INSTDIR\LIB\ia2.dll
 RegDll $INSTDIR\LIB\ia2.dll
-;!insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
 Section Uninstaller
@@ -263,8 +269,9 @@ PreserveConfiguration:
 CopyFiles /SILENT "$INSTDIR\${NVDAConfig}" "$PLUGINSDIR\${NVDAConfig}"
 strcpy $preserveConfig "1"
 Continue:
-Delete "$SMPROGRAMS\${PRODUCT}\*.*"
-RmDir "$SMPROGRAMS\${PRODUCT}"
+!insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+Delete "$SMPROGRAMS\$StartMenuFolder\*.*"
+RmDir "$SMPROGRAMS\$StartMenuFolder"
 Delete $DESKTOP\${PRODUCT}.lnk"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PRODUCT}"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
