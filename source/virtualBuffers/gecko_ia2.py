@@ -184,6 +184,10 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
+		elif nodeType=="list":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LIST]}
+		elif nodeType=="listItem":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LISTITEM]}
 		else:
 			return None
 		# We should never consider invisible nodes.
