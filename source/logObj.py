@@ -1,13 +1,22 @@
+"""Utilities and classes to manage logging in NVDA"""
+
 import os
 import sys
 import logging
 import inspect
 import winsound
-from types import *
+from types import MethodType
+
 
 moduleCache={}
 
 def makeModulePathFromFilePath(path):
+	"""calculates the pythonic dotted module path from a file path of a python module.
+@param path: the relative or absolute path to the module
+@type path: string
+@returns: the Pythonic dotted module path 
+@rtype: string
+"""
 	if path in moduleCache:
 		return moduleCache[path]
 	curPath=path
@@ -33,6 +42,12 @@ def makeModulePathFromFilePath(path):
  
 #Using a frame object, gets current module path (relative to current directory).[className.[funcName]]
 def getCodePath(f):
+	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
+@param f: the frame object to use
+@type f: frame
+@returns: the dotted module.class.attribute path
+@rtype: string
+"""
 	path=makeModulePathFromFilePath(f.f_code.co_filename)
 	funcName=f.f_code.co_name
 	if funcName.startswith('<'):
