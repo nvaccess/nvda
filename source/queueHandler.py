@@ -47,9 +47,9 @@ def isRunningGenerators():
 def flushQueue(queue):
 	for count in range(queue.qsize()+1):
 		if not queue.empty():
-			(func,args,vars)=queue.get_nowait()
+			(func,args,kwargs)=queue.get_nowait()
 			try:
-				func(*args,**vars)
+				func(*args,**kwargs)
 			except:
 				globalVars.log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
 

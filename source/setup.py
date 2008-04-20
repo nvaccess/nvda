@@ -48,7 +48,7 @@ setup(
 ],
 	windows = ["nvda.pyw"],
 	options = {"py2exe": {
-		"bundle_files": 3,
+		"bundle_files": 1,
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
 		# The explicit cursorManager include can be removed once the new virtualBuffers package is included.

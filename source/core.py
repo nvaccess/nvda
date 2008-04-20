@@ -9,7 +9,6 @@
 #Bit of a dance to force comtypes generated interfaces in to our directory
 import comtypes.client
 comtypes.client.gen_dir='.\\comInterfaces'
-import comtypes
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
@@ -17,19 +16,11 @@ import wx
 import time
 import logging
 import globalVars
-import winUser
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
 CORE_QUIT=2
 CORE_RESTART=3
-
-def quit():
-	"""
-Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
-"""
-	globalVars.log.debug("Calling gui.quit")
-	gui.quit()
 
 def resetConfiguration(reportDone=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -156,10 +147,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		return CORE_INITERROR
 	globalVars.log.info("NVDA initialized")
 	globalVars.log.debug("entering wx application main loop")
-	res=app.MainLoop()
-	if res is not None and res is not 0:
-		globalVars.log.critical("wx application main loop stopped with errors, returned %s"%res)
-		endResult=CORE_MAINLOOPERROR
+	app.MainLoop()
 	globalVars.log.debug("Shutting down core")
 	try:
 		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):

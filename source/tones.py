@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import nvwave
-import os
 import struct
 import math
 from glob import glob

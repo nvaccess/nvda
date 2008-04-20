@@ -26,6 +26,7 @@
 @type lastProgressValue: int
 """
  
+startTime=0
 desktopObject=None
 foregroundObject=None
 focusObject=None

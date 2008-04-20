@@ -39,7 +39,7 @@ class scriptableObject(autoPropertyObject):
 		if func:
             			self.bindKeyToFunc_runtime(keyName,func)
       		else:
-			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
+			raise ValueError("no script \"%s\" in %s"%(scriptName,self))
 
 	def bindKeyToFunc_runtime(self,keyName,func):
 		if not self.__dict__.has_key('_keyMap'):

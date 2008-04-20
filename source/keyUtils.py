@@ -64,7 +64,7 @@ def sendKey(keyPress):
 				continue
 			elif (modifier=="win") and ((winUser.getKeyState(winUser.VK_LWIN)&32768) or (winUser.getKeyState(winUser.VK_RWIN)&32768)):
 				continue
-			elif (modifier=="insert") and insertDown:
+			elif (modifier=="insert") and (winUser.getKeyState(winUser.VK_INSERT)&32768):
 				continue
 			if modifier[0:8]=="extended":
 				extended=1
