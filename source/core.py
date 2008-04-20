@@ -131,7 +131,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			"Checks the queues and executes functions."
 			def __init__(self,*args,**kwargs):
 				globalVars.log.debug("Core pump starting")
-				wx.Timer.__init__(self,*args,**kwargs)
+				super(CorePump,self).__init__(*args,**kwargs)
 			def Notify(self):
 				try:
 					IAccessibleHandler.pumpAll()
