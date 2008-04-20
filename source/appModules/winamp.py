@@ -39,7 +39,7 @@ class fileinfo2(Structure):
 
 hwndWinamp=0
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp

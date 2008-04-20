@@ -86,7 +86,7 @@ POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
-class Bookmark(baseObject.autoPropertyObject):
+class Bookmark(baseObject.AutoPropertyObject):
 	"""The type for representing a static absolute position from a L{TextInfo} object
 @ivar infoClass: the class of the TextInfo object
 @type infoClass: type
@@ -125,7 +125,7 @@ UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunck"
 
-class TextInfo(baseObject.autoPropertyObject):
+class TextInfo(baseObject.AutoPropertyObject):
 	"""Contains information about the text at the given position or unit
 @ivar position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
 @type position: int, tuple or string

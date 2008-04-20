@@ -16,7 +16,7 @@ import gui.scriptUI
 import controlTypes
 import NVDAObjects
 
-class virtualBuffer(textBuffer.textBufferObject):
+class virtualBuffer(textBuffer.TextBufferObject):
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		pass
@@ -41,7 +41,7 @@ class virtualBuffer(textBuffer.textBufferObject):
 }
 
 	def __init__(self,NVDAObject):
-		textBuffer.textBufferObject.__init__(self)
+		textBuffer.TextBufferObject.__init__(self)
 		self.needsLoad=True
 		self.rootNVDAObject=NVDAObject
 		self._IDs={}

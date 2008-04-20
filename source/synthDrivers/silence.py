@@ -7,7 +7,7 @@ import baseObject
 
 #Each synth driver is its own python module containing a 'SynthDriver' class.
 
-class SynthDriver(baseObject.autoPropertyObject):
+class SynthDriver(baseObject.AutoPropertyObject):
 
 	hasVoice=False
 	hasPitch=False

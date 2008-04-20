@@ -6,7 +6,7 @@ import __builtin__
 import code
 import sys
 import wx
-from baseObject import autoPropertyObject
+from baseObject import AutoPropertyObject
 import speech
 import queueHandler
 import api
@@ -15,7 +15,7 @@ import gui
 #: The singleton Python console UI instance.
 consoleUI = None
 
-class PythonConsole(code.InteractiveConsole, autoPropertyObject):
+class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	"""An interactive Python console which directs output to supplied functions.
 	This is necessary for a Python console facilitated by a GUI.
 	Input is always received via the L{push} method.

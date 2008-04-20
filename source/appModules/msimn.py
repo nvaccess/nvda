@@ -32,7 +32,7 @@ envelopeNames={
 	1037:_("From:"),
 }
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		controlID=obj.windowControlID

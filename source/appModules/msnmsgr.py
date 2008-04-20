@@ -30,7 +30,7 @@ u'è¨˜éŒ',
 u'Historik',
 ])
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:

@@ -7,7 +7,7 @@
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if (obj.windowClassName=="TMainUserList") or (obj.windowClassName=="TPanel" and obj.windowControlID==13698186):

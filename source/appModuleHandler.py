@@ -150,7 +150,7 @@ def update(windowHandle):
 	"""
 	global activeModule
 	for w in [x for x in runningTable if not winUser.isWindow(x)]:
-		if isinstance(activeModule,appModule) and w==activeModule.appWindow: 
+		if isinstance(activeModule,AppModule) and w==activeModule.appWindow: 
 			if hasattr(activeModule,"event_appLooseFocus"):
 				globalVars.log.debug("calling appLoseFocus event on appModule %s"%activeModule)
 				activeModule.event_appLooseFocus()
@@ -171,12 +171,12 @@ def update(windowHandle):
 		mod=fetchModule(appName)
 		if mod: 
 			mod=mod(appName,appWindow)
-			if mod.__class__!=appModule:
+			if mod.__class__!=AppModule:
 				globalVars.log.info("Loaded appModule %s, %s"%(mod.appName,mod)) 
 			loadKeyMap(appName,mod)
 		runningTable[appWindow]=mod
 	activeAppWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
-	if isinstance(activeModule,appModule) and activeAppWindow!=activeModule.appWindow: 
+	if isinstance(activeModule,AppModule) and activeAppWindow!=activeModule.appWindow: 
 		globalVars.log.info("appModule %s lost focus"%activeModule)
 		if hasattr(activeModule,"event_appLooseFocus"):
 			activeModule.event_appLooseFocus()
@@ -228,7 +228,7 @@ def fetchModule(appName):
 			speech.speakMessage(_("Error in appModule %s")%appName)
 			raise RuntimeError
 	if mod is None:
-		return appModule
+		return AppModule
 	return mod
 
 def initialize():
@@ -250,7 +250,7 @@ def initialize():
 		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
 
 #base class for appModules
-class appModule(baseObject.scriptableObject):
+class AppModule(baseObject.ScriptableObject):
 	"""AppModule base class
 	@var appName: the application name
 	@type appName: str

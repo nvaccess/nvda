@@ -16,13 +16,13 @@ import api
 import speech
 import config
 
-class CursorManager(baseObject.scriptableObject):
+class CursorManager(baseObject.ScriptableObject):
 	"""
 	A mix-in providing caret navigation and selection commands for the object's virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
 	This base cursor manager requires that the text range being used stores its own caret and selection information.
 
-	This is a mix-in class; i.e. it should be inherited alongside another L{baseObject.scriptableObject}.
+	This is a mix-in class; i.e. it should be inherited alongside another L{baseObject.ScriptableObject}.
 	The class into which it is inherited must provide a C{makeTextInfo(position)} method.
 
 	@ivar selection: The current caret/selection range.

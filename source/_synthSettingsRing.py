@@ -3,7 +3,7 @@ import synthDriverHandler
 import config
 import itertools
 
-class SynthSetting(baseObject.autoPropertyObject):
+class SynthSetting(baseObject.AutoPropertyObject):
 	""" a synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,name,min=0,max=100,step=1):
 		self.name=name
@@ -75,7 +75,7 @@ class VariantSynthSetting(SynthSetting):
 	def _get_valueName(self):
 		return synthDriverHandler.getSynth().getVariantName(self.value)
 
-class SynthSettingsRing(baseObject.autoPropertyObject):
+class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
 	 A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
 	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.

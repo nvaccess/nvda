@@ -1,10 +1,10 @@
 import appModuleHandler
 import speech
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def __init__(self,*args):
-		appModuleHandler.appModule.__init__(self,*args)
+		appModuleHandler.AppModule.__init__(self,*args)
 		self._lastValue=None
 
 	def event_NVDAObject_init(self,obj):

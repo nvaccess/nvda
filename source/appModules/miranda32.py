@@ -71,7 +71,7 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 #other constants
 ANSILOGS=(1001,1006)
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":

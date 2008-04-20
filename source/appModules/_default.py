@@ -30,7 +30,7 @@ import ctypes
 from gui import mainFrame
 import virtualBufferHandler
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_switchStart(self,obj,nextHandler):
 		speech.cancelSpeech()

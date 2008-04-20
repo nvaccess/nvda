@@ -7,7 +7,7 @@
 from new import instancemethod
 from keyUtils import key
 
-class autoPropertyObject(object):
+class AutoPropertyObject(object):
 
 	def __getattr__(self,name):
 		if not name.startswith('_get_') and hasattr(self,'_get_%s'%name):
@@ -20,9 +20,9 @@ class autoPropertyObject(object):
 		if not name.startswith('_set_') and hasattr(self,'_set_%s'%name):
 			getattr(self,'_set_%s'%name)(value)
 		else:
-			super(autoPropertyObject,self).__setattr__(name,value)
+			super(AutoPropertyObject,self).__setattr__(name,value)
 
-class scriptableObject(autoPropertyObject):
+class ScriptableObject(AutoPropertyObject):
 
 	@classmethod
 	def bindKey(cls,keyName,scriptName):

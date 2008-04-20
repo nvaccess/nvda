@@ -319,7 +319,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _get_bookmark(self):
 		return textHandler.Bookmark(self.__class__,(self._startOffset,self._endOffset))
 
-class NVDAObject(baseObject.scriptableObject):
+class NVDAObject(baseObject.ScriptableObject):
 	"""
 The baseType NVDA object. All other NVDA objects are based on this one.
 @ivar _hashLimit: The limit in size for a hash of this object

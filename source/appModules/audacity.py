@@ -7,7 +7,7 @@
 import appModuleHandler
 import winUser
 
-class appModule(appModuleHandler.appModule):
+class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="Button":

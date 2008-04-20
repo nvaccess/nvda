@@ -6,7 +6,7 @@ from keyUtils import sendKey, key
 from scriptHandler import isScriptWaiting
 import api
 
-class textBufferObject(baseObject.scriptableObject):
+class TextBufferObject(baseObject.ScriptableObject):
 
 	def __init__(self):
 		self._reviewPosition=0
