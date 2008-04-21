@@ -44,6 +44,12 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
+	def _getWordOffsets(self,offset):
+		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
+		line_startOffset,line_endOffset=VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,False)
+		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
+		return (max(line_startOffset,word_startOffset),min(line_endOffset,word_endOffset))
+
 	def _getLineOffsets(self,offset):
 		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"])
 
