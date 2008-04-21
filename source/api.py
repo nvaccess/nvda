@@ -7,11 +7,9 @@
 """General functions for NVDA"""
 
 import pythoncom
-import weakref
 import logging
 import textHandler
 import globalVars
-import speech
 import virtualBufferHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
@@ -24,12 +22,6 @@ import win32clipboard
 import win32con
 
 #User functions
-
-def quit():
-	"""
-Instructs the GUI that you want to quit. The GUI responds by bringing up a dialog asking you if you want to exit.
-"""
-	gui.quit()
 
 def findObjectWithFocus():
 	"""Walks the object hyerarchy starting at the desktop Window (root object) and follows the activeChild property of each object until it can not go any further - this will be the object with focus.
