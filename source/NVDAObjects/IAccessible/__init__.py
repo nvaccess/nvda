@@ -50,6 +50,9 @@ def getNVDAObjectFromPoint(x,y):
 	return obj
 
 def processGeckoDescription(obj):
+	#Don't do this if the description property is overridden
+	if obj.__class__._get_description!=IAccessible._get_description:
+		return 
 	if not obj.windowClassName.startswith('Mozilla'):
 		return
 	rawDescription=obj.description
