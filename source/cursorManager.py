@@ -41,7 +41,6 @@ class CursorManager(baseObject.ScriptableObject):
 		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
 		"""
 		self._lastSelectionMovedStart=False
-		self._inFind=False
 		self.bindToStandardKeys()
 
 	def _get_selection(self):
@@ -76,12 +75,10 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindTextDialogHelper)
-		self._inFind=True
 		findDialog.run()
 
 	def doFindTextDialogHelper(self,text):
 		if not text:
-			self._inFind=False
 			return
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		res=info.find(text)
@@ -97,7 +94,6 @@ class CursorManager(baseObject.ScriptableObject):
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
 			errorDialog.run()
 		CursorManager._lastFindText=text
-		self._inFind=False
 
 	def script_find(self,keyPress,nextScript): 
 		self.doFindTextDialog()
