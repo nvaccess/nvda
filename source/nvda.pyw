@@ -4,12 +4,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core. it also handles the playing of the startup and exit sounds."""
+ 
 import logging
 import os
 import sys
-import codecs
 import tempfile
-import ctypes
 import winsound
 import locale
 import gettext
@@ -25,11 +25,14 @@ import winKernel
 restartByErrorCount=0
 
 class NoConsoleOptionParser(optparse.OptionParser):
+	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
 
 	def print_help(self, file=None):
+		"""Shows help in a standard Windows message dialog"""
 		win32gui.MessageBox(0, self.format_help(), "Help", 0)
 
 	def error(self, msg):
+		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
 		out = ""
 		if self.usage:
 			out = self.get_usage()
@@ -38,6 +41,7 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		sys.exit(2)
 
 def abortWithError(code):
+	"""Logs a critical error, plays the critical error Windows sound, sets the system screen reader flag back to false, plays the NVDA exit sound, and then exits NVDA"""
 	globalVars.log.critical("core stop not due to exit/restart",exc_info=True)
 	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
