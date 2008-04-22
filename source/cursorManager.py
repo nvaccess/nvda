@@ -74,14 +74,14 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakSpelling(info.text)
 
 	def doFindTextDialog(self):
-		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindTextDialogHelper)
+		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)
 		findDialog.run()
 
-	def doFindTextDialogHelper(self,text):
+	def doFindText(self,text,reverse=False):
 		if not text:
 			return
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		res=info.find(text)
+		res=info.find(text,reverse=reverse)
 		if res:
 			self.selection=info
 			speech.cancelSpeech()
@@ -103,8 +103,15 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastFindText:
 			self.doFindTextDialog()
 			return
-		self.doFindTextDialogHelper(self._lastFindText)
+		self.doFindText(self._lastFindText)
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
+
+	def script_findPrevious(self, keyPress, nextScript):
+		if not self._lastFindText:
+			self.doFindTextDialog()
+			return
+		self.doFindText(self._lastFindText,reverse=True)
+	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
 	def script_pageUp(self,keyPress,nextScript):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
@@ -270,6 +277,7 @@ class CursorManager(baseObject.ScriptableObject):
 			("control+c","copyToClipboard"),
 			("NVDA+Control+f","find"),
 			("NVDA+f3","findNext"),
+			("NVDA+shift+f3","findPrevious"),
 		):
 			self.bindKey_runtime(keyName, scriptName)
 
