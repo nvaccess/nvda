@@ -9,7 +9,6 @@
 import nvwave
 import struct
 import math
-from glob import glob
 import config
 import globalVars
 
