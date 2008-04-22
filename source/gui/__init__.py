@@ -18,6 +18,7 @@ import core
 from settingsDialogs import *
 import speechDictHandler
 import languageHandler
+import logViewer
 
 ### Constants
 appTitle = "NVDA"
@@ -198,6 +199,9 @@ class MainFrame(wx.Frame):
 		except:
 			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
 
+	def onViewLogCommand(self, evt):
+		logViewer.LogViewer().Show()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -232,6 +236,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+
+		menu_tools = wx.Menu()
+		item = menu_tools.Append(wx.ID_ANY, _("View log"))
+		self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
 		item = menu_help.Append(wx.ID_ANY, _("User guide"))
