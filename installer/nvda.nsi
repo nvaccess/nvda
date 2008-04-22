@@ -126,7 +126,7 @@ Var StartMenuFolder
 ;!insertmacro MUI_LANGUAGE "Kurdish"
 ;!insertmacro MUI_LANGUAGE "Irish"
 ;!insertmacro MUI_LANGUAGE "Uzbek"
-;!insertmacro MUI_LANGUAGE "Galician"
+!insertmacro MUI_LANGUAGE "Galician"
 ;--------------------------------
 
 ;----------------------------
@@ -137,6 +137,7 @@ Var StartMenuFolder
 !include "locale\es\langstrings.txt"
 !include "locale\fi\langstrings.txt"
 !include "locale\fr\langstrings.txt"
+!include "locale\gl\langstrings.txt"
 !include "locale\hu\langstrings.txt"
 !include "locale\hr\langstrings.txt"
 !include "locale\it\langstrings.txt"
