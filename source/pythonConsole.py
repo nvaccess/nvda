@@ -62,6 +62,7 @@ class ConsoleUI(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY)
+		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
 		inputSizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.promptLabel = wx.StaticText(self, wx.ID_ANY)
@@ -125,6 +126,16 @@ class ConsoleUI(wx.Frame):
 		elif key in (wx.WXK_UP, wx.WXK_DOWN):
 			if self.historyMove(-1 if key == wx.WXK_UP else 1):
 				return
+		elif key == wx.WXK_F6:
+			self.outputCtrl.SetFocus()
+			return
+		evt.Skip()
+
+	def onOutputChar(self, evt):
+		key = evt.GetKeyCode()
+		if key == wx.WXK_F6:
+			self.inputCtrl.SetFocus()
+			return
 		evt.Skip()
 
 	def updateNamespaceSnapshotVars(self):
