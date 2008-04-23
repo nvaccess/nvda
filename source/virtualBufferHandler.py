@@ -73,6 +73,11 @@ def killVirtualBuffer(virtualBufferObject):
 	if hasattr(virtualBufferObject,'unloadBuffer'):
 		virtualBufferObject.unloadBuffer()
 
+def cleanupVirtualBuffers():
+	"""Kills any currently running virtualBuffers"""
+	for v in list(runningTable):
+		killVirtualBuffer(v)
+
 def reportPassThrough(virtualBuffer):
 	"""Speaks the state of virtualBufferPassThroughMode if it has changed.
 	@param virtualBuffer: The current virtual buffer.

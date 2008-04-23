@@ -159,6 +159,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 	except:
 		pass
+	globalVars.log.debug("Cleaning up running virtualBuffers")
+	try:
+		import virtualBufferHandler
+		virtualBufferHandler.cleanupVirtualBuffers()
+	except:
+		globalVars.log.warn("Error cleaning up virtualBuffers",exc_info=True)
 	globalVars.log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
