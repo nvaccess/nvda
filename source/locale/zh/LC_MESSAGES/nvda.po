@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-03-23 20:30+0800\n"
+"PO-Revision-Date: 2008-04-23 18:59+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -134,27 +134,17 @@ msgstr "人聲"
 msgid "variant"
 msgstr "腔調"
 
-# api.py:145
-# api.py:148
-msgid "virtual buffer pass through"
-msgstr "虛擬緩衝直通"
+# appModuleHandler.py:188
+msgid "Error in appModule %s"
+msgstr "錯誤的模組 %s"
 
-# api.py:145
-# appModules\_default.py:41
-# appModules\_default.py:72
-# appModules\_default.py:82
-# appModules\_default.py:92
-# appModules\_default.py:102
-# appModules\_default.py:343
-# appModules\_default.py:407
-# appModules\_default.py:441
-# appModules\_default.py:451
-# appModules\_default.py:461
-# appModules\_default.py:471
-# keyboardHandler.py:80
-# keyboardHandler.py:83
-msgid "off"
-msgstr "關"
+# appModuleHandler.py:204
+msgid "Could not load default module keyMap"
+msgstr "未能載入預設的鍵盤分配模組"
+
+# appModuleHandler.py:207
+msgid "Could not load default module "
+msgstr "未能載入預設的模組"
 
 # api.py:148
 # appModules\_default.py:38
@@ -172,17 +162,22 @@ msgstr "關"
 msgid "on"
 msgstr "開"
 
-# appModuleHandler.py:188
-msgid "Error in appModule %s"
-msgstr "錯誤的模組 %s"
-
-# appModuleHandler.py:204
-msgid "Could not load default module keyMap"
-msgstr "未能載入預設的鍵盤分配模組"
-
-# appModuleHandler.py:207
-msgid "Could not load default module "
-msgstr "未能載入預設的模組"
+# api.py:145
+# appModules\_default.py:41
+# appModules\_default.py:72
+# appModules\_default.py:82
+# appModules\_default.py:92
+# appModules\_default.py:102
+# appModules\_default.py:343
+# appModules\_default.py:407
+# appModules\_default.py:441
+# appModules\_default.py:451
+# appModules\_default.py:461
+# appModules\_default.py:471
+# keyboardHandler.py:80
+# keyboardHandler.py:83
+msgid "off"
+msgstr "關"
 
 # appModules\_default.py:43
 msgid "keyboard help %s"
@@ -208,19 +203,6 @@ msgstr "選取了 %s"
 # appModules\_default.py:54
 msgid "Reports the current date and time"
 msgstr "報出現時時間和日期"
-
-# appModules\_default.py:60
-# appModules\_default.py:67
-msgid "rate %d%%"
-msgstr "速度百分之 %d"
-
-# appModules\_default.py:61
-msgid "Increases the speech rate by 5 percent"
-msgstr "增加百分之五的朗讀速度"
-
-# appModules\_default.py:68
-msgid "decreases the speech rate by 5 percent"
-msgstr "減低百分之五的朗讀速度"
 
 # appModules\_default.py:82
 msgid "Increases currently active setting in the synth settings ring"
@@ -1135,7 +1117,7 @@ msgstr "時鐘"
 
 # controlTypes.py:117
 msgid "separator"
-msgstr "分隔符號"
+msgstr "隔位符"
 
 # controlTypes.py:118
 msgid "form"
@@ -1635,6 +1617,10 @@ msgstr "圖像化"
 msgid "selectable"
 msgstr "可選取的"
 
+# controlTypes.py:141
+msgid "focusable"
+msgstr "焦點可到達的"
+
 # core.py:44
 msgid "configuration applied"
 msgstr "設定已套用"
@@ -1673,7 +1659,11 @@ msgstr "從目前游標位置開始尋找關鍵字詞"
 
 # virtualBuffers\__init__.py:479
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "從目前游標位置開始尋找上一次輸入過的關鍵字詞"
+msgstr "從當前游標位置開始向下尋找上一次輸入過的關鍵字詞"
+
+# virtualBuffers\__init__.py:479
+msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgstr "從當前游標位置開始向上尋找上一次輸入過的關鍵字詞"
 
 # characterSymbols.py:25
 msgid "none"
@@ -1826,6 +1816,14 @@ msgstr "讀音修正字庫 &d"
 msgid "&Preferences"
 msgstr "偏好設定 (&P)"
 
+# gui\__init__.py:241
+msgid "View log"
+msgstr "檢視記錄 &V"
+
+# gui\__init__.py:243
+msgid "Tools"
+msgstr "工具 &T"
+
 # gui\__init__.py:231
 msgid "User guide"
 msgstr "用戶指南 &U"
@@ -1886,6 +1884,10 @@ msgstr "將現時的設定寫入 nvda.ini"
 # gui\__init__.py:143
 msgid "E&xit"
 msgstr "關閉 NVDA &X"
+
+# gui\logViewer.py:14
+msgid "NVDA Log Viewer"
+msgstr "NVDA 記錄檢視器"
 
 # gui\__init__.py:196
 # gui\scriptUI.py:52
@@ -2097,6 +2099,10 @@ msgstr "一行最多的字元數目 &M"
 msgid "&Number of lines per page"
 msgstr "在一頁裡的行數 &N"
 
+# virtualBuffers_new\__init__.py:277
+msgid "Use &screen layout (when supported)"
+msgstr "可能的話套用畫面檢視方式"
+
 # gui\settingsDialogs.py:316
 msgid "Report &virtual presentation on focus changes"
 msgstr "每當焦點改變時也讀出相關的描述 &V"
@@ -2286,6 +2292,10 @@ msgstr "在按鍵放開時發生錯誤"
 msgid "%s cursor"
 msgstr "%s 光標"
 
+# pythonConsole.py:61
+msgid "NVDA Python Console"
+msgstr "NVDA Python Console"
+
 # controlTypes.py:196
 msgid "end of text"
 msgstr "全部完"
@@ -2448,6 +2458,11 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "或者參閱包含在本程式之內的 copying.txt 檔案。"
 
+# api.py:145
+# api.py:148
+msgid "virtual buffer pass through"
+msgstr "虛擬緩衝直通"
+
 # virtualBuffers\__init__.py:193
 msgid "out of %s"
 msgstr "離開 %s"
@@ -2479,7 +2494,11 @@ msgstr "重新整理"
 
 # virtualBuffers_new\__init__.py:277
 msgid "use screen layout %s"
-msgstr "套用畫面顯示 %s"
+msgstr "套用畫面檢視方式 %s"
+
+# virtualBuffers\__init__.py:342
+msgid "displays a list of links"
+msgstr "顯示超連結清單"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
@@ -2531,42 +2550,37 @@ msgstr "沒有上一個連結了"
 msgid "moves to the previous link"
 msgstr "移到上一個連結"
 
-# virtualBuffers_new\__init__.py:352
-msgid "no next visited link"
-msgstr "沒有下一個到訪過的連結了"
-
 # virtualBuffers\__init__.py:383
 msgid "moves to the next visited link"
 msgstr "移到下一個到訪過的連結"
 
-# virtualBuffers_new\__init__.py:357
-msgid "no previous visited link"
-msgstr "沒有上一個到訪過的連結了"
+# virtualBuffers_new\__init__.py:352
+msgid "no next visited link"
+msgstr "沒有下一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:394
 msgid "moves to the previous visited link"
 msgstr "移到上一個到訪過的連結"
 
-# virtualBuffers_new\__init__.py:362
-msgid "no next unvisited link"
-msgstr "沒有下一個未到過的連結了"
+# virtualBuffers_new\__init__.py:357
+msgid "no previous visited link"
+msgstr "沒有上一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:383
 msgid "moves to the next unvisited link"
 msgstr "移到下一個未到過的連結"
 
-# virtualBuffers_new\__init__.py:367
-msgid "no previous unvisited link"
-msgstr "沒有上一個未到過的連結了"
+# virtualBuffers_new\__init__.py:362
+msgid "no next unvisited link"
+msgstr "沒有下一個未到過的連結了"
 
 # virtualBuffers\__init__.py:394
 msgid "moves to the previous unvisited link"
 msgstr "移到上一個未到過的連結"
 
-# virtualBuffers\__init__.py:448
-# virtualBuffers\__init__.py:459
-msgid "no next form field"
-msgstr "沒有下一個表單欄位了"
+# virtualBuffers_new\__init__.py:367
+msgid "no previous unvisited link"
+msgstr "沒有上一個未到過的連結了"
 
 # virtualBuffers\__init__.py:449
 msgid "moves to the next form field"
@@ -2574,12 +2588,52 @@ msgstr "移到下一個表單欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
+msgid "no next form field"
+msgstr "沒有下一個表單欄位了"
+
+# virtualBuffers\__init__.py:448
+# virtualBuffers\__init__.py:459
 msgid "no previous form field"
 msgstr "沒有上一個表單欄位了"
 
-# virtualBuffers\__init__.py:342
-msgid "displays a list of links"
-msgstr "顯示超連結清單"
+# virtualBuffers\__init__.py:460
+msgid "moves to the previous form field"
+msgstr "移到上一個表單欄位"
+
+# virtualBuffers\__init__.py:382
+# virtualBuffers\__init__.py:393
+msgid "no next list"
+msgstr "沒有下一個清單了"
+
+# virtualBuffers\__init__.py:405
+msgid "moves to the next list"
+msgstr "移到下一個清單"
+
+# appModules\_default.py:189
+msgid "no previous list"
+msgstr "沒有上一個清單了"
+
+# virtualBuffers\__init__.py:416
+msgid "moves to the previous list"
+msgstr "移到上一個清單"
+
+# virtualBuffers\__init__.py:426
+# virtualBuffers\__init__.py:437
+msgid "no next list item"
+msgstr "沒有下一個清單項目了"
+
+# virtualBuffers\__init__.py:427
+msgid "moves to the next list item"
+msgstr "移到下一個清單項目"
+
+# virtualBuffers\__init__.py:426
+# virtualBuffers\__init__.py:437
+msgid "no previous list item"
+msgstr "沒有上一個清單項目了"
+
+# virtualBuffers\__init__.py:438
+msgid "moves to the previous list item"
+msgstr "移到上一個清單項目"
 
 # virtualBuffers\IAccessible\MSHTML.py:136
 # virtualBuffers\IAccessible\gecko.py:157
@@ -2647,26 +2701,10 @@ msgstr "沒有連結了"
 msgid "no more lists"
 msgstr "沒有清單了"
 
-# virtualBuffers\__init__.py:405
-msgid "moves to the next list"
-msgstr "移到下一個清單"
-
-# virtualBuffers\__init__.py:416
-msgid "moves to the previous list"
-msgstr "移到上一個清單"
-
 # virtualBuffers\__init__.py:426
 # virtualBuffers\__init__.py:437
 msgid "no more list items"
 msgstr "沒有清單項目了"
-
-# virtualBuffers\__init__.py:427
-msgid "moves to the next list item"
-msgstr "移到下一個清單項目"
-
-# virtualBuffers\__init__.py:438
-msgid "moves to the previous list item"
-msgstr "移到上一個清單項目"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
@@ -2676,10 +2714,6 @@ msgstr "沒有表單欄位了"
 # virtualBuffers\__init__.py:449
 msgid "Moves to the next form field"
 msgstr "移到下一個表單欄位"
-
-# virtualBuffers\__init__.py:460
-msgid "moves to the previous form field"
-msgstr "移到上一個表單欄位"
 
 # virtualBuffers\__init__.py:473
 msgid "text: \"%s\" not found"
