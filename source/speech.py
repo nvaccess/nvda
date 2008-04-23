@@ -33,13 +33,6 @@ speechMode=2
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
-re_sentence_dot=re.compile(r"(\w|\)|\"|')\.(\s|$)")
-re_sentence_comma=re.compile(r"(\w|\)|\"|'),(\s|$)")
-re_sentence_question=re.compile(r"(\w|\))\?(\s|$)")
-re_sentence_colon=re.compile(r"(\w|\)|\"|'):(\s|$)")
-re_sentence_semiColon=re.compile(r"(\w|\)|\"|');(\s|$)")
-re_sentence_exclimation=re.compile(r"(\w|\)|\"|')!(\s|$)")
-re_word_apostraphy=re.compile(r"(\w)'(\w)")
 typedWord=""
 REASON_FOCUS=1
 REASON_MOUSE=2
@@ -62,6 +55,26 @@ def initialize():
 def terminate():
 	setSynth(None)
 
+RE_PROCESS_SYMBOLS = re.compile(
+	# Groups 1-3: expand symbols where the actual symbol should be preserved to provide correct entonation.
+	# Group 1: sentence endings.
+	r"(?:(?<=[^\s.!?])([.!?])(?=[\"')\s]|$))"
+	# Group 2: comma.
+	+ r"|(,)"
+	# Group 3: semi-colon and colon.
+	+ r"|(?:(?<=[^\s;:])([;:])(?=\s|$))"
+	# Group 4: expand all other symbols without preserving.
+	+ r"|([%s])" % re.escape("".join(frozenset(characterSymbols.names) - frozenset(characterSymbols.blankList)))
+)
+def _processSymbol(m):
+	symbol = m.group(1) or m.group(2) or m.group(3)
+	if symbol:
+		# Preserve symbol.
+		return " %s%s " % (characterSymbols.names[symbol], symbol)
+	else:
+		# Expand without preserving.
+		return " %s " % characterSymbols.names[m.group(4)]
+
 def processTextSymbols(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
@@ -69,47 +82,9 @@ def processTextSymbols(text,expandPunctuation=False):
 	if isinstance(text,basestring):
 		text=text.replace(u'\xa0',u' ')
 	text = speechDictHandler.processText(text)
-	#expands ^ and ~ so they can be used as protector symbols
-	#Expands special sentence punctuation keeping the origional physical symbol but protected by ^ and ~
-	#Expands any other symbols and removes ^ and ~ protectors
-	if expandPunctuation is False:
+	if not expandPunctuation:
 		return text 
-	protector=False
-	buf=""
-	for char in text:
-		if (char=="^") or (char=="~"):
-			buf+=" %s "%characterSymbols.names[char]
-		else:
-			buf+=char
-	text=buf
-	text=re_sentence_dot.sub(r"\1 ^%s.~ \2"%characterSymbols.names["."],text)
-	text=re_sentence_comma.sub(r"\1 ^%s,~ \2"%characterSymbols.names[","],text)
-	text=re_sentence_question.sub(r"\1 ^%s?~ \2"%characterSymbols.names["?"],text)
-	text=re_sentence_colon.sub(r"\1 ^%s:~ \2"%characterSymbols.names[":"],text)
-	text=re_sentence_semiColon.sub(r"\1 ^%s;~ \2"%characterSymbols.names[";"],text)
-	text=re_sentence_exclimation.sub(r"\1 ^%s!~ \2"%characterSymbols.names["!"],text)
-	#text=re_word_apostraphy.sub(r"\1 %s^.~ \2"%characterSymbols.names["'"],text)
-	buf=""
-	for char in text:
-		if char=="^":
-			protector=True
-			buf+="^"
-			continue
-		if char=="~":
-			protector=False
-			buf+="~"
-			continue
-		if not protector:
-			if (char not in characterSymbols.blankList) and char in characterSymbols.names:
-				buf+=" ^%s~ "%characterSymbols.names[char]
-			else:
-				buf+=char
-		else:
-			buf+=char
-	text=buf
-	text=text.replace("^","")
-	text=text.replace("~","")
-	return text
+	return RE_PROCESS_SYMBOLS.sub(_processSymbol, text)
 
 def processSymbol(symbol):
 	if isinstance(symbol,basestring):
