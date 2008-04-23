@@ -1,12 +1,11 @@
 # Suomenkielinen lokalisointi NVDA:lle
 # Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
-# Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1937\n"
+"Project-Id-Version: r1949\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-04-22 11:03+0300\n"
+"PO-Revision-Date: 2008-04-23 07:30+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,17 +13,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:64 speech.py:699
+#: NVDAObjects\IAccessible\__init__.py:67 speech.py:699
 msgid "level %s"
 msgstr "taso %s"
 
-#: NVDAObjects\IAccessible\__init__.py:70
+#: NVDAObjects\IAccessible\__init__.py:73
 #: NVDAObjects\IAccessible\__init__.py:549
 #: NVDAObjects\IAccessible\sysListView32.py:89
 msgid "%s of %s"
 msgstr "%s kautta %s"
 
-#: NVDAObjects\IAccessible\__init__.py:76
+#: NVDAObjects\IAccessible\__init__.py:79
 msgid "contains %s items"
 msgstr "sisältää %s kohdetta"
 
@@ -1167,7 +1166,7 @@ msgstr "rivin otsikko"
 
 #: controlTypes.py:202
 msgid "drop down button"
-msgstr "alasvetopainike"
+msgstr "pudotuspainike"
 
 #: controlTypes.py:203
 msgid "clock"
@@ -1284,7 +1283,7 @@ msgstr "upotettu objekti"
 
 #: controlTypes.py:231
 msgid "end note"
-msgstr "loppuhuomautus"
+msgstr "loppuviite"
 
 #: controlTypes.py:232
 msgid "footer"
@@ -1292,7 +1291,7 @@ msgstr "alatunniste"
 
 #: controlTypes.py:233
 msgid "foot note"
-msgstr "alareunan huomautus"
+msgstr "alaviite"
 
 #: controlTypes.py:234
 msgid "glass pane"
@@ -1424,7 +1423,7 @@ msgstr "valikkopainike"
 
 #: controlTypes.py:267
 msgid "drop down button grid"
-msgstr "alasvetopainikeruudukko"
+msgstr "pudotuspainikeruudukko"
 
 #: controlTypes.py:268
 msgid "equation"
@@ -1690,83 +1689,85 @@ msgstr ""
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "Etsi aiemmin annetun tekstin edellinen esiintymä kohdistimen nykyisestä paikasta lähtien"
+msgstr ""
+"Etsi aiemmin annetun tekstin edellinen esiintymä kohdistimen nykyisestä "
+"paikasta lähtien"
 
-#: gui\__init__.py:126
+#: gui\__init__.py:127
 msgid "configuration saved"
 msgstr "asetukset tallennettu"
 
-#: gui\__init__.py:128
+#: gui\__init__.py:129
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Asetuksia ei voitu tallentaa, tiedostojärjestelmä luultavasti vain luku -"
 "tyyppiä"
 
-#: gui\__init__.py:131
+#: gui\__init__.py:132
 msgid "Default dictionary"
 msgstr "Oletussanasto"
 
-#: gui\__init__.py:135
+#: gui\__init__.py:136
 msgid "Voice dictionary (%s)"
 msgstr "Puheäänikohtainen sanasto (%s)"
 
-#: gui\__init__.py:139
+#: gui\__init__.py:140
 msgid "Temporary dictionary"
 msgstr "Tilapäissanasto"
 
-#: gui\__init__.py:145
+#: gui\__init__.py:146
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Oletko varma, että haluat sulkea NVDA:n?"
 
-#: gui\__init__.py:145 gui\__init__.py:262
+#: gui\__init__.py:146 gui\__init__.py:271
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "copyright"
 msgstr "tekijänoikeus"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "url"
 msgstr "URL-osoite"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "version"
 msgstr "versio"
 
-#: gui\__init__.py:196 gui\__init__.py:253
+#: gui\__init__.py:197 gui\__init__.py:262
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
-#: gui\__init__.py:210
+#: gui\__init__.py:214
 msgid "&General settings..."
 msgstr "&Yleiset..."
 
-#: gui\__init__.py:210 gui\settingsDialogs.py:98
+#: gui\__init__.py:214 gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Yleiset asetukset"
 
-#: gui\__init__.py:212
+#: gui\__init__.py:216
 msgid " the synthesizer to use"
 msgstr " käytettävä syntetisaattori"
 
-#: gui\__init__.py:212
+#: gui\__init__.py:216
 msgid "&Synthesizer..."
 msgstr "&Syntetisaattori..."
 
-#: gui\__init__.py:214
+#: gui\__init__.py:218
 msgid "&Voice settings..."
 msgstr "&Puhe..."
 
-#: gui\__init__.py:214
+#: gui\__init__.py:218
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
-#: gui\__init__.py:216
+#: gui\__init__.py:220
 msgid "&Keyboard Settings..."
 msgstr "&Näppäimistö..."
 
-#: gui\__init__.py:216
+#: gui\__init__.py:220
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -1774,54 +1775,54 @@ msgstr ""
 "Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
 "komentonäppäinten lukeminen"
 
-#: gui\__init__.py:218
+#: gui\__init__.py:222
 msgid "&Mouse settings..."
 msgstr "&Hiiri..."
 
-#: gui\__init__.py:218
+#: gui\__init__.py:222
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr ""
 "Muuta hiirikohdistimen muutosten ja hiiren alla olevan objektin lukuasetuksia"
 
-#: gui\__init__.py:220
+#: gui\__init__.py:224
 msgid "&Object presentation..."
 msgstr "&Objektien lukeminen..."
 
-#: gui\__init__.py:220
+#: gui\__init__.py:224
 msgid "Change reporting of objects"
 msgstr "Muuta objektien lukuasetuksia"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:226
 msgid "Change virtual buffers specific settings"
 msgstr "Muuta näennäispuskureiden asetuksia"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:226
 msgid "Virtual &buffers..."
 msgstr "Näennäisp&uskurit..."
 
-#: gui\__init__.py:224
+#: gui\__init__.py:228
 msgid "Change Settings of document properties"
 msgstr "Muuta asiakirjojen muotoiluasetuksia"
 
-#: gui\__init__.py:224
+#: gui\__init__.py:228
 msgid "Document &formatting..."
 msgstr "&Asiakirjojen muotoilu..."
 
-#: gui\__init__.py:227
+#: gui\__init__.py:231
 msgid "&Default dictionary..."
 msgstr "&Oletussanasto..."
 
-#: gui\__init__.py:227
+#: gui\__init__.py:231
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
 msgstr "Valintaikkuna, jossa voit lisätä sanastomerkintöjä oletussanastoon"
 
-#: gui\__init__.py:229
+#: gui\__init__.py:233
 msgid "&Voice dictionary..."
 msgstr "&Puheäänikohtainen sanasto..."
 
-#: gui\__init__.py:229
+#: gui\__init__.py:233
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -1829,84 +1830,96 @@ msgstr ""
 "Valintaikkuna, jossa voit lisätä sanastomerkintöjä puheäänikohtaiseen "
 "sanastoon"
 
-#: gui\__init__.py:231
+#: gui\__init__.py:235
 msgid "&Temporary dictionary..."
 msgstr "&Tilapäissanasto..."
 
-#: gui\__init__.py:231
+#: gui\__init__.py:235
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
 "Valintaikkuna, jossa voit lisätä sanastomerkintöjä tilapäissanastoon"
 
-#: gui\__init__.py:233
+#: gui\__init__.py:237
 msgid "Speech &dictionaries"
 msgstr "Puh&esanastot"
 
-#: gui\__init__.py:234
+#: gui\__init__.py:238
 msgid "&Preferences"
 msgstr "&Asetukset"
 
-#: gui\__init__.py:237
+#: gui\__init__.py:241
+msgid "View log"
+msgstr "Näytä loki"
+
+#: gui\__init__.py:243
+msgid "Tools"
+msgstr "Työkalut"
+
+#: gui\__init__.py:246
 msgid "User guide"
 msgstr "Käyttöopas"
 
-#: gui\__init__.py:239
+#: gui\__init__.py:248
 msgid "Key Command Quick Reference"
 msgstr "Näppäinkomennot"
 
-#: gui\__init__.py:241
+#: gui\__init__.py:250
 msgid "What's &new"
 msgstr "Mitä &uutta"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:253
 msgid "Home page"
 msgstr "Kotisivu"
 
-#: gui\__init__.py:246
+#: gui\__init__.py:255
 msgid "Trac (issue tracker)"
 msgstr "Trac (ongelmienseuranta)"
 
-#: gui\__init__.py:248
+#: gui\__init__.py:257
 msgid "Web resources"
 msgstr "Web-resurssit"
 
-#: gui\__init__.py:249
+#: gui\__init__.py:258
 msgid "License"
 msgstr "Lisenssi"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:260
 msgid "Contributors"
 msgstr "Avustajat"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:262
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:255
+#: gui\__init__.py:264
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:266
 msgid "&Revert to saved configuration"
 msgstr "&Palaa tallennettuihin asetuksiin"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:266
 msgid "Reset all settings to saved state"
 msgstr "Nollaa asetukset tallennettuihin arvoihinsa"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:268
 msgid "&Save configuration"
 msgstr "&Tallenna asetukset"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:268
 msgid "Write the current configuration to nvda.ini"
 msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:271
 msgid "E&xit"
 msgstr "&Lopeta"
+
+#: gui\logViewer.py:14
+msgid "NVDA Log Viewer"
+msgstr "NVDA-lokikatselija"
 
 #: gui\scriptUI.py:52 gui\scriptUI.py:61 gui\scriptUI.py:73
 msgid "NVDA"
