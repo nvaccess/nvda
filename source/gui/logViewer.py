@@ -25,7 +25,7 @@ class LogViewer(wx.Frame):
 		menu = wx.Menu()
 		item = menu.Append(wx.ID_ANY, _("Refresh	F5"))
 		self.Bind(wx.EVT_MENU, self.refresh, item)
-		item = menu.Append(wx.ID_ANY, _("Save as..."))
+		item = menu.Append(wx.ID_SAVEAS)
 		self.Bind(wx.EVT_MENU, self.onSaveAsCommand, item)
 		menu.AppendSeparator()
 		item = menu.Append(wx.ID_EXIT, _("E&xit"))

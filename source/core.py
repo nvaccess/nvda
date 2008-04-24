@@ -95,6 +95,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import gui
 		globalVars.log.debug("Initializing GUI")
 		gui.initialize(app)
+		# initialize wxpython localization support
+		locale = wx.Locale()
+		locale.Init2()
 		import speechDictHandler
 		globalVars.log.debug("Speech Dictionary processing")
 		speechDictHandler.initialize()
