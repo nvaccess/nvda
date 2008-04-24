@@ -117,7 +117,7 @@ logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
 	logLevel=logging.WARN
 log=logObj.Logger("NVDA",logLevel)
-logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w")
+logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w", "UTF-8")
 logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
 logHandler.setFormatter(logFormatter)
 log.addHandler(logHandler)
