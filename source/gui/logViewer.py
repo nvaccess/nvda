@@ -1,7 +1,6 @@
 """Provides functionality to view the NVDA log.
 """
 
-import logging
 import wx
 import globalVars
 import gui
@@ -13,6 +12,7 @@ class LogViewer(wx.Frame):
 	def __init__(self):
 		super(LogViewer, self).__init__(None, wx.ID_ANY, _("NVDA Log Viewer"))
 		gui.topLevelWindows.append(self)
+		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY)
@@ -20,26 +20,46 @@ class LogViewer(wx.Frame):
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 
+		menuBar = wx.MenuBar()
+		menu = wx.Menu()
+		item = menu.Append(wx.ID_ANY, _("Refresh	F5"))
+		self.Bind(wx.EVT_MENU, self.refresh, item)
+		item = menu.Append(wx.ID_SAVEAS)
+		self.Bind(wx.EVT_MENU, self.onSaveAsCommand, item)
+		menu.AppendSeparator()
+		item = menu.Append(wx.ID_EXIT, _("E&xit"))
+		self.Bind(wx.EVT_MENU, self.onClose, item)
+		menuBar.Append(menu, _("Log"))
+		self.SetMenuBar(menuBar)
+
+		self.refresh()
+		self.outputCtrl.SetFocus()
+
+	def refresh(self, evt=None):
+		pos = self.outputCtrl.GetInsertionPoint()
 		# Populate the output control with the contents of the log file.
 		try:
 			self.outputCtrl.SetValue(file(globalVars.appArgs.logFileName, "r").read())
+			self.outputCtrl.SetInsertionPoint(pos)
 		except IOError:
 			pass
 
-		# Install a log handler to direct future output to the output control.
-		# wx.TextCtrl does not support flush(), so fudge it.
-		self.outputCtrl.flush = lambda: None
-		self.logHandler = logging.StreamHandler(self.outputCtrl)
-		self.logHandler.setFormatter(globalVars.log.handlers[0].formatter)
-		globalVars.log.addHandler(self.logHandler)
-
-		self.outputCtrl.SetFocus()
+	def onActivate(self, evt):
+		self.refresh()
+		evt.Skip()
 
 	def onClose(self, evt):
 		self.Destroy()
 
+	def onSaveAsCommand(self, evt):
+		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.SAVE | wx.OVERWRITE_PROMPT, parent=self)
+		if not filename:
+			return
+		try:
+			file(filename, "w").write(self.outputCtrl.GetValue())
+		except (IOError, OSError), e:
+			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
+
 	def Destroy(self):
 		gui.topLevelWindows.remove(self)
-		globalVars.log.removeHandler(self.logHandler)
-		self.logHandler.close()
 		super(LogViewer, self).Destroy()
