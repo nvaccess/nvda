@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1929\n"
+"Project-Id-Version: r1961\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2008-04-22 15:38+0100\n"
+"PO-Revision-Date: 2008-04-24 17:15+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español en Tifloclub <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #: NVDAObjects\IAccessible\__init__.py:67
-#: speech.py:699
+#: speech.py:674
 msgid "level %s"
 msgstr "nivel %s"
 
@@ -166,8 +166,8 @@ msgstr "no se pudo cargar el módulo predeterminado"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:351
-#: virtualBufferHandler.py:82
+#: speech.py:326
+#: virtualBufferHandler.py:87
 #: virtualBuffers\__init__.py:209
 #: virtualBuffers_new\__init__.py:169
 msgid "on"
@@ -187,9 +187,9 @@ msgstr "activado"
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: speech.py:356
-#: speech.py:362
-#: virtualBufferHandler.py:82
+#: speech.py:331
+#: speech.py:337
+#: virtualBufferHandler.py:87
 #: virtualBuffers\__init__.py:209
 #: virtualBuffers_new\__init__.py:169
 msgid "off"
@@ -209,8 +209,8 @@ msgid "no selection"
 msgstr "Sin selección"
 
 #: appModules\_default.py:82
-#: speech.py:263
-#: speech.py:407
+#: speech.py:238
+#: speech.py:382
 #: textBuffer.py:537
 #: textBuffer.py:541
 #: textBuffer.py:543
@@ -770,8 +770,8 @@ msgstr "enviado: %s"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:67
-#: speech.py:632
+#: speech.py:80
+#: speech.py:607
 msgid "blank"
 msgstr "en blanco"
 
@@ -1617,208 +1617,249 @@ msgstr "encontrar la siguiente ocurrencia de la cadena de texto introducida prev
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "encontrar la aparición anterior de la cadena de texto previamente introducida desde la posición actual del cursor"
 
-#: gui\__init__.py:126
+#: gui\__init__.py:127
 msgid "configuration saved"
 msgstr "configuración guardada"
 
-#: gui\__init__.py:128
+#: gui\__init__.py:129
 msgid "Could not save configuration - probably read only file system"
 msgstr "No se pudo guardar la configuración; provablemente el sistema de archivos es de sólo lectura"
 
-#: gui\__init__.py:131
+#: gui\__init__.py:132
 msgid "Default dictionary"
 msgstr "Diccionario predeterminado"
 
-#: gui\__init__.py:135
+#: gui\__init__.py:136
 msgid "Voice dictionary (%s)"
 msgstr "Diccionario por Voces (%s)"
 
-#: gui\__init__.py:139
+#: gui\__init__.py:140
 msgid "Temporary dictionary"
 msgstr "Diccionario temporal"
 
-#: gui\__init__.py:145
+#: gui\__init__.py:146
 msgid "Are you sure you want to quit NVDA?"
 msgstr "¿Estás seguro de querer salir del NVDA?"
 
-#: gui\__init__.py:145
-#: gui\__init__.py:262
+#: gui\__init__.py:146
+#: gui\__init__.py:279
 msgid "Exit NVDA"
 msgstr "salir del NVDA"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "copyright"
 msgstr "Derechos Reservados"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "url"
 msgstr "URL"
 
-#: gui\__init__.py:195
+#: gui\__init__.py:196
 msgid "version"
 msgstr "versión"
 
-#: gui\__init__.py:196
-#: gui\__init__.py:253
+#: gui\__init__.py:197
+#: gui\__init__.py:270
 msgid "About NVDA"
 msgstr "Acerca del NVDA"
 
-#: gui\__init__.py:210
+#: gui\__init__.py:220
 msgid "&General settings..."
 msgstr "Opciones &Generales..."
 
-#: gui\__init__.py:210
+#: gui\__init__.py:220
 #: gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "Opciones Generales"
 
-#: gui\__init__.py:212
+#: gui\__init__.py:222
 msgid " the synthesizer to use"
 msgstr " el sintetizador a utilizar"
 
-#: gui\__init__.py:212
+#: gui\__init__.py:222
 msgid "&Synthesizer..."
 msgstr "&Sintetizador..."
 
-#: gui\__init__.py:214
+#: gui\__init__.py:224
 msgid "&Voice settings..."
 msgstr "Opciones de &Voz..."
 
-#: gui\__init__.py:214
+#: gui\__init__.py:224
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Elegir voz, velocidad, tono y volumen a utilizar"
 
-#: gui\__init__.py:216
+#: gui\__init__.py:226
 msgid "&Keyboard Settings..."
 msgstr "Opciones de &Teclado..."
 
-#: gui\__init__.py:216
+#: gui\__init__.py:226
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "configurar la lectura de carácteres, palabras o teclas de órdenes al escribir"
 
-#: gui\__init__.py:218
+#: gui\__init__.py:228
 msgid "&Mouse settings..."
 msgstr "Opciones de &Ratón..."
 
-#: gui\__init__.py:218
+#: gui\__init__.py:228
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "Cambiar el aviso de la forma del ratón, objeto bajo el ratón"
 
-#: gui\__init__.py:220
+#: gui\__init__.py:230
 msgid "&Object presentation..."
 msgstr "Presentación de &Objetos..."
 
-#: gui\__init__.py:220
+#: gui\__init__.py:230
 msgid "Change reporting of objects"
 msgstr "Cambiar el anunciado de los objetos"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:232
 msgid "Change virtual buffers specific settings"
 msgstr "modificar configuraciones del modo virtual"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:232
 msgid "Virtual &buffers..."
 msgstr "Modo &Virtual..."
 
-#: gui\__init__.py:224
+#: gui\__init__.py:234
 msgid "Change Settings of document properties"
 msgstr "Cambiar opciones de propiedades del documento"
 
-#: gui\__init__.py:224
+#: gui\__init__.py:234
 msgid "Document &formatting..."
 msgstr "&Formateado de documentos..."
 
-#: gui\__init__.py:227
+#: gui\__init__.py:237
 msgid "&Default dictionary..."
 msgstr "Diccionario &predeterminado..."
 
-#: gui\__init__.py:227
+#: gui\__init__.py:237
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "diálogo donde puedes ajustar el diccionario predeterminado añadiendo entradas de diccionario a la lista"
 
-#: gui\__init__.py:229
+#: gui\__init__.py:239
 msgid "&Voice dictionary..."
 msgstr "Diccionario por &Voces..."
 
-#: gui\__init__.py:229
+#: gui\__init__.py:239
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "diálogo donde puedes ajustar el diccionario para una voz en especial añadiendo entradas de diccionario a la lista"
 
-#: gui\__init__.py:231
+#: gui\__init__.py:241
 msgid "&Temporary dictionary..."
 msgstr "Diccionario &temporal..."
 
-#: gui\__init__.py:231
+#: gui\__init__.py:241
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "diálogo donde puedes ajustar un diccionario temporal añadiendo entradas de diccionario al cuadro de edición"
 
-#: gui\__init__.py:233
+#: gui\__init__.py:243
 msgid "Speech &dictionaries"
 msgstr "&Diccionarios del Habla"
 
-#: gui\__init__.py:234
+#: gui\__init__.py:244
 msgid "&Preferences"
 msgstr "&Preferencias"
 
-#: gui\__init__.py:237
+#: gui\__init__.py:247
+msgid "View log"
+msgstr "Ver log"
+
+#: gui\__init__.py:249
+msgid "Python console"
+msgstr "Consola Python"
+
+#: gui\__init__.py:251
+msgid "Tools"
+msgstr "Herramientas"
+
+#: gui\__init__.py:254
 msgid "User guide"
 msgstr "Guía del usuario"
 
-#: gui\__init__.py:239
+#: gui\__init__.py:256
 msgid "Key Command Quick Reference"
 msgstr "Referencia Rápida de Teclas de Órdenes"
 
-#: gui\__init__.py:241
+#: gui\__init__.py:258
 msgid "What's &new"
 msgstr "¿Qué hai de &nuevo?"
 
-#: gui\__init__.py:244
+#: gui\__init__.py:261
 msgid "Home page"
 msgstr "Página de Inicio"
 
-#: gui\__init__.py:246
+#: gui\__init__.py:263
 msgid "Trac (issue tracker)"
 msgstr "Trac (seguimiento de incidencias)"
 
-#: gui\__init__.py:248
+#: gui\__init__.py:265
 msgid "Web resources"
 msgstr "Recursos Web"
 
-#: gui\__init__.py:249
+#: gui\__init__.py:266
 msgid "License"
 msgstr "Licencia"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:268
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:270
 msgid "About..."
 msgstr "Acerca de..."
 
-#: gui\__init__.py:255
+#: gui\__init__.py:272
 msgid "&Help"
 msgstr "A&yuda"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:274
 msgid "&Revert to saved configuration"
 msgstr "&Regresar a la Configuración Guardada"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:274
 msgid "Reset all settings to saved state"
 msgstr "Reinicia todas las opciones al estado guardado"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:276
 msgid "&Save configuration"
 msgstr "&Guardar Configuración"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:276
 msgid "Write the current configuration to nvda.ini"
 msgstr "Guarda la configuración actual en el nvda.ini"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:279
+#: gui\logViewer.py:31
 msgid "E&xit"
 msgstr "&Salir"
+
+#: gui\logViewer.py:14
+msgid "NVDA Log Viewer"
+msgstr "Visualizador de Log de NVDA"
+
+#: gui\logViewer.py:26
+msgid "Refresh\tF5"
+msgstr "Refrescar\tF5"
+
+#: gui\logViewer.py:28
+msgid "Save as..."
+msgstr "Guardar como..."
+
+#: gui\logViewer.py:33
+msgid "Log"
+msgstr "Log"
+
+#: gui\logViewer.py:56
+msgid "Save As"
+msgstr "Guardar Como"
+
+#: gui\logViewer.py:64
+msgid "Error"
+msgstr "Error"
+
+#: gui\logViewer.py:64
+msgid "Error saving log: %s"
+msgstr "Error guardando log: %s"
 
 #: gui\scriptUI.py:52
 #: gui\scriptUI.py:61
@@ -2227,27 +2268,27 @@ msgstr "Consola Python para NVDA"
 msgid "end of text"
 msgstr "fin del texto"
 
-#: speech.py:190
+#: speech.py:165
 msgid "cap %s"
 msgstr "mayus %s"
 
-#: speech.py:342
+#: speech.py:317
 msgid "in"
 msgstr "en"
 
-#: speech.py:347
-#: speech.py:365
+#: speech.py:322
+#: speech.py:340
 msgid "out of"
 msgstr "fuera de"
 
-#: speech.py:412
+#: speech.py:387
 #: textBuffer.py:545
 #: textBuffer.py:547
 #: textBuffer.py:551
 msgid "unselected %s"
 msgstr "no seleccionado %s"
 
-#: speech.py:685
+#: speech.py:660
 #: virtualBuffers\MSHTML.py:123
 #: virtualBuffers\MSHTML.py:302
 #: virtualBuffers\MSHTML.py:306
@@ -2401,7 +2442,7 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "O mirar el fichero Copying.txt que viene con este programa."
 
-#: virtualBufferHandler.py:82
+#: virtualBufferHandler.py:87
 msgid "virtual buffer pass through"
 msgstr "Pasando por el modo virtual"
 
