@@ -59,6 +59,7 @@ class ConsoleUI(wx.Frame):
 
 	def __init__(self):
 		super(ConsoleUI, self).__init__(None, wx.ID_ANY, _("NVDA Python Console"))
+		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY)
@@ -81,7 +82,10 @@ class ConsoleUI(wx.Frame):
 		self.inputHistory = []
 		self.inputHistoryPos = 0
 
-		self.inputCtrl.SetFocus()
+	def onActivate(self, evt):
+		if evt.GetActive():
+			self.inputCtrl.SetFocus()
+		evt.Skip()
 
 	def onClose(self, evt):
 		self.Hide()
