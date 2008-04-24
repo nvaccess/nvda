@@ -156,8 +156,17 @@ class ConsoleUI(wx.Frame):
 
 def initialize():
 	"""Initialize the NVDA Python console GUI.
-	This creates a singleton instance of the console GUI. This is accessible as L{consoleUI}. This can and should be manipulated externally.
+	This creates a singleton instance of the console GUI. This is accessible as L{consoleUI}. This may be manipulated externally.
 	"""
 	global consoleUI
 	consoleUI = ConsoleUI()
 	gui.topLevelWindows.append(consoleUI)
+
+def activate():
+	"""Activate the console GUI.
+	This shows the GUI and brings it to the foreground if possible.
+	@precondition: L{initialize} has been called.
+	"""
+	global consoleUI
+	consoleUI.Raise()
+	consoleUI.Show()

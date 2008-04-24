@@ -766,4 +766,4 @@ class appModule(appModuleHandler.AppModule):
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
 		pythonConsole.consoleUI.updateNamespaceSnapshotVars()
-		pythonConsole.consoleUI.Show()
+		pythonConsole.activate()
