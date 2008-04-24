@@ -108,7 +108,7 @@ class MainFrame(wx.Frame):
 	def Destroy(self):
 		global topLevelWindows
 		self.sysTrayIcon.Destroy()
-		for window in topLevelWindows:
+		for window in list(topLevelWindows):
 			window.Destroy()
 		super(MainFrame, self).Destroy()
 
