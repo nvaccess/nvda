@@ -4,14 +4,14 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1955\n"
-"POT-Creation-Date: 2008-04-24 10:02+???? (?W???)\n"
-"PO-Revision-Date: 2008-04-24 10:13+0900\n"
+"Project-Id-Version: 1963\n"
+"PO-Revision-Date: 2008-04-25 10:00+0900\n"
 "Last-Translator: Katsutoshi Tsuji <tsuji-katsutoshi@mitsue.co.jp>\n"
 "Language-Team: JA <NVDA-jp@comm.twcu.ac.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
 
 #: NVDAObjects\IAccessible\__init__.py:67
 #: speech.py:674
@@ -1559,15 +1559,15 @@ msgstr "フォーカス可能"
 msgid "configuration applied"
 msgstr "設定が適用されました"
 
-#: core.py:106
+#: core.py:109
 msgid "Loading subsystems, please wait..."
 msgstr "お待ちください。補助システムを読み込み中..."
 
-#: core.py:127
+#: core.py:130
 msgid "NVDA started"
 msgstr "NVDA起動しました"
 
-#: core.py:128
+#: core.py:131
 msgid "You can press insert+n to activate the NVDA menu at any time"
 msgstr "NVDA+Nキーを押すことで、いつでもNVDAメニューを開くことができます"
 
@@ -1627,7 +1627,7 @@ msgid "Are you sure you want to quit NVDA?"
 msgstr "本当にNVDAを終了しますか？"
 
 #: gui\__init__.py:146
-#: gui\__init__.py:271
+#: gui\__init__.py:279
 msgid "Exit NVDA"
 msgstr "NVDAを終了します"
 
@@ -1644,178 +1644,203 @@ msgid "version"
 msgstr "バージョン"
 
 #: gui\__init__.py:197
-#: gui\__init__.py:262
+#: gui\__init__.py:270
 msgid "About NVDA"
 msgstr "NVDAについて"
 
-#: gui\__init__.py:214
+#: gui\__init__.py:220
 msgid "&General settings..."
 msgstr "一般設定....(&G)"
 
-#: gui\__init__.py:214
+#: gui\__init__.py:220
 #: gui\settingsDialogs.py:98
 msgid "General settings"
 msgstr "一般設定"
 
-#: gui\__init__.py:216
+#: gui\__init__.py:222
 msgid " the synthesizer to use"
 msgstr "使用する出力先の選択"
 
-#: gui\__init__.py:216
+#: gui\__init__.py:222
 msgid "&Synthesizer..."
 msgstr "出力先....(&S)"
 
-#: gui\__init__.py:218
+#: gui\__init__.py:224
 msgid "&Voice settings..."
 msgstr "音声設定....(&V)"
 
-#: gui\__init__.py:218
+#: gui\__init__.py:224
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "使用する音声、高さ、速さ、音量の選択"
 
-#: gui\__init__.py:220
+#: gui\__init__.py:226
 msgid "&Keyboard Settings..."
 msgstr "キーボードの設定....(&K)"
 
-#: gui\__init__.py:220
+#: gui\__init__.py:226
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "入力文字、入力単語、またはコマンドキーの読み方の設定"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:228
 msgid "&Mouse settings..."
 msgstr "マウス設定....(&M)"
 
-#: gui\__init__.py:222
+#: gui\__init__.py:228
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "マウスポインタ形状の変更や、マウスポインタ位置のオブジェクトの通知方法に関する設定"
 
-#: gui\__init__.py:224
+#: gui\__init__.py:230
 msgid "&Object presentation..."
 msgstr "オブジェクトの説明....(&O)"
 
-#: gui\__init__.py:224
+#: gui\__init__.py:230
 msgid "Change reporting of objects"
 msgstr "オブジェクトの通知方法の変更"
 
-#: gui\__init__.py:226
+#: gui\__init__.py:232
 msgid "Change virtual buffers specific settings"
 msgstr "仮想バッファ固有の設定"
 
-#: gui\__init__.py:226
+#: gui\__init__.py:232
 msgid "Virtual &buffers..."
 msgstr "仮想バッファ....(&B)"
 
-#: gui\__init__.py:228
+#: gui\__init__.py:234
 msgid "Change Settings of document properties"
 msgstr "ドキュメントの書式情報の変更に関する設定"
 
-#: gui\__init__.py:228
+#: gui\__init__.py:234
 msgid "Document &formatting..."
 msgstr "書式情報....(&F)"
 
-#: gui\__init__.py:231
+#: gui\__init__.py:237
 msgid "&Default dictionary..."
 msgstr "デフォルト辞書...(&D)"
 
-#: gui\__init__.py:231
+#: gui\__init__.py:237
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "リストに項目を追加することでデフォルト辞書に項目を追加できるダイアログ"
 
-#: gui\__init__.py:233
+#: gui\__init__.py:239
 msgid "&Voice dictionary..."
 msgstr "音声辞書...(&V)"
 
-#: gui\__init__.py:233
+#: gui\__init__.py:239
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "リストに項目を追加することで音声読み上げ用の辞書に項目を追加できるダイアログ"
 
-#: gui\__init__.py:235
+#: gui\__init__.py:241
 msgid "&Temporary dictionary..."
 msgstr "一時辞書...(&T)"
 
-#: gui\__init__.py:235
+#: gui\__init__.py:241
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "エディットボックスに辞書項目を追加することで一時設定できる辞書ダイアログ"
 
-#: gui\__init__.py:237
+#: gui\__init__.py:243
 msgid "Speech &dictionaries"
 msgstr "音声辞書(&D)"
 
-#: gui\__init__.py:238
+#: gui\__init__.py:244
 msgid "&Preferences"
 msgstr "設定(&P)"
 
-#: gui\__init__.py:241
+#: gui\__init__.py:247
 msgid "View log"
-msgstr "ログ閲覧"
+msgstr "ログ閲覧(&V)"
 
-#: gui\__init__.py:243
+#: gui\__init__.py:249
+msgid "Python console"
+msgstr "Pythonコンソール"
+
+#: gui\__init__.py:251
 msgid "Tools"
 msgstr "ツール(&T)"
 
-#: gui\__init__.py:246
+#: gui\__init__.py:254
 msgid "User guide"
 msgstr "ユーザーガイド(&U)"
 
-#: gui\__init__.py:248
+#: gui\__init__.py:256
 msgid "Key Command Quick Reference"
 msgstr "キーコマンドクイックリファレンス(&K)"
 
-#: gui\__init__.py:250
+#: gui\__init__.py:258
 msgid "What's &new"
 msgstr "最新情報(&N)"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:261
 msgid "Home page"
 msgstr "ホームページ(&H)"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:263
 msgid "Trac (issue tracker)"
 msgstr "TRAC（問題の追跡）"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:265
 msgid "Web resources"
 msgstr "Webリソース"
 
-#: gui\__init__.py:258
+#: gui\__init__.py:266
 msgid "License"
 msgstr "ライセンス(&L)"
 
-#: gui\__init__.py:260
+#: gui\__init__.py:268
 msgid "Contributors"
 msgstr "貢献者(&C)"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:270
 msgid "About..."
 msgstr "NVDAについて...(&A)"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:272
 msgid "&Help"
 msgstr "ヘルプ(&H)"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:274
 msgid "&Revert to saved configuration"
 msgstr "保存された設定状態に戻す(&R)"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:274
 msgid "Reset all settings to saved state"
 msgstr "すべての設定情報を保存された物でリセットします"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:276
 msgid "&Save configuration"
 msgstr "設定情報の保存(&S)"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:276
 msgid "Write the current configuration to nvda.ini"
 msgstr "現在の設定情報をnvda.iniに書き込みます"
 
-#: gui\__init__.py:271
+#: gui\__init__.py:279
+#: gui\logViewer.py:31
 msgid "E&xit"
 msgstr "終了(&X)"
 
 #: gui\logViewer.py:14
 msgid "NVDA Log Viewer"
 msgstr "NVDAログビュアー(&N)"
+
+#: gui\logViewer.py:26
+msgid "Refresh\tF5"
+msgstr "更新(&R)\tF5"
+
+#: gui\logViewer.py:33
+msgid "Log"
+msgstr "ログ(&L)"
+
+#: gui\logViewer.py:56
+msgid "Save As"
+msgstr "名前を付けて保存"
+
+#: gui\logViewer.py:64
+msgid "Error"
+msgstr "エラー"
+
+#: gui\logViewer.py:64
+msgid "Error saving log: %s"
+msgstr "ログ%s保存時にエラーが発生しました"
 
 #: gui\scriptUI.py:52
 #: gui\scriptUI.py:61
@@ -2235,7 +2260,7 @@ msgstr "音声なし"
 
 #: pythonConsole.py:61
 msgid "NVDA Python Console"
-msgstr "NVDA Python Console"
+msgstr "NVDA Pythonコンソール"
 
 #: sayAllHandler.py:155
 msgid "end of text"
@@ -2717,5 +2742,5 @@ msgstr "i=リスト項目用クイックキー"
 
 #: virtualBuffers_old\adobe.py:315
 msgid "protected %s"
-msgstr "保護された%s"
+msgstr "保護付%s"
 
