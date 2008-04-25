@@ -97,7 +97,15 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		gui.initialize(app)
 		# initialize wxpython localization support
 		locale = wx.Locale()
-		locale.Init2()
+		lang=languageHandler.getLanguage()
+		if '_' in lang:
+			wxLang=lang.split('_')[0]
+		else:
+			wxLang=lang
+		try:
+			locale.Init(lang,wxLang)
+		except:
+			pass
 		import speechDictHandler
 		globalVars.log.debug("Speech Dictionary processing")
 		speechDictHandler.initialize()
