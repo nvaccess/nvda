@@ -103,10 +103,10 @@ class GeneralSettingsDialog(SettingsDialog):
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
-		self.languageList=wx.Choice(self,languageListID,name=_("Language"),choices=self.languageNames)
+		self.languageList=wx.Choice(self,languageListID,name=_("Language"),choices=[x[1] for x in self.languageNames])
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
-			index=self.languageNames.index(self.oldLanguage)
+			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
 			self.languageList.SetSelection(index)
 		except:
 			pass
@@ -136,7 +136,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.languageList.SetFocus()
 
 	def onOk(self,evt):
-		newLanguage=self.languageNames[self.languageList.GetSelection()]
+		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
 		if newLanguage!=self.oldLanguage:
 			try:
 				languageHandler.setLanguage(newLanguage)
