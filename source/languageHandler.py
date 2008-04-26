@@ -25,7 +25,7 @@ def localeNameToWindowsLCID(localeName):
 	func_LocaleNameToLCID=getattr(ctypes.windll.kernel32,'LocaleNameToLCID',None)
 	if func_LocaleNameToLCID is not None:
 		localeName=localeName.replace('_','-')
-		LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(localeName),0)
+		LCID=func_LocaleNameToLCID(unicode(localeName),0)
 	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
 		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
 		if len(LCList)>0:
