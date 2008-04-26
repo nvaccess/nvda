@@ -11,6 +11,21 @@ LOCALE_SLANGDISPLAYNAME=0x6f
 
 curLang="en"
 
+def localeNameToWindowsLCID(localeName):
+	"""Retreave the Windows locale identifier (LCID) for the given locale name
+	@param localeName: a string of 2letterLanguage_2letterCountry or or just 2letterLanguage
+	@type localeName: string
+	@returns: a Windows LCID
+	@rtype: integer
+	""" 
+	#Windows only excepts full locales (with country included) and uses a dash not underscore
+	localeName=locale.normalize(localeName)
+	if '.' in localeName:
+		localeName=localeName.split('.')[0]
+	localeName=localeName.replace('_','-')
+	LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(localeName),0)
+	return LCID
+
 def getAvailableLanguages():
 	"""generates a list of locale names, plus their full localized language and country names.
 	@rtype: list of tuples
@@ -25,12 +40,7 @@ def getAvailableLanguages():
 	#For each locale, ask Windows for its human readable display name
 	d=[]
 	for i in l:
-		#Windows only excepts full locales (with country included) and uses a dash not underscore
-		t=locale.normalize(i)
-		if '.' in t:
-			t=t.split('.')[0]
-		t=t.replace('_','-')
-		LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(t),0)
+		LCID=localeNameToWindowsLCID(i)
 		buf=ctypes.create_unicode_buffer(1024)
 		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 		if '_' not in i:
@@ -73,15 +83,8 @@ def setLanguage(lang):
 				except:
 					pass
 			#Set the windows locale for this thread (NVDA core) to this locale.
-			#To convert to windows locale, the language must be language_country, not just language
-			tempLang=locale.normalize(lang)
-			if '.' in tempLang:
-				#There was charset info given, wrip that out
-				tempLang=tempLang.split('.')[0]
-			#Find the windows LC ID for this locale
-			LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==tempLang]
-			if len(LCList)>0:
-				ctypes.windll.kernel32.SetThreadLocale(LCList[0])
+			LCID=localeNameToWindowsLCID(lang)
+			ctypes.windll.kernel32.SetThreadLocale(LCID)
 		config.conf["general"]["language"]=lang
 		return True
 	except IOError:
