@@ -607,6 +607,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return 
 		(left,top,width,height)=obj.location
 		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		if offset<0:
+			return #Point was not at any good offset
 		if obj._lastMouseTextOffsets is None or offset<obj._lastMouseTextOffsets[0] or offset>=obj._lastMouseTextOffsets[1]:   
 			if mouseEntered:
 				speech.cancelSpeech()
