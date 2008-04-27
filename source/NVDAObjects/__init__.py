@@ -30,19 +30,13 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			return False
 
 	def _getStoryText(self):
-		if not hasattr(self,'_storyText'):
-			self._storyText=self.obj.basicText
-		return self._storyText
+		return self.obj.basicText
 
 	def _getStoryLength(self):
-		if not hasattr(self,'_storyLength'):
-			self._storyLength=len(self._getStoryText())
-		return self._storyLength
+		return len(self._getStoryText())
 
 	def _getTextLineLength(self):
-		if not hasattr(self,'_textLineLength'):
-			self._textLineLength=self.obj.basicTextLineLength
-		return self._textLineLength
+		return self.obj.basicTextLineLength
 
 	def _getCaretOffset(self):
 		return self.obj.basicCaretOffset
@@ -57,11 +51,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		self.obj.basicSelectionOffsets=(self._startOffset,self._endOffset)
 
 	def _getTextRange(self,start,end):
-		if hasattr(self,'_text'):
-			return self._text[start:end]
-		else:
-			self._text=self._getStoryText()
-			return self._text[start:end]
+		text=self._getStoryText()
+		return text[start:end]
 
 	def _getCharacterOffsets(self,offset):
 		return [offset,offset+1]
@@ -635,10 +626,15 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 
 	def _get_basicText(self):
-		basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
-		if len(basicText)==0:
-			basicText="\n"
-		return basicText
+		newTime=time.time()
+		oldTime=getattr(self,'_basicTextTime',0)
+		if newTime-oldTime>0.5:
+			self._basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			if len(self._basicText)==0:
+				self._basicText="\n"
+		else:
+			self._basicTextTime=newTime
+		return self._basicText
 
 	def _get_basicTextLineLength(self):
 		return None

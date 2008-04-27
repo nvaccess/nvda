@@ -250,13 +250,9 @@ class EditTextInfo(NVDAObjectTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
-		if not hasattr(self,'_storyText'):
-			self._storyText=self.obj.windowText
-		return self._storyText
+		return self.obj.windowText
 
 	def _getStoryLength(self):
-		if hasattr(self,'_storyLength'):
-			return self._storyLength
 		if self.obj.editAPIVersion>=2:
 			info=getTextLengthExStruct()
 			info.flags=GTL_NUMCHARS
@@ -269,10 +265,9 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
 			textLen=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
 			winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
-			self._storyLength=textLen+1
+			return textLen+1
 		else:
-			self._storyLength=winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
-		return self._storyLength
+			return winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
 
 	def _getLineCount(self):
 		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
