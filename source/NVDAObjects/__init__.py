@@ -588,7 +588,9 @@ Tries to force this object to take the focus.
 	def event_mouseMove(self,x,y):
 		if not self._mouseEntered:
 			speech.cancelSpeech()
-			speech.speakObject(self,reason=speech.REASON_MOUSE)
+			info=self.makeTextInfo(textHandler.POSITION_ALL)
+			speech.speakText(info.text)
+			speech.speakObjectProperties(self,role=True,states=True,keyboardShortcut=True,reason=speech.REASON_MOUSE)
 		self._mouseEntered=True
 
 	def event_stateChange(self):
