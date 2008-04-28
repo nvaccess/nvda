@@ -318,7 +318,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_actionStrings(self):
 		try:
-			action=self.IAccessibleObject.accDefaultAction()
+			action=self.IAccessibleObject.accDefaultAction(self.IAccessibleChildID)
 		except:
 			action=None
 		if action:
@@ -744,7 +744,7 @@ class Dialog(IAccessible):
 		textList=[]
 		childCount=len(children)
 		for index in range(childCount):
-			if children[index].role==controlTypes.ROLE_STATICTEXT:
+			if children[index].role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL):
 				childName=children[index].name
 				childStates=children[index].states
 				if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates:
@@ -753,8 +753,8 @@ class Dialog(IAccessible):
 					continue
 				if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
 					continue
-				if childName and ((index+1)>=childCount or children[index+1].role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR) or children[index+1].name!=childName):
- 					textList.append(childName)
+				if ((index+1)>=childCount or children[index+1].role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR) or children[index+1].name!=childName):
+ 					textList.append(children[index].makeTextInfo(textHandler.POSITION_ALL).text)
 		return " ".join(textList)
 
 	def event_gainFocus(self):
