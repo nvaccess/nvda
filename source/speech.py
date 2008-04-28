@@ -448,6 +448,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_FOCUSABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
+	positiveStates.discard(controlTypes.STATE_MODAL)
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
 	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
 		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
