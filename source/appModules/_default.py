@@ -89,25 +89,25 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(text)
 	script_dateTime.__doc__=_("Reports the current date and time")
 
-	def script_increaseSetting(self,keyPress,nextScript):
+	def script_increaseSynthSetting(self,keyPress,nextScript):
 		#val = globalVars.settingsRing.increase()
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
-	script_increaseSetting.__doc__=_("Increases currently active setting in the synth settings ring")
+	script_increaseSynthSetting.__doc__=_("Increases currently active setting in the synth settings ring")
 
-	def script_decreaseSetting(self,keyPress,nextScript):
+	def script_decreaseSynthSetting(self,keyPress,nextScript):
 		#val = globalVars.settingsRing.decrease()
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
-	script_decreaseSetting.__doc__=_("Decreases currently active setting in the synth settings ring")
+	script_decreaseSynthSetting.__doc__=_("Decreases currently active setting in the synth settings ring")
 
-	def script_nextSetting(self,keyPress,nextScript):
+	def script_nextSynthSetting(self,keyPress,nextScript):
 		#name = globalVars.settingsRing.next()
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
-	script_nextSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
+	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
 
-	def script_previousSetting(self,keyPress,nextScript):
+	def script_previousSynthSetting(self,keyPress,nextScript):
 #		name = globalVars.settingsRing.previous()
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
-	script_previousSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
+	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
@@ -205,7 +205,8 @@ class appModule(appModuleHandler.AppModule):
 		if not location:
 			speech.speakMessage(_("No location information for navigator object"))
 		(left,top,width,height)=location
-		speech.speakMessage(_("%d wide by %d high, located %d from left and %d from top")%(width,height,left,top))
+		(deskLeft,deskTop,deskWidth,deskHeight)=api.getDesktopObject().location
+		speech.speakMessage(_("Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen")%((float(left)/deskWidth)*100,(float(top)/deskHeight)*100,100-((float(width+left)/deskWidth)*100),100-(float(height+top)/deskHeight)*100))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
 	def script_navigatorObject_toFocus(self,keyPress,nextScript):
