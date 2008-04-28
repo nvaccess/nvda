@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-0223 12:20-0500\n"
-"PO-Revision-Date: 2008-03-25 3:24:52 -0500\n"
+"PO-Revision-Date: 2008-04-28 3:24:52 -0500\n"
 "Last-Translator: Tamás Géczy <geczy@earthlink.net>\n"
 "Language-Team: hun <gt1991@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -733,6 +733,28 @@ msgstr "Kulcsszavak:"
 #: appModules\msimn.py:33
 msgid "BCC:"
 msgstr "Titkos másolat:"
+
+#: appModules\outlook.py:30
+#: appModules\outlook.py:43
+msgid "subject: %s"
+msgstr "tárgy: %s"
+
+#: appModules\outlook.py:31
+msgid "received: %s"
+msgstr "átvétel idopontja: %s"
+
+#: appModules\outlook.py:35
+msgid "unread"
+msgstr "Olvasatlan"
+
+#: appModules\outlook.py:37
+msgid "attachment"
+msgstr "csatolás"
+
+#: appModules\outlook.py:44
+msgid "sent: %s"
+msgstr "Feladási idopont: %s"
+ 
 
 #: characterSymbols.py:17 characterSymbols.py:18 speech.py:56
 msgid "blank"
@@ -1555,7 +1577,7 @@ msgstr "párbeszédpanel ahol az alapértelmezett szótárt betudja állitani új szava
 
 #: gui\__init__.py:151
 msgid "&Voice dictionary..."
-msgstr "&kiejtési szótár"
+msgstr "&beszéd kiejtési szótár"
 
 #: gui\__init__.py:151
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
@@ -1717,11 +1739,21 @@ msgstr "A beállításokat lementettem."
 msgid "Could not save configuration - probably read only file system"
 msgstr" A beállításokat nem lehetett lementeni - lehet, hogy írásvédett fájl rendszert használ."
 
-#: gui\__init__.py:235
+#: gui\__init__.py:132
+msgid "Default dictionary"
+msgstr "alapértelmezett szótár"
 
+#: gui\__init__.py:136
+msgid "Voice dictionary (%s)"
+msgstr "Beszéd kiejtési szótár (%s)"
+
+#: gui\__init__.py:140
+msgid "Temporary dictionary"
+msgstr "ideiglenes szótár"
+
+#: gui\__init__.py:235
 msgid "Are you sure you want to quit NVDA?"
 msgstr "biztos, hogy kilép az NVDA programból?"
-
 
 #: gui\__init__.py:251
 msgid "General settings"
