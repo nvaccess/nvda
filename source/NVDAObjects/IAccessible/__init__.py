@@ -883,7 +883,7 @@ class ProgressBar(IAccessible):
 	def event_valueChange(self):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"] and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			val=self.value
-			if val!=globalVars.lastProgressValue:
+			if val and val!=globalVars.lastProgressValue:
 				tones.beep(self.BASE_BEEP_FREQ*2**(float(val[:-1])/25.0),40)
 				globalVars.lastProgressValue=val
 		else:
