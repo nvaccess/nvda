@@ -123,13 +123,12 @@ class SynthDriver(silence.SynthDriver):
 			self._variant="none"
 		identifier=_espeak.getCurrentVoice().identifier.split('+')[0]
 		if self._variant =="none":
-			_espeak.setVoiceByName(identifier.split('+')[0])
-		else:
-			identifier="%s+%s"%(identifier,self._variant)
-		try:
 			_espeak.setVoiceByName(identifier)
-		except:
-			_espeak.setVoiceByName(identifier.split('+')[0])
+		else:
+			try:
+				_espeak.setVoiceByName("%s+%s"%(identifier,val))
+			except:
+				_espeak.setVoiceByName(identifier)
 
 	def _get_variantCount(self):
 		return len(self._variantDict)

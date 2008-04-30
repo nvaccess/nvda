@@ -175,7 +175,7 @@ def stop():
 	try:
 		while True:
 			item = bgQueue.get_nowait()
-			if item[0] == espeakDLL.espeak_SetParameter:
+			if item[0] != _speakBg:
 				params.append(item)
 	except Queue.Empty:
 		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
@@ -212,10 +212,10 @@ def getCurrentVoice():
 
 def setVoice(voice):
 	# For some weird reason, espeak_EspeakSetVoiceByProperties throws an integer divide by zero exception.
-	espeakDLL.espeak_SetVoiceByName(voice.identifier)
+	setVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	espeakDLL.espeak_SetVoiceByName(name)
+	_bgExec(espeakDLL.espeak_SetVoiceByName,name)
 
 def setVoiceByLanguage(lang):
 	v=espeak_VOICE()

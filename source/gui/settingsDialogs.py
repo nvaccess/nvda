@@ -309,7 +309,8 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onVariantChange(self,evt):
 		val=evt.GetSelection()
-		getSynth().variant=getSynth().getVariantIdentifier(val)
+		s=getSynth()
+		s.variant=s.getVariantIdentifier(val)
 
 	def onRateChange(self,evt):
 		val=evt.GetSelection()
