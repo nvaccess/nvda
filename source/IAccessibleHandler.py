@@ -786,7 +786,7 @@ def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
 	oldAncestors=api.getFocusAncestors()
 	ancestors=[]
 	if needsFocusState:
-		if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
+		if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED:
 			hasFocusState=True
 		else:
 			hasFocusState=False
