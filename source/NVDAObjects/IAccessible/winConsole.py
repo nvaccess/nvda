@@ -36,11 +36,15 @@ class WinConsole(IAccessible):
 			return
 		#Get the process ID of the console this NVDAObject is fore
 		processID=self.windowProcessID
+		if processID<=0:
+			globalVars.log.warn("Could not get valid processID from window "%self.windowHandle)
+			return
 		#Attach NVDA to this console so we can access its text etc
 		if winKernel.kernel32.GetConsoleWindow():
-			winKernel.freeConsole()
-		res=winKernel.attachConsole(processID)
-		if not res:
+			globalVars.log.debug("Already attached to a console, need to free first")
+			if winKernel.freeConsole()==0:
+				raise OSError("Could not free console")
+		if winKernel.attachConsole(processID)==0:
 			raise OSError("WinConsole: could not attach console") 
 		#Try and get the handle for this console's standard out
 		res=winKernel.getStdHandle(winKernel.STD_OUTPUT_HANDLE)
@@ -61,6 +65,8 @@ class WinConsole(IAccessible):
 		self.lastConsoleEvent=None
 		self.basicText=self.consoleVisibleText
 		lineLength=self.getConsoleHorizontalLength()
+		if lineLength<=0:
+			raise RuntimeError("console line length is not valid")
 		self.basicTextLineLength=lineLength
 		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
@@ -159,11 +165,11 @@ class WinConsole(IAccessible):
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		return info.consoleSize.y
+		return max(info.consoleSize.y,25)
 
 	def getConsoleHorizontalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		return info.consoleSize.x
+		return max(info.consoleSize.x,80)
 
 	def _get_basicCaretOffset(self):
 		if not hasattr(self,"consoleHandle"):
