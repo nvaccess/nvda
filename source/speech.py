@@ -466,7 +466,8 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# when the state change for the previous focus is issued before the focus change.
 	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
-	if role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON):
+	# Restrict "not checked" in a similar way to "not selected".
+	if role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
 	if reason == REASON_CHANGE:
 		# We were given states which have changed to negative.
