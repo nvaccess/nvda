@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-04-26 17:37+0800\n"
+"PO-Revision-Date: 2008-04-30 22:49+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -326,9 +326,9 @@ msgstr "報出目前項目的內容, 如果連按三次, 就把內容複製到�
 msgid "No location information for navigator object"
 msgstr "沒有瀏覽項目的位置資訊"
 
-# appModules\_default.py:141
-msgid "%d wide by %d high, located %d from left and %d from top"
-msgstr "寬 %d 高 %d, 從左算起 %d 從頂算起 %d"
+# appModules\_default.py:209
+msgid "Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen"
+msgstr "物件邊沿的位置, 從屏幕左邊向右算起為百分之 %.1f, 從屏幕上邊向下算起為百分之 %.1f, 從屏幕右邊向左算起為百分之 %.1f, 從屏幕底邊向上算起為百分之 %.1f"
 
 # appModules\_default.py:142
 msgid "Reports the hight, width and position of the current navigator object"
@@ -2039,6 +2039,14 @@ msgstr "每當遇到大寫字元時發出逼逼聲 &B"
 msgid "Keyboard Settings"
 msgstr "鍵盤設定"
 
+# keyboardHandler.py:77
+msgid "&Keyboard layout"
+msgstr "鍵盤配置 &K"
+
+# keyboardHandler.py:77
+msgid "Keyboard layout"
+msgstr "鍵盤配置"
+
 # gui\settingsDialogs.py:264
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "把 CapsLock 鍵設為 NVDA 的組合鍵"
@@ -2789,4 +2797,3 @@ msgstr "i=清單項目快速鍵"
 # virtualBuffers\IAccessible\gecko.py:294
 msgid "protected %s"
 msgstr "保密 %s"
-
