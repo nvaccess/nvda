@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import glob
 import os
 import wx
 import logging
@@ -16,6 +17,7 @@ import globalVars
 from ctypes import *
 from ctypes.wintypes import *
 import speechDictHandler
+import appModuleHandler
 import scriptUI
 
 MAXPNAMELEN=32
@@ -123,7 +125,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		logLevelSizer.Add(logLevelLabel)
 		logLevelListID=wx.NewId()
 		self.logLevelNames=[logging._levelNames[x] for x in sorted([x for x in logging._levelNames.keys() if isinstance(x,int) and x>0],reverse=True)]
-		self.logLevelList=wx.Choice(self,languageListID,name=_("Log level"),choices=self.logLevelNames)
+		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=self.logLevelNames)
 		try:
 			index=self.logLevelNames.index(logging._levelNames[globalVars.log.getEffectiveLevel()])
 			self.logLevelList.SetSelection(index)
@@ -363,6 +365,20 @@ class KeyboardSettingsDialog(SettingsDialog):
 	title = _("Keyboard Settings")
 
 	def makeSettings(self, settingsSizer):
+		kbdSizer=wx.BoxSizer(wx.HORIZONTAL)
+		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout"))
+		kbdSizer.Add(kbdLabel)
+		kbdListID=wx.NewId()
+		self.kbdNames=list(set(os.path.splitext(x)[0].split('_')[-1] for x in glob.glob('appModules/*.kbd')))
+		self.kbdNames.sort()
+		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=self.kbdNames)
+		try:
+			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
+			self.kbdList.SetSelection(index)
+		except:
+			globalVars.log.warn("Could not set Keyboard layout list to current layout",exc_info=True) 
+		kbdSizer.Add(self.kbdList)
+		settingsSizer.Add(kbdSizer,border=10,flag=wx.BOTTOM)
 		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		settingsSizer.Add(self.capsAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
@@ -383,9 +399,18 @@ class KeyboardSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		self.capsAsNVDAModifierCheckBox.SetFocus()
+		self.kbdList.SetFocus()
 
 	def onOk(self,evt):
+		layout=self.kbdNames[self.kbdList.GetSelection()]
+		oldLayout=config.conf['keyboard']['keyboardLayout']
+		if layout!=oldLayout:
+			config.conf['keyboard']['keyboardLayout']=layout
+			for m in appModuleHandler.runningTable.values():
+				if m.__class__==appModuleHandler.AppModule:
+					continue
+				appModuleHandler.loadKeyMap(m.appName,m)
+		appModuleHandler.loadKeyMap(appModuleHandler.default.appName,appModuleHandler.default)
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()

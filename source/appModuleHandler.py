@@ -200,11 +200,14 @@ def loadKeyMap(appName,mod):
 		return False
 	keyMapFile=open(keyMapFileName,'r')
 	bindCount=0
+	#If the appModule already has a running keyMap, clear it
+	if '_keyMap' in mod.__dict__:
+		mod._keyMap={}
 	for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
 		m=re_keyScript.match(line)
 		if m:
 			try:
-				mod.bindKey(m.group('key'),m.group('script'))
+				mod.bindKey_runtime(m.group('key'),m.group('script'))
 				bindCount+=1
 			except:
 				globalVars.log.error("error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
