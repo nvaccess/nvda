@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r1993\n"
+"Project-Id-Version: r2003\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-04-30 07:56+0300\n"
+"PO-Revision-Date: 2008-05-01 15:28+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:67 speech.py:676
+#: NVDAObjects\IAccessible\__init__.py:67 speech.py:700
 msgid "level %s"
 msgstr "taso %s"
 
@@ -105,27 +105,27 @@ msgstr "rivin loppu"
 msgid "beginning of row"
 msgstr "rivin alku"
 
-#: _synthSettingsRing.py:86
+#: _synthSettingsRing.py:76
 msgid "volume"
 msgstr "voimakkuus"
 
-#: _synthSettingsRing.py:87
+#: _synthSettingsRing.py:77
 msgid "rate"
 msgstr "nopeus"
 
-#: _synthSettingsRing.py:88
+#: _synthSettingsRing.py:78
 msgid "pitch"
 msgstr "korkeus"
 
-#: _synthSettingsRing.py:89
+#: _synthSettingsRing.py:79
 msgid "inflection"
 msgstr "sävy"
 
-#: _synthSettingsRing.py:90
+#: _synthSettingsRing.py:80
 msgid "voice"
 msgstr "puheääni"
 
-#: _synthSettingsRing.py:91
+#: _synthSettingsRing.py:81
 msgid "variant"
 msgstr "muunnelma"
 
@@ -179,8 +179,8 @@ msgstr ""
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:82 speech.py:238 speech.py:382 textBuffer.py:537
-#: textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
+#: appModules\_default.py:82 speech.py:238 speech.py:398 speech.py:411
+#: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
 
@@ -871,7 +871,7 @@ msgstr "liite"
 msgid "sent: %s"
 msgstr "lähetetty: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:80 speech.py:609
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:80 speech.py:633
 msgid "blank"
 msgstr "tyhjä"
 
@@ -2078,253 +2078,253 @@ msgstr "Sano &iso ennen isoja kirjaimia"
 msgid "&Beep for capitals"
 msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:365
+#: gui\settingsDialogs.py:366
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
-#: gui\settingsDialogs.py:369
+#: gui\settingsDialogs.py:370
 msgid "&Keyboard layout"
 msgstr "&Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:374
+#: gui\settingsDialogs.py:375
 msgid "Keyboard layout"
 msgstr "Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:382
+#: gui\settingsDialogs.py:383
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lock -näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:385
+#: gui\settingsDialogs.py:386
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:389
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:392
 msgid "Speak typed &characters"
 msgstr "Lue &kirjoitetut merkit"
 
-#: gui\settingsDialogs.py:394
+#: gui\settingsDialogs.py:395
 msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
-#: gui\settingsDialogs.py:397
+#: gui\settingsDialogs.py:398
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:424
 msgid "Mouse settings"
 msgstr "Hiiriasetukset"
 
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:427
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muutokset"
 
-#: gui\settingsDialogs.py:429
+#: gui\settingsDialogs.py:430
 msgid "Report &object under mouse"
 msgstr "Lue hiiren alla oleva &objekti"
 
-#: gui\settingsDialogs.py:432
+#: gui\settingsDialogs.py:433
 msgid "play audio coordinates when mouse moves"
 msgstr "Ilmoita hiirikohdistimen &koordinaatit äänimerkeillä"
 
-#: gui\settingsDialogs.py:446
+#: gui\settingsDialogs.py:447
 msgid "Object presentation"
 msgstr "Objektien lukeminen"
 
-#: gui\settingsDialogs.py:449
+#: gui\settingsDialogs.py:450
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui\settingsDialogs.py:452
+#: gui\settingsDialogs.py:453
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui\settingsDialogs.py:455
+#: gui\settingsDialogs.py:456
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui\settingsDialogs.py:458
+#: gui\settingsDialogs.py:459
 msgid "Report object &position information"
 msgstr "Lue objektien p&aikkatiedot"
 
-#: gui\settingsDialogs.py:461
+#: gui\settingsDialogs.py:462
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:465
 msgid "Say object &state first"
 msgstr "Lue &ensin objektin tila"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:468
 msgid "&Beep on progress bar updates"
 msgstr "Anna &äänimerkki edistymispalkin päivittyessä"
 
-#: gui\settingsDialogs.py:485
+#: gui\settingsDialogs.py:486
 msgid "virtual buffers"
 msgstr "näennäispuskurit"
 
-#: gui\settingsDialogs.py:488
+#: gui\settingsDialogs.py:489
 msgid "&Maximum number of characters on one line"
 msgstr "Merkk&ien maksimimäärä rivillä"
 
-#: gui\settingsDialogs.py:493
+#: gui\settingsDialogs.py:494
 msgid "&Number of lines per page"
 msgstr "R&ivejä sivulla"
 
-#: gui\settingsDialogs.py:498
+#: gui\settingsDialogs.py:499
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua (Firefox 3)"
 
-#: gui\settingsDialogs.py:502
+#: gui\settingsDialogs.py:503
 msgid "Report &virtual presentation on focus changes"
 msgstr "Ilmoita koh&distuksen muuttuessa"
 
-#: gui\settingsDialogs.py:505
+#: gui\settingsDialogs.py:506
 msgid "Update the content &dynamically"
 msgstr "Päivitä sisältöä d&ynaamisesti"
 
-#: gui\settingsDialogs.py:508
+#: gui\settingsDialogs.py:509
 msgid "Report lin&ks"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:511
+#: gui\settingsDialogs.py:512
 msgid "Report &lists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:515
 msgid "Report list &items"
 msgstr "Ilmoita luettelon &osat"
 
-#: gui\settingsDialogs.py:517
+#: gui\settingsDialogs.py:518
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:520 gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:521 gui\settingsDialogs.py:601
 msgid "Report &tables"
 msgstr "Ilmoita t&aulukot"
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:524
 msgid "Report &graphics"
 msgstr "Ilmoita kuv&at"
 
-#: gui\settingsDialogs.py:526
+#: gui\settingsDialogs.py:527
 msgid "Report f&orms"
 msgstr "Ilmoita lo&makkeet"
 
-#: gui\settingsDialogs.py:529
+#: gui\settingsDialogs.py:530
 msgid "Report form &fields"
 msgstr "Ilmoita lomakek&entät"
 
-#: gui\settingsDialogs.py:532
+#: gui\settingsDialogs.py:533
 msgid "Report block &quotes"
 msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
 
-#: gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:536
 msgid "Report &paragraphs"
 msgstr "Ilmoita ka&ppaleet"
 
-#: gui\settingsDialogs.py:538
+#: gui\settingsDialogs.py:539
 msgid "Report f&rames"
 msgstr "Ilmoita ke&hykset"
 
-#: gui\settingsDialogs.py:576
+#: gui\settingsDialogs.py:577
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: gui\settingsDialogs.py:579
+#: gui\settingsDialogs.py:580
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (saattaa aiheuttaa "
 "hidastumista)"
 
-#: gui\settingsDialogs.py:582
+#: gui\settingsDialogs.py:583
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:585
+#: gui\settingsDialogs.py:586
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:589
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:591
+#: gui\settingsDialogs.py:592
 msgid "Report st&yle"
 msgstr "Ilmoita tyylim&ääritteet"
 
-#: gui\settingsDialogs.py:594
+#: gui\settingsDialogs.py:595
 msgid "Report &pages"
 msgstr "Ilmoita sivunume&rot"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:598
 msgid "Report &line numbers"
 msgstr "Ilmoita rivi&numerot"
 
-#: gui\settingsDialogs.py:603
+#: gui\settingsDialogs.py:604
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:625
+#: gui\settingsDialogs.py:626
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:629
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:631
+#: gui\settingsDialogs.py:632
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:634
+#: gui\settingsDialogs.py:635
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:638
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:640
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:661
+#: gui\settingsDialogs.py:662
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:664
+#: gui\settingsDialogs.py:665
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:665
+#: gui\settingsDialogs.py:666
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:667
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:667
+#: gui\settingsDialogs.py:668
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:668
+#: gui\settingsDialogs.py:669
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:675
+#: gui\settingsDialogs.py:676
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:678
+#: gui\settingsDialogs.py:679
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:681
+#: gui\settingsDialogs.py:682
 msgid "&Remove"
 msgstr "&Poista"
 
@@ -2384,18 +2384,26 @@ msgstr "alkaa"
 msgid "out of"
 msgstr "loppuu"
 
-#: speech.py:387 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
-msgid "unselected %s"
-msgstr "ei valittu %s"
+#: speech.py:393
+msgid "selecting %s"
+msgstr "valitaan %s"
 
-#: speech.py:662 virtualBuffers_old\MSHTML.py:125
+#: speech.py:404
+msgid "unselecting %s"
+msgstr "ei valita %s"
+
+#: speech.py:406
+msgid "selection removed"
+msgstr "valinta poistettu"
+
+#: speech.py:686 virtualBuffers_old\MSHTML.py:125
 #: virtualBuffers_old\MSHTML.py:307 virtualBuffers_old\MSHTML.py:311
 #: virtualBuffers_old\adobe.py:303 virtualBuffers_old\adobe.py:307
 #: virtualBuffers_old\gecko.py:296 virtualBuffers_old\gecko.py:300
 msgid "not %s"
 msgstr "ei %s"
 
-#: synthDrivers\_espeak.py:268
+#: synthDrivers\_espeak.py:288
 msgid "none"
 msgstr "ei mitään"
 
@@ -2490,6 +2498,10 @@ msgstr "Siirtää edelliseen kappaleeseen ja lukee sen"
 #: textBuffer.py:534
 msgid "no selections"
 msgstr "ei valintoja"
+
+#: textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
+msgid "unselected %s"
+msgstr "ei valittu %s"
 
 #: textBuffer.py:553
 msgid "Moves and reads the current selection"
