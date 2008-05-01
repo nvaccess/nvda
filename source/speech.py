@@ -346,45 +346,69 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 				speech.speakSpelling(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
-def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,speakSelectionDeleted=True):
+def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
+	"""Speaks a change in selection, either selected or unselected text.
+	@param oldInfo: a TextInfo instance representing what the selection was before
+	@type oldInfo: L{TextHandler.TextInfo}
+	@param newInfo: a TextInfo instance representing what the selection is now
+	@type newInfo: L{textHandler.TextInfo}
+	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
+	@type generalize: boolean
+	"""
 	selectedTextList=[]
 	unselectedTextList=[]
 	if newInfo.isCollapsed and oldInfo.isCollapsed:
 		return
-	if newInfo.compareEndPoints(oldInfo,"startToEnd")>=0 or newInfo.compareEndPoints(oldInfo,"endToStart")<=0:
+	startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
+	startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
+	endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
+	endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
+	if startToEnd>0 or endToStart<0:
 		if speakSelected and not newInfo.isCollapsed:
 			selectedTextList.append(newInfo.text)
 		if speakUnselected and not oldInfo.isCollapsed:
 			unselectedTextList.append(oldInfo.text)
 	else:
-		leftDiff=newInfo.compareEndPoints(oldInfo,"startToStart")
-		rightDiff=newInfo.compareEndPoints(oldInfo,"endToEnd")
-		if speakSelected and leftDiff<0 and not newInfo.isCollapsed:
+		if speakSelected and startToStart<0 and not newInfo.isCollapsed:
 			tempInfo=newInfo.copy()
 			tempInfo.setEndPoint(oldInfo,"endToStart")
 			selectedTextList.append(tempInfo.text)
-		if speakSelected and rightDiff>0 and not newInfo.isCollapsed:
+		if speakSelected and endToEnd>0 and not newInfo.isCollapsed:
 			tempInfo=newInfo.copy()
 			tempInfo.setEndPoint(oldInfo,"startToEnd")
 			selectedTextList.append(tempInfo.text)
-		if leftDiff>0 and not oldInfo.isCollapsed:
+		if startToStart>0 and not oldInfo.isCollapsed:
 			tempInfo=oldInfo.copy()
 			tempInfo.setEndPoint(newInfo,"endToStart")
 			unselectedTextList.append(tempInfo.text)
-		if rightDiff<0 and not oldInfo.isCollapsed:
+		if endToEnd<0 and not oldInfo.isCollapsed:
 			tempInfo=oldInfo.copy()
 			tempInfo.setEndPoint(newInfo,"startToEnd")
 			unselectedTextList.append(tempInfo.text)
 	if speakSelected:
-		for text in selectedTextList:
-			if  len(text)==1:
+		if not generalize:
+			for text in selectedTextList:
+				if  len(text)==1:
+					text=processSymbol(text)
+				speakMessage(_("selecting %s")%text)
+		elif len(selectedTextList)>0:
+			text=newInfo.text
+			if len(text)==1:
 				text=processSymbol(text)
 			speakMessage(_("selected %s")%text)
 	if speakUnselected:
-		for text in unselectedTextList:
-			if  len(text)==1:
-				text=processSymbol(text)
-			speakMessage(_("unselected %s")%text)
+		if not generalize:
+			for text in unselectedTextList:
+				if  len(text)==1:
+					text=processSymbol(text)
+				speakMessage(_("unselecting %s")%text)
+		elif len(unselectedTextList)>0:
+			speakMessage(_("selection removed"))
+			if not newInfo.isCollapsed:
+				text=newInfo.text
+				if len(text)==1:
+					text=processSymbol(text)
+				speakMessage(_("selected %s")%text)
 
 def speakTypedCharacters(ch):
 	global typedWord
