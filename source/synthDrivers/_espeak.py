@@ -217,6 +217,26 @@ def setVoice(voice):
 def setVoiceByName(name):
 	_bgExec(espeakDLL.espeak_SetVoiceByName,name)
 
+def _setVoiceAndVariantBg(voice=None, variant=None):
+	res = getCurrentVoice().identifier.split("+")
+	if not voice:
+		voice = res[0]
+	if not variant:
+		if len(res) == 2:
+			variant = res[1]
+		else:
+			variant = "none"
+	if variant == "none":
+		espeakDLL.espeak_SetVoiceByName(voice)
+	else:
+		try:
+			espeakDLL.espeak_SetVoiceByName("%s+%s" % (voice, variant))
+		except:
+			espeakDLL.espeak_SetVoiceByName(voice)
+
+def setVoiceAndVariant(voice=None, variant=None):
+	_bgExec(_setVoiceAndVariantBg, voice=voice, variant=variant)
+
 def setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')

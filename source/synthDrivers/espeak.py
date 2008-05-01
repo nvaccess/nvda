@@ -91,14 +91,7 @@ class SynthDriver(silence.SynthDriver):
 	def _set_voice(self, index):
 		if index == 0:
 			return
-		if self._variant !="none":
-			identifier="%s+%s"%(self._voiceList[index - 1].identifier,self._variant)
-		else:
-			identifier=self._voiceList[index - 1].identifier
-		try:
-			_espeak.setVoiceByName(identifier)
-		except:
-			_espeak.setVoiceByName(identifier.split('+')[0])
+		_espeak.setVoiceAndVariant(voice=self._voiceList[index - 1].identifier)
 
 	def _get_voiceCount(self):
 		return len(self._voiceList)
@@ -117,18 +110,8 @@ class SynthDriver(silence.SynthDriver):
 		return self._variant
 
 	def _set_variant(self,val):
-		if val in self._variantDict:
-			self._variant=val
-		else:
-			self._variant="none"
-		identifier=_espeak.getCurrentVoice().identifier.split('+')[0]
-		if self._variant =="none":
-			_espeak.setVoiceByName(identifier)
-		else:
-			try:
-				_espeak.setVoiceByName("%s+%s"%(identifier,val))
-			except:
-				_espeak.setVoiceByName(identifier)
+		self._variant = val if val in self._variantDict else "none"
+		_espeak.setVoiceAndVariant(variant=val)
 
 	def _get_variantCount(self):
 		return len(self._variantDict)
