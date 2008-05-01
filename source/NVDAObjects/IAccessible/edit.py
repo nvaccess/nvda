@@ -1,4 +1,3 @@
-#NVDAObjects/Edit.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -375,8 +374,9 @@ class Edit(IAccessible):
 		self._lastMouseTextOffsets=None
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_CARET)
-
+		self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_CARET)
+		self._storyLengthAtLastSelection=self.makeTextInfo(textHandler.POSITION_CARET)._getStoryLength()
+		self._contentChangedSinceLastSelection=False
 
 	def __del__(self):
 		if self.editAPIVersion>=1:
@@ -411,22 +411,20 @@ class Edit(IAccessible):
 			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def event_valueChange(self):
-		self._editLastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION).copy()
+		self._contentChangedSinceLastSelection=True
 
 	def event_caret(self):
 		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		oldInfo=self._editLastSelectionPos
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,speakUnselected=False)
-		self._editLastSelectionPos=newInfo.copy()
-
-	def script_changeSelection(self,keyPress,nextScript):
-		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		sendKey(keyPress)
-		if not isScriptWaiting():
-			api.processPendingEvents()
-			focus=api.getFocusObject()
-			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
-			speech.speakSelectionChange(oldInfo,newInfo,speakSelected=False)
+		oldInfo=self._lastSelectionPos
+		newStoryLength=newInfo._getStoryLength()
+		if (newStoryLength-self._storyLengthAtLastSelection)!=0 or self._contentChangedSinceLastSelection:
+			generalize=True
+		else:
+			generalize=False
+		self._contentChangedSinceLastSelection=False
+		self._storyLengthAtLastSelection=newStoryLength
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,generalize=generalize)
+		self._lastSelectionPos=newInfo.copy()
 
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
@@ -435,22 +433,12 @@ class Edit(IAccessible):
 	("ExtendedRight","moveByCharacter"),
 	("Control+ExtendedLeft","moveByWord"),
 	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
 	("control+extendedDown","moveByParagraph"),
 	("control+extendedUp","moveByParagraph"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
 	("ExtendedHome","moveByCharacter"),
 	("ExtendedEnd","moveByCharacter"),
 	("control+extendedHome","moveByLine"),
 	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
 	("ExtendedDelete","delete"),
 	("Back","backspace"),
 ]]
