@@ -679,10 +679,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getAncestor(window,winUser.GA_ROOTOWNER))=="Notepad++":
 			return
 		if objectID==OBJID_CARET and eventName=="locationChange":
-			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and window==focusObject.event_windowHandle:
-				eventName="caret"
-				objectID=focusObject.event_objectID
-				childID=focusObject.IAccessibleChildID
+			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle or window==focusObject.windowHandle):
+				return queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"caret",focusObject)
 			else:
 				return
 		#Report mouse shape changes
