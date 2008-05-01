@@ -90,22 +90,18 @@ class appModule(appModuleHandler.AppModule):
 	script_dateTime.__doc__=_("Reports the current date and time")
 
 	def script_increaseSynthSetting(self,keyPress,nextScript):
-		#val = globalVars.settingsRing.increase()
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
 	script_increaseSynthSetting.__doc__=_("Increases currently active setting in the synth settings ring")
 
 	def script_decreaseSynthSetting(self,keyPress,nextScript):
-		#val = globalVars.settingsRing.decrease()
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
 	script_decreaseSynthSetting.__doc__=_("Decreases currently active setting in the synth settings ring")
 
 	def script_nextSynthSetting(self,keyPress,nextScript):
-		#name = globalVars.settingsRing.next()
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
 	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
 
 	def script_previousSynthSetting(self,keyPress,nextScript):
-#		name = globalVars.settingsRing.previous()
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
