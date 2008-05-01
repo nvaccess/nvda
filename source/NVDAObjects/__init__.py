@@ -686,6 +686,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
+			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_moveByCharacter(self,keyPress,nextScript):
@@ -700,6 +701,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
+			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress,nextScript):
@@ -714,6 +716,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
+			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_moveByParagraph(self,keyPress,nextScript):
@@ -728,6 +731,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
+			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_backspace(self,keyPress,nextScript):
@@ -742,6 +746,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			delChar=""
 		sendKey(keyPress)
 		if self._hasCaretMoved(oldBookmark):
+			speech.cancelSpeech()
 			speech.speakSpelling(delChar)
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -760,6 +765,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
+			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress,nextScript):
