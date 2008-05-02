@@ -416,7 +416,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		if self.windowClassName.startswith('Mozilla'):
 			res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
-			if res:
+			if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
