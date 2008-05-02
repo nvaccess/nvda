@@ -46,6 +46,13 @@ class appModule(appModuleHandler.AppModule):
 		hwndWinamp=windll.user32.FindWindowA("Winamp v1.x",None)
 		if obj.windowClassName=="Winamp PE":
 			obj.__class__=winampPlaylistEditor
+		elif obj.windowClassName=="Winamp v1.x":
+			obj.__class__=winampMainWindow
+
+class winampMainWindow(IAccessible):
+
+	def event_nameChange(self):
+		pass
 
 class winampPlaylistEditor(IAccessible):
 
