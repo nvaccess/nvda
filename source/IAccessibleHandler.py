@@ -163,6 +163,8 @@ import JABHandler
 import eventHandler
 import winUser
 import speech
+import sayAllHandler
+import textHandler
 import api
 import queueHandler
 import NVDAObjects.IAccessible
@@ -633,6 +635,11 @@ def manageEvent(name,window,objectID,childID):
 				#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
 				focus=api.getFocusObject()
 				focus.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focus)
+				if focus.virtualBuffer==v:
+					virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
+					speech.speakObjectProperties(obj,name=True)
+					info=v.makeTextInfo(textHandler.POSITION_CARET)
+					sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 		eventHandler.manageEvent(name,obj)
 

@@ -10,6 +10,8 @@ import pythoncom
 import logging
 import textHandler
 import globalVars
+import speech
+import sayAllHandler
 import virtualBufferHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
@@ -103,7 +105,12 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			if virtualBufferObject:
 				break
 		obj.virtualBuffer=virtualBufferObject
-	if obj.virtualBuffer:
+		if virtualBufferObject:
+			virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
+			speech.speakObjectProperties(obj,name=True)
+			info=virtualBufferObject.makeTextInfo(textHandler.POSITION_CARET)
+			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+	elif obj.virtualBuffer:
 		virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj

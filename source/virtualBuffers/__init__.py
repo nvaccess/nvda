@@ -125,21 +125,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.passThrough=False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
+		self.loadBuffer()
 
 	def loadBuffer(self):
-		try:
-			self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
-		except:
-			return virtualBufferHandler.killVirtualBuffer(self)
-		focusObject=api.getFocusObject()
-		if self.isNVDAObjectInVirtualBuffer(focusObject):
-			speech.cancelSpeech()
-			if self.passThrough:
-				self.passThrough=False
-				virtualBufferHandler.reportPassThrough(self)
-			speech.speakObjectProperties(self.rootNVDAObject,name=True,role=True)
-			info=self.makeTextInfo(textHandler.POSITION_FIRST)
-			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:

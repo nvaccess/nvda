@@ -59,11 +59,15 @@ def update(obj):
 	newClass=getattr(mod,classString)
 	globalVars.log.debug("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,obj.windowClassName))
 	virtualBufferObject=newClass(obj)
-	if virtualBufferObject.isAlive():
-		runningTable.add(virtualBufferObject)
-		if hasattr(virtualBufferObject,'unloadBuffer'):
-			virtualBufferObject.loadBuffer()
-		return virtualBufferObject
+	if not virtualBufferObject.isAlive():
+		return None
+	try:
+		virtualBufferObject.loadBuffer()
+	except:
+		globalVars.log.error("error loading buffer",exc_info=True)
+		return None
+	runningTable.add(virtualBufferObject)
+	return virtualBufferObject
 
 def killVirtualBuffer(virtualBufferObject):
 	try:
