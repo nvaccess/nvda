@@ -125,7 +125,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.passThrough=False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
-		self.loadBuffer()
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
