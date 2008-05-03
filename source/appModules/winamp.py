@@ -23,6 +23,10 @@ import api
 
 WM_WA_IPC=winUser.WM_USER
 
+# winamp window
+IPC_GET_SHUFFLE=250
+IPC_GET_REPEAT=251
+
 # playlist editor
 IPC_PLAYLIST_GET_NEXT_SELECTED=3029
 IPC_PE_GETCURINDEX=100
@@ -39,6 +43,14 @@ class fileinfo2(Structure):
 
 hwndWinamp=0
 
+def getShuffle():
+	global hwndWinamp
+	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_SHUFFLE)
+
+def getRepeat():
+	global hwndWinamp
+	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
+
 class appModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
@@ -54,7 +66,27 @@ class winampMainWindow(IAccessible):
 	def event_nameChange(self):
 		pass
 
-class winampPlaylistEditor(IAccessible):
+	def script_shuffleToggle(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isScriptWaiting():
+			api.processPendingEvents()
+			if getShuffle():
+				onOff=_("on")
+			else:
+				onOff=_("off")
+			speech.speakMessage(onOff)
+
+	def script_repeatToggle(self,keyPress,nextScript):
+		sendKey(keyPress)
+		if not isScriptWaiting():
+			api.processPendingEvents()
+			if getRepeat():
+				onOff=_("on")
+			else:
+				onOff=_("off")
+			speech.speakMessage(onOff)
+
+class winampPlaylistEditor(winampMainWindow):
 
 	def _get_name(self):
 		curIndex=winUser.sendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
@@ -73,11 +105,17 @@ class winampPlaylistEditor(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM
 
-	def script_changeItem(self,keyPress,nextScript):
-		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
+
+	def event_nameChange(self):
+		return super(winampMainWindow,self).event_nameChange()
+
+[winampMainWindow.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("s","shuffleToggle"),
+	("r","repeatToggle"),
+]]
 
 [winampPlaylistEditor.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","changeItem"),
