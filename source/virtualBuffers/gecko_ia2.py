@@ -167,8 +167,17 @@ class Gecko_ia2(VirtualBuffer):
 			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_SLIDER):
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)
-			else:
-				pacc.accDoDefaultAction(accChildID)
+			else: #Just try performing the default action of the object, or of one of its ancestors
+				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
+				while obj and obj!=self.rootNVDAObject:
+					try:
+						action=obj.IAccessibleObject.accDefaultAction(obj.IAccessibleChildID)
+						if action:
+							obj.IAccessibleObject.accDoDefaultAction(obj.IAccessibleChildID)
+							break
+					except:
+						pass
+					obj=obj.parent
 		except:
 			pass
 
