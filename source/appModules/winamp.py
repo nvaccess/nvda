@@ -105,6 +105,8 @@ class winampPlaylistEditor(winampMainWindow):
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM
 
+	def script_changeItem(self,keyPress,nextScript):
+		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
