@@ -11,7 +11,6 @@ import pythoncom
 import win32clipboard
 import oleTypes
 import comInterfaces.tom
-import queueHandler
 import globalVars
 import speech
 import winKernel
@@ -423,7 +422,7 @@ class Edit(IAccessible):
 			generalize=False
 		self._contentChangedSinceLastSelection=False
 		self._storyLengthAtLastSelection=newStoryLength
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakSelectionChange,oldInfo,newInfo,generalize=generalize)
+		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)
 		self._lastSelectionPos=newInfo.copy()
 
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
