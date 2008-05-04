@@ -61,11 +61,12 @@ def update(obj):
 	virtualBufferObject=newClass(obj)
 	if not virtualBufferObject.isAlive():
 		return None
-	try:
-		virtualBufferObject.loadBuffer()
-	except:
-		globalVars.log.error("error loading buffer",exc_info=True)
-		return None
+	if hasattr(virtualBufferObject,'loadBuffer'):
+		try:
+			virtualBufferObject.loadBuffer()
+		except:
+			globalVars.log.error("error loading buffer",exc_info=True)
+			return None
 	runningTable.add(virtualBufferObject)
 	return virtualBufferObject
 
