@@ -108,6 +108,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		if virtualBufferObject:
 			virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
 			if hasattr(virtualBufferObject,'TextInfo'):
+				speech.cancelSpeech()
 				speech.speakObjectProperties(obj,name=True)
 				info=virtualBufferObject.makeTextInfo(textHandler.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)

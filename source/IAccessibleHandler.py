@@ -638,6 +638,7 @@ def manageEvent(name,window,objectID,childID):
 				if focus.virtualBuffer==v:
 					virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
 					if hasattr(v,'TextInfo'):
+						speech.cancelSpeech()
 						speech.speakObjectProperties(obj,name=True)
 						info=v.makeTextInfo(textHandler.POSITION_CARET)
 						sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
