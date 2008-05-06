@@ -112,14 +112,29 @@ class MainFrame(wx.Frame):
 			window.Destroy()
 		super(MainFrame, self).Destroy()
 
+	def prePopup(self):
+		"""Prepare for a popup.
+		This should be called before any dialog or menu which should pop up for the user.
+		L{postPopup} should be called after the dialog or menu has been shown.
+		@postcondition: A dialog or menu may be shown.
+		"""
+		self.Show()
+		self.Raise()
+
+	def postPopup(self):
+		"""Clean up after a popup dialog or menu.
+		This should be called after a dialog or menu was popped up for the user.
+		"""
+		self.Show()
+		self.Hide()
+
 	def onAbortCommand(self,evt):
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
-		self.Show()
-		self.Raise()
+		self.prePopup()
 		self.sysTrayIcon.onActivate(None)
-		self.Hide()
+		self.postPopup()
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,reportDone=True)
@@ -146,12 +161,11 @@ class MainFrame(wx.Frame):
 	def onExitCommand(self, evt):
 		canExit=False
 		if config.conf["general"]["askToExit"]:
-			self.Show()
-			self.Raise()
-			d = wx.MessageDialog(None, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
+			self.prePopup()
+			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
-			self.Hide()
+			self.postPopup()
 		else:
 			canExit=True
 		if canExit:
@@ -297,8 +311,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# If we don't do this and no dialog was displayed, the user will be dumped in the invisible system tray window, which is bad.
 		# It is even worse than expected because the user can close the system tray window, breaking the system tray icon.
 		# Even if a dialog is displayed, this does no harm.
-		mainFrame.Show()
-		mainFrame.Hide()
+		mainFrame.postPopup()
 
 def initialize(app):
 	global mainFrame
