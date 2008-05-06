@@ -146,6 +146,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _get_windowHandle(self):
 		return self.rootNVDAObject.windowHandle
 
+	def event_virtualBuffer_firstEnter(self):
+		"""Triggered the first time this virtual buffer is entered.
+		"""
+		speech.cancelSpeech()
+		virtualBufferHandler.reportPassThrough(self)
+		speech.speakObjectProperties(self.rootNVDAObject,name=True)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+
 	def _calculateLineBreaks(self,text):
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
 		lastBreak=0

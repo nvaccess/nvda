@@ -633,15 +633,9 @@ def manageEvent(name,window,objectID,childID):
 			if v:
 				obj.virtualBuffer=v
 				#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
-				focus=api.getFocusObject()
-				focus.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focus)
-				if focus.virtualBuffer==v:
-					virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
-					if hasattr(v,'TextInfo'):
-						speech.cancelSpeech()
-						speech.speakObjectProperties(obj,name=True)
-						info=v.makeTextInfo(textHandler.POSITION_CARET)
-						sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+				focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
+				if focusObject.virtualBuffer==v and hasattr(v,"event_virtualBuffer_firstEnter"):
+					v.event_virtualBuffer_firstEnter()
 
 		eventHandler.manageEvent(name,obj)
 
