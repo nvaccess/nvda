@@ -88,18 +88,24 @@ class winampMainWindow(IAccessible):
 
 class winampPlaylistEditor(winampMainWindow):
 
+	def __init__(self,*args,**kwargs):
+		super(winampPlaylistEditor,self).__init__(*args,**kwargs)
+		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)
+
 	def _get_name(self):
 		curIndex=winUser.sendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
 		if curIndex <0:
 			return None
 		info=fileinfo2()
 		info.fileindex=curIndex
-		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		internalInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalInfo,byref(info),sizeof(info),None)
+		internalInfo=winKernel.virtualAllocEx(self.processHandle,None,sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winKernel.writeProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
 		winUser.sendMessage(self.windowHandle,WM_WA_IPC,IPC_PE_GETINDEXTITLE,internalInfo)
-		winKernel.readProcessMemory(processHandle,internalInfo,byref(info),sizeof(info),None)
-		winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+		winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
+		winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
 
 	def _get_role(self):

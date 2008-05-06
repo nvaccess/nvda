@@ -199,7 +199,7 @@ def copyToClip(text):
 @returns: True if it succeeds, False otherwise.
 @rtype: boolean
 @param text: the text which will be copied to the clipboard
-@type obj: string
+@type text: string
 """
 	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
 		win32clipboard.OpenClipboard()
