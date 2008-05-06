@@ -116,7 +116,10 @@ class MainFrame(wx.Frame):
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
+		self.Show()
+		self.Raise()
 		self.sysTrayIcon.onActivate(None)
+		self.Hide()
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,reportDone=True)
@@ -143,9 +146,12 @@ class MainFrame(wx.Frame):
 	def onExitCommand(self, evt):
 		canExit=False
 		if config.conf["general"]["askToExit"]:
+			self.Show()
+			self.Raise()
 			d = wx.MessageDialog(None, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
+			self.Hide()
 		else:
 			canExit=True
 		if canExit:

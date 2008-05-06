@@ -35,9 +35,11 @@ class ModalDialog(object):
 		return response
 
 	def _run_gui(self):
+		gui.mainFrame.Show()
+		gui.mainFrame.Raise()
 		dialog = self.dialog = self.makeDialog()
-		dialog.Raise()
 		ret = self.getResponse(dialog.ShowModal())
+		gui.mainFrame.Hide()
 		dialog.Destroy()
 		return ret
 
