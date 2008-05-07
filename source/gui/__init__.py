@@ -29,7 +29,8 @@ ICON_PATH=os.path.join(NVDA_PATH, "images", "icon.png")
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
 id_showGuiCommand=wx.NewId()
 id_abortCommand=wx.NewId()
-evt_externalExecute = wx.NewEventType()
+evtid_externalExecute = wx.NewEventType()
+evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
 
 ### Globals
 mainFrame = None
@@ -39,7 +40,7 @@ topLevelWindows = []
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
-		super(ExternalExecuteEvent, self).__init__(evt_externalExecute, wx.ID_ANY)
+		super(ExternalExecuteEvent, self).__init__(evtid_externalExecute, wx.ID_ANY)
 		self._func = func
 		self._args = args
 		self._kwargs = kwargs
@@ -101,7 +102,7 @@ class MainFrame(wx.Frame):
 		self.Bind(evt_externalCommand, self.onAbortCommand, id=id_abortCommand)
 		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
-		wx.EVT_COMMAND(self,wx.ID_ANY,evt_externalExecute,lambda evt: evt.run())
+		self.Bind(evt_externalExecute,lambda evt: evt.run())
 		self.sysTrayIcon = SysTrayIcon(self)
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 		self.Show()
