@@ -146,17 +146,19 @@ class MainFrame(wx.Frame):
 		except:
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
+	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+		self.prePopup()
+		dialog(self, *args, **kwargs).Show()
+		self.postPopup()
+
 	def onDefaultDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Default dictionary"),speechDictHandler.dictionaries["default"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
 
 	def onVoiceDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
 		canExit=False
@@ -177,36 +179,28 @@ class MainFrame(wx.Frame):
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):
-		d=GeneralSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(GeneralSettingsDialog)
 
 	def onSynthesizerCommand(self,evt):
-		d=SynthesizerDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(SynthesizerDialog)
 
 	def onVoiceCommand(self,evt):
-		d=VoiceSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(VoiceSettingsDialog)
 
 	def onKeyboardSettingsCommand(self,evt):
-		d=KeyboardSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(KeyboardSettingsDialog)
 
 	def onMouseSettingsCommand(self,evt):
-		d=MouseSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(MouseSettingsDialog)
 
 	def onObjectPresentationCommand(self,evt):
-		d=ObjectPresentationDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(ObjectPresentationDialog)
 
 	def onVirtualBuffersCommand(self,evt):
-		d=VirtualBuffersDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(VirtualBuffersDialog)
 
 	def onDocumentFormattingCommand(self,evt):
-		d=DocumentFormattingDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(DocumentFormattingDialog)
 
 	def onAboutCommand(self,evt):
 		try:
@@ -214,8 +208,10 @@ class MainFrame(wx.Frame):
 %s: %s
 %s: %s
 %s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("copyright"),versionInfo.copyrightInfo)
-			d = wx.MessageDialog(None, aboutInfo, _("About NVDA"), wx.OK)
+			self.prePopup()
+			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
+			self.postPopup()
 		except:
 			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
 
