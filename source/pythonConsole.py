@@ -57,8 +57,8 @@ class ConsoleUI(wx.Frame):
 	"""The NVDA Python console GUI.
 	"""
 
-	def __init__(self):
-		super(ConsoleUI, self).__init__(None, wx.ID_ANY, _("NVDA Python Console"))
+	def __init__(self, parent):
+		super(ConsoleUI, self).__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -159,8 +159,7 @@ def initialize():
 	This creates a singleton instance of the console GUI. This is accessible as L{consoleUI}. This may be manipulated externally.
 	"""
 	global consoleUI
-	consoleUI = ConsoleUI()
-	gui.topLevelWindows.append(consoleUI)
+	consoleUI = ConsoleUI(gui.mainFrame)
 
 def activate():
 	"""Activate the console GUI.

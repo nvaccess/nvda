@@ -10,9 +10,8 @@ class LogViewer(wx.Frame):
 	"""The NVDA log viewer GUI.
 	"""
 
-	def __init__(self):
-		super(LogViewer, self).__init__(None, wx.ID_ANY, _("NVDA Log Viewer"))
-		gui.topLevelWindows.append(self)
+	def __init__(self, parent):
+		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -46,7 +45,8 @@ class LogViewer(wx.Frame):
 			pass
 
 	def onActivate(self, evt):
-		self.refresh()
+		if evt.GetActive():
+			self.refresh()
 		evt.Skip()
 
 	def onClose(self, evt):
@@ -62,7 +62,3 @@ class LogViewer(wx.Frame):
 			file(filename, "w").write(self.outputCtrl.GetValue().encode("UTF-8"))
 		except (IOError, OSError), e:
 			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
-
-	def Destroy(self):
-		gui.topLevelWindows.remove(self)
-		super(LogViewer, self).Destroy()
