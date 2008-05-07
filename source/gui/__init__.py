@@ -19,6 +19,7 @@ from settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import logViewer
+import winUser
 
 ### Constants
 appTitle = "NVDA"
@@ -118,23 +119,25 @@ class MainFrame(wx.Frame):
 		L{postPopup} should be called after the dialog or menu has been shown.
 		@postcondition: A dialog or menu may be shown.
 		"""
-		self.Show()
-		self.Raise()
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != os.getpid():
+			# This process is not the foreground process, so bring it to the foreground.
+			self.Raise()
 
 	def postPopup(self):
 		"""Clean up after a popup dialog or menu.
 		This should be called after a dialog or menu was popped up for the user.
 		"""
-		self.Show()
-		self.Hide()
+		if not winUser.isWindowVisible(winUser.getForegroundWindow()):
+			# The current foreground window is invisible, so we want to return to the previous foreground window.
+			# Showing and hiding our main window seems to achieve this.
+			self.Show()
+			self.Hide()
 
 	def onAbortCommand(self,evt):
 		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
-		self.prePopup()
 		self.sysTrayIcon.onActivate(None)
-		self.postPopup()
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,reportDone=True)
@@ -302,11 +305,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		super(SysTrayIcon, self).Destroy()
 
 	def onActivate(self, evt):
+		mainFrame.prePopup()
 		self.PopupMenu(self.menu)
-		# Showing and hiding our main frame seems to cause Windows to switch to the previous foreground window.
-		# If we don't do this and no dialog was displayed, the user will be dumped in the invisible system tray window, which is bad.
-		# It is even worse than expected because the user can close the system tray window, breaking the system tray icon.
-		# Even if a dialog is displayed, this does no harm.
 		mainFrame.postPopup()
 
 def initialize(app):
