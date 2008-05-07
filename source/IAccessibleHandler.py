@@ -148,6 +148,7 @@ import threading
 import heapq
 import itertools
 import time
+import struct
 from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
@@ -934,10 +935,19 @@ def terminate():
 	oledll.ole32.CoRevokeClassObject(_IA2RegCooky)
 
 
-def getIAccIdentityString(pacc,childID):
-	p,s=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
-	p=cast(p,POINTER(c_char*s))
-	return p.contents.raw
+def getIAccIdentity(pacc,childID):
+	stringPtr,stringSize=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
+	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
+	s=p.contents.raw
+	fields=struct.unpack('IIII',s)
+	d={}
+	d['childID']=fields[3]
+	if fields[0]&2:
+		d['menuHandle']=fields[2]
+	else:
+		d['objectID']=fields[2]
+		d['windowHandle']=fields[1]
+	return d
 
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)

@@ -87,7 +87,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		textRange=TextRangeStruct()
 		textRange.chrg.cpMin=start
 		textRange.chrg.cpMax=end
-		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.obj.windowProcessID)
+		processHandle=self.obj.processHandle
 		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		textRange.lpstrText=internalBuf
 		internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -130,6 +130,10 @@ class Scintilla(IAccessible):
 		self.TextInfo=ScintillaTextInfo
 		self._lastMouseTextOffsets=None
 		super(Scintilla,self).__init__(*args,**kwargs)
+		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)
 
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):

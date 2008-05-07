@@ -6,6 +6,7 @@
 
 import weakref
 import re
+import struct
 import os
 import tones
 import textHandler
@@ -176,7 +177,9 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
-		if not windowHandle:
+		if not windowHandle and event_windowHandle:
+			windowHandle=event_windowHandle
+		elif not windowHandle:
 			return None #We really do need a window handle
 		windowClassName=winUser.getClassName(windowHandle)
 		try:
@@ -223,6 +226,15 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
+		Identity=self.IAccessibleIdentity
+		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
+			event_windowHandle=Identity['windowHandle']
+		if event_objectID is None and Identity and 'objectID' in Identity:
+			event_objectID=Identity['objectID']
+		if event_childID is None and Identity and 'childID' in Identity:
+			event_childID=Identity['childID']
+		if event_childID is None:
+			event_childID=IAccessibleChildID
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -290,8 +302,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return False
 		if not super(IAccessible,self)._isEqual(other):
 			return False
-		selfIden=self.IAccessibleIdentityString
-		otherIden=other.IAccessibleIdentityString
+		selfIden=self.IAccessibleIdentity
+		otherIden=other.IAccessibleIdentity
 		if selfIden!=otherIden:
 			return False
 		if self.location!=other.location:
@@ -330,13 +342,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if index==0:
 			self.IAccessibleObject.accDoDefaultAction()
 
-	def _get_IAccessibleIdentityString(self):
-		if not hasattr(self,'_IAccessibleIdentityString'):
+	def _get_IAccessibleIdentity(self):
+		if not hasattr(self,'_IAccessibleIdentity'):
 			try:
-				self._IAccessibleIdentityString=IAccessibleHandler.getIAccIdentityString(self.IAccessibleObject,self.IAccessibleChildID)
+				self._IAccessibleIdentity=IAccessibleHandler.getIAccIdentity(self.IAccessibleObject,self.IAccessibleChildID)
 			except:
-				self._IAccessibleIdentityString=None
-		return self._IAccessibleIdentityString
+				self._IAccessibleIdentity=None
+		return self._IAccessibleIdentity
 
 	def _get_IAccessibleRole(self):
 		if not hasattr(self,'_IAccessibleRole'):

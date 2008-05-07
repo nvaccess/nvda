@@ -6,13 +6,15 @@ import wx
 import globalVars
 import gui
 
+#: The singleton instance of the log viewer UI.
+logViewer = None
+
 class LogViewer(wx.Frame):
 	"""The NVDA log viewer GUI.
 	"""
 
-	def __init__(self):
-		super(LogViewer, self).__init__(None, wx.ID_ANY, _("NVDA Log Viewer"))
-		gui.topLevelWindows.append(self)
+	def __init__(self, parent):
+		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -46,7 +48,8 @@ class LogViewer(wx.Frame):
 			pass
 
 	def onActivate(self, evt):
-		self.refresh()
+		if evt.GetActive():
+			self.refresh()
 		evt.Skip()
 
 	def onClose(self, evt):
@@ -63,6 +66,13 @@ class LogViewer(wx.Frame):
 		except (IOError, OSError), e:
 			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
 
-	def Destroy(self):
-		gui.topLevelWindows.remove(self)
-		super(LogViewer, self).Destroy()
+def activate():
+	"""Activate the log viewer.
+	If the log viewer has not already been created and opened, this will create and open it.
+	Otherwise, it will be brought to the foreground if possible.
+	"""
+	global logViewer
+	if not logViewer:
+		logViewer = LogViewer(gui.mainFrame)
+	logViewer.Raise()
+	logViewer.Show()

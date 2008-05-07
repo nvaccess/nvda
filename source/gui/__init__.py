@@ -19,6 +19,7 @@ from settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import logViewer
+import winUser
 
 ### Constants
 appTitle = "NVDA"
@@ -28,17 +29,16 @@ ICON_PATH=os.path.join(NVDA_PATH, "images", "icon.png")
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
 id_showGuiCommand=wx.NewId()
 id_abortCommand=wx.NewId()
-evt_externalExecute = wx.NewEventType()
+evtid_externalExecute = wx.NewEventType()
+evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
 
 ### Globals
 mainFrame = None
 #: A list of top level windows excluding L{mainFrame} which are currently instantiated and which should be destroyed on exit.
-#: @type: list
-topLevelWindows = []
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
-		super(ExternalExecuteEvent, self).__init__(evt_externalExecute, wx.ID_ANY)
+		super(ExternalExecuteEvent, self).__init__(evtid_externalExecute, wx.ID_ANY)
 		self._func = func
 		self._args = args
 		self._kwargs = kwargs
@@ -96,21 +96,39 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(500,500), style=style)
+		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
 		self.Bind(evt_externalCommand, self.onAbortCommand, id=id_abortCommand)
 		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
-		wx.EVT_COMMAND(self,wx.ID_ANY,evt_externalExecute,lambda evt: evt.run())
+		self.Bind(evt_externalExecute,lambda evt: evt.run())
 		self.sysTrayIcon = SysTrayIcon(self)
-		self.Show(True)
-		self.Show(False)
+		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
+		self.Show()
+		self.Hide()
 
 	def Destroy(self):
-		global topLevelWindows
 		self.sysTrayIcon.Destroy()
-		for window in list(topLevelWindows):
-			window.Destroy()
 		super(MainFrame, self).Destroy()
+
+	def prePopup(self):
+		"""Prepare for a popup.
+		This should be called before any dialog or menu which should pop up for the user.
+		L{postPopup} should be called after the dialog or menu has been shown.
+		@postcondition: A dialog or menu may be shown.
+		"""
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != os.getpid():
+			# This process is not the foreground process, so bring it to the foreground.
+			self.Raise()
+
+	def postPopup(self):
+		"""Clean up after a popup dialog or menu.
+		This should be called after a dialog or menu was popped up for the user.
+		"""
+		if not winUser.isWindowVisible(winUser.getForegroundWindow()):
+			# The current foreground window is invisible, so we want to return to the previous foreground window.
+			# Showing and hiding our main window seems to achieve this.
+			self.Show()
+			self.Hide()
 
 	def onAbortCommand(self,evt):
 		self.Destroy()
@@ -128,24 +146,28 @@ class MainFrame(wx.Frame):
 		except:
 			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
 
+	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+		self.prePopup()
+		dialog(self, *args, **kwargs).Show()
+		self.postPopup()
+
 	def onDefaultDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Default dictionary"),speechDictHandler.dictionaries["default"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
 
 	def onVoiceDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
 
 	def onTemporaryDictionaryCommand(self,evt):
-		d=DictionaryDialog(None,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
-		d.Show(True)
+		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
 		canExit=False
 		if config.conf["general"]["askToExit"]:
-			d = wx.MessageDialog(None, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
+			self.prePopup()
+			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
+			self.postPopup()
 		else:
 			canExit=True
 		if canExit:
@@ -157,36 +179,28 @@ class MainFrame(wx.Frame):
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):
-		d=GeneralSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(GeneralSettingsDialog)
 
 	def onSynthesizerCommand(self,evt):
-		d=SynthesizerDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(SynthesizerDialog)
 
 	def onVoiceCommand(self,evt):
-		d=VoiceSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(VoiceSettingsDialog)
 
 	def onKeyboardSettingsCommand(self,evt):
-		d=KeyboardSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(KeyboardSettingsDialog)
 
 	def onMouseSettingsCommand(self,evt):
-		d=MouseSettingsDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(MouseSettingsDialog)
 
 	def onObjectPresentationCommand(self,evt):
-		d=ObjectPresentationDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(ObjectPresentationDialog)
 
 	def onVirtualBuffersCommand(self,evt):
-		d=VirtualBuffersDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(VirtualBuffersDialog)
 
 	def onDocumentFormattingCommand(self,evt):
-		d=DocumentFormattingDialog(None)
-		d.Show(True)
+		self._popupSettingsDialog(DocumentFormattingDialog)
 
 	def onAboutCommand(self,evt):
 		try:
@@ -194,13 +208,15 @@ class MainFrame(wx.Frame):
 %s: %s
 %s: %s
 %s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("copyright"),versionInfo.copyrightInfo)
-			d = wx.MessageDialog(None, aboutInfo, _("About NVDA"), wx.OK)
+			self.prePopup()
+			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
+			self.postPopup()
 		except:
 			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
 
 	def onViewLogCommand(self, evt):
-		logViewer.LogViewer().Show()
+		logViewer.activate()
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
@@ -279,20 +295,16 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
-		self.Bind(wx.EVT_TASKBAR_RIGHT_UP, self.onActivate)
+		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
 		self.menu.Destroy()
 		super(SysTrayIcon, self).Destroy()
 
 	def onActivate(self, evt):
+		mainFrame.prePopup()
 		self.PopupMenu(self.menu)
-		# Showing and hiding our main frame seems to cause Windows to switch to the previous foreground window.
-		# If we don't do this and no dialog was displayed, the user will be dumped in the invisible system tray window, which is bad.
-		# It is even worse than expected because the user can close the system tray window, breaking the system tray icon.
-		# Even if a dialog is displayed, this does no harm.
-		mainFrame.Show()
-		mainFrame.Hide()
+		mainFrame.postPopup()
 
 def initialize(app):
 	global mainFrame

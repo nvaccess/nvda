@@ -89,20 +89,26 @@ class appModule(appModuleHandler.AppModule):
 
 class mirandaIMContactList(IAccessible):
 
+	def __init__(self,*args,**kwargs):
+		super(mirandaIMContactList,self).__init__(*args,**kwargs)
+		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)
+
 	def _get_name(self):
 		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
-		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,MAXITEMTEXTLEN,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalBuf=winKernel.virtualAllocEx(self.processHandle,None,MAXITEMTEXTLEN,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winUser.sendMessage(self.windowHandle,CLM_GETITEMTEXT,hItem,internalBuf)
 		buf=create_unicode_buffer(MAXITEMTEXTLEN)
-		winKernel.readProcessMemory(processHandle,internalBuf,buf,MAXITEMTEXTLEN,None)
+		winKernel.readProcessMemory(self.processHandle,internalBuf,buf,MAXITEMTEXTLEN,None)
 		text=buf.value
 		statusMsgPtr=winUser.sendMessage(self.windowHandle,CLM_GETSTATUSMSG,hItem,0)
 		if statusMsgPtr>0:
 			buf2=create_unicode_buffer(MAXSTATUSMSGLEN)
-			winKernel.readProcessMemory(processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
+			winKernel.readProcessMemory(self.processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
 			text="%s %s"%(text,buf2.value)
-		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		winKernel.virtualFreeEx(self.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		return text
 
 	def _get_role(self):
