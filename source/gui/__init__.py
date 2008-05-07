@@ -96,7 +96,7 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(500,500), style=style)
+		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
 		self.Bind(evt_externalCommand, self.onAbortCommand, id=id_abortCommand)
 		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
