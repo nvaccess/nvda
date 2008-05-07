@@ -103,8 +103,9 @@ class MainFrame(wx.Frame):
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
 		wx.EVT_COMMAND(self,wx.ID_ANY,evt_externalExecute,lambda evt: evt.run())
 		self.sysTrayIcon = SysTrayIcon(self)
-		self.Show(True)
-		self.Show(False)
+		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
+		self.Show()
+		self.Hide()
 
 	def Destroy(self):
 		global topLevelWindows
