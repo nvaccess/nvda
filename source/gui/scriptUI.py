@@ -51,7 +51,7 @@ class ModalDialog(object):
 class MessageDialog(ModalDialog):
 
 	def __init__(self, message, title = _("NVDA"), style=wx.OK, callback=None):
-		self.makeDialog = lambda: wx.MessageDialog(None, message, title, style)
+		self.makeDialog = lambda: wx.MessageDialog(gui.mainFrame, message, title, style)
 		super(MessageDialog, self).__init__(callback)
 
 	def getResponse(self, response):
@@ -60,7 +60,7 @@ class MessageDialog(ModalDialog):
 class TextEntryDialog(ModalDialog):
 
 	def __init__(self, message, title=_("NVDA"), default="", style=wx.OK | wx.CANCEL, callback=None):
-		self.makeDialog = lambda: wx.TextEntryDialog(None, message, title, defaultValue=default, style=style)
+		self.makeDialog = lambda: wx.TextEntryDialog(gui.mainFrame, message, title, defaultValue=default, style=style)
 		super(TextEntryDialog, self).__init__(callback)
 
 	def getResponse(self, response):
@@ -73,7 +73,7 @@ class SingleChoiceDialog(ModalDialog):
 
 	def __init__(self, message, title=_("NVDA"), choices=(), default=0, style=wx.OK|wx.CANCEL, callback=None):
 		def makeDialog():
-			dialog = wx.Dialog(None, wx.ID_ANY, title)
+			dialog = wx.Dialog(gui.mainFrame, wx.ID_ANY, title)
 			mainSizer = wx.BoxSizer(wx.VERTICAL)
 			mainSizer.Add(wx.StaticText(dialogD_ANY, label=message))
 			self.list = wx.ListView(dialog, wx.ID_ANY, style=wx.LC_LIST | wx.LC_SINGLE_SEL)
@@ -106,7 +106,7 @@ class LinksListDialog(ModalDialog):
 
 	def __init__(self, choices, default=0, callback=None):
 		def makeDialog():
-			dialog = wx.Dialog(None, wx.ID_ANY, _("Links List"))
+			dialog = wx.Dialog(gui.mainFrame, wx.ID_ANY, _("Links List"))
 			mainSizer = wx.BoxSizer(wx.VERTICAL)
 			self.list = wx.ListView(dialog, wx.ID_ANY, style=wx.LC_LIST | wx.LC_SINGLE_SEL)
 			self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, lambda evt: dialog.EndModal(wx.ID_OK))
