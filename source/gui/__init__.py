@@ -216,7 +216,7 @@ class MainFrame(wx.Frame):
 			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
 
 	def onViewLogCommand(self, evt):
-		logViewer.LogViewer(self).Show()
+		logViewer.activate()
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole

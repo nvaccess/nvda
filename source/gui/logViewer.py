@@ -6,6 +6,9 @@ import wx
 import globalVars
 import gui
 
+#: The singleton instance of the log viewer UI.
+logViewer = None
+
 class LogViewer(wx.Frame):
 	"""The NVDA log viewer GUI.
 	"""
@@ -62,3 +65,14 @@ class LogViewer(wx.Frame):
 			file(filename, "w").write(self.outputCtrl.GetValue().encode("UTF-8"))
 		except (IOError, OSError), e:
 			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
+
+def activate():
+	"""Activate the log viewer.
+	If the log viewer has not already been created and opened, this will create and open it.
+	Otherwise, it will be brought to the foreground if possible.
+	"""
+	global logViewer
+	if not logViewer:
+		logViewer = LogViewer(gui.mainFrame)
+	logViewer.Raise()
+	logViewer.Show()
