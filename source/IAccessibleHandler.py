@@ -178,11 +178,97 @@ _IA2Dll=None
 _IA2ClassFactory=None
 _IA2RegCooky=None
 
-#A set to cache property change events
-#values stored as (eventName,window,objectID,childID)
-propertyChangeEventCache={}
+class OrderedWinEventLimiter(object):
+	"""Collects and limits winEvents based on whether they are property changes, focus changes, or just generic (all other ones).
+	Only allow a max of L{maxFocusItems}, if more are added then the oldest focus event is removed to make room.
+	Only allow one property change for one specific object at a time, though push it further forward in time if a duplicate tries to get added.
+ 	"""
 
-focusEventQueue=Queue.Queue(4)
+	def __init__(self,maxFocusItems=4):
+		"""
+		@param maxFocusItems: the amount of focus changed events allowed to be queued.
+		@type maxFocusItems: integer
+		"""
+		self._maxFocusItems=maxFocusItems
+		self._focusEventQueue=Queue.Queue(maxFocusItems)
+		self._propertyChangeEventCache={}
+		self._eventHeap=[]
+		self._eventCounter=itertools.count()
+
+	def addPropertyChangeEvent(self,eventID,window,objectID,childID):
+		"""Adds a winEvent to the limiter, that is treeted as a propertyChange event, i.e. only one event type is allowed for one specific object.
+		@param eventID: the winEvent type
+		@type eventID: integer
+		@param window: the window handle of the winEvent
+		@type window: integer
+		@param objectID: the objectID of the winEvent
+		@type objectID: integer
+		@param childID: the childID of the winEvent
+		@type childID: integer
+		"""
+		self._propertyChangeEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+
+	def addFocusEvent(self,eventID,window,objectID,childID):
+		"""Adds a winEvent to the limiter, which is treeted as a focus change, i.e. only the last L{maxFocusItems} will be stored.
+		@param eventID: the winEvent type
+		@type eventID: integer
+		@param window: the window handle of the winEvent
+		@type window: integer
+		@param objectID: the objectID of the winEvent
+		@type objectID: integer
+		@param childID: the childID of the winEvent
+		@type childID: integer
+		"""
+		if self._focusEventQueue.full():
+			self._focusEventQueue.get_nowait()
+		self._focusEventQueue.put_nowait((self._eventCounter.next(),eventID,window,objectID,childID))
+
+	def addGenericEvent(self,eventID,window,objectID,childID):
+		"""Adds a winEvent to the limiter, which is treeted as a generic event, i.e. it is not limited at all.
+		@param eventID: the winEvent type
+		@type eventID: integer
+		@param window: the window handle of the winEvent
+		@type window: integer
+		@param objectID: the objectID of the winEvent
+		@type objectID: integer
+		@param childID: the childID of the winEvent
+		@type childID: integer
+		"""
+		heapq.heappush(self._eventHeap,(self._eventCounter.next(),eventID,window,objectID,childID))
+
+	def flushEvents(self):
+		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
+		"""
+		p=self._propertyChangeEventCache
+		self._propertyChangeEventCache={}
+		for k in p:
+			heapq.heappush(self._eventHeap,(p[k],)+k)
+		for count in range(self._focusEventQueue.qsize()):
+			item=self._focusEventQueue.get_nowait()
+			heapq.heappush(self._eventHeap,item)
+		e=self._eventHeap
+		self._eventHeap=[]
+		r=[]
+		for count in range(len(e)):
+			r.append(heapq.heappop(e)[1:])
+		return r
+
+#The win event limiter for all winEvents
+winEventLimiter=OrderedWinEventLimiter(maxFocusItems=4)
+
+#A set of winEvent event IDs that we want to treet as property changes
+propertyChangeWinEventIDs=set([
+	winUser.EVENT_OBJECT_STATECHANGE,
+	winUser.EVENT_OBJECT_LOCATIONCHANGE,
+	winUser.EVENT_OBJECT_NAMECHANGE,
+	winUser.EVENT_OBJECT_DESCRIPTIONCHANGE,
+	winUser.EVENT_OBJECT_VALUECHANGE,
+	winUser.EVENT_OBJECT_PARENTCHANGE,
+	winUser.EVENT_OBJECT_HELPCHANGE,
+	winUser.EVENT_OBJECT_DEFACTIONCHANGE,
+	winUser.EVENT_OBJECT_ACCELERATORCHANGE,
+	winUser.EVENT_OBJECT_REORDER,
+])
 
 IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -346,7 +432,7 @@ IAccessible2StatesToNVDAStates={
 }
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
-objectEventHandles=[]
+winEventHookIDs=[]
 
 eventCounter=itertools.count()
 eventHeap=[]
@@ -581,7 +667,7 @@ def accLocation(ia,child):
 	except:
 		return None
 
-eventMap={
+winEventIDsToNVDAEventNames={
 winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
@@ -609,245 +695,108 @@ IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 }
 
-def manageEvent(name,window,objectID,childID):
+def winEventToNVDAEvent(eventID,window,objectID,childID,focusNeedsFocusedState=True,ignoreSameFocus=True,compareEvents=True,compareObjects=True):
+	"""Tries to convert a win event ID to an NVDA event name, and instanciate or fetch an NVDAObject for the win event parameters.
+	@param eventID: the win event ID (type)
+	@type eventID: integer
+	@param window: the win event's window handle
+	@type window: integer
+	@param objectID: the win event's object ID
+	@type objectID: integer
+	@param childID: the win event's childID
+	@type childID: the win event's childID
+	@param focusNeedsFocusedState: if true then the object (or one of its ancestors) for a focus event must have state_focused in its states to be a valid event.
+	@type focusNeedsFocusedState: boolean
+	@param ignoreSameFocus: if true then a focus event will return None if an object that equals this object, or has the same event params, already has focus.
+	@type ignoreSameFocus: boolean
+	@param compareEvents: if true then this function is allowd to try and find an already instanciated object with the same event params.
+	@type compareEvents: boolean
+	@param compareObjects: if true then this function is allowed to compare an object it just instanciated, with already instanciated objects, and return the older object, for sake of keeping state in NVDA.
+	@type compareObjects: boolean
+	@returns: the NVDA event name and the NVDAObject the event is for
+	@rtype: boolean of string and L{NVDAObject.IAccessible.IAccessible}
+	"""
+	if eventID not in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
+		return None
+	neededCreation=True #used to track if we were able to use a previously instanciated object instead
+	#We can't handle MSAA create and destroy events.
+	if eventID in (winUser.EVENT_OBJECT_CREATE,winUser.EVENT_OBJECT_DESTROY):
+		return None
+	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
+	if not NVDAEventName:
+		return None
 	#Ignore any events with invalid window handles
-	if not winUser.isWindow(window):
-		return
-	desktopObject=api.getDesktopObject()
-	foregroundObject=api.getForegroundObject()
-	focusObject=api.getFocusObject()
+	if not window or not winUser.isWindow(window):
+		return None
+	#Ignore focus events on invisible windows
+	if eventID==winUser.EVENT_OBJECT_FOCUS and not winUser.isWindowVisible(window):
+		return None
 	obj=None
-	for testObject in [o for o in [focusObject,foregroundObject,desktopObject] if o]:
-		if isinstance(testObject,NVDAObjects.IAccessible.IAccessible) and window==testObject.event_windowHandle and objectID==testObject.event_objectID and childID==testObject.event_childID: 
-			obj=testObject
-			break
-	if obj is None and name not in ["hide","locationChange"]:
+	focusObject=api.getFocusObject()
+	if NVDAEventName=="gainFocus":
+		#If the current focus object has the same event parameters as this focus event then ignore it
+		if ignoreSameFocus and compareEvents and isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and window==focusObject.event_windowHandle and objectID==focusObject.event_objectID and childID==focusObject.event_childID:
+			return None
+ 	else:
+		#Check the focus or any of its ancestors to see if the object for these event parameters already exists -- we don't have to instanciate
+		obj=focusObject
+		while obj:
+			if compareEvents and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and window==obj.event_windowHandle and objectID==obj.event_objectID and childID==obj.event_childID:
+				neededCreation=False
+				break
+			obj=obj.parent
+	#If we don't yet have the object, then actually instanciate it.
+	if not obj: 
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-		if not obj:
-			return
-		if obj==focusObject:
-			obj=focusObject
-	if obj:
-		if name=="documentLoadComplete" and (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):
-			import virtualBufferHandler
-			v=virtualBufferHandler.update(obj)
-			if v:
-				obj.virtualBuffer=v
-				#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
-				focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
-				if focusObject.virtualBuffer==v and hasattr(v,"event_virtualBuffer_firstEnter"):
-					v.event_virtualBuffer_firstEnter()
-
-		eventHandler.manageEvent(name,obj)
+	#At this point if we don't have an object then we can't do any more
+	if not obj:
+		return None
+	#if the event is not for focus, and the object was instanciated, then see if this object is the same as the focus or one of its ancestors, 
+	#if so then the event is really for that object
+	if compareObjects and NVDAEventName!="gainFocus" and  neededCreation:
+		for testObj in (focusObject,):
+			if obj==testObj:
+				obj=testObj
+				break
+	#If this is a focus event, then this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
+	if focusNeedsFocusedState and NVDAEventName=="gainFocus":
+		testObj=obj
+		while testObj:
+			if controlTypes.STATE_FOCUSED in testObj.states:
+				break
+			parent=testObj.parent
+			if not parent:
+				return None
+			testObj.parent=parent
+			testObj=parent
+	return (NVDAEventName,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
-		focusObject=api.getFocusObject()
-		foregroundObject=api.getForegroundObject()
-		desktopObject=api.getDesktopObject()
-		navigatorObject=api.getNavigatorObject()
-		mouseObject=api.getMouseObject()
-		eventName=eventMap[eventID]
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
-		#Remove any objects that are being hidden or destroyed
-		if eventName in ["hide","destroy"]:
-			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle) and (objectID==focusObject.event_objectID) and (childID==focusObject.event_childID):
-				try:
-					parent=api.getFocusAncestors()[-1]
-				except:
-					parent=desktopObject
-				globalVars.focusObject=parent
-				api.setMouseObject(desktopObject)
-				return
-			elif isinstance(foregroundObject,NVDAObjects.IAccessible.IAccessible) and (window==foregroundObject.event_windowHandle) and (objectID==foregroundObject.event_objectID) and (childID==foregroundObject.event_childID):
-				api.setForegroundObject(desktopObject)
-				api.setMouseObject(desktopObject)
-				api.setNavigatorObject(desktopObject)
-				return
-		#Ignore any other destroy events since the object does not exist
-		if eventName=="destroy":
-			return
 		#Ignore events with invalid window handles
-		isWindow = winUser.isWindow(window)
-		if not window or eventName == "switchEnd" or (not isWindow and eventName == "menuEnd"):
+		isWindow = winUser.isWindow(window) if window else 0
+		if not window or eventID == winUser.EVENT_SYSTEM_SWITCHEND or (not isWindow and eventID in (winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
 			window=winUser.getDesktopWindow()
 		elif not isWindow:
 			return
 		windowClassName=winUser.getClassName(window)
-		controlID=winUser.getControlID(window)
-		if windowClassName.startswith('Mozilla') and eventName in ("show","hide","reorder"):
-			return
-		#A hack to fix a bug in Notepad++ where focus is constantly given to some strange list
-		if eventID==winUser.EVENT_OBJECT_FOCUS and controlID==30002 and winUser.getClassName(winUser.getAncestor(window,winUser.GA_ROOTOWNER))=="Notepad++":
-			return
-		if objectID==OBJID_CARET and eventName=="locationChange":
-			if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible) and (window==focusObject.event_windowHandle or window==focusObject.windowHandle):
-				return queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"caret",focusObject)
-			else:
-				return
-		#Report mouse shape changes
-		if (eventID==winUser.EVENT_OBJECT_NAMECHANGE) and (objectID==OBJID_CURSOR):
-			if not config.conf["mouse"]["reportMouseShapeChanges"]:
-				return
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CURSOR,0)
-			if obj:
-				queueHandler.queueFunction(queueHandler.eventQueue,mouseHandler.updateMouseShape,obj.name)
+		#At the moment we can't handle Gecko show, hide or reorder events as there are just too many of them
+		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
 			return
 		#Process focus events
-		elif eventName=="gainFocus":
-			if focusEventQueue.full():
-				focusEventQueue.get()
-			focusEventQueue.put((eventCounter.next(),window,objectID,childID))
+		if eventID==winUser.EVENT_OBJECT_FOCUS:
+			winEventLimiter.addFocusEvent(eventID,window,objectID,childID)
 			return
-		elif eventName.endswith("Change") or eventName in ("reorder","caret"):
-			propertyChangeEventCache[(eventName,window,objectID,childID)]=eventCounter.next()
+		elif eventID in propertyChangeWinEventIDs:
+			winEventLimiter.addPropertyChangeEvent(eventID,window,objectID,childID)
 			return
 		#Its a generic event which should just be queued
-		with eventLock:
-			heapq.heappush(eventHeap,(eventCounter.next(),eventName,window,objectID,childID))
+		winEventLimiter.addGenericEvent(eventID,window,objectID,childID)
 	except:
 		globalVars.log.error("winEventCallback", exc_info=True)
-
-def foreground_winEventCallback(window,objectID,childID):
-	if not winUser.isWindow(window):
-		return False
-	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
-		return False
-	appModuleHandler.update(window)
-	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
-		JABHandler.event_enterJavaWindow(window)
-		return True
-	obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if not obj:
-		return False
-	api.setForegroundObject(obj)
-	api.setFocusObject(obj)
-	speech.cancelSpeech()
-	eventHandler.manageEvent("foreground",obj)
-
-def focus_winEventCallback(window,objectID,childID,isForegroundChange=False,needsFocusState=True):
-	#Ignore any events with invalid window handles
-	if not winUser.isWindow(window):
-		return False
-	# Ignore focus events on invisible windows.
-	if not isForegroundChange and not winUser.isWindowVisible(window):
-		return False
-		foregroundWindow=winUser.getForegroundWindow()
-		info=winuser.getGUIThreadInfo(winUser.getWindowThreadProcessID(foregroundWindow)[1])
-		if window!=foregroundWindow and winUser.isDescendantWindow(window,info.hwndFocus) and window!=info.hwndFocus:
-			return False
-	#Ignore foreground events for a window that is a parent of the current focus as focus ancestors would have already announced it
-	focus=api.getFocusObject()
-	#Ignore focus/foreground events on the parent windows of the desktop and taskbar
-	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
-		return False
-	appModuleHandler.update(window)
-	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
-		JABHandler.event_enterJavaWindow(window)
-		return True
-	#We can't trust MSAA focus events with a childID greater than 0, just use 0 and retreave its activeChild
-	#We can only do this if there are no focus events pending or else we'll get issues with keyboard silencing focus announcement
-	if winUser.getClassName(window)!="ToolbarWindow32" and childID>0:
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,0)
-		if obj:
-			activeChild=obj.activeChild
-			if obj!=activeChild:
-				obj=activeChild
-			else:
-				obj=None
-	else:
-		obj=None
-	if not obj:
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
-	if obj and childID==0:
-		activeChild=obj.activeChild
-		if activeChild and activeChild.IAccessibleChildID>0 and activeChild!=obj:
-			obj=activeChild
-	return focus_manageEvent(obj,isForegroundChange,needsFocusState)
-
-def focus_manageEvent(obj,isForegroundChange=False,needsFocusState=True):
-	if not obj:
-		return False
-	if obj.role==controlTypes.ROLE_UNKNOWN:
-		parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
-		if parent:
-			return focus_manageEvent(parent,isForegroundChange,False)
-	if isForegroundChange:
-		api.setForegroundObject(obj)
-		speech.cancelSpeech()
-		needsFocusState=False
-	else:
-		foregroundObject=api.getForegroundObject()
-		if foregroundObject.windowClassName=="MozillaUIWindowClass" and obj==foregroundObject:
-			return False
-	oldFocus=api.getFocusObject()
-	if obj==oldFocus:
-		return True #even though its not used, we still  need to communicate its ok
-	oldAncestors=api.getFocusAncestors()
-	ancestors=[]
-	if needsFocusState:
-		if obj.IAccessibleStates&STATE_SYSTEM_FOCUSED or obj.windowClassName.startswith("Mozilla"):
-			hasFocusState=True
-		else:
-			hasFocusState=False
-	parent=NVDAObjects.IAccessible.IAccessible._get_parent(obj)
-	matchedOld=False
-	oldAncestorLen=len(oldAncestors)
-	while parent:
-		if parent==oldFocus:
-			newAncestors=list(oldAncestors)
-			newAncestors.append(oldFocus)
-			newAncestors.extend(ancestors)
-			ancestors=newAncestors
-			break
-		for index in range(oldAncestorLen):
-			if parent==oldAncestors[(oldAncestorLen-1)-index]:
-				ancestors=oldAncestors[0:oldAncestorLen-index]+ancestors
-				matchedOld=True
-				break
-		if matchedOld:
-			break
-		ancestors.insert(0,parent)
-		parent=NVDAObjects.IAccessible.IAccessible._get_parent(parent)
-	if needsFocusState:
-		for parent in ancestors:
-			if (not hasFocusState) and (parent.IAccessibleStates&STATE_SYSTEM_FOCUSED):
-				hasFocusState=True
-	foundGroup=False
-	for index in range(len(ancestors)):
-		role=ancestors[index].role
-		if role==controlTypes.ROLE_WINDOW:
-			continue
-		if role==controlTypes.ROLE_GROUPING:
-			foundGroup=True
-			break
-		groupObj=findGroupboxObject(ancestors[index])
-		if groupObj:
-			foundGroup=True
-			ancestors.insert(index,groupObj)
-			break
-	if not foundGroup:
-		groupObj=findGroupboxObject(obj)
-		if groupObj:
-			ancestors.append(groupObj)
-	if needsFocusState:
-		if not hasFocusState:
-			return False
-	api.setFocusObject(obj,ancestors=ancestors)
-	if isForegroundChange and obj.childCount>0:
-		eventHandler.manageEvent("focusEntered",obj)
-	else:
-		eventHandler.manageEvent("gainFocus",obj)
-	return True
-
-def processFocusWinEvents(focusEventList):
-	for focusEvent in focusEventList[::-1]:
-		if focus_winEventCallback(*focusEvent):
-			break
-
-
 
 #Register internal object event with IAccessible
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
@@ -886,51 +835,45 @@ def initialize():
 	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
 	if foregroundObject:
 		api.setForegroundObject(foregroundObject)
-		queueHandler.queueFunction(queueHandler.eventQueue,focus_manageEvent,foregroundObject,needsFocusState=False)
+		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"foreground",foregroundObject)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		queueHandler.queueFunction(queueHandler.eventQueue,focus_manageEvent,focusObject)
-	for eventType in eventMap.keys():
-		handle=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
-		if handle:
-			objectEventHandles.append(handle)
+		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",focusObject)
+	for eventType in winEventIDsToNVDAEventNames.keys():
+		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
+		if hookID:
+			winEventHookIDs.append(hookID)
 		else:
-			globalVars.log.error("initialize: could not register callback for event %s (%s)"%(eventType,eventMap[eventType]))
+			globalVars.log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
 
 def pumpAll():
-	global lastFocusEvent
-	currentFocusEvents=[]
-	s=propertyChangeEventCache.copy()
-	propertyChangeEventCache.clear()
-	with eventLock:
-		for count in range(focusEventQueue.qsize()):
-			try:
-				item=focusEventQueue.get_nowait()
-				heapq.heappush(eventHeap,(item[0],"gainFocus")+item[1:])
-			except:
-				globalVars.log.warn("focus queue",exc_info=True)
-				pass
-	with eventLock:
-		for v in s: 
-			heapq.heappush(eventHeap,(s[v],)+v)
-	with eventLock:
-		for count in range(len(eventHeap)):
-			item=heapq.heappop(eventHeap)
-			if item[1]=="gainFocus":
-				currentFocusEvents.append(item[2:])
-			else:
-				if len(currentFocusEvents)>0:
-					queueHandler.queueFunction(queueHandler.eventQueue,processFocusWinEvents,currentFocusEvents)
-					currentFocusEvents=[]
-				if item[1]=="foreground":
-					queueHandler.queueFunction(queueHandler.eventQueue,foreground_winEventCallback,*item[2:])
-				else:
-					queueHandler.queueFunction(queueHandler.eventQueue,manageEvent,*(item[1:]))
-		if len(currentFocusEvents)>0:
-			queueHandler.queueFunction(queueHandler.eventQueue,processFocusWinEvents,currentFocusEvents)
+	#Receive all the winEvents from the limiter for this cycle
+	winEvents=winEventLimiter.flushEvents()
+	focusWinEvents=[]
+	for winEvent in winEvents:
+		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
+		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
+			focusWinEvents.append(winEvent)
+			continue
+		else:
+			for focusWinEvent in reversed(focusWinEvents):
+				NVDAEvent=winEventToNVDAEvent(*focusWinEvent)
+				if NVDAEvent is not None:
+					api.setFocusObject(NVDAEvent[1]) #Eventually eventHandler will do that
+					queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
+					break
+			focusWinEvents=[]
+			NVDAEvent=winEventToNVDAEvent(*winEvent)
+			if NVDAEvent is not None:
+				queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
+	for focusWinEvent in reversed(focusWinEvents):
+		NVDAEvent=winEventToNVDAEvent(*focusWinEvent)
+		if NVDAEvent is not None:
+			api.setFocusObject(NVDAEvent[1]) #Eventually eventHandler will do that
+			queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
 
 def terminate():
-	for handle in objectEventHandles:
+	for handle in winEventHookIDs:
 		winUser.unhookWinEvent(handle)
 	oledll.ole32.CoRevokeClassObject(_IA2RegCooky)
 
