@@ -731,6 +731,9 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,focusNeedsFocusedState=T
 	#Ignore focus events on invisible windows
 	if eventID==winUser.EVENT_OBJECT_FOCUS and not winUser.isWindowVisible(window):
 		return None
+	#Ignore focus / foreground events on the parent of the desktop and taskbar
+	if eventID in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND) and winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
+		return None
 	obj=None
 	focusObject=api.getFocusObject()
 	if NVDAEventName=="gainFocus":
