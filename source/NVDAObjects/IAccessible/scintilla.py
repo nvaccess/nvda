@@ -57,6 +57,37 @@ class TextRangeStruct(ctypes.Structure):
 
 class ScintillaTextInfo(NVDAObjectTextInfo):
 
+	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
+		formatList,start,end=super(ScintillaTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
+		oldSel=self._getSelectionOffsets()
+		if oldSel[0]!=offset and oldSel[1]!=offset:
+			self._setSelectionOffsets(offset,offset)
+		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
+#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
+		fontNameBuf=ctypes.create_string_buffer(32)
+		internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
+		winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
+		winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
+			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=fontNameBuf.value))
+			formatList.append(f)
+		if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
+			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)))
+			formatList.append(f)
+		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
+			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD))
+			formatList.append(f)
+		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
+			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC))
+			formatList.append(f)
+		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
+			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
+			formatList.append(f)
+		if oldSel[0]!=offset and oldSel[1]!=offset:
+				self._setSelectionOffsets(oldSel[0],oldSel[1])
+		return (formatList,start,end)
+
 	def _getCaretOffset(self):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
 
