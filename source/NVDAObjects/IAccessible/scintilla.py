@@ -7,6 +7,7 @@ import globalVars
 import controlTypes
 from . import IAccessible 
 from .. import NVDAObjectTextInfo
+import locale
 
 #Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -35,9 +36,12 @@ SCI_STYLEGETITALIC=2484
 SCI_STYLEGETUNDERLINE=2488
 SCI_WORDSTARTPOSITION=2266
 SCI_WORDENDPOSITION=2267
+SCI_GETCODEPAGE=2137
+SCI_POSITIONAFTER=2418
 
 #constants
 STYLE_DEFAULT=32
+SC_CP_UTF8=65001
 
 class CharacterRangeStruct(ctypes.Structure):
 	_fields_=[
@@ -97,8 +101,11 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		buf=ctypes.create_string_buffer(bufLen)
 		winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		return buf.value
-
+		cp=winUser.sendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
+		if cp==SC_CP_UTF8:
+			return unicode(buf.value, errors="replace", encoding="utf-8")
+		else:
+			return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
 
 	def _getWordOffsets(self,offset):
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
@@ -122,6 +129,9 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 
 	def _getParagraphOffsets(self,offset):
 		return super(EditTextInfo,self)._getLineOffsets(offset)
+
+	def _getCharacterOffsets(self,offset):
+		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(IAccessible):
