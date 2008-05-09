@@ -190,7 +190,7 @@ class OrderedWinEventLimiter(object):
 		@type maxFocusItems: integer
 		"""
 		self._maxFocusItems=maxFocusItems
-		self._focusEventQueue=Queue.Queue(maxFocusItems)
+		self._focusEventCache={}
 		self._propertyChangeEventCache={}
 		self._eventHeap=[]
 		self._eventCounter=itertools.count()
@@ -219,9 +219,7 @@ class OrderedWinEventLimiter(object):
 		@param childID: the childID of the winEvent
 		@type childID: integer
 		"""
-		if self._focusEventQueue.full():
-			self._focusEventQueue.get_nowait()
-		self._focusEventQueue.put_nowait((self._eventCounter.next(),eventID,window,objectID,childID))
+		self._focusEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
 
 	def addGenericEvent(self,eventID,window,objectID,childID):
 		"""Adds a winEvent to the limiter, which is treeted as a generic event, i.e. it is not limited at all.
@@ -241,15 +239,16 @@ class OrderedWinEventLimiter(object):
 		"""
 		p=self._propertyChangeEventCache
 		self._propertyChangeEventCache={}
-		for k in p:
-			heapq.heappush(self._eventHeap,(p[k],)+k)
-		for count in range(self._focusEventQueue.qsize()):
-			item=self._focusEventQueue.get_nowait()
-			heapq.heappush(self._eventHeap,item)
+		for k,v in p.iteritems():
+			heapq.heappush(self._eventHeap,(v,)+k)
+		f=self._focusEventCache
+		self._focusEventCache={}
+		for k,v in sorted(f.iteritems())[-4:]:
+			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in range(len(e)):
+		for count in xrange(len(e)):
 			r.append(heapq.heappop(e)[1:])
 		return r
 
