@@ -812,7 +812,7 @@ def initialize():
 	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
 	if foregroundObject:
 		api.setForegroundObject(foregroundObject)
-		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"foreground",foregroundObject)
+		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",foregroundObject)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",focusObject)
