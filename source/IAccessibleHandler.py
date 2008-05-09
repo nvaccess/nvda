@@ -836,7 +836,7 @@ def pumpAll():
 			for focusWinEvent in reversed(focusWinEvents):
 				NVDAEvent=winEventToNVDAEvent(*focusWinEvent)
 				if NVDAEvent is not None:
-					api.setFocusObject(NVDAEvent[1]) #Eventually eventHandler will do that
+					queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,NVDAEvent[1]) #Eventually eventHandler will do that
 					queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
 					break
 			focusWinEvents=[]
@@ -846,7 +846,7 @@ def pumpAll():
 	for focusWinEvent in reversed(focusWinEvents):
 		NVDAEvent=winEventToNVDAEvent(*focusWinEvent)
 		if NVDAEvent is not None:
-			api.setFocusObject(NVDAEvent[1]) #Eventually eventHandler will do that
+			queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,NVDAEvent[1]) #Eventually eventHandler will do that
 			queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
 
 def terminate():
