@@ -191,12 +191,12 @@ class OrderedWinEventLimiter(object):
 		"""
 		self._maxFocusItems=maxFocusItems
 		self._focusEventCache={}
-		self._propertyChangeEventCache={}
+		self._genericEventCache={}
 		self._eventHeap=[]
 		self._eventCounter=itertools.count()
 
-	def addPropertyChangeEvent(self,eventID,window,objectID,childID):
-		"""Adds a winEvent to the limiter, that is treeted as a propertyChange event, i.e. only one event type is allowed for one specific object.
+	def addEvent(self,eventID,window,objectID,childID):
+		"""Adds a winEvent to the limiter.
 		@param eventID: the winEvent type
 		@type eventID: integer
 		@param window: the window handle of the winEvent
@@ -206,40 +206,37 @@ class OrderedWinEventLimiter(object):
 		@param childID: the childID of the winEvent
 		@type childID: integer
 		"""
-		self._propertyChangeEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
-
-	def addFocusEvent(self,eventID,window,objectID,childID):
-		"""Adds a winEvent to the limiter, which is treeted as a focus change, i.e. only the last L{maxFocusItems} will be stored.
-		@param eventID: the winEvent type
-		@type eventID: integer
-		@param window: the window handle of the winEvent
-		@type window: integer
-		@param objectID: the objectID of the winEvent
-		@type objectID: integer
-		@param childID: the childID of the winEvent
-		@type childID: integer
-		"""
-		self._focusEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
-
-	def addGenericEvent(self,eventID,window,objectID,childID):
-		"""Adds a winEvent to the limiter, which is treeted as a generic event, i.e. it is not limited at all.
-		@param eventID: the winEvent type
-		@type eventID: integer
-		@param window: the window handle of the winEvent
-		@type window: integer
-		@param objectID: the objectID of the winEvent
-		@type objectID: integer
-		@param childID: the childID of the winEvent
-		@type childID: integer
-		"""
-		heapq.heappush(self._eventHeap,(self._eventCounter.next(),eventID,window,objectID,childID))
+		if eventID==winUser.EVENT_OBJECT_FOCUS:
+			self._focusEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+		elif eventID==winUser.EVENT_OBJECT_SHOW:
+			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID)
+			if k in self._genericEventCache:
+				del self._genericEventCache[k]
+				return
+		elif eventID==winUser.EVENT_OBJECT_HIDE:
+			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
+			if k in self._genericEventCache:
+				del self._genericEventCache[k]
+				return
+		elif eventID==winUser.EVENT_OBJECT_CREATE:
+			k=(winUser.EVENT_OBJECT_DESTROY,window,objectID,childID)
+			if k in self._genericEventCache:
+				del self._genericEventCache[k]
+				return
+		elif eventID==winUser.EVENT_OBJECT_DESTROY:
+			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID)
+			if k in self._genericEventCache:
+				del self._genericEventCache[k]
+				return
+		else:
+			self._genericEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
 		"""
-		p=self._propertyChangeEventCache
-		self._propertyChangeEventCache={}
-		for k,v in p.iteritems():
+		g=self._genericEventCache
+		self._genericEventCache={}
+		for k,v in g.iteritems():
 			heapq.heappush(self._eventHeap,(v,)+k)
 		f=self._focusEventCache
 		self._focusEventCache={}
@@ -254,20 +251,6 @@ class OrderedWinEventLimiter(object):
 
 #The win event limiter for all winEvents
 winEventLimiter=OrderedWinEventLimiter(maxFocusItems=4)
-
-#A set of winEvent event IDs that we want to treet as property changes
-propertyChangeWinEventIDs=set([
-	winUser.EVENT_OBJECT_STATECHANGE,
-	winUser.EVENT_OBJECT_LOCATIONCHANGE,
-	winUser.EVENT_OBJECT_NAMECHANGE,
-	winUser.EVENT_OBJECT_DESCRIPTIONCHANGE,
-	winUser.EVENT_OBJECT_VALUECHANGE,
-	winUser.EVENT_OBJECT_PARENTCHANGE,
-	winUser.EVENT_OBJECT_HELPCHANGE,
-	winUser.EVENT_OBJECT_DEFACTIONCHANGE,
-	winUser.EVENT_OBJECT_ACCELERATORCHANGE,
-	winUser.EVENT_OBJECT_REORDER,
-])
 
 IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -788,15 +771,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#At the moment we can't handle Gecko show, hide or reorder events as there are just too many of them
 		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
 			return
-		#Process focus events
-		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			winEventLimiter.addFocusEvent(eventID,window,objectID,childID)
-			return
-		elif eventID in propertyChangeWinEventIDs:
-			winEventLimiter.addPropertyChangeEvent(eventID,window,objectID,childID)
-			return
-		#Its a generic event which should just be queued
-		winEventLimiter.addGenericEvent(eventID,window,objectID,childID)
+		winEventLimiter.addEvent(eventID,window,objectID,childID)
 	except:
 		globalVars.log.error("winEventCallback", exc_info=True)
 
