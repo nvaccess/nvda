@@ -289,6 +289,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		except:
 			pass
 		self._lastMouseTextOffsets=None
+		if None not in (event_windowHandle,event_objectID,event_childID):
+			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
 
 	def _isEqual(self,other):
