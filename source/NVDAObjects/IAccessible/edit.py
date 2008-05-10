@@ -85,6 +85,8 @@ CFM_UNDERLINE=0x4
 CFM_STRIKEOUT=0x8
 CFM_PROTECTED=0x10
 CFM_LINK=0x20
+CFE_SUBSCRIPT=0x00010000 # Superscript and subscript are 
+CFE_SUPERSCRIPT=0x00020000 #  mutually exclusive			 
 
 SCF_SELECTION=0x1
 
@@ -198,6 +200,9 @@ class EditTextInfo(NVDAObjectTextInfo):
 			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=charFormat.szFaceName))
 				formatList.append(f)
+			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=charFormat.yHeight/20))
+				formatList.append(f)
 			if (charFormat.dwEffects&CFM_BOLD) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD))
 				formatList.append(f)
@@ -206,6 +211,12 @@ class EditTextInfo(NVDAObjectTextInfo):
 				formatList.append(f)
 			if (charFormat.dwEffects&CFM_UNDERLINE) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
 				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
+				formatList.append(f)
+			if (charFormat.dwEffects&CFE_SUBSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUBSCRIPT,includes=includes,excludes=excludes):
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUBSCRIPT))
+				formatList.append(f)
+			if (charFormat.dwEffects&CFE_SUPERSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUPERSCRIPT,includes=includes,excludes=excludes):
+				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUPERSCRIPT))
 				formatList.append(f)
 			if oldSel[0]!=offset and oldSel[1]!=offset:
 				self._setSelectionOffsets(oldSel[0],oldSel[1])
