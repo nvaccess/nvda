@@ -235,6 +235,15 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			event_childID=Identity['childID']
 		if event_childID is None:
 			event_childID=IAccessibleChildID
+		if event_windowHandle is None:
+			event_windowHandle=windowHandle
+		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			event_objectID=IAccessibleHandler.OBJID_CLIENT
+		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				event_childID=IAccessibleObject.uniqueID
+			except:
+				globalVars.log.warning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
