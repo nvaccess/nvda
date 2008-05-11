@@ -783,6 +783,12 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	#If the existing focus has the same win event params as these, then ignore this event
 	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
+	#Notify appModuleHandler of this new foreground window
+	appModuleHandler.update(window)
+	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
+	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+		JABHandler.event_enterJavaWindow(window)
+		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID)
 	if not NVDAEvent:
@@ -841,6 +847,12 @@ def processForegroundWinEvent(window,objectID,childID):
 	#If the existing focus has the same win event params as these, then ignore this event
 	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
+	#Notify appModuleHandler of this new foreground window
+	appModuleHandler.update(window)
+	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
+	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+		JABHandler.event_enterJavaWindow(window)
+		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID)
 	if not NVDAEvent:
