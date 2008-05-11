@@ -184,7 +184,7 @@ class OrderedWinEventLimiter(object):
 	Only allow one property change for one specific object at a time, though push it further forward in time if a duplicate tries to get added.
  	"""
 
-	def __init__(self,maxFocusItems=4):
+	def __init__(self,maxFocusItems=3):
 		"""
 		@param maxFocusItems: the amount of focus changed events allowed to be queued.
 		@type maxFocusItems: integer
@@ -250,7 +250,7 @@ class OrderedWinEventLimiter(object):
 		return r
 
 #The win event limiter for all winEvents
-winEventLimiter=OrderedWinEventLimiter(maxFocusItems=4)
+winEventLimiter=OrderedWinEventLimiter()
 
 #A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params, or special usage strings, like 'focus' or 'foreground' etc.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
@@ -679,7 +679,7 @@ IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 }
 
-def winEventToNVDAEvent(eventID,window,objectID,childID,focusNeedsFocusedState=True,ignoreSameFocus=True,compareEvents=True,compareObjects=True):
+def winEventToNVDAEvent(eventID,window,objectID,childID):
 	"""Tries to convert a win event ID to an NVDA event name, and instanciate or fetch an NVDAObject for the win event parameters.
 	@param eventID: the win event ID (type)
 	@type eventID: integer
@@ -689,14 +689,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,focusNeedsFocusedState=T
 	@type objectID: integer
 	@param childID: the win event's childID
 	@type childID: the win event's childID
-	@param focusNeedsFocusedState: if true then the object (or one of its ancestors) for a focus event must have state_focused in its states to be a valid event.
-	@type focusNeedsFocusedState: boolean
-	@param ignoreSameFocus: if true then a focus event will return None if an object that equals this object, or has the same event params, already has focus.
-	@type ignoreSameFocus: boolean
-	@param compareEvents: if true then this function is allowd to try and find an already instanciated object with the same event params.
-	@type compareEvents: boolean
-	@param compareObjects: if true then this function is allowed to compare an object it just instanciated, with already instanciated objects, and return the older object, for sake of keeping state in NVDA.
-	@type compareObjects: boolean
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: boolean of string and L{NVDAObject.IAccessible.IAccessible}
 	"""
@@ -768,18 +760,16 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
 	return True
 
-def processFocusWinEvent(eventID,window,objectID,childID):
+def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	"""checks to see if the focus win event is not the same as the existing focus, 
-	then converts the win event to an NVDA event (instanciating an NVDA Object) and then checks the NVDAObject against the existing focus object. 
-	If all is ok it queues the focus event to NVDA and returns True.
-	@param eventID: a win event ID (type)
-	@type eventID: integer
-	@param window: a win event's window handle
+	then converts the win event to an NVDA event (instanciating an NVDA Object) then calls processFocusNVDAEvent. If all is ok it returns True.
 	@type window: integer
 	@param objectID: a win event's object ID
 	@type objectID: integer
 	@param childID: a win event's child ID
 	@type childID: integer
+	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
+	@type needsFocusedState: boolean
 	@returns: True if the focus was processed, False otherwise.
 	@rtype: boolean
 	"""
@@ -797,29 +787,39 @@ def processFocusWinEvent(eventID,window,objectID,childID):
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID)
 	if not NVDAEvent:
 		return False
-	if NVDAEvent[1]==oldFocus:
+	return processFocusNVDAEvent(NVDAEvent[1],needsFocusedState=needsFocusedState)
+
+def processFocusNVDAEvent(obj,needsFocusedState=True):
+	"""Checks the given NVDAObject against the existing focus to make sure they are not equal.
+	Queues the focus event.
+	If the focus event is bad then it returns False, else it returns True.
+	@param obj: the NVDAObject the focus event is for
+	@type obj: L{NVDAObjects.NVDAObject}
+	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
+	@type needsFocusedState: boolean
+	"""
+	oldFocus=liveNVDAObjectTable.get('focus',None)
+	if oldFocus and obj==oldFocus:
 		return False
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
-	testObj=NVDAEvent[1]
-	while testObj:
-		if controlTypes.STATE_FOCUSED in testObj.states:
-			break
-		parent=testObj.parent
-		testObj.parent=parent
-		testObj=parent
-	if not testObj:
-		return False
-	liveNVDAObjectTable['focus']=NVDAEvent[1]
-	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,NVDAEvent[1]) #Eventually eventHandler will do that
-	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
-	return True
+	if needsFocusedState:
+		testObj=obj
+		while testObj:
+			if controlTypes.STATE_FOCUSED in testObj.states:
+				break
+			parent=testObj.parent
+			testObj.parent=parent
+			testObj=parent
+		if not testObj:
+			return False
+	liveNVDAObjectTable['focus']=obj
+	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,obj) #Eventually eventHandler will do that
+	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,'gainFocus',obj)
 
-def processForegroundWinEvent(eventID,window,objectID,childID):
+def processForegroundWinEvent(window,objectID,childID):
 	"""checks to see if the foreground win event is not the same as the existing focus or any of its parents, 
 	then converts the win event to an NVDA event (instanciating an NVDA Object) and then checks the NVDAObject against the existing focus object. 
 	If all is ok it queues the foreground event to NVDA and returns True.
-	@param eventID: a win event ID (type)
-	@type eventID: integer
 	@param window: a win event's window handle
 	@type window: integer
 	@param objectID: a win event's object ID
@@ -830,8 +830,6 @@ def processForegroundWinEvent(eventID,window,objectID,childID):
 	@rtype: boolean
 	"""
 	#Ignore foreground events on invisible windows
-	if not winUser.isWindowVisible(window):
-		return False
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False
@@ -911,15 +909,15 @@ def pumpAll():
 			continue
 		else:
 			for focusWinEvent in reversed(focusWinEvents):
-				if processFocusWinEvent(*focusWinEvent):
+				if processFocusWinEvent(*(focusWinEvent[1:])):
 					break
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
-				processForegroundWinEvent(*winEvent)
+				processForegroundWinEvent(*(winEvent[1:]))
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
-		if processFocusWinEvent(*focusWinEvent):
+		if processFocusWinEvent(*(focusWinEvent[1:])):
 			break
 
 def terminate():

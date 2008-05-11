@@ -610,7 +610,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			except:
 				char=0
 			if char!=0xfffc:
-				IAccessibleHandler.focus_manageEvent(self)
+				IAccessibleHandler.processFocusNVDAEvent(self)
 
 	def event_mouseMove(self,x,y):
 		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
@@ -675,7 +675,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		parentObject=focusObject.parent if focusObject else None
 		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP):
 			speech.cancelSpeech()
-			IAccessibleHandler.focus_winEventCallback(self.event_windowHandle,self.event_objectID,self.event_childID,needsFocusState=False)
+			IAccessibleHandler.processFocusWinEvent(self.event_windowHandle,self.event_objectID,self.event_childID)
 
 	def event_menuEnd(self):
 		oldFocus=api.getFocusObject()
@@ -687,8 +687,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		speech.cancelSpeech()
 		obj=api.findObjectWithFocus()
-		IAccessibleHandler.focus_manageEvent(obj)
-
+		IAccessibleHandler.processFocusNVDAEvent(obj)
 
 	def event_selection(self):
 		return self.event_stateChange()
