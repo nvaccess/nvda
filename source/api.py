@@ -189,8 +189,8 @@ def processPendingEvents():
 	import IAccessibleHandler
 	wx.Yield()
 	pythoncom.PumpWaitingMessages()
-	queueHandler.flushQueue(queueHandler.eventQueue)
 	IAccessibleHandler.pumpAll()
+	queueHandler.flushQueue(queueHandler.eventQueue)
 
 def copyToClip(text):
 	"""Copies the given text to the windows clipboard.

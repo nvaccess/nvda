@@ -692,7 +692,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: boolean of string and L{NVDAObject.IAccessible.IAccessible}
 	"""
-	if eventID not in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
+	if False and eventID not in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 		return None
 	neededCreation=True #used to track if we were able to use a previously instanciated object instead
 	#We can't handle MSAA create and destroy events.
@@ -724,7 +724,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			objectID=OBJID_CLIENT
 		#Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
-		if not window or eventID == winUser.EVENT_SYSTEM_SWITCHEND or (not isWindow and eventID in (winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
+		if not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND):
 			window=winUser.getDesktopWindow()
 		elif not isWindow:
 			return
