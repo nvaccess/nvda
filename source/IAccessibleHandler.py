@@ -860,6 +860,7 @@ def processForegroundWinEvent(window,objectID,childID):
 	liveNVDAObjectTable['focus']=NVDAEvent[1]
 	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,NVDAEvent[1]) #Eventually eventHandler will do that
 	queueHandler.queueFunction(queueHandler.eventQueue,api.setForegroundObject,NVDAEvent[1]) #Eventually eventHandler will do that
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
 	return True
 
