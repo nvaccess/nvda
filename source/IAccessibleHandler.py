@@ -815,6 +815,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	liveNVDAObjectTable['focus']=obj
 	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,obj) #Eventually eventHandler will do that
 	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,'gainFocus',obj)
+	return True
 
 def processForegroundWinEvent(window,objectID,childID):
 	"""checks to see if the foreground win event is not the same as the existing focus or any of its parents, 
