@@ -89,7 +89,7 @@ class MessageList_pre2003(IAccessible):
 			self.curMessageItem=MessageItem(self,msg)
 		super(MessageList_pre2003,self).event_gainFocus()
 		if msg:
-			eventHandler.manageEvent("gainFocus",self.curMessageItem)
+			eventHandler.executeEvent("gainFocus",self.curMessageItem)
 
 	def script_moveByMessage(self,keyPress,nextScript):
 		if hasattr(self,'curMessageItem'):
@@ -107,7 +107,7 @@ class MessageList_pre2003(IAccessible):
 			newEntryID=messageItem.msg.entryID
 			if newEntryID!=oldEntryID:
 				self.curMessageItem=messageItem
-				eventHandler.manageEvent("gainFocus",messageItem)
+				eventHandler.executeEvent("gainFocus",messageItem)
 
 [MessageList_pre2003.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","moveByMessage"),

@@ -762,7 +762,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 			return False
 	if NVDAEvent[1]==focus:
 		NVDAEvent=(NVDAEvent[0],focus)
-	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
+	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
 def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
@@ -824,8 +824,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 		if not testObj:
 			return False
 	liveNVDAObjectTable['focus']=obj
-	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,obj) #Eventually eventHandler will do that
-	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,'gainFocus',obj)
+	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
 def processForegroundWinEvent(window,objectID,childID):
@@ -863,10 +862,7 @@ def processForegroundWinEvent(window,objectID,childID):
 	if not NVDAEvent:
 		return False
 	liveNVDAObjectTable['focus']=NVDAEvent[1]
-	queueHandler.queueFunction(queueHandler.eventQueue,api.setFocusObject,NVDAEvent[1]) #Eventually eventHandler will do that
-	queueHandler.queueFunction(queueHandler.eventQueue,api.setForegroundObject,NVDAEvent[1]) #Eventually eventHandler will do that
-	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
-	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
+	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
 #Register internal object event with IAccessible
@@ -906,10 +902,10 @@ def initialize():
 	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
 	if foregroundObject:
 		api.setForegroundObject(foregroundObject)
-		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",foregroundObject)
+		eventHandler.queueEvent('gainFocus',foregroundObject)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,"gainFocus",focusObject)
+		eventHandler.queueEvent('gainFocus',focusObject)
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:

@@ -261,12 +261,10 @@ def event_gainFocus(vmID,accContext):
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
 		return 
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	api.setFocusObject(obj)
-	eventHandler.manageEvent("gainFocus",obj)
+	eventHandler.queueEvent("gainFocus",obj)
 	activeChild=obj.activeChild
 	if activeChild:
-		api.setFocusObject(activeChild)
-		eventHandler.manageEvent("gainFocus",activeChild)
+		eventHandler.queueEvent("gainFocus",activeChild)
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
@@ -287,14 +285,13 @@ def event_stateChange(vmID,accContext,oldState,newState):
 	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU]:
-			api.setFocusObject(obj)
-			eventHandler.manageEvent("gainFocus",obj)
+			eventHandler.queueEvent("gainFocus",obj)
 			return
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
 		obj=focus
 	else:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	eventHandler.manageEvent("stateChange",obj)
+	eventHandler.queueEvent("stateChange",obj)
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
@@ -307,8 +304,7 @@ def event_enterJavaWindow(hwnd):
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getForegroundObject():
 		return
-	api.setForegroundObject(obj)
-	eventHandler.manageEvent("foreground",obj)
+	eventHandler.queueEvent("foreground",obj)
 
 def isJavaWindow(hwnd):
 	if not isRunning:
