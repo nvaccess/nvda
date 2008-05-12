@@ -318,4 +318,6 @@ qn("list", key="l", nextDoc=_("moves to the next list"), nextError=_("no next li
 	prevDoc=_("moves to the previous list"), prevError=_("no previous list"))
 qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("no next list item"),
 	prevDoc=_("moves to the previous list item"), prevError=_("no previous list item"))
+qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no next button"),
+	prevDoc=_("moves to the previous button"), prevError=_("no previous button"))
 del qn

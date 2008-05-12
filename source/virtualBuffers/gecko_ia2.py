@@ -198,6 +198,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LISTITEM]}
+		elif nodeType=="button":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]}
 		else:
 			return None
 		# We should never consider invisible nodes.
