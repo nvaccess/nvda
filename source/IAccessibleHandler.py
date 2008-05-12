@@ -751,6 +751,8 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
+	#Notify appModuleHandler of this new foreground window
+	appModuleHandler.update(window)
 	NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
 	if not NVDAEvent:
 		return False

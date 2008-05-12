@@ -675,7 +675,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		parentObject=focusObject.parent if focusObject else None
 		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP):
 			speech.cancelSpeech()
-			IAccessibleHandler.processFocusWinEvent(self.event_windowHandle,self.event_objectID,self.event_childID)
+			IAccessibleHandler.processFocusWinEvent(self.event_windowHandle,self.event_objectID,self.event_childID,needsFocusedState=False)
 
 	def event_menuEnd(self):
 		oldFocus=api.getFocusObject()
