@@ -95,7 +95,9 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			break
 		if tempObj is not obj: #we don't want to add the new focus to the new focusancestors
 			ancestors.insert(0,tempObj)
-		tempObj=tempObj.parent
+		parent=tempObj.parent
+		tempObj.parent=parent
+		tempObj=parent
 	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
 		virtualBufferObject=None
 		for o in ancestors[focusDifferenceLevel:]+[obj]:
