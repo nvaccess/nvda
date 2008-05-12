@@ -692,12 +692,11 @@ def winEventToNVDAEvent(eventID,window,objectID,childID):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: boolean of string and L{NVDAObject.IAccessible.IAccessible}
 	"""
-	if False and eventID not in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
-		return None
 	neededCreation=True #used to track if we were able to use a previously instanciated object instead
 	#We can't handle MSAA create and destroy events.
 	if eventID in (winUser.EVENT_OBJECT_CREATE,winUser.EVENT_OBJECT_DESTROY):
 		return None
+	#Handle the special MSAA caret object's locationChange and show events as 'caret' events for the focus object
 	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
 	if not NVDAEventName:
 		return None
@@ -753,7 +752,13 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	"""
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(window)
-	NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
+	#Handle particular events for the special MSAA caret object just as if they were for the focus object
+	if objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
+		focus=liveNVDAObjectTable.get('focus',None)
+		if focus:
+			NVDAEvent=("caret",focus)
+	else:
+		NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
 	if not NVDAEvent:
 		return False
 	focus=liveNVDAObjectTable.get('focus',None)
