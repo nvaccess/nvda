@@ -29,6 +29,7 @@ import controlTypes
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import NVDAObjects.JAB
+import eventHandler
 
 re_gecko_level=re.compile('.*?L([0-9]+).*')
 re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
@@ -640,10 +641,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			speech.speakText(info.text)
 			obj._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
-	def event_show(self):
-		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP:
-			self.event_menuStart()
-
 	def _get_groupName(self):
 		return None
 		if self.IAccessibleChildID>0:
@@ -672,10 +669,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_menuStart(self):
 		focusObject=api.getFocusObject()
-		parentObject=focusObject.parent if focusObject else None
-		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP):
+		if focusObject.IAccessibleRole not in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):
 			speech.cancelSpeech()
-			IAccessibleHandler.processFocusWinEvent(self.event_windowHandle,self.event_objectID,self.event_childID,needsFocusedState=False)
+			api.setFocusObject(self)
+			eventHandler.manageEvent("gainFocus", self)
 
 	def event_menuEnd(self):
 		oldFocus=api.getFocusObject()
