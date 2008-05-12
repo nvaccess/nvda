@@ -444,7 +444,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
-			if res[0].accRole(res[1])!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
+			try:
+				parentRole=res[0].accRole(res[1])
+			except:
+				globalVars.log.warning("parent has bad role",exc_info=True)
+				return None
+			if parentRole!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 			res=IAccessibleHandler.accParent(res[0],res[1])
 			if res:
