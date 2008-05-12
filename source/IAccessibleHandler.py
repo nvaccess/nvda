@@ -753,15 +753,13 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(window)
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
-	if objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
-		focus=liveNVDAObjectTable.get('focus',None)
-		if focus:
-			NVDAEvent=("caret",focus)
+	focus=liveNVDAObjectTable.get('focus',None)
+	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
+		NVDAEvent=("caret",focus)
 	else:
 		NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
-	if not NVDAEvent:
-		return False
-	focus=liveNVDAObjectTable.get('focus',None)
+		if not NVDAEvent:
+			return False
 	if NVDAEvent[1]==focus:
 		NVDAEvent=(NVDAEvent[0],focus)
 	queueHandler.queueFunction(queueHandler.eventQueue,eventHandler.manageEvent,*NVDAEvent)
