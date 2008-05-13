@@ -26,12 +26,11 @@ class TCList(IAccessible):
 			obj=self
 			while obj and obj.parent.windowClassName!="TTOTAL_CMD":
 				obj=obj.parent
-			obj=obj.previous
-			try:
+			counter=0
+			while obj and obj.windowClassName!="TPanel":
 				obj=obj.previous
-			except:
-				obj=None
-			if obj:
+				counter+=1
+			if counter==2:
 				speech.speakMessage(_("left"))
 			else:
 				speech.speakMessage(_("right"))
