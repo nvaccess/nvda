@@ -134,7 +134,7 @@ def pumpAll():
 		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 			playAudioCoordinates(x,y,screenWidth=screenWidth,screenHeight=screenHeight)
 		executeMouseMoveEvent(x,y)
-	if mouseShapeChanged>0:
+	if config.conf["mouse"]["reportMouseShapeChanges"] and mouseShapeChanged>0:
 		if mouseShapeChanged==10:
 			mouseShapeChanged=0
 			speech.speakMessage(_("%s cursor")%curMouseShape)
