@@ -723,7 +723,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			objectID=OBJID_CLIENT
 		#Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
-		if not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND):
+		if window==0 or (not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
 			window=winUser.getDesktopWindow()
 		elif not isWindow:
 			return
@@ -760,6 +760,9 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 		NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
 		if not NVDAEvent:
 			return False
+	if NVDAEvent[0]=="nameChange" and objectID==OBJID_CURSOR:
+		mouseHandler.updateMouseShape(NVDAEvent[1].name)
+		return
 	if NVDAEvent[1]==focus:
 		NVDAEvent=(NVDAEvent[0],focus)
 	eventHandler.queueEvent(*NVDAEvent)
