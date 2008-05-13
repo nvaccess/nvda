@@ -797,7 +797,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
-	if childID>0 and winUser.getClassName(window)=="SysListView32":
+	if childID>0 and objectID==OBJID_CLIENT and winUser.getClassName(window)=="SysListView32":
 		# Don't trust child IDs from SysListView32, as it reports incorrect child IDs when items are removed.
 		childID=0
 	#Convert the win event to an NVDA event
