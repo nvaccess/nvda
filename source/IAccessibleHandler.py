@@ -824,6 +824,9 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 		if child:
 			obj=child
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
+	if needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (ROLE_SYSTEM_COMBOBOX, ROLE_SYSTEM_DOCUMENT):
+		# The focused state is not set on certain Mozilla controls.
+		needsFocusedState=False
 	if needsFocusedState:
 		testObj=obj
 		while testObj:
