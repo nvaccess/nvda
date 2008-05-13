@@ -797,6 +797,9 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
+	if childID>0 and winUser.getClassName(window)=="SysListView32":
+		# Don't trust child IDs from SysListView32, as it reports incorrect child IDs when items are removed.
+		childID=0
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID)
 	if not NVDAEvent:
@@ -815,6 +818,11 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	oldFocus=liveNVDAObjectTable.get('focus',None)
 	if oldFocus and obj==oldFocus:
 		return False
+	if obj.event_childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST:
+		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
+		child=obj.activeChild
+		if child:
+			obj=child
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
 	if needsFocusedState:
 		testObj=obj
