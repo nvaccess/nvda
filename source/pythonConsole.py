@@ -148,7 +148,9 @@ class ConsoleUI(wx.Frame):
 		"""
 		self.namespace.update({
 			"focus": api.getFocusObject(),
-			"focusAnc": api.getFocusAncestors(),
+			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
+			"focusAnc": list(api.getFocusAncestors()),
+			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
 			"mouse": api.getMouseObject(),
