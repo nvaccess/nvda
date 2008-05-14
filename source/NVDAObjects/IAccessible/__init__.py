@@ -881,12 +881,6 @@ class SHELLDLL_DefView_client(IAccessible):
 
 class List(IAccessible):
 
-	def _get_name(self):
-		name=super(List,self)._get_name()
-		if not name:
-			name=super(IAccessible,self)._get_name()
-		return name
-
 	def _get_role(self):
 		return controlTypes.ROLE_LIST
 
@@ -1008,6 +1002,7 @@ _staticMap={
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.Edit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
+	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("SysTreeView32",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
