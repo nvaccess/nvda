@@ -159,7 +159,7 @@ def update(windowHandle):
 		del runningTable[w]
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
 	globalVars.log.debug("Using window %s, got appWindow %s"%(windowHandle,appWindow))
-	if appWindow<=0 or not winUser.isWindowVisible(appWindow) or not winUser.isWindowEnabled(appWindow):
+	if appWindow<=0:
 		globalVars.log.debug("bad appWindow")
 		return
 	if appWindow not in runningTable:
