@@ -449,7 +449,9 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.windowClassName.startswith('Mozilla'):
 			res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
 			if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				if newObj:
+					return newObj
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			try:
