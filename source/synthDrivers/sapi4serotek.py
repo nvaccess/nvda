@@ -92,6 +92,7 @@ class SynthDriver(silence.SynthDriver):
 
 	def _set_pitch(self,value):
 		self.tts.averagePitch=int(round(value*self.pitchRatio))+self.pitchOffset
+		self.tts.say("\0")
 
 	def _set_volume(self,value):
 		pass
