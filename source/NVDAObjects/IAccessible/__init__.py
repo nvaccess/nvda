@@ -176,8 +176,17 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
 		elif not windowHandle and not IAccessibleObject:
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
-		if not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				windowHandle=IAccessibleObject.windowHandle
+			except:
+				globalVars.log.warn("IAccessible2::windowHandle failed",exc_info=True)
+				pass
+			#Mozilla Gecko: we can never use a MozillaWindowClass window
+			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
+				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
+			if not windowHandle:
+				windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle and event_windowHandle:
 			windowHandle=event_windowHandle
 		elif not windowHandle:
