@@ -84,19 +84,25 @@ Before overriding the last object, this function calls event_looseFocus on the o
 	matchedOld=False
 	focusDifferenceLevel=0
 	oldFocusLineLength=len(oldFocusLine)
+	# Starting from the focus, move up the ancestor chain.
 	while tempObj:
-		for index in range(oldFocusLineLength):
-			if tempObj==oldFocusLine[(oldFocusLineLength-1)-index]:
-				ancestors=oldFocusLine[0:oldFocusLineLength-index]+ancestors
-				focusDifferenceLevel=oldFocusLineLength-index
+		# Scan backwards through the old ancestors looking for a match.
+		for index in xrange(oldFocusLineLength-1,-1,-1):
+			if tempObj==oldFocusLine[index]:
+				# Match! The old and new focus ancestors converge at this point.
+				# Copy the old ancestors up to and including this object.
+				ancestors=oldFocusLine[0:index+1]+ancestors
+				focusDifferenceLevel=index+1
+				# We don't need to process any more in either this loop or the outer loop; we have all of the ancestors.
 				matchedOld=True
 				break
 		if matchedOld:
 			break
-		if tempObj is not obj: #we don't want to add the new focus to the new focusancestors
+		if tempObj is not obj: #we don't want to add the new focus to the new focus ancestors
+			# We're moving backwards along the ancestor chain, so add this to the start of the list.
 			ancestors.insert(0,tempObj)
 		parent=tempObj.parent
-		tempObj.parent=parent
+		tempObj.parent=parent # Cache the parent.
 		tempObj=parent
 	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
 		virtualBufferObject=None
