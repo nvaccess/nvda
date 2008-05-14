@@ -240,7 +240,7 @@ class OrderedWinEventLimiter(object):
 			heapq.heappush(self._eventHeap,(v,)+k)
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems())[-4:]:
+		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[-4:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
@@ -679,7 +679,7 @@ IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 }
 
-def winEventToNVDAEvent(eventID,window,objectID,childID):
+def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	"""Tries to convert a win event ID to an NVDA event name, and instanciate or fetch an NVDAObject for the win event parameters.
 	@param eventID: the win event ID (type)
 	@type eventID: integer
@@ -689,12 +689,13 @@ def winEventToNVDAEvent(eventID,window,objectID,childID):
 	@type objectID: integer
 	@param childID: the win event's childID
 	@type childID: the win event's childID
+	@param useCache: C{True} to use the L{liveNVDAObjectTable} cache when retrieving an NVDAObject, C{False} if the cache should not be used.
+	@type useCache: boolean
 	@returns: the NVDA event name and the NVDAObject the event is for
-	@rtype: boolean of string and L{NVDAObject.IAccessible.IAccessible}
+	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
-	neededCreation=True #used to track if we were able to use a previously instanciated object instead
-	#We can't handle MSAA create and destroy events.
-	if eventID in (winUser.EVENT_OBJECT_CREATE,winUser.EVENT_OBJECT_DESTROY):
+	#We can't handle MSAA create events. (Destroys are handled elsewhere.)
+	if eventID == winUser.EVENT_OBJECT_CREATE:
 		return None
 	#Handle the special MSAA caret object's locationChange and show events as 'caret' events for the focus object
 	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
@@ -704,10 +705,9 @@ def winEventToNVDAEvent(eventID,window,objectID,childID):
 	if not window or not winUser.isWindow(window):
 		return None
 	obj=None
-	#See if we already know an object by this win event info
-	obj=liveNVDAObjectTable.get((window,objectID,childID),None)
-	if obj:
-		neededCreation=False
+	if useCache:
+		#See if we already know an object by this win event info
+		obj=liveNVDAObjectTable.get((window,objectID,childID),None)
 	#If we don't yet have the object, then actually instanciate it.
 	if not obj: 
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(window,objectID,childID)
@@ -872,12 +872,21 @@ def processForegroundWinEvent(window,objectID,childID):
 		JABHandler.event_enterJavaWindow(window)
 		return True
 	#Convert the win event to an NVDA event
-	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID)
+	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
 	liveNVDAObjectTable['focus']=NVDAEvent[1]
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
+
+def processDestroyWinEvent(window,objectID,childID):
+	"""Process a destroy win event.
+	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if such an object exists.
+	"""
+	try:
+		del liveNVDAObjectTable[(window,objectID,childID)]
+	except KeyError:
+		pass
 
 #Register internal object event with IAccessible
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
@@ -943,6 +952,8 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
 				processForegroundWinEvent(*(winEvent[1:]))
+			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
+				processDestroyWinEvent(*winEvent[1:])
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
