@@ -802,7 +802,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 		# Don't trust child IDs from SysListView32, as it reports incorrect child IDs when items are removed.
 		childID=0
 	#Convert the win event to an NVDA event
-	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID)
+	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
 	return processFocusNVDAEvent(NVDAEvent[1],needsFocusedState=needsFocusedState)
