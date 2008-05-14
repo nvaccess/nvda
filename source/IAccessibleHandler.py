@@ -179,9 +179,10 @@ _IA2ClassFactory=None
 _IA2RegCooky=None
 
 class OrderedWinEventLimiter(object):
-	"""Collects and limits winEvents based on whether they are property changes, focus changes, or just generic (all other ones).
+	"""Collects and limits winEvents based on whether they are focus changes, or just generic (all other ones).
+
 	Only allow a max of L{maxFocusItems}, if more are added then the oldest focus event is removed to make room.
-	Only allow one property change for one specific object at a time, though push it further forward in time if a duplicate tries to get added.
+	Only allow one event for one specific object at a time, though push it further forward in time if a duplicate tries to get added. This is true for both generic and focus events.
  	"""
 
 	def __init__(self,maxFocusItems=3):
@@ -189,7 +190,7 @@ class OrderedWinEventLimiter(object):
 		@param maxFocusItems: the amount of focus changed events allowed to be queued.
 		@type maxFocusItems: integer
 		"""
-		self._maxFocusItems=maxFocusItems
+		self.maxFocusItems=maxFocusItems
 		self._focusEventCache={}
 		self._genericEventCache={}
 		self._eventHeap=[]
@@ -240,7 +241,7 @@ class OrderedWinEventLimiter(object):
 			heapq.heappush(self._eventHeap,(v,)+k)
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[-4:]:
+		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
