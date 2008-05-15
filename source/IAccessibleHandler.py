@@ -779,7 +779,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	@type childID: integer
 	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
 	@type needsFocusedState: boolean
-	@returns: True if the focus was processed, False otherwise.
+	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
 	#Ignore focus events on invisible windows
@@ -791,7 +791,9 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	oldFocus=liveNVDAObjectTable.get('focus',None)
 	#If the existing focus has the same win event params as these, then ignore this event
 	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
-		return False
+		# Don't actually process the event, as it is the same as the current focus.
+		# However, it is still a valid event, so return True.
+		return True
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(window)
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
