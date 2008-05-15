@@ -807,25 +807,24 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
-	return processFocusNVDAEvent(NVDAEvent[1],needsFocusedState=needsFocusedState)
-
-def processFocusNVDAEvent(obj,needsFocusedState=True):
-	"""Checks the given NVDAObject against the existing focus to make sure they are not equal.
-	Queues the focus event.
-	If the focus event is bad then it returns False, else it returns True.
-	@param obj: the NVDAObject the focus event is for
-	@type obj: L{NVDAObjects.NVDAObject}
-	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
-	@type needsFocusedState: boolean
-	"""
-	oldFocus=liveNVDAObjectTable.get('focus',None)
-	if oldFocus and obj==oldFocus:
-		return False
-	if obj.event_childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST:
+	eventName,obj=NVDAEvent
+	if obj.event_childID==0 and (obj.IAccessibleRole==ROLE_SYSTEM_LIST or (obj.IAccessibleRole==ROLE_SYSTEM_MENUPOPUP and obj.windowClassName=="SysListView32")):
 		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
 		child=obj.activeChild
 		if child:
 			obj=child
+	return processFocusNVDAEvent(obj,needsFocusedState=needsFocusedState)
+
+def processFocusNVDAEvent(obj,needsFocusedState=True):
+	"""Processes a focus NVDA event.
+	If the focus event is valid, it is queued.
+	@param obj: the NVDAObject the focus event is for
+	@type obj: L{NVDAObjects.NVDAObject}
+	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
+	@type needsFocusedState: boolean
+	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
+	@rtype: boolean
+	"""
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
 	if needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (ROLE_SYSTEM_COMBOBOX, ROLE_SYSTEM_DOCUMENT):
 		# The focused state is not set on certain Mozilla controls.
