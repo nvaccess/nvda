@@ -64,7 +64,7 @@ def setForegroundObject(obj):
 		globalVars.log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
-def setFocusObject(obj,ancestors=None):
+def setFocusObject(obj):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
 Before overriding the last object, this function calls event_looseFocus on the object to notify it that it is loosing focus. 
 @param obj: the object that will be stored as the focus object
@@ -77,27 +77,33 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			globalVars.focusObject.event_looseFocus()
 		except:
 			globalVars.log.error("event_looseFocus in focusObject", exc_info=True)
-	oldAncestors=globalVars.focusAncestors
-	if not ancestors:
-		ancestors=[]
-		parent=obj.parent
-		while parent:
-			ancestors.insert(0,parent)
-			parent=parent.parent
-	commonLevel=None
-	oldAncestors=globalVars.focusAncestors
-	oldAncestors.append(globalVars.focusObject)
-	for index in range(min(len(oldAncestors),len(ancestors))):
-		if oldAncestors[index]==ancestors[index]:
-			commonLevel=index
-		else:
+	oldFocusLine=globalVars.focusAncestors
+	oldFocusLine.append(globalVars.focusObject)
+	ancestors=[]
+	tempObj=obj
+	matchedOld=False
+	focusDifferenceLevel=0
+	oldFocusLineLength=len(oldFocusLine)
+	# Starting from the focus, move up the ancestor chain.
+	while tempObj:
+		# Scan backwards through the old ancestors looking for a match.
+		for index in xrange(oldFocusLineLength-1,-1,-1):
+			if tempObj==oldFocusLine[index]:
+				# Match! The old and new focus ancestors converge at this point.
+				# Copy the old ancestors up to and including this object.
+				ancestors=oldFocusLine[0:index+1]+ancestors
+				focusDifferenceLevel=index+1
+				# We don't need to process any more in either this loop or the outer loop; we have all of the ancestors.
+				matchedOld=True
+				break
+		if matchedOld:
 			break
-	if commonLevel is None and len(ancestors)>0 and ancestors[0]==globalVars.foregroundObject:
-		commonLevel=0
-	if commonLevel is None:
-		focusDifferenceLevel=0
-	else:
-		focusDifferenceLevel=commonLevel+1
+		if tempObj is not obj: #we don't want to add the new focus to the new focus ancestors
+			# We're moving backwards along the ancestor chain, so add this to the start of the list.
+			ancestors.insert(0,tempObj)
+		parent=tempObj.parent
+		tempObj.parent=parent # Cache the parent.
+		tempObj=parent
 	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
 		virtualBufferObject=None
 		for o in ancestors[focusDifferenceLevel:]+[obj]:
@@ -191,8 +197,8 @@ def processPendingEvents():
 	import IAccessibleHandler
 	wx.Yield()
 	pythoncom.PumpWaitingMessages()
-	queueHandler.flushQueue(queueHandler.eventQueue)
 	IAccessibleHandler.pumpAll()
+	queueHandler.flushQueue(queueHandler.eventQueue)
 
 def copyToClip(text):
 	"""Copies the given text to the windows clipboard.

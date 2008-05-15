@@ -29,6 +29,7 @@ import controlTypes
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import NVDAObjects.JAB
+import eventHandler
 
 re_gecko_level=re.compile('.*?L([0-9]+).*')
 re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
@@ -175,6 +176,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
 		elif not windowHandle and not IAccessibleObject:
 			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
+		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				windowHandle=IAccessibleObject.windowHandle
+			except:
+				globalVars.log.warn("IAccessible2::windowHandle failed",exc_info=True)
+			#Mozilla Gecko: we can never use a MozillaWindowClass window
+			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
+				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		if not windowHandle:
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle and event_windowHandle:
@@ -235,6 +244,15 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			event_childID=Identity['childID']
 		if event_childID is None:
 			event_childID=IAccessibleChildID
+		if event_windowHandle is None:
+			event_windowHandle=windowHandle
+		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			event_objectID=IAccessibleHandler.OBJID_CLIENT
+		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				event_childID=IAccessibleObject.uniqueID
+			except:
+				globalVars.log.warning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -280,6 +298,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		except:
 			pass
 		self._lastMouseTextOffsets=None
+		if None not in (event_windowHandle,event_objectID,event_childID):
+			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
 
 	def _isEqual(self,other):
@@ -290,8 +310,21 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
 		try:
-			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and self.IAccessibleObject.windowHandle==other.IAccessibleObject.windowHandle:
-				return True
+			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
+				# These are both IAccessible2 objects, so we can test unique ID.
+				# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
+				selfIA2Window=self.IAccessibleObject.windowHandle
+				selfIA2ID=self.IAccessibleObject.uniqueID
+				otherIA2Window=other.IAccessibleObject.windowHandle
+				otherIA2ID=other.IAccessibleObject.uniqueID
+				if selfIA2Window!=otherIA2Window:
+					# The window handles are different, so these are definitely different windows.
+					return False
+				# At this point, we know that the window handles are equal.
+				if selfIA2Window and (selfIA2ID or otherIA2ID):
+					# The window handles are valid and one of the objects has a valid unique ID.
+					# Therefore, we can safely determine equality or inequality based on unique ID.
+					return selfIA2ID==otherIA2ID
 		except:
 			pass
 		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
@@ -429,10 +462,17 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.windowClassName.startswith('Mozilla'):
 			res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
 			if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				if newObj:
+					return newObj
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
-			if res[0].accRole(res[1])!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
+			try:
+				parentRole=res[0].accRole(res[1])
+			except:
+				globalVars.log.warning("parent has bad role",exc_info=True)
+				return None
+			if parentRole!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 			res=IAccessibleHandler.accParent(res[0],res[1])
 			if res:
@@ -599,7 +639,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			except:
 				char=0
 			if char!=0xfffc:
-				IAccessibleHandler.focus_manageEvent(self)
+				IAccessibleHandler.processFocusNVDAEvent(self)
 
 	def event_mouseMove(self,x,y):
 		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
@@ -629,10 +669,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			speech.speakText(info.text)
 			obj._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
-	def event_show(self):
-		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP:
-			self.event_menuStart()
-
 	def _get_groupName(self):
 		return None
 		if self.IAccessibleChildID>0:
@@ -661,10 +697,9 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_menuStart(self):
 		focusObject=api.getFocusObject()
-		parentObject=focusObject.parent if focusObject else None
-		if self!=focusObject and self!=parentObject  and self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP):
+		if focusObject.IAccessibleRole not in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):
 			speech.cancelSpeech()
-			IAccessibleHandler.focus_winEventCallback(self.event_windowHandle,self.event_objectID,self.event_childID,needsFocusState=False)
+			eventHandler.executeEvent("gainFocus", self)
 
 	def event_menuEnd(self):
 		oldFocus=api.getFocusObject()
@@ -676,8 +711,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		speech.cancelSpeech()
 		obj=api.findObjectWithFocus()
-		IAccessibleHandler.focus_manageEvent(obj)
-
+		eventHandler.executeEvent('gainFocus',obj)
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -861,12 +895,6 @@ class SHELLDLL_DefView_client(IAccessible):
 
 class List(IAccessible):
 
-	def _get_name(self):
-		name=super(List,self)._get_name()
-		if not name:
-			name=super(IAccessible,self)._get_name()
-		return name
-
 	def _get_role(self):
 		return controlTypes.ROLE_LIST
 
@@ -988,6 +1016,7 @@ _staticMap={
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.Edit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
+	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("SysTreeView32",IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

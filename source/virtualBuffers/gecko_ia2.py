@@ -7,6 +7,7 @@ import NVDAObjects.IAccessible
 import winUser
 import sayAllHandler
 import speech
+import eventHandler
 import IAccessibleHandler
 import globalVars
 import api
@@ -155,7 +156,7 @@ class Gecko_ia2(VirtualBuffer):
 			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
 				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
 				api.setNavigatorObject(obj)
-				if controlTypes.STATE_FOCUSABLE in obj.states:
+				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states:
 					obj.setFocus()
 		except:
 			pass

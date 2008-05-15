@@ -9,7 +9,7 @@ from ctypes.wintypes import *
 import speech
 import winKernel
 import winUser
-from . import IAccessible
+from . import IAccessible, List
 
 #Window messages
 LVM_FIRST=0x1000
@@ -55,6 +55,14 @@ class NMLVDispInfoStruct(Structure):
 		('hdr',winUser.NMHdrStruct),
 		('item',c_int),
 	]
+
+class List(List):
+
+	def _get_name(self):
+		name=super(List,self)._get_name()
+		if not name:
+			name=super(IAccessible,self)._get_name()
+		return name
 
 class ListItem(IAccessible):
 
