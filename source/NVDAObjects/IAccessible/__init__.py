@@ -310,8 +310,21 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
 		try:
-			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2) and self.IAccessibleObject.UniqueID==other.IAccessibleObject.UniqueID and self.IAccessibleObject.windowHandle==other.IAccessibleObject.windowHandle:
-				return True
+			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
+				# These are both IAccessible2 objects, so we can test unique ID.
+				# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
+				selfIA2Window=self.IAccessibleObject.windowHandle
+				selfIA2ID=self.IAccessibleObject.uniqueID
+				otherIA2Window=other.IAccessibleObject.windowHandle
+				otherIA2ID=other.IAccessibleObject.uniqueID
+				if selfIA2Window!=otherIA2Window:
+					# The window handles are different, so these are definitely different windows.
+					return False
+				# At this point, we know that the window handles are equal.
+				if selfIA2Window and (selfIA2ID or otherIA2ID):
+					# The window handles are valid and one of the objects has a valid unique ID.
+					# Therefore, we can safely determine equality or inequality based on unique ID.
+					return selfIA2ID==otherIA2ID
 		except:
 			pass
 		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
