@@ -18,7 +18,9 @@ class appModule(appModuleHandler.AppModule):
 			if statusBar:
 				statusText = api.getStatusBarText(statusBar)
 				speech.cancelSpeech()
+				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
 				speech.speakMessage(statusText)
+				return
 		nextHandler()
 
 	event_gainFocus = event_stateChange
