@@ -41,7 +41,7 @@ class TCList(IAccessible):
 			speakList=[]
 			if controlTypes.STATE_SELECTED in self.states:
 				speakList.append(controlTypes.speechStateLabels[controlTypes.STATE_SELECTED])
-			speakList.append(self.name)
+			speakList.append(self.name.split("\\")[-1])
 			speech.speakMessage(" ".join(speakList))
 		else:
 			super(TCList,self).reportFocus()
