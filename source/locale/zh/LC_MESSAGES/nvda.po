@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-04-30 22:49+0800\n"
+"PO-Revision-Date: 2008-05-16 18:17+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2344,13 +2344,29 @@ msgstr "進入了"
 msgid "out of"
 msgstr "離開了"
 
+# NVDAObjects\IAccessible\MSHTML.py:317
+# NVDAObjects\IAccessible\MSHTML.py:323
+# textBuffer.py:537
+# textBuffer.py:541
+# textBuffer.py:543
+# textBuffer.py:549
+#, fuzzy
+msgid "selecting %s"
+msgstr "選取了 %s"
+
 # NVDAObjects\IAccessible\MSHTML.py:314
 # NVDAObjects\IAccessible\MSHTML.py:320
 # textBuffer.py:545
 # textBuffer.py:547
 # textBuffer.py:551
-msgid "unselected %s"
+#, fuzzy
+msgid "unselecting %s"
 msgstr "不選取 %s"
+
+# NVDAObjects\IAccessible\excel.py:64
+# controlTypes.py:142
+msgid "selection removed"
+msgstr "沒選取了"
 
 # IAccessibleHandler.py:190
 # speech.py:213
@@ -2455,6 +2471,14 @@ msgstr "手動移到上一段然後把它讀出來"
 # textBuffer.py:534
 msgid "no selections"
 msgstr "沒有已經選取的文字"
+
+# NVDAObjects\IAccessible\MSHTML.py:314
+# NVDAObjects\IAccessible\MSHTML.py:320
+# textBuffer.py:545
+# textBuffer.py:547
+# textBuffer.py:551
+msgid "unselected %s"
+msgstr "不選取 %s"
 
 # textBuffer.py:553
 msgid "Moves and reads the current selection"
@@ -2667,6 +2691,41 @@ msgstr "沒有上一個清單項目了"
 msgid "moves to the previous list item"
 msgstr "移到上一個清單項目"
 
+# virtualBuffers\__init__.py:383
+msgid "moves to the next button"
+msgstr "移到下一個按鈕"
+
+# virtualBuffers\__init__.py:382
+# virtualBuffers\__init__.py:393
+msgid "no next button"
+msgstr "沒有下一個按鈕了"
+
+# virtualBuffers\__init__.py:394
+msgid "moves to the previous button"
+msgstr "移到上一個按鈕"
+
+# appModules\_default.py:189
+msgid "no previous button"
+msgstr "沒有上一個按鈕了"
+
+# virtualBuffers\__init__.py:449
+msgid "moves to the next edit field"
+msgstr "移到下一個文字編輯欄位"
+
+# virtualBuffers\__init__.py:448
+# virtualBuffers\__init__.py:459
+msgid "no next edit field"
+msgstr "沒有下一個文字編輯欄位了"
+
+# virtualBuffers\__init__.py:460
+msgid "moves to the previous edit field"
+msgstr "移到上一個文字編輯欄位"
+
+# virtualBuffers\__init__.py:448
+# virtualBuffers\__init__.py:459
+msgid "no previous edit field"
+msgstr "沒有上一個文字編輯欄位了"
+
 # virtualBuffers\IAccessible\MSHTML.py:136
 # virtualBuffers\IAccessible\gecko.py:157
 msgid "loading document %s"
@@ -2797,3 +2856,4 @@ msgstr "i=清單項目快速鍵"
 # virtualBuffers\IAccessible\gecko.py:294
 msgid "protected %s"
 msgstr "保密 %s"
+
