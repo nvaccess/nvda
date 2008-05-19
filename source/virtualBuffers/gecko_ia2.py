@@ -174,7 +174,21 @@ class Gecko_ia2(VirtualBuffer):
 					try:
 						action=obj.IAccessibleObject.accDefaultAction(obj.IAccessibleChildID)
 						if action:
-							obj.IAccessibleObject.accDoDefaultAction(obj.IAccessibleChildID)
+							try:
+								speech.speakMessage("accDoDefaultAction")
+								obj.IAccessibleObject.accDoDefaultAction(obj.IAccessibleChildID)
+							except:
+								speech.speakMessage("needs click")
+								l=obj.location
+								if l:
+									x=(l[0]+l[2]/2)
+									y=l[1]+(l[3]/2) 
+									oldX,oldY=winUser.getCursorPos()
+									winUser.setCursorPos(x,y)
+									speech.speakMessage("%s,%s"%(x,y))
+									winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+									winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+									winuser.setCursorPos(oldX,oldY)
 							break
 					except:
 						pass
