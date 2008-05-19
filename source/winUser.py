@@ -34,6 +34,8 @@ class GUITHREADINFO(Structure):
 	]
 
 #constants
+MOUSEEVENTF_LEFTDOWN=0x0002 
+MOUSEEVENTF_LEFTUP=0x0004 
 GUI_CARETBLINKING=0x00000001
 GUI_INMOVESIZE=0x00000002
 GUI_INMENUMODE=0x00000004
@@ -321,6 +323,9 @@ def getClassName(window):
 
 def keybd_event(*args):
 	return user32.keybd_event(*args)
+
+def mouse_event(*args):
+	return user32.mouse_event(*args)
 
 def getAncestor(hwnd,flags):
 	return user32.GetAncestor(hwnd,flags)
