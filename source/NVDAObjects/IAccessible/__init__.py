@@ -268,7 +268,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			self.TextInfo=IA2TextTextInfo
 			replacedTextInfo=True
 			try:
-				self.IAccessibleEditableTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleEditableText)
+				hasEditableState=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
+			except:
+				hasEditableState=False
+			if  hasEditableState:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
 					("ExtendedDown","moveByLine"),
@@ -293,8 +296,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 				]]
-			except:
-				pass
 		except:
 			pass
 		self._lastMouseTextOffsets=None
