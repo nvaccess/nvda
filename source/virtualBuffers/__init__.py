@@ -107,7 +107,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType=="end_removedFromStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME):
 			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_inStack","start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 			return speech.getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 		elif extraDetail and fieldType in ("start_addedToStack","start_relative") and roleText:
 			return _("in %s")%roleText
