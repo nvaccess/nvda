@@ -79,7 +79,8 @@ class ConsoleUI(wx.Frame):
 		#: @type: dict
 		self.namespace = {}
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, locals=self.namespace)
-		self.inputHistory = []
+		# Even the most recent line has a position in the history, so initialise with one blank line.
+		self.inputHistory = [""]
 		self.inputHistoryPos = 0
 
 	def onActivate(self, evt):
@@ -105,20 +106,28 @@ class ConsoleUI(wx.Frame):
 	def execute(self):
 		data = self.inputCtrl.GetValue()
 		self.console.push(data)
-		self.inputHistory.append(data)
-		self.inputHistoryPos = len(self.inputHistory)
+		if data:
+			# Only add non-blank lines to history.
+			if len(self.inputHistory) > 1 and self.inputHistory[-2] == data:
+				# The previous line was the same and we don't want consecutive duplicates, so trash the most recent line.
+				del self.inputHistory[-1]
+			else:
+				# Update the content for the most recent line of history.
+				self.inputHistory[-1] = data
+			# Start with a new, blank line.
+			self.inputHistory.append("")
+		self.inputHistoryPos = len(self.inputHistory) - 1
 		self.inputCtrl.ChangeValue("")
 
 	def historyMove(self, movement):
 		newIndex = self.inputHistoryPos + movement
-		historyLen = len(self.inputHistory)
-		if 0 <= newIndex < historyLen:
-			self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
-		elif newIndex == len(self.inputHistory):
-			self.inputCtrl.ChangeValue("")
-		else:
+		if not (0 <= newIndex < len(self.inputHistory)):
+			# No more lines in this direction.
 			return False
+		# Update the content of the history at the current position.
+		self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		self.inputHistoryPos = newIndex
+		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()
 		return True
 
