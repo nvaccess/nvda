@@ -795,19 +795,21 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
-	if childID>0 and objectID==OBJID_CLIENT and winUser.getClassName(window)=="SysListView32":
-		# Don't trust child IDs from SysListView32, as it reports incorrect child IDs when items are removed.
-		childID=0
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
 	eventName,obj=NVDAEvent
-	if obj.event_childID==0 and (obj.IAccessibleRole==ROLE_SYSTEM_LIST or (obj.IAccessibleRole==ROLE_SYSTEM_MENUPOPUP and obj.windowClassName=="SysListView32")):
+	if (childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST) or (objectID==OBJID_CLIENT and obj.windowClassName=="SysListView32"):
 		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
-		child=obj.activeChild
-		if child:
-			obj=child
+		try:
+			realChildID=obj.IAccessibleObject.accFocus
+		except:
+			realChildID=None
+		if isinstance(realChildID,int) and realChildID>0 and realChildID!=childID:
+			realObj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=obj.IAccessibleObject,IAccessibleChildID=realChildID,event_windowHandle=window,event_objectID=objectID,event_childID=realChildID)
+			if realObj:
+				obj=realObj
 	return processFocusNVDAEvent(obj,needsFocusedState=needsFocusedState)
 
 def processFocusNVDAEvent(obj,needsFocusedState=True):
