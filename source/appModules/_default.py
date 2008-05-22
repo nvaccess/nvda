@@ -29,6 +29,7 @@ import winKernel
 import ctypes
 from gui import mainFrame
 import virtualBufferHandler
+import scriptHandler
 
 class appModule(appModuleHandler.AppModule):
 
@@ -62,7 +63,7 @@ class appModule(appModuleHandler.AppModule):
 			obj=virtualBuffer
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
-		if keyboardHandler.lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			if info.hasXML:
 				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_CARET)
 			else:
@@ -82,7 +83,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("selected %s")%info.text)
 
 	def script_dateTime(self,keyPress):
-		if keyboardHandler.lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
@@ -168,7 +169,7 @@ class appModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		if keyboardHandler.lastKeyCount in range(2,4):
+		if scriptHandler.getLastScriptRepeateCount()>=1:
 			textList=[]
 			if isinstance(curObject.name,basestring) and len(curObject.name)>0 and not curObject.name.isspace():
 				textList.append(curObject.name)
@@ -183,7 +184,7 @@ class appModule(appModuleHandler.AppModule):
 					textList.append(info.text)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
-				if keyboardHandler.lastKeyCount == 2:
+				if scriptHandler.getLastScriptRepeateCount()>=1:
 					speech.speakSpelling(text)
 				else:
 					if api.copyToClip(text):
@@ -572,7 +573,7 @@ class appModule(appModuleHandler.AppModule):
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
-			if keyboardHandler.lastKeyCount == 1:
+			if scriptHandler.getLastScriptRepeateCount()==0:
 				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
 			else:
 				speech.speakSpelling(focusObject.name)
@@ -587,7 +588,7 @@ class appModule(appModuleHandler.AppModule):
 			return
 		text = api.getStatusBarText(obj)
 
-		if keyboardHandler.lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			speech.speakMessage(text)
 		else:
 			speech.speakSpelling(text)
@@ -628,7 +629,7 @@ class appModule(appModuleHandler.AppModule):
 		if not isinstance(obj,NVDAObject): 
 			speech.speakMessage(_("no navigator object"))
 			return
-		if keyboardHandler.lastKeyCount ==2:
+		if scriptHandler.getLastScriptRepeateCount()>=1:
 			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
 				speech.speakMessage(_("copied to clipboard"))
 		else:
