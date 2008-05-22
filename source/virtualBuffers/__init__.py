@@ -246,14 +246,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptSuffix = nodeType[0].upper() + nodeType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nextScript, nodeType, "next", nextError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "next", nextError)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
 		cls.bindKey(key, scriptName)
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nextScript, nodeType, "previous", prevError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "previous", prevError)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
