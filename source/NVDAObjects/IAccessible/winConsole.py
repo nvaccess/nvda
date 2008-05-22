@@ -255,7 +255,7 @@ class WinConsole(IAccessible):
 					outLines.append(text)
 		return outLines
 
-	def script_protectConsoleKillKey(self,keyPress,nextScript):
+	def script_protectConsoleKillKey(self,keyPress):
 		self.disconnectConsole()
 		sendKey(keyPress)
 		time.sleep(0.01)

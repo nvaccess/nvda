@@ -129,7 +129,7 @@ class mirandaIMContactList(IAccessible):
 			newStates.add(controlTypes.STATE_COLLAPSED)
 		return newStates
 
-	def script_changeItem(self,keyPress,nextScript):
+	def script_changeItem(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
@@ -148,7 +148,7 @@ class mirandaIMButton(IAccessible):
 		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONDOWN,0,0)
 		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONUP,0,0)
 
-	def script_doDefaultAction(self,keyPress,nextScript):
+	def script_doDefaultAction(self,keyPress):
 		self.doDefaultAction()
 
 class mirandaIMHyperlink(mirandaIMButton):

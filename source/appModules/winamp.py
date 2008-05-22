@@ -66,7 +66,7 @@ class winampMainWindow(IAccessible):
 	def event_nameChange(self):
 		pass
 
-	def script_shuffleToggle(self,keyPress,nextScript):
+	def script_shuffleToggle(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
@@ -76,7 +76,7 @@ class winampMainWindow(IAccessible):
 				onOff=_("off")
 			speech.speakMessage(onOff)
 
-	def script_repeatToggle(self,keyPress,nextScript):
+	def script_repeatToggle(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
@@ -111,7 +111,7 @@ class winampPlaylistEditor(winampMainWindow):
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM
 
-	def script_changeItem(self,keyPress,nextScript):
+	def script_changeItem(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()

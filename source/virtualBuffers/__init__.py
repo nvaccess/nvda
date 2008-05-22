@@ -176,7 +176,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _caretMovedToField(self,dochandle,ID):
 		pass
 
-	def script_activatePosition(self,keyPress,nextScript):
+	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		start,end=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
@@ -196,14 +196,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
 				self._caretMovedToField(docHandle,ID)
 
-	def script_refreshBuffer(self,keyPress,nextScript):
+	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		self.unloadBuffer()
 		self.loadBuffer()
 		speech.speakMessage(_("Refreshed"))
 
-	def script_toggleScreenLayout(self,keyPress,nextScript):
+	def script_toggleScreenLayout(self,keyPress):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)

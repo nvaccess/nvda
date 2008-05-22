@@ -45,7 +45,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.cancelSpeech()
 		IAccessibleHandler.processFocusNVDAEvent(api.findObjectWithFocus())
 
-	def script_keyboardHelp(self,keyPress,nextScript):
+	def script_keyboardHelp(self,keyPress):
 		if not globalVars.keyboardHelp:
  			state=_("on")
 			globalVars.keyboardHelp=True
@@ -55,7 +55,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("keyboard help %s")%state)
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
-	def script_reportCurrentLine(self,keyPress,nextScript):
+	def script_reportCurrentLine(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
@@ -70,7 +70,7 @@ class appModule(appModuleHandler.AppModule):
 		else:
 			speech.speakSpelling(info._get_text())
 
-	def script_reportCurrentSelection(self,keyPress,nextScript):
+	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
@@ -81,7 +81,7 @@ class appModule(appModuleHandler.AppModule):
 		else:
 			speech.speakMessage(_("selected %s")%info.text)
 
-	def script_dateTime(self,keyPress,nextScript):
+	def script_dateTime(self,keyPress):
 		if keyboardHandler.lastKeyCount == 1:
 			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
 		else:
@@ -89,23 +89,23 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(text)
 	script_dateTime.__doc__=_("Reports the current date and time")
 
-	def script_increaseSynthSetting(self,keyPress,nextScript):
+	def script_increaseSynthSetting(self,keyPress):
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
 	script_increaseSynthSetting.__doc__=_("Increases currently active setting in the synth settings ring")
 
-	def script_decreaseSynthSetting(self,keyPress,nextScript):
+	def script_decreaseSynthSetting(self,keyPress):
 		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
 	script_decreaseSynthSetting.__doc__=_("Decreases currently active setting in the synth settings ring")
 
-	def script_nextSynthSetting(self,keyPress,nextScript):
+	def script_nextSynthSetting(self,keyPress):
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
 	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
 
-	def script_previousSynthSetting(self,keyPress,nextScript):
+	def script_previousSynthSetting(self,keyPress):
 		speech.speakMessage("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
-	def script_toggleSpeakTypedCharacters(self,keyPress,nextScript):
+	def script_toggleSpeakTypedCharacters(self,keyPress):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
@@ -115,7 +115,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("speak typed characters")+" "+onOff)
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
-	def script_toggleSpeakTypedWords(self,keyPress,nextScript):
+	def script_toggleSpeakTypedWords(self,keyPress):
 		if config.conf["keyboard"]["speakTypedWords"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakTypedWords"]=False
@@ -125,7 +125,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("speak typed words")+" "+onOff)
 	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
 
-	def script_toggleSpeakCommandKeys(self,keyPress,nextScript):
+	def script_toggleSpeakCommandKeys(self,keyPress):
 		if config.conf["keyboard"]["speakCommandKeys"]:
 			onOff=_("off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
@@ -135,7 +135,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("speak command keys")+" "+onOff)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
-	def script_toggleSpeakPunctuation(self,keyPress,nextScript):
+	def script_toggleSpeakPunctuation(self,keyPress):
 		if config.conf["speech"]["speakPunctuation"]:
 			onOff=_("off")
 			config.conf["speech"]["speakPunctuation"]=False
@@ -145,7 +145,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("speak punctuation")+" "+onOff)
 	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
-	def script_moveMouseToNavigatorObject(self,keyPress,nextScript):
+	def script_moveMouseToNavigatorObject(self,keyPress):
 		speech.speakMessage(_("Move mouse to navigator"))
 		obj=api.getNavigatorObject()
 		try:
@@ -156,14 +156,14 @@ class appModule(appModuleHandler.AppModule):
 		winUser.setCursorPos(left,top)
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object.")
 
-	def script_moveNavigatorObjectToMouse(self,keyPress,nextScript):
+	def script_moveNavigatorObjectToMouse(self,keyPress):
 		speech.speakMessage(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
 		api.setNavigatorObject(obj)
 		speech.speakObject(obj)
 
 
-	def script_navigatorObject_current(self,keyPress,nextScript):
+	def script_navigatorObject_current(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -193,7 +193,7 @@ class appModule(appModuleHandler.AppModule):
 		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard")
 
-	def script_navigatorObject_currentDimensions(self,keyPress,nextScript):
+	def script_navigatorObject_currentDimensions(self,keyPress):
 		obj=api.getNavigatorObject()
 		if not obj:
 			speech.speakMessage(_("no navigator object"))
@@ -205,7 +205,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen")%((float(left)/deskWidth)*100,(float(top)/deskHeight)*100,100-((float(width+left)/deskWidth)*100),100-(float(height+top)/deskHeight)*100))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
-	def script_navigatorObject_toFocus(self,keyPress,nextScript):
+	def script_navigatorObject_toFocus(self,keyPress):
 		obj=api.getFocusObject()
 		if not isinstance(obj,NVDAObject):
 			speech.speakMessage(_("no focus"))
@@ -214,7 +214,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
 
-	def script_navigatorObject_parent(self,keyPress,nextScript):
+	def script_navigatorObject_parent(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -227,7 +227,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("No parents"))
 	script_navigatorObject_parent.__doc__=_("Sets the navigator object to the parent of the object it is currently on.")
 
-	def script_navigatorObject_next(self,keyPress,nextScript):
+	def script_navigatorObject_next(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -240,7 +240,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("No next"))
 	script_navigatorObject_next.__doc__=_("Sets the navigator object to the next object to the one it is currently on")
 
-	def script_navigatorObject_previous(self,keyPress,nextScript):
+	def script_navigatorObject_previous(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -253,7 +253,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("No previous"))
 	script_navigatorObject_previous.__doc__=_("Sets the navigator object to the previous object to the one it is currently on")
 
-	def script_navigatorObject_firstChild(self,keyPress,nextScript):
+	def script_navigatorObject_firstChild(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -266,7 +266,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object to the one it is currently on")
 
-	def script_navigatorObject_nextInFlow(self,keyPress,nextScript):
+	def script_navigatorObject_nextInFlow(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -289,7 +289,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("end of flow"))
 	script_navigatorObject_nextInFlow.__doc__=_("Sets the navigator object to the object this object flows to.")
 
-	def script_navigatorObject_previousInFlow(self,keyPress,nextScript):
+	def script_navigatorObject_previousInFlow(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -312,7 +312,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("Beginning of flow"))
 	script_navigatorObject_previousInFlow.__doc__=_("Sets the navigator object to the object this object flows from.")
 
-	def script_navigatorObject_doDefaultAction(self,keyPress,nextScript):
+	def script_navigatorObject_doDefaultAction(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
@@ -320,7 +320,7 @@ class appModule(appModuleHandler.AppModule):
 		curObject.doDefaultAction()
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
-	def script_navigatorObject_where(self,keyPress,nextScript):
+	def script_navigatorObject_where(self,keyPress):
 		"""Reports where the current navigator object is by reporting each of its ancestors""" 
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -334,7 +334,7 @@ class appModule(appModuleHandler.AppModule):
 			curObject=curObject.parent
 	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
 
-	def script_review_top(self,keyPress,nextScript):
+	def script_review_top(self,keyPress):
 		info=globalVars.reviewPosition.obj.makeTextInfo(textHandler.POSITION_FIRST)
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
@@ -342,7 +342,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object")
 
-	def script_review_previousLine(self,keyPress,nextScript):
+	def script_review_previousLine(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse()
@@ -354,7 +354,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object")
 
-	def script_review_currentLine(self,keyPress,nextScript):
+	def script_review_currentLine(self,keyPress):
 		from keyboardHandler import lastKeyCount
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
@@ -364,7 +364,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakSpelling(info._get_text())
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated")
 
-	def script_review_nextLine(self,keyPress,nextScript):
+	def script_review_nextLine(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse()
@@ -376,7 +376,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object")
 
-	def script_review_bottom(self,keyPress,nextScript):
+	def script_review_bottom(self,keyPress):
 		info=globalVars.reviewPosition.obj.makeTextInfo(textHandler.POSITION_LAST)
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
@@ -384,7 +384,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object")
 
-	def script_review_previousWord(self,keyPress,nextScript):
+	def script_review_previousWord(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
 		info.collapse()
@@ -396,7 +396,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object")
 
-	def script_review_currentWord(self,keyPress,nextScript):
+	def script_review_currentWord(self,keyPress):
 		from keyboardHandler import lastKeyCount
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
@@ -406,7 +406,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakSpelling(info._get_text())
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated")
 
-	def script_review_nextWord(self,keyPress,nextScript):
+	def script_review_nextWord(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
 		info.collapse()
@@ -418,7 +418,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object")
 
-	def script_review_startOfLine(self,keyPress,nextScript):
+	def script_review_startOfLine(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse()
@@ -428,7 +428,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info,handleSymbols=True)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the start of the line where it is situated, in the current navigator object")
 
-	def script_review_previousCharacter(self,keyPress,nextScript):
+	def script_review_previousCharacter(self,keyPress):
 		lineInfo=globalVars.reviewPosition.copy()
 		lineInfo.expand(textHandler.UNIT_LINE)
 		charInfo=globalVars.reviewPosition.copy()
@@ -446,7 +446,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakFormattedText(charInfo,handleSymbols=True)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object")
 
-	def script_review_currentCharacter(self,keyPress,nextScript):
+	def script_review_currentCharacter(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		from keyboardHandler import lastKeyCount
@@ -461,7 +461,7 @@ class appModule(appModuleHandler.AppModule):
 				speech.speakFormattedText(info,handleSymbols=True)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated")
 
-	def script_review_nextCharacter(self,keyPress,nextScript):
+	def script_review_nextCharacter(self,keyPress):
 		lineInfo=globalVars.reviewPosition.copy()
 		lineInfo.expand(textHandler.UNIT_LINE)
 		charInfo=globalVars.reviewPosition.copy()
@@ -479,7 +479,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakFormattedText(charInfo,handleSymbols=True)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object")
 
-	def script_review_endOfLine(self,keyPress,nextScript):
+	def script_review_endOfLine(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		info.collapse(end=True)
@@ -490,21 +490,21 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakFormattedText(info,handleSymbols=True)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the end of the line where it is situated, in the current navigator object")
 
-	def script_review_moveToCaret(self,keyPress,nextScript):
+	def script_review_moveToCaret(self,keyPress):
 		info=globalVars.reviewPosition.obj.makeTextInfo(textHandler.POSITION_CARET)
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakFormattedText(info)
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
-	def script_review_moveCaretHere(self,keyPress,nextScript):
+	def script_review_moveCaretHere(self,keyPress):
 		globalVars.reviewPosition.updateCaret()
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakFormattedText(info)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
 
-	def script_speechMode(self,keyPress,nextScript):
+	def script_speechMode(self,keyPress):
 		curMode=speech.speechMode
 		speech.speechMode=speech.speechMode_talk
 		newMode=(curMode+1)%3
@@ -519,7 +519,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
-	def script_toggleVirtualBufferPassThrough(self,keyPress,nextScript):
+	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
 		if not vbuf:
 			return
@@ -527,25 +527,25 @@ class appModule(appModuleHandler.AppModule):
 		virtualBufferHandler.reportPassThrough(vbuf)
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key.")
 
-	def script_quit(self,keyPress,nextScript):
+	def script_quit(self,keyPress):
 		gui.quit()
 	script_quit.__doc__=_("Quits NVDA!")
 
-	def script_showGui(self,keyPress,nextScript):
+	def script_showGui(self,keyPress):
 		gui.showGui()
 	script_showGui.__doc__=_("Shows the NVDA interface window")
 
-	def script_review_sayAll(self,keyPress,nextScript):
+	def script_review_sayAll(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from review cursor  up to end of current text, moving the review cursor as it goes")
 
-	def script_navigatorObject_sayAll(self,keyPress,nextScript):
+	def script_navigatorObject_sayAll(self,keyPress):
 		obj=api.getNavigatorObject()
 		sayAllHandler.readObjects(obj)
 	script_navigatorObject_sayAll.__doc__ = _("reads from navigator object ")
 
-	def script_sayAll(self,keyPress,nextScript):
+	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
 		if v and not hasattr(v,'TextInfo') and not v.passThrough:
@@ -557,7 +557,7 @@ class appModule(appModuleHandler.AppModule):
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from system caret up to end of text, moving the caret as it goes")
 
-	def script_reportFormatting(self,keyPress,nextScript):
+	def script_reportFormatting(self,keyPress):
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
@@ -569,7 +569,7 @@ class appModule(appModuleHandler.AppModule):
 
 
 
-	def script_reportCurrentFocus(self,keyPress,nextScript):
+	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
 			if keyboardHandler.lastKeyCount == 1:
@@ -580,7 +580,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no focus"))
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
 
-	def script_reportStatusLine(self,keyPress,nextScript):
+	def script_reportStatusLine(self,keyPress):
 		obj = api.getStatusBar()
 		if not obj:
 			speech.speakMessage(_("no status bar found"))
@@ -594,7 +594,7 @@ class appModule(appModuleHandler.AppModule):
 		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
-	def script_toggleReportObjectUnderMouse(self,keyPress,nextScript):
+	def script_toggleReportObjectUnderMouse(self,keyPress):
 		if config.conf["mouse"]["reportObjectUnderMouse"]:
 			onOff=_("off")
 			config.conf["mouse"]["reportObjectUnderMouse"]=False
@@ -604,20 +604,20 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("Report object under mouse")+" "+onOff)
 	script_toggleReportObjectUnderMouse.__doc__=_("Toggles on and off the reporting of objects under the mouse")
 
-	def script_title(self,keyPress,nextScript):
+	def script_title(self,keyPress):
 		obj=api.getForegroundObject()
 		if obj:
 			speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_title.__doc__=_("Reports the title of the current application or foreground window")
 
-	def script_speakForeground(self,keyPress,nextScript):
+	def script_speakForeground(self,keyPress):
 		obj=api.getForegroundObject()
 		if obj:
 			speech.speakObject(obj,reason=speech.REASON_QUERY)
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
-	def script_test_navigatorWindowInfo(self,keyPress,nextScript):
+	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		import ctypes
 		import winUser
@@ -642,7 +642,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
 	script_test_navigatorWindowInfo.__doc__ = _("reports some info about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")	
 
-	def script_toggleBeepOnProgressBarUpdates(self,keyPress,nextScript):
+	def script_toggleBeepOnProgressBarUpdates(self,keyPress):
 		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
 			onOff=_("off")
 			config.conf["presentation"]["beepOnProgressBarUpdates"]=False
@@ -652,7 +652,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("Beep on progress bar updates")+" "+onOff)
 	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles on and off the beeping on progress bar updates")
 
-	def script_toggleReportDynamicContentChanges(self,keyPress,nextScript):
+	def script_toggleReportDynamicContentChanges(self,keyPress):
 		if globalVars.reportDynamicContentChanges:
 			onOff=_("off")
 			globalVars.reportDynamicContentChanges=False
@@ -662,7 +662,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("report dynamic content changes")+" "+onOff)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
-	def script_toggleCaretMovesReviewCursor(self,keyPress,nextScript):
+	def script_toggleCaretMovesReviewCursor(self,keyPress):
 		if globalVars.caretMovesReviewCursor:
 			onOff=_("off")
 			globalVars.caretMovesReviewCursor=False
@@ -672,7 +672,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("caret moves review cursor")+" "+onOff)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
-	def script_toggleFocusMovesNavigatorObject(self,keyPress,nextScript):
+	def script_toggleFocusMovesNavigatorObject(self,keyPress):
 		if globalVars.focusMovesNavigatorObject:
 			onOff=_("off")
 			globalVars.focusMovesNavigatorObject=False
@@ -701,12 +701,12 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
 
-	def script_passNextKeyThrough(self,keyPress,nextScript):
+	def script_passNextKeyThrough(self,keyPress):
 		keyboardHandler.passNextKeyThrough()
 		speech.speakMessage(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
 
-	def script_speakApplicationName(self,keyPress,nextScript):
+	def script_speakApplicationName(self,keyPress):
 		s=appModuleHandler.getAppName(api.getForegroundObject().windowHandle,True)
 		speech.speakMessage(_("Currently running application is %s.")%s)
 		speech.speakSpelling(s)
@@ -717,44 +717,44 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("and currently loaded module is %s") % mod)
 	script_speakApplicationName.__doc__ = _("Speaks filename of the active application along with name of the currently loaded appmodule")
 
-	def script_activateGeneralSettingsDialog(self,keyPress,nextScript):
+	def script_activateGeneralSettingsDialog(self,keyPress):
 		mainFrame.onGeneralSettingsCommand(None)
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows NVDA general settings dialog")
 
-	def script_activateSynthesizerDialog(self,keyPress,nextScript):
+	def script_activateSynthesizerDialog(self,keyPress):
 		mainFrame.onSynthesizerCommand(None)
 	script_activateSynthesizerDialog.__doc__ = _("Shows NVDA synthesizer dialog")
 
-	def script_activateVoiceDialog(self,keyPress,nextScript):
+	def script_activateVoiceDialog(self,keyPress):
 		mainFrame.onVoiceCommand(None)
 	script_activateVoiceDialog.__doc__ = _("Shows NVDA voice settings dialog")
 
-	def script_activateKeyboardSettingsDialog(self,keyPress,nextScript):
+	def script_activateKeyboardSettingsDialog(self,keyPress):
 		mainFrame.onKeyboardSettingsCommand(None)
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows NVDA keyboard settings dialog")
 
-	def script_activateMouseSettingsDialog(self,keyPress,nextScript):
+	def script_activateMouseSettingsDialog(self,keyPress):
 		mainFrame.onMouseSettingsCommand(None)
 	script_activateMouseSettingsDialog.__doc__ = _("Shows NVDA mouse settings dialog")
 
-	def script_activateObjectPresentationDialog(self,keyPress,nextScript):
+	def script_activateObjectPresentationDialog(self,keyPress):
 		mainFrame. onObjectPresentationCommand(None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows NVDA object presentation settings dialog")
 
-	def script_activateVirtualBuffersDialog(self,keyPress,nextScript):
+	def script_activateVirtualBuffersDialog(self,keyPress):
 		mainFrame.onVirtualBuffersCommand(None)
 	script_activateVirtualBuffersDialog.__doc__ = _("Shows NVDA virtual buffers settings dialog")
 
-	def script_activateDocumentFormattingDialog(self,keyPress,nextScript):
+	def script_activateDocumentFormattingDialog(self,keyPress):
 		mainFrame.onDocumentFormattingCommand(None)
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows NVDA document formatting settings dialog")
 
 
-	def script_saveConfiguration(self,keyPress,nextScript):
+	def script_saveConfiguration(self,keyPress):
 		mainFrame.onSaveConfigurationCommand(None)
 	script_saveConfiguration.__doc__ = _("Saves current NVDA configuration to file")
 
-	def script_revertToSavedConfiguration(self,keyPress,nextScript):
+	def script_revertToSavedConfiguration(self,keyPress):
 		mainFrame.onRevertToSavedConfigurationCommand(None)
 	script_revertToSavedConfiguration.__doc__ = _("loads NVDA configuration from file, overriding current changes")
 

@@ -257,7 +257,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			end=self.text_characterCount
 		return self._textBuf[start:end]
 
-	def script_pageUp(self,keyPress,nextScript):
+	def script_pageUp(self,keyPress):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.text_reviewPosition
 		lineCount=0
@@ -272,7 +272,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 	script_pageUp.__doc__ = _("moves one page up in the virtual buffer's current document")
 
 
-	def script_pageDown(self,keyPress,nextScript):
+	def script_pageDown(self,keyPress):
 		pageLength=config.conf["virtualBuffers"]["linesPerPage"]
 		curPos=self.text_reviewPosition
 		lineCount=0
@@ -286,7 +286,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 		self.text_speakLine(self.text_reviewPosition)
 	script_pageDown.__doc__ = _("moves one page down in the virtual buffer's current document")
 
-	def script_activatePosition(self,keyPress,nextScript):
+	def script_activatePosition(self,keyPress):
 		self.activatePosition(self.text_reviewPosition)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 	
@@ -302,7 +302,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 				speech.speakMessage(info["descriptionFunc"](info["node"]))
 		super(virtualBuffer,self).text_reportPresentation(offset)
 
-	def script_nextHeading(self,keyPress,nextScript):
+	def script_nextHeading(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -313,7 +313,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more headings"))
 	script_nextHeading.__doc__ = _("moves to the next heading")
 	
-	def script_previousHeading(self,keyPress,nextScript):
+	def script_previousHeading(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_HEADING,controlTypes.ROLE_HEADING1,controlTypes.ROLE_HEADING2,controlTypes.ROLE_HEADING3,controlTypes.ROLE_HEADING4,controlTypes.ROLE_HEADING5,controlTypes.ROLE_HEADING6)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -324,7 +324,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more headings"))
 	script_previousHeading.__doc__ = _("moves to the previous heading")
 
-	def script_nextParagraph(self,keyPress,nextScript):
+	def script_nextParagraph(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_PARAGRAPH)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -335,7 +335,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more paragraphs"))
 	script_nextParagraph.__doc__ = _("moves to the next paragraph")
 
-	def script_previousParagraph(self,keyPress,nextScript):
+	def script_previousParagraph(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_PARAGRAPH)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -346,7 +346,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more paragraphs"))
 	script_previousParagraph.__doc__ = _("moves to the previous paragraph")
 
-	def script_nextTable(self,keyPress,nextScript):
+	def script_nextTable(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_TABLE)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -357,7 +357,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more tables"))
 	script_nextTable.__doc__ = _("moves to the next table")
 
-	def script_previousTable(self,keyPress,nextScript):
+	def script_previousTable(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_TABLE)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -368,7 +368,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more tables"))
 	script_previousTable.__doc__ = _("moves to the previous table")
 
-	def script_nextLink(self,keyPress,nextScript):
+	def script_nextLink(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LINK)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -379,7 +379,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more links"))
 	script_nextLink.__doc__ = _("moves to the next link")
 
-	def script_previousLink(self,keyPress,nextScript):
+	def script_previousLink(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LINK)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -390,7 +390,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more links"))
 	script_previousLink.__doc__ = _("moves to the previous link")
 	
-	def script_nextList(self,keyPress,nextScript):
+	def script_nextList(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LIST)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -401,7 +401,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more lists"))
 	script_nextList.__doc__ = _("moves to the next list")
 
-	def script_previousList(self,keyPress,nextScript):
+	def script_previousList(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LIST)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -412,7 +412,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more lists"))
 	script_previousList.__doc__ = _("moves to the previous list")
 
-	def script_nextListItem(self,keyPress,nextScript):
+	def script_nextListItem(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_LISTITEM)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -423,7 +423,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more list items"))
 	script_nextListItem.__doc__ = _("moves to the next list item")
 
-	def script_previousListItem(self,keyPress,nextScript):
+	def script_previousListItem(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_LISTITEM)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -434,7 +434,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more list items"))
 	script_previousListItem.__doc__ = _("moves to the previous list item")
 
-	def script_nextFormField(self,keyPress,nextScript):
+	def script_nextFormField(self,keyPress):
 		pos=self.nextField(self.text_reviewPosition,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -445,7 +445,7 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			speech.speakMessage(_("no more form fields"))
 	script_nextFormField.__doc__ = _("Moves to the next form field")
 
-	def script_previousFormField(self,keyPress,nextScript):
+	def script_previousFormField(self,keyPress):
 		pos=self.previousField(self.text_reviewPosition,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_BUTTON)
 		if isinstance(pos,int):
 			self.text_reviewPosition=pos
@@ -471,11 +471,11 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			errorDialog.run()
 		self._lastFindText=text
 
-	def script_findText(self,keyPress,nextScript): 
+	def script_findText(self,keyPress): 
 		self.doFindTextDialog()	
 	script_findText.__doc__ = _("find a text pattern from the current cursor's position")
 
-	def script_findNext(self,keyPress,nextScript):
+	def script_findNext(self,keyPress):
 		self.doFindTextDialogHelper(self._lastFindText)
 	script_findNext.__doc__ = _("find next occurrence of text")
 

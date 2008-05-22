@@ -674,7 +674,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			elapsed += retryInterval
 		return False
 
-	def script_moveByLine(self,keyPress,nextScript):
+	def script_moveByLine(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		bookmark=info.bookmark
 		sendKey(keyPress)
@@ -689,7 +689,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
-	def script_moveByCharacter(self,keyPress,nextScript):
+	def script_moveByCharacter(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		bookmark=info.bookmark
 		sendKey(keyPress)
@@ -704,7 +704,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
-	def script_moveByWord(self,keyPress,nextScript):
+	def script_moveByWord(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		bookmark=info.bookmark
 		sendKey(keyPress)
@@ -719,7 +719,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
-	def script_moveByParagraph(self,keyPress,nextScript):
+	def script_moveByParagraph(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		bookmark=info.bookmark
 		sendKey(keyPress)
@@ -734,7 +734,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
-	def script_backspace(self,keyPress,nextScript):
+	def script_backspace(self,keyPress):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
@@ -753,7 +753,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info
 
-	def script_delete(self,keyPress,nextScript):
+	def script_delete(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		bookmark=info.bookmark
 		sendKey(keyPress)
@@ -768,7 +768,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
-	def script_changeSelection(self,keyPress,nextScript):
+	def script_changeSelection(self,keyPress):
 		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
 		sendKey(keyPress)
 		if not isScriptWaiting():

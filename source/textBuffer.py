@@ -356,24 +356,24 @@ class TextBufferObject(baseObject.ScriptableObject):
 	def _get_text_reviewPositionLimits(self):
 		return (0,self.text_characterCount-1)
 
-	def script_text_review_moveToCaret(self,keyPress,nextScript):
+	def script_text_review_moveToCaret(self,keyPress):
 		self.text_reviewPosition=self.text_caretPosition
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_top(self,keyPress,nextScript):
+	def script_text_review_top(self,keyPress):
 		speech.speakMessage(_("top"))
 		self.text_reviewPosition=self.text_reviewPositionLimits[0]
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_bottom(self,keyPress,nextScript):
+	def script_text_review_bottom(self,keyPress):
 		speech.speakMessage(_("bottom"))
 		self.text_reviewPosition=self.text_reviewPositionLimits[1]
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_currentLine(self,keyPress,nextScript):
+	def script_text_review_currentLine(self,keyPress):
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_nextLine(self,keyPress,nextScript):
+	def script_text_review_nextLine(self,keyPress):
 		r=self.text_getNextLineOffsets(self.text_reviewPosition)
 		limits=self.text_reviewPositionLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -382,7 +382,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("bottom"))
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_prevLine(self,keyPress,nextScript):
+	def script_text_review_prevLine(self,keyPress):
 		r=self.text_getPrevLineOffsets(self.text_reviewPosition)
 		limits=self.text_reviewPositionLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -391,10 +391,10 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("top"))
 		self.text_speakLine(self.text_reviewPosition)
 
-	def script_text_review_currentWord(self,keyPress,nextScript):
+	def script_text_review_currentWord(self,keyPress):
 		self.text_speakWord(self.text_reviewPosition)
 
-	def script_text_review_nextWord(self,keyPress,nextScript):
+	def script_text_review_nextWord(self,keyPress):
 		r=self.text_getNextWordOffsets(self.text_reviewPosition)
 		limits=self.text_reviewPositionLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -403,7 +403,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("bottom"))
 		self.text_speakWord(self.text_reviewPosition)
 
-	def script_text_review_prevWord(self,keyPress,nextScript):
+	def script_text_review_prevWord(self,keyPress):
 		r=self.text_getPrevWordOffsets(self.text_reviewPosition)
 		limits=self.text_reviewPositionLimits
 		if r is not None and r[0]>=limits[0] and r[0]<=limits[1]:
@@ -412,10 +412,10 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("top"))
 		self.text_speakWord(self.text_reviewPosition)
 
-	def script_text_review_currentCharacter(self,keyPress,nextScript):
+	def script_text_review_currentCharacter(self,keyPress):
 		self.text_speakCharacter(self.text_reviewPosition)
 
-	def script_text_review_nextCharacter(self,keyPress,nextScript):
+	def script_text_review_nextCharacter(self,keyPress):
 		newOffset=self.text_reviewPosition+1
 		limits=self.text_reviewPositionLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -424,7 +424,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("bottom"))
 		self.text_speakCharacter(self.text_reviewPosition)
 
-	def script_text_review_prevCharacter(self,keyPress,nextScript):
+	def script_text_review_prevCharacter(self,keyPress):
 		newOffset=self.text_reviewPosition-1
 		limits=self.text_reviewPositionLimits
 		if newOffset>=limits[0] and newOffset<=limits[1]:
@@ -433,12 +433,12 @@ class TextBufferObject(baseObject.ScriptableObject):
 			speech.speakMessage(_("top"))
 		self.text_speakCharacter(self.text_reviewPosition)
 
-	def script_text_review_startOfLine(self,keyPress,nextScript):
+	def script_text_review_startOfLine(self,keyPress):
 		r=self.text_getLineOffsets(self.text_reviewPosition)
 		self.text_reviewPosition=r[0]
 		self.text_speakCharacter(self.text_reviewPosition)
 
-	def script_text_review_endOfLine(self,keyPress,nextScript):
+	def script_text_review_endOfLine(self,keyPress):
 		r=self.text_getLineOffsets(self.text_reviewPosition)
 		self.text_reviewPosition=r[1]-1
 		self.text_speakCharacter(self.text_reviewPosition)
@@ -461,7 +461,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			curPos=r[0]
 			yield
 
-	def script_text_moveByLine(self,keyPress,nextScript):
+	def script_text_moveByLine(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			self.text_speakLine(self.text_caretPosition)
@@ -469,11 +469,11 @@ class TextBufferObject(baseObject.ScriptableObject):
 			self.text_reviewPosition=self.text_caretPosition
 	script_text_moveByLine.__doc__=_("Moves and then reads the current line")
 
-	def script_text_reportCurrentLine(self,keyPress,nextScript):
+	def script_text_reportCurrentLine(self,keyPress):
 		self.text_speakLine(self.text_caretPosition)
 	script_text_reportCurrentLine.__doc__=_("reads the current line")
 
-	def script_text_moveByCharacter(self,keyPress,nextScript):
+	def script_text_moveByCharacter(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			self.text_speakCharacter(self.text_caretPosition)
@@ -481,7 +481,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			self.text_reviewPosition=self.text_caretPosition
 	script_text_moveByCharacter.__doc__=_("Moves and reads the current character")
 
-	def script_text_moveByWord(self,keyPress,nextScript):
+	def script_text_moveByWord(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			self.text_speakWord(self.text_caretPosition)
@@ -489,7 +489,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			self.text_reviewPosition=self.text_caretPosition
 	script_text_moveByWord.__doc__=_("Moves and reads the current word")
 
-	def script_text_moveBySentence(self,keyPress,nextScript):
+	def script_text_moveBySentence(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			self.text_speakSentence(self.text_caretPosition)
@@ -497,7 +497,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			self.text_reviewPosition=self.text_caretPosition
 	script_text_moveBySentence.__doc__=_("Moves and then reads the current line")
 
-	def script_text_moveByParagraph(self,keyPress,nextScript):
+	def script_text_moveByParagraph(self,keyPress):
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			self.text_speakParagraph(self.text_caretPosition)
@@ -505,7 +505,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 			self.text_reviewPosition=self.text_caretPosition
 	script_text_moveByParagraph.__doc__=_("Moves and then reads the current line")
 
-	def script_text_nextParagraph(self,keyPress,nextScript):
+	def script_text_nextParagraph(self,keyPress):
 		r=self.text_getNextParagraphOffsets(self.text_caretPosition)
 		if r:
 			self.text_caretPosition=r[0]
@@ -513,7 +513,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 		self.text_reviewPosition=self.text_caretPosition
 	script_text_nextParagraph.__doc__=_("Manually moves to the next paragraph and then speaks it")
 
-	def script_text_prevParagraph(self,keyPress,nextScript):
+	def script_text_prevParagraph(self,keyPress):
 		r=self.text_getPrevParagraphOffsets(self.text_caretPosition)
 		if r:
 			self.text_caretPosition=r[0]
@@ -521,7 +521,7 @@ class TextBufferObject(baseObject.ScriptableObject):
 		self.text_reviewPosition=self.text_caretPosition
 	script_text_prevParagraph.__doc__=_("Manually moves to the previous paragraph and then speaks it")
 
-	def script_text_changeSelection(self,keyPress,nextScript):
+	def script_text_changeSelection(self,keyPress):
 		oldSelections=[]
 		for selNum in xrange(self.text_selectionCount):
 			oldSelections.append(self.text_getSelectionOffsets(selNum))
@@ -552,13 +552,13 @@ class TextBufferObject(baseObject.ScriptableObject):
 		self.text_reviewPosition=self.text_caretPosition
 	script_text_changeSelection.__doc__=_("Moves and reads the current selection")
 
-	def script_text_delete(self,keyPress,nextScript):
+	def script_text_delete(self,keyPress):
 		sendKey(keyPress)
 		self.text_speakCharacter(self.text_caretPosition)
 		self.text_reviewPosition=self.text_caretPosition
 	script_text_delete.__doc__=_("Deletes the character and reads the new current character")
 
-	def script_text_backspace(self,keyPress,nextScript):
+	def script_text_backspace(self,keyPress):
 		point=self.text_caretPosition
 		if point>0:
 			delChar=self.text_getText(point-1,point)

@@ -89,7 +89,7 @@ class ExcelGrid(IAccessible):
 		super(ExcelGrid,self).event_gainFocus()
 		self.speakSelection()
 
-	def script_moveByCell(self,keyPress,nextScript):
+	def script_moveByCell(self,keyPress):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
 		self.speakSelection()

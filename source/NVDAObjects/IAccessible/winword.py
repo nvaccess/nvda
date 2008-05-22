@@ -290,7 +290,7 @@ class WordDocument(IAccessible):
 			self._dom=win32com.client.CDispatch(o,oleRepr)
  		return self._dom
 
-	def script_nextRow(self,keyPress,nextScript):
+	def script_nextRow(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -306,7 +306,7 @@ class WordDocument(IAccessible):
 		info.expand(textHandler.UNIT_CELL)
 		speech.speakFormattedText(info)
 
-	def script_previousRow(self,keyPress,nextScript):
+	def script_previousRow(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -322,7 +322,7 @@ class WordDocument(IAccessible):
 		info.expand(textHandler.UNIT_CELL)
 		speech.speakFormattedText(info)
 
-	def script_nextColumn(self,keyPress,nextScript):
+	def script_nextColumn(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -338,7 +338,7 @@ class WordDocument(IAccessible):
 		info.expand(textHandler.UNIT_CELL)
 		speech.speakFormattedText(info)
 
-	def script_previousColumn(self,keyPress,nextScript):
+	def script_previousColumn(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))

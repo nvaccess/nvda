@@ -91,7 +91,7 @@ class MessageList_pre2003(IAccessible):
 		if msg:
 			eventHandler.executeEvent("gainFocus",self.curMessageItem)
 
-	def script_moveByMessage(self,keyPress,nextScript):
+	def script_moveByMessage(self,keyPress):
 		if hasattr(self,'curMessageItem'):
 			oldEntryID=self.curMessageItem.msg.entryID
 		else:
