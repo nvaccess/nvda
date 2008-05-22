@@ -99,14 +99,14 @@ class CursorManager(baseObject.ScriptableObject):
 		self.doFindTextDialog()
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
-	def script_findNext(self, keyPress, nextScript):
+	def script_findNext(self,keyPress):
 		if not self._lastFindText:
 			self.doFindTextDialog()
 			return
 		self.doFindText(self._lastFindText)
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
-	def script_findPrevious(self, keyPress, nextScript):
+	def script_findPrevious(self,keyPress):
 		if not self._lastFindText:
 			self.doFindTextDialog()
 			return

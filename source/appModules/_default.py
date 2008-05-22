@@ -684,7 +684,7 @@ class appModule(appModuleHandler.AppModule):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
-	def script_say_battery_status(self, keyPress, nextScript):
+	def script_say_battery_status(self,keyPress):
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
 		NO_SYSTEM_BATTERY = 0X80
@@ -759,7 +759,7 @@ class appModule(appModuleHandler.AppModule):
 		mainFrame.onRevertToSavedConfigurationCommand(None)
 	script_revertToSavedConfiguration.__doc__ = _("loads NVDA configuration from file, overriding current changes")
 
-	def script_activatePythonConsole(self, keyPress, nextScript):
+	def script_activatePythonConsole(self,keyPress):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()

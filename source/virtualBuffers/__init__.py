@@ -227,7 +227,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			yield docHandle, ID, startOffset, endOffset
 
-	def _quickNavScript(self, keyPress, nextScript, nodeType, direction, errorMessage):
+	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
@@ -246,20 +246,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptSuffix = nodeType[0].upper() + nodeType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self, keyPress, nextScript: self._quickNavScript(keyPress, nextScript, nodeType, "next", nextError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nextScript, nodeType, "next", nextError)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
 		cls.bindKey(key, scriptName)
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self, keyPress, nextScript: self._quickNavScript(keyPress, nextScript, nodeType, "previous", prevError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nextScript, nodeType, "previous", prevError)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
 		cls.bindKey("shift+%s" % key, scriptName)
 
-	def script_linksList(self, keyPress, nextScript):
+	def script_linksList(self,keyPress):
 		if self.VBufHandle is None:
 			return
 
