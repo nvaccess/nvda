@@ -184,7 +184,7 @@ class appModule(appModuleHandler.AppModule):
 					textList.append(info.text)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
-				if scriptHandler.getLastScriptRepeateCount()>=1:
+				if scriptHandler.getLastScriptRepeateCount()==1:
 					speech.speakSpelling(text)
 				else:
 					if api.copyToClip(text):
