@@ -18,10 +18,15 @@ Name "NVDA"
 !define NVDASourceDir "..\source\dist"
 !define NVDAConfig "nvda.ini"
 
+!define INSTDIR_REG_ROOT "HKLM"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
+
+SetCompressor /SOLID LZMA
 ;Include Modern UI Macro's
 !include "MUI2.nsh"
+!include "AdvUninstLog.nsh"
 !include "WinMessages.nsh"
-SetCompressor /SOLID LZMA
+
 CRCCheck On
 ShowInstDetails hide
 ShowUninstDetails hide
@@ -51,6 +56,9 @@ Var StartMenuFolder
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${PRODUCT}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
 
+; Interactive or unattended uninstallation, i.e. ask to replace/delete/modify files
+!insertmacro UNATTENDED_UNINSTALL
+
 ;--------------------------------
 ;Pages
 !InsertMacro MUI_PAGE_WELCOME
@@ -67,8 +75,11 @@ Var StartMenuFolder
  !define MUI_ABORTWARNING
 
 
+
 ;--------------------------------
  ;Language
+!define UNINSTALLOG_LOCALIZE ; necessary for localization of messages from the uninstallation log file
+
 ;Remember the installer language
 !define MUI_LANGDLL_REGISTRY_ROOT "HKCU"
 !define MUI_LANGDLL_REGISTRY_KEY "Software\${PRODUCT}"
@@ -159,7 +170,7 @@ OutFile "${PRODUCT}_${VERSION}.exe"
  InstallDir "$PROGRAMFILES\${PRODUCT}"
 
 ;Remember install folder
-InstallDirRegKey HKLM "Software\${PRODUCT}" ""
+InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 ;--------------------------------
 ;Reserve Files
@@ -177,6 +188,10 @@ Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
+
+;prepare log always within .onInit function
+!insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+
 ;Banner::show /nounload
 FunctionEnd
 
@@ -200,7 +215,10 @@ FunctionEnd
 Section "install" section_install
 SetShellVarContext all
 SetOutPath "$INSTDIR"
+; open and close uninstallation log after ennumerating all the files being copied
+!insertmacro UNINSTALL.LOG_OPEN_INSTALL
 File /r "${NVDASourceDir}\"
+!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 strcpy $NVDAInstalled "1"
 SectionEnd
 
@@ -223,14 +241,12 @@ SectionEnd
 
 Section Uninstaller
  SetShellVarContext all
-CreateShortCut "$SMPROGRAMS\NVDA\$(shortcut_uninstall).lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayName" "${PRODUCT} ${VERSION}"
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "DisplayVersion" "${VERSION}"
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "URLInfoAbout" "http://www.nvda-project.org/"
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "Publisher" "Michael Curran"
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NVDA" "UninstallString" "$INSTDIR\Uninst.exe"
-WriteRegStr HKCU "Software\${PRODUCT}" "" $INSTDIR
-WriteUninstaller "$INSTDIR\Uninst.exe"
+CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${VERSION}"
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "URLInfoAbout" "http://www.nvda-project.org/"
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "Michael Curran"
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\Uninstall.exe"
+WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
 Function .onGUIEnd
@@ -247,12 +263,21 @@ System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 end:
 FunctionEnd
 
+Function .onInstSuccess
+;create/update log always within .onInstSuccess function
+!insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+FunctionEnd
+
+; Uninstall functions
 var PreserveConfig
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetThreadLocale() i .r0'
 StrCpy $LANGUAGE $0
+
+; Start uninstalling with a log
+!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
 FunctionEnd
 
 Function un.NVDA_GUIInit
@@ -262,6 +287,15 @@ FunctionEnd
 
 Section "Uninstall"
 SetShellVarContext all
+;uninstall from path, must be repeated for every install logged path individual
+!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
+
+;uninstall from path, must be repeated for every install logged path individual
+;!insertmacro UNINSTALL.LOG_UNINSTALL "$APPDATA\${PRODUCT}"
+
+;end uninstall, after uninstall from all logged paths has been performed
+!insertmacro UNINSTALL.LOG_END_UNINSTALL
+
 ; Warn about configuration file
 IfFileExists "$INSTDIR\${NVDAConfig}" +1 +2
 MessageBox MB_ICONQUESTION|MB_YESNO|MB_DefButton2 $(msg_NVDAConfigFound) IDYES +1 IDNO PreserveConfiguration
@@ -274,16 +308,18 @@ Continue:
 Delete "$SMPROGRAMS\$StartMenuFolder\*.*"
 RmDir "$SMPROGRAMS\$StartMenuFolder"
 Delete $DESKTOP\${PRODUCT}.lnk"
-DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\${PRODUCT}"
-DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
-Delete /RebootOK "$INSTDIR\*.*"
-RMDir /RebootOK /r "$INSTDIR\*.*"
+Delete $INSTDIR\${PRODUCT}.url"
+DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
+DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
 StrCmp $PreserveConfig 1 +1 NoPreserveConfig
 CreateDirectory $INSTDIR
 CopyFiles /SILENT "$PLUGINSDIR\${NVDAConfig}" "$INSTDIR\${NVDAConfig}"
 goto End
 NoPreserveConfig:
-RMDir /RebootOK "$INSTDIR"
+Delete $INSTDIR\${NVDAConfig}
+Rmdir $INSTDIR
+Goto End
+
 End:
 SectionEnd
 
