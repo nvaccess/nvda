@@ -17,3 +17,15 @@ LangString shortcut_readme $(LANG_FRENCH) "Lisez-moi"
 LangString shortcut_userguide $(LANG_FRENCH) "Guide de l'utilisateur"
 LangString path_userguide $(LANG_FRENCH) "fr\user guide.html"
 LangString path_readmefile $(LANG_FRENCH) "fr\readme.txt"
+LangString UNLOG_HEADER ${LANG_FRENCH} "=========== Journal du désinstallateur \
+                                         ne pas éditer ce fichier ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_FRENCH} "${UNINST_DAT} non trouvé, \
+                                                impossible de procéder à la désinstallation."
+LangString UNLOG_DEL_FILE ${LANG_FRENCH} 'Effacer le fichier "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_FRENCH} 'Effacer le répertoire "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_FRENCH} "Précédente installation détectée à $0.$\n\
+                                            Le fichier ${UNINSTALL_LOG}.dat est absent.$\n$\n\
+                                            Il est fortement recommandé de choisir un \
+                                            répertoire vide et de procéder à une installation fraîche."
+LangString UNLOG_ERROR_LOG ${LANG_FRENCH} "Erreur dans le journal ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_FRENCH} "Erreur à la création de ${UNINSTALL_LOG}."
