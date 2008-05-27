@@ -77,7 +77,9 @@ winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DW
 # Initialise error checking.
 def _winmm_errcheck(res, func, args):
 	if res != MMSYSERR_NOERROR:
-		raise RuntimeError("%s: code %d" % (func.__name__, res))
+		buf = create_unicode_buffer(256)
+		winmm.waveOutGetErrorTextW(res, buf, sizeof(buf))
+		raise WindowsError(res, buf.value)
 for func in (
 	winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
 	winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
@@ -101,7 +103,7 @@ class WavePlayer(object):
 		@param outputDevice: The device ID or name of the audio output device to use.
 		@type outputDevice: int or basestring
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
-		@raise RuntimeError: If there was an error opening the audio output device.
+		@raise WindowsError: If there was an error opening the audio output device.
 		"""
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
@@ -132,7 +134,7 @@ class WavePlayer(object):
 		This allows for uninterrupted playback as long as a new chunk is fed before the previous chunk has finished playing.
 		@param data: Waveform audio in the format specified when this instance was constructed.
 		@type data: str
-		@raise RuntimeError: If there was an error playing the audio.
+		@raise WindowsError: If there was an error playing the audio.
 		"""
 		whdr = WAVEHDR()
 		whdr.lpData = data
@@ -141,7 +143,7 @@ class WavePlayer(object):
 		try:
 			winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 			self.sync()
-		except RuntimeError, e:
+		except WindowsError, e:
 			self.close()
 			self._open()
 			raise e
@@ -210,7 +212,7 @@ def outputDeviceIDToName(ID):
 	caps = WAVEOUTCAPS()
 	try:
 		windll.winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
-	except RuntimeError:
+	except WindowsError:
 		raise LookupError("No such device ID")
 	return caps.szPname
 
