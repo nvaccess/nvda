@@ -11,6 +11,7 @@ import _winreg
 import globalVars
 import silence
 import config
+import nvwave
 
 class constants:
 	SVSFlagsAsync = 1
@@ -87,8 +88,9 @@ class SynthDriver(silence.SynthDriver):
 		if value>self.voiceCount:
 			value=1
 		self.tts=comtypes.client.CreateObject('sapi.SPVoice')
-		if config.conf["speech"]["outputDevice"] >=0:
-			self.tts.audioOutput=self.tts.getAudioOutputs()[config.conf["speech"]["outputDevice"]]
+		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
+		if outputDeviceID>=0:
+			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 		self.tts.Voice=self.tts.GetVoices()[value-1]
 		self._voice=value
 

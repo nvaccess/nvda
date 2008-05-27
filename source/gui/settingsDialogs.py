@@ -14,25 +14,10 @@ import languageHandler
 import speech
 import gui
 import globalVars
-from ctypes import *
-from ctypes.wintypes import *
+import nvwave
 import speechDictHandler
 import appModuleHandler
 import scriptUI
-
-MAXPNAMELEN=32
-
-class WAVEOUTCAPS(Structure):
-	_fields_=[
-		('wMid',WORD),
-		('wPid',WORD),
-		('vDriverVersion',c_uint),
-		('szPname',WCHAR*MAXPNAMELEN),
-		('dwFormats',DWORD),
-		('wChannels',WORD),
-		('wReserved1',WORD),
-		('dwSupport',DWORD),
-	]
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -180,23 +165,13 @@ class SynthesizerDialog(SettingsDialog):
 		deviceListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		deviceListLabel=wx.StaticText(self,-1,label=_("Output &device"))
 		deviceListID=wx.NewId()
-		deviceIndex =-1
-		numDevices=windll.winmm.waveOutGetNumDevs()
-		deviceNames=[]
-		self.deviceIndexes=[]
-		caps=WAVEOUTCAPS()
-		while deviceIndex<numDevices:
-			windll.winmm.waveOutGetDevCapsW(deviceIndex,byref(caps),sizeof(caps))
-			deviceNames.append(caps.szPname)
-			self.deviceIndexes.append(deviceIndex)
-			if deviceIndex==config.conf["speech"]["outputDevice"]:
-				selection=deviceIndex+1
-			deviceIndex=deviceIndex+1
+		deviceNames=nvwave.getOutputDeviceNames()
 		self.deviceList=wx.Choice(self,deviceListID,choices=deviceNames)
 		try:
-			self.deviceList.SetSelection(selection)
-		except:
-			pass
+			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
+		except ValueError:
+			selection = 0
+		self.deviceList.SetSelection(selection)
 		deviceListSizer.Add(deviceListLabel)
 		deviceListSizer.Add(self.deviceList)
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
@@ -205,7 +180,7 @@ class SynthesizerDialog(SettingsDialog):
 		self.synthList.SetFocus()
 
 	def onOk(self,evt):
-		config.conf["speech"]["outputDevice"]=self.deviceIndexes[self.deviceList.GetSelection()]
+		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
 			wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING).ShowModal()

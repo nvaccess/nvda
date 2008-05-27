@@ -54,7 +54,20 @@ CALLBACK_NULL = 0
 #waveOutProc = CFUNCTYPE(HANDLE, UINT, DWORD, DWORD, DWORD)
 #WOM_DONE = 0x3bd
 
-# Set argument types.
+MAXPNAMELEN = 32
+class WAVEOUTCAPS(Structure):
+	_fields_ = [
+		('wMid', WORD),
+		('wPid', WORD),
+		('vDriverVersion', c_uint),
+		('szPname', WCHAR*MAXPNAMELEN),
+		('dwFormats', DWORD),
+		('wChannels', WORD),
+		('wReserved1', WORD),
+		('dwSupport', DWORD),
+	]
+
+	# Set argument types.
 winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
 
 # Initialise error checking.
@@ -62,8 +75,9 @@ def _winmm_errcheck(res, func, args):
 	if res != MMSYSERR_NOERROR:
 		raise RuntimeError("%s: code %d" % (func.__name__, res))
 for func in (
-		winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
-		winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose
+	winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
+	winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
+	winmm.waveOutGetDevCapsW
 ):
 	func.errcheck = _winmm_errcheck
 
@@ -72,7 +86,7 @@ class WavePlayer(object):
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDeviceNumber=WAVE_MAPPER):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -80,14 +94,17 @@ class WavePlayer(object):
 		@type samplesPerSec: int
 		@param bitsPerSample: The number of bits per sample.
 		@type bitsPerSample: int
-		@param outputDeviceNumber: The number of the audio output device to use.
-		@type outputDeviceNumber: int
+		@param outputDevice: The device ID or name of the audio output device to use.
+		@type outputDevice: int or basestring
+		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise RuntimeError: If there was an error opening the audio output device.
 		"""
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		self.outputDeviceNumber=outputDeviceNumber
+		if isinstance(outputDevice, basestring):
+			outputDevice = outputDeviceNameToID(outputDevice, True)
+		self.outputDeviceID = outputDevice
 		self._open()
 		self._whdr_lock = threading.RLock()
 
@@ -100,7 +117,7 @@ class WavePlayer(object):
 		wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
 		wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 		waveout = HWAVEOUT(0)
-		winmm.waveOutOpen(byref(waveout), self.outputDeviceNumber, LPWAVEFORMATEX(wfx), 0, 0, CALLBACK_NULL)
+		winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), 0, 0, CALLBACK_NULL)
 		self._waveout = waveout.value
 		self._prev_whdr = None
 
@@ -130,7 +147,6 @@ class WavePlayer(object):
 	def sync(self):
 		"""Synchronise with playback.
 		This method blocks until the previously fed chunk of audio has finished playing.
-		It is called by L{feed} to wait for the previous chunk of audio to finish playing.
 		It need only be called directly if there is no more audio to feed, but synchronisation is nevertheless desired.
 		"""
 		with self._whdr_lock:
@@ -166,3 +182,50 @@ class WavePlayer(object):
 		self.stop()
 		winmm.waveOutClose(self._waveout)
 		self._waveout = None
+
+def _getOutputDevices():
+	caps = WAVEOUTCAPS()
+	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
+		windll.winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
+		yield devID, caps.szPname
+
+def getOutputDeviceNames():
+	"""Obtain the names of all audio output devices on the system.
+	@return: The names of all output devices on the system.
+	@rtype: [str, ...]
+	"""
+	return [name for ID, name in _getOutputDevices()]
+
+def outputDeviceIDToName(ID):
+	"""Obtain the name of an output device given its device ID.
+	@param ID: The device ID.
+	@type ID: int
+	@return: The device name.
+	@rtype: str
+	"""
+	caps = WAVEOUTCAPS()
+	try:
+		windll.winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
+	except RuntimeError:
+		raise LookupError("No such device ID")
+	return caps.szPname
+
+def outputDeviceNameToID(name, useDefaultIfInvalid=False):
+	"""Obtain the device ID of an output device given its name.
+	@param name: The device name.
+	@type name: str
+	@param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
+		C{False} to raise an exception.
+	@return: The device ID.
+	@rtype: int
+	@raise LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
+	"""
+	for curID, curName in _getOutputDevices():
+		if curName == name:
+			return curID
+
+	# No such ID.
+	if useDefaultIfInvalid:
+		return -1
+	else:
+		raise LookupError("No such device name")

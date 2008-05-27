@@ -12,6 +12,7 @@ import _winreg
 import silence
 import config
 import globalVars
+import nvwave
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 
@@ -47,7 +48,7 @@ class SynthDriver(silence.SynthDriver):
 			self.check()
 			self.tts=comtypes.client.CreateObject(COM_CLASS,)
 			self._ttsEventObj=comtypes.client.GetEvents(self.tts,self)
-			self.tts.InitAudioDestMM(config.conf["speech"]["outputDevice"])
+			self.tts.InitAudioDestMM(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
 			self.tts.CallBacksEnabled=1
 			self.tts.Tagged=1
 			self.tts.initialized=1

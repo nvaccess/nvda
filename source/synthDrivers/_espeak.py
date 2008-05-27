@@ -265,7 +265,7 @@ def initialize():
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
 	bgThread=BgThread()

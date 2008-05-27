@@ -17,7 +17,7 @@ piTwo=math.pi*2
 sampleRate=44100
 amplitude=14000
 
-player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDeviceNumber=config.conf["speech"]["outputDevice"])
+player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
 
 def beep(hz,length,left=50,right=50):
 	"""Plays a tone at the given hz, length, and stereo balance.
