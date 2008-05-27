@@ -13,6 +13,10 @@ import threading
 from ctypes import *
 from ctypes.wintypes import *
 
+__all__ = (
+	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
+)
+
 winmm = windll.winmm
 
 HWAVEOUT = HANDLE
