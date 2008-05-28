@@ -433,6 +433,11 @@ silentRolesOnFocus=set([
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
+silentValuesForRoles=set([
+	controlTypes.ROLE_CHECKBOX,
+	controlTypes.ROLE_RADIOBUTTON,
+])
+
 userDisabledRoles=[]
 
 def updateUserDisabledRoles():
@@ -669,7 +674,8 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	else:
 		role=controlTypes.ROLE_UNKNOWN
 	if 'value' in propertyValues:
-		textList.append(propertyValues['value'])
+		if not role in silentValuesForRoles:
+			textList.append(propertyValues['value'])
 		del propertyValues['value']
 	states=propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
