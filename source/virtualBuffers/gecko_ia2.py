@@ -13,6 +13,8 @@ import globalVars
 import api
 import textHandler
 
+GECKO_SCROLL_TYPE_ANYWHERE=0x06
+
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
@@ -159,6 +161,7 @@ class Gecko_ia2(VirtualBuffer):
 			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
 				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
 				api.setNavigatorObject(obj)
+				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
 				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states:
 					obj.setFocus()
 		except:
