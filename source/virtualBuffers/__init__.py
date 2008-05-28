@@ -222,7 +222,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			except:
 				return
 			if not ID:
-				return
+				continue
 
 			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			yield docHandle, ID, startOffset, endOffset
