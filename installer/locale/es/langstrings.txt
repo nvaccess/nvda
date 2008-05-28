@@ -2,18 +2,29 @@
 LangString msg_WelcomePageTitle ${LANG_SPANISH} "Instalador para ${PRODUCT}, Versión ${VERSION}"
 LangString msg_WelcomePageText ${LANG_SPANISH} "Bienvenido a la instalación de ${PRODUCT}, (Non-Visual Desktop Access), un lector de pantalla libre y de código abierto para Microsoft Windows.$\n\
 Derechos Reservados 2006 - 2008 por los colaboradores de NVDA.$\n\
-Este asistente te guiará a través de la instalación de ${PRODUCT}; Es recomendable cerrar todas las demás aplicaciones antes de  comenzar con esta instalación.$\n"
-LangString msg_READMEText ${LANG_SPANISH} "Ver el fichero README (recomendado)"
-LangString msg_NVDAWebSite ${LANG_SPANISH} "Visita el sitio web official de NVDA"
+Este asistente le guiará a través de la instalación de ${PRODUCT}; Es recomendable cerrar todas las demás aplicaciones antes de  comenzar con esta instalación.$\n"
+LangString msg_READMEText ${LANG_SPANISH} "Vea el fichero README (recomendado)"
+LangString msg_NVDAWebSite ${LANG_SPANISH} "Visite el sitio web official de NVDA"
 LangString msg_NVDARunning ${LANG_SPANISH} "Alguna otra copia de NVDA está ya en ejecución. Será detenida antes de que el Instalador pueda continuar."
-LangString msg_SpeechInstall ${LANG_SPANISH} "¿Te gustaría utilizar voz durante la instalación de NVDA? Presiona la tecla INTRO para continuar con voz, presiona la tecla ESCAPE para instalar sin voz."
-LangString msg_RemoveNVDA ${LANG_SPANISH} "¿Estás seguro de querer eliminar completamente $(^Name) y todos sus componentes?"
-LangString msg_NVDAConfigFound ${LANG_SPANISH} "El instalador encontró un fichero de configuración existente para NVDA. ¿Te gustaría borrar el fichero de configuración de NVDA?"
-LangString msg_NVDASuccessfullyRemoved ${LANG_SPANISH} "$(^Name) fue eliminado satisfactoriamente de tu ordenador."
-LangString shortcut_Wiki $(LANG_SPANISH) "Wiki Para NVDA"
+LangString msg_SpeechInstall ${LANG_SPANISH} "¿Le gustaría utilizar voz durante la instalación de NVDA? Presione la tecla INTRO para continuar con voz, presione la tecla ESCAPE para instalar sin voz."
+LangString msg_RemoveNVDA ${LANG_SPANISH} "¿Está seguro de querer eliminar completamente $(^Name) y todos sus componentes?"
+LangString msg_NVDAConfigFound ${LANG_SPANISH} "El instalador encontró un fichero de configuración existente para NVDA. ¿Le gustaría eliminar el fichero de configuración de NVDA?"
+LangString msg_NVDASuccessfullyRemoved ${LANG_SPANISH} "$(^Name) fue eliminado satisfactoriamente de su ordenador."
+LangString shortcut_Wiki $(LANG_SPANISH) "Info en el WIKI"
 LangString shortcut_uninstall $(LANG_SPANISH) "Desinstalar"
 LangString shortcut_website $(LANG_SPANISH) "Sitio Web"
-LangString shortcut_readme $(LANG_SPANISH) "Léeme"
+LangString shortcut_readme $(LANG_SPANISH) "Léame"
 LangString shortcut_userguide $(LANG_SPANISH) "Guía del Usuario"
 LangString path_userguide $(LANG_SPANISH) "es_es\user guide.txt"
 LangString path_readmefile $(LANG_SPANISH) "es_es\readme.txt"
+LangString UNLOG_HEADER ${LANG_SPANISH} "=========== Log del Desinstalador \                                           por favor no edite este fichero ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_SPANISH} "${UNINST_DAT} no encontrado, \
+                                                imposible llevar a cabo la desinstalación."
+LangString UNLOG_DEL_FILE ${LANG_SPANISH} '¿Eliminar Fichero "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_SPANISH} '¿Eliminar el Directorio "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_SPANISH} "Detectada instalación anterior en $0.$\n\
+                                            Falta el fichero  ${UNINSTALL_LOG}.dat requerido.$\n$\n\
+                                            Es altamente recomendable seleccionar un \
+                                            directorio vacío y llevar a cabo una instalación limpia."
+LangString UNLOG_ERROR_LOG ${LANG_SPANISH} "Error en el log ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_SPANISH} "Error creando ${UNINSTALL_LOG}."
