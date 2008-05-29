@@ -805,7 +805,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if not NVDAEvent:
 		return False
 	eventName,obj=NVDAEvent
-	if (childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST) or (objectID==OBJID_CLIENT and obj.windowClassName.find("SysListView32")>=0):
+	if (childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST) or (objectID==OBJID_CLIENT and "SysListView32" in obj.windowClassName):
 		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
 		try:
 			realChildID=obj.IAccessibleObject.accFocus
