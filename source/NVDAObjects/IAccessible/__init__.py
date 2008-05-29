@@ -122,7 +122,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		try:
-			return self.obj.IAccessibleTextObject.Text(start,end)
+			return self.obj.IAccessibleTextObject.text(start,end)
 		except:
 			return ""
 
@@ -688,6 +688,20 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				speech.speakObject(child,reason=speech.REASON_FOCUS)
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
+
+	def event_show(self):
+		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
+			return
+		try:
+			attribs=self.IAccessibleObject.attributes
+		except:
+			return
+		if attribs and 'live:' in attribs and 'live:off' not in attribs:
+			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
+			if text and not text.isspace():
+				if 'live:rude' in attribs:
+					speech.cancelSpeech()
+				speech.speakMessage(text)
 
 	def event_gainFocus(self):
 		if self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:

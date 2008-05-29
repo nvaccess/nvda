@@ -714,6 +714,10 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
+		#Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window
+		#Move up the ancestry to find the real mozilla Window and use that
+		while window and winUser.getClassName(window)=="MozillaWindowClass":
+			window=winUser.getAncestor(window,winUser.GA_PARENT)
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
@@ -724,8 +728,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif not isWindow:
 			return
 		windowClassName=winUser.getClassName(window)
-		#At the moment we can't handle Gecko show, hide or reorder events as there are just too many of them
-		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
+		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
+		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
+		if windowClassName=='MozillaDropShadowWindowClass' and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
 			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID)
 	except:
@@ -993,3 +998,51 @@ def findGroupboxObject(obj):
 				return groupObj
 		prevWindow=winUser.getPreviousWindow(prevWindow)
 
+def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
+	if not isinstance(obj,IAccessibleText):
+		try:
+			textObject=obj.QueryInterface(IAccessibleText)
+		except:
+			textObject=None
+	else:
+		textObject=obj
+	if not isinstance(obj,IAccessible):
+		try:
+			accObject=obj.QueryInterface(IAccessible)
+		except:
+			return ""
+	else:
+		accObject=obj
+	try:
+		text=textObject.text(startOffset,endOffset)
+	except:
+		text=None
+	if not text or text.isspace(): 
+		try:
+			name=accObject.accName(0)
+		except:
+			name=None
+		try:
+			value=accObject.accValue(0)
+		except:
+			value=None
+		try:
+			description=accObject.accDescription(0)
+		except:
+			description=None
+		return " ".join([x for x in [name,value,description] if x and not x.isspace()])
+	try:
+		hypertextObject=accObject.QueryInterface(IAccessibleHypertext)
+	except:
+		return text
+	textList=[]
+	for i in range(len(text)):
+		t=text[i]
+		if ord(t)==0xFFFC:
+			try:
+				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)
+				t=" %s "%getRecursiveTextFromIAccessibleTextObject(childTextObject)
+			except:
+				pass
+		textList.append(t)
+	return "".join(textList).replace('  ',' ')
