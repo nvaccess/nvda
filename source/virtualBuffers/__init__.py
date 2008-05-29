@@ -82,12 +82,12 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		keyboardShortcutText=speech.getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
 		nameText=speech.getSpeechTextForProperties(reason=reason,name=name)
 		levelText=speech.getSpeechTextForProperties(reason=reason,level=level)
-		if not extraDetail and ((reason==speech.REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (speech.REASON_CARET,speech.REASON_SAYALL) and fieldType in ("start_inStack","start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_SLIDER):
+		if not extraDetail and ((reason==speech.REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (speech.REASON_CARET,speech.REASON_SAYALL) and fieldType in ("start_inStack","start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR):
 			if role==controlTypes.ROLE_LINK:
 				return " ".join([x for x in stateText,roleText,keyboardShortcutText])
 			else:
 				return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative","start_inStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and not controlTypes.STATE_MULTILINE in states: 
+		elif not extraDetail and fieldType in ("start_addedToStack","start_relative","start_inStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
 			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
