@@ -177,7 +177,11 @@ class WavePlayer(object):
 	def stop(self):
 		"""Stop playback.
 		"""
-		winmm.waveOutReset(self._waveout)
+		try:
+			winmm.waveOutReset(self._waveout)
+		except WindowsError:
+			# waveOutReset seems to fail randomly on some systems.
+			pass
 		# Unprepare the previous buffer.
 		self.sync()
 
