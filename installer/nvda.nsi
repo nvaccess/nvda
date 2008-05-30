@@ -5,7 +5,7 @@
 ; Written by Victor Tsaran, vtsaran@yahoo.com
 ;--------------------------------
 
-!define VERSION "SVN-trunk"
+!define VERSION "unknown"
 Name "NVDA"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
