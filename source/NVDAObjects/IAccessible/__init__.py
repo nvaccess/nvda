@@ -726,7 +726,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		speech.cancelSpeech()
 		obj=api.findObjectWithFocus()
-		eventHandler.executeEvent('gainFocus',obj)
+		IAccessibleHandler.processFocusNVDAEvent(obj,needsFocusedState=False)
+
 
 	def event_selection(self):
 		return self.event_stateChange()
