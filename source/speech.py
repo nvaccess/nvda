@@ -474,6 +474,8 @@ updateUserDisabledRoles()
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
+	if role!=controlTypes.ROLE_LINK:
+		positiveStates.discard(controlTypes.STATE_VISITED)
 	positiveStates.discard(controlTypes.STATE_SELECTABLE)
 	positiveStates.discard(controlTypes.STATE_FOCUSABLE)
 	if reason == REASON_QUERY:
