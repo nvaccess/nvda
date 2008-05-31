@@ -192,7 +192,7 @@ StrCpy $LANGUAGE $0
 ;prepare log always within .onInit function
 !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 
-;Banner::show /nounload
+Banner::show /nounload
 FunctionEnd
 
 Function NVDA_GUIInit
@@ -209,7 +209,8 @@ IntCmp $1 1 +1 Continue
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
-;Banner::destroy
+Banner::destroy
+BringToFront
 FunctionEnd
 
 Section "install" section_install
