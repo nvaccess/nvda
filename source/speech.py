@@ -225,6 +225,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
+	isEditable=bool(obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionString':True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
@@ -232,8 +233,10 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties["keyboardShortcut"]=False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
 		allowProperties["positionString"]=False
+	if reason==REASON_FOCUS and isEditable:
+		allowProperties['value']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
- 	if reason not in (REASON_SAYALL,REASON_CARET,REASON_MOUSE,REASON_ONLYCACHE) and obj.TextInfo!=NVDAObjects.NVDAObjectTextInfo:
+	if reason==REASON_FOCUS and isEditable:
 		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 		if not info.isCollapsed:
 			speakMessage(_("selected %s")%info.text)
@@ -474,6 +477,8 @@ updateUserDisabledRoles()
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
+	if role==controlTypes.ROLE_EDITABLETEXT:
+		positiveStates.discard(controlTypes.STATE_EDITABLE)
 	if role!=controlTypes.ROLE_LINK:
 		positiveStates.discard(controlTypes.STATE_VISITED)
 	positiveStates.discard(controlTypes.STATE_SELECTABLE)

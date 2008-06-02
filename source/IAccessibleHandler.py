@@ -410,6 +410,7 @@ IAccessible2StatesToNVDAStates={
 	IA2_STATE_SUPPORTS_AUTOCOMPLETION:controlTypes.STATE_AUTOCOMPLETE,
 	IA2_STATE_MULTI_LINE:controlTypes.STATE_MULTILINE,
 	IA2_STATE_ICONIFIED:controlTypes.STATE_ICONIFIED,
+	IA2_STATE_EDITABLE:controlTypes.STATE_EDITABLE,
 }
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  

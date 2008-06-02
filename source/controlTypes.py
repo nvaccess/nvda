@@ -162,6 +162,8 @@ STATE_ICONIFIED=0x200000
 STATE_SELECTABLE=0x400000
 STATE_FOCUSABLE=0x800000
 STATE_CLICKABLE=0x1000000
+STATE_EDITABLE=0x2000000
+
 
 speechRoleLabels={
 	ROLE_UNKNOWN:_("unknown object"),
@@ -329,4 +331,5 @@ speechStateLabels={
 	STATE_SELECTABLE:_("selectable"),
 	STATE_FOCUSABLE:_("focusable"),
 	STATE_CLICKABLE:_("clickable"),
+	STATE_EDITABLE:_("editable"),
 }

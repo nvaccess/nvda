@@ -267,10 +267,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
 			self.TextInfo=IA2TextTextInfo
 			replacedTextInfo=True
-			try:
-				hasEditableState=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
-			except:
-				hasEditableState=False
+			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TEXT:
+				hasEditableState=True
+			else:
+				try:
+					hasEditableState=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
+				except:
+					hasEditableState=False
 			if  hasEditableState:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
