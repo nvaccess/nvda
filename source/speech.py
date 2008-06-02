@@ -233,10 +233,10 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties["keyboardShortcut"]=False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
 		allowProperties["positionString"]=False
-	if reason==REASON_FOCUS and isEditable:
+	if isEditable:
 		allowProperties['value']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason==REASON_FOCUS and isEditable:
+	if isEditable:
 		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 		if not info.isCollapsed:
 			speakMessage(_("selected %s")%info.text)
