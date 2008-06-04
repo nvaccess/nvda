@@ -99,7 +99,8 @@ class Gecko_ia2(VirtualBuffer):
 		return True
 
 	def event_focusEntered(self,obj,nextHandler):
-		pass
+		if self.passThrough:
+			 nextHandler()
 
 	def event_gainFocus(self,obj,nextHandler):
 		ID=obj.IAccessibleObject.uniqueID
@@ -169,13 +170,14 @@ class Gecko_ia2(VirtualBuffer):
 
 	def _activateField(self,docHandle,ID):
 		try:
-			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-			role=pacc.accRole(accChildID)
-			if role in (IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_TEXT,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_SLIDER):
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+			role=obj.role
+			states=obj.states
+			if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+				obj.setFocus()
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)
 			else: #Just try performing the default action of the object, or of one of its ancestors
-				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
 				while obj and obj!=self.rootNVDAObject:
 					try:
 						action=obj.IAccessibleObject.accDefaultAction(obj.IAccessibleChildID)
