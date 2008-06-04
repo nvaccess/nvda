@@ -57,7 +57,7 @@ def doPreGainFocus(obj):
 			continue
 		name=parent.name
 		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE) and not name and not description:
+		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION) and not name and not description:
 			continue
 		states=parent.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
