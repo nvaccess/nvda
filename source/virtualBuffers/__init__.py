@@ -103,9 +103,9 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			return _("out of %s")%roleText
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role==controlTypes.ROLE_COMBOBOX):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="start_addedToStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU):
+		elif not extraDetail and fieldType=="start_addedToStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="end_removedFromStack" and role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU):
+		elif not extraDetail and fieldType=="end_removedFromStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 			return _("out of %s")%roleText
 		elif not extraDetail and fieldType in ("start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 			return speech.getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
