@@ -10,7 +10,7 @@ Name "NVDA"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
 !define READMEFILE "documentation\en\readme.txt"
-!define IA2DLL "LIB\ia2.dll"
+!define IA2DLL "ia2.dll"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
@@ -197,10 +197,10 @@ FunctionEnd
 
 Function NVDA_GUIInit
 InitPluginsDir
-CreateDirectory $PLUGINSDIR\_nvda_temp_
-SetOutPath $PLUGINSDIR\_nvda_temp_
+CreateDirectory $PLUGINSDIR\${NVDATempDir}
+SetOutPath $PLUGINSDIR\${NVDATempDir}
 File /r "${NVDASourceDir}\"
-;If NVDA is already running, kill it first before starting new one
+;If NVDA is already running, kill it first before starting a new copy
 call isNVDARunning
 pop $1	; TRUE or FALSE
 pop $oldNVDAWindowHandle
@@ -214,14 +214,26 @@ Banner::destroy
 BringToFront
 FunctionEnd
 
+Function unregisterDLLs
+; place here the names of DLLs that need to be unregistered before copying files
+UnRegDll $INSTDIR\LIB\${IA2DLL}
+FunctionEnd
+
+Function registerDLLs
+RegDll $INSTDIR\\LIB\${IA2DLL}
+FunctionEnd
+
 Section "install" section_install
 SetShellVarContext all
 SetOutPath "$INSTDIR"
+; unregister any NVDA-related DLLs to prevent write-access violations
+call unregisterDLLs
 ; open and close uninstallation log after ennumerating all the files being copied
 !insertmacro UNINSTALL.LOG_OPEN_INSTALL
 File /r "${NVDASourceDir}\"
 !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 strcpy $NVDAInstalled "1"
+call registerDLLs
 SectionEnd
 
 Section Shortcuts
@@ -237,8 +249,6 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\
 !insertmacro MUI_STARTMENU_WRITE_END
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
-UnRegDll $INSTDIR\LIB\ia2.dll
-RegDll $INSTDIR\LIB\ia2.dll
 SectionEnd
 
 Section Uninstaller
@@ -263,6 +273,8 @@ intcmp $1 1 +1 End
 intcmp $2 $oldNVDAWindowHandle End +1
 System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
 end:
+; Clean up the temporary folder
+rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
 FunctionEnd
 
 Function .onInstSuccess
