@@ -231,7 +231,10 @@ def getStatusBar():
 	# The status bar is usually at the bottom of the screen.
 	# Therefore, get the object at the bottom left of the foreground object using screen coordinates.
 	foreground = getForegroundObject()
-	left, top, width, height = foreground.location
+	location=foreground.location
+	if not location:
+		return None
+	left, top, width, height = location
 	bottom = top + height - 1
 	obj = NVDAObjects.IAccessible.getNVDAObjectFromPoint(left, bottom)
 
