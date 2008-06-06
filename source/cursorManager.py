@@ -228,21 +228,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if info.isCollapsed:
 			speech.speakMessage(_("no selection"))
 			return
-		#To handle line lengths properly, grab each line separately
-		lineInfo=info.copy()
-		lineInfo.collapse()
-		textList=[]
-		while lineInfo.compareEndPoints(info,"startToEnd")<0:
-			lineInfo.expand(textHandler.UNIT_LINE)
-			chunkInfo=lineInfo.copy()
-			if chunkInfo.compareEndPoints(info,"startToStart")<0:
-				chunkInfo.setEndPoint(info,"startToStart")
-			if chunkInfo.compareEndPoints(info,"endToEnd")>0:
-				chunkInfo.setEndPoint(info,"endToEnd")
-			textList.append(chunkInfo.text)
-			lineInfo.collapse(end=True)
-		text="\r\n".join(textList).replace('\r\n\r\n','\r\n')
-		if api.copyToClip(text):
+		if info.copyToClipboard():
 			speech.speakMessage(_("copied to clipboard"))
 
 	def bindToStandardKeys(self):

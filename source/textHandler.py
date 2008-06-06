@@ -6,6 +6,7 @@
 
 import weakref
 import baseObject
+import api
 
 def isFormatEnabled(role,includes=set(),excludes=set()):
 	"""Checks to see if a role is in an includes list (if given), or not in an excludes list (if given).
@@ -280,6 +281,26 @@ class TextInfo(baseObject.AutoPropertyObject):
 @rtype: bool
 """ 
 		raise NotImplementedError
+
+	def copyToClipboard(self):
+		"""Copy the content of this instance to the clipboard.
+		@return: C{True} if successful, C{False} otherwise.
+		@rtype: bool
+		"""
+		#To handle line lengths properly, grab each line separately
+		lineInfo=self.copy()
+		lineInfo.collapse()
+		textList=[]
+		while lineInfo.compareEndPoints(self,"startToEnd")<0:
+			lineInfo.expand(UNIT_LINE)
+			chunkInfo=lineInfo.copy()
+			if chunkInfo.compareEndPoints(self,"startToStart")<0:
+				chunkInfo.setEndPoint(self,"startToStart")
+			if chunkInfo.compareEndPoints(self,"endToEnd")>0:
+				chunkInfo.setEndPoint(self,"endToEnd")
+			textList.append(chunkInfo.text.rstrip("\r\n"))
+			lineInfo.collapse(end=True)
+		return api.copyToClip("\r\n".join(textList))
 
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
