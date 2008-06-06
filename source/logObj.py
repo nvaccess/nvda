@@ -7,7 +7,6 @@ import inspect
 import winsound
 from types import MethodType
 
-
 moduleCache={}
 
 def makeModulePathFromFilePath(path):
@@ -63,14 +62,26 @@ def getCodePath(f):
 
 class Logger(logging.Logger):
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
 		if not extra:
 			extra={}
 		if not codepath:
 			f=inspect.currentframe().f_back.f_back
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
-		return logging.Logger._log(self,level, msg, args, exc_info, extra)
+		if activateLogViewer:
+			# Import logViewer here, as we don't want to import GUI code when this module is imported.
+			from gui import logViewer
+			logViewer.activate()
+			# Move to the end of the current log text. The new text will be written at this position.
+			# This means that the user will be positioned at the start of the new log text.
+			# This is why we activate the log viewer before writing to the log.
+			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
+		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
+		if activateLogViewer:
+			# Make the log text we just wrote appear in the log viewer.
+			logViewer.logViewer.refresh()
+		return res
 
 class FileHandler(logging.FileHandler):
 

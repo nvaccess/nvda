@@ -35,15 +35,21 @@ class LogViewer(wx.Frame):
 		menuBar.Append(menu, _("Log"))
 		self.SetMenuBar(menuBar)
 
+		self._lastFilePos = 0
+
 		self.refresh()
 		self.outputCtrl.SetFocus()
 
 	def refresh(self, evt=None):
 		pos = self.outputCtrl.GetInsertionPoint()
-		# Populate the output control with the contents of the log file.
+		# Append new text to the output control which has been written to the log file since the last refresh.
 		try:
-			self.outputCtrl.SetValue(codecs.open(globalVars.appArgs.logFileName, "r", encoding="UTF-8").read())
+			f = codecs.open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")
+			f.seek(self._lastFilePos)
+			self.outputCtrl.AppendText(f.read())
+			self._lastFilePos = f.tell()
 			self.outputCtrl.SetInsertionPoint(pos)
+			f.close()
 		except IOError:
 			pass
 
