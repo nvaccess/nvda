@@ -62,7 +62,7 @@ class Gecko_ia2(VirtualBuffer):
 			self.rootID=self.rootNVDAObject.IAccessibleObject.uniqueID
 		except:
 			self.rootID=0
-		self._lastFocusID=0
+		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -103,8 +103,12 @@ class Gecko_ia2(VirtualBuffer):
 			 nextHandler()
 
 	def event_gainFocus(self,obj,nextHandler):
-		ID=obj.IAccessibleObject.uniqueID
-		if self._lastFocusID==ID:
+		try:
+			docHandle=obj.IAccessibleObject.windowHandle
+			ID=obj.IAccessibleObject.uniqueID
+		except:
+			return nextHandler()
+		if self._lastFocusIdentifier==(docHandle,ID):
 			# This was the last non-document node with focus, so don't handle this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
@@ -118,17 +122,13 @@ class Gecko_ia2(VirtualBuffer):
 			return 
 		if obj.role==controlTypes.ROLE_DOCUMENT and not self.passThrough:
 			return
-		self._lastFocusID=ID
+		self._lastFocusIdentifier=(docHandle,ID)
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
 			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
 		except:
 			oldDocHandle=oldID=0
-		try:
-			docHandle=obj.IAccessibleObject.windowHandle
-		except:
-			return nextHandler()
 		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
