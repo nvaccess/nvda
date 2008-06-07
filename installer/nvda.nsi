@@ -191,11 +191,11 @@ StrCpy $LANGUAGE $0
 
 ;prepare log always within .onInit function
 !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
-
-Banner::show /nounload
 FunctionEnd
 
 Function NVDA_GUIInit
+Banner::show /nounload
+BringToFront
 InitPluginsDir
 CreateDirectory $PLUGINSDIR\${NVDATempDir}
 SetOutPath $PLUGINSDIR\${NVDATempDir}
@@ -206,12 +206,10 @@ pop $1	; TRUE or FALSE
 pop $oldNVDAWindowHandle
 ; Shut down NVDA
 IntCmp $1 1 +1 Continue
-BringToFront
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
 Banner::destroy
-BringToFront
 FunctionEnd
 
 Function unregisterDLLs
