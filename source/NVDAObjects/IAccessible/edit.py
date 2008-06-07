@@ -10,6 +10,7 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import eventHandler
 import comInterfaces.tom
 import globalVars
 import speech
@@ -384,9 +385,6 @@ class Edit(IAccessible):
 		self._lastMouseTextOffsets=None
 		if self.editAPIVersion>=1:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
-		self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_CARET)
-		self._storyLengthAtLastSelection=self.makeTextInfo(textHandler.POSITION_CARET)._getStoryLength()
-		self._contentChangedSinceLastSelection=False
 
 	def __del__(self):
 		if self.editAPIVersion>=1:
@@ -420,21 +418,17 @@ class Edit(IAccessible):
 			speech.speakText(info.text)
 			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
-	def event_valueChange(self):
-		self._contentChangedSinceLastSelection=True
-
 	def event_caret(self):
-		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		oldInfo=self._lastSelectionPos
-		newStoryLength=newInfo._getStoryLength()
-		if (newStoryLength-self._storyLengthAtLastSelection)!=0 or self._contentChangedSinceLastSelection:
-			generalize=True
-		else:
-			generalize=False
-		self._contentChangedSinceLastSelection=False
-		self._storyLengthAtLastSelection=newStoryLength
-		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)
-		self._lastSelectionPos=newInfo.copy()
+		if eventHandler.isPendingEvents('valueChange',self):
+			self.hasContentChangedSinceLastSelection=True
+		self.detectPossibleSelectionChange()
+
+	def event_valueChange(self):
+		self.hasContentChangedSinceLastSelection=True
+
+	def event_gainFocus(self):
+		self.initAutoSelectDetection()
+		super(Edit,self).event_gainFocus()
 
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
