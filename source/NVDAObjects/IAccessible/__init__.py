@@ -27,7 +27,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 
@@ -161,7 +161,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
-class IAccessible(Window):
+class IAccessible(Window,AutoSelectDetectionNVDAObject):
 	"""
 the NVDAObject for IAccessible
 @ivar IAccessibleChildID: the IAccessible object's child ID
@@ -282,20 +282,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 					("ExtendedRight","moveByCharacter"),
 					("Control+ExtendedLeft","moveByWord"),
 					("Control+ExtendedRight","moveByWord"),
-					("Shift+ExtendedRight","changeSelection"),
-					("Shift+ExtendedLeft","changeSelection"),
-					("Shift+ExtendedHome","changeSelection"),
-					("Shift+ExtendedEnd","changeSelection"),
-					("Shift+ExtendedUp","changeSelection"),
-					("Shift+ExtendedDown","changeSelection"),
-					("Control+Shift+ExtendedLeft","changeSelection"),
-					("Control+Shift+ExtendedRight","changeSelection"),
 					("ExtendedHome","moveByCharacter"),
 					("ExtendedEnd","moveByCharacter"),
 					("control+extendedHome","moveByLine"),
 					("control+extendedEnd","moveByLine"),
-					("control+shift+extendedHome","changeSelection"),
-					("control+shift+extendedEnd","changeSelection"),
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 				]]
@@ -607,6 +597,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
+			self._hasContentChangedSinceLastSelection=True
 			return
 		return super(IAccessible,self).event_valueChange()
 
@@ -618,6 +609,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_caret(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
+		if hasattr(self,'IAccessibleTextObject'):
+			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
 			inDocument=None
@@ -707,6 +700,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				speech.speakMessage(text)
 
 	def event_gainFocus(self):
+		if hasattr(self,'IAccessibleTextObject'):
+			self.initAutoSelectDetection()
 		if self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
 			parent=self.parent
 			if parent and parent.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
