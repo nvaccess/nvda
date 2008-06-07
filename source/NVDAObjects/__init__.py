@@ -9,6 +9,7 @@ from new import instancemethod
 import time
 import re
 import weakref
+import eventHandler
 import baseObject
 import speech
 from keyUtils import key, sendKey
@@ -776,3 +777,30 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			focus=api.getFocusObject()
 			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
 			speech.speakSelectionChange(oldInfo,newInfo)
+
+class AutoSelectDetectionNVDAObject(NVDAObject):
+
+	"""Provides an NVDAObject with the means to detect if the text selection has changed, and if so to announce the change
+	@ivar hasContentChangedSinceLastSelection: if True then the content has changed.
+	@ivar hasContentChangedSinceLastSelection: boolean
+	"""
+
+	def initAutoSelectDetection(self):
+		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
+		self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		self.hasContentChangedSinceLastSelection=False
+
+	def detectPossibleSelectionChange(self):
+		"""Detects if the selection has been changed, and if so it speaks the change."""
+		oldInfo=getattr(self,'_lastSelectionPos',None)
+		if not oldInfo:
+			return
+		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		self._lastSelectionPos=newInfo.copy()
+		hasContentChanged=self.hasContentChangedSinceLastSelection
+		self.hasContentChangedSinceLastSelection=False
+		if hasContentChanged:
+			generalize=True
+		else:
+			generalize=False
+		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)
