@@ -17,3 +17,15 @@ LangString shortcut_readme $(LANG_PORTUGUESE) "Readme"
 LangString shortcut_userguide $(LANG_PORTUGUESE) "Guia do utilizador"
 LangString path_userguide $(LANG_PORTUGUESE) "pt\guia do utilizador.txt"
 LangString path_readmefile $(LANG_PORTUGUESE) "pt\readme.txt"
+LangString UNLOG_HEADER ${LANG_PORTUGUESE} "=========== Log de Desinstalação \
+                                         por favor, não edite este fichheiro ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_PORTUGUESE} "O ${UNINST_DAT} não foi encontrado, \
+                                                não é possível executar a desinstalação."
+LangString UNLOG_DEL_FILE ${LANG_PORTUGUESE} 'Pretende eliminar o ficheiro "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_PORTUGUESE} 'Pretende remover a pasta "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior em $0.$\n\
+                                            O ficheiro requerido ${UNINSTALL_LOG}.dat está a faltar.$\n$\n\
+                                            É extremamente recomendado a seleccionar uma \
+                                            pasta vazia e executar uma nova instalação."
+LangString UNLOG_ERROR_LOG ${LANG_PORTUGUESE} "Erro no log ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_PORTUGUESE} "Erro a criar o ${UNINSTALL_LOG}."
