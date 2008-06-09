@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2036\n"
+"Project-Id-Version: r2109\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-05-14 14:20+0300\n"
+"PO-Revision-Date: 2008-06-07 18:29+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,17 +13,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:68 speech.py:700
+#: NVDAObjects\IAccessible\__init__.py:69 speech.py:714
 msgid "level %s"
 msgstr "taso %s"
 
-#: NVDAObjects\IAccessible\__init__.py:74
-#: NVDAObjects\IAccessible\__init__.py:561
-#: NVDAObjects\IAccessible\sysListView32.py:89
+#: NVDAObjects\IAccessible\__init__.py:75
+#: NVDAObjects\IAccessible\__init__.py:595
+#: NVDAObjects\IAccessible\sysListView32.py:97
 msgid "%s of %s"
 msgstr "%s kautta %s"
 
-#: NVDAObjects\IAccessible\__init__.py:80
+#: NVDAObjects\IAccessible\__init__.py:81
 msgid "contains %s items"
 msgstr "sisältää %s kohdetta"
 
@@ -31,7 +31,7 @@ msgstr "sisältää %s kohdetta"
 msgid "through"
 msgstr "kautta"
 
-#: NVDAObjects\IAccessible\excel.py:63 controlTypes.py:308
+#: NVDAObjects\IAccessible\excel.py:63 controlTypes.py:311
 msgid "selected"
 msgstr "valittu"
 
@@ -51,7 +51,7 @@ msgstr "fontti"
 msgid "point"
 msgstr "piste"
 
-#: NVDAObjects\IAccessible\excel.py:103 controlTypes.py:292 textBuffer.py:266
+#: NVDAObjects\IAccessible\excel.py:103 controlTypes.py:295 textBuffer.py:266
 #: textBuffer.py:318
 msgid "bold"
 msgstr "lihavointi"
@@ -61,7 +61,7 @@ msgid "italic"
 msgstr "kursiivi"
 
 #: NVDAObjects\IAccessible\excel.py:107 characterSymbols.py:50
-#: controlTypes.py:294 textBuffer.py:280 textBuffer.py:322
+#: controlTypes.py:297 textBuffer.py:280 textBuffer.py:322
 msgid "underline"
 msgstr "alleviivaus"
 
@@ -141,34 +141,34 @@ msgstr "Oletusmoduulin näppäinkarttaa ei voitu ladata"
 msgid "Could not load default module "
 msgstr "Oletusmoduulia ei voitu ladata"
 
-#: appModules\_default.py:50 appModules\_default.py:113
-#: appModules\_default.py:123 appModules\_default.py:133
-#: appModules\_default.py:143 appModules\_default.py:602
-#: appModules\_default.py:650 appModules\_default.py:660
-#: appModules\_default.py:670 appModules\_default.py:680
+#: appModules\_default.py:51 appModules\_default.py:114
+#: appModules\_default.py:124 appModules\_default.py:134
+#: appModules\_default.py:144 appModules\_default.py:603
+#: appModules\_default.py:651 appModules\_default.py:661
+#: appModules\_default.py:671 appModules\_default.py:681
 #: appModules\winamp.py:74 appModules\winamp.py:84 keyboardHandler.py:53
-#: keyboardHandler.py:55 keyboardHandler.py:57 speech.py:326
-#: virtualBufferHandler.py:92 virtualBuffers\__init__.py:206
+#: keyboardHandler.py:55 keyboardHandler.py:57 speech.py:330
+#: virtualBufferHandler.py:92 virtualBuffers\__init__.py:208
 msgid "on"
 msgstr "käytössä"
 
-#: appModules\_default.py:53 appModules\_default.py:110
-#: appModules\_default.py:120 appModules\_default.py:130
-#: appModules\_default.py:140 appModules\_default.py:512
-#: appModules\_default.py:599 appModules\_default.py:647
-#: appModules\_default.py:657 appModules\_default.py:667
-#: appModules\_default.py:677 appModules\winamp.py:76 appModules\winamp.py:86
+#: appModules\_default.py:54 appModules\_default.py:111
+#: appModules\_default.py:121 appModules\_default.py:131
+#: appModules\_default.py:141 appModules\_default.py:513
+#: appModules\_default.py:600 appModules\_default.py:648
+#: appModules\_default.py:658 appModules\_default.py:668
+#: appModules\_default.py:678 appModules\winamp.py:76 appModules\winamp.py:86
 #: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
-#: speech.py:331 speech.py:337 virtualBufferHandler.py:92
-#: virtualBuffers\__init__.py:206
+#: speech.py:335 speech.py:341 virtualBufferHandler.py:92
+#: virtualBuffers\__init__.py:208
 msgid "off"
 msgstr "pois käytöstä"
 
-#: appModules\_default.py:55
+#: appModules\_default.py:56
 msgid "keyboard help %s"
 msgstr "näppäinohje  %s"
 
-#: appModules\_default.py:56
+#: appModules\_default.py:57
 msgid ""
 "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
 "tell you what script is associated with it, if any."
@@ -177,62 +177,62 @@ msgstr ""
 "inohje on käytössä, NVDA kertoo näppäintä painettaessa, mikä toiminto "
 "siihen liittyy."
 
-#: appModules\_default.py:80 cursorManager.py:229
+#: appModules\_default.py:81 cursorManager.py:229
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:82 speech.py:238 speech.py:398 speech.py:411
+#: appModules\_default.py:83 speech.py:242 speech.py:402 speech.py:415
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
 
-#: appModules\_default.py:90
+#: appModules\_default.py:91
 msgid "Reports the current date and time"
 msgstr "Ilmoittaa päiväyksen ja kellonajan"
 
-#: appModules\_default.py:94
+#: appModules\_default.py:95
 msgid "Increases currently active setting in the synth settings ring"
 msgstr "Nostaa syntetisaattorin asetusrenkaan aktiivista asetusta"
 
-#: appModules\_default.py:98
+#: appModules\_default.py:99
 msgid "Decreases currently active setting in the synth settings ring"
 msgstr "Laskee syntetisaattorin asetusrenkaan aktiivista asetusta"
 
-#: appModules\_default.py:102
+#: appModules\_default.py:103
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
 "Siirtää seuraavaan käytettävissä olevaan asetukseen syntetisaattorin "
 "asetusrenkaassa"
 
-#: appModules\_default.py:106
+#: appModules\_default.py:107
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
 "Siirtää edelliseen käytettävissä olevaan asetukseen syntetisaattorin "
 "asetusrenkaassa"
 
-#: appModules\_default.py:115
+#: appModules\_default.py:116
 msgid "speak typed characters"
 msgstr "lue kirjoitetut merkit"
 
-#: appModules\_default.py:116
+#: appModules\_default.py:117
 msgid "Toggles on and off the speaking of typed characters"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen merkkien lukemisen"
 
-#: appModules\_default.py:125
+#: appModules\_default.py:126
 msgid "speak typed words"
 msgstr "lue kirjoitetut sanat"
 
-#: appModules\_default.py:126
+#: appModules\_default.py:127
 msgid "Toggles on and off the speaking of typed words"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen lukemisen"
 
-#: appModules\_default.py:135
+#: appModules\_default.py:136
 msgid "speak command keys"
 msgstr "lue komentonäppäimet"
 
-#: appModules\_default.py:136
+#: appModules\_default.py:137
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
@@ -240,11 +240,11 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen "
 "jotka eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
 
-#: appModules\_default.py:145
+#: appModules\_default.py:146
 msgid "speak punctuation"
 msgstr "lue välimerkit"
 
-#: appModules\_default.py:146
+#: appModules\_default.py:147
 msgid ""
 "Toggles on and off the speaking of punctuation. When on NVDA will say the "
 "names of punctuation symbols, when off it will be up to the synthesizer as "
@@ -254,36 +254,36 @@ msgstr ""
 "limerkkien puhuminen on käytössä, NVDA sanoo välimerkkisymbolien nimet, "
 "kun pois käytöstä, välimerkkien lukutapa riippuu syntetisaattorista"
 
-#: appModules\_default.py:149
+#: appModules\_default.py:150
 msgid "Move mouse to navigator"
 msgstr "Siirrä hiiri navigointiobjektiin"
 
-#: appModules\_default.py:154
+#: appModules\_default.py:155
 msgid "object has no location"
 msgstr "objektilla ei ole sijaintia"
 
-#: appModules\_default.py:157
+#: appModules\_default.py:158
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "Siirtää hiiriosoittimen nykyiseen navigointiobjektiin."
 
-#: appModules\_default.py:160
+#: appModules\_default.py:161
 msgid "Move navigator object to mouse"
 msgstr "Siirrä navigointiobjekti hiiren kohdalle"
 
-#: appModules\_default.py:169 appModules\_default.py:199
-#: appModules\_default.py:220 appModules\_default.py:233
-#: appModules\_default.py:246 appModules\_default.py:259
-#: appModules\_default.py:272 appModules\_default.py:295
-#: appModules\_default.py:318 appModules\_default.py:327
-#: appModules\_default.py:629
+#: appModules\_default.py:170 appModules\_default.py:200
+#: appModules\_default.py:221 appModules\_default.py:234
+#: appModules\_default.py:247 appModules\_default.py:260
+#: appModules\_default.py:273 appModules\_default.py:296
+#: appModules\_default.py:319 appModules\_default.py:328
+#: appModules\_default.py:630
 msgid "no navigator object"
 msgstr "ei navigointiobjektia"
 
-#: appModules\_default.py:190
+#: appModules\_default.py:191
 msgid "%s copied to clipboard"
 msgstr "%s kopioitu leikepöydälle"
 
-#: appModules\_default.py:194
+#: appModules\_default.py:195
 msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
@@ -291,11 +291,11 @@ msgstr ""
 "Ilmoittaa nykyisen navigointiobjektin, tai kolmesti painettaessa kopioi sen "
 "nimen ja arvon leikepöydälle"
 
-#: appModules\_default.py:202
+#: appModules\_default.py:203
 msgid "No location information for navigator object"
 msgstr "Ei sijaintitietoja navigointiobjektille"
 
-#: appModules\_default.py:205
+#: appModules\_default.py:206
 msgid ""
 "Object edges positioned %.1f per cent right from left of screen, %.1f per "
 "cent down from top of screen, %.1f per cent left from right of screen, %.1f "
@@ -305,59 +305,59 @@ msgstr ""
 "reunasta, %.1f prosenttia alas ruudun yläreunasta, %.1f prosenttia "
 "vasemmalle ruudun oikeasta reunasta, %.1f prosenttia ylös ruudun alareunasta"
 
-#: appModules\_default.py:206
+#: appModules\_default.py:207
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Ilmoittaa nykyisen navigointiobjektin korkeuden, leveyden ja paikan"
 
-#: appModules\_default.py:211 appModules\_default.py:580
+#: appModules\_default.py:212 appModules\_default.py:581
 msgid "no focus"
 msgstr "ei kohdistusta"
 
-#: appModules\_default.py:213
+#: appModules\_default.py:214
 msgid "move to focus"
 msgstr "siirrä kohdistukseen"
 
-#: appModules\_default.py:215
+#: appModules\_default.py:216
 msgid "Sets the navigator object to the current focus"
 msgstr "Siirtää navigointiobjektin nykyisen kohdistuksen kohdalle"
 
-#: appModules\_default.py:227
+#: appModules\_default.py:228
 msgid "No parents"
 msgstr "Ei ylemmän tason objekteja"
 
-#: appModules\_default.py:228
+#: appModules\_default.py:229
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on."
 msgstr ""
 "Siirtää navigointiobjektin nykyistä ylemmän tason objektin kohdalle"
 
-#: appModules\_default.py:240
+#: appModules\_default.py:241
 msgid "No next"
 msgstr "Ei seuraavaa"
 
-#: appModules\_default.py:241
+#: appModules\_default.py:242
 msgid ""
 "Sets the navigator object to the next object to the one it is currently on"
 msgstr ""
 "Siirtää navigointiobjektin nykyisestä objektista seuraavana olevaan "
 "objektiin"
 
-#: appModules\_default.py:253
+#: appModules\_default.py:254
 msgid "No previous"
 msgstr "Ei edellistä"
 
-#: appModules\_default.py:254
+#: appModules\_default.py:255
 msgid ""
 "Sets the navigator object to the previous object to the one it is currently "
 "on"
 msgstr ""
 "Siirtää navigointiobjektin nykyistä objektia edeltävän objektin kohdalle"
 
-#: appModules\_default.py:266
+#: appModules\_default.py:267
 msgid "No children"
 msgstr "Ei alemman tason objekteja"
 
-#: appModules\_default.py:267
+#: appModules\_default.py:268
 msgid ""
 "Sets the navigator object to the first child object to the one it is "
 "currently on"
@@ -365,27 +365,27 @@ msgstr ""
 "Siirtää navigointiobjektin ensimmäisen alemman tason objektin kohdalle "
 "nykyisessä objektissa"
 
-#: appModules\_default.py:289
+#: appModules\_default.py:290
 msgid "end of flow"
 msgstr "objektipuun loppu"
 
-#: appModules\_default.py:290
+#: appModules\_default.py:291
 msgid "Sets the navigator object to the object this object flows to."
 msgstr ""
 "Siirtää navigointiobjektin objektipuussa seuraavana olevan objektin "
 "kohdalle."
 
-#: appModules\_default.py:312
+#: appModules\_default.py:313
 msgid "Beginning of flow"
 msgstr "Objektipuun alku"
 
-#: appModules\_default.py:313
+#: appModules\_default.py:314
 msgid "Sets the navigator object to the object this object flows from."
 msgstr ""
 "Siirtää navigointiobjektin edellisen objektipuussa olevan objektin "
 "kohdalle."
 
-#: appModules\_default.py:321
+#: appModules\_default.py:322
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -393,70 +393,70 @@ msgstr ""
 "Suorittaa oletustoiminnon nykyiselle navigointiobjektille (esimerkiksi: "
 "painaa, jos se on painike)"
 
-#: appModules\_default.py:332
+#: appModules\_default.py:333
 msgid "inside"
 msgstr "sisällä"
 
-#: appModules\_default.py:335
+#: appModules\_default.py:336
 msgid ""
 "Reports where the current navigator object is by reporting each of its "
 "ancestors"
 msgstr "Ilmoittaa, missä nykyinen navigointiobjekti on"
 
-#: appModules\_default.py:341 appModules\_default.py:353
-#: appModules\_default.py:395 textBuffer.py:364 textBuffer.py:391
+#: appModules\_default.py:342 appModules\_default.py:354
+#: appModules\_default.py:396 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers_old\__init__.py:270
 msgid "top"
 msgstr "yläreuna"
 
-#: appModules\_default.py:343
+#: appModules\_default.py:344
 msgid "Moves the review cursor to the top line of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen ylimmälle riville nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:355
+#: appModules\_default.py:356
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen edelliselle riville nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:365
+#: appModules\_default.py:366
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated"
 msgstr ""
 "Lukee rivin, jolla tarkastelukohdistin on nykyisessä navigointiobjektissa"
 
-#: appModules\_default.py:375 appModules\_default.py:383
-#: appModules\_default.py:417 textBuffer.py:369 textBuffer.py:382
+#: appModules\_default.py:376 appModules\_default.py:384
+#: appModules\_default.py:418 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers_old\__init__.py:285
 msgid "bottom"
 msgstr "alareuna"
 
-#: appModules\_default.py:377
+#: appModules\_default.py:378
 msgid ""
 "Moves the review cursor to the next line of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen seuraavalle riville nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:385
+#: appModules\_default.py:386
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen alimmalle riville nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:397
+#: appModules\_default.py:398
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen edellisen sanan kohdalle nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:407
+#: appModules\_default.py:408
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated"
@@ -464,26 +464,26 @@ msgstr ""
 "Lukee sanan, jonka kohdalla tarkastelukohdistin on nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:419
+#: appModules\_default.py:420
 msgid ""
 "Moves the review cursor to the next word of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen seuraavan sanan kohdalle  nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:427 appModules\_default.py:439
+#: appModules\_default.py:428 appModules\_default.py:440
 #: appModules\totalcmd.py:34
 msgid "left"
 msgstr "vasen"
 
-#: appModules\_default.py:429
+#: appModules\_default.py:430
 msgid ""
 "Moves the review cursor to the start of the line where it is situated, in "
 "the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen rivin alkuun nykyisessä navigointiobjektissa"
 
-#: appModules\_default.py:447
+#: appModules\_default.py:448
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object"
@@ -491,7 +491,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen edellisen merkin kohdalle nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:462
+#: appModules\_default.py:463
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated"
@@ -499,19 +499,19 @@ msgstr ""
 "Lukee merkin, jonka kohdalla tarkastelukohdistin on nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:472 appModules\_default.py:489
+#: appModules\_default.py:473 appModules\_default.py:490
 #: appModules\totalcmd.py:36
 msgid "right"
 msgstr "oikea"
 
-#: appModules\_default.py:480
+#: appModules\_default.py:481
 msgid ""
 "Moves the review cursor to the next character of the current navigator object"
 msgstr ""
 "Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:491
+#: appModules\_default.py:492
 msgid ""
 "Moves the review cursor to the end of the line where it is situated, in the "
 "current navigator object"
@@ -519,7 +519,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen rivin loppuun nykyisessä "
 "navigointiobjektissa"
 
-#: appModules\_default.py:498
+#: appModules\_default.py:499
 msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
@@ -527,7 +527,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen järjestelmäkohdistimen kohdalle nykyisessä"
 " navigointiobjektissa"
 
-#: appModules\_default.py:505
+#: appModules\_default.py:506
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -535,19 +535,19 @@ msgstr ""
 "Siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle nykyisessä"
 " navigointiobjektissa"
 
-#: appModules\_default.py:514
+#: appModules\_default.py:515
 msgid "beeps"
 msgstr "äänimerkit"
 
-#: appModules\_default.py:516
+#: appModules\_default.py:517
 msgid "talk"
 msgstr "puhe"
 
-#: appModules\_default.py:518
+#: appModules\_default.py:519
 msgid "speech mode %s"
 msgstr "puhetila on %s"
 
-#: appModules\_default.py:520
+#: appModules\_default.py:521
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -558,7 +558,7 @@ msgstr ""
 "antaa äänimerkin, kun sen otaksutaan puhuvan jotakin. Jos puhe, NVDA puhuu "
 "normaalisti."
 
-#: appModules\_default.py:528
+#: appModules\_default.py:529
 msgid ""
 "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
 "straight through the current virtualBuffer, allowing you to interact with a "
@@ -569,15 +569,15 @@ msgstr ""
 "näennäispuskurin mahdollistaen vuorovaikutuksen säätöjen kanssa ilman, "
 "että näennäispuskuri tekee näppäimellä jotain muuta."
 
-#: appModules\_default.py:532
+#: appModules\_default.py:533
 msgid "Quits NVDA!"
 msgstr "Sulkee NVDA:n"
 
-#: appModules\_default.py:536
+#: appModules\_default.py:537
 msgid "Shows the NVDA interface window"
 msgstr "Näyttää NVDA:n käyttöliittymän"
 
-#: appModules\_default.py:541
+#: appModules\_default.py:542
 msgid ""
 "reads from review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -585,72 +585,72 @@ msgstr ""
 "Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
 "siirtäen samalla tarkastelukohdistinta"
 
-#: appModules\_default.py:546
+#: appModules\_default.py:547
 msgid "reads from navigator object "
 msgstr ""
 "lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa "
 "järjestyksessä"
 
-#: appModules\_default.py:558
+#: appModules\_default.py:559
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien "
 "siirtäen samalla järjestelmäkohdistinta"
 
-#: appModules\_default.py:581
+#: appModules\_default.py:582
 msgid "reports the object with focus"
 msgstr "ilmoittaa objektin, jossa kohdistus on"
 
-#: appModules\_default.py:586
+#: appModules\_default.py:587
 msgid "no status bar found"
 msgstr "tilariviä ei löydy"
 
-#: appModules\_default.py:595
+#: appModules\_default.py:596
 msgid ""
 "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointikohdistimen sen "
 "kohdalle"
 
-#: appModules\_default.py:604
+#: appModules\_default.py:605
 msgid "Report object under mouse"
 msgstr "Lue hiiren alla oleva objekti"
 
-#: appModules\_default.py:605
+#: appModules\_default.py:606
 msgid "Toggles on and off the reporting of objects under the mouse"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä hiiren alla olevan objektin "
 "lukemisen"
 
-#: appModules\_default.py:611
+#: appModules\_default.py:612
 msgid "Reports the title of the current application or foreground window"
 msgstr "Lukee nykyisen sovelluksen tai ikkunan nimen"
 
-#: appModules\_default.py:618
+#: appModules\_default.py:619
 msgid "speaks the current foreground object"
 msgstr "Ilmoittaa nykyisen objektin"
 
-#: appModules\_default.py:633 cursorManager.py:246
+#: appModules\_default.py:634 cursorManager.py:232
 msgid "copied to clipboard"
 msgstr "kopioitu leikepöydälle"
 
-#: appModules\_default.py:637
+#: appModules\_default.py:638
 msgid "Control ID: %s"
 msgstr "Säädintunnus: %s"
 
-#: appModules\_default.py:638
+#: appModules\_default.py:639
 msgid "Class: %s"
 msgstr "Luokka: %s"
 
-#: appModules\_default.py:640
+#: appModules\_default.py:641
 msgid "internal text: %s"
 msgstr "sisäinen teksti: %s"
 
-#: appModules\_default.py:641
+#: appModules\_default.py:642
 msgid "text: %s"
 msgstr "teksti: %s"
 
-#: appModules\_default.py:643
+#: appModules\_default.py:644
 msgid ""
 "reports some info about the current navigator object, mainly useful for "
 "developers. When pressed 2 times it copies control id, class and internal "
@@ -660,21 +660,21 @@ msgstr ""
 "pääasiassa ohjelmistokehittäjille. Kahdesti painettaessa säädintunnus, "
 "luokka ja sisäinen teksti kopioidaan leikepöydälle."
 
-#: appModules\_default.py:652
+#: appModules\_default.py:653
 msgid "Beep on progress bar updates"
 msgstr "Anna äänimerkki edistymispalkin päivittyessä"
 
-#: appModules\_default.py:653
+#: appModules\_default.py:654
 msgid "Toggles on and off the beeping on progress bar updates"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä äänimerkin antamisen "
 "edistymispalkin päivittyessä"
 
-#: appModules\_default.py:662
+#: appModules\_default.py:663
 msgid "report dynamic content changes"
 msgstr "ilmoita dynaamisen sisällön muutokset"
 
-#: appModules\_default.py:663
+#: appModules\_default.py:664
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -682,55 +682,55 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön, kuten uuden "
 "tekstin DOS-ikkunoissa, muutoksista ilmoittamisen"
 
-#: appModules\_default.py:672
+#: appModules\_default.py:673
 msgid "caret moves review cursor"
 msgstr "järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
-#: appModules\_default.py:673
+#: appModules\_default.py:674
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen siirtämisen "
 "järjestelmäkohdistimen mukaan."
 
-#: appModules\_default.py:682
+#: appModules\_default.py:683
 msgid "focus moves navigator object"
 msgstr "kohdistus siirtää navigointiobjektia"
 
-#: appModules\_default.py:683
+#: appModules\_default.py:684
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen "
 "kohdistusmuutosten mukaan"
 
-#: appModules\_default.py:695
+#: appModules\_default.py:696
 msgid "no system battery"
 msgstr "järjestelmässä ei akkua"
 
-#: appModules\_default.py:697
+#: appModules\_default.py:698
 msgid "%d percent"
 msgstr "%d prosenttia"
 
-#: appModules\_default.py:698
+#: appModules\_default.py:699
 msgid "AC power on"
 msgstr "verkkovirta käytössä"
 
-#: appModules\_default.py:700
+#: appModules\_default.py:701
 msgid "%d hours and %d minutes remaining"
 msgstr "%d tuntia ja %d minuuttia jäljellä"
 
-#: appModules\_default.py:702
+#: appModules\_default.py:703
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Ilmoittaa akun varauksen ja jäljellä olevan ajan, jos verkkovirta ei ole "
 "käytössä"
 
-#: appModules\_default.py:706
+#: appModules\_default.py:707
 msgid "Pass next key through"
 msgstr "Päästä läpi seuraava näppäinpainallus"
 
-#: appModules\_default.py:707
+#: appModules\_default.py:708
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -738,68 +738,68 @@ msgstr ""
 "NVDA ei käsittele seuraavaksi painettua näppäintä, vaan se annetaan "
 "suoraan Windowsin käsiteltäväksi."
 
-#: appModules\_default.py:711
+#: appModules\_default.py:712
 msgid "Currently running application is %s."
 msgstr "Nykyinen sovellus on %s."
 
-#: appModules\_default.py:716
+#: appModules\_default.py:717
 msgid "default module"
 msgstr "oletusmoduuli"
 
-#: appModules\_default.py:717
+#: appModules\_default.py:718
 msgid "and currently loaded module is %s"
 msgstr "nykyinen ladattu moduuli on %s"
 
-#: appModules\_default.py:718
+#: appModules\_default.py:719
 msgid ""
 "Speaks filename of the active application along with name of the currently "
 "loaded appmodule"
 msgstr "Lukee aktiivisen sovelluksen ja ladatun sovellusmoduulin nimen"
 
-#: appModules\_default.py:722
+#: appModules\_default.py:723
 msgid "Shows NVDA general settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n yleisiä asetuksia"
 
-#: appModules\_default.py:726
+#: appModules\_default.py:727
 msgid "Shows NVDA synthesizer dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n syntetisaattoriasetuksia"
 
-#: appModules\_default.py:730
+#: appModules\_default.py:731
 msgid "Shows NVDA voice settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n puheasetuksia"
 
-#: appModules\_default.py:734
+#: appModules\_default.py:735
 msgid "Shows NVDA keyboard settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n näppäimistöasetuksia"
 
-#: appModules\_default.py:738
+#: appModules\_default.py:739
 msgid "Shows NVDA mouse settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n hiiriasetuksia"
 
-#: appModules\_default.py:742
+#: appModules\_default.py:743
 msgid "Shows NVDA object presentation settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n objektien lukuasetuksia"
 
-#: appModules\_default.py:746
+#: appModules\_default.py:747
 msgid "Shows NVDA virtual buffers settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n näennäispuskureiden "
 "asetuksia"
 
-#: appModules\_default.py:750
+#: appModules\_default.py:751
 msgid "Shows NVDA document formatting settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n asiakirjojen "
 "muotoiluasetuksia"
 
-#: appModules\_default.py:755
+#: appModules\_default.py:756
 msgid "Saves current NVDA configuration to file"
 msgstr "Tallentaa NVDA:n nykyiset asetukset tiedostoon"
 
-#: appModules\_default.py:759
+#: appModules\_default.py:760
 msgid "loads NVDA configuration from file, overriding current changes"
 msgstr "Lataa NVDA:n asetukset tiedostosta kumoten nykyiset muutokset"
 
@@ -875,7 +875,7 @@ msgstr "liite"
 msgid "sent: %s"
 msgstr "lähetetty: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:80 speech.py:633
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:81 speech.py:646
 msgid "blank"
 msgstr "tyhjä"
 
@@ -883,7 +883,7 @@ msgstr "tyhjä"
 msgid "null"
 msgstr "nolla"
 
-#: characterSymbols.py:20 controlTypes.py:188
+#: characterSymbols.py:20 controlTypes.py:191
 msgid "tab"
 msgstr "sarkain"
 
@@ -999,7 +999,7 @@ msgstr "keno"
 msgid "right bracket"
 msgstr "loppuhaka"
 
-#: characterSymbols.py:49 controlTypes.py:258
+#: characterSymbols.py:49 controlTypes.py:261
 msgid "caret"
 msgstr "hattu"
 
@@ -1034,622 +1034,630 @@ msgstr "nuoli"
 msgid "dot dot dot"
 msgstr "piste piste piste"
 
-#: controlTypes.py:166
+#: controlTypes.py:169
 msgid "unknown object"
 msgstr "tuntematon objekti"
 
-#: controlTypes.py:167
+#: controlTypes.py:170
 msgid "window"
 msgstr "ikkuna"
 
-#: controlTypes.py:168
+#: controlTypes.py:171
 msgid "title bar"
 msgstr "otsikkopalkki"
 
-#: controlTypes.py:169
+#: controlTypes.py:172
 msgid "pane"
 msgstr "ruutu"
 
-#: controlTypes.py:170
+#: controlTypes.py:173
 msgid "dialog"
 msgstr "valintaikkuna"
 
-#: controlTypes.py:171
+#: controlTypes.py:174
 msgid "check box"
 msgstr "valintaruutu"
 
-#: controlTypes.py:172
+#: controlTypes.py:175
 msgid "radio button"
 msgstr "valintapainike"
 
-#: controlTypes.py:173
+#: controlTypes.py:176
 msgid "text"
 msgstr "teksti"
 
-#: controlTypes.py:174
+#: controlTypes.py:177
 msgid "edit"
 msgstr "muokkaa"
 
-#: controlTypes.py:175
+#: controlTypes.py:178
 msgid "button"
 msgstr "painike"
 
-#: controlTypes.py:176
+#: controlTypes.py:179
 msgid "menu bar"
 msgstr "valikkorivi"
 
-#: controlTypes.py:177
+#: controlTypes.py:180
 msgid "menu item"
 msgstr "valikon osa"
 
-#: controlTypes.py:178 controlTypes.py:285
+#: controlTypes.py:181 controlTypes.py:288
 msgid "menu"
 msgstr "valikko"
 
-#: controlTypes.py:179
+#: controlTypes.py:182
 msgid "combo box"
 msgstr "yhdistelmäruutu"
 
-#: controlTypes.py:180
+#: controlTypes.py:183
 msgid "list"
 msgstr "luettelo"
 
-#: controlTypes.py:181
+#: controlTypes.py:184
 msgid "list item"
 msgstr "luettelon osa"
 
-#: controlTypes.py:182
+#: controlTypes.py:185
 msgid "graphic"
 msgstr "kuva"
 
-#: controlTypes.py:183
+#: controlTypes.py:186
 msgid "help balloon"
 msgstr "kuplailmoitus"
 
-#: controlTypes.py:184
+#: controlTypes.py:187
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:185
+#: controlTypes.py:188
 msgid "link"
 msgstr "linkki"
 
-#: controlTypes.py:186
+#: controlTypes.py:189
 msgid "tree view"
 msgstr "puunäkymä"
 
-#: controlTypes.py:187
+#: controlTypes.py:190
 msgid "tree view item"
 msgstr "puunäkymän osa"
 
-#: controlTypes.py:189
+#: controlTypes.py:192
 msgid "tab control"
 msgstr "välilehti"
 
-#: controlTypes.py:190
+#: controlTypes.py:193
 msgid "slider"
 msgstr "liukusäädin"
 
-#: controlTypes.py:191
+#: controlTypes.py:194
 msgid "progress bar"
 msgstr "edistymispalkki"
 
-#: controlTypes.py:192
+#: controlTypes.py:195
 msgid "scroll bar"
 msgstr "vierityspalkki"
 
-#: controlTypes.py:193
+#: controlTypes.py:196
 msgid "status bar"
 msgstr "tilarivi"
 
-#: controlTypes.py:194
+#: controlTypes.py:197
 msgid "table"
 msgstr "taulukko"
 
-#: controlTypes.py:195
+#: controlTypes.py:198
 msgid "cell"
 msgstr "solu"
 
-#: controlTypes.py:196
+#: controlTypes.py:199
 msgid "column"
 msgstr "sarake"
 
-#: controlTypes.py:197
+#: controlTypes.py:200
 msgid "row"
 msgstr "rivi"
 
-#: controlTypes.py:198
+#: controlTypes.py:201
 msgid "frame"
 msgstr "kehys"
 
-#: controlTypes.py:199
+#: controlTypes.py:202
 msgid "tool bar"
 msgstr "työkalupalkki"
 
-#: controlTypes.py:200
+#: controlTypes.py:203
 msgid "column header"
 msgstr "sarakkeen otsikko"
 
-#: controlTypes.py:201
+#: controlTypes.py:204
 msgid "row header"
 msgstr "rivin otsikko"
 
-#: controlTypes.py:202
+#: controlTypes.py:205
 msgid "drop down button"
 msgstr "pudotuspainike"
 
-#: controlTypes.py:203
+#: controlTypes.py:206
 msgid "clock"
 msgstr "kello"
 
-#: controlTypes.py:204
+#: controlTypes.py:207
 msgid "separator"
 msgstr "erotin"
 
-#: controlTypes.py:205
+#: controlTypes.py:208
 msgid "form"
 msgstr "lomake"
 
-#: controlTypes.py:206
+#: controlTypes.py:209
 msgid "heading"
 msgstr "otsikko"
 
-#: controlTypes.py:207
+#: controlTypes.py:210
 msgid "heading 1"
 msgstr "otsikko yksi"
 
-#: controlTypes.py:208
+#: controlTypes.py:211
 msgid "heading 2"
 msgstr "otsikko kaksi"
 
-#: controlTypes.py:209
+#: controlTypes.py:212
 msgid "heading 3"
 msgstr "otsikko kolme"
 
-#: controlTypes.py:210
+#: controlTypes.py:213
 msgid "heading 4"
 msgstr "otsikko neljä"
 
-#: controlTypes.py:211
+#: controlTypes.py:214
 msgid "heading 5"
 msgstr "otsikko viisi"
 
-#: controlTypes.py:212
+#: controlTypes.py:215
 msgid "heading 6"
 msgstr "otsikko kuusi"
 
-#: controlTypes.py:213
+#: controlTypes.py:216
 msgid "paragraph"
 msgstr "kappale"
 
-#: controlTypes.py:214
+#: controlTypes.py:217
 msgid "block quote"
 msgstr "sisennys kappaleenvaihdolla"
 
-#: controlTypes.py:215
+#: controlTypes.py:218
 msgid "table header"
 msgstr "taulukon ylätunniste"
 
-#: controlTypes.py:216
+#: controlTypes.py:219
 msgid "table body"
 msgstr "taulukon sisältö"
 
-#: controlTypes.py:217
+#: controlTypes.py:220
 msgid "table footer"
 msgstr "taulukon alatunniste"
 
-#: controlTypes.py:218 virtualBuffers_old\adobe.py:38
+#: controlTypes.py:221 virtualBuffers_old\adobe.py:38
 #: virtualBuffers_old\gecko.py:43
 msgid "document"
 msgstr "dokumentti"
 
-#: controlTypes.py:219
+#: controlTypes.py:222
 msgid "animation"
 msgstr "animaatio"
 
-#: controlTypes.py:220
+#: controlTypes.py:223
 msgid "application"
 msgstr "sovellus"
 
-#: controlTypes.py:221
+#: controlTypes.py:224
 msgid "box"
 msgstr "ruutu"
 
-#: controlTypes.py:222
+#: controlTypes.py:225
 msgid "grouping"
 msgstr "ryhmä"
 
-#: controlTypes.py:223
+#: controlTypes.py:226
 msgid "property page"
 msgstr "ominaisuussivu"
 
-#: controlTypes.py:224
+#: controlTypes.py:227
 msgid "canvas"
 msgstr "kangas"
 
-#: controlTypes.py:225
+#: controlTypes.py:228
 msgid "caption"
 msgstr "otsikko"
 
-#: controlTypes.py:226
+#: controlTypes.py:229
 msgid "check menu item"
 msgstr "valittava valikon osa"
 
-#: controlTypes.py:227
+#: controlTypes.py:230
 msgid "date edit"
 msgstr "päiväyksen syöttökenttä"
 
-#: controlTypes.py:228
+#: controlTypes.py:231
 msgid "icon"
 msgstr "kuvake"
 
-#: controlTypes.py:229
+#: controlTypes.py:232
 msgid "directory pane"
 msgstr "hakemistoruutu"
 
-#: controlTypes.py:230
+#: controlTypes.py:233
 msgid "embedded object"
 msgstr "upotettu objekti"
 
-#: controlTypes.py:231
+#: controlTypes.py:234
 msgid "end note"
 msgstr "loppuviite"
 
-#: controlTypes.py:232
+#: controlTypes.py:235
 msgid "footer"
 msgstr "alatunniste"
 
-#: controlTypes.py:233
+#: controlTypes.py:236
 msgid "foot note"
 msgstr "alaviite"
 
-#: controlTypes.py:234
+#: controlTypes.py:237
 msgid "glass pane"
 msgstr "päällimmäinen paneeli"
 
-#: controlTypes.py:235
+#: controlTypes.py:238
 msgid "header"
 msgstr "ylätunniste"
 
-#: controlTypes.py:236
+#: controlTypes.py:239
 msgid "image map"
 msgstr "kuvakartta"
 
-#: controlTypes.py:237
+#: controlTypes.py:240
 msgid "input window"
 msgstr "syöttöikkuna"
 
-#: controlTypes.py:238
+#: controlTypes.py:241
 msgid "label"
 msgstr "nimi"
 
-#: controlTypes.py:239
+#: controlTypes.py:242
 msgid "note"
 msgstr "huomautus"
 
-#: controlTypes.py:240
+#: controlTypes.py:243
 msgid "page"
 msgstr "sivu"
 
-#: controlTypes.py:241
+#: controlTypes.py:244
 msgid "radio menu item"
 msgstr "valintapainike valikon osana"
 
-#: controlTypes.py:242
+#: controlTypes.py:245
 msgid "layered pane"
 msgstr "kerrospaneeli"
 
-#: controlTypes.py:243
+#: controlTypes.py:246
 msgid "redundant object"
 msgstr "tarpeeton objekti"
 
-#: controlTypes.py:244
+#: controlTypes.py:247
 msgid "root pane"
 msgstr "juuripaneeli"
 
-#: controlTypes.py:245
+#: controlTypes.py:248
 msgid "edit bar"
 msgstr "muokkauspalkki"
 
-#: controlTypes.py:246
+#: controlTypes.py:249
 msgid "terminal"
 msgstr "pääte"
 
-#: controlTypes.py:247
+#: controlTypes.py:250
 msgid "rich edit"
 msgstr "muokkaa"
 
-#: controlTypes.py:248
+#: controlTypes.py:251
 msgid "ruler"
 msgstr "viivain"
 
-#: controlTypes.py:249
+#: controlTypes.py:252
 msgid "scroll pane"
 msgstr "vierityspaneeli"
 
-#: controlTypes.py:250
+#: controlTypes.py:253
 msgid "section"
 msgstr "kappale"
 
-#: controlTypes.py:251
+#: controlTypes.py:254
 msgid "shape"
 msgstr "kaava"
 
-#: controlTypes.py:252
+#: controlTypes.py:255
 msgid "split pane"
 msgstr "jaettu paneeli"
 
-#: controlTypes.py:253
+#: controlTypes.py:256
 msgid "view port"
 msgstr "ikkuna"
 
-#: controlTypes.py:254
+#: controlTypes.py:257
 msgid "tear off menu"
 msgstr "irrotusvalikko"
 
-#: controlTypes.py:255
+#: controlTypes.py:258
 msgid "text frame"
 msgstr "tekstikehys"
 
-#: controlTypes.py:256
+#: controlTypes.py:259
 msgid "toggle button"
 msgstr "vipupainike"
 
-#: controlTypes.py:257
+#: controlTypes.py:260
 msgid "border"
 msgstr "reuna"
 
-#: controlTypes.py:259
+#: controlTypes.py:262
 msgid "character"
 msgstr "merkki"
 
-#: controlTypes.py:260
+#: controlTypes.py:263
 msgid "chart"
 msgstr "kaavio"
 
-#: controlTypes.py:261
+#: controlTypes.py:264
 msgid "cursor"
 msgstr "kohdistin"
 
-#: controlTypes.py:262
+#: controlTypes.py:265
 msgid "diagram"
 msgstr "diagrammi"
 
-#: controlTypes.py:263
+#: controlTypes.py:266
 msgid "dial"
 msgstr "arvosäädin"
 
-#: controlTypes.py:264
+#: controlTypes.py:267
 msgid "drop list"
 msgstr "pudotuslista"
 
-#: controlTypes.py:265
+#: controlTypes.py:268
 msgid "split button"
 msgstr "jaettu painike"
 
-#: controlTypes.py:266
+#: controlTypes.py:269
 msgid "menu button"
 msgstr "valikkopainike"
 
-#: controlTypes.py:267
+#: controlTypes.py:270
 msgid "drop down button grid"
 msgstr "pudotuspainikeruudukko"
 
-#: controlTypes.py:268
+#: controlTypes.py:271
 msgid "equation"
 msgstr "yhtälö"
 
-#: controlTypes.py:269
+#: controlTypes.py:272
 msgid "grip"
 msgstr "kahva"
 
-#: controlTypes.py:270
+#: controlTypes.py:273
 msgid "hot key field"
 msgstr "pikanäppäinkenttä"
 
-#: controlTypes.py:271
+#: controlTypes.py:274
 msgid "indicator"
 msgstr "ilmaisin"
 
-#: controlTypes.py:272
+#: controlTypes.py:275
 msgid "spin button"
 msgstr "kiertopainike"
 
-#: controlTypes.py:273
+#: controlTypes.py:276
 msgid "sound"
 msgstr "ääni"
 
-#: controlTypes.py:274
+#: controlTypes.py:277
 msgid "white space"
 msgstr "tyhjä tila"
 
-#: controlTypes.py:275
+#: controlTypes.py:278
 msgid "tree view button"
 msgstr "puunäkymäpainike"
 
-#: controlTypes.py:276
+#: controlTypes.py:279
 msgid "IP address"
 msgstr "IP-osoite"
 
-#: controlTypes.py:277
+#: controlTypes.py:280
 msgid "desktop icon"
 msgstr "työpöytäkuvake"
 
-#: controlTypes.py:278 controlTypes.py:302
+#: controlTypes.py:281 controlTypes.py:305
 msgid "alert"
 msgstr "hälytys"
 
-#: controlTypes.py:279
+#: controlTypes.py:282
 msgid "IFrame"
 msgstr "upotettu kehys"
 
-#: controlTypes.py:280
+#: controlTypes.py:283
 msgid "desktop pane"
 msgstr "työpöytä"
 
-#: controlTypes.py:281
+#: controlTypes.py:284
 msgid "option pane"
 msgstr "valintapaneeli"
 
-#: controlTypes.py:282
+#: controlTypes.py:285
 msgid "color chooser"
 msgstr "värinvalitsin"
 
-#: controlTypes.py:283
+#: controlTypes.py:286
 msgid "file chooser"
 msgstr "tiedostonvalitsin"
 
-#: controlTypes.py:284
+#: controlTypes.py:287
 msgid "filler"
 msgstr "täyte"
 
-#: controlTypes.py:286
+#: controlTypes.py:289
 msgid "panel"
 msgstr "paneeli"
 
-#: controlTypes.py:287
+#: controlTypes.py:290
 msgid "password edit"
 msgstr "salasanan syöttökenttä"
 
-#: controlTypes.py:288
+#: controlTypes.py:291
 msgid "font chooser"
 msgstr "fontinvalitsin"
 
-#: controlTypes.py:289
+#: controlTypes.py:292
 msgid "line"
 msgstr "rivi"
 
-#: controlTypes.py:290
+#: controlTypes.py:293
 msgid "font name"
 msgstr "fontti"
 
-#: controlTypes.py:291
+#: controlTypes.py:294
 msgid "font size"
 msgstr "fonttikoko"
 
-#: controlTypes.py:293
+#: controlTypes.py:296
 msgid "ITALIC"
 msgstr "kursiivi"
 
-#: controlTypes.py:295
+#: controlTypes.py:298
 msgid "foreground color"
 msgstr "edustan väri"
 
-#: controlTypes.py:296
+#: controlTypes.py:299
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:297 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
+#: controlTypes.py:300 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:298 textBuffer.py:326
+#: controlTypes.py:301 textBuffer.py:326
 msgid "subscript"
 msgstr "alaindeksi"
 
-#: controlTypes.py:299
+#: controlTypes.py:302
 msgid "style"
 msgstr "tyyli"
 
-#: controlTypes.py:300
+#: controlTypes.py:303
 msgid "indent"
 msgstr "sisennys"
 
-#: controlTypes.py:301
+#: controlTypes.py:304
 msgid "alignment"
 msgstr "tasaus"
 
-#: controlTypes.py:306
+#: controlTypes.py:309
 msgid "unavailable"
 msgstr "ei käytettävissä"
 
-#: controlTypes.py:307
+#: controlTypes.py:310
 msgid "focused"
 msgstr "kohdistettu"
 
-#: controlTypes.py:309
+#: controlTypes.py:312
 msgid "busy"
 msgstr "varattu"
 
-#: controlTypes.py:310
+#: controlTypes.py:313
 msgid "pressed"
 msgstr "painettu"
 
-#: controlTypes.py:311
+#: controlTypes.py:314
 msgid "checked"
 msgstr "valittu"
 
-#: controlTypes.py:312
+#: controlTypes.py:315
 msgid "half checked"
 msgstr "puoliksi valittu"
 
-#: controlTypes.py:313
+#: controlTypes.py:316
 msgid "read only"
 msgstr "ei muokattava"
 
-#: controlTypes.py:314
+#: controlTypes.py:317
 msgid "expanded"
 msgstr "avattu"
 
-#: controlTypes.py:315
+#: controlTypes.py:318
 msgid "collapsed"
 msgstr "suljettu"
 
-#: controlTypes.py:316
+#: controlTypes.py:319
 msgid "invisible"
 msgstr "näkymätön"
 
-#: controlTypes.py:317
+#: controlTypes.py:320
 msgid "visited"
 msgstr "avattu"
 
-#: controlTypes.py:318
+#: controlTypes.py:321
 msgid "linked"
 msgstr "linkitetty"
 
-#: controlTypes.py:319
+#: controlTypes.py:322
 msgid "subMenu"
 msgstr "alavalikko"
 
-#: controlTypes.py:320 virtualBuffers_old\MSHTML.py:299
+#: controlTypes.py:323 virtualBuffers_old\MSHTML.py:299
 msgid "protected"
 msgstr "suojattu"
 
-#: controlTypes.py:321
+#: controlTypes.py:324
 msgid "required"
 msgstr "pakollinen"
 
-#: controlTypes.py:322
+#: controlTypes.py:325
 msgid "defunct"
 msgstr "kuollut"
 
-#: controlTypes.py:323
+#: controlTypes.py:326
 msgid "invalid entry"
 msgstr "merkintä ei kelpaa"
 
-#: controlTypes.py:324
+#: controlTypes.py:327
 msgid "modal"
 msgstr "modaali"
 
-#: controlTypes.py:325
+#: controlTypes.py:328
 msgid "has auto complete"
 msgstr "sisältää automaattisen täydennyksen"
 
-#: controlTypes.py:326
+#: controlTypes.py:329
 msgid "multi line"
 msgstr "monirivinen"
 
-#: controlTypes.py:327
+#: controlTypes.py:330
 msgid "iconified"
 msgstr "pienennetty"
 
-#: controlTypes.py:328
+#: controlTypes.py:331
 msgid "selectable"
 msgstr "valittavissa"
 
-#: controlTypes.py:329
+#: controlTypes.py:332
 msgid "focusable"
 msgstr "kohdistettu"
+
+#: controlTypes.py:333 virtualBuffers_old\MSHTML.py:329
+msgid "clickable"
+msgstr "napsautettava"
+
+#: controlTypes.py:334
+msgid "editable"
+msgstr "muokattava"
 
 #: core.py:60
 msgid "configuration applied"
@@ -1753,7 +1761,7 @@ msgstr "Tietoja NVDA:sta"
 msgid "&General settings..."
 msgstr "&Yleiset..."
 
-#: gui\__init__.py:236 gui\settingsDialogs.py:100
+#: gui\__init__.py:236 gui\settingsDialogs.py:85
 msgid "General settings"
 msgstr "Yleiset asetukset"
 
@@ -1873,11 +1881,11 @@ msgstr "Työkalut"
 
 #: gui\__init__.py:270
 msgid "User guide"
-msgstr "Käyttöopas"
+msgstr "Käyttöohje"
 
 #: gui\__init__.py:272
 msgid "Key Command Quick Reference"
-msgstr "Näppäinkomennot"
+msgstr "Näppäinkomentojen pikaopas"
 
 #: gui\__init__.py:274
 msgid "What's &new"
@@ -1943,15 +1951,15 @@ msgstr "Päivitä\tF5"
 msgid "Log"
 msgstr "Loki"
 
-#: gui\logViewer.py:59
+#: gui\logViewer.py:65
 msgid "Save As"
 msgstr "Tallenna nimellä"
 
-#: gui\logViewer.py:67
+#: gui\logViewer.py:73
 msgid "Error"
 msgstr "Virhe"
 
-#: gui\logViewer.py:67
+#: gui\logViewer.py:73
 msgid "Error saving log: %s"
 msgstr "Virhe tallennettaessa lokia: %s"
 
@@ -1971,39 +1979,39 @@ msgstr "&Avaa linkki"
 msgid "&Move to link"
 msgstr "&Siirry linkin kohdalle"
 
-#: gui\settingsDialogs.py:104
+#: gui\settingsDialogs.py:89
 msgid "&Language (requires restart to fully take affect)"
 msgstr "&Kieli (vaatii uudelleenkäynnistyksen)"
 
-#: gui\settingsDialogs.py:108
+#: gui\settingsDialogs.py:93
 msgid "Language"
 msgstr "Kieli"
 
-#: gui\settingsDialogs.py:117
+#: gui\settingsDialogs.py:102
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
 
-#: gui\settingsDialogs.py:120
+#: gui\settingsDialogs.py:105
 msgid "&Warn before exiting NVDA"
 msgstr "&Vahvista NVDA:n sulkeminen"
 
-#: gui\settingsDialogs.py:124
+#: gui\settingsDialogs.py:109
 msgid "L&ogging level"
 msgstr "L&okitaso"
 
-#: gui\settingsDialogs.py:128
+#: gui\settingsDialogs.py:113
 msgid "Log level"
 msgstr "Lokitaso"
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:132
 msgid "Error in %s language file"
 msgstr "Virhe kielitiedostossa %s"
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:132
 msgid "Language Error"
 msgstr "Virhe"
 
-#: gui\settingsDialogs.py:156
+#: gui\settingsDialogs.py:141
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2014,321 +2022,321 @@ msgstr ""
 "uudelleen painamalla Enter, tai paina Peruuta tallentaaksesi asetukset ja "
 "käynnistääksesi NVDA:n uudelleen myöhemmin."
 
-#: gui\settingsDialogs.py:156
+#: gui\settingsDialogs.py:141
 msgid "Language Configuration Change"
 msgstr "Kieliasetuksen muutos"
 
-#: gui\settingsDialogs.py:162
+#: gui\settingsDialogs.py:147
 msgid "Synthesizer"
 msgstr "Syntetisaattori"
 
-#: gui\settingsDialogs.py:166
+#: gui\settingsDialogs.py:151
 msgid "&Synthesizer"
 msgstr "&Syntetisaattori"
 
-#: gui\settingsDialogs.py:181
+#: gui\settingsDialogs.py:166
 msgid "Output &device"
 msgstr "&Käytettävä äänikortti"
 
-#: gui\settingsDialogs.py:211
+#: gui\settingsDialogs.py:186
 msgid "Could not load the %s synthesizer."
 msgstr "Syntetisaattoria %s ei voitu ladata."
 
-#: gui\settingsDialogs.py:211
+#: gui\settingsDialogs.py:186
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
-#: gui\settingsDialogs.py:216
+#: gui\settingsDialogs.py:191
 msgid "Voice settings"
 msgstr "Puheasetukset"
 
-#: gui\settingsDialogs.py:221
+#: gui\settingsDialogs.py:196
 msgid "&Voice"
 msgstr "&Puheääni"
 
-#: gui\settingsDialogs.py:237
+#: gui\settingsDialogs.py:212
 msgid "V&ariant"
 msgstr "&Muunnelma"
 
-#: gui\settingsDialogs.py:251
+#: gui\settingsDialogs.py:226
 msgid "&Rate"
 msgstr "&Nopeus"
 
-#: gui\settingsDialogs.py:260
+#: gui\settingsDialogs.py:235
 msgid "&Pitch"
 msgstr "&Korkeus"
 
-#: gui\settingsDialogs.py:269
+#: gui\settingsDialogs.py:244
 msgid "&Inflection"
 msgstr "&Sävy"
 
-#: gui\settingsDialogs.py:278
+#: gui\settingsDialogs.py:253
 msgid "V&olume"
 msgstr "&Voimakkuus"
 
-#: gui\settingsDialogs.py:285
+#: gui\settingsDialogs.py:260
 msgid "&Speak all punctuation"
 msgstr "&Lue kaikki välimerkit"
 
-#: gui\settingsDialogs.py:288
+#: gui\settingsDialogs.py:263
 msgid "Raise pitch for capitals"
 msgstr "Nosta äänenkorkeutta isojen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:291
+#: gui\settingsDialogs.py:266
 msgid "Say &cap before capitals"
 msgstr "Sano &iso ennen isoja kirjaimia"
 
-#: gui\settingsDialogs.py:294
+#: gui\settingsDialogs.py:269
 msgid "&Beep for capitals"
 msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:366
+#: gui\settingsDialogs.py:341
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
-#: gui\settingsDialogs.py:370
+#: gui\settingsDialogs.py:345
 msgid "&Keyboard layout"
 msgstr "&Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:375
+#: gui\settingsDialogs.py:350
 msgid "Keyboard layout"
 msgstr "Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:383
+#: gui\settingsDialogs.py:358
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lock -näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:386
+#: gui\settingsDialogs.py:361
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:389
+#: gui\settingsDialogs.py:364
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insert-näppäintä NVDA:n toimintonäppäimenä"
 
-#: gui\settingsDialogs.py:392
+#: gui\settingsDialogs.py:367
 msgid "Speak typed &characters"
 msgstr "Lue &kirjoitetut merkit"
 
-#: gui\settingsDialogs.py:395
+#: gui\settingsDialogs.py:370
 msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
-#: gui\settingsDialogs.py:398
+#: gui\settingsDialogs.py:373
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
-#: gui\settingsDialogs.py:424
+#: gui\settingsDialogs.py:399
 msgid "Mouse settings"
 msgstr "Hiiriasetukset"
 
-#: gui\settingsDialogs.py:427
+#: gui\settingsDialogs.py:402
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muutokset"
 
-#: gui\settingsDialogs.py:430
+#: gui\settingsDialogs.py:405
 msgid "Report &object under mouse"
 msgstr "Lue hiiren alla oleva &objekti"
 
-#: gui\settingsDialogs.py:433
+#: gui\settingsDialogs.py:408
 msgid "play audio coordinates when mouse moves"
 msgstr "Ilmoita hiirikohdistimen &koordinaatit äänimerkeillä"
 
-#: gui\settingsDialogs.py:447
+#: gui\settingsDialogs.py:422
 msgid "Object presentation"
 msgstr "Objektien lukeminen"
 
-#: gui\settingsDialogs.py:450
+#: gui\settingsDialogs.py:425
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui\settingsDialogs.py:453
+#: gui\settingsDialogs.py:428
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:431
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui\settingsDialogs.py:459
+#: gui\settingsDialogs.py:434
 msgid "Report object &position information"
 msgstr "Lue objektien p&aikkatiedot"
 
-#: gui\settingsDialogs.py:462
+#: gui\settingsDialogs.py:437
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui\settingsDialogs.py:465
+#: gui\settingsDialogs.py:440
 msgid "Say object &state first"
 msgstr "Lue &ensin objektin tila"
 
-#: gui\settingsDialogs.py:468
+#: gui\settingsDialogs.py:443
 msgid "&Beep on progress bar updates"
 msgstr "Anna &äänimerkki edistymispalkin päivittyessä"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:461
 msgid "virtual buffers"
 msgstr "näennäispuskurit"
 
-#: gui\settingsDialogs.py:489
+#: gui\settingsDialogs.py:464
 msgid "&Maximum number of characters on one line"
 msgstr "Merkk&ien maksimimäärä rivillä"
 
-#: gui\settingsDialogs.py:494
+#: gui\settingsDialogs.py:469
 msgid "&Number of lines per page"
 msgstr "R&ivejä sivulla"
 
-#: gui\settingsDialogs.py:499
+#: gui\settingsDialogs.py:474
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua (Firefox 3)"
 
-#: gui\settingsDialogs.py:503
+#: gui\settingsDialogs.py:478
 msgid "Report &virtual presentation on focus changes"
 msgstr "Ilmoita koh&distuksen muuttuessa"
 
-#: gui\settingsDialogs.py:506
+#: gui\settingsDialogs.py:481
 msgid "Update the content &dynamically"
 msgstr "Päivitä sisältöä d&ynaamisesti"
 
-#: gui\settingsDialogs.py:509
+#: gui\settingsDialogs.py:484
 msgid "Report lin&ks"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:512
+#: gui\settingsDialogs.py:487
 msgid "Report &lists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:515
+#: gui\settingsDialogs.py:490
 msgid "Report list &items"
 msgstr "Ilmoita luettelon &osat"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:493
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:521 gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:496 gui\settingsDialogs.py:576
 msgid "Report &tables"
 msgstr "Ilmoita t&aulukot"
 
-#: gui\settingsDialogs.py:524
+#: gui\settingsDialogs.py:499
 msgid "Report &graphics"
 msgstr "Ilmoita kuv&at"
 
-#: gui\settingsDialogs.py:527
+#: gui\settingsDialogs.py:502
 msgid "Report f&orms"
 msgstr "Ilmoita lo&makkeet"
 
-#: gui\settingsDialogs.py:530
+#: gui\settingsDialogs.py:505
 msgid "Report form &fields"
 msgstr "Ilmoita lomakek&entät"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:508
 msgid "Report block &quotes"
 msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
 
-#: gui\settingsDialogs.py:536
+#: gui\settingsDialogs.py:511
 msgid "Report &paragraphs"
 msgstr "Ilmoita ka&ppaleet"
 
-#: gui\settingsDialogs.py:539
+#: gui\settingsDialogs.py:514
 msgid "Report f&rames"
 msgstr "Ilmoita ke&hykset"
 
-#: gui\settingsDialogs.py:577
+#: gui\settingsDialogs.py:552
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: gui\settingsDialogs.py:580
+#: gui\settingsDialogs.py:555
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (saattaa aiheuttaa "
 "hidastumista)"
 
-#: gui\settingsDialogs.py:583
+#: gui\settingsDialogs.py:558
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:586
+#: gui\settingsDialogs.py:561
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:589
+#: gui\settingsDialogs.py:564
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:592
+#: gui\settingsDialogs.py:567
 msgid "Report st&yle"
 msgstr "Ilmoita tyylim&ääritteet"
 
-#: gui\settingsDialogs.py:595
+#: gui\settingsDialogs.py:570
 msgid "Report &pages"
 msgstr "Ilmoita sivunume&rot"
 
-#: gui\settingsDialogs.py:598
+#: gui\settingsDialogs.py:573
 msgid "Report &line numbers"
 msgstr "Ilmoita rivi&numerot"
 
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:579
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:601
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:604
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:607
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:610
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:638
+#: gui\settingsDialogs.py:613
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:615
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:662
+#: gui\settingsDialogs.py:637
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:665
+#: gui\settingsDialogs.py:640
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:641
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:667
+#: gui\settingsDialogs.py:642
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:668
+#: gui\settingsDialogs.py:643
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:644
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:651
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:679
+#: gui\settingsDialogs.py:654
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:682
+#: gui\settingsDialogs.py:657
 msgid "&Remove"
 msgstr "&Poista"
 
@@ -2376,31 +2384,31 @@ msgstr "NVDA Python-konsoli"
 msgid "end of text"
 msgstr "tekstin loppu"
 
-#: speech.py:165
+#: speech.py:166
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:317
+#: speech.py:321
 msgid "in"
 msgstr "alkaa"
 
-#: speech.py:322 speech.py:340
+#: speech.py:326 speech.py:344
 msgid "out of"
 msgstr "loppuu"
 
-#: speech.py:393
+#: speech.py:397
 msgid "selecting %s"
 msgstr "valitaan %s"
 
-#: speech.py:404
+#: speech.py:408
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: speech.py:406
+#: speech.py:410
 msgid "selection removed"
 msgstr "valinta poistettu"
 
-#: speech.py:686 virtualBuffers_old\MSHTML.py:125
+#: speech.py:700 virtualBuffers_old\MSHTML.py:125
 #: virtualBuffers_old\MSHTML.py:307 virtualBuffers_old\MSHTML.py:311
 #: virtualBuffers_old\adobe.py:303 virtualBuffers_old\adobe.py:307
 #: virtualBuffers_old\gecko.py:296 virtualBuffers_old\gecko.py:300
@@ -2519,15 +2527,15 @@ msgstr "Poistaa merkin ja lukee uuden kohdalla olevan merkin"
 msgid "Reads the character before the current character and then deletes it"
 msgstr "Lukee kohdalla olevaa merkkiä ennen olevan merkin ja poistaa sen"
 
-#: versionInfo.py:8
+#: versionInfo.py:40
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:10
+#: versionInfo.py:42
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "Ilmainen, avoimen lähdekoodin ruudunlukuohjelma Windowsille"
 
-#: versionInfo.py:12
+#: versionInfo.py:44
 msgid ""
 "Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
 "%(name)s is covered by the GNU General Public License. You are free to share "
@@ -2555,7 +2563,7 @@ msgstr "näennäispuskurin läpivienti"
 
 #: virtualBuffers\__init__.py:95 virtualBuffers\__init__.py:99
 #: virtualBuffers\__init__.py:103 virtualBuffers\__init__.py:109
-#: virtualBuffers\__init__.py:113 virtualBuffers_old\__init__.py:191
+#: virtualBuffers\__init__.py:115 virtualBuffers_old\__init__.py:191
 msgid "out of %s"
 msgstr "%s loppuu"
 
@@ -2566,183 +2574,183 @@ msgstr "%s loppuu"
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
-#: virtualBuffers\__init__.py:111
+#: virtualBuffers\__init__.py:113
 msgid "in %s"
 msgstr "%s"
 
-#: virtualBuffers\__init__.py:183 virtualBuffers_old\__init__.py:291
+#: virtualBuffers\__init__.py:185 virtualBuffers_old\__init__.py:291
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivoi kohdalla olevan objektin näennäispuskurissa"
 
-#: virtualBuffers\__init__.py:202
+#: virtualBuffers\__init__.py:204
 msgid "Refreshed"
 msgstr "Päivitetty"
 
-#: virtualBuffers\__init__.py:207
+#: virtualBuffers\__init__.py:209
 msgid "use screen layout %s"
 msgstr "ruutuasettelu %s"
 
-#: virtualBuffers\__init__.py:293
+#: virtualBuffers\__init__.py:295
 msgid "displays a list of links"
 msgstr "näyttää linkkilistan"
 
-#: virtualBuffers\__init__.py:305
+#: virtualBuffers\__init__.py:307
 msgid "no next heading"
 msgstr "ei seuraavaa otsikkoa"
 
-#: virtualBuffers\__init__.py:305 virtualBuffers_old\__init__.py:314
+#: virtualBuffers\__init__.py:307 virtualBuffers_old\__init__.py:314
 msgid "moves to the next heading"
 msgstr "siirtää seuraavan otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:306
+#: virtualBuffers\__init__.py:308
 msgid "no previous heading"
 msgstr "ei edellistä otsikkoa"
 
-#: virtualBuffers\__init__.py:306 virtualBuffers_old\__init__.py:325
+#: virtualBuffers\__init__.py:308 virtualBuffers_old\__init__.py:325
 msgid "moves to the previous heading"
 msgstr "siirtää edellisen otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:307
+#: virtualBuffers\__init__.py:309
 msgid "no next table"
 msgstr "ei seuraavaa taulukkoa"
 
-#: virtualBuffers\__init__.py:307 virtualBuffers_old\__init__.py:358
+#: virtualBuffers\__init__.py:309 virtualBuffers_old\__init__.py:358
 msgid "moves to the next table"
 msgstr "siirtää seuraavan taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:308
+#: virtualBuffers\__init__.py:310
 msgid "no previous table"
 msgstr "ei edellistä taulukkoa"
 
-#: virtualBuffers\__init__.py:308 virtualBuffers_old\__init__.py:369
+#: virtualBuffers\__init__.py:310 virtualBuffers_old\__init__.py:369
 msgid "moves to the previous table"
 msgstr "siirtää edellisen taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:309
+#: virtualBuffers\__init__.py:311
 msgid "no next link"
 msgstr "ei seuraavaa linkkiä"
 
-#: virtualBuffers\__init__.py:309 virtualBuffers_old\__init__.py:380
+#: virtualBuffers\__init__.py:311 virtualBuffers_old\__init__.py:380
 msgid "moves to the next link"
 msgstr "siirtää seuraavan linkin kohdalle"
 
-#: virtualBuffers\__init__.py:310
+#: virtualBuffers\__init__.py:312
 msgid "no previous link"
 msgstr "ei edellistä linkkiä"
 
-#: virtualBuffers\__init__.py:310 virtualBuffers_old\__init__.py:391
+#: virtualBuffers\__init__.py:312 virtualBuffers_old\__init__.py:391
 msgid "moves to the previous link"
 msgstr "siirtää edellisen linkin kohdalle"
 
-#: virtualBuffers\__init__.py:311
+#: virtualBuffers\__init__.py:313
 msgid "moves to the next visited link"
 msgstr "siirtää seuraavan avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:311
+#: virtualBuffers\__init__.py:313
 msgid "no next visited link"
 msgstr "ei seuraavaa avattua linkkiä"
 
-#: virtualBuffers\__init__.py:312
+#: virtualBuffers\__init__.py:314
 msgid "moves to the previous visited link"
 msgstr "siirtää edellisen avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:312
+#: virtualBuffers\__init__.py:314
 msgid "no previous visited link"
 msgstr "ei edellistä avattua linkkiä"
 
-#: virtualBuffers\__init__.py:313
+#: virtualBuffers\__init__.py:315
 msgid "moves to the next unvisited link"
 msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:313
+#: virtualBuffers\__init__.py:315
 msgid "no next unvisited link"
 msgstr "ei seuraavaa avaamatonta linkkiä"
 
-#: virtualBuffers\__init__.py:314
+#: virtualBuffers\__init__.py:316
 msgid "moves to the previous unvisited link"
 msgstr "siirtää edellisen avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:314
+#: virtualBuffers\__init__.py:316
 msgid "no previous unvisited link"
 msgstr "ei edellistä avaamatonta linkkiä"
 
-#: virtualBuffers\__init__.py:315
+#: virtualBuffers\__init__.py:317
 msgid "moves to the next form field"
 msgstr "siirtää seuraavan lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:315
+#: virtualBuffers\__init__.py:317
 msgid "no next form field"
 msgstr "ei seuraavaa lomakekenttää"
 
-#: virtualBuffers\__init__.py:316
+#: virtualBuffers\__init__.py:318
 msgid "no previous form field"
 msgstr "ei edellistä lomakekenttää"
 
-#: virtualBuffers\__init__.py:316 virtualBuffers_old\__init__.py:457
+#: virtualBuffers\__init__.py:318 virtualBuffers_old\__init__.py:457
 msgid "moves to the previous form field"
 msgstr "siirtää edellisen lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:317
+#: virtualBuffers\__init__.py:319
 msgid "no next list"
 msgstr "ei seuraavaa luetteloa"
 
-#: virtualBuffers\__init__.py:317 virtualBuffers_old\__init__.py:402
+#: virtualBuffers\__init__.py:319 virtualBuffers_old\__init__.py:402
 msgid "moves to the next list"
 msgstr "siirtää seuraavan luettelon kohdalle"
 
-#: virtualBuffers\__init__.py:318
+#: virtualBuffers\__init__.py:320
 msgid "no previous list"
 msgstr "ei edellistä luetteloa"
 
-#: virtualBuffers\__init__.py:318 virtualBuffers_old\__init__.py:413
+#: virtualBuffers\__init__.py:320 virtualBuffers_old\__init__.py:413
 msgid "moves to the previous list"
 msgstr "siirtää edellisen luettelon kohdalle"
 
-#: virtualBuffers\__init__.py:319
+#: virtualBuffers\__init__.py:321
 msgid "no next list item"
 msgstr "ei seuraavaa luettelon osaa"
 
-#: virtualBuffers\__init__.py:319 virtualBuffers_old\__init__.py:424
+#: virtualBuffers\__init__.py:321 virtualBuffers_old\__init__.py:424
 msgid "moves to the next list item"
 msgstr "siirtää seuraavan luettelon osan kohdalle"
 
-#: virtualBuffers\__init__.py:320
+#: virtualBuffers\__init__.py:322
 msgid "no previous list item"
 msgstr "ei edellistä luettelon osaa"
 
-#: virtualBuffers\__init__.py:320 virtualBuffers_old\__init__.py:435
+#: virtualBuffers\__init__.py:322 virtualBuffers_old\__init__.py:435
 msgid "moves to the previous list item"
 msgstr "siirtää edellisen luettelon osan kohdalle"
 
-#: virtualBuffers\__init__.py:321
+#: virtualBuffers\__init__.py:323
 msgid "moves to the next button"
 msgstr "siirtää seuraavan painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:321
+#: virtualBuffers\__init__.py:323
 msgid "no next button"
 msgstr "ei seuraavaa painiketta"
 
-#: virtualBuffers\__init__.py:322
+#: virtualBuffers\__init__.py:324
 msgid "moves to the previous button"
 msgstr "siirtää edellisen painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:322
+#: virtualBuffers\__init__.py:324
 msgid "no previous button"
 msgstr "ei edellistä painiketta"
 
-#: virtualBuffers\__init__.py:323
+#: virtualBuffers\__init__.py:325
 msgid "moves to the next edit field"
 msgstr "siirtää seuraavan muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:323
+#: virtualBuffers\__init__.py:325
 msgid "no next edit field"
 msgstr "ei seuraavaa muokkauskenttää"
 
-#: virtualBuffers\__init__.py:324
+#: virtualBuffers\__init__.py:326
 msgid "moves to the previous edit field"
 msgstr "siirtää edellisen muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:324
+#: virtualBuffers\__init__.py:326
 msgid "no previous edit field"
 msgstr "ei edellistä muokkauskenttää"
 
@@ -2765,10 +2773,6 @@ msgstr "määritelmä"
 #: virtualBuffers_old\MSHTML.py:295
 msgid "file upload"
 msgstr "tiedoston siirto"
-
-#: virtualBuffers_old\MSHTML.py:329
-msgid "clickable"
-msgstr "napsautettava"
 
 #: virtualBuffers_old\__init__.py:272
 msgid "moves one page up in the virtual buffer's current document"
