@@ -835,7 +835,13 @@ class Dialog(IAccessible):
 		return " ".join(textList)
 
 	def event_foreground(self):
-		speech.speakObject(self,reason=speech.REASON_FOCUS)
+		super(IAccessible,self).event_foreground()
+		text=self.getDialogText(self)
+		if text and not text.isspace():
+			speech.speakText(text)
+
+	def event_gainFocus(self):
+		super(IAccessible,self).event_gainFocus()
 		text=self.getDialogText(self)
 		if text and not text.isspace():
 			speech.speakText(text)
