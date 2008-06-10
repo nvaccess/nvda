@@ -1,20 +1,31 @@
 ;German
-LangString msg_WelcomePageTitle ${LANG_GERMAN} "Willkommen zur Instalation von ${PRODUCT}, ein freier und quelloffener Screen Reader für Windows."
-LangString msg_WelcomePageText ${LANG_GERMAN} "Copyright 2006 - 2008 Michael Curran\n\
-Das Instalationsprogramm wird Sie durch die einzelnen Schritte von ${PRODUCT} führen.\n\
-Es wird empfohlen, das sie alle anderen Programme schließen, bevor Sie mit der Instalation fortfahren.\
-Dies erlaubt es, die Systemdateien ohne einen Neustart des Computers zu aktualisieren.$\n"
-LangString msg_READMEText ${LANG_GERMAN} "Readme-Datei lesen"
+LangString msg_WelcomePageTitle ${LANG_GERMAN} "Setup für ${PRODUCT}, Version ${VERSION}"
+LangString msg_WelcomePageText ${LANG_GERMAN} "Willkommen zur Instalation von ${PRODUCT}, ein freier und quelloffener Screen Reader für Windows.$\n\
+Copyright 2006 - 2008 NVDA Contributers.$\n\
+Das Instalationsprogramm wird Sie durch die einzelnen Schritte von ${PRODUCT} führen. Es wird empfohlen, das sie alle anderen Programme schließen, bevor Sie mit der Instalation fortfahren.$\n"
+LangString msg_READMEText ${LANG_GERMAN} "Readme-Datei lesen (Empfohlen)"
 LangString msg_NVDAWebSite ${LANG_GERMAN} "Offizielle NVDA-Webseite besuchen"
 LangString msg_NVDARunning ${LANG_GERMAN} "Es läuft bereits eine Instanz von NVDA. Sie wird beendet, um fortzufahren."
-LangString msg_SpeechInstall ${LANG_GERMAN} "Möchten Sie das NVDA-Instalation mit der Sprachunterstützung fortsetzen? Drücken sie die Eingabetaste, um mit der Sprache fortzufahren, andernfalls drücken Sie ESCAPE."
+LangString msg_SpeechInstall ${LANG_GERMAN} "Möchten Sie die NVDA-Instalation mit der Sprachunterstützung fortsetzen? Drücken sie die Eingabetaste, um mit der Sprache fortzufahren, andernfalls drücken Sie ESCAPE."
 LangString msg_RemoveNVDA ${LANG_GERMAN} "Sind Sie sicher, dass Sie $(^Name) und alle dazu gehörigen Kompunenten entfernen möchten?"
 LangString msg_NVDAConfigFound ${LANG_GERMAN} "Das Instalationsprogramm hat festgestellt, das sich Konfigurationsdateien für NVDA auf ihrem System befinden. Möchten Sie sie entfernen?"
-LangString msg_NVDASuccessfullyRemoved ${LANG_GERMAN} "$(^Name) wurde erfolgreich entfernt.."
+LangString msg_NVDASuccessfullyRemoved ${LANG_GERMAN} "$(^Name) wurde erfolgreich von Ihrem Computer Entfernt..."
 LangString shortcut_Wiki $(LANG_GERMAN) "NVDA Info WIKI"
 LangString shortcut_uninstall $(LANG_GERMAN) "Deinstallieren"
 LangString shortcut_website $(LANG_GERMAN) "Website"
 LangString shortcut_readme $(LANG_GERMAN) "Readme"
 LangString shortcut_userguide $(LANG_GERMAN) "Benutzerhandbuch"
-LangString path_userguide $(LANG_GERMAN) "de\user guide.txt"
+LangString path_userguide $(LANG_GERMAN) "de\user guide.html"
 LangString path_readmefile $(LANG_GERMAN) "de\readme.txt"
+LangString UNLOG_HEADER ${LANG_GERMAN} "=========== Uninstaller Log \
+                                         Bitte diese Datei nicht verändern ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_GERMAN} "${UNINST_DAT} nicht gefunden, \
+                                                nicht in der Lage, die Deinstallation durchzuführen."
+LangString UNLOG_DEL_FILE ${LANG_GERMAN} 'Datei "$R9" löschen?'
+LangString UNLOG_DEL_DIR ${LANG_GERMAN} 'Ordner "$R9" löschen?'
+LangString UNLOG_EMPTY_DIR ${LANG_GERMAN} "Vorherige Installation erkannt in $0.$\n\
+                                            Erforderliche Datei ${UNINSTALL_LOG}.dat fehlt.$\n$\n\
+                                            Es wird dringend empfohlen, ein \
+                                           leeres verzeichnis auszuwählen und eine neuinstallation durchzuführen."
+LangString UNLOG_ERROR_LOG ${LANG_GERMAN} "Fehler in log ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_GERMAN} "Fehler beim erstellen von ${UNINSTALL_LOG}."
