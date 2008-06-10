@@ -236,7 +236,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	if isEditable:
 		allowProperties['value']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if isEditable:
+	if reason!=REASON_ONLYCACHE and isEditable:
 		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 		if not info.isCollapsed:
 			speakMessage(_("selected %s")%info.text)
