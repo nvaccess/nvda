@@ -324,4 +324,8 @@ qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no nex
 	prevDoc=_("moves to the previous button"), prevError=_("no previous button"))
 qn("edit", key="e", nextDoc=_("moves to the next edit field"), nextError=_("no next edit field"),
 	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"))
+qn("frame", key="m", nextDoc=_("moves to the next frame"), nextError=_("no next frame"),
+	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"))
+qn("separator", key="s", nextDoc=_("moves to the next separator"), nextError=_("no next separator"),
+	prevDoc=_("moves to the previous separator"), prevError=_("no previous separator"))
 del qn
