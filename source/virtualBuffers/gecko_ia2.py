@@ -109,7 +109,7 @@ class Gecko_ia2(VirtualBuffer):
 			ID=obj.IAccessibleObject.uniqueID
 		except:
 			return nextHandler()
-		if self._lastFocusIdentifier==(docHandle,ID):
+		if not self.passThrough and self._lastFocusIdentifier==(docHandle,ID):
 			# This was the last non-document node with focus, so don't handle this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
@@ -156,6 +156,9 @@ class Gecko_ia2(VirtualBuffer):
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
 			else:
 				return nextHandler()
+		if hasattr(obj,'IAccessibleTextObject'):
+			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
+			obj.initAutoSelectDetection()
 
 	def _caretMovedToField(self,docHandle,ID):
 		try:
