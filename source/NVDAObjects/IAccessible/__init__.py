@@ -609,7 +609,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_caret(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
-		if hasattr(self,'IAccessibleTextObject'):
+		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject():
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
