@@ -190,6 +190,11 @@ class SynthesizerDialog(SettingsDialog):
 class VoiceSettingsDialog(SettingsDialog):
 	title = _("Voice settings")
 
+	@classmethod
+	def _setSliderStepSizes(cls, slider, minStep):
+		slider.SetLineSize(minStep)
+		slider.SetPageSize(max(minStep, 10))
+
 	def makeSettings(self, settingsSizer):
 		if getSynth().hasVoice:
 			voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -226,6 +231,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			rateSliderLabel=wx.StaticText(self,-1,label=_("&Rate"))
 			rateSliderID=wx.NewId()
 			self.rateSlider=wx.Slider(self,rateSliderID,value=getSynth().rate,minValue=0,maxValue=100,name="Rate:")
+			self._setSliderStepSizes(self.rateSlider,getSynth().rateMinStep)
 			self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
 			rateSliderSizer.Add(rateSliderLabel)
 			rateSliderSizer.Add(self.rateSlider)
@@ -235,6 +241,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			pitchSliderLabel=wx.StaticText(self,-1,label=_("&Pitch"))
 			pitchSliderID=wx.NewId()
 			self.pitchSlider=wx.Slider(self,pitchSliderID,value=getSynth().pitch,minValue=0,maxValue=100)
+			self._setSliderStepSizes(self.pitchSlider,getSynth().pitchMinStep)
 			self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
 			pitchSliderSizer.Add(pitchSliderLabel)
 			pitchSliderSizer.Add(self.pitchSlider)
@@ -244,6 +251,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			inflectionSliderLabel=wx.StaticText(self,-1,label=_("&Inflection"))
 			inflectionSliderID=wx.NewId()
 			self.inflectionSlider=wx.Slider(self,inflectionSliderID,value=getSynth().inflection,minValue=0,maxValue=100)
+			self._setSliderStepSizes(self.inflectionSlider,getSynth().inflectionMinStep)
 			self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
 			inflectionSliderSizer.Add(inflectionSliderLabel)
 			inflectionSliderSizer.Add(self.inflectionSlider)
@@ -253,6 +261,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			volumeSliderLabel=wx.StaticText(self,-1,label=_("V&olume"))
 			volumeSliderID=wx.NewId()
 			self.volumeSlider=wx.Slider(self,volumeSliderID,value=getSynth().volume,minValue=0,maxValue=100)
+			self._setSliderStepSizes(self.volumeSlider,getSynth().volumeMinStep)
 			self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
 			volumeSliderSizer.Add(volumeSliderLabel)
 			volumeSliderSizer.Add(self.volumeSlider)

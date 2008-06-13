@@ -105,7 +105,9 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
-	They should set the bool variables L{hasVoice}, L{hasPitch}, etc., indicating whether they support each voice setting.
+	The bool variables L{hasVoice}, L{hasPitch}, etc. should be set where appropriate. These indicate which voice settings are supported.
+	The MinStep values (L{pitchMinStep}, L{rateMinStep}, etc.) specify the minimum step between valid values for each numeric setting.
+	For example, if L{pitchMinStep} is set to 10, L{pitch} can only be multiples of 10; 10, 20, 30, etc.
 	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
 	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
 	The methods L{speakText}, L{cancel} and L{pause} should be overridden as appropriate.
@@ -137,10 +139,14 @@ class SynthDriver(baseObject.AutoPropertyObject):
 
 	hasVoice = False
 	hasPitch = False
+	pitchMinStep = 1
 	hasRate = False
+	rateMinStep = 1
 	hasVolume = False
+	volumeMinStep = 1
 	hasVariant = False
 	hasInflection = False
+	inflectionMinStep = 1
 
 	@classmethod
 	def check(cls):

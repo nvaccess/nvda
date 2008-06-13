@@ -124,10 +124,10 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def updateSupportedSettings(self):
 		list = []
 		synth = synthDriverHandler.getSynth()
-		if synth.hasVolume: list.append(SynthSetting("volume", step=10))
-		if synth.hasRate: list.append(SynthSetting("rate",step=5))
-		if synth.hasPitch: list.append(SynthSetting("pitch", step=5))
-		if synth.hasInflection: list.append(SynthSetting("inflection",step = 5))
+		if synth.hasVolume: list.append(SynthSetting("volume", step=max(synth.volumeMinStep, 10)))
+		if synth.hasRate: list.append(SynthSetting("rate",step=max(synth.rateMinStep, 5)))
+		if synth.hasPitch: list.append(SynthSetting("pitch", step=max(synth.pitchMinStep, 5)))
+		if synth.hasInflection: list.append(SynthSetting("inflection",step = max(synth.inflectionMinStep, 5)))
 		if synth.hasVoice: list.append(VoiceSynthSetting())
 		if synth.hasVariant: list.append(VariantSynthSetting())
 		if len(list) == 0:
