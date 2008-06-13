@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2100\n"
+"Project-Id-Version: r2123\n"
 "POT-Creation-Date: 2007-03-18 21:51+Hora oficial de España\n"
-"PO-Revision-Date: 2008-06-05 21:37+0100\n"
+"PO-Revision-Date: 2008-06-12 16:08+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español en Tifloclub <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgid "level %s"
 msgstr "nivel %s"
 
 #: NVDAObjects\IAccessible\__init__.py:75
-#: NVDAObjects\IAccessible\__init__.py:605
+#: NVDAObjects\IAccessible\__init__.py:595
 #: NVDAObjects\IAccessible\sysListView32.py:97
 msgid "%s of %s"
 msgstr "%s de %s"
@@ -561,7 +561,7 @@ msgid "speaks the current foreground object"
 msgstr "Verbaliza el objeto actual en primer plano"
 
 #: appModules\_default.py:634
-#: cursorManager.py:246
+#: cursorManager.py:232
 msgid "copied to clipboard"
 msgstr "copiado al portapapeles"
 
@@ -1862,15 +1862,15 @@ msgstr "Refrescar\tF5"
 msgid "Log"
 msgstr "Log"
 
-#: gui\logViewer.py:59
+#: gui\logViewer.py:65
 msgid "Save As"
 msgstr "Guardar Como"
 
-#: gui\logViewer.py:67
+#: gui\logViewer.py:73
 msgid "Error"
 msgstr "Error"
 
-#: gui\logViewer.py:67
+#: gui\logViewer.py:73
 msgid "Error saving log: %s"
 msgstr "Error guardando log: %s"
 
@@ -2761,6 +2761,38 @@ msgstr "se mueve al anterior campo de edición"
 #: virtualBuffers\__init__.py:326
 msgid "no previous edit field"
 msgstr "no hay anterior campo de edición"
+
+#: virtualBuffers\__init__.py:327
+msgid "moves to the next frame"
+msgstr "se mueve al siguiente marco"
+
+#: virtualBuffers\__init__.py:327
+msgid "no next frame"
+msgstr "no hay siguiente marco"
+
+#: virtualBuffers\__init__.py:328
+msgid "moves to the previous frame"
+msgstr "Se mueve al marco anterior"
+
+#: virtualBuffers\__init__.py:328
+msgid "no previous frame"
+msgstr "no hay marco anterior"
+
+#: virtualBuffers\__init__.py:329
+msgid "moves to the next separator"
+msgstr "Se mueve al siguiente separador"
+
+#: virtualBuffers\__init__.py:329
+msgid "no next separator"
+msgstr "no hay siguiente separador"
+
+#: virtualBuffers\__init__.py:330
+msgid "moves to the previous separator"
+msgstr "Se mueve al separador anterior"
+
+#: virtualBuffers\__init__.py:330
+msgid "no previous separator"
+msgstr "no hay separador anterior"
 
 #: virtualBuffers\adobe.py:312
 #: virtualBuffers_old\adobe.py:315
