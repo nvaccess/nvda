@@ -1,6 +1,6 @@
 #synthDrivers/sapi4activeVoice.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,14 +9,14 @@ import time
 import pythoncom
 import comtypes.client
 import _winreg
-import silence
+import synthDriverHandler
 import config
 import globalVars
 import nvwave
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
 
-class SynthDriver(silence.SynthDriver):
+class SynthDriver(synthDriverHandler.SynthDriver):
 
 	hasVoice=True
 	hasRate=True
@@ -26,7 +26,8 @@ class SynthDriver(silence.SynthDriver):
 	name="sapi4activeVoice"
 	description="Microsoft Speech API 4 (ActiveVoice.ActiveVoice)"
 
-	def _registerDll(self):
+	@classmethod
+	def _registerDll(cls):
 		try:
 			ret = os.system(r"regsvr32 /s %SystemRoot%\speech\xvoice.dll")
 			return ret == 0
@@ -34,14 +35,15 @@ class SynthDriver(silence.SynthDriver):
 			pass
 			return False
 
-	def check(self):
+	@classmethod
+	def check(cls):
 		try:
 			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
 			r.Close()
 			return True
 		except:
 			pass
-		return self._registerDll()
+		return cls._registerDll()
 
 	def initialize(self):
 		try:

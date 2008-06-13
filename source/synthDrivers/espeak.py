@@ -1,6 +1,6 @@
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,10 +8,9 @@ import _espeak
 import Queue
 import threading
 import languageHandler
-import silence
+import synthDriverHandler
 
-class SynthDriver(silence.SynthDriver):
-
+class SynthDriver(synthDriverHandler.SynthDriver):
 	name = "espeak"
 	description = "eSpeak"
 
@@ -21,6 +20,10 @@ class SynthDriver(silence.SynthDriver):
 	hasVolume=True
 	hasVariant=True
 	hasInflection=True
+
+	@classmethod
+	def check(cls):
+		return True
 
 	def _paramToPercent(self, current, min, max):
 		return int(round(float(current - min) / (max - min) * 100))

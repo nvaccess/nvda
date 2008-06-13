@@ -6,10 +6,11 @@
 
 import os
 import config
+import baseObject
 import queueHandler
 import speech
 import globalVars
-from  _synthSettingsRing import SynthSettingsRing
+from  synthSettingsRing import SynthSettingsRing
 import speechDictHandler
 
 #This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
@@ -27,7 +28,7 @@ def getSynthList():
 	synthList=[]
 	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if (x.endswith('.py') and not x.startswith('_'))]:
 		try:
-			synth=__import__(name,globals(),locals(),[]).SynthDriver()
+			synth=__import__(name,globals(),locals(),[]).SynthDriver
 			if synth.check():
 				synthList.append((synth.name,synth.description))
 		except:
@@ -98,3 +99,145 @@ def setSynth(name):
 		elif not _curSynth and name=='espeak':
 			setSynth('silence')
 		return False
+
+class SynthDriver(baseObject.AutoPropertyObject):
+	"""Abstract base synthesizer driver.
+	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
+	
+	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
+	They should set the bool variables L{hasVoice}, L{hasPitch}, etc., indicating whether they support each voice setting.
+	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
+	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
+	The methods L{speakText}, L{cancel} and L{pause} should be overridden as appropriate.
+	@ivar voice: The current voice.
+	@type voice: int
+	@ivar voiceCount: The number of available voices.
+	@type voiceCount: int
+	@ivar pitch: The current pitch; ranges between 0 and 100.
+	@type pitch: int
+	@ivar rate: The current rate; ranges between 0 and 100.
+	@type rate: int
+	@ivar volume: The current volume; ranges between 0 and 100.
+	@type volume: int
+	@ivar variant: The current variant of the voice.
+	@type variant: str
+	@ivar variantCount: The number of available variants.
+	@type variantCount: int
+	@ivar inflection: The current inflection; ranges between 0 and 100.
+	@type inflection: int
+	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
+	@type lastIndex: int
+	"""
+	#: The name of the synth; must be the original module file name.
+	#: @type: str
+	name = ""
+	#: A description of the synth.
+	#: @type: str
+	description = ""
+
+	hasVoice = False
+	hasPitch = False
+	hasRate = False
+	hasVolume = False
+	hasVariant = False
+	hasInflection = False
+
+	@classmethod
+	def check(cls):
+		"""Determine whether this synth is available.
+		The synth will be excluded from the list of available synths if this method returns C{False}.
+		For example, if this synth requires installation and it is not installed, C{False} should be returned.
+		@return: C{True} if this synth is available, C{False} if not.
+		@rtype: bool
+		"""
+		return False
+
+	def initialize(self):
+		"""Initialize this synth driver.
+		This method can also set default settings for the synthesizer.
+		@raise Exception: If an error occurs.
+		@postcondition: This driver can be used.
+		"""
+
+	def terminate(self):
+		"""Terminate this synth driver.
+		This should be used for any required clean up.
+		@precondition: L{initialize} has been called.
+		@postcondition: This driver can no longer be used.
+		"""
+
+	def speakText(self, text, wait=False, index=None):
+		"""Speak some text.
+		@param text: The chunk of text to speak.
+		@type text: str
+		@param wait: C{True} if this method should block until speech is complete, C{False} if it should begin speaking and return immediately.
+		@type wait: bool
+		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
+		@type index: int
+		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
+		"""
+
+	def _get_lastIndex(self):
+		"""Obtain the index of the chunk of text which was last spoken.
+		When the synth speaks text associated with a particular index, this method should return that index.
+		That is, this property should update for each chunk of text spoken by the synth.
+		@return: The index or C{None} if no index.
+		@rtype: int
+		"""
+		return None
+
+	def cancel(self):
+		"""Silence speech immediately.
+		"""
+
+	def _get_voice(self):
+		return 1
+
+	def _set_voice(self, value):
+		pass
+
+	def _get_voiceCount(self):
+		return 1
+
+	def getVoiceName(self, num):
+		return ""
+
+	def _get_rate(self):
+		return 0
+
+	def _set_rate(self, value):
+		pass
+
+	def _get_pitch(self):
+		return 0
+
+	def _set_pitch(self, value):
+		pass
+
+	def _get_volume(self):
+		return 0
+
+	def _set_volume(self, value):
+		pass
+
+	def _get_variant(self):
+		return "none"
+
+	def _set_variant(self, value):
+		pass
+
+	def _get_variantCount(self):
+		return 1
+
+	def _get_inflection(self):
+		return 0
+
+	def _set_inflection(self, value):
+		pass
+
+	def pause(self, switch):
+		"""Pause or resume speech output.
+		@param switch: C{True} to pause, C{False} to resume (unpause).
+		@type switch: bool
+		"""
+		pass

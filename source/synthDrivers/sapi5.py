@@ -9,7 +9,7 @@ import os
 import comtypes.client
 import _winreg
 import globalVars
-import silence
+import synthDriverHandler
 import config
 import nvwave
 
@@ -18,7 +18,9 @@ class constants:
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
 
-class SynthDriver(silence.SynthDriver):
+COM_CLASS = "SAPI.SPVoice"
+
+class SynthDriver(synthDriverHandler.SynthDriver):
 
 	hasVoice=True
 	hasRate=True
@@ -29,9 +31,10 @@ class SynthDriver(silence.SynthDriver):
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"
 
-	def check(self):
+	@classmethod
+	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"SAPI.SPVoice")
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
 			r.Close()
 			return True
 		except:
@@ -39,7 +42,7 @@ class SynthDriver(silence.SynthDriver):
 
 	def initialize(self):
 		try:
-			self.tts = comtypes.client.CreateObject('sapi.SPVoice')
+			self.tts = comtypes.client.CreateObject(COM_CLASS)
 			self._pitch=50
 			self.voice=1
 			return True

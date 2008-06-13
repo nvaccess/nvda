@@ -1,6 +1,6 @@
 #synthDrivers/sapi4.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,10 +9,10 @@ import time
 import _winreg
 import pythoncom
 import core
-import silence
+import synthDriverHandler
 import _sapi4serotekHelper
 
-class SynthDriver(silence.SynthDriver):
+class SynthDriver(synthDriverHandler.SynthDriver):
 
 	hasVoice=True
 	hasRate=True
@@ -22,7 +22,8 @@ class SynthDriver(silence.SynthDriver):
 	name="sapi4serotek"
 	description="Microsoft Speech API version 4 (Serotek driver)"
 
-	def check(self):
+	@classmethod
+	def check(cls):
 		try:
 			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,"Speech.VoiceText")
 			r.Close()

@@ -1,12 +1,12 @@
 #synthDrivers/display.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import wx
 import gui
-import silence
+import synthDriverHandler
 
 class SynthFrame(wx.MiniFrame):
 
@@ -25,9 +25,13 @@ class SynthFrame(wx.MiniFrame):
 			return
 		evt.Veto()
 
-class SynthDriver(silence.SynthDriver):
+class SynthDriver(synthDriverHandler.SynthDriver):
 	name = "display"
-	description = "A virtual synth which displays text in a window"
+	description = _("A virtual synth which displays text in a window")
+
+	@classmethod
+	def check(cls):
+		return True
 
 	def initialize(self):
 		self.frame = SynthFrame()
