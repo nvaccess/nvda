@@ -154,7 +154,7 @@ class appModule(appModuleHandler.AppModule):
 		except:
 			speech.speakMessage(_("object has no location"))
 			return
-		winUser.setCursorPos(left,top)
+		winUser.setCursorPos(left+(width/2),top+(height/2))
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object.")
 
 	def script_moveNavigatorObjectToMouse(self,keyPress):
