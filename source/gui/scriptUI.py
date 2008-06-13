@@ -109,7 +109,10 @@ class LinksListDialog(ModalDialog):
 			dialog = wx.Dialog(gui.mainFrame, wx.ID_ANY, _("Links List"))
 			mainSizer = wx.BoxSizer(wx.VERTICAL)
 			self.list = wx.ListView(dialog, wx.ID_ANY, style=wx.LC_LIST | wx.LC_SINGLE_SEL)
-			self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, lambda evt: dialog.EndModal(wx.ID_OK))
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			self.list.Bind(wx.EVT_CHAR, self.onListChar)
 			for index, choice in enumerate(choices):
 				self.list.InsertStringItem(index, choice)
 			self.list.Focus(default)
@@ -129,6 +132,12 @@ class LinksListDialog(ModalDialog):
 			return dialog
 		self.makeDialog = makeDialog
 		super(LinksListDialog, self).__init__(callback)
+
+	def onListChar(self, evt):
+		if evt.GetKeyCode() == wx.WXK_RETURN:
+			self.dialog.EndModal(self.ID_ACTIVATE)
+			return
+		evt.Skip()
 
 	def getResponse(self, response):
 		if response != wx.ID_CANCEL:
