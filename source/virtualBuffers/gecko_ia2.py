@@ -136,7 +136,7 @@ class Gecko_ia2(VirtualBuffer):
 			except:
 				#globalVars.log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
 				return nextHandler()
-			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
 			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
@@ -260,7 +260,7 @@ class Gecko_ia2(VirtualBuffer):
 			except:
 				#globalVars.log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
 				return nextHandler()
-			newInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
 			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
@@ -299,7 +299,7 @@ class Gecko_ia2(VirtualBuffer):
 			start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,focusDocHandle,focusID)
 		except:
 			return False
-		focusInfo=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(start,end)))
+		focusInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 		startToStart=focusInfo.compareEndPoints(caretInfo,"startToStart")
 		startToEnd=focusInfo.compareEndPoints(caretInfo,"startToEnd")
 		endToStart=focusInfo.compareEndPoints(caretInfo,"endToStart")
@@ -315,7 +315,7 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 
 		# Finally, speak, move to and set focus to this node.
-		newInfo = self.makeTextInfo(textHandler.Bookmark(self.TextInfo, (newStart, newEnd)))
+		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
 		speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
 		newInfo.updateCaret()

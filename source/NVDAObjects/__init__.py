@@ -123,7 +123,12 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
 
+	def _getOffsetAtPoint(self,x,y):
+		raise NotImplementedError
+
 	def __init__(self,obj,position):
+		if isinstance(position,textHandler.Points):
+			position=textHandler.Offsets(self._getOffsetFromPoint(position.x1,position.y1),self._getOffsetFromPoint(position.x2,position.y2))
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
 		if position==textHandler.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
@@ -136,11 +141,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		elif position==textHandler.POSITION_ALL:
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
-		elif isinstance(position,textHandler.Bookmark):
-			if position.infoClass==self.__class__:
-				(self._startOffset,self._endOffset)=position.data
-			else:
-				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
+		elif isinstance(position,textHandler.Offsets):
+			self._startOffset=max(min(position.startOffset,self._getStoryLength()-1),0)
+			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 
@@ -309,7 +312,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		return self._setSelectionOffsets(self._startOffset,self._endOffset)
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark(self.__class__,(self._startOffset,self._endOffset))
+		return textHandler.Offsets(self._startOffset,self._endOffset)
 
 class NVDAObject(baseObject.ScriptableObject):
 	"""
