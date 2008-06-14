@@ -37,24 +37,28 @@ def updateMouseShape(name):
 	curMouseShape=name
 	mouseShapeChanged=1
 
-def playAudioCoordinates(x, y,screenWidth=None,screenHeight=None):
-	(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
-	screenRight=screenLeft+screenWidth
-	screenBottom=screenTop+screenHeight
+def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
+	screenWidth,screenHeight=api.getDesktopObject().location[2:]
+	x=min(max(0,x),screenWidth-1)
+	y=min(max(0,y),screenHeight-1)
 	minPitch=220
 	maxPitch=880
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
-	hdc=ctypes.windll.user32.GetDC(0)
-	brightness=0
-	for i in range(x-4,x+5):
-		for j in range(y-4,y+5):
-			if i>=screenLeft and i<screenRight and j>=screenTop and j<screenBottom:
-				p=ctypes.windll.gdi32.GetPixel(hdc,i,j)
-				grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
-				brightness=(brightness+(grey/255))/2
-	minBrightness=0.1
-	maxBrightness=1
-	brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+	if detectBrightness:
+		screenDC=ctypes.windll.user32.GetDC(0)
+		brightness=0
+		for i in range(x-blurFactor,x+blurFactor+1):
+			for j in range(y-blurFactor,y+blurFactor+1):
+				if i>=0 and i<screenWidth and j>=0 and j<screenHeight:
+					p=ctypes.windll.gdi32.GetPixel(screenDC,i,j)
+					grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
+					brightness=(brightness+(grey/255))/2
+		minBrightness=0.1
+		maxBrightness=1
+		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+		ctypes.windll.user32.ReleaseDC(0,screenDC)
+	else:
+		brightness=1
 	leftVolume=(85*((screenWidth-float(x))/screenWidth))*brightness
 	rightVolume=(85*(float(x)/screenWidth))*brightness
 	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
@@ -115,24 +119,23 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
+	global curMousePos, screenDC, screenWidth, screenHeight
 	(x,y)=winUser.getCursorPos()
 	mouseObj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 	if not mouseObj:
 		mouseObj=api.getDesktopObject()
 	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
+	screenWidth,screenHeight=api.getDesktopObject().location[2:]
 	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
 	if mouseMoved:
 		mouseMoved=False
-		(screenLeft,screenTop,screenWidth,screenHeight)=api.getDesktopObject().location
 		(x,y)=curMousePos
-		x=min(max(x,screenLeft),(screenLeft+screenWidth))
-		y=min(max(y,screenTop),(screenTop+screenHeight))
 		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-			playAudioCoordinates(x,y,screenWidth=screenWidth,screenHeight=screenHeight)
+			playAudioCoordinates(x,y,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 		executeMouseMoveEvent(x,y)
 	if config.conf["mouse"]["reportMouseShapeChanges"] and mouseShapeChanged>0:
 		if mouseShapeChanged==10:

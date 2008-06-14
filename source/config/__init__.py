@@ -60,6 +60,8 @@ outputDevice = string(default=default)
 [mouse]
 	reportObjectUnderMouse = boolean(default=true)
 	audioCoordinatesOnMouseMove = boolean(default=True)
+	audioCoordinates_detectBrightness = boolean(default=False)
+	audioCoordinates_blurFactor = integer(default=3)
 	reportMouseShapeChanges = boolean(default=false)
 
 #Keyboard settings
