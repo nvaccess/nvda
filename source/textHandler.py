@@ -87,6 +87,38 @@ POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
+class Points(object):
+	"""Represents two sets of X Y coordinates."""
+
+	def __init__(self,startX,startY,endX,endY):
+		"""
+		@param startX: the x coordinate of the first point.
+		@type startX: integer
+		@param xstartY: The y coordinate of the first point.
+		@type startY: integer
+		@param endX: the x coordinate of the second point.
+		@type endX: integer
+		@param endY: the y coordinate of the second point.
+		@type endY: integer
+		"""
+		self.startX=startX
+		self.startY=startY
+		self.endX=endX
+		self.endY=endY
+
+class Offsets(object):
+	"""Represents two offsets."""
+
+	def __init__(self,startOffset,endOffset):
+		"""
+		@param startOffset: the first offset.
+		@type startOffset: integer
+		@param endOffset: the second offset.
+		@type endOffset: integer
+		"""
+		self.startOffset=startOffset
+		self.endOffset=endOffset
+
 class Bookmark(baseObject.AutoPropertyObject):
 	"""The type for representing a static absolute position from a L{TextInfo} object
 @ivar infoClass: the class of the TextInfo object
