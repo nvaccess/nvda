@@ -236,7 +236,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		except StopIteration:
 			speech.speakMessage(errorMessage)
 			return
-		info = self.makeTextInfo(textHandler.Bookmark(self.TextInfo, (startOffset, endOffset)))
+		info = self.makeTextInfo(textHandler.Offsets(startOffset, endOffset))
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
 		self._caretMovedToField(docHandle, ID)
@@ -274,7 +274,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				elif startOffset > caretOffset:
 					# The caret wasn't inside a link, so set the default selection to be the next link.
 					defaultIndex = len(nodes)
-			text = self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset))).text
+			text = self.makeTextInfo(textHandler.Offsets(startOffset,endOffset)).text
 			nodes.append((text, docHandle, ID, startOffset, endOffset))
 
 		def action(args):
@@ -285,7 +285,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if activate:
 				self._activateField(docHandle, ID)
 			else:
-				info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(startOffset,endOffset)))
+				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 				info.updateCaret()
 				speech.cancelSpeech()
 				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
