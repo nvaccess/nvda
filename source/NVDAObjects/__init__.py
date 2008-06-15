@@ -127,9 +127,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		raise NotImplementedError
 
 	def __init__(self,obj,position):
-		if isinstance(position,textHandler.Points):
-			position=textHandler.Offsets(self._getOffsetFromPoint(position.x1,position.y1),self._getOffsetFromPoint(position.x2,position.y2))
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
+		if isinstance(position,textHandler.Points):
+			position=textHandler.Offsets(self._getOffsetFromPoint(position.startX,position.startY),self._getOffsetFromPoint(position.endX,position.endY))
 		if position==textHandler.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textHandler.POSITION_LAST:
@@ -590,12 +590,31 @@ Tries to force this object to take the focus.
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_mouseMove(self,x,y):
-		if not self._mouseEntered:
+		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
-			info=self.makeTextInfo(textHandler.POSITION_ALL)
-			speech.speakText(info.text)
-			speech.speakObjectProperties(self,role=True,states=True,keyboardShortcut=True,reason=speech.REASON_MOUSE)
+			speech.speakObjectProperties(self,role=True)
+			speechWasCanceled=True
+		else:
+			speechWasCanceled=False
 		self._mouseEntered=True
+		try:
+			info=self.makeTextInfo(textHandler.Points(x,y,x,y))
+			info.expand(textHandler.UNIT_PARAGRAPH)
+		except:
+			info=self.makeTextInfo(textHandler.POSITION_ALL)
+		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
+		self._lastMouseTextInfoObject=info
+		if not oldInfo or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
+			text=info.text
+			notBlank=False
+			if text:
+				for ch in text:
+					if not ch.isspace() and ch!=u'\ufffc':
+						notBlank=True
+			if notBlank:
+				if not speechWasCanceled:
+					speech.cancelSpeech()
+				speech.speakText(text)
 
 	def event_stateChange(self):
 		if id(self)==id(api.getFocusObject()):

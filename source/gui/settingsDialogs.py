@@ -411,20 +411,29 @@ class MouseSettingsDialog(SettingsDialog):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
-		self.objectCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &object under mouse"))
-		self.objectCheckBox.SetValue(config.conf["mouse"]["reportObjectUnderMouse"])
-		settingsSizer.Add(self.objectCheckBox,border=10,flag=wx.BOTTOM)
+		self.reportTextCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &text under the mouse"))
+		self.reportTextCheckBox.SetValue(config.conf["mouse"]["reportTextUnderMouse"])
+		settingsSizer.Add(self.reportTextCheckBox,border=10,flag=wx.BOTTOM)
+		self.reportObjectRoleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &role when mouse enters object"))
+		self.reportObjectRoleCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
+		settingsSizer.Add(self.reportObjectRoleCheckBox,border=10,flag=wx.BOTTOM)
 		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
 		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
 		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
+		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("brightness controls audio coordinates volume"))
+		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
+		settingsSizer.Add(self.audioDetectBrightnessCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.shapeCheckBox.SetFocus()
 
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
-		config.conf["mouse"]["reportObjectUnderMouse"]=self.objectCheckBox.IsChecked()
+		config.conf["mouse"]["reportTextUnderMouse"]=self.reportTextCheckBox.IsChecked()
+		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
+		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
+
 		super(MouseSettingsDialog, self).onOk(evt)
 
 class ObjectPresentationDialog(SettingsDialog):

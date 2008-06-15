@@ -58,7 +58,9 @@ outputDevice = string(default=default)
 		beepOnProgressBarUpdates = boolean(default=true)
 
 [mouse]
-	reportObjectUnderMouse = boolean(default=true)
+	reportTextUnderMouse = boolean(default=True)
+	mouseTextUnit = string(default="paragraph")
+	reportObjectRoleOnMouseEnter = boolean(default=False)
 	audioCoordinatesOnMouseMove = boolean(default=True)
 	audioCoordinates_detectBrightness = boolean(default=False)
 	audioCoordinates_blurFactor = integer(default=3)

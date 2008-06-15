@@ -158,6 +158,20 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
+	def _getOffsetFromPoint(self,x,y):
+		(left,top,width,height)=self.obj.location
+		if self.obj.editAPIVersion>=1:
+			processHandle=self.obj.editProcessHandle
+			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			p=PointLStruct(x-left,y-top)
+			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,internalP)
+			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
+		else:
+			p=(x-left)+((y-top)<<16)
+			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
+		return offset
+
 	def _getTextRangeWithEmbeddedObjects(self,start,end):
 		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
@@ -370,7 +384,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
-		return super(EditTextInfo,self)._getLineOffsets(offset)
+		return self._getLineOffsets(offset)
+
 
 class Edit(IAccessible):
 
@@ -395,28 +410,6 @@ class Edit(IAccessible):
 
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
-
-	def event_mouseMove(self,x,y):
-		mouseEntered=self._mouseEntered
-		super(Edit,self).event_mouseMove(x,y)
-		(left,top,width,height)=self.location
-		if self.editAPIVersion>=1:
-			processHandle=self.editProcessHandle
-			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			p=PointLStruct(x-left,y-top)
-			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-			offset=winUser.sendMessage(self.windowHandle,EM_CHARFROMPOS,0,internalP)
-			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
-		else:
-			p=(x-left)+((y-top)<<16)
-			offset=winUser.sendMessage(self.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
-		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
-			if mouseEntered:
-				speech.cancelSpeech()
-			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
-			info.expand(textHandler.UNIT_WORD)
-			speech.speakText(info.text)
-			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def event_caret(self):
 		if eventHandler.isPendingEvents('valueChange',self):

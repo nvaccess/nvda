@@ -86,6 +86,9 @@ def processGeckoDescription(obj):
 
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
+	def _getOffsetFromPoint(self,x,y):
+		return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+
 	def _getCaretOffset(self):
 		try:
 			return self.obj.IAccessibleTextObject.CaretOffset
@@ -132,31 +135,34 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		except:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
 
-
 	def _getWordOffsets(self,offset):
 		try:
 			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
 		except:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
 
-
 	def _getLineOffsets(self,offset):
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)[0:2]
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
+			return start,end
 		except:
 			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
 
 	def _getSentenceOffsets(self,offset):
 		try:
-			start,end=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)[0:2]
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)
 			if start==end:
 				raise NotImplementedError
-			return (start,end)
+			return start,end
 		except:
 			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
 
 	def _getParagraphOffsets(self,offset):
-		return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)[0:2]
+		try:
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)
+			return start,end
+		except:
+			super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
@@ -637,34 +643,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				char=0
 			if char!=0xfffc:
 				IAccessibleHandler.processFocusNVDAEvent(self)
-
-	def event_mouseMove(self,x,y):
-		#As Gecko 1.9 still has MSAA text node objects, these get hit by accHitTest, so
-		#We must find the real object and cache it
-		obj=getattr(self,'_realMouseObject',None)
-		if not obj:
-			obj=self
-			while obj and not hasattr(obj,'IAccessibleTextObject'):
-				obj=obj.parent
-			if obj:
-				self._realMouseObject=obj
-			else:
-				obj=self
-		mouseEntered=obj._mouseEntered
-		super(IAccessible,obj).event_mouseMove(x,y)
-		if not hasattr(obj,'IAccessibleTextObject'):
-			return 
-		(left,top,width,height)=obj.location
-		offset=obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
-		if offset<0:
-			return #Point was not at any good offset
-		if obj._lastMouseTextOffsets is None or offset<obj._lastMouseTextOffsets[0] or offset>=obj._lastMouseTextOffsets[1]:   
-			if mouseEntered:
-				speech.cancelSpeech()
-			info=obj.makeTextInfo(textHandler.Bookmark(obj.TextInfo,(offset,offset)))
-			info.expand(textHandler.UNIT_WORD)
-			speech.speakText(info.text)
-			obj._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def _get_groupName(self):
 		return None

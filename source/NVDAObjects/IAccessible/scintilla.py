@@ -57,6 +57,9 @@ class TextRangeStruct(ctypes.Structure):
 
 class ScintillaTextInfo(NVDAObjectTextInfo):
 
+	def _getOffsetFromPoint(self,x,y):
+		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
+
 	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
 		formatList,start,end=super(ScintillaTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
 		oldSel=self._getSelectionOffsets()
@@ -159,7 +162,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
-		return super(EditTextInfo,self)._getLineOffsets(offset)
+		return self._getLineOffsets(offset)
 
 	def _getCharacterOffsets(self,offset):
 		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
@@ -183,18 +186,6 @@ class Scintilla(IAccessible):
 #The role of the object should be editable text
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
-
-	def event_mouseMove(self,x,y):
-		mouseEntered=self._mouseEntered
-		super(Scintilla,self).event_mouseMove(x,y)
-		offset=winUser.sendMessage(self.windowHandle,SCI_POSITIONFROMPOINT,x,y)
-		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
-			if mouseEntered:
-				speech.cancelSpeech()
-			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
-			info.expand(textHandler.UNIT_WORD)
-			speech.speakText(info.text)
-			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 #We want all the standard text editing key commands to be handled by NVDA
 [Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [
