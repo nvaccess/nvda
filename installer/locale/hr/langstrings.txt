@@ -1,8 +1,9 @@
 ;Croatian
+LangString msg_WelcomePageTitle ${LANG_CROATIAN} "Instalacija programa ${PRODUCT}, Inaèica ${VERSION}"
 LangString msg_WelcomePageTitle ${LANG_Croatian} "Dobrodošli u instalaciju programa  ${PRODUCT}, besplatnog èitaèa ekrana za MS Windows baziranog na otvorenom kodu"
 LangString msg_WelcomePageText ${LANG_Croatian} "Autorska prava  2006 - 2008  NVDA doprinositelji\n\
 Ova instalacija æe na vaš sustav instalirati program ${PRODUCT}\n\
- Preporuèujemo da prije nastavka instalacije zatvorite sve otvorene aplikacije. To æe omoguæiti instalaciju sustavnih komponenti bez ponovnog pokretanja raèunala.$\n"
+ Preporuèujemo da prije nastavka instalacije zatvorite sve otvorene aplikacije.$\n"
 LangString msg_READMEText ${LANG_Croatian} "Pregledati datoteku Readme  (Preporuèeno)"
 LangString msg_NVDAWebSite ${LANG_Croatian} "Posjetite originalnu NVDA web stranicu"
 LangString msg_NVDARunning ${LANG_Croatian} "Kopija programa Nvda je veæ uèitana u vaš sustav. Ista æe biti iskljuèena prije nastavka pokrenute  NVDA instalacije."
@@ -17,3 +18,15 @@ LangString shortcut_readme $(LANG_CROATIAN) "Readme"
 LangString shortcut_userguide $(LANG_CROATIAN) "Korisnièke Upute"
 LangString path_userguide $(LANG_CROATIAN) "en\user guide.html"
 LangString path_readmefile $(LANG_CROATIAN) "en\readme.txt"
+LangString UNLOG_HEADER ${LANG_CROATIAN} "=========== Zapisnik Deinstalacije \
+                                         molimo ne preureðujte ovu datoteku ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_CROATIAN} "${UNINST_DAT} nije pronaðena, \
+                                                ne mogu izvršiti deinstalaciju."
+LangString UNLOG_DEL_FILE ${LANG_CROATIAN} 'Izbrisati Datoteku "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_CROATIAN} 'Izbrisati Direktorij "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_CROATIAN} "Pronaðena je prethodna instalacija u $0.$\n\
+                                            Potrebna datoteka ${UNINSTALL_LOG}.dat nedostaje.$\n$\n\
+                                            Preporuèeno je odabrati \
+                                            prazan direktorij i izvršiti svježu instalaciju."
+LangString UNLOG_ERROR_LOG ${LANG_CROATIAN} "Greška u zapisniku ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_CROATIAN} "Greška prilikom stvaranja ${UNINSTALL_LOG}."

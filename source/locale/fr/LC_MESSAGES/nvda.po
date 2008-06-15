@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2122\n"
+"Project-Id-Version: r2133\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-06-12 09:30+0200\n"
+"PO-Revision-Date: 2008-06-15 09:30+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgid "level %s"
 msgstr "niveau %s"
 
 #: NVDAObjects\IAccessible\__init__.py:75
-#: NVDAObjects\IAccessible\__init__.py:595
+#: NVDAObjects\IAccessible\__init__.py:601
 #: NVDAObjects\IAccessible\sysListView32.py:97
 msgid "%s of %s"
 msgstr "%s sur %s"
@@ -105,30 +105,6 @@ msgstr "fin de ligne"
 #: NVDAObjects\IAccessible\winword.py:353
 msgid "beginning of row"
 msgstr "début de ligne"
-
-#: _synthSettingsRing.py:76
-msgid "volume"
-msgstr "Volume"
-
-#: _synthSettingsRing.py:77
-msgid "rate"
-msgstr "débit"
-
-#: _synthSettingsRing.py:78
-msgid "pitch"
-msgstr "Hauteur"
-
-#: _synthSettingsRing.py:79
-msgid "inflection"
-msgstr "inflexion"
-
-#: _synthSettingsRing.py:80
-msgid "voice"
-msgstr "Voix"
-
-#: _synthSettingsRing.py:81
-msgid "variant"
-msgstr "Variante"
 
 #: appModuleHandler.py:231
 msgid "Error in appModule %s"
@@ -1071,7 +1047,7 @@ msgstr "menu"
 
 #: controlTypes.py:182
 msgid "combo box"
-msgstr "liste déroulante d'édition"
+msgstr "zone de liste déroulante"
 
 #: controlTypes.py:183
 msgid "list"
@@ -1956,11 +1932,11 @@ msgstr "NVDA"
 msgid "Links List"
 msgstr "liste de liens"
 
-#: gui\scriptUI.py:120
+#: gui\scriptUI.py:123
 msgid "&Activate Link"
 msgstr "&Activation du lien"
 
-#: gui\scriptUI.py:121
+#: gui\scriptUI.py:124
 msgid "&Move to link"
 msgstr "&Aller au lien"
 
@@ -2031,293 +2007,301 @@ msgstr "Erreur de synthétiseur"
 msgid "Voice settings"
 msgstr "Paramètres vocaux"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:201
 msgid "&Voice"
 msgstr "&Voix"
 
-#: gui\settingsDialogs.py:212
+#: gui\settingsDialogs.py:217
 msgid "V&ariant"
 msgstr "V&ariante"
 
-#: gui\settingsDialogs.py:226
+#: gui\settingsDialogs.py:231
 msgid "&Rate"
 msgstr "&Débit"
 
-#: gui\settingsDialogs.py:235
+#: gui\settingsDialogs.py:241
 msgid "&Pitch"
 msgstr "&Hauteur"
 
-#: gui\settingsDialogs.py:244
+#: gui\settingsDialogs.py:251
 msgid "&Inflection"
 msgstr "&inflexion"
 
-#: gui\settingsDialogs.py:253
+#: gui\settingsDialogs.py:261
 msgid "V&olume"
 msgstr "V&olume"
 
-#: gui\settingsDialogs.py:260
+#: gui\settingsDialogs.py:269
 msgid "&Speak all punctuation"
 msgstr "Dire toutes les &ponctuations"
 
-#: gui\settingsDialogs.py:263
+#: gui\settingsDialogs.py:272
 msgid "Raise pitch for capitals"
 msgstr "Augmenter la hauteur de la &voix pour signaler les majuscules"
 
-#: gui\settingsDialogs.py:266
+#: gui\settingsDialogs.py:275
 msgid "Say &cap before capitals"
 msgstr "Dire &maj avant les majuscules"
 
-#: gui\settingsDialogs.py:269
+#: gui\settingsDialogs.py:278
 msgid "&Beep for capitals"
 msgstr "émettre un &bip pour signaler les majuscules"
 
-#: gui\settingsDialogs.py:341
+#: gui\settingsDialogs.py:350
 msgid "Keyboard Settings"
 msgstr "Paramètres du clavier"
 
-#: gui\settingsDialogs.py:345
+#: gui\settingsDialogs.py:354
 msgid "&Keyboard layout"
 msgstr "Disposition du &clavier"
 
-#: gui\settingsDialogs.py:350
+#: gui\settingsDialogs.py:359
 msgid "Keyboard layout"
 msgstr "Disposition du clavier"
 
-#: gui\settingsDialogs.py:358
+#: gui\settingsDialogs.py:367
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Utiliser verrouillage majuscule comme touche NVDA"
 
-#: gui\settingsDialogs.py:361
+#: gui\settingsDialogs.py:370
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Utiliser insert du pavé numérique comme touche NVDA"
 
-#: gui\settingsDialogs.py:364
+#: gui\settingsDialogs.py:373
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Utiliser insert du clavier étendu comme touche NVDA"
 
-#: gui\settingsDialogs.py:367
+#: gui\settingsDialogs.py:376
 msgid "Speak typed &characters"
 msgstr "Echo clavier par &caractères"
 
-#: gui\settingsDialogs.py:370
+#: gui\settingsDialogs.py:379
 msgid "Speak typed &words"
 msgstr "Echo clavier par &mots"
 
-#: gui\settingsDialogs.py:373
+#: gui\settingsDialogs.py:382
 msgid "Speak command &keys"
 msgstr "Dire les &touches de commande"
 
-#: gui\settingsDialogs.py:399
+#: gui\settingsDialogs.py:408
 msgid "Mouse settings"
 msgstr "Paramètres de la souris"
 
-#: gui\settingsDialogs.py:402
+#: gui\settingsDialogs.py:411
 msgid "Report mouse &shape changes"
 msgstr "Annoncer les changements de &forme de la souris"
 
-#: gui\settingsDialogs.py:405
-msgid "Report &object under mouse"
-msgstr "Annoncer l'&objet sous la souris"
+#: gui\settingsDialogs.py:414
+msgid "Report &text under the mouse"
+msgstr "Annoncer le &texte sous la souris"
 
-#: gui\settingsDialogs.py:408
+#: gui\settingsDialogs.py:417
+msgid "Report &role when mouse enters object"
+msgstr "quand la souris entre dans un objet, annoncer son &type"
+
+#: gui\settingsDialogs.py:420
 msgid "play audio coordinates when mouse moves"
 msgstr "Jouer des sons indiquant les coordonnées quand la souris se déplace"
 
-#: gui\settingsDialogs.py:422
+#: gui\settingsDialogs.py:423
+msgid "brightness controls audio coordinates volume"
+msgstr "La brillance modifie le volume des coordonnées audio"
+
+#: gui\settingsDialogs.py:440
 msgid "Object presentation"
 msgstr "Présentation des objets"
 
-#: gui\settingsDialogs.py:425
+#: gui\settingsDialogs.py:443
 msgid "Report &tooltips"
 msgstr "Annoncer les &suggestions"
 
-#: gui\settingsDialogs.py:428
+#: gui\settingsDialogs.py:446
 msgid "Report &help balloons"
 msgstr "Annoncer les &infobulles"
 
-#: gui\settingsDialogs.py:431
+#: gui\settingsDialogs.py:449
 msgid "Report object shortcut &keys"
 msgstr "Annoncer les touches de &raccourci des objets"
 
-#: gui\settingsDialogs.py:434
+#: gui\settingsDialogs.py:452
 msgid "Report object &position information"
 msgstr "Annoncer l'information de &position de l'objet"
 
-#: gui\settingsDialogs.py:437
+#: gui\settingsDialogs.py:455
 msgid "Report object &descriptions"
 msgstr "Annoncer la &description de l'objet"
 
-#: gui\settingsDialogs.py:440
+#: gui\settingsDialogs.py:458
 msgid "Say object &state first"
 msgstr "Dire l'&état de l'objet en premier"
 
-#: gui\settingsDialogs.py:443
+#: gui\settingsDialogs.py:461
 msgid "&Beep on progress bar updates"
 msgstr "Indiquer la mise à jour des barres de progression par des &bips"
 
-#: gui\settingsDialogs.py:461
+#: gui\settingsDialogs.py:479
 msgid "virtual buffers"
 msgstr "tampon virtuel"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:482
 msgid "&Maximum number of characters on one line"
 msgstr "Nombre &maximum de caractères par ligne"
 
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:487
 msgid "&Number of lines per page"
 msgstr "&Nombre de lignes par page"
 
-#: gui\settingsDialogs.py:474
+#: gui\settingsDialogs.py:492
 msgid "Use &screen layout (when supported)"
 msgstr "utiliser la disposition telle qu'à l'&écran (quand c'est possible)"
 
-#: gui\settingsDialogs.py:478
+#: gui\settingsDialogs.py:496
 msgid "Report &virtual presentation on focus changes"
 msgstr "Annoncer la présentation &virtuelle au changement de focus"
 
-#: gui\settingsDialogs.py:481
+#: gui\settingsDialogs.py:499
 msgid "Update the content &dynamically"
 msgstr "Mise à jour &dynamique du contenu"
 
-#: gui\settingsDialogs.py:484
+#: gui\settingsDialogs.py:502
 msgid "Report lin&ks"
 msgstr "annoncer les l&iens"
 
-#: gui\settingsDialogs.py:487
+#: gui\settingsDialogs.py:505
 msgid "Report &lists"
 msgstr "Annoncer les &listes"
 
-#: gui\settingsDialogs.py:490
+#: gui\settingsDialogs.py:508
 msgid "Report list &items"
 msgstr "Annoncer les &éléments de listes"
 
-#: gui\settingsDialogs.py:493
+#: gui\settingsDialogs.py:511
 msgid "Report &headings"
 msgstr "Annoncer les &titres"
 
-#: gui\settingsDialogs.py:496 gui\settingsDialogs.py:576
+#: gui\settingsDialogs.py:514 gui\settingsDialogs.py:594
 msgid "Report &tables"
 msgstr "Annoncer les ta&bleaux"
 
-#: gui\settingsDialogs.py:499
+#: gui\settingsDialogs.py:517
 msgid "Report &graphics"
 msgstr "Annoncer les &graphiques"
 
-#: gui\settingsDialogs.py:502
+#: gui\settingsDialogs.py:520
 msgid "Report f&orms"
 msgstr "Annoncer les &formulaires"
 
-#: gui\settingsDialogs.py:505
+#: gui\settingsDialogs.py:523
 msgid "Report form &fields"
 msgstr "Annoncer les &champs de formulaires"
 
-#: gui\settingsDialogs.py:508
+#: gui\settingsDialogs.py:526
 msgid "Report block &quotes"
 msgstr "Annoncer les &balises de citation"
 
-#: gui\settingsDialogs.py:511
+#: gui\settingsDialogs.py:529
 msgid "Report &paragraphs"
 msgstr "Annoncer les &paragraphes"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:532
 msgid "Report f&rames"
 msgstr "Annoncer les c&adres"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:570
 msgid "Document formatting"
 msgstr "format du document"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:573
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Annonce les changements de format après le curseur (peut dégrader les "
 "performances)"
 
-#: gui\settingsDialogs.py:558
+#: gui\settingsDialogs.py:576
 msgid "Report font &name"
 msgstr "annoncer le &nom de la police"
 
-#: gui\settingsDialogs.py:561
+#: gui\settingsDialogs.py:579
 msgid "Report font &size"
 msgstr "annoncer la &taille de la police"
 
-#: gui\settingsDialogs.py:564
+#: gui\settingsDialogs.py:582
 msgid "Report font attri&butes"
 msgstr "annoncer les &attributs de la police"
 
-#: gui\settingsDialogs.py:567
+#: gui\settingsDialogs.py:585
 msgid "Report st&yle"
 msgstr "annoncer le st&yle"
 
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:588
 msgid "Report &pages"
 msgstr "annoncer la &page"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:591
 msgid "Report &line numbers"
 msgstr "annoncer le numéro de &ligne"
 
-#: gui\settingsDialogs.py:579
+#: gui\settingsDialogs.py:597
 msgid "Report &alignment"
 msgstr "annoncer l'&alignement"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:619
 msgid "Edit dictionary entry"
 msgstr "éditer une entrée du dictionnaire"
 
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:622
 msgid "&Pattern"
 msgstr "&Mot réel"
 
-#: gui\settingsDialogs.py:607
+#: gui\settingsDialogs.py:625
 msgid "&Replacement"
 msgstr "&Remplacement"
 
-#: gui\settingsDialogs.py:610
+#: gui\settingsDialogs.py:628
 msgid "&Comment"
 msgstr "&Commentaire"
 
-#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:631
 msgid "Case &sensitive"
 msgstr "Tenir compte de la &casse"
 
-#: gui\settingsDialogs.py:615
+#: gui\settingsDialogs.py:633
 msgid "Regular &expression"
 msgstr "&Expression normale"
 
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:655
 msgid "&Dictionary entries"
 msgstr "Entrées du &dictionnaire"
 
-#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:658
 msgid "Comment"
 msgstr "Commentaire"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:659
 msgid "Pattern"
 msgstr "Mot réel"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:660
 msgid "Replacement"
 msgstr "Remplacement"
 
-#: gui\settingsDialogs.py:643
+#: gui\settingsDialogs.py:661
 msgid "case sensitive"
 msgstr "Tenir compte de la casse"
 
-#: gui\settingsDialogs.py:644
+#: gui\settingsDialogs.py:662
 msgid "Regular expression"
 msgstr "Expression normale"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:669
 msgid "&Add"
 msgstr "&Ajouter"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:672
 msgid "&edit"
 msgstr "&éditer"
 
-#: gui\settingsDialogs.py:657
+#: gui\settingsDialogs.py:675
 msgid "&Remove"
 msgstr "&Supprimer"
 
@@ -2353,7 +2337,7 @@ msgstr "Erreur dans keyboardHandler.internal_keyDownEvent"
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:140
+#: mouseHandler.py:143
 msgid "%s cursor"
 msgstr "curseur %s"
 
@@ -2400,9 +2384,37 @@ msgstr "non %s"
 msgid "none"
 msgstr "aucune"
 
-#: synthDrivers\silence.py:20
-msgid "No speech,  a template synthesizer"
-msgstr "no speech, un modèle de synthétiseur"
+#: synthDrivers\display.py:30
+msgid "A virtual synth which displays text in a window"
+msgstr "Un synthétiseur virtuel qui affiche le texte dans une fenêtre"
+
+#: synthDrivers\silence.py:13
+msgid "No speech"
+msgstr "pas de parole"
+
+#: synthSettingsRing.py:76
+msgid "volume"
+msgstr "Volume"
+
+#: synthSettingsRing.py:77
+msgid "rate"
+msgstr "débit"
+
+#: synthSettingsRing.py:78
+msgid "pitch"
+msgstr "Hauteur"
+
+#: synthSettingsRing.py:79
+msgid "inflection"
+msgstr "inflexion"
+
+#: synthSettingsRing.py:80
+msgid "voice"
+msgstr "Voix"
+
+#: synthSettingsRing.py:81
+msgid "variant"
+msgstr "Variante"
 
 #: textBuffer.py:207
 msgid "page %d"
