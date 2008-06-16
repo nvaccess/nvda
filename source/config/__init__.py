@@ -58,12 +58,16 @@ outputDevice = string(default=default)
 		beepOnProgressBarUpdates = boolean(default=true)
 
 [mouse]
+	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
 	reportTextUnderMouse = boolean(default=True)
-	mouseTextUnit = string(default="paragraph")
 	reportObjectRoleOnMouseEnter = boolean(default=False)
 	audioCoordinatesOnMouseMove = boolean(default=True)
 	audioCoordinates_detectBrightness = boolean(default=False)
 	audioCoordinates_blurFactor = integer(default=3)
+	audioCoordinates_minVolume = float(default=0.1)
+	audioCoordinates_maxVolume = float(default=1.0)
+	audioCoordinates_minPitch = integer(default=220)
+	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
 
 #Keyboard settings

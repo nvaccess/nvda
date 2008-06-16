@@ -41,8 +41,8 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 	screenWidth,screenHeight=api.getDesktopObject().location[2:]
 	x=min(max(0,x),screenWidth-1)
 	y=min(max(0,y),screenHeight-1)
-	minPitch=220
-	maxPitch=880
+	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
+	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	if detectBrightness:
 		screenDC=ctypes.windll.user32.GetDC(0)
@@ -53,12 +53,12 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 					p=ctypes.windll.gdi32.GetPixel(screenDC,i,j)
 					grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
 					brightness=(brightness+(grey/255))/2
-		minBrightness=0.1
-		maxBrightness=1
+		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
+		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
 		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
 		ctypes.windll.user32.ReleaseDC(0,screenDC)
 	else:
-		brightness=1
+		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
 	leftVolume=(85*((screenWidth-float(x))/screenWidth))*brightness
 	rightVolume=(85*(float(x)/screenWidth))*brightness
 	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
@@ -68,15 +68,17 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos
+	if not config.conf['mouse']['enableMouseTracking']:
+		return True
 	try:
 		curMousePos=(x,y)
-		if msg==WM_MOUSEMOVE and config.conf["mouse"]["reportObjectUnderMouse"]:
+		if msg==WM_MOUSEMOVE and (config.conf['mouse']['reportTextUnderMouse'] or config.conf['mouse']['reportObjectRoleOnMouseEnter'] or config.conf['mouse']['audioCoordinatesOnMouseMove']):
 			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
-		return True
 	except:
 		globalVars.log.error("", exc_info=True)
+	return True
 
 def executeMouseMoveEvent(x,y):
 	oldMouseObject=api.getMouseObject()

@@ -595,15 +595,15 @@ class appModule(appModuleHandler.AppModule):
 		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current aplication status bar and moves the navigation cursor to it")
 
-	def script_toggleReportObjectUnderMouse(self,keyPress):
-		if config.conf["mouse"]["reportObjectUnderMouse"]:
+	def script_toggleMouseTracking(self,keyPress):
+		if config.conf["mouse"]["enableMouseTracking"]:
 			onOff=_("off")
-			config.conf["mouse"]["reportObjectUnderMouse"]=False
+			config.conf["mouse"]["enableMouseTracking"]=False
 		else:
 			onOff=_("on")
-			config.conf["mouse"]["reportObjectUnderMouse"]=True
-		speech.speakMessage(_("Report object under mouse")+" "+onOff)
-	script_toggleReportObjectUnderMouse.__doc__=_("Toggles on and off the reporting of objects under the mouse")
+			config.conf["mouse"]["enableMouseTracking"]=True
+		speech.speakMessage(_("Mouse tracking")+" "+onOff)
+	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 
 	def script_title(self,keyPress):
 		obj=api.getForegroundObject()

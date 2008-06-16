@@ -597,6 +597,8 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
+		if not config.conf['mouse']['reportTextUnderMouse']:
+			return
 		try:
 			info=self.makeTextInfo(textHandler.Points(x,y,x,y))
 			info.expand(textHandler.UNIT_PARAGRAPH)
