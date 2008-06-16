@@ -1048,5 +1048,6 @@ _staticMap={
 	("TPropInspEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TFilterbarEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("EditControl",None):"edit.Edit",
+	("AkelEditW",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.RichEdit20",
 	("TRichEditViewer",None):"edit.RichEdit",
 }
