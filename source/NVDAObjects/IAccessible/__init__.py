@@ -465,6 +465,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 				if newObj:
 					return newObj
+		#Support for groupbox windows
+		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
+		if groupboxObj:
+			return groupboxObj
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			try:
