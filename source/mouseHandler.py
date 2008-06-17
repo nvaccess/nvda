@@ -68,6 +68,8 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos
+	if injected:
+		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True
 	try:

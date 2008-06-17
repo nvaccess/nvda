@@ -71,6 +71,19 @@ class appModule(appModuleHandler.AppModule):
 		else:
 			speech.speakSpelling(info._get_text())
 
+	def script_leftMouseClick(self,keyPress):
+		speech.speakMessage(_("left click"))
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+	script_leftMouseClick.__doc__=_("Clicks the left mouse button once where ever it may be at the time.")
+
+	def script_rightMouseClick(self,keyPress):
+		speech.speakMessage(_("right click"))
+		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+	script_rightMouseClick.__doc__=_("Clicks the right mouse button once where ever it may be at the time.")
+
+
 	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
