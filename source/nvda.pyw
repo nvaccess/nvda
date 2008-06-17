@@ -15,6 +15,8 @@ import locale
 import gettext
 import time
 import optparse
+import win32gui
+import win32con
 import globalVars
 import logObj
 import winUser
@@ -27,7 +29,6 @@ class NoConsoleOptionParser(optparse.OptionParser):
 
 	def print_help(self, file=None):
 		"""Shows help in a standard Windows message dialog"""
-		import win32gui
 		win32gui.MessageBox(0, self.format_help(), "Help", 0)
 
 	def error(self, msg):
@@ -36,7 +37,6 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		if self.usage:
 			out = self.get_usage()
 		out += "\nerror: %s" % msg
-		import win32gui
 		win32gui.MessageBox(0, out, "Error", 0)
 		sys.exit(2)
 
@@ -86,8 +86,6 @@ except:
 if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle): 
 	processID,threadID=winUser.getWindowThreadProcessID(oldAppWindowHandle)
 	if globalVars.appArgs.quit or globalVars.appArgs.replace:
-		import win32gui
-		import win32con
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
 		timeout=0
 		ok=False
