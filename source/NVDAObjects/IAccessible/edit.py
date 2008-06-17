@@ -177,6 +177,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
 		r=ptr.Range(self._startOffset,self._endOffset)
 		bufText=r.text
+		if bufText is None:
+			bufText=""
 		newTextList=[]
 		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
