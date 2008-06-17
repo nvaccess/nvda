@@ -119,6 +119,15 @@ class Offsets(object):
 		self.startOffset=startOffset
 		self.endOffset=endOffset
 
+	def __eq__(self,other):
+		if isinstance(other,self.__class__) and self.startOffset==other.startOffset and self.endOffset==other.endOffset:
+			return True
+		else:
+			return False
+
+	def __ne__(self,other):
+		return not self==other
+ 
 class Bookmark(baseObject.AutoPropertyObject):
 	"""The type for representing a static absolute position from a L{TextInfo} object
 @ivar infoClass: the class of the TextInfo object
