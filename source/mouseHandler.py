@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 import tones
 import ctypes
 import winUser
@@ -29,6 +30,9 @@ curMousePos=(0,0)
 mouseMoved=False
 curMouseShape=""
 mouseShapeChanged=0
+#: The time (in seconds) at which the last mouse event occurred.
+#: @type: float
+lastMouseEventTime=0
 
 def updateMouseShape(name):
 	global curMouseShape, mouseShapeChanged
@@ -67,7 +71,8 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 
 @ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
-	global mouseMoved, curMousePos
+	global mouseMoved, curMousePos, lastMouseEventTime
+	lastMouseEventTime=time.time()
 	if injected:
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:

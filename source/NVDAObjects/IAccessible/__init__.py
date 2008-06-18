@@ -30,6 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
 import NVDAObjects.JAB
 import eventHandler
+import mouseHandler
 
 re_gecko_level=re.compile('.*?L([0-9]+).*')
 re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
@@ -951,18 +952,39 @@ class TaskListIcon(IAccessible):
 			return
 		super(TaskListIcon,self).reportFocus()
 
+class ToolbarWindow32(IAccessible):
 
-class ToolBarButton(IAccessible):
+	def event_gainFocus(self):
+		if (self.parent if self.IAccessibleRole == IAccessibleHandler.ROLE_SYSTEM_TOOLBAR else self.parent.parent).windowClassName == "SysPager":
+			# This is the system tray.
+			if not self.sysTrayGainFocus():
+				return
+		super(ToolbarWindow32, self).event_gainFocus()
 
-	def old_event_gainFocus(self):
-		super(ToolBarButton, self).event_gainFocus()
-		# If the mouse is on another toolbar control, some toolbars will rudely
-		# bounce the focus back to the object under the mouse after a brief pause.
-		# This is particularly annoying in the system tray in Windows XP.
-		# Moving the mouse to the focus object isn't a good solution because
-		# sometimes, the focus can't be moved away from the object under the mouse.
-		# Therefore, move the mouse out of the way.
-		winUser.setCursorPos(1, 1)
+	def sysTrayGainFocus(self):
+		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
+			# This focus change was not caused by a mouse event.
+			# If the mouse is on another toolbar control, the system tray toolbar will rudely
+			# bounce the focus back to the object under the mouse after a brief pause.
+			# Moving the mouse to the focus object isn't a good solution because
+			# sometimes, the focus can't be moved away from the object under the mouse.
+			# Therefore, move the mouse out of the way.
+			winUser.setCursorPos(0, 0)
+
+		if self.IAccessibleRole == IAccessibleHandler.ROLE_SYSTEM_TOOLBAR:
+			# Sometimes, the toolbar itself receives the focus instead of the focused child.
+			# However, the focused child still has the focused state.
+			for child in self.children:
+				if child.hasFocus:
+					# Redirect the focus to the focused child.
+					eventHandler.executeEvent("gainFocus", child)
+					return False
+			# We've really landed on the toolbar itself.
+			# This was probably caused by moving the mouse out of the way in a previous focus event.
+			# This previous focus event is no longer useful, so cancel speech.
+			speech.cancelSpeech()
+
+		return not eventHandler.isPendingEvents("gainFocus")
 
 class MenuItem(IAccessible):
 
@@ -1030,7 +1052,7 @@ _staticMap={
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"ToolBarButton",
+	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
