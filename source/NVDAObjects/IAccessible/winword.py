@@ -84,21 +84,28 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		self._rangeObj=self.obj.WinwordSelectionObject.range
-		if position==textHandler.POSITION_SELECTION:
-			pass
+		if isinstance(position,textHandler.Points):
+			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.startX,position.startY)
+			endRangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.endX,position.endY)
+			self._rangeObj.End=endRangeObj.End
+		elif position==textHandler.POSITION_SELECTION:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textHandler.POSITION_CARET:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.Collapse()
+		elif position==textHandler.POSITION_ALL:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
+			self._rangeObj.Expand(wdStory)
 		elif position==textHandler.POSITION_FIRST:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(0,0)
 		elif position==textHandler.POSITION_LAST:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.moveEnd(wdStory,1)
 			self._rangeObj.move(wdCharacter,-1)
-		elif isinstance(position,textHandler.Bookmark):
-			if position.infoClass==self.__class__:
-				self._rangeObj.SetRange(position.data[0],position.data[1])
-			else:
-				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
+		elif isinstance(position,textHandler.Offsets):
+			self._rangeObj=self.obj.WinwordSelectionObject.range
+			self._rangeObj.SetRange(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -262,7 +269,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark(self.__class__,(self._rangeObj.Start,self._rangeObj.End))
+		return textHandler.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
 	def updateCaret(self):
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
