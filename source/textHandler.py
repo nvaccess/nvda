@@ -87,6 +87,19 @@ POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
+class Point(object):
+	"""Represents a set of X Y coordinates."""
+
+	def __init__(self,x,y):
+		"""
+		@param x: the x coordinate
+		@type x: integer
+		@param y: The y coordinate
+		@type y: integer
+		"""
+		self.x=x
+		self.y=y
+
 class Points(object):
 	"""Represents two sets of X Y coordinates."""
 

@@ -128,8 +128,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
-		if isinstance(position,textHandler.Points):
-			position=textHandler.Offsets(self._getOffsetFromPoint(position.startX,position.startY),self._getOffsetFromPoint(position.endX,position.endY))
+		if isinstance(position,textHandler.Point):
+			offset=self._getOffsetFromPoint(position.x,position.y)
+			position=textHandler.Offsets(offset,offset)
 		if position==textHandler.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textHandler.POSITION_LAST:
@@ -600,7 +601,7 @@ Tries to force this object to take the focus.
 		if not config.conf['mouse']['reportTextUnderMouse']:
 			return
 		try:
-			info=self.makeTextInfo(textHandler.Points(x,y,x,y))
+			info=self.makeTextInfo(textHandler.Point(x,y))
 			info.expand(textHandler.UNIT_PARAGRAPH)
 		except:
 			info=self.makeTextInfo(textHandler.POSITION_ALL)

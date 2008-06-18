@@ -84,10 +84,8 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textHandler.Points):
-			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.startX,position.startY)
-			endRangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.endX,position.endY)
-			self._rangeObj.End=endRangeObj.End
+		if isinstance(position,textHandler.Point):
+			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.x,position.y)
 		elif position==textHandler.POSITION_SELECTION:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textHandler.POSITION_CARET:

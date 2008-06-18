@@ -390,10 +390,8 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textHandler.Points):
-			startRange=self.obj.ITextDocumentObject.rangeFromPoint(position.startX,position.startY)
-			endRange=self.obj.ITextDocumentObject.rangeFromPoint(position.endX,position.endY)
-			self._rangeObj=self.obj.ITextDocumentObject.range(startRange.start,endRange.end)
+		if isinstance(position,textHandler.Point):
+			self._rangeObj=self.obj.ITextDocumentObject.rangeFromPoint(position.x,position.y)
 		elif position==textHandler.POSITION_ALL:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 			self._rangeObj.expand(comInterfaces.tom.tomStory)
