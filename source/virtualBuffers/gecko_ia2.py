@@ -235,7 +235,7 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="comboBox":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]}
 		elif nodeType=="checkBox":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBOX]}
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON]}
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="focusable":
