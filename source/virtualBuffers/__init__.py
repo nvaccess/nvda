@@ -336,4 +336,6 @@ qn("checkBox", key="x", nextDoc=_("moves to the next check box"), nextError=_("n
 	prevDoc=_("moves to the previous check box"), prevError=_("no previous check box"))
 qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no next graphic"),
 	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
+qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=_("no next block quote"),
+	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
 del qn

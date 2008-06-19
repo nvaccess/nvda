@@ -228,6 +228,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON]}
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType=="blockQuote":
+			attrs={"IAccessible2::attribute_tag":["BLOCKQUOTE"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
