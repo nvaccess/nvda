@@ -242,8 +242,6 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
 			return None
-		# We should never consider invisible nodes.
-		attrs["IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_INVISIBLE]=[None]
 		return attrs
 
 	def event_stateChange(self,obj,nextHandler):
