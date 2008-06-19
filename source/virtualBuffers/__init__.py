@@ -328,4 +328,12 @@ qn("frame", key="m", nextDoc=_("moves to the next frame"), nextError=_("no next 
 	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"))
 qn("separator", key="s", nextDoc=_("moves to the next separator"), nextError=_("no next separator"),
 	prevDoc=_("moves to the previous separator"), prevError=_("no previous separator"))
+qn("radioButton", key="r", nextDoc=_("moves to the next radio button"), nextError=_("no next radio button"),
+	prevDoc=_("moves to the previous radio button"), prevError=_("no previous radio button"))
+qn("comboBox", key="c", nextDoc=_("moves to the next combo box"), nextError=_("no next combo box"),
+	prevDoc=_("moves to the previous combo box"), prevError=_("no previous combo box"))
+qn("checkBox", key="x", nextDoc=_("moves to the next check box"), nextError=_("no next check box"),
+	prevDoc=_("moves to the previous check box"), prevError=_("no previous check box"))
+qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no next graphic"),
+	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
 del qn

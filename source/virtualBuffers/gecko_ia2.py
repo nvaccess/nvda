@@ -230,6 +230,14 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_SEPARATOR]}
+		elif nodeType=="radioButton":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]}
+		elif nodeType=="checkBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBOX]}
+		elif nodeType=="graphic":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
