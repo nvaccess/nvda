@@ -22,18 +22,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		_IA2Attributes=attrs.get('iaccessible2::attributes',"")
-		IA2Attributes={}
-		for attrib in _IA2Attributes.split(';'):
-			nameValue=attrib.split(':')
-			name=nameValue[0].lower()
-			if len(nameValue)>1:
-				value=nameValue[1]
-			else:
-				value=""
-			if value is not "":
-				IA2Attributes[name]=value
-		if IA2Attributes.get('tag',"").lower()=="blockquote":
+		if attrs.get('iaccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
@@ -43,7 +32,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
-		level=IA2Attributes.get('level',"")
+		globalVars.log.warning(repr(attrs))
+		level=attrs.get('iaccessible2::attribute_level',"")
 		newAttrs=attrs.copy()
 		newAttrs['role']=role
 		newAttrs['states']=states
