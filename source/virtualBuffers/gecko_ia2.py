@@ -22,18 +22,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		_IA2Attributes=attrs.get('iaccessible2::attributes',"")
-		IA2Attributes={}
-		for attrib in _IA2Attributes.split(';'):
-			nameValue=attrib.split(':')
-			name=nameValue[0].lower()
-			if len(nameValue)>1:
-				value=nameValue[1]
-			else:
-				value=""
-			if value is not "":
-				IA2Attributes[name]=value
-		if IA2Attributes.get('tag',"").lower()=="blockquote":
+		if attrs.get('iaccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
@@ -43,7 +32,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
-		level=IA2Attributes.get('level',"")
+		level=attrs.get('iaccessible2::attribute_level',"")
 		newAttrs=attrs.copy()
 		newAttrs['role']=role
 		newAttrs['states']=states
@@ -230,12 +219,20 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_SEPARATOR]}
+		elif nodeType=="radioButton":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_COMBOBOX]}
+		elif nodeType=="checkBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON]}
+		elif nodeType=="graphic":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType=="blockQuote":
+			attrs={"IAccessible2::attribute_tag":["BLOCKQUOTE"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
 			return None
-		# We should never consider invisible nodes.
-		attrs["IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_INVISIBLE]=[None]
 		return attrs
 
 	def event_stateChange(self,obj,nextHandler):
