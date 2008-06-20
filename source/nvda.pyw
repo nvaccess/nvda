@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,7 +18,7 @@ import optparse
 import win32gui
 import win32con
 import globalVars
-import logObj
+import logHandler
 import winUser
 import winKernel
 
@@ -116,13 +116,10 @@ if globalVars.appArgs.quit or oldAppWindowHandle:
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
 	logLevel=logging.WARN
-log=logObj.Logger("NVDA",logLevel)
-logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w", "UTF-8")
-logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
-logHandler.setFormatter(logFormatter)
-log.addHandler(logHandler)
-logObj.redirectStdout(log)
-globalVars.log=log
+logHandler.initialize()
+logHandler.log.setLevel(logLevel)
+globalVars.log=logHandler.log
+
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 winUser.setSystemScreenReaderFlag(True)
