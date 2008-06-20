@@ -10,6 +10,7 @@ import ctypes
 import difflib
 import pythoncom
 import globalVars
+from logHandler import log
 import queueHandler
 import textHandler
 import tones
@@ -37,11 +38,11 @@ class WinConsole(IAccessible):
 		#Get the process ID of the console this NVDAObject is fore
 		processID=self.windowProcessID
 		if processID<=0:
-			globalVars.log.warn("Could not get valid processID from window "%self.windowHandle)
+			log.warn("Could not get valid processID from window "%self.windowHandle)
 			return
 		#Attach NVDA to this console so we can access its text etc
 		if winKernel.kernel32.GetConsoleWindow():
-			globalVars.log.debug("Already attached to a console, need to free first")
+			log.debug("Already attached to a console, need to free first")
 			if winKernel.freeConsole()==0:
 				raise OSError("Could not free console")
 		if winKernel.attachConsole(processID)==0:
@@ -161,7 +162,7 @@ class WinConsole(IAccessible):
 				#Each round of the while loop we wait 10 milliseconds
 				time.sleep(0.01)
 		except:
-			globalVars.log.error("console monitorThread", exc_info=True)
+			log.error("console monitorThread", exc_info=True)
 
 	def getConsoleVerticalLength(self):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)

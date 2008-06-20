@@ -19,6 +19,7 @@ import win32gui
 import win32con
 import globalVars
 import logHandler
+from logHandler import log
 import winUser
 import winKernel
 
@@ -42,7 +43,7 @@ class NoConsoleOptionParser(optparse.OptionParser):
 
 def abortWithError(code):
 	"""Logs a critical error, plays the critical error Windows sound, sets the system screen reader flag back to false, plays the NVDA exit sound, and then exits NVDA"""
-	globalVars.log.critical("core stop not due to exit/restart",exc_info=True)
+	log.critical("core stop not due to exit/restart",exc_info=True)
 	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 	winUser.setSystemScreenReaderFlag(False)
@@ -118,7 +119,6 @@ if logLevel<=0:
 	logLevel=logging.WARN
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
-globalVars.log=logHandler.log
 
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
@@ -137,5 +137,4 @@ elif res==core.CORE_INITERROR:
 winUser.setSystemScreenReaderFlag(False)
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
-globalVars.log.info("NVDA exit")
-del globalVars.log
+log.info("NVDA exit")

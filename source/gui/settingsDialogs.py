@@ -14,6 +14,7 @@ import languageHandler
 import speech
 import gui
 import globalVars
+from logHandler import log
 import nvwave
 import speechDictHandler
 import appModuleHandler
@@ -112,10 +113,10 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.logLevelNames=[logging._levelNames[x] for x in sorted([x for x in logging._levelNames.keys() if isinstance(x,int) and x>0],reverse=True)]
 		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=self.logLevelNames)
 		try:
-			index=self.logLevelNames.index(logging._levelNames[globalVars.log.getEffectiveLevel()])
+			index=self.logLevelNames.index(logging._levelNames[log.getEffectiveLevel()])
 			self.logLevelList.SetSelection(index)
 		except:
-			globalVars.log.warn("Could not set log level list to current log level",exc_info=True) 
+			log.warn("Could not set log level list to current log level",exc_info=True) 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 
@@ -128,14 +129,14 @@ class GeneralSettingsDialog(SettingsDialog):
 			try:
 				languageHandler.setLanguage(newLanguage)
 			except:
-				globalVars.log.error("languageHandler.setLanguage", exc_info=True)
+				log.error("languageHandler.setLanguage", exc_info=True)
 				wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING).ShowModal()
 				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		logLevelName=self.logLevelNames[self.logLevelList.GetSelection()]
-		globalVars.log.setLevel(logging._levelNames[logLevelName])
+		log.setLevel(logging._levelNames[logLevelName])
 		config.conf["general"]["loggingLevel"]=logLevelName
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
@@ -361,7 +362,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
 		except:
-			globalVars.log.warn("Could not set Keyboard layout list to current layout",exc_info=True) 
+			log.warn("Could not set Keyboard layout list to current layout",exc_info=True) 
 		kbdSizer.Add(self.kbdList)
 		settingsSizer.Add(kbdSizer,border=10,flag=wx.BOTTOM)
 		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))

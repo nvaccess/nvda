@@ -11,6 +11,7 @@ import struct
 import math
 import config
 import globalVars
+from logHandler import log
 
 piTwo=math.pi*2
 
@@ -30,7 +31,7 @@ def beep(hz,length,left=50,right=50):
 	@param right: volume of the right channel (0 to 100)
 	@type right: float
 	""" 
-	globalVars.log.info("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
+	log.info("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	hz=float(hz)
 	player.stop()
 	samplesPerCycle=(sampleRate/hz)

@@ -10,6 +10,7 @@ import speech
 import eventHandler
 import IAccessibleHandler
 import globalVars
+from logHandler import log
 import api
 import textHandler
 import keyUtils
@@ -123,7 +124,7 @@ class Gecko_ia2(VirtualBuffer):
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			except:
-				#globalVars.log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
+				#log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
@@ -255,7 +256,7 @@ class Gecko_ia2(VirtualBuffer):
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			except:
-				#globalVars.log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
+				#log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")

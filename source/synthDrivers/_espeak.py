@@ -11,6 +11,7 @@ import Queue
 from ctypes import *
 import config
 import globalVars
+from logHandler import log
 import os
 import codecs
 
@@ -129,10 +130,10 @@ def callback(wav,numsamples,event):
 			try:
 				player.feed(string_at(wav, numsamples * sizeof(c_short)))
 			except:
-				globalVars.log.warn("Error feeding audio to nvWave",exc_info=True)
+				log.warn("Error feeding audio to nvWave",exc_info=True)
 		return 0
 	except:
-		globalVars.log.error("callback", exc_info=True)
+		log.error("callback", exc_info=True)
 
 class BgThread(threading.Thread):
 	def __init__(self):
@@ -149,7 +150,7 @@ class BgThread(threading.Thread):
 				func(*args, **kwargs)
 				bgQueue.task_done()
 		except:
-			globalVars.log.error("bgThread.run", exc_info=True)
+			log.error("bgThread.run", exc_info=True)
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue

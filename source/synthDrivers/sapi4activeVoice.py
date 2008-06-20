@@ -12,6 +12,7 @@ import _winreg
 import synthDriverHandler
 import config
 import globalVars
+from logHandler import log
 import nvwave
 
 COM_CLASS = "ActiveVoice.ActiveVoice"
@@ -57,7 +58,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self._lastIndex=None
 			return True
 		except:
-			globalVars.log.error("initialize", exc_info=True)
+			log.error("initialize", exc_info=True)
 			return False
 
 	def _get_voiceCount(self):

@@ -19,6 +19,7 @@ import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
+from logHandler import log
 from synthDriverHandler import *
 import gui
 import wx
@@ -647,7 +648,7 @@ class appModule(appModuleHandler.AppModule):
 			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
 				speech.speakMessage(_("copied to clipboard"))
 		else:
-			globalVars.log.info("%s %s"%(obj.role,obj.windowHandle))
+			log.info("%s %s"%(obj.role,obj.windowHandle))
 			speech.speakMessage("%s"%obj)
 			speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
 			speech.speakMessage(_("Class: %s")%obj.windowClassName)
@@ -704,7 +705,7 @@ class appModule(appModuleHandler.AppModule):
 		NO_SYSTEM_BATTERY = 0X80
 		sps = winKernel.SYSTEM_POWER_STATUS()
 		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
-			globalVars.log.error("error accessing system power status")
+			log.error("error accessing system power status")
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
 			speech.speakMessage(_("no system battery"))

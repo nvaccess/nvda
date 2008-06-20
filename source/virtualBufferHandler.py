@@ -7,6 +7,7 @@
 import gc
 import os
 import globalVars
+from logHandler import log
 import winUser
 import NVDAObjects
 import NVDAObjects.window
@@ -53,11 +54,11 @@ def update(obj):
 		return
 	modString,classString=os.path.splitext(classString)
 	classString=classString[1:]
-	globalVars.log.debug("loading module %s, class %s"%(modString,classString))
+	log.debug("loading module %s, class %s"%(modString,classString))
 	mod=__import__(modString,globals(),locals(),[""])
-	globalVars.log.debug("mod contains %s"%dir(mod))
+	log.debug("mod contains %s"%dir(mod))
 	newClass=getattr(mod,classString)
-	globalVars.log.debug("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,obj.windowClassName))
+	log.debug("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,obj.windowClassName))
 	virtualBufferObject=newClass(obj)
 	if not virtualBufferObject.isAlive():
 		return None
@@ -65,7 +66,7 @@ def update(obj):
 		try:
 			virtualBufferObject.loadBuffer()
 		except:
-			globalVars.log.error("error loading buffer",exc_info=True)
+			log.error("error loading buffer",exc_info=True)
 			return None
 	runningTable.add(virtualBufferObject)
 	return virtualBufferObject
