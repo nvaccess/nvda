@@ -8,9 +8,6 @@ import winsound
 from types import MethodType
 import globalVars
 
-#: The singleton logger instance.
-#: @type: L{Logger}
-log = None
 moduleCache={}
 
 def makeModulePathFromFilePath(path):
@@ -127,13 +124,16 @@ def redirectStdout(logger):
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
 
+#: The singleton logger instance.
+#: @type: L{Logger}
+log = Logger("nvda")
+
 def initialize():
 	"""Initialize logging.
 	This must be called before any logging can occur.
 	@precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
 	"""
 	global log
-	log = Logger("NVDA")
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", "UTF-8")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
 	logHandler.setFormatter(logFormatter)
