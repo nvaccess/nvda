@@ -39,7 +39,7 @@ def queueFunction(queue,func,*args,**kwargs):
 		kwargsText=",".join(["%s=%s"%(x,y) for x,y in kwargs.items()])
 		funcText="%s(%s)"%(func.__name__,",".join([x for x in (argsText,kwargsText) if x]))
 		queueText=queue.__name__
-		log.warn("Queue full when trying to add function %s to %s"%(funcText,queueText))
+		log.debugWarning("Queue full when trying to add function %s to %s"%(funcText,queueText))
 
 def isRunningGenerators():
 	res=len(generators)>0

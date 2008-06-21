@@ -535,7 +535,7 @@ class XMLContextParser(object):
 		try:
 			self.parser.Parse(XMLContext.encode('utf-8'))
 		except:
-			log.warn("XML: %s"%XMLContext,exc_info=True)
+			log.debugWarning("XML: %s"%XMLContext,exc_info=True)
 		return self._fieldStack
 
 class RelativeXMLParser(object):

@@ -130,7 +130,7 @@ def callback(wav,numsamples,event):
 			try:
 				player.feed(string_at(wav, numsamples * sizeof(c_short)))
 			except:
-				log.warn("Error feeding audio to nvWave",exc_info=True)
+				log.debugWarning("Error feeding audio to nvWave",exc_info=True)
 		return 0
 	except:
 		log.error("callback", exc_info=True)

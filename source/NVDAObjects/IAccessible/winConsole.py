@@ -38,7 +38,7 @@ class WinConsole(IAccessible):
 		#Get the process ID of the console this NVDAObject is fore
 		processID=self.windowProcessID
 		if processID<=0:
-			log.warn("Could not get valid processID from window "%self.windowHandle)
+			log.debugWarning("Could not get valid processID from window "%self.windowHandle)
 			return
 		#Attach NVDA to this console so we can access its text etc
 		if winKernel.kernel32.GetConsoleWindow():

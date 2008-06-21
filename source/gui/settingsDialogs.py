@@ -116,7 +116,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			index=self.logLevelNames.index(logHandler.levelNames[log.getEffectiveLevel()])
 			self.logLevelList.SetSelection(index)
 		except:
-			log.warn("Could not set log level list to current log level",exc_info=True) 
+			log.debugWarning("Could not set log level list to current log level",exc_info=True) 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 
@@ -362,7 +362,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
 		except:
-			log.warn("Could not set Keyboard layout list to current layout",exc_info=True) 
+			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
 		kbdSizer.Add(self.kbdList)
 		settingsSizer.Add(kbdSizer,border=10,flag=wx.BOTTOM)
 		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))

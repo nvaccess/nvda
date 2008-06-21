@@ -91,20 +91,20 @@ class JABContext(object):
 
 	def getAccessibleTextLineBounds(self,index):
 		index=max(index,0)
-		log.info("lineBounds: index %s"%index)
+		log.debug("lineBounds: index %s"%index)
 		#Java returns end as the last character, not end as past the last character
 		startIndex=c_int()
 		endIndex=c_int()
 		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
 		start=max(startIndex.value,0)
 		end=max(endIndex.value,0)
-		log.info("line bounds: start %s, end %s"%(start,end))
+		log.debug("line bounds: start %s, end %s"%(start,end))
 		ok=False
 		while not ok:
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,end,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
-			log.info("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
+			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempStart>(index+1):
 				end=tempStart-1
 			else:
@@ -114,12 +114,12 @@ class JABContext(object):
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,start,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
-			log.info("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
+			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempEnd<(index-1):
 				start=tempEnd+1
 			else:
 				ok=True
-		log.info("line bounds: returning %s, %s"%(start,end))
+		log.debug("line bounds: returning %s, %s"%(start,end))
 		return (start,end)
 
 

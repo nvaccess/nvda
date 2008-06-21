@@ -210,7 +210,7 @@ class JAB(Window):
 		return self._JABAccContextInfo.states_en_US
 
 	def _get_states(self):
-		log.info("states: %s"%self.JABStates)
+		log.debug("states: %s"%self.JABStates)
 		stateSet=set()
 		stateString=self.JABStates
 		for state in stateString.split(','):
