@@ -6,7 +6,6 @@
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core. it also handles the playing of the startup and exit sounds."""
  
-import logging
 import os
 import sys
 import tempfile
@@ -116,7 +115,7 @@ if globalVars.appArgs.quit or oldAppWindowHandle:
 
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
-	logLevel=logging.WARN
+	logLevel=log.WARN
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 

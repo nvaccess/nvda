@@ -16,7 +16,6 @@
 import re
 import ctypes
 import os
-import logging
 import baseObject
 import globalVars
 from logHandler import log
@@ -118,7 +117,7 @@ def getActiveModule():
 	"""
 	fg=winUser.getForegroundWindow()
 	mod=getAppModuleFromWindow(fg)
-	if log.getEffectiveLevel()<=logging.DEBUG:
+	if log.isEnabledFor(log.DEBUG):
 		log.debug("Using window %s (%s), got appModule %s"%(fg,winUser.getClassName(fg),mod))
 	return mod
 

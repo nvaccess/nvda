@@ -3,6 +3,7 @@
 import os
 import sys
 import logging
+from logging import _levelNames as levelNames
 import inspect
 import winsound
 from types import MethodType
@@ -62,6 +63,8 @@ def getCodePath(f):
 	return ".".join([x for x in path,className,funcName if x])
 
 class Logger(logging.Logger):
+	# Import standard levels for convenience.
+	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
 		if not extra:

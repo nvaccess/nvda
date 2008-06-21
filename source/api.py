@@ -7,7 +7,6 @@
 """General functions for NVDA"""
 
 import pythoncom
-import logging
 import textHandler
 import globalVars
 from logHandler import log
@@ -61,7 +60,7 @@ def setForegroundObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
-	if log.getEffectiveLevel()<=logging.INFO:
+	if log.isEnabledFor(log.INFO):
 		log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
@@ -119,7 +118,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
-	if log.getEffectiveLevel()<=logging.INFO:
+	if log.isEnabledFor(log.INFO):
 		log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
@@ -135,7 +134,7 @@ def getMouseObject():
 
 def setMouseObject(obj):
 	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
-	if log.getEffectiveLevel()<=logging.INFO:
+	if log.isEnabledFor(log.INFO):
 		log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.mouseObject=obj
 
@@ -145,7 +144,7 @@ def getDesktopObject():
 
 def setDesktopObject(obj):
 	"""Tells NVDA to remember the given object as the desktop object"""
-	if log.getEffectiveLevel()<=logging.INFO:
+	if log.isEnabledFor(log.INFO):
 		log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.desktopObject=obj
 
@@ -163,7 +162,7 @@ def setNavigatorObject(obj):
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if log.getEffectiveLevel()<=logging.INFO:
+	if log.isEnabledFor(log.INFO):
 		log.info("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 	globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)

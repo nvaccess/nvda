@@ -14,7 +14,7 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 
 import wx
 import time
-import logging
+import logHandler
 import globalVars
 from logHandler import log
 
@@ -38,7 +38,7 @@ def resetConfiguration(reportDone=False):
 	#Logging
 	levelName=config.conf["general"]["loggingLevel"].upper()
 	try:
-		logLevel=logging._levelNames[levelName]
+		logLevel=logHandler.levelNames[levelName]
 		log.setLevel(logLevel)
 	except:
 		log.warning("could not set logging to %s"%levelName,exc_info=True)
@@ -79,7 +79,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if globalVars.appArgs.logLevel==0:
 			levelName=config.conf["general"]["loggingLevel"].upper()
 			try:
-				logLevel=logging._levelNames[levelName]
+				logLevel=logHandler.levelNames[levelName]
 				log.setLevel(logLevel)
 			except:
 				log.warning("could not set logging to %s"%levelName,exc_info=True)
