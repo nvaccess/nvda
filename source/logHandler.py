@@ -66,6 +66,10 @@ class Logger(logging.Logger):
 	# Import standard levels for convenience.
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
 
+	# Our custom levels.
+	DEBUGWARNING = 12
+	IO = 15
+
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
 		if not extra:
 			extra={}
@@ -86,6 +90,20 @@ class Logger(logging.Logger):
 			# Make the log text we just wrote appear in the log viewer.
 			logViewer.logViewer.refresh()
 		return res
+
+	def debugWarning(self, msg, *args, **kwargs):
+		"""Log 'msg % args' with severity 'DEBUGWARNING'.
+		"""
+		if not self.isEnabledFor(self.DEBUGWARNING):
+			return
+		self._log(log.DEBUGWARNING, msg, args, **kwargs)
+
+	def io(self, msg, *args, **kwargs):
+		"""Log 'msg % args' with severity 'IO'.
+		"""
+		if not self.isEnabledFor(self.IO):
+			return
+		self._log(log.IO, msg, args, **kwargs)
 
 class FileHandler(logging.FileHandler):
 
@@ -137,6 +155,8 @@ def initialize():
 	@precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
 	"""
 	global log
+	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
+	logging.addLevelName(Logger.IO, "IO")
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", "UTF-8")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
 	logHandler.setFormatter(logFormatter)
