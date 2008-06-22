@@ -115,9 +115,12 @@ if globalVars.appArgs.quit or oldAppWindowHandle:
 
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
-	logLevel=log.WARN
+	logLevel=log.INFO
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
+
+import versionInfo
+log.info("Starting NVDA version %s" % versionInfo.version)
 
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
