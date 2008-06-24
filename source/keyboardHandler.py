@@ -155,6 +155,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			else:
 				labelList.append(keyPress[1])
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"+".join(labelList))
+		if (mainKey in ('extendeddivide', 'multiply', 'subtract', 'add', 'extendedreturn')) and (bool(winUser.getKeyState(winUser.VK_NUMLOCK)&1)):
+			return True
 		script=scriptHandler.findScript(keyPress)
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
