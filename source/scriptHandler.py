@@ -44,12 +44,13 @@ def findScript_virtualBufferLevel(keyPress):
 	return findScript_NVDAObjectLevel(keyPress)
 
 def findScript_NVDAObjectLevel(keyPress):
-	focusObject=api.getFocusObject()
-	func=focusObject.getScript(keyPress)
-	if func:
-		return func
-	else:
-		return None
+	objList=list(reversed(api.getFocusAncestors()))
+	objList.insert(0,api.getFocusObject())
+	for obj in objList:
+		func=obj.getScript(keyPress)
+		if func:
+			return func
+	return None
 
 def getScriptName(script):
 	return script.__name__[7:]
