@@ -144,7 +144,9 @@ class MainFrame(wx.Frame):
 			config.save()
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration saved"))
 		except:
-			speech.speakMessage(_("Could not save configuration - probably read only file system"),wait=True)
+			self.prePopup()
+			wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
+			self.postPopup()
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
 		self.prePopup()

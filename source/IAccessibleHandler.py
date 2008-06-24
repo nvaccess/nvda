@@ -367,6 +367,8 @@ IAccessibleRolesToNVDARoles={
 	"page":controlTypes.ROLE_PAGE,
 	"form":controlTypes.ROLE_FORM,
 	"div":controlTypes.ROLE_SECTION,
+	"li":controlTypes.ROLE_LISTITEM,
+	"ul":controlTypes.ROLE_LIST,
 	"tbody":controlTypes.ROLE_TABLEBODY,
 	"browser":controlTypes.ROLE_WINDOW,
 	"h1":controlTypes.ROLE_HEADING1,
@@ -377,6 +379,7 @@ IAccessibleRolesToNVDARoles={
 	"h6":controlTypes.ROLE_HEADING6,
 	"p":controlTypes.ROLE_PARAGRAPH,
 	"hbox":controlTypes.ROLE_BOX,
+	"embed":controlTypes.ROLE_EMBEDDEDOBJECT,
 }
 
 IAccessibleStatesToNVDAStates={

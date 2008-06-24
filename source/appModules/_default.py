@@ -21,6 +21,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from synthDriverHandler import *
 import gui
+import wx
 import core
 import config
 import winUser
@@ -765,7 +766,7 @@ class appModule(appModuleHandler.AppModule):
 
 
 	def script_saveConfiguration(self,keyPress):
-		mainFrame.onSaveConfigurationCommand(None)
+		wx.CallAfter(mainFrame.onSaveConfigurationCommand, None)
 	script_saveConfiguration.__doc__ = _("Saves current NVDA configuration to file")
 
 	def script_revertToSavedConfiguration(self,keyPress):
