@@ -238,8 +238,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		info = self.makeTextInfo(textHandler.Offsets(startOffset, endOffset))
 		if readUnit:
+			fieldInfo = info.copy()
 			info.collapse()
 			info.move(readUnit, 1, endPoint="end")
+			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
+				# We've expanded past the end of the field, so limit to the end of the field.
+				info.setEndPoint(fieldInfo, "endToEnd")
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
 		self._caretMovedToField(docHandle, ID)
