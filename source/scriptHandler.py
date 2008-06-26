@@ -6,6 +6,7 @@
 
 import time
 import weakref
+from keyUtils import sendKey
 import appModuleHandler
 import api
 import queueHandler
@@ -14,6 +15,7 @@ _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
 _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
+_isScriptRunning=False
 
 def findScript(keyPress):
 		return findScript_appModuleLevel(keyPress)
@@ -79,16 +81,24 @@ def executeScript(script,keyPress):
 	@param keyPress: the key press that activated this script
 	@type keyPress: an NVDA keyPress
 	"""
-	global _lastScriptTime, _lastScriptCount, _lastScriptRef 
-	scriptTime=time.time()
-	scriptRef=weakref.ref(script)
-	if (scriptTime-_lastScriptTime)<=0.5 and _lastScriptRef and script==_lastScriptRef():
-		_lastScriptCount+=1
-	else:
-		_lastScriptCount=0
-	_lastScriptRef=scriptRef
-	_lastScriptTime=scriptTime
-	script(keyPress)
+	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
+	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
+	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
+	if _isScriptRunning and lastScriptRef==script:
+		return sendKey(keyPress)
+	_isScriptRunning=True
+	try:
+		scriptTime=time.time()
+		scriptRef=weakref.ref(script)
+		if (scriptTime-_lastScriptTime)<=0.5 and script==lastScriptRef:
+			_lastScriptCount+=1
+		else:
+			_lastScriptCount=0
+		_lastScriptRef=scriptRef
+		_lastScriptTime=scriptTime
+		script(keyPress)
+	finally:
+		_isScriptRunning=False
 
 def getLastScriptRepeateCount():
 	"""The count of how many times the most recent script has been executed.
