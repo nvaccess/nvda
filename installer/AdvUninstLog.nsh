@@ -213,11 +213,11 @@
 				IfFileExists "$R9\*.*" isdir
 		
 			isfile:
-				Delete "$R9"
+				Delete /rebootok "$R9"
 				goto end
 		
 		    isdir:
-				RmDir "$R9"
+				RmDir /rebootok "$R9"
 				IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
 				goto end
 		
@@ -245,11 +245,11 @@
 				IfFileExists "$R9\*.*" isdir
 	
 			isfile:
-				Delete "$R9"
+				Delete /rebootok "$R9"
 				goto end
 	
 			isdir:
-				RmDir "$R9"
+				RmDir /rebootok "$R9"
 				IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
 				goto end
 	

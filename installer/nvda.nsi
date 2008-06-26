@@ -10,7 +10,6 @@ Name "NVDA"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
 !define READMEFILE "documentation\en\readme.txt"
-!define IA2DLL "ia2.dll"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
@@ -26,6 +25,7 @@ SetCompressor /SOLID LZMA
 !include "MUI2.nsh"
 !include "AdvUninstLog.nsh"
 !include "WinMessages.nsh"
+!include "Library.nsh"
 
 CRCCheck On
 ShowInstDetails hide
@@ -212,26 +212,24 @@ Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
 Banner::destroy
 FunctionEnd
 
-Function unregisterDLLs
-; place here the names of DLLs that need to be unregistered before copying files
-UnRegDll $INSTDIR\LIB\${IA2DLL}
-FunctionEnd
-
-Function registerDLLs
-RegDll $INSTDIR\\LIB\${IA2DLL}
-FunctionEnd
-
 Section "install" section_install
 SetShellVarContext all
 SetOutPath "$INSTDIR"
-; unregister any NVDA-related DLLs to prevent write-access violations
-call unregisterDLLs
 ; open and close uninstallation log after ennumerating all the files being copied
 !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-File /r "${NVDASourceDir}\"
+File /r /x lib "${NVDASourceDir}\"
+CreateDirectory "$INSTDIR\lib"
 !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+; Install libraries
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\charHook.dll" "$INSTDIR\lib\charHook.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\keyHook.dll" "$INSTDIR\lib\keyHook.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\mouseHook.dll" "$INSTDIR\lib\mouseHook.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\virtualBuffer.dll" "$INSTDIR\lib\virtualBuffer.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
+!insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\ia2.dll" "$INSTDIR\lib\ia2.dll" "$INSTDIR\lib"
+
 strcpy $NVDAInstalled "1"
-call registerDLLs
 SectionEnd
 
 Section Shortcuts
@@ -299,6 +297,15 @@ FunctionEnd
 
 Section "Uninstall"
 SetShellVarContext all
+
+; Uninstall libraries
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\charHook.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\keyHook.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\mouseHook.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\virtualBuffer.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_gecko_ia2.dll"
+!insertmacro UninstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\ia2.dll"
+
 ;uninstall from path, must be repeated for every install logged path individual
 !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 

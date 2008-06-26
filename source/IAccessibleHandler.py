@@ -863,7 +863,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	@returns: True if the foreground was processed, False otherwise.
 	@rtype: boolean
 	"""
-	#Ignore foreground events on invisible windows
+	#Ignore foreground events on windows that aren't the current foreground window
+	if window!=winUser.getForegroundWindow():
+		return False
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False

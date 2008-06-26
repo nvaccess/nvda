@@ -17,3 +17,15 @@ LangString shortcut_readme $(LANG_RUSSIAN) "Ознакомительный фа�
 LangString shortcut_userguide $(LANG_RUSSIAN) "Руководство пользователя"
 LangString path_userguide $(LANG_RUSSIAN) "ru\user guide.html"
 LangString path_readmefile $(LANG_RUSSIAN) "ru\readme.txt"
+LangString UNLOG_HEADER ${LANG_RUSSIAN} "=========== Log удаления \
+                                         Пожалуйста, не изменяйте этот файл ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_RUSSIAN} "${UNINST_DAT} не найден, \
+                                                невозможно удалить программу."
+LangString UNLOG_DEL_FILE ${LANG_RUSSIAN} 'Удалить файл "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_RUSSIAN} 'Удалить папку "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_RUSSIAN} "Обнаружена предыдущая установка  $0.$\n\
+                                            требуемыйфайл ${UNINSTALL_LOG}.dat не найден.$\n$\n\
+                                            настоятельно рекомендуется выбрать \
+                                            пустую папку и произвести новую установку."
+LangString UNLOG_ERROR_LOG ${LANG_RUSSIAN} "Ошибка в log-файле ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_RUSSIAN} "Ошибка создания ${UNINSTALL_LOG}."

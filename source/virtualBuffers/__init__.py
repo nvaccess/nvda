@@ -227,7 +227,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			yield docHandle, ID, startOffset, endOffset
 
-	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage):
+	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
@@ -237,23 +237,30 @@ class VirtualBuffer(cursorManager.CursorManager):
 			speech.speakMessage(errorMessage)
 			return
 		info = self.makeTextInfo(textHandler.Offsets(startOffset, endOffset))
+		if readUnit:
+			fieldInfo = info.copy()
+			info.collapse()
+			info.move(readUnit, 1, endPoint="end")
+			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
+				# We've expanded past the end of the field, so limit to the end of the field.
+				info.setEndPoint(fieldInfo, "endToEnd")
 		info.updateCaret()
 		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
 		self._caretMovedToField(docHandle, ID)
 
 	@classmethod
-	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError):
+	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
 		scriptSuffix = nodeType[0].upper() + nodeType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "next", nextError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
 		cls.bindKey(key, scriptName)
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "previous", prevError)
+		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
@@ -307,7 +314,7 @@ qn = VirtualBuffer.addQuickNav
 qn("heading", key="h", nextDoc=_("moves to the next heading"), nextError=_("no next heading"),
 	prevDoc=_("moves to the previous heading"), prevError=_("no previous heading"))
 qn("table", key="t", nextDoc=_("moves to the next table"), nextError=_("no next table"),
-	prevDoc=_("moves to the previous table"), prevError=_("no previous table"))
+	prevDoc=_("moves to the previous table"), prevError=_("no previous table"), readUnit=textHandler.UNIT_LINE)
 qn("link", key="k", nextDoc=_("moves to the next link"), nextError=_("no next link"),
 	prevDoc=_("moves to the previous link"), prevError=_("no previous link"))
 qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextError=_("no next visited link"),
@@ -315,7 +322,7 @@ qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextErro
 qn("unvisitedLink", key="u", nextDoc=_("moves to the next unvisited link"), nextError=_("no next unvisited link"),
 	prevDoc=_("moves to the previous unvisited link"), prevError=_("no previous unvisited link"))
 qn("formField", key="f", nextDoc=_("moves to the next form field"), nextError=_("no next form field"),
-	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"))
+	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"), readUnit=textHandler.UNIT_LINE)
 qn("list", key="l", nextDoc=_("moves to the next list"), nextError=_("no next list"),
 	prevDoc=_("moves to the previous list"), prevError=_("no previous list"))
 qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("no next list item"),
@@ -323,9 +330,9 @@ qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("n
 qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no next button"),
 	prevDoc=_("moves to the previous button"), prevError=_("no previous button"))
 qn("edit", key="e", nextDoc=_("moves to the next edit field"), nextError=_("no next edit field"),
-	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"))
+	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"), readUnit=textHandler.UNIT_LINE)
 qn("frame", key="m", nextDoc=_("moves to the next frame"), nextError=_("no next frame"),
-	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"))
+	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"), readUnit=textHandler.UNIT_LINE)
 qn("separator", key="s", nextDoc=_("moves to the next separator"), nextError=_("no next separator"),
 	prevDoc=_("moves to the previous separator"), prevError=_("no previous separator"))
 qn("radioButton", key="r", nextDoc=_("moves to the next radio button"), nextError=_("no next radio button"),

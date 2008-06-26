@@ -21,7 +21,7 @@ NVDA+F12=dateTime
 NVDA+space=toggleVirtualBufferPassThrough
 NVDA+Tab=reportCurrentFocus
 NVDA+f=reportFormatting
-Shift+NVDA+m=toggleReportObjectUnderMouse
+Shift+NVDA+m=toggleMouseTracking
 NVDA+f1=test_navigatorWindowInfo
 NVDA+f2=passNextKeyThrough
 Control+NVDA+f1=speakApplicationName
@@ -102,6 +102,10 @@ Shift+NVDA+7=moveMouseToNavigatorObject
 NVDA+extendedDivide=moveMouseToNavigatorObject
 Shift+NVDA+8=moveNavigatorObjectToMouse
 NVDA+Multiply=moveNavigatorObjectToMouse
+Control+Shift+NVDA+7=leftMouseClick
+extendedDivide=leftMouseClick
+Control+Shift+NVDA+8=rightMouseClick
+multiply=rightMouseClick
 
 # Keys for activating settings dialogs 
 Control+NVDA+g=activateGeneralSettingsDialog
