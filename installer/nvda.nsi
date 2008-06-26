@@ -27,15 +27,26 @@ SetCompressor /SOLID LZMA
 !include "WinMessages.nsh"
 !include "Library.nsh"
 
+;Installer flags
 CRCCheck On
 ShowInstDetails hide
 ShowUninstDetails hide
-SetOverwrite On
+SetOverwrite ifdiff
 SetDateSave on
 XPStyle on
 InstProgressFlags Smooth
 
-!define MUI_WELCOMEPAGE_TITLE $(msg_WelcomePageTitle)
+;Needs to be hear to use other Windows file meta properties
+VIProductVersion "0.0.0.0"
+
+;Windows file meta properties
+;Only in English for now, would have to repete the commands for each language
+VIAddVersionKey "ProductName" "${PRODUCT}"
+VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2008 NVDA Contributers <http://www.nvda-project.org/>"
+VIAddVersionKey "FileDescription" "NVDA installer file"
+VIAddVersionKey "ProductVersion" "${VERSION}"
+
+ !define MUI_WELCOMEPAGE_TITLE $(msg_WelcomePageTitle)
 !define MUI_WELCOMEPAGE_TEXT $(msg_WelcomePageText)
 
 !define MUI_FINISHPAGE_TEXT_LARGE
