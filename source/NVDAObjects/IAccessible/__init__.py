@@ -725,12 +725,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 class IAccessibleWindow(IAccessible):
 
-	def _get_name(self):
-		return super(IAccessibleWindow,self)._get_name()
-		if not name or (isinstance(name,basestring) and name.isspace()):
-			name=self.windowClassName
-		return name
-
 	def _get_firstChild(self):
 		child=super(IAccessibleWindow,self)._get_firstChild()
 		if child:
