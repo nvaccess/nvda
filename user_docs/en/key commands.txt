@@ -40,49 +40,105 @@ Turns on or off the speaking of punctuation symbols as NVDA speaks information.
 NVDA+End: reportStatusLine
 Announces the status bar of the current application if it can find one.
 
-NVDA+numPadDivide: moveMouseToNavigatorObject
-Move the mouse pointer to the current navigator object
- 
-NVDA+Multiply: moveNavigatorObjectToMouse
-Sets the navigator object to the current object under the mouse pointer
+NVDA+f: reportFormatting
+Announces formatting information at the current position in a document
+
+NVDA+m: toggleMouseTracking
+Turns on or off announcement of the object or word at the mouse pointer's current potion, as it moves.
+
+Control+NVDA+f1: speakApplicationName
+Announces the currently active application's name, and also spells it out. It also announces the currently loaded NVDA app module.
+
+NVDA+u: toggleBeepOnProgressBarUpdates
+Turns on and off the beeping to indicate when a progress bar changes.
+
+NVDA+shift+b: say_battery_status
+Announces the current battery level and whether or not you're plugged in to AC power.
+
+NVDA+5: toggleReportDynamicContentChanges
+Turns on and off the automatic speaking of content changes (such as when ew text appears in a dos console window).
+
+NVDA+6: toggleCaretMovesReviewCursor
+Turns on and off the automatic movement of the review cursor as the caret moves.
+
+NVDA+7: toggleFocusMovesNavigatorObject
+Turns on and off the setting of the navigator object to the object with focus as it changes.
 
 NVDA+Tab: reportCurrentFocus
 Announces the object you are currently focused on.
 
-NVDA+Clear: navigatorObject_current
+NVDA+f2: passNextKeyThrough
+Pressing this key then allows you to press any other key on the keyboard and NVDA will let it go straight to the operating system with out running its NVDA specific command if it has one.
+
+Shift+NVDA+upArrow: reportCurrentSelection
+Announces the current selection in edit controls and documents. If there is no selection it says so.
+
+NVDA+upArrow: reportCurrentLine
+Announces the current line in edit controls and documents.
+
+Control+NVDA+leftArrow: previousSetting
+Moves to and announces the previous voice setting
+ 
+Control+NVDA+rightArrow: nextSetting
+Moves to and announces the next voice setting
+
+Control+NVDA+upArrow: increaseSetting
+Increases the current voice setting
+
+Control+NVDA+downArrow: decreaseSetting
+decreases the current voice setting
+
+NVDA+downArrow: sayAll
+Starts reading from the current position in a document or edit control 
+
+navigator object navigation
+
+NVDA+numPad5: navigatorObject_current
 Announces the current navigator object.
 
-Shift+NVDA+Clear: navigatorObject_currentDimensions
+Shift+NVDA+numPad5: navigatorObject_currentDimensions
 Announces the size and location of the current navigator object.
  
-Control+Shift+NVDA+Clear: navigatorObject_where
+Control+Shift+NVDA+numPad5: navigatorObject_where
 Announces the ancestors of the current navigator object.
 
-NVDA+Subtract: navigatorObject_toFocus
+NVDA+numPadSubtract: navigatorObject_toFocus
 Sets the navigator object to the current object with focus.
 
-NVDA+Up: navigatorObject_parent
+NVDA+numPad8: navigatorObject_parent
 Sets the navigator object to the current navigator object's parent (i.e. the object that contains it).
 
-NVDA+Down: navigatorObject_firstChild
+NVDA+numPad2: navigatorObject_firstChild
 Sets the navigator object to the current navigator object's first child (i.e. the first object inside it)
 
-NVDA+Left: navigatorObject_previous
+NVDA+numPad4: navigatorObject_previous
 Sets the navigator object to the current navigator object's previous object (i.e. the object before it, on the same level).
 
-Shift+NVDA+Left: navigatorObject_previousInFlow
+Shift+NVDA+numPad4: navigatorObject_previousInFlow
 Sets the navigator object to the current navigator object's previous object in flow (i.e. the object before it, not necessarily on the same leve).
 
-NVDA+Right: navigatorObject_next
+NVDA+numPad6: navigatorObject_next
 Sets the navigator object to the current navigator object's next object (i.e. the object after it, on the same level).
 
-Shift+NVDA+Right: navigatorObject_nextInFlow
+Shift+NVDA+numPad6: navigatorObject_nextInFlow
 Sets the navigator object to the current navigator object's next object in flow (i.e. the object after it, not necessarily on the same leve).
 
 NVDA+numpadEnter: navigatorObject_doDefaultAction
 Performs the default action on the current navigator object (e.g. presses a button, activates a list item).
 
-NVDA+Add: navigatorObject_sayAll
+NVDA+numPadDivide: moveMouseToNavigatorObject
+Move the mouse pointer to the current navigator object
+ 
+NVDA+numPadMultiply: moveNavigatorObjectToMouse
+Sets the navigator object to the current object under the mouse pointer
+
+numPadDivide: leftMouseClick
+Clicks the left mouse button once where ever it may be at the time.
+
+numPadMultiply: rightMouseClick
+Clicks the right mouse button once where ever it may be at the time.
+
+NVDA+numPadAdd: navigatorObject_sayAll
 Starts to read all the objects after the navigator object, in flow order.
 
 numpadSubtract: review_moveToCaret
@@ -90,6 +146,11 @@ Moves the review cursor to the location of the caret.
 
 Control+numpadSubtract: review_moveCaretHere
 Moves the caret to the location of the review cursor
+
+numpadAdd: review_sayAll
+Uses the review cursor to read from its position to the end of the currently reviewable text
+
+reading objeckts
 
 numpad1: review_previousCharacter
 Moves the review cursor to the previous character
@@ -130,57 +191,6 @@ Moves the review cursor to the previous line
 shift+numpad9: review_bottom
 Moves the review cursor to the last line
 
-NVDA+downArrow: sayAll
-Starts reading from the current position in a document or edit control 
-
-numpadAdd: review_sayAll
-Uses the review cursor to read from its position to the end of the currently reviewable text
-
-NVDA+f: reportFormatting
-Announces formatting information at the current position in a document
-
-NVDA+m: toggleReportObjectUnderMouse
-Turns on or off announcement of the object or word at the mouse pointer's current potion, as it moves.
-
-Control+NVDA+f1: speakApplicationName
-Announces the currently active application's name, and also spells it out. It also announces the currently loaded NVDA app module.
-
-NVDA+u: toggleBeepOnProgressBarUpdates
-Turns on and off the beeping to indicate when a progress bar changes.
-
-NVDA+shift+b: say_battery_status
-Announces the current battery level and whether or not you're plugged in to AC power.
-
-NVDA+5: toggleReportDynamicContentChanges
-Turns on and off the automatic speaking of content changes (such as when ew text appears in a dos console window).
-
-NVDA+6: toggleCaretMovesReviewCursor
-Turns on and off the automatic movement of the review cursor as the caret moves.
-
-NVDA+7: toggleFocusMovesNavigatorObject
-Turns on and off the setting of the navigator object to the object with focus as it changes.
- 
-NVDA+f2: passNextKeyThrough
-Pressing this key then allows you to press any other key on the keyboard and NVDA will let it go straight to the operating system with out running its NVDA specific command if it has one.
-
-Shift+NVDA+upArrow: reportCurrentSelection
-Announces the current selection in edit controls and documents. If there is no selection it says so.
-
-NVDA+upArrow: reportCurrentLine
-Announces the current line in edit controls and documents.
-
-Control+NVDA+leftArrow: previousSetting
-Moves to and announces the previous voice setting
- 
-Control+NVDA+rightArrow: nextSetting
-Moves to and announces the next voice setting
-
-Control+NVDA+upArrow: increaseSetting
-Increases the current voice setting
-
-Control+NVDA+downArrow: decreaseSetting
-decreases the current voice setting
-
 VirtualBuffer commands for Firefox3 (some of these may work for Internet Explorer or Firefox2):
 
 NVDA+space: toggleVirtualBufferPassThrough
@@ -191,13 +201,20 @@ NVDA+f3: find next
 NVDA+f7: links list (not in firefox2 or internet explorer)
 NVDA+f5: refresh buffer (not in Firefox2 or Internet Explorer)
 
-VirtualBuffer quick keys to skip to the next element of a particular type(also use shift with the key to go backwards):
+VirtualBuffer quick keys to skip to the next element of a particular type (also use shift with the key to go backwards):
 h: heading
+1 to 6: heading at level 1 to 6
 l: list
 i: list item
 k: link
 t: table
 f: form
-
-
-
+e: edit field
+b: button
+r: radio button
+c: combobox
+x: checkbox
+m: frame
+s: separator
+g: graphic
+q: block quote
