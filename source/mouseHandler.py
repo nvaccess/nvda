@@ -18,6 +18,8 @@ import config
 import IAccessibleHandler
 import JABHandler
 
+mouseHookLib=ctypes.cdll.LoadLibrary('lib/mouseHook.dll')
+
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
 WM_LBUTTONUP=0x0202
@@ -136,7 +138,7 @@ def initialize():
 	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
 	screenWidth,screenHeight=api.getDesktopObject().location[2:]
-	ctypes.cdll.mouseHook.initialize(internal_mouseEvent)
+	mouseHookLib.initialize(internal_mouseEvent)
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
@@ -154,4 +156,4 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	ctypes.cdll.mouseHook.terminate()
+	mouseHookLib.terminate()
