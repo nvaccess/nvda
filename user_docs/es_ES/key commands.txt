@@ -2,194 +2,201 @@ Referencia rápida de teclas de órdenes de NVDA
 
 Muchas de estas órdenes utilizan la tecla NVDA. La tecla NVDA es el insert encontrada o en el tecládo numérico o junto a las teclas suprimir, inicio, fin, retroceso de página y avance de página en tu teclado. NVDA también puede ser configurado para que puedas utilizar la tecla BloqMayus como la tecla NVDA.
 
-Órdenes Globales 
 
-NVDA+1: ayuda de teclado
-Esta orden activa el modo de ayuda de teclado así puedes presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
+Órdenes Globales
+
+NVDA+1: AyudaDeTeclado
+Esta orden activa el modo de ayuda de teclado tal que puedes presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
 
 NVDA+t: título
 Anuncia el título de la aplicación actualmente activa.
 
-NVDA+b: Verbalización de fondo
-Verbaliza el contenido de la aplicación actualmente activa. Útil para leer información en un cuadro de diálogo que quizás te perdiste cuando fue verbalizado por primera vez.
+NVDA+b: verbalizarFondo
+Verbaliza el contenido de la aplicación actualmente activa. Útil para leer información en un cuadro de diálogo que quizás te perdiste cuando fue anunciado por primera vez.
 
-NVDA+n: Mostrar Gui
+NVDA+n: mostrarGui
 Presiona esta tecla para activar el menú de NVDA donde puedes acceder a las opciones de NVDA.
 
 NVDA+q: salir
-Te pregunta si quieres salir de NVDA. Presionando sí saldrá, presionando no, no saldrá.
+Te pregunta si quieres salir de NVDA. Presionando sí saldrás, presionando no, no saldrás.
 
-NVDA+s: modo de Voz
+NVDA+s: modoDeVoz
 Conmuta entre los tres modos de voz (hablar, pitidos y desactivado).
 
-NVDA+F12: Fecha y hora
+NVDA+F12: fechaYHora
 Anuncia la hora actual, presionando dos veces rápidamente anuncia la fecha actual.
 
-NVDA+RePag: incrementar Velocidad
-Incrementa la velocidad del habla en un 5 por ciento
-
-NVDA+AvPag: decrementar Velocidad
-Decrementa la velocidad del habla en un 5 por ciento
-
-NVDA+2: conmutar verbalización de Carácteres al escribir
+NVDA+2: conmutarVerbalizaciónDeCaracteresAlEscribir
 Activa o desactiva la verbalización de caracteres cuando los tecleas.
 
-NVDA+3: conmutar palabras al escribir
+NVDA+3: conmutarVerbalizaciónDePalabrasAlEscribir
 Activa o desactiva la verbalización de las palabras al escribirlas.
 
-NVDA+4: conmutar Verbalización de Teclas de Órdenes
+NVDA+4: conmutarVerbalizaciónDeTeclasDeÓrdenes
 Activa o desactiva la verbalización de cualquier tecla al teclearla.
 
-NVDA+p: conmutar Verbalización de Puntuación
+NVDA+p: conmutarVerbalizaciónDePuntuación
 Activa o desactiva la verbalización de símbolos de puntuación cuando NVDA verbaliza información.
 
-NVDA+Fin: anunciar línea de Estado
+NVDA+Fin: anunciarLíneaDeEstado
 Anuncia la barra de estado de la aplicación actual si puede encontrar una.
 
-NVDA+Dibidir del teclado numérico: mover Ratón A Objeto Navegable
-Mueve el puntero del ratón al actual objeto navegable 
- 
-NVDA+Multiplicar del teclado Numérico: mover Navegador de Objetos al Ratón
-Pone el navegador de objetos en el actual objeto bajo el puntero del ratón
-
-NVDA+Tab: anunciar Foco actual
-Anuncia el objeto que estás enfocando actualmente.
-
-NVDA+5 del teclado numérico: actual Navegador de objetos
-Anuncia el navegador de objetos actual.
-
-Shift+NVDA+5 del teclado Numérico: dimensiones del Actual Navegador de objetos
-Anuncia el tamaño y localización del actual navegador de objetos.
- 
-Control+Shift+NVDA+5 del Teclado Numérico: dónde navegador de objetos
-Anuncia los ancestros del navegador de objetos actual.
-
-NVDA+Menos: navegador de objetos al Foco
-Pone el navegador de objetos en el actual objeto con el foco.
-
-NVDA+Arriba: padre navegador de Objetos
-Pone el navegador de objetos en el navegador de objetos padre del actual (es decir, el objeto que lo contiene).
-
-NVDA+Abajo: primer Hijo de navegador de objetos
-Pone el navegador de objetos en el primer hijo del navegador de objetos actual (es decir, el primer objeto dentro de él)
-
-NVDA+Izquierda: anterior Navegador de objetos
-Pone el navegador de objetos en el objeto previo del actual navegador de objetos (es decir, el objeto antes de él, en en el mismo nivel).
-
-Shift+NVDA+Izquierda: Anterior Navegador de Objetos en Flujo
-Pone el navegador de objetos en el anterior objeto en flujo al actual navegador de objetos (es decir, el objeto antes de él, no necesariamente en el mismo nivel).
-
-NVDA+Derecha: Siguiente Navegador de Objetos
-Pone el navegador de objetos en el siguiente objeto del actual navegador de objetos (es decir, el objeto después de él, en el mismo nivel).
-
-Shift+NVDA+Derecha: Siguiente Navegador de Objetos en Flujo
-Pone el navegador de objetos en el siguiente objeto en flujo del actual navegador de objetos (es decir, el objeto después de él, no necesariamente en el mismo nivel).
-
-NVDA+enter del Teclado numérico: Hacer Acción Predeterminada Navegador de Objetos
-Lleva a cabo la acción predeterminada en el actual navegador de objetos (ej. presiona un botón, activa un elemento de lista).
-
-NVDA+Más: Leer Todo Navegador de Objetos
-Comienza la lectura de todos los objetos después del navegador de objetos, en orden al flujo.
-
-Menos del Teclado numérico: revisión mover Al Cursor
-Mueve el cursor de revisión a la localización del cursor.
-
-Control+Menos del Teclado Numérico: cursor Mover a Cursor Revisión
-Mueve el cursor a la localización del cursor de revisión
-
-1 del Teclado Numérico: revisión Caracter anterior
-Mueve el cursor de revisión al caracter anterior
-
-shift+1 del Teclado Numérico: revisión Comienzo de Línea
-Mueve el cursor de revisión al comienzo de la línea
-
-2 del Teclado Numérico: revisión Caracter Actual
-Verbaliza el caracter  en el cursor de revisión
-
-3 del Teclado Numérico: revisión Caracter Siguiente
-Mueve el cursor de revisión al siguiente caracter 
-
-shift+3 del Teclado Numérico: revisión Final de Línea
-Mueve el cursor de revisión al final de la línea
-
-4 del Teclado Numérico: revisión Palabra Anterior
-Mueve el cursor de revisión a la palabra anterior
-
-5 del Teclado Numérico: revisión Palabra Actual
-Verbaliza la palabra en el cursor de revisión
-
-6 del Teclado Numérico: revisión Palabra Siguiente
-Mueve el cursor de revisión a la palabra siguiente
-
-7 del Teclado Numérico: revisión Línea Anterior
-Mueve el cursor de revisión a la línea anterior
-
-shift+7 del Teclado Numérico: revisión Superior
-Mueve el cursor de revisión a la primera línea
- 
-8 del Teclado Numérico: revisión Línea Actual
-Verbaliza la línea en el cursor de revisión
-
-9 del Teclado Numérico: revisión Línea Siguiente
-Mueve el cursor de revisión a la línea anterior
-
-shift+9 del Teclado Numérico: revisión Inferior
-Mueve el cursor de revisión a la última línea
-
-NVDA+flecha Abajo: Leer Todo
-Starts reading from the current position in a document or edit control 
-
-Más del Teclado Numérico: revisión Leer Todo
-Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
-
-NVDA+f: anunciar Formato
+NVDA+f: anunciarFormato
 Anuncia la información de formato en la posición actual en un documento
 
-NVDA+m: conmutar Anuncio de Objeto Bajo Ratón
+NVDA+m: conmutarSeguimientoDelRatón
 Activa o desactiva el anunciado del objeto o palabra en la actual posición del puntero del ratón, según se mueva.
 
-Control+NVDA+f1: verbalizar Nombre Aplicación
+Control+NVDA+f1: verbalizarNombreDeAplicación
 Anuncia el nombre de la aplicación actualmente activa, y también la deletrea. También anuncia el módulo de aplicación de NVDA cargado actualmente.
 
-NVDA+u: conmutar Pitidos En Actualización Barras de Progreso
+NVDA+u: conmutarPitidosEnActualizaciónDeBarrasDeProgreso
 Activa y desactiva el pitado para indicar cuándo cambia una barra de progreso.
 
-NVDA+shift+b: decir Estado Baterías
+NVDA+shift+b: decir_estado_batería
 Anuncia el nivel actual de la batería y si estás o no enchufado a la fuente de alimentación.
 
-NVDA+5: conmutar Anunciado Cambios Contenido Dinámico
+NVDA+5: conmutarAnunciadoDeCambiosDeContenidoDinámico
 Activa o desactiva la verbalización automática de cambios de contenido (tales como cuando aparece texto nuevo en Una ventana de consola del dos).
 
-NVDA+6: conmuntar Cursor Mueve Cursor Revisión
-Activa y desactiva el movimiento automático del cursor de revisión según se mueva el cursor.
+NVDA+6: conmutarCursorMueveCursorDeRevisión
+Activa y desactiva el movimiento automático del cursor de revisión según se mueva el cursor del sistema.
 
-NVDA+7: conmutar Foco Mueve Navegador de Objetos
+NVDA+7: conmutarFocoMueveNavegadorDeObjetos
 Activa y desactiva el ajuste del navegador de objetos al objeto con el foco cuando cambie.
- 
-NVDA+f2: Dejar Pasar Siguiente Tecla
-Presionando esta tecla te permite luego presionar cualquier otra tecla en el teclado y NVDA la dejará ir directamente al sistema operativo sin ejecutar su orden específica para NVDA si hay alguna.
 
-Shift+NVDA+Flecha Arriba: anunciar Selección Actual
+NVDA+Tab: anunciarFocoActual
+Anuncia el objeto que estás enfocando actualmente.
+
+NVDA+f2: dejarPasarSiguienteTecla
+Presionando esta tecla te permite luego presionar cualquier otra tecla en el teclado y NVDA la dejará ir directamente al sistema operativo sin ejecutar su orden específica para NVDA si hubiese alguna.
+
+Shift+NVDA+Flecha Arriba: anunciarSelecciónActual
 Anuncia la selección actual en controles de edición y documentos. Si no hay selección lo dice.
 
-NVDA+Flecha Arriba: anunciar Línea Actual
-Anuncia the la línea actual en controles de edición y documentos.
+NVDA+Flecha Arriba: anunciarLíneaActual
+Anuncia la línea actual en controles de edición y documentos.
 
-Control+NVDA+Flecha Izquierda: opción anterior
+Control+NVDA+Flecha Izquierda: opciónAnterior
 Se mueve y anuncia la anterior opción de voz
  
-Control+NVDA+Flecha Derecha: Siguiente opción
+Control+NVDA+Flecha Derecha: opciónSiguiente
 Se mueve y anuncia  la siguiente opción de voz
 
-Control+NVDA+Flecha Arriba: incrementa Opción
+Control+NVDA+Flecha Arriba: incrementarOpción
 Incrementa la opción de voz actual
 
-Control+NVDA+flecha Abajo: decrementa Opción
+Control+NVDA+flecha Abajo: decrementarOpción
 Decrementa la actual opción de voz
 
-Órdenes del Modo Virtual para Firefox3 (Algunas de estas podrán funcionar en Internet Explorer o Firefox2):
+NVDA+flecha Abajo: Leer Todo
+Comienza la lectura desde la posición actual en un documento o control de edición.
 
-NVDA+espacio: conmutar Paso A Través Modo Virtual
+
+Navegación del Navegador de Objetos
+
+NVDA+5 teclado numérico: actualNavegadorDeObjetos
+Anuncia el navegador de objetos actual.
+
+Shift+NVDA+5 teclado Numérico: dimensionesDelActualNavegadorDeObjetos
+Anuncia el tamaño y localización del actual navegador de objetos.
+
+Control+Shift+NVDA+5 Teclado Numérico: dóndeNavegadorDeObjetos
+Anuncia los ancestros del navegador de objetos actual.
+
+NVDA+Menos: navegadorDeObjetosAlFoco
+Pone el navegador de objetos en el actual objeto con el foco.
+
+NVDA+8 Teclado Numérico: padreNavegadorDeObjetos
+Pone el navegador de objetos en el navegador de objetos padre del actual (es decir, en el objeto que lo contiene).
+
+NVDA+2 Teclado Numérico: primerHijoDeNavegadorDeObjetos
+Pone el navegador de objetos en el primer hijo del navegador de objetos actual (es decir, el primer objeto dentro de él)
+
+NVDA+4 Teclado Numérico: anteriorNavegadorDeObjetos
+Pone el navegador de objetos en el objeto previo del actual navegador de objetos (es decir, el objeto antes de él, en el mismo nivel).
+
+Shift+NVDA+4 Teclado Numérico: anteriorNavegadorDeObjetosEnFlujo
+Pone el navegador de objetos en el anterior objeto en flujo al actual navegador de objetos (es decir, el objeto antes de él, no necesariamente en el mismo nivel).
+
+NVDA+6 Teclado Numérico: siguienteNavegadorDeObjetos
+Pone el navegador de objetos en el siguiente objeto del actual navegador de objetos (es decir, el objeto después de él, en el mismo nivel).
+
+Shift+NVDA+6 Teclado Numérico: siguienteNavegadorDeObjetosEnFlujo
+Pone el navegador de objetos en el siguiente objeto en flujo del actual navegador de objetos (es decir, el objeto después de él, no necesariamente en el mismo nivel).
+
+NVDA+enter Teclado numérico: HacerAcciónPredeterminadaEnNavegadorDeObjetos
+Lleva a cabo la acción predeterminada en el actual navegador de objetos (ej. presiona un botón, activa un elemento de lista).
+
+NVDA+Dibidir teclado numérico: moverRatónAObjetoDelNavegador
+Mueve el puntero del ratón al actual objeto del navegador 
+
+NVDA+Multiplicar teclado Numérico: moverNavegadorDeObjetosAlRatón
+Pone el navegador de objetos en el actual objeto bajo el puntero del ratón
+
+Dividir Teclado Numérico: clicIzquierdoDelRatón
+Hace clic con el botón izquierdo del ratón una vez donde quiera que esté.
+
+Multiplicar teclado numérico: clicDerechoDelRatón
+Hace clic con el botón derecho del ratón una vez donde quiera que esté.
+
+NVDA+Más Teclado Numérico: LeerTodoNavegadorDeObjetos
+Comienza la lectura de todos los objetos después del navegador de objetos, en orden al flujo.
+
+Menos Teclado numérico: revisiónMueveACursor
+Mueve el cursor de revisión a la localización del cursor del sistema.
+
+Control+Menos Teclado Numérico: revisiónMueveCursorSistemaAquí
+Mueve el cursor del sistema a la localización del cursor de revisión
+
+Más Teclado Numérico: revisiónLeerTodo
+Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
+
+Leyendo objetos
+
+1 Teclado Numérico: revisiónCaracterAnterior
+Mueve el cursor de revisión al caracter anterior
+
+shift+1 Teclado Numérico: revisiónComienzoDeLínea
+Mueve el cursor de revisión al comienzo de la línea
+
+2 Teclado Numérico: revisiónCaracterActual
+Verbaliza el caracter  en el cursor de revisión
+
+3 Teclado Numérico: revisiónCaracterSiguiente
+Mueve el cursor de revisión al siguiente caracter 
+
+shift+3 Teclado Numérico: revisiónFinalDeLínea
+Mueve el cursor de revisión al final de la línea
+
+4 Teclado Numérico: revisión PalabraAnterior
+Mueve el cursor de revisión a la palabra anterior
+
+5 Teclado Numérico: revisiónPalabraActual
+Verbaliza la palabra en el cursor de revisión
+
+6 Teclado Numérico: revisiónPalabraSiguiente
+Mueve el cursor de revisión a la palabra siguiente
+
+7 Teclado Numérico: revisiónLíneaAnterior
+Mueve el cursor de revisión a la línea anterior
+
+shift+7 Teclado Numérico: revisiónSuperior
+Mueve el cursor de revisión a la primera línea
+ 
+8 Teclado Numérico: revisiónLíneaActual
+Verbaliza la línea en el cursor de revisión
+
+9 Teclado Numérico: revisiónLíneaSiguiente
+Mueve el cursor de revisión a la línea anterior
+
+shift+9 Teclado Numérico: revisiónInferior
+Mueve el cursor de revisión a la última línea
+
+
+Ordenes del Modo Virtual para Firefox3 (Algunas de estas podrán funcionar en Internet Explorer o Firefox2):
+
+NVDA+espacio: conmutarPasoATravésModoVirtual
 Activa o desactiva el paso a través del modo virtual.
 
 control+NVDA+f: encontrar (control+f en firefox2 / internet explorer)
@@ -198,12 +205,20 @@ NVDA+f7: lista de enlaces (no en firefox2 o internet explorer)
 NVDA+f5: refresca la memoria intermedia (no en Firefox2 o Internet Explorer)
 
 Teclas rápidas del modo virtual para saltar a siguientes elementos de un tipo en particular (utiliza también shift con la tecla para retroceder):
+
 h: encabezado
+1 a 6: encabezados de nivel 1 a 6
 l: lista
 i: elemento de lista
 k: enlace
 t: tabla
 f: formulario
-
-
-
+e: campo de edición
+b: botón
+r: botón de opción
+c: cuadro combinado
+x: casilla de verificación
+m: marco
+s: separador
+g: gráfico
+q: cita
