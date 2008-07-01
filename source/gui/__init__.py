@@ -137,7 +137,7 @@ class MainFrame(wx.Frame):
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
-		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,reportDone=True)
+		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
 
 	def onSaveConfigurationCommand(self,evt):
 		try:

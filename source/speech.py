@@ -130,18 +130,16 @@ def pauseSpeech(switch):
 	isPaused=switch
 	beenCanceled=False
 
-def speakMessage(text,wait=False,index=None):
+def speakMessage(text,index=None):
 	"""Speaks a given message.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
-@param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
-@type wait: boolean
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
 	global beenCanceled
-	speakText(text,wait=wait,index=index,reason=REASON_MESSAGE)
+	speakText(text,index=index,reason=REASON_MESSAGE)
 
 def speakSpelling(text):
 	global beenCanceled
@@ -244,13 +242,11 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			info.expand(textHandler.UNIT_READINGCHUNK)
 			speakMessage(info.text)
 
-def speakText(text,index=None,wait=False,reason=REASON_MESSAGE):
+def speakText(text,index=None,reason=REASON_MESSAGE):
 	"""Speaks some given text.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
-@param wait: if true, the function will not return until the text has finished being spoken. If false, the function will return straight away.
-@type wait: boolean
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
@@ -265,7 +261,7 @@ This function will not speak if L{speechMode} is false.
 	beenCanceled=False
 	text=processText(text)
 	if text and not text.isspace():
-		getSynth().speakText(text,wait=wait,index=index)
+		getSynth().speakText(text,index=index)
 
 def getExcludedAutoSpeakFormats():
 	formats=set()
@@ -292,7 +288,7 @@ def getExcludedAutoSpeakFormats():
 		formats.add(controlTypes.ROLE_ALIGNMENT)
 	return formats
 
-def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=False,index=None):
+def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,index=None):
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
@@ -345,7 +341,7 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,wait=F
 					speakMessage(speechText)
 			if len(item)>1 or not handleSymbols:
 				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
-					speakText(item,wait=wait,index=index)
+					speakText(item,index=index)
 			else:
 				speech.speakSpelling(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
@@ -564,7 +560,7 @@ class RelativeXMLParser(object):
 		self.parser.feed(relativeXML)
 		return self._commandList
 
-def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,reason=REASON_QUERY,wait=False,index=None):
+def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,reason=REASON_QUERY,index=None):
 	textList=[]
 	#Fetch the last stack, or make a blank one
 	oldStack=getattr(cacheObject,'_speech_XMLCache',[])
@@ -652,7 +648,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 	text=" ".join(textList)
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
 	if text and not text.isspace():
-		speakText(text,wait=wait,index=index)
+		speakText(text,index=index)
 
 def getFieldSpeech(attrs,fieldType,extraDetail=False):
 		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_LINK:

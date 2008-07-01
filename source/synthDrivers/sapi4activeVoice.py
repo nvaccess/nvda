@@ -5,8 +5,6 @@
 #See the file COPYING for more details.
 
 import os
-import time
-import pythoncom
 import comtypes.client
 import _winreg
 import synthDriverHandler
@@ -119,15 +117,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		except:
 			pass
 
-	def speakText(self,text,wait=False,index=None):
+	def speakText(self,text,index=None):
 		text=text.replace("\\","\\\\")
 		if isinstance(index,int) and index>=0:
 			text="".join(["\\mrk=%d\\"%(index+1),text])
 		self.tts.speak(text)
-		if wait:
-			while self.tts.speaking:
-				pythoncom.PumpWaitingMessages()
-				time.sleep(0.01)
 
 	def cancel(self):
 		self.tts.audioReset()

@@ -246,10 +246,10 @@ def initialize():
 		if loadKeyMap('_default',default):
 			globalVars.log.info("loaded default module")
 		else:
-			speech.speakMessage(_("Could not load default module keyMap"),wait=True)
+			speech.speakMessage(_("Could not load default module keyMap"))
 			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
 	else:
-		speech.speakMessage(_("Could not load default module "),wait=True)
+		speech.speakMessage(_("Could not load default module "))
 		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
 
 #base class for appModules
