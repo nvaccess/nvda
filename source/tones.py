@@ -31,7 +31,7 @@ def beep(hz,length,left=50,right=50):
 	@param right: volume of the right channel (0 to 100)
 	@type right: float
 	""" 
-	log.info("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
+	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	hz=float(hz)
 	player.stop()
 	samplesPerCycle=(sampleRate/hz)

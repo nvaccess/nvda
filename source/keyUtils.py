@@ -51,7 +51,7 @@ def sendKey(keyPress):
 @param keyPress: the key to send
 @type keyPress: NVDA internal key
 """
-	if log.isEnabledFor(log.INFO): log.info("%s"%keyName(keyPress))
+	if log.isEnabledFor(log.IO): log.io("%s"%keyName(keyPress))
 	keyList=[]
 	#Process modifier keys
 	if keyPress[0] is not None:

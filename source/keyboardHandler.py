@@ -138,7 +138,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if extended==1:
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
-		if log.isEnabledFor(log.INFO): log.info("key press: %s"%keyName(keyPress))
+		if log.isEnabledFor(log.IO): log.io("key press: %s"%keyName(keyPress))
 		if modifiers is None and lastKeyCount>=1 and ((time.time()-lastPressedKeyTime)>0.5):
 			lastPressedKey = None
 			lastKeyCount = 0

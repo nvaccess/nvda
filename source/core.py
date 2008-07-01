@@ -39,7 +39,7 @@ def resetConfiguration():
 		logLevel=logHandler.levelNames[levelName]
 		log.setLevel(logLevel)
 	except:
-		log.warning("could not set logging to %s"%levelName,exc_info=True)
+		log.warning("could not set logging to %s"%levelName)
 	#Language
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
@@ -77,7 +77,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				logLevel=logHandler.levelNames[levelName]
 				log.setLevel(logLevel)
 			except:
-				log.warning("could not set logging to %s"%levelName,exc_info=True)
+				log.warning("could not set logging to %s"%levelName)
 		try:
 			lang = config.conf["general"]["language"]
 			import languageHandler
@@ -161,7 +161,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			log.debug("calling loose focus on object with focus")
 			globalVars.focusObject.event_looseFocus()
 	except:
-		log.warn("Loose focus error",exc_info=True)
+		log.error("Loose focus error",exc_info=True)
 	try:
 		speech.cancelSpeech()
 	except:
@@ -171,27 +171,27 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import virtualBufferHandler
 		virtualBufferHandler.cleanupVirtualBuffers()
 	except:
-		log.warn("Error cleaning up virtualBuffers",exc_info=True)
+		log.error("Error cleaning up virtualBuffers",exc_info=True)
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
 	except:
-		log.warn("Error terminating IAccessible support",exc_info=True)
+		log.error("Error terminating IAccessible support",exc_info=True)
 	log.debug("Terminating Java Access Bridge support")
 	try:
 		JABHandler.terminate()
 	except:
-		log.warn("Error terminating Java Access Bridge support",exc_info=True)
+		log.error("Error terminating Java Access Bridge support",exc_info=True)
 	log.debug("Terminating charHook")
 	try:
 		charHook.terminate()
 	except:
-		log.warn("Error terminating charHook",exc_info=True)
+		log.error("Error terminating charHook",exc_info=True)
 	log.debug("Terminating keyboard handler")
 	try:
 		keyboardHandler.terminate()
 	except:
-		log.warn("Error terminating keyboard handler")
+		log.error("Error terminating keyboard handler")
 	log.debug("Terminating mouse handler")
 	try:
 		mouseHandler.terminate()

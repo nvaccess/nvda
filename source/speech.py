@@ -166,7 +166,7 @@ def speakSpelling(text):
 			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
-		if log.isEnabledFor(log.INFO): log.info("Speaking \"%s\""%char)
+		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
 		getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
@@ -421,7 +421,7 @@ def speakTypedCharacters(ch):
 			typedWord="".join([typedWord,ch])
 		elif len(typedWord)>0:
 			speakText(typedWord)
-			if log.isEnabledFor(log.INFO): log.info("typedword: %s"%typedWord)
+			if log.isEnabledFor(log.IO): log.io("typedword: %s"%typedWord)
 			typedWord=""
 	else:
 		typedWord=""

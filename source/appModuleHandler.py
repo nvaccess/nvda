@@ -155,7 +155,7 @@ def update(windowHandle):
 				log.debug("calling appLoseFocus event on appModule %s"%activeModule)
 				activeModule.event_appLooseFocus()
 			activeModule=None
-		log.info("application %s closed, window %s"%(runningTable[w].appName,w))
+		log.debug("application %s closed, window %s"%(runningTable[w].appName,w))
 		del runningTable[w]
 	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
 	log.debug("Using window %s, got appWindow %s"%(windowHandle,appWindow))
@@ -172,18 +172,18 @@ def update(windowHandle):
 		if mod: 
 			mod=mod(appName,appWindow)
 			if mod.__class__!=AppModule:
-				log.info("Loaded appModule %s, %s"%(mod.appName,mod)) 
+				log.info("Loaded appModule %s"%(mod.appName))
 			loadKeyMap(appName,mod)
 		runningTable[appWindow]=mod
 	activeAppWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
 	if isinstance(activeModule,AppModule) and activeAppWindow!=activeModule.appWindow: 
-		log.info("appModule %s lost focus"%activeModule)
+		log.debug("appModule %s lost focus"%activeModule)
 		if hasattr(activeModule,"event_appLooseFocus"):
 			activeModule.event_appLooseFocus()
 		activeModule=None
 	if not activeModule and activeAppWindow in runningTable:
 		activeModule=runningTable[activeAppWindow]
-		log.info("appModule %s gained focus"%activeModule)
+		log.debug("appModule %s gained focus"%activeModule)
 		if hasattr(activeModule,"event_appGainFocus"):
 			activeModule.event_appGainFocus()
 
@@ -211,7 +211,7 @@ def loadKeyMap(appName,mod):
 				bindCount+=1
 			except:
 				log.error("error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
-	log.info("added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
+	log.debug("added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
   	return True
 
 def fetchModule(appName):
@@ -244,7 +244,7 @@ def initialize():
 		default=defaultModClass('_default',winUser.getDesktopWindow())
 	if default:
 		if loadKeyMap('_default',default):
-			log.info("loaded default module")
+			log.info("loaded default appModule")
 		else:
 			speech.speakMessage(_("Could not load default module keyMap"))
 			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
