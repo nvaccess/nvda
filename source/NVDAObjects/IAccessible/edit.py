@@ -172,30 +172,6 @@ class EditTextInfo(NVDAObjectTextInfo):
 			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
-	def _getTextRangeWithEmbeddedObjects(self,start,end):
-		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
-		r=ptr.Range(self._startOffset,self._endOffset)
-		bufText=r.text
-		if bufText is None:
-			bufText=""
-		newTextList=[]
-		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
-				embedRange=ptr.Range(start+offset,start+offset)
-				o=embedRange.GetEmbeddedObject()
-				o=o.QueryInterface(oleTypes.IOleObject)
-				dataObj=o.GetClipboardData(0)
-				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-				medium=dataObj.GetData(format)
-				buf=ctypes.create_string_buffer(medium.data)
-				buf=ctypes.cast(buf,ctypes.c_wchar_p)
-				newTextList.append(buf.value)
-			else:
-				newTextList.append(bufText[offset])
-		return "".join(newTextList)
-
 	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
 		formatList,start,end=super(EditTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
 		if self.obj.editAPIVersion>=1:
@@ -388,6 +364,134 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
+ITextDocumentUnitsToNVDAUnits={
+	comInterfaces.tom.tomCharacter:textHandler.UNIT_CHARACTER,
+	comInterfaces.tom.tomWord:textHandler.UNIT_WORD,
+	comInterfaces.tom.tomLine:textHandler.UNIT_LINE,
+	comInterfaces.tom.tomSentence:textHandler.UNIT_SENTENCE,
+	comInterfaces.tom.tomParagraph:textHandler.UNIT_PARAGRAPH,
+	comInterfaces.tom.tomStory:textHandler.UNIT_STORY,
+}
+
+NVDAUnitsToITextDocumentUnits={
+	textHandler.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
+	textHandler.UNIT_WORD:comInterfaces.tom.tomWord,
+	textHandler.UNIT_LINE:comInterfaces.tom.tomLine,
+	textHandler.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
+	textHandler.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
+	textHandler.UNIT_STORY:comInterfaces.tom.tomStory,
+	textHandler.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
+}
+
+class ITextDocumentTextInfo(textHandler.TextInfo):
+
+	def __init__(self,obj,position,_rangeObj=None):
+		super(ITextDocumentTextInfo,self).__init__(obj,position)
+		if _rangeObj:
+			self._rangeObj=_rangeObj.Duplicate
+			return
+		if isinstance(position,textHandler.Point):
+			self._rangeObj=self.obj.ITextDocumentObject.rangeFromPoint(position.x,position.y)
+		elif position==textHandler.POSITION_ALL:
+			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
+			self._rangeObj.expand(comInterfaces.tom.tomStory)
+		elif position==textHandler.POSITION_SELECTION:
+			self._rangeObj=self.obj.ITextSelectionObject.duplicate
+		elif position==textHandler.POSITION_CARET:
+			self._rangeObj=self.obj.ITextSelectionObject.duplicate
+			self._rangeObj.Collapse(True)
+		elif position==textHandler.POSITION_FIRST:
+			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
+		elif position==textHandler.POSITION_LAST:
+			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
+			self._rangeObj.moveEnd(comInterfaces.tom.tomStory,1)
+			self._rangeObj.move(comInterfaces.tom.tomCharacter,-1)
+		elif isinstance(position,textHandler.Offsets):
+			self._rangeObj=self.obj.ITextDocumentObject.range(position.startOffset,position.endOffset)
+		else:
+			raise NotImplementedError("position: %s"%position)
+
+	def expand(self,unit):
+		if unit in NVDAUnitsToITextDocumentUnits:
+			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
+		else:
+			raise NotImplementedError("unit: %s"%unit)
+
+	def compareEndPoints(self,other,which):
+		if which=="startToStart":
+			diff=self._rangeObj.Start-other._rangeObj.Start
+		elif which=="startToEnd":
+			diff=self._rangeObj.Start-other._rangeObj.End
+		elif which=="endToStart":
+			diff=self._rangeObj.End-other._rangeObj.Start
+		elif which=="endToEnd":
+			diff=self._rangeObj.End-other._rangeObj.End
+		else:
+			raise ValueError("bad argument - which: %s"%which)
+		if diff<0:
+			diff=-1
+		elif diff>0:
+			diff=1
+		return diff
+
+	def setEndPoint(self,other,which):
+		if which=="startToStart":
+			self._rangeObj.Start=other._rangeObj.Start
+		elif which=="startToEnd":
+			self._rangeObj.Start=other._rangeObj.End
+		elif which=="endToStart":
+			self._rangeObj.End=other._rangeObj.Start
+		elif which=="endToEnd":
+			self._rangeObj.End=other._rangeObj.End
+		else:
+			raise ValueError("bad argument - which: %s"%which)
+
+	def _get_isCollapsed(self):
+		if self._rangeObj.Start==self._rangeObj.End:
+			return True
+		else:
+			return False
+
+	def collapse(self,end=False):
+		a=self._rangeObj.Start
+		b=self._rangeObj.end
+		startOffset=min(a,b)
+		endOffset=max(a,b)
+		if not end:
+			offset=startOffset
+		else:
+			offset=endOffset
+		self._rangeObj.SetRange(offset,offset)
+
+	def copy(self):
+		return ITextDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
+
+	def _get_text(self):
+		return self._rangeObj.text
+
+	def move(self,unit,direction,endPoint=None):
+		if unit in NVDAUnitsToITextDocumentUnits:
+			unit=NVDAUnitsToITextDocumentUnits[unit]
+		else:
+			raise NotImplementedError("unit: %s"%unit)
+		if endPoint=="start":
+			moveFunc=self._rangeObj.MoveStart
+		elif endPoint=="end":
+			moveFunc=self._rangeObj.MoveEnd
+		else:
+			moveFunc=self._rangeObj.Move
+		res=moveFunc(unit,direction)
+		return res
+
+	def _get_bookmark(self):
+		return textHandler.Offsets(self._rangeObj.start,self._rangeObj.end)
+
+	def updateCaret(self):
+		self.obj.ITextSelectionObject.start=self.obj.ITextSelectionObject.end=self._rangeObj.start
+
+	def updateSelection(self):
+		self.obj.ITextSelectionObject.start=self._rangeObj.start
+		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
 class Edit(IAccessible):
 
@@ -397,15 +501,43 @@ class Edit(IAccessible):
 	editValueUnit=textHandler.UNIT_LINE
 
 	def __init__(self,*args,**kwargs):
-		self.TextInfo=EditTextInfo
 		super(Edit,self).__init__(*args,**kwargs)
-		self._lastMouseTextOffsets=None
-		if self.editAPIVersion>=1:
+		#For now disable ITextDocument support
+		if False and self.editAPIVersion>1 and self.ITextDocumentObject:
+			self.TextInfo=ITextDocumentTextInfo
+		else:
+			self.TextInfo=EditTextInfo
+		if self.TextInfo is EditTextInfo:
 			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
 
 	def __del__(self):
-		if self.editAPIVersion>=1:
+		if self.TextInfo is EditTextInfo:
 			winKernel.closeHandle(self.editProcessHandle)
+
+	def _get_TextInfo(self):
+		if self.editAPIVersion>1 and self.ITextDocumentObject:
+			return ITextDocumentTextInfo
+		else:
+			return EditTextInfo
+
+	def _get_ITextDocumentObject(self):
+		if not hasattr(self,'_ITextDocumentObject'):
+			try:
+				ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
+				ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
+				self._ITextDocumentObject=ptr
+			except:
+				globalVars.log.error("Error getting ITextDocument",exc_info=True)
+				self._ITextDocumentObject=None
+		return self._ITextDocumentObject
+
+	def _get_ITextSelectionObject(self):
+		if not hasattr(self,'_ITextSelectionObject'):
+			try:
+				self._ITextSelectionObject=self.ITextDocumentObject.selection
+			except:
+				self._ITextSelectionObject=None
+		return self._ITextSelectionObject
 
 	def _get_value(self):
 		return None

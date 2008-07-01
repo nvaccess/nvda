@@ -72,10 +72,9 @@ NVDAUnitsToWordUnits={
 class WordDocumentTextInfo(textHandler.TextInfo):
 
 	def _expandToLine(self,rangeObj):
-		sel=self.obj.dom.Selection
+		sel=self.obj.WinwordSelectionObject
 		oldSel=sel.range
-		sel.Start=rangeObj.Start
-		sel.End=rangeObj.End
+		sel.SetRange(rangeObj.start,rangeObj.end)
 		sel.Expand(wdLine)
 		rangeObj.SetRange(sel.Start,sel.End)
 		sel.SetRange(oldSel.Start,oldSel.End)
@@ -85,21 +84,26 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		self._rangeObj=self.obj.dom.Selection.range
-		if position==textHandler.POSITION_SELECTION:
-			pass
+		if isinstance(position,textHandler.Point):
+			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.x,position.y)
+		elif position==textHandler.POSITION_SELECTION:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textHandler.POSITION_CARET:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.Collapse()
+		elif position==textHandler.POSITION_ALL:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
+			self._rangeObj.Expand(wdStory)
 		elif position==textHandler.POSITION_FIRST:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(0,0)
 		elif position==textHandler.POSITION_LAST:
+			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.moveEnd(wdStory,1)
 			self._rangeObj.move(wdCharacter,-1)
-		elif isinstance(position,textHandler.Bookmark):
-			if position.infoClass==self.__class__:
-				self._rangeObj.SetRange(position.data[0],position.data[1])
-			else:
-				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
+		elif isinstance(position,textHandler.Offsets):
+			self._rangeObj=self.obj.WinwordSelectionObject.range
+			self._rangeObj.SetRange(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -263,10 +267,13 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark(self.__class__,(self._rangeObj.Start,self._rangeObj.End))
+		return textHandler.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
 	def updateCaret(self):
-		self.obj.dom.Selection.SetRange(self._rangeObj.Start,self._rangeObj.End)
+		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
+
+	def updateSelection(self):
+		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
 class WordDocument(IAccessible):
 
@@ -277,8 +284,8 @@ class WordDocument(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
-	def _get_dom(self):
-		if not hasattr(self,'_dom'): 
+	def _get_WinwordDocumentObject(self):
+		if not hasattr(self,'_WinwordDocumentObject'): 
 			ptr=ctypes.c_void_p()
 			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 				raise OSError("No native object model")
@@ -287,8 +294,13 @@ class WordDocument(IAccessible):
 			t=o.GetTypeInfo()
 			a=t.GetTypeAttr()
 			oleRepr=win32com.client.build.DispatchItem(attr=a)
-			self._dom=win32com.client.CDispatch(o,oleRepr)
- 		return self._dom
+			self._WinwordDocumentObject=win32com.client.CDispatch(o,oleRepr)
+ 		return self._WinwordDocumentObject
+
+	def _get_WinwordSelectionObject(self):
+		if not hasattr(self,'_WinwordSelectionObject'):
+			self._WinwordSelectionObject=self.WinwordDocumentObject.selection
+		return self._WinwordSelectionObject
 
 	def script_nextRow(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)

@@ -128,8 +128,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
-		if isinstance(position,textHandler.Points):
-			position=textHandler.Offsets(self._getOffsetFromPoint(position.startX,position.startY),self._getOffsetFromPoint(position.endX,position.endY))
+		if isinstance(position,textHandler.Point):
+			offset=self._getOffsetFromPoint(position.x,position.y)
+			position=textHandler.Offsets(offset,offset)
 		if position==textHandler.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textHandler.POSITION_LAST:
@@ -600,7 +601,7 @@ Tries to force this object to take the focus.
 		if not config.conf['mouse']['reportTextUnderMouse']:
 			return
 		try:
-			info=self.makeTextInfo(textHandler.Points(x,y,x,y))
+			info=self.makeTextInfo(textHandler.Point(x,y))
 			info.expand(textHandler.UNIT_PARAGRAPH)
 		except:
 			info=self.makeTextInfo(textHandler.POSITION_ALL)
@@ -688,11 +689,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		while elapsed < timeout:
 			if isScriptWaiting():
 				return False
-			api.processPendingEvents()
-			focusObject=api.getFocusObject()
-			if focusObject!=self:
-				return True
-			newBookmark = focusObject.makeTextInfo(textHandler.POSITION_CARET).bookmark
+			newBookmark = self.makeTextInfo(textHandler.POSITION_CARET).bookmark
 			if newBookmark!=bookmark:
 				return True
 			time.sleep(retryInterval)
@@ -711,7 +708,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
-			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_moveByCharacter(self,keyPress):
@@ -726,7 +722,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress):
@@ -741,7 +736,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
-			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_moveByParagraph(self,keyPress):
@@ -756,7 +750,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
-			speech.cancelSpeech()
 			speech.speakFormattedText(info)
 
 	def script_backspace(self,keyPress):
@@ -771,7 +764,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			delChar=""
 		sendKey(keyPress)
 		if self._hasCaretMoved(oldBookmark):
-			speech.cancelSpeech()
 			speech.speakSpelling(delChar)
 			focus=api.getFocusObject()
 			info=focus.makeTextInfo(textHandler.POSITION_CARET)
@@ -790,7 +782,6 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.cancelSpeech()
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress):

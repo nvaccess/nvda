@@ -7,6 +7,7 @@
 import time
 import weakref
 from keyUtils import sendKey
+import inspect
 import appModuleHandler
 import api
 import queueHandler
@@ -46,12 +47,16 @@ def findScript_virtualBufferLevel(keyPress):
 	return findScript_NVDAObjectLevel(keyPress)
 
 def findScript_NVDAObjectLevel(keyPress):
-	focusObject=api.getFocusObject()
-	func=focusObject.getScript(keyPress)
+	focusObj=api.getFocusObject()
+	func=focusObj.getScript(keyPress)
 	if func:
 		return func
-	else:
-		return None
+	ancestors=reversed(api.getFocusAncestors())
+	for obj in ancestors:
+		func=obj.getScript(keyPress)
+		if func and getattr(func,'canPropagate',False): 
+			return func
+	return None
 
 def getScriptName(script):
 	return script.__name__[7:]
@@ -113,3 +118,28 @@ def getLastScriptRepeateCount():
 
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
+
+def isCurrentScript(scriptFunc):
+	"""Finds out if the given script is equal to the script that L{isCurrentScript} is being called from.
+	@param scriptFunc: the script retreaved from ScriptableObject.getScript(keyPress)
+	@type scriptFunc: Instance method
+	@returns: True if they are equal, False otherwise
+	@rtype: boolean
+	"""
+	try:
+	 	givenFunc=getattr(scriptFunc.im_self.__class__,scriptFunc.__name__)
+	except AttributeError:
+		globalVars.log.debug("Could not get unbound method from given script",exc_info=True) 
+		return False
+	parentFrame=inspect.currentframe().f_back
+	try:
+		realObj=parentFrame.f_locals['self']
+	except KeyError:
+		globalVars.log.debug("Could not get self instance from parent frame instance method",exc_info=True)
+		return False
+	try:
+		realFunc=getattr(realObj.__class__,parentFrame.f_code.co_name)
+	except AttributeError:
+		globalVars.log.debug("Could not get unbound method from parent frame instance",exc_info=True)
+		return False
+	return givenFunc==realFunc
