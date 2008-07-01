@@ -1,3 +1,4 @@
+import ctypes
 import weakref
 import time
 import os
@@ -12,6 +13,8 @@ import api
 import sayAllHandler
 import controlTypes
 import textHandler
+#Before importing virtualBuffer_lib, force ctypes to use virtualBuffer.dll from the lib dir, not the current dir
+ctypes.cdll.virtualBuffer=ctypes.cdll.LoadLibrary('lib\\virtualBuffer.dll')
 from virtualBuffer_lib import *
 import globalVars
 import config
