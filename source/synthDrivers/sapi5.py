@@ -98,7 +98,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._voice=value
 
 
-	def speakText(self,text,wait=False,index=None):
+	def speakText(self,text,index=None):
 		flags=constants.SVSFIsXML
 		text=text.replace("<","&lt;")
 		pitch=(self._pitch/2)-25
@@ -106,9 +106,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
 		else:
 			bookmarkXML=""
-		flags=constants.SVSFIsXML
-		if wait is False:
-			flags+=constants.SVSFlagsAsync
+		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
 		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
 
 	def cancel(self):

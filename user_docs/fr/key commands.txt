@@ -1,4 +1,4 @@
-NVDA résumé des touches de commande
+Résumé des touches de commande de NVDA
 
 Beaucoup de ces commandes utilisent la touche NVDA. La touche NVDA est la touche Insertion qu'on trouve soit sur le pavé numérique, soit sur le clavier principal près de début, fin, page précédente et page suivante. NVDA peut aussi être configuré de manière à utiliser la touche de verrouillage majuscule comme touche NVDA.
 
@@ -16,7 +16,7 @@ Lit le contenu de l'application courante.
 Utile pour lire le contenu d'une boîte de dialogue qui vous a peut-être échappé lors de la première lecture.
 
 NVDA+n: showGui
-Cette combinaison active le menu NVDA permettant d'accéder aux paramètres de NVDA.
+Cette combinaison active le menu permettant d'accéder aux paramètres de NVDA.
 
 NVDA+q: quit
 Vous demande si vous voulez quitter NVDA. Pressez oui pour quitter, non pour continuer.
@@ -27,17 +27,11 @@ Bascule entre les trois modes de parole (parole, bips et silence).
 NVDA+F12: dateTime
 Annonce l'heure. Une double pression annonce la date.
 
-NVDA+pageUp: increaseRate
-Augmente le débit de la parole de 5 pourcent.
-
-NVDA+pageDown: decreaseRate
-Diminue le débit de la parole de 5 pourcent.
-
 NVDA+2: toggleSpeakTypedCharacters
-Active ou désactive l'annonce des caractères à la frappe.
+Active ou désactive l'écho clavier par caractère.
 
 NVDA+3: toggleSpeakTypedWords
-Active ou désactive l'annonce des mots à la frappe.
+Active ou désactive l'écho clavier par mot.
 
 NVDA+4: toggleSpeakCommandKeys
 Active ou désactive l'annonce de toutes les touches à la frappe.
@@ -48,107 +42,11 @@ Active ou désactive l'annonce des ponctuations.
 NVDA+End: reportStatusLine
 Annonce la barre d'état de l'application courante si NVDA en trouve une.
 
-NVDA+pavnumDivisé: moveMouseToNavigatorObject
-Déplace le pointeur de la souris à l'objet de navigation courant.
- 
-NVDA+Multiplié: moveNavigatorObjectToMouse
-Déplace l'objet de navigation à l'objet sous le pointeur de la souris.
-
-NVDA+Tab: reportCurrentFocus
-Annonce l'objet actuellement en focus.
-
-NVDA+pavnum5: navigatorObject_current
-Annonce l'objet de navigation courant.
-
-maj+NVDA+pavnum5: navigatorObject_currentDimensions
-Annonce la taille et la position de l'objet de navigation courant.
- 
-Control+maj+NVDA+pavnum5: navigatorObject_where
-Annonce l'ancêtre de l'objet de navigation courant.
-
-NVDA+moins: navigatorObject_toFocus
-Déplace l'objet de navigation à l'objet actuellement en focus.
-
-NVDA+flèche haut: navigatorObject_parent
-Déplace l'objet de navigation à son parent (l'objet qui le contient).
-
-NVDA+flèche bas: navigatorObject_firstChild
-Déplace l'objet de navigation à son premier enfant
-(premier objet à l'intérieur de l'objet de navigation)).
-
-NVDA+flèche gauche: navigatorObject_previous
-Déplace l'objet de navigation à l'objet précédent de même niveau.
-
-maj+NVDA+flèche gauche: navigatorObject_previousInFlow
-Déplace l'objet de navigation à l'objet précédent, pas nécessairement de même niveau.
-
-NVDA+flèche droite: navigatorObject_next
-Déplace l'objet de navigation à l'objet suivant de même niveau.
-
-maj+NVDA+flèche droite: navigatorObject_nextInFlow
-Déplace l'objet de navigation à l'objet suivant, pas nécessairement de même niveau.
-
-NVDA+pavnumEntrée: navigatorObject_doDefaultAction
-Exécute l'action par défaut sur l'objet de navigation courant, par exemple appuie sur un bouton, active un élément de liste.
-
-NVDA+plus: navigatorObject_sayAll
-Démarre la lecture de tous les objets après l'objet de navigation, dans l'ordre de l'arborescence.
-
-pavnumMoins: review_moveToCaret
-amène le pointeur de revue d'écran au curseur applicatif.
-
-Control+pavnumMoins: review_moveCaretHere
-déplace le curseur applicatif au pointeur de revue d'écran.
-
-Pavnum1: review_previousCharacter
-Déplace le pointeur de revue d'écran au caractère précédent.
-
-Maj+pavnum1: review_startOfLine
-déplace le pointeur de revue d'écran au début de la ligne.
-
-pavnum2: review_currentCharacter
-annonce le caractère sous le pointeur de revue d'écran.
-
-Pavnum3: review_nextCharacter
-déplace le pointeur de revue d'écran au caractère suivant.
-
-maj+pavnum3: review_endOfLine
-déplace le pointeur de revue d'écran à la fin de la ligne.
-
-pavnum4: review_previousWord
-déplace le pointeur de revue d'écran au mot précédent.
-
-pavnum5: review_currentWord
-annonce le mot sous le pointeur de revue d'écran.
-
-pavnum6: review_nextWord
-déplace le pointeur de revue d'écran au mot suivant.
-
-pavnum7: review_previousLine
-déplace le pointeur de revue d'écran à la ligne précédente.
-
-maj+pavnum7: review_top
-déplace le pointeur de revue d'écran à la première ligne.
- 
-pavnum8: review_currentLine
-annonce la ligne sous le pointeur de revue d'écran.
-
-pavnum9: review_nextLine
-déplace le pointeur de revue d'écran à la ligne précédente.
-
-maj+pavnum9: review_bottom
-déplace le pointeur de revue d'écran à la dernière ligne.
-
-NVDA+flèche bas: sayAll
-démarre la lecture à la position courante dans un document ou une zone d'édition.
-
-pavnum-plus: review_sayAll
-utilise le pointeur de revue d'écran pour lire depuis sa position jusqu'à la fin du texte disponible.
-
 NVDA+f: reportFormatting
 annonce les informations de formatage à la position courante dans un document.
 
-NVDA+m: toggleReportObjectUnderMouse
+NVDA+m: toggleMouseTracking
+
 active ou désactive l'annonce des objets sous la souris quand elle se déplace.
 
 Control+NVDA+f1: speakApplicationName
@@ -168,6 +66,9 @@ active ou désactive le déplacement automatique du pointeur de revue d'écran`quan
 
 NVDA+7: toggleFocusMovesNavigatorObject
 active ou désactive le positionnement de l'objet de navigation quand le focus change.
+
+NVDA+Tab: reportCurrentFocus
+Annonce l'objet actuellement en focus.
  
 NVDA+f2: passNextKeyThrough
 Cette combinaison permet de passer la touche suivante au système même si une commande NVDA y est associée.
@@ -179,16 +80,122 @@ NVDA+flèche haut: reportCurrentLine
 annonce la ligne courante dans une zone d''édition ou un document.
 
 Control+NVDA+flèche gauche: previousSetting
-annonce le paramètre vocal précédent.
+va au paramètre vocal précédent et l'annonce.
  
 Control+NVDA+flèche droite: nextSetting
-annonce le paramètre vocal suivant.
+va au paramètre vocal suivant et l'annonce.
 
 Control+NVDA+flèche haut: increaseSetting
 augmente le paramètre vocal courant.
 
 Control+NVDA+flèche bas: decreaseSetting
 diminue le paramètre vocal courant.
+
+NVDA+flèche bas: sayAll
+démarre la lecture à la position courante dans un document ou une zone d'édition.
+
+
+Naviguer avec l'objet de navigation
+
+NVDA+pavNum5: navigatorObject_current
+Annonce l'objet de navigation courant.
+
+maj+NVDA+pavNum5: navigatorObject_currentDimensions
+Annonce la taille et la position de l'objet de navigation courant.
+ 
+Control+maj+NVDA+pavNum5: navigatorObject_where
+Annonce l'ancêtre de l'objet de navigation courant.
+
+NVDA+pavNumMoins: navigatorObject_toFocus
+Déplace l'objet de navigation à l'objet actuellement en focus.
+
+NVDA+pavNum8: navigatorObject_parent
+Déplace l'objet de navigation à son parent (l'objet qui le contient).
+
+NVDA+pavNum2: navigatorObject_firstChild
+Déplace l'objet de navigation à son premier enfant
+(premier objet à l'intérieur de l'objet de navigation)).
+
+NVDA+pavNum4: navigatorObject_previous
+Déplace l'objet de navigation à l'objet précédent de même niveau.
+
+maj+NVDA+pavNum4: navigatorObject_previousInFlow
+Déplace l'objet de navigation à l'objet précédent, pas nécessairement de même niveau.
+
+NVDA+pavNum6: navigatorObject_next
+Déplace l'objet de navigation à l'objet suivant de même niveau.
+
+maj+NVDA+pavNum6: navigatorObject_nextInFlow
+Déplace l'objet de navigation à l'objet suivant, pas nécessairement de même niveau.
+
+NVDA+pavNumEntrée: navigatorObject_doDefaultAction
+Exécute l'action par défaut sur l'objet de navigation courant, par exemple appuie sur un bouton, active un élément de liste.
+
+NVDA+pavNumDivisé: moveMouseToNavigatorObject
+Déplace le pointeur de la souris à l'objet de navigation courant.
+ 
+NVDA+pavNumMultiplié: moveNavigatorObjectToMouse
+Déplace l'objet de navigation à l'objet sous le pointeur de la souris.
+
+pavNumDivisé: leftMouseClick
+Clique le bouton gauche de la souris quelle que soit la position de celle-ci à ce moment.
+
+pavNumMultiplié: rightMouseClick
+Clique le bouton droit de la souris quelle que soit la position de celle-ci à ce moment.
+
+NVDA+pavNumPlus: navigatorObject_sayAll
+Démarre la lecture de tous les objets après l'objet de navigation, dans l'ordre de l'arborescence.
+
+pavNumMoins: review_moveToCaret
+amène le pointeur de revue d'écran au curseur applicatif.
+
+Control+pavNumMoins: review_moveCaretHere
+déplace le curseur applicatif au pointeur de revue d'écran.
+
+pavNumPlus: review_sayAll
+utilise le pointeur de revue d'écran pour lire depuis sa position jusqu'à la fin du texte disponible.
+
+
+Lecture des objets
+
+PavNum1: review_previousCharacter
+Déplace le pointeur de revue d'écran au caractère précédent.
+
+Maj+pavNum1: review_startOfLine
+déplace le pointeur de revue d'écran au début de la ligne.
+
+pavNum2: review_currentCharacter
+annonce le caractère sous le pointeur de revue d'écran.
+
+PavNum3: review_nextCharacter
+déplace le pointeur de revue d'écran au caractère suivant.
+
+maj+pavNum3: review_endOfLine
+déplace le pointeur de revue d'écran à la fin de la ligne.
+
+pavNum4: review_previousWord
+déplace le pointeur de revue d'écran au mot précédent.
+
+pavNum5: review_currentWord
+annonce le mot sous le pointeur de revue d'écran.
+
+pavNum6: review_nextWord
+déplace le pointeur de revue d'écran au mot suivant.
+
+pavNum7: review_previousLine
+déplace le pointeur de revue d'écran à la ligne précédente.
+
+maj+pavNum7: review_top
+déplace le pointeur de revue d'écran à la première ligne.
+ 
+pavNum8: review_currentLine
+annonce la ligne sous le pointeur de revue d'écran.
+
+pavNum9: review_nextLine
+déplace le pointeur de revue d'écran à la ligne précédente.
+
+maj+pavNum9: review_bottom
+déplace le pointeur de revue d'écran à la dernière ligne.
 
 Commandes du tampon virtuel pour Firefox3. Certaines marchent éventuellement pour Internet Explorer et Firefox2.
 
@@ -203,11 +210,21 @@ NVDA+f5: mise à jour de la page (uniquement Firefox3)
 Raccourcis spécifiques du tampon virtuel pour passer à l'élément suivant. La même touche en majuscule permet de passer à l'élément précédent.
 
 h: titre
+1 à 6: titre de niveau 1 à 6
 l: liste
 i: élément de liste
 k: lien
 t: tableau
 f: formulaire
+e: zone d'édition
+b: bouton
+r: btuton radio
+c: liste déroulante
+x: case à cocher
+m: cadre
+s: séparateur
+g: graphique
+q: balise de citation
 
 
 

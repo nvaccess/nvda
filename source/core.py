@@ -23,10 +23,8 @@ CORE_MAINLOOPERROR=1
 CORE_QUIT=2
 CORE_RESTART=3
 
-def resetConfiguration(reportDone=False):
+def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
-@param reportDone: if true then this function will speak when done, if else it won't.
-@type reportDone: boolean
 """
 	import config
 	import speech
@@ -56,9 +54,6 @@ def resetConfiguration(reportDone=False):
 	except:
 		pass
 	log.info("Reverted to saved configuration")
-	if reportDone:
-		log.debug("Reporting success to user")
-		speech.speakMessage(_("configuration applied"),wait=True)
 
 def main():
 	"""NVDA's core main loop.

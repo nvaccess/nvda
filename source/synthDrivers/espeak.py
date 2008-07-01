@@ -43,8 +43,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self.inflection=75
 
 
-	def speakText(self,text,wait=False,index=None):
-		_espeak.speak(text, index=index, wait=wait)
+	def speakText(self,text,index=None):
+		_espeak.speak(text, index=index)
 
 	def cancel(self):
 		_espeak.stop()

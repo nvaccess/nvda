@@ -21,6 +21,8 @@ import config
 import _winreg
 import api
 
+keyHookLib=ctypes.cdll.LoadLibrary('lib/keyHook.dll')
+
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
 NVDAModifierKey=None
@@ -212,14 +214,14 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			return True
 	except:
 		log.error("", exc=True)
-		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"),wait=True)
+		speech.speakMessage(_("Error in keyboardHandler.internal_keyUpEvent"))
 	return True
 
 #Register internal key press event with  operating system
 
 def initialize():
 	"""Initialises keyboard support."""
-	ctypes.cdll.keyHook.initialize(internal_keyDownEvent,internal_keyUpEvent)
+	keyHookLib.initialize(internal_keyDownEvent,internal_keyUpEvent)
 
 def terminate():
-	ctypes.cdll.keyHook.terminate()
+	keyHookLib.terminate()

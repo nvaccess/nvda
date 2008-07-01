@@ -173,12 +173,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@postcondition: This driver can no longer be used.
 		"""
 
-	def speakText(self, text, wait=False, index=None):
+	def speakText(self, text, index=None):
 		"""Speak some text.
 		@param text: The chunk of text to speak.
 		@type text: str
-		@param wait: C{True} if this method should block until speech is complete, C{False} if it should begin speaking and return immediately.
-		@type wait: bool
 		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
 		@type index: int
 		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.

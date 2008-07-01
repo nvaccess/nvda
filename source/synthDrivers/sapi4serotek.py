@@ -4,10 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import winsound
-import time
 import _winreg
-import pythoncom
 import core
 import synthDriverHandler
 import _sapi4serotekHelper
@@ -36,8 +33,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self.tts=_sapi4serotekHelper.SAPI4()
 			self.tts.say('')
 			self._lastIndex=None
-			self.tts.callWhenDone(self.onDoneSpeaking)
-			self._waitFlag=False
 			return True
 		except:
 			return False
@@ -47,9 +42,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def onIndexMark(self,index):
 		self._lastIndex=index
-
-	def onDoneSpeaking(self):
-		self.waitFlag=False
 
 	def _get_rateRatio(self):
 		return (self.tts.rateMax-self.tts.rateMin)/100.0
@@ -101,15 +93,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _set_voice(self,value):
 		self.tts.voice=self.tts.voices[value-1][0]
 
-	def speakText(self,text,wait=False,index=None):
+	def speakText(self,text,index=None):
 		text="%s\0"%text
-		self.waitFlag=wait
 		if index is not None:
 			self.tts.addIndexMark(self.onIndexMark,[index],{})
 		self.tts.say(text)
-		while self.waitFlag:
-			pythoncom.PumpWaitingMessages()
-			time.sleep(0.001)
 
 	def cancel(self):
 		self.tts.stop()

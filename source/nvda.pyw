@@ -60,8 +60,6 @@ if getattr(sys, "frozen", None):
 else:
 	os.chdir(sys.path[0])
 	logFileName='nvda.log'
-# Add our lib dir to the system search path so that dlls can be found.
-os.environ["path"] = os.environ["path"] + ";" + os.path.join(os.getcwd(), "lib")
 
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')

@@ -1,3 +1,4 @@
+import ctypes
 import weakref
 import time
 import os
@@ -12,6 +13,8 @@ import api
 import sayAllHandler
 import controlTypes
 import textHandler
+#Before importing virtualBuffer_lib, force ctypes to use virtualBuffer.dll from the lib dir, not the current dir
+ctypes.cdll.virtualBuffer=ctypes.cdll.LoadLibrary('lib\\virtualBuffer.dll')
 from virtualBuffer_lib import *
 import globalVars
 import config
@@ -313,6 +316,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 qn = VirtualBuffer.addQuickNav
 qn("heading", key="h", nextDoc=_("moves to the next heading"), nextError=_("no next heading"),
 	prevDoc=_("moves to the previous heading"), prevError=_("no previous heading"))
+qn("heading1", key="1", nextDoc=_("moves to the next heading at level 1"), nextError=_("no next heading at level 1"),
+	prevDoc=_("moves to the previous heading at level 1"), prevError=_("no previous heading at level 1"))
+qn("heading2", key="2", nextDoc=_("moves to the next heading at level 2"), nextError=_("no next heading at level 2"),
+	prevDoc=_("moves to the previous heading at level 2"), prevError=_("no previous heading at level 2"))
+qn("heading3", key="3", nextDoc=_("moves to the next heading at level 3"), nextError=_("no next heading at level 3"),
+	prevDoc=_("moves to the previous heading at level 3"), prevError=_("no previous heading at level 3"))
+qn("heading4", key="4", nextDoc=_("moves to the next heading at level 4"), nextError=_("no next heading at level 4"),
+	prevDoc=_("moves to the previous heading at level 4"), prevError=_("no previous heading at level 4"))
+qn("heading5", key="5", nextDoc=_("moves to the next heading at level 5"), nextError=_("no next heading at level 5"),
+	prevDoc=_("moves to the previous heading at level 5"), prevError=_("no previous heading at level 5"))
+qn("heading6", key="6", nextDoc=_("moves to the next heading at level 6"), nextError=_("no next heading at level 6"),
+	prevDoc=_("moves to the previous heading at level 6"), prevError=_("no previous heading at level 6"))
 qn("table", key="t", nextDoc=_("moves to the next table"), nextError=_("no next table"),
 	prevDoc=_("moves to the previous table"), prevError=_("no previous table"), readUnit=textHandler.UNIT_LINE)
 qn("link", key="k", nextDoc=_("moves to the next link"), nextError=_("no next link"),

@@ -32,7 +32,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 
 def initialize():
 	global charHookLib, winEventHookID
-	charHookLib=ctypes.windll.charHook
+	charHookLib=ctypes.windll.LoadLibrary('lib/charHook.dll')
 	charHookLib.initialize()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 

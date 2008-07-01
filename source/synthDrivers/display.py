@@ -36,7 +36,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def initialize(self):
 		self.frame = SynthFrame()
 
-	def speakText(self,text,wait=False,index=None):
+	def speakText(self,text,index=None):
 		self.frame.textCtrl.AppendText(text + "\n")
 
 	def terminate(self):
