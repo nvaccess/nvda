@@ -158,7 +158,7 @@ def initialize():
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", "UTF-8")
-	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
+	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
