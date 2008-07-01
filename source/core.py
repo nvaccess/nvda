@@ -113,8 +113,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import speech
 		log.debug("Initializing speech")
 		speech.initialize()
-		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
-			log.warn("Slow starting core")
+		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
+			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import appModuleHandler
 		log.debug("Initializing appModule Handler")
