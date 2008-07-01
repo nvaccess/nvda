@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,7 +12,7 @@ import win32clipboard
 import oleTypes
 import eventHandler
 import comInterfaces.tom
-import globalVars
+from logHandler import log
 import speech
 import winKernel
 import api
@@ -527,7 +527,7 @@ class Edit(IAccessible):
 				ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
 				self._ITextDocumentObject=ptr
 			except:
-				globalVars.log.error("Error getting ITextDocument",exc_info=True)
+				log.error("Error getting ITextDocument",exc_info=True)
 				self._ITextDocumentObject=None
 		return self._ITextDocumentObject
 
