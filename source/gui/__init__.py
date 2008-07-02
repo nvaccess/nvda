@@ -178,7 +178,7 @@ class MainFrame(wx.Frame):
 				try:
 					config.save()
 				except:
-					log.warning("Could not save configuration - probably read only file system", exc_info=True)
+					pass
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):

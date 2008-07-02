@@ -25,7 +25,7 @@ CORE_RESTART=3
 
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
-"""
+	"""
 	import config
 	import speech
 	import languageHandler
@@ -50,7 +50,6 @@ def resetConfiguration():
 	log.debug("Trying to save config...")
 	try:
 		config.save()
-		log.debug("config save successfull")
 	except:
 		pass
 	log.info("Reverted to saved configuration")
@@ -68,7 +67,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.debug("Trying to save config")
 		try:
 			config.save()
-			log.debug("save config successfull")
 		except:
 			pass
 		if globalVars.appArgs.logLevel==0:
