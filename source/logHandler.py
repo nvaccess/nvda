@@ -13,42 +13,37 @@ moduleCache={}
 
 def makeModulePathFromFilePath(path):
 	"""calculates the pythonic dotted module path from a file path of a python module.
-@param path: the relative or absolute path to the module
-@type path: string
-@returns: the Pythonic dotted module path 
-@rtype: string
-"""
+	@param path: the relative or absolute path to the module
+	@type path: string
+	@returns: the Pythonic dotted module path 
+	@rtype: string
+	"""
 	if path in moduleCache:
 		return moduleCache[path]
-	curPath=path
-	if os.path.isfile(curPath):
-		curPath=os.path.splitext(curPath)[0]
-	modList=[]
+	modPathList = []
+	# Work through the path components from right to left.
+	curPath = path
 	while curPath:
-		left,right=os.path.split(curPath)
-		modList.append(os.path.splitext(right)[0])
-		isPackage=False
-		for ext in ('py','pyc','pyo','pyd'):
-			if os.path.isfile(os.path.join(left,"__init__.%s")):
-				isPackage=True
-				break
-		if isPackage:
-			curPath=left
-		else:
-			curPath=None
-	modulePath=".".join(modList)
+		curPath, curPathCom = os.path.split(curPath)
+		curPathCom = os.path.splitext(curPathCom)[0]
+		# __init__ is the root module of a package, so skip it.
+		if curPathCom != "__init__":
+			modPathList.insert(0, curPathCom)
+		if curPath in sys.path:
+			# curPath is in the Python search path, so the Pythonic module path is relative to curPath.
+			break
+	modulePath = ".".join(modPathList)
 	if modulePath:
-		moduleCache[path]=modulePath
+		moduleCache[path] = modulePath
 	return modulePath
  
-#Using a frame object, gets current module path (relative to current directory).[className.[funcName]]
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
-@param f: the frame object to use
-@type f: frame
-@returns: the dotted module.class.attribute path
-@rtype: string
-"""
+	@param f: the frame object to use
+	@type f: frame
+	@returns: the dotted module.class.attribute path
+	@rtype: string
+	"""
 	path=makeModulePathFromFilePath(f.f_code.co_filename)
 	funcName=f.f_code.co_name
 	if funcName.startswith('<'):
