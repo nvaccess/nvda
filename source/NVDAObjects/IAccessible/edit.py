@@ -276,8 +276,6 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
-			if self.obj.editAPIHasITextDocument:
-				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=((end-start)+1)*2
 			if self.obj.isWindowUnicode:
 				textRange=TextRangeUStruct()
