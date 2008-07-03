@@ -339,7 +339,7 @@ qn("unvisitedLink", key="u", nextDoc=_("moves to the next unvisited link"), next
 qn("formField", key="f", nextDoc=_("moves to the next form field"), nextError=_("no next form field"),
 	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"), readUnit=textHandler.UNIT_LINE)
 qn("list", key="l", nextDoc=_("moves to the next list"), nextError=_("no next list"),
-	prevDoc=_("moves to the previous list"), prevError=_("no previous list"))
+	prevDoc=_("moves to the previous list"), prevError=_("no previous list"), readUnit=textHandler.UNIT_LINE)
 qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("no next list item"),
 	prevDoc=_("moves to the previous list item"), prevError=_("no previous list item"))
 qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no next button"),
