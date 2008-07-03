@@ -352,8 +352,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 		#If we just seem to get invalid line info, calculate manually
 		if start<=0 and end<=0 and lineNum<=0 and self._getLineCount()<=0 and self._getStoryLength()>0:
 			return super(EditTextInfo,self)._getLineOffsets(offset)
-		if end<offset:
-			start=offset
+		#Some edit controls that show both line feed and carage return can give a length not including the line feed
+		if end<=offset:
 			end=offset+1
 		#edit controls lye about their line length
 		limit=self._getStoryLength()
