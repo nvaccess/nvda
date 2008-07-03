@@ -58,6 +58,7 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+	log.info("Using Python version %s"%sys.version)
 	endResult=CORE_QUIT
 	try:
 		log.debug("loading config")
@@ -93,6 +94,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import wx
+		log.info("Using wx version %s"%wx.version())
 		app = wx.App(redirect=False)
 		import charHook
 		log.debug("Initializing charHook")
@@ -131,6 +133,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			speech.speakMessage(_("NVDA started"))
 			speech.speakMessage(_("You can press insert+n to activate the NVDA menu at any time"))
 		import queueHandler
+		log.info("Using comtypes version %s"%comtypes.__version__)
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def __init__(self,*args,**kwargs):
