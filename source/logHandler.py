@@ -3,50 +3,47 @@
 import os
 import sys
 import logging
+from logging import _levelNames as levelNames
 import inspect
 import winsound
 from types import MethodType
+import globalVars
 
 moduleCache={}
 
 def makeModulePathFromFilePath(path):
 	"""calculates the pythonic dotted module path from a file path of a python module.
-@param path: the relative or absolute path to the module
-@type path: string
-@returns: the Pythonic dotted module path 
-@rtype: string
-"""
+	@param path: the relative or absolute path to the module
+	@type path: string
+	@returns: the Pythonic dotted module path 
+	@rtype: string
+	"""
 	if path in moduleCache:
 		return moduleCache[path]
-	curPath=path
-	if os.path.isfile(curPath):
-		curPath=os.path.splitext(curPath)[0]
-	modList=[]
+	modPathList = []
+	# Work through the path components from right to left.
+	curPath = path
 	while curPath:
-		left,right=os.path.split(curPath)
-		modList.append(os.path.splitext(right)[0])
-		isPackage=False
-		for ext in ('py','pyc','pyo','pyd'):
-			if os.path.isfile(os.path.join(left,"__init__.%s")):
-				isPackage=True
-				break
-		if isPackage:
-			curPath=left
-		else:
-			curPath=None
-	modulePath=".".join(modList)
+		curPath, curPathCom = os.path.split(curPath)
+		curPathCom = os.path.splitext(curPathCom)[0]
+		# __init__ is the root module of a package, so skip it.
+		if curPathCom != "__init__":
+			modPathList.insert(0, curPathCom)
+		if curPath in sys.path:
+			# curPath is in the Python search path, so the Pythonic module path is relative to curPath.
+			break
+	modulePath = ".".join(modPathList)
 	if modulePath:
-		moduleCache[path]=modulePath
+		moduleCache[path] = modulePath
 	return modulePath
  
-#Using a frame object, gets current module path (relative to current directory).[className.[funcName]]
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
-@param f: the frame object to use
-@type f: frame
-@returns: the dotted module.class.attribute path
-@rtype: string
-"""
+	@param f: the frame object to use
+	@type f: frame
+	@returns: the dotted module.class.attribute path
+	@rtype: string
+	"""
 	path=makeModulePathFromFilePath(f.f_code.co_filename)
 	funcName=f.f_code.co_name
 	if funcName.startswith('<'):
@@ -61,6 +58,12 @@ def getCodePath(f):
 	return ".".join([x for x in path,className,funcName if x])
 
 class Logger(logging.Logger):
+	# Import standard levels for convenience.
+	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
+
+	# Our custom levels.
+	DEBUGWARNING = 12
+	IO = 15
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
 		if not extra:
@@ -82,6 +85,20 @@ class Logger(logging.Logger):
 			# Make the log text we just wrote appear in the log viewer.
 			logViewer.logViewer.refresh()
 		return res
+
+	def debugWarning(self, msg, *args, **kwargs):
+		"""Log 'msg % args' with severity 'DEBUGWARNING'.
+		"""
+		if not self.isEnabledFor(self.DEBUGWARNING):
+			return
+		self._log(log.DEBUGWARNING, msg, args, **kwargs)
+
+	def io(self, msg, *args, **kwargs):
+		"""Log 'msg % args' with severity 'IO'.
+		"""
+		if not self.isEnabledFor(self.IO):
+			return
+		self._log(log.IO, msg, args, **kwargs)
 
 class FileHandler(logging.FileHandler):
 
@@ -122,3 +139,21 @@ def redirectStdout(logger):
 	"""
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
+
+#: The singleton logger instance.
+#: @type: L{Logger}
+log = Logger("nvda")
+
+def initialize():
+	"""Initialize logging.
+	This must be called before any logging can occur.
+	@precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
+	"""
+	global log
+	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
+	logging.addLevelName(Logger.IO, "IO")
+	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", "UTF-8")
+	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+	logHandler.setFormatter(logFormatter)
+	log.addHandler(logHandler)
+	redirectStdout(log)

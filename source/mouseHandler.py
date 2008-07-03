@@ -14,6 +14,7 @@ import speech
 import NVDAObjects.JAB
 import NVDAObjects.IAccessible
 import globalVars
+from logHandler import log
 import config
 import IAccessibleHandler
 import JABHandler
@@ -86,7 +87,7 @@ def internal_mouseEvent(msg,x,y,injected):
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 	except:
-		globalVars.log.error("", exc_info=True)
+		log.error("", exc_info=True)
 	return True
 
 def executeMouseMoveEvent(x,y):
@@ -125,7 +126,7 @@ def executeMouseMoveEvent(x,y):
 		mouseObject.event_mouseMove(x,y)
 		oldMouseObject=mouseObject
 	except:
-		globalVars.log.error("api.notifyMouseMoved", exc_info=True)
+		log.error("api.notifyMouseMoved", exc_info=True)
 
 #Register internal mouse event
 

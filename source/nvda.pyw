@@ -1,12 +1,11 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core. it also handles the playing of the startup and exit sounds."""
  
-import logging
 import os
 import sys
 import tempfile
@@ -18,7 +17,8 @@ import optparse
 import win32gui
 import win32con
 import globalVars
-import logObj
+import logHandler
+from logHandler import log
 import winUser
 import winKernel
 
@@ -42,7 +42,7 @@ class NoConsoleOptionParser(optparse.OptionParser):
 
 def abortWithError(code):
 	"""Logs a critical error, plays the critical error Windows sound, sets the system screen reader flag back to false, plays the NVDA exit sound, and then exits NVDA"""
-	globalVars.log.critical("core stop not due to exit/restart",exc_info=True)
+	log.critical("core stop not due to exit/restart",exc_info=True)
 	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 	winUser.setSystemScreenReaderFlag(False)
@@ -115,14 +115,13 @@ if globalVars.appArgs.quit or oldAppWindowHandle:
 
 logLevel=globalVars.appArgs.logLevel
 if logLevel<=0:
-	logLevel=logging.WARN
-log=logObj.Logger("NVDA",logLevel)
-logHandler=logObj.FileHandler(globalVars.appArgs.logFileName,"w", "UTF-8")
-logFormatter=logging.Formatter("%(levelname)s - %(codepath)s:\n%(message)s")
-logHandler.setFormatter(logFormatter)
-log.addHandler(logHandler)
-logObj.redirectStdout(log)
-globalVars.log=log
+	logLevel=log.INFO
+logHandler.initialize()
+logHandler.log.setLevel(logLevel)
+
+import versionInfo
+log.info("Starting NVDA version %s" % versionInfo.version)
+
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 winUser.setSystemScreenReaderFlag(True)
@@ -140,5 +139,4 @@ elif res==core.CORE_INITERROR:
 winUser.setSystemScreenReaderFlag(False)
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
-globalVars.log.info("NVDA exit")
-del globalVars.log
+log.info("NVDA exit")

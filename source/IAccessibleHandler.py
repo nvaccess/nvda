@@ -160,6 +160,7 @@ from comInterfaces.IAccessible2Lib import *
 from comInterfaces.servprov import *
 import tones
 import globalVars
+from logHandler import log
 import JABHandler
 import eventHandler
 import winUser
@@ -738,7 +739,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID)
 	except:
-		globalVars.log.error("winEventCallback", exc_info=True)
+		log.error("winEventCallback", exc_info=True)
 
 def processGenericWinEvent(eventID,window,objectID,childID):
 	"""Converts the win event to an NVDA event,
@@ -944,7 +945,7 @@ def initialize():
 		if hookID:
 			winEventHookIDs.append(hookID)
 		else:
-			globalVars.log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
+			log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
 
 def pumpAll():
 	#Receive all the winEvents from the limiter for this cycle

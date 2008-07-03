@@ -13,7 +13,7 @@ import sgmllib
 from xml.parsers import expat
 import time
 import globalVars
-import logging
+from logHandler import log
 import api
 import controlTypes
 import config
@@ -166,7 +166,7 @@ def speakSpelling(text):
 			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
-		if globalVars.log.getEffectiveLevel() <= logging.INFO: globalVars.log.info("Speaking \"%s\""%char)
+		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
 		getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
@@ -421,7 +421,7 @@ def speakTypedCharacters(ch):
 			typedWord="".join([typedWord,ch])
 		elif len(typedWord)>0:
 			speakText(typedWord)
-			if globalVars.log.getEffectiveLevel() <= logging.INFO: globalVars.log.info("typedword: %s"%typedWord)
+			if log.isEnabledFor(log.IO): log.io("typedword: %s"%typedWord)
 			typedWord=""
 	else:
 		typedWord=""
@@ -531,7 +531,7 @@ class XMLContextParser(object):
 		try:
 			self.parser.Parse(XMLContext.encode('utf-8'))
 		except:
-			globalVars.log.warn("XML: %s"%XMLContext,exc_info=True)
+			log.debugWarning("XML: %s"%XMLContext,exc_info=True)
 		return self._fieldStack
 
 class RelativeXMLParser(object):

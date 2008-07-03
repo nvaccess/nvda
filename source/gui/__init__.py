@@ -10,6 +10,7 @@ import sys
 import wx
 from wx.lib import newevent
 import globalVars
+from logHandler import log
 import config
 import versionInfo
 import speech
@@ -177,7 +178,7 @@ class MainFrame(wx.Frame):
 				try:
 					config.save()
 				except:
-					globalVars.log.warning("Could not save configuration - probably read only file system", exc_info=True)
+					pass
 			self.Destroy()
 
 	def onGeneralSettingsCommand(self,evt):
@@ -215,7 +216,7 @@ class MainFrame(wx.Frame):
 			d.ShowModal()
 			self.postPopup()
 		except:
-			globalVars.log.error("gui.mainFrame.onAbout", exc_info=True)
+			log.error("gui.mainFrame.onAbout", exc_info=True)
 
 	def onViewLogCommand(self, evt):
 		logViewer.activate()

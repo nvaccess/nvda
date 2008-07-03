@@ -9,11 +9,12 @@
 import globalVars
 configFileName = globalVars.appArgs.configFileName
 
-
 import os
 from StringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
+from logHandler import log
+
 val = Validator()
 
 ### The configuration specification
@@ -147,16 +148,22 @@ def updateSynthConfig(name):
 
 def save(force = False):
 	"""Saves the configuration to the config file. However it does not if the file's modification time has changed and L{force} is not true.
-@param force: if true then the modification time of the file will be ignored.
-@type force: boolean
-"""
+	@param force: if true then the modification time of the file will be ignored.
+	@type force: boolean
+	"""
 	global conf, mtime
 	# If the file has changed since it was read, don't save over the top of it.
 	if not force and os.path.isfile(configFileName) and os.path.getmtime(configFileName) != mtime:
 		return
-	# Copy default settings and formatting.
-	conf.validate(val, copy = True)
-	conf.write()
+	try:
+		# Copy default settings and formatting.
+		conf.validate(val, copy = True)
+		conf.write()
+		log.info("Configuration saved")
+	except Exception, e:
+		log.warning("Could not save configuration - probably read only file system")
+		log.debugWarning("", exc_info=True)
+		raise e
 	mtime = os.path.getmtime(configFileName)
 
 ### Main

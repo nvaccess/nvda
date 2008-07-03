@@ -7,6 +7,7 @@
 import time
 import ctypes
 import globalVars
+from logHandler import log
 import core
 import tones
 import winUser
@@ -111,7 +112,7 @@ class Adobe(virtualBuffer):
 			return nextHandler()
 		#obj.speakObject()
 		ID=self.getNVDAObjectID(obj)
-		globalVars.log.debug("virtualBuffers.adobe.event_IAccessible_reorder: ID %s"%ID)
+		log.debug("virtualBuffers.adobe.event_IAccessible_reorder: ID %s"%ID)
 		if ID not in self._IDs:
 			return nextHandler()
 		parentID=self._IDs[ID]['parent']
@@ -121,7 +122,7 @@ class Adobe(virtualBuffer):
 			childNum=zOrder[-1]
 		else:
 			childNum=0
-		globalVars.log.debug("virtualBuffers.adobe.event_IAccessible_reorder: range %s"%str(r))
+		log.debug("virtualBuffers.adobe.event_IAccessible_reorder: range %s"%str(r))
 		self.removeID(ID)
 		if parentID is not None:
 			self._IDs[parentID]['children'].insert(childNum,ID)
@@ -172,9 +173,9 @@ class Adobe(virtualBuffer):
 				virtualBufferHandler.reportPassThrough(self)
 			speech.speakMessage(_("loading document %s")%self.rootNVDAObject.name+"...")
 		self.resetBuffer()
-		globalVars.log.debug("virtualBuffers.adobe.loadDocument: load start") 
+		log.debug("virtualBuffers.adobe.loadDocument: load start") 
 		self.fillBuffer(self.rootNVDAObject)
-		globalVars.log.debug("virtualBuffers.adobe.loadDocument: load end")
+		log.debug("virtualBuffers.adobe.loadDocument: load end")
 		lastLoadTime=time.time()
 		if winUser.getAncestor(self.rootNVDAObject.windowHandle,winUser.GA_ROOT)==winUser.getForegroundWindow():
 			speech.cancelSpeech()

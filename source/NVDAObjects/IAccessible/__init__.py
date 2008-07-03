@@ -22,6 +22,7 @@ import JABHandler
 import winUser
 import winKernel
 import globalVars
+from logHandler import log
 import speech
 import api
 import config
@@ -187,7 +188,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			try:
 				windowHandle=IAccessibleObject.windowHandle
 			except:
-				globalVars.log.warn("IAccessible2::windowHandle failed",exc_info=True)
+				log.debugWarning("IAccessible2::windowHandle failed",exc_info=True)
 			#Mozilla Gecko: we can never use a MozillaWindowClass window
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
@@ -260,7 +261,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			try:
 				event_childID=IAccessibleObject.uniqueID
 			except:
-				globalVars.log.warning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
+				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -397,7 +398,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		IARole=self.IAccessibleRole
 		if isinstance(IARole,basestring):
 			IARole=IARole.split(',')[0].lower()
-			globalVars.log.info("IARole: %s"%IARole)
+			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
 
 	def _get_IAccessibleStates(self):
@@ -411,7 +412,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
-			globalVars.log.warning("could not get IAccessible states",exc_info=True)
+			log.debugWarning("could not get IAccessible states",exc_info=True)
 			states=set()
 		else:
 			states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
@@ -420,7 +421,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		try:
 			IAccessible2States=self.IAccessibleObject.states
 		except:
-			globalVars.log.warning("could not get IAccessible2 states",exc_info=True)
+			log.debugWarning("could not get IAccessible2 states",exc_info=True)
 			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
@@ -476,7 +477,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			try:
 				parentRole=res[0].accRole(res[1])
 			except:
-				globalVars.log.warning("parent has bad role",exc_info=True)
+				log.debugWarning("parent has bad role",exc_info=True)
 				return None
 			if parentRole!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
 				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])

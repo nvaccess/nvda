@@ -1,6 +1,6 @@
 #scriptHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ import inspect
 import appModuleHandler
 import api
 import queueHandler
+from logHandler import log
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
@@ -129,17 +130,17 @@ def isCurrentScript(scriptFunc):
 	try:
 	 	givenFunc=getattr(scriptFunc.im_self.__class__,scriptFunc.__name__)
 	except AttributeError:
-		globalVars.log.debug("Could not get unbound method from given script",exc_info=True) 
+		log.debugWarning("Could not get unbound method from given script",exc_info=True) 
 		return False
 	parentFrame=inspect.currentframe().f_back
 	try:
 		realObj=parentFrame.f_locals['self']
 	except KeyError:
-		globalVars.log.debug("Could not get self instance from parent frame instance method",exc_info=True)
+		log.debugWarning("Could not get self instance from parent frame instance method",exc_info=True)
 		return False
 	try:
 		realFunc=getattr(realObj.__class__,parentFrame.f_code.co_name)
 	except AttributeError:
-		globalVars.log.debug("Could not get unbound method from parent frame instance",exc_info=True)
+		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
 		return False
 	return givenFunc==realFunc

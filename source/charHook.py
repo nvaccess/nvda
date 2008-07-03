@@ -7,6 +7,7 @@ import speech
 import queueHandler
 import api
 import globalVars
+from logHandler import log
 
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
@@ -27,7 +28,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif eventID==EVENT_INPUTLANGCHANGE:
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
-		globalVars.log.error("charHook.winEventCallback", exc_info=True)
+		log.error("charHook.winEventCallback", exc_info=True)
 
 def initialize():
 	global charHookLib, winEventHookID

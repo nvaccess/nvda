@@ -10,6 +10,7 @@ import baseObject
 import queueHandler
 import speech
 import globalVars
+from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
 import speechDictHandler
 
@@ -87,13 +88,13 @@ def setSynth(name):
 			_curSynth.terminate()
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
-		globalVars.log.info("Loaded synthDriver %s"%name)
+		log.info("Loaded synthDriver %s"%name)
 		#start or update the synthSettingsRing
 		if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings()
 		else:  globalVars.settingsRing = SynthSettingsRing()
 		return True
 	except:
-		globalVars.log.error("setSynth", exc_info=True)
+		log.error("setSynth", exc_info=True)
 		if not _curSynth and name not in ['espeak','silence']:
 			setSynth('espeak')
 		elif not _curSynth and name=='espeak':

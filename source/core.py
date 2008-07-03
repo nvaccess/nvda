@@ -14,8 +14,9 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 
 import wx
 import time
-import logging
+import logHandler
 import globalVars
+from logHandler import log
 
 CORE_INITERROR=0
 CORE_MAINLOOPERROR=1
@@ -24,71 +25,69 @@ CORE_RESTART=3
 
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
-"""
+	"""
 	import config
 	import speech
 	import languageHandler
-	globalVars.log.debug("terminating speech")
+	log.debug("terminating speech")
 	speech.terminate()
-	globalVars.log.debug("Reloading config")
+	log.debug("Reloading config")
 	config.load()
 	#Logging
 	levelName=config.conf["general"]["loggingLevel"].upper()
 	try:
-		logLevel=logging._levelNames[levelName]
-		globalVars.log.setLevel(logLevel)
+		logLevel=logHandler.levelNames[levelName]
+		log.setLevel(logLevel)
 	except:
-		globalVars.log.warning("could not set logging to %s"%levelName,exc_info=True)
+		log.warning("could not set logging to %s"%levelName)
 	#Language
 	lang = config.conf["general"]["language"]
-	globalVars.log.debug("setting language to %s"%lang)
+	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	#Speech
-	globalVars.log.debug("initializing speech")
+	log.debug("initializing speech")
 	speech.initialize()
-	globalVars.log.debug("Trying to save config...")
+	log.debug("Trying to save config...")
 	try:
 		config.save()
-		globalVars.log.debug("config save successfull")
 	except:
 		pass
-	globalVars.log.info("Reverted to saved configuration")
+	log.info("Reverted to saved configuration")
 
 def main():
 	"""NVDA's core main loop.
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
-	globalVars.log.debug("Core starting")
+	log.debug("Core starting")
 	endResult=CORE_QUIT
 	try:
-		globalVars.log.debug("loading config")
+		log.debug("loading config")
 		import config
 		config.load()
-		globalVars.log.debug("Trying to save config")
+		log.debug("Trying to save config")
 		try:
 			config.save()
-			globalVars.log.debug("save config successfull")
 		except:
 			pass
 		if globalVars.appArgs.logLevel==0:
 			levelName=config.conf["general"]["loggingLevel"].upper()
 			try:
-				logLevel=logging._levelNames[levelName]
-				globalVars.log.setLevel(logLevel)
+				logLevel=logHandler.levelNames[levelName]
+				log.setLevel(logLevel)
 			except:
-				globalVars.log.warning("could not set logging to %s"%levelName,exc_info=True)
+				log.warning("could not set logging to %s"%levelName)
 		try:
 			lang = config.conf["general"]["language"]
 			import languageHandler
-			globalVars.log.debug("setting language to %s"%lang)
+			log.debug("setting language to %s"%lang)
 			languageHandler.setLanguage(lang)
 		except:
-			globalVars.log.warning("Could not set language to %s"%lang)
-		globalVars.log.debug("Creating wx application instance")
+			log.warning("Could not set language to %s"%lang)
+		log.debug("Creating wx application instance")
 		app = wx.App(redirect=False)
 		import queueHandler
 		import gui
-		globalVars.log.debug("Initializing GUI")
+		log.debug("Initializing GUI")
 		gui.initialize(app)
 		# initialize wxpython localization support
 		locale = wx.Locale()
@@ -102,31 +101,31 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		except:
 			pass
 		import speechDictHandler
-		globalVars.log.debug("Speech Dictionary processing")
+		log.debug("Speech Dictionary processing")
 		speechDictHandler.initialize()
 		import speech
-		globalVars.log.debug("Initializing speech")
+		log.debug("Initializing speech")
 		speech.initialize()
-		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>2:
-			globalVars.log.warn("Slow starting core")
+		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
+			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import appModuleHandler
-		globalVars.log.debug("Initializing appModule Handler")
+		log.debug("Initializing appModule Handler")
 		appModuleHandler.initialize()
 		import JABHandler
-		globalVars.log.debug("initializing Java Access Bridge support")
+		log.debug("initializing Java Access Bridge support")
 		JABHandler.initialize()
 		import charHook
-		globalVars.log.debug("Initializing charHook")
+		log.debug("Initializing charHook")
 		charHook.initialize()
 		import IAccessibleHandler
-		globalVars.log.debug("Initializing IAccessible support")
+		log.debug("Initializing IAccessible support")
 		IAccessibleHandler.initialize()
 		import keyboardHandler
-		globalVars.log.debug("Initializing keyboard handler")
+		log.debug("Initializing keyboard handler")
 		keyboardHandler.initialize()
 		import mouseHandler
-		globalVars.log.debug("initializing mouse handler")
+		log.debug("initializing mouse handler")
 		mouseHandler.initialize()
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
@@ -136,7 +135,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def __init__(self,*args,**kwargs):
-				globalVars.log.debug("Core pump starting")
+				log.debug("Core pump starting")
 				super(CorePump,self).__init__(*args,**kwargs)
 			def Notify(self):
 				try:
@@ -144,65 +143,65 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 					queueHandler.pumpAll()
 					mouseHandler.pumpAll()
 				except:
-					globalVars.log.error("errors in this core pump cycle",exc_info=True)
-		globalVars.log.debug("starting core pump")
+					log.error("errors in this core pump cycle",exc_info=True)
+		log.debug("starting core pump")
 		pump = CorePump()
 		pump.Start(1)
 	except:
-		globalVars.log.critical("Core initialization error",exc_info=True)
+		log.critical("Core initialization error",exc_info=True)
 		return CORE_INITERROR
-	globalVars.log.info("NVDA initialized")
-	globalVars.log.debug("entering wx application main loop")
+	log.info("NVDA initialized")
+	log.debug("entering wx application main loop")
 	app.MainLoop()
-	globalVars.log.debug("Shutting down core")
+	log.debug("Shutting down core")
 	try:
 		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
-			globalVars.log.debug("calling loose focus on object with focus")
+			log.debug("calling loose focus on object with focus")
 			globalVars.focusObject.event_looseFocus()
 	except:
-		globalVars.log.warn("Loose focus error",exc_info=True)
+		log.error("Loose focus error",exc_info=True)
 	try:
 		speech.cancelSpeech()
 	except:
 		pass
-	globalVars.log.debug("Cleaning up running virtualBuffers")
+	log.debug("Cleaning up running virtualBuffers")
 	try:
 		import virtualBufferHandler
 		virtualBufferHandler.cleanupVirtualBuffers()
 	except:
-		globalVars.log.warn("Error cleaning up virtualBuffers",exc_info=True)
-	globalVars.log.debug("Terminating IAccessible support")
+		log.error("Error cleaning up virtualBuffers",exc_info=True)
+	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
 	except:
-		globalVars.log.warn("Error terminating IAccessible support",exc_info=True)
-	globalVars.log.debug("Terminating Java Access Bridge support")
+		log.error("Error terminating IAccessible support",exc_info=True)
+	log.debug("Terminating Java Access Bridge support")
 	try:
 		JABHandler.terminate()
 	except:
-		globalVars.log.warn("Error terminating Java Access Bridge support",exc_info=True)
-	globalVars.log.debug("Terminating charHook")
+		log.error("Error terminating Java Access Bridge support",exc_info=True)
+	log.debug("Terminating charHook")
 	try:
 		charHook.terminate()
 	except:
-		globalVars.log.warn("Error terminating charHook",exc_info=True)
-	globalVars.log.debug("Terminating keyboard handler")
+		log.error("Error terminating charHook",exc_info=True)
+	log.debug("Terminating keyboard handler")
 	try:
 		keyboardHandler.terminate()
 	except:
-		globalVars.log.warn("Error terminating keyboard handler")
-	globalVars.log.debug("Terminating mouse handler")
+		log.error("Error terminating keyboard handler")
+	log.debug("Terminating mouse handler")
 	try:
 		mouseHandler.terminate()
 	except:
-		globalVars.log.error("error terminating mouse handler",exc_info=True)
-	globalVars.log.debug("Terminating speech")
+		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating speech")
 	try:
 		speech.terminate()
 	except:
-		globalVars.log.error("Error terminating speech",exc_info=True)
+		log.error("Error terminating speech",exc_info=True)
 	if endResult==CORE_QUIT and globalVars.restart:
 		globalVars.restart=False
 		endResult=CORE_RESTART
-	globalVars.log.debug("Core done, return code %d"%endResult)
+	log.debug("Core done, return code %d"%endResult)
 	return endResult

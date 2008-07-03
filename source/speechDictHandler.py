@@ -6,6 +6,7 @@
 
 import re
 import globalVars
+from logHandler import log
 import os
 import codecs
 import synthDriverHandler
@@ -36,9 +37,9 @@ class SpeechDict(list):
 		self.fileName=fileName
 		comment=""
 		del self[:]
-		globalVars.log.debug("Loading speech dictionary '%s'..." % fileName)
+		log.debug("Loading speech dictionary '%s'..." % fileName)
 		if not os.path.isfile(fileName): 
-			globalVars.log.debug("file '%s' not found." % fileName)
+			log.debug("file '%s' not found." % fileName)
 			return
 		file = codecs.open(fileName,"r","utf_8_sig",errors="replace")
 		for line in file:
@@ -56,8 +57,8 @@ class SpeechDict(list):
 					self.append(SpeechDictEntry(temp[0],temp[1],comment,bool(int(temp[2])),bool(int(temp[3]))))
 					comment=""
 				else:
-					globalVars.log.warning("can't parse line '%s'" % line)
-		globalVars.log.debug("%d loaded records." % len(self))
+					log.warning("can't parse line '%s'" % line)
+		log.debug("%d loaded records." % len(self))
 		file.close()
 		return
 

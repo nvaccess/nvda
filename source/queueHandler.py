@@ -7,6 +7,7 @@
 import types
 from Queue import Queue
 import globalVars
+from logHandler import log
 
 MAX_ITEMS=500
 eventQueue=Queue(MAX_ITEMS)
@@ -19,7 +20,7 @@ def registerGeneratorObject(generatorObj):
 	if not isinstance(generatorObj,types.GeneratorType):
 		raise TypeError('Arg 2 must be a generator object, not %s'%type(generatorObj))
 	lastGeneratorObjID+=1
-	globalVars.log.debug("Adding generator %d"%lastGeneratorObjID)
+	log.debug("Adding generator %d"%lastGeneratorObjID)
 	generators[lastGeneratorObjID]=generatorObj
 	return lastGeneratorObjID
 
@@ -38,11 +39,11 @@ def queueFunction(queue,func,*args,**kwargs):
 		kwargsText=",".join(["%s=%s"%(x,y) for x,y in kwargs.items()])
 		funcText="%s(%s)"%(func.__name__,",".join([x for x in (argsText,kwargsText) if x]))
 		queueText=queue.__name__
-		globalVars.log.warn("Queue full when trying to add function %s to %s"%(funcText,queueText))
+		log.debugWarning("Queue full when trying to add function %s to %s"%(funcText,queueText))
 
 def isRunningGenerators():
 	res=len(generators)>0
-	globalVars.log.debug("generators running: %s"%res)
+	log.debug("generators running: %s"%res)
 
 def flushQueue(queue):
 	for count in range(queue.qsize()+1):
@@ -51,14 +52,14 @@ def flushQueue(queue):
 			try:
 				func(*args,**kwargs)
 			except:
-				globalVars.log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
+				log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
 
 def isPendingItems(queue):
 	if not queue.empty():
 		res=True
 	else:
 		res=False
-	globalVars.log.debug("pending events in %s: %s"%(queue.__name__,res))
+	log.debug("pending events in %s: %s"%(queue.__name__,res))
 	return res
 
 def pumpAll():
@@ -71,12 +72,12 @@ def pumpAll():
 			# Generator was cancelled. This is fine.
 			continue
 		try:
-			globalVars.log.debug("pumping generator %d"%ID)
+			log.debug("pumping generator %d"%ID)
 			gen.next()
 		except StopIteration:
-			globalVars.log.debug("generator %s finished"%ID)
+			log.debug("generator %s finished"%ID)
 			del generators[ID]
 		except:
-			globalVars.log.error("error in generator %d"%ID,exc_info=True)
+			log.error("error in generator %d"%ID,exc_info=True)
 			del generators[ID]
 	flushQueue(eventQueue)
