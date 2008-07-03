@@ -12,7 +12,6 @@ comtypes.client.gen_dir='.\\comInterfaces'
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
-import wx
 import time
 import logHandler
 import globalVars
@@ -84,10 +83,22 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		except:
 			log.warning("Could not set language to %s"%lang)
 		log.debug("Creating wx application instance")
+		import speechDictHandler
+		log.debug("Speech Dictionary processing")
+		speechDictHandler.initialize()
+		import speech
+		log.debug("Initializing speech")
+		speech.initialize()
+		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
+			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
+			speech.speakMessage(_("Loading subsystems, please wait..."))
+		import wx
 		app = wx.App(redirect=False)
-		import queueHandler
-		import gui
+		import charHook
+		log.debug("Initializing charHook")
+		charHook.initialize()
 		log.debug("Initializing GUI")
+		import gui
 		gui.initialize(app)
 		# initialize wxpython localization support
 		locale = wx.Locale()
@@ -100,24 +111,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			locale.Init(lang,wxLang)
 		except:
 			pass
-		import speechDictHandler
-		log.debug("Speech Dictionary processing")
-		speechDictHandler.initialize()
-		import speech
-		log.debug("Initializing speech")
-		speech.initialize()
-		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
-			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
-			speech.speakMessage(_("Loading subsystems, please wait..."))
 		import appModuleHandler
 		log.debug("Initializing appModule Handler")
 		appModuleHandler.initialize()
 		import JABHandler
 		log.debug("initializing Java Access Bridge support")
 		JABHandler.initialize()
-		import charHook
-		log.debug("Initializing charHook")
-		charHook.initialize()
 		import IAccessibleHandler
 		log.debug("Initializing IAccessible support")
 		IAccessibleHandler.initialize()
@@ -131,7 +130,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if not globalVars.appArgs.minimal:
 			speech.speakMessage(_("NVDA started"))
 			speech.speakMessage(_("You can press insert+n to activate the NVDA menu at any time"))
-
+		import queueHandler
 		class CorePump(wx.Timer):
 			"Checks the queues and executes functions."
 			def __init__(self,*args,**kwargs):

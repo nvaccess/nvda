@@ -22,7 +22,6 @@ from synthDriverHandler import *
 import re
 import textHandler
 import characterSymbols
-import NVDAObjects
 import queueHandler
 import speechDictHandler
 
@@ -343,7 +342,7 @@ def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,index=
 				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
 					speakText(item,index=index)
 			else:
-				speech.speakSpelling(item)
+				speakSpelling(item)
 	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):

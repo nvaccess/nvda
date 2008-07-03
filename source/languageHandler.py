@@ -3,7 +3,6 @@ import os
 import ctypes
 import locale
 import gettext
-import globalVars
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2

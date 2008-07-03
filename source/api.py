@@ -6,7 +6,6 @@
 
 """General functions for NVDA"""
 
-import pythoncom
 import textHandler
 import globalVars
 from logHandler import log
@@ -16,9 +15,6 @@ import virtualBufferHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
-import wx
-import core
-import queueHandler
 import controlTypes
 import win32clipboard
 import win32con
@@ -195,8 +191,9 @@ def moveMouseToNVDAObject(obj):
 def processPendingEvents():
 	# Import late to avoid circular import.
 	import IAccessibleHandler
+	import wx
+	import queueHandler
 	wx.Yield()
-	pythoncom.PumpWaitingMessages()
 	IAccessibleHandler.pumpAll()
 	queueHandler.flushQueue(queueHandler.eventQueue)
 

@@ -7,8 +7,6 @@
 import os
 import config
 import baseObject
-import queueHandler
-import speech
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
