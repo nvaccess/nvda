@@ -919,6 +919,7 @@ def initialize():
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleApplication._iid_),byref(IAccessible2._iid_))
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleComponent._iid_),byref(IAccessible2._iid_))
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleEditableText._iid_),byref(IAccessible2._iid_))
+	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHyperlink._iid_),byref(IAccessible2._iid_))
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHypertext._iid_),byref(IAccessible2._iid_))
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleImage._iid_),byref(IAccessible2._iid_))
 	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleRelation._iid_),byref(IAccessible2._iid_))
