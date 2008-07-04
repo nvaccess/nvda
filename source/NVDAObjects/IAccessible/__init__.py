@@ -773,9 +773,6 @@ class Dialog(IAccessible):
 	Based on NVDAObject but on foreground events, the dialog contents gets read.
 	"""
 
-	def _get_role(self):
-		return controlTypes.ROLE_DIALOG
-
 	@classmethod
 	def getDialogText(cls,obj):
 		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
