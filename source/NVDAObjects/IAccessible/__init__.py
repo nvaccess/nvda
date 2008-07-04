@@ -802,7 +802,7 @@ class Dialog(IAccessible):
 					continue
 				childName=children[index].name
 				#Ignore object's that have another object directly after them with the same name, this object is probably just a label for that object. But, graphics, Windows, static text and separators are ok
-				if index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
+				if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 					continue
 				childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
 				if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
