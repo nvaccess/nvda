@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-16 18:17+0800\n"
+"PO-Revision-Date: 2008-07-04 23:04+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -110,30 +110,6 @@ msgstr "最右一欄了"
 msgid "beginning of row"
 msgstr "最左一欄了"
 
-# gui\settingsDialogs.py:145
-msgid "volume"
-msgstr "音量"
-
-# characterSymbols.py:43
-msgid "rate"
-msgstr "速度"
-
-# gui\settingsDialogs.py:137
-msgid "pitch"
-msgstr "音調"
-
-# textBuffer.py:534
-msgid "inflection"
-msgstr "語調"
-
-# gui\settingsDialogs.py:114
-msgid "voice"
-msgstr "人聲"
-
-# gui\settingsDialogs.py:135
-msgid "variant"
-msgstr "腔調"
-
 # appModuleHandler.py:188
 msgid "Error in appModule %s"
 msgstr "錯誤的模組 %s"
@@ -186,6 +162,22 @@ msgstr "鍵盤說明 %s"
 # appModules\_default.py:44
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "切換鍵盤說明開關, 開的時候每按下按鍵會告訴你相關的功能"
+
+# characterSymbols.py:46
+msgid "left click"
+msgstr "左擊"
+
+# appModules\_default.py:79
+msgid "Clicks the left mouse button once where ever it may be at the time."
+msgstr "在目前鼠標位置執行滑鼠左擊功能"
+
+# characterSymbols.py:48
+msgid "right click"
+msgstr "右擊"
+
+# appModules\_default.py:85
+msgid "Clicks the right mouse button once where ever it may be at the time."
+msgstr "在目前鼠標位置執行滑鼠右擊功能"
 
 # textBuffer.py:534
 msgid "no selection"
@@ -572,13 +564,13 @@ msgstr "找不到狀態列"
 msgid "reads the current aplication status bar and moves the navigation cursor to it"
 msgstr "把瀏覽游標移到並讀出狀態列的內容"
 
-# appModules\_default.py:412
-msgid "Report object under mouse"
-msgstr "讀出鼠標所指項目"
+# gui\__init__.py:261
+msgid "Mouse tracking"
+msgstr "鼠標移動通知"
 
 # appModules\_default.py:413
-msgid "Toggles on and off the reporting of objects under the mouse"
-msgstr "切換讀出鼠標所指項目的開關"
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "切換每當鼠標移動時, 是否播放聲音或語音"
 
 # appModules\_default.py:419
 msgid "Reports the title of the current application or foreground window"
@@ -1621,9 +1613,13 @@ msgstr "可選取的"
 msgid "focusable"
 msgstr "焦點可到達的"
 
-# core.py:44
-msgid "configuration applied"
-msgstr "設定已套用"
+# virtualBuffers\IAccessible\MSHTML.py:316
+msgid "clickable"
+msgstr "可點擊"
+
+# controlTypes.py:107
+msgid "editable"
+msgstr "可編輯的"
 
 # core.py:74
 msgid "Loading subsystems, please wait..."
@@ -1669,9 +1665,13 @@ msgstr "從當前游標位置開始向上尋找上一次輸入過的關鍵字詞
 msgid "none"
 msgstr "無"
 
-# synthDrivers\silence.py:14
-msgid "No speech,  a template synthesizer"
-msgstr "不會說話的語音合成器"
+# synthDrivers\display.py:30
+msgid "A virtual synth which displays text in a window"
+msgstr "一個虛擬引擎視窗, 把要說的東西都顯示出來"
+
+# synthDrivers\silence.py:13
+msgid "No speech"
+msgstr "沒有語音"
 
 # gui\__init__.py:223
 msgid "configuration saved"
@@ -1680,6 +1680,10 @@ msgstr "設定存好了"
 # gui\__init__.py:225
 msgid "Could not save configuration - probably read only file system"
 msgstr "未能儲存設定, 也許目前的檔案系統是唯讀的"
+
+# virtualBuffers\__init__.py:473
+msgid "Error"
+msgstr "錯誤"
 
 # gui\__init__.py:281
 msgid "Default dictionary"
@@ -1905,10 +1909,6 @@ msgstr "記錄 &L"
 msgid "Save As"
 msgstr "另存新檔"
 
-# virtualBuffers\__init__.py:473
-msgid "Error"
-msgstr "錯誤"
-
 # appModuleHandler.py:188
 msgid "Error saving log: %s"
 msgstr "在儲存記錄檔案時發生錯誤, %s"
@@ -2080,12 +2080,20 @@ msgid "Report mouse &shape changes"
 msgstr "報告鼠標型態變更 &S"
 
 # gui\settingsDialogs.py:243
-msgid "Report &object under mouse"
-msgstr "報出鼠標所指物件 &O"
+msgid "Report &text under the mouse"
+msgstr "報出鼠標所指文字 &T"
+
+# gui\settingsDialogs.py:417
+msgid "Report &role when mouse enters object"
+msgstr "描述鼠標所指物件 &R"
 
 # gui\settingsDialogs.py:359
 msgid "play audio coordinates when mouse moves"
 msgstr "用聲效表示鼠標所在位置 &P"
+
+# gui\settingsDialogs.py:423
+msgid "brightness controls audio coordinates volume"
+msgstr "用音量高低來表示鼠標位置的光暗道 &B"
 
 # gui\__init__.py:265
 msgid "Object presentation"
@@ -2350,7 +2358,6 @@ msgstr "離開了"
 # textBuffer.py:541
 # textBuffer.py:543
 # textBuffer.py:549
-#, fuzzy
 msgid "selecting %s"
 msgstr "選取了 %s"
 
@@ -2359,7 +2366,6 @@ msgstr "選取了 %s"
 # textBuffer.py:545
 # textBuffer.py:547
 # textBuffer.py:551
-#, fuzzy
 msgid "unselecting %s"
 msgstr "不選取 %s"
 
@@ -2377,6 +2383,30 @@ msgstr "沒選取了"
 # virtualBuffers\IAccessible\gecko.py:286
 msgid "not %s"
 msgstr "不是 %s"
+
+# gui\settingsDialogs.py:145
+msgid "volume"
+msgstr "音量"
+
+# characterSymbols.py:43
+msgid "rate"
+msgstr "速度"
+
+# gui\settingsDialogs.py:137
+msgid "pitch"
+msgstr "音調"
+
+# textBuffer.py:534
+msgid "inflection"
+msgstr "語調"
+
+# gui\settingsDialogs.py:114
+msgid "voice"
+msgstr "人聲"
+
+# gui\settingsDialogs.py:135
+msgid "variant"
+msgstr "腔調"
 
 # textBuffer.py:207
 msgid "page %d"
@@ -2573,6 +2603,108 @@ msgstr "沒有上一個標題了"
 msgid "moves to the previous heading"
 msgstr "移到上一個標題"
 
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 1"
+msgstr "移到下一個第一級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 1"
+msgstr "沒有下一個第一級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 1"
+msgstr "移到上一個第一級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 1"
+msgstr "沒有上一個第一級標題了"
+
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 2"
+msgstr "移到下一個第二級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 2"
+msgstr "沒有下一個第二級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 2"
+msgstr "移到上一個第二級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 2"
+msgstr "沒有上一個第二級標題了"
+
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 3"
+msgstr "移到下一個第三級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 3"
+msgstr "沒有下一個第三級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 3"
+msgstr "移到上一個第三級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 3"
+msgstr "沒有上一個第三級標題了"
+
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 4"
+msgstr "移到下一個第四級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 4"
+msgstr "沒有下一個第四級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 4"
+msgstr "移到上一個第四級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 4"
+msgstr "沒有上一個第四級標題了"
+
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 5"
+msgstr "移到下一個第五級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 5"
+msgstr "沒有下一個第五級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 5"
+msgstr "移到上一個第五級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 5"
+msgstr "沒有上一個第五級標題了"
+
+# virtualBuffers\__init__.py:317
+msgid "moves to the next heading at level 6"
+msgstr "移到下一個第六級標題"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next heading at level 6"
+msgstr "沒有下一個第六級標題了"
+
+# virtualBuffers\__init__.py:328
+msgid "moves to the previous heading at level 6"
+msgstr "移到上一個第六級標題"
+
+# virtualBuffers\__init__.py:328
+msgid "no previous heading at level 6"
+msgstr "沒有上一個第六級標題了"
+
 # textBuffer.py:219
 msgid "no next table"
 msgstr "沒有下一個表格了"
@@ -2726,6 +2858,120 @@ msgstr "移到上一個文字編輯欄位"
 msgid "no previous edit field"
 msgstr "沒有上一個文字編輯欄位了"
 
+# virtualBuffers\__init__.py:361
+msgid "moves to the next frame"
+msgstr "移到下一個框架"
+
+# controlTypes.py:111
+msgid "no next frame"
+msgstr "沒有下一個框架了"
+
+# virtualBuffers\__init__.py:372
+msgid "moves to the previous frame"
+msgstr "移到上一個框架"
+
+# appModules\_default.py:189
+msgid "no previous frame"
+msgstr "沒有上一個框架了"
+
+# virtualBuffers\__init__.py:339
+msgid "moves to the next separator"
+msgstr "移到下一個格位符"
+
+# controlTypes.py:117
+msgid "no next separator"
+msgstr "沒有下一個隔位符了"
+
+# virtualBuffers\__init__.py:350
+msgid "moves to the previous separator"
+msgstr "移到上一個格位符"
+
+# appModules\_default.py:189
+msgid "no previous separator"
+msgstr "沒有上一個格位符了"
+
+# virtualBuffers\__init__.py:383
+msgid "moves to the next radio button"
+msgstr "移到下一個單選鈕"
+
+# virtualBuffers\__init__.py:382
+# virtualBuffers\__init__.py:393
+msgid "no next radio button"
+msgstr "沒有下一個單選鈕了"
+
+# virtualBuffers\__init__.py:394
+msgid "moves to the previous radio button"
+msgstr "移到上一個單選鈕"
+
+# appModules\_default.py:189
+msgid "no previous radio button"
+msgstr "沒有上一個單選鈕了"
+
+# virtualBuffers\__init__.py:383
+msgid "moves to the next combo box"
+msgstr "移到下一個下拉方塊"
+
+# controlTypes.py:92
+msgid "no next combo box"
+msgstr "沒有下一個下拉方塊了"
+
+# virtualBuffers\__init__.py:394
+msgid "moves to the previous combo box"
+msgstr "移到上一個下拉方塊"
+
+# appModules\_default.py:189
+msgid "no previous combo box"
+msgstr "沒有上一個下拉方塊了"
+
+# virtualBuffers\__init__.py:383
+msgid "moves to the next check box"
+msgstr "移到下一個核取方塊"
+
+# controlTypes.py:84
+msgid "no next check box"
+msgstr "沒有下一個核取方塊了"
+
+# virtualBuffers\__init__.py:394
+msgid "moves to the previous check box"
+msgstr "移到上一個核取方塊"
+
+# appModules\_default.py:189
+msgid "no previous check box"
+msgstr "沒有上一個核取方塊了"
+
+# virtualBuffers\__init__.py:339
+msgid "moves to the next graphic"
+msgstr "移到下一張圖片"
+
+# virtualBuffers\__init__.py:316
+# virtualBuffers\__init__.py:327
+msgid "no next graphic"
+msgstr "沒有下一張圖片了"
+
+# virtualBuffers\__init__.py:350
+msgid "moves to the previous graphic"
+msgstr "移到上一張圖片"
+
+# appModules\_default.py:189
+msgid "no previous graphic"
+msgstr "沒有上一張圖片了"
+
+# virtualBuffers\__init__.py:361
+msgid "moves to the next block quote"
+msgstr "移到下一個引述區"
+
+# controlTypes.py:127
+msgid "no next block quote"
+msgstr "沒有下一個引述區了"
+
+# virtualBuffers\__init__.py:372
+msgid "moves to the previous block quote"
+msgstr "移到上一個引述區"
+
+# appModules\_default.py:189
+msgid "no previous block quote"
+msgstr "沒有上一個引述區了"
+
 # virtualBuffers\IAccessible\MSHTML.py:136
 # virtualBuffers\IAccessible\gecko.py:157
 msgid "loading document %s"
@@ -2746,10 +2992,6 @@ msgstr "定義"
 # virtualBuffers\IAccessible\MSHTML.py:283
 msgid "file upload"
 msgstr "上載檔案"
-
-# virtualBuffers\IAccessible\MSHTML.py:316
-msgid "clickable"
-msgstr "可點擊"
 
 # virtualBuffers\__init__.py:274
 msgid "moves one page up in the virtual buffer's current document"
