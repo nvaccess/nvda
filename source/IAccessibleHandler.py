@@ -152,6 +152,7 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
 from comtypes.server import *
+from comtypes import GUID
 import comtypes.client
 import Queue
 from comInterfaces.Accessibility import *
@@ -175,7 +176,6 @@ import mouseHandler
 import controlTypes
 
 _IA2Dll=None
-_IA2ClassFactory=None
 _IA2RegCooky=None
 
 class OrderedWinEventLimiter(object):
@@ -901,29 +901,37 @@ def processDestroyWinEvent(window,objectID,childID):
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	global _IA2Dll, _IA2ClassFactory, _IA2RegCooky
-	#Load the IA2 proxy dll
-	_IA2Dll=oledll.LoadLibrary('lib/ia2.dll')
-	#Instanciate a class object for the IA2 proxy dll
-	punk=POINTER(IUnknown)()
-	_IA2Dll.DllGetClassObject(byref(IAccessible2._iid_),byref(IUnknown._iid_),byref(punk))
-	#Register this class object in this process
-	regCooky=c_long()
-	oledll.ole32.CoRegisterClassObject(byref(IAccessible2._iid_),punk,CLSCTX_LOCAL_SERVER,REGCLS_MULTIPLEUSE,byref(regCooky))
-	_IA2RegCooky=regCooky.value
-	#Register all the IAccessible2 interfaces we want to use in this process
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessible2._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleAction._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleApplication._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleComponent._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleEditableText._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHyperlink._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHypertext._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleImage._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleRelation._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleTable._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleText._iid_),byref(IAccessible2._iid_))
-	oledll.ole32.CoRegisterPSClsid(byref(IAccessibleValue._iid_),byref(IAccessible2._iid_))
+	global _IA2Dll, _IA2RegCooky
+	#Check if IAccessible2 is already registered
+	proxyIid=GUID()
+	try:
+		oledll.ole32.CoGetPSClsid(byref(IAccessible2._iid_),byref(proxyIid))
+		isRegistered=True
+	except:
+		isRegistered=False
+	if not isRegistered:
+		#Load the IA2 proxy dll
+		_IA2Dll=oledll.LoadLibrary('lib/ia2.dll')
+		#Instanciate a class object for the IA2 proxy dll
+		punk=POINTER(IUnknown)()
+		_IA2Dll.DllGetClassObject(byref(IAccessible2._iid_),byref(IUnknown._iid_),byref(punk))
+		#Register this class object in this process
+		regCooky=c_long()
+		oledll.ole32.CoRegisterClassObject(byref(IAccessible2._iid_),punk,CLSCTX_LOCAL_SERVER,REGCLS_MULTIPLEUSE,byref(regCooky))
+		_IA2RegCooky=regCooky.value
+		#Register all the IAccessible2 interfaces we want to use in this process
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessible2._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleAction._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleApplication._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleComponent._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleEditableText._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHyperlink._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleHypertext._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleImage._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleRelation._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleTable._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleText._iid_),byref(IAccessible2._iid_))
+		oledll.ole32.CoRegisterPSClsid(byref(IAccessibleValue._iid_),byref(IAccessible2._iid_))
 	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
 	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
 		raise OSError("can not get desktop object")
@@ -971,10 +979,11 @@ def pumpAll():
 			break
 
 def terminate():
+	global _IA2RegCooky
 	for handle in winEventHookIDs:
 		winUser.unhookWinEvent(handle)
-	oledll.ole32.CoRevokeClassObject(_IA2RegCooky)
-
+	if _IA2RegCooky is not None:
+		oledll.ole32.CoRevokeClassObject(_IA2RegCooky)
 
 def getIAccIdentity(pacc,childID):
 	stringPtr,stringSize=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
