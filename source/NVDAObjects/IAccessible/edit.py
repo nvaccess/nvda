@@ -274,8 +274,34 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getLineCount(self):
 		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
 
+	def _getTextRangeWithEmbeddedObjects(self,start,end):
+		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
+		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
+		r=ptr.Range(self._startOffset,self._endOffset)
+		bufText=r.text
+		if bufText is None:
+			bufText=""
+		newTextList=[]
+		for offset in range(len(bufText)):
+			if ord(bufText[offset])==0xfffc:
+				embedRange=ptr.Range(start+offset,start+offset)
+				o=embedRange.GetEmbeddedObject()
+				o=o.QueryInterface(oleTypes.IOleObject)
+				dataObj=o.GetClipboardData(0)
+				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
+				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+				medium=dataObj.GetData(format)
+				buf=ctypes.create_string_buffer(medium.data)
+				buf=ctypes.cast(buf,ctypes.c_wchar_p)
+				newTextList.append(buf.value)
+			else:
+				newTextList.append(bufText[offset])
+		return "".join(newTextList)
+
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
+			if self.obj.editAPIHasITextDocument:
+				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=((end-start)+1)*2
 			if self.obj.isWindowUnicode:
 				textRange=TextRangeUStruct()
