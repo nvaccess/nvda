@@ -96,9 +96,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import wx
 		log.info("Using wx version %s"%wx.version())
 		app = wx.App(redirect=False)
-		import charHook
-		log.debug("Initializing charHook")
-		charHook.initialize()
+		import NVDAHelper
+		log.debug("Initializing NVDAHelper")
+		NVDAHelper.initialize()
 		log.debug("Initializing GUI")
 		import gui
 		gui.initialize(app)
@@ -182,11 +182,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		JABHandler.terminate()
 	except:
 		log.error("Error terminating Java Access Bridge support",exc_info=True)
-	log.debug("Terminating charHook")
+	log.debug("Terminating NVDAHelper")
 	try:
-		charHook.terminate()
+		NVDAHelper.terminate()
 	except:
-		log.error("Error terminating charHook",exc_info=True)
+		log.error("Error terminating NVDAHelper",exc_info=True)
 	log.debug("Terminating keyboard handler")
 	try:
 		keyboardHandler.terminate()

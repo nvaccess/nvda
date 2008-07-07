@@ -12,7 +12,7 @@ from logHandler import log
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
 
-charHookLib=None
+helperLib=None
 
 winEventHookID=None
 
@@ -28,16 +28,16 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif eventID==EVENT_INPUTLANGCHANGE:
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
-		log.error("charHook.winEventCallback", exc_info=True)
+		log.error("helper.winEventCallback", exc_info=True)
 
 def initialize():
-	global charHookLib, winEventHookID
-	charHookLib=ctypes.windll.LoadLibrary('lib/charHook.dll')
-	charHookLib.initialize()
+	global helperLib, winEventHookID
+	helperLib=ctypes.windll.LoadLibrary('lib/charHook.dll')
+	helperLib.initialize()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
-	global charHookLib
+	global helperLib
 	winUser.unhookWinEvent(winEventHookID)
-	charHookLib.terminate()
-	del charHookLib
+	helperLib.terminate()
+	del helperLib
