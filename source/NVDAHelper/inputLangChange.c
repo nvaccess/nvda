@@ -5,7 +5,7 @@
 
 #define UNICODE
 #include <windows.h>
-#include "charHook.h"
+#include "inputLangChange.h"
 
 int lastInputLangChange=0;
 

@@ -6,7 +6,7 @@
 #define UNICODE
 #include <windows.h>
 #include <wchar.h>
-#include "charHook.h"
+#include "typedCharacter.h"
 
 HWND charWindow=0;
 wchar_t lastCharacter=0;
