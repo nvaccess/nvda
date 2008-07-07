@@ -121,7 +121,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def speakText(self,text,index=None):
 		text=text.replace("\\","\\\\")
 		if isinstance(index,int) and index>=0:
-			text="".join(["\\mrk=%d\\"%(index+1),text])
+			text="\\mrk=%d\\%s"%(index+1,text)
 		self.tts.speak(text)
 
 	def cancel(self):
