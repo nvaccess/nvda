@@ -38,7 +38,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._voiceList=_espeak.getVoiceList()
 		self._variantDict=_espeak.getVariantDict()
 		self.variant="max"
-		self.rate=40
+		self.rate=30
 		self.pitch=40
 		self.inflection=75
 
