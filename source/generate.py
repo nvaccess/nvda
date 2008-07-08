@@ -26,7 +26,7 @@ import compileall
 
 COM_INTERFACES = (
 	("MS HTML", comtypes.client.GetModule, "mshtml.tlb"),
-	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2TypeLibrary.tlb"),
+	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2.tlb"),
 	("IService Provider library", comtypes.client.GetModule, "typelibs/servprov.tlb"),
 	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
 	("Rich Edit library", comtypes.client.GetModule, "msftedit.dll"),

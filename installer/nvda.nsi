@@ -232,13 +232,17 @@ File /r /x lib "${NVDASourceDir}\"
 CreateDirectory "$INSTDIR\lib"
 !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+;Unregister and remove any old ia2.dll
+!define LIBRARY_COM
+!insertmacro UninstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\ia2.dll"
+!undef LIBRARY_COM
 ; Install libraries
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\charHook.dll" "$INSTDIR\lib\charHook.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\keyHook.dll" "$INSTDIR\lib\keyHook.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\mouseHook.dll" "$INSTDIR\lib\mouseHook.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\virtualBuffer.dll" "$INSTDIR\lib\virtualBuffer.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
-!insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\ia2.dll" "$INSTDIR\lib\ia2.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
 
 strcpy $NVDAInstalled "1"
 SectionEnd
@@ -315,7 +319,7 @@ SetShellVarContext all
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\mouseHook.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\virtualBuffer.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_gecko_ia2.dll"
-!insertmacro UninstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\ia2.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\IAccessible2Proxy.dll"
 
 ;uninstall from path, must be repeated for every install logged path individual
 !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
