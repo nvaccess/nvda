@@ -118,9 +118,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		self.obj.IAccessibleTextObject.AddSelection(start,end)
 
 	def _getStoryLength(self):
-		if not hasattr(self,'_storyLength'):
-			self._storyLength=self.obj.IAccessibleTextObject.NCharacters
-		return self._storyLength
+		try:
+			return self.obj.IAccessibleTextObject.NCharacters
+		except:
+			log.debugWarning("IAccessibleText::nCharacters failed",exc_info=True)
+			return 0
 
 	def _getLineCount(self):
 			return -1
