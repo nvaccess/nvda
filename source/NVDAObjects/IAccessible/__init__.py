@@ -818,6 +818,12 @@ class Dialog(IAccessible):
 		if text and not text.isspace():
 			speech.speakText(text)
 
+	def event_focusEntered(self):
+		super(IAccessible,self).event_focusEntered()
+		text=self.getDialogText(self)
+		if text and not text.isspace():
+			speech.speakText(text)
+
 	def event_gainFocus(self):
 		super(IAccessible,self).event_gainFocus()
 		text=self.getDialogText(self)
