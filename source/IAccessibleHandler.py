@@ -911,7 +911,7 @@ def initialize():
 		isRegistered=False
 	if not isRegistered:
 		#Load the IA2 proxy dll
-		_IA2Dll=oledll.LoadLibrary('lib/ia2.dll')
+		_IA2Dll=oledll.LoadLibrary('lib/IAccessible2Proxy.dll')
 		#Instanciate a class object for the IA2 proxy dll
 		punk=POINTER(IUnknown)()
 		_IA2Dll.DllGetClassObject(byref(IAccessible2._iid_),byref(IUnknown._iid_),byref(punk))
