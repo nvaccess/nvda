@@ -263,6 +263,7 @@ def initialize():
 	espeakDLL.espeak_Terminate.errcheck=espeak_errcheck
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
+	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)

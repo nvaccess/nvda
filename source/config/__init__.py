@@ -120,13 +120,13 @@ mtime = 0
 
 def load():
 	"""Loads the configuration from the configFile. It also takes note of the file's modification time so that L{save} won't loose any changes made to the file while NVDA is running. 
-"""
+	"""
 	global conf, mtime
 	# If the config file exists, store its mtime.
 	if os.path.isfile(configFileName):
 		mtime = os.path.getmtime(configFileName)
 	confspec.seek(0)
-	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t")
+	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
 	conf.validate(val)
