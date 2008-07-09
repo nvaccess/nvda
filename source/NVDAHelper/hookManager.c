@@ -13,7 +13,10 @@
 #pragma data_seg(".hookManagerShared")
 HHOOK getMessageHookID=0;
 HHOOK callWndProcHookID=0;
-HWINEVENTHOOK foregroundWinEventHookID=0; 
+HWINEVENTHOOK winEventHookID=0; 
+int initialProcessID=0;
+int desktopProcessID=0;
+int shellProcessID=0;
 #pragma data_seg()
 #pragma comment(linker, "/section:.hookManagerShared,rws")
 
@@ -50,10 +53,12 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	return CallNextHookEx(callWndProcHookID,code,wParam,lParam);
 }
 
-//Foreground winEvent callback
-void foregroundWinEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+//winEvent callback
+void winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	int curProcessID=0;
 	if(eventID==EVENT_SYSTEM_FOREGROUND||eventID==EVENT_OBJECT_FOCUS) {
-		if(isIA2Initialized) installIA2Support();
+		GetWindowThreadProcessId(hwnd,&curProcessID);
+		if(isIA2Initialized&&curProcessID!=initialProcessID&&curProcessID!=desktopProcessID&&curProcessID!=shellProcessID) installIA2Support();
 	}
 }
 
@@ -62,6 +67,9 @@ int initialize() {
 		fprintf(stderr,"Already initialized\n");
 		return -1;
 	}
+	initialProcessID=GetCurrentProcessId();
+	GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
+	GetWindowThreadProcessId(GetShellWindow(),&shellProcessID);
 	IA2Support_initialize();
 	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
 		fprintf(stderr,"Error registering window message hook\n");
@@ -71,7 +79,7 @@ int initialize() {
 		fprintf(stderr,"Error registering window message hook\n");
 		return -1;
 	}
-	if((foregroundWinEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)foregroundWinEventHook,0,0,WINEVENT_INCONTEXT|WINEVENT_SKIPOWNPROCESS))==0) {
+	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT|WINEVENT_SKIPOWNPROCESS))==0) {
 		fprintf(stderr,"Error registering foregorund winEvent hook\n");
 		return -1;
 	}
@@ -92,7 +100,7 @@ int terminate() {
 		fprintf(stderr,"Error unhooking callWndProc hook\n");
 		return -1;
 	}
-	if(UnhookWinEvent(foregroundWinEventHookID)==FALSE) {
+	if(UnhookWinEvent(winEventHookID)==FALSE) {
 		fprintf(stderr,"Error unregistering foreground winEvent\n");
 		return -1;
 	}
