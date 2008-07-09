@@ -1,24 +1,23 @@
 """Manages NVDA configuration.
-@var configFileName: file where the configuration should be read from, and written to
-@type configFileName: string
-@var confspec: a template that defines all the sections and values for the configuration.
-@type confspec: string
 """ 
-# NVDA Configuration Support
 
 import globalVars
+#: The name of the configuration file.
+#: @type: str
 configFileName = globalVars.appArgs.configFileName
 
 import os
-from StringIO import StringIO
+from cStringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
 from logHandler import log
 
 val = Validator()
 
-### The configuration specification
-confspec = StringIO("""# NVDA Configuration File
+#: The configuration specification
+#: @type: ConfigObj
+confspec = ConfigObj(StringIO(
+"""# NVDA Configuration File
 
 [general]
 	language = string(default="Windows")
@@ -111,10 +110,12 @@ outputDevice = string(default=default)
 	reportLineNumber = boolean(default=False)
 	reportTables = boolean(default=true)
 	reportAlignment = boolean(default=false)
+"""
+), list_values=False, encoding="UTF-8")
+confspec.newlines = "\r\n"
 
-""".replace("\n", "\r\n"))
-
-### Globals
+#: The active configuration, C{None} if it has not yet been loaded.
+#: @type: ConfigObj
 conf = None
 mtime = 0
 
@@ -125,7 +126,6 @@ def load():
 	# If the config file exists, store its mtime.
 	if os.path.isfile(configFileName):
 		mtime = os.path.getmtime(configFileName)
-	confspec.seek(0)
 	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
@@ -136,7 +136,6 @@ def updateSynthConfig(name):
 @param name: the synth name
 @type name: string
 """ 
-	"Validate the configuration for the selected synth."
 	speech = conf["speech"]
 	# If there are no settings for this synth, make sure there are defaults.
 	if not speech.has_key(name):
@@ -165,6 +164,3 @@ def save(force = False):
 		log.debugWarning("", exc_info=True)
 		raise e
 	mtime = os.path.getmtime(configFileName)
-
-### Main
-#load()
