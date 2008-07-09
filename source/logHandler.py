@@ -62,8 +62,8 @@ class Logger(logging.Logger):
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
 
 	# Our custom levels.
-	DEBUGWARNING = 12
-	IO = 15
+	IO = 12
+	DEBUGWARNING = 15
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
 		if not extra:
