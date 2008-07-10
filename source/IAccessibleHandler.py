@@ -717,6 +717,11 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
+		#ignore  particular objectIDs as we do not support them in winEvents
+		if objectID in (OBJID_SOUND,OBJID_ALERT,OBJID_NATIVEOM):
+			return
+
+
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
