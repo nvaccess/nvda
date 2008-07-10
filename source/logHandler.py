@@ -157,3 +157,18 @@ def initialize():
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
+
+def setLogLevelFromConfig():
+	"""Set the log level based on the current configuration.
+	"""
+	if globalVars.appArgs.logLevel != 0:
+		# Log level was overridden on the command line, so don't set it.
+		return
+	import config
+	levelName=config.conf["general"]["loggingLevel"]
+	level = levelNames.get(levelName)
+	if not level or level > log.INFO:
+		log.warning("invalid setting for logging level: %s" % levelName)
+		level = log.INFO
+		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
+	log.setLevel(level)

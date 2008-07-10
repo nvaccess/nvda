@@ -23,8 +23,8 @@ confspec = ConfigObj(StringIO(
 	language = string(default="Windows")
 	saveConfigurationOnExit = boolean(default=False)
 	askToExit = boolean(default=true)
-	#log levels are DEBUG, INFO, WARN, ERROR, CRITICAL
-	loggingLevel = string(default="WARN")
+	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
+	loggingLevel = string(default="INFO")
 
 # Speech settings
 [speech]

@@ -32,13 +32,7 @@ def resetConfiguration():
 	speech.terminate()
 	log.debug("Reloading config")
 	config.load()
-	#Logging
-	levelName=config.conf["general"]["loggingLevel"].upper()
-	try:
-		logLevel=logHandler.levelNames[levelName]
-		log.setLevel(logLevel)
-	except:
-		log.warning("could not set logging to %s"%levelName)
+	logHandler.setLogLevelFromConfig()
 	#Language
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
@@ -69,13 +63,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			config.save()
 		except:
 			pass
-		if globalVars.appArgs.logLevel==0:
-			levelName=config.conf["general"]["loggingLevel"].upper()
-			try:
-				logLevel=logHandler.levelNames[levelName]
-				log.setLevel(logLevel)
-			except:
-				log.warning("could not set logging to %s"%levelName)
+		logHandler.setLogLevelFromConfig()
 		try:
 			lang = config.conf["general"]["language"]
 			import languageHandler

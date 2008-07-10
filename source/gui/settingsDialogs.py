@@ -84,6 +84,12 @@ class SettingsDialog(wx.Dialog):
 
 class GeneralSettingsDialog(SettingsDialog):
 	title = _("General settings")
+	LOG_LEVELS = (
+		(log.INFO, _("info")),
+		(log.DEBUGWARNING, _("debug warning")),
+		(log.IO, _("input/output")),
+		(log.DEBUG, _("debug"))
+	)
 
  	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -110,13 +116,14 @@ class GeneralSettingsDialog(SettingsDialog):
 		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level"))
 		logLevelSizer.Add(logLevelLabel)
 		logLevelListID=wx.NewId()
-		self.logLevelNames=[logHandler.levelNames[x] for x in sorted([x for x in logHandler.levelNames.keys() if isinstance(x,int) and x>0],reverse=True)]
-		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=self.logLevelNames)
-		try:
-			index=self.logLevelNames.index(logHandler.levelNames[log.getEffectiveLevel()])
-			self.logLevelList.SetSelection(index)
-		except:
-			log.debugWarning("Could not set log level list to current log level",exc_info=True) 
+		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=[name for level, name in self.LOG_LEVELS])
+		curLevel = log.getEffectiveLevel()
+		for index, (level, name) in enumerate(self.LOG_LEVELS):
+			if level == curLevel:
+				self.logLevelList.SetSelection(index)
+				break
+		else:
+			log.debugWarning("Could not set log level list to current log level") 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 
@@ -135,9 +142,9 @@ class GeneralSettingsDialog(SettingsDialog):
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
-		logLevelName=self.logLevelNames[self.logLevelList.GetSelection()]
-		log.setLevel(logHandler.levelNames[logLevelName])
-		config.conf["general"]["loggingLevel"]=logLevelName
+		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
+		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
+		logHandler.setLogLevelFromConfig()
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
