@@ -71,7 +71,7 @@ void uninstallIA2Support() {
 		CoRegisterPSClsid(&IID_IAccessibleText,&NULLIid);
 		CoRegisterPSClsid(&IID_IAccessibleValue,&NULLIid);
 		CoRevokeClassObject(IA2RegCooky);
-		CoFreeUnusedLibraries();
+		CoFreeUnusedLibrariesEx(0,0);
 		IA2DllHandle=0;
 		isIA2Installed=FALSE;
 	}
