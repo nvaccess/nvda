@@ -4,7 +4,7 @@ LangString msg_WelcomePageText ${LANG_TRADCHINESE} "歡迎安裝 ${PRODUCT} (Non-Vis
 版權 2006 - 2008 NVDA 的貢獻者.$\n\
 此精靈會協助你安裝 ${PRODUCT}; 建議你先把所有程式關閉才繼續安裝.$\n"
 LangString msg_READMEText ${LANG_TRADCHINESE} "檢視讀我檔案"
-LangString msg_NVDAWebSite ${LANG_TRADCHINESE} "造訪 NVDA 官方網站"
+LangString msg_NVDAWebSite ${LANG_TRADCHINESE} "造訪 NVDA 網站"
 LangString msg_NVDARunning ${LANG_TRADCHINESE} "另一個 NVDA 程式似乎在運行中, 現在安裝程式必須把它關閉才可繼續."
 LangString msg_SpeechInstall ${LANG_TRADCHINESE} "在安裝 NVDA 期間, 你是否希望有語音協助呢? 按輸入鍵打開語音協助功能, 按 escape 鍵不啟動語音協助功能"
 LangString msg_RemoveNVDA ${LANG_TRADCHINESE} "是否從系統中完全移除 $(^Name) 及相關元件呢?"
@@ -12,8 +12,20 @@ LangString msg_NVDAConfigFound ${LANG_TRADCHINESE} "安裝程式發現了舊版本 NVDA 的
 LangString msg_NVDASuccessfullyRemoved ${LANG_TRADCHINESE} "已經成功在系統中移除 $(^Name).."
 LangString shortcut_Wiki $(LANG_TRADCHINESE) "NVDA 百科"
 LangString shortcut_uninstall $(LANG_TRADCHINESE) "解除安裝"
-LangString shortcut_website $(LANG_TRADCHINESE) "打開 NVDA 網站"
-LangString shortcut_readme $(LANG_TRADCHINESE) "開啟 NVDA 讀我檔案"
-LangString shortcut_userguide $(LANG_TRADCHINESE) "開啟 NVDA 用戶指南"
+LangString shortcut_website $(LANG_TRADCHINESE) "程式網站"
+LangString shortcut_readme $(LANG_TRADCHINESE) "讀我檔案"
+LangString shortcut_userguide $(LANG_TRADCHINESE) "用戶指南"
 LangString path_userguide $(LANG_TRADCHINESE) "zh\user guide.html"
 LangString path_readmefile $(LANG_TRADCHINESE) "en\readme.txt"
+LangString UNLOG_HEADER ${LANG_TRADCHINESE} "=========== 解除安裝記錄檔 \
+                                         請不要更改此一檔案 ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_TRADCHINESE} "${UNINST_DAT} 不見了, \
+                                                未能解除安裝程式."
+LangString UNLOG_DEL_FILE ${LANG_TRADCHINESE} '刪除檔案 "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_TRADCHINESE} '刪除資料夾 "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_TRADCHINESE} "發現程式已經安裝在 $0.$\n\
+                                            但找不到必須的 ${UNINSTALL_LOG}.dat 檔案.$\n$\n\
+                                            請先選擇一個空的資料夾 \
+                                            然後重裝一次."
+LangString UNLOG_ERROR_LOG ${LANG_TRADCHINESE} "記錄檔案 ${UNINSTALL_LOG} 錯誤."
+LangString UNLOG_ERROR_CREATE ${LANG_TRADCHINESE} "建立記錄檔 ${UNINSTALL_LOG} 時發生錯誤."

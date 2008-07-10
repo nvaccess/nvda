@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-07-04 23:04+0800\n"
+"PO-Revision-Date: 2008-07-11 00:21+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1085,7 +1085,7 @@ msgstr "行"
 
 # controlTypes.py:111
 msgid "frame"
-msgstr "框架"
+msgstr "頁框"
 
 # controlTypes.py:112
 msgid "tool bar"
@@ -1198,7 +1198,7 @@ msgstr "文字描述"
 
 # controlTypes.py:90
 msgid "check menu item"
-msgstr "可核取的選單項目"
+msgstr "可核取選單項目"
 
 # IAccessibleHandler.py:137
 # controlTypes.py:87
@@ -1320,7 +1320,7 @@ msgstr "分開的窗格"
 
 # controlTypes.py:218
 msgid "view port"
-msgstr "端口"
+msgstr "檢視端口"
 
 # controlTypes.py:219
 msgid "tear off menu"
@@ -1630,8 +1630,8 @@ msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
 # core.py:137
-msgid "You can press insert+n to activate the NVDA menu at any time"
-msgstr "你可隨時按 insert+n 來打開 N V D A 的選單"
+msgid "Press NVDA+n to activate the NVDA menu at any time"
+msgstr "可隨時按 insert+n 來打開 N V D A 的選單"
 
 # virtualBuffers\__init__.py:463
 msgid "Find"
@@ -1844,17 +1844,9 @@ msgstr "按鍵指令快速說明 &K"
 msgid "What's &new"
 msgstr "最新版本資訊 &N"
 
-# controlTypes.py:136
-msgid "Home page"
-msgstr "主頁 &H"
-
-# gui\__init__.py:242
-msgid "Trac (issue tracker)"
-msgstr "發展進程 &T"
-
-# gui\__init__.py:244
-msgid "Web resources"
-msgstr "網上資源 &W"
+# gui\__init__.py:279
+msgid "Web site"
+msgstr "打開網站 &W"
 
 # controlTypes.py:103
 msgid "License"
@@ -1931,6 +1923,22 @@ msgstr "啟動連結 &A"
 # gui\scriptUI.py:121
 msgid "&Move to link"
 msgstr "移到連結 &M"
+
+# controlTypes.py:98
+msgid "info"
+msgstr "資訊"
+
+# gui\settingsDialogs.py:89
+msgid "debug warning"
+msgstr "偵錯警告"
+
+# gui\settingsDialogs.py:90
+msgid "input/output"
+msgstr "輸入/輸出"
+
+# gui\settingsDialogs.py:91
+msgid "debug"
+msgstr "偵錯"
 
 # gui\settingsDialogs.py:25
 msgid "&Language (requires restart to fully take affect)"
@@ -2085,7 +2093,7 @@ msgstr "報出鼠標所指文字 &T"
 
 # gui\settingsDialogs.py:417
 msgid "Report &role when mouse enters object"
-msgstr "描述鼠標所指物件 &R"
+msgstr "報告鼠標所指物件 &R"
 
 # gui\settingsDialogs.py:359
 msgid "play audio coordinates when mouse moves"
@@ -2372,7 +2380,7 @@ msgstr "不選取 %s"
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
 msgid "selection removed"
-msgstr "沒選取了"
+msgstr "選取移除了"
 
 # IAccessibleHandler.py:190
 # speech.py:213
@@ -2382,7 +2390,7 @@ msgstr "沒選取了"
 # virtualBuffers\IAccessible\gecko.py:282
 # virtualBuffers\IAccessible\gecko.py:286
 msgid "not %s"
-msgstr "不是 %s"
+msgstr "沒 %s"
 
 # gui\settingsDialogs.py:145
 msgid "volume"
@@ -2500,7 +2508,7 @@ msgstr "手動移到上一段然後把它讀出來"
 
 # textBuffer.py:534
 msgid "no selections"
-msgstr "沒有已經選取的文字"
+msgstr "沒有選取文字"
 
 # NVDAObjects\IAccessible\MSHTML.py:314
 # NVDAObjects\IAccessible\MSHTML.py:320
@@ -2572,7 +2580,7 @@ msgstr "在 %s"
 
 # virtualBuffers\__init__.py:293
 msgid "activates the current object in the virtual buffer"
-msgstr "嘗試啟動目前的項目"
+msgstr "嘗試啟動當前項目"
 
 # controlTypes.py:144
 msgid "Refreshed"
