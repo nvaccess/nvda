@@ -89,7 +89,6 @@ def doPreGainFocus(obj):
 		executeEvent("focusEntered",parent)
 
 def doPreForeground(obj):
-	api.setForegroundObject(obj)
 	api.setFocusObject(obj)
 	speech.cancelSpeech()
 
