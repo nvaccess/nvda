@@ -80,7 +80,7 @@ int initialize() {
 		return -1;
 	}
 	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT|WINEVENT_SKIPOWNPROCESS))==0) {
-		fprintf(stderr,"Error registering foregorund winEvent hook\n");
+		fprintf(stderr,"Error registering winEvent hook\n");
 		return -1;
 	}
 	isManagerInitialized=TRUE;
