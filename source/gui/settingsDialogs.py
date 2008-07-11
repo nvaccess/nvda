@@ -19,6 +19,7 @@ import nvwave
 import speechDictHandler
 import appModuleHandler
 import scriptUI
+import queueHandler
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
