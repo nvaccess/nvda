@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2221\n"
+"Project-Id-Version: r2228\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2008-07-11 11:10+Central Europe Standard Time\n"
+"PO-Revision-Date: 2008-07-11 19:40+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk peter.v@datagate.sk>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "úroveň %s"
 
 #: NVDAObjects\IAccessible\__init__.py:77
 #: NVDAObjects\IAccessible\__init__.py:610
-#: NVDAObjects\IAccessible\sysListView32.py:97
+#: NVDAObjects\IAccessible\sysListView32.py:215
 msgid "%s of %s"
 msgstr "%s z %s"
 
@@ -1728,13 +1728,9 @@ msgstr "začiarkavacie"
 msgid "Loading subsystems, please wait..."
 msgstr "nahrávam podporné systémy, prosím čakajte"
 
-#: core.py:121
+#: core.py:124
 msgid "NVDA started"
 msgstr "NVDA spustený"
-
-#: core.py:122
-msgid "Press NVDA+n to activate the NVDA menu at any time"
-msgstr "Stlačením NVDA+n nech ste kde koľvek vyvoláte NVDA menu"
 
 #: cursorManager.py:77
 #: virtualBuffers_old\__init__.py:471
@@ -1811,7 +1807,7 @@ msgid "Are you sure you want to quit NVDA?"
 msgstr "Ste si istý, že chcete ukončiť NVDA?"
 
 #: gui\__init__.py:171
-#: gui\__init__.py:295
+#: gui\__init__.py:298
 msgid "Exit NVDA"
 msgstr "ukončiť nvda"
 
@@ -1828,7 +1824,7 @@ msgid "version"
 msgstr "verzia"
 
 #: gui\__init__.py:216
-#: gui\__init__.py:286
+#: gui\__init__.py:289
 msgid "About NVDA"
 msgstr "O NVDA"
 
@@ -1982,33 +1978,72 @@ msgid "Contributors"
 msgstr "Tím NVDA"
 
 #: gui\__init__.py:286
+msgid "We&lcome dialog"
+msgstr "Dia&lóg vitajte v NVDA"
+
+#: gui\__init__.py:289
 msgid "About..."
 msgstr "&O programe..."
 
-#: gui\__init__.py:288
+#: gui\__init__.py:291
 msgid "&Help"
 msgstr "&Pomocník"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:293
 msgid "&Revert to saved configuration"
 msgstr "&Návrat k uloženým nastaveniam"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:293
 msgid "Reset all settings to saved state"
 msgstr "Obnoviť uložené nastavenia"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:295
 msgid "&Save configuration"
 msgstr "&Uložiť nastavenia"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:295
 msgid "Write the current configuration to nvda.ini"
 msgstr "zapíše nastavenia do súboru nvda.ini"
 
-#: gui\__init__.py:295
+#: gui\__init__.py:298
 #: gui\logViewer.py:33
 msgid "E&xit"
 msgstr "U&končiť"
+
+#: gui\__init__.py:350
+msgid ""
+"Welcome to NVDA!\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys. By default, the numpad insert and main insert "
+"keys may both be used as the NVDA key. You can also configure NVDA to use "
+"the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can "
+"configure NVDA, get help and access other NVDA functions.\n"
+msgstr ""
+"Vitajte v NVDA!\n"
+"Väčšina príkazov, ktoré sa používajú na ovládanie programu NVDA sú kombináciou stlačeného klávesu NVDA "
+"s ďalšími klávesmi. Predvolene ako kláves NVDA môžete použiť hlavný insert "
+"alebo insert na numerickom bloku klávesnice. Je tiež možné nastaviť NVDA tak, "
+"aby používal kláves capslock ako kláves NVDA.\n"
+"Na otvorenie NVDA menu môžete kedy koľvek stlačiť NVDA+n. Z tohoto menu môžete "
+"Nastavovať NVDA, získať pomoc a pristupovať k ostatným funkciám programu NVDA.\n"
+
+#: gui\__init__.py:357
+msgid "Welcome to NVDA"
+msgstr "Vitajte v NVDA"
+
+#: gui\__init__.py:361
+msgid "Options"
+msgstr "Možnosti"
+
+#: gui\__init__.py:362
+#: gui\settingsDialogs.py:375
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "Používať &Capslock ako kláves NVDA"
+
+#: gui\__init__.py:365
+msgid "Show this dialog when NVDA starts"
+msgstr "Zobraziť tento dialóg pri každom spustení"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
@@ -2186,10 +2221,6 @@ msgstr "Rozloženie &klávesnice"
 #: gui\settingsDialogs.py:367
 msgid "Keyboard layout"
 msgstr "Rozloženie klávesnice"
-
-#: gui\settingsDialogs.py:375
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Používať &Capslock ako kláves NVDA"
 
 #: gui\settingsDialogs.py:378
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -2993,7 +3024,7 @@ msgstr "žiadne predchádzajúce tlačidlo"
 
 #: virtualBuffers\__init__.py:349
 msgid "moves to the next edit field"
-msgstr "Prejde na predchádzajúce editačné pole"
+msgstr "Prejde na nasledujúce editačné pole"
 
 #: virtualBuffers\__init__.py:349
 msgid "no next edit field"
@@ -3092,6 +3123,7 @@ msgid "no next graphic"
 msgstr "žiadna ďalšia grafika"
 
 #: virtualBuffers\__init__.py:361
+#: virtualBuffers_old\__init__.py:314
 msgid "moves to the next graphic"
 msgstr "Prejde na nasledujúcu grafiku"
 
