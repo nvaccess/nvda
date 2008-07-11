@@ -139,6 +139,7 @@ class MainFrame(wx.Frame):
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration applied"))
 
 	def onSaveConfigurationCommand(self,evt):
 		try:
