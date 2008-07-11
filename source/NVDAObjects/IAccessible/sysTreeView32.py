@@ -10,8 +10,10 @@ from . import IAccessible
 oldLevel=None
 
 TV_FIRST=0x1100
+TVIS_STATEIMAGEMASK=0xf000
 
 #Window messages
+TVM_GETITEMSTATE=TV_FIRST+39
 TVM_GETITEM=TV_FIRST+62
 TVM_MAPACCIDTOHTREEITEM=TV_FIRST+42
 TVM_MAPHTREEITEMTOACCID=TV_FIRST+43
@@ -45,6 +47,19 @@ class TreeViewItem(IAccessible):
 
 	def _get_treeLevel(self):
 		return int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
+
+	def _get_states(self):
+		states=super(TreeViewItem,self)._get_states()
+		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		itemStates=winUser.sendMessage(self.windowHandle,TVM_GETITEMSTATE,hItem,TVIS_STATEIMAGEMASK)
+		ch=(itemStates>>12)&3
+		if ch>0:
+			states.add(controlTypes.STATE_CHECKABLE)
+		if ch==2:
+			states.add(controlTypes.STATE_CHECKED)
+		elif ch==3:
+			states.add(controlTypes.STATE_HALFCHECKED)
+		return states
 
 	def _get_value(self):
 		return None
