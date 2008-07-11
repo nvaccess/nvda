@@ -478,6 +478,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(controlTypes.STATE_VISITED)
 	positiveStates.discard(controlTypes.STATE_SELECTABLE)
 	positiveStates.discard(controlTypes.STATE_FOCUSABLE)
+	positiveStates.discard(controlTypes.STATE_CHECKABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_MODAL)
@@ -499,7 +500,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
-	if role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
 	if reason == REASON_CHANGE:
 		# We were given states which have changed to negative.
