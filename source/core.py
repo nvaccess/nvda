@@ -118,8 +118,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.initialize()
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
-			speech.speakMessage(_("NVDA started"))
-			speech.speakMessage(_("Press NVDA+n to activate the NVDA menu at any time"))
+			if config.conf["general"]["showWelcomeDialogAtStartup"]:
+				wx.CallAfter(gui.WelcomeDialog.run)
+			else:
+				speech.speakMessage(_("NVDA started"))
 		import queueHandler
 		log.info("Using comtypes version %s"%comtypes.__version__)
 		class CorePump(wx.Timer):

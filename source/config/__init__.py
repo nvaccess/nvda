@@ -25,6 +25,7 @@ confspec = ConfigObj(StringIO(
 	askToExit = boolean(default=true)
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
+	showWelcomeDialogAtStartup = boolean(default=true)
 
 # Speech settings
 [speech]

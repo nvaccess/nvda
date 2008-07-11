@@ -285,6 +285,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog"))
+		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
@@ -336,3 +338,54 @@ def execute(func, callback=None, *args, **kwargs):
 	@param kwargs: Keyword arguments for the function.
 """
 	wx.PostEvent(mainFrame, ExternalExecuteEvent(func, args, kwargs, callback))
+
+class WelcomeDialog(wx.Dialog):
+	"""The NVDA welcome dialog.
+	This provides essential information for new users, such as a description of the NVDA key and instructions on how to activate the NVDA menu.
+	It also provides quick access to some important configuration options.
+	This dialog is displayed the first time NVDA is started with a new configuration.
+	"""
+
+	WELCOME_MESSAGE = _(
+		"Welcome to NVDA!\n"
+		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys. By default, the numpad insert and main insert keys may both be used as the NVDA key. You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+		"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+	)
+
+	def __init__(self, parent):
+		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		welcomeText = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE)
+		mainSizer.Add(welcomeText)
+		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
+		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Use CapsLock as an NVDA modifier key"))
+		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		optionsSizer.Add(self.capsAsNVDAModifierCheckBox)
+		self.showWelcomeDialogAtStartupCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Show this dialog when NVDA starts"))
+		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
+		optionsSizer.Add(self.showWelcomeDialogAtStartupCheckBox)
+		mainSizer.Add(optionsSizer)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK))
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+
+		self.SetSizer(mainSizer)
+		mainSizer.Fit(self)
+		self.capsAsNVDAModifierCheckBox.SetFocus()
+
+	def onOk(self, evt):
+		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
+		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
+		try:
+			config.save()
+		except:
+			pass
+		self.Destroy()
+
+	@classmethod
+	def run(cls):
+		"""Prepare and display an instance of this dialog.
+		This does not require the dialog to be instantiated.
+		"""
+		mainFrame.prePopup()
+		cls(mainFrame).ShowModal()
+		mainFrame.postPopup()
