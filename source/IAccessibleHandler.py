@@ -796,11 +796,13 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if not winUser.isWindowVisible(window):
 		return False
 	#Ignore focus  events on the parent of the desktop and taskbar
-	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
+	windowClassName=winUser.getClassName(window)
+	if windowClassName in ("Progman","Shell_TrayWnd"):
 		return False
 	oldFocus=liveNVDAObjectTable.get('focus',None)
 	#If the existing focus has the same win event params as these, then ignore this event
-	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
+	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
+	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
 		# Don't actually process the event, as it is the same as the current focus.
 		# However, it is still a valid event, so return True.
 		return True
