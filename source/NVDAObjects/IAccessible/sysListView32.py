@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 from ctypes import *
 from ctypes.wintypes import *
 import controlTypes
@@ -12,6 +13,7 @@ import api
 import winKernel
 import winUser
 from . import IAccessible, List
+from ..window import Window 
 
 #Window messages
 LVM_FIRST=0x1000
@@ -113,47 +115,71 @@ def getListGroupInfo(windowHandle,groupIndex):
 	winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
 	winKernel.closeHandle(processHandle)
 	if messageRes==1:
-		return (localHeader.value,localFooter.value,localInfo.state,localInfo.uAlign)
+		return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
 	else:
 		return None
 
 class List(List):
 
-	def _get_focusedGroupInfo(self):
-		if self is not api.getFocusObject():
-			return None
-		if not hasattr(self,'_focusedGroupInfo'):
-			groupIndex=winUser.sendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
-			if groupIndex<0:
-				self._focusedGroupInfo=None
-			self._focusedGroupInfo=getListGroupInfo(self.windowHandle,groupIndex)
-		return self._focusedGroupInfo
-
 	def _get_name(self):
-		if self.focusedGroupInfo is not None:
-			return self.focusedGroupInfo[0]
 		name=super(List,self)._get_name()
 		if not name:
 			name=super(IAccessible,self)._get_name()
 		return name
 
+	def event_gainFocus(self):
+		#See if this object is the focus and the focus is on a group item.
+		#if so, then morph this object to a groupingItem object
+		if self is api.getFocusObject():
+			groupIndex=winUser.sendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
+			if groupIndex>=0:
+				info=getListGroupInfo(self.windowHandle,groupIndex)
+				if info is not None:
+					ancestors=api.getFocusAncestors()
+					if api.getFocusDifferenceLevel()==len(ancestors)-1:
+						self.event_focusEntered()
+						ancestors.append(self)
+					groupingObj=GroupingItem(self,info)
+					api.setFocusObject(groupingObj)
+					return groupingObj.event_gainFocus()
+		return super(List,self).event_gainFocus()
+
+class GroupingItem(Window):
+
+	def __init__(self,parent,groupInfo):
+		super(GroupingItem,self).__init__(parent.windowHandle)
+		self.parent=parent
+		self.groupInfo=groupInfo
+
+	def _isEqual(self,other):
+		return isinstance(other,self.__class__) and self.groupInfo==othergroupInfo
+
+	def _set_groupInfo(self,info):
+		self._groupInfoTime=time.time()
+		self._groupInfo=info
+
+	def _get_groupInfo(self):
+		now=time.time()
+		if (now-self._groupInfoTime)>0.25:
+			self._groupInfoTime=now
+			self._groupInfo=getListGroupInfo(self.windowHandle,self._groupInfo['groupIndex'])
+		return self._groupInfo
+
+	def _get_name(self):
+		return self.groupInfo['header']
+
 	def _get_role(self):
-		if self.focusedGroupInfo is not None:
-			return controlTypes.ROLE_GROUPING
-		return super(List,self)._get_role()
+		return controlTypes.ROLE_GROUPING
 
 	def _get_value(self):
-		if self.focusedGroupInfo is not None:
-			return self.focusedGroupInfo[1]
-		return super(List,self)._get_value()
+		return self.groupInfo['footer']
 
 	def _get_states(self):
-		states=super(List,self)._get_states()
-		if self.focusedGroupInfo is not None:
-			if self.focusedGroupInfo[-2]&1:
-				states.add(controlTypes.STATE_COLLAPSED)
-			else:
-				states.add(controlTypes.STATE_EXPANDED)
+		states=set()
+		if self.groupInfo['state']&1:
+			states.add(controlTypes.STATE_COLLAPSED)
+		else:
+			states.add(controlTypes.STATE_EXPANDED)
 		return states
 
 class ListItem(IAccessible):
