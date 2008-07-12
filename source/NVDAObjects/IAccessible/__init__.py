@@ -227,7 +227,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			newClass=globals()[classString]
 		obj=Window.__new__(newClass,windowHandle=windowHandle)
 		obj.windowClassName=windowClassName
-		obj.IAccessibleRole=IAccessibleRole
 		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 		return obj
 
@@ -389,12 +388,20 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return self._IAccessibleIdentity
 
 	def _get_IAccessibleRole(self):
-		if not hasattr(self,'_IAccessibleRole'):
+		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
-				self._IAccessibleRole=self.IAccessibleObject.accRole(self.IAccessibleChildID)
+				role=self.IAccessibleObject.role()
 			except:
-				self._IAccessibleRole=None
-		return self._IAccessibleRole
+				role=0
+		else:
+			role=0
+		if role==0:
+			try:
+				role=self.IAccessibleObject.accRole(self.IAccessibleChildID)
+			except:
+				role=0
+		return role
+
 
 	def _get_role(self):
 		IARole=self.IAccessibleRole
@@ -1077,4 +1084,6 @@ _staticMap={
 	("EditControl",None):"edit.Edit",
 	("AkelEditW",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.RichEdit20",
 	("TRichEditViewer",None):"edit.RichEdit",
+	("AVL_AVView","Page"):"adobe.Page",
+	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
 }
