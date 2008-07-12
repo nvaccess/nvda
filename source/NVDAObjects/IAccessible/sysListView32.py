@@ -10,6 +10,7 @@ from ctypes.wintypes import *
 import controlTypes
 import speech
 import api
+from keyUtils import sendKey
 import winKernel
 import winUser
 from . import IAccessible, List
@@ -181,6 +182,15 @@ class GroupingItem(Window):
 		else:
 			states.add(controlTypes.STATE_EXPANDED)
 		return states
+
+	def script_collapseOrExpand(self,keyPress):
+		sendKey(keyPress)
+		self.event_stateChange()
+
+[GroupingItem.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("ExtendedLeft","collapseOrExpand"),
+	("ExtendedRight","collapseOrExpand"),
+]]
 
 class ListItem(IAccessible):
 
