@@ -6,6 +6,7 @@
 
 import time
 import ctypes
+import eventHandler
 import globalVars
 from logHandler import log
 import core
@@ -79,8 +80,7 @@ class Adobe(virtualBuffer):
 		if self.rootNVDAObject.role==0:
 			self.rootNVDAObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(self.rootNVDAObject.windowHandle,-4,0)
 			self.loadDocument()
-
-		speech.speakObject(obj)
+			eventHandler.queueEvent("gainFocus",self.rootNVDAObject)
 
 	def event_scrollingStart(self,obj,nextHandler):
 		ID=self.getNVDAObjectID(obj)
@@ -153,8 +153,9 @@ class Adobe(virtualBuffer):
 		elif role==IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON:
 			obj.doDefaultAction()
 		elif role in [IAccessibleHandler.ROLE_SYSTEM_LINK,IAccessibleHandler.ROLE_SYSTEM_GRAPHIC]:
-			obj.doDefaultAction()
 			obj.setFocus()
+			obj.doDefaultAction()
+			obj.doDefaultAction()
 
 	def isDocumentComplete(self):
 		role=self.rootNVDAObject.role
