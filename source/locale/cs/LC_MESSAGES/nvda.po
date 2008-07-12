@@ -812,7 +812,7 @@ msgstr "Zobrazí okno s nastavením virtuálního dokumentu"
 
 #: appModules\_default.py:767
 msgid "Shows NVDA document formatting settings dialog"
-msgstr "Vyvolá dialog formátování dokumentu"
+msgstr "Vyvolá dialog nastavení čtení formátování textu"
 
 #: appModules\_default.py:772
 msgid "Saves current NVDA configuration to file"
@@ -1886,7 +1886,7 @@ msgstr "Změnit způsob hlášení vlastností dokumentu"
 
 #: gui\__init__.py:254
 msgid "Document &formatting..."
-msgstr "&Formátování dokumentu..."
+msgstr "nastavení čtení &formátování textu"
 
 #: gui\__init__.py:257
 msgid "&Default dictionary..."
@@ -2015,10 +2015,10 @@ msgstr ""
 "Většina příkazů, které lze použít pro ovládání programu NVDA je tvořena"
 "soustiskem tzv. klávesy NVDA spolu s dalšími klávesami. Jako klávesa NVDA"
 "je standardně přednastavena klávesa insert. Můžete použít buď hlavní insert, nebo"
-"insert na numerickém bloku klávesnice. Nvda je ale možné nastavit i tak, že jako NVDA"
-"klávesa bude použitý capslock.\n"
-"Pro vyvolání nabídky programu NVDA stiskněte kdykoli klávesu NVDA+n. V tomto menu můžete"
-"NVDA nastavovat, získat nápovědu a přistupovat k ostatním funkcím programu NVDA."
+"insert na numerickém bloku klávesnice. jako klávesu NVDA lze místo insertu též"
+"nastavit klávesu capslock.\n"
+"Pro vyvolání nabídky programu NVDA stiskněte kdykoli klávesu NVDA+n. V tomto menu"
+"najdete položky pro nastavení,  nápovědu a další funkce programu NVDA."
 
 #: gui\__init__.py:357
 msgid "Welcome to NVDA"
@@ -2361,7 +2361,7 @@ msgstr "Hlásit rám&ce"
 
 #: gui\settingsDialogs.py:578
 msgid "Document formatting"
-msgstr "Formátování dokumentu"
+msgstr "Nastavení čtení formátování textu"
 
 #: gui\settingsDialogs.py:581
 msgid "Announce formatting changes after the cursor (can cause a lag)"
@@ -3169,6 +3169,10 @@ msgstr "odstránkuje nahoru v aktuálním virtuálním dokumentu"
 #: virtualBuffers_old\__init__.py:287
 msgid "moves one page down in the virtual buffer's current document"
 msgstr "odstránkuje dolů v aktuálním virtuálním dokumentu"
+
+#: virtualBuffers_old\__init__.py:313
+msgid "no more graphic"
+msgstr "žádná další grafika"
 
 #: virtualBuffers_old\__init__.py:324
 #: virtualBuffers_old\__init__.py:335

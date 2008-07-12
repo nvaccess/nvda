@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-07-11 00:21+0800\n"
+"PO-Revision-Date: 2008-07-12 23:24+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1607,7 +1607,7 @@ msgstr "圖像化"
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
 msgid "selectable"
-msgstr "可選取的"
+msgstr "可選取"
 
 # controlTypes.py:141
 msgid "focusable"
@@ -1619,7 +1619,11 @@ msgstr "可點擊"
 
 # controlTypes.py:107
 msgid "editable"
-msgstr "可編輯的"
+msgstr "可編輯"
+
+# virtualBuffers\IAccessible\MSHTML.py:316
+msgid "checkable"
+msgstr "可核取"
 
 # core.py:74
 msgid "Loading subsystems, please wait..."
@@ -1628,10 +1632,6 @@ msgstr "載入程式中, 請稍後..."
 # core.py:87
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
-
-# core.py:137
-msgid "Press NVDA+n to activate the NVDA menu at any time"
-msgstr "可隨時按 insert+n 來打開 N V D A 的選單"
 
 # virtualBuffers\__init__.py:463
 msgid "Find"
@@ -1672,6 +1672,10 @@ msgstr "一個虛擬引擎視窗, 把要說的東西都顯示出來"
 # synthDrivers\silence.py:13
 msgid "No speech"
 msgstr "沒有語音"
+
+# gui\__init__.py:223
+msgid "configuration applied"
+msgstr "設定套用了"
 
 # gui\__init__.py:223
 msgid "configuration saved"
@@ -1753,7 +1757,7 @@ msgstr "鍵盤設定... &K"
 
 # gui\__init__.py:158
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "修改和鍵盤有關的設定，例如設定是否邊打邊念字元, 字詞或指令"
+msgstr "選擇套用哪一個鍵盤配置, 設定是否邊打邊念字元, 字詞或指令"
 
 # gui\__init__.py:261
 msgid "&Mouse settings..."
@@ -1838,7 +1842,7 @@ msgstr "用戶指南 &U"
 
 # gui\__init__.py:233
 msgid "Key Command Quick Reference"
-msgstr "按鍵指令快速說明 &K"
+msgstr "按鍵指令快速參考 &K"
 
 # gui\__init__.py:235
 msgid "What's &new"
@@ -1855,6 +1859,10 @@ msgstr "版權資訊 &L"
 # gui\__init__.py:247
 msgid "Contributors"
 msgstr "貢獻者名單 &C"
+
+# gui\__init__.py:286
+msgid "We&lcome dialog"
+msgstr "歡迎視窗 &L"
 
 # gui\__init__.py:181
 msgid "About..."
@@ -1884,6 +1892,32 @@ msgstr "將現時的設定寫入 nvda.ini"
 # gui\__init__.py:143
 msgid "E&xit"
 msgstr "結束 &X"
+
+# gui\__init__.py:350
+msgid ""
+"Welcome to NVDA!\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys. By default, the numpad insert and main insert keys may both be used as the NVDA key. You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+msgstr ""
+"歡迎使用 NVDA!\n"
+"許多操作 NVDA 的按鍵指令都需要按著一個 NVDA 的組合鍵不放, 然後按下其它按鍵. 一般來說, 主鍵盤的 insert 鍵和數字鍵盤的 insert 鍵都預設為 NVDA 的組合鍵, 你也可設定大寫鎖鍵為 NVDA 的組合鍵.\n"
+"你可隨時按 NVDA+n 打開 NVDA 的選單, 此選單可讓你調校 NVDA 的選項設定, 取得協助和使用程式的一些功能.\n"
+
+# gui\__init__.py:357
+msgid "Welcome to NVDA"
+msgstr "歡迎使用 NVDA"
+
+# controlTypes.py:133
+msgid "Options"
+msgstr "選項"
+
+# gui\settingsDialogs.py:264
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "把 CapsLock 鍵設為 NVDA 的組合鍵"
+
+# gui\__init__.py:365
+msgid "Show this dialog when NVDA starts"
+msgstr "每當 NVDA 啟動時顯示此對話方塊"
 
 # gui\logViewer.py:14
 msgid "NVDA Log Viewer"
@@ -2054,10 +2088,6 @@ msgstr "鍵盤配置 &K"
 # keyboardHandler.py:77
 msgid "Keyboard layout"
 msgstr "鍵盤配置"
-
-# gui\settingsDialogs.py:264
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "把 CapsLock 鍵設為 NVDA 的組合鍵"
 
 # gui\settingsDialogs.py:267
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -2868,19 +2898,19 @@ msgstr "沒有上一個文字編輯欄位了"
 
 # virtualBuffers\__init__.py:361
 msgid "moves to the next frame"
-msgstr "移到下一個框架"
+msgstr "移到下一個頁框"
 
 # controlTypes.py:111
 msgid "no next frame"
-msgstr "沒有下一個框架了"
+msgstr "沒有下一個頁框了"
 
 # virtualBuffers\__init__.py:372
 msgid "moves to the previous frame"
-msgstr "移到上一個框架"
+msgstr "移到上一個頁框"
 
 # appModules\_default.py:189
 msgid "no previous frame"
-msgstr "沒有上一個框架了"
+msgstr "沒有上一個頁框了"
 
 # virtualBuffers\__init__.py:339
 msgid "moves to the next separator"
