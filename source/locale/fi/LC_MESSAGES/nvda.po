@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2221\n"
+"Project-Id-Version: r2228\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-07-11 09:18+0300\n"
+"PO-Revision-Date: 2008-07-11 18:33+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr "taso %s"
 
 #: NVDAObjects\IAccessible\__init__.py:77
 #: NVDAObjects\IAccessible\__init__.py:610
-#: NVDAObjects\IAccessible\sysListView32.py:97
+#: NVDAObjects\IAccessible\sysListView32.py:215
 msgid "%s of %s"
 msgstr "%s kautta %s"
 
@@ -1663,13 +1663,9 @@ msgstr "valittava"
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alajärjestelmiä, odota..."
 
-#: core.py:121
+#: core.py:124
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
-
-#: core.py:122
-msgid "Press NVDA+n to activate the NVDA menu at any time"
-msgstr "Paina NVDA+n avataksesi NVDA-valikon"
 
 #: cursorManager.py:77 virtualBuffers_old\__init__.py:460
 msgid "Find"
@@ -1741,7 +1737,7 @@ msgstr "Tilapäissanasto"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Oletko varma, että haluat lopettaa NVDA:n?"
 
-#: gui\__init__.py:171 gui\__init__.py:295
+#: gui\__init__.py:171 gui\__init__.py:298
 msgid "Exit NVDA"
 msgstr "Lopeta NVDA"
 
@@ -1757,7 +1753,7 @@ msgstr "URL-osoite"
 msgid "version"
 msgstr "versio"
 
-#: gui\__init__.py:216 gui\__init__.py:286
+#: gui\__init__.py:216 gui\__init__.py:289
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
@@ -1908,36 +1904,76 @@ msgid "Contributors"
 msgstr "Avustajat"
 
 #: gui\__init__.py:286
+msgid "We&lcome dialog"
+msgstr "&Tervetuloa-valintaikkuna"
+
+#: gui\__init__.py:289
 msgid "About..."
 msgstr "Tietoja..."
 
-#: gui\__init__.py:288
+#: gui\__init__.py:291
 msgid "&Help"
 msgstr "&Ohje"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:293
 msgid "&Revert to saved configuration"
 msgstr "&Palaa tallennettuihin asetuksiin"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:293
 msgid "Reset all settings to saved state"
 msgstr "Nollaa asetukset tallennettuihin arvoihinsa"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:295
 msgid "&Save configuration"
 msgstr "&Tallenna asetukset"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:295
 msgid "Write the current configuration to nvda.ini"
 msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 
-#: gui\__init__.py:295 gui\logViewer.py:33
+#: gui\__init__.py:298 gui\logViewer.py:33
 msgid "E&xit"
 msgstr "&Lopeta"
 
+#: gui\__init__.py:350
+msgid ""
+"Welcome to NVDA!\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys. By default, the numpad insert and main insert "
+"keys may both be used as the NVDA key. You can also configure NVDA to use "
+"the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can "
+"configure NVDA, get help and access other NVDA functions.\n"
+msgstr ""
+"Tervetuloa NVDA:han!\n"
+"Useimmat NVDA:n säätämiseen tarkoitetut näppäimet edellyttävät NVDA-"
+"näppäimen painamista samaan aikaan muiden näppäinten kanssa. Oletuksena "
+"normaalia ja laskinnäppäimistön Insert-näppäintä voidaan molempia "
+"käyttää NVDA-näppäimenä. Voit myös määrittää NVDA:n käyttämää"
+"n CapsLock-näppäintä NVDA-näppäimenä.\n"
+"Paina NVDA+n avataksesi NVDA-valikon milloin tahansa. Tästä valikosta voit "
+"määrittää NVDA:n asetuksia, saada ohjeita ja käyttää muita NVDA:n "
+"toimintoja.\n"
+
+#: gui\__init__.py:357
+msgid "Welcome to NVDA"
+msgstr "Tervetuloa NVDA:han"
+
+#: gui\__init__.py:361
+msgid "Options"
+msgstr "Asetukset"
+
+#: gui\__init__.py:362 gui\settingsDialogs.py:375
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
+
+#: gui\__init__.py:365
+msgid "Show this dialog when NVDA starts"
+msgstr "Näytä tämä valintaikkuna, kun NVDA käynnistyy"
+
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "NVDA-lokikatselija"
+msgstr "NVDA-lokinäyttäjä"
 
 #: gui\logViewer.py:28
 msgid "Refresh\tF5"
@@ -2110,17 +2146,13 @@ msgstr "&Näppäimistöasettelu"
 msgid "Keyboard layout"
 msgstr "Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:375
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Käytä Caps Lock -näppäintä NVDA:n toimintonäppäimenä"
-
 #: gui\settingsDialogs.py:378
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Käytä numeroryhmän Insert-näppäintä NVDA:n toimintonäppäimenä"
+msgstr "Käytä laskinnäppäimistön Insert-näppäintä NVDA-näppäimenä"
 
 #: gui\settingsDialogs.py:381
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Käytä laajennettua Insert-näppäintä NVDA:n toimintonäppäimenä"
+msgstr "Käytä laajennettua Insert-näppäintä NVDA-näppäimenä"
 
 #: gui\settingsDialogs.py:384
 msgid "Speak typed &characters"
