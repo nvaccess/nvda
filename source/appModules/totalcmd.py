@@ -29,7 +29,8 @@ class TCList(IAccessible):
 			counter=0
 			while obj and obj.windowClassName!="TPanel":
 				obj=obj.previous
-				counter+=1
+				if obj.windowClassName!="TDrivePanel":
+					counter+=1
 			if counter==2:
 				speech.speakMessage(_("left"))
 			else:
