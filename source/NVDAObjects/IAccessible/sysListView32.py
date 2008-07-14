@@ -11,6 +11,7 @@ import controlTypes
 import speech
 import api
 from keyUtils import sendKey
+import eventHandler
 import winKernel
 import winUser
 from . import IAccessible, List
@@ -139,11 +140,8 @@ class List(List):
 					ancestors=api.getFocusAncestors()
 					if api.getFocusDifferenceLevel()==len(ancestors)-1:
 						self.event_focusEntered()
-						ancestors.append(self)
 					groupingObj=GroupingItem(self,info)
-					api.setFocusObject(groupingObj)
-					return groupingObj.event_gainFocus()
-		return super(List,self).event_gainFocus()
+					return eventHandler.queueEvent("gainFocus",groupingObj)
 
 class GroupingItem(Window):
 
