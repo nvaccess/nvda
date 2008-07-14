@@ -680,7 +680,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			child=child.next
 
 	def event_show(self):
-		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
+		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or not winUser.isWindowVisible(self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
 			return
 		try:
 			attribs=self.IAccessibleObject.attributes
