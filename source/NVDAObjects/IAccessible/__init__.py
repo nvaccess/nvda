@@ -1086,4 +1086,7 @@ _staticMap={
 	("TRichEditViewer",None):"edit.RichEdit",
 	("AVL_AVView","Page"):"adobe.Page",
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
+	("TNavigableTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TNavigableTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	("TskRichEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 }
