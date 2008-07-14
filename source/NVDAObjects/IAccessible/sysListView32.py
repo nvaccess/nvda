@@ -142,6 +142,7 @@ class List(List):
 						self.event_focusEntered()
 					groupingObj=GroupingItem(self,info)
 					return eventHandler.queueEvent("gainFocus",groupingObj)
+		return super(List,self).event_gainFocus()
 
 class GroupingItem(Window):
 
