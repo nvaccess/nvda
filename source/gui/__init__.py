@@ -29,7 +29,6 @@ ICON_PATH=os.path.join(NVDA_PATH, "images", "icon.png")
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
 id_showGuiCommand=wx.NewId()
-id_abortCommand=wx.NewId()
 evtid_externalExecute = wx.NewEventType()
 evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
 
@@ -98,8 +97,7 @@ class MainFrame(wx.Frame):
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
-		self.Bind(evt_externalCommand, self.onAbortCommand, id=id_abortCommand)
+		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
 		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
 		self.Bind(evt_externalExecute,lambda evt: evt.run())
@@ -107,9 +105,6 @@ class MainFrame(wx.Frame):
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 		self.Show()
 		self.Hide()
-
-	def onClose(self, evt):
-		self.Destroy()
 
 	def Destroy(self):
 		self.sysTrayIcon.Destroy()
@@ -134,9 +129,6 @@ class MainFrame(wx.Frame):
 			# Showing and hiding our main window seems to achieve this.
 			self.Show()
 			self.Hide()
-
-	def onAbortCommand(self,evt):
-		self.Destroy()
 
 	def onShowGuiCommand(self,evt):
 		self.sysTrayIcon.onActivate(None)
@@ -179,12 +171,7 @@ class MainFrame(wx.Frame):
 		else:
 			canExit=True
 		if canExit:
-			if config.conf["general"]["saveConfigurationOnExit"]:
-				try:
-					config.save()
-				except:
-					pass
-			self.Destroy()
+			wx.GetApp().ExitMainLoop()
 
 	def onGeneralSettingsCommand(self,evt):
 		self._popupSettingsDialog(GeneralSettingsDialog)
@@ -313,19 +300,20 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.PopupMenu(self.menu)
 		mainFrame.postPopup()
 
-def initialize(app):
+def initialize():
 	global mainFrame
 	mainFrame = MainFrame()
-	app.SetTopWindow(mainFrame)
+	wx.GetApp().SetTopWindow(mainFrame)
+
+def terminate():
+	global mainFrame
+	mainFrame.Destroy()
 
 def showGui():
  	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
 
 def quit():
 	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
-
-def abort():
-	wx.PostEvent(mainFrame, ExternalCommandEvent(id_abortCommand))
 
 def restart():
 	globalVars.restart=True

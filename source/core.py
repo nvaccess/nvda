@@ -89,7 +89,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		NVDAHelper.initialize()
 		log.debug("Initializing GUI")
 		import gui
-		gui.initialize(app)
+		gui.initialize()
 		# initialize wxpython localization support
 		locale = wx.Locale()
 		lang=languageHandler.getLanguage()
@@ -145,7 +145,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("NVDA initialized")
 	log.debug("entering wx application main loop")
 	app.MainLoop()
-	log.debug("Shutting down core")
+	log.info("Exiting")
+	log.debug("Terminating GUI")
+	gui.terminate()
+	if config.conf["general"]["saveConfigurationOnExit"]:
+		try:
+			config.save()
+		except:
+			pass
 	try:
 		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 			log.debug("calling loose focus on object with focus")
