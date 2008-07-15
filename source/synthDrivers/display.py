@@ -11,7 +11,7 @@ import synthDriverHandler
 class SynthFrame(wx.MiniFrame):
 
 	def __init__(self):
-		wx.MiniFrame.__init__(self, gui.mainFrame, wx.ID_ANY, "NVDA Display Synth", style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		super(SynthFrame, self).__init__(gui.mainFrame, wx.ID_ANY, "NVDA Display Synth", style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		self.textCtrl = wx.TextCtrl(self, -1,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
@@ -22,6 +22,7 @@ class SynthFrame(wx.MiniFrame):
 
 	def onClose(self, evt):
 		if not evt.CanVeto():
+			self.Destroy()
 			return
 		evt.Veto()
 
@@ -34,14 +35,22 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return True
 
 	def initialize(self):
-		self.frame = SynthFrame()
+		self.frame = None
+		try:
+			self.frame = SynthFrame()
+		except wx.PyNoAppError:
+			# We can't initialize yet.
+			pass
 
 	def speakText(self,text,index=None):
+		if not self.frame:
+			self.initialize()
+			if not self.frame:
+				return
 		self.frame.textCtrl.AppendText(text + "\n")
 
 	def terminate(self):
 		if not self.frame:
 			return
-		self.frame.Close()
 		self.frame.Destroy()
 		self.frame = None
