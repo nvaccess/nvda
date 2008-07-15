@@ -15,6 +15,7 @@ PROCESS_ALL_ACCESS=0x1F0FFF
 PROCESS_VM_OPERATION=0x8
 PROCESS_VM_READ=0x10
 PROCESS_VM_WRITE=0X20
+SYNCHRONIZE=0x100000
 PROCESS_QUERY_INFORMATION=0x400
 READ_CONTROL=0x20000
 MEM_COMMIT=0x1000
@@ -119,6 +120,9 @@ def readProcessMemory(*args):
 
 def writeProcessMemory(*args):
 	return kernel32.WriteProcessMemory(*args)
+
+def waitForSingleObject(handle,timeout):
+	return kernel32.WaitForSingleObject(handle,timeout)
 
 
 
