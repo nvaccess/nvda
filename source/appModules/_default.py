@@ -371,10 +371,9 @@ class appModule(appModuleHandler.AppModule):
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object")
 
 	def script_review_currentLine(self,keyPress):
-		from keyboardHandler import lastKeyCount
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
-		if lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			speech.speakFormattedText(info)
 		else:
 			speech.speakSpelling(info._get_text())
@@ -413,10 +412,9 @@ class appModule(appModuleHandler.AppModule):
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object")
 
 	def script_review_currentWord(self,keyPress):
-		from keyboardHandler import lastKeyCount
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
-		if lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			speech.speakFormattedText(info)
 		else:
 			speech.speakSpelling(info._get_text())
@@ -465,8 +463,7 @@ class appModule(appModuleHandler.AppModule):
 	def script_review_currentCharacter(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
-		from keyboardHandler import lastKeyCount
-		if lastKeyCount == 1:
+		if scriptHandler.getLastScriptRepeateCount()==0:
 			speech.speakFormattedText(info,handleSymbols=True)
 		else:
 			try:
@@ -586,7 +583,7 @@ class appModule(appModuleHandler.AppModule):
 
 
 	def script_reportCurrentFocus(self,keyPress):
-		focusObject=api.getFocusObject()
+		focusObject=api.findObjectWithFocus() #getFocusObject()
 		if isinstance(focusObject,NVDAObject):
 			if scriptHandler.getLastScriptRepeateCount()==0:
 				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
