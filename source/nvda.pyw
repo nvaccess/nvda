@@ -22,8 +22,6 @@ from logHandler import log
 import winUser
 import winKernel
 
-restartByErrorCount=0
-
 class NoConsoleOptionParser(optparse.OptionParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
 
@@ -39,15 +37,6 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		out += "\nerror: %s" % msg
 		win32gui.MessageBox(0, out, "Error", 0)
 		sys.exit(2)
-
-def abortWithError(code):
-	"""Logs a critical error, plays the critical error Windows sound, sets the system screen reader flag back to false, plays the NVDA exit sound, and then exits NVDA"""
-	log.critical("core stop not due to exit/restart",exc_info=True)
-	winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
-	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
-	winUser.setSystemScreenReaderFlag(False)
-	sys.exit(code)
-
 
 globalVars.startTime=time.time()
 
@@ -114,16 +103,16 @@ if not globalVars.appArgs.minimal:
 winUser.setSystemScreenReaderFlag(True)
 try:
 	import core
+	core.main()
 except:
-	abortWithError(3)
-res=core.main()
-if res in [core.CORE_MAINLOOPERROR,core.CORE_RESTART]:
-	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+	log.critical("core failure",exc_info=True)
+	sys.exit(1)
+finally:
+	winUser.setSystemScreenReaderFlag(False)
+	if not globalVars.appArgs.minimal:
+		winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+if globalVars.restart:
 	os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
-	exit(0)
-elif res==core.CORE_INITERROR:
-	abortWithError(4)
-winUser.setSystemScreenReaderFlag(False)
-if not globalVars.appArgs.minimal:
-	winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+	sys.exit(0)
+
 log.info("NVDA exit")

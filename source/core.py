@@ -1,6 +1,6 @@
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,11 +16,6 @@ import time
 import logHandler
 import globalVars
 from logHandler import log
-
-CORE_INITERROR=0
-CORE_MAINLOOPERROR=1
-CORE_QUIT=2
-CORE_RESTART=3
 
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -53,98 +48,95 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	log.debug("Core starting")
 	log.info("Using Python version %s"%sys.version)
-	endResult=CORE_QUIT
+	log.debug("loading config")
+	import config
+	config.load()
+	log.debug("Trying to save config")
 	try:
-		log.debug("loading config")
-		import config
-		config.load()
-		log.debug("Trying to save config")
-		try:
-			config.save()
-		except:
-			pass
-		logHandler.setLogLevelFromConfig()
-		try:
-			lang = config.conf["general"]["language"]
-			import languageHandler
-			log.debug("setting language to %s"%lang)
-			languageHandler.setLanguage(lang)
-		except:
-			log.warning("Could not set language to %s"%lang)
-		log.debug("Creating wx application instance")
-		import speechDictHandler
-		log.debug("Speech Dictionary processing")
-		speechDictHandler.initialize()
-		import speech
-		log.debug("Initializing speech")
-		speech.initialize()
-		if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
-			log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
-			speech.speakMessage(_("Loading subsystems, please wait..."))
-		import wx
-		log.info("Using wx version %s"%wx.version())
-		app = wx.App(redirect=False)
-		import NVDAHelper
-		log.debug("Initializing NVDAHelper")
-		NVDAHelper.initialize()
-		log.debug("Initializing GUI")
-		import gui
-		gui.initialize()
-		# initialize wxpython localization support
-		locale = wx.Locale()
-		lang=languageHandler.getLanguage()
-		if '_' in lang:
-			wxLang=lang.split('_')[0]
-		else:
-			wxLang=lang
-		try:
-			locale.Init(lang,wxLang)
-		except:
-			pass
-		import appModuleHandler
-		log.debug("Initializing appModule Handler")
-		appModuleHandler.initialize()
-		import JABHandler
-		log.debug("initializing Java Access Bridge support")
-		JABHandler.initialize()
-		import IAccessibleHandler
-		log.debug("Initializing IAccessible support")
-		IAccessibleHandler.initialize()
-		import keyboardHandler
-		log.debug("Initializing keyboard handler")
-		keyboardHandler.initialize()
-		import mouseHandler
-		log.debug("initializing mouse handler")
-		mouseHandler.initialize()
-		speech.cancelSpeech()
-		if not globalVars.appArgs.minimal:
-			if config.conf["general"]["showWelcomeDialogAtStartup"]:
-				wx.CallAfter(gui.WelcomeDialog.run)
-			else:
-				speech.speakMessage(_("NVDA started"))
-		import queueHandler
-		log.info("Using comtypes version %s"%comtypes.__version__)
-		class CorePump(wx.Timer):
-			"Checks the queues and executes functions."
-			def __init__(self,*args,**kwargs):
-				log.debug("Core pump starting")
-				super(CorePump,self).__init__(*args,**kwargs)
-			def Notify(self):
-				try:
-					IAccessibleHandler.pumpAll()
-					queueHandler.pumpAll()
-					mouseHandler.pumpAll()
-				except:
-					log.error("errors in this core pump cycle",exc_info=True)
-		log.debug("starting core pump")
-		pump = CorePump()
-		pump.Start(1)
+		config.save()
 	except:
-		log.critical("Core initialization error",exc_info=True)
-		return CORE_INITERROR
+		pass
+	logHandler.setLogLevelFromConfig()
+	try:
+		lang = config.conf["general"]["language"]
+		import languageHandler
+		log.debug("setting language to %s"%lang)
+		languageHandler.setLanguage(lang)
+	except:
+		log.warning("Could not set language to %s"%lang)
+	log.debug("Creating wx application instance")
+	import speechDictHandler
+	log.debug("Speech Dictionary processing")
+	speechDictHandler.initialize()
+	import speech
+	log.debug("Initializing speech")
+	speech.initialize()
+	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
+		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
+		speech.speakMessage(_("Loading subsystems, please wait..."))
+	import wx
+	log.info("Using wx version %s"%wx.version())
+	app = wx.App(redirect=False)
+	import NVDAHelper
+	log.debug("Initializing NVDAHelper")
+	NVDAHelper.initialize()
+	log.debug("Initializing GUI")
+	import gui
+	gui.initialize()
+	# initialize wxpython localization support
+	locale = wx.Locale()
+	lang=languageHandler.getLanguage()
+	if '_' in lang:
+		wxLang=lang.split('_')[0]
+	else:
+		wxLang=lang
+	try:
+		locale.Init(lang,wxLang)
+	except:
+		pass
+	import appModuleHandler
+	log.debug("Initializing appModule Handler")
+	appModuleHandler.initialize()
+	import JABHandler
+	log.debug("initializing Java Access Bridge support")
+	JABHandler.initialize()
+	import IAccessibleHandler
+	log.debug("Initializing IAccessible support")
+	IAccessibleHandler.initialize()
+	import keyboardHandler
+	log.debug("Initializing keyboard handler")
+	keyboardHandler.initialize()
+	import mouseHandler
+	log.debug("initializing mouse handler")
+	mouseHandler.initialize()
+	speech.cancelSpeech()
+	if not globalVars.appArgs.minimal:
+		if config.conf["general"]["showWelcomeDialogAtStartup"]:
+			wx.CallAfter(gui.WelcomeDialog.run)
+		else:
+			speech.speakMessage(_("NVDA started"))
+	import queueHandler
+	log.info("Using comtypes version %s"%comtypes.__version__)
+	class CorePump(wx.Timer):
+		"Checks the queues and executes functions."
+		def __init__(self,*args,**kwargs):
+			log.debug("Core pump starting")
+			super(CorePump,self).__init__(*args,**kwargs)
+		def Notify(self):
+			try:
+				IAccessibleHandler.pumpAll()
+				queueHandler.pumpAll()
+				mouseHandler.pumpAll()
+			except:
+				log.error("errors in this core pump cycle",exc_info=True)
+	log.debug("starting core pump")
+	pump = CorePump()
+	pump.Start(1)
 	log.info("NVDA initialized")
+
 	log.debug("entering wx application main loop")
 	app.MainLoop()
+
 	log.info("Exiting")
 	log.debug("Terminating GUI")
 	gui.terminate()
@@ -199,8 +191,4 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
-	if endResult==CORE_QUIT and globalVars.restart:
-		globalVars.restart=False
-		endResult=CORE_RESTART
-	log.debug("Core done, return code %d"%endResult)
-	return endResult
+	log.debug("core done")

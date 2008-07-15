@@ -103,7 +103,9 @@ class Logger(logging.Logger):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		if record.levelno>=logging.ERROR:
+		if record.levelno>=logging.CRITICAL:
+			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+		elif record.levelno>=logging.ERROR:
 			winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
 		return logging.FileHandler.handle(self,record)
 
