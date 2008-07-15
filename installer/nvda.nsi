@@ -16,6 +16,7 @@ Name "NVDA"
 !define NVDATempDir "_nvda_temp_"
 !define NVDASourceDir "..\source\dist"
 !define NVDAConfig "nvda.ini"
+!define SNDLogo "nvda_logo.wav"
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
@@ -188,9 +189,11 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
+ReserveFile "waves\${SNDLogo}"
 
 Var oldNVDAWindowHandle
  Var NVDAInstalled ;"1" if NVDA has been installed
+var hmci
 
 Function .onInit
 ; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
@@ -210,6 +213,12 @@ BringToFront
 InitPluginsDir
 CreateDirectory $PLUGINSDIR\${NVDATempDir}
 SetOutPath $PLUGINSDIR\${NVDATempDir}
+
+;Play NVDA logo sound
+File "waves\${SNDLogo}"
+Push "$PLUGINSDIR\${NVDATempDir}\${SNDLogo}"
+Call PlaySound
+
 File /r "${NVDASourceDir}\"
 ;If NVDA is already running, kill it first before starting a new copy
 call isNVDARunning
@@ -373,7 +382,7 @@ push 1	; push TRUE onto the stack
 end:
 FunctionEnd
 
-/*
+
 Function PlaySound
 ; Retrieve the file to play
 pop $9
@@ -390,4 +399,4 @@ SendMessage $hmci 0x0465 0 "STR:play"
 
 nosup:
 FunctionEnd
-*/
+
