@@ -282,16 +282,14 @@ WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
 Function .onGUIEnd
-intCMP $NVDAInstalled 1 +1 NotInstalled
-Exec "$INSTDIR\${NVDAApp} -r"
-goto End
-NotInstalled:
 call isNVDARunning
 pop $1
 pop $2
 intcmp $1 1 +1 End
 intcmp $2 $oldNVDAWindowHandle End +1
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+intCMP $NVDAInstalled 1 +1 end
+Exec "$INSTDIR\${NVDAApp} -r"
 end:
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
