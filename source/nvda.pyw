@@ -86,7 +86,7 @@ except:
 if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle): 
 	processID,threadID=winUser.getWindowThreadProcessID(oldAppWindowHandle)
 	if globalVars.appArgs.quit or globalVars.appArgs.replace:
-		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
+		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_CLOSE,0,0)
 		timeout=0
 		ok=False
 		while not ok and timeout<3000:

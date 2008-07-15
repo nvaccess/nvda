@@ -282,7 +282,7 @@ pop $1
 pop $2
 intcmp $1 1 +1 End
 intcmp $2 $oldNVDAWindowHandle End +1
-System::Call "user32.dll::PostMessage(i $2, i ${WM_QUIT}, i 0, i 0)"
+Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
 end:
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
