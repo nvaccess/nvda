@@ -11,7 +11,6 @@
 
 import sgmllib
 from xml.parsers import expat
-import time
 import globalVars
 from logHandler import log
 import api
@@ -152,9 +151,18 @@ def speakSpelling(text):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	lastKeyCount=globalVars.keyCounter
 	if not text.isspace():
 		text=text.rstrip()
+	gen=_speakSpellingGen(text)
+	try:
+		# Speak the first character before this function returns.
+		gen.next()
+	except StopIteration:
+		return
+	queueHandler.registerGeneratorObject(gen)
+
+def _speakSpellingGen(text):
+	lastKeyCount=globalVars.keyCounter
 	textLength=len(text)
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
@@ -170,9 +178,8 @@ def speakSpelling(text):
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
-			time.sleep(0.05)
-			api.processPendingEvents()
-			queueHandler.flushQueue(queueHandler.eventQueue)
+			yield
+			yield
 		if globalVars.keyCounter!=lastKeyCount:
 			break
 		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
