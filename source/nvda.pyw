@@ -72,7 +72,9 @@ try:
 	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA')
 except:
 	oldAppWindowHandle=0
-if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle): 
+if not win32gui.IsWindow(oldAppWindowHandle):
+	oldAppWindowHandle=0
+if oldAppWindowHandle:
 	processID,threadID=winUser.getWindowThreadProcessID(oldAppWindowHandle)
 	if globalVars.appArgs.quit or globalVars.appArgs.replace:
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
@@ -82,7 +84,7 @@ if oldAppWindowHandle and win32gui.IsWindow(oldAppWindowHandle):
 			if res!=0:
 				win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
 				sys.exit(1)
-if globalVars.appArgs.quit:
+if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
 	sys.exit(0)
 
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
