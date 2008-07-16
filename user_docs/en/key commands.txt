@@ -52,11 +52,11 @@ Announces the currently active application's name, and also spells it out. It al
 NVDA+u: toggleBeepOnProgressBarUpdates
 Turns on and off the beeping to indicate when a progress bar changes.
 
-NVDA+shift+b: say_battery_status
+NVDA+Shift+b: say_battery_status
 Announces the current battery level and whether or not you're plugged in to AC power.
 
 NVDA+5: toggleReportDynamicContentChanges
-Turns on and off the automatic speaking of content changes (such as when ew text appears in a dos console window).
+Turns on and off the automatic speaking of content changes (such as when new text appears in a dos console window).
 
 NVDA+6: toggleCaretMovesReviewCursor
 Turns on and off the automatic movement of the review cursor as the caret moves.
@@ -155,7 +155,7 @@ reading objeckts
 numpad1: review_previousCharacter
 Moves the review cursor to the previous character
 
-shift+numpad1: review_startOfLine
+Shift+numpad1: review_startOfLine
 Moves the review cursor to the start of the line
 
 numpad2: review_currentCharacter
@@ -164,7 +164,7 @@ speaks the character at the review cursor
 numpad3: review_nextCharacter
 Moves the review cursor to the next character
 
-shift+numpad3: review_endOfLine
+Shift+numpad3: review_endOfLine
 Moves the review cursor to the end of the line
 
 numpad4: review_previousWord
@@ -179,7 +179,7 @@ Moves the review cursor to the next word
 numpad7: review_previousLine
 Moves the review cursor to the previous line
 
-shift+numpad7: review_top
+Shift+numpad7: review_top
 Moves the review cursor to the first line
  
 numpad8: review_currentLine
@@ -188,7 +188,7 @@ speaks the line at the review cursor
 numpad9: review_nextLine
 Moves the review cursor to the previous line
 
-shift+numpad9: review_bottom
+Shift+numpad9: review_bottom
 Moves the review cursor to the last line
 
 VirtualBuffer commands for Firefox3 (some of these may work for Internet Explorer or Firefox2):
@@ -208,7 +208,7 @@ l: list
 i: list item
 k: link
 t: table
-f: form
+f: form field
 e: edit field
 b: button
 r: radio button
