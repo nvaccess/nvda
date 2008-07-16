@@ -110,5 +110,6 @@ BOOL IA2Support_terminate() {
 		fprintf(stderr,"Error uninstalling IA2 support\n");
 		return FALSE;
 	}
+	isIA2Initialized=FALSE;
 	return TRUE;
 }
