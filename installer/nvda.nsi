@@ -282,6 +282,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
 Function .onGUIEnd
+Banner::show /nounload
 call isNVDARunning
 pop $1
 pop $2
@@ -293,6 +294,7 @@ Exec "$INSTDIR\${NVDAApp} -r"
 end:
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
+Banner::destroy
 FunctionEnd
 
 Function .onInstSuccess
