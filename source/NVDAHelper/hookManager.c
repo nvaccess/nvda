@@ -70,7 +70,10 @@ int initialize() {
 	initialProcessID=GetCurrentProcessId();
 	GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
 	GetWindowThreadProcessId(GetShellWindow(),&shellProcessID);
-	IA2Support_initialize();
+	if(!IA2Support_initialize()) {
+		fprintf(stderr,"Error initializing IA2 support\n");
+		return -1;
+	}
 	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
 		fprintf(stderr,"Error registering window message hook\n");
 		return -1;
@@ -102,6 +105,10 @@ int terminate() {
 	}
 	if(UnhookWinEvent(winEventHookID)==FALSE) {
 		fprintf(stderr,"Error unregistering foreground winEvent\n");
+		return -1;
+	}
+	if(!IA2Support_terminate()) {
+		fprintf(stderr,"Error terminating IA2 support\n");
 		return -1;
 	}
 	isManagerInitialized=FALSE;

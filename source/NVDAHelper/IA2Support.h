@@ -11,7 +11,9 @@
 extern BOOL isIA2Initialized;
 
 //Private functions
-void IA2Support_initialize();
-void installIA2Support();
+BOOL IA2Support_initialize();
+BOOL installIA2Support();
+BOOL uninstallIA2Support();
+BOOL IA2Support_terminate();
 
 #endif
