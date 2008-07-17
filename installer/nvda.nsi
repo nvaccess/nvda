@@ -280,7 +280,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
-function cleanupNVDA
+function manualQuitNVDA
 call isNVDARunning
 pop $1
 pop $2
@@ -291,24 +291,28 @@ System::Call 'kernel32.dll::OpenProcess(i 1048576, i 0, i r3) i .r4'
 System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)' 
 System::Call 'kernel32.dll::WaitForSingleObject(i r4, i 10000) i .r5'
 end:
-; Clean up the temporary folder
-rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
 FunctionEnd
 
 Function userAbort
-call cleanupNVDA
+call manualQuitNVDA
 FunctionEnd
 
 function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-call cleanupNVDA
+;call manualQuitNVDA
+Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
 Exec "$INSTDIR\${NVDAApp}"
 FunctionEnd
 
-function blanvdanInstFailed
-call cleanupNVDA
+function .oninstFailed
+call manualQuitNVDA
 functionEnd
+
+Function .onGUIEnd
+; Clean up the temporary folder
+rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
+FunctionEnd
 
 ; Uninstall functions
 var PreserveConfig
