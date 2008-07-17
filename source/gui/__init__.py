@@ -341,8 +341,11 @@ class WelcomeDialog(wx.Dialog):
 
 	WELCOME_MESSAGE = _(
 		"Welcome to NVDA!\n"
-		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys. By default, the numpad insert and main insert keys may both be used as the NVDA key. You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-		"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+		"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+		"Press NVDA+n at any time to activate the NVDA menu.\n"
+		"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 	)
 
 	def __init__(self, parent):
@@ -350,7 +353,7 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		welcomeText = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE)
 		mainSizer.Add(welcomeText)
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
+		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.HORIZONTAL)
 		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		optionsSizer.Add(self.capsAsNVDAModifierCheckBox)
