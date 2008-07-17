@@ -1,0 +1,232 @@
+﻿Zoznam klávesových príkazov NVDA
+
+Množstvo klávesových príkazov odčítača NVDA sú stláčania klávesu NVDA kombinované s ďalšími klávesmi. Kláves NVDA je insert vedľa klávesov delete, home a end; v šestici klávesov na pravo od hlavnej časti klávesnice alebo numerický insert - kláves 0 v numerickej časti klávesnice. NVDA je tiež možné nakonfigurovať tak, aby používal kláves capslock ako kláves NVDA.
+
+Všeobecné príkazy
+
+NVDA+1: klávesová nápoveda
+Zapína a vypína klávesovú nápovedu. Keď je zapnutá, nvda prečíta ná zov a popis skriptu, ktorý je s klávesom asociovaný. Pre vypnutie stlačte znova NVDA+.1
+
+NVDA+t: názov okna
+prečíta titulok aktuálneho aplikačného okna alebo okna v popredí.
+
+NVDA+b: obsah okna v popredí
+prečíta obsah aktuálneho okna v popredí.
+
+NVDA+n: NVDA menu
+Zobrazí ponuku NVDA, odkiaľ sa dostanete ku všetkým nastaveniam a ďalším funkciám.
+
+NVDA+q: skončiť
+Opýta sa či naozaj chcete ukončiť NVDA. V dialógu všeobecné nastavenia je voľba, ktorou sa otázka pred ukončením dá vypnúť.
+
+NVDA+s: režim reči
+prepína režimy reči medzi vypnuté, pípanie a hlas. Ak je nastavené vypnuté nvda nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. Hlas znamená reč hlasového výstupu.
+
+NVDA+F12: dátum a čas
+Oznami čas; stlačené 2 krát rýchlo posebe prečíta dátum.
+
+NVDA+2: odozva napísaných znakov
+Zapína alebo vypína oznamovanie napísaných znakov
+
+NVDA+3: odozva napísaných slov
+zapína alebo vypína oznamovanie napísaných slov.
+
+NVDA+4: odozva príkazových skratiek
+prepína vyslovovanie stlačených klávesov, ktoré nie sú alfa-numerickými znakmi.
+
+NVDA+p: úroveň interpunkcie
+Zapína a vypína čítanie interpunkčných znamienok. Keď je toto zapnuté NVDA bude čítať názvy znamienok, pri vypnutí sa o vyslovovanie interpunkcie stará len hlasový výstup.
+
+NVDA+End: stavový riadok
+prečíta stavový riadok aktuálnej aplikácie a premiestni naň navigačný objekt.
+
+NVDA+f: info o formátovaní
+prečíta vlastnosti formátovania na aktuálnej pozícii v dokumente.
+
+NVDA+m: sledovanie myši
+Prepína oznamovanie informácií počas posúvania myšou
+
+Control+NVDA+f1: názov aktuálnej aplikácie
+Prečíta alebo vyhláskuje názov súboru práve spustenej aplikácie ako aj názov práve aktívneho aplikačného modulu NVDA."
+
+
+NVDA+u: pípanie pri aktualizácii priebehu
+zapína alebo vypína pípanie pri aktualizácii priebehu
+
+NVDA+Shift+b: stav batérie
+oznamuje stav a zostávajúci čas používania pri napájaní z batérie ak nie je zapnuté dobíjanie.
+
+NVDA+5: čítať dynamicky menený obsah
+prepína oznamovanie dynamických zmien  obsahu, napr. text v okne príkazového riadka."
+
+NVDA+6: prehliadací kurzor sleduje textový kurzor
+prepína automatické polohovanie prehliadacieho kurzora pri pohybe textovým kurzorom.
+
+NVDA+7: navigačný objekt sleduje fokus
+prepína sledovanie zmeny fokusu navigačným objektom
+
+NVDA+Tab: fokus
+oznámy objekt, ktorý má fokus.
+
+NVDA+f2: prepustiť nasledujúci kláves
+nasledujúci stlačený kláves nebude vôbec spracovaný NVDA. bude poslaný aktuálnej aplikácii.
+
+Shift+NVDA+upArrow: aktuálny výber
+V editačných poliach a dokumentoch prečíta aktuálne vybratý text.
+
+NVDA+upArrow: aktuálny riadok
+prečíta aktuálny riadok
+
+Control+NVDA+leftArrow: predchádzajúce nastavenie
+Prejde na a oznámy predchádzajúci ovládač v skupine nastavení hlasového výstupu.
+
+Control+NVDA+rightArrow: nasledujúce nastavenie
+Prejde na a oznámy nasledujúci ovládač v skupine nastavení hlasového výstupu.
+
+Control+NVDA+upArrow: vyššia hodnota nastavenia
+Zvyšuje hodnotu aktuálneho nastavenia skupiny hlasového výstupu
+
+Control+NVDA+downArrow: nižšia hodnota nastavenia
+Znižuje hodnotu aktuálneho nastavenia skupiny hlasového výstupu
+
+NVDA+downArrow: plinulé čítanie
+číta text od polohy systémového kurzora do konca, pri čom sa postupne posúva aj systémový kurzor.
+
+
+Objektová navigácia
+
+NVDA+numPad5: aktuálny objekt
+prečíta info o aktuálne zameranom objekte
+
+Shift+NVDA+numPad5: poloha aktuálneho objektu
+prečíta veľkosť a umiestnenie aktuálneho navigačného objektu.
+
+Control+Shift+NVDA+numPad5: kde som
+prečíta hierarchiu nadradených objektov aktuálneho navigačného objektu.
+
+NVDA+numPadMínus: navigačný objekt na fokus
+Premiestni navigačný objekt na systémový fokus.
+
+NVDA+numPad8: rodičovský objekt
+Premiestni navigačný objekt na rodičovský objekt aktuálneho objektu
+
+
+NVDA+numPad2: prvý dcérsky objekt
+Premiestni navigačný objekt na prvý dcérsky objekt aktuálneho objektu.
+
+NVDA+numPad4: predchádzajúci objekt
+Premiestni navigačný objekt na predchádzajúci objekt na rovnakej úrovni.
+
+Shift+NVDA+numPad4: predchádzajúci objekt v náväznosti
+premiestni navigačný objekt na predchádzajúci objekt v náväznosti (nemusí byť na aktuálnej úrovni)
+
+NVDA+numPad6: nasledujúci objekt
+Premiestni navigačný objekt na nasledujúci objekt na rovnakej úrovni.
+
+Shift+NVDA+numPad6: nasledujúci objekt v náväznosti
+Premiestni navigačný objekt na nasledujúci objekt v náväznosti (nemusí byť na aktuálnej úrovni)
+
+NVDA+numpadEnter: predvolená akcia
+vykoná predvolenú akciu aktuálneho objektu (napríklad: dvojklik ak aktuálny objekt je tlačidlo).
+
+NVDA+numPadLomeno: myš na navigačný objekt
+premiestni ukazovateľ myši na miesto zamerané objektovou navigáciou
+
+NVDA+numPadKrát: navigačný objekt na myš
+Premiestni navigačný objekt na objekt, ktorý sa nachádza pod ukazovateľom myši.
+
+numPadLomeno: ľavý klik
+Simuluje ľavý klik myši na mieste, kde sa práve nachádza ukazovateľ.
+
+numPadKrát: pravý klik
+Simuluje pravý klik myši na mieste, kde sa práve nachádza ukazovateľ.
+
+NVDA+numPadPlus: plinulé čítanie navigačného objektu
+prečíta hierarchiu objektov od aktuálneho objektu.
+
+numpadMínus: prehliadací na systémový kurzor
+premiestni prehliadací kurzor aktuálneho navigačného objektu na pozíciu systémového kurzora.
+
+Control+numpadMínus: systémový na prehliadací kurzor
+prečíta text od pozície prehliadacieho kurzora do konca textu aktuálneho navigačného objektu, pri čom sa prehliadací kurzor posúva po riadkoch.
+
+
+Čítanie prehliadacím kurzorom
+
+numpad1: predchádzajúci znak
+premiestni prehliadací kurzor na predchádzajúci znak aktuálneho navigačného objektu.
+
+Shift+numpad1: začiatok riadka
+Premiestni prehliadací kurzor na začiatok aktuálneho riadka v rámci aktuálneho navigačného objektu.
+
+numpad2: aktuálny znak
+prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor.
+
+numpad3: ďalší znak
+premiestni prehliadací kurzor na nasledujúci znak aktuálneho navigačného objektu.
+
+Shift+numpad3: koniec riadka
+Premiestni prehliadací kurzor na koniec aktuálneho riadka v rámci aktuálneho navigačného objektu.
+
+numpad4: predchádzajúce slovo
+premiestni prehliadací kurzor na predchádzajúce slovo aktuálneho navigačného objektu.
+
+numpad5: aktuálne slovo
+prečíta slovo aktuálneho navigačného objektu, na ktoré ukazuje prehliadací kurzor.
+
+numpad6: nasledujúce slovo
+premiestni prehliadací kurzor na nasledujúce slovo aktuálneho navigačného objektu.
+
+numpad7: predchádzajúci riadok
+premiestni prehliadací kurzor na predchádzajúci riadok aktuálneho navigačného objektu.
+
+Shift+numpad7: vrch
+premiestni prehliadací kurzor na vrchný riadok aktuálneho navigačného objektu.
+
+numpad8: aktuálny riadok
+prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor.
+
+numpad9: nasledujúci riadok
+premiestni prehliadací kurzor na nasledujúci riadok aktuálneho navigačného objektu.
+
+Shift+numpad9: spodok
+premiestni prehliadací kurzor na spodný riadok aktuálneho navigačného objektu.
+
+
+Príkazy špecifické pre virtuálny buffer - niektoré z nich fungujú len v gecko 1.9 aplikáciách ako je napr. Firefox 3.0
+
+NVDA+medzera: režim prepúšťania cez virtuálny buffer
+Zapína a vypína režim prepustenia klávesových príkazov cez virtuálny buffer. Keď je to zapnuté, klávesy budú prepustené čo umožní interaktívne pracovať s aktuálnym formulárovým prvkom bez vikonávania príkazov NVDA.
+
+control+NVDA+f: hľadať (control+f v prehliadačoch firefox 2 / internet explorer)
+Vyhľadávanie zadaného textu od aktuálnej pozície kurzora
+
+NVDA+f3: hľadať ďalej
+ďalšiehľadanie textu zadané pri vyvolaní príkazu hľadať.
+
+NVDA+f7: zoznam odkazov (nefunguje vo firefox 2 a internet explorery)
+Zobrazí dialóg so zoznamom všetkých odkazov aktuálnej stránky. Obsahuje tiež tlačidlá na aktiváciu alebo premiestnenie sa na vybratý odkaz.
+
+NVDA+f5: Obnoviť (nefunguje vo Firefox 2 a Internet Explorery)
+Pokúsi sa znovu načítať aktuálnu stránku z prehliadača.
+
+
+Príkazy rýchlej navigácie pre virtuálny buffer
+Na navigáciu v opačnom smere použite navigačný kláves kombinovaný s klávesom shift.
+
+h: nadpis
+1 a 6: nadpis príslušnej úrovne
+l: zoznam
+i: položka zoznamu
+k: odkaz
+t: tabuľka
+f: prvok formulára
+e: editačné pole
+b: tlačidlo
+r: prepínač
+c: zoznamový rámik
+x: začiarkavacie políčko
+m: rámik
+q: citácia
+s: oddeľovač
+g: grafika
