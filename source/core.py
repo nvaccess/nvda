@@ -77,6 +77,16 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
+	# We do support QueryEndSession events, but we don't want to do anything for them.
+	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
+	def onEndSession(evt):
+		import winsound
+		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
+		config.saveOnExit()
+		if not globalVars.appArgs.minimal:
+			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+		log.info("Windows session ending")
+	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -140,11 +150,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Exiting")
 	log.debug("Terminating GUI")
 	gui.terminate()
-	if config.conf["general"]["saveConfigurationOnExit"]:
-		try:
-			config.save()
-		except:
-			pass
+	config.saveOnExit()
 	try:
 		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
 			log.debug("calling loose focus on object with focus")

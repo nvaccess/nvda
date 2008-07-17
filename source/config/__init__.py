@@ -165,3 +165,14 @@ def save(force = False):
 		log.debugWarning("", exc_info=True)
 		raise e
 	mtime = os.path.getmtime(configFileName)
+
+def saveOnExit():
+	"""Save the configuration if configured to save on exit.
+	This should only be called if NVDA is about to exit.
+	Errors are ignored.
+	"""
+	if conf["general"]["saveConfigurationOnExit"]:
+		try:
+			save()
+		except:
+			pass
