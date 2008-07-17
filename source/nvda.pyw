@@ -80,7 +80,7 @@ if oldAppWindowHandle:
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
 		h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 		if h:
-			res=winKernel.waitForSingleObject(h,5000)
+			res=winKernel.waitForSingleObject(h,10000)
 			if res!=0:
 				win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
 				sys.exit(1)

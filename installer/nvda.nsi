@@ -59,6 +59,7 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 
 !define MUI_UNINSTALLER
 !define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
+!define MUI_CUSTOMFUNCTION_ABORT userAbort
 !define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
 !define MUI_CUSTOMPAGECOMMANDS
 
@@ -84,9 +85,7 @@ Var StartMenuFolder
 !InsertMacro MUI_UNPAGE_FINISH
 
  !define MUI_HEADERBITMAP "${NVDASourceDir}\images\icon.png"
- !define MUI_ABORTWARNING
-
-
+!define MUI_ABORTWARNING
 
 ;--------------------------------
  ;Language
@@ -281,26 +280,35 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
-Function .onGUIEnd
-Banner::show /nounload
+function cleanupNVDA
 call isNVDARunning
 pop $1
 pop $2
 intcmp $1 1 +1 End
 intcmp $2 $oldNVDAWindowHandle End +1
-Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
-intCMP $NVDAInstalled 1 +1 end
-Exec "$INSTDIR\${NVDAApp} -r"
+System::Call 'user32.dll::GetWindowThreadProcessId(i r2, *i .r3) i .r4'
+System::Call 'kernel32.dll::OpenProcess(i 1048576, i 0, i r3) i .r4'
+System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)' 
+System::Call 'kernel32.dll::WaitForSingleObject(i r4, i 10000) i .r5'
 end:
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
-Banner::destroy
 FunctionEnd
 
-Function .onInstSuccess
+Function userAbort
+call cleanupNVDA
+FunctionEnd
+
+function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+call cleanupNVDA
+Exec "$INSTDIR\${NVDAApp}"
 FunctionEnd
+
+function blanvdanInstFailed
+call cleanupNVDA
+functionEnd
 
 ; Uninstall functions
 var PreserveConfig
