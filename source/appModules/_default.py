@@ -85,7 +85,6 @@ class appModule(appModuleHandler.AppModule):
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once where ever it may be at the time.")
 
-
 	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
@@ -96,6 +95,7 @@ class appModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no selection"))
 		else:
 			speech.speakMessage(_("selected %s")%info.text)
+	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 
 	def script_dateTime(self,keyPress):
 		if scriptHandler.getLastScriptRepeateCount()==0:
@@ -177,7 +177,7 @@ class appModule(appModuleHandler.AppModule):
 		obj=api.getMouseObject()
 		api.setNavigatorObject(obj)
 		speech.speakObject(obj)
-
+	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer.")
 
 	def script_navigatorObject_current(self,keyPress):
 		curObject=api.getNavigatorObject()
@@ -579,8 +579,7 @@ class appModule(appModuleHandler.AppModule):
 			if isinstance(item,textHandler.FormatCommand):
 				if item.cmd in (textHandler.FORMAT_CMD_SWITCHON,textHandler.FORMAT_CMD_CHANGE):
 					speech.speakMessage("%s %s"%(controlTypes.speechRoleLabels[item.format.role],item.format.value)) 
-
-
+	script_reportFormatting.__doc__ = _("Announces formatting information at the current position in a document")
 
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.findObjectWithFocus() #getFocusObject()
