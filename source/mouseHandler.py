@@ -139,7 +139,8 @@ def initialize():
 	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
 	screenWidth,screenHeight=api.getDesktopObject().location[2:]
-	mouseHookLib.initialize(internal_mouseEvent)
+	if mouseHookLib.initialize(internal_mouseEvent) < 0:
+		raise RuntimeError("Error initializing mouseHook")
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
@@ -157,4 +158,5 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	mouseHookLib.terminate()
+	if mouseHookLib.terminate() < 0:
+		raise RuntimeError("Error terminating mouseHook")

@@ -209,7 +209,9 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 def initialize():
 	"""Initialises keyboard support."""
-	keyHookLib.initialize(internal_keyDownEvent,internal_keyUpEvent)
+	if keyHookLib.initialize(internal_keyDownEvent,internal_keyUpEvent) < 0:
+		raise RuntimeError("Error initializing keyHook")
 
 def terminate():
-	keyHookLib.terminate()
+	if keyHookLib.terminate() < 0:
+		raise RuntimeError("Error terminating keyHook")
