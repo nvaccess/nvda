@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-07-12 23:24+0800\n"
+"PO-Revision-Date: 2008-07-19 17:10+0800\n"
 "Last-Translator: Eric <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "直通"
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
 msgid "selected"
-msgstr "已選取"
+msgstr "選取了"
 
 # NVDAObjects\IAccessible\excel.py:68
 msgid "has formula"
@@ -88,7 +88,7 @@ msgstr "第 %d 級"
 
 # textBuffer.py:225
 msgid "with %s columns and %s rows"
-msgstr "有 %d 欄和 %d 行"
+msgstr "有 %s 列和 %s 行"
 
 # textBuffer.py:219
 msgid "not in table"
@@ -96,19 +96,19 @@ msgstr "不在表格中"
 
 # NVDAObjects\IAccessible\winword.py:286
 msgid "bottom of column"
-msgstr "最下一行了"
+msgstr "列的底部了"
 
 # controlTypes.py:109
 msgid "top of column"
-msgstr "最上一行了"
+msgstr "列的頂部了"
 
 # controlTypes.py:196
 msgid "end of row"
-msgstr "最右一欄了"
+msgstr "行的末尾了"
 
 # appModules\_default.py:254
 msgid "beginning of row"
-msgstr "最左一欄了"
+msgstr "行的開頭了"
 
 # appModuleHandler.py:188
 msgid "Error in appModule %s"
@@ -191,6 +191,10 @@ msgstr "沒有已經選取的文字"
 # textBuffer.py:549
 msgid "selected %s"
 msgstr "選取了 %s"
+
+# appModules\_default.py:98
+msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+msgstr "編輯文件時, 報出已選取的文字"
 
 # appModules\_default.py:54
 msgid "Reports the current date and time"
@@ -279,6 +283,10 @@ msgstr "把鼠標移到目前瀏覽項目"
 # appModules\_default.py:327
 # appModules\_default.py:335
 msgid "Move navigator object to mouse"
+msgstr "把瀏覽游標移到鼠標"
+
+# appModules\_default.py:151
+msgid "Sets the navigator object to the current object under the mouse pointer."
 msgstr "把瀏覽游標移到鼠標"
 
 # appModules\_default.py:127
@@ -551,6 +559,10 @@ msgstr "從目前項目開始繼續讀出所有流程之內的物件"
 # appModules\_default.py:375
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr "從目前打字游標所在的一行讀到結尾, 並且讓打字游標跟著走"
+
+# gui\settingsDialogs.py:474
+msgid "Announces formatting information at the current position in a document"
+msgstr "編輯文件時, 報出當前位置的字體名稱, 大小及屬性等資料"
 
 # appModules\_default.py:390
 msgid "reports the object with focus"
@@ -1077,7 +1089,7 @@ msgstr "儲存格"
 
 # controlTypes.py:109
 msgid "column"
-msgstr "欄"
+msgstr "列"
 
 # controlTypes.py:110
 msgid "row"
@@ -1093,7 +1105,7 @@ msgstr "工具列"
 
 # controlTypes.py:113
 msgid "column header"
-msgstr "欄標題"
+msgstr "列標題"
 
 # controlTypes.py:114
 msgid "row header"
@@ -1896,12 +1908,18 @@ msgstr "結束 &X"
 # gui\__init__.py:350
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys. By default, the numpad insert and main insert keys may both be used as the NVDA key. You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu. From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
 "歡迎使用 NVDA!\n"
-"許多操作 NVDA 的按鍵指令都需要按著一個 NVDA 的組合鍵不放, 然後按下其它按鍵. 一般來說, 主鍵盤的 insert 鍵和數字鍵盤的 insert 鍵都預設為 NVDA 的組合鍵, 你也可設定大寫鎖鍵為 NVDA 的組合鍵.\n"
-"你可隨時按 NVDA+n 打開 NVDA 的選單, 此選單可讓你調校 NVDA 的選項設定, 取得協助和使用程式的一些功能.\n"
+"許多操作 NVDA 的按鍵指令都需要按著一個 NVDA 的組合鍵不放, 然後按下其它按鍵.\n"
+"一般來說, 主鍵盤的 insert 鍵和數字鍵盤的 insert 鍵都預設為 NVDA 的組合鍵.\n"
+"你也可設定大寫鎖鍵為 NVDA 的組合鍵.\n"
+"你可隨時按 NVDA+n 打開 NVDA 的選單.\n"
+"此選單可讓你調校 NVDA 的選項設定, 取得協助和使用程式的一些功能.\n"
 
 # gui\__init__.py:357
 msgid "Welcome to NVDA"
@@ -2095,7 +2113,7 @@ msgstr "把數字鍵盤的 Insert 鍵設為 NVDA 的組合鍵"
 
 # gui\settingsDialogs.py:270
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "把延伸的 Insert 鍵設為 NVDA 的組合鍵"
+msgstr "把主鍵盤的 Insert 鍵設為 NVDA 的組合鍵"
 
 # gui\settingsDialogs.py:211
 msgid "Speak typed &characters"
@@ -2410,7 +2428,7 @@ msgstr "不選取 %s"
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
 msgid "selection removed"
-msgstr "選取移除了"
+msgstr "已選取的都移除了"
 
 # IAccessibleHandler.py:190
 # speech.py:213
@@ -2460,7 +2478,7 @@ msgstr "離開表格"
 
 # textBuffer.py:225
 msgid "table with %d columns and %d rows"
-msgstr "表格有 %d 欄和 %d 行"
+msgstr "表格有 %d 列和 %d 行"
 
 # textBuffer.py:231
 msgid "row %d"
@@ -2468,7 +2486,7 @@ msgstr "第 %d 行"
 
 # textBuffer.py:236
 msgid "column %d"
-msgstr "第 %d 欄"
+msgstr "第 %d 列"
 
 # textBuffer.py:242
 # textBuffer.py:310
@@ -2571,16 +2589,16 @@ msgstr "一套免費且開放原碼的微軟視窗螢幕報讀軟體"
 # versionInfo.py:14
 msgid ""
 "Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
+"%(name)s is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
-"http://www.gnu.org/licenses/gpl.html\n"
+"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "版權 (C) 2006-2008 NVDA 的貢獻者 <http://www.nvda-project.org/>\n"
-"%(name)s 受 GNU 一般公共許可正所規範。您可以兢Ψһ分享或以任何方式修改本軟體，發布時必需包含該許可證，同時公開原版與修改版的原始碼，並加上任何用本軟體的原始碼所創造的軟體。\n"
+"%(name)s 受 GNU 一般公共許可正第二版所規範. 您可以自由分享或以任何方式修改本軟體, 發布時必需包含該許可證, 同時公開原版與修改版的原始碼, 並加上任何用本軟體的原始碼所創造的軟體.\n"
 "關於許可證的細節可以參考以下網頁\n"
 "http://www.gnu.org/licenses/gpl.html\n"
-"或者參閱包含在本程式之內的 copying.txt 檔案。"
+"或者參閱包含在本程式之內的 copying.txt 檔案."
 
 # api.py:145
 # api.py:148

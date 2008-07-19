@@ -1,28 +1,14 @@
-NVDA - soubor Readme
+NonVisual Desktop Access (NVDA)
+Web: http://www.nvda-project.org/
 
-Otevøenı (a svobodnı) odeèítaè obrazovky pro operaèní systém Windows.
+NonVisual Desktop Access (NVDA) je otevÅ™enÃ½ (a volnÄ› Å¡iÅ™itelnÃ½) odeÄÃ­taÄ obrazovky pro operaÄnÃ­ systÃ©m Windows.
 
-Vytvoøil Michael Curran, a také James Teh a další.
+PotÅ™ebnÃ© informace najdete nejen v uÅ¾ivatelskÃ© pÅ™Ã­ruÄce, ale takÃ© na webovÃ½ch strÃ¡nkÃ¡ch programu NVDA (viz vÃ½Å¡e) a nebo na strÃ¡nce ÄeskÃ½ch a slovenskÃ½ch fanouÅ¡kÅ¯ projektu NVDA na adrese:
+http://nvda.venik.org
 
-NonVisual Desktop Access (NVDA) je otevøenı odeèítaè obrazovky pro operaèní systém Windows, umoòující zrakovì postienım uivatelùm bez nutnosti vynaloit vìtší náklady ne je cena poèítaèe a operaèního systému. Vzniká od dubna 2006 a dospìl do stavu, kdy je pouitelnı jako odeèítaè obrazovky pro kadodenní práci, dovolujících vykonat uivatelùm vìtšinu úkolù, je potøebují. Není tak stabilní nebo tak odladìnı jako nìkteré komerèní odeèítaèe. Nicménì od prosince 2006 byl tvùrce NVDA schopen uívat svùj produkt jako svùj primární odeèítaè obrazovky a nebıt závislı na svém pùvodním komerèním odeèítaèi.
+LicenÄnÃ­ podmÃ­nky
 
-Pomocí øeèové odezvy umoòuje NVDA uivateli pøistupovat a manipulovat se všemi èástmi operaèního systému Windows, jako napøíklad:
-
-Prohlíení internetu (s Internet Explorerem a Firefoxem)
-Èíst a psát dokumenty s programy jako WordPad nebo Microsoft Word
-Posílat a pøijímat maily programem Outlook Express 
-Pouívat programy pro pøíkazovı øádek v oknì DOSu
-Vytváøet jednoduché tabulky v programu Microsoft Excel
-Spravovat poèítaè prostøednictvím nástrojù Tento poèítaè / Prùzkumník Windows, Ovládací panely  a další obecné úlohy Windows
-
-NVDA není omezen nutností sledovat trní trendy a poadavky. Komerèní odeèítaèe implementují opravdu dobré vlastnosti, ale obèas jsou tyto vlastnosti urèovány tím, co ádá trh spíše ne tím, co by bylo opravdu uiteèné pro uivatele. NVDA nemusí bıt vdy tak stabilní jako ostatní odeèítaèe obrazovky, ale jistì mùe poslouit jako experimentální a testovací nástroj. Je jím mono snadno a rychle zkoušet nové nápady a vlastnosti, které se nemusí vyskytovat v jinıch odeèítaèích pro Windows. Pøíkladem toho je schopnost NVDA informovat zvukem o pohybu indikátoru prùbìhu. Èím vyšší tón, tím blíe je indikátor prùbìhu ke svému konci. Lidé si tuto vlastnost prostøednictvím skriptù pøidali i do jinıch odeèítaèù, ale ádnı jinı pracující ve Windows ji do svého jádra oficiálnì nezaèlenil.
-
-K vıvoji NVDA mùete pøispìt oznamováním chyb, na které narazíte. Instrukce, jak chyby oznamovat, najdete spolu s øadou uiteènıch èlánkù najdete na wiki stránkách: www.nvda-project.org/nvda/wiki. Obecnìjší informace o NVDA najdete na stránkách: www.nvda-project.org/nvda. Tam také najdete informace o tom, jak se pøihlásit do poštovních konferencí. Zatím jsou v provozu dvì konference: jedna pro obecnou diskuzi uivatelù a vıvojáøská konference pro kadého, kdo spouští a testuje NVDA ze zdrojovıch kódù.
-
---- Informace o autorskıch právech ---
-Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-	NVDA je chránìn licencí GNU General Public License. Program mùete svobodnì sdílet a upravovat za pøedpokladu, e k nìmu pøiloíte tuto licenci a zpøístupníte jeho zdrojovı kód všem zájemcùm. Toto se vztahuje jak na pùvodní, tak upravené kopie tohoto programu a také na software uívající kód pøevzatı z tohoto programu. Podrobností najdete na následující webové stránce: "http://www.gnu.org/licenses/gpl.html. "Viz té soubor Copying.txt pøiloenı k tomuto programu."
-----------------------
-
-Kontaktovat autora mùete na této emailové adrese:
-Michael Curran <mick@kulgan.net>
+Copyright (C) 2006-2008 TÃ½m NVDA <http://www.nvda-project.org/>
+	NVDA je chrÃ¡nÄ›n licencÃ­ GNU General Public License verze 2.0. Program mÅ¯Å¾ete libovolnÄ› Å¡Ã­Å™it a upravovat za pÅ™edpokladu, Å¾e k nÄ›mu pÅ™iloÅ¾Ã­te tuto licenci a zpÅ™Ã­stupnÃ­te jeho zdrojovÃ½ kÃ³d vÅ¡em zÃ¡jemcÅ¯m. Toto se vztahuje jak na pÅ¯vodnÃ­, tak upravenÃ© kopie tohoto programu a takÃ© na software uÅ¾Ã­vajÃ­cÃ­ kÃ³d pÅ™evzatÃ½ z tohoto programu. Podrobnosti najdete na nÃ¡sledujÃ­cÃ­ webovÃ© strÃ¡nce: 
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ "Viz tÃ©Å¾ soubor Copying.txt pÅ™iloÅ¾enÃ½ k tomuto programu."
