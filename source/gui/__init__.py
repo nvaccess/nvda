@@ -317,7 +317,8 @@ def quit():
 
 def restart():
 	globalVars.restart=True
-	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
+	wx.GetApp().ExitMainLoop()
+#	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
 
 def execute(func, callback=None, *args, **kwargs):
 	"""Execute a function in the GUI thread.
