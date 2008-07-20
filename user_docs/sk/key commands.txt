@@ -1,4 +1,4 @@
-﻿Zoznam klávesových príkazov NVDA
+Zoznam klávesových príkazov NVDA
 
 Množstvo klávesových príkazov odčítača NVDA sú stláčania klávesu NVDA kombinované s ďalšími klávesmi. Kláves NVDA je insert vedľa klávesov delete, home a end; v šestici klávesov na pravo od hlavnej časti klávesnice alebo numerický insert - kláves 0 v numerickej časti klávesnice. NVDA je tiež možné nakonfigurovať tak, aby používal kláves capslock ako kláves NVDA.
 
@@ -49,7 +49,6 @@ Prepína oznamovanie informácií počas posúvania myšou
 Control+NVDA+f1: názov aktuálnej aplikácie
 Prečíta alebo vyhláskuje názov súboru práve spustenej aplikácie ako aj názov práve aktívneho aplikačného modulu NVDA."
 
-
 NVDA+u: pípanie pri aktualizácii priebehu
 zapína alebo vypína pípanie pri aktualizácii priebehu
 
@@ -66,37 +65,37 @@ NVDA+7: navigačný objekt sleduje fokus
 prepína sledovanie zmeny fokusu navigačným objektom
 
 NVDA+Tab: fokus
-oznámy objekt, ktorý má fokus.
+oznámy alebo vyhláskuje meno objektu, ktorý má fokus.
 
 NVDA+f2: prepustiť nasledujúci kláves
 nasledujúci stlačený kláves nebude vôbec spracovaný NVDA. bude poslaný aktuálnej aplikácii.
 
-Shift+NVDA+upArrow: aktuálny výber
+Shift+NVDA+šípka hore: aktuálny výber
 V editačných poliach a dokumentoch prečíta aktuálne vybratý text.
 
-NVDA+upArrow: aktuálny riadok
-prečíta aktuálny riadok
+NVDA+šípka hore: aktuálny riadok
+prečíta alebo vyhláskuje aktuálny riadok
 
-Control+NVDA+leftArrow: predchádzajúce nastavenie
+Control+NVDA+ľavá šípka: predchádzajúce nastavenie
 Prejde na a oznámy predchádzajúci ovládač v skupine nastavení hlasového výstupu.
 
-Control+NVDA+rightArrow: nasledujúce nastavenie
+Control+NVDA+pravá šípka: nasledujúce nastavenie
 Prejde na a oznámy nasledujúci ovládač v skupine nastavení hlasového výstupu.
 
-Control+NVDA+upArrow: vyššia hodnota nastavenia
+Control+NVDA+šípka hore: vyššia hodnota nastavenia
 Zvyšuje hodnotu aktuálneho nastavenia skupiny hlasového výstupu
 
-Control+NVDA+downArrow: nižšia hodnota nastavenia
+Control+NVDA+šípka dolu: nižšia hodnota nastavenia
 Znižuje hodnotu aktuálneho nastavenia skupiny hlasového výstupu
 
-NVDA+downArrow: plinulé čítanie
+NVDA+šípka dolu: plinulé čítanie
 číta text od polohy systémového kurzora do konca, pri čom sa postupne posúva aj systémový kurzor.
 
 
 Objektová navigácia
 
 NVDA+numPad5: aktuálny objekt
-prečíta info o aktuálne zameranom objekte
+prečíta info o aktuálne zameranom objekte. Stlačené 3 krát rýchlo za sebou okopíruje názov a hodnotu objektu do schránky windows.
 
 Shift+NVDA+numPad5: poloha aktuálneho objektu
 prečíta veľkosť a umiestnenie aktuálneho navigačného objektu.
@@ -109,7 +108,6 @@ Premiestni navigačný objekt na systémový fokus.
 
 NVDA+numPad8: rodičovský objekt
 Premiestni navigačný objekt na rodičovský objekt aktuálneho objektu
-
 
 NVDA+numPad2: prvý dcérsky objekt
 Premiestni navigačný objekt na prvý dcérsky objekt aktuálneho objektu.
@@ -150,6 +148,9 @@ premiestni prehliadací kurzor aktuálneho navigačného objektu na pozíciu sys
 Control+numpadMínus: systémový na prehliadací kurzor
 prečíta text od pozície prehliadacieho kurzora do konca textu aktuálneho navigačného objektu, pri čom sa prehliadací kurzor posúva po riadkoch.
 
+numpadPlus: plinulé čítanie prehliadacím kurzorom
+prečíta text od pozície prehliadacieho kurzora do konca textu aktuálneho navigačného objektu, pri čom sa prehliadací kurzor posúva po riadkoch.
+
 
 Čítanie prehliadacím kurzorom
 
@@ -160,7 +161,7 @@ Shift+numpad1: začiatok riadka
 Premiestni prehliadací kurzor na začiatok aktuálneho riadka v rámci aktuálneho navigačného objektu.
 
 numpad2: aktuálny znak
-prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor.
+prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor. Stlačené 2 krát rýchlo za sebou oznámy ascii hodnotu práve zameraného znaku.
 
 numpad3: ďalší znak
 premiestni prehliadací kurzor na nasledujúci znak aktuálneho navigačného objektu.
@@ -172,7 +173,7 @@ numpad4: predchádzajúce slovo
 premiestni prehliadací kurzor na predchádzajúce slovo aktuálneho navigačného objektu.
 
 numpad5: aktuálne slovo
-prečíta slovo aktuálneho navigačného objektu, na ktoré ukazuje prehliadací kurzor.
+prečíta alebo vyhláskuje slovo aktuálneho navigačného objektu, na ktoré ukazuje prehliadací kurzor.
 
 numpad6: nasledujúce slovo
 premiestni prehliadací kurzor na nasledujúce slovo aktuálneho navigačného objektu.
@@ -184,7 +185,7 @@ Shift+numpad7: vrch
 premiestni prehliadací kurzor na vrchný riadok aktuálneho navigačného objektu.
 
 numpad8: aktuálny riadok
-prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor.
+prečíta alebo vyhláskuje riadok aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor.
 
 numpad9: nasledujúci riadok
 premiestni prehliadací kurzor na nasledujúci riadok aktuálneho navigačného objektu.
@@ -215,7 +216,7 @@ Príkazy rýchlej navigácie pre virtuálny buffer
 Na navigáciu v opačnom smere použite navigačný kláves kombinovaný s klávesom shift.
 
 h: nadpis
-1 a 6: nadpis príslušnej úrovne
+1 až 6: nadpis príslušnej úrovne
 l: zoznam
 i: položka zoznamu
 k: odkaz

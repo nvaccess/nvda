@@ -1,12 +1,12 @@
 ;Chinese Traditional
 LangString msg_WelcomePageTitle ${LANG_TRADCHINESE} "安裝 ${PRODUCT}, ${VERSION} 版本"
-LangString msg_WelcomePageText ${LANG_TRADCHINESE} "歡迎安裝 ${PRODUCT} (Non-Visual Desktop Access), 一套免費且開放源代碼的視窗屏幕報讀程式.$\n\
+LangString msg_WelcomePageText ${LANG_TRADCHINESE} "歡迎安裝 ${PRODUCT} (Non-Visual Desktop Access), 一套免費且開放源代碼的微軟視窗螢幕報讀程式.$\n\
 版權 2006 - 2008 NVDA 的貢獻者.$\n\
 此精靈會協助你安裝 ${PRODUCT}; 建議你先把所有程式關閉才繼續安裝.$\n"
-LangString msg_READMEText ${LANG_TRADCHINESE} "檢視讀我檔案"
-LangString msg_NVDAWebSite ${LANG_TRADCHINESE} "造訪 NVDA 網站"
-LangString msg_NVDARunning ${LANG_TRADCHINESE} "另一個 NVDA 程式似乎在運行中, 現在安裝程式必須把它關閉才可繼續."
-LangString msg_SpeechInstall ${LANG_TRADCHINESE} "在安裝 NVDA 期間, 你是否希望有語音協助呢? 按輸入鍵打開語音協助功能, 按 escape 鍵不啟動語音協助功能"
+LangString msg_READMEText ${LANG_TRADCHINESE} "檢視讀我檔案(建議)"
+LangString msg_NVDAWebSite ${LANG_TRADCHINESE} "造訪 NVDA 官方網站"
+LangString msg_NVDARunning ${LANG_TRADCHINESE} "另一個 NVDA 程式正在運行中, 現在安裝程式必須把它關閉才可繼續."
+LangString msg_SpeechInstall ${LANG_TRADCHINESE} "在安裝 NVDA 期間, 你是否希望有螢幕報讀程式協助呢? 按輸入鍵啟動螢幕報讀程式, 按 escape 鍵不啟用螢幕報讀程式"
 LangString msg_RemoveNVDA ${LANG_TRADCHINESE} "是否從系統中完全移除 $(^Name) 及相關元件呢?"
 LangString msg_NVDAConfigFound ${LANG_TRADCHINESE} "安裝程式發現了舊版本 NVDA 的設定檔, 是否也刪除此檔案呢?"
 LangString msg_NVDASuccessfullyRemoved ${LANG_TRADCHINESE} "已經成功在系統中移除 $(^Name).."
@@ -16,10 +16,10 @@ LangString shortcut_website $(LANG_TRADCHINESE) "程式網站"
 LangString shortcut_readme $(LANG_TRADCHINESE) "讀我檔案"
 LangString shortcut_userguide $(LANG_TRADCHINESE) "用戶指南"
 LangString path_userguide $(LANG_TRADCHINESE) "zh\user guide.html"
-LangString path_readmefile $(LANG_TRADCHINESE) "en\readme.txt"
+LangString path_readmefile $(LANG_TRADCHINESE) "zh\readme.txt"
 LangString UNLOG_HEADER ${LANG_TRADCHINESE} "=========== 解除安裝記錄檔 \
                                          請不要更改此一檔案 ==========="
-LangString UNLOG_DAT_NOT_FOUND ${LANG_TRADCHINESE} "${UNINST_DAT} 不見了, \
+LangString UNLOG_DAT_NOT_FOUND ${LANG_TRADCHINESE} "${UNINST_DAT} 遺失了, \
                                                 未能解除安裝程式."
 LangString UNLOG_DEL_FILE ${LANG_TRADCHINESE} '刪除檔案 "$R9"?'
 LangString UNLOG_DEL_DIR ${LANG_TRADCHINESE} '刪除資料夾 "$R9"?'
