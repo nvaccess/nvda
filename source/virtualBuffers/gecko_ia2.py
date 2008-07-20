@@ -291,8 +291,12 @@ class Gecko_ia2(VirtualBuffer):
 		except:
 			return False
 		focus = api.getFocusObject()
-		focusDocHandle=focus.IAccessibleObject.windowHandle
-		focusID=focus.IAccessibleObject.uniqueID
+		try:
+			focusDocHandle=focus.IAccessibleObject.windowHandle
+			focusID=focus.IAccessibleObject.uniqueID
+		except:
+			log.debugWarning("error getting focus windowHandle or uniqueID", exc_info=True)
+			return False
 		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
 			return False
 		try:
