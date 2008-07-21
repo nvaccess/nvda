@@ -58,8 +58,14 @@ Changes since 0.6 P1:
  *Stop possible crashes when trying to save configuration on non-English versions of Windows
  *Add an NVDA welcome dialog. This dialog is designed to provide essential information for new users and allows CapsLock to be configured as an NVDA modifier key. This dialog will be displayed when NVDA is started by default until it is disabled.
  *Fix basic support for Adobe Reader so it is possible to read documents  in  versions 8 and 9
+*Fix some errors that may have occured when holding down keys before NVDA is properly initialized
+*If the user has configured NVDA to save configuration on exit, make sure the configuration is properly saved when shutting down or logging out of  Windows.
+*Added an NVDA logo sound to the beginning of the installer, contributed by Victer Tsaran
+*NVDA, both running in the installer, and otherwise, should properly clean up its system tray icon when it exits
+ *Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.
+ *NVDA's icon should now be  used for  the NVDA shortcuts in the start menu and on the Desktop, rather than a default application icon.
  
-Changes since 0.5:
+  Changes since 0.5:
 
 Access to web content with new in-process virtualBuffers (so far for Mozilla Gecko applications including Firefox3 and Thunderbird3):
 *Load times have been improved almost by a factor of thirty (you no longer have to wait at all for most web pages to load in to the buffer)
