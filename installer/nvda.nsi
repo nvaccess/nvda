@@ -9,7 +9,6 @@
 Name "NVDA"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
 !define WEBSITE "www.nvda-project.org"
-!define READMEFILE "documentation\en\readme.txt"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
@@ -51,8 +50,6 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !define MUI_WELCOMEPAGE_TEXT $(msg_WelcomePageText)
 
 !define MUI_FINISHPAGE_TEXT_LARGE
-!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\documentation\$(path_READMEFile)
-!define MUI_FINISHPAGE_SHOWREADME_TEXT $(msg_READMEText)
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
