@@ -12,6 +12,7 @@ import py2exe
 from glob import glob
 from versionInfo import *
 from py2exe import build_exe
+import wx
 
 # py2exe insists on excluding certain dlls that don't seem to exist on many systems, so hackishly force them to be included.
 origIsSystemDLL = build_exe.isSystemDLL
@@ -22,7 +23,10 @@ def isSystemDLL(pathname):
 build_exe.isSystemDLL = isSystemDLL
 
 def getLocaleDataFiles():
-	return [(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
+	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
+	wxDir=wx.__path__[0]
+	wxLocaleFiles=[(os.path.dirname(f)[len(wxDir)+1:], (f,)) for f in glob(wxDir+"/locale/*/LC_MESSAGES/*.mo")]
+	return NVDALocaleFiles+wxLocaleFiles
 
 def getRecursiveDataFiles(dest,source):
 	rulesList=[]

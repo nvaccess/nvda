@@ -12,6 +12,7 @@ comtypes.client.gen_dir='.\\comInterfaces'
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
+import os
 import time
 import logHandler
 import globalVars
@@ -100,6 +101,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wxLang=lang.split('_')[0]
 	else:
 		wxLang=lang
+	if hasattr(sys,'frozen'):
+		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
 	try:
 		locale.Init(lang,wxLang)
 	except:
