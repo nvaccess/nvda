@@ -50,7 +50,10 @@ setup(
 'Programming Language :: Python',
 'Operating System :: Microsoft :: Windows',
 ],
-	windows = ["nvda.pyw"],
+	windows = [{
+		"script":"nvda.pyw",
+		"icon_resources":[(1,"images/nvda.ico")],
+	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
