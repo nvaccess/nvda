@@ -1,29 +1,37 @@
 <html>
 <head>
-<title>Guide de l'utilisateur de NVDA 0.5</title>
+<title>Guide de l'utilisateur de NVDA 0.6</title>
 </head>
 <body>
-<h1>Guide de l'utilisateur de NVDA 0.5</h1>
-<span>Dernière mise à jour le 23 Mai 2007</span>
+<h1>Guide de l'utilisateur de NVDA 0.6</h1>
+<span>Dernière mise à jour le 20 Juillet 2008</span>
 
 <h2>Somaire</h2>
 <ul>
 <li><a href="#1">1. Introduction</a></li>
 <ul>
 <li><a href="#1.1">1.1. Présentation rapide</a></li>
-<li><a href="#1.2">1.2. Licence et Copyright</a></li>
+<li><a href="#1.2">1.2. Internationalisation</a></li>
+<li><a href="#1.3">1.3. Support des synthèses vocales</a></li>
+<li><a href="#1.4">1.4. Innovation et expérimentation</a></li>
+<li><a href="#1.5">1.5. Architecture et implémentation</a></li>
+<li><a href="#1.6">1.6. Licence et copyright</a></li>
 </ul>
 <li><a href="#2">2. Configuration Système Requise</a></li>
 <li><a href="#3">3. Se procurer NVDA</a></li>
 <li><a href="#4">4. Installer NVDA</a></li>
 <ul>
 <li><a href="#4.1">4.1. L'installateur de NVDA</a></li>
-<li><a href="#4.2">4.2. Le fichier zip nomade de NVDA</a></li>
+<li><a href="#4.2">4.2. Le fichier zip portable</a></li>
 </ul>
-<li><a href="#5">5. Démarrer NVDA</a></li>
-<li><a href="#6">6. L'interface utilisateur</a></li>
+<li><a href="#5">5. Prise en main de NVDA</a></li>
 <ul>
-<li><a href="#6.1">6.1. Montrer et masquer l'interface</a></li>
+<li><a href="#5.1">5.1. Démarrer NVDA</li>
+<li><a href="#5.2">5.2. Au sujet des commandes clavier de NVDA</li>
+</ul>
+<li><a href="#6">6. Le menu NVDA</a></li>
+<ul>
+<li><a href="#6.1">6.1. Accéder au menu NVDA</a></li>
 <li><a href="#6.2">6.2. Sauvegarder et  recharger la configuration</a></li>
 <li><a href="#6.3">6.3 Le menu Préférences</a></li>
 </ul>
@@ -31,82 +39,102 @@
 <ul>
 <li><a href="#7.1">7.1. La navigation par focus</a></li>
 <li><a href="#7.2">7.2. La navigation par objets</a></li>
-<li><a href="#7.3">7.3. Présenter le texte de l'objet courant</a></li>
+<li><a href="#7.3">7.3. Explorer le texte dans l'objet courant</a></li>
 <li><a href="#7.4">7.4. La navigation avec le curseur système</a></li>
 <li><a href="#7.5">7.5. La navigation avec la souris</a></li>
 </ul>
 <li><a href="#8">8. Les tampons virtuels</a></li>
 <ul>
 <li><a href="#8.1">8.1. Les touches de navigation rapide</a></li>
-<li><a href="#8.2">8.2. Les formulaires et la désactivation du mode tampon virtuel</a></li>
+<li><a href="#8.2">8.2. Les formulaires et le mode formulaire</a></li>
+<li><a href="#8.3">8.3. La liste des liens</a></li>
 </ul>
 <li><a href="#9">9. Configurer NVDA</a></li>
-<li><a href="#9.1">9.1. Les paramètres de l'interface utilisateur</a></li>
-<li><a href="#9.2">9.2. Le choix de la synthèse</a></li>
-<li><a href="#9.3">9.3. Les paramètres de voix</a></li>
-<li><a href="#9.4">9.4. Les réglages de l'écho clavier</a></li>
-<li><a href="#9.5">9.5. Les paramètres de la souris</a></li>
-<li><a href="#9.6">9.6. Les paramètres de la présentation des objets</a></li>
-<li><a href="#9.7">9.7. Les paramètres du tampon virtuel</a></li>
-<li><a href="#9.8">9.8. Les paramètres de format des documents</a></li>
+<li><a href="#9.1">9.1. Paramètres généraux</a></li>
+<li><a href="#9.2">9.2. Choix du synthétiseur</a></li>
+<li><a href="#9.3">9.3. Paramètres vocaux</a></li>
+<li><a href="#9.4">9.4. Paramètres du clavier</a></li>
+<li><a href="#9.5">9.5. Paramètres de la souris</a></li>
+<li><a href="#9.6">9.6. Paramètres de présentation des objets</a></li>
+<li><a href="#9.7">9.7. Paramètres du tampon virtuel</a></li>
+<li><a href="#9.8">9.8. Paramètres de format des documents</a></li>
 </ul>
 </ul>
-
 <h2 id="1">1. Introduction</h2>
-<h3 id="1.1">1.1. Présentation rapide</h3>
+<h3 id="1.1">1.1. Présentation Rapide</h3>
 <p>
-NVDA est un lecteur d'écran pour le système d'exploitation Windows qui permet à l'utilisateur de se servir de l'ordinateur sans l'aide de la vision. En requèrant auprès du Système d'Exploitation les information sur la situation de l'utilisateur, quelles fenêtres et quelles commandes apparaîssent à l'écran,  et en surveillant le Système d'exploitation en guettant les changements, NVDA traite et fait entendre cette information  via la synthèse vocale, de façon que l'utilisateur comprenne exactement ce qui se passe sur l'écran.
+En restituant l'information par synthèse vocale, NVDA permet aux personnes aveugles et mal-voyantes d'utiliser le système d'exploitation Windows ainsi que beaucoup d'applications disponibles dans cet environnement.
+</p>
+<p>
+Ses principales caractéristiques sont:
+</p>
+<li>La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans nécessité d'installation</li>
+<li>La navigation sur le web avec <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a></li>
+<li>Un installateur parlant facile à utiliser </li>
+<li>Le traitement du courrier électronique en utilisant <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3</a></li>
+<li>Une ébauche de support pour Microsoft Internet Explorer</li>
+<li>Un support de base pour Microsoft Outlook Express / Windows Mail</li>
+<li>Un support de base pour Microsoft Word et Excel</li>
+<li>Le support des applications Java accessibles</li>
+<li>Une ébauche de support de Adobe Reader</li>
+<li>Une ébauche de support pour IBM Lotus Symphony</li>
+<li>Le support de l'invite de commande Windows et des applications en mode console  </li>
+<li>L'annonce automatique du texte sous la souris et l'indication sonore optionnelle de la position de la souris</li>
+</ul>
+<h3 id="1.2">Internationalisation</h3>
+<p>
+Il est important que les personnes, partout dans le monde, quelle que soit leur langue, aient le même accès aux technologies.
+A ce jour, NVDA a été traduit en plus de 20 langues, parmi les quelles: le Portugais Brésilien, le Tchèque, le Finois, le Français, l'Allemand, le Hongrois, l'Italien, le Portugais, le Slovaque, l'Espagnol, le Suédois, le Chinois Traditionnel, le Vietnamien, l'Afrikaans, le Galicien, le Croate, le Japonais, le Polonais, le Russe, le Thai et l'Ukrainien.
+</p>
+<h3 id="1.3">Support des Synthèses Vocales</h3>
+<p>
+En plus de fournir ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
+ /p>
+<p>
+NVDA est fourni avec <a href="http://espeak.sourceforge.net/">eSpeak</a>, un synthétiseur vocal gratuit, open-source, multilingue. De plus, NVDA peut utiliser les moteurs de parole SAPI4 et SAPI5, ainsi que le synthétiseur de parole Audiologic.
+</p>
+<h3 id="1.4">Innovation et Expérimentation</h3>
+<p>
+NVDA n'est pas limité par un besoin de suivre des tendances et des demandes
+du marché. Les revues d'écran commerciales proposent des fonctionnalités
+vraiment intéressantes, mais parfois elles sont biaisées par la volonté du
+marché, plutôt que par ce qui serait vraiment utile pour l'utilisateur.
+NVDA ne peut pas être toujours aussi stable que d'autres lecteurs d'écran,
+mais il peut certainement être utilisé en tant qu'outil expérimental et de test.
+Il peut facilement et rapidement tester de nouvelles idées et dispositifs
+peut-être absents dans d'autres revues d'écran pour Windows.
+Un exemple de ceci est la capacité de NVDA d'émettre des signaux sonores pour
+indiquer à l'utilisateur qu'une barre de progression évolue. Plus le signal
+sonore est haut, plus la barre de progression approche de la fin.
+Cce dispositif a été ajouté dans d'autres revues d'écran au
+ moyen de scripts ou équivalent, mais il n'a jamais été complètement intégré
+ officiellement au noyau d'aucun autre lecteur d'écran pour Windows.
  </p>
+<h3 id="1.5">Architecture et Implémentation</h3>
 <p>
-NVDA comprend une synthèse vocale intégrée appelée eSpeak, et il prend aussi en charge  les synthèses SAPI4 et SAPI5.
+NVDA est écrit dans le <a href="http://www.python.org/">langage de programmation Python</a>, et est construit avec une architecture modulaire, et la plus grande partie de son code peut facilement être modifiée ou augmentée pour supporter de nouveaux programmes et/ou contrôles de Windows. Des Modules spécifiques peuvent être écrits pour ajouter le support d'une application particulière, des tampons virtuels peuvent être écrits pour permettre à NVDA d'afficher des documents complexes ou d'autres données, et des objets NVDA peuvent être écrits pour ajouter le support de contrôles ou de fenêtres spécifiques. NVDA essaie toujours de rendre les éléments et contrôles d'un programme ou du système d'exploitation aussi accessibles que possible
+pour que l'utilisateur puisse toujours trouver l'information dont il a besoin.
+NVDA ne se préoccupe pas trop de filtrer et annoncer des informations dont il pense que l'utilisateur pourrait avoir besoin.
 </p>
 <p>
-NVDA combine l'utilisation de Microsoft Active Accessibility (MSAA), d'appels bas-niveau à Windows API, et de modèles objets spécifiques à certaines applications. NVDA n'utilise ni pilotes d'intercepteur video ni boucles d'affichage. Tout ceci présente L'avantage de permettre à NVDA de fonctionner avec beaucoup de configurations système différentes et sans se soucier de réglages particuliers des couleurs ou des modes d'affichage vidéo. De plus NVDA ne nécessite l'installation d'aucun pilote ou fichier particulier qui demanderait le redémarrage de l'ordinateur avant qu'on puisse effectuer le premier lancement de NVDA.
-</p>
-<p>
-NVDA ne prend pas encore en charge les afficheurs Braille, mais  on y travaille activement.
-</p>
-<p>
-La fenêtre d'interface de NVDA peut s'affichée, et les messages peuvent être prononcés, en onze langues différentes.
-</p>
-<p>
-NVDA est capable de lire du texte dans n'importe quelle langue à partir du moment ou vous avez un synthétiseur qui parle cette langue.  eSpeak parle de nombreuses langues, mais naturellement,  on peut utiliser une synthèse SAPI4 ou SAPI5  qui parle la langue de votre choix.
+Pour communiquer avec le système d'exploitation et les programmes, NVDA utilise un mélange de fonctions du système d'exploitation, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge, des interfaces de programation spécifiques fournis par certaines applications.
+ NVDA n'utilise aucun pilote d'interception vidéo spécifique, et essaiera toujours d'obtenir autant d'informations que possible de la part des interfaces spécifiques d'accessibilité avant de recourir à d'autres moyens.
  </p>
+<h3 id="1.6">Licence et Copyright</h3>
 <p>
-NVDA est un logiciel en période d'essai et en développement constant. De plus il est open-source, ce qui signifie que tout le monde peut  prendre conaissance du code source, et même le modifier selon ses besoins. Cependant, de ce fait, il peut exister des imperfections et tout peut ne pas fonctionner comme attendu sur chaque système.
+NVDA est Copyright (C) 2006-2008 NVDA contributers.
 </p>
 <p>
-Mais, l'accroîssement du nombre des utilisateurs qui testent NVDA et font part de leur expérience, va permettre à NVDA  de s'améliorer encore pour devenir une solution entièrement gratuite d'accès à Windows pour les aveugles ou mal-voyants.
-</p>
-<p>
-NVDA fonctionne avec beaucoup de programmmes, et ce n'est que leur degré d'accessibilité qui détermine la qualité du fonctionnement avec NVDA.
-</p>
-<p>
-Outre la prise en charge des fonctionnalités générales de Windows, NVDA fonctionne avec WordPad, Notepad, Outlook Express et Internet Explorer. Il assure aussi une prise en charge élémentaire de Microsoft Word 2000/xp/2003, et Microsoft Excel 2000/xp/2003. NVDA n'a pas été testé avec  Microsoft Office 2007.
-</p>
-<p>
-NVDA présente aussi une prise en charge complète de Mozilla Firefox (version 2 et supérieures). Firefox est le navigateur Web recommandé pour la meilleure accessibilité avec NVDA.
-</p>
-<p>
-Ce guide de l'utilisateur ne prétend pas être un guide complet de l'utilisation de NVDA et Windows, mais seulement une information suffisante pour vos premiers pas avec NVDA, vous permettant d'explorer, de naviguer, et d'apprendre par vous-même à faire bien davantage.
-</p>
-
-<h3 id="1.2">1.2. Licence et Copyright</h3>
-<p>NVDA est Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-NVDA est couvert par la licence GNU General Public License. Vous avez le droit de distribuer ou modifier ce logiciel comme il vous plait pourvu que vous distribuyiez la licence avec le logiciel, et rendiez disponible l'intégralité du code source pour toute personne qui le veut. Ceci s'applique aussi bien à la version originale qu'aux copies modifiées  de ce logiciel, et aussi à tout logiciel qui utilisent du code repris de ce logiciel.
+NVDA est couvert par la licence GNU General Public License (Version 2). Vous avez le droit de distribuer ou modifier ce logiciel comme il vous plait pourvu que vous distribuyiez la licence avec le logiciel, et rendiez disponible l'intégralité du code source pour toute personne qui le veut. Ceci s'applique aussi bien à la version originale qu'aux copies modifiées  de ce logiciel, et aussi à tout logiciel qui utilise du code tiré de ce logiciel.
 Pour plus de détails, on peut lire la licence en ligne à :
 <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>
 </p>
 <h2 id="2">2. Configuration système requise</h2>
-<p>
-NVDA fonctionne sous Windows XP et Windows Vista. Il se peut que NVDA fonctionne avec Windows 2000, mais ceci n'a pas encore été testé par suffisamment d'utilisateurs.
-</p>
-<p>
-NVDA ne fonctionne pas sous Windows 95/98/ME, et ne fonctionne pas encore avec les versions 64 bit de Windows.
- </p>
-<p>
-Il vous faut au moins 256MB de ram, et il est préférable d'exécuter NVDA sur un ordinateur dont le processeur est cadencé au moins à 1.0 GHZ. NVDA fonctionnera sur des ordinateurs plus lents, mais son lancement peut prendre un temps assez long, et les tâches intensives, telles que le chargement de pages Web peuvent prendre beaucoup de temps.
-</p>
+<ul>
+<li>Systèmes d'Exploitation: Toutes les variantes de Windows XP et Windows Vista (y compris les versions Serveur). Il est possible qu'il fonctionne partiellement sous Windows 2000</li>
+<li>Mémoire: 256 mo ou plus de RAM</li>
+<li>Vitesse processeur: 1.0 ghz ou plus</li>
+</ul>
 <h2 id="3">3. Se procurer NVDA</h2>
 <p>
 Si vous ne vous êtes pas encore procuré une copie de NVDA, vous pouvez la télécharger sur le site Web de NVDA à l'adresse :
@@ -124,19 +152,19 @@ Il y a actuellement deux présentations de NVDA. L'une comporte un installeur  qu
 Si vous avez l'installateur NVDA, appuyez simplement sur entrée ou double-cliquez sur le fichier et l'installateur va démarrer.
 </p>
 <p>
-L'installateur vous fera d'abord entendre un message enregistré, et demandera si le reste de l'installation doit  être vocalisé ou non. Si vous choisissez l'installation vocalisée,  une copie temporaire de NVDA démarre, vous permettant  de terminer l'installation sans assistance visuelle.
+Pendant que l'installateur se charge, vous entendrez la musique d'installation de NVDA.
+Une fois chargé, une copie temporaire de NVDA vous permettra de suivre les dialogues d'installation et installera NVDA.
+Notez que si une autre copie de NVDA est active au moment de l'installation, un message apparaîtra vous indiquant que la copie en cours sera fermée.  Si vous pressez la touche "entrée" sur ce message, l'installateur fermera votre copie actuelle de NVDA pour ouvrir la sienne.
+Cela est nécessaire pour que l'installateur puisse mettre à jour tous les fichiers modifiés.
+ p>
+Quand vous aurez fini avec succès l'installation de NVDA, l'installateur démarrera pour vous la nouvelle copie de NVDA.
 </p>
-<p>
-Suivez simplement toutes les invites, et NVDA s'installera simplement, prêt à l'emploi.
-</p>
-<p>
-A la fin de l'installation,  l'Installateur lance automatiquement  la nouvelle copie de NVDA  qui vient d'être installée.
-</p>
-<h3 id="4.2">4.2. Le fichier zip portable</h3>
+<h3 id="4.2">4.2. Le Fichier Zip Portable</h3>
 <p>
 Si vous avez la version de NVDA en fichier zip, il vous suffit de décompresser  ce fichier à l'endroit que vous voulez sur votre disque dur. Vous pouvez aussi le décompresser sur un média nomade  comme une clé USB ou un CD.
 </p>
-<h2 id="5">5. Démarrer NVDA</h2>
+<h2 id="5">5. Prise en main de NVDA</h2>
+<h3 id="5.1">5.1. Démarrer NVDA</h3>
 <p>
 Si NVDA a été installé à l'aide de l'installateur, alors il suffit, ou bien de frapper la combinaison control+alt+n, ou alors de choisir dans le menu Démarrer / Programmes / NVDA / NVDA.
 </p>
@@ -150,79 +178,83 @@ Au lancement de NVDA, on entend d'abord une série de sons ascendants (indiquant 
 Si vous n'entendez rien de tout cela, ou si vous entendez le signal sonore d'erreur de Windows, ou une série de sons descendants, cela indique un problème de NVDA et vous pourrez, si vous le voulez, envoyer un rapport d'erreur au développeurs. Rapportez-vous au site Web pour les détails de la procédure.
 </p>
 <p>
-Après un démarrage normal de NVDA, la fenêtre d'interface NVDA s'affiche, qui vous permet de controler le paramétrage de NVDA et aussi de quitter NVDA.
+Quand NVDA démarre pour la première fois, vous serez accueilli par une boîte de dialogue vous donnant des informations de base sur la touche NVDA et le menu NVDA. Veuillez consulter les sections ci-après pour plus d'information sur ces sujets.
+La boîte de dialogue contient également deux cases à cocher. La première vous permet de choisir si vous voulez utiliser la touche de verrouillage numérique comme touche NVDA.
+La seconde permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
+</p>
+<h3 id="5.2">5.2. Au sujet des commandes clavier de NVDA</h3>
+<p>
+La plupart des commandes spécifiques de NVDA se font en pressant la touche NVDA en conjonction avec une ou plusieurs autres touches. Une exception est constituée par les fonctions de revue de texte qui n'utilisent que le pavé numérique.
 </p>
 <p>
-Beaucoup de commandes sont mentionnées au cours du présent guide de l'utilisateur, mais  on peut explorer commodément les différentes commandes en activant l'aide clavier.
-</p>
-<p>
-Pour activer l'aide clavier, appuyez sur insert+1. Pour la désactiver,  appuyez à nouveau sur insert+1. Lorsque le mode aide clavier est actif, l'appui sur une touche quelconque provoquera l'annonce de son action (si bien sûr, une action est effectivement associée à l'appui de cette touche). Les touches n'effectuent pas leur action lorsque le mode clavier est actif, vous pouvez donc sans crainte choisir d'appuyer sur une touche. La plupart des commandes clavier de NVDA associent une touche en combinaison avec la touche  insert. Cependant, les touches du pavé numérique en elles-mêmes produisent aussi des actions particulières.
-</p>
-<p>
-Une autre commande utile qu'on peut noter ici est  insert+f12, qui annonce l'heure et la date courantes.
+Par défaut, les touches insert du pavé numérique et du clavier étendu peuvent être utilisées comme touche NVDA. Cependant, vous pouvez également configurer NVDA pour que la touche de verrouillage majuscule soit utilisée comme touche NVDA.
+Dans cette configuration, le maintien enfoncé de la touche de verrouillage majuscule agit comme touche NVDA tandis que deux appuis rapprochés agissent comme touche de verrouillage majuscule.
  </p>
-<h2 id="6">6. L'interface utilisateur</h2>
 <p>
-La fenêtre d'interface NVDA comprend une barre de menus permettant de changer les réglages ainsi que de quitter NVDA. La fenètre montre aussi un document de prise en main rapide qui donne la liste de la plupart des commandes clavier qu'on peut utiliser quand NVDA est actif.
+Beaucoup de touches de commande sont mensionnées dans la suite de ce guide, mais une manière simple d'explorer toutes les différentes touches de commande est d'activer l'aide clavier.
 </p>
 <p>
-La fenêtre d'interface NVDA est un bon endroit pour prendre en main le travail avec NVDA car elle contient un document dans lequel on peut se déplacer avec les flèches, et de plus, un bon nombre de menus et de boîtes de dialogue.
+Pour activer l'aide clavier, appuyez sur NVDA+1. Pour la désactiver, appuyez à nouveau sur NVDA+1. Quand l'aide clavier est activée, l'appui sur une touche annonce sa fonction (si elle en a une). La fonctionne ne s'effectue pas réellement, vous pouvez donc presser n'importe quelle touche sans crainte.
 </p>
-<h3 id="6.1">6.1. Montrer et masquer l'Interface utilisateur </h3>
+<h2 id="6">6. Le menu NVDA</h2>
 <p>
-Bien que la fenêtre d'interface  NVDA s'affiche quand on lance NVDA, il n'est pas nécessaire de la laisser affichée tout le temps de l'utilisation de NVDA. Il n'y a rien de pire que d'avoir trop de fenêtres ouvertes entre lesquelles alt-tabuler pour trouver celle qu'on cherche.
+Le  menu NVDA vous permet de contrôler les paramètres de NVDA, d'obtenir de l'aide, sauvegarder ou recharger la configuration et quitter NVDA.
 </p>
+<h3 id="6.1">6.1. Accéder au menu NVDA</h3>
 <p>
-Pour faire disparaître la fenêtre d'interface NVDA, il suffit de presser alt+F4  lorsqu'on est dans cette fenêtre. Ceci ne ferme pas NVDA lui-même mais seulement l'interface.
-</p>
-<p>
-Pour rappeler l'interface à tout moment, vous pouvez ou bien appuyer sur insert+n, ou bien "entrée" ou double-cliquer surNVDA dans la barre des tâches système.
-</p>
-<h3 id="6.2">6.2. Sauvegarder et charger la configuration</h3>
-<p>
-NVDA enregistre ses réglages dans un fichier nommé nvda.ini du dossier d'installation. Vous n'aurez probablement jamais à modifier ce fichier, mais ce fichier permet aux utilisateurs avancés de modifier certains paramètres qu'aucune boîte de dialogue ne permet encore d'atteindre.
+Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA est en fonction, appuyez sur NVDA+n.
+Quand le menu apparaît, vous pouvez utiliser les flèches pour naviguer dans le menu, et la touche entrée pour activer un élément. Le menu Préférences vous permet de configurer NVDA comme vous le voulez, le menu Outils contient 1 ou 2 utils utiles pour les développeurs comme le journal de NVDA ou la console Python, le menu Aide permet d'accéder le manuel utilisateur, un résumé des touches de commande et bien plus. Le menu NVDA contient également des éléments permettant de sauvegarder ou recharger la configuration ainsi que de quitter NVDA.
 </p>
 <p>
-NVDA ne sauvegarde pas automatiquement vos réglages si bien que si vous quittez NVDA puis le relancez, les paramètres reprennent leur valeur d'origine. Pour sauvegarder les paramètres,ou bien choisissez l'élément "Sauvegarder les paramètres" du menu NVDA ou appuyez sur control+s dans la fenêtre d'interface NVDA.
+On peut également accéder au menu NVDA par l'icône NVDA de la barre des tâches système de Windows. Soit cliquez sur l'icône avec le bouton droit de la souris, soit allez à la barre des tâches système par la combinaison de touches Windows+b, trouver l'icône NVDA avec les flèches puis appuyez sur la touche d'applications.
+</p>
+<h3 id="6.2">6.2. Sauvegarder et recharger la configuration</h3>
+<p>
+NVDA conserve ses paramètre dans un fichier nommé nvda.ini dans son répertoire.
+Vous n'aurez probablement jamais à toucher ce fichier mais, pour les utilisateurs avancés, ce fichier contient certains paramètres supplémentaires qui n'ont pas encore leur boîte de dialogue.
 </p>
 <p>
-Si NVDA est sur un système de fichiers dont l'attribut est en lecture seule, par exemple un CD, il ne vous sera pas possible de sauvegarder les réglages et NVDA vous en informera.
+NVDA ne sauvegarde pas automatiquement vos paramètres, donc si vous quittez NVDA puis les redémarrez, les paramètres reprendront leur valeur originelle. Pour sauvegarder les paramètres, vous pouvez soit choisir l'élément Sauvegarde de la configuration dans le menu NVDA, soit appuyer sur NVDA+Control+c depuis n'importe où.
+ </p>
+<p>
+Si NVDA est sur un média non inscriptible tel qu'un CD il ne pourra pas sauvegarder vos paramètre et il vous le dira.
 </p>
 <p>
-Si vous faites une erreur dans les choix de paramètres et que vous deviez revenir aux paramètres sauvegardés, vous pouvez ou bien choisir "retour à la configuration sauvegardée" du menu NVDA, ou bien taper  control+r dans la fenêtre d'interface NVDA.
+Si jamais vous faites une erreur dans vos paramètres et avez besoin de revenir aux valeurs précédentes, vous pouvez soit choisir l'élément Retour à la configuration sauvegardée dans le menu NVDA, soit appuyer sur NVDA+Control+r depuis n'importe où.
 </p>
-<h3 id="6.3">6.3. Le menu Préférences</h3>
+<h3 id="6.3">6.3. Le Menu Préférences Menu</h3>
 <p>
-Dans la barre de menu de l'interface utilisateur, il y a un menu Préférences  qui contient de nombreux éléments qui ouvrent des boîtes de dialogue vous permettant d'effectuer différents réglages de NVDA.
-</p>
-<p>
-Vous pouvez gérer les paramètres de l'interface utilisateur,  le choix de la synthèse, les réglages de la voix, l'écho clavier, les paramètres de la souris,  la présentation des objets, les paramètres du tampon virtuel, et les informations de formatage des documents.
-</p>
-<h2 id="7">7. La navigation avec NVDA</h2>
-<h3 id="7.1">7.1. La navigation par focus</h3>
-<p>
-La façon ordinaire de naviguer dans Windows avec NVDA, est simplement de se déplacer à l'aide des commandes clavier normales, telles que tab et maj tab pour aller de commande en commande en avant et en arrière, de taper alt pour faire apparaître la barre de menu puis d'utiliser les flèches pour se déplacer dans les menus, d'utiliser alt-tab pour parcourir les applications ouvertes. Quand vous effectuez ces actions, NVDA énonce l'élément qui a le focus.
+Dans le menu NVDA, il y a un menu Préférences  contenant beaucoup d'éléments de menu ouvrant des boîtes de dialogue permettant de contrôler différents paramètres de NVDA.
 </p>
 <p>
-Quand NVDA annonce un objet (c'est-à-dire quand l'objet reçoit le focus), il énonce normalement le nom de l'objet, son type, sa valeur, sa description, son raccourci clavier et les informations de position. Tout ceci est semblable au comportement des autres lecteurs d'écran ; cependant,  les types des objets peuvent être légèrement différents.
+Vous pouvez contrôler les paramègres généraux, le choix du synthétiseur, les paramètres vocaux, les paramètres du clavier, les paramètres de la souris, la présentation des objets, les paramètres des tampons virtuels et les paramètres de formatage des documents.
+</p>
+<h2 id="7">7. La Navigation avec NVDA</h2>
+<h3 id="7.1">7.1. La Navigation avec le Focus</h3>
+<p>
+La manière la plus commune de naviguer dans Windows avec NVDA, est de simplement se déplacer avec des commandes clavier normales, comme Tabulation et Majuscule+Tabulation pour se déplacer entre les contrôles, Alt pour aller au menu puis Flèches pour naviguer dans les menus, utiliser Alt+Tabulation pour passer d'une application à l'autre.
+Quand vous faites cela, NVDA annonce quel objet a le focus.
 </p>
 <p>
-Voici quelques touches de commandes utiles quand on se déplace avec le focus :
+Quand NVDA annonce un objet (par exemple quand un objet reçoit le focus), il dira généralement le nom de l'objet, son type, son état, sa valeur, sa description, son raccourci clavier et sa position. Ceci est tout à fait similaire aux autres revues d'écran, cependant le type d'objet peut être un peu différent.
+</p>
+<p>
+Il y a quelques touches de commande utiles quand on navigue avec le focus:
 </p>
 <ul>
-<li>insert+flècheHaut - annonce le focus courant</li>
-<li>insert+b - lit entièrement la fenêtre en avant-plan (utile pour lire une boîte de dialogue)</li>
-<li>insert+t - annonces le titre de la fenêtre actuellement en avant-plan</li>
+<li>NVDA+tab - annonce le focus courant</li>
+<li>NVDA+b - lit l'intégralité de la fenêtre en avant-plan (utile pour lire une boîte de dialogue)</li>
+<li>NVDA+t - Annonce le titre de la fenêtre en avant-plan</li>
 </ul>
-<h3 id="7.2">7.2. La navigation par objets</h3>
+<h3 id="7.2">7.2. La Navigation par Objet</h3>
 <p>
-Si on désire parcourir quelque peu le système, mais sans déplacer le focus, on peut se servir de la navigation par objets de NVDA. Ceci permet de se déplacer d'objet en objet dans une structure arborescente.
+Si vous voulez explorer un peu le système d'exploitation sans déplacer le focus, vous pouvez utiliser la navigation par objet. Cela vous permet de vous déplacer d'objet en objet dans une arborescence.
 </p>
 <p>
-La structure arborescente des objets débute à la fenêtre du bureau qui constitue la racine de larborescence. Les premières branches de l'arborescence sont les applications actives et naturellement, ces applications ont leurs propres branches (objets) représentant les différentes parties de l'application).
+L'arborescence des objets commence au bureau, la racine de l'arbre. Les premières branches de l'arbre sont les applications en cours et, bien sûr, ces applications ont leurs propres branches (objets), représentant différentes partie de l'application.
 </p>
 <p>
-La structure arborescente peut être de grande taille, mais elle permet de naviguer dans un ordre logique si bien qu'on trouve facilement l'information dont on a besoin.
+L'arborescence peut être très importante, mais cela vous permet de naviguer dans un ordre logique, vous permettant de trouver rapidement l'information dont vous avez besoin.
 </p>
 <p>
 Cette structure n'a pas de rapport avec la façon dont les objets sont disposés sur l'écran, mais reflète comment ils sont reliés logiquement. On peut avoir besoin d'un peu de temps pour s'y habituer, mais une fois l'organisation comprise, on s'y déplace tout à fait facilement.
@@ -231,57 +263,65 @@ Cette structure n'a pas de rapport avec la façon dont les objets sont disposés s
 Dans son état actuel, NVDA ne permet pas une navigation entre objets en rapport avec leur disposition à l'écran parce qu'il n'a pas d'intercepteur video ou de boucles d'affichage. On a choisi que NVDA n'interagisse pas avec l'écran, parce que, finalement, ce choix doit permettre une perception d'une application et du système d'exploittation plus claire et plus logique, que celle qu'on aurait en donnant une représentation de l'image plate de l'écran.
 </p>
 <p>
-Toutes les applications ne possèdent pas une structure arborescente parfaite, mais ceci est le choix du développeur de cette application. La plupart paraissent convenables ; certainement la plupart des boîtes de dialogue  et des application hautement structurées s'y conforment bien.
-
+Toutes les applications n'ont pas une structure d'arbre parfaite, mais c'est le choix des développeurs de chaque application.
 </p>
 <p>
-Pour naviguer par objets, on utilise les touches suivantes :
-
+Pour naviguer par objet, utilisez les touches suivantes:
 </p>
 <ul>
-<li>énoncer l'objet courant : insert+pavnum5</li>
-<li>Déplacement à l'objet parent (remonter vers la racine de l'arborescence) : insert+pavnum8</li>
-<li>Déplacement à l'objet précédent (l'objet placé juste avant, au même niveau) : insert+pavnum4</li>
-<li>Déplacement à l'objet suivant (l'objet placé juste après, au même niveau) : insert+pavnum6</li>
-<li>Déplacement au premier objet enfant (la première branche qui en sort) : insert+pavnum2</li>
-<li>Déplacement au focus : insert+pavnumMoins</li>
-<li>Activation de l'objet courant (entrer / clic / double clic): insert+pavnumEntrer</li>
-<li>Amener la souris à l'objet courant : insert+pavnumBarreOblique</li>
-<li>Déplacement à la souris : insert+pavnumMultiplier</li>
+<li>NVDA+pavnum5: Annonce l'objet courant</li>
+<li>NVDA+pavnum8: Va à l'objet parent (vers la racine de l'arbre)</li>
+<li>NVDA+pavnum4: Va à l'objet précédent (l'objet directement avant celui-ci au même niveau)</li>
+<li>NVDA+pavnum6: Va à l'objet suivant (l'objet directement après celui-ci au même niveau)</li>
+<li>NVDA+pavnum2: Va au premier fils (la première branche sortant de l'actuelle)</li>
+<li>NVDA+maj+pavnum4: Va à l'objet précédent dans le flot (traverse les frontières parent, enfant, jusqu'à ce qu'il puisse remonter d'un niveau)</li>
+<li>NVDA+maj+pavnum6: Va à l'objet suivant dans le flot (traverse les frontières parent, enfant, jusqu'à ce qu'il puisse descendre d'un niveau)</li>
+<li>NVDA+pavnum Moins: Va au focus</li>
+<li>NVDA+pavnum Entrée: Active l'objet courant (ex. Appuyer sur entrée / cliquer / double cliquer)</li>
+<li>NVDA+pavnum Diviser: Amène la souris à l'objet courant</li>
+<li>NVDA+pavnum Multiplier: Va à la souris</li>
+<li>NVDA+maj+pavnum5: annonce les dimentions de l'objet courant par rapport à l'écran</li>
+<li>NVDA+pavnumPlus:  Dit tous les objets - Démarre la lecture à l'objet courant, puis continue dans le flot</li>
 </ul>
 <p>
-Si on  déplace le focus, l'objet courant de la navigation, le suit. Cependant, si on désire fixer l'objet de la navigation sur un objet donné, de sorte qu'il ne change pas avec le focus, on peut désactiver la fonction focusMovesNavigatorObject par insert+7.
+Note: Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
 </p>
-<h3 id="&.3">7.3. Présentation du texte de l'objet courant</h3>
 <p>
-Il arrive que l'on veuille savoir comment quelque chose est écrit, ou bien on a besoin de lire du texte par mots. On peut prendre conaissance du texte de l'objet courant à l'aide des touches du pavé numérique :
+Quand vous naviguez avec le focus, l'objet de navigation courant change en même temps. Cependant, si vous voulez bloquer l'objet de navigation sur un objet particulier pour qu'il ne suive pas le focus, vous pouvez désactiver le lien entre le focus et l'objet de navigation par NVDA+7.
+</p>
+<h3 id="7.3">7.3. Explorer le Texte dans l'ObjetCourant</h3>
+<p>
+Parfois vous avez besoin de savoir comment quelque chose s'écrit, ou de lire mot à mot. Vous pouvez explorer le texte dans l'objet courant avec les touches du pavé numérique:
 </p>
 <ul>
-Ligne du haut : maj+pavnum7
-<li>Ligne précédente : pavnum7</li>
-<li>Ligne courante : pavnum8</li>
-<li>Ligne suivante : pavnum9</li>
-<li>Ligne du bas : maj+pavnum9</li>
-<li>Mot précédent : pavnum4</li>
-<li>Mot courant : pavnum5</li>
-<li>Mot suivant : pavnum6</li>
-<li>Début de ligne : maj+pavnum1</li>
-<li>Caractère précédent : pavnum1</li>
-<li>Caractère courant : pavnum2</li>
-<li>Caractère suivant : pavnum3</li>
-<li>Fin de ligne : maj+pavnum3</li>
-<li>Lire tout le texte : pavnumPlus</li>
+<li>Maj+pavnum7: Première ligne</li>
+<li>pavnum7: Ligne précédente</li>
+<li>pavnum8: Ligne courante</li>
+<li>pavnum9: Ligne suivante</li>
+<li>maj+pavnum9: Dernière ligne</li>
+<li>pavnum4: Mot précédent</li>
+<li>pavnum5: Mot courant</li>
+<li>pavnum6: Mot suivant</li>
+<li>maj+pavnum1: Début de ligne</li>
+<li>pavnum1: Caractère précédent</li>
+<li>pavnum2: Caractère courant</li>
+<li>pavnum3: Caractère suivant</li>
+<li>maj+pavnum3: Fin de ligne</li>
+<li>pavnum Plus: Dire tout le texte</li>
 </ul>
 <p>
-Pour la plupart des objets, le texte se compose du nom, de la valeur et de la description.  Cependant, pour les objets qui contiennent un véritable texte ou un contenu éditable, le texte associé à l'objet est alors le texte effectivement contenu dans l'objet.
+Note: Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
 </p>
 <p>
-Par exemple : un élément de liste dans une liste aura un texte qui comprend son nom, sa valeur et sa description. Mais un champ d'édition ou une fenêtre de la console DOS, aura pour texte le contenu du champ ou de la fenêtre.
+Pour la plupart des objets, le texte est fait du nom, de la valeur et de la description de l'objet. Cependant, pour les objets contenant vraiment du texte ou ayant un contenu éditable, le texte est le texte réel contenu dans l'objet.
 </p>
 <p>
-Lorsqu'un objet contient un curseur d'édition (curseur système), et qu'il se déplace, le pointeur de revue d'écran est lui aussi réactualisé à cette nouvelle position. Si on désire que le pointeur de revue d'écran reste à sa place, et ne suive pas le curseur système, on peut désactiver la fonction caretMovesReviewCursor en appuyant sur insert+6.
+Par exemple, un élément de liste dans une liste aura un texte comprenant son nom, sa valeur et sa description. Par contre, une zone d'édition ou une fenêtre DOS auront le texte réel contenu dans la zone ou la fenêtre.
+</p>
+<p>
+Quand un objet contient un curseur d'édition système et que celui-ci bouge, le curseur de revue le suit. Si vous voulez que le curseur de revue reste où il est et ne suive pas le curseur système, vous pouvez désactiver le lien entre le curseur système et le curseur de revue en pressant NVDA+6.
  </p>
-<h3 id="7.4">7.4. La navigation avec le curseur système</h3>
+<h3 id="7.4<h3 id="7.4">7.4. La navigation avec le curseur système</h3>
 <p>
 Lorsque le focus est sur un objet qui contient un curseur d'édition (curseur systèm), on peut se déplacer avec les flèches et éditer normalement. NVDA fait l'annonce de chaque mouvement quand on se déplace par caractère, mot, ligne, et annonce aussi la sélection et la désélection de texte.
 </p>
@@ -289,86 +329,119 @@ Lorsque le focus est sur un objet qui contient un curseur d'édition (curseur sys
 Lorsqu'on déplace le curseur système, la position du pointeur de revue d'écran est aussi réactualisée et suit le curseur système.
 <p>
 </p>
+<p>
 On peut aussi lire l'intégralité du texte (lire tout) par insert+flèche bas. Noter toutefois que ceci est différent de pavnumPlus qui ne déplace que le pointeur de revue d'écran, en ceci que le curseur système est déplacé tout au long de la progression de la lecture.
 </p>
 <h3 id="7.5">7.5. La navigation avec la souris</h3>
 <p>
-On peut configurer NVDApour que, lorsqu'on déplace la souris,  l'objet qui se trouve précisément sous le pointeur souris soit annoncé au moment où il est atteint par le pointeur.
+Lorsqu'on déplace la souris, NVDA annonce par défaut le texte se trouvant directement sous le pointeur de la souris. Quand c'est possible, NVDA lira un paragraphe, cependant il se peut que certains contrôles ne soient lus que par ligne.
 </p>
 <p>
-Par l'utilisation de la souris, même des utilisateurs aveugles peuvent se faire une idée de la façon dont l'écran est disposé. NVDA ne peut annoncer que l'objet  qui se trouve sous la souris, il ne peut pas encore lire un contenu textuel particulier ou autre élément.
+NVDA peut également être configuré de manière à annoncer aussi le type de contrôle ou l'objet sur lequel se trouve la souris (ex: liste, bouton etc). Cela peut être utile pour les personnes complètement aveugles car le texte n'est pas toujours suffisant. 
+</p>
+<p>
+NVDA offre à l'utilisateur un moyen d'évaluer la position de la souris sur l'écran en émettant des bips audio représentant les coordonnées de la souris. Plus la souris est haut sur l'écran, plus les bips sont aigus. Plus la souris va à gauche ou à droite, plus le son viendra de gauche ou de droite dans la mesure où l'utilisateur possède des haut-parleurs stéréo.
+</p>
+<p>
+Par défaut, ces fonctions additionnelles de la souris ne sont pas activées dans NVDA. Si vous voulez en tirer profit, vous pouvez les configurer par le dialogue Paramètres de la souris que l'on trouve dans le menu Préférences du menu NVDA.
 </p>
 <h2 id="8">8. Les tampons virtuels</h2>
 <p>
-Les documents complexes, tels que les pages web, sont représentés dans NVDA à l'intérieur d'un Tampon Virtuel. 
+Les documents complexes, tels que les pages web, sont représentés dans NVDA à l'intérieur d'un Tampon Virtuel.
 </p>
 <p>
 Un Tampon Virtuel est une représentation platement textuelle du document, qui permet à l'utilisateur de se déplacer à l'aide des flèches, de lire le texte et les champs que le document contient. En plus des mouvements avec les flèches, on peut aussi appuyer sur entrer ou espace sur les liens et les boutons pour les activer, appuyer sur entrer ou espace dans les champs d'édition pour ensuite éditer leur contenu, appuyer sur entrer ou espace sur les cases à cocher ou les radio-boutons pour les sélectionner, et appuyer sur entrer ou espace dans les zones de liste déroulante pour pouvoir ensuite modifier leur sélection.
 </p>
 <p>
-Quand on atteint un champ à l'aide des flèches, le type du champ (tel que lien, titre, liste etc) est annoncé, cependant cette information n'est pas présente physiquement dans le tampon, c'est pourquoi les flèches permettent un déplacement normal dans le texte. 
+Quand on atteint un champ à l'aide des flèches, le type du champ (tel que lien, titre, liste etc) est annoncé, cependant cette information n'est pas présente physiquement dans le tampon, c'est pourquoi les flèches permettent un déplacement normal dans le texte.
 </p>
 <p>
-Dans l'état actuel, NVDA utilise les Tampons Virtuels aussi bien pour Internet Explorer que pour  Mozilla Firefox. 
+Dans l'état actuel, NVDA utilise les Tampons Virtuels pour Internet Explorer, Mozilla Firefox et Adobe Reader.
 </p>
 <p>
-Les Tampons Virtuels ont la propriété d'être mis à jour dynamiquement, cependant actuellement seul Mozilla Firefox fait usage de cette fonction. Même si Internet Explorer affichera probablement la plupart des pages convenablement, Firefox est bien meilleur  pour les contenus qui change sous l'effet de JavaScript etc.
-</p>
-<p>
-En raison de la complexité des Tampons Virtuels, NVDA peut prendre du temps à charger certaines pages. La plupart des pages se chargent rapidement, mais quelques pages très lourdes peuvent demander largement 5 secondes ou plus. 
+Notons que les tampons virtuels utilisés dans Internet Explorer ou Adobe Reader sont beaucoup plus primitifs et prennent beaucoup de temps à se charger.
+Cette ancienne version des tampons virtuels ne se comporte pas très bien avec les contenus dynamiques et ne dispose ni des listes de liens ni de certains raccourcis clavier.
+ Pour de meilleurs performances et une utilisation simplifiée, essayez <a href="http://www.getfirefox.com/">Mozilla Firefox</a> pour naviguer sur le Web.
 </p>
 <h3 id="8.1">8.1. Les touches de navigation rapide</h3>
 <p>
 Pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs  dans le tampon virtuel.
 </p>
 <p>
-L'appui de la touche amène au champ suivant, en combinaison avec la touche maj, il amène au champ précédent. 
+L'appui de la touche amène au champ suivant, en combinaison avec la touche maj, il amène au champ précédent.
 </p>
-Touches :
+<p<
+Touches utilisées à la fois par l'ancienne et la nouvelle version des tampons virtuels:
+</p>
 <ul>
-<li>titre : h</li>
-<li>liste : l</li>
-<li>élément de liste : i</li>
-<li>tableau : t</li>
-<li>lien : k</li>
-<li>paragraphe : p</li>
-<li>Champ de formulaire : f</li>
+<li>h : titre</li>
+<li>l : liste</li>
+<li>i : élément de liste</li>
+<li>t : tableau</li>
+<li>k : lien</li>
+<li>p : paragraphe</li>
+<li>f : Champ de formulaire</li>
 </ul>
-<h3 id="8.2">8.2. Les formulaires et la désactivation du mode tampon virtuel</h3>
 <p>
-Lorsqu'on désire entrer dans un champ de formulaire, il ne faut pas que les commandes associées aux raccourcis clavier demeurent actives. Le mode "traverser" du Tampon Virtuel est fait pour ce problème et peut être activé ou désactivé par insert+espace.
+Touches non utilisées par l'ancienne version:
+</p>
+<ul>
+<li>u : lien non visité</li>
+<li>v : lien visité</li>
+<li>Zone d'édition: e</li>
+<li>Bouton: b</li>
+<li>Case à cocher: x</li>
+<li>Liste déroulante: c</li>
+<li>Bouton radio: r</li>
+<li>Balise de citation: q</li>
+<li>Separateur: s</li>
+<li>Cadre: m</li>
+<li>Graphique: g</li>
+<li>Titres 1 ... 6: 1 ... 6</li>
+</ul>
+<h3 id="8.2">8.2. Les Formulaires et le Mode Formulaire</h3>
+<p>
+Lorsqu'on désire entrer dans un champ de formulaire, il ne faut pas que les commandes associées aux raccourcis clavier demeurent actives. Le "mode formulaire" du Tampon Virtuel est fait pour ce problème et peut être activé ou désactivé par MVDA+espace.
 </p>
 <p>
 D'une façon générale, la frappe de la touche entrer sur un champ de formulaire va l'activer, et lorsqu'une nouvelle page est chargée, il est  désactivé.
 </p>
-<h2 id="9">9. Configurer NVDA</h2>
-<h3 id="9.1">9.1. Paramètres de l'interface utilisateur</h3>
+<h3 id="8.3">8.3. La Liste des Liens</h3>
 <p>
-La boîte de dialogue des paramètres de l'interface utilisateur se trouve sous le menu des préférences. . Elle comporte les options suivantes :
+Pour accéder à la liste des liens du tampon virtuel en cours, appuyer sur NVDA+f7. Depuis le dialogue qui apparaît, vous pouvez sélectionner le lien qui vous intéresse, puis vous y rendre ou l'activer en utilisant les boutons prévus à cet effet.
+</p>
+<h2 id="9">9. Configurer NVDA</h2>
+<h3 id="9.1">9.1. Paramètres Généraux</h3>
+<p>
+Le dialogue Paramètres généraux qui se trouve sous "Paramètres généraux..." dans le menu Ppréférences comporte les options suivantes :
 </p>
 <h4>Langue</h4>
 <p>
-Une zone de liste déroulante permet de choisir la langue de l'interface utilisateur et des messages de NVDA.  La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".  Ce choix indique à NVDA d'utiliser la langue   de Windows c'est-à-dire celle qui est actuellement sélectionnée  dans les options régionales et linguistiques du panneau de configuration. 
-Noter qu'il faut relancer NVDA quand on a changé la langue, un message demandera si on désire relancer NVDA après qu'on a changé la langue et validé sur OK. 
-</p>
-<h4>Masquer l'interface au démarrage</h4>
-<p>
-Une case à cocher sert à ne pas laisser visible l'interface utilisateur au démarrage de NVDA. Si la case est cochée, l'interface sera masquée, si la case n'est pas cochée, l'interface restera visible jusqu'à ce que l'utilisateur demande à la masquer par alt+f4.
+Une liste déroulante permet de choisir la langue de l'interface utilisateur et des messages de NVDA.  La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".  Ce choix indique à NVDA d'utiliser la langue   de Windows c'est-à-dire celle qui est actuellement sélectionnée  dans les options régionales et linguistiques du panneau de configuration.
+Noter qu'il faut relancer NVDA quand on a changé la langue, un message demandera si on désire relancer NVDA après qu'on a changé la langue et validé sur OK.
 </p>
 <h4>Sauvegarder la configuration en quittant</h4>
 <p>
-Une case à cocher qui une fois cochée, indique à NVDA de sauvegarder automatiquement la configuration courante lorsqu'on arrête NVDA. 
+Une case à cocher qui une fois cochée, indique à NVDA de sauvegarder automatiquement la configuration courante lorsqu'on arrête NVDA.
 </p>
-<h3 id="9.2">9.2. Choix du synthétiseur</h3>
+<h4>Avertir avant de quitter NVDA</h4>
+<p>
+Une case à cocher vous permettant d'indiquer si NVDA doit vous demander de confirmer quand vous voulez quitter NVDA.
+</p>
+<h4>Niveau de log</h4>
+<p>
+Une liste déroulante qui vous permet de choisir la quantité d'information que NVDA consignera dans son journal durant son exécution. Généralement, l'utilisateur n'aura pas besoin de modifier ce paramètre dans la mesure où peu d'informations sont consignées. Cependant, si vous voulez fournir des informations lors d'un rapport d'erreur, il est peut-être bon d'augmenter cette valeur.
+</p>  
+<h3 id="9.2">9.2. Choix du Synthétiseur</h3>
 <p>
 Le dialogue Synthétiseur, qui se trouve sous "Synthétiseur..." du menu Préférences, permet de choisir la synthèse vocale que NVDA va utiliser.
 </p>
 <p>
-Le dialogue contient une simple liste déroulante d'édition, qui liste toutes les synthèses disponibles. Choisissez la synthèse à l'aide des flèches, puis validez sur ok. Si une erreur se produit lors du chargement de la synthèse, une boîte de message vous en avertit et l'ancienne synthèse reste chargée.
+Le dialogue contient une simple liste déroulante, qui liste toutes les synthèses disponibles. Choisissez la synthèse à l'aide des flèches, puis validez sur ok. Si une erreur se produit lors du chargement de la synthèse, une boîte de message vous en avertit et l'ancienne synthèse reste chargée.
 </p>
 <p>
 Voici la liste des synthèses que NVDA prend en charge :
-eSpeak (incluse dans NVDA), SAPI4, SAPI5, et Silence.
+eSpeak, SAPI4, SAPI5, Audiologic, Display et Silence.
   </p>
 <p>
 La synthèse eSpeak est directement intégrée à NVDA, et son installation ne requiert aucun autrepilote particulier  ou SAPI runtime. Par défaut, NVDA démarre avec eSpeak. Cette synthèse doit fonctionner sur tout système où NVDA fonctionne, de sorte  qu'elle fonctionnera assurément pour un NVDA lancé à partir d'une clé USB ou d'un CD, sur le système de n'importe qui d'autre.
@@ -377,23 +450,34 @@ La synthèse eSpeak est directement intégrée à NVDA, et son installation ne requi
 NVDA dispose actuellement de deux pilotes SAPI4. On rapporte des résultats différents avec les deux pilotes, alors, essayez les deux et voyez lequel fonctionne le mieux pour vous.
 </p>
 <p>
+Le synthétiseur Display est utile pour des développeurs voyants désirant lire ce que NVDA dit pendant qu'il testent NVDA avec leur application.
+</p>
+<p>
 Le pilote de la synthèse silence n'est pas d'une grande utilité, à moins que vous ne désiriez aucun retour vocal  lors de l'utilisation de NVDA.
 </p>
 <p>
-Notez que, quel que soit le nombre de voix (ou moteurs) SAPI4 ou SAPI5 installés sur votre système, seuls les synthétiseurs SAPI4 et SAPI5 réels s'afficheront dans le dialogue des synthétiseurs. Pour choisir effectivement un moteur (voix), sélectionnez SAPI4 ou SAPI5 et alors, dans le dialogue des paramètres de voix, vous pourrez choisir la synthèse que vous désirez.
+Notez que, quel que soit le nombre de voix (ou moteurs) SAPI4 ou SAPI5 installés sur votre système, seuls les synthétiseurs SAPI4 et SAPI5 réels s'afficheront dans le dialogue des synthétiseurs. Pour choisir effectivement un moteur (voix), sélectionnez SAPI4 ou SAPI5 et alors, dans le dialogue des paramètres vocaux, vous pourrez choisir la voix que vous désirez.
  </p>
 <h3 id="9.3">9.3. Paramètres vocaux</h3>
 <p>
-Le dialogue des paramètres vocaux qui se trouve dans le menu Préférences, a les options suivantes : 
+Le dialogue des paramètres vocaux qui se trouve dans le menu Préférences, contient des options vous permettant de changer le son de la voix. Vous pouvez aussi modifier la plupart de ces paramètres depuis n'importe où en appuyant sur NVDA+contrôle associé à l'une des flèches. Les flèches gauche et droite permettent de choisir l'option, les flèches haut et bas augmentent ou diminuent l'option sélectionnée.
+</p>
+<p>
+Ce dialogue contient les options suivantes:
 </p>
 <h4>Voix</h4>
 <p>
-Une zone de liste modifiable qui donne la liste de toutes les voix du synthétiseur courant. A l'aide des flèches de direction, on peut entendre les différents choix. 
+Une liste déroulante qui donne la liste de toutes les voix du synthétiseur courant. A l'aide des flèches de direction, on peut entendre les différents choix.
+</p>
+<h4>Variante</h4>
+<p>
+Une liste déroulante permettant de choisir la variante utilisée par le synthétiseur. Actuellement, seule Espeak supporte ce paramètre.
+Les variantes Espeak sont comparables à des voix, dans la mesure où elles modifient significativement les attributs de la voix Espeak.
 </p>
 <h4>Débit</h4>
-
-<p>Un potentiomètre gradué de 0 à 100, (0 étant la vitesse la plus lente et 100 la plus rapide). Il est aussi possible de modifier le débit où qu'on se trouve à l'aide des touches insert+pagePréc et insert+pageSuiv pour, respectivement, accélérer ou ralentir. 
-</p>
+<p>
+Un potentiomètre gradué de 0 à 100, (0 étant la vitesse la plus lente et 100 la plus rapide).
+ /p>
 <h4>Hauteur</h4>
 <p>
 Un potentiomètre gradué de 0 à 100, (0 pour le son le plus grave et 100 pour le plus aiguë).
@@ -402,25 +486,49 @@ Un potentiomètre gradué de 0 à 100, (0 pour le son le plus grave et 100 pour le 
 <p>
 Un potentiomètre gradué de 0 à 100, (0 étant le volume le plus bas et 100 le plus élevé).
 </p>
+<h4>Inflection</h4>
+<p>
+Un potentiomètre vous permettant de choisir  le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
+ /p>
 <h4>Dire toutes les ponctuations</h4>
 <p>
 Une case à cocher qui, cochée, indique à NVDA d'énoncer tous les symboles de ponctuation (très utile pour la correction  d'épreuves). Lorsque la case  n'est pas cochée, NVDA ne remplace pas les ponctuations par leur nom, de sorte que le synthétiseur lit les phrases avec les inflexions appropriées, sans que les symboles soient énoncés.
 </p>
 <h4>Dire maj avant les majuscules</h4>
 <p>
-Une case à cocher qui, cochée, indique à NVDA de dire maj pour une lettre en majuscule quand on l'atteint par les flèches de direction ou lors de la frappe. Normalement, NVDA énonce chaque lettre majuscule avec un ton plus aiguë, mais ceci n'est pas correctement pris en charge par certains synthétiseurs, si bien que cette option est parfois utile. 
+Une case à cocher qui, cochée, indique à NVDA de dire maj pour une lettre en majuscule quand on l'atteint par les flèches de direction ou lors de la frappe. Normalement, NVDA énonce chaque lettre majuscule avec un ton plus aiguë, mais ceci n'est pas correctement pris en charge par certains synthétiseurs, si bien que cette option est parfois utile.
 </p>
-<h3 id="9.4">9.4. Echo clavier</h3>
+<h4>Annoncer les majuscules par des bips</h4>
 <p>
-Cette boîte de dialogue se trouve dans le menu Preferences,  sous "écho clavier...". Elle comprend les options suivantes :
+Si cette case à cocher est cochée, NVDA émettra un petit bip chaque fois qu'il rencontre un caractère majuscule. Comme l'option "Dire maj avant les majuscules" cette option est utile pour les synthétiseurs ne pouvant pas modifier la hauteur de leur voix pour les majuscules.
+</p>
+<h3 id="9.4">9.4. Paramètres du clavier</h3>
+<p>
+Cette boîte de dialogue se trouve dans le menu Préferences,  sous "Paramètres du clavier...". Elle comprend les options suivantes :
+</p>
+<h4>Disposition du clavier</h4>
+<p>
+Cette liste déroulante vous permet de choisir la disposition de clavier utilisé par NVDA. Actuellement, les deux disposition fournies avec NVDA sont: Desktop (ordinateur de bureau) et Laptop (ordinateur portable).
+</p>
+<h4>Utiliser verrouillage majuscule comme touche NVDA</h4>
+<p>
+Si cette case à cocher est cochée, NVDA peut utiliser la touche de verrouillage majuscule comme touche NVDA.
+</p>
+<h4>Utiliser Insert du clavier principal comme touche NVDA</h4>
+<p>
+Si cette case à cocher est cochée, Insert du clavier principal, généralement situé au-dessus des flèches, près des touches Début et Fin, pourra être utilisé comme touche NVDA.
+</p>
+<h4>Utiliser Insert du pavé numérique comme touche NVDA</h4>
+<p>
+Si cette case à cochée est cochée, la touche Insert du pavé numérique peut être utilisée comme touche NVDA.
 </p>
 <h4>Echo clavier par caractère</h4>
 <p>
-Une case à cocher qui, cochée, fera que NVDA prononce chaque caractère tapé au clavier. On peut aussi configurer  ceci où qu'on se trouve par insert+2.
+Une case à cocher qui, cochée, fera que NVDA prononce chaque caractère tapé au clavier. On peut aussi configurer  ceci où qu'on se trouve par NVDA+2.
  </p>
 <h4>Echo clavier par mot</h4>
 <p>
-Une case à cocher qui, cochée, fera que NVDA prononce chaque mot  frappé au clavier.  On peut aussi configurer  ceci où qu'on se trouve par insert+3.
+Une case à cocher qui, cochée, fera que NVDA prononce chaque mot  frappé au clavier.  On peut aussi configurer  ceci où qu'on se trouve par NVDA+3.
 </p>
 <h4>Dire les touches de commande</h4>
 <p>
@@ -434,11 +542,24 @@ Le dialogue paramètres de la souris se trouve dans le menu Préférences, sous "Pa
 <p>
 Une case à cocher qui, cochée, fera que NVDA annonce la forme du pointeur souris chaque fois qu'elle change.  Sous Windows, le pointeur de souris change de forme pour transmettre certaines informations telles que indiquer que quelque chose devient modifiable, ou que quelque chose est en train de se charger, etc.
 </p>
-<h4>Annoncer l'objet sous la souris</h4>
+<h4>Annoncer le texte sous la souris</h4>
 <p>
-Une case à cocher qui, cochée, fera que NVDA annonce l'objet (la commande) présentement sous le pointeur souris, lorsqu'on la déplace sur l'écran. De cette façon, on peut trouver quelque chose qui apparaît à l'écran, en déplaçant physiquement la souris, plutôt que d'essayer de la trouver à l'aide de la navigation par objets. Il se peut que ça ne marche pas toujours convenablement, mais certains aprécieront cette possibilité. On peut activer ou désactiver cette annonce de n'importe où par insert+m.
+Une case à cocher qui, cochée, fera que NVDA annonce le texte présentement sous le pointeur souris, lorsqu'on la déplace sur l'écran. De cette façon, on peut trouver quelque chose qui apparaît à l'écran, en déplaçant physiquement la souris, plutôt que d'essayer de la trouver à l'aide de la navigation par objets.
 </p>
-<h3 id="9.6">9.6. les paramètres de la présentation des objets</h3>
+<h4>Quand la souris entre dans un objet, annoncer son type</h4>
+<p>
+Si cette case à cocher est cochée, NVDA annoncera le type de l'objet quand la souris y entre.
+</p>
+<h4>Jouer les coordonnées audio quand la souris se déplace</h4>
+<p>
+Cocher cette case fait que NVDA émet des bips quand la souris se déplace, pour que l'utilisateur puisse se figurer la position de la souris sur l'écran.
+ /p>
+<h4>La brillance contrôle le volume des coordonnées audio</h4>
+<p>
+Si la case "jouer les coordonnées audio quand la souris se déplace" est cochée, Cocher cette case fera que le volume des bips variera en fonction de la brillance de la zone sous le pointeur de la souris.
+Ceci peut entraîner des problèmes de performances sous Windows Vista, aussi cette case est-elle décochée par défaut.
+</p>
+<h3 id="9.6">9.6. Paramètres de Présentation des Objets</h3>
 <p>
 Cette boîte de dialogue se trouve dans le menu Préférences sous "Présentation des objets..." et contient les options suivantes :
 </p>
@@ -454,9 +575,9 @@ Lorsque cette case à cocher est cochée, NVDA annonce les bulles d'aide à leur ap
 <p>
 Lorsque cette case à cocher est cochée, NVDA incluera, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. Par exemple, le menu fichier d'une barre de menu peut avoir pour raccourci clavier alt+f.
 </p>
-<h4>Annoncer le nom des groupes d'objets</h4>
+<h4>Annonce de la description des objets</h4>
 <p>
-Des objets ou des commandes d'une boîte de dialogue peuvent être regroupés. Quand cette case à cocher est cochée, NVDA annonce d'abord le nom du groupe avant d'annoncer les objets. Entendre le nom du groupe aide souvent à identifier la fonction de l'objet, mais il se peut aussi que ce soit gênant, alors on peut le désactiver ici.
+Décochez cette case si vous pensez que vous n'avez pas besoin d'entendre leur description annoncée avec les objets.
 </p>
 <h4>Dire l'état de l'objet en premier</h4>
 <p>
@@ -466,9 +587,13 @@ Lorsque cette case à cocher est cochée, NVDA annonce l'état d'un objet avant tou
 <p>
 Une barre de progression est un élément de contrôle qui se présente un peu comme une règle. Au fur et à mesure de l'avancement d'une tâche, une portion croîssante de la barre est mise en surbrillance. L'indication quantitative de l'avancement de la tâche est aussi indiqué en pourcentage. Des barres de progression sont affichées pour des tâches telles que le chargement d'une page Web, le retrait du courrier électronique,  le traitement d'un fichier son, etc. Si la case à cocher est cochée, NVDA fait entendre des beeps pour indiquer l'état d'avancement de la barre de progression. Ce peut être plus agréable que d'entendre l'annonce d'une suite de nombres.
 </p>
-<h3 id="9.7">9.7. Les paramètres du tampon virtuel</h3>
+<h3 id="9.7">9.7. Paramètres du Tampon Virtuel</h3>
 <p>
-Le dialogue des paramètres du tampon virtuel se trouve dans le menu des Préférences, sous "Tampon virtuel...". Il comprend les options suivantes :
+Le dialogue des paramètres du tampon virtuel se trouve dans le menu des Préférences, sous "Tampon virtuel...".
+Les paramètres contenus dans ce dialogue n'affectent que l'ancienne version des tampons virtuels utilisée par Internet Explorer et Adobe Reader. Ce problème devrait être résolu dans les versions futures de NVDA.
+ /p>
+<p>
+Ce dialogue comporte les options suivantes:
 </p>
 <h4>Nombre maximum de caractères par ligne</h4>
 <p>
@@ -490,7 +615,6 @@ Lorsque cette case est cochée, les tampons virtuels peuvent être mis à jour lors
 <p>
 l'ensemble des onze éléments ou cases à cocher de cette boîte de dialogue servent à définir quels types d'informations sont donnés quand on se déplace dans le tampon virtuel. Par exemple, cocher la case "annoncer les liens" provoque la prononciation du mot "lien" avant le texte d'un lien.
 </p>
-
 <p>
 On peut configurer cette information pour les liens, les titres, les graphiques, les listes, les éléments de liste, les tableaux, les formulaires, les champs de formulaires, les citations, les cadres et les paragraphes.
 </p>

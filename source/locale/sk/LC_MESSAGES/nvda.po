@@ -31,7 +31,7 @@ msgstr "má %s položiek"
 
 #: NVDAObjects\IAccessible\excel.py:63
 msgid "through"
-msgstr "cez"
+msgstr "až"
 
 #: NVDAObjects\IAccessible\excel.py:63
 #: controlTypes.py:312
@@ -222,24 +222,24 @@ msgstr "Oznami čas; stlačené 2 krát rýchlo posebe prečíta dátum."
 #: appModules\_default.py:110
 msgid "Increases currently active setting in the synth settings ring"
 msgstr ""
-"Zvyšuje hodnotu aktuálneho nastavenia skupiny nastavení hlasového "
+"Zvyšuje hodnotu aktuálneho prvku skupiny nastavení hlasového "
 "výstupu"
 
 #: appModules\_default.py:114
 msgid "Decreases currently active setting in the synth settings ring"
 msgstr ""
-"Znižuje hodnotu aktuálneho nastavenia skupiny nastavení hlasového "
+"Znižuje hodnotu aktuálneho prvku skupiny nastavení hlasového "
 "výstupu"
 
 #: appModules\_default.py:118
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
-"prejde na nasledujúce nastavenie v skupine nastavení hlasového výstupu"
+"prejde na nasledujúci prvok skupiny nastavení hlasového výstupu"
 
 #: appModules\_default.py:122
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
-"prejde na predchádzajúce nastavenie v skupine nastavení hlasového "
+"prejde na predchádzajúci prvok skupiny nastavení hlasového "
 "výstupu"
 
 #: appModules\_default.py:131
@@ -612,7 +612,7 @@ msgid ""
 "control without the virtualBuffer doing something else with the key."
 msgstr ""
 "Zapína a vypína režim prepustenia klávesových príkazov cez virtuálny "
-"buffer. Keď je to zapnuté, klávesy budú prepustené čo umožní "
+"prehliadač. Keď je to zapnuté, klávesy budú prepustené čo umožní "
 "interaktívne pracovať s aktuálnym formulárovým prvkom bez vikonávania "
 "príkazov NVDA."
 
@@ -829,7 +829,7 @@ msgstr "Zobrazí dialóg Prezentácia objektov"
 
 #: appModules\_default.py:758
 msgid "Shows NVDA virtual buffers settings dialog"
-msgstr "Zobrazí dialóg Virtuálne buffery"
+msgstr "Zobrazí dialóg nastavení pre Virtuálny prehliadač"
 
 #: appModules\_default.py:762
 msgid "Shows NVDA document formatting settings dialog"
@@ -1891,11 +1891,11 @@ msgstr "mení oznamovanie objektov"
 
 #: gui\__init__.py:243
 msgid "Change virtual buffers specific settings"
-msgstr "zmení nastavenia špecifické pre vyrtuálne buffery"
+msgstr "zmení nastavenia špecifické pre virtuálny prehliadač"
 
 #: gui\__init__.py:243
 msgid "Virtual &buffers..."
-msgstr "&Virtuálne buffery"
+msgstr "&Virtuálny prehliadač"
 
 #: gui\__init__.py:245
 msgid "Change Settings of document properties"
@@ -2202,7 +2202,7 @@ msgstr "&Výška"
 
 #: gui\settingsDialogs.py:260
 msgid "&Inflection"
-msgstr "&Modulácia"
+msgstr "&Intonácia"
 
 #: gui\settingsDialogs.py:270
 msgid "V&olume"
@@ -2314,7 +2314,7 @@ msgstr "Píp&ať pri aktualizácii priebehu"
 
 #: gui\settingsDialogs.py:488
 msgid "virtual buffers"
-msgstr "Virtuálne buffery"
+msgstr "Virtuálny prehliadač"
 
 #: gui\settingsDialogs.py:491
 msgid "&Maximum number of characters on one line"
@@ -2331,7 +2331,7 @@ msgstr "zachovať vzhľad ako na obrazovke (ak je podporovaný)"
 #: gui\settingsDialogs.py:505
 msgid "Report &virtual presentation on focus changes"
 msgstr ""
-"Pri zmene fokusu načítať informácie o objekte z &virtuálneho bufferu"
+"Pri zmene fokusu načítať informácie o objekte z &virtuálneho prehliadača"
 
 #: gui\settingsDialogs.py:508
 msgid "Update the content &dynamically"
@@ -2584,7 +2584,7 @@ msgstr "výška"
 
 #: synthSettingsRing.py:81
 msgid "inflection"
-msgstr "modulácia"
+msgstr "intonácia"
 
 #: synthSettingsRing.py:82
 msgid "voice"
@@ -2766,7 +2766,7 @@ msgstr "%s"
 #: virtualBuffers\__init__.py:188
 #: virtualBuffers_old\__init__.py:291
 msgid "activates the current object in the virtual buffer"
-msgstr "aktivuje aktuálny objekt virtuálneho bufferu"
+msgstr "aktivuje aktuálny objekt virtuálneho prehliadača."
 
 #: virtualBuffers\__init__.py:207
 msgid "Refreshed"
@@ -3186,11 +3186,11 @@ msgstr "upload súboru"
 
 #: virtualBuffers_old\__init__.py:272
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "Prejde o stranu vyššie v aktuálnom dokumente virtuálneho bufferu."
+msgstr "Prejde o stranu vyššie v aktuálnom dokumente virtuálneho prehliadača."
 
 #: virtualBuffers_old\__init__.py:287
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "Prejde o stranu nižšie v aktuálnom dokumente virtuálneho bufferu"
+msgstr "Prejde o stranu nižšie v aktuálnom dokumente virtuálneho prehliadača."
 
 #: virtualBuffers_old\__init__.py:313
 #: virtualBuffers_old\__init__.py:324

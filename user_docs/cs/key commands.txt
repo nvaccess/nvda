@@ -1,0 +1,292 @@
+ Seznam klávesovıch zkratek pro NVDA
+
+Mnoho pøíkazovıch kláves vyuívá tzv. NVDA klávesu.
+Standardnì je k tomuto úèelu pøednastavena klávesa insert, obvykle umístìna nad klávesou delete, nebo numerickı insert. Zvolí se tak, e pøi vypnuté numerické klávesnici stiskneme nulu. 
+NVDA lze nastavit tak, e místo insertu mùe bıt jako klávesa NVDA pouit capslock.
+
+
+Obecné pøíkazy
+
+
+NVDA+n: NVDA menu
+Zobrazí nabídku, ve které najdete poloky pro nastavení,  nápovìdu a další funkce programu NVDA.
+
+NVDA+t: Titulek
+Pøeète titulek aktuálního aplikaèního okna, nebo okna v popøedí.
+
+NVDA+b: pøeèti popøedí
+Pøeète obsah aktuálního okna v popøedí.
+Uiteèné napø pøi opìtovném ètení informací v dialogovém oknì, kdy je napoprvé pøeslechnete.
+
+NVDA+q: Ukonèení NVDA
+zde jsou dvì monosti nastavení.
+Buï pøi stisku klávesy NVDA+q zazní znìlka a program je ukonèen, nebo se zobrazí dotaz, zda chceme NVDA ukonèit. V obecném nastavení programu NVDA lze potvrzovací dialog pøed ukonèením zapnout nebo vypnout.
+
+NVDA+s: Reim øeèi
+Opakované stisknutí této kombinace pøepíná reimy øeèi mezi vypnuto, pípání a mluvení. 
+Pøi vypnuté øeèi je NVDA zticha, pozor, mlèí i odezva klávesnice.
+pøi pípání jsou hlášení nahrazena pípnutím, (pípá i odezva klávesnice). a reim mluvení zajišuje normální hlasovou odezvu
+
+NVDA+F12: Datum a èas
+Oznámı aktuální èas.
+Pokud stisknete dvakrát rychle po sobì, NVDA oznámí aktuální datum.
+
+
+Zkratkové klávesy vyuívající horní písmennou øadu kláves.
+
+
+NVDA++: Klávesová nápovìda
+Tento pøíkaz zapíná reim klávesové nápovìdy. 
+V tomto reimu NVDA oznámí název jakékoli stisknuté klávesy. 
+V pøípadì stisku kombinace kláves, která pøedstavuje jakıkoli pøíkaz programu NVDA budou postupnì pøeèteny názvi jednotlivıch kláves a potom NVDA oznámí, o jakı pøíkaz se jedná.
+Pro vypnutí klávesové nápovìdy pouijte opìt kombinaci kláves NVDA++
+
+NVDA+ì: odezva psanıch znakù
+Opakovanım stisknutím zapíná a vypíná hlášení psanıch znakù.
+
+NVDA+š: odezva psanıch slov
+Zapíná a vypíná hlášení psanıch slov.
+
+NVDA+è: odezva pøíkazovıch kláves
+Zapíná a vypíná hlášení kláves, které nevkládají znaky.
+
+NVDA+ø: ohlašování dynamicky mìnìného obsahu
+Zapíná a vypíná hlášení dynamickıch zmìn obsahu, napøíklad v oknech pøíkazového øádku.
+
+NVDA+: Zapíná a vypíná monost, kdy se ètecí kurzor pohybuje 
+spolu s textovım kurzorem.
+
+NVDA+ı: zmìna fokusu zmìní prohlíenı objekt
+Zapíná a vypíná zmìnu prohlíeného objektu pøi zmìnì fokusu.
+
+
+Ostatní zkratkové klávesy z jinıch písmennıch øad
+
+
+NVDA+p: úroveò interpunkce
+Zapíná a vypíná hlášení interpunkce. je-li zapnuto, NVDA oznamuje názvy interpunkèních znamének, je-li vypnuto, je zacházení s interpunkcí ponecháno na hlasovém vıstupu
+
+NVDA+End: pøeèti stavovı øádek
+Pøeète stavovı øádek aktuální aplikace, jen se stane prohlíenım objektem
+
+NVDA+f: pøeèti formátování
+pøeète vlastnosti formátování na aktuální pozici v dokumentu
+
+NVDA+m: sledování myši
+Zapíná a vypíná ohlašování objektù pod kurzorem myši.
+
+NVDA+u: pípání pøi zmìnì indikátoru prùbìhu
+Zapíná a vypíná reim pípání pøi zmìnì indikátoru prùbìhu.
+
+NVDA+Shift+b: stav baterie
+Oznámí stav baterie a zbıvající èas provozu, je-li odpojeno napájení ze sítì.
+
+NVDA+Tab: pøeèti fokus
+Ohlásí objekt s fokusem.
+
+Control+NVDA+f1: pøeèti název aplikace
+Pøeète a vyhláskuje název souboru právì spuštìné aplikace a zároveò pøeète název aktivního aplikaèního modulu NVDA.
+
+NVDA+f2: propustit následující klávesu
+Další stisknutá klávesa nebude interpretována programem NVDA, ale bude pøedána ke zpracování ve Windows.
+Vysvìtlující pøíklad této funkce.
+Pøedstavte si, e budete potøebovat pouít nìjakı klávesovı pøíkaz v jiném programu, ale NVDA v tom bude bránit, protoe je to i jeho klávesovı pøíkaz. 
+Tato klávesová zkratka slouí právì k tomu, abychom mohli klávesovı pøíkaz pouít v jiném programu a nevadilo v tom NVDA.
+
+
+Zkratkové klávesy vyvolávající nastavovací funkce NVDA
+
+Control+NVDA+d: nastavení ètení formátování textu
+Control+NVDA+g: obecné nastavení
+Control+NVDA+k: nastavení klávesnice
+Control+NVDA+o: prezentace objektù
+Control+NVDA+z: NVDA python konzole (uiteèné zejména pro vıvojáøe)
+Control+NVDA+r: naètení uloeného nastavení NVDA
+Control+NVDA+c: uloení nastavení NVDA
+Control+NVDA+v: nastavení hlasu
+Control+NVDA+b: virtuální prohlíeè
+Control+NVDA+m: nastavení myši
+
+
+Zkratkové klávesy ovládající hlasové monosti
+
+
+Control+NVDA+Levá šipka: pøedchozí hlasovı parametr
+"Pøesune se na parametr a oznámí pøedchozí parametr v kruhu nastavení hlasového vıstupu.
+ 
+Control+NVDA+Pravá šipka: další hlasovı parametr
+"Pøesune se na pøíslušnı parametr a oznámí následující parametr v kruhu nastavení hlasového vıstupu"
+
+Control+NVDA+Horní šipka: zvıšit hodnotu hlasového parametru
+Zvyšuje hodnotu aktuálnì zvoleného parametru v kruhu nastavení hlasového vıstupu.
+
+Control+NVDA+Dolní šipka: sníit hodnotu hlasového parametru
+Sniuje hodnotu aktuálnì zvoleného parametru v kruhu nastavení hlasového vıstupu.
+
+
+Objektová navigace
+Pøi pouití zkratek je nutno vypnout numerickı blok, protoe jeho klávesy budou pouívány ke zvolení funkcí.
+
+
+NVDA+numerická5: Aktuální prohlíenı objekt
+ohlásí aktuální prohlíenı objekt. Stiskne-li se 3krát rychle za sebou, zkopíruje jméno a hodnotu objektu do schránky.
+
+Shift+NVDA+numerická5: poloha právì prohlíeného objektu
+Ohlásí velikost a pozici prohlíeného objektu
+
+Control+Shift+NVDA+numerická5: kde jsem
+pøeète hierarchii nadøízenıch objektù právì prohlíeného objektu.
+
+NVDA+numerickéMínus: prohlíenı objekt na fokus
+Prohlíenım objektem se stane objekt s fokusem
+
+NVDA+numerická8: nadøízenı objekt
+Pøejde o úroveò vıše na nadøízenı objekt právì prohlíeného objektu.
+
+NVDA+numerická2: podøízenı objekt
+Pøejde na první podøízenı objekt o úroveò ní vzhledem k prohlíenému objektu.
+
+NVDA+numerická4: pøedchozí objekt
+Pøejde na pøedchozí objekt ve stejné úrovni.
+
+Shift+NVDA+numerická4: pøedchozí objekt v návaznosti
+pøesune prohlíenı objekt na pøedchozí objekt v návaznosti (nemusí bıt na stejné úrovni)
+
+NVDA+numerická6: následující objekt
+Pøejde na další objekt ve stejné úrovni.
+
+Shift+NVDA+numerická6: následující objekt v návaznosti
+pøesune prohlíenı objekt na další objekt v návaznosti (nemusí bıt na stejné úrovni)
+
+NVDA+numerickıEnter: pøedvolená akce
+Provede vıchozí akci na prohlíeném objektu (napøíklad , pokud se jedná o tlaèítko) tak ho stiskne.
+
+NVDA+numerickéLomeno: myš na prohlíenı objekt
+Pøesune kurzor myši na prohlíenı objekt.
+ 
+NVDA+numerickáHvìzdièka: prohlíenı objekt na myš
+Prohlíenım objektem se stane objekt pod kurzorem myši.
+
+numerickéLomeno: levı klik
+Klikne levım tlaèítkem myši.
+
+numerickáHvìzdièka: pravı klik
+Klikne pravım tlaèítkem myši.
+
+
+Zkratkové klávesy pøi pohybu v textu.
+Zde je také nutno mít numerickı blok vypnut.
+V otevøeném textovém souboru pak platí následující zkratkové klávesy.
+
+
+NVDA+Dolní šipka: plynulé ètení
+V editaèních polích a dokumentech pøeète text od polohy textového kurzoru do konce, pøi èem se textovı kurzor plynule posouvá po øádcích.
+
+Shift+NVDA+Horní šipka: pøeèti aktuální vıbìr
+V editaèních polích a dokumentech pøeète oznaèenı text. Jestlie není oznaèeno nic, NVDA to oznámí.
+
+NVDA+Horní šipka: pøeèti aktuální øádek
+V editaèních polích a dokumentech pøeète aktuální øádek.
+
+NVDA+numerickéPlus: plynulé ètení prohlíeného objektu
+pøeète hierarchii objektù od právì prohlíeného objektu.
+
+numerickéMínus: ètecí kurzor na textovı kurzor
+Pøesune ètecí kurzor na pozici textového kurzoru v rámci prohlíeného objektu.
+
+Control+Mínus: textovı kurzor na ètecí kurzor
+Pøesune textovı kurzor na pozici ètecího kurzoru v rámci prohlíeného objektu.
+
+numerickéPlus: plynulé ètení ètecím kurzorem
+Pøeète text od pozice ètecího kurzoru do konce, pøièem se ètecí kurzor plynule posouvá po øádcích.
+
+
+Ètení ètecím kurzorem
+
+
+numerická1: pøedchozí znak
+Pøesune ètecí kurzor na pøedchozí znak právì prohlíeného objektu.
+
+Shift+numerická1: zaèátek øádku
+Pøesune ètecí kurzor na zaèátek aktuálního øádku v rámci prohlíeného objektu.
+
+numerická2: aktuální znak
+Pøeète znak, na nìm se v rámci prohlíeného objektu nachází ètecí kurzor.
+
+numerická3: další znak
+Pøesune ètecí kurzor na následující znak právì prohlíeného objektu.
+
+Shift+numerická3: konec øádku
+Pøesune ètecí kurzor na konec aktuálního øádku v rámci prohlíeného objektu.
+
+numerická4: pøedchozí slovo
+Pøesune ètecí kurzor na pøedchozí slovo právì prohlíeného objektu.
+
+numerická5: aktuální slovo
+Pøeète slovo, na nìm se v rámci prohlíeného objektu nachází ètecí kurzor.
+
+numerická6: další slovo
+Pøesune ètecí kurzor na následující slovo právì prohlíeného objektu.
+
+numerická7: pøedchozí øádek
+Pøesune ètecí kurzor na pøedchozí øádek právì prohlíeného objektu.
+
+Shift+numerická7: horní øádek
+Pøesune ètecí kurzor na horní øádek právì prohlíeného objektu.
+ 
+numerická8: aktuální øádek
+Pøeète aktuální øádek, na nìm se v rámci prohlíeného objektu nachází ètecí kurzor.
+
+numerická9: další øádek
+Pøesune ètecí kurzor na následující øádek právì prohlíeného objektu.
+
+Shift+numerická9: spodní øádek
+Pøesune ètecí kurzor na spodní øádek právì prohlíeného objektu.
+
+
+Pøíkazy pro virtuální prohlíeè
+nìkteré z nich fungují jen v gecko 1.9 aplikacích jako je napø. Firefox 3.0, 
+nejsou funkènív prohlíeèích Internet explorer, èi firefox 2 .
+
+
+NVDA+Mezera: Reim propouštìní pøes virtuální prohlíeè
+Zapíná a vypíná reim propouštìní virtuálního prohlíeèe. Pøi jeho aktivaci nebudou stisknuté klávesy povaovány za pøíkazy pro virtuální prohlíeè, ale projdou dál k internetovému prohlíeèi, kterı si je sám zpracuje.
+
+control+NVDA+f: hledat 
+Vyhledávání zadaného textu od aktuální pozice kurzoru
+pozor! V prohlíeèích firefox 2 a internet explorer není funkèní. Zde platí pøíkaz control+f
+
+NVDA+f3: najít další
+Najde další vıskyt textu, kterı byl pøed tím zadán pøi vyvolání pøíkazu hledat.
+
+NVDA+f7:seznam odkazù
+Zobrazí dialog se seznamem všech odkazù na stránce. 
+Jednotlivé odkazy procházíme šipkami Tabulátorem se pak dostaneme na tlaèítka na aktivaci nebo pøesunutí se na vybranı odkaz.
+Pro zavøení dialogu pouijte klávesu esc, nebo alt+f4.
+pozor! Nefunguje v prohlíeèích firefox 2 a internet explorer 
+
+NVDA+f5: obnovit
+Pokusí se znovu naèíst aktuální stránku do virtuálního prohlíeèe
+pozor! Nefunguje v prohlíeèích firefox 2 a internet explorer 
+
+
+Pøíkazy rychlé navigace pro virtuální prohlíeè
+Pro navigaci v opaèném smìru pouijte navigaèní klávesu spolu s klávesou shift.
+
+
+h: nadpis
+klávesy + a  èili 1 a 6:nadpis v pøíslušné úrovni.
+l: seznam
+i: poloka seznamu
+k: odkaz
+t: tabulka
+f: prvek formuláøe
+e: editaèní pole
+b: tlaèítko
+r: pøepínaè
+c: rozbalovací políèko
+x: zaškrtávací políèko
+m: rámec
+s: oddìlovaè
+g: grafika
+q: citace
