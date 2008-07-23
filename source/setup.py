@@ -70,7 +70,7 @@ setup(
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
-		("images", glob("images/*.png")),
+		("images", glob("images/*.ico")),
 		("speechdicts", glob("speechdicts/*.dic")),
 	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers'),
 )

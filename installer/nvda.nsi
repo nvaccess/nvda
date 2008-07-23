@@ -81,7 +81,6 @@ Var StartMenuFolder
 !insertmacro MUI_UNPAGE_INSTFILES
 !InsertMacro MUI_UNPAGE_FINISH
 
- !define MUI_HEADERBITMAP "${NVDASourceDir}\images\icon.png"
 !define MUI_ABORTWARNING
 
 ;--------------------------------
