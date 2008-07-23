@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2269\n"
+"Project-Id-Version: r2293\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-07-17 20:16+0300\n"
+"PO-Revision-Date: 2008-07-23 15:19+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -161,7 +161,7 @@ msgstr "vasen napsautus"
 msgid "Clicks the left mouse button once where ever it may be at the time."
 msgstr ""
 "Napsauttaa kerran hiiren vasenta painiketta hiirikohdistimen nykyisessä "
-"sijainnissa."
+"paikassa"
 
 #: appModules\_default.py:83
 msgid "right click"
@@ -171,7 +171,7 @@ msgstr "oikea napsautus"
 msgid "Clicks the right mouse button once where ever it may be at the time."
 msgstr ""
 "Napsauttaa kerran hiiren oikeaa painiketta hiirikohdistimen nykyisessä "
-"sijainnissa."
+"paikassa"
 
 #: appModules\_default.py:95 cursorManager.py:229
 msgid "no selection"
@@ -310,7 +310,7 @@ msgid ""
 "cent down from top of screen, %.1f per cent left from right of screen, %.1f "
 "up from bottom of screen"
 msgstr ""
-"Objektin reunojen sijainnit %.1f prosenttia oikealle ruudun vasemmasta "
+"Objektin reunojen paikat: %.1f prosenttia oikealle ruudun vasemmasta "
 "reunasta, %.1f prosenttia alas ruudun yläreunasta, %.1f prosenttia "
 "vasemmalle ruudun oikeasta reunasta, %.1f prosenttia ylös ruudun alareunasta"
 
@@ -338,7 +338,8 @@ msgstr "Ei ylemmän tason objekteja"
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on."
 msgstr ""
-"Siirtää navigointiobjektin nykyistä ylemmän tason objektin kohdalle"
+"Siirtää navigointiobjektin ylemmän tason objektiin siitä objektista, "
+"jossa se on tällä hetkellä."
 
 #: appModules\_default.py:256
 msgid "No next"
@@ -360,7 +361,7 @@ msgid ""
 "Sets the navigator object to the previous object to the one it is currently "
 "on"
 msgstr ""
-"Siirtää navigointiobjektin nykyistä objektia edeltävän objektin kohdalle"
+"Siirtää navigointiobjektin nykyistä objektia edeltävään objektiin"
 
 #: appModules\_default.py:282
 msgid "No children"
@@ -371,8 +372,8 @@ msgid ""
 "Sets the navigator object to the first child object to the one it is "
 "currently on"
 msgstr ""
-"Siirtää navigointiobjektin ensimmäisen alemman tason objektin kohdalle "
-"nykyisessä objektissa"
+"Siirtää navigointiobjektin ensimmäiseen alemman tason objektiin siitä "
+"objektista, jossa se on tällä hetkellä"
 
 #: appModules\_default.py:305
 msgid "end of flow"
@@ -381,8 +382,7 @@ msgstr "objektipuun loppu"
 #: appModules\_default.py:306
 msgid "Sets the navigator object to the object this object flows to."
 msgstr ""
-"Siirtää navigointiobjektin objektipuussa seuraavana olevan objektin "
-"kohdalle."
+"Siirtää navigointiobjektin objektipuussa seuraavana olevaan objektiin"
 
 #: appModules\_default.py:328
 msgid "Beginning of flow"
@@ -391,8 +391,7 @@ msgstr "Objektipuun alku"
 #: appModules\_default.py:329
 msgid "Sets the navigator object to the object this object flows from."
 msgstr ""
-"Siirtää navigointiobjektin edellisen objektipuussa olevan objektin "
-"kohdalle."
+"Siirtää navigointiobjektin edelliseen objektipuussa olevaan objektiin."
 
 #: appModules\_default.py:337
 msgid ""
@@ -780,7 +779,7 @@ msgstr ""
 
 #: appModules\_default.py:742
 msgid "Shows NVDA voice settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n puheasetuksia"
+msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n ääniasetuksia"
 
 #: appModules\_default.py:746
 msgid "Shows NVDA keyboard settings dialog"
@@ -1676,11 +1675,11 @@ msgstr "muokattava"
 msgid "checkable"
 msgstr "valittava"
 
-#: core.py:76
+#: core.py:77
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alajärjestelmiä, odota..."
 
-#: core.py:127
+#: core.py:130
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -1792,7 +1791,7 @@ msgstr "&Syntetisaattori..."
 
 #: gui\__init__.py:235
 msgid "&Voice settings..."
-msgstr "&Puhe..."
+msgstr "&Ääni..."
 
 #: gui\__init__.py:235
 msgid "Choose the voice, rate, pitch and volume  to use"
@@ -1934,7 +1933,7 @@ msgstr "&Ohje"
 
 #: gui\__init__.py:284
 msgid "&Revert to saved configuration"
-msgstr "&Palaa tallennettuihin asetuksiin"
+msgstr "&Palauta tallennetut asetukset"
 
 #: gui\__init__.py:284
 msgid "Reset all settings to saved state"
@@ -1952,7 +1951,7 @@ msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 msgid "E&xit"
 msgstr "&Lopeta"
 
-#: gui\__init__.py:342
+#: gui\__init__.py:343
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -1965,31 +1964,31 @@ msgid ""
 "functions.\n"
 msgstr ""
 "Tervetuloa NVDA:han!\n"
-"Useimmat NVDA:n säätämiseen tarkoitetut näppäimet edellyttävät NVDA-"
-"näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
-"Oletuksena normaalia ja laskinnäppäimistön Insert-näppäintä voidaan "
-"molempia käyttää NVDA-näppäimenä.\n"
+"Suurin osa NVDA:n säätämiseen tarkoitetuista näppäimistä edellyttävä"
+"t NVDA-näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
+"Oletuksena sekä normaalia että laskinnäppäimistön Insert-näppäintä "
+"voidaan käyttää NVDA-näppäimenä.\n"
 "Voit myös määrittää NVDA:n käyttämään CapsLock-näppäintä NVDA-"
 "näppäimenä.\n"
 "Paina NVDA+n avataksesi NVDA-valikon milloin tahansa.\n"
 "Tästä valikosta voit määrittää NVDA:n asetuksia, saada ohjeita ja "
 "käyttää muita NVDA:n toimintoja.\n"
 
-#: gui\__init__.py:352
+#: gui\__init__.py:353
 msgid "Welcome to NVDA"
 msgstr "Tervetuloa NVDA:han"
 
-#: gui\__init__.py:356
+#: gui\__init__.py:357
 msgid "Options"
 msgstr "Asetukset"
 
-#: gui\__init__.py:357 gui\settingsDialogs.py:376
+#: gui\__init__.py:358 gui\settingsDialogs.py:376
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
-#: gui\__init__.py:360
+#: gui\__init__.py:361
 msgid "Show this dialog when NVDA starts"
-msgstr "Näytä tämä valintaikkuna, kun NVDA käynnistyy"
+msgstr "Näytä tämä valintaikkuna NVDA:n käynnistyessä"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
@@ -2112,7 +2111,7 @@ msgstr "Syntetisaattorivirhe"
 
 #: gui\settingsDialogs.py:200
 msgid "Voice settings"
-msgstr "Puheasetukset"
+msgstr "Ääniasetukset"
 
 #: gui\settingsDialogs.py:210
 msgid "&Voice"
@@ -2244,7 +2243,7 @@ msgstr "Anna &äänimerkki edistymispalkin päivittyessä"
 
 #: gui\settingsDialogs.py:488
 msgid "virtual buffers"
-msgstr "näennäispuskurit"
+msgstr "Näennäispuskurit"
 
 #: gui\settingsDialogs.py:491
 msgid "&Maximum number of characters on one line"
@@ -2252,7 +2251,7 @@ msgstr "Merkk&ien maksimimäärä rivillä"
 
 #: gui\settingsDialogs.py:496
 msgid "&Number of lines per page"
-msgstr "R&ivejä sivulla"
+msgstr "R&ivien maksimimäärä sivulla"
 
 #: gui\settingsDialogs.py:501
 msgid "Use &screen layout (when supported)"
@@ -2440,7 +2439,7 @@ msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:155
+#: mouseHandler.py:156
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
@@ -2515,7 +2514,7 @@ msgstr "sävy"
 
 #: synthSettingsRing.py:82
 msgid "voice"
-msgstr "puheääni"
+msgstr "Puheääni"
 
 #: synthSettingsRing.py:83
 msgid "variant"
