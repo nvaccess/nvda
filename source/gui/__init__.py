@@ -25,7 +25,7 @@ import winUser
 ### Constants
 appTitle = "NVDA"
 NVDA_PATH = os.getcwd()
-ICON_PATH=os.path.join(NVDA_PATH, "images", "icon.png")
+ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
 id_showGuiCommand=wx.NewId()
@@ -223,7 +223,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
-		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_PNG)
+		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, appTitle)
 
 		self.menu=wx.Menu()
