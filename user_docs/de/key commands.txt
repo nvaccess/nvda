@@ -3,7 +3,9 @@ NVDA - Kurztasten- und Befehlsreferenz
 Viele der nachfolgenden Befehle verwenden die sog. NVDA-Taste. Dies ist standardmäßig die Einfügetaste der erweiterten Tastatur. In den Tastatureinstellungen können auch die Dauergroßschreibtaste und die Einfügetaste des Nummernblocks als NVDA-Taste eingestellt werden. Wenn sich eine Taste auf den Nummernblock bezieht, ist (zur besseren Erkennung) die Zeichenkette "NUM " vorangestellt. Diese funktionieren aber nur, wenn Numlock ausgeschaltet ist. Beispiel: NUM 1 ist gleichbedeutend mit der Taste 1 des Nummernblocks.
  
 Desktop-Tastaturbelegung
+
 allgemeine Tastenkombinationen
+
 Tasten(nkombination): Zweck
 STRG: Sprache abbrechen/unterbrechen
 Umschalt: Sprache fortsetzen
@@ -17,7 +19,7 @@ NVDA+Pfeil auf: aktuelle Zeile lesen
 NVDA+Pfeil ab: Text ab der Cursorposition lesen (beliebiger Tastendruck bricht Sprache ab)
 NVDA+t: Titelzeile lesen
 NVDA+f12: Urzeit ansagen
-NVDA+f12 (zweimal schnell) gedrückt: Datum ansagen
+NVDA+f12 (zweimal schnell): Datum ansagen
 NVDA+2: eingegebene Zeichen sprechen ein/aus
 NVDA+3: eingegebene Wörter sprechen ein/aus
 NVDA+4: Funktionstasten (Pfeiltasten, STRG, Umschalt,  usw.) sprechen ein/aus
@@ -26,7 +28,7 @@ NVDA+s: Sprachmodus wechseln (aus, Signaltöne oder Sprache)
 NVDA+m: Objekt unter der Maus sprechen ein/aus
 NVDA+f: Schriftart in Dokumenten ansagen
 NVDA+f1: Gibt Informationen über das aktuelle Navigator-Objekt aus, die hauptsächlich für Entwickler wichtig sind.
-STRG+NVDA+f1: Namen der aktuellen Anwendung ansagen
+STRG+NVDA+f1: spricht und buchstabiert den Namen der aktuellen Anwendung und sagt das aktuell geladene NVDA Anwendungsmodul an.
 NVDA+u: Signaltöne bei Aktualisierung von Fortschrittsbalken
 Umschalt+NVDA+b: Akkustatus ansagen
 NVDA+5: dynamische Änderungen ansagen ein/aus
@@ -36,21 +38,23 @@ NVDA+F2: nächste Taste(nkombination) an die aktive Anwendung durchreichen
 Umschalt+NVDA+Pfeil auf: markierten Text lesen
 STRG+NVDA+Pfeil links/rechts: wählt die vorige/nächste Einstellung im Synthesizer-Einstellungsring
 STRG+NVDA+Pfeil hoch/runter: erhöht/verringert die aktuelle Einstellung im Synthesizer-Einstellungsring.
-STRG+NVDA+G: öffnet die allgemeinen Einstellungen
+NUM Stern: Mausklick rechts
+NUM Schrägstrich: Mausklick links
+STRG+NVDA+c: Einstellungen speichern
+STRG+NVDA+r: Einstellungen zurücksetzen
+
+NVDA-Dialoge öffnen
+STRG+NVDA+g: öffnet die allgemeinen Einstellungen
 STRG+NVDA+s: öffnet den Sprachausgaben-Dialog
 STRG+NVDA+v: öffnet die Stimmeinstellungen
 STRG+NVDA+k: öffnet die Tastatureinstellungen
 STRG+NVDA+m: öffnet die Mauseinstellungen
 STRG+NVDA+o: öffnet den Dialog "Objektpräsentation"
-STRG+NVDA+B: öffnet die Einstellungen für den virtuellenPuffer
+STRG+NVDA+b: öffnet die Einstellungen für den virtuellenPuffer
 STRG+NVDA+d: öffnet die Einstellungen für die Dokumentformatierungen
-STRG+NVDA+c: Einstellungen speichern
-STRG+NVDA+r: Einstellungen zurücksetzen
 STRG+NVDA+z: aktiviert die Python-Konsole
-NUM Stern: Mausklick rechts
-NUM Schrägstrich: Mausklick links
  
-das aktuelle Objekt lesen:
+Das aktuelle Objekt lesen:
 Tasten(nkombination): Zweck
 Umschalt+NUM 7: springt zur ersten Zeile
 NUM 7: springt eine Zeile nach oben
@@ -73,7 +77,9 @@ Umschalt+NVDA+NUM 5: Sagt Größe und Position des aktuellen Objekts an
 STRG+Umschalt+NVDA+NUM 5: benennt das aktuelle Objekt und all seine Vorfahren bis hinauf zum Desktop
 NVDA+NUM 8: springt zum übergeordneten Objekt
 NVDA+NUM 4: springt zum vorigen Objekt
+Umschalt+NVDA+NUM 4: springt zum vorigen Objekt, welches nicht zwingend auf der selben Ebene sein muss
 NVDA+NUM 6: springt zum nächsten Objekt
+Umschalt+NVDA+NUM 6: springt zum nächsten Objekt, welches nicht zwingend auf der selben Ebene sein muss
 NVDA+NUM 2: springt zum ersten untergeordneten Objekt
 NVDA+NUM Minus: zieht den Navigator zum Fokus
 NVDA+NUM Schrägstrich: Zieht die Maus zum Navigator
@@ -92,16 +98,27 @@ NVDA+f3: weitersuchen
 NVDA+f7: ruft die Linkliste auf (nicht in Firefox 2 und Internetexplorer)
 NVDA+f5: aktualisiert den Inhalt des virtuellen Puffers (nicht in Firefox 2 und Internetexplorer)
 
-
 Schnelltasten in virtuellen Puffern
 Verwenden Sie diese Tasten um zum nächsten Objekt zu springen. Drücken Sie Umschalt und die entsprechende Taste, um zum vorigen Objekt zu springen.
 Taste: Zweck
+b: Schalter
+c: Kombinationsfeld
+e: Eingabefeld
+f: Formularfeld
+g: Grafik
 h: Überschrift
-l: Liste
+1 bis 6: Überschift der Ebene 1 bis 6
 i: Listeneintrag
 k: Link
+l: Liste
+m: Rahmen
+q: Zitat
+r: Auswahlschalter
+s: Trennlinie
 t: Tabelle
-f: Formularfeld
+x Kontrollfeld
+u: nicht besuchter Link
+v: besuchter Link
  
 Laptop-Tastaturbelegung
 In den Tastatureinstellungen von NVDA kann man statt der standardmäßig eingestellten Desktop-Tastaturbelegung eine experimentelle Laptop-Tastaturbelegung auswählen, sodass NVDA ohne den Nummernblock auskommt. Die Referenzen sind hier "noch" nicht aufgeführt.
