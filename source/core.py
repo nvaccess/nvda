@@ -48,7 +48,6 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
-	log.info("Using Python version %s"%sys.version)
 	log.debug("loading config")
 	import config
 	config.load()
@@ -65,6 +64,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
+	import versionInfo
+	log.info("NVDA version %s" % versionInfo.version)
+	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
+	log.info("Using Python version %s"%sys.version)
 	log.debug("Creating wx application instance")
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")

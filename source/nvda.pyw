@@ -97,8 +97,7 @@ if logLevel<=0:
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 
-import versionInfo
-log.info("Starting NVDA version %s" % versionInfo.version)
+log.info("Starting NVDA")
 
 if not globalVars.appArgs.minimal:
 	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
