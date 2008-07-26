@@ -4,6 +4,9 @@ Many of these commands use the NVDA key. The NVDA key is the insert key found ei
 
 Global commands 
 
+Control: Breaks down speech
+Shift: Continue speech
+
 NVDA+1: keyboardHelp
 This command turns on keyboard help mode so you can press any combination of keys on the keyboard and NVDA will tell you its name and what command it performs if it has one. To turn off keyboard help, press NVDA+1 again.
 
@@ -90,6 +93,44 @@ decreases the current voice setting
 
 NVDA+downArrow: sayAll
 Starts reading from the current position in a document or edit control 
+
+NVDA+f1: test_navigatorWindowInfo
+Reads Informations aboutthe current navigator object }hich are mainly useful for developers.
+
+Control+NVDA+c: saveConfiguration
+Saves the configuration.
+
+Control+NVDA+r: revertToSavedConfiguration
+Resets the configuration.
+
+Show dialogues:
+
+Control+NVDA+g: activateGeneralSettingsDialog
+Shows the general settings dialog.
+
+Control+NVDA+s: activateSynthesizerDialog
+Shows the synthesizer selection dialog.
+
+Control+NVDA+v: activateVoiceDialog
+Shows the voice settings dialog.
+
+Control+NVDA+k: activateKeyboardSettingsDialog
+Shows the keyboard settings dialog.
+
+Control+NVDA+m: activateMouseSettingsDialog
+Shows the mouse settings dialog.
+
+Control+NVDA+o: activateObjectPresentationDialog
+Shows the object presentation dialog.
+
+Control+NVDA+b: activateVirtualBuffersDialog
+Shows the virtual buffer settings dialog.
+
+Control+NVDA+d: activateDocumentFormattingDialog
+Shows the document formating setings dialog.
+
+Control+NVDA+z: activatePythonConsole
+Shows the python console dialog.
 
 navigator object navigation
 
@@ -202,19 +243,21 @@ NVDA+f7: links list (not in firefox2 or internet explorer)
 NVDA+f5: refresh buffer (not in Firefox2 or Internet Explorer)
 
 VirtualBuffer quick keys to skip to the next element of a particular type (also use shift with the key to go backwards):
+b: button
+c: combobox
+e: edit field
+f: form field
+g: graphic
 h: heading
 1 to 6: heading at level 1 to 6
-l: list
 i: list item
 k: link
-t: table
-f: form field
-e: edit field
-b: button
-r: radio button
-c: combobox
-x: checkbox
+l: list
 m: frame
-s: separator
-g: graphic
 q: block quote
+r: radio button
+s: separator
+t: table
+u: unvisited link
+v: visited link
+x: checkbox
