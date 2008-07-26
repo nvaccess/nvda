@@ -132,7 +132,13 @@ class MSHTML(virtualBuffer):
 			elif inputType in ["button","image","reset","submit"]:
 				domNode.click()
 		elif (nodeName in ["A","IMG"]) or domNode.onclick:
-			domNode.click()
+			try:
+				s=domNode.QueryInterface(IAccessibleHandler.IServiceProvider)
+				ia=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_), ctypes.byref(IAccessibleHandler.IAccessible._iid_))
+				ia=ctypes.POINTER(IAccessibleHandler.IAccessible)(ia)
+				ia.accDoDefaultAction()
+			except:
+				domNode.click()
 			try:
 				domNode.focus()
 			except:
