@@ -1,14 +1,14 @@
 NonVisual Desktop Access (NVDA)
 Web: http://www.nvda-project.org/
 
-NonVisual Desktop Access (NVDA) je otevÅ™enÃ½ (a volnÄ› Å¡iÅ™itelnÃ½) odeÄÃ­taÄ obrazovky pro operaÄnÃ­ systÃ©m Windows.
+NonVisual Desktop Access (NVDA) je otevøenı (a volnì šiøitelnı) odeèítaè obrazovky pro operaèní systém Windows.
 
-PotÅ™ebnÃ© informace najdete nejen v uÅ¾ivatelskÃ© pÅ™Ã­ruÄce, ale takÃ© na webovÃ½ch strÃ¡nkÃ¡ch programu NVDA (viz vÃ½Å¡e) a nebo na strÃ¡nce ÄeskÃ½ch a slovenskÃ½ch fanouÅ¡kÅ¯ projektu NVDA na adrese:
+Potøebné informace najdete nejen v uivatelské pøíruèce, ale také na webovıch stránkách programu NVDA (viz vıše) a nebo na stránce èeskıch a slovenskıch fanouškù projektu NVDA na adrese:
 http://nvda.venik.org
 
-LicenÄnÃ­ podmÃ­nky
+Licenèní podmínky
 
-Copyright (C) 2006-2008 TÃ½m NVDA <http://www.nvda-project.org/>
-	NVDA je chrÃ¡nÄ›n licencÃ­ GNU General Public License verze 2.0. Program mÅ¯Å¾ete libovolnÄ› Å¡Ã­Å™it a upravovat za pÅ™edpokladu, Å¾e k nÄ›mu pÅ™iloÅ¾Ã­te tuto licenci a zpÅ™Ã­stupnÃ­te jeho zdrojovÃ½ kÃ³d vÅ¡em zÃ¡jemcÅ¯m. Toto se vztahuje jak na pÅ¯vodnÃ­, tak upravenÃ© kopie tohoto programu a takÃ© na software uÅ¾Ã­vajÃ­cÃ­ kÃ³d pÅ™evzatÃ½ z tohoto programu. Podrobnosti najdete na nÃ¡sledujÃ­cÃ­ webovÃ© strÃ¡nce: 
+Copyright (C) 2006-2008 Tım NVDA <http://www.nvda-project.org/>
+	NVDA je chránìn licencí GNU General Public License verze 2.0. Program mùete libovolnì šíøit a upravovat za pøedpokladu, e k nìmu pøiloíte tuto licenci a zpøístupníte jeho zdrojovı kód všem zájemcùm. Toto se vztahuje jak na pùvodní, tak upravené kopie tohoto programu a také na software uívající kód pøevzatı z tohoto programu. Podrobnosti najdete na následující webové stránce: 
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- "Viz tÃ©Å¾ soubor Copying.txt pÅ™iloÅ¾enÃ½ k tomuto programu."
+ "Viz té soubor Copying.txt pøiloenı k tomuto programu."

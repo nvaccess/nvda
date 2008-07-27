@@ -4,6 +4,9 @@ Monet näistä komennoista käyttävät NVDA-näppäintä, joka on joko laskinnäppäimist
 
 Yleiset komennot
 
+Control: keskeytä puhe
+Shift: jatka puhetta
+
 NVDA+1: näppäinohje
 Tämä komento ottaa käyttöön näppäinohjeen, jossa NVDA kertoo mitä tahansa näppäinyhdistelmää painettaessa kyseisen näppäinyhdistelmän ja minkä toiminnon se suorittaa. Poista näppäinohje käytöstä painamalla uudelleen NVDA+1.
 
@@ -90,6 +93,44 @@ Laskee nykyistä puheasetusta
 
 NVDA+alanuoli: lue kaikki
 Lukee kaiken asiakirjan tai muokkaussäätimen tekstin nykyisestä paikasta lähtien.
+
+NVDA+f1: navigointiobjektin tiedot
+Lukee tietoja nykyisestä navigointiobjektista (hyödyllinen pääasiassa kehittäjille).
+
+Control+NVDA+c: tallenna asetukset
+Tallentaa asetukset.
+
+Control+NVDA+r: palauta tallennetut asetukset
+Palauttaa käyttöön nvda.ini-tiedostoon tallennetut asetukset.
+
+Asetusvalintaikkunoiden avaaminen:
+
+Control+NVDA+g: yleiset asetukset
+Avaa Yleiset asetukset -valintaikkunan.
+
+Control+NVDA+s: syntetisaattori
+Avaa Syntetisaattori-valintaikkunan.
+
+Control+NVDA+v: ääniasetukset
+Avaa Ääniasetukset-valintaikkunan.
+
+Control+NVDA+k: näppäimistöasetukset
+Avaa Näppäimistöasetukset-valintaikkunan.
+
+Control+NVDA+m: hiiriasetukset
+Avaa Hiiriasetukset-valintaikkunan.
+
+Control+NVDA+o: objektien lukeminen
+Avaa Objektien lukuasetukset -valintaikkunan.
+
+Control+NVDA+b: näennäispuskurit
+Avaa näennäispuskurin asetusvalintaikkunan.
+
+Control+NVDA+d: asiakirjojen muotoilu
+Avaa Asiakirjojen muotoiluasetukset -valintaikkunan.
+
+Control+NVDA+z: Python-konsoli
+Avaa Python-konsolin.
 
 Navigointiobjektilla navigoiminen
 
@@ -202,19 +243,21 @@ NVDA+f7: linkkilista (ei toimi Firefox 2:ssa tai internet explorerissa)
 NVDA+f5: päivitä näennäispuskuri (ei toimi Firefox 2:ssa tai Internet Explorerissa)
 
 Näennäispuskurin pikanäppäimet seuraavaan elementtiin siirtymiseksi (käytä shiftiä näiden näppäinten kanssa siirtyäksesi edelliseen):
+b: painike
+c: yhdistelmäruutu
+e: muokkauskenttä
+f: lomakekenttä
+g: kuva
 h: otsikko
-1 - 6: otsikko tasolla 1 - 6
-l: luettelo
+numerot 1 to 6: otsikko tasolla 1 - 6
 i: luettelon osa
 k: linkki
-t: taulukko
-f: lomakekenttä
-e: muokkauskenttä
-b: painike
-r: valintapainike
-c: yhdistelmäruutu
-x: valintaruutu
+l: luettelo
 m: kehys
-s: erotin
-g: kuva
 q: kappaleenvaihdollinen sisennys
+r: valintapainike
+s: erotin
+t: taulukko
+u: avaamaton linkki
+v: avattu linkki
+x: valintaruutu
