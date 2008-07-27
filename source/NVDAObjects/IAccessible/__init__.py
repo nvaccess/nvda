@@ -93,9 +93,18 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
 		try:
-			return self.obj.IAccessibleTextObject.CaretOffset
+			offset=self.obj.IAccessibleTextObject.CaretOffset
 		except:
+			log.debugWarning("IAccessibleText::caretOffset failed, returning 0",exc_info=True)
 			return 0
+		if offset==-1:
+			#-1 means end of text apparently, NVDA would prefer something better
+			try:
+				offset=self.obj.IAccessibleTextObject.nCharacters
+			except:
+				log.debugWarning("IAccessibleText::nCharacters failed, returning 0",exc_info=True)
+		return offset
+
 
 	def _setCaretOffset(self,offset):
 		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
