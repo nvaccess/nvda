@@ -689,6 +689,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		while elapsed < timeout:
 			if isScriptWaiting():
 				return False
+			api.processPendingEvents(processEventQueue=False)
 			newBookmark = self.makeTextInfo(textHandler.POSITION_CARET).bookmark
 			if newBookmark!=bookmark:
 				return True

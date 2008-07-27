@@ -196,14 +196,15 @@ def moveMouseToNVDAObject(obj):
 		y=(top+top+height)/2
 		winUser.setCursorPos(x,y)
 
-def processPendingEvents():
+def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
 	import IAccessibleHandler
 	import wx
 	import queueHandler
 	wx.Yield()
 	IAccessibleHandler.pumpAll()
-	queueHandler.flushQueue(queueHandler.eventQueue)
+	if processEventQueue:
+		queueHandler.flushQueue(queueHandler.eventQueue)
 
 def copyToClip(text):
 	"""Copies the given text to the windows clipboard.
