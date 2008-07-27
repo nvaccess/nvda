@@ -107,6 +107,8 @@ class ExcelGrid(IAccessible):
 			speech.speakMessage(_("underline"))
 
 [ExcelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("Tab","moveByCell"),
+	("Shift+Tab","moveByCell"),
 	("ExtendedUp","moveByCell"),
 	("ExtendedDown","moveByCell"),
 	("ExtendedLeft","moveByCell"),
