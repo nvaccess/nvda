@@ -144,11 +144,21 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getCharacterOffsets(self,offset):
 		try:
+			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+				return offset,offset+1
+		except:
+			pass
+		try:
 			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
 		except:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
 
 	def _getWordOffsets(self,offset):
+		try:
+			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+				return offset,offset+1
+		except:
+			pass
 		try:
 			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
 		except:
@@ -156,12 +166,22 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		try:
+			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+				return offset,offset+1
+		except:
+			pass
+		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except:
 			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
 
 	def _getSentenceOffsets(self,offset):
+		try:
+			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+				return offset,offset+1
+		except:
+			pass
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)
 			if start==end:
@@ -171,6 +191,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
 
 	def _getParagraphOffsets(self,offset):
+		try:
+			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+				return offset,offset+1
+		except:
+			pass
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)
 			return start,end
