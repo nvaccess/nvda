@@ -140,6 +140,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			super(CorePump,self).__init__(*args,**kwargs)
 		def Notify(self):
 			try:
+				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()

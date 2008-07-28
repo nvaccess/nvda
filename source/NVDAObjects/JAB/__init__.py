@@ -90,7 +90,10 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
-		return max(textInfo.caretIndex,0)
+		offset=textInfo.caretIndex
+		if offset==-1:
+			raise RuntimeError("no available caret in this object")
+		return offset
 
 	def _setCaretOffset(self,offset):
 		self.obj.jabContext.setCaretPosition(offset)

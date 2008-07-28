@@ -202,9 +202,11 @@ def moveMouseToNVDAObject(obj):
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
 	import IAccessibleHandler
+	import JABHandler
 	import wx
 	import queueHandler
 	wx.Yield()
+	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)

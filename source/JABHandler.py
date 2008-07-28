@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import winsound
+import Queue
 from ctypes import *
 from ctypes.wintypes import *
 import queueHandler
@@ -20,6 +20,10 @@ import NVDAObjects.JAB
 bridgeDll=None
 isRunning=False
 vmIDsToWindowHandles={}
+internalFunctionQueue=Queue.Queue(1000)
+
+def internalQueueFunction(func,*args,**kwargs):
+	internalFunctionQueue.put_nowait((func,args,kwargs))
 
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
@@ -42,7 +46,8 @@ class JABContext(object):
 		self.accContext=accContext
 
 	def __del__(self):
-		bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+		if isRunning:
+			bridgeDll.releaseJavaObject(self.vmID,self.accContext)
 
 	def __eq__(self,jabContext):
 		if self.vmID==jabContext.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
@@ -251,7 +256,7 @@ class AccessibleTextAttributesInfo(Structure):
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
-	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
+	internalQueueFunction(event_gainFocus,vmID,source)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
@@ -269,13 +274,13 @@ def event_gainFocus(vmID,accContext):
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
-	queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,newDescendant)
+	internalQueueFunction(event_gainFocus,vmID,newDescendant)
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_wchar_p,c_wchar_p)
 def internal_event_stateChange(vmID,event,source,oldState,newState):
-	queueHandler.queueFunction(queueHandler.eventQueue,event_stateChange,vmID,source,oldState,newState)
+	internalQueueFunction(event_stateChange,vmID,source,oldState,newState)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_stateChange(vmID,accContext,oldState,newState):
@@ -297,7 +302,7 @@ def event_stateChange(vmID,accContext,oldState,newState):
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	if oldPos<0 and newPos>=0:
-		queueHandler.queueFunction(queueHandler.eventQueue,event_gainFocus,vmID,source)
+		internalQueueFunction(event_gainFocus,vmID,source)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_enterJavaWindow(hwnd):
@@ -327,6 +332,10 @@ def initialize():
 		return True
 	except:
 		return False
+
+def pumpAll():
+	if isRunning: 
+		queueHandler.flushQueue(internalFunctionQueue)
 
 def terminate():
 	global isRunning, bridgeDll
