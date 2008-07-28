@@ -169,7 +169,10 @@ def setNavigatorObject(obj):
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
-	globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)
+	try:
+		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)
+	except:
+		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_FIRST)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
