@@ -690,71 +690,115 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if isScriptWaiting():
 				return False
 			api.processPendingEvents(processEventQueue=False)
-			newBookmark = self.makeTextInfo(textHandler.POSITION_CARET).bookmark
-			if newBookmark!=bookmark:
+			if eventHandler.isPendingEvents("gainFocus"):
+				oldInCaretMovement=globalVars.inCaretMovement
+				globalVars.inCaretMovement=True
+				try:
+					api.processPendingEvents()
+				finally:
+					globalVars.inCaretMovement=oldInCaretMovement
 				return True
+			#The caret may stop working as the focus jumps, we want to stay in the while loop though
+			try:
+				newBookmark = self.makeTextInfo(textHandler.POSITION_CARET).bookmark
+				if newBookmark!=bookmark:
+					return True
+			except:
+				pass
 			time.sleep(retryInterval)
 			elapsed += retryInterval
 		return False
 
 	def script_moveByLine(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
 			speech.speakFormattedText(info)
 
 	def script_moveByCharacter(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
 			speech.speakFormattedText(info)
 
 	def script_moveByParagraph(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
 			speech.speakFormattedText(info)
 
 	def script_backspace(self,keyPress):
-		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
 		res=testInfo.move(textHandler.UNIT_CHARACTER,-1)
@@ -767,31 +811,48 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		if self._hasCaretMoved(oldBookmark):
 			speech.speakSpelling(delChar)
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info
 
 	def script_delete(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=self.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			sendKey(keyPress)
+			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
-			info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+			except:
+				return
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakFormattedText(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress):
-		oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		try:
+			oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		except:
+			sendKey(keyPress)
+			return
 		sendKey(keyPress)
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			focus=api.getFocusObject()
-			newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
+			try:
+				newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
+			except:
+				return
 			speech.speakSelectionChange(oldInfo,newInfo)
 
 class AutoSelectDetectionNVDAObject(NVDAObject):
@@ -803,7 +864,10 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 
 	def initAutoSelectDetection(self):
 		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
-		self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		try:
+			self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		except:
+			self._lastSelectionPos=None
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -811,7 +875,11 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 		oldInfo=getattr(self,'_lastSelectionPos',None)
 		if not oldInfo:
 			return
-		newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		try:
+			newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		except:
+			self._lastSelectionPos=None
+			return
 		self._lastSelectionPos=newInfo.copy()
 		hasContentChanged=self.hasContentChangedSinceLastSelection
 		self.hasContentChangedSinceLastSelection=False

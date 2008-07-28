@@ -240,13 +240,18 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	if isEditable:
 		allowProperties['value']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=REASON_ONLYCACHE and isEditable:
-		info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
-		if not info.isCollapsed:
-			speakMessage(_("selected %s")%info.text)
-		else:
-			info.expand(textHandler.UNIT_READINGCHUNK)
-			speakMessage(info.text)
+	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
+		try:
+			info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+			if not info.isCollapsed:
+				speakMessage(_("selected %s")%info.text)
+			else:
+				info.expand(textHandler.UNIT_READINGCHUNK)
+				speakMessage(info.text)
+		except:
+			newInfo=obj.makeTextInfo(textHandler.POSITION_ALL)
+			speakMessage(newInfo.text)
+
 
 def speakText(text,index=None,reason=REASON_MESSAGE):
 	"""Speaks some given text.
