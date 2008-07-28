@@ -157,11 +157,6 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
-				return offset,offset+1
-		except:
-			pass
-		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except:
