@@ -58,8 +58,6 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
-		# The explicit cursorManager include can be removed once the new virtualBuffers package is included.
-		"includes": ["cursorManager"],
 	}},
 	zipfile = None,
 	data_files=[
