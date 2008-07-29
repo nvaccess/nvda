@@ -82,6 +82,7 @@ JABStatesToNVDAStates={
 	"pressed":controlTypes.STATE_PRESSED,
 	"expanded":controlTypes.STATE_EXPANDED,
 	"collapsed":controlTypes.STATE_COLLAPSED,
+	"editable":controlTypes.STATE_EDITABLE,
 }
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
