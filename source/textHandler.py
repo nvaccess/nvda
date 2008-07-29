@@ -418,7 +418,7 @@ def findStartOfWord(text,offset,lineLength=None):
 @rtype: int 
 """
 	if offset>=len(text):
-		offset=len(text)-1
+		return offset
 	while offset>0 and text[offset].isspace():
 		offset-=1
 	if not text[offset].isalnum():
@@ -440,7 +440,7 @@ def findEndOfWord(text,offset,lineLength=None):
 @rtype: int 
 """
 	if offset>=len(text):
-		offset=len(text)-1
+		return offset+1
 	if text[offset].isalnum():
 		while offset<len(text) and text[offset].isalnum():
 			offset+=1
