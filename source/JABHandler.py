@@ -21,6 +21,8 @@ bridgeDll=None
 isRunning=False
 vmIDsToWindowHandles={}
 internalFunctionQueue=Queue.Queue(1000)
+internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
+lastFocusNVDAObject=None
 
 def internalQueueFunction(func,*args,**kwargs):
 	internalFunctionQueue.put_nowait((func,args,kwargs))
@@ -260,17 +262,22 @@ def internal_event_focusGained(vmID, event,source):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
+	global lastFocusNVDAObject
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
 	focus=api.getFocusObject()
-	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
+	if (isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext) or (lastFocusNVDAObject and lastFocusNVDAObject.jabContext==jabContext):
 		return 
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj.role==controlTypes.ROLE_UNKNOWN:
+		return
 	eventHandler.queueEvent("gainFocus",obj)
+	lastFocusNVDAObject=obj
 	activeChild=obj.activeChild
-	if activeChild:
+	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN and activeChild.jabContext!=jabContext:
 		eventHandler.queueEvent("gainFocus",activeChild)
+		lastFocusNVDAObject=activeChild
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
