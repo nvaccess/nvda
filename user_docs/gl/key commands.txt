@@ -5,6 +5,10 @@ Moitas destas ordes utilizan a tecla NVDA. A tecla NVDA é o insert atopado ou no
 
 Ordes Globais
 
+
+Control: Interrumpe a voz
+Shift: Continúa a voz
+
 NVDA+1: AxudaDoTeclado
 Esta orden activa o modo de axuda do teclado tal que podes premer calquer combinación de teclas no teclado e NVDA dirache o seu nome e que orden leva a cabo se ten unha. Para desactivar a axuda do teclado, preme NVDA+1 de novo.
 
@@ -91,6 +95,47 @@ Decrementa a actual opción de voz
 
 NVDA+flecha Abaixo: LerTodo
 Comeza a letura dende a posición actual nun documento ou control de edición.
+
+NVDA+f1: InfoTest_ventáNavegador
+Le Informacións acerca do navegador de obxectos actual que son principalmente utis para desenrroladores..
+
+Control+NVDA+c: gardarConfiguración
+Garda a configuración..
+
+Control+NVDA+r: voltarÁConfiguraciónGardada
+Restaura a configuración..
+
+
+Amosar diálogos:
+
+Control+NVDA+g: activvarDiálogoOpciónXerais
+Amosa o diálogo de Opcións Xerais.
+
+Control+NVDA+s: activarDiálogoSintetizadores
+Amosa o diálogo de selección dos sintetizadores.
+
+Control+NVDA+v: activarDiálogoVoz
+Amosa o diálogo de opcións da voz.
+
+Control+NVDA+k: activaRDiálogoOpciónsDeTeclado
+Amosa o diálogo de opcións do teclado.
+
+Control+NVDA+m: activarDiálogoPociónsDoRato
+Amosa o diálogo de opcións do rato.
+
+Control+NVDA+o: activarDialogoPresentaciónDeObxectos
+Amosa o diálogo presentación de obxectos.
+
+Control+NVDA+b: activarDiálogoModoVirtual
+Amosa o diálogo das opcións do modo virtual.
+
+Control+NVDA+d: activarDiálogoFormatoDeDocumento
+Amosa o diálogo de opcións de formato de documento.
+
+Control+NVDA+z: activarConsolaPython
+Amosa o diálogo da consola de python.
+
+
 
 
 Navegación do Navegador de Obxectos
@@ -206,19 +251,24 @@ NVDA+f5: refresca a memoria intermedia (non en Firefox2 o Internet Explorer)
 
 Teclas rápidas do modo virtual para saltar ós seguintes elementos de un tipo en particular (utiliza tamén shift ca tecla para retroceder):
 
+
+b: botón
+c: cadro combinado
+e: campo de edición
+f: formulario
+g: gráfico
 h: cabeceira
 1 a 6: cabeceiras de nivel 1 a 6
-l: lista
 i: elemento de lista
 k: liga
-t: táboa
-f: formulario
-e: campo de edición
-b: botón
-r: botón de opción
-c: cadro combinado
-x: casiña de verificación
+l: lista
 m: marco
-s: separador
-g: gráfico
 q: cita
+r: botón de opción
+s: separador
+t: táboa
+u: liga non visitada
+v: liga visitada
+x: casiña de verificación
+
+

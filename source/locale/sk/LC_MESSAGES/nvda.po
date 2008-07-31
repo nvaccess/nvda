@@ -106,11 +106,11 @@ msgstr "vrchol stĺpca"
 
 #: NVDAObjects\IAccessible\winword.py:349
 msgid "end of row"
-msgstr "koniec riadka"
+msgstr "koniec riadku"
 
 #: NVDAObjects\IAccessible\winword.py:365
 msgid "beginning of row"
-msgstr "začiatok riadka"
+msgstr "začiatok riadku"
 
 #: appModuleHandler.py:231
 msgid "Error in appModule %s"
@@ -527,7 +527,7 @@ msgid ""
 "Moves the review cursor to the start of the line where it is situated, in "
 "the current navigator object"
 msgstr ""
-"Premiestni prehliadací kurzor na začiatok aktuálneho riadka v rámci "
+"Premiestni prehliadací kurzor na začiatok aktuálneho riadku v rámci "
 "aktuálneho navigačného objektu."
 
 #: appModules\_default.py:461
@@ -564,7 +564,7 @@ msgid ""
 "Moves the review cursor to the end of the line where it is situated, in the "
 "current navigator object"
 msgstr ""
-"Premiestni prehliadací kurzor na koniec aktuálneho riadka v rámci aktuá"
+"Premiestni prehliadací kurzor na koniec aktuálneho riadku v rámci aktuá"
 "lneho navigačného objektu"
 
 #: appModules\_default.py:511
@@ -622,7 +622,7 @@ msgstr "ukončí nvda"
 
 #: appModules\_default.py:549
 msgid "Shows the NVDA interface window"
-msgstr "aktivuje okno nvda"
+msgstr "zobrazí NVDA menu"
 
 #: appModules\_default.py:554
 msgid ""
@@ -640,7 +640,7 @@ msgstr "prečíta hierarchiu objektov od aktuálneho objektu."
 msgid "reads from system caret up to end of text, moving the caret as it goes"
 msgstr ""
 "číta text od polohy systémového kurzora do konca, pri čom sa postupne "
-"posúva aj systémový kurzor."
+"tento posúva."
 
 #: appModules\_default.py:582
 msgid "Announces formatting information at the current position in a document"
@@ -727,7 +727,7 @@ msgid ""
 "text in dos console windows"
 msgstr ""
 "prepína oznamovanie dynamických zmien  obsahu, napr. text v okne "
-"príkazového riadka."
+"príkazového riadku."
 
 #: appModules\_default.py:684
 msgid "caret moves review cursor"
@@ -935,11 +935,11 @@ msgstr "tab"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "koniec riadka"
+msgstr "koniec riadku"
 
 #: characterSymbols.py:22
 msgid "carriage return"
-msgstr "koniec riadka"
+msgstr "koniec riadku"
 
 #: characterSymbols.py:23
 msgid "space"
@@ -1159,7 +1159,7 @@ msgstr "bublinková nápoveda"
 
 #: controlTypes.py:188
 msgid "tool tip"
-msgstr "nástrojová nápoveda"
+msgstr "kontextová nápoveda"
 
 #: controlTypes.py:189
 msgid "link"
@@ -1223,7 +1223,7 @@ msgstr "hlavička stĺpca"
 
 #: controlTypes.py:205
 msgid "row header"
-msgstr "hlavička riadka"
+msgstr "hlavička riadku"
 
 #: controlTypes.py:206
 msgid "drop down button"
@@ -1953,7 +1953,7 @@ msgstr "Zobraziť log"
 
 #: gui\__init__.py:260
 msgid "Python console"
-msgstr "python konzola"
+msgstr "Python konzola"
 
 #: gui\__init__.py:262
 msgid "Tools"
@@ -2129,11 +2129,11 @@ msgstr "&Potvrdzovať ukončenie NVDA"
 
 #: gui\settingsDialogs.py:117
 msgid "L&ogging level"
-msgstr "Úroveň l&ogovania"
+msgstr "Úr&oveň záznamu"
 
 #: gui\settingsDialogs.py:120
 msgid "Log level"
-msgstr "úroveň logovania"
+msgstr "úroveň záznamu"
 
 #: gui\settingsDialogs.py:141
 msgid "Error in %s language file"
@@ -2216,7 +2216,7 @@ msgstr "Veľké písmená čítať &zvýšeným hlasom"
 
 #: gui\settingsDialogs.py:284
 msgid "Say &cap before capitals"
-msgstr "Hovoriť v&eľké pred veľkými písmenami"
+msgstr "Vysloviť \"veľké\" pred prečítaním veľkého písmena"
 
 #: gui\settingsDialogs.py:287
 msgid "&Beep for capitals"
@@ -2236,11 +2236,11 @@ msgstr "Rozloženie klávesnice"
 
 #: gui\settingsDialogs.py:379
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Používať numerický insert ako kláves NVDA"
+msgstr "Používať &numerický Insert ako kláves NVDA"
 
 #: gui\settingsDialogs.py:382
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "používať insert ako kláves NVDA"
+msgstr "Používať &Insert ako kláves NVDA"
 
 #: gui\settingsDialogs.py:385
 msgid "Speak typed &characters"
@@ -2268,7 +2268,7 @@ msgstr "Oznamovať &text pod kurzorom myši"
 
 #: gui\settingsDialogs.py:426
 msgid "Report &role when mouse enters object"
-msgstr "Oznamovať názvy p&rvkov pri zameraní kurzorom myši"
+msgstr "Oznamovať typ p&rvku pri zameraní kurzorom myši"
 
 #: gui\settingsDialogs.py:429
 msgid "play audio coordinates when mouse moves"
@@ -2284,7 +2284,7 @@ msgstr "Prezentácia objektov"
 
 #: gui\settingsDialogs.py:452
 msgid "Report &tooltips"
-msgstr "Čítať nástrojovú ná&povedu"
+msgstr "Čítať kon&textovú nápovedu"
 
 #: gui\settingsDialogs.py:455
 msgid "Report &help balloons"
@@ -2300,7 +2300,7 @@ msgstr "Oznamovať &pozíciu objektu"
 
 #: gui\settingsDialogs.py:464
 msgid "Report object &descriptions"
-msgstr "Oznamovať popisky objektov"
+msgstr "Oznamovať pop&isky objektov"
 
 #: gui\settingsDialogs.py:467
 msgid "Say object &state first"

@@ -1,9 +1,12 @@
 Referencia rápida de teclas de órdenes de NVDA
 
-Muchas de estas órdenes utilizan la tecla NVDA. La tecla NVDA es el insert encontrada o en el tecládo numérico o junto a las teclas suprimir, inicio, fin, retroceso de página y avance de página en tu teclado. NVDA también puede ser configurado para que puedas utilizar la tecla BloqMayus como la tecla NVDA.
+Muchas de estas órdenes utilizan la tecla NVDA. La tecla NVDA es el insert encontrado o en el tecládo numérico o junto a las teclas suprimir, inicio, fin, retroceso de página y avance de página en tu teclado. NVDA también puede ser configurado para que puedas utilizar la tecla BloqMayus como la tecla NVDA.
 
 
 Órdenes Globales
+
+Control: Interrumpe la voz
+Shift: Continúa la voz
 
 NVDA+1: AyudaDeTeclado
 Esta orden activa el modo de ayuda de teclado tal que puedes presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
@@ -92,8 +95,47 @@ Decrementa la actual opción de voz
 NVDA+flecha Abajo: Leer Todo
 Comienza la lectura desde la posición actual en un documento o control de edición.
 
+NVDA+f1: infoTest_ventanaNavegador
+Lee Informaciones acerca del navegador de objetos actual las cuales son principalmente útiles para desarrolladores.
 
-Navegación del Navegador de Objetos
+Control+NVDA+c: guardarConfiguración
+Guarda la configuración.
+
+Control+NVDA+r: volverAConfiguraciónGuardada
+Restaura la configuración.
+
+
+Mostrar diálogos:
+
+Control+NVDA+g: activarDiálogoOpcionesGenerales
+Muestra el diálogo opciones generales.
+
+Control+NVDA+s: activarDiálogoSintetizadores
+Muestra el diálogo de selección de sintetizadores.
+
+Control+NVDA+v: activarDiálogoVoz
+Muestra el diálogo de opciones de voz.
+
+Control+NVDA+k: activarDiálogoOpcionesDeTeclado
+Muestra el diálogo de opciones de teclado.
+
+Control+NVDA+m: activarDiálogoOpcionesDeRatón
+Muestra el diálogo de opciones del ratón.
+
+Control+NVDA+o: activarDiálogoPresentaciónDeObjetos
+Muestra el diálogo de presentación de objetos.
+
+Control+NVDA+b: activarDiálogoModoVirtual
+Muestra el diálogo de opciones del modo virtual.
+
+Control+NVDA+d: activarDiálogoFormatoDeDocumento
+Muestra el diálogo de opciones de formato de documento.
+
+Control+NVDA+z: activarConsolaPython
+Muestra el diálogo de consola de python.
+
+
+Navegación en el Navegador de Objetos
 
 NVDA+5 teclado numérico: actualNavegadorDeObjetos
 Anuncia el navegador de objetos actual.
@@ -152,6 +194,7 @@ Mueve el cursor del sistema a la localización del cursor de revisión
 Más Teclado Numérico: revisiónLeerTodo
 Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
 
+
 Leyendo objetos
 
 1 Teclado Numérico: revisiónCaracterAnterior
@@ -206,19 +249,23 @@ NVDA+f5: refresca la memoria intermedia (no en Firefox2 o Internet Explorer)
 
 Teclas rápidas del modo virtual para saltar a siguientes elementos de un tipo en particular (utiliza también shift con la tecla para retroceder):
 
+b: botón
+c: cuadro combinado
+e: campo de edición
+f: formulario
+g: gráfico
 h: encabezado
 1 a 6: encabezados de nivel 1 a 6
-l: lista
 i: elemento de lista
 k: enlace
-t: tabla
-f: formulario
-e: campo de edición
-b: botón
-r: botón de opción
-c: cuadro combinado
-x: casilla de verificación
+l: lista
 m: marco
-s: separador
-g: gráfico
 q: cita
+r: botón de opción
+s: separador
+t: tabla
+u: enlace no visitado
+v: enlace visitado
+x: casilla de verificación
+
+
