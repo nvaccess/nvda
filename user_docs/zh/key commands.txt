@@ -4,6 +4,10 @@ NvDA 按鍵列表
 
 通用按鍵
 
+Control: 中斷朗讀
+Shift: 繼續朗讀
+NVDA+pageUp: 加快朗讀速度
+NVDA+pageDown: 減慢朗讀速度
 NVDA+1: 鍵盤學習模式開關
 NVDA+t: 朗讀標題
 NVDA+b: 朗讀視窗內容
@@ -11,8 +15,6 @@ NVDA+n: 打開 NVDA 視窗
 NVDA+q: 結束 NVDA
 NVDA+s: 語音模式切換
 NVDA+F12: 按一次朗讀時間，按兩次朗讀日期
-NVDA+pageUp: 加快朗讀速度
-NVDA+pageDown: 減慢朗讀速度
 NVDA+2: 邊打邊唸字元開關
 NVDA+3: 邊打邊唸自詞開關
 NVDA+4: 邊打邊唸鍵盤開關
@@ -35,6 +37,22 @@ Control+NVDA+右: 下一個語音設定項目
 Control+NVDA+上: 增加語音設定值
 Control+NVDA+下: 減少語音設定值
 NVDA+下: 朗讀到全篇結束
+NVDA+f1: 讀出目前瀏覽物件的技術資訊
+Control+NVDA+c: 儲存設定
+Control+NVDA+r: 還原設定
+
+
+顯示 NVDA 設定對話框
+
+Control+NVDA+g: 叫出一般設定對話框
+Control+NVDA+s: 叫出語音合成器設定對話框
+Control+NVDA+v: 叫出語音設定對話框
+Control+NVDA+k: 叫出鍵盤設定對話框
+Control+NVDA+m: 叫出滑鼠設定對話框
+Control+NVDA+o: 叫出物件設定對話框
+Control+NVDA+b: 叫出虛擬游標設定對話框
+Control+NVDA+d: 叫出文件格式設定對話框
+Control+NVDA+z: 叫出 python 工作台對話框
 
 
 物件瀏覽
@@ -87,19 +105,21 @@ NVDA+F5: 畫面重整（在 Firefox2/IE 無效）
 
 以下為網業物件的快速移動鍵，家 Shift 為反向跳躍：
 
+b: 按鈕
+c: 下拉方塊
+e: 可編輯欄位
+f: 表單
+g: 圖片
 h: 標題
 1-6: 1-6 號標題
-l: 清單
 i: 清單項目
 k: 連結
-t: 表格
-f: 表單
-e: 可編輯欄位
-b: 按鈕
-r: 單選紐
-c: 下拉方塊
-x: 核取方塊
+l: 清單
 m: 頁框
-s: 分隔區
-g: 圖片
 q: 區快
+r: 單選紐
+s: 分隔區
+t: 表格
+u: 未進入過的連結
+v: 已進入過的連結
+x: 核取方塊

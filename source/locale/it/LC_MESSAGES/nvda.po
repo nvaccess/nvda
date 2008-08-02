@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2008-07-22 18:53+0100\n"
+"PO-Revision-Date: 2008-08-01 18:31+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 #: NVDAObjects\IAccessible\__init__.py:71
-#: speech.py:717
+#: speech.py:722
 msgid "level %s"
 msgstr "Livello %s"
 
 #: NVDAObjects\IAccessible\__init__.py:77
-#: NVDAObjects\IAccessible\__init__.py:617
+#: NVDAObjects\IAccessible\__init__.py:637
 #: NVDAObjects\IAccessible\sysListView32.py:224
 msgid "%s of %s"
 msgstr "%s di %s"
@@ -75,7 +75,7 @@ msgid "underline"
 msgstr "Sottolineato"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:245
+#: NVDAObjects\JAB\__init__.py:249
 msgid "%d of %d"
 msgstr "%d di %d"
 
@@ -141,7 +141,7 @@ msgstr "Impossibile caricare il modulo di default"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: speech.py:332
+#: speech.py:337
 #: virtualBufferHandler.py:93
 #: virtualBuffers\__init__.py:211
 msgid "on"
@@ -163,8 +163,8 @@ msgstr "Attivato"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: speech.py:337
-#: speech.py:343
+#: speech.py:342
+#: speech.py:348
 #: virtualBufferHandler.py:93
 #: virtualBuffers\__init__.py:211
 msgid "off"
@@ -200,9 +200,9 @@ msgid "no selection"
 msgstr "Nessuna selezione"
 
 #: appModules\_default.py:97
-#: speech.py:246
-#: speech.py:404
-#: speech.py:417
+#: speech.py:247
+#: speech.py:409
+#: speech.py:422
 #: textBuffer.py:537
 #: textBuffer.py:541
 #: textBuffer.py:543
@@ -777,7 +777,7 @@ msgstr "Inviato: %s"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: speech.py:79
-#: speech.py:649
+#: speech.py:654
 msgid "blank"
 msgstr "Vuoto"
 
@@ -928,8 +928,8 @@ msgid "tilda"
 msgstr "Tilde"
 
 #: characterSymbols.py:56
-#: virtualBuffers_old\MSHTML.py:258
-#: virtualBuffers_old\MSHTML.py:265
+#: virtualBuffers_old\MSHTML.py:264
+#: virtualBuffers_old\MSHTML.py:271
 #: virtualBuffers_old\adobe.py:268
 #: virtualBuffers_old\adobe.py:279
 #: virtualBuffers_old\gecko.py:260
@@ -996,7 +996,7 @@ msgstr "Menu'"
 
 #: controlTypes.py:183
 msgid "combo box"
-msgstr "Combo box"
+msgstr "Casella combinata"
 
 #: controlTypes.py:184
 msgid "list"
@@ -1387,7 +1387,7 @@ msgstr "Icona desktop"
 #: controlTypes.py:282
 #: controlTypes.py:306
 msgid "alert"
-msgstr "Allarme"
+msgstr "Avviso"
 
 #: controlTypes.py:283
 msgid "IFrame"
@@ -1526,7 +1526,7 @@ msgid "subMenu"
 msgstr "Sottomenu'"
 
 #: controlTypes.py:324
-#: virtualBuffers_old\MSHTML.py:300
+#: virtualBuffers_old\MSHTML.py:306
 msgid "protected"
 msgstr "Protetto"
 
@@ -1567,7 +1567,7 @@ msgid "focusable"
 msgstr "Focus"
 
 #: controlTypes.py:334
-#: virtualBuffers_old\MSHTML.py:330
+#: virtualBuffers_old\MSHTML.py:336
 msgid "clickable"
 msgstr "Cliccabile"
 
@@ -1579,11 +1579,11 @@ msgstr "Modificabile"
 msgid "checkable"
 msgstr "Selezionabile"
 
-#: core.py:77
+#: core.py:80
 msgid "Loading subsystems, please wait..."
 msgstr "Caricamento in corso, attendere prego"
 
-#: core.py:130
+#: core.py:133
 msgid "NVDA started"
 msgstr "Nvda attivato"
 
@@ -2328,31 +2328,31 @@ msgstr "Fine testo"
 msgid "cap %s"
 msgstr "Cap %s"
 
-#: speech.py:323
+#: speech.py:328
 msgid "in"
 msgstr "In"
 
-#: speech.py:328
-#: speech.py:346
+#: speech.py:333
+#: speech.py:351
 msgid "out of"
 msgstr "Fuori di"
 
-#: speech.py:399
+#: speech.py:404
 msgid "selecting %s"
 msgstr "Seleziono %s"
 
-#: speech.py:410
+#: speech.py:415
 msgid "unselecting %s"
 msgstr "Deseleziono %s"
 
-#: speech.py:412
+#: speech.py:417
 msgid "selection removed"
 msgstr "Selezione cancellata"
 
-#: speech.py:703
+#: speech.py:708
 #: virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:308
-#: virtualBuffers_old\MSHTML.py:312
+#: virtualBuffers_old\MSHTML.py:314
+#: virtualBuffers_old\MSHTML.py:318
 #: virtualBuffers_old\adobe.py:305
 #: virtualBuffers_old\adobe.py:309
 #: virtualBuffers_old\gecko.py:297
@@ -2544,9 +2544,9 @@ msgid "out of %s"
 msgstr "Fuori di %s"
 
 #: virtualBuffers\__init__.py:100
-#: virtualBuffers_old\MSHTML.py:252
-#: virtualBuffers_old\MSHTML.py:255
-#: virtualBuffers_old\MSHTML.py:262
+#: virtualBuffers_old\MSHTML.py:258
+#: virtualBuffers_old\MSHTML.py:261
+#: virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:262
 #: virtualBuffers_old\adobe.py:273
 #: virtualBuffers_old\gecko.py:254
@@ -2954,20 +2954,20 @@ msgstr "Vai al blocco tra virgolette precedente"
 msgid "no previous block quote"
 msgstr "Nessun blocco tra virgolette precedente"
 
-#: virtualBuffers_old\MSHTML.py:149
+#: virtualBuffers_old\MSHTML.py:155
 #: virtualBuffers_old\adobe.py:175
 #: virtualBuffers_old\gecko.py:172
 msgid "loading document %s"
 msgstr "Sto' caricando il documento %s"
 
-#: virtualBuffers_old\MSHTML.py:157
+#: virtualBuffers_old\MSHTML.py:163
 #: virtualBuffers_old\adobe.py:184
 #: virtualBuffers_old\gecko.py:181
 msgid "done"
 msgstr "Fatto"
 
-#: virtualBuffers_old\MSHTML.py:261
-#: virtualBuffers_old\MSHTML.py:268
+#: virtualBuffers_old\MSHTML.py:267
+#: virtualBuffers_old\MSHTML.py:274
 #: virtualBuffers_old\adobe.py:272
 #: virtualBuffers_old\adobe.py:285
 #: virtualBuffers_old\gecko.py:264
@@ -2975,7 +2975,7 @@ msgstr "Fatto"
 msgid "definition"
 msgstr "Definizione"
 
-#: virtualBuffers_old\MSHTML.py:296
+#: virtualBuffers_old\MSHTML.py:302
 msgid "file upload"
 msgstr "Upload file"
 

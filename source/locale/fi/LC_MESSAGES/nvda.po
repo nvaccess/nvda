@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2299\n"
+"Project-Id-Version: r2321\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-07-25 06:33+0300\n"
+"PO-Revision-Date: 2008-08-02 09:03+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,12 +13,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:71 speech.py:717
+#: NVDAObjects\IAccessible\__init__.py:71 speech.py:722
 msgid "level %s"
 msgstr "taso %s"
 
 #: NVDAObjects\IAccessible\__init__.py:77
-#: NVDAObjects\IAccessible\__init__.py:617
+#: NVDAObjects\IAccessible\__init__.py:637
 #: NVDAObjects\IAccessible\sysListView32.py:224
 msgid "%s of %s"
 msgstr "%s kautta %s"
@@ -66,7 +66,7 @@ msgid "underline"
 msgstr "alleviivaus"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:245
+#: NVDAObjects\JAB\__init__.py:249
 msgid "%d of %d"
 msgstr "%d kautta %d"
 
@@ -123,7 +123,7 @@ msgstr "Oletusmoduulia ei voitu ladata"
 #: appModules\_default.py:662 appModules\_default.py:672
 #: appModules\_default.py:682 appModules\_default.py:692
 #: appModules\winamp.py:74 appModules\winamp.py:84 keyboardHandler.py:52
-#: keyboardHandler.py:54 keyboardHandler.py:56 speech.py:332
+#: keyboardHandler.py:54 keyboardHandler.py:56 speech.py:337
 #: virtualBufferHandler.py:93 virtualBuffers\__init__.py:211
 msgid "on"
 msgstr "käytössä"
@@ -135,10 +135,10 @@ msgstr "käytössä"
 #: appModules\_default.py:669 appModules\_default.py:679
 #: appModules\_default.py:689 appModules\winamp.py:76 appModules\winamp.py:86
 #: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
-#: speech.py:337 speech.py:343 virtualBufferHandler.py:93
+#: speech.py:342 speech.py:348 virtualBufferHandler.py:93
 #: virtualBuffers\__init__.py:211
 msgid "off"
-msgstr "pois käytöstä"
+msgstr "ei käytössä"
 
 #: appModules\_default.py:58
 msgid "keyboard help %s"
@@ -177,7 +177,7 @@ msgstr ""
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:97 speech.py:246 speech.py:404 speech.py:417
+#: appModules\_default.py:97 speech.py:247 speech.py:409 speech.py:422
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -196,11 +196,11 @@ msgstr "Ilmoittaa päiväyksen ja kellonajan"
 
 #: appModules\_default.py:110
 msgid "Increases currently active setting in the synth settings ring"
-msgstr "Nostaa syntetisaattorin asetusrenkaan aktiivista asetusta"
+msgstr "Suurentaa syntetisaattorin asetusrenkaan aktiivista asetusta"
 
 #: appModules\_default.py:114
 msgid "Decreases currently active setting in the synth settings ring"
-msgstr "Laskee syntetisaattorin asetusrenkaan aktiivista asetusta"
+msgstr "Pienentää syntetisaattorin asetusrenkaan aktiivista asetusta"
 
 #: appModules\_default.py:118
 msgid "Moves to the next available setting in the synth settings ring"
@@ -887,7 +887,7 @@ msgstr "liite"
 msgid "sent: %s"
 msgstr "lähetetty: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:649
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:654
 msgid "blank"
 msgstr "tyhjä"
 
@@ -1035,8 +1035,8 @@ msgstr "loppuaalto"
 msgid "tilda"
 msgstr "mato"
 
-#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:258
-#: virtualBuffers_old\MSHTML.py:265 virtualBuffers_old\adobe.py:268
+#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:264
+#: virtualBuffers_old\MSHTML.py:271 virtualBuffers_old\adobe.py:268
 #: virtualBuffers_old\adobe.py:279 virtualBuffers_old\gecko.py:260
 #: virtualBuffers_old\gecko.py:271
 msgid "bullet"
@@ -1623,7 +1623,7 @@ msgstr "linkitetty"
 msgid "subMenu"
 msgstr "alavalikko"
 
-#: controlTypes.py:324 virtualBuffers_old\MSHTML.py:300
+#: controlTypes.py:324 virtualBuffers_old\MSHTML.py:306
 msgid "protected"
 msgstr "suojattu"
 
@@ -1663,7 +1663,7 @@ msgstr "valittavissa"
 msgid "focusable"
 msgstr "kohdistettavissa"
 
-#: controlTypes.py:334 virtualBuffers_old\MSHTML.py:330
+#: controlTypes.py:334 virtualBuffers_old\MSHTML.py:336
 msgid "clickable"
 msgstr "napsautettava"
 
@@ -2455,28 +2455,28 @@ msgstr "tekstin loppu"
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:323
+#: speech.py:328
 msgid "in"
 msgstr "alkaa"
 
-#: speech.py:328 speech.py:346
+#: speech.py:333 speech.py:351
 msgid "out of"
 msgstr "loppuu"
 
-#: speech.py:399
+#: speech.py:404
 msgid "selecting %s"
 msgstr "valitaan %s"
 
-#: speech.py:410
+#: speech.py:415
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: speech.py:412
+#: speech.py:417
 msgid "selection removed"
 msgstr "valinta poistettu"
 
-#: speech.py:703 virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:308 virtualBuffers_old\MSHTML.py:312
+#: speech.py:708 virtualBuffers_old\MSHTML.py:126
+#: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
 #: virtualBuffers_old\adobe.py:305 virtualBuffers_old\adobe.py:309
 #: virtualBuffers_old\gecko.py:297 virtualBuffers_old\gecko.py:301
 msgid "not %s"
@@ -2666,8 +2666,8 @@ msgstr "näennäispuskurin läpivienti"
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: virtualBuffers\__init__.py:100 virtualBuffers_old\MSHTML.py:252
-#: virtualBuffers_old\MSHTML.py:255 virtualBuffers_old\MSHTML.py:262
+#: virtualBuffers\__init__.py:100 virtualBuffers_old\MSHTML.py:258
+#: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:262 virtualBuffers_old\adobe.py:273
 #: virtualBuffers_old\gecko.py:254 virtualBuffers_old\gecko.py:265
 msgid "with %s items"
@@ -3061,23 +3061,23 @@ msgstr "siirtää edellisen kappaleenvaihdollisen sisennyksen kohdalle"
 msgid "no previous block quote"
 msgstr "ei edellistä kappaleenvaihdollista sisennystä"
 
-#: virtualBuffers_old\MSHTML.py:149 virtualBuffers_old\adobe.py:175
+#: virtualBuffers_old\MSHTML.py:155 virtualBuffers_old\adobe.py:175
 #: virtualBuffers_old\gecko.py:172
 msgid "loading document %s"
 msgstr "ladataan dokumenttia %s"
 
-#: virtualBuffers_old\MSHTML.py:157 virtualBuffers_old\adobe.py:184
+#: virtualBuffers_old\MSHTML.py:163 virtualBuffers_old\adobe.py:184
 #: virtualBuffers_old\gecko.py:181
 msgid "done"
 msgstr "valmis"
 
-#: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
+#: virtualBuffers_old\MSHTML.py:267 virtualBuffers_old\MSHTML.py:274
 #: virtualBuffers_old\adobe.py:272 virtualBuffers_old\adobe.py:285
 #: virtualBuffers_old\gecko.py:264 virtualBuffers_old\gecko.py:277
 msgid "definition"
 msgstr "määritelmä"
 
-#: virtualBuffers_old\MSHTML.py:296
+#: virtualBuffers_old\MSHTML.py:302
 msgid "file upload"
 msgstr "tiedoston siirto"
 
