@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2008-07-22 10:37+Russian Daylight Time\n"
-"PO-Revision-Date: 2008-07-22 11:35+Moscow\n"
+"POT-Creation-Date: 2008-08-03 16:58+Russian Daylight Time\n"
+"PO-Revision-Date: 2008-08-03 17:35+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In cooperation with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -11,12 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:71 speech.py:717
+#: NVDAObjects\IAccessible\__init__.py:71 speech.py:722
 msgid "level %s"
 msgstr "Уровень %s"
 
 #: NVDAObjects\IAccessible\__init__.py:77
-#: NVDAObjects\IAccessible\__init__.py:617
+#: NVDAObjects\IAccessible\__init__.py:637
 #: NVDAObjects\IAccessible\sysListView32.py:224
 msgid "%s of %s"
 msgstr "%s из %s"
@@ -68,7 +68,7 @@ msgid "underline"
 msgstr "Подчёркнутый"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:245
+#: NVDAObjects\JAB\__init__.py:249
 msgid "%d of %d"
 msgstr "%d из %d"
 
@@ -129,7 +129,7 @@ msgstr ""
 #: appModules\_default.py:682 appModules\_default.py:692
 #: appModules\winamp.py:74 appModules\winamp.py:84
 #: keyboardHandler.py:52 keyboardHandler.py:54
-#: keyboardHandler.py:56 speech.py:332
+#: keyboardHandler.py:56 speech.py:337
 #: virtualBufferHandler.py:93 virtualBuffers\__init__.py:211
 msgid "on"
 msgstr "Включено"
@@ -142,7 +142,7 @@ msgstr "Включено"
 #: appModules\_default.py:689 appModules\winamp.py:76
 #: appModules\winamp.py:86 keyboardHandler.py:52
 #: keyboardHandler.py:54 keyboardHandler.py:56
-#: speech.py:337 speech.py:343 virtualBufferHandler.py:93
+#: speech.py:342 speech.py:348 virtualBufferHandler.py:93
 #: virtualBuffers\__init__.py:211
 msgid "off"
 msgstr "Выключено"
@@ -185,8 +185,8 @@ msgstr ""
 msgid "no selection"
 msgstr "Нет выделения"
 
-#: appModules\_default.py:97 speech.py:246 speech.py:404
-#: speech.py:417 textBuffer.py:537 textBuffer.py:541
+#: appModules\_default.py:97 speech.py:247 speech.py:409
+#: speech.py:422 textBuffer.py:537 textBuffer.py:541
 #: textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "Выделено %s"
@@ -195,7 +195,11 @@ msgstr "Выделено %s"
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
-msgstr "Читает выделенный текст в документе или редактируемом элементе управления. При отсутствии выделения, также, сообщает об этом"
+msgstr ""
+"Читает выделенный текст в документе или "
+"редактируемом элементе управления. При "
+"отсутствии выделения, также, сообщает об "
+"этом"
 
 #: appModules\_default.py:106
 msgid "Reports the current date and time"
@@ -290,7 +294,8 @@ msgstr "Привести навигатор к мыши"
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer."
 msgstr ""
-"устанавливает навигатор на текущий объект под указателем мыши"
+"устанавливает навигатор на текущий "
+"объект под указателем мыши"
 
 #: appModules\_default.py:185 appModules\_default.py:215
 #: appModules\_default.py:236 appModules\_default.py:249
@@ -645,7 +650,8 @@ msgstr ""
 #: appModules\_default.py:582
 msgid "Announces formatting information at the current position in a document"
 msgstr ""
-"Читать информацию о форматировании документа в позиции курсора"
+"Читать информацию о форматировании "
+"документа в позиции курсора"
 
 #: appModules\_default.py:593
 msgid "reports the object with focus"
@@ -951,7 +957,7 @@ msgid "sent: %s"
 msgstr "Отправлено: %s"
 
 #: characterSymbols.py:17 characterSymbols.py:18
-#: speech.py:79 speech.py:649
+#: speech.py:79 speech.py:654
 msgid "blank"
 msgstr "Чисто"
 
@@ -1081,7 +1087,7 @@ msgstr "Крышка"
 
 #: characterSymbols.py:51
 msgid "graav"
-msgstr "Акцент"
+msgstr "Обратный апостроф"
 
 #: characterSymbols.py:52
 msgid "left brace"
@@ -1099,8 +1105,8 @@ msgstr "Правая фигурная скобка"
 msgid "tilda"
 msgstr "Тильда"
 
-#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:258
-#: virtualBuffers_old\MSHTML.py:265
+#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:264
+#: virtualBuffers_old\MSHTML.py:271
 #: virtualBuffers_old\adobe.py:268
 #: virtualBuffers_old\adobe.py:279
 #: virtualBuffers_old\gecko.py:260
@@ -1550,7 +1556,7 @@ msgstr "Кнопка дерева"
 
 #: controlTypes.py:280
 msgid "IP address"
-msgstr "IP адрес"
+msgstr "I P адрес"
 
 #: controlTypes.py:281
 msgid "desktop icon"
@@ -1693,7 +1699,7 @@ msgstr "Связано"
 msgid "subMenu"
 msgstr "Подменю"
 
-#: controlTypes.py:324 virtualBuffers_old\MSHTML.py:300
+#: controlTypes.py:324 virtualBuffers_old\MSHTML.py:306
 msgid "protected"
 msgstr "Защищено"
 
@@ -1733,7 +1739,7 @@ msgstr "Доступно для выделения"
 msgid "focusable"
 msgstr "Активно"
 
-#: controlTypes.py:334 virtualBuffers_old\MSHTML.py:330
+#: controlTypes.py:334 virtualBuffers_old\MSHTML.py:336
 msgid "clickable"
 msgstr "По щелчку"
 
@@ -1745,13 +1751,13 @@ msgstr "Редактируемый"
 msgid "checkable"
 msgstr "Отмечаемый"
 
-#: core.py:77
+#: core.py:80
 msgid "Loading subsystems, please wait..."
 msgstr ""
 "Загрузка подсистем, пожалуйста, подождит"
 "е..."
 
-#: core.py:130
+#: core.py:133
 msgid "NVDA started"
 msgstr "NVDA готов"
 
@@ -2060,15 +2066,18 @@ msgid ""
 msgstr ""
 "Добро пожаловать в NVDA!\n"
 "Большинство команд NVDA вводятся с удержани"
-"ем клавиши-модификатора NVDA при нажатии других клавиш.\n"
-"По умолчанию, используется insert на цифровом блоке и обычный insert как "
-"клавиша-модификатор NVDA.\n"
-"Также, можно настроить NVDA на использование CapsLock как "
-"клавишу-модификатор NVDA.\n"
+"ем клавиши-модификатора NVDA при нажатии "
+"других клавиш.\n"
+"По умолчанию, используется insert на цифр"
+"овом блоке и обычный insert как клавиша-"
+"модификатор NVDA.\n"
+"Также, можно настроить NVDA на использовани"
+"е CapsLock как клавишу-модификатор NVDA.\n"
 "Нажимайте NVDA+n в любое время для активации "
 "меню NVDA.\n"
-"Из этого меню вы можете настраивать NVDA, получать доступ к справке "
-"идругим функциям программы.\n"
+"Из этого меню вы можете настраивать NVDA, "
+"получать доступ к справке идругим функция"
+"м программы.\n"
 
 #: gui\__init__.py:353
 msgid "Welcome to NVDA"
@@ -2580,29 +2589,29 @@ msgstr "Конец текста"
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:323
+#: speech.py:328
 msgid "in"
 msgstr "в"
 
-#: speech.py:328 speech.py:346
+#: speech.py:333 speech.py:351
 msgid "out of"
 msgstr "вне"
 
-#: speech.py:399
+#: speech.py:404
 msgid "selecting %s"
 msgstr "Выделено %s"
 
-#: speech.py:410
+#: speech.py:415
 msgid "unselecting %s"
 msgstr "Не выделено %s"
 
-#: speech.py:412
+#: speech.py:417
 msgid "selection removed"
 msgstr "Выделение удалено"
 
-#: speech.py:703 virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:308
-#: virtualBuffers_old\MSHTML.py:312
+#: speech.py:708 virtualBuffers_old\MSHTML.py:126
+#: virtualBuffers_old\MSHTML.py:314
+#: virtualBuffers_old\MSHTML.py:318
 #: virtualBuffers_old\adobe.py:305
 #: virtualBuffers_old\adobe.py:309
 #: virtualBuffers_old\gecko.py:297
@@ -2784,13 +2793,13 @@ msgid ""
 msgstr ""
 "Авторское право (C) 2006-2008 NVDA Contributors <http://www."
 "nvda-project.org/>\n"
-"%(name)s защищается GNU General Public License (Version 2). Вы можете "
-"свободно распространять и изменятьда"
-"нное программное обеспечение, если "
-"соблюдаете лицензионное соглашение исох"
-"раняете файл лицензии в не изменнённом "
-"виде в программе при распространении, "
-"позволяя и другим получать доступ к "
+"%(name)s защищается GNU General Public License (Version 2). Вы "
+"можете свободно распространять и "
+"изменятьданное программное обеспечение, "
+"если соблюдаете лицензионное соглашение "
+"исохраняете файл лицензии в не изменнё"
+"нном виде в программе при распространении"
+", позволяя и другим получать доступ к "
 "оригиналу.Также, разрешается изменять "
 "программное обеспечение, использующее "
 "код, взятый из данного пакета и егочаст"
@@ -2813,9 +2822,9 @@ msgid "out of %s"
 msgstr "вне %s"
 
 #: virtualBuffers\__init__.py:100
-#: virtualBuffers_old\MSHTML.py:252
-#: virtualBuffers_old\MSHTML.py:255
-#: virtualBuffers_old\MSHTML.py:262
+#: virtualBuffers_old\MSHTML.py:258
+#: virtualBuffers_old\MSHTML.py:261
+#: virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:262
 #: virtualBuffers_old\adobe.py:273
 #: virtualBuffers_old\gecko.py:254
@@ -3259,20 +3268,20 @@ msgstr "переходит на предыдущую цитату"
 msgid "no previous block quote"
 msgstr "Нет предыдущей цитаты"
 
-#: virtualBuffers_old\MSHTML.py:149
+#: virtualBuffers_old\MSHTML.py:155
 #: virtualBuffers_old\adobe.py:175
 #: virtualBuffers_old\gecko.py:172
 msgid "loading document %s"
 msgstr "Загрузка документа %s"
 
-#: virtualBuffers_old\MSHTML.py:157
+#: virtualBuffers_old\MSHTML.py:163
 #: virtualBuffers_old\adobe.py:184
 #: virtualBuffers_old\gecko.py:181
 msgid "done"
 msgstr "Готово"
 
-#: virtualBuffers_old\MSHTML.py:261
-#: virtualBuffers_old\MSHTML.py:268
+#: virtualBuffers_old\MSHTML.py:267
+#: virtualBuffers_old\MSHTML.py:274
 #: virtualBuffers_old\adobe.py:272
 #: virtualBuffers_old\adobe.py:285
 #: virtualBuffers_old\gecko.py:264
@@ -3280,7 +3289,7 @@ msgstr "Готово"
 msgid "definition"
 msgstr "Определение"
 
-#: virtualBuffers_old\MSHTML.py:296
+#: virtualBuffers_old\MSHTML.py:302
 msgid "file upload"
 msgstr "Закачка файла"
 
