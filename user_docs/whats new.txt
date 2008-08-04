@@ -3,79 +3,74 @@ What's New in NVDA
 Changes since 0.6 P1:
 
 *Improved the default ESpeak voice in NVDA
-*Added a laptop keyboard layout. Keyboard layouts can be configured from NVDA's  Keyboard settings dialog
-*Support for grouping items in SysListView32 controls, mainly found in Windows Vista.
+*Added a laptop keyboard layout. Keyboard layouts can be configured from NVDA's  Keyboard settings dialog. (#60)
+*Support for grouping items in SysListView32 controls, mainly found in Windows Vista. (#27)
 *Report the checked state of treeview items in SysTreeview32 controls.
 *Added shortcut keys for many of NVDA's configuration dialogs
 *Support for IAccessible2 enabled applications such as Mozilla Firefox when running NVDA from portable media, with out having to register any special Dll files
- *Fix a crash with the virtualBuffers Links List in Gecko applications
- *Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions
- *Whether or not NVDA uses a 'screen layout' mode for virtual buffer documents can now be configured from a settings dialog
- *No longer report anchor tags with no href in Gecko documents as links
- *The NVDA find command now remembers what you last searched for, across all applications
- *Fix issues where the checked state would not be announced for some checkboxes and radio buttons in virtualBuffers
- *VirtualBuffer pass-through mode is now specific to each document, rather than NVDA globally
- *Fixed some sluggishness with focus changes and incorrect speech interuption which sometimes occured when using NVDA on a system that had been on standby or was rather slow
- *Improve support for combo boxes in Mozilla Firefox. Specifically when arrowing around them text isn't repeated, and when jumping out of them, ancestor controls are not announced unnecessarily. Also virtualBuffer commands now work when focused on one  when you are in a virtualBuffer.
- *Improve accuracy of finding the statusbar in many applications
- *Added the NVDA interactive Python console tool, to enable developers to look at and manipulate NVDA's internals as it is running
- *sayAll, reportSelection and reportCurrentLine scripts now work properly when in virtualBuffer pass-through mode
- *The increase rate and decrease rate scripts have been removed. Users should use the synth settings ring scripts (control+nvda+arrows) or the Voice settings dialog
- *Improve the range and scale of the progress bar beeps
- *Added more quick keys to the new virtualBuffers:  l for list, i for list item, e for edit field, b for button, x for checkbox, r for radio button, g for graphic, q for blockquote, c for combo box, 1 through 6 for respective heading levels, s for separator, m for frame
- *Canceling the loading of a new document in Mozilla Firefox now allows the user to keep using the old document's virtualBuffer if the old document hadn't yet really been destroyed.
- *Navigating by words in virtualBuffers is now more accurate as  words do not accidentily contain text from more than one field
- *Improved accuracy of focus tracking and focus updating when navigating in Mozilla Gecko virtualBuffers
- *Added a findPrevious script (shift+NVDA+f3) for use in new virtualBuffers
- *Improved sluggishness in Mozilla Gecko dialogs (in Firefox and Thunderbird)
- *Add the ability to view the current log file for NVDA. it can be found in the NVDA menu -> Tools
- *Scripts such as say time and date now take the current language in to account; punctuation and ordering of words now reflects the language
- *The language combo box in NVDA's General settings dialog now shows full language names for ease of use
- *When reviewing text in the current navigator object, the text is always up to date if it changes dynamically. E.g. reviewing the text of a list item in Task Manager
- *When moving with the mouse, the current paragraph of text under the mouse is now announced, rather than either all the text in that particular object or just the current word. Also audio coordinates, and announcement of object roles is optional, they are turned off by default
- *Support for reading text with the mouse in Microsoft Word
+*Fix a crash with the virtualBuffers Links List in Gecko applications. (#48)
+*Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions. (#39)
+*Whether or not NVDA uses a 'screen layout' mode for virtual buffer documents can now be configured from a settings dialog
+*No longer report anchor tags with no href in Gecko documents as links. (#47)
+*The NVDA find command now remembers what you last searched for, across all applications. (#53)
+*Fix issues where the checked state would not be announced for some checkboxes and radio buttons in virtualBuffers
+*VirtualBuffer pass-through mode is now specific to each document, rather than NVDA globally. (#33)
+*Fixed some sluggishness with focus changes and incorrect speech interuption which sometimes occured when using NVDA on a system that had been on standby or was rather slow
+*Improve support for combo boxes in Mozilla Firefox. Specifically when arrowing around them text isn't repeated, and when jumping out of them, ancestor controls are not announced unnecessarily. Also virtualBuffer commands now work when focused on one  when you are in a virtualBuffer.
+*Improve accuracy of finding the statusbar in many applications. (#8)
+*Added the NVDA interactive Python console tool, to enable developers to look at and manipulate NVDA's internals as it is running
+*sayAll, reportSelection and reportCurrentLine scripts now work properly when in virtualBuffer pass-through mode. (#52)
+*The increase rate and decrease rate scripts have been removed. Users should use the synth settings ring scripts (control+nvda+arrows) or the Voice settings dialog
+*Improve the range and scale of the progress bar beeps
+*Added more quick keys to the new virtualBuffers:  l for list, i for list item, e for edit field, b for button, x for checkbox, r for radio button, g for graphic, q for blockquote, c for combo box, 1 through 6 for respective heading levels, s for separator, m for frame. (#67, #102, #108)
+*Canceling the loading of a new document in Mozilla Firefox now allows the user to keep using the old document's virtualBuffer if the old document hadn't yet really been destroyed. (#63)
+*Navigating by words in virtualBuffers is now more accurate as  words do not accidentally contain text from more than one field. (#70)
+*Improved accuracy of focus tracking and focus updating when navigating in Mozilla Gecko virtualBuffers.
+*Added a findPrevious script (shift+NVDA+f3) for use in new virtualBuffers
+*Improved sluggishness in Mozilla Gecko dialogs (in Firefox and Thunderbird). (#66)
+*Add the ability to view the current log file for NVDA. it can be found in the NVDA menu -> Tools
+*Scripts such as say time and date now take the current language in to account; punctuation and ordering of words now reflects the language
+*The language combo box in NVDA's General settings dialog now shows full language names for ease of use
+*When reviewing text in the current navigator object, the text is always up to date if it changes dynamically. E.g. reviewing the text of a list item in Task Manager. (#15)
+*When moving with the mouse, the current paragraph of text under the mouse is now announced, rather than either all the text in that particular object or just the current word. Also audio coordinates, and announcement of object roles is optional, they are turned off by default
+*Support for reading text with the mouse in Microsoft Word
 *Fixed bug where leaving the menu bar in applications such as Wordpad would cause text selection to not be announced anymore
 *In Winamp, the title of the track is no longer announced again and again when switching tracks, or pausing/resuming/stopping playback.
 *In Winamp,  Added ability to announce state of the shuffle and repeat controls as they are switched. Works in the main window and in the playlist editor
 *Improve the ability to activate particular fields in Mozilla Gecko virtualBuffers. May include clickable graphics, links containing paragraphs, and other weird structures
-*Fixed an initial lag when opening NVDA dialogs on some systems
+*Fixed an initial lag when opening NVDA dialogs on some systems. (#65)
 *Add specific support for the Total Commander application
-*Fix bug in the sapi4serotek driver where the pitch could get locked at a particular value, i.e. stays high after reading a capital letter
-*Announce clickable text and other fields as clickable in Mozilla Gecko VirtualBuffers. e.g.  a field has an onclick HTML attribute
-*When moving around Mozilla Gecko virtualBuffers, scroll the current field in to view -- useful so sighted peers have an idea of where the user is up to in the document
+*Fix bug in the sapi4serotek driver where the pitch could get locked at a particular value, i.e. stays high after reading a capital letter. (#89)
+*Announce clickable text and other fields as clickable in Mozilla Gecko VirtualBuffers. e.g.  a field which has an onclick HTML attribute. (#91)
+*When moving around Mozilla Gecko virtualBuffers, scroll the current field in to view -- useful so sighted peers have an idea of where the user is up to in the document. (#57)
 *Add basic support for ARIA live region show events in IAccessible2 enabled applications. Useful in the Chatzilla IRC application, new messages will now be read automatically
 *Some slight improvements to help use ARIA enabled web applications,  e.g. Google Docs
 *Stop adding extra blank lines to text when copying it from a virtualBuffer
 *Stop the space key from activating a link in the Links List. Now it can be used like other letters in order to  start typing the name of a particular link you wish to go to
 *The moveMouseToNavigator script (NVDA+numpadSlash) now moves the mouse to the centre of the navigator object, rather than the top left
 *Added scripts to click the left and right mouse buttons (numpadSlash and numpadStar respectively)
-*Improve access to the Windows System Tray. Focus hopefully should no longer seem to keep jumping back to one particular item. Reminder: to get to the System Tray use the Windows command WindowsKey+b
+*Improve access to the Windows System Tray. Focus hopefully should no longer seem to keep jumping back to one particular item. Reminder: to get to the System Tray use the Windows command WindowsKey+b. (#10)
 *Improve performance and stop announcing extra text when holding down a cursor key in an edit field and it hits the end
-*Stop the ability for NVDA to make the user wait while particular messages are spoken. Fixes some crashes/freezes with particular speech synthesizers
-*Added support for the Audiologic Tts3 speech synthesizer, contribution by Gianluca Casalino
- *Possibly improve performance when navigating around documents in Microsoft Word
- *Improved accuracy when reading text of alerts in Mozilla Gecko applications
- *Stop possible crashes when trying to save configuration on non-English versions of Windows
- *Add an NVDA welcome dialog. This dialog is designed to provide essential information for new users and allows CapsLock to be configured as an NVDA modifier key. This dialog will be displayed when NVDA is started by default until it is disabled.
- *Fix basic support for Adobe Reader so it is possible to read documents  in  versions 8 and 9
+*Stop the ability for NVDA to make the user wait while particular messages are spoken. Fixes some crashes/freezes with particular speech synthesizers. (#117)
+*Added support for the Audiologic Tts3 speech synthesizer, contribution by Gianluca Casalino. (#105)
+*Possibly improve performance when navigating around documents in Microsoft Word
+*Improved accuracy when reading text of alerts in Mozilla Gecko applications
+*Stop possible crashes when trying to save configuration on non-English versions of Windows. (#114)
+*Add an NVDA welcome dialog. This dialog is designed to provide essential information for new users and allows CapsLock to be configured as an NVDA modifier key. This dialog will be displayed when NVDA is started by default until it is disabled.
+*Fix basic support for Adobe Reader so it is possible to read documents  in  versions 8 and 9
 *Fix some errors that may have occured when holding down keys before NVDA is properly initialized
 *If the user has configured NVDA to save configuration on exit, make sure the configuration is properly saved when shutting down or logging out of  Windows.
 *Added an NVDA logo sound to the beginning of the installer, contributed by Victer Tsaran
-*NVDA, both running in the installer, and otherwise, should properly clean up its system tray icon when it exits
- *Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.
- *NVDA's icon should now be  used for  the NVDA shortcuts in the start menu and on the Desktop, rather than a default application icon.
- *Read cells in MS Excel when moving with tab and shift+tab.
- *Fix some double speaking in particular lists in Skype.
-*Improved caret tracking in IAccessible2 and Java applications e.g. in Open Office and Lotus Symphony NVDA properly waits for the caret to move in documents rather than accidentily reading the wrong word or line at the end of some paragraphs.
+*NVDA, both running in the installer and otherwise, should properly clean up its system tray icon when it exits
+*Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.
+*NVDA's icon should now be  used for  the NVDA shortcuts in the start menu and on the Desktop, rather than a default application icon.
+*Read cells in MS Excel when moving with tab and shift+tab.
+*Fix some double speaking in particular lists in Skype.
+*Improved caret tracking in IAccessible2 and Java applications; e.g. in Open Office and Lotus Symphony, NVDA properly waits for the caret to move in documents rather than accidentally reading the wrong word or line at the end of some paragraphs.
 *Support for AkelEdit controls found in Akelpad 4.0
 *NVDA no longer locks up in Lotus Synphony when moving from the document to the menu bar.
-*NVDA no longer freezes in the Windows XP Add/Remove programs applet when launching an uninstaller
+*NVDA no longer freezes in the Windows XP Add/Remove programs applet when launching an uninstaller. (#30)
 *NVDA no longer freezes when opening Spybot Search and Destroy
-
-
-
- 
- 
  
 
  Changes since 0.5:
@@ -166,7 +161,6 @@ User Interface:
 *Removed the NVDA interface window, and replaced it with a simple NVDA popup menu.
 *NVDA's user interface settings dialog is now called General Settings. It also contains an extra setting: a combo box to set the log level, for what messages should go to NVDA's log file. Note that NVDA's log file is now called nvda.log not debug.log.
 *Removed the report object group names checkBox from the object presentation settings dialog, reporting of group names now is handled differently.
-
 
 
 Changes since r425:
