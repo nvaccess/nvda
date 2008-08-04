@@ -1,3 +1,4 @@
+import CoCallCancellationHandler
 import queueHandler
 import api
 import speech
@@ -87,6 +88,15 @@ def doPreGainFocus(obj):
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			continue
 		executeEvent("focusEntered",parent)
+	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
+(globalVars.focusAncestors[1].windowClassName=="TformMain" and 
+globalVars.focusAncestors[1].name=="SpyBot - Search & Destroy") or 
+globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"): 
+		if not CoCallCancellationHandler.isRunning: 
+			CoCallCancellationHandler.start() 
+	elif CoCallCancellationHandler.isRunning:
+		import wx
+		wx.CallAfter(CoCallCancellationHandler.stop)
 
 def doPreForeground(obj):
 	api.setFocusObject(obj)
