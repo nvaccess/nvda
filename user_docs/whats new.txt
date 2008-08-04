@@ -7,7 +7,7 @@ Changes since 0.6 P1:
 *Support for grouping items in SysListView32 controls, mainly found in Windows Vista.
 *Report the checked state of treeview items in SysTreeview32 controls.
 *Added shortcut keys for many of NVDA's configuration dialogs
-*Support for IAccessible2 enabled applications such as Mozilla Firefox when running NVDA from portable media
+*Support for IAccessible2 enabled applications such as Mozilla Firefox when running NVDA from portable media, with out having to register any special Dll files
  *Fix a crash with the virtualBuffers Links List in Gecko applications
  *Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions
  *Whether or not NVDA uses a 'screen layout' mode for virtual buffer documents can now be configured from a settings dialog
@@ -64,8 +64,21 @@ Changes since 0.6 P1:
 *NVDA, both running in the installer, and otherwise, should properly clean up its system tray icon when it exits
  *Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.
  *NVDA's icon should now be  used for  the NVDA shortcuts in the start menu and on the Desktop, rather than a default application icon.
+ *Read cells in MS Excel when moving with tab and shift+tab.
+ *Fix some double speaking in particular lists in Skype.
+*Improved caret tracking in IAccessible2 and Java applications e.g. in Open Office and Lotus Symphony NVDA properly waits for the caret to move in documents rather than accidentily reading the wrong word or line at the end of some paragraphs.
+*Support for AkelEdit controls found in Akelpad 4.0
+*NVDA no longer locks up in Lotus Synphony when moving from the document to the menu bar.
+*NVDA no longer freezes in the Windows XP Add/Remove programs applet when launching an uninstaller
+*NVDA no longer freezes when opening Spybot Search and Destroy
+
+
+
  
-  Changes since 0.5:
+ 
+ 
+
+ Changes since 0.5:
 
 Access to web content with new in-process virtualBuffers (so far for Mozilla Gecko applications including Firefox3 and Thunderbird3):
 *Load times have been improved almost by a factor of thirty (you no longer have to wait at all for most web pages to load in to the buffer)
