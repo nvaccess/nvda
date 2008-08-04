@@ -61,7 +61,7 @@
 </ul>
 </ul>
 <h2 id="1">1. Introduction</h2>
-<h3 id="1.1">General Features</h3>
+<h3 id="1.1">1.1. General Features</h3>
 <p>
 Providing feedback by synthetic speech, NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 </p>
@@ -82,31 +82,31 @@ Major highlights include:
 <li>support for Windows Command Prompt and console applications   </li>
 <li>Automatic announcement of text under the mouse and optional audible indication of the mouse position</li>
 </ul>
-<h3 id="1.2">Internationalization</h3>
+<h3 id="1.2">1.2. Internationalization</h3>
 <p>
 It is important that people anywhere in the world, no matter what language they speak, get the same access to technologies. NVDA currently has been translated into   over 20 languages including: Brazilian Portuguese, Croatian, Czech, Finnish, French, Galician, German, Hungarian, Italian, Japanese, Portuguese, Russian, Slovak, Spanish, Traditional Chinese, Afrikaans, Polish, Thai, Ukrainian and Vietnamese.
 </p>
-<h3 id="1.3">Speech Synthesizer Support</h3>
+<h3 id="1.3">1.3. Speech Synthesizer Support</h3>
 <p>
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that particular language.
 </p>
 <p>
 NVDA is bundled with <a href="http://espeak.sourceforge.net/">eSpeak</a>, a free, open-source, multi-lingual speech synthesizer. Additionally, NVDA can use both SAPI4 and SAPI5  speech engines to provide speech output, as well as the Audiologic speech synthesizer.
 </p>
-<h3 id="1.4">Innovation and Experimentation</h3>
+<h3 id="1.4">1.4. Innovation and Experimentation</h3>
 <p>
 NVDA is not restricted by a need to follow market trends and demands. Commercial screen readers implement really good features, but sometimes this is biased by what the market wants, rather than what will be really useful for the user. NVDA may not be always as stable as other screen readers, but it can certainly act as an experimental testing tool.  It can easily and quickly test new ideas and features perhaps not seen in other screen readers for the Windows Operating System. An example of this is NVDA's ability to use beeps to communicate to the user that a progress bar is moving. The higher the beep, the closer the progress bar is to the end. People have added this feature in to other screen readers through custom scripts and the like, but it has never been officially adopted completely in to the core of any other Windows screen reader.  
  </p>
-<h3 id="1.5">Design and Implementation</h3>
+<h3 id="1.5">1.5. Design and Implementation</h3>
 <p>
 NVDA is written in the <a href="http://www.python.org/">Python programming language</a>, and is built with a modular design, and much of its code can easily be extended and added to in order to support new programs and/or controls in Windows. App Modules can be written to add overall support for a specific application, virtual buffers can be written to allow NVDA to display complex documents or other data, and NVDA Objects can be written to add support for specific controls or Windows. NVDA always tries to make controls and elements of a program or Operating System as accessible as possible, so that the user can actively seek any information they require. NVDA is not so concerned with special features such as filtering and announcing particular information it thinks the user may want to know. 
 </p>
 <p>
 To communicate with the Operating System and programs, NVDA uses a mix of Operating System functions, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge and specific programming interfaces provided by certain applications. NVDA does not use any special Video Intercept drivers or display hooks, and will always try to gain as much information from Accessibility specific interfaces as possible, before resorting to other means. 
  </p>
-<h3 id="1.6">Licence and Copyright</h3>
+<h3 id="1.6">1.6. Licence and Copyright</h3>
 <p>
-NVDA is copyright © 2006-2008 NVDA contributors.
+NVDA is copyright …†2006-2008 NVDA contributors.
 </p>
 <p>
 NVDA is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both original and modified copies of the software, plus any software that uses code taken from this software.
@@ -120,7 +120,7 @@ For further details, you can <a href="http://www.gnu.org/licenses/old-licenses/g
 </ul>
 <h2 id="3">3. Getting NVDA</h2>
 <p>
-If you havenít yet got a copy of NVDA, you can download it from the NVDA website at: 
+If you haven”¥ yet got a copy of NVDA, you can download it from the NVDA website at: 
 <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
 </p>
 <p>
@@ -153,7 +153,7 @@ If you have installed NVDA with the installer, then starting NVDA is as simple a
 To start the portable zip file version, go to the directory you unzipped NVDA to, and press enter or double click on nvda.exe.
  </p>
 <p>
-As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading). You should then hear it say "NVDA Started". Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start. If it is taking an extra long time, NVDA should say "Loading subsystems. Please wait...î
+As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading). You should then hear it say "NVDA Started". Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start. If it is taking an extra long time, NVDA should say "Loading subsystems. Please wait...‘ç
 </p>
 <p>
 If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers. Please check out the NVDA website for how to do this.
@@ -351,7 +351,7 @@ Keys supported by both old and new virtualBuffers:
 <li>i: list item</li>
 <li>t: table</li>
 <li>k: link</li>
-<li>p: paragraph</li>
+<li>p: paragraph (only used in the old virtual Buffer, use Control+Up/DownArrow in the new virtual Buffer)</li>
 <li>f: form field</li>
 </ul>
 <p>
