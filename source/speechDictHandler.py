@@ -81,8 +81,8 @@ class SpeechDict(list):
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
-	for entry in dictionaries.values():
-		text=entry.sub(text)
+	for type in dictTypes:
+		text=dictionaries[type].sub(text)
 	return text
 
 def getFileName(type):
