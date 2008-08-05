@@ -722,7 +722,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'level' in propertyValues:
 		levelNo=propertyValues['level']
 		del propertyValues['level']
-		if levelNo is not None and reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
+		if levelNo is not None or reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
 			textList.append(_("level %s")%levelNo)
 	for name,value in propertyValues.items():
 		if not name.startswith('_') and value is not None and value is not "":
