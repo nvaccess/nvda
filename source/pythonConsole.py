@@ -62,7 +62,7 @@ class ConsoleUI(wx.Frame):
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY)
+		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
 		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
 		inputSizer = wx.BoxSizer(wx.HORIZONTAL)
