@@ -602,7 +602,7 @@ Tries to force this object to take the focus.
 			return
 		try:
 			info=self.makeTextInfo(textHandler.Point(x,y))
-			info.expand(textHandler.UNIT_PARAGRAPH)
+			info.expand(config.conf["mouse"]["mouseTextUnit"])
 		except:
 			info=self.makeTextInfo(textHandler.POSITION_ALL)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
