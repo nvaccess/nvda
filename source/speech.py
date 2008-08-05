@@ -456,6 +456,7 @@ def updateUserDisabledRoles():
 		userDisabledRoles.append(controlTypes.ROLE_LINK)
 	if not config.conf["virtualBuffers"]["reportLists"]:
 		userDisabledRoles.append(controlTypes.ROLE_LIST)
+		userDisabledRoles.append(controlTypes.ROLE_LISTITEM)
 	if not config.conf["virtualBuffers"]["reportHeadings"]:
 		userDisabledRoles.append(controlTypes.ROLE_HEADING)
 	if not config.conf["virtualBuffers"]["reportTables"]:
@@ -696,7 +697,8 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	realStates=propertyValues.get('_states',states)
 	if states is not None:
 		positiveStates=processPositiveStates(role,realStates,reason,states)
-		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
+			textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
 		del propertyValues['states']
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
@@ -705,7 +707,8 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		negativeStates=None
 	if negativeStates is not None or (reason != REASON_CHANGE and states is not None):
 		negativeStates=processNegativeStates(role, realStates, reason, negativeStates)
-		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
+			textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 		del propertyValues['description']
@@ -713,12 +716,13 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(propertyValues['keyboardShortcut'])
 		del propertyValues['keyboardShortcut']
 	if 'positionString' in propertyValues:
-		textList.append(propertyValues['positionString'])
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
+			textList.append(propertyValues['positionString'])
 		del propertyValues['positionString']
 	if 'level' in propertyValues:
 		levelNo=propertyValues['level']
 		del propertyValues['level']
-		if levelNo is not None:
+		if levelNo is not None and reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
 			textList.append(_("level %s")%levelNo)
 	for name,value in propertyValues.items():
 		if not name.startswith('_') and value is not None and value is not "":
