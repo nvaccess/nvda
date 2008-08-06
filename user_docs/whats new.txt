@@ -9,6 +9,7 @@ Changes since 0.6 P1:
 *Added shortcut keys for many of NVDA's configuration dialogs
 *Support for IAccessible2 enabled applications such as Mozilla Firefox when running NVDA from portable media, with out having to register any special Dll files
 *Fix a crash with the virtualBuffers Links List in Gecko applications. (#48)
+*NVDA should no longer crash Mozilla Gecko applications such as Firefox and Thunderbird if NVDA is running with higher privilages than the Mozilla Gecko application. E.g. NVDA is  running as Administrator.
 *Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions. (#39)
 *Whether or not NVDA uses a 'screen layout' mode for virtual buffer documents can now be configured from a settings dialog
 *No longer report anchor tags with no href in Gecko documents as links. (#47)
