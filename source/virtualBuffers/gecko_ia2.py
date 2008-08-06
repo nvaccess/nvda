@@ -157,7 +157,7 @@ class Gecko_ia2(VirtualBuffer):
 				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
 				api.setNavigatorObject(obj)
 				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
-				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDEDOBJECT:
+				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT:
 					obj.setFocus()
 		except:
 			pass
