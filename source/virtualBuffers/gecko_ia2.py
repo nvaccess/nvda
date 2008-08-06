@@ -172,27 +172,31 @@ class Gecko_ia2(VirtualBuffer):
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)
 			else: #Just try performing the default action of the object, or of one of its ancestors
-				while obj and obj!=self.rootNVDAObject:
+				try:
+					action=obj.IAccessibleObject.accDefaultAction(obj.IAccessibleChildID)
+					if not action:
+						log.debugWarning("no default action for object")
+						raise RuntimeError("need an action")
 					try:
-						action=obj.IAccessibleObject.accDefaultAction(obj.IAccessibleChildID)
-						if action:
-							try:
-								obj.IAccessibleObject.accDoDefaultAction(obj.IAccessibleChildID)
-							except:
-								l=obj.location
-								if l:
-									x=(l[0]+l[2]/2)
-									y=l[1]+(l[3]/2) 
-									oldX,oldY=winUser.getCursorPos()
-									winUser.setCursorPos(x,y)
-									winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-									winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-									winuser.setCursorPos(oldX,oldY)
-							break
+						obj.IAccessibleObject.accDoDefaultAction(obj.IAccessibleChildID)
 					except:
-						pass
-					obj=obj.parent
+						log.debugWarning("error in calling accDoDefaultAction",exc_info=True)
+						raise RuntimeError("error in accDoDefaultAction")
+				except:
+					log.debugWarning("could not programmatically activate field, trying mouse")
+					l=obj.location
+					if l:
+						x=(l[0]+l[2]/2)
+						y=l[1]+(l[3]/2) 
+						oldX,oldY=winUser.getCursorPos()
+						winUser.setCursorPos(x,y)
+						winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+						winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+						winUser.setCursorPos(oldX,oldY)
+					else:
+						log.debugWarning("no location for field")
 		except:
+			log.debugWarning("Error activating field",exc_info=True)
 			pass
 
 	def _searchableAttribsForNodeType(self,nodeType):
