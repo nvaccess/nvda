@@ -21,6 +21,7 @@ import speechDictHandler
 import languageHandler
 import logViewer
 import winUser
+import api
 
 ### Constants
 appTitle = "NVDA"
@@ -131,6 +132,12 @@ class MainFrame(wx.Frame):
 			self.Hide()
 
 	def onShowGuiCommand(self,evt):
+		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
+		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
+		left, top, width, height = api.getDesktopObject().location
+		x = width / 2
+		y = height / 2
+		winUser.setCursorPos(x, y)
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
