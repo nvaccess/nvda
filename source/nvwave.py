@@ -196,8 +196,12 @@ class WavePlayer(object):
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
 	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
-		windll.winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
-		yield devID, caps.szPname
+		try:
+			windll.winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
+			yield devID, caps.szPname
+		except WindowsError:
+			# It seems that in certain cases, Windows includes devices which cannot be accessed.
+			pass
 
 def getOutputDeviceNames():
 	"""Obtain the names of all audio output devices on the system.
