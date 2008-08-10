@@ -8,7 +8,6 @@
 """
 
 from __future__ import with_statement
-import time
 import threading
 from ctypes import *
 from ctypes.wintypes import *
@@ -18,6 +17,9 @@ __all__ = (
 )
 
 winmm = windll.winmm
+kernel32 = windll.kernel32
+
+INFINITE = 0xffffffff
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -55,6 +57,7 @@ MMSYSERR_NOERROR = 0
 
 CALLBACK_NULL = 0
 #CALLBACK_FUNCTION = 0x30000
+CALLBACK_EVENT = 0x50000
 #waveOutProc = CFUNCTYPE(HANDLE, UINT, DWORD, DWORD, DWORD)
 #WOM_DONE = 0x3bd
 
@@ -117,6 +120,7 @@ class WavePlayer(object):
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
 		self._waveout = None
+		self._waveout_event = kernel32.CreateEventW(None, False, False, None)
 		self.open()
 		self._lock = threading.RLock()
 
@@ -135,7 +139,7 @@ class WavePlayer(object):
 		wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
 		wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 		waveout = HWAVEOUT(0)
-		winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), 0, 0, CALLBACK_NULL)
+		winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
 		self._waveout = waveout.value
 		self._prev_whdr = None
 
@@ -170,9 +174,8 @@ class WavePlayer(object):
 		with self._lock:
 			if not self._prev_whdr:
 				return
-			# todo: Wait for an event instead of spinning.
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
-				time.sleep(0.005)
+				kernel32.WaitForSingleObject(self._waveout_event, INFINITE)
 			winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			self._prev_whdr = None
 
@@ -227,6 +230,11 @@ class WavePlayer(object):
 	def _close(self):
 		winmm.waveOutClose(self._waveout)
 		self._waveout = None
+
+	def __del__(self):
+		self.close()
+		kernel32.CloseHandle(self._waveout_event)
+		self._waveout_event = None
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
