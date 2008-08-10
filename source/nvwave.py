@@ -92,7 +92,7 @@ class WavePlayer(object):
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -102,6 +102,8 @@ class WavePlayer(object):
 		@type bitsPerSample: int
 		@param outputDevice: The device ID or name of the audio output device to use.
 		@type outputDevice: int or basestring
+		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
+		@type closeWhenIdle: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -111,10 +113,20 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
-		self._open()
-		self._whdr_lock = threading.RLock()
+		#: If C{True}, close the output device when no audio is being played.
+		#: @type: bool
+		self.closeWhenIdle = closeWhenIdle
+		self._waveout = None
+		self.open()
+		self._lock = threading.RLock()
 
-	def _open(self):
+	def open(self):
+		"""Open the output device.
+		This will be called automatically when required.
+		It is not an error if the output device is already open.
+		"""
+		if self._waveout:
+			return
 		wfx = WAVEFORMATEX()
 		wfx.wFormatTag = WAVE_FORMAT_PCM
 		wfx.nChannels = self.channels
@@ -139,23 +151,23 @@ class WavePlayer(object):
 		whdr = WAVEHDR()
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
-		winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-		try:
-			winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-			self.sync()
-		except WindowsError, e:
-			self.close()
-			self._open()
-			raise e
-		with self._whdr_lock:
+		with self._lock:
+			self.open()
+			winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+			try:
+				winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+				self.sync()
+			except WindowsError, e:
+				self.close()
+				raise e
 			self._prev_whdr = whdr
 
 	def sync(self):
 		"""Synchronise with playback.
 		This method blocks until the previously fed chunk of audio has finished playing.
-		It need only be called directly if there is no more audio to feed, but synchronisation is nevertheless desired.
+		It is called automatically by L{feed}, so usually need not be called directly by the user.
 		"""
-		with self._whdr_lock:
+		with self._lock:
 			if not self._prev_whdr:
 				return
 			# todo: Wait for an event instead of spinning.
@@ -169,27 +181,50 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
+		if not self._waveout:
+			return
 		if switch:
 			winmm.waveOutPause(self._waveout)
 		else:
 			winmm.waveOutRestart(self._waveout)
 
+	def idle(self):
+		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
+		This will first call L{sync} to synchronise with playback.
+		If L{closeWhenIdle} is C{True}, the output device will be closed.
+		A subsequent call to L{feed} will reopen it.
+		"""
+		with self._lock:
+			if not self._waveout:
+				return
+			self.sync()
+			if self.closeWhenIdle:
+				self._close()
+
 	def stop(self):
 		"""Stop playback.
 		"""
+		if not self._waveout:
+			return
 		try:
+			# Pausing first seems to make waveOutReset respond faster on some systems.
+			winmm.waveOutPause(self._waveout)
 			winmm.waveOutReset(self._waveout)
 		except WindowsError:
 			# waveOutReset seems to fail randomly on some systems.
 			pass
-		# Unprepare the previous buffer.
-		self.sync()
+		# Unprepare the previous buffer and close the output device if appropriate.
+		self.idle()
 
 	def close(self):
 		"""Close the output device.
-		@postcondition: The audio device is closed; this instance is no longer useable.
 		"""
+		if not self._waveout:
+			return
 		self.stop()
+		self._close()
+
+	def _close(self):
 		winmm.waveOutClose(self._waveout)
 		self._waveout = None
 
