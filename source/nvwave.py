@@ -275,6 +275,6 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 	# No such ID.
 	if useDefaultIfInvalid:
-		return -1
+		return WAVE_MAPPER
 	else:
 		raise LookupError("No such device name")
