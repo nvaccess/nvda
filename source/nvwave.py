@@ -121,27 +121,29 @@ class WavePlayer(object):
 		self.closeWhenIdle = closeWhenIdle
 		self._waveout = None
 		self._waveout_event = kernel32.CreateEventW(None, False, False, None)
-		self.open()
+		self._waveout_lock = threading.RLock()
 		self._lock = threading.RLock()
+		self.open()
 
 	def open(self):
 		"""Open the output device.
 		This will be called automatically when required.
 		It is not an error if the output device is already open.
 		"""
-		if self._waveout:
-			return
-		wfx = WAVEFORMATEX()
-		wfx.wFormatTag = WAVE_FORMAT_PCM
-		wfx.nChannels = self.channels
-		wfx.nSamplesPerSec = self.samplesPerSec
-		wfx.wBitsPerSample = self.bitsPerSample
-		wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
-		wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
-		waveout = HWAVEOUT(0)
-		winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
-		self._waveout = waveout.value
-		self._prev_whdr = None
+		with self._waveout_lock:
+			if self._waveout:
+				return
+			wfx = WAVEFORMATEX()
+			wfx.wFormatTag = WAVE_FORMAT_PCM
+			wfx.nChannels = self.channels
+			wfx.nSamplesPerSec = self.samplesPerSec
+			wfx.wBitsPerSample = self.bitsPerSample
+			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
+			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
+			waveout = HWAVEOUT(0)
+			winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			self._waveout = waveout.value
+			self._prev_whdr = None
 
 	def feed(self, data):
 		"""Feed a chunk of audio data to be played.
@@ -156,14 +158,15 @@ class WavePlayer(object):
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
 		with self._lock:
-			self.open()
-			winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-			try:
-				winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				self.sync()
-			except WindowsError, e:
-				self.close()
-				raise e
+			with self._waveout_lock:
+				self.open()
+				winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+				try:
+					winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+				except WindowsError, e:
+					self.close()
+					raise e
+			self.sync()
 			self._prev_whdr = whdr
 
 	def sync(self):
@@ -174,9 +177,12 @@ class WavePlayer(object):
 		with self._lock:
 			if not self._prev_whdr:
 				return
+			assert self._waveout, "waveOut None before wait"
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
 				kernel32.WaitForSingleObject(self._waveout_event, INFINITE)
-			winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+			with self._waveout_lock:
+				assert self._waveout, "waveOut None after wait"
+				winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			self._prev_whdr = None
 
 	def pause(self, switch):
@@ -184,12 +190,13 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
-		if not self._waveout:
-			return
-		if switch:
-			winmm.waveOutPause(self._waveout)
-		else:
-			winmm.waveOutRestart(self._waveout)
+		with self._waveout_lock:
+			if not self._waveout:
+				return
+			if switch:
+				winmm.waveOutPause(self._waveout)
+			else:
+				winmm.waveOutRestart(self._waveout)
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
@@ -198,34 +205,38 @@ class WavePlayer(object):
 		A subsequent call to L{feed} will reopen it.
 		"""
 		with self._lock:
-			if not self._waveout:
-				return
 			self.sync()
-			if self.closeWhenIdle:
-				self._close()
+			with self._waveout_lock:
+				if not self._waveout:
+					return
+				if self.closeWhenIdle:
+					self._close()
 
 	def stop(self):
 		"""Stop playback.
 		"""
-		if not self._waveout:
-			return
-		try:
-			# Pausing first seems to make waveOutReset respond faster on some systems.
-			winmm.waveOutPause(self._waveout)
-			winmm.waveOutReset(self._waveout)
-		except WindowsError:
-			# waveOutReset seems to fail randomly on some systems.
-			pass
+		with self._waveout_lock:
+			if not self._waveout:
+				return
+			try:
+				# Pausing first seems to make waveOutReset respond faster on some systems.
+				winmm.waveOutPause(self._waveout)
+				winmm.waveOutReset(self._waveout)
+			except WindowsError:
+				# waveOutReset seems to fail randomly on some systems.
+				pass
 		# Unprepare the previous buffer and close the output device if appropriate.
 		self.idle()
 
 	def close(self):
 		"""Close the output device.
 		"""
-		if not self._waveout:
-			return
 		self.stop()
-		self._close()
+		with self._lock:
+			with self._waveout_lock:
+				if not self._waveout:
+					return
+				self._close()
 
 	def _close(self):
 		winmm.waveOutClose(self._waveout)
