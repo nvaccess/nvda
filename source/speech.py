@@ -9,8 +9,7 @@
 @type speechMode: boolean
 """ 
 
-import sgmllib
-from xml.parsers import expat
+import XMLFields
 import globalVars
 from logHandler import log
 import api
@@ -525,60 +524,12 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-class XMLContextParser(object): 
-
-	def __init__(self):
-		self.parser=expat.ParserCreate('utf-8')
-		self.parser.StartElementHandler=self._startElementHandler
-		#self.parser.EndElementHandler=self._EndElementHandler
-		#self.parser.CharacterDataHandler=self._CharacterDataHandler
-		self._fieldStack=[]
-
-	def _startElementHandler(self,name,attrs):
-		newAttrs={}
-		for name,value in attrs.items():
-			newAttrs[name.lower()]=value
-		self._fieldStack.append(newAttrs)
-
-	def parse(self,XMLContext):
-		try:
-			self.parser.Parse(XMLContext.encode('utf-8'))
-		except:
-			log.debugWarning("XML: %s"%XMLContext,exc_info=True)
-		return self._fieldStack
-
-class RelativeXMLParser(object):
-
-	def __init__(self):
-		self.parser=sgmllib.SGMLParser()
-		self.parser.unknown_starttag=self._startElementHandler
-		self.parser.unknown_endtag=self._endElementHandler
-		self.parser.handle_data=self._characterDataHandler
-		self._commandList=[]
-
-	def _startElementHandler(self,tag,attrs):
-		newAttrs={}
-		for attr in attrs:
-			newAttrs[attr[0]]=attr[1]
-		attrs=newAttrs
-		self._commandList.append(("start",attrs))
-
-	def _endElementHandler(self,tag):
-		self._commandList.append(("end",None))
-
-	def _characterDataHandler(self,data):
-		self._commandList.append(("text",data))
-
-	def parse(self,relativeXML):
-		self.parser.feed(relativeXML)
-		return self._commandList
-
 def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,reason=REASON_QUERY,index=None):
 	textList=[]
 	#Fetch the last stack, or make a blank one
 	oldStack=getattr(cacheObject,'_speech_XMLCache',[])
 	#Create a new stack from the XML context
-	stackParser=XMLContextParser()
+	stackParser=XMLFields.XMLContextParser()
 	newStack=stackParser.parse(XMLContext)
 	#Cache a copy of the new stack for future use
 	if not cacheFinalStack:
@@ -615,7 +566,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 
 	if relativeXML is not None:
 		#Fetch a command list for the relative XML
-		commandParser=RelativeXMLParser()
+		commandParser=XMLFields.RelativeXMLParser()
 		commandList=commandParser.parse(relativeXML)
 		#Move through the command list, getting speech text for all starts and ends
 		#But also keep newStack up to date as we will need it for the ends
