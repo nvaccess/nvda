@@ -41,9 +41,6 @@ REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
 
-globalXMLFieldStack=[]
-XMLFIELD_COMMON=1
-XMLFIELD_WASCOMMON=2
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -186,7 +183,6 @@ def _speakSpellingGen(text):
 
 def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
 	global beenCanceled
-	del globalXMLFieldStack[:]
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -613,18 +609,6 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
 	if text and not text.isspace():
 		speakText(text,index=index)
-
-def getFieldSpeech(attrs,fieldType,extraDetail=False):
-		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_LINK:
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_LINK]
-		if not extraDetail and fieldType in ("end_relative","end_inStack") and attrs['role']==controlTypes.ROLE_HEADING:
-			return controlTypes.speechRoleLabels[controlTypes.ROLE_HEADING]
-		elif extraDetail and fieldType in ("start_addedToStack","start_relative"):
-			return "in %s"%controlTypes.speechRoleLabels[attrs['role']]
-		elif extraDetail and fieldType in ("end_removedFromStack","end_relative"):
-			return "out of %s"%controlTypes.speechRoleLabels[attrs['role']]
-		else:
-			return ""
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	textList=[]
