@@ -9,7 +9,7 @@
 @type speechMode: boolean
 """ 
 
-import XMLFields
+import XMLFormatting
 import globalVars
 from logHandler import log
 import api
@@ -529,7 +529,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 	#Fetch the last stack, or make a blank one
 	oldStack=getattr(cacheObject,'_speech_XMLCache',[])
 	#Create a new stack from the XML context
-	stackParser=XMLFields.XMLContextParser()
+	stackParser=XMLFormatting.XMLContextParser()
 	newStack=stackParser.parse(XMLContext)
 	#Cache a copy of the new stack for future use
 	if not cacheFinalStack:
@@ -566,7 +566,7 @@ def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechF
 
 	if relativeXML is not None:
 		#Fetch a command list for the relative XML
-		commandParser=XMLFields.RelativeXMLParser()
+		commandParser=XMLFormatting.RelativeXMLParser()
 		commandList=commandParser.parse(relativeXML)
 		#Move through the command list, getting speech text for all starts and ends
 		#But also keep newStack up to date as we will need it for the ends
