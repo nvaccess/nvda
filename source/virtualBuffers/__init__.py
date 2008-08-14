@@ -69,57 +69,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return text
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		childCount=int(attrs['_childcount'])
-		indexInParent=int(attrs['_indexinparent'])
-		parentChildCount=int(attrs['_parentchildcount'])
-		if reason==speech.REASON_FOCUS:
-			name=attrs.get('name',"")
-		else:
-			name=""
-		role=attrs['role']
-		states=attrs['states']
-		keyboardShortcut=attrs['keyboardshortcut']
-		level=attrs.get('level',None)
-		roleText=speech.getSpeechTextForProperties(reason=reason,role=role)
-		stateText=speech.getSpeechTextForProperties(reason=reason,states=states,_role=role)
-		keyboardShortcutText=speech.getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
-		nameText=speech.getSpeechTextForProperties(reason=reason,name=name)
-		levelText=speech.getSpeechTextForProperties(reason=reason,level=level)
-		if role in speech.userDisabledRoles:
-			return None
-		if not extraDetail and ((reason==speech.REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (speech.REASON_CARET,speech.REASON_SAYALL) and fieldType in ("start_inStack","start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
-			if role==controlTypes.ROLE_LINK:
-				return " ".join([x for x in stateText,roleText,keyboardShortcutText])
-			else:
-				return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative","start_inStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
-			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("end_removedFromStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType=="start_addedToStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
-			return roleText+_("with %s items")%childCount
-		elif not extraDetail and fieldType=="end_removedFromStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-			return roleText
-		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX)):
-			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="start_addedToStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
-			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="end_removedFromStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-			return speech.getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-		elif extraDetail and fieldType in ("start_addedToStack","start_relative") and roleText:
-			return _("in %s")%roleText
-		elif extraDetail and fieldType in ("end_removedFromStack","end_relative") and roleText:
-			return _("out of %s")%roleText
-		else:
-			return ""
+		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
