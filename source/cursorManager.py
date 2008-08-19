@@ -49,7 +49,7 @@ class CursorManager(baseObject.ScriptableObject):
 	def _set_selection(self, info):
 		info.updateSelection()
 
-	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False):
+	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		info=self.makeTextInfo(posConstant)
 		info.collapse(end=not self._lastSelectionMovedStart)
 		if posUnit is not None:
@@ -63,11 +63,7 @@ class CursorManager(baseObject.ScriptableObject):
 			info.move(unit,direction)
 		self.selection=info
 		info.expand(unit)
-		if unit!=textHandler.UNIT_CHARACTER:
-			speech.speakTextInfo(info)
-		else:
-			speech.speakTextInfo(info,handleSymbols=True)
-
+		speech.speakTextInfo(info,extraDetail=extraDetail,handleSymbols=handleSymbols,reason=speech.REASON_CARET)
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)
@@ -82,7 +78,7 @@ class CursorManager(baseObject.ScriptableObject):
 			self.selection=info
 			speech.cancelSpeech()
 			info.expand(textHandler.UNIT_LINE)
-			speech.speakTextInfo(info)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
 			errorDialog.run()
@@ -113,16 +109,16 @@ class CursorManager(baseObject.ScriptableObject):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
 
 	def script_moveByCharacter_back(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,-1,extraDetail=True,handleSymbols=True)
 
 	def script_moveByCharacter_forward(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,1,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,1,extraDetail=True,handleSymbols=True)
 
 	def script_moveByWord_back(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,-1,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_WORD,-1,extraDetail=True,handleSymbols=True)
 
 	def script_moveByWord_forward(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_WORD,1,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_WORD,1,extraDetail=True,handleSymbols=True)
 
 	def script_moveByLine_back(self,keyPress):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,-1)

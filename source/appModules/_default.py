@@ -66,7 +66,7 @@ class appModule(appModuleHandler.AppModule):
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeateCount()==0:
-			speech.speakTextInfo(info)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info.text)
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")

@@ -1,5 +1,7 @@
 import sgmllib
 from xml.parsers import expat
+import textHandler
+from logHandler import log
 
 class XMLContextParser(object): 
 
@@ -11,8 +13,8 @@ class XMLContextParser(object):
 		self._fieldStack=[]
 
 	def _startElementHandler(self,name,attrs):
-		newAttrs={}
-		for name,value in attrs.items():
+		newAttrs=textHandler.ControlField()
+		for name,value in attrs.iteritems():
 			newAttrs[name.lower()]=value
 		self._fieldStack.append(newAttrs)
 
@@ -33,17 +35,16 @@ class RelativeXMLParser(object):
 		self._commandList=[]
 
 	def _startElementHandler(self,tag,attrs):
-		newAttrs={}
+		newAttrs=textHandler.ControlField()
 		for attr in attrs:
 			newAttrs[attr[0]]=attr[1]
-		attrs=newAttrs
-		self._commandList.append(("start",attrs))
+		self._commandList.append(textHandler.FieldCommand("controlStart",newAttrs))
 
 	def _endElementHandler(self,tag):
-		self._commandList.append(("end",None))
+		self._commandList.append(textHandler.FieldCommand("controlEnd",None))
 
 	def _characterDataHandler(self,data):
-		self._commandList.append(("text",data))
+		self._commandList.append(data)
 
 	def parse(self,relativeXML):
 		self.parser.feed(relativeXML)

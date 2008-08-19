@@ -19,7 +19,7 @@ GECKO_SCROLL_TYPE_ANYWHERE=0x06
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
+	def _normalizeControlField(self,attrs):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
@@ -39,7 +39,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		newAttrs['states']=states
 		if level is not "" and level is not None:
 			newAttrs['level']=level
-		return super(Gecko_ia2_TextInfo,self).getXMLFieldSpeech(newAttrs,fieldType,extraDetail=extraDetail,reason=reason)
+		return newAttrs
 
 class Gecko_ia2(VirtualBuffer):
 

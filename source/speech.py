@@ -571,7 +571,10 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 				speakSpelling(text)
 			else:
 				speakText(text,index=index)
+		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
+		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 		return
+
 	#Fetch a command list for the text and fields for this textInfo
 	commandList=info.textWithFields
 	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
@@ -583,19 +586,19 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 			text=commandList[count]
 			if text:
 				relativeTextList.append(text)
-		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="controlStart":
+		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlStart":
 			text=getControlFieldSpeech(commandList[count].field,"start_relative",extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
-		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="controlEnd":
+		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlEnd":
 			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			del newControlFieldStack[-1]
 			if commonFieldCount>len(newControlFieldStack):
 				commonFieldCount=len(newControlFieldStack)
-		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="formatChange":
+		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="formatChange":
 			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache)
 			if text:
 				relativeTextList.append(text)
@@ -727,7 +730,7 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
 		return _("in %s")%roleText
-	elif extraDetail and fieldType in ("end_removedFromStack","end_relative") and roleText:
+	elif extraDetail and fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText:
 		return _("out of %s")%roleText
 	else:
 		return ""

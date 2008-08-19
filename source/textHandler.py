@@ -6,7 +6,6 @@
 
 import weakref
 import baseObject
-import api
 
 class Field(dict):
 	"""The base type for fields in textInfo objects"""
@@ -23,9 +22,9 @@ class FieldCommand(object):
 	def __init__(self,command,field):
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
-		elif command.startswith("control") and not isinstance(field,ControlField):
+		elif command=="controlStart" and not isinstance(field,ControlField):
 			raise ValueError("command: %s needs a controlField"%command)
-		elif command.startswith("format") and not isinstance(field,FormatField):
+		elif command=="formatChange" and not isinstance(field,FormatField):
 			raise ValueError("command: %s needs a formatField"%command)
 		self.command=command
 		self.field=field
@@ -368,6 +367,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				chunkInfo.setEndPoint(self,"endToEnd")
 			textList.append(chunkInfo.text.rstrip("\r\n"))
 			lineInfo.collapse(end=True)
+		import api
 		return api.copyToClip("\r\n".join(textList))
 
 def findStartOfLine(text,offset,lineLength=None):

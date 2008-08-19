@@ -3,6 +3,7 @@ import weakref
 import time
 import os
 import winsound
+import XMLFormatting
 import baseObject
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
@@ -24,8 +25,6 @@ from gui import scriptUI
 import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
-
-	hasXML=True
 
 	def _getSelectionOffsets(self):
 		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
@@ -59,8 +58,28 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	def _getParagraphOffsets(self,offset):
 		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
 
+	def _normalizeControlField(self,attrs):
+		return attrs
+
+	def _get_initialControlFieldAncestry(self):
+		XMLContext=VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
+		ancestry=XMLFormatting.XMLContextParser().parse(XMLContext)
+		for index in xrange(len(ancestry)):
+			ancestry[index]=self._normalizeControlField(ancestry[index])
+		return ancestry
+
 	def _get_XMLContext(self):
 		return VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
+
+	def _get_textWithFields(self):
+		start=self._startOffset
+		end=self._endOffset
+		XMLText=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		commandList=XMLFormatting.RelativeXMLParser().parse(XMLText)
+		for index in xrange(len(commandList)):
+			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
+				commandList[index].field=self._normalizeControlField(commandList[index].field)
+		return commandList
 
 	def _get_XMLText(self):
 		start=self._startOffset
