@@ -316,7 +316,7 @@ class WordDocument(IAccessible):
 		else:
 			speech.speakMessage(_("bottom of column"))
 		info.expand(textHandler.UNIT_CELL)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 
 	def script_previousRow(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -332,7 +332,7 @@ class WordDocument(IAccessible):
 		else:
 			speech.speakMessage(_("top of column"))
 		info.expand(textHandler.UNIT_CELL)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 
 	def script_nextColumn(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -348,7 +348,7 @@ class WordDocument(IAccessible):
 		else:
 			speech.speakMessage(_("end of row"))
 		info.expand(textHandler.UNIT_CELL)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 
 	def script_previousColumn(self,keyPress):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
@@ -364,7 +364,7 @@ class WordDocument(IAccessible):
 		else:
 			speech.speakMessage(_("beginning of row"))
 		info.expand(textHandler.UNIT_CELL)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

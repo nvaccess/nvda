@@ -1,4 +1,4 @@
-#py
+#speech.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -520,91 +520,105 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def speakFormattedTextWithXML(XMLContext,relativeXML,cacheObject,getFieldSpeechFunc,extraDetail=False,cacheFinalStack=False,reason=REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
 	textList=[]
-	#Fetch the last stack, or make a blank one
-	oldStack=getattr(cacheObject,'_speech_XMLCache',[])
-	#Create a new stack from the XML context
-	stackParser=XMLFormatting.XMLContextParser()
-	newStack=stackParser.parse(XMLContext)
-	#Cache a copy of the new stack for future use
-	if not cacheFinalStack:
-		cacheObject._speech_XMLCache=list(newStack)
-
-	#Calculate how many fields in the old and new stacks are the same
+	#Fetch the last controlFieldStack, or make a blank one
+	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else {}
+	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
+	#Make a new controlFieldStack from the textInfo's initialControlFieldAncestry
+	newControlFieldStack=info.initialControlFieldAncestry
+	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
-	for count in range(min(len(newStack),len(oldStack))):
-		if newStack[count]==oldStack[count]:
+	for count in range(min(len(newControlFieldStack),len(controlFieldStackCache))):
+		if newControlFieldStack[count]==controlFieldStackCache[count]:
 			commonFieldCount+=1
 		else:
 			break
 
-	#Get speech text for any fields in the old stack that are not in the new stack 
-	for count in reversed(range(commonFieldCount,len(oldStack))):
-		text=getFieldSpeechFunc(oldStack[count],"end_removedFromStack",extraDetail,reason=reason)
+	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
+	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
+		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 	textListRemovedEndLen=len(textList)
 
-	#Get speech text for any fields that are in both stacks, if extra detail is not requested
+	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in range(commonFieldCount):
-			text=getFieldSpeechFunc(newStack[count],"start_inStack",extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[count],"start_inControlFieldStack",extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
-	#Get speech text for any fields in the new stack that are not in the old stack
-	for count in range(commonFieldCount,len(newStack)):
-		text=getFieldSpeechFunc(newStack[count],"start_addedToStack",extraDetail,reason=reason)
+	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
+	for count in range(commonFieldCount,len(newControlFieldStack)):
+		text=getControlFieldSpeech(newControlFieldStack[count],"start_addedToControlFieldStack",extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 		commonFieldCount+=1
 
-	if relativeXML is not None:
-		#Fetch a command list for the relative XML
-		commandParser=XMLFormatting.RelativeXMLParser()
-		commandList=commandParser.parse(relativeXML)
-		#Move through the command list, getting speech text for all starts and ends
-		#But also keep newStack up to date as we will need it for the ends
-		# Add any text to a separate list, as it must be handled differently.
-		relativeTextList=[]
-		for count in range(len(commandList)):
-			if commandList[count][0]=="text":
-				text=commandList[count][1]
-				if text:
-					relativeTextList.append(text)
-			elif commandList[count][0]=="start":
-				text=getFieldSpeechFunc(commandList[count][1],"start_relative",extraDetail,reason=reason)
-				if text:
-					relativeTextList.append(text)
-				newStack.append(commandList[count][1])
-			elif commandList[count][0]=="end" and len(newStack)>0:
-				text=getFieldSpeechFunc(newStack[-1],"end_relative",extraDetail,reason=reason)
-				if text:
-					relativeTextList.append(text)
-				del newStack[-1]
-				if commonFieldCount>len(newStack):
-					commonFieldCount=len(newStack)
+	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
+	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache)
+	if text:
+		textList.append(text)
 
-		text=" ".join(relativeTextList)
-		if text and not text.isspace():
-			textList.append(text)
+	if handleSymbols:
+		text=" ".join(textList)
+		if text:
+			speakText(text,index=index)
+		text=info.text
+		if text:
+			if len(text)==1:
+				speakSpelling(text)
+			else:
+				speakText(text,index=index)
+		return
+	#Fetch a command list for the text and fields for this textInfo
+	commandList=info.textWithFields
+	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
+	#But also keep newControlFieldStack up to date as we will need it for the ends
+	# Add any text to a separate list, as it must be handled differently.
+	relativeTextList=[]
+	for count in range(len(commandList)):
+		if isinstance(commandList[count],basestring):
+			text=commandList[count]
+			if text:
+				relativeTextList.append(text)
+		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="controlStart":
+			text=getControlFieldSpeech(commandList[count].field,"start_relative",extraDetail,reason=reason)
+			if text:
+				relativeTextList.append(text)
+			newControlFieldStack.append(commandList[count].field)
+		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="controlEnd":
+			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",extraDetail,reason=reason)
+			if text:
+				relativeTextList.append(text)
+			del newControlFieldStack[-1]
+			if commonFieldCount>len(newControlFieldStack):
+				commonFieldCount=len(newControlFieldStack)
+		elif isinstance(commandList[count],FieldCommand) and commandList[count].command=="formatChange":
+			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache)
+			if text:
+				relativeTextList.append(text)
 
-	#Finally get speech text for any fields left in new stack that are common with the old stack (for closing), if extra detail is not requested
+	text=" ".join(relativeTextList)
+	if text and not text.isspace():
+		textList.append(text)
+
+	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if not extraDetail:
-		for count in reversed(range(min(len(newStack),commonFieldCount))):
-			text=getFieldSpeechFunc(newStack[count],"end_inStack",extraDetail,reason=reason)
+		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
+			text=getControlFieldSpeech(newControlFieldStack[count],"end_inControlFieldStack",extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
 	# If we are handling content and we are only exiting fields (i.e. we aren't entering any new fields and there is no text), blank should be reported, unless we are doing a say all.
-	if relativeXML is not None and reason != REASON_SAYALL and len(textList)==textListRemovedEndLen:
+	if len(relativeTextList)>0 and reason != REASON_SAYALL and len(textList)==textListRemovedEndLen:
 		textList.append(_("blank"))
 
-	#Cache a copy of the new stack for future use
-	if cacheFinalStack:
-		cacheObject._speech_XMLCache=list(newStack)
-
+	#Cache a copy of the new controlFieldStack for future use
+	if useCache:
+		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
+		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
 	if text and not text.isspace():
@@ -665,7 +679,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			textList.append(unicode(value))
 	return " ".join([x for x in textList if x])
 
-def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
+def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	childCount=int(attrs['_childcount'])
 	indexInParent=int(attrs['_indexinparent'])
 	parentChildCount=int(attrs['_parentchildcount'])
@@ -684,36 +698,44 @@ def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
 	levelText=getSpeechTextForProperties(reason=reason,level=level)
 	if role in userDisabledRoles:
 		return None
-	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inStack","start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
+	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
 		if role==controlTypes.ROLE_LINK:
 			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
 		else:
 			return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("start_addedToStack","start_relative","start_inStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative","start_inControlFieldStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
 		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("end_removedFromStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
+	elif not extraDetail and fieldType in ("end_removedFromControlFieldStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return roleText+_("with %s items")%childCount
-	elif not extraDetail and fieldType=="end_removedFromStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_BLOCKQUOTE:
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 		return roleText
-	elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_BLOCKQUOTE:
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX)):
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX)):
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="start_addedToStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="end_removedFromStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType in ("start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-	elif extraDetail and fieldType in ("start_addedToStack","start_relative") and roleText:
+	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
 		return _("in %s")%roleText
 	elif extraDetail and fieldType in ("end_removedFromStack","end_relative") and roleText:
 		return _("out of %s")%roleText
 	else:
 		return ""
+
+def getFormatFieldSpeech(fieldAttrs,attrsCache):
+	textList=[]
+	for attr,value in fieldAttrs.iteritems():
+		if attr not in attrsCache or attrsCache[attr]!=value:
+			textList.append("%s: %s"%(attr,value))
+	attrsCache.update(fieldAttrs)
+	return " ".join(textList)

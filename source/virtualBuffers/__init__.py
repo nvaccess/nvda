@@ -200,7 +200,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
 		info.updateCaret()
-		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
 		self._caretMovedToField(docHandle, ID)
 
 	@classmethod
@@ -250,7 +250,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 				info.updateCaret()
 				speech.cancelSpeech()
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
 				self._caretMovedToField(docHandle,ID)
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()

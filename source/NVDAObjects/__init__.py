@@ -728,7 +728,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 
 	def script_moveByCharacter(self,keyPress):
 		try:
@@ -749,7 +749,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True)
 
 	def script_moveByWord(self,keyPress):
 		try:
@@ -770,7 +770,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
@@ -791,7 +791,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 
 	def script_backspace(self,keyPress):
 		try:
@@ -837,7 +837,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress):
 		try:

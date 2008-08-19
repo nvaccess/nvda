@@ -8,6 +8,28 @@ import weakref
 import baseObject
 import api
 
+class Field(dict):
+	"""The base type for fields in textInfo objects"""
+	pass
+
+class FormatField(Field):
+	pass
+
+class ControlField(Field):
+	pass
+
+class FieldCommand(object):
+
+	def __init__(self,command,field):
+		if command not in ("controlStart","controlEnd","formatChange"):
+			raise ValueError("Unknown command: %s"%command)
+		elif command.startswith("control") and not isinstance(field,ControlField):
+			raise ValueError("command: %s needs a controlField"%command)
+		elif command.startswith("format") and not isinstance(field,FormatField):
+			raise ValueError("command: %s needs a formatField"%command)
+		self.command=command
+		self.field=field
+
 def isFormatEnabled(role,includes=set(),excludes=set()):
 	"""Checks to see if a role is in an includes list (if given), or not in an excludes list (if given).
 @param role: an NVDA object or format role
@@ -190,18 +212,16 @@ class TextInfo(baseObject.AutoPropertyObject):
 @type isCollapsed: bool
 @ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
 @type text: string
-@ivar hasXML: if true then the XMLContext and XMLText properties can be used to get text with fields
-@type hasXML: bool
-@ivar XMLContext: a string of xml denoting the ancestor hierarchy of fields
-@type XMLContext: string
-@ivar XMLText: a string of text contained in the range of the object, marked up with xml to denote fields 
-@type XMLText: string
+@ivar initialControlFieldAncestry: a list of L{ControlField}s representing the control fields the start of the text range is in.
+@type initialControlFieldAncestry: list
+@ivar initialFormatField: The L{FormatField} at the start of the text range. 
+@type initialFormatField: L{FormatField}
+@ivar textWithFields: a list of strings of text, plus L{FieldCommand} objects denoting where control fields start and stop and where format fields change. 
+@type textWithFields: list
 @ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
 @type bookmark: L{Bookmark}
 """
  
-	hasXML=False
-
 	def __init__(self,obj,position):
 		"""
 @param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
@@ -218,24 +238,18 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self):
 		raise NotImplementedError
 
-	def _get_XMLContext(self):
-		pass
+	def _get_initialControlFieldAncestry(self):
+		return []
 
-	def _get_XMLText(self):
-		pass
+	def _get_initialFormatField(self):
+		return FormatField();
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		"""
-@param attrs: a dictionary of attributes for a particular xml field
-@type attrs: dict
-@param fieldType: one of the XML fieldType constants
-@type fieldtype: string
-@param extraDetail: if true then extra detail is being requested, more fields should return speech data
-@type extraDetail: bool
-@returns: The text to speak
-@rtype: string
- """
-		pass
+	def _get_textWithFields(self):
+		fieldList=[]
+		text=self.text
+		if text:
+			fieldList.append(text)
+		return fieldList
 
 	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
 		"""

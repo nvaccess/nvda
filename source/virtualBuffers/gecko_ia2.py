@@ -134,7 +134,7 @@ class Gecko_ia2(VirtualBuffer):
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
 				if not self.passThrough:
 					speech.cancelSpeech()
-					speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				else:
 					nextHandler()
 				newInfo.collapse()
@@ -270,7 +270,7 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
-				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
 
@@ -324,7 +324,7 @@ class Gecko_ia2(VirtualBuffer):
 
 		# Finally, speak, move to and set focus to this node.
 		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
-		speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		self._caretMovedToField(newDocHandle, newID)

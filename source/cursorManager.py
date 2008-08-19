@@ -64,14 +64,10 @@ class CursorManager(baseObject.ScriptableObject):
 		self.selection=info
 		info.expand(unit)
 		if unit!=textHandler.UNIT_CHARACTER:
-			if info.hasXML:
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
-			else:
-				speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 		else:
-			if info.hasXML:
-				speech.speakFormattedTextWithXML(info.XMLContext,None,info.obj,info.getXMLFieldSpeech,extraDetail=extraDetail,reason=speech.REASON_CARET)
-			speech.speakSpelling(info.text)
+			speech.speakTextInfo(info,handleSymbols=True)
+
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)
@@ -86,10 +82,7 @@ class CursorManager(baseObject.ScriptableObject):
 			self.selection=info
 			speech.cancelSpeech()
 			info.expand(textHandler.UNIT_LINE)
-			if info.hasXML:
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,extraDetail=False,reason=speech.REASON_CARET)
-			else:
-				speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 		else:
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
 			errorDialog.run()
