@@ -770,7 +770,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
-			speech.speakTextInfo(info)
+			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
