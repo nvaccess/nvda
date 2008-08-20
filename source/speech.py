@@ -739,8 +739,11 @@ def getFormatFieldSpeech(fieldAttrs,attrsCache):
 	textList=[]
 	for attr,value in fieldAttrs.iteritems():
 		if attr not in attrsCache or attrsCache[attr]!=value:
-			if value==True: value=_("on")
-			if value==False: value=_("off")
+			if isinstance(value,bool):
+				if not value and  attr not in attrsCache:
+					continue
+				if value==True: value=_("on")
+				if value==False: value=_("off")
 			textList.append("%s %s"%(attr,value))
 	attrsCache.update(fieldAttrs)
 	return " ".join(textList)

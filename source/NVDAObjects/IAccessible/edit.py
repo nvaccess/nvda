@@ -13,6 +13,7 @@ import oleTypes
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
+import config
 import speech
 import winKernel
 import api
@@ -172,51 +173,42 @@ class EditTextInfo(NVDAObjectTextInfo):
 			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
-	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
-		formatList,start,end=super(EditTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
-		if self.obj.editAPIVersion>=1:
-			oldSel=self._getSelectionOffsets()
-			if oldSel[0]!=offset and oldSel[1]!=offset:
-				self._setSelectionOffsets(offset,offset)
-			if self.obj.isWindowUnicode:
-				charFormatStruct=CharFormat2WStruct
-			else:
-				charFormatStruct=CharFormat2AStruct
-			charFormat=charFormatStruct()
-			charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-			processHandle=self.obj.editProcessHandle
-			internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=charFormat.szFaceName))
-				formatList.append(f)
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=charFormat.yHeight/20))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_BOLD) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_ITALIC) and textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_UNDERLINE) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFE_SUBSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUBSCRIPT,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUBSCRIPT))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFE_SUPERSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUPERSCRIPT,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUPERSCRIPT))
-				formatList.append(f)
-			if oldSel[0]!=offset and oldSel[1]!=offset:
-				self._setSelectionOffsets(oldSel[0],oldSel[1])
-		return (formatList,start,end)
-
-
-
+	def _getFormatFieldAndOffsets(self,offset):
+		#Basic edit fields do not support formatting at all
+		if self.obj.editAPIVersion<1:
+			return textHandler.FormatField(),(self._startOffset,self._endOffset)
+		startOffset,endOffset=self._getWordOffsets(offset)
+		#lineStart,lineEnd=self._getLineOffsets(offset)
+		#if offset>lineStart: offset+=1
+		oldSel=self._getSelectionOffsets()
+		if oldSel!=(offset,offset+1):
+			self._setSelectionOffsets(offset,offset+1)
+		if self.obj.isWindowUnicode:
+			charFormatStruct=CharFormat2WStruct
+		else:
+			charFormatStruct=CharFormat2AStruct
+		charFormat=charFormatStruct()
+		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
+		processHandle=self.obj.editProcessHandle
+		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+		formatField=textHandler.FormatField()
+		if config.conf["documentFormatting"]["reportFontName"]:
+			formatField["fontName"]=charFormat.szFaceName
+		if config.conf["documentFormatting"]["reportFontSize"]:
+			formatField["fontSize"]=charFormat.yHeight/20
+		if config.conf["documentFormatting"]["reportFontAttributes"]:
+			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
+			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
+			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
+			formatField["subscript"]=bool(charFormat.dwEffects&CFE_SUBSCRIPT)
+			formatField["superscript"]=bool(charFormat.dwEffects&CFE_SUPERSCRIPT)
+		if oldSel!=(offset,offset+1):
+			self._setSelectionOffsets(oldSel[0],oldSel[1])
+		return formatField,(startOffset,endOffset)
 
 
 	def _getSelectionOffsets(self):
@@ -300,8 +292,6 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
-			if self.obj.editAPIHasITextDocument:
-				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=((end-start)+1)*2
 			if self.obj.isWindowUnicode:
 				textRange=TextRangeUStruct()

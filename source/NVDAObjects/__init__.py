@@ -55,6 +55,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
+	def _getFormatFieldAndOffsets(self,offset):
+		return textHandler.FormatField(),(self._startOffset,self._endOffset)
+
 	def _getCharacterOffsets(self,offset):
 		return [offset,offset+1]
 
@@ -198,6 +201,25 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			self._endOffset=other._endOffset
 		else:
 			raise ValueError("bad argument - which: %s"%which)
+
+	def _get_initialFormatField(self):
+		return self._getFormatFieldAndOffsets(self._startOffset)[0]
+
+	def _get_textWithFields(self):
+		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+			return [self.text]
+		commandList=[]
+		offset=self._startOffset
+		while offset<self._endOffset:
+			field,bounds=self._getFormatFieldAndOffsets(offset)
+			nextOffset=bounds[1]
+			if offset>self._startOffset:
+				command=textHandler.FieldCommand("formatChange",field)
+				commandList.append(command)
+			text=self._getTextRange(offset,min(nextOffset,self._endOffset))
+			commandList.append(text)
+			offset=nextOffset
+		return commandList
 
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)
