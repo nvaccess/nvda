@@ -540,7 +540,8 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",extraDetail,reason=reason)
 		if text:
 			textList.append(text)
-	textListRemovedEndLen=len(textList)
+	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
+	textListBlankLen=len(textList)
 
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
@@ -559,6 +560,9 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
 	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache)
 	if text:
+		if textListBlankLen==len(textList):
+			# If the TextInfo is considered blank so far, it should still be considered blank if there is only formatting thereafter.
+			textListBlankLen+=1
 		textList.append(text)
 
 	if handleSymbols:
@@ -614,8 +618,8 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 			if text:
 				textList.append(text)
 
-	# If we are handling content and we are only exiting fields (i.e. we aren't entering any new fields and there is no text), blank should be reported, unless we are doing a say all.
-	if len(relativeTextList)>0 and reason != REASON_SAYALL and len(textList)==textListRemovedEndLen:
+	# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
+	if reason != REASON_SAYALL and len(textList)==textListBlankLen:
 		textList.append(_("blank"))
 
 	#Cache a copy of the new controlFieldStack for future use
