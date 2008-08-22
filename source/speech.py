@@ -570,11 +570,10 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		if text:
 			speakText(text,index=index)
 		text=info.text
-		if text:
-			if len(text)==1:
-				speakSpelling(text)
-			else:
-				speakText(text,index=index)
+		if len(text)==1:
+			speakSpelling(text)
+		else:
+			speakText(text,index=index)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 		return
