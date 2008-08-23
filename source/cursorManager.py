@@ -133,10 +133,10 @@ class CursorManager(baseObject.ScriptableObject):
 		self._caretMovementScriptHelper(textHandler.UNIT_PARAGRAPH,1)
 
 	def script_startOfLine(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,extraDetail=True,handleSymbols=True)
 
 	def script_endOfLine(self,keyPress):
-		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,posUnitEnd=True,extraDetail=True)
+		self._caretMovementScriptHelper(textHandler.UNIT_CHARACTER,posUnit=textHandler.UNIT_LINE,posUnitEnd=True,extraDetail=True,handleSymbols=True)
 
 	def script_topOfDocument(self,keyPress):
 		self._caretMovementScriptHelper(textHandler.UNIT_LINE,posConstant=textHandler.POSITION_FIRST)
