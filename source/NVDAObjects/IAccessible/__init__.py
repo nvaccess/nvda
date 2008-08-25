@@ -133,6 +133,45 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		except:
 			return ""
 
+	def _getFormatFieldAndOffsets(self,offset):
+		try:
+			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
+		except:
+			log.error("could not get attrib run",exc_info=True)
+			return textHandler.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textHandler.FormatField()
+		attrs={}
+		for attr in attribsString.split(";"):
+			try:
+				name,value=attr.split(":")
+			except:
+				name=attr
+				value=""
+			formatField[name]=value
+		try:
+			fontWeight=formatField.pop("font-weight")
+		except KeyError:
+			fontWeight=None
+		if fontWeight is not None and fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700):
+			formatField["bold"]=True
+		else:
+			formatField["bold"]=False
+		try:
+			fontStyle=formatField.pop("font-style")
+		except KeyError:
+			fontStyle=None
+		if fontStyle is not None and fontStyle.lower()=="italic":
+			formatField["italic"]=True
+		else:
+			formatField["italic"]=False
+		try:
+			invalid=formatField.pop("invalid")
+		except KeyError:
+			invalid=None
+		if invalid and invalid.lower()=="spelling":
+			formatField["invalid-spelling"]=True
+		return formatField,(startOffset,endOffset)
+
 	def _getCharacterOffsets(self,offset):
 		try:
 			if offset>=self.obj.IAccessibleTextObject.nCharacters:
