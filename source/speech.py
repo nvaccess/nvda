@@ -738,61 +738,65 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache={},extraDetail=False):
+def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=True):
 	textList=[]
-	fontFamily=attrs.get("font-family")
-	oldFontFamily=attrsCache.get("font-family")
-	if fontFamily and fontFamily!=oldFontFamily:
-		textList.append(fontFamily)
-	fontName=attrs.get("font-name")
-	oldFontName=attrsCache.get("font-name")
-	if fontName and fontName!=oldFontName:
-		textList.append(fontName)
-	fontSize=attrs.get("font-size")
-	oldFontSize=attrsCache.get("font-size")
-	if fontSize and fontSize!=oldFontSize:
-		textList.append(fontSize)
-	bold=attrs.get("bold")
-	oldBold=attrsCache.get("bold")
-	if (bold or oldBold is not None) and bold!=oldBold:
-		text=_("bold") if bold else _("no bold")
-		textList.append(text)
-	italic=attrs.get("italic")
-	oldItalic=attrsCache.get("italic")
-	if (italic or oldItalic is not None) and italic!=oldItalic:
-		text=_("italic") if italic else _("no italic")
-		textList.append(text)
-	strikethrough=attrs.get("strikethrough")
-	oldStrikethrough=attrsCache.get("strikethrough")
-	if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
-		text=_("strikethrough") if strikethrough else _("no strikethrough")
-		textList.append(text)
+	if not honourConfig or config.conf["documentFormatting"]["reportFontName"]:
+		fontFamily=attrs.get("font-family")
+		oldFontFamily=attrsCache.get("font-family") if attrsCache is not None else None
+		if fontFamily and fontFamily!=oldFontFamily:
+			textList.append(fontFamily)
+		fontName=attrs.get("font-name")
+		oldFontName=attrsCache.get("font-name") if attrsCache is not None else None
+		if fontName and fontName!=oldFontName:
+			textList.append(fontName)
+	if not honourConfig or config.conf["documentFormatting"]["reportFontSize"]:
+		fontSize=attrs.get("font-size")
+		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize!=oldFontSize:
+			textList.append(fontSize)
+	if not honourConfig or config.conf["documentFormatting"]["reportFontAttributes"]:
+		bold=attrs.get("bold")
+		oldBold=attrsCache.get("bold") if attrsCache is not None else None
+		if (bold or oldBold is not None) and bold!=oldBold:
+			text=_("bold") if bold else _("no bold")
+			textList.append(text)
+		italic=attrs.get("italic")
+		oldItalic=attrsCache.get("italic") if attrsCache is not None else None
+		if (italic or oldItalic is not None) and italic!=oldItalic:
+			text=_("italic") if italic else _("no italic")
+			textList.append(text)
+		strikethrough=attrs.get("strikethrough")
+		oldStrikethrough=attrsCache.get("strikethrough") if attrsCache is not None else None
+		if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
+			text=_("strikethrough") if strikethrough else _("no strikethrough")
+			textList.append(text)
+		underline=attrs.get("underline")
+		oldUnderline=attrsCache.get("underline") if attrsCache is not None else None
+		if (underline or oldUnderline is not None) and underline!=oldUnderline:
+			text=_("underlined") if underline else _("not underlined")
+			textList.append(text)
+		textPosition=attrs.get("text-position")
+		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
+		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
+			if textPosition.lower()=="super":
+				text=_("superscript")
+			elif textPosition.lower()=="sub":
+				text=_("subscript")
+			else:
+				text=_("baseline")
+			textList.append(text)
 	invalidSpelling=attrs.get("invalid-spelling")
-	oldInvalidSpelling=attrsCache.get("invalid-spelling")
+	oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
 	if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
 		if invalidSpelling:
-			text=_("invalid spelling")
+			text=_("spelling error")
 		elif extraDetail:
-			text=_("not invalid spelling")
+			text=_("out of spelling error")
 		else:
 			text=""
 		if text:
 			textList.append(text)
-	underline=attrs.get("underline")
-	oldUnderline=attrsCache.get("underline")
-	if (underline or oldUnderline is not None) and underline!=oldUnderline:
-		text=_("underlined") if underline else _("not underlined")
-		textList.append(text)
-	textPosition=attrs.get("text-position")
-	oldTextPosition=attrsCache.get("text-position")
-	if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-		if textPosition=="superscript":
-			text=_("superscript")
-		elif textList=="subscript":
-			text=_("subscript")
-		else:
-			text=_("baseline")
-		textList.append(text)
-	attrsCache.clear()
-	attrsCache.update(attrs)
+	if attrsCache is not None:
+		attrsCache.clear()
+		attrsCache.update(attrs)
 	return " ".join(textList)
