@@ -572,12 +572,9 @@ class appModule(appModuleHandler.AppModule):
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
-		formattedText=info.getFormattedText(includes=set([controlTypes.ROLE_STYLE,controlTypes.ROLE_FONTNAME,controlTypes.ROLE_FONTSIZE,controlTypes.ROLE_BOLD,controlTypes.ROLE_ITALIC,controlTypes.ROLE_UNDERLINE]))
-		for item in formattedText:
-			if isinstance(item,textHandler.FormatCommand):
-				if item.cmd in (textHandler.FORMAT_CMD_SWITCHON,textHandler.FORMAT_CMD_CHANGE):
-					speech.speakMessage("%s %s"%(controlTypes.speechRoleLabels[item.format.role],item.format.value)) 
-	script_reportFormatting.__doc__ = _("Announces formatting information at the current position in a document")
+		formatField=info.initialFormatField
+		speechText=speech.getFormatFieldSpeech(formatField,{})
+		speech.speakMessage(speechText)
 
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.findObjectWithFocus() #getFocusObject()
