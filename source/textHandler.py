@@ -7,22 +7,6 @@
 import weakref
 import baseObject
 
-speechFormatFieldAttributeLabels={
-	"font-family":_("font family"),
-	"font-name":_("font name"),
-	"font-size":_("font size"),
-	"bold":_("bold"),
-	"italic":_("italic"),
-	"underline":_("underlined"),
-	"text-position":_("text position"),
-	"text-align":_("text alignment"),
-	"foreground-color":_("foreground color"),
-	"background-color":_("background color"),
-	"invalid-spelling":_("invalid spelling"),
-	"style":_("style"),
-	"page-number":_("page"),
-}
-
 class Field(dict):
 	"""The base type for fields in textInfo objects"""
 
