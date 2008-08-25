@@ -573,7 +573,7 @@ class appModule(appModuleHandler.AppModule):
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
 		formatField=info.initialFormatField
-		speechText=speech.getFormatFieldSpeech(formatField,{})
+		speechText=speech.getFormatFieldSpeech(formatField,honourConfig=False)
 		speech.speakMessage(speechText)
 
 	def script_reportCurrentFocus(self,keyPress):
