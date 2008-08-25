@@ -197,15 +197,17 @@ class EditTextInfo(NVDAObjectTextInfo):
 		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
 		formatField=textHandler.FormatField()
 		if config.conf["documentFormatting"]["reportFontName"]:
-			formatField["fontName"]=charFormat.szFaceName
+			formatField["font-name"]=charFormat.szFaceName
 		if config.conf["documentFormatting"]["reportFontSize"]:
-			formatField["fontSize"]=charFormat.yHeight/20
+			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
 			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
 			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
-			formatField["subscript"]=bool(charFormat.dwEffects&CFE_SUBSCRIPT)
-			formatField["superscript"]=bool(charFormat.dwEffects&CFE_SUPERSCRIPT)
+			if charFormat.dwEffects&CFE_SUBSCRIPT:
+				formatField["text-position"]="subscript"
+			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
+				formatField["text-position"]="superscript"
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return formatField,(startOffset,endOffset)

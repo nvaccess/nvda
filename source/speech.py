@@ -558,7 +558,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache)
+	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache,extraDetail=extraDetail)
 	if text:
 		if textListBlankLen==len(textList):
 			# If the TextInfo is considered blank so far, it should still be considered blank if there is only formatting thereafter.
@@ -602,7 +602,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 			if commonFieldCount>len(newControlFieldStack):
 				commonFieldCount=len(newControlFieldStack)
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="formatChange":
-			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache)
+			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,extraDetail=extraDetail)
 			if text:
 				relativeTextList.append(text)
 
@@ -738,15 +738,61 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	else:
 		return ""
 
-def getFormatFieldSpeech(fieldAttrs,attrsCache):
+def getFormatFieldSpeech(attrs,attrsCache={},extraDetail=False):
 	textList=[]
-	for attr,value in fieldAttrs.iteritems():
-		if attr not in attrsCache or attrsCache[attr]!=value:
-			if isinstance(value,bool):
-				if not value and  attr not in attrsCache:
-					continue
-				if value==True: value=_("on")
-				if value==False: value=_("off")
-			textList.append("%s %s"%(attr,value))
-	attrsCache.update(fieldAttrs)
+	fontFamily=attrs.get("font-family")
+	oldFontFamily=attrsCache.get("font-family")
+	if fontFamily and fontFamily!=oldFontFamily:
+		textList.append(fontFamily)
+	fontName=attrs.get("font-name")
+	oldFontName=attrsCache.get("font-name")
+	if fontName and fontName!=oldFontName:
+		textList.append(fontName)
+	fontSize=attrs.get("font-size")
+	oldFontSize=attrsCache.get("font-size")
+	if fontSize and fontSize!=oldFontSize:
+		textList.append(fontSize)
+	bold=attrs.get("bold")
+	oldBold=attrsCache.get("bold")
+	if (bold or oldBold is not None) and bold!=oldBold:
+		text=_("bold") if bold else _("no bold")
+		textList.append(text)
+	italic=attrs.get("italic")
+	oldItalic=attrsCache.get("italic")
+	if (italic or oldItalic is not None) and italic!=oldItalic:
+		text=_("italic") if italic else _("no italic")
+		textList.append(text)
+	strikethrough=attrs.get("strikethrough")
+	oldStrikethrough=attrsCache.get("strikethrough")
+	if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
+		text=_("strikethrough") if strikethrough else _("no strikethrough")
+		textList.append(text)
+	invalidSpelling=attrs.get("invalid-spelling")
+	oldInvalidSpelling=attrsCache.get("invalid-spelling")
+	if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
+		if invalidSpelling:
+			text=_("invalid spelling")
+		elif extraDetail:
+			text=_("not invalid spelling")
+		else:
+			text=""
+		if text:
+			textList.append(text)
+	underline=attrs.get("underline")
+	oldUnderline=attrsCache.get("underline")
+	if (underline or oldUnderline is not None) and underline!=oldUnderline:
+		text=_("underlined") if underline else _("not underlined")
+		textList.append(text)
+	textPosition=attrs.get("text-position")
+	oldTextPosition=attrsCache.get("text-position")
+	if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
+		if textPosition=="superscript":
+			text=_("superscript")
+		elif textList=="subscript":
+			text=_("subscript")
+		else:
+			text=_("baseline")
+		textList.append(text)
+	attrsCache.clear()
+	attrsCache.update(attrs)
 	return " ".join(textList)
