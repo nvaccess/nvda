@@ -6,6 +6,7 @@
 
 import weakref
 import re
+from comtypes import COMError
 import struct
 import os
 import tones
@@ -136,8 +137,8 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 	def _getFormatFieldAndOffsets(self,offset):
 		try:
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
-		except:
-			log.error("could not get attrib run",exc_info=True)
+		except COMError:
+			log.debugWarning("could not get attributes",exc_info=True)
 			return textHandler.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
 		attrs={}
