@@ -1034,3 +1034,61 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 				pass
 		textList.append(t)
 	return "".join(textList).replace('  ',' ')
+
+def splitIA2Attribs(attribsString):
+	attribsDict = {}
+	tmp = ""
+	key = ""
+	subkey = ""
+	subattr = {}
+	inEscape = False
+	for char in attribsString:
+		if inEscape:
+			tmp += char
+			inEscape = False
+		elif char == "\\":
+			inEscape = True
+		elif char == ":":
+			# We're about to move on to the value, so save the key and clear tmp.
+			key = tmp
+			tmp = ""
+		elif char == "=":
+			# This is a subattribute.
+			# Save the subattribute key and clear tmp, ready for the value.
+			subkey = tmp
+			tmp = ""
+		elif char == ",":
+			# We're about to move on to a new subattribute.
+			# Add this subattribute key/value pair to the dict.
+			if subkey:
+				subattr[subkey] = tmp
+				subkey = ""
+				tmp = ""
+		elif char == ";":
+			# We're about to move on to a new attribute.
+			if subkey:
+				# This attribute had subattributes.
+				# Add the last subattribute key/value pair to the dict.
+				subattr[subkey] = tmp
+				# Add the key/subattribute pair to the dict.
+				attribsDict[key] = subattr
+				subkey = ""
+				subattr = {}
+			elif key:
+				# Add this key/value pair to the dict.
+				attribsDict[key] = tmp
+			key = ""
+			tmp = ""
+		else:
+			tmp += char
+	# If there was no trailing semi-colon, we need to handle the last attribute.
+	if subkey:
+		# This attribute had subattributes.
+		# Add the last subattribute key/value pair to the dict.
+		subattr[subkey] = tmp
+		# Add the key/subattribute pair to the dict.
+		attribsDict[key] = subattr
+	elif key:
+		# Add this key/value pair to the dict.
+		attribsDict[key] = tmp
+	return attribsDict
