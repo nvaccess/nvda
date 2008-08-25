@@ -196,18 +196,15 @@ class EditTextInfo(NVDAObjectTextInfo):
 		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
 		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
 		formatField=textHandler.FormatField()
-		if config.conf["documentFormatting"]["reportFontName"]:
-			formatField["font-name"]=charFormat.szFaceName
-		if config.conf["documentFormatting"]["reportFontSize"]:
-			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
-			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
-			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
-			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
-			if charFormat.dwEffects&CFE_SUBSCRIPT:
-				formatField["text-position"]="subscript"
-			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
-				formatField["text-position"]="superscript"
+		formatField["font-name"]=charFormat.szFaceName
+		formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+		formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
+		formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
+		formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
+		if charFormat.dwEffects&CFE_SUBSCRIPT:
+			formatField["text-position"]="sub"
+		elif charFormat.dwEffects&CFE_SUPERSCRIPT:
+			formatField["text-position"]="super"
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return formatField,(startOffset,endOffset)
