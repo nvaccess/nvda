@@ -211,14 +211,17 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		commandList=[]
 		offset=self._startOffset
 		while offset<self._endOffset:
-			field,bounds=self._getFormatFieldAndOffsets(offset)
-			nextOffset=bounds[1]
+			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset)
+			if boundEnd<=boundStart:
+				boundEnd=boundStart+1
+			if boundEnd<=offset:
+				boundEnd=offset+1
 			if offset>self._startOffset:
 				command=textHandler.FieldCommand("formatChange",field)
 				commandList.append(command)
-			text=self._getTextRange(offset,min(nextOffset,self._endOffset))
+			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
 			commandList.append(text)
-			offset=nextOffset
+			offset=boundEnd
 		return commandList
 
 	def _get_text(self):
@@ -771,7 +774,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True,extraDetail=True)
 
 	def script_moveByWord(self,keyPress):
 		try:
