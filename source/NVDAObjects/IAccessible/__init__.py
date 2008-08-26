@@ -141,14 +141,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textHandler.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
-		attrs={}
-		for attr in attribsString.split(";"):
-			try:
-				name,value=attr.split(":")
-			except:
-				name=attr
-				value=""
-			formatField[name]=value
+		formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
 		try:
 			fontWeight=formatField.pop("font-weight")
 		except KeyError:
