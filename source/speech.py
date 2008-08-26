@@ -754,6 +754,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
 		if fontSize and fontSize!=oldFontSize:
 			textList.append(fontSize)
+	if not honourConfig or config.conf["documentFormatting"]["reportLineNumber"]:
+		lineNumber=attrs.get("line-number")
+		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
+		if lineNumber is not None and lineNumber!=oldLineNumber:
+			text=_("line %s"%lineNumber)
+			textList.append(text)
 	if not honourConfig or config.conf["documentFormatting"]["reportFontAttributes"]:
 		bold=attrs.get("bold")
 		oldBold=attrsCache.get("bold") if attrsCache is not None else None

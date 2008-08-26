@@ -90,6 +90,8 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			formatField["font-name"]=fontNameBuf.value
 		if config.conf["documentFormatting"]["reportFontSize"]:
 			formatField["font-size"]="%spt"%winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			formatField["bold"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0))
 			formatField["italic"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
@@ -155,7 +157,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
 		return [start,end]
 
-	def _lineNumFromOffset(self,offset):
+	def _getLineNumFromOffset(self,offset):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):

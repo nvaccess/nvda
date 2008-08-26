@@ -205,6 +205,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 			formatField["text-position"]="sub"
 		elif charFormat.dwEffects&CFE_SUPERSCRIPT:
 			formatField["text-position"]="super"
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return formatField,(startOffset,endOffset)
