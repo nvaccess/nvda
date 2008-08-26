@@ -403,6 +403,8 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 	def _getFormatFieldAtRange(self,range):
 		formatField=textHandler.FormatField()
 		fontObj=None
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
 		if config.conf["documentFormatting"]["reportFontName"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-name"]=fontObj.name
@@ -584,7 +586,7 @@ class Edit(IAccessible):
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
 		#For now disable ITextDocument support
-		if False and self.editAPIVersion>1 and self.ITextDocumentObject:
+		if self.editAPIVersion>1 and self.ITextDocumentObject:
 			self.TextInfo=ITextDocumentTextInfo
 		else:
 			self.TextInfo=EditTextInfo
