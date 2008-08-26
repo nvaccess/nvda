@@ -584,17 +584,24 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
 	relativeTextList=[]
+	lastTextOkToMerge=False
 	for count in range(len(commandList)):
 		if isinstance(commandList[count],basestring):
 			text=commandList[count]
 			if text:
-				relativeTextList.append(text)
+				if lastTextOkToMerge:
+					relativeTextList[-1]+=text
+				else:
+					relativeTextList.append(text)
+					lastTextOkToMerge=True
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlStart":
+			lastTextOkToMerge=False
 			text=getControlFieldSpeech(commandList[count].field,"start_relative",extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlEnd":
+			lastTextOkToMerge=False
 			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
@@ -605,6 +612,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,extraDetail=extraDetail)
 			if text:
 				relativeTextList.append(text)
+				lastTextOkToMerge=False
 
 	text=" ".join(relativeTextList)
 	if text and (not text.isspace() or "\t" in text):
