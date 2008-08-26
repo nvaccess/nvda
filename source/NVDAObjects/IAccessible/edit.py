@@ -400,6 +400,44 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
+	def _getFormatFieldAtRange(self,range):
+		formatField=textHandler.FormatField()
+		fontObj=None
+		if config.conf["documentFormatting"]["reportFontName"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-name"]=fontObj.name
+		if config.conf["documentFormatting"]["reportFontSize"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-size"]="%spt"%fontObj.size
+		if config.conf["documentFormatting"]["reportFontAttributes"]:
+			if not fontObj: fontObj=range.font
+			formatField["bold"]=bool(fontObj.bold)
+			formatField["italic"]=bool(fontObj.italic)
+			formatField["underline"]=bool(fontObj.underline)
+			if fontObj.superscript:
+				formatField["text-position"]="super"
+			elif fontObj.subscript:
+				formatField["text-position"]="sub"
+		return formatField
+
+	def _expandFormatRange(self,range):
+		startLimit=self._rangeObj.start
+		endLimit=self._rangeObj.end
+		lineRange=range.duplicate
+		lineRange.expand(comInterfaces.tom.tomLine)
+		lineStart=lineRange.start
+		lineEnd=lineRange.end
+		if startLimit<lineStart:
+			startLimit=lineStart
+		if endLimit>lineEnd:
+			endLimit=lineEnd
+		#range.moveEnd(comInterfaces.tom.tomCharFormat,1)
+		range.expand(comInterfaces.tom.tomCharFormat)
+		if range.end>endLimit:
+			range.end=endLimit
+		if range.start<startLimit:
+			range.start=startLimit
+
 	def __init__(self,obj,position,_rangeObj=None):
 		super(ITextDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -425,6 +463,34 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			self._rangeObj=self.obj.ITextDocumentObject.range(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
+
+	def _get_initialFormatField(self):
+		range=self._rangeObj.duplicate
+		range.collapse(True)
+		range.expand(comInterfaces.tom.tomCharacter)
+		return self._getFormatFieldAtRange(range)
+
+	def _get_textWithFields(self):
+		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+			return [self.text]
+		commandList=[]
+		endLimit=self._rangeObj.end
+		range=self._rangeObj.duplicate
+		range.collapse(True)
+		hasLoopedOnce=False
+		while range.end<endLimit:
+			self._expandFormatRange(range)
+			if hasLoopedOnce:
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range)))
+			else:
+				hasLoopedOnce=True
+			commandList.append(range.text)
+			end=range.end
+			range.start=end
+			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
+			if range.end<end:
+				break
+		return commandList
 
 	def expand(self,unit):
 		if unit in NVDAUnitsToITextDocumentUnits:
