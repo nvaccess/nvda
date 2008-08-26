@@ -425,14 +425,17 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 	def _expandFormatRange(self,range):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
-		lineRange=range.duplicate
-		lineRange.expand(comInterfaces.tom.tomLine)
-		lineStart=lineRange.start
-		lineEnd=lineRange.end
-		if startLimit<lineStart:
-			startLimit=lineStart
-		if endLimit>lineEnd:
-			endLimit=lineEnd
+		chunkRange=range.duplicate
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			chunkRange.expand(comInterfaces.tom.tomLine)
+		else:
+			chunkRange.expand(comInterfaces.tom.tomParagraph)
+		chunkStart=chunkRange.start
+		chunkEnd=chunkRange.end
+		if startLimit<chunkStart:
+			startLimit=chunkStart
+		if endLimit>chunkEnd:
+			endLimit=chunkEnd
 		#range.moveEnd(comInterfaces.tom.tomCharFormat,1)
 		range.expand(comInterfaces.tom.tomCharFormat)
 		if range.end>endLimit:
