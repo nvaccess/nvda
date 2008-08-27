@@ -79,6 +79,62 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		rangeObj.SetRange(sel.Start,sel.End)
 		sel.SetRange(oldSel.Start,oldSel.End)
 
+	def _getFormatFieldAtRange(self,range):
+		formatField=textHandler.FormatField()
+		fontObj=None
+		paraFormatObj=None
+		if config.conf["documentFormatting"]["reportStyle"]:
+			formatField["style"]=range.style.nameLocal
+		if config.conf["documentFormatting"]["reportTables"] and range.Information(wdWithInTable):
+			tableInfo={}
+			tableInfo["column-count"]=range.Information(wdMaximumNumberOfColumns)
+			tableInfo["row-count"]=range.Information(wdMaximumNumberOfRows)
+			tableInfo["column-number"]=range.Information(wdStartOfRangeColumnNumber)
+			tableInfo["row-number"]=range.Information(wdStartOfRangeRowNumber)
+			formatField["table-info"]=tableInfo
+		if config.conf["documentFormatting"]["reportAlignment"]:
+			if not paraFormatObj: paraFormatObj=range.paragraphFormat
+			alignment=paraFormatObj.alignment
+			if alignment==wdAlignParagraphLeft:
+				formatField["text-align"]="left"
+			elif alignment==wdAlignParagraphCenter:
+				formatField["text-align"]="center"
+			elif alignment==wdAlignParagraphRight:
+				formatField["text-align"]="right"
+			elif alignment==wdAlignParagraphJustify:
+				formatField["text-align"]="justify"
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			formatField["line-number"]=range.getIndex(wdLine)
+		if config.conf["documentFormatting"]["reportFontName"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-name"]=fontObj.name
+		if config.conf["documentFormatting"]["reportFontSize"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-size"]="%spt"%fontObj.size
+		if config.conf["documentFormatting"]["reportFontAttributes"]:
+			if not fontObj: fontObj=range.font
+			formatField["bold"]=bool(fontObj.bold)
+			formatField["italic"]=bool(fontObj.italic)
+			formatField["underline"]=bool(fontObj.underline)
+			if fontObj.superscript:
+				formatField["text-position"]="super"
+			elif fontObj.subscript:
+				formatField["text-position"]="sub"
+		return formatField
+
+	def _expandFormatRange(self,range):
+		startLimit=self._rangeObj.start
+		endLimit=self._rangeObj.end
+		#Only Office 2007 onwards supports moving by format changes, -- and only moveEnd works.
+		try:
+			range.MoveEnd(13,1)
+		except:
+			range.Expand(wdWord)
+		if range.start<startLimit:
+			range.start=startLimit
+		if range.end>endLimit:
+			range.end=endLimit
+
 	def __init__(self,obj,position,_rangeObj=None):
 		super(WordDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -106,6 +162,34 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
+
+	def _get_initialFormatField(self):
+		range=self._rangeObj.duplicate
+		range.Collapse()
+		range.Expand(wdCharacter)
+		return self._getFormatFieldAtRange(range)
+
+	def _get_textWithFields(self):
+		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+			return [self.text]
+		commandList=[]
+		endLimit=self._rangeObj.end
+		range=self._rangeObj.duplicate
+		range.Collapse()
+		hasLoopedOnce=False
+		while range.end<endLimit:
+			self._expandFormatRange(range)
+			if hasLoopedOnce:
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range)))
+			else:
+				hasLoopedOnce=True
+			commandList.append(range.text)
+			end=range.end
+			range.start=end
+			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
+			if range.end<end:
+				break
+		return commandList
 
 	def expand(self,unit):
 		if unit==textHandler.UNIT_LINE and self.basePosition not in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
@@ -366,7 +450,14 @@ class WordDocument(IAccessible):
 		info.expand(textHandler.UNIT_CELL)
 		speech.speakTextInfo(info)
 
+	def script_test(self,keyPress):
+		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
+		speech.speakMessage("before: %s, %s"%(info._rangeObj.start,info._rangeObj.end))
+		info._expandFormatRange(info._rangeObj)
+		speech.speakMessage("after: %s, %s"%(info._rangeObj.start,info._rangeObj.end))
+
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("nvda+l","test"),
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
 	("ExtendedLeft","moveByCharacter"),
