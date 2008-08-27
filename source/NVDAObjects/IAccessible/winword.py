@@ -83,6 +83,8 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
 		if config.conf["documentFormatting"]["reportPage"]:
 			formatField["page-number"]=range.Information(wdActiveEndPageNumber)
 		if config.conf["documentFormatting"]["reportStyle"]:
@@ -105,8 +107,6 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 				formatField["text-align"]="right"
 			elif alignment==wdAlignParagraphJustify:
 				formatField["text-align"]="justify"
-		if config.conf["documentFormatting"]["reportLineNumber"]:
-			formatField["line-number"]=range.getIndex(wdLine)
 		if config.conf["documentFormatting"]["reportFontName"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-name"]=fontObj.name
