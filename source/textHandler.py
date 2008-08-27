@@ -28,78 +28,6 @@ class FieldCommand(object):
 		self.command=command
 		self.field=field
 
-def isFormatEnabled(role,includes=set(),excludes=set()):
-	"""Checks to see if a role is in an includes list (if given), or not in an excludes list (if given).
-@param role: an NVDA object or format role
-@type role: int
-@param includes: a set of 0 or more roles, or None
-@type includes: set, None
-@param excludes: a set of 0 or more roles, or None
-@type excludes: set, None
-@rtype: bool
-"""
-	if len(includes)>0 and len(excludes)>0:
-		raise ValueError("Only one of includes or excludes can be used")
-	elif role in excludes:
-		return False
-	elif len(includes)>0 and role not in includes:
-		return False
-	else: 
-		return True
-   
-#Field stuff
-
-FORMAT_CMD_CHANGE=0
-FORMAT_CMD_INFIELD=1
-FORMAT_CMD_OUTOFFIELD=2
-FORMAT_CMD_SWITCHON=3
-FORMAT_CMD_SWITCHOFF=4
-
-class FormatCommand(object):
-	"""A container to hold a format, and also communicates whether the format is once off, is being turned on, or is being turned off.
-@ivar cmd: the command type (one of the FORMAT_CMD_* constants)
-@type cmd: int
- @ivar format: the format
-@type format: L{Format}
-"""
-
-	def __init__(self,cmd,format):
-		"""
-@param cmd: the command type (one of the FORMAT_CMD_* constants)
-@type cmd: int
- @param format: the format
-@type format: L{Format}
-"""
- 		self.cmd=cmd
-		self.format=format
-
-class Format(object):
-	"""Represents a field or format with in text.
-@ivar role: The format's role (a control role or format role)
-@type role: int
-@ivar value: a line's number, a link's URL, a font name field's  name
-@type value: string
-@ivar states: a set of state constants (the checked state for a checkbox etc)
-@type states: set
-@ivar uniqueID: either a value unique to this format field, or None
-"""
-
-	def __init__(self,role,value="",states=frozenset(),contains="",uniqueID=""):
-		"""
-@param role: The format's role (a control role or format role)
-@type role: int
-@param value: a line's number, a link's URL, a font name field's  name
-@type value: string
-@param states: a set of state constants (the checked state for a checkbox etc)
-@type states: set
-@param uniqueID: either a value unique to this format field, or None
-"""
-		self.role=role
-		self.value=value
-		self.states=states
-		self.contains=contains
-		self.uniqueID=uniqueID
-
 #Position constants
 POSITION_FIRST="first"
 POSITION_LAST="last"
@@ -248,13 +176,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		if text:
 			fieldList.append(text)
 		return fieldList
-
-	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
-		"""
-@returns: A sequence of L{FormatCommand} objects and strings of text.
-@rtype: list
-"""
-		return [self.text]
 
 	def unitIndex(self,unit):
 		"""
