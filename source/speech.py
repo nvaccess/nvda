@@ -748,6 +748,12 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 
 def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=True):
 	textList=[]
+	if config.conf["documentFormatting"]["reportTables"]:
+		tableInfo=attrs.get("table-info")
+		oldTableInfo=attrsCache.get("table-info")
+		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
+		if text:
+			textList.append(text)
 	if not honourConfig or config.conf["documentFormatting"]["reportFontName"]:
 		fontFamily=attrs.get("font-family")
 		oldFontFamily=attrsCache.get("font-family") if attrsCache is not None else None
@@ -829,4 +835,29 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
+	return " ".join(textList)
+
+def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
+	if tableInfo is None and oldTableInfo is None:
+		return ""
+	if tableInfo is None and oldTableInfo is not None:
+		return _("out of table")
+	if not oldTableInfo or tableInfo.get("table-id")!=oldTableInfo.get("table-id"):
+		newTable=True
+	else:
+		newTable=False
+	textList=[]
+	if newTable:
+		columnCount=tableInfo.get("column-count",0)
+		rowCount=tableInfo.get("row-count",0)
+		text=_("table with %s columns and %s rows")%(columnCount,rowCount)
+		textList.append(text)
+	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0
+	columnNumber=tableInfo.get("column-number",0)
+	if columnNumber!=oldColumnNumber:
+		textList.append(_("column %s")%columnNumber)
+	oldRowNumber=oldTableInfo.get("row-number",0) if oldTableInfo else 0
+	rowNumber=tableInfo.get("row-number",0)
+	if rowNumber!=oldRowNumber:
+		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
