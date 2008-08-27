@@ -799,6 +799,22 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 			else:
 				text=_("baseline")
 			textList.append(text)
+	if config.conf["documentFormatting"]["reportAlignment"]:
+		textAlign=attrs.get("text-align")
+		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
+		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:
+			textAlign=textAlign.lower() if textAlign else textAlign
+			if textAlign=="left":
+				text=_("align left")
+			elif textAlign=="center":
+				text=_("align center")
+			elif textAlign=="right":
+				text=_("align right")
+			elif textAlign=="justify":
+				text=_("align justify")
+			else:
+				text=_("align default")
+			textList.append(text)
 	invalidSpelling=attrs.get("invalid-spelling")
 	oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
 	if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:

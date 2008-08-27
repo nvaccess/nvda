@@ -403,6 +403,18 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 	def _getFormatFieldAtRange(self,range):
 		formatField=textHandler.FormatField()
 		fontObj=None
+		paraFormatObj=None
+		if config.conf["documentFormatting"]["reportAlignment"]:
+			if not paraFormatObj: paraFormatObj=range.para
+			alignment=paraFormatObj.alignment
+			if alignment==comInterfaces.tom.tomAlignLeft:
+				formatField["text-align"]="left"
+			elif alignment==comInterfaces.tom.tomAlignCenter:
+				formatField["text-align"]="center"
+			elif alignment==comInterfaces.tom.tomAlignRight:
+				formatField["text-align"]="right"
+			elif alignment==comInterfaces.tom.tomAlignJustify:
+				formatField["text-align"]="justify"
 		if config.conf["documentFormatting"]["reportLineNumber"]:
 			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
 		if config.conf["documentFormatting"]["reportFontName"]:

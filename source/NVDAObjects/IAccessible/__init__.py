@@ -143,6 +143,18 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		formatField=textHandler.FormatField()
 		formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
 		try:
+			textAlign=formatField.pop("text-align")
+		except KeyError:
+			textAlign=None
+		if textAlign:
+			if "right" in textAlign:
+				textAlign="right"
+			elif "center" in textAlign:
+				textAlign="center"
+			elif "justify" in textAlign:
+				textAlign="justify"
+			formatField["text-align"]=textAlign
+		try:
 			fontWeight=formatField.pop("font-weight")
 		except KeyError:
 			fontWeight=None
