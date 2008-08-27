@@ -754,6 +754,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
+	if not honourConfig or config.conf["documentFormatting"]["reportPage"]:
+		pageNumber=attrs.get("page-number")
+		oldPageNumber=attrsCache.get("page-number")
+		if pageNumber and pageNumber!=oldPageNumber:
+			text=_("page %s"%pageNumber)
+			textList.append(text)
 	if not honourConfig or config.conf["documentFormatting"]["reportFontName"]:
 		fontFamily=attrs.get("font-family")
 		oldFontFamily=attrsCache.get("font-family") if attrsCache is not None else None

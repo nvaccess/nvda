@@ -83,6 +83,8 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
+		if config.conf["documentFormatting"]["reportPage"]:
+			formatField["page-number"]=range.Information(wdActiveEndPageNumber)
 		if config.conf["documentFormatting"]["reportStyle"]:
 			formatField["style"]=range.style.nameLocal
 		if config.conf["documentFormatting"]["reportTables"] and range.Information(wdWithInTable):
@@ -450,14 +452,7 @@ class WordDocument(IAccessible):
 		info.expand(textHandler.UNIT_CELL)
 		speech.speakTextInfo(info)
 
-	def script_test(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_SELECTION)
-		speech.speakMessage("before: %s, %s"%(info._rangeObj.start,info._rangeObj.end))
-		info._expandFormatRange(info._rangeObj)
-		speech.speakMessage("after: %s, %s"%(info._rangeObj.start,info._rangeObj.end))
-
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("nvda+l","test"),
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
 	("ExtendedLeft","moveByCharacter"),
@@ -486,5 +481,7 @@ class WordDocument(IAccessible):
 	("control+alt+extendedDown","nextRow"),
 	("control+alt+extendedLeft","previousColumn"),
 	("control+alt+extendedRight","nextColumn"),
+	("ExtendedPrior","moveByLine"),
+	("ExtendedNext","moveByLine"),
 ]]
 
