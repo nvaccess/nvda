@@ -267,30 +267,6 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getLineCount(self):
 		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
 
-	def _getTextRangeWithEmbeddedObjects(self,start,end):
-		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
-		r=ptr.Range(self._startOffset,self._endOffset)
-		bufText=r.text
-		if bufText is None:
-			bufText=""
-		newTextList=[]
-		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
-				embedRange=ptr.Range(start+offset,start+offset)
-				o=embedRange.GetEmbeddedObject()
-				o=o.QueryInterface(oleTypes.IOleObject)
-				dataObj=o.GetClipboardData(0)
-				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-				medium=dataObj.GetData(format)
-				buf=ctypes.create_string_buffer(medium.data)
-				buf=ctypes.cast(buf,ctypes.c_wchar_p)
-				newTextList.append(buf.value)
-			else:
-				newTextList.append(bufText[offset])
-		return "".join(newTextList)
-
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
 			bufLen=((end-start)+1)*2
@@ -455,6 +431,35 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		if range.start<startLimit:
 			range.start=startLimit
 
+	def _getTextAtRange(self,rangeObj):
+		embedRangeObj=None
+		bufText=rangeObj.text
+		if bufText is None:
+			bufText=""
+		newTextList=[]
+		start=rangeObj.start
+		for offset in range(len(bufText)):
+			if ord(bufText[offset])==0xfffc:
+				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
+				embedRangeObj.setRange(start+offset,start+offset)
+				o=embedRangeObj.GetEmbeddedObject()
+				#Fetch a description for this object
+				try:
+					o=o.QueryInterface(oleTypes.IOleObject)
+					dataObj=o.GetClipboardData(0)
+					dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
+					format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+					medium=dataObj.GetData(format)
+					buf=ctypes.create_string_buffer(medium.data)
+					buf=ctypes.cast(buf,ctypes.c_wchar_p)
+					label=buf.value
+				except comtypes.COMError:
+					label=_("unknown")
+				newTextList.append(_("%s embedded object")%label)
+			else:
+				newTextList.append(bufText[offset])
+		return "".join(newTextList)
+
 	def __init__(self,obj,position,_rangeObj=None):
 		super(ITextDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -489,7 +494,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 
 	def _get_textWithFields(self):
 		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
-			return [self.text]
+			return [self._getTextAtRange(self._rangeObj)]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		range=self._rangeObj.duplicate
@@ -501,7 +506,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range)))
 			else:
 				hasLoopedOnce=True
-			commandList.append(range.text)
+			commandList.append(self._getTextAtRange(range))
 			end=range.end
 			range.start=end
 			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
@@ -565,7 +570,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		return ITextDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		return self._rangeObj.text
+		return self._getTextAtRange(self._rangeObj)
 
 	def move(self,unit,direction,endPoint=None):
 		if unit in NVDAUnitsToITextDocumentUnits:
@@ -595,7 +600,6 @@ class Edit(IAccessible):
 
 	editAPIVersion=0
 	editAPIUnicode=True
-	editAPIHasITextDocument=False
 	editValueUnit=textHandler.UNIT_LINE
 
 	def __init__(self,*args,**kwargs):
