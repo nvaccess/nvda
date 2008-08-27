@@ -56,7 +56,15 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		return text[start:end]
 
 	def _getFormatFieldAndOffsets(self,offset):
-		return textHandler.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textHandler.FormatField()
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			startOffset,endOffset=self._getLineOffsets(offset)
+			lineNum=self._getLineNumFromOffset(offset)
+			if lineNum is not None:
+				formatField["line-number"]=lineNum+1
+		else:
+			startOffset,endOffset=self._startOffset,self._endOffset
+		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
 		return [offset,offset+1]

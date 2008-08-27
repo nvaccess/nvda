@@ -176,7 +176,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getFormatFieldAndOffsets(self,offset):
 		#Basic edit fields do not support formatting at all
 		if self.obj.editAPIVersion<1:
-			return textHandler.FormatField(),(self._startOffset,self._endOffset)
+			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset)
 		startOffset,endOffset=self._getWordOffsets(offset)
 		#lineStart,lineEnd=self._getLineOffsets(offset)
 		#if offset>lineStart: offset+=1
