@@ -604,7 +604,6 @@ class Edit(IAccessible):
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
-		#For now disable ITextDocument support
 		if self.editAPIVersion>1 and self.ITextDocumentObject:
 			self.TextInfo=ITextDocumentTextInfo
 		else:
