@@ -141,7 +141,8 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textHandler.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
-		formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		if attribsString:
+			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
 		try:
 			textAlign=formatField.pop("text-align")
 		except KeyError:
@@ -158,7 +159,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			fontWeight=formatField.pop("font-weight")
 		except KeyError:
 			fontWeight=None
-		if fontWeight is not None and fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700):
+		if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
 			formatField["bold"]=True
 		else:
 			formatField["bold"]=False
