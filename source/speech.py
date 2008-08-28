@@ -667,19 +667,19 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 	textList=[]
 	if config.conf["documentFormatting"]["reportTables"]:
 		tableInfo=attrs.get("table-info")
-		oldTableInfo=attrsCache.get("table-info")
+		oldTableInfo=attrsCache.get("table-info") if attrsCache is not None else None
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
 	if not honourConfig or config.conf["documentFormatting"]["reportPage"]:
 		pageNumber=attrs.get("page-number")
-		oldPageNumber=attrsCache.get("page-number")
+		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
 			text=_("page %s"%pageNumber)
 			textList.append(text)
 	if not honourConfig or config.conf["documentFormatting"]["reportStyle"]:
 		style=attrs.get("style")
-		oldStyle=attrsCache.get("style")
+		oldStyle=attrsCache.get("style") if attrsCache is not None else None
 		if style!=oldStyle:
 			if style:
 				text=_("style %s"%style)
