@@ -141,6 +141,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textHandler.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
+		if not attribsString and offset>0:
+			try:
+				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
+			except COMError:
+				pass
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
 		try:
