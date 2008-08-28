@@ -87,6 +87,9 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		text=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
+	def _getLineNumFromOffset(self, offset):
+		return None
+
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
 		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
 
