@@ -730,9 +730,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
 		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			if textPosition.lower()=="super":
+			textPosition=textPosition.lower() if textPosition else textPosition
+			if textPosition=="super":
 				text=_("superscript")
-			elif textPosition.lower()=="sub":
+			elif textPosition=="sub":
 				text=_("subscript")
 			else:
 				text=_("baseline")
