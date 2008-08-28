@@ -137,6 +137,8 @@ class Gecko_ia2(VirtualBuffer):
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				else:
 					nextHandler()
+				self.passThrough=self.shouldEnablePassThrough(obj,reason=speech.REASON_FOCUS)
+				virtualBufferHandler.reportPassThrough(self)
 				newInfo.collapse()
 				newInfo.updateCaret()
 		else:
@@ -150,7 +152,7 @@ class Gecko_ia2(VirtualBuffer):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
 
-	def _caretMovedToField(self,docHandle,ID):
+	def _caretMovedToField(self,docHandle,ID,reason=speech.REASON_CARET):
 		try:
 			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
 			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
@@ -159,15 +161,16 @@ class Gecko_ia2(VirtualBuffer):
 				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
 				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT:
 					obj.setFocus()
+				if self.shouldEnablePassThrough(obj,reason=reason):
+					self.passThrough=True
+					virtualBufferHandler.reportPassThrough(self)
 		except:
 			pass
 
 	def _activateField(self,docHandle,ID):
 		try:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-			role=obj.role
-			states=obj.states
-			if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+			if self.shouldEnablePassThrough(obj):
 				obj.setFocus()
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)
@@ -327,7 +330,7 @@ class Gecko_ia2(VirtualBuffer):
 		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
 		newInfo.updateCaret()
-		self._caretMovedToField(newDocHandle, newID)
+		self._caretMovedToField(newDocHandle, newID, reason=speech.REASON_FOCUS)
 		return True
 
 	def script_tab(self, keyPress):

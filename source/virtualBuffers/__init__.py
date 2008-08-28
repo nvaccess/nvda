@@ -92,6 +92,8 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 class VirtualBuffer(cursorManager.CursorManager):
 
+	REASON_QUICKNAV = "quickNav"
+
 	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
 		self.backendLibPath=os.path.abspath(backendLibPath)
 		self.TextInfo=TextInfo
@@ -147,7 +149,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _activateContextMenuForField(self,docHandle,ID):
 		pass
 
-	def _caretMovedToField(self,dochandle,ID):
+	def _caretMovedToField(self,docHandle,ID,reason=speech.REASON_CARET):
 		pass
 
 	def script_activatePosition(self,keyPress):
@@ -220,7 +222,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info.setEndPoint(fieldInfo, "endToEnd")
 		info.updateCaret()
 		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
-		self._caretMovedToField(docHandle, ID)
+		self._caretMovedToField(docHandle, ID,reason=self.REASON_QUICKNAV)
 
 	@classmethod
 	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -274,6 +276,25 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")
+
+	def shouldEnablePassThrough(self, obj, reason=None):
+		"""Determine whether pass through mode should be enabled for a given object.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@param reason: The reason for this query; one of the speech reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
+		@return: C{True} if pass through mode should be enabled, C{False} if not.
+		"""
+		states = obj.states
+		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
+			return False
+		role = obj.role
+		if reason == self.REASON_QUICKNAV:
+			return False
+		if reason == speech.REASON_CARET:
+			return role == controlTypes.ROLE_EDITABLETEXT
+		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+			return True
+		return False
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
