@@ -277,13 +277,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")
 
-	def shouldEnablePassThrough(self, obj, reason=None):
-		"""Determine whether pass through mode should be enabled for a given object.
+	def shouldPassThrough(self, obj, reason=None):
+		"""Determine whether pass through mode should be enabled or disabled for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		@param reason: The reason for this query; one of the speech reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
-		@return: C{True} if pass through mode should be enabled, C{False} if not.
+		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
+		if reason and not config.conf["virtualBuffers"]["autoPassThrough"]:
+			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
+			return self.passThrough
 		states = obj.states
 		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
 			return False

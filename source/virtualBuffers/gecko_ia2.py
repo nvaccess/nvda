@@ -137,7 +137,7 @@ class Gecko_ia2(VirtualBuffer):
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				else:
 					nextHandler()
-				self.passThrough=self.shouldEnablePassThrough(obj,reason=speech.REASON_FOCUS)
+				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
 				virtualBufferHandler.reportPassThrough(self)
 				newInfo.collapse()
 				newInfo.updateCaret()
@@ -161,7 +161,7 @@ class Gecko_ia2(VirtualBuffer):
 				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
 				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT:
 					obj.setFocus()
-				if self.shouldEnablePassThrough(obj,reason=reason):
+				if self.shouldPassThrough(obj,reason=reason):
 					self.passThrough=True
 					virtualBufferHandler.reportPassThrough(self)
 		except:
@@ -170,7 +170,7 @@ class Gecko_ia2(VirtualBuffer):
 	def _activateField(self,docHandle,ID):
 		try:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-			if self.shouldEnablePassThrough(obj):
+			if self.shouldPassThrough(obj):
 				obj.setFocus()
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)

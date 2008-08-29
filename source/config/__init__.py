@@ -99,6 +99,7 @@ outputDevice = string(default=default)
 	reportBlockQuotes = boolean(default=true)
 	reportParagraphs = boolean(default=false)
 	reportFrames = boolean(default=true)
+	autoPassThrough = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
