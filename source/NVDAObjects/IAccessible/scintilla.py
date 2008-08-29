@@ -81,7 +81,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 				else:
 					break
 		else:
-			startOffset,endOffset=self._startOffset,self._endOffset)
+			startOffset,endOffset=(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
 		if formatConfig["reportFontName"]:
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
