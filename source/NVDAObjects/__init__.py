@@ -742,8 +742,8 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
-		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
+		if not self._hasCaretMoved(bookmark):
+			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:

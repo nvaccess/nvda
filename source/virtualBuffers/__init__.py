@@ -6,6 +6,7 @@ import winsound
 import XMLFormatting
 import baseObject
 from keyUtils import sendKey
+import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
 import NVDAObjects
@@ -300,6 +301,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
 			return True
 		return False
+
+	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
+		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThrough"]:
+			return nextHandler()
+		script = self.getScript(keyPress)
+		if script:
+			self.passThrough = False
+			virtualBufferHandler.reportPassThrough(self)
+			scriptHandler.queueScript(script, keyPress)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
