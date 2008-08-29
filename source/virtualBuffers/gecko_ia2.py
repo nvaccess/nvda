@@ -146,9 +146,10 @@ class Gecko_ia2(VirtualBuffer):
 				newInfo.collapse()
 				newInfo.updateCaret()
 		else:
-			# The virtual buffer caret was already at the focused node, so we don't speak it.
-			# However, we still want to update the speech property cache so that property changes will be spoken properly.
+			# The virtual buffer caret was already at the focused node.
 			if not self.passThrough:
+				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
 			else:
 				return nextHandler()
