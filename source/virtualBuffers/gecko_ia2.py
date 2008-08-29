@@ -124,7 +124,11 @@ class Gecko_ia2(VirtualBuffer):
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			except:
-				#log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
+				# This object is not in the virtual buffer, even though it resides beneath the document.
+				# Automatic pass through should be enabled in certain circumstances where this occurs.
+				if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
+					self.passThrough=True
+					virtualBufferHandler.reportPassThrough(self)
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")

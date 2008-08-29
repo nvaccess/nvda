@@ -295,6 +295,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT
+		if reason == speech.REASON_FOCUS and role == controlTypes.ROLE_LISTITEM:
+			return True
 		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
 			return True
 		return False
