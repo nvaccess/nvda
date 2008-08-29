@@ -61,26 +61,29 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
-	def _getFormatFieldAndOffsets(self,offset):
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
-		#we need to manually see how far the style goes, limit to line
-		lineStart,lineEnd=self._getLineOffsets(offset)
-		startOffset=offset
-		while startOffset>lineStart:
-			curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,startOffset-1,0)
-			if curStyle==style:
-				startOffset-=1
-			else:
-				break
-		endOffset=offset+1
-		while endOffset<lineEnd:
-			curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,endOffset,0)
-			if curStyle==style:
-				endOffset+=1
-			else:
-				break
+		if calculateOffsets:
+			#we need to manually see how far the style goes, limit to line
+			lineStart,lineEnd=self._getLineOffsets(offset)
+			startOffset=offset
+			while startOffset>lineStart:
+				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,startOffset-1,0)
+				if curStyle==style:
+					startOffset-=1
+				else:
+					break
+			endOffset=offset+1
+			while endOffset<lineEnd:
+				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,endOffset,0)
+				if curStyle==style:
+					endOffset+=1
+				else:
+					break
+		else:
+			startOffset,endOffset=self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
-		if config.conf["documentFormatting"]["reportFontName"]:
+		if formatConfig["reportFontName"]:
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 			fontNameBuf=ctypes.create_string_buffer(32)
 			internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -88,11 +91,11 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 			winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			formatField["font-name"]=fontNameBuf.value
-		if config.conf["documentFormatting"]["reportFontSize"]:
+		if formatConfig["reportFontSize"]:
 			formatField["font-size"]="%spt"%winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
-		if config.conf["documentFormatting"]["reportLineNumber"]:
+		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
+		if formatConfig["reportFontAttributes"]:
 			formatField["bold"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0))
 			formatField["italic"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
 			formatField["underline"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0))

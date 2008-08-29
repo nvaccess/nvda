@@ -26,6 +26,10 @@ import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
+	def _getLineNumFromOffset(offset):
+		#virtualBuffers have no concept of line numbers
+		return 0
+
 	def _getSelectionOffsets(self):
 		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
 		return (start,end)
@@ -61,17 +65,14 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	def _normalizeControlField(self,attrs):
 		return attrs
 
-	def _get_initialControlFieldAncestry(self):
+	def getInitialFields(self,formatConfig=None):
 		XMLContext=VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
 		ancestry=XMLFormatting.XMLContextParser().parse(XMLContext)
 		for index in xrange(len(ancestry)):
 			ancestry[index]=self._normalizeControlField(ancestry[index])
 		return ancestry
 
-	def _get_XMLContext(self):
-		return VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
-
-	def _get_textWithFields(self):
+	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
 		XMLText=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
@@ -80,12 +81,6 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
 				commandList[index].field=self._normalizeControlField(commandList[index].field)
 		return commandList
-
-	def _get_XMLText(self):
-		start=self._startOffset
-		end=self._endOffset
-		text=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		return text
 
 	def _getLineNumFromOffset(self, offset):
 		return None

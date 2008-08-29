@@ -79,24 +79,24 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		rangeObj.SetRange(sel.Start,sel.End)
 		sel.SetRange(oldSel.Start,oldSel.End)
 
-	def _getFormatFieldAtRange(self,range):
+	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
-		if config.conf["documentFormatting"]["reportLineNumber"]:
+		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
-		if config.conf["documentFormatting"]["reportPage"]:
+		if formatConfig["reportPage"]:
 			formatField["page-number"]=range.Information(wdActiveEndPageNumber)
-		if config.conf["documentFormatting"]["reportStyle"]:
+		if formatConfig["reportStyle"]:
 			formatField["style"]=range.style.nameLocal
-		if config.conf["documentFormatting"]["reportTables"] and range.Information(wdWithInTable):
+		if formatConfig["reportTables"] and range.Information(wdWithInTable):
 			tableInfo={}
 			tableInfo["column-count"]=range.Information(wdMaximumNumberOfColumns)
 			tableInfo["row-count"]=range.Information(wdMaximumNumberOfRows)
 			tableInfo["column-number"]=range.Information(wdStartOfRangeColumnNumber)
 			tableInfo["row-number"]=range.Information(wdStartOfRangeRowNumber)
 			formatField["table-info"]=tableInfo
-		if config.conf["documentFormatting"]["reportAlignment"]:
+		if formatConfig["reportAlignment"]:
 			if not paraFormatObj: paraFormatObj=range.paragraphFormat
 			alignment=paraFormatObj.alignment
 			if alignment==wdAlignParagraphLeft:
@@ -107,13 +107,13 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 				formatField["text-align"]="right"
 			elif alignment==wdAlignParagraphJustify:
 				formatField["text-align"]="justify"
-		if config.conf["documentFormatting"]["reportFontName"]:
+		if formatConfig["reportFontName"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-name"]=fontObj.name
-		if config.conf["documentFormatting"]["reportFontSize"]:
+		if formatConfig["reportFontSize"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-size"]="%spt"%fontObj.size
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
+		if formatConfig["reportFontAttributes"]:
 			if not fontObj: fontObj=range.font
 			formatField["bold"]=bool(fontObj.bold)
 			formatField["italic"]=bool(fontObj.italic)
@@ -165,14 +165,18 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def _get_initialFormatField(self):
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
 		range=self._rangeObj.duplicate
 		range.Collapse()
 		range.Expand(wdCharacter)
-		return self._getFormatFieldAtRange(range)
+		return [self._getFormatFieldAtRange(range,formatConfig)]
 
-	def _get_textWithFields(self):
-		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
 			return [self.text]
 		commandList=[]
 		endLimit=self._rangeObj.end
@@ -182,7 +186,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		while range.end<endLimit:
 			self._expandFormatRange(range)
 			if hasLoopedOnce:
-				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range)))
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			else:
 				hasLoopedOnce=True
 			commandList.append(range.text)

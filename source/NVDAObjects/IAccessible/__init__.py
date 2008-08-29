@@ -134,7 +134,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		except:
 			return ""
 
-	def _getFormatFieldAndOffsets(self,offset):
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
 		except COMError:

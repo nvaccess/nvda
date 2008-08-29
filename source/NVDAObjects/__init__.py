@@ -55,15 +55,15 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
-	def _getFormatFieldAndOffsets(self,offset):
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textHandler.FormatField()
-		if config.conf["documentFormatting"]["reportLineNumber"]:
-			startOffset,endOffset=self._getLineOffsets(offset)
+		startOffset,endOffset=self._startOffset,self._endOffset
+		if formatConfig["reportLineNumber"]:
+			if calculateOffsets:
+				startOffset,endOffset=self._getLineOffsets(offset)
 			lineNum=self._getLineNumFromOffset(offset)
 			if lineNum is not None:
 				formatField["line-number"]=lineNum+1
-		else:
-			startOffset,endOffset=self._startOffset,self._endOffset
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
@@ -210,16 +210,20 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		else:
 			raise ValueError("bad argument - which: %s"%which)
 
-	def _get_initialFormatField(self):
-		return self._getFormatFieldAndOffsets(self._startOffset)[0]
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		return [self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)[0]]
 
-	def _get_textWithFields(self):
-		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
 			return [self.text]
 		commandList=[]
 		offset=self._startOffset
 		while offset<self._endOffset:
-			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset)
+			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset,formatConfig)
 			if boundEnd<=boundStart:
 				boundEnd=boundStart+1
 			if boundEnd<=offset:

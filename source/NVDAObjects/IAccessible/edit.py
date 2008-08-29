@@ -173,13 +173,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
-	def _getFormatFieldAndOffsets(self,offset):
-		#Basic edit fields do not support formatting at all
-		if self.obj.editAPIVersion<1:
-			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset)
-		startOffset,endOffset=self._getWordOffsets(offset)
-		#lineStart,lineEnd=self._getLineOffsets(offset)
-		#if offset>lineStart: offset+=1
+	def _getCharFormat(self,offset):
 		oldSel=self._getSelectionOffsets()
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(offset,offset+1)
@@ -195,22 +189,38 @@ class EditTextInfo(NVDAObjectTextInfo):
 		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
 		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
 		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-		formatField=textHandler.FormatField()
-		formatField["font-name"]=charFormat.szFaceName
-		formatField["font-size"]="%spt"%(charFormat.yHeight/20)
-		formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
-		formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
-		formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
-		if charFormat.dwEffects&CFE_SUBSCRIPT:
-			formatField["text-position"]="sub"
-		elif charFormat.dwEffects&CFE_SUPERSCRIPT:
-			formatField["text-position"]="super"
-		if config.conf["documentFormatting"]["reportLineNumber"]:
-			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
-		return formatField,(startOffset,endOffset)
+		return charFormat
 
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		#Basic edit fields do not support formatting at all
+		if self.obj.editAPIVersion<1:
+			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset,formatConfig,calculateOffsets=calculateOffsets)
+		if calculateOffsets:
+			startOffset,endOffset=self._getWordOffsets(offset)
+		else:
+			startOffset,endOffset=self._startOffset,self._endOffset
+		formatField=textHandler.FormatField()
+		charFormat=None
+		if formatConfig["reportFontName"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["font-name"]=charFormat.szFaceName
+		if formatConfig["reportFontSize"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+		if formatConfig["reportFontAttributes"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
+			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
+			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
+			if charFormat.dwEffects&CFE_SUBSCRIPT:
+				formatField["text-position"]="sub"
+			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
+				formatField["text-position"]="super"
+		if formatConfig["reportLineNumber"]:
+			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
+		return formatField,(startOffset,endOffset)
 
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
@@ -376,11 +386,11 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
-	def _getFormatFieldAtRange(self,range):
+	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
-		if config.conf["documentFormatting"]["reportAlignment"]:
+		if formatConfig["reportAlignment"]:
 			if not paraFormatObj: paraFormatObj=range.para
 			alignment=paraFormatObj.alignment
 			if alignment==comInterfaces.tom.tomAlignLeft:
@@ -391,15 +401,15 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 				formatField["text-align"]="right"
 			elif alignment==comInterfaces.tom.tomAlignJustify:
 				formatField["text-align"]="justify"
-		if config.conf["documentFormatting"]["reportLineNumber"]:
+		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
-		if config.conf["documentFormatting"]["reportFontName"]:
+		if formatConfig["reportFontName"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-name"]=fontObj.name
-		if config.conf["documentFormatting"]["reportFontSize"]:
+		if formatConfig["reportFontSize"]:
 			if not fontObj: fontObj=range.font
 			formatField["font-size"]="%spt"%fontObj.size
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
+		if formatConfig["reportFontAttributes"]:
 			if not fontObj: fontObj=range.font
 			formatField["bold"]=bool(fontObj.bold)
 			formatField["italic"]=bool(fontObj.italic)
@@ -410,11 +420,11 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 				formatField["text-position"]="sub"
 		return formatField
 
-	def _expandFormatRange(self,range):
+	def _expandFormatRange(self,range,formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
 		chunkRange=range.duplicate
-		if config.conf["documentFormatting"]["reportLineNumber"]:
+		if formatConfig["reportLineNumber"]:
 			chunkRange.expand(comInterfaces.tom.tomLine)
 		else:
 			chunkRange.expand(comInterfaces.tom.tomParagraph)
@@ -486,14 +496,18 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def _get_initialFormatField(self):
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
 		range=self._rangeObj.duplicate
 		range.collapse(True)
 		range.expand(comInterfaces.tom.tomCharacter)
-		return self._getFormatFieldAtRange(range)
+		return [self._getFormatFieldAtRange(range,formatConfig)]
 
-	def _get_textWithFields(self):
-		if not config.conf["documentFormatting"]["detectFormatAfterCursor"]:
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
 			return [self._getTextAtRange(self._rangeObj)]
 		commandList=[]
 		endLimit=self._rangeObj.end
@@ -501,9 +515,9 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		range.collapse(True)
 		hasLoopedOnce=False
 		while range.end<endLimit:
-			self._expandFormatRange(range)
+			self._expandFormatRange(range,formatConfig)
 			if hasLoopedOnce:
-				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range)))
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			else:
 				hasLoopedOnce=True
 			commandList.append(self._getTextAtRange(range))

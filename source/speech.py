@@ -437,13 +437,23 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+	if not formatConfig:
+		formatConfig=config.conf["documentFormatting"]
 	textList=[]
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else {}
 	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
-	#Make a new controlFieldStack from the textInfo's initialControlFieldAncestry
-	newControlFieldStack=info.initialControlFieldAncestry
+	#Make a new controlFieldStack and formatField from the textInfo's initialFields
+	newControlFieldStack=[]
+	newFormatField=textHandler.FormatField()
+	for field in info.getInitialFields(formatConfig):
+		if isinstance(field,textHandler.ControlField):
+			newControlFieldStack.append(field)
+		elif isinstance(field,textHandler.FormatField):
+			newFormatField.update(field)
+		else:
+			raise ValueError("unknown field: %s"%field)
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
 	for count in range(min(len(newControlFieldStack),len(controlFieldStackCache))):
@@ -475,7 +485,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache,extraDetail=extraDetail)
+	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,extraDetail=extraDetail)
 	if text:
 		if textListBlankLen==len(textList):
 			# If the TextInfo is considered blank so far, it should still be considered blank if there is only formatting thereafter.
@@ -496,7 +506,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		return
 
 	#Fetch a command list for the text and fields for this textInfo
-	commandList=info.textWithFields
+	commandList=info.getTextWithFields(formatConfig)
 	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
@@ -526,7 +536,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 			if commonFieldCount>len(newControlFieldStack):
 				commonFieldCount=len(newControlFieldStack)
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="formatChange":
-			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,extraDetail=extraDetail)
+			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,formatConfig,extraDetail=extraDetail)
 			if text:
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
@@ -663,21 +673,23 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=True):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=False):
+	if not formatConfig:
+		formatConfig=config.conf["documentFormatting"]
 	textList=[]
-	if config.conf["documentFormatting"]["reportTables"]:
+	if formatConfig["reportTables"]:
 		tableInfo=attrs.get("table-info")
 		oldTableInfo=attrsCache.get("table-info") if attrsCache is not None else None
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
-	if not honourConfig or config.conf["documentFormatting"]["reportPage"]:
+	if  formatConfig["reportPage"]:
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
 			text=_("page %s"%pageNumber)
 			textList.append(text)
-	if not honourConfig or config.conf["documentFormatting"]["reportStyle"]:
+	if  formatConfig["reportStyle"]:
 		style=attrs.get("style")
 		oldStyle=attrsCache.get("style") if attrsCache is not None else None
 		if style!=oldStyle:
@@ -686,7 +698,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 			else:
 				text=_("default style")
 			textList.append(text)
-	if not honourConfig or config.conf["documentFormatting"]["reportFontName"]:
+	if  formatConfig["reportFontName"]:
 		fontFamily=attrs.get("font-family")
 		oldFontFamily=attrsCache.get("font-family") if attrsCache is not None else None
 		if fontFamily and fontFamily!=oldFontFamily:
@@ -695,18 +707,18 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		oldFontName=attrsCache.get("font-name") if attrsCache is not None else None
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
-	if not honourConfig or config.conf["documentFormatting"]["reportFontSize"]:
+	if  formatConfig["reportFontSize"]:
 		fontSize=attrs.get("font-size")
 		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
 		if fontSize and fontSize!=oldFontSize:
 			textList.append(fontSize)
-	if not honourConfig or config.conf["documentFormatting"]["reportLineNumber"]:
+	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
 		if lineNumber is not None and lineNumber!=oldLineNumber:
 			text=_("line %s"%lineNumber)
 			textList.append(text)
-	if not honourConfig or config.conf["documentFormatting"]["reportFontAttributes"]:
+	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
 		oldBold=attrsCache.get("bold") if attrsCache is not None else None
 		if (bold or oldBold is not None) and bold!=oldBold:
@@ -738,7 +750,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 			else:
 				text=_("baseline")
 			textList.append(text)
-	if config.conf["documentFormatting"]["reportAlignment"]:
+	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
 		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:

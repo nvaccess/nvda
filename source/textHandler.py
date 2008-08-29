@@ -138,12 +138,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 @type isCollapsed: bool
 @ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
 @type text: string
-@ivar initialControlFieldAncestry: a list of L{ControlField}s representing the control fields the start of the text range is in.
-@type initialControlFieldAncestry: list
-@ivar initialFormatField: The L{FormatField} at the start of the text range. 
-@type initialFormatField: L{FormatField}
-@ivar textWithFields: a list of strings of text, plus L{FieldCommand} objects denoting where control fields start and stop and where format fields change. 
-@type textWithFields: list
 @ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
 @type bookmark: L{Bookmark}
 """
@@ -164,18 +158,23 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self):
 		raise NotImplementedError
 
-	def _get_initialControlFieldAncestry(self):
+	def getInitialFields(self,formatConfig=None):
+		"""Retreaves the control fields, and the format field, that the start of this text range is currently positioned.
+		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
+		@type formatConfig: dictionary
+		@returns: a list of control fields and a format field
+		@rtype: list
+		""" 
 		return []
 
-	def _get_initialFormatField(self):
-		return FormatField();
-
-	def _get_textWithFields(self):
-		fieldList=[]
-		text=self.text
-		if text:
-			fieldList.append(text)
-		return fieldList
+	def getTextWithFields(self,formatConfig=None):
+		"""Retreaves the text in this range, also including fields to indicate when controls start and end, and when format changes occure.
+		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
+		@type formatConfig: dictionary
+		@returns: a list of text strings and field commands
+		@rtype: list
+		""" 
+		return [self.text]
 
 	def unitIndex(self,unit):
 		"""
