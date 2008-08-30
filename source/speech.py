@@ -425,7 +425,7 @@ def speakTypedCharacters(ch):
 	global typedWord
 	if api.isTypingProtected():
 		ch="*"
-	if config.conf["keyboard"]["speakTypedCharacters"]:
+	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(ch)
 	if config.conf["keyboard"]["speakTypedWords"]: 
 		if ch.isalnum():
