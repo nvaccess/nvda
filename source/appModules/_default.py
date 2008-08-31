@@ -570,8 +570,11 @@ class appModule(appModuleHandler.AppModule):
 
 	def script_reportFormatting(self,keyPress):
 		formatConfig={
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportStyle":True,
-			"reportPage":False,"reportLineNumber":False,"reportTables":False,"reportAlignment":True,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,
+			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
+			"reportPage":False,"reportLineNumber":False,"reportTables":False,
+			"reportLinks":False,"reportHeadings":False,"reportLists":False,
+			"reportBlockQuotes":False,
 		}
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
