@@ -19,7 +19,7 @@ GECKO_SCROLL_TYPE_ANYWHERE=0x06
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
+	def _normalizeControlField(self,attrs):
 		accRole=attrs['iaccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
@@ -34,12 +34,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('iaccessible2::attribute_level',"")
-		newAttrs=attrs.copy()
+		newAttrs=textHandler.ControlField()
+		newAttrs.update(attrs)
 		newAttrs['role']=role
 		newAttrs['states']=states
 		if level is not "" and level is not None:
 			newAttrs['level']=level
-		return super(Gecko_ia2_TextInfo,self).getXMLFieldSpeech(newAttrs,fieldType,extraDetail=extraDetail,reason=reason)
+		return newAttrs
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -134,7 +135,7 @@ class Gecko_ia2(VirtualBuffer):
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
 				if not self.passThrough:
 					speech.cancelSpeech()
-					speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				else:
 					nextHandler()
 				newInfo.collapse()
@@ -270,7 +271,7 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
-				speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
 				newInfo.updateCaret()
 
@@ -324,7 +325,7 @@ class Gecko_ia2(VirtualBuffer):
 
 		# Finally, speak, move to and set focus to this node.
 		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
-		speech.speakFormattedTextWithXML(newInfo.XMLContext,newInfo.XMLText,self,newInfo.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		self._caretMovedToField(newDocHandle, newID)

@@ -5,6 +5,7 @@ import winKernel
 import winUser
 import globalVars
 import controlTypes
+import config
 from . import IAccessible 
 from .. import NVDAObjectTextInfo
 import locale
@@ -60,36 +61,46 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
-	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
-		formatList,start,end=super(ScintillaTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
-		oldSel=self._getSelectionOffsets()
-		if oldSel[0]!=offset and oldSel[1]!=offset:
-			self._setSelectionOffsets(offset,offset)
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
-#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
-		fontNameBuf=ctypes.create_string_buffer(32)
-		internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
-		winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
-		winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
-			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=fontNameBuf.value))
-			formatList.append(f)
-		if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
-			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)))
-			formatList.append(f)
-		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
-			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD))
-			formatList.append(f)
-		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
-			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC))
-			formatList.append(f)
-		if winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
-			f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
-			formatList.append(f)
-		if oldSel[0]!=offset and oldSel[1]!=offset:
-				self._setSelectionOffsets(oldSel[0],oldSel[1])
-		return (formatList,start,end)
+		if calculateOffsets:
+			#we need to manually see how far the style goes, limit to line
+			lineStart,lineEnd=self._getLineOffsets(offset)
+			startOffset=offset
+			while startOffset>lineStart:
+				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,startOffset-1,0)
+				if curStyle==style:
+					startOffset-=1
+				else:
+					break
+			endOffset=offset+1
+			while endOffset<lineEnd:
+				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,endOffset,0)
+				if curStyle==style:
+					endOffset+=1
+				else:
+					break
+		else:
+			startOffset,endOffset=(self._startOffset,self._endOffset)
+		formatField=textHandler.FormatField()
+		if formatConfig["reportFontName"]:
+			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
+			fontNameBuf=ctypes.create_string_buffer(32)
+			internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
+			winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
+			winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+			formatField["font-name"]=fontNameBuf.value
+		if formatConfig["reportFontSize"]:
+			formatField["font-size"]="%spt"%winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
+		if formatConfig["reportLineNumber"]:
+			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
+		if formatConfig["reportFontAttributes"]:
+			formatField["bold"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0))
+			formatField["italic"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
+			formatField["underline"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0))
+		return formatField,(startOffset,endOffset)
+
 
 	def _getCaretOffset(self):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
@@ -149,7 +160,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
 		return [start,end]
 
-	def _lineNumFromOffset(self,offset):
+	def _getLineNumFromOffset(self,offset):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):

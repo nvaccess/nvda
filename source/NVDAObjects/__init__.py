@@ -55,6 +55,17 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		formatField=textHandler.FormatField()
+		startOffset,endOffset=self._startOffset,self._endOffset
+		if formatConfig["reportLineNumber"]:
+			if calculateOffsets:
+				startOffset,endOffset=self._getLineOffsets(offset)
+			lineNum=self._getLineNumFromOffset(offset)
+			if lineNum is not None:
+				formatField["line-number"]=lineNum+1
+		return formatField,(startOffset,endOffset)
+
 	def _getCharacterOffsets(self,offset):
 		return [offset,offset+1]
 
@@ -199,39 +210,34 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		else:
 			raise ValueError("bad argument - which: %s"%which)
 
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		return [self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)[0]]
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
+			return [self.text]
+		commandList=[]
+		offset=self._startOffset
+		while offset<self._endOffset:
+			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset,formatConfig)
+			if boundEnd<=boundStart:
+				boundEnd=boundStart+1
+			if boundEnd<=offset:
+				boundEnd=offset+1
+			if offset>self._startOffset:
+				command=textHandler.FieldCommand("formatChange",field)
+				commandList.append(command)
+			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
+			commandList.append(text)
+			offset=boundEnd
+		return commandList
+
 	def _get_text(self):
 		return self._getTextRange(self._startOffset,self._endOffset)
-
-	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
-		if not searchRange:
-			formats,start,end=self._getFormatAndOffsets(self._startOffset,includes=includes,excludes=excludes)
-			formats.append(self.text)
-			return formats
-		lastFormatKeys={}
-		l=[]
-		finnished=False
-		offset=self._startOffset
-		while not finnished:
-			curFormatKeys={}
-			formats,start,end=self._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
-			for item in formats:
-				itemKey="%d, %d, %s, %s"%(item.cmd,item.format.role,item.format.value,item.format.uniqueID)
-				if itemKey not in lastFormatKeys:
-					l.append(item)
-				curFormatKeys[itemKey]=item
-			for itemKey,item in lastFormatKeys.items():
-				if item.cmd==textHandler.FORMAT_CMD_SWITCHON and itemKey not in curFormatKeys:
-					l.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,item.format))
-			text=self._getTextRange(start,end)
-			if len(l)>0 and isinstance(l[-1],basestring):
-				text="%s%s"%(l[-1],text)
-				del l[-1]
-			l.append(text)
-			lastFormatKeys=curFormatKeys
-			offset=end
-			if end>=self._endOffset:
-				finnished=True
-		return l
 
 	def unitIndex(self,unit):
 		if unit==textHandler.UNIT_LINE:  
@@ -728,7 +734,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_LINE)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 
 	def script_moveByCharacter(self,keyPress):
 		try:
@@ -749,7 +755,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True,extraDetail=True)
 
 	def script_moveByWord(self,keyPress):
 		try:
@@ -770,7 +776,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_WORD)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
@@ -791,7 +797,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_PARAGRAPH)
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 
 	def script_backspace(self,keyPress):
 		try:
@@ -837,7 +843,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			if globalVars.caretMovesReviewCursor:
 				globalVars.reviewPosition=info.copy()
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True)
 
 	def script_changeSelection(self,keyPress):
 		try:

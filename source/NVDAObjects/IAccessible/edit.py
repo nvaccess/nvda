@@ -13,6 +13,7 @@ import oleTypes
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
+import config
 import speech
 import winKernel
 import api
@@ -172,52 +173,54 @@ class EditTextInfo(NVDAObjectTextInfo):
 			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
-	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
-		formatList,start,end=super(EditTextInfo,self)._getFormatAndOffsets(offset,includes=includes,excludes=excludes)
-		if self.obj.editAPIVersion>=1:
-			oldSel=self._getSelectionOffsets()
-			if oldSel[0]!=offset and oldSel[1]!=offset:
-				self._setSelectionOffsets(offset,offset)
-			if self.obj.isWindowUnicode:
-				charFormatStruct=CharFormat2WStruct
-			else:
-				charFormatStruct=CharFormat2AStruct
-			charFormat=charFormatStruct()
-			charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-			processHandle=self.obj.editProcessHandle
-			internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=charFormat.szFaceName))
-				formatList.append(f)
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=charFormat.yHeight/20))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_BOLD) and textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_ITALIC) and textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFM_UNDERLINE) and textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFE_SUBSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUBSCRIPT,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUBSCRIPT))
-				formatList.append(f)
-			if (charFormat.dwEffects&CFE_SUPERSCRIPT) and textHandler.isFormatEnabled(controlTypes.ROLE_SUPERSCRIPT,includes=includes,excludes=excludes):
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_SUPERSCRIPT))
-				formatList.append(f)
-			if oldSel[0]!=offset and oldSel[1]!=offset:
-				self._setSelectionOffsets(oldSel[0],oldSel[1])
-		return (formatList,start,end)
+	def _getCharFormat(self,offset):
+		oldSel=self._getSelectionOffsets()
+		if oldSel!=(offset,offset+1):
+			self._setSelectionOffsets(offset,offset+1)
+		if self.obj.isWindowUnicode:
+			charFormatStruct=CharFormat2WStruct
+		else:
+			charFormatStruct=CharFormat2AStruct
+		charFormat=charFormatStruct()
+		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
+		processHandle=self.obj.editProcessHandle
+		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+		if oldSel!=(offset,offset+1):
+			self._setSelectionOffsets(oldSel[0],oldSel[1])
+		return charFormat
 
-
-
-
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		#Basic edit fields do not support formatting at all
+		if self.obj.editAPIVersion<1:
+			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset,formatConfig,calculateOffsets=calculateOffsets)
+		if calculateOffsets:
+			startOffset,endOffset=self._getWordOffsets(offset)
+		else:
+			startOffset,endOffset=self._startOffset,self._endOffset
+		formatField=textHandler.FormatField()
+		charFormat=None
+		if formatConfig["reportFontName"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["font-name"]=charFormat.szFaceName
+		if formatConfig["reportFontSize"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+		if formatConfig["reportFontAttributes"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
+			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
+			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
+			if charFormat.dwEffects&CFE_SUBSCRIPT:
+				formatField["text-position"]="sub"
+			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
+				formatField["text-position"]="super"
+		if formatConfig["reportLineNumber"]:
+			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
+		return formatField,(startOffset,endOffset)
 
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
@@ -274,34 +277,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getLineCount(self):
 		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
 
-	def _getTextRangeWithEmbeddedObjects(self,start,end):
-		ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
-		ctypes.windll.oleacc.AccessibleObjectFromWindow(self.obj.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
-		r=ptr.Range(self._startOffset,self._endOffset)
-		bufText=r.text
-		if bufText is None:
-			bufText=""
-		newTextList=[]
-		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
-				embedRange=ptr.Range(start+offset,start+offset)
-				o=embedRange.GetEmbeddedObject()
-				o=o.QueryInterface(oleTypes.IOleObject)
-				dataObj=o.GetClipboardData(0)
-				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-				medium=dataObj.GetData(format)
-				buf=ctypes.create_string_buffer(medium.data)
-				buf=ctypes.cast(buf,ctypes.c_wchar_p)
-				newTextList.append(buf.value)
-			else:
-				newTextList.append(bufText[offset])
-		return "".join(newTextList)
-
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
-			if self.obj.editAPIHasITextDocument:
-				return self._getTextRangeWithEmbeddedObjects(start,end)
 			bufLen=((end-start)+1)*2
 			if self.obj.isWindowUnicode:
 				textRange=TextRangeUStruct()
@@ -409,6 +386,90 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
+	def _getFormatFieldAtRange(self,range,formatConfig):
+		formatField=textHandler.FormatField()
+		fontObj=None
+		paraFormatObj=None
+		if formatConfig["reportAlignment"]:
+			if not paraFormatObj: paraFormatObj=range.para
+			alignment=paraFormatObj.alignment
+			if alignment==comInterfaces.tom.tomAlignLeft:
+				formatField["text-align"]="left"
+			elif alignment==comInterfaces.tom.tomAlignCenter:
+				formatField["text-align"]="center"
+			elif alignment==comInterfaces.tom.tomAlignRight:
+				formatField["text-align"]="right"
+			elif alignment==comInterfaces.tom.tomAlignJustify:
+				formatField["text-align"]="justify"
+		if formatConfig["reportLineNumber"]:
+			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
+		if formatConfig["reportFontName"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-name"]=fontObj.name
+		if formatConfig["reportFontSize"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-size"]="%spt"%fontObj.size
+		if formatConfig["reportFontAttributes"]:
+			if not fontObj: fontObj=range.font
+			formatField["bold"]=bool(fontObj.bold)
+			formatField["italic"]=bool(fontObj.italic)
+			formatField["underline"]=bool(fontObj.underline)
+			if fontObj.superscript:
+				formatField["text-position"]="super"
+			elif fontObj.subscript:
+				formatField["text-position"]="sub"
+		return formatField
+
+	def _expandFormatRange(self,range,formatConfig):
+		startLimit=self._rangeObj.start
+		endLimit=self._rangeObj.end
+		chunkRange=range.duplicate
+		if formatConfig["reportLineNumber"]:
+			chunkRange.expand(comInterfaces.tom.tomLine)
+		else:
+			chunkRange.expand(comInterfaces.tom.tomParagraph)
+		chunkStart=chunkRange.start
+		chunkEnd=chunkRange.end
+		if startLimit<chunkStart:
+			startLimit=chunkStart
+		if endLimit>chunkEnd:
+			endLimit=chunkEnd
+		#range.moveEnd(comInterfaces.tom.tomCharFormat,1)
+		range.expand(comInterfaces.tom.tomCharFormat)
+		if range.end>endLimit:
+			range.end=endLimit
+		if range.start<startLimit:
+			range.start=startLimit
+
+	def _getTextAtRange(self,rangeObj):
+		embedRangeObj=None
+		bufText=rangeObj.text
+		if bufText is None:
+			bufText=""
+		newTextList=[]
+		start=rangeObj.start
+		for offset in range(len(bufText)):
+			if ord(bufText[offset])==0xfffc:
+				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
+				embedRangeObj.setRange(start+offset,start+offset)
+				o=embedRangeObj.GetEmbeddedObject()
+				#Fetch a description for this object
+				try:
+					o=o.QueryInterface(oleTypes.IOleObject)
+					dataObj=o.GetClipboardData(0)
+					dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
+					format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+					medium=dataObj.GetData(format)
+					buf=ctypes.create_string_buffer(medium.data)
+					buf=ctypes.cast(buf,ctypes.c_wchar_p)
+					label=buf.value
+				except comtypes.COMError:
+					label=_("unknown")
+				newTextList.append(_("%s embedded object")%label)
+			else:
+				newTextList.append(bufText[offset])
+		return "".join(newTextList)
+
 	def __init__(self,obj,position,_rangeObj=None):
 		super(ITextDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -434,6 +495,38 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			self._rangeObj=self.obj.ITextDocumentObject.range(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
+
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		range=self._rangeObj.duplicate
+		range.collapse(True)
+		range.expand(comInterfaces.tom.tomCharacter)
+		return [self._getFormatFieldAtRange(range,formatConfig)]
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
+			return [self._getTextAtRange(self._rangeObj)]
+		commandList=[]
+		endLimit=self._rangeObj.end
+		range=self._rangeObj.duplicate
+		range.collapse(True)
+		hasLoopedOnce=False
+		while range.end<endLimit:
+			self._expandFormatRange(range,formatConfig)
+			if hasLoopedOnce:
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
+			else:
+				hasLoopedOnce=True
+			commandList.append(self._getTextAtRange(range))
+			end=range.end
+			range.start=end
+			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
+			if range.end<end:
+				break
+		return commandList
 
 	def expand(self,unit):
 		if unit in NVDAUnitsToITextDocumentUnits:
@@ -491,7 +584,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		return ITextDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		return self._rangeObj.text
+		return self._getTextAtRange(self._rangeObj)
 
 	def move(self,unit,direction,endPoint=None):
 		if unit in NVDAUnitsToITextDocumentUnits:
@@ -521,13 +614,11 @@ class Edit(IAccessible):
 
 	editAPIVersion=0
 	editAPIUnicode=True
-	editAPIHasITextDocument=False
 	editValueUnit=textHandler.UNIT_LINE
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
-		#For now disable ITextDocument support
-		if False and self.editAPIVersion>1 and self.ITextDocumentObject:
+		if self.editAPIVersion>1 and self.ITextDocumentObject:
 			self.TextInfo=ITextDocumentTextInfo
 		else:
 			self.TextInfo=EditTextInfo

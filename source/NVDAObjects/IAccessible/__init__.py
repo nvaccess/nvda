@@ -6,6 +6,7 @@
 
 import weakref
 import re
+from comtypes import COMError
 import struct
 import os
 import tones
@@ -132,6 +133,56 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			return self.obj.IAccessibleTextObject.text(start,end)
 		except:
 			return ""
+
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		try:
+			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
+		except COMError:
+			log.debugWarning("could not get attributes",exc_info=True)
+			return textHandler.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textHandler.FormatField()
+		if not attribsString and offset>0:
+			try:
+				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
+			except COMError:
+				pass
+		if attribsString:
+			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		try:
+			textAlign=formatField.pop("text-align")
+		except KeyError:
+			textAlign=None
+		if textAlign:
+			if "right" in textAlign:
+				textAlign="right"
+			elif "center" in textAlign:
+				textAlign="center"
+			elif "justify" in textAlign:
+				textAlign="justify"
+			formatField["text-align"]=textAlign
+		try:
+			fontWeight=formatField.pop("font-weight")
+		except KeyError:
+			fontWeight=None
+		if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
+			formatField["bold"]=True
+		else:
+			formatField["bold"]=False
+		try:
+			fontStyle=formatField.pop("font-style")
+		except KeyError:
+			fontStyle=None
+		if fontStyle is not None and fontStyle.lower()=="italic":
+			formatField["italic"]=True
+		else:
+			formatField["italic"]=False
+		try:
+			invalid=formatField.pop("invalid")
+		except KeyError:
+			invalid=None
+		if invalid and invalid.lower()=="spelling":
+			formatField["invalid-spelling"]=True
+		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
 		try:

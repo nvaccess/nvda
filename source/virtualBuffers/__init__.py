@@ -3,6 +3,7 @@ import weakref
 import time
 import os
 import winsound
+import XMLFormatting
 import baseObject
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
@@ -25,7 +26,9 @@ import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
-	hasXML=True
+	def _getLineNumFromOffset(offset):
+		#virtualBuffers have no concept of line numbers
+		return 0
 
 	def _getSelectionOffsets(self):
 		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
@@ -59,67 +62,31 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	def _getParagraphOffsets(self,offset):
 		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
 
-	def _get_XMLContext(self):
-		return VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
+	def _normalizeControlField(self,attrs):
+		return attrs
 
-	def _get_XMLText(self):
+	def getInitialFields(self,formatConfig=None):
+		XMLContext=VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
+		ancestry=XMLFormatting.XMLContextParser().parse(XMLContext)
+		for index in xrange(len(ancestry)):
+			ancestry[index]=self._normalizeControlField(ancestry[index])
+		return ancestry
+
+	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
-		text=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		return text
+		XMLText=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
+		commandList=XMLFormatting.RelativeXMLParser().parse(XMLText)
+		for index in xrange(len(commandList)):
+			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
+				commandList[index].field=self._normalizeControlField(commandList[index].field)
+		return commandList
+
+	def _getLineNumFromOffset(self, offset):
+		return None
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		childCount=int(attrs['_childcount'])
-		indexInParent=int(attrs['_indexinparent'])
-		parentChildCount=int(attrs['_parentchildcount'])
-		if reason==speech.REASON_FOCUS:
-			name=attrs.get('name',"")
-		else:
-			name=""
-		role=attrs['role']
-		states=attrs['states']
-		keyboardShortcut=attrs['keyboardshortcut']
-		level=attrs.get('level',None)
-		roleText=speech.getSpeechTextForProperties(reason=reason,role=role)
-		stateText=speech.getSpeechTextForProperties(reason=reason,states=states,_role=role)
-		keyboardShortcutText=speech.getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
-		nameText=speech.getSpeechTextForProperties(reason=reason,name=name)
-		levelText=speech.getSpeechTextForProperties(reason=reason,level=level)
-		if role in speech.userDisabledRoles:
-			return None
-		if not extraDetail and ((reason==speech.REASON_FOCUS and fieldType in ("end_relative","end_inStack")) or (reason in (speech.REASON_CARET,speech.REASON_SAYALL) and fieldType in ("start_inStack","start_addedToStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
-			if role==controlTypes.ROLE_LINK:
-				return " ".join([x for x in stateText,roleText,keyboardShortcutText])
-			else:
-				return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative","start_inStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
-			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-			return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType in ("end_removedFromStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType=="start_addedToStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
-			return roleText+_("with %s items")%childCount
-		elif not extraDetail and fieldType=="end_removedFromStack" and reason in (speech.REASON_CARET,speech.REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType=="start_addedToStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-			return roleText
-		elif not extraDetail and fieldType=="end_removedFromStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX)):
-			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="start_addedToStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
-			return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-		elif not extraDetail and fieldType=="end_removedFromStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
-			return _("out of %s")%roleText
-		elif not extraDetail and fieldType in ("start_addedToStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-			return speech.getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-		elif extraDetail and fieldType in ("start_addedToStack","start_relative") and roleText:
-			return _("in %s")%roleText
-		elif extraDetail and fieldType in ("end_removedFromStack","end_relative") and roleText:
-			return _("out of %s")%roleText
-		else:
-			return ""
+		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
@@ -250,7 +217,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
 		info.updateCaret()
-		speech.speakFormattedTextWithXML(info.XMLContext, info.XMLText, info.obj, info.getXMLFieldSpeech, reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
 		self._caretMovedToField(docHandle, ID)
 
 	@classmethod
@@ -300,7 +267,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 				info.updateCaret()
 				speech.cancelSpeech()
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
 				self._caretMovedToField(docHandle,ID)
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()

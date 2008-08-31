@@ -111,10 +111,7 @@ def readTextHelper_generator(info,cursor):
 				if delta<=0:
 					keepReading=False
 					continue
-				if reader.hasXML:
-					speech.speakFormattedTextWithXML(reader.XMLContext,reader.XMLText,reader.obj,reader.getXMLFieldSpeech,index=index,reason=speech.REASON_SAYALL)
-				else:
-					speech.speakFormattedText(reader,includeBlankText=False,index=index)
+				speech.speakTextInfo(reader,reason=speech.REASON_SAYALL,index=index)
 				sendCount+=1
 				cursorIndexMap[index]=(bookmark,sendCount)
 				reader.collapse(end=True)

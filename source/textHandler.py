@@ -6,79 +6,27 @@
 
 import weakref
 import baseObject
-import api
 
-def isFormatEnabled(role,includes=set(),excludes=set()):
-	"""Checks to see if a role is in an includes list (if given), or not in an excludes list (if given).
-@param role: an NVDA object or format role
-@type role: int
-@param includes: a set of 0 or more roles, or None
-@type includes: set, None
-@param excludes: a set of 0 or more roles, or None
-@type excludes: set, None
-@rtype: bool
-"""
-	if len(includes)>0 and len(excludes)>0:
-		raise ValueError("Only one of includes or excludes can be used")
-	elif role in excludes:
-		return False
-	elif len(includes)>0 and role not in includes:
-		return False
-	else: 
-		return True
-   
-#Field stuff
+class Field(dict):
+	"""The base type for fields in textInfo objects"""
 
-FORMAT_CMD_CHANGE=0
-FORMAT_CMD_INFIELD=1
-FORMAT_CMD_OUTOFFIELD=2
-FORMAT_CMD_SWITCHON=3
-FORMAT_CMD_SWITCHOFF=4
+class FormatField(Field):
+	pass
 
-class FormatCommand(object):
-	"""A container to hold a format, and also communicates whether the format is once off, is being turned on, or is being turned off.
-@ivar cmd: the command type (one of the FORMAT_CMD_* constants)
-@type cmd: int
- @ivar format: the format
-@type format: L{Format}
-"""
+class ControlField(Field):
+	pass
 
-	def __init__(self,cmd,format):
-		"""
-@param cmd: the command type (one of the FORMAT_CMD_* constants)
-@type cmd: int
- @param format: the format
-@type format: L{Format}
-"""
- 		self.cmd=cmd
-		self.format=format
+class FieldCommand(object):
 
-class Format(object):
-	"""Represents a field or format with in text.
-@ivar role: The format's role (a control role or format role)
-@type role: int
-@ivar value: a line's number, a link's URL, a font name field's  name
-@type value: string
-@ivar states: a set of state constants (the checked state for a checkbox etc)
-@type states: set
-@ivar uniqueID: either a value unique to this format field, or None
-"""
-
-	def __init__(self,role,value="",states=frozenset(),contains="",uniqueID=""):
-		"""
-@param role: The format's role (a control role or format role)
-@type role: int
-@param value: a line's number, a link's URL, a font name field's  name
-@type value: string
-@param states: a set of state constants (the checked state for a checkbox etc)
-@type states: set
-@param uniqueID: either a value unique to this format field, or None
-"""
-		self.role=role
-		self.value=value
-		self.states=states
-		self.contains=contains
-		self.uniqueID=uniqueID
+	def __init__(self,command,field):
+		if command not in ("controlStart","controlEnd","formatChange"):
+			raise ValueError("Unknown command: %s"%command)
+		elif command=="controlStart" and not isinstance(field,ControlField):
+			raise ValueError("command: %s needs a controlField"%command)
+		elif command=="formatChange" and not isinstance(field,FormatField):
+			raise ValueError("command: %s needs a formatField"%command)
+		self.command=command
+		self.field=field
 
 #Position constants
 POSITION_FIRST="first"
@@ -190,18 +138,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 @type isCollapsed: bool
 @ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
 @type text: string
-@ivar hasXML: if true then the XMLContext and XMLText properties can be used to get text with fields
-@type hasXML: bool
-@ivar XMLContext: a string of xml denoting the ancestor hierarchy of fields
-@type XMLContext: string
-@ivar XMLText: a string of text contained in the range of the object, marked up with xml to denote fields 
-@type XMLText: string
 @ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
 @type bookmark: L{Bookmark}
 """
  
-	hasXML=False
-
 	def __init__(self,obj,position):
 		"""
 @param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
@@ -218,30 +158,22 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self):
 		raise NotImplementedError
 
-	def _get_XMLContext(self):
-		pass
+	def getInitialFields(self,formatConfig=None):
+		"""Retreaves the control fields, and the format field, that the start of this text range is currently positioned.
+		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
+		@type formatConfig: dictionary
+		@returns: a list of control fields and a format field
+		@rtype: list
+		""" 
+		return []
 
-	def _get_XMLText(self):
-		pass
-
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False):
-		"""
-@param attrs: a dictionary of attributes for a particular xml field
-@type attrs: dict
-@param fieldType: one of the XML fieldType constants
-@type fieldtype: string
-@param extraDetail: if true then extra detail is being requested, more fields should return speech data
-@type extraDetail: bool
-@returns: The text to speak
-@rtype: string
- """
-		pass
-
-	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
-		"""
-@returns: A sequence of L{FormatCommand} objects and strings of text.
-@rtype: list
-"""
+	def getTextWithFields(self,formatConfig=None):
+		"""Retreaves the text in this range, also including fields to indicate when controls start and end, and when format changes occure.
+		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
+		@type formatConfig: dictionary
+		@returns: a list of text strings and field commands
+		@rtype: list
+		""" 
 		return [self.text]
 
 	def unitIndex(self,unit):
@@ -354,6 +286,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				chunkInfo.setEndPoint(self,"endToEnd")
 			textList.append(chunkInfo.text.rstrip("\r\n"))
 			lineInfo.collapse(end=True)
+		import api
 		return api.copyToClip("\r\n".join(textList))
 
 def findStartOfLine(text,offset,lineLength=None):

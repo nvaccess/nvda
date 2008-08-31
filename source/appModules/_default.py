@@ -66,12 +66,9 @@ class appModule(appModuleHandler.AppModule):
 		info=obj.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeateCount()==0:
-			if info.hasXML:
-				speech.speakFormattedTextWithXML(info.XMLContext,info.XMLText,info.obj,info.getXMLFieldSpeech,reason=speech.REASON_CARET)
-			else:
-				speech.speakFormattedText(info)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakSpelling(info._get_text())
+			speech.speakSpelling(info.text)
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
 
 	def script_leftMouseClick(self,keyPress):
@@ -356,7 +353,7 @@ class appModule(appModuleHandler.AppModule):
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 
 	def script_review_previousLine(self,keyPress):
@@ -368,14 +365,14 @@ class appModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 
 	def script_review_currentLine(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeateCount()==0:
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled")
@@ -389,7 +386,7 @@ class appModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,keyPress):
@@ -397,7 +394,7 @@ class appModule(appModuleHandler.AppModule):
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 
 	def script_review_previousWord(self,keyPress):
@@ -409,14 +406,14 @@ class appModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 
 	def script_review_currentWord(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_WORD)
 		if scriptHandler.getLastScriptRepeateCount()==0:
-			speech.speakFormattedText(info)
+			speech.speakTextInfo(info)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled")
@@ -430,7 +427,7 @@ class appModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 
 	def script_review_startOfLine(self,keyPress):
@@ -440,7 +437,7 @@ class appModule(appModuleHandler.AppModule):
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakFormattedText(info,handleSymbols=True)
+		speech.speakTextInfo(info,handleSymbols=True)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_previousCharacter(self,keyPress):
@@ -458,21 +455,21 @@ class appModule(appModuleHandler.AppModule):
 		else:
 			globalVars.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(charInfo,handleSymbols=True)
+			speech.speakTextInfo(charInfo,handleSymbols=True)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
 
 	def script_review_currentCharacter(self,keyPress):
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		if scriptHandler.getLastScriptRepeateCount()==0:
-			speech.speakFormattedText(info,handleSymbols=True)
+			speech.speakTextInfo(info,handleSymbols=True)
 		else:
 			try:
 				c = ord(info._get_text())
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
 			except:
-				speech.speakFormattedText(info,handleSymbols=True)
+				speech.speakTextInfo(info,handleSymbols=True)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character")
 
 	def script_review_nextCharacter(self,keyPress):
@@ -490,7 +487,7 @@ class appModule(appModuleHandler.AppModule):
 		else:
 			globalVars.reviewPosition=charInfo.copy()
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakFormattedText(charInfo,handleSymbols=True)
+			speech.speakTextInfo(charInfo,handleSymbols=True)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
 
 	def script_review_endOfLine(self,keyPress):
@@ -501,21 +498,21 @@ class appModule(appModuleHandler.AppModule):
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakFormattedText(info,handleSymbols=True)
+		speech.speakTextInfo(info,handleSymbols=True)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_moveToCaret(self,keyPress):
 		info=globalVars.reviewPosition.obj.makeTextInfo(textHandler.POSITION_CARET)
 		globalVars.reviewPosition=info.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
 		globalVars.reviewPosition.updateCaret()
 		info=globalVars.reviewPosition.copy()
 		info.expand(textHandler.UNIT_LINE)
-		speech.speakFormattedText(info)
+		speech.speakTextInfo(info)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
 
 	def script_speechMode(self,keyPress):
@@ -572,15 +569,19 @@ class appModule(appModuleHandler.AppModule):
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
 	def script_reportFormatting(self,keyPress):
+		formatConfig={
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportStyle":True,
+			"reportPage":False,"reportLineNumber":False,"reportTables":False,"reportAlignment":True,
+		}
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
-		formattedText=info.getFormattedText(includes=set([controlTypes.ROLE_STYLE,controlTypes.ROLE_FONTNAME,controlTypes.ROLE_FONTSIZE,controlTypes.ROLE_BOLD,controlTypes.ROLE_ITALIC,controlTypes.ROLE_UNDERLINE]))
-		for item in formattedText:
-			if isinstance(item,textHandler.FormatCommand):
-				if item.cmd in (textHandler.FORMAT_CMD_SWITCHON,textHandler.FORMAT_CMD_CHANGE):
-					speech.speakMessage("%s %s"%(controlTypes.speechRoleLabels[item.format.role],item.format.value)) 
-	script_reportFormatting.__doc__ = _("Announces formatting information at the current position in a document")
+		formatField=textHandler.FormatField()
+		for field in info.getInitialFields(formatConfig):
+			if isinstance(field,textHandler.FormatField):
+				formatField.update(field)
+		speechText=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
+		speech.speakMessage(speechText)
 
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.findObjectWithFocus() #getFocusObject()
