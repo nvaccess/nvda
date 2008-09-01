@@ -269,89 +269,6 @@ This function will not speak if L{speechMode} is false.
 	if text and not text.isspace():
 		getSynth().speakText(text,index=index)
 
-def getExcludedAutoSpeakFormats():
-	formats=set()
-	if not config.conf["documentFormatting"]["reportFontName"]:
-		formats.add(controlTypes.ROLE_FONTNAME)
-	if not config.conf["documentFormatting"]["reportFontSize"]:
-		formats.add(controlTypes.ROLE_FONTSIZE)
-	if not config.conf["documentFormatting"]["reportFontAttributes"]:
-		formats.add(controlTypes.ROLE_BOLD)
-		formats.add(controlTypes.ROLE_ITALIC)
-		formats.add(controlTypes.ROLE_UNDERLINE)
-	if not config.conf["documentFormatting"]["reportStyle"]:
-		formats.add(controlTypes.ROLE_STYLE)
-	if not config.conf["documentFormatting"]["reportPage"]:
-		formats.add(controlTypes.ROLE_PAGE)
-	if not config.conf["documentFormatting"]["reportLineNumber"]:
-		formats.add(controlTypes.ROLE_LINE)
-	if not config.conf["documentFormatting"]["reportTables"]:
-		formats.add(controlTypes.ROLE_TABLE)
-		formats.add(controlTypes.ROLE_TABLEROW)
-		formats.add(controlTypes.ROLE_TABLECOLUMN)
-		formats.add(controlTypes.ROLE_TABLECELL)
-	if not config.conf["documentFormatting"]["reportAlignment"]:
-		formats.add(controlTypes.ROLE_ALIGNMENT)
-	return formats
-
-def speakFormattedText(textInfo,handleSymbols=False,includeBlankText=True,index=None):
-	global beenCanceled
-	if speechMode==speechMode_off:
-		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
-		return
-	if isPaused:
-		cancelSpeech()
-	beenCanceled=False
-	formattedText=textInfo.getFormattedText(searchRange=config.conf["documentFormatting"]["detectFormatAfterCursor"],excludes=getExcludedAutoSpeakFormats())
-	if not hasattr(textInfo.obj,"_lastInitialSpokenFormats"):
-		textInfo.obj._lastInitialSpokenFormats={}
-	initialSpokenFormats={}
-	checkFormats=True
-	for item in formattedText:
-		if isinstance(item,textHandler.FormatCommand):
-			itemKey="%d, %s, %s"%(item.format.role,item.format.value,item.format.uniqueID)
-			if item.cmd==textHandler.FORMAT_CMD_CHANGE:
-				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
-					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
-					speakMessage(speechText)
-				if checkFormats:
-					initialSpokenFormats[itemKey]=item
-			elif item.cmd==textHandler.FORMAT_CMD_INFIELD:
-				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
-					speechText=" ".join([_("in"),controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value])
-					speakMessage(speechText)
-				if checkFormats:
-					initialSpokenFormats[itemKey]=item
-			elif item.cmd==textHandler.FORMAT_CMD_OUTOFFIELD:
-				speechText=" ".join([_("out of"),controlTypes.speechRoleLabels.get(item.format.role,""),])
-				speakMessage(speechText)
-			elif item.cmd==textHandler.FORMAT_CMD_SWITCHON:
-				if not checkFormats or itemKey not in textInfo.obj._lastInitialSpokenFormats: 
-					speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),item.format.value,_("on")])
-					speakMessage(speechText)
-				if checkFormats:
-					initialSpokenFormats[itemKey]=item
-			elif item.cmd==textHandler.FORMAT_CMD_SWITCHOFF:
-				speechText=" ".join([controlTypes.speechRoleLabels.get(item.format.role,""),_("off")])
-				speakMessage(speechText)
-		elif isinstance(item,basestring):
-			checkFormats=False
-			for oldItemKey,oldItem in textInfo.obj._lastInitialSpokenFormats.items():
-				if oldItem.cmd==textHandler.FORMAT_CMD_SWITCHON and oldItemKey not in initialSpokenFormats:
-					speechText=" ".join([controlTypes.speechRoleLabels.get(oldItem.format.role,""),_("off")])
-					speakMessage(speechText)
-				if oldItem.cmd==textHandler.FORMAT_CMD_INFIELD and oldItemKey not in initialSpokenFormats:
-					speechText=" ".join([_("out of"),controlTypes.speechRoleLabels.get(oldItem.format.role,"")])
-					speakMessage(speechText)
-			if len(item)>1 or not handleSymbols:
-				if includeBlankText or not set(item)<=set(characterSymbols.blankList):
-					speakText(item,index=index)
-			else:
-				speakSpelling(item)
-	textInfo.obj._lastInitialSpokenFormats=initialSpokenFormats
-
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
@@ -420,7 +337,7 @@ def speakTypedCharacters(ch):
 	global typedWord
 	if api.isTypingProtected():
 		ch="*"
-	if config.conf["keyboard"]["speakTypedCharacters"]:
+	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(ch)
 	if config.conf["keyboard"]["speakTypedWords"]: 
 		if ch.isalnum():
@@ -442,40 +359,6 @@ silentValuesForRoles=set([
 	controlTypes.ROLE_CHECKBOX,
 	controlTypes.ROLE_RADIOBUTTON,
 ])
-
-userDisabledRoles=[]
-
-def updateUserDisabledRoles():
-	del userDisabledRoles[:]
-	if not config.conf["virtualBuffers"]["reportLinks"]:
-		userDisabledRoles.append(controlTypes.ROLE_LINK)
-	if not config.conf["virtualBuffers"]["reportLists"]:
-		userDisabledRoles.append(controlTypes.ROLE_LIST)
-		userDisabledRoles.append(controlTypes.ROLE_LISTITEM)
-	if not config.conf["virtualBuffers"]["reportHeadings"]:
-		userDisabledRoles.append(controlTypes.ROLE_HEADING)
-	if not config.conf["virtualBuffers"]["reportTables"]:
-		userDisabledRoles.append(controlTypes.ROLE_TABLE)
-	if not config.conf["virtualBuffers"]["reportGraphics"]:
-		userDisabledRoles.append(controlTypes.ROLE_GRAPHIC)
-	if not config.conf["virtualBuffers"]["reportForms"]:
-		userDisabledRoles.append(controlTypes.ROLE_FORM)
-	if not config.conf["virtualBuffers"]["reportFormFields"]:
-		userDisabledRoles.append(controlTypes.ROLE_BUTTON)
-		userDisabledRoles.append(controlTypes.ROLE_RADIOBUTTON)
-		userDisabledRoles.append(controlTypes.ROLE_CHECKBOX)
-		userDisabledRoles.append(controlTypes.ROLE_COMBOBOX)
-		userDisabledRoles.append(controlTypes.ROLE_TREEVIEW)
-		userDisabledRoles.append(controlTypes.ROLE_EDITABLETEXT)
-	if not config.conf["virtualBuffers"]["reportBlockQuotes"]:
-		userDisabledRoles.append(controlTypes.ROLE_BLOCKQUOTE)
-	if not config.conf["virtualBuffers"]["reportParagraphs"]:
-		userDisabledRoles.append(controlTypes.ROLE_PARAGRAPH)
-	if not config.conf["virtualBuffers"]["reportFrames"]:
-		userDisabledRoles.append(controlTypes.ROLE_FRAME)
-		userDisabledRoles.append(controlTypes.ROLE_INTERNALFRAME)
-
-updateUserDisabledRoles()
 
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
@@ -520,13 +403,23 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+	if not formatConfig:
+		formatConfig=config.conf["documentFormatting"]
 	textList=[]
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else {}
 	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
-	#Make a new controlFieldStack from the textInfo's initialControlFieldAncestry
-	newControlFieldStack=info.initialControlFieldAncestry
+	#Make a new controlFieldStack and formatField from the textInfo's initialFields
+	newControlFieldStack=[]
+	newFormatField=textHandler.FormatField()
+	for field in info.getInitialFields(formatConfig):
+		if isinstance(field,textHandler.ControlField):
+			newControlFieldStack.append(field)
+		elif isinstance(field,textHandler.FormatField):
+			newFormatField.update(field)
+		else:
+			raise ValueError("unknown field: %s"%field)
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
 	for count in range(min(len(newControlFieldStack),len(controlFieldStackCache))):
@@ -537,7 +430,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 
 	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
 	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
-		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",extraDetail,reason=reason)
+		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
@@ -546,19 +439,19 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in range(commonFieldCount):
-			text=getControlFieldSpeech(newControlFieldStack[count],"start_inControlFieldStack",extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in range(commonFieldCount,len(newControlFieldStack)):
-		text=getControlFieldSpeech(newControlFieldStack[count],"start_addedToControlFieldStack",extraDetail,reason=reason)
+		text=getControlFieldSpeech(newControlFieldStack[count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(info.initialFormatField,formatFieldAttributesCache,extraDetail=extraDetail)
+	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,extraDetail=extraDetail)
 	if text:
 		if textListBlankLen==len(textList):
 			# If the TextInfo is considered blank so far, it should still be considered blank if there is only formatting thereafter.
@@ -579,7 +472,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 		return
 
 	#Fetch a command list for the text and fields for this textInfo
-	commandList=info.textWithFields
+	commandList=info.getTextWithFields(formatConfig)
 	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
@@ -596,20 +489,20 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 					lastTextOkToMerge=True
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlStart":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(commandList[count].field,"start_relative",extraDetail,reason=reason)
+			text=getControlFieldSpeech(commandList[count].field,"start_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlEnd":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			del newControlFieldStack[-1]
 			if commonFieldCount>len(newControlFieldStack):
 				commonFieldCount=len(newControlFieldStack)
 		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="formatChange":
-			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,extraDetail=extraDetail)
+			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,formatConfig,extraDetail=extraDetail)
 			if text:
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
@@ -621,7 +514,7 @@ def speakTextInfo(info,useCache=True,extraDetail=False,handleSymbols=False,reaso
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if not extraDetail:
 		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
-			text=getControlFieldSpeech(newControlFieldStack[count],"end_inControlFieldStack",extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
@@ -645,7 +538,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		del propertyValues['name']
 	if 'role' in propertyValues:
 		role=propertyValues['role']
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role not in silentRolesOnFocus and role not in userDisabledRoles):
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or role not in silentRolesOnFocus:
 			textList.append(controlTypes.speechRoleLabels[role])
 		del propertyValues['role']
 	elif '_role' in propertyValues:
@@ -660,8 +553,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	realStates=propertyValues.get('_states',states)
 	if states is not None:
 		positiveStates=processPositiveStates(role,realStates,reason,states)
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
-			textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
+		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
 		del propertyValues['states']
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
@@ -670,8 +562,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		negativeStates=None
 	if negativeStates is not None or (reason != REASON_CHANGE and states is not None):
 		negativeStates=processNegativeStates(role, realStates, reason, negativeStates)
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
-			textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
+		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 		del propertyValues['description']
@@ -679,13 +570,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(propertyValues['keyboardShortcut'])
 		del propertyValues['keyboardShortcut']
 	if 'positionString' in propertyValues:
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
-			textList.append(propertyValues['positionString'])
+		textList.append(propertyValues['positionString'])
 		del propertyValues['positionString']
 	if 'level' in propertyValues:
 		levelNo=propertyValues['level']
 		del propertyValues['level']
-		if levelNo is not None or reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or (role and role not in userDisabledRoles):
+		if levelNo is not None or reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS):
 			textList.append(_("level %s")%levelNo)
 	for name,value in propertyValues.items():
 		if not name.startswith('_') and value is not None and value is not "":
@@ -693,7 +583,9 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			textList.append(unicode(value))
 	return " ".join([x for x in textList if x])
 
-def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
+def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
+	if not formatConfig:
+		formatConfig=config.conf["documentFormatting"]
 	childCount=int(attrs['_childcount'])
 	indexInParent=int(attrs['_indexinparent'])
 	parentChildCount=int(attrs['_parentchildcount'])
@@ -705,13 +597,19 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	states=attrs['states']
 	keyboardShortcut=attrs['keyboardshortcut']
 	level=attrs.get('level',None)
+	if reason in (REASON_CARET,REASON_SAYALL) and (
+		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
+		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
+		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
+		(role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN) and not formatConfig["reportTables"]) or
+		(role in (controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+	):
+			return ""
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	levelText=getSpeechTextForProperties(reason=reason,level=level)
-	if role in userDisabledRoles:
-		return None
 	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
 		if role==controlTypes.ROLE_LINK:
 			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
@@ -746,9 +644,32 @@ def getControlFieldSpeech(attrs,fieldType,extraDetail=False,reason=None):
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=True):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=False):
+	if not formatConfig:
+		formatConfig=config.conf["documentFormatting"]
 	textList=[]
-	if not honourConfig or config.conf["documentFormatting"]["reportFontName"]:
+	if formatConfig["reportTables"]:
+		tableInfo=attrs.get("table-info")
+		oldTableInfo=attrsCache.get("table-info") if attrsCache is not None else None
+		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
+		if text:
+			textList.append(text)
+	if  formatConfig["reportPage"]:
+		pageNumber=attrs.get("page-number")
+		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
+		if pageNumber and pageNumber!=oldPageNumber:
+			text=_("page %s"%pageNumber)
+			textList.append(text)
+	if  formatConfig["reportStyle"]:
+		style=attrs.get("style")
+		oldStyle=attrsCache.get("style") if attrsCache is not None else None
+		if style!=oldStyle:
+			if style:
+				text=_("style %s"%style)
+			else:
+				text=_("default style")
+			textList.append(text)
+	if  formatConfig["reportFontName"]:
 		fontFamily=attrs.get("font-family")
 		oldFontFamily=attrsCache.get("font-family") if attrsCache is not None else None
 		if fontFamily and fontFamily!=oldFontFamily:
@@ -757,18 +678,18 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		oldFontName=attrsCache.get("font-name") if attrsCache is not None else None
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
-	if not honourConfig or config.conf["documentFormatting"]["reportFontSize"]:
+	if  formatConfig["reportFontSize"]:
 		fontSize=attrs.get("font-size")
 		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
 		if fontSize and fontSize!=oldFontSize:
 			textList.append(fontSize)
-	if not honourConfig or config.conf["documentFormatting"]["reportLineNumber"]:
+	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
 		if lineNumber is not None and lineNumber!=oldLineNumber:
 			text=_("line %s"%lineNumber)
 			textList.append(text)
-	if not honourConfig or config.conf["documentFormatting"]["reportFontAttributes"]:
+	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
 		oldBold=attrsCache.get("bold") if attrsCache is not None else None
 		if (bold or oldBold is not None) and bold!=oldBold:
@@ -792,25 +713,68 @@ def getFormatFieldSpeech(attrs,attrsCache=None,extraDetail=False,honourConfig=Tr
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
 		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			if textPosition.lower()=="super":
+			textPosition=textPosition.lower() if textPosition else textPosition
+			if textPosition=="super":
 				text=_("superscript")
-			elif textPosition.lower()=="sub":
+			elif textPosition=="sub":
 				text=_("subscript")
 			else:
 				text=_("baseline")
 			textList.append(text)
-	invalidSpelling=attrs.get("invalid-spelling")
-	oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
-	if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
-		if invalidSpelling:
-			text=_("spelling error")
-		elif extraDetail:
-			text=_("out of spelling error")
-		else:
-			text=""
-		if text:
+	if formatConfig["reportAlignment"]:
+		textAlign=attrs.get("text-align")
+		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
+		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:
+			textAlign=textAlign.lower() if textAlign else textAlign
+			if textAlign=="left":
+				text=_("align left")
+			elif textAlign=="center":
+				text=_("align center")
+			elif textAlign=="right":
+				text=_("align right")
+			elif textAlign=="justify":
+				text=_("align justify")
+			else:
+				text=_("align default")
 			textList.append(text)
+	if formatConfig["reportSpellingErrors"]:
+		invalidSpelling=attrs.get("invalid-spelling")
+		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
+		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
+			if invalidSpelling:
+				text=_("spelling error")
+			elif extraDetail:
+				text=_("out of spelling error")
+			else:
+				text=""
+			if text:
+				textList.append(text)
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
+	return " ".join(textList)
+
+def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
+	if tableInfo is None and oldTableInfo is None:
+		return ""
+	if tableInfo is None and oldTableInfo is not None:
+		return _("out of table")
+	if not oldTableInfo or tableInfo.get("table-id")!=oldTableInfo.get("table-id"):
+		newTable=True
+	else:
+		newTable=False
+	textList=[]
+	if newTable:
+		columnCount=tableInfo.get("column-count",0)
+		rowCount=tableInfo.get("row-count",0)
+		text=_("table with %s columns and %s rows")%(columnCount,rowCount)
+		textList.append(text)
+	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0
+	columnNumber=tableInfo.get("column-number",0)
+	if columnNumber!=oldColumnNumber:
+		textList.append(_("column %s")%columnNumber)
+	oldRowNumber=oldTableInfo.get("row-number",0) if oldTableInfo else 0
+	rowNumber=tableInfo.get("row-number",0)
+	if rowNumber!=oldRowNumber:
+		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)

@@ -10,6 +10,7 @@ from logHandler import log
 import os
 import codecs
 import synthDriverHandler
+import api
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
@@ -90,7 +91,7 @@ def getFileName(type):
 		return "%s/default.dic"%speechDictsPath
 	elif type is "voice":
 		s=synthDriverHandler.getSynth()
-		return "%s/%s-%s.dic"%(speechDictsPath,s.name,s.getVoiceName(s.voice))
+		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(s.name),validateFile(s.getVoiceName(s.voice)))
 	return None
 
 def initialize():

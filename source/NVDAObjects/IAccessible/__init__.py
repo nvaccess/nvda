@@ -134,19 +134,37 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		except:
 			return ""
 
-	def _getFormatFieldAndOffsets(self,offset):
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
 		except COMError:
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textHandler.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textHandler.FormatField()
-		formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		if not attribsString and offset>0:
+			try:
+				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
+			except COMError:
+				pass
+		if attribsString:
+			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		try:
+			textAlign=formatField.pop("text-align")
+		except KeyError:
+			textAlign=None
+		if textAlign:
+			if "right" in textAlign:
+				textAlign="right"
+			elif "center" in textAlign:
+				textAlign="center"
+			elif "justify" in textAlign:
+				textAlign="justify"
+			formatField["text-align"]=textAlign
 		try:
 			fontWeight=formatField.pop("font-weight")
 		except KeyError:
 			fontWeight=None
-		if fontWeight is not None and fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700):
+		if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
 			formatField["bold"]=True
 		else:
 			formatField["bold"]=False

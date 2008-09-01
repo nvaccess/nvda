@@ -79,6 +79,64 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		rangeObj.SetRange(sel.Start,sel.End)
 		sel.SetRange(oldSel.Start,oldSel.End)
 
+	def _getFormatFieldAtRange(self,range,formatConfig):
+		formatField=textHandler.FormatField()
+		fontObj=None
+		paraFormatObj=None
+		if formatConfig["reportLineNumber"]:
+			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
+		if formatConfig["reportPage"]:
+			formatField["page-number"]=range.Information(wdActiveEndPageNumber)
+		if formatConfig["reportStyle"]:
+			formatField["style"]=range.style.nameLocal
+		if formatConfig["reportTables"] and range.Information(wdWithInTable):
+			tableInfo={}
+			tableInfo["column-count"]=range.Information(wdMaximumNumberOfColumns)
+			tableInfo["row-count"]=range.Information(wdMaximumNumberOfRows)
+			tableInfo["column-number"]=range.Information(wdStartOfRangeColumnNumber)
+			tableInfo["row-number"]=range.Information(wdStartOfRangeRowNumber)
+			formatField["table-info"]=tableInfo
+		if formatConfig["reportAlignment"]:
+			if not paraFormatObj: paraFormatObj=range.paragraphFormat
+			alignment=paraFormatObj.alignment
+			if alignment==wdAlignParagraphLeft:
+				formatField["text-align"]="left"
+			elif alignment==wdAlignParagraphCenter:
+				formatField["text-align"]="center"
+			elif alignment==wdAlignParagraphRight:
+				formatField["text-align"]="right"
+			elif alignment==wdAlignParagraphJustify:
+				formatField["text-align"]="justify"
+		if formatConfig["reportFontName"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-name"]=fontObj.name
+		if formatConfig["reportFontSize"]:
+			if not fontObj: fontObj=range.font
+			formatField["font-size"]="%spt"%fontObj.size
+		if formatConfig["reportFontAttributes"]:
+			if not fontObj: fontObj=range.font
+			formatField["bold"]=bool(fontObj.bold)
+			formatField["italic"]=bool(fontObj.italic)
+			formatField["underline"]=bool(fontObj.underline)
+			if fontObj.superscript:
+				formatField["text-position"]="super"
+			elif fontObj.subscript:
+				formatField["text-position"]="sub"
+		return formatField
+
+	def _expandFormatRange(self,range):
+		startLimit=self._rangeObj.start
+		endLimit=self._rangeObj.end
+		#Only Office 2007 onwards supports moving by format changes, -- and only moveEnd works.
+		try:
+			range.MoveEnd(13,1)
+		except:
+			range.Expand(wdWord)
+		if range.start<startLimit:
+			range.start=startLimit
+		if range.end>endLimit:
+			range.end=endLimit
+
 	def __init__(self,obj,position,_rangeObj=None):
 		super(WordDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -106,6 +164,38 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
+
+	def getInitialFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		range=self._rangeObj.duplicate
+		range.Collapse()
+		range.Expand(wdCharacter)
+		return [self._getFormatFieldAtRange(range,formatConfig)]
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		if not formatConfig["detectFormatAfterCursor"]:
+			return [self.text]
+		commandList=[]
+		endLimit=self._rangeObj.end
+		range=self._rangeObj.duplicate
+		range.Collapse()
+		hasLoopedOnce=False
+		while range.end<endLimit:
+			self._expandFormatRange(range)
+			if hasLoopedOnce:
+				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
+			else:
+				hasLoopedOnce=True
+			commandList.append(range.text)
+			end=range.end
+			range.start=end
+			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
+			if range.end<end:
+				break
+		return commandList
 
 	def expand(self,unit):
 		if unit==textHandler.UNIT_LINE and self.basePosition not in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
@@ -168,87 +258,6 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 
 	def _get_text(self):
 		return self._rangeObj.text
-
-	def getFormattedText(self,searchRange=False,includes=set(),excludes=set()):
-		fieldList=[]
-		curRangeObj=self._rangeObj.Duplicate
-		curRangeObj.Collapse()
-		startLimit=self._rangeObj.Start
-		endLimit=self._rangeObj.End
-		lastStyle=lastFontName=lastFontSize=lastBold=lastItalic=lastUnderline=lastTable=lastRow=lastColumn=None
-		while curRangeObj.Start>=startLimit and curRangeObj.Start<endLimit:
-			if textHandler.isFormatEnabled(controlTypes.ROLE_TABLE,includes=includes,excludes=excludes):
-				table=curRangeObj.Information(wdWithInTable)
-				if table and not lastTable:
-					value=_("with %s columns and %s rows")%(curRangeObj.Information(wdMaximumNumberOfColumns),curRangeObj.Information(wdMaximumNumberOfRows))
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_INFIELD,textHandler.Format(role=controlTypes.ROLE_TABLE,value=value)))
-				elif not table and lastTable:
-	 				fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_OUTOFFIELD,textHandler.Format(role=controlTypes.ROLE_TABLE)))
-				lastTable=table
-				if table:
-					row=str(curRangeObj.Information(wdStartOfRangeRowNumber))
-					if row!=lastRow:
-						fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_TABLEROW,value=row)))
-					lastRow=row
-					column=str(curRangeObj.Information(wdStartOfRangeColumnNumber))
-					if column!=lastColumn:
-						fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_TABLECOLUMN,value=column)))
-					lastColumn=column
-			curFont=curRangeObj.font
-			curStyle=curRangeObj.style
-			if textHandler.isFormatEnabled(controlTypes.ROLE_STYLE,includes=includes,excludes=excludes):
-				style=curStyle.nameLocal
-				if style!=lastStyle:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_STYLE,value=style)))
-					lastStyle=style
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTNAME,includes=includes,excludes=excludes):
-				fontName=curFont.name
-				if fontName!=lastFontName:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTNAME,value=fontName)))
-					lastFontName=fontName
-			if textHandler.isFormatEnabled(controlTypes.ROLE_FONTSIZE,includes=includes,excludes=excludes):
-				fontSize=str(curFont.size)
-				if fontSize!=lastFontSize:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(role=controlTypes.ROLE_FONTSIZE,value=fontSize)))
-					lastFontSize=fontSize
-			if textHandler.isFormatEnabled(controlTypes.ROLE_BOLD,includes=includes,excludes=excludes):
-				bold=curFont.bold
-				if bold!=lastBold and bold:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_BOLD)))
-				elif lastBold is not None and bold!=lastBold and not bold:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_BOLD)))
-				lastBold=bold
-			if textHandler.isFormatEnabled(controlTypes.ROLE_ITALIC,includes=includes,excludes=excludes):
-				italic=curFont.italic
-				if italic!=lastItalic and italic:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_ITALIC)))
-				elif lastItalic is not None and italic!=lastItalic and not italic:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_ITALIC)))
-				lastItalic=italic
-			if textHandler.isFormatEnabled(controlTypes.ROLE_UNDERLINE,includes=includes,excludes=excludes):
-				underline=curFont.UNDERLINE
-				if underline!=lastUnderline and underline:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHON,textHandler.Format(role=controlTypes.ROLE_UNDERLINE)))
-				elif lastUnderline is not None and underline!=lastUnderline and not underline:
-					fieldList.append(textHandler.FormatCommand(textHandler.FORMAT_CMD_SWITCHOFF,textHandler.Format(role=controlTypes.ROLE_UNDERLINE)))
-				lastUnderline=underline
-			if not searchRange:
-				break
-			tempStart=curRangeObj.Start
-			tempEnd=curRangeObj.End
-			curRangeObj.Expand(wdWord)
-			curRangeObj.Start=max(startLimit,curRangeObj.Start)
-			curRangeObj.End=min(endLimit,curRangeObj.End)
-			fieldList.append(curRangeObj.text)
-			curRangeObj.Start=tempStart
-			curRangeObj.End=tempEnd
-			if curRangeObj.Move(wdWord,1)<1:
-				break
-		if curRangeObj.End<endLimit:
-			curRangeObj.Start=curRangeObj.End
-			curRangeObj.End=endLimit
-			fieldList.append(curRangeObj.text)
-		return fieldList
 
 	def move(self,unit,direction,endPoint=None):
 		if unit==textHandler.UNIT_LINE:
@@ -395,5 +404,7 @@ class WordDocument(IAccessible):
 	("control+alt+extendedDown","nextRow"),
 	("control+alt+extendedLeft","previousColumn"),
 	("control+alt+extendedRight","nextColumn"),
+	("ExtendedPrior","moveByLine"),
+	("ExtendedNext","moveByLine"),
 ]]
 

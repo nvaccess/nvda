@@ -569,11 +569,21 @@ class appModule(appModuleHandler.AppModule):
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
 	def script_reportFormatting(self,keyPress):
+		formatConfig={
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,
+			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
+			"reportPage":False,"reportLineNumber":False,"reportTables":False,
+			"reportLinks":False,"reportHeadings":False,"reportLists":False,
+			"reportBlockQuotes":False,
+		}
 		o=api.getFocusObject()
 		info=o.makeTextInfo(textHandler.POSITION_CARET)
 		info.expand(textHandler.UNIT_CHARACTER)
-		formatField=info.initialFormatField
-		speechText=speech.getFormatFieldSpeech(formatField,honourConfig=False)
+		formatField=textHandler.FormatField()
+		for field in info.getInitialFields(formatConfig):
+			if isinstance(field,textHandler.FormatField):
+				formatField.update(field)
+		speechText=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
 		speech.speakMessage(speechText)
 
 	def script_reportCurrentFocus(self,keyPress):
