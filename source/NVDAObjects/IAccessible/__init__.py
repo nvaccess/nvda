@@ -359,6 +359,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
 					("ExtendedDown","moveByLine"),
+					("control+ExtendedUp","moveByLine"),
+					("control+ExtendedDown","moveByLine"),
 					("ExtendedLeft","moveByCharacter"),
 					("ExtendedRight","moveByCharacter"),
 					("Control+ExtendedLeft","moveByWord"),
