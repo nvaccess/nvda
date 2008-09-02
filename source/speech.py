@@ -658,14 +658,14 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
-			text=_("page %s"%pageNumber)
+			text=_("page %s")%pageNumber
 			textList.append(text)
 	if  formatConfig["reportStyle"]:
 		style=attrs.get("style")
 		oldStyle=attrsCache.get("style") if attrsCache is not None else None
 		if style!=oldStyle:
 			if style:
-				text=_("style %s"%style)
+				text=_("style %s")%style
 			else:
 				text=_("default style")
 			textList.append(text)
@@ -687,7 +687,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
 		if lineNumber is not None and lineNumber!=oldLineNumber:
-			text=_("line %s"%lineNumber)
+			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
