@@ -314,9 +314,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
 		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThrough"]:
 			return nextHandler()
+		if keyPress[1] in ("extendedhome", "extendedend"):
+			# Home, end, control+home and control+end should not disable pass through.
+			return nextHandler()
 		script = self.getScript(keyPress)
 		if not script:
-			return
+			return nextHandler()
 
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
