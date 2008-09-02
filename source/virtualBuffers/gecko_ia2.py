@@ -167,9 +167,8 @@ class Gecko_ia2(VirtualBuffer):
 				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
 				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT:
 					obj.setFocus()
-				if self.shouldPassThrough(obj,reason=reason):
-					self.passThrough=True
-					virtualBufferHandler.reportPassThrough(self)
+				self.passThrough=self.shouldPassThrough(obj,reason=reason)
+				virtualBufferHandler.reportPassThrough(self)
 		except:
 			pass
 

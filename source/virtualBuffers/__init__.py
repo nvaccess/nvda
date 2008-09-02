@@ -27,6 +27,8 @@ import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
+	UNIT_CONTROLFIELD = "controlField"
+
 	def _getLineNumFromOffset(offset):
 		#virtualBuffers have no concept of line numbers
 		return 0
@@ -85,6 +87,15 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getLineNumFromOffset(self, offset):
 		return None
+
+	def _get_fieldIdentifierAtStart(self):
+		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle, self._startOffset)
+
+	def _getUnitOffsets(self, unit, offset):
+		if unit == self.UNIT_CONTROLFIELD:
+			docHandle, ID = self.fieldIdentifierAtStart
+			return VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle, docHandle, ID)
+		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
 		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
@@ -304,10 +315,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThrough"]:
 			return nextHandler()
 		script = self.getScript(keyPress)
-		if script:
-			self.passThrough = False
-			virtualBufferHandler.reportPassThrough(self)
-			scriptHandler.queueScript(script, keyPress)
+		if not script:
+			return
+
+		# We've hit the edge of the focused control.
+		# Therefore, move the virtual caret to the same edge of the field.
+		info = self.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(info.UNIT_CONTROLFIELD)
+		if keyPress[1] in ("extendedleft", "extendedup", "extendedprior"):
+			info.collapse()
+		else:
+			info.collapse(end=True)
+			info.move(textHandler.UNIT_CHARACTER, -1)
+		info.updateCaret()
+
+		scriptHandler.queueScript(script, keyPress)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
