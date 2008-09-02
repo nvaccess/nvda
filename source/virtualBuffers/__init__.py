@@ -334,12 +334,30 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		scriptHandler.queueScript(script, keyPress)
 
+	def script_disablePassThrough(self, keyPress):
+		if not self.passThrough:
+			return sendKey(keyPress)
+		self.passThrough = False
+		virtualBufferHandler.reportPassThrough(self)
+	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
+
+	def script_collapseOrExpandControl(self, keyPress):
+		sendKey(keyPress)
+		if not self.passThrough:
+			return
+		self.passThrough = False
+		virtualBufferHandler.reportPassThrough(self)
+	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
 	("NVDA+v","toggleScreenLayout"),
 	("NVDA+f7","linksList"),
+	("escape","disablePassThrough"),
+	("alt+extendedUp","collapseOrExpandControl"),
+	("alt+extendedDown","collapseOrExpandControl"),
 ]]
 
 # Add quick navigation scripts.
