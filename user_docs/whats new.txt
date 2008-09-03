@@ -1,5 +1,19 @@
 What's New in NVDA
 
+Changes since 0.6 P2:
+* change: If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
+* fix: The last chunk of audio is no longer cut off when using NVDA with eSpeak on a remote desktop server.
+* change: Improve performance of eSpeak with some Windows Vista audio drivers.
+* fix: Fix problems with saving speech dictionaries for certain voices.
+* fix: Eliminate the lag when moving by units other than character (word, line, etc.) towards the bottom of large plain text documents in Mozilla Gecko virtual buffers. (#155)
+* fix: If speak typed words is enabled, announce the word when enter is pressed.
+* fix: Fix some character set issues in richedit documents.
+* change: Read by sentence in richedit controls if possible.
+* change: The announcement of links, headings, lists and block quotes in documents is now configured in the Document Formatting preferences dialog. This includes Mozilla Gecko virtual buffers.
+* new: Support for formatting in IAccessible2 text controls, including Mozilla applications.
+* new: Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
+
+
 Changes since 0.6 P1:
 
 *Improved the default ESpeak voice in NVDA
