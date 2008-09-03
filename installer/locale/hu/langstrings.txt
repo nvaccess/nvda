@@ -1,20 +1,31 @@
 ;Hungarian
-LangString msg_WelcomePageTitle ${LANG_HUNGARIAN} "üdvözöljük az ${product} instaláció programban! ${product} egy ingyenes és nyílt terjedésü  képernyofelolvasó a windows 2000/xp/2003/vista operációs rendszerhez.\n"
-LangString msg_WelcomePageText ${LANG_HUNGARIAN} "Copyright 2006 - 2008 Michael Curran\n\
-Ez a várázsló végigvezeti önt a ${product} telepítésén.\n\
-ajánlott, hogy a  telepítés elott kilép minden futó allkalmazásból. Ez megengedi, hogy a telepíto fontos fájlokat feltudjon frissíteni.\n\
-Anélkul, hogy ujra kellene indítani a kompjuterét."
-LangString msg_READMEText ${LANG_HUNGARIAN} "View README file (recommended)"
-LangString msg_NVDAWebSite ${LANG_HUNGARIAN} "látogassa meg a ${product} honlapját!"
- LangString msg_NVDARunning ${LANG_HUNGARIAN} "Már egy NVDA példány fut. Mielott a telepíto folytatni tud, ez le lesz állitva."
-LangString msg_SpeechInstall ${LANG_HUNGARIAN} "akar beszédet használni a  telepités közbe? Ha igen, akkor nyomja meg az enter billentyüt. Ha nem akar beszédet telepítés kozben, a mégse gombot allkalmazza."
-LangString msg_RemoveNVDA ${LANG_HUNGARIAN} "biztos, hogy teljesen elakarja távolitani az $(^name) programot, és minden komponensét?"
-LangString msg_NVDAConfigFound ${LANG_HUNGARIAN} "a telepíto talált egy létezo nvda konfiguráció fájlt. Elakarja távolitani ezt a fájlt?"
-LangString msg_NVDASuccessfullyRemoved ${LANG_HUNGARIAN} "$(^Name) sikeresen el lett távolitva."
+LangString msg_WelcomePageTitle ${LANG_HUNGARIAN} "${PRODUCT} telepítõ, Verzió ${VERSION}"
+LangString msg_WelcomePageText ${LANG_HUNGARIAN} "Üdvözöljük az ${PRODUCT} (Non-Visual Desktop Access), Microsoft Windows operációs rendszerei alatt futtatható, ingyenes, nyilt forráskódu képernyõolvasójának telepítõjében.$\n\
+Copyright 2006 - 2008 NVDA közremûködõk.$\n\
+A varázsló végigvezeti önt az ${PRODUCT} telepítésének lépésein; a telepítés idejére ajánlott bezárni minden egyéb alkalmazást.$\n"
+LangString msg_READMEText ${LANG_HUNGARIAN} "Olvassa el a readme fájlt (ajánlott)"
+LangString msg_NVDAWebSite ${LANG_HUNGARIAN} "Az NVDA hivatalos weboldalának meglátogatása"
+LangString msg_NVDARunning ${LANG_HUNGARIAN} "Már fut egy NVDA alkalmazás. A telepítés folytatása elõtt az alkalmazás bezárul."
+LangString msg_SpeechInstall ${LANG_HUNGARIAN} "Szeretne beszédtámogatást az NVDA telepítése közben? Nyomja meg az enter billentyût a beszédtámogatás elindításához, vagy nyomja meg az ESCAPE billentyût a beszédtámogatás nélküli telepítéshez."
+LangString msg_RemoveNVDA ${LANG_HUNGARIAN} "Biztosan törölni szeretné az $(^Name) programot az összes összetevõjével eggyütt?"
+LangString msg_NVDAConfigFound ${LANG_HUNGARIAN} "A telepítõ NVDA konfigurációs fájlt talált a számítógépen. Szeretné törölni ezt a fájlt?"
+LangString msg_NVDASuccessfullyRemoved ${LANG_HUNGARIAN} "$(Az ^Name) sikeresen el let távolítva a számítógéprõl."
 LangString shortcut_Wiki $(LANG_HUNGARIAN) "NVDA Info WIKI"
-LangString shortcut_uninstall $(LANG_HUNGARIAN) "Uninstall"
-LangString shortcut_website $(LANG_HUNGARIAN) "Website"
-LangString shortcut_readme $(LANG_HUNGARIAN) "Readme"
-LangString shortcut_userguide $(LANG_HUNGARIAN) "User Guide"
-LangString path_userguide $(LANG_HUNGARIAN) "en\user guide.html"
+LangString shortcut_uninstall $(LANG_HUNGARIAN) "Eltávolítás"
+LangString shortcut_website $(LANG_HUNGARIAN) "Weboldal"
+LangString shortcut_readme $(LANG_HUNGARIAN) "A readme fájl megtekintése"
+LangString shortcut_userguide $(LANG_HUNGARIAN) "Felhasználói útmutató"
+LangString path_userguide $(LANG_HUNGARIAN) "hu\user guide.html"
 LangString path_readmefile $(LANG_HUNGARIAN) "hu\readme.txt"
+LangString UNLOG_HEADER ${LANG_HUNGARIAN} "=========== Eltávolítási Napló \
+                                         ne szerkessze ezt a fájlt! ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_HUNGARIAN} "${UNINST_DAT} nem található, \
+                                                így a telepítõ nem tudja elvégezni az eltávolítást."
+LangString UNLOG_DEL_FILE ${LANG_HUNGARIAN} 'Törli a(z) "$R9" fájlt?'
+LangString UNLOG_DEL_DIR ${LANG_HUNGARIAN} 'Törli a(z) "$R9" könyvtárat?'
+LangString UNLOG_EMPTY_DIR ${LANG_HUNGARIAN} "Meglévõ telepítés a $0 helyen.$\n\
+                                            A szükséges ${UNINSTALL_LOG}.dat fájl nem található.$\n$\n\
+                                            Erõsen ajánlott egy üres könyvtár \
+                                            megadása az új verzió telepítéséhez."
+LangString UNLOG_ERROR_LOG ${LANG_HUNGARIAN} "Hiba az ${UNINSTALL_LOG} log fájlban."
+LangString UNLOG_ERROR_CREATE ${LANG_HUNGARIAN} "Nem sikerült létrehozni az ${UNINSTALL_LOG} fájlt."
