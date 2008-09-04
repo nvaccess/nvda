@@ -9,7 +9,7 @@ Control: Interrumpe la voz
 Shift: Continúa la voz
 
 NVDA+1: AyudaDeTeclado
-Esta orden activa el modo de ayuda de teclado tal que puedes presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
+Esta orden activa el modo de ayuda de teclado tal que puedas presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
 
 NVDA+t: título
 Anuncia el título de la aplicación actualmente activa.
@@ -247,23 +247,27 @@ NVDA+f3: encontrar siguiente
 NVDA+f7: lista de enlaces (no en firefox2 o internet explorer)
 NVDA+f5: refresca la memoria intermedia (no en Firefox2 o Internet Explorer)
 
-Teclas rápidas del modo virtual para saltar a siguientes elementos de un tipo en particular (utiliza también shift con la tecla para retroceder):
+Teclas rápidas del modo virtual para saltar a siguientes elementos de un tipo en particular (también utiliza shift con la tecla para retroceder):
 
+Teclas soportadas tanto por el viejo como por el nuevo modo virtual: 
+h: encabezado
+i: elemento de lista
+l: lista
+k: enlace
+p: párrafo (sólo utilizado en el modo virtual antiguo, utiliza Control+Flecha arriba/abajo en el modo virtual nuevo)
+t: tabla
+f: campo de formulario
+
+Teclas no soportadas por el modo virtual antiguo: 
+1 a 6: encabezados de nivel 1 a 6
 b: botón
 c: cuadro combinado
 e: campo de edición
-f: formulario
 g: gráfico
-h: encabezado
-1 a 6: encabezados de nivel 1 a 6
-i: elemento de lista
-k: enlace
-l: lista
 m: marco
 q: cita
 r: botón de opción
 s: separador
-t: tabla
 u: enlace no visitado
 v: enlace visitado
 x: casilla de verificación
