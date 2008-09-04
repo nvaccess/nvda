@@ -452,9 +452,9 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset)
-				o=embedRangeObj.GetEmbeddedObject()
-				#Fetch a description for this object
 				try:
+					o=embedRangeObj.GetEmbeddedObject()
+					#Fetch a description for this object
 					o=o.QueryInterface(oleTypes.IOleObject)
 					dataObj=o.GetClipboardData(0)
 					dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
