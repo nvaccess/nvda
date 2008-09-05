@@ -597,7 +597,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	states=attrs['states']
 	keyboardShortcut=attrs['keyboardshortcut']
 	level=attrs.get('level',None)
-	if reason in (REASON_CARET,REASON_SAYALL) and (
+	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
 		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
