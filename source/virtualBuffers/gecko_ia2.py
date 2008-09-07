@@ -137,12 +137,12 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
+				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
 				if not self.passThrough:
 					speech.cancelSpeech()
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				else:
 					nextHandler()
-				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
 				virtualBufferHandler.reportPassThrough(self)
 				newInfo.collapse()
 				newInfo.updateCaret()
