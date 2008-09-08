@@ -190,11 +190,12 @@ class appModule(appModuleHandler.AppModule):
 				textList.append(curObject.value)
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				info=curObject.makeTextInfo(textHandler.POSITION_SELECTION)
-				if not info.isCollapsed:
+				if info.text and not info.isCollapsed:
 					textList.append(info.text)
 				else:
 					info.expand(textHandler.UNIT_READINGCHUNK)
-					textList.append(info.text)
+					if info.text:
+						textList.append(info.text)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeateCount()==1:
@@ -660,14 +661,21 @@ class appModule(appModuleHandler.AppModule):
 	script_test_navigatorWindowInfo.__doc__ = _("reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")
 
 	def script_toggleBeepOnProgressBarUpdates(self,keyPress):
-		if config.conf["presentation"]["beepOnProgressBarUpdates"]:
-			onOff=_("off")
-			config.conf["presentation"]["beepOnProgressBarUpdates"]=False
-		else:
-			onOff=_("on")
-			config.conf["presentation"]["beepOnProgressBarUpdates"]=True
-		speech.speakMessage(_("Beep on progress bar updates")+" "+onOff)
-	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles on and off the beeping on progress bar updates")
+		progressLabels = (
+			("off", _("off")),
+			("visible", _("Beep for visible")),
+			("all", _("Beep for all")),
+			("speak", _("Speak each 10 percent"))
+		)
+
+		for index, (setting, name) in enumerate(progressLabels):
+			if setting == config.conf["presentation"]["reportProgressBarUpdates"]:
+				new=(index+1)%4
+				break
+		config.conf["presentation"]["reportProgressBarUpdates"]=progressLabels[new][0]
+		speech.cancelSpeech()
+		speech.speakMessage(progressLabels[new][1])
+	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles how NVDA reports progress bar updates. It can beep for all the progress bars or just for the progressbars in the foreground. Additionally it is possible to have current value spoken each 10 percent or it is possible to completely disable this reporting.")
 
 	def script_toggleReportDynamicContentChanges(self,keyPress):
 		if globalVars.reportDynamicContentChanges:
