@@ -47,6 +47,12 @@ outputDevice = string(default=default)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 
+# Braille settings
+[braille]
+	display = string(default=brltty)
+	translationTable = string(default=en-us-comp8.ctb)
+	expandAtCursor = boolean(default=true)
+
 # Presentation settings
 [presentation]
 		reportClassOfClientObjects = boolean(default=false)
