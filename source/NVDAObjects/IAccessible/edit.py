@@ -465,7 +465,10 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 					label=buf.value
 				except comtypes.COMError:
 					label=_("unknown")
-				newTextList.append(_("%s embedded object")%label)
+				if label:
+					newTextList.append(_("%s embedded object")%label)
+				else:
+					newTextList.append(_("embedded object"))
 			else:
 				newTextList.append(bufText[offset])
 		return "".join(newTextList)
