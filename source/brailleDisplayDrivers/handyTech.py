@@ -14,6 +14,8 @@ class Sink:
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""HandyTech braille display driver.
 	"""
+	name = "handyTech"
+	description = _("HandyTech braille displays")
 
 	def __init__(self):
 		self._server = comtypes.client.CreateObject("HtBrailleDriverServer.HtBrailleDriver")

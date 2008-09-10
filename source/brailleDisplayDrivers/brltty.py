@@ -11,6 +11,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""brltty braille display driver.
 	"""
 	name = "brltty"
+	description = "brltty"
 
 	@classmethod
 	def check(cls):
