@@ -229,7 +229,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = self.display.numCells
 		except:
 			log.error("Error initializing display driver", exc_info=True)
-			return
+			self.setDisplayByName("noBraille")
 
 	def update(self):
 		self.display.display(self.buffer.windowBrailleCells)

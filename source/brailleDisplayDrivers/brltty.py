@@ -29,10 +29,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
 
 	def __del__(self):
-		self._keyCheckTimer.Stop()
-		self._keyCheckTimer = None
-		self._con.leaveTtyMode()
-		self._con = None
+		# Exceptions might be raised if initialisation failed. Just ignore them.
+		try:
+			self._keyCheckTimer.Stop()
+		except:
+			pass
+		try:
+			self._con.leaveTtyMode()
+		except:
+			pass
 
 	def _get_numCells(self):
 		return self._con.displaySize[0]

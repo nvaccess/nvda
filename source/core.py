@@ -91,6 +91,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
+	import braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -199,6 +202,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating braille")
+	try:
+		braille.terminate()
+	except:
+		log.error("Error terminating braille",exc_info=True)
 	log.debug("Terminating speech")
 	try:
 		speech.terminate()
