@@ -123,7 +123,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def bufferPosToRegionPos(self, bufferPos):
 		for region, start, end in self.regionsWithPositions:
-			if end >= offset:
+			if end >= bufferPos:
 				return region, bufferPos - start
 		raise LookupError("No such position")
 

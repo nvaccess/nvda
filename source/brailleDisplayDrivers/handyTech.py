@@ -7,9 +7,9 @@ class Sink:
 		if constants.KEY_ROUTING in keys:
 			braille.handler.buffer.routeTo(routing_pos)
 		elif constants.KEY_UP in keys:
-			braille.handler.scrollBack()
+			braille.handler.buffer.scrollBack()
 		elif constants.KEY_DOWN in keys:
-			braille_handler.scrollForward()
+			braille.handler.buffer.scrollForward()
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""HandyTech braille display driver.
