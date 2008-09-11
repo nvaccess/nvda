@@ -137,6 +137,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getOffsetAtPoint(self,x,y):
 		raise NotImplementedError
 
+	def _getPoint(self):
+		return None
+
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)
 		if isinstance(position,textHandler.Point):

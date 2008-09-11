@@ -737,6 +737,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 			else:
 				text=_("align default")
 			textList.append(text)
+	if  formatConfig["reportLinks"]:
+		link=attrs.get("link")
+		oldLink=attrsCache.get("link") if attrsCache is not None else None
+		if (link or oldLink is not None) and link!=oldLink:
+			text=_("link") if link else _("out of %s")%_("link")
+			textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None

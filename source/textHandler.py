@@ -126,7 +126,7 @@ UNIT_COLUMN="column"
 UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
-UNIT_READINGCHUNK="readingChunck"
+UNIT_READINGCHUNK="readingChunk"
 
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Contains information about the text at the given position or unit

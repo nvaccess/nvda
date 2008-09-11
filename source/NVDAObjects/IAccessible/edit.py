@@ -159,6 +159,29 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
+	def _getPoint(self):
+		self.expand(textHandler.UNIT_CHARACTER)
+		offset=self._startOffset
+		if self.obj.editAPIVersion==1:
+			processHandle=self.obj.editProcessHandle
+			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			p=PointLStruct(0,0)
+			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+			winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,self._startOffset)
+			winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
+			point=textHandler.Point(p.x,p.y)
+		else:
+			res=winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,self._startOffset,None)
+			point=textHandler.Point(winUser.LOWORD(res),winUser.HIWORD(res))
+		(left,top,width,height)=self.obj.location
+		if point.x and point.y:
+			point.x=point.x+left
+			point.y=point.y+top
+			return point
+		else:
+			return None
+
 	def _getOffsetFromPoint(self,x,y):
 		(left,top,width,height)=self.obj.location
 		if self.obj.editAPIVersion>=1:
@@ -220,6 +243,9 @@ class EditTextInfo(NVDAObjectTextInfo):
 				formatField["text-position"]="super"
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
+		if formatConfig["reportLinks"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
 
 	def _getSelectionOffsets(self):
@@ -386,10 +412,44 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
+	def _getPoint(self):
+		range=self._rangeObj.duplicate
+		range.collapse(True)
+		range.expand(comInterfaces.tom.tomCharacter)
+		p=textHandler.Point(0,0)
+		(p.x,p.y)=range.GetPoint(comInterfaces.tom.tomStart)
+		if p.x and p.y:
+			return p
+		else:
+			return None
+
+	def _getCharFormat(self,range):
+		oldSel=self.obj.ITextSelectionObject.duplicate
+		if not (oldSel.start==range.start and oldSel.end==range.end):
+			self.obj.ITextSelectionObject.start=range.start
+			self.obj.ITextSelectionObject.end=range.end
+		if self.obj.isWindowUnicode:
+			charFormatStruct=CharFormat2WStruct
+		else:
+			charFormatStruct=CharFormat2AStruct
+		charFormat=charFormatStruct()
+		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
+		processHandle=self.obj.editProcessHandle
+		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+		if not (oldSel.start==range.start and oldSel.end==range.end):
+			self.obj.ITextSelectionObject.start=oldSel.start
+			self.obj.ITextSelectionObject.end=oldSel.end
+		return charFormat
+
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
+		charFormat=None
 		if formatConfig["reportAlignment"]:
 			if not paraFormatObj: paraFormatObj=range.para
 			alignment=paraFormatObj.alignment
@@ -414,10 +474,14 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			formatField["bold"]=bool(fontObj.bold)
 			formatField["italic"]=bool(fontObj.italic)
 			formatField["underline"]=bool(fontObj.underline)
+			formatField["strikethrough"]=bool(fontObj.StrikeThrough)
 			if fontObj.superscript:
 				formatField["text-position"]="super"
 			elif fontObj.subscript:
 				formatField["text-position"]="sub"
+		if formatConfig["reportLinks"]:
+			if charFormat is None: charFormat=self._getCharFormat(range)
+			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
@@ -492,8 +556,8 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 		elif position==textHandler.POSITION_LAST:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
-			self._rangeObj.moveEnd(comInterfaces.tom.tomStory,1)
-			self._rangeObj.move(comInterfaces.tom.tomCharacter,-1)
+			self._rangeObj.move(comInterfaces.tom.tomStory,1)
+			self._rangeObj.moveStart(comInterfaces.tom.tomCharacter,-1)
 		elif isinstance(position,textHandler.Offsets):
 			self._rangeObj=self.obj.ITextDocumentObject.range(position.startOffset,position.endOffset)
 		else:
@@ -625,12 +689,10 @@ class Edit(IAccessible):
 			self.TextInfo=ITextDocumentTextInfo
 		else:
 			self.TextInfo=EditTextInfo
-		if self.TextInfo is EditTextInfo:
-			self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
 
 	def __del__(self):
-		if self.TextInfo is EditTextInfo:
-			winKernel.closeHandle(self.editProcessHandle)
+		winKernel.closeHandle(self.editProcessHandle)
 
 	def _get_TextInfo(self):
 		if self.editAPIVersion>1 and self.ITextDocumentObject:
@@ -680,6 +742,8 @@ class Edit(IAccessible):
 	("ExtendedDown","moveByLine"),
 	("ExtendedLeft","moveByCharacter"),
 	("ExtendedRight","moveByCharacter"),
+	("ExtendedPrior","moveByLine"),
+	("ExtendedNext","moveByLine"),
 	("Control+ExtendedLeft","moveByWord"),
 	("Control+ExtendedRight","moveByWord"),
 	("control+extendedDown","moveByParagraph"),
