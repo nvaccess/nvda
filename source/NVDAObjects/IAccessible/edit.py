@@ -81,12 +81,12 @@ class TextRangeAStruct(ctypes.Structure):
 		('lpstrText',ctypes.c_char_p),
 	]
 
-CFM_BOLD=0x1
-CFM_ITALIC=0x2
-CFM_UNDERLINE=0x4
-CFM_STRIKEOUT=0x8
-CFM_PROTECTED=0x10
 CFM_LINK=0x20
+CFE_BOLD=1
+CFE_ITALIC=2
+CFE_UNDERLINE=4
+CFE_STRIKEOUT=8
+CFE_PROTECTED=16
 CFE_SUBSCRIPT=0x00010000 # Superscript and subscript are 
 CFE_SUPERSCRIPT=0x00020000 #  mutually exclusive			 
 
@@ -159,7 +159,7 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
-	def _getPoint(self):
+	def getPointAtStart(self):
 		self.expand(textHandler.UNIT_CHARACTER)
 		offset=self._startOffset
 		if self.obj.editAPIVersion==1:
@@ -234,9 +234,10 @@ class EditTextInfo(NVDAObjectTextInfo):
 			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["bold"]=bool(charFormat.dwEffects&CFM_BOLD)
-			formatField["italic"]=bool(charFormat.dwEffects&CFM_ITALIC)
-			formatField["underline"]=bool(charFormat.dwEffects&CFM_UNDERLINE)
+			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
+			formatField["italic"]=bool(charFormat.dwEffects&CFE_ITALIC)
+			formatField["underline"]=bool(charFormat.dwEffects&CFE_UNDERLINE)
+			formatField["strikethrough"]=bool(charFormat.dwEffects&CFE_STRIKEOUT)
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
 				formatField["text-position"]="sub"
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
@@ -412,7 +413,7 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
-	def _getPoint(self):
+	def getPointAtStart(self):
 		range=self._rangeObj.duplicate
 		range.collapse(True)
 		range.expand(comInterfaces.tom.tomCharacter)

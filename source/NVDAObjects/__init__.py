@@ -134,11 +134,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
 
-	def _getOffsetAtPoint(self,x,y):
+	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
-
-	def _getPoint(self):
-		return None
 
 	def __init__(self,obj,position):
 		super(NVDAObjectTextInfo,self).__init__(obj,position)

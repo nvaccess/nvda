@@ -162,7 +162,10 @@ class appModule(appModuleHandler.AppModule):
 	def script_moveMouseToNavigatorObject(self,keyPress):
 		speech.speakMessage(_("Move mouse to navigator"))
 		obj=api.getNavigatorObject() 
-		p=globalVars.reviewPosition.copy()._getPoint()
+		try:
+			p=globalVars.reviewPosition.copy().getPointAtStart()
+		except NotImplementedError:
+			p=None
 		if p:
 			winUser.setCursorPos(p.x,p.y)
 		else:

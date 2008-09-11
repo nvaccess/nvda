@@ -268,6 +268,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 """ 
 		raise NotImplementedError
 
+	def getPointAtStart(self):
+		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
+		raise NotImplementedError
+
 	def copyToClipboard(self):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
