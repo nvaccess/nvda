@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import os
+import wx
 import louis
 import baseObject
 import config
@@ -301,4 +302,68 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		return 0
 
 	def _set_cursorBlinkRate(self, rate):
+		pass
+
+class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
+	"""Abstract base braille display driver which manages its own cursor.
+	This should be used by braille display drivers where the display or underlying driver does not provide support for a cursor.
+	Instead of overriding L{display}, subclasses should override L{_display}.
+	"""
+
+	def __init__(self):
+		self._cursorPos = None
+		self._cursorBlinkRate = 1000
+		self._cursorBlinkUp = True
+		self._cursorShape = 0xc0
+		self._cells = []
+		self._cursorBlinkTimer = None
+		self._initCursor()
+
+	def _initCursor(self):
+		if self._cursorBlinkTimer:
+			self._cursorBlinkTimer.Stop()
+		self._cursorBlinkUp = True
+		self._displayWithCursor()
+		if self._cursorBlinkRate:
+			self._cursorBlinkTimer = wx.PyTimer(self._blink)
+			self._cursorBlinkTimer.Start(self._cursorBlinkRate)
+
+	def _blink(self):
+		self._cursorBlinkUp = not self._cursorBlinkUp
+		self._displayWithCursor()
+
+	def _get_cursorPos(self):
+		return self._cursorPos
+
+	def _set_cursorPos(self, pos):
+		self._cursorPos = pos
+		self._initCursor()
+
+	def _get_cursorBlinkRate(self):
+		return self._cursorBlinkRate
+
+	def _set_cursorBlinkRate(self, rate):
+		self._cursorBlinkRate = rate
+		self._initCursor()
+
+	def _get_cursorShape(self):
+		return self._cursorShape
+
+	def _set_cursorShape(self, shape):
+		self._cursorShape = shape
+		self._initCursor()
+
+	def display(self, cells):
+		self._cells = cells
+		self._displayWithCursor()
+
+	def _displayWithCursor(self):
+		if not self._cells:
+			return
+		cells = list(self._cells)
+		if self._cursorPos is not None and self._cursorBlinkUp:
+			cells[self._cursorPos] |= self._cursorShape
+		self._display(cells)
+
+	def _display(self, cells):
 		pass

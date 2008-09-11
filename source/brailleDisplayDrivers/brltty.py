@@ -7,7 +7,7 @@ except ImportError:
 
 KEY_CHECK_INTERVAL = 50
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	"""brltty braille display driver.
 	"""
 	name = "brltty"
@@ -24,6 +24,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return False
 
 	def __init__(self):
+		super(BrailleDisplayDriver, self).__init__()
 		self._con = brlapi.Connection()
 		self._con.enterTtyModeWithPath()
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
@@ -43,14 +44,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numCells(self):
 		return self._con.displaySize[0]
 
-	def display(self, cells):
-		self._cells = cells
-		self._display()
-
-	def _display(self):
+	def _display(self, cells):
 		# The string sent to the display needs to be the length of the display, so pad with zeroes if necessary.
-		out = "".join(chr(cell) for cell in self._cells) + "\0" * (self.numCells - len(self._cells))
-		self._con.writeDots(out)
+		cells = "".join(chr(cell) for cell in cells) + "\0" * (self.numCells - len(self._cells))
+		self._con.writeDots(cells)
 
 	def _handleKeyPresses(self):
 		while True:
