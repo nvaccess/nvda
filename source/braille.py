@@ -13,6 +13,7 @@ import config
 from logHandler import log
 import controlTypes
 import api
+import textHandler
 
 __path__ = ["brailleDisplayDrivers"]
 
@@ -92,6 +93,43 @@ class NVDAObjectRegion(Region):
 
 	def routeTo(self, braillePos):
 		self.obj.doDefaultAction()
+
+class TextInfoRegion(Region):
+
+	def __init__(self, obj):
+		super(TextInfoRegion, self).__init__()
+		self.obj = obj
+
+	def update(self):
+		caret = self.obj.makeTextInfo(textHandler.POSITION_CARET)
+		# Get the line at the caret.
+		self._line = line = caret.copy()
+		line.expand(textHandler.UNIT_LINE)
+		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
+		# Therefore, grab the line in two parts.
+		# First, the chunk from the start of the line up to the caret.
+		chunk = line.copy()
+		chunk.collapse()
+		chunk.setEndPoint(caret, "endToEnd")
+		self.rawText = chunk.text
+		# The cursor position is the length of this chunk, as its end is the caret.
+		self.cursorPos = len(self.rawText)
+		# Now, get the chunk from the caret to the end of the line.
+		chunk.setEndPoint(line, "endToEnd")
+		chunk.setEndPoint(caret, "startToStart")
+		# Strip line ending characters, but add a space in case the caret is at the end of the line.
+		self.rawText += chunk.text.rstrip("\r\n") + " "
+		super(TextInfoRegion, self).update()
+
+	def routeTo(self, braillePos):
+		pos = self.brailleToRawPos[braillePos]
+		# pos is relative to the start of the line.
+		# Therefore, get the start of the line...
+		dest = self._line.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textHandler.UNIT_CHARACTER, pos)
+		dest.updateCaret()
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -183,16 +221,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			self.windowStartPos = pos
 		self.updateDisplay()
 
-	def focus(self, region, pos):
-		"""Bring the specified region position into focus so that as much as possible of the region is visible.
-		The position is usually placed at the start of the display.
+	def focus(self, region):
+		"""Bring the specified region into focus so that as much as possible of the region is visible.
+		The region is usually placed at the start of the display.
 		However, if there is extra space at the end of the display, the display is scrolled left so that as much as possible is displayed.
 		@param region: The region to focus.
 		@type region: L{Region}
-		@param pos: The position relative to the region.
-		@type pos: int
 		"""
-		pos = self.regionPosToBufferPos(region, pos)
+		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -251,8 +287,11 @@ def getContextRegionsForNVDAObject(obj):
 		yield NVDAObjectRegion(parent, appendText=" ")
 
 def getFocusRegionsForNVDAObject(obj):
-	# TODO: Handle TextInfos and VirtualBuffers.
-	yield NVDAObjectRegion(obj)
+	# TODO: Handle VirtualBuffers.
+	useTextInfo = (obj.role == controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
+	yield NVDAObjectRegion(obj, appendText=" " if useTextInfo else "")
+	if useTextInfo:
+		yield TextInfoRegion(obj)
 
 class BrailleHandler(baseObject.AutoPropertyObject):
 
@@ -284,10 +323,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		for region in itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj)):
 			self.buffer.regions.append(region)
 			region.update()
-		# Last region should receive focus.
 		self.buffer.update(updateDisplay=False)
-		self.buffer.focus(region, region.brailleCursorPos or 0)
-		self.buffer.updateDisplay()
+		# Last region should receive focus.
+		self.buffer.focus(region)
+		if region.cursorPos is not None:
+			self.buffer.scrollTo(region, region.cursorPos)
+		self.update()
 
 def initialize():
 	global handler
