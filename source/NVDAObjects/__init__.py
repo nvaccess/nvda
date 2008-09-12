@@ -676,7 +676,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return None
 
 	def _get_basicCaretOffset(self):
-		return 0
+		raise NotImplementedError
 
 	def _set_basicCaretOffset(self,offset):
 		pass
