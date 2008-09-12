@@ -183,6 +183,23 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			self.windowStartPos = pos
 		self.updateDisplay()
 
+	def focus(self, region, pos):
+		"""Bring the specified region position into focus so that as much as possible of the region is visible.
+		The position is usually placed at the start of the display.
+		However, if there is extra space at the end of the display, the display is scrolled left so that as much as possible is displayed.
+		@param region: The region to focus.
+		@type region: L{Region}
+		@param pos: The position relative to the region.
+		@type pos: int
+		"""
+		pos = self.regionPosToBufferPos(region, pos)
+		self.windowStartPos = pos
+		end = self.windowEndPos
+		if end - pos < self.handler.displaySize:
+			# We can fit more on the display while still keeping pos visible.
+			# Force windowStartPos to be recalculated based on windowEndPos.
+			self.windowEndPos = end
+
 	def update(self, updateDisplay=True):
 		self.brailleCells = []
 		self.cursorPos = None
@@ -269,7 +286,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			region.update()
 		# Last region should receive focus.
 		self.buffer.update(updateDisplay=False)
-		self.buffer.scrollTo(region, region.brailleCursorPos or 0)
+		self.buffer.focus(region, region.brailleCursorPos or 0)
 		self.buffer.updateDisplay()
 
 def initialize():
