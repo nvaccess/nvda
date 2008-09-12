@@ -21,6 +21,7 @@ import config
 import controlTypes
 import appModuleHandler
 import virtualBufferHandler
+import braille
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
@@ -638,6 +639,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		api.setNavigatorObject(self)
 		self.reportFocus()
+		braille.handler.NVDAObjectGainFocus(self)
 
 	def event_foreground(self):
 		"""

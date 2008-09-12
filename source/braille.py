@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import itertools
 import os
 import wx
 import louis
@@ -11,6 +12,7 @@ import baseObject
 import config
 from logHandler import log
 import controlTypes
+import api
 
 __path__ = ["brailleDisplayDrivers"]
 
@@ -211,6 +213,25 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
 
+def getContextRegionsForNVDAObject(obj):
+	# TODO: Shouldn't be specific to the current focus.
+	for parent in api.getFocusAncestors()[1:]:
+		role=parent.role
+		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
+			continue
+		name=parent.name
+		description=parent.description
+		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION) and not name and not description:
+			continue
+		states=parent.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			continue
+		yield NVDAObjectRegion(parent)
+
+def getFocusRegionsForNVDAObject(obj):
+	# TODO: Handle TextInfos and VirtualBuffers.
+	yield NVDAObjectRegion(obj)
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
@@ -238,10 +259,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def NVDAObjectGainFocus(self, obj):
 		self.buffer.clear()
-		region = NVDAObjectRegion(obj)
-		self.buffer.regions.append(region)
-		region.update()
-		self.buffer.update()
+		for region in itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj)):
+			self.buffer.regions.append(region)
+			region.update()
+		# Last region should receive focus.
+		self.buffer.update(updateDisplay=False)
+		self.buffer.scrollTo(region, region.brailleCursorPos or 0)
+		self.buffer.updateDisplay()
 
 def initialize():
 	global handler
