@@ -133,7 +133,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def regionPosToBufferPos(self, region, pos):
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
-				return start + pos
+				if pos < end:
+					return start + pos
 		raise LookupError("No such position")
 
 	def bufferPosToWindowPos(self, bufferPos):
@@ -173,7 +174,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def scrollTo(self, region, pos):
 		pos = self.regionPosToBufferPos(region, pos)
 		if pos > self.windowEndPos:
-			self.windowEndPos = pos
+			self.windowEndPos = pos + 1
 		elif pos < self.windowStartPos:
 			self.windowStartPos = pos
 		self.updateDisplay()
