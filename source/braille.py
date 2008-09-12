@@ -75,15 +75,19 @@ class TextRegion(Region):
 
 class NVDAObjectRegion(Region):
 
-	def __init__(self, obj):
+	def __init__(self, obj, appendText=""):
 		super(NVDAObjectRegion, self).__init__()
 		self.obj = obj
+		self.appendText = appendText
 
 	def update(self):
-		textList = [self.obj.name]
+		textList = []
+		name = self.obj.name
+		if name:
+			textList.append(name)
 		#TODO: Don't use speech stuff.
 		textList.append(controlTypes.speechRoleLabels[self.obj.role])
-		self.rawText = " ".join(textList)
+		self.rawText = " ".join(textList) + self.appendText
 		super(NVDAObjectRegion, self).update()
 
 	def routeTo(self, braillePos):
@@ -218,7 +222,7 @@ def getContextRegionsForNVDAObject(obj):
 	# TODO: Shouldn't be specific to the current focus.
 	for parent in api.getFocusAncestors()[1:]:
 		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
+		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_MENUITEM):
 			continue
 		name=parent.name
 		description=parent.description
@@ -227,7 +231,7 @@ def getContextRegionsForNVDAObject(obj):
 		states=parent.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			continue
-		yield NVDAObjectRegion(parent)
+		yield NVDAObjectRegion(parent, appendText=" ")
 
 def getFocusRegionsForNVDAObject(obj):
 	# TODO: Handle TextInfos and VirtualBuffers.
