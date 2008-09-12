@@ -318,7 +318,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display.display(self.buffer.windowBrailleCells)
 		self.display.cursorPos = self.buffer.cursorWindowPos
 
-	def NVDAObjectGainFocus(self, obj):
+	def handleGainFocus(self, obj):
 		self.buffer.clear()
 		for region in itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj)):
 			self.buffer.regions.append(region)
@@ -328,6 +328,17 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.focus(region)
 		if region.cursorPos is not None:
 			self.buffer.scrollTo(region, region.cursorPos)
+		self.update()
+
+	def handleCaretMove(self, obj):
+		if not self.buffer.regions:
+			return
+		region = self.buffer.regions[-1]
+		if region.obj is not obj:
+			return
+		region.update()
+		self.buffer.update(updateDisplay=False)
+		self.buffer.scrollTo(region, region.cursorPos)
 		self.update()
 
 def initialize():

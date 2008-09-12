@@ -700,6 +700,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		self.speakDescendantObjects()
 
 	def event_caret(self):
+		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject():

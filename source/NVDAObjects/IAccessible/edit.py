@@ -25,6 +25,7 @@ import IAccessibleHandler
 import controlTypes
 from . import IAccessible
 from .. import NVDAObjectTextInfo
+import braille
 
 ignoreCaretEvents=False
 
@@ -663,6 +664,7 @@ class Edit(IAccessible):
 	def event_caret(self):
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
+		braille.handler.handleCaretMove(self)
 		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):

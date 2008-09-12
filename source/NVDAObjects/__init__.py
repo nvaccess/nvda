@@ -639,7 +639,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		api.setNavigatorObject(self)
 		self.reportFocus()
-		braille.handler.NVDAObjectGainFocus(self)
+		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""
@@ -660,6 +660,10 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_descriptionChange(self):
 		if id(self)==id(api.getFocusObject()):
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
+
+	def event_caret(self):
+		if self is api.getFocusObject():
+			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):
 		newTime=time.time()
