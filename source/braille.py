@@ -441,7 +441,9 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 		self._initCursor()
 
 	def display(self, cells):
-		self._cells = cells
+		# cells might not be the full length of the display.
+		# Therefore, pad it with spaces to fill the display so that the cursor can lie beyond it.
+		self._cells = cells + [0] * (self.numCells - len(cells))
 		self._displayWithCursor()
 
 	def _displayWithCursor(self):

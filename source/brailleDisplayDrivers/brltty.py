@@ -45,8 +45,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		return self._con.displaySize[0]
 
 	def _display(self, cells):
-		# The string sent to the display needs to be the length of the display, so pad with zeroes if necessary.
-		cells = "".join(chr(cell) for cell in cells) + "\0" * (self.numCells - len(self._cells))
+		cells = "".join(chr(cell) for cell in cells)
 		self._con.writeDots(cells)
 
 	def _handleKeyPresses(self):
