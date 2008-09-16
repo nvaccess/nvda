@@ -507,6 +507,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
+		if controlTypes.STATE_HALFCHECKED in states:
+			states.discard(controlTypes.STATE_CHECKED)
 		return states
 
 	def _get_description(self):
