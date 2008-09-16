@@ -93,6 +93,16 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 
+	def getPointAtStart(self):
+		self.expand(textHandler.UNIT_CHARACTER)
+		offset=self._startOffset
+		try:
+			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		except:
+			return None
+		point=textHandler.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		return point
+
 	def _getCaretOffset(self):
 		offset=self.obj.IAccessibleTextObject.caretOffset
 		if offset<0:
