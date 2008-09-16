@@ -17,6 +17,7 @@ import textHandler
 
 __path__ = ["brailleDisplayDrivers"]
 
+#: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
 
 def _getDisplayDriver(name):
@@ -34,6 +35,12 @@ def getDisplayList():
 	return displayList
 
 class Region(object):
+	"""A region of braille to be displayed.
+	Each portion of braille to be displayed is represented by a region.
+	The region is responsible for retrieving its text and cursor position, translating it into braille cells and handling cursor routing requests relative to its braille cells.
+	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells} and L{brailleCursorPos} will be set appropriately.
+	L{routeTo} will be called to handle a cursor routing request.
+	"""
 
 	def __init__(self):
 		#: The original, raw text of this region.
@@ -55,6 +62,12 @@ class Region(object):
 		self.brailleCursorPos = None
 
 	def update(self):
+		"""Update this region.
+		Subclasses should extend this to update L{rawText} and L{cursorPos} if necessary.
+		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}. L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
+		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
+		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
+		"""
 		mode = louis.MODE.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.MODE.compbrlAtCursor
@@ -66,17 +79,35 @@ class Region(object):
 			self.brailleCursorPos = brailleCursorPos
 
 	def routeTo(self, braillePos):
+		"""Handle a cursor routing request.
+		For example, this might activate an object or move the cursor to the requested position.
+		@param braillePos: The routing position in L{brailleCells}.
+		@type braillePos: int
+		@note: If routing the cursor, L{brailleToRawPos} can be used to translate L{braillePos} into a position in L{rawText}.
+		"""
 		pass
 
 class TextRegion(Region):
+	"""A simple region containing a string of text.
+	"""
 
 	def __init__(self, text):
 		super(TextRegion, self).__init__()
 		self.rawText = text
 
 class NVDAObjectRegion(Region):
+	"""A region to provide a braille representation of an NVDAObject.
+	This region will update based on the current state of the associated NVDAObject.
+	A cursor routing request will activate the object's default action.
+	"""
 
 	def __init__(self, obj, appendText=""):
+		"""Constructor.
+		@param obj: The associated NVDAObject.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
+		@type appendText: str
+		"""
 		super(NVDAObjectRegion, self).__init__()
 		self.obj = obj
 		self.appendText = appendText
@@ -138,7 +169,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The regions in this buffer.
 		#: @type: [L{Region}, ...]
 		self.regions = []
-		#: The region containing the cursor, C{None} if no region contains the cursor.
 		#: The position of the cursor in L{brailleCells}, C{None} if no region contains the cursor.
 		#: @type: int
 		self.cursorPos = None
@@ -382,6 +412,10 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		return 80
 
 	def display(self, cells):
+		"""Display the given braille cells.
+		@param cells: The braille cells to display.
+		@type cells: [int, ...]
+		"""
 		pass
 
 	def _get_cursorPos(self):
@@ -466,4 +500,8 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 		self._display(cells)
 
 	def _display(self, cells):
+		"""Actually display the given cells to the display.
+		L{display} calls methods to handle the cursor representation as appropriate.
+		However, this method (L{_display}) is called to actually display the final cells.
+		"""
 		pass
