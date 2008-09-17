@@ -268,7 +268,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 """ 
 		raise NotImplementedError
 
-	def getPointAtStart(self):
+	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError
 

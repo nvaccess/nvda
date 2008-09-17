@@ -159,20 +159,18 @@ WB_RIGHTBREAK=7
 
 class EditTextInfo(NVDAObjectTextInfo):
 
-	def getPointAtStart(self):
-		self.expand(textHandler.UNIT_CHARACTER)
-		offset=self._startOffset
+	def _getPointFromOffset(self,offset):
 		if self.obj.editAPIVersion==1:
 			processHandle=self.obj.editProcessHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			p=PointLStruct(0,0)
 			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,self._startOffset)
+			winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,offset)
 			winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 			point=textHandler.Point(p.x,p.y)
 		else:
-			res=winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,self._startOffset,None)
+			res=winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
 			point=textHandler.Point(winUser.LOWORD(res),winUser.HIWORD(res))
 		(left,top,width,height)=self.obj.location
 		if point.x and point.y:
@@ -180,7 +178,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			point.y=point.y+top
 			return point
 		else:
-			return None
+			raise NotImplementedError
 
 	def _getOffsetFromPoint(self,x,y):
 		(left,top,width,height)=self.obj.location
@@ -413,16 +411,13 @@ NVDAUnitsToITextDocumentUnits={
 
 class ITextDocumentTextInfo(textHandler.TextInfo):
 
-	def getPointAtStart(self):
-		range=self._rangeObj.duplicate
-		range.collapse(True)
-		range.expand(comInterfaces.tom.tomCharacter)
+	def _get_pointAtStart(self):
 		p=textHandler.Point(0,0)
-		(p.x,p.y)=range.GetPoint(comInterfaces.tom.tomStart)
+		(p.x,p.y)=self._rangeObj.GetPoint(comInterfaces.tom.tomStart)
 		if p.x and p.y:
 			return p
 		else:
-			return None
+			raise NotImplementedError
 
 	def _getCharFormat(self,range):
 		oldSel=self.obj.ITextSelectionObject.duplicate

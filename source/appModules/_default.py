@@ -163,7 +163,7 @@ class appModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("Move mouse to navigator"))
 		obj=api.getNavigatorObject() 
 		try:
-			p=globalVars.reviewPosition.copy().getPointAtStart()
+			p=globalVars.reviewPosition.pointAtStart
 		except NotImplementedError:
 			p=None
 		if p:
