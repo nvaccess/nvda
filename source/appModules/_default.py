@@ -63,7 +63,10 @@ class appModule(appModuleHandler.AppModule):
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
-		info=obj.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=obj.makeTextInfo(textHandler.POSITION_CARET)
+		except:
+			info=obj.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeateCount()==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
