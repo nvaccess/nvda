@@ -68,9 +68,9 @@ class Region(object):
 		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
 		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
 		"""
-		mode = louis.MODE.dotsIO
+		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
-			mode |= louis.MODE.compbrlAtCursor
+			mode |= louis.compbrlAtCursor
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, handler.translationTable)], unicode(self.rawText), mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
@@ -373,6 +373,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 def initialize():
 	global handler
+	log.info("Using liblouis version %s" % louis.version())
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
