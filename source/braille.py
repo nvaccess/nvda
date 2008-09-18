@@ -149,7 +149,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(caret, "startToStart")
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
-		self.rawText += chunk.text.rstrip("\r\n") + " "
+		self.rawText += chunk.text.rstrip("\r\n\0") + " "
 		super(TextInfoRegion, self).update()
 
 	def routeTo(self, braillePos):
@@ -245,7 +245,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def scrollTo(self, region, pos):
 		pos = self.regionPosToBufferPos(region, pos)
-		if pos > self.windowEndPos:
+		if pos >= self.windowEndPos:
 			self.windowEndPos = pos + 1
 		elif pos < self.windowStartPos:
 			self.windowStartPos = pos
