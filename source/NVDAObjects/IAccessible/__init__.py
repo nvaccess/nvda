@@ -33,6 +33,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAO
 import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
+import queueHandler
 
 re_gecko_level=re.compile('.*?L([0-9]+).*')
 re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
@@ -91,6 +92,14 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+
+	def _getPointFromOffset(self,offset):
+		try:
+			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		except:
+			raise NotImplementedError
+		point=textHandler.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		return point
 
 	def _getCaretOffset(self):
 		offset=self.obj.IAccessibleTextObject.caretOffset
@@ -506,6 +515,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
+		if controlTypes.STATE_HALFCHECKED in states:
+			states.discard(controlTypes.STATE_CHECKED)
 		return states
 
 	def _get_description(self):
@@ -1004,10 +1015,15 @@ class ProgressBar(IAccessible):
 	BASE_BEEP_FREQ=110
 
 	def event_valueChange(self):
-		if config.conf["presentation"]["beepOnProgressBarUpdates"] and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+		if config.conf["presentation"]["reportProgressBarUpdates"] !="off":
 			val=self.value
+			if val:
+				val=val.rstrip('%')
 			if val and val!=globalVars.lastProgressValue:
-				tones.beep(self.BASE_BEEP_FREQ*2**(float(val[:-1])/25.0),40)
+				if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
+					tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
+				elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+					queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,val)
 				globalVars.lastProgressValue=val
 		else:
 			super(ProgressBar,self).event_valueChange()

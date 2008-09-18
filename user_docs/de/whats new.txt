@@ -1,0 +1,208 @@
+Was ist neu in NVDA?
+
+Änderungen seit Version 0.6 P1:
+
+- Grundeinstellung von ESpeak in NVDA verbessert
+- Laptop-Tastaturlayout hinzugefügt. Das layout kann in NVDA-Tastatureinstellungen konfiguriert werden (#60)
+- Gruppenbeschriftungen in SysListView32-steuerung unterstützt - Hauptsächlich für WindowsVista. (#27)
+- Ansage des Status von Einträgen in SysListView32-Steuerungsfeldern.
+- Viele Kurztasten für NVDA-Konfigurationsdialoge hinzugefügt.
+- Unterstützung für Anwendungen wie Mozilla Firefox unter NVDA-Portabel-Betrieb, ohne Registrierung irgendwelcher DLL-Dateien.
+- Gefixt: Absturz des VirtualBuffers in Linklisten bei Gecko-Anwendungen (#48) 
+- NVDA sollte bei Mozilla-Anwendungen wie Firefox oder Thunderbird bei höherer Priorität von NVDA als die Anwendungen selbst nicht mehr abstürzen, d. h., NVDA läuft als Administrator.
+- Sprachenwörterbücher (ehemals AnwenderWörterbücher) berücksichtigen jetzt Groß- und Kleinschreibung. Zeichenketten können optional als Reguläre Ausdrücke gekennzeichnet werden. (#39)  
+- Dokumente können jetzt in einem Einstellungsdialog konfiguriert werden, unabhängig davon ob NVDA ein Bildschirm-Layout für VirtualBuffer verwendet oder nicht. 
+- Sprunganker in Gecko-Dokumenten ohne Bezug auf einen Link werden nicht mehr angesagt. (#47)
+- Der Suchen-Befehl in NVDA merkt sich in allen Anwendungen (anwendungsübergreifend) die letzten Sucheinträge (#53)
+- Gefixt: Ausgabe des Status von ausgewählt - nicht ausgewählt" bei einigen "auswahlboxen" und "Radio Buttons" in VirtualBuffers.
+- Jedes Dokument besitzt jetzt seinen eigenen "Durchreichemodus" statt einer generellen NVDA-Option.  (#33)
+
+- Gefixt: gelegentliche Verwischungen bei Fokusveränderungen und ungenaue Sprachunterbrechung nach Wiederaufruf aus dem Standby-Modus eines Systems. 
+- Verbesserte Unterstützung von NVDA in Mozilla-Firefox-Komboboxen. Text wird beim Navigieren nicht wiederholt. Beim Verlassen der Boxen werden frühere Steuerungsanweisungen nicht unnötigerweise ausgegeben. VirtualBuffer-Kommandos werden ausgelöst - wenn Fokusiert und sich der Anwender in einem VirtualBuffer befindet.  
+- Verbessert: Genaues Auffinden des Statusbalkens in vielen Anwendungen (#8)
+- Hinzugefügt: NVDA interaktive Python Konsole Werkzeug. Dies ermöglicht Entwicklern bei laufendem NVDA Eingriffe im System vorzunehmen und deren Auswirkungen zu überprüfen.  
+- Die Skripts für "alles sprechen",  "auswahl ansagen" und "aktuelle Zeile ansagen" arbeiten jetzt korrekt wenn Sie sich im virtualBuffer-Durchreichemodus befinden. (#52)  
+- Die Skripts für "lauter" und "leiser" wurden entfernt. Bitte nutzen Sie die Einstellungen über die Synthesiser-Skripts (STRG-NVDA+Pfeil-links/rechts) oder nehmen Sie die Einstellungen über den Stimmeneinstellungsdialog vor. 
+
+- Die Ausgabetöne zur darstellung eines Fortschrittsbalkens entsprechen nun einer genaueren wiedergabe. 
+- Weitere Schnelltasten im Virtualbuffer hinzugefügt:
+	L = Liste, I = Listeneinträge, E = Eingabefeld, B = Button, X = Auswahlkästchen "checkbox", R = Radioknopf, G = Grafik, Q = Blockmarkierung, C = Kombobox, 1 - 6 = Überschriften (Ebene 1 - 6), S = Separator (Trennungszeichen), M = Rahmen. (#67, #102, #108)
+
+- Wird das Laden eines neuen Dokuments in Mozilla Firefox abgebrochen, kann der Virtualbuffer des alten dokuments, insofern es noch nicht gelöscht wurde, verwendet werden. (#63)
+- Das wortweise Navigieren in Virtualbuffer arbeitet nun zuverlässiger; jedes Feld beinhaltet nur ein Wort. (#70)
+- Die Fokusverfolgung und Aktualisierung in Virtualbuffer von Gecko-Anwendungen wurde verbessert.  
+- Ein neues Skript "Suche vorherige Fundstelle" in Virtualbuffers (Schift-NVDA-F3) wurde hinzugefügt. 
+- Verbessert: Darstellung der Dialoge in Gecko-Anwendungen wie Firefox und Thunderbird. (#66)
+- Hinzugefügt: Die aktuelle Logdatei von NVDA kann eingesehen werden. Sie befindet sich im NVDA-menü (werkzeuge "Tools").
+- Zeit- und Datumsansage werden in der Sprache des Anwenders ausgegeben; Zeichensetzung und Wortfolge entsprechen der jeweiligen Anwendungssprache.
+- Im NVDA-Einstellungsdialog werden in der Sprachen-Kombobox jetzt die Vollständigen Namen der jeweiligen Sprache ausgegeben.  
+- Die Darstellung eines Listeneintrags im Taskmanager wird ständig aktualisiert. (#15)
+- Bei Bewegung mit der Maus in einem Text wird der aktuelle Abschnitt ausgegeben und nicht der ganze Text oder nur ein Wort. Die Ausgabe der Audiokoordinaten und Steuerelemente* kann optional abgefragt werden; standardmäßig ist diese Option ausgeschaltet. 
+- Lesen von Text mit der Maus in MS-Word wird unterstützt.   
+- Gefixt: Beim Verlassen des Menübalkens in Anwendungen wie Wordpad wird die jeweilige Auswahl angesagt. 
+- In Winamp wurde die daueransage von Titeln bei "Pause", "fortsetzen", "Anhalten" und "playback" unterdrückt. 
+- Ebenfalls in Winamp  wird die Veränderung von "zufällige Wiedergabe" und "Wiederholen" jeweils ausgegeben. Funktioniert im Hauptfenster und im Playlist-Editor.
+- Verbessert wurde die Möglichkeit, Einzelne Felder in Virtualbuffer von Mozilla Gecko-Anwendungen zu aktievieren. Dies betrifft klickbare Grafiken und Links, die weitere Zusätze beinhalten.
+- Gefixt: Probleme beim Öffnen von NVDA-Dialogen in manchen Systemen. (#65)
+- Hinzugefügt: Unterstützung des "totalKommanders". 
+- Gefixt: Im SAPI4Serotek-Treiber hängt die Einstellung der Sprachhöhe nach einem Großbuchstaben nicht mehr. (#89) 
+- Felder mit klickbaren Attributen im Virtualbuffer von Mozilla Gecko-Anwendungen werden angesagt. (#91)
+- Das Feld in Virtualbuffer Mozilla Gecko-Anwendungen, in dem sich der Anwender bewegt ist für Sehende Personen jetzt sichtbar. Verbessert die Zusammenarbeit von nicht sehenden und sehenden Personen. (#57)
+- Unterstützt werden jetzt ARIA "live region events" für Anwendungen wie "chatzilla" IRC. Neue Meldungen werden automatisch vorgelesen.
+- Verbesserung der Handhabung von ARIA web-Anwendungen wie "Google Docs". 
+- Beim Kopieren von Text aus dem Virtualbuffer werden keine Extraleerzeilen mehr hinzugefügt.  
+- Die Leertaste aktiviert keine Links in einer Linkliste mehr. 
+- Das Skript "moveMouseToNavigator" (NVDA+Num-Schrägstrich) bewegt die Maus in die Mitte des Navigationsobjekts und nicht mehr an den oberen Rand. 
+- Linker Mausklick: Num-Schrägstrich, rechter Mausklick: Num-Stern 
+- Verbesserter Zugang zum Windows Systemtray. Um ins Systemtray zu gelangen, verwenden Sie den Windows-eigenen Befehl "windows-Taste+B". (#10)
+- Beim Erreichen des Textendes in einem Eingabefeld wird kein weiterer Text mehr gesprochen, Dies gilt auch dann, wenn die Cursortaste länger gedrückt werden sollte.  
+- Gefixt: Absturz bei manchen Sprachausgaben während NVDA noch meldungen ausgibt und der Anwender seine Arbeit bereits fortsetzt. (#117)
+- Unterstützung für Audiologic Tts3 speech synthesizer, zu beziehen bei Gianluca Casalino hinzugefügt. (#105) 
+- Verbesserte Navigation in MS-Word Dokumenten. 
+- Verbesserte Wiedergabe von Warnmeldungen bei Mozilla Gecko-Anwendungen.  
+- Verbesserte abspeicherung der Konfigurationseinstellungen bei nicht-englischen MS-Windows-Systemen (#114)
+- Hinzugefügt: NVDA-Begrüßungsdialog. Dieser Dialog enthält wesentliche Informationen für neue Anwender. Hier kann die CAPSLOCK-Taste als NVDA-Taste konfiguriert werden. Dieser Bildschirm erscheint standardmäßig beim Start von NVDA und bleibt bis zu dessen Abschaltung durch den Benutzer sichtbar. 
+- NVDA unterstützt das Lesen von PDF-Dokumenten von AdobeAcrobat  Vers. 8 und 9.
+- Gefixt: Unterbinden von Fehlern durch unbeabsichtigtes Drücken einer Taste während des Starts von NVDA.
+- Achten Sie beim Verlassen von MS-Windows darauf, dass Ihre Einstellungen für NVDA zuvor korrekt gesichert wurden.  
+- Hinzugefügt: Akustisches Logo von NVDA bei der Installation. (Beitrag von Victer Tsaran)
+- NVDA löscht sein Icon beim Verlassen aus dem Systemtray. 
+- NVDA-Standard-Bezeichnungen wie "OK" und "Cancel" werden in der jeweiligen Anwendersprache angezeigt. 
+- das NVDA-Icon wird im Startmenü und auf dem Desktop richtig angezeigt und kann durch die entsprechende Kurztaste ausgelöst werden.  
+- Zellen in MS-Excel werden beim Drücken von 
+Tab und Schift-Tab gelesen. (#146)
+- Gefixt: kein doppeltes Vorlesen von Einträgen in Listen von "Skype".  
+- Verbesserte Cursor-Verfolgung bei Java-Anwendungen. In "Open Office" und "Lotus Symphony" liest NVDA erst bei Cursor-Bewegung anstatt Text, der nicht gewählt wurde. (#119) 
+- Unterstützung von AkelEdit controls in Akelpad 4.0
+- NVDA Blockiert nicht mehr bei Cursor-bewegungen vom Dokumententext zur Steuerleiste in "Lotus Symphony-Anwendungen.
+- NVDA blockiert nicht mehr bei "hinzufügen/Entfernen"-Aktionen in Windows-XP oder beim Aufruf eines Deinstallationsprogramms. (#30)
+- NVDA blockiert nicht mehr beim Aufruf von "Spybot Search and Destroy". 
+ 
+
+Änderungen seit Version 0.5
+Zugang zu web-Inhaltenmit neuem Virtualbuffer im laufenden Betrieb (zur Zeit für Mozilla Gecko-Anwendungen einschließlich Firefox und Thunderbird):
+- Ladezeiten haben sich um den Faktor 30 verringert, d. h., es entsteht fast keine Wartezeit, um neue web-Seiten in den Puffer zu laden.  
+- Eine Linkliste kann mit NVDA+F7 geladen werden.
+- der Suchen-Dialog (STRG+NVDA+F) wurde (groß-Kleinschreibung-unabhängig) verbessert. Die jeweilige Cursorposition wurde stabilisiert. 
+- Ausgewählter Text kann jetzt in den Virtualbuffer kopiert werden. 
+- Standardmäßig wird Text in einem Virtualbuffer dargestellt, d. h., Links und die zugehörigen Steuerelemente sind in einer Zeile zu lesen, es sei denn, sie sind sichtbar tatsächlich so angeordnet.  Mit NVDA+V kann zwischen beiden Darstellungsformen gewechselt werden. 
+- Mit STRG+Pfeil-auf und -ab bewegen Sie sich absatzweise in einem Dokument. 
+- Verbesserte Darstellung dynamischer Inhalte. 
+- Zeilen- und Felderweises Navigieren wurde verbessert. 
+
+
+Internationale Zeichensätze:
+- Im laufenden Betrieb von NVDA können internationale Zeichensätze verwendet werden. 
+- NVDA sagt den Wechsel eines Tastaturlayouts (Alt+Schift) an.  
+- Zeit und Datum werden ordnungsgemäß in der eingestellten Sprache ausgegeben
+- Hinzugefügt: tschechisch (von Tomas Valusek und Jaromir Vit)
+- Hinzugefügt: vietnamesisch (von Dang Hoai Phuc)
+- Hinzugefügt: afrikans (af_Za) (von Willem van der Walt)
+- Hinzugefügt: russisch (von Dmitry Kaslin) 
+- Hinzugefügt: polnisch (von DOROTA CZAJKA und Freunden)
+- Hinzugefügt: japanisch (von Katsutoshi Tsuji)
+- Hinzugefügt: thai (von Amorn Kiattikhunrat)
+- Hinzugefügt: kroatisch (von Mario Percinic und Hrvoje Katic)  
+- Hinzugefügt: galizisch (galleco) (von Juan C. buno)  
+- Hinzugefügt: ukrainisch (von Aleksey Sadovoy) 
+
+
+Sprache: 
+- NVDA enthält jetzt eSpeak, Version 1.33 mit vielen Verbesserungen wie mehrere Sprachen undSprachgeschwindigkeit.
+- Die Stimmeinstellungen in NVDA lassen nun eine genauere Spracheinstellung zu (falls der jeweilige Synthesiser dies erlaubt). Die sog. "variants" bedeuten eine Art Feinabstimmung der Aussprache. 
+- In den Stimmeinstellungen kann die Betonung gezielt verändert werden (falls der jeweilige Synthesiser dies erlaubt). 
+- Die Ausgabe der jeweiligen Objektposition kann wahlweise ein- und ausgeschaltet werden. Hierzu finden Sie im Dialog "Objektdarstellung" vier Auswahlmöglichkeiten. 
+- Großbuchstaben können jetzt mit einem zusätzlichen Tonsignal angezeigt werden. Im Stimmeneinstellungsdialog kann dies an- und abgeschaltet werden. Im selben Dialog kann NVDA auch so eingestellt werden, dass bei Großbuchstaben die Stimme erhöht wird. Somit stehen folgende Optionen zur Verfügung: Tonsignal, Stimmhöhenänderung und/oder Ansage "cap" (= Großbuchstabe).
+- Mit STRG- oder Schift-Taste können Sie das Vorlesen von NVDA stoppen. Betätigen Sie die Schift-Taste erneut, ohne eine andere Taste vorher gedrückt zu haben, setzt NVDA an derselben Stelle das Vorlesen fort. 
+- Hinzugefügt: eine virtuelle Sprachausgabe, die sehenden Anwendern, die nicht mit Sprachausgaben vertraut sind, aber prüfen möchten, was NVDA gerade gesprochen hat. Diese Funktion ist neu und enthält möglicherweise noch Fehler. Bitte teilen Sie uns diese mit. 
+- Standardmäßig wurde die Ansage von Satzzeichen ausgeschaltet. Mit NVDA+P schalten Sie sie wieder ein.
+- eSpeak spricht standardmäßig nun etwas langsamer. Dies ist für Anfänger von NVDA gedacht. 
+- Hinzugefügt: Anwenderwörterbücher. Es sind dies: ein Standardwörterbuch, ein Stimmenwörterbuch und ein "temporäres" Wörterbuch. Einträge im Standardwörterbuch gelten für alle NVDA-Anwendungen. Einträge im Stimmenwörterbuch gelten für die jeweilige Sprache und den gewählten Synthesiser. Einträge im temporären Wörterbuch bleiben nur für die aktuelle Anwendung gültig und werden beim Schließen wieder gelöscht. Dies ist für Testzwecke oder sonstiges gedacht. Es können reguläre Ausdrücke oder auch normaler Text eingegeben werden. 
+- Bevor Sie einen Synthesiser auswählen, können Sie in der Synthesiser-dialogbox festlegen, welches Ausgabegerät sie bevorzugen. 
+
+
+Darstellung
+- NVDA benötigt nur noch geringen Arbeitsspeicher bei Eingabe von Text mit MSHTML-Steuerfeldern. 
+- Verbesserte Darstellung von Text in vielen Steuerfeldern, die keinen "echten" Cursor besitzen. (MSN Messenger history window, treeview items, listview items etc.) 
+- Verbesserte Darstellung in RTF-Texten. 
+- Verbesserte Speicherpermanenz (NVDA verwendet den ihm zugewiesenen Speicherbedarf und versucht nicht, mehr Speicher anzufordern). 
+- Gefixt: NVDA stürzt in der DOS-Konsole nicht mehr ab. 
+
+
+Tastenkomandos:
+- Mit NVDA+Schift+Num6 und NVDA+Schift+Num4 navigieren Sie vorwärts oder rückwärts von Objekt zu Objekt. Das bedeutet, Sie bewegen sich mit nur diesen beiden Tastenkomandos innerhalb einer Anwendung ohne die Gefahr außerhalb der Hierarchie zu kommen. In einem web-Browser wie Firefox navigieren Sie innerhalb einesDokuments mit diesen beiden Kommandos. Signaltöne zeigen die Navigationsrichtung an.  
+- Stimmeneinstellungen können jezt ohne Öffnen der entsprechenden Einstellungsbox zu öffnen konfiguriert werden. Sie nutzen hierfür den Synthesiser-Einstellungsring. Mit STRG+NVDA+Pfeil-rechts und -links bewegen Sie sich in diesem Ring. Um Einstellungen zu ändern, drücken Sie STRG+NVDA+Pfeil-auf und -ab.
+- Hinzugefügt: Kommando zur Anzeige der aktuellen Auswahl in einem Edit-Feld (NVDA+Schift+Pfeil-auf).
+- Hinzugefügt: Einige Kommandos zur Anzeige wie (aktuelle Zeile lesen); Zweimalige schnelle Eingabe dieses Kommandos buchstabiert den Text. 
+- Capslock, Numpad-Insert und Einfügetaste können als NVDA-Taste verwendet werden. Zweimaliges Drücken dieser Tasten wirkt sich als "kommando durchreichen an das System" aus so als wenn diese Tasten ohne NVDA eingegeben würden. Um eine dieser Tasten als NVDA-Taste zu definieren, legen Sie dies in der Tastenlayout-Box fest.
+   
+
+Anwendungsunterstützung:
+- Verbesserte Darstellung von "Audacity".
+- Hinzugefügt: Unterstützung von "Skype". (noch nicht vollständig). 
+- Verbesserte Unterstützung von "Miranda Instant Messenger". 
+- Verbesserte Darstellung von html- und nur-Text in Outlook-Express. 
+- Korrekte Darstellung der Meldungsfelder bei Newsgroups in Outlook Express. 
+- Die "von", "an" und "Copy an" (CC)-Felder in Outlook Express werden korrekt gelesen. 
+- Nach dem Löschen einer Nachricht aus der Nachrichtenliste in Outlook liest NVDA die nächste Nachricht vor. 
+- Verbessertes navigieren in MSAA-Objekten, d. h., verbesserte Navigation zu Titel und Scroll-Balken in möglichen Systemfenstern dieses MSAA-Objekts. 
+- Verbesserte Unterstützung für Anwendungen wie Firefox 3 und Thunderbird 3. Ansage von Steuerelementen und verbesserte Navigation, Auswahl und Eingabe von Text. 
+- Verbesserte Unterstützung von Scintilla Steuerelementen. Sie sind zu finden in "Notepad++" und "Tortoise svn". 
+- Verbesserung der Nutzung von Java-Anwendungen übr "Java Access Bridge". Dies bedeutet bessere Zugänglichkeit von "Open Office" wenn Java eingeschaltet ist. Beachten Sie, dass Java-Applets im web-Browser noch nicht arbeiten. 
+
+Maus:
+- Das Lesen unter dem Mauszeiger wurde verbessert. Schnelleres Lesen von Steuerelementen und Text in Eingabefeldern. Es wird jetzt nur das Wort unter dem Mauszeigr gelesen, noch nicht der Ganze Text oder Titel eines Objekts. Dies kann nützlich sein für Anwender mit geringem Sehrest, um schnell ein Wort oder ein Teil einer Information zu lesen.  
+- Hinzugefügt: Im Mauseinstellungsdialog kann festgelegt werden, ob beim Bewegen der Maus Töne ausgegeben werden sollen. Wenn eingeschaltet, wird bei Auf-ab-Bewegung der Maus ein Ton zwischen 220 und 1760 Hz ausgegeben, desgleichen bei Links-rechts-Bewegungen (Y- und X-achse). Hierdurch soll dem blinden Anwender ein ungefährer Eindruck über die Position der Maus auf dem Bildschirm vermittelt werden. Auch das unter dem Mauszeiger befindliche Objekt wird angesagt. Mit NVDA+M können diese Optionen abgeschaltet werden. Ein leiserer oder lauterer Ton zeigt auch die jeweilige Helligkeit der entsprechenden Bildschirmposition an. 
+
+Objectpräsentation und Interaction:
+- Verbesserte Darstellung der Steuerelemente im Menü-Baumansicht. NVDA gibt an, wieviele Elemente in einer ausgeklappten Liste vorhanden sind. Auch die Ebene eines Menü-Zweiges wird angesagt sowie die aktuelle Nummer des Elements in der jeweiligen Ebene und die Gesamtzal von Elementen in dieser Ebene (nicht der gesamten Baumansicht!). 
+- Ansage der Fokusveränderung beim Navigieren zwischen Anwendungen oder innerhalb des Betriebssystems. Statt der Ansage eines Steuerelements wird jetzt dieses sowie die übrigen Elemente innerhalb desselben angessagt. Dies Bedeutet beispielsweise beim Tabben innerhalb einer Gruppenbox, dass nicht nur das aktuelle Element, sondern auch die anderen Elemente und die Gruppenboxbezeichnung angesagt werden. 
+- Innerhalb von Dialogboxen werden Meldungen ausgegeben, jedoch arbeitet diese Funktion noch nicht ganz zufriedenstellend. 
+- Die ausführliche Ansage über den Status von Elementen wie z. B. in Java-Anwendungen kann abgeschaltet werden. 
+- Wird der Cursor auf ausgewählten Text innerhalb eines Eingabefeldes bewegt, wird dieser Text automatisch vorgelesen. Bei nicht ausgewähltem Text reagiert NVDA wie gewohnt, d. h., es wird lediglich die aktuelle Zeile vorgelesen. 
+- Die Darstellung des Fortschrittsbalkens durch Signaltöne arbeitet jetzt genauer. 
+
+
+Anwenderschnittstelle:
+- Das NVDA-Schnittstellenfenster wurde entfernt und durch ein einfaches popup-Menü ersetzt.  
+- der "user interface settings"-Dialog (Dialog für NVDA-Anwendereinstellungen) heißt jetzt allgemeiner Einstellungsdialog. Hier kann in einer speziellen Kombobox festgelegt werden, welche Meldungen in der NVDA-Logdatei gespeichert werden sollen.  Beachten Sie die Änderung von NVDA-"debug"-Datei in NVDA-Logdatei. 
+- Die Meldebox für Gruppennamencheckboxen wurde entfernt. Gruppennamenänderungen werden jetzt anders gehandhabt. 
+
+
+Änderungen seit Version r425:
+- Standardmäßig ist NVDA mit eSpeak ausgestattet. (entwickelt von Jonathan Duddington). eSpeak benötigt wenig Speicherplatz und verfügt über viele Sprachen. eSpeak kann von jedem Computer oder usb-Stick aus gestartet werden. (Für weitere Informationen siehe Http://espeak.sourceforge.net/).
+- Gefixt: Ausgabe eines falschen Buchstabens beim Löschen von Text im Internetexplorer und Outlook-Express. 
+- Unterstützung für Ausgabe weiterer Eingabefelder bei "Skype".  
+- VirtualBuffer wird nur für das jeweilige Fenster geladen, welches ihn benötigt. 
+- Hinzugefügt: Kommandozeilenparameter: 
+M, minimal: Start- und Exit-Klänge werden nicht abgespielt. Auch der Startbildschirm wird ausgeblendet.  
+Q, Quit: Alle laufenden Programme werden geschlossen und NVDA beendet.  
+S, stderr-File (StandardError-Dateiname): Logdatei zum Speichern von Fehlermeldungen. 
+D, debug-File: alternative Debug-Datei, in der NVDA debug-Meldungen abspeichert. 
+C, configfile alternative  Konfigurationsdatei: 
+H, Hilfedatei mit Kommandozeilenparametern.
+- Gefixt: Satzzeichen werden in der jeweils gewählten Sprache ausgegeben. 
+- Hinzugefügt: slovakisch (Dank an Peter Vagner). 
+- Hinzugefügt: Virtualbuffer-Dialog und Dokumentenformatierungsdialog (von Peter Vagner). 
+- Hinzugefügt: französisch (Dank an Michel Such). 
+- Hinzugefügt: Skript zum Ein- und Ausschalten der Signaltöne bei Anzeige eines Fortschrittsbalkens, (Einf.+u). (von Peter Vagner).  
+- In der Tastaturhilfe stehen Skriptbeschreibungen in mehreren Sprachen zur Verfügung. 
+- Hinzugefügt: "Suche"-Dialog für den Virtualbuffer im Internetexplorer und Firefox. Mit STRG+F starten Sie den Suchdialog. Nach Eingabe des Suchtextes und Drücken der Eingabetaste erscheint der Virtualbuffer-Cursor in der Zeile, in der eine Fundstelle sich befindet. Mit F3 suchen Sie nach der nächsten Fundstelle. 
+- Bei eingeschaltetem "Buchstabenecho" wird nur noch der jeweilige Buchstabe angesagt. (Es werden jetzt alle Buchstaben zwischen ASCII-32 und ASCII-255 ausgegeben). 
+- Einige Steuerelemente wurden umbenannt. "editierbarer Text" ist jetzt "edit", "outline" heißt jetzt "Baumansicht". 
+- Um die Navigation zu beschleunigen, werden Worte wie "Listeneintrag" in einer Liste oder "Baumansichteintrag" in einer Baumansicht nicht mehr angesagt.  
+- Hat ein Menüpunkt ein Untermenü so wird dies nun mit "untermenü" angezeigt. 
+- Im Tastaturecho-Modus werden Sonderzeichen wie sie bei einigen Sprachen mit STRG-, Alt- oder Alt+STRG-Taste erzeugt werden, jetzt von NVDA angesagt. 
+- Gefixt: Ansage von nicht veränderlichem Text von Steuerelementen. 
+- Hinzugefügt: chinesisch (traditional) (Dank an Coscell Kao).  
+- Hinzugefügt: Sapi4-Unterstützung. Es gibt 2 Sapi4-Treiber; einer von beiden basiert auf Code von "Serotek Cooperation" und der andere von ("ActiveVoice.ActiveVoice com Interface). Finden Sie heraus, welcher für Ihre Bedürfnisse der geeignetere ist. 
+- Starten Sie bei laufendem NVDA eine weitere Version des Programms, so wird diese geschlossen. Dadurch soll eine Systeminstabilität vermieden werden. 
+- "NVDA-Userinterface" wurde in "NVDA" umbenannt. 
+- Gefixt: Das Drücken der Rücktaste in Outlookexpress sollte jetzt in Eingabefeldern mit Text keine Fehlermeldung mehr ausgeben. 
+- Hinzugefügt: Anzeige des Bateriestatus bei Laptops (Einf.+Schift+B) (von Rui Batista). 
+- Hinzugefügt: "keine Sprache". Diese Möglichkeit könnte für Braillezeilennutzer vorteilhaft sein (sobald Braillezeilen von NVDA unterstützt werden.
+- hinzugefügt: Einstellen der Stimmerhöhung bei der Ansage von Großbuchstaben (von J. J. Meddaugh). 
+- hinzugefügt: Ansage von "on/off" bei Anzeige von Objekten, die diese Möglichkeit bieten (von J. J. Meddaugh).
+- Hinzugefügt: spanisch (von Juan C. Buo). 
+- Hinzugefügt: ungarisch (von Tamas Gczy). 
+- Hinzugefügt: portugiesisch (von Rui Batista). 

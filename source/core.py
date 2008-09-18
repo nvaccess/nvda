@@ -68,6 +68,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
+	log.info("Using comtypes version %s"%comtypes.__version__)
 	log.debug("Creating wx application instance")
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
@@ -135,7 +136,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		else:
 			speech.speakMessage(_("NVDA started"))
 	import queueHandler
-	log.info("Using comtypes version %s"%comtypes.__version__)
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def __init__(self,*args,**kwargs):

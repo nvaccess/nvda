@@ -126,7 +126,7 @@ UNIT_COLUMN="column"
 UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
-UNIT_READINGCHUNK="readingChunck"
+UNIT_READINGCHUNK="readingChunk"
 
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Contains information about the text at the given position or unit
@@ -266,6 +266,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 @returns: True if text is found, false otherwise
 @rtype: bool
 """ 
+		raise NotImplementedError
+
+	def _get_pointAtStart(self):
+		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError
 
 	def copyToClipboard(self):

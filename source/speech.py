@@ -597,7 +597,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	states=attrs['states']
 	keyboardShortcut=attrs['keyboardshortcut']
 	level=attrs.get('level',None)
-	if reason in (REASON_CARET,REASON_SAYALL) and (
+	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
 		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
@@ -736,6 +736,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 				text=_("align justify")
 			else:
 				text=_("align default")
+			textList.append(text)
+	if  formatConfig["reportLinks"]:
+		link=attrs.get("link")
+		oldLink=attrsCache.get("link") if attrsCache is not None else None
+		if (link or oldLink is not None) and link!=oldLink:
+			text=_("link") if link else _("out of %s")%_("link")
 			textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
