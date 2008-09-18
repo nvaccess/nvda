@@ -266,7 +266,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Force windowStartPos to be recalculated based on windowEndPos.
 			self.windowEndPos = end
 
-	def update(self, updateDisplay=True):
+	def update(self):
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
@@ -276,8 +276,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			if region.brailleCursorPos is not None:
 				self.cursorPos = start + region.brailleCursorPos
 			start += len(cells)
-		if updateDisplay:
-			self.updateDisplay()
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
@@ -353,7 +351,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		for region in itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj)):
 			self.buffer.regions.append(region)
 			region.update()
-		self.buffer.update(updateDisplay=False)
+		self.buffer.update()
 		# Last region should receive focus.
 		self.buffer.focus(region)
 		if region.cursorPos is not None:
@@ -367,7 +365,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if region.obj is not obj:
 			return
 		region.update()
-		self.buffer.update(updateDisplay=False)
+		self.buffer.update()
 		self.buffer.scrollTo(region, region.cursorPos)
 		self.update()
 
