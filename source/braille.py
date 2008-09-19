@@ -354,8 +354,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		# Last region should receive focus.
 		self.buffer.focus(region)
-		if region.cursorPos is not None:
-			self.buffer.scrollTo(region, region.cursorPos)
+		if region.brailleCursorPos is not None:
+			self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
 
 	def handleCaretMove(self, obj):
@@ -366,7 +366,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region.update()
 		self.buffer.update()
-		self.buffer.scrollTo(region, region.cursorPos)
+		self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
 
 def initialize():
