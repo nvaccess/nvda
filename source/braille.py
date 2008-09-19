@@ -20,6 +20,14 @@ __path__ = ["brailleDisplayDrivers"]
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
 
+#: The table filenames and descriptions.
+TABLES = (
+	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
+	("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille")),
+	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
+	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+)
+
 def _getDisplayDriver(name):
 	return __import__(name,globals(),locals(),[]).BrailleDisplayDriver
 
@@ -77,7 +85,7 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, handler.translationTable)], unicode(self.rawText), mode=mode, cursorPos=self.cursorPos or 0)
+		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"])], unicode(self.rawText), mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
@@ -346,7 +354,6 @@ def getFocusRegionsForNVDAObject(obj):
 class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
-		self.translationTable = config.conf["braille"]["translationTable"]
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
@@ -360,9 +367,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		try:
 			self.display = _getDisplayDriver(name)()
 			self.displaySize = self.display.numCells
+			config.conf["braille"]["display"] = name
+			log.info("Loaded braille display driver %s" % name)
+			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille")
+			return False
 
 	def update(self):
 		self.display.display(self.buffer.windowBrailleCells)

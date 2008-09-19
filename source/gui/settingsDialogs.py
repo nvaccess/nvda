@@ -20,6 +20,7 @@ import speechDictHandler
 import appModuleHandler
 import scriptUI
 import queueHandler
+import braille
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -781,3 +782,44 @@ class DictionaryDialog(SettingsDialog):
 			del self.tempSpeechDict[index]
 			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()
+
+class BrailleSettingsDialog(SettingsDialog):
+	title = _("Braille Settings")
+
+	def makeSettings(self, settingsSizer):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &Display"))
+		driverList = braille.getDisplayList()
+		self.displayNames = [driver[0] for driver in driverList]
+		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
+		try:
+			selection = self.displayNames.index(braille.handler.display.name)
+			self.displayList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.displayList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &Table"))
+		self.tableNames = [table[0] for table in braille.TABLES]
+		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
+		try:
+			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
+			self.tableList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.tableList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+	def postInit(self):
+		self.displayList.SetFocus()
+
+	def onOk(self, evt):
+		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
+		display = self.displayNames[self.displayList.GetSelection()]
+		if not braille.handler.setDisplayByName(display):
+			wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING).ShowModal()
+			return 
+		super(BrailleSettingsDialog,  self).onOk(evt)
