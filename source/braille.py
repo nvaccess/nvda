@@ -142,7 +142,7 @@ class TextInfoRegion(Region):
 		chunk = line.copy()
 		chunk.collapse()
 		chunk.setEndPoint(caret, "endToEnd")
-		self.rawText = chunk.text
+		self.rawText = chunk.text or ""
 		# The cursor position is the length of this chunk, as its end is the caret.
 		self.cursorPos = len(self.rawText)
 		# Now, get the chunk from the caret to the end of the line.
