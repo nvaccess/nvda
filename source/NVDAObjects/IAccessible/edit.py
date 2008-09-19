@@ -735,6 +735,12 @@ class Edit(IAccessible):
 		self.initAutoSelectDetection()
 		super(Edit,self).event_gainFocus()
 
+	def _get_states(self):
+		states = super(Edit, self)._get_states()
+		if self.windowStyle & winUser.ES_MULTILINE:
+			states.add(controlTypes.STATE_MULTILINE)
+		return states
+
 [Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
