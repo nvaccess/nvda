@@ -60,6 +60,12 @@ class Region(object):
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.brailleCursorPos = None
+		#: Whether to hide all previous regions.
+		#: @type: bool
+		self.hidePreviousRegions = False
+		#: Whether this region should be positioned at the absolute left of the display when focused.
+		#: @type: bool
+		self.focusToHardLeft = False
 
 	def update(self):
 		"""Update this region.
@@ -150,6 +156,11 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(caret, "startToStart")
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
 		self.rawText += chunk.text.rstrip("\r\n\0") + " "
+		# If this is not the first line, hide all previous regions.
+		start = self.obj.makeTextInfo(textHandler.POSITION_FIRST)
+		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
+		# If this is a multiline control, position it at the absolute left of the display when focused.
+		self.focusToHardLeft = (controlTypes.STATE_MULTILINE in self.obj.states)
 		super(TextInfoRegion, self).update()
 
 	def routeTo(self, braillePos):
@@ -189,9 +200,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.brailleCells = []
 		self.windowStartPos = 0
 
+	def _get_visibleRegions(self):
+		if not self.regions:
+			return
+		if self.regions[-1].hidePreviousRegions:
+			yield self.regions[-1]
+			return
+		for region in self.regions:
+			yield region
+
 	def _get_regionsWithPositions(self):
 		start = 0
-		for region in self.regions:
+		for region in self.visibleRegions:
 			end = start + len(region.brailleCells)
 			yield region, start, end
 			start = end
@@ -252,14 +272,16 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.updateDisplay()
 
 	def focus(self, region):
-		"""Bring the specified region into focus so that as much as possible of the region is visible.
-		The region is usually placed at the start of the display.
-		However, if there is extra space at the end of the display, the display is scrolled left so that as much as possible is displayed.
+		"""Bring the specified region into focus.
+		The region is placed at the start of the display.
+		However, if the region has not set L{Region.focusToHardLeft} and there is extra space at the end of the display, the display is scrolled left so that as much as possible is displayed.
 		@param region: The region to focus.
 		@type region: L{Region}
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
+		if region.focusToHardLeft:
+			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
 			# We can fit more on the display while still keeping pos visible.
@@ -270,7 +292,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
-		for region in self.regions:
+		for region in self.visibleRegions:
 			cells = region.brailleCells
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
