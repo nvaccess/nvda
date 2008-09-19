@@ -399,7 +399,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region.update()
 		self.buffer.update()
-		self.buffer.scrollTo(region, region.brailleCursorPos)
+		if region.brailleCursorPos is not None:
+			self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
 
 def initialize():
