@@ -329,6 +329,29 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
 
+	def saveWindow(self):
+		"""Save the current window so that it can be restored after the buffer is updated.
+		The window start position is saved as a position relative to a region.
+		This allows it to be restored even after other regions are added, removed or updated.
+		It can be restored with L{restoreWindow}.
+		@postcondition: The window is saved and can be restored with L{restoreWindow}.
+		"""
+		self._savedWindow = self.bufferPosToRegionPos(self.windowStartPos)
+
+	def restoreWindow(self, ignoreErrors=False):
+		"""Restore the window saved by L{saveWindow}.
+		@param ignoreErrors: Whether to ignore errors.
+		@type ignoreErrors: bool
+		@precondition: L{saveWindow} has been called.
+		@postcondition: If the saved position is valid, the window is restored.
+		@raise LookupError: If C{ignoreErrors} is C{False} and the saved region position is invalid.
+		"""
+		try:
+			self.windowStartPos = self.regionPosToBufferPos(*self._savedWindow)
+		except LookupError:
+			if not ignoreErrors:
+				raise
+
 def getContextRegionsForNVDAObject(obj):
 	# TODO: Shouldn't be specific to the current focus.
 	for parent in api.getFocusAncestors()[1:]:
@@ -397,8 +420,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.buffer.regions[-1]
 		if region.obj is not obj:
 			return
+		self.buffer.saveWindow()
 		region.update()
 		self.buffer.update()
+		self.buffer.restoreWindow(ignoreErrors=True)
 		if region.brailleCursorPos is not None:
 			self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
