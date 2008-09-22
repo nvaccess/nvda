@@ -101,6 +101,16 @@ class Region(object):
 		"""
 		pass
 
+	def nextLine(self):
+		"""Move to the next line if possible.
+		"""
+		pass
+
+	def previousLine(self):
+		"""Move to the previous line if possible.
+		"""
+		pass
+
 class TextRegion(Region):
 	"""A simple region containing a string of text.
 	"""
@@ -179,6 +189,27 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textHandler.UNIT_CHARACTER, pos)
+		dest.updateCaret()
+
+	def nextLine(self):
+		dest = self._line.copy()
+		moved = dest.move(textHandler.UNIT_LINE, 1)
+		if not moved:
+			return
+		dest.collapse()
+		dest.updateCaret()
+
+	def previousLine(self):
+		dest = self._line.copy()
+		dest.collapse()
+		moved = dest.move(textHandler.UNIT_LINE, -1)
+		if not moved:
+			return
+		dest.expand(textHandler.UNIT_LINE)
+		# Move to the end of the line so we see the last segment.
+		dest.collapse(end=True)
+		dest.move(textHandler.UNIT_CHARACTER, -1)
+		dest.collapse()
 		dest.updateCaret()
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
@@ -260,16 +291,29 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.windowStartPos = max(endPos - self.handler.displaySize, lineStart)
 
 	def scrollForward(self):
+		oldStart = self.windowStartPos
 		end = self.windowEndPos
 		if end < len(self.brailleCells):
 			self.windowStartPos = end
-		self.updateDisplay()
+		if self.windowStartPos == oldStart:
+			# The window could not be scrolled, so try moving to the next line.
+			if self.regions:
+				self.regions[-1].nextLine()
+		else:
+			# Scrolling succeeded.
+			self.updateDisplay()
 
 	def scrollBack(self):
 		start = self.windowStartPos
 		if start > 0:
 			self.windowEndPos = start
-		self.updateDisplay()
+		if self.windowStartPos == start:
+			# The window could not be scrolled, so try moving to the previous line.
+			if self.regions:
+				self.regions[-1].previousLine()
+		else:
+			# Scrolling succeeded.
+			self.updateDisplay()
 
 	def scrollTo(self, region, pos):
 		pos = self.regionPosToBufferPos(region, pos)
