@@ -12,6 +12,15 @@ Changes since 0.6 P2:
 * change: The announcement of links, headings, lists and block quotes in documents is now configured in the Document Formatting preferences dialog. This includes Mozilla Gecko virtual buffers.
 * new: Support for formatting in IAccessible2 text controls, including Mozilla applications.
 * new: Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
+* fix: The NVDA log viewer now uses richedit instead of just edit to display the log. This improves reading by word with NVDA and allows it to read log text beyond 65535 bytes.
+* new: NVDA can be configured to beep for either all or only visible progress bars. Alternatively, it can be configured to speak progress bar values every 10%.
+* fix: Fix some issues related to embedded objects in richedit controls.
+* new: Links can now be identified in richedit controls.
+* new: The mouse can now be moved to the character under the review cursor in most editable text controls. Previously, the mouse could only be moved to the center of the control.
+* fix: NVDA now reads page numbers in Microsoft Word. (#120)
+* fix: Fix the issue where tabbing to a checked checkbox in a Mozilla Gecko virtual buffer and pressing space would not announce that the checkbox was being unchecked.
+* fix: Correctly report partially checked checkboxes in Mozilla applications.
+* change: Rate is now the default setting in the speech synthesizer settings ring.
 
 
 Changes since 0.6 P1:
