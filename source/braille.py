@@ -202,13 +202,10 @@ class TextInfoRegion(Region):
 	def previousLine(self):
 		dest = self._line.copy()
 		dest.collapse()
-		moved = dest.move(textHandler.UNIT_LINE, -1)
+		# Move to the last character of the previous line.
+		moved = dest.move(textHandler.UNIT_CHARACTER, -1)
 		if not moved:
 			return
-		dest.expand(textHandler.UNIT_LINE)
-		# Move to the end of the line so we see the last segment.
-		dest.collapse(end=True)
-		dest.move(textHandler.UNIT_CHARACTER, -1)
 		dest.collapse()
 		dest.updateCaret()
 
