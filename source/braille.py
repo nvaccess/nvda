@@ -173,7 +173,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(caret, "startToStart")
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
-		self.rawText += chunk.text.rstrip("\r\n\0") + " "
+		self.rawText += (chunk.text or "").rstrip("\r\n\0") + " "
 		# If this is not the first line, hide all previous regions.
 		start = self.obj.makeTextInfo(textHandler.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
