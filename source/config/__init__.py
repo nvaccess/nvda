@@ -56,7 +56,7 @@ outputDevice = string(default=default)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
 		sayStateFirst = boolean(default=False)
-		beepOnProgressBarUpdates = boolean(default=true)
+		reportProgressBarUpdates = string(default=visible)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work

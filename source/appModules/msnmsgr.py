@@ -28,6 +28,7 @@ u'HistÃ³ria',
 u'LÆ°á»£c Sá',
 u'è¨˜éŒ',
 u'Historik',
+u'Előzmények',
 ])
 
 class appModule(appModuleHandler.AppModule):

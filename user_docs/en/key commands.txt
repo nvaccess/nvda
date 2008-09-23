@@ -243,21 +243,26 @@ NVDA+f7: links list (not in firefox2 or internet explorer)
 NVDA+f5: refresh buffer (not in Firefox2 or Internet Explorer)
 
 VirtualBuffer quick keys to skip to the next element of a particular type (also use shift with the key to go backwards):
-b: button
-c: combobox
-e: edit field
-f: form field
-g: graphic
+
+Keys supported by both old and new virtualBuffers: 
 h: heading
-1 to 6: heading at level 1 to 6
-i: list item
-k: link
 l: list
-m: frame
-q: block quote
-r: radio button
-s: separator
+i: list item
 t: table
+k: link
+p: paragraph (only used in the old virtual Buffer, use Control+Up/DownArrow in the new virtual 
+Buffer)
+f: form field
+Keys not supported by the older virtualBuffers: 
 u: unvisited link
 v: visited link
+e: edit field
+b: button
 x: checkbox
+c: combo box
+r: radio button
+q: block quote
+s: separator
+m: frame
+g: graphic
+1 to 6: headings 1 to 6 respectively

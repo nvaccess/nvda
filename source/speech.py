@@ -597,7 +597,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	states=attrs['states']
 	keyboardShortcut=attrs['keyboardshortcut']
 	level=attrs.get('level',None)
-	if reason in (REASON_CARET,REASON_SAYALL) and (
+	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
 		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
@@ -658,14 +658,14 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
-			text=_("page %s"%pageNumber)
+			text=_("page %s")%pageNumber
 			textList.append(text)
 	if  formatConfig["reportStyle"]:
 		style=attrs.get("style")
 		oldStyle=attrsCache.get("style") if attrsCache is not None else None
 		if style!=oldStyle:
 			if style:
-				text=_("style %s"%style)
+				text=_("style %s")%style
 			else:
 				text=_("default style")
 			textList.append(text)
@@ -687,7 +687,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
 		if lineNumber is not None and lineNumber!=oldLineNumber:
-			text=_("line %s"%lineNumber)
+			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
@@ -736,6 +736,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,extraDetail=Fal
 				text=_("align justify")
 			else:
 				text=_("align default")
+			textList.append(text)
+	if  formatConfig["reportLinks"]:
+		link=attrs.get("link")
+		oldLink=attrsCache.get("link") if attrsCache is not None else None
+		if (link or oldLink is not None) and link!=oldLink:
+			text=_("link") if link else _("out of %s")%_("link")
 			textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")

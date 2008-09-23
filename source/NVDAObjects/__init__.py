@@ -134,7 +134,10 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
 
-	def _getOffsetAtPoint(self,x,y):
+	def _getPointFromOffset(self,offset):
+		raise NotImplementedError
+
+	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
 
 	def __init__(self,obj,position):
@@ -158,6 +161,9 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
+
+	def _get_pointAtStart(self):
+		return self._getPointFromOffset(self._startOffset)
 
 	def _get_isCollapsed(self):
 		if self._startOffset==self._endOffset:

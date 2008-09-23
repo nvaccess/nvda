@@ -61,6 +61,17 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
+	def _getPointFromOffset(self,offset):
+		point=textHandler.Point(
+		winUser.sendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+		winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		)
+		if point.x and point.y:
+			return point
+		else:
+			raise NotImplementedError
+
+
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
 		if calculateOffsets:

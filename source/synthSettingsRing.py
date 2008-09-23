@@ -75,9 +75,10 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 
 	#dictionary with each attribute name translated so the settings name is returned 
 	#in the users language
-	_I18nAttributeNames = {"volume": _("volume"),
+	_I18nAttributeNames = {
 	"rate": _("rate"),
 	"pitch": _("pitch"),
+	"volume": _("volume"),
 	"inflection": _("inflection"),
 	"voice": _("voice"),
 	"variant": _("variant")}
@@ -126,9 +127,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def updateSupportedSettings(self):
 		list = []
 		synth = synthDriverHandler.getSynth()
-		if synth.hasVolume: list.append(SynthSetting("volume", step=max(synth.volumeMinStep, 10)))
 		if synth.hasRate: list.append(SynthSetting("rate",step=max(synth.rateMinStep, 5)))
 		if synth.hasPitch: list.append(SynthSetting("pitch", step=max(synth.pitchMinStep, 5)))
+		if synth.hasVolume: list.append(SynthSetting("volume", step=max(synth.volumeMinStep, 10)))
 		if synth.hasInflection: list.append(SynthSetting("inflection",step = max(synth.inflectionMinStep, 5)))
 		if synth.hasVoice: list.append(VoiceSynthSetting())
 		if synth.hasVariant: list.append(VariantSynthSetting())

@@ -406,5 +406,7 @@ class WordDocument(IAccessible):
 	("control+alt+extendedRight","nextColumn"),
 	("ExtendedPrior","moveByLine"),
 	("ExtendedNext","moveByLine"),
+	("Control+ExtendedPrior","moveByLine"),
+	("Control+ExtendedNext","moveByLine"),
 ]]
 
