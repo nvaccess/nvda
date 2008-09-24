@@ -738,7 +738,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_LINE)
 			speech.speakTextInfo(info)
 
@@ -759,7 +759,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakTextInfo(info,handleSymbols=True,extraDetail=True)
 
@@ -780,7 +780,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_WORD)
 			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True)
 
@@ -801,7 +801,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
@@ -828,7 +828,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info
+				api.setReviewPosition(info)
 
 	def script_delete(self,keyPress):
 		try:
@@ -847,7 +847,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakTextInfo(info,handleSymbols=True)
 

@@ -125,7 +125,7 @@ def readTextHelper_generator(info,cursor):
 				if cursor==CURSOR_CARET:
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
-					globalVars.reviewPosition=updater
+					api.setReviewPosition(updater)
 		while speech.isPaused:
 			yield
 		yield

@@ -157,15 +157,43 @@ def setDesktopObject(obj):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.desktopObject=obj
 
+def getReviewPosition():
+	"""Retreaves the current TextInfo instance representing the user's review position. If it is not set, it uses the user's set navigator object and creates a TextInfo from that.
+	"""
+	if globalVars.reviewPosition: 
+		return globalVars.reviewPosition
+	else:
+		try:
+			globalVars.reviewPosition=globalVars.navigatorObject.virtualBuffer.makeTextInfo(globalVars.navigatorObject)
+			return globalVars.reviewPosition
+		except:
+			pass
+		try:
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_CARET)
+			return globalVars.reviewPosition
+		except:
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_FIRST)
+			return globalVars.reviewPosition
+
+def setReviewPosition(reviewPosition):
+	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
+	"""
+	globalVars.reviewPosition=reviewPosition
+	globalVars.navigatorObject=None
+
 def getNavigatorObject():
-	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
+	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
 @returns: the current navigator object
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	return globalVars.navigatorObject
+	if globalVars.navigatorObject:
+		return globalVars.navigatorObject
+	else:
+		globalVars.navigatorObject=globalVars.reviewPosition.NVDAObjectAtStart
+		return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
-	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus.  
+	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. It also sets the current review position to None so that next time the review position is asked for, it is created from the navigator object.  
 @param obj: the object that will be set as the current navigator object
 @type obj: NVDAObjects.NVDAObject  
 """
@@ -174,10 +202,7 @@ def setNavigatorObject(obj):
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
-	try:
-		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)
-	except:
-		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_FIRST)
+	globalVars.reviewPosition=None
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
