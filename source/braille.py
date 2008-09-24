@@ -394,8 +394,13 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				raise
 
 def getContextRegionsForNVDAObject(obj):
-	# TODO: Shouldn't be specific to the current focus.
-	for parent in api.getFocusAncestors()[1:]:
+	ancestors=[]
+	ancestor=obj.parent
+	while ancestor:
+		ancestors.append(ancestor)
+		ancestor=ancestor.parent
+	ancestors.reverse()
+	for parent in ancestors[1:]:
 		role=parent.role
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_MENUITEM):
 			continue
