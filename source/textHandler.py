@@ -149,12 +149,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
 """
-		self._NVDAObject=weakref.ref(obj)
+		self.obj=obj
 		self.basePosition=position
 
-	def _get_obj(self):
-		return self._NVDAObject()
- 
+
 	def _get_text(self):
 		raise NotImplementedError
 
@@ -267,6 +265,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 @rtype: bool
 """ 
 		raise NotImplementedError
+
+	def _get_NVDAObjectAtStart(self):
+		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		@returns: the NVDAObject at the start
+		"""
+		return self.obj
 
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
