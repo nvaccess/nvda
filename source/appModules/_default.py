@@ -357,7 +357,7 @@ class appModule(appModuleHandler.AppModule):
 	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
 
 	def script_review_top(self,keyPress):
-		info=api.setReviewPosition().obj.makeTextInfo(textHandler.POSITION_FIRST)
+		info=api.getReviewPosition().obj.makeTextInfo(textHandler.POSITION_FIRST)
 		api.setReviewPosition(info.copy())
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakMessage(_("top"))
