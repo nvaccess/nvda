@@ -4,6 +4,7 @@ import time
 import os
 import winsound
 import XMLFormatting
+import IAccessibleHandler
 import baseObject
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
@@ -25,6 +26,32 @@ from gui import scriptUI
 import virtualBufferHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+		return obj
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		foundObj=False
+		while obj and obj!=self.obj:
+			try:
+				docHandle=obj.IAccessibleObject.windowHandle
+				ID=obj.IAccessibleObject.uniqueID
+				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
+				return start,end
+			except:
+				obj=obj.parent
+
+	def __init__(self,obj,position):
+		self.obj=obj
+		if isinstance(position,NVDAObjects.NVDAObject):
+			start,end=self._getOffsetsFromNVDAObject(position)
+			position=textHandler.Offsets(start,end)
+		super(VirtualBufferTextInfo,self).__init__(obj,position)
+
+	def _get_NVDAObjectAtStart(self):
+		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getLineNumFromOffset(offset):
 		#virtualBuffers have no concept of line numbers
