@@ -415,7 +415,7 @@ def getContextRegionsForNVDAObject(obj):
 
 def getFocusRegionsForNVDAObject(obj):
 	# TODO: Handle VirtualBuffers.
-	useTextInfo = (obj.role == controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
+	useTextInfo = (obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states)
 	yield NVDAObjectRegion(obj, appendText=" " if useTextInfo else "")
 	if useTextInfo:
 		yield TextInfoRegion(obj)

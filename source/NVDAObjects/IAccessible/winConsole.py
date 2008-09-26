@@ -21,6 +21,7 @@ import winUser
 import speech
 from . import IAccessible
 from .. import NVDAObjectTextInfo
+import controlTypes
 
 class WinConsole(IAccessible):
 
@@ -263,6 +264,9 @@ class WinConsole(IAccessible):
 		time.sleep(0.01)
 		self.connectConsole()
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
+
+	def _get_role(self):
+		return controlTypes.ROLE_TERMINAL
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+c","protectConsoleKillKey"),
