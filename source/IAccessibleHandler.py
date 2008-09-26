@@ -759,7 +759,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@rtype: boolean
 	"""
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=liveNVDAObjectTable.get('focus',None)
 	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
@@ -804,7 +804,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 		# However, it is still a valid event, so return True.
 		return True
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
@@ -884,7 +884,7 @@ def processForegroundWinEvent(window,objectID,childID):
 	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
