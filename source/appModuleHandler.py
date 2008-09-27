@@ -24,6 +24,7 @@ import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
+import api
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
@@ -152,6 +153,9 @@ def update(processID):
 	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID];
+		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
+			if hasattr(deadMod,'event_appLooseFocus'):
+				deadMod.event_appLooseFocus();
 		getAppModuleFromProcessID(processID)
 
 def loadKeyMap(appName,mod):
