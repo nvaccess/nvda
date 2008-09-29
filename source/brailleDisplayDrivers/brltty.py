@@ -47,6 +47,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 
 	def _display(self, cells):
 		cells = "".join(chr(cell) for cell in cells)
+		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
+		# Simply consume and act upon any waiting key presses.
+		self._handleKeyPresses()
 		self._con.writeDots(cells)
 
 	def _handleKeyPresses(self):
