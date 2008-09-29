@@ -1,5 +1,6 @@
 import wx
 import braille
+from logHandler import log
 try:
 	import brlapi
 except ImportError:
@@ -50,7 +51,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 
 	def _handleKeyPresses(self):
 		while True:
-			key = self._con.readKey(False)
+			try:
+				key = self._con.readKey(False)
+			except:
+				log.error("Error reading key press from brlapi", exc_info=True)
+				return
 			if not key:
 				break
 			key = self._con.expandKeyCode(key)
@@ -60,10 +65,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		keyType = key["type"]
 		command = key["command"]
 		argument = key["argument"]
-		if keyType == brlapi.KEY_TYPE_CMD:
-			if command == brlapi.KEY_CMD_FWINLT:
-				braille.handler.buffer.scrollBack()
-			elif command == brlapi.KEY_CMD_FWINRT:
-				braille.handler.buffer.scrollForward()
-			elif command == brlapi.KEY_CMD_ROUTE:
-				braille.handler.buffer.routeTo(argument)
+		try:
+			if keyType == brlapi.KEY_TYPE_CMD:
+				if command == brlapi.KEY_CMD_FWINLT:
+					braille.handler.buffer.scrollBack()
+				elif command == brlapi.KEY_CMD_FWINRT:
+					braille.handler.buffer.scrollForward()
+				elif command == brlapi.KEY_CMD_ROUTE:
+					braille.handler.buffer.routeTo(argument)
+		except:
+			log.error("Error executing key press action", exc_info=True)
