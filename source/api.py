@@ -83,6 +83,7 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			log.error("event_looseFocus in focusObject", exc_info=True)
 	oldFocusLine=globalVars.focusAncestors
 	oldFocusLine.append(globalVars.focusObject)
+	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
 	ancestors=[]
 	tempObj=obj
 	matchedOld=False
@@ -113,6 +114,13 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		parent=tempObj.parent
 		tempObj.parent=parent # Cache the parent.
 		tempObj=parent
+	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
+	for removedMod in oldAppModuleSet-newAppModuleSet:
+		if hasattr(removedMod,'event_appLooseFocus'):
+			removedMod.event_appLooseFocus()
+  	for addedMod in newAppModuleSet-oldAppModuleSet:
+		if hasattr(addedMod,'event_appGainFocus'):
+			addedMod.event_appGainFocus()
 	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
 		virtualBufferObject=None
 		for o in ancestors[focusDifferenceLevel:]+[obj]:
