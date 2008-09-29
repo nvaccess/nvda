@@ -52,6 +52,7 @@ outputDevice = string(default=default)
 	display = string(default=brltty)
 	translationTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
+	cursorBlinkRate = integer(default=500,min=0,max=2000)
 
 # Presentation settings
 [presentation]

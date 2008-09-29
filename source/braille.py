@@ -438,11 +438,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = self.display.numCells
 			config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s" % name)
+			self.configDisplay()
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille")
 			return False
+
+	def configDisplay(self):
+		"""Configure the braille display driver based on the user's configuration.
+		@precondition: L{display} has been set.
+		"""
+		self.display.cursorBlinkRate = config.conf["braille"]["cursorBlinkRate"]
+		self.display.cursorShape = 0xc0
 
 	def update(self):
 		self.display.display(self.buffer.windowBrailleCells)
@@ -548,9 +556,9 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 
 	def __init__(self):
 		self._cursorPos = None
-		self._cursorBlinkRate = 1000
+		self._cursorBlinkRate = 0
 		self._cursorBlinkUp = True
-		self._cursorShape = 0xc0
+		self._cursorShape = 0
 		self._cells = []
 		self._cursorBlinkTimer = None
 		self._initCursor()
