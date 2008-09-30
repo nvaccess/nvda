@@ -6,5 +6,5 @@ class appModule(appModuleHandler.appModule):
 	def event_appGainFocus(self):
 		speech.speechMode=speech.speechMode_off
 
-	def event_appLooseFocus(self):
+	def event_appLoseFocus(self):
 		speech.speechMode=speech.speechMode_talk

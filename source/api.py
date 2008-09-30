@@ -70,17 +70,17 @@ def setForegroundObject(obj):
 
 def setFocusObject(obj):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
-Before overriding the last object, this function calls event_looseFocus on the object to notify it that it is loosing focus. 
+Before overriding the last object, this function calls event_loseFocus on the object to notify it that it is loosing focus. 
 @param obj: the object that will be stored as the focus object
 @type obj: NVDAObjects.NVDAObject
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
+	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
 		try:
-			globalVars.focusObject.event_looseFocus()
+			globalVars.focusObject.event_loseFocus()
 		except:
-			log.error("event_looseFocus in focusObject", exc_info=True)
+			log.error("event_loseFocus in focusObject", exc_info=True)
 	oldFocusLine=globalVars.focusAncestors
 	oldFocusLine.append(globalVars.focusObject)
 	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
@@ -116,8 +116,8 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		tempObj=parent
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
-		if hasattr(removedMod,'event_appLooseFocus'):
-			removedMod.event_appLooseFocus()
+		if hasattr(removedMod,'event_appLoseFocus'):
+			removedMod.event_appLoseFocus()
   	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()

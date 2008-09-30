@@ -159,11 +159,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	gui.terminate()
 	config.saveOnExit()
 	try:
-		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
-			log.debug("calling loose focus on object with focus")
-			globalVars.focusObject.event_looseFocus()
+		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
+			log.debug("calling lose focus on object with focus")
+			globalVars.focusObject.event_loseFocus()
 	except:
-		log.error("Loose focus error",exc_info=True)
+		log.error("Lose focus error",exc_info=True)
 	try:
 		speech.cancelSpeech()
 	except:

@@ -127,7 +127,8 @@ conf = None
 mtime = 0
 
 def load():
-	"""Loads the configuration from the configFile. It also takes note of the file's modification time so that L{save} won't loose any changes made to the file while NVDA is running. 
+	"""Loads the configuration from the configFile.
+	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
 	"""
 	global conf, mtime
 	# If the config file exists, store its mtime.
