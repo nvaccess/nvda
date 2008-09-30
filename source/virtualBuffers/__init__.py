@@ -147,14 +147,26 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _get_windowHandle(self):
 		return self.rootNVDAObject.windowHandle
 
-	def event_virtualBuffer_firstEnter(self):
-		"""Triggered the first time this virtual buffer is entered.
+	def event_virtualBuffer_firstGainFocus(self):
+		"""Triggered the first time this virtual buffer ever gains focus.
 		"""
 		speech.cancelSpeech()
 		virtualBufferHandler.reportPassThrough(self)
 		speech.speakObjectProperties(self.rootNVDAObject,name=True)
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+
+	def event_virtualBuffer_gainFocus(self):
+		"""Triggered when this virtual buffer gains focus.
+		This event is only fired upon entering this buffer when it was not the current buffer before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
+		"""
+		virtualBufferHandler.reportPassThrough(self)
+
+	def event_virtualBuffer_loseFocus(self):
+		"""Triggered when this virtual buffer loses focus.
+		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
+		"""
 
 	def _calculateLineBreaks(self,text):
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
