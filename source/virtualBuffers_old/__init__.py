@@ -15,6 +15,7 @@ import textBuffer
 import gui.scriptUI
 import controlTypes
 import NVDAObjects
+import virtualBufferHandler
 
 class virtualBuffer(textBuffer.TextBufferObject):
 
@@ -26,6 +27,9 @@ class virtualBuffer(textBuffer.TextBufferObject):
 
 	def event_focusEntered(self,obj,nextHandler):
 		pass
+
+	def event_virtualBuffer_gainFocus(self):
+		virtualBufferHandler.reportPassThrough(self)
 
 	fieldInfoTemplate={
 		"role":controlTypes.ROLE_UNKNOWN,

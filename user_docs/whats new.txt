@@ -21,6 +21,9 @@ Changes since 0.6 P2:
 * fix: Fix the issue where tabbing to a checked checkbox in a Mozilla Gecko virtual buffer and pressing space would not announce that the checkbox was being unchecked.
 * fix: Correctly report partially checked checkboxes in Mozilla applications.
 * change: Rate is now the default setting in the speech synthesizer settings ring.
+* new: In virtual buffers, the review cursor now reviews the text of the buffer, rather than just the internal text of the navigator object (which is often not useful to the user). This means that you can navigate the virtual buffer hierarchically using object navigation and the review cursor will move to that point in the buffer.
+* fix: If the text selection expands or shrinks in both directions, read the selection as one chunk instead of two.
+* change: Improve the loading and unloading of appModules.
 
 
 Changes since 0.6 P1:

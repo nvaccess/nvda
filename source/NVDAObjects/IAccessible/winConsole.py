@@ -229,7 +229,7 @@ class WinConsole(IAccessible):
 			if not line.isspace() and len(line)>0: 
 				speech.speakText(line)
 
-	def event_looseFocus(self):
+	def event_loseFocus(self):
 		self.disconnectConsole()
 
 	def calculateNewText(self,newLines,oldLines):

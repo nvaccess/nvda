@@ -244,6 +244,8 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			pass
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)
+			if start>=end:
+				raise RuntimeError("did not expand to paragraph correctly")
 			return start,end
 		except:
 			super(IA2TextTextInfo,self)._getParagraphOffsets(offset)

@@ -154,8 +154,8 @@ def update(processID):
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID];
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
-			if hasattr(deadMod,'event_appLooseFocus'):
-				deadMod.event_appLooseFocus();
+			if hasattr(deadMod,'event_appLoseFocus'):
+				deadMod.event_appLoseFocus();
 		getAppModuleFromProcessID(processID)
 
 def loadKeyMap(appName,mod):
