@@ -155,6 +155,10 @@ class TextInfoRegion(Region):
 		super(TextInfoRegion, self).__init__()
 		self.obj = obj
 
+	def _isMultiline(self):
+		# Terminals are inherently multiline, so they don't have the multiline state.
+		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
+
 	def update(self):
 		caret = self.obj.makeTextInfo(textHandler.POSITION_CARET)
 		# Get the line at the caret.
@@ -178,7 +182,7 @@ class TextInfoRegion(Region):
 		start = self.obj.makeTextInfo(textHandler.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
-		self.focusToHardLeft = (controlTypes.STATE_MULTILINE in self.obj.states)
+		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
 	def routeTo(self, braillePos):
