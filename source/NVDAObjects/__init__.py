@@ -101,7 +101,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getSentenceOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
-	_getParagraphOffsets=_getLineOffsets
+	def _getParagraphOffsets(self,offset):
+		return self._getLineOffsets(offset)
 
 	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
 		end=offset+1
