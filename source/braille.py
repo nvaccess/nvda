@@ -14,6 +14,7 @@ from logHandler import log
 import controlTypes
 import api
 import textHandler
+import speech
 
 __path__ = ["brailleDisplayDrivers"]
 
@@ -27,6 +28,29 @@ TABLES = (
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
 )
+
+roleLabels = {
+	controlTypes.ROLE_EDITABLETEXT: _("edt"),
+	controlTypes.ROLE_LISTITEM: None,
+	controlTypes.ROLE_MENUBAR: _("mnubar"),
+	controlTypes.ROLE_MENU: _("mnu"),
+	controlTypes.ROLE_MENUITEM: None,
+	controlTypes.ROLE_BUTTON: _("btn"),
+	controlTypes.ROLE_CHECKBOX: _("chk"),
+	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
+	controlTypes.ROLE_COMBOBOX: _("cbo"),
+	controlTypes.ROLE_LINK: _("lnk"),
+	controlTypes.ROLE_DIALOG: _("dlg"),
+}
+
+positiveStateLabels = {
+	controlTypes.STATE_CHECKED: _("(x)"),
+	controlTypes.STATE_SELECTED: _("sel"),
+	controlTypes.STATE_HASPOPUP: _("submnu"),
+}
+negativeStateLabels = {
+	controlTypes.STATE_CHECKED: _("( )"),
+}
 
 def _getDisplayDriver(name):
 	return __import__(name,globals(),locals(),[]).BrailleDisplayDriver
@@ -119,6 +143,41 @@ class TextRegion(Region):
 		super(TextRegion, self).__init__()
 		self.rawText = text
 
+def getBrailleTextForProperties(**propertyValues):
+	# TODO: Don't use speech functions.
+	textList = []
+	name = propertyValues.get("name")
+	if name:
+		textList.append(name)
+	role = propertyValues.get("role")
+	if role:
+		roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
+	else:
+		role = propertyValues.get("_role")
+	value = propertyValues.get("value")
+	if value and role not in speech.silentValuesForRoles:
+		textList.append(value)
+	states = propertyValues.get("states")
+	if states:
+		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
+		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
+		negativeStates = speech.processNegativeStates(role, states, speech.REASON_FOCUS, None)
+		textList.extend(negativeStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in negativeStates)
+	textList.append(roleText)
+	description = propertyValues.get("description")
+	if description:
+		textList.append(description)
+	keyboardShortcut = propertyValues.get("keyboardShortcut")
+	if keyboardShortcut:
+		textList.append(keyboardShortcut)
+	positionString = propertyValues["positionString"]
+	if positionString:
+		textList.append(positionString)
+	level = propertyValues.get("level")
+	if level:
+		textList.append(_("lvl %s") % level)
+	return " ".join([x for x in textList if x])
+
 class NVDAObjectRegion(Region):
 	"""A region to provide a braille representation of an NVDAObject.
 	This region will update based on the current state of the associated NVDAObject.
@@ -137,13 +196,9 @@ class NVDAObjectRegion(Region):
 		self.appendText = appendText
 
 	def update(self):
-		textList = []
-		name = self.obj.name
-		if name:
-			textList.append(name)
-		#TODO: Don't use speech stuff.
-		textList.append(controlTypes.speechRoleLabels[self.obj.role])
-		self.rawText = " ".join(textList) + self.appendText
+		obj = self.obj
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionString=obj.positionString)
+		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
 	def routeTo(self, braillePos):
