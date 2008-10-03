@@ -51,7 +51,7 @@ def getRepeat():
 	global hwndWinamp
 	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp

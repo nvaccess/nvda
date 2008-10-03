@@ -33,7 +33,7 @@ from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_switchStart(self,obj,nextHandler):
 		speech.cancelSpeech()

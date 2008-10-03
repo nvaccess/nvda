@@ -191,12 +191,12 @@ def fetchAppModuleClass(appName):
 	@param appName: the application name for which an appModule should be found.
 	@type appName: str
 	@returns: the appModule, or None if not found
-	@rtype: appModule
+	@rtype: AppModule
 	"""  
 	mod=None
 	if moduleExists(appName):
 		try:
-			mod=__import__(appName,globals(),locals(),[]).appModule
+			mod=__import__(appName,globals(),locals(),[]).AppModule
 		except:
 			log.error("Error in appModule %s"%appName,exc_info=True)
 			speech.speakMessage(_("Error in appModule %s")%appName)

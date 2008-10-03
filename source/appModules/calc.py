@@ -1,7 +1,7 @@
 import appModuleHandler
 import speech
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self,*args,**kwargs):
 		super(appModule,self).__init__(*args,**kwargs)
