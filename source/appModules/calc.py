@@ -3,8 +3,8 @@ import speech
 
 class appModule(appModuleHandler.AppModule):
 
-	def __init__(self,*args):
-		appModuleHandler.AppModule.__init__(self,*args)
+	def __init__(self,*args,**kwargs):
+		super(appModule,self).__init__(*args,**kwargs)
 		self._lastValue=None
 
 	def event_NVDAObject_init(self,obj):
