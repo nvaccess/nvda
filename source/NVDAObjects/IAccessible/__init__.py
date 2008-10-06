@@ -690,6 +690,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		except:
 			pass
 
+	def scrollIntoView(self):
+		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				self.IAccessibleObject.scrollTo(IAccessibleHandler.IA2_SCROLL_TYPE_ANYWHERE)
+			except:
+				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
+
 	def _get_positionString(self):
 		position=""
 		childID=self.IAccessibleChildID

@@ -577,6 +577,10 @@ Tries to force this object to take the focus.
 """
 		pass
 
+	def scrollIntoView(self):
+		"""Scroll this object into view on the screen if possible.
+		"""
+
 	def _get_labeledBy(self):
 		return None
 
