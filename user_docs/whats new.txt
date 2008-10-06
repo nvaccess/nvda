@@ -24,6 +24,10 @@ Changes since 0.6 P2:
 * new: In virtual buffers, the review cursor now reviews the text of the buffer, rather than just the internal text of the navigator object (which is often not useful to the user). This means that you can navigate the virtual buffer hierarchically using object navigation and the review cursor will move to that point in the buffer.
 * fix: If the text selection expands or shrinks in both directions, read the selection as one chunk instead of two.
 * change: Improve the loading and unloading of appModules.
+* fix: When reading with the mouse, text in Mozilla Gecko edit fields should now be read.
+* fix: Say all should no longer cause certain SAPI5 synthesizers to crash.
+* fix: Say all should now work correctly with the sapi4activeVoice driver.
+* fix: Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.
 
 
 Changes since 0.6 P1:
