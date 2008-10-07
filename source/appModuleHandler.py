@@ -240,7 +240,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
 	def __repr__(self):
-		return "AppModule (appName %s, appWindow %s) at address %x"%(self.appName,self.appWindow,id(self))
+		return "AppModule (appName %s, process ID %s) at address %x"%(self.appName,self.processID,id(self))
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
