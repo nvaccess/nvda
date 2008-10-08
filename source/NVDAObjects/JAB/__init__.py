@@ -76,12 +76,17 @@ JABRolesToNVDARoles={
 }
 
 JABStatesToNVDAStates={
+	"busy":controlTypes.STATE_BUSY,
 	"checked":controlTypes.STATE_CHECKED,
 	"focused":controlTypes.STATE_FOCUSED,
 	"selected":controlTypes.STATE_SELECTED,
 	"pressed":controlTypes.STATE_PRESSED,
 	"expanded":controlTypes.STATE_EXPANDED,
 	"collapsed":controlTypes.STATE_COLLAPSED,
+	"iconified":controlTypes.STATE_ICONIFIED,
+	"modal":controlTypes.STATE_MODAL,
+	"multi_line":controlTypes.STATE_MULTILINE,
+	"focusable":controlTypes.STATE_FOCUSABLE,
 	"editable":controlTypes.STATE_EDITABLE,
 }
 
@@ -222,9 +227,16 @@ class JAB(Window):
 		log.debug("states: %s"%self.JABStates)
 		stateSet=set()
 		stateString=self.JABStates
-		for state in stateString.split(','):
+		stateStrings=stateString.split(',')
+		for state in stateStrings:
 			if JABStatesToNVDAStates.has_key(state):
 				stateSet.add(JABStatesToNVDAStates[state])
+		if "visible" not in stateStrings:
+			stateSet.add(controlTypes.STATE_INVISIBLE)
+		if "showing" not in stateStrings:
+			stateSet.add(controlTypes.STATE_OFFSCREEN)
+		if "expandable" not in stateStrings:
+			stateSet.discard(controlTypes.STATE_COLLAPSED)
 		return stateSet
 
 	def _get_value(self):
