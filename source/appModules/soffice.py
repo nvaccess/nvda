@@ -11,7 +11,7 @@ import api
 
 inDocument=False
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self,obj,nextHandler):
 		global inDocument

@@ -7,7 +7,7 @@
 import appModuleHandler
 import controlTypes
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="#32770" and obj.windowControlID==10021:

@@ -24,6 +24,7 @@ import api
 import cursorManager
 from gui import scriptUI
 import virtualBufferHandler
+import eventHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -184,8 +185,25 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _activateContextMenuForField(self,docHandle,ID):
 		pass
 
-	def _caretMovedToField(self,dochandle,ID):
-		pass
+	def _set_selection(self, info):
+		super(VirtualBuffer, self)._set_selection(info)
+		if isScriptWaiting() or not info.isCollapsed:
+			return
+		api.setReviewPosition(info)
+		obj = info.NVDAObjectAtStart
+		if obj == self.rootNVDAObject:
+			return
+		obj.scrollIntoView()
+		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
+			obj.setFocus()
+
+	def _shouldSetFocusToObj(self, obj):
+		"""Determine whether an object should receive focus.
+		Subclasses should override this method.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		return False
 
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
@@ -198,14 +216,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _caretMovementScriptHelper(self, *args, **kwargs):
 		if self.VBufHandle is None:
 			return 
-		noKeyWaiting=not isScriptWaiting()
-		if noKeyWaiting:
-			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-		if noKeyWaiting:
-			docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
-			if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
-				self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
@@ -255,9 +266,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		info.updateCaret()
 		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
-		self._caretMovedToField(docHandle, ID)
+		info.collapse()
+		self.selection = info
 
 	@classmethod
 	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -304,10 +315,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 				self._activateField(docHandle, ID)
 			else:
 				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
-				info.updateCaret()
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-				self._caretMovedToField(docHandle,ID)
+				info.collapse()
+				self.selection = info
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")

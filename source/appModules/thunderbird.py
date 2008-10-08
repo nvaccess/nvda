@@ -10,7 +10,7 @@ import api
 import speech
 import winUser
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):

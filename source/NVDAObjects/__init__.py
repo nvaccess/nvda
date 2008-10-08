@@ -26,7 +26,7 @@ import braille
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def __eq__(self,other):
-		if id(self)==id(other) or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
+		if self is other or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
 			return True
 		else:
 			return False
@@ -578,6 +578,10 @@ Tries to force this object to take the focus.
 """
 		pass
 
+	def scrollIntoView(self):
+		"""Scroll this object into view on the screen if possible.
+		"""
+
 	def _get_labeledBy(self):
 		return None
 
@@ -634,7 +638,7 @@ Tries to force this object to take the focus.
 				speech.speakText(text)
 
 	def event_stateChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
 
 	def event_focusEntered(self):
@@ -657,15 +661,15 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.speakObjectProperties(self,name=True,role=True,reason=speech.REASON_FOCUS)
 
 	def event_valueChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
 
 	def event_nameChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
 
 	def event_descriptionChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
 
 	def event_caret(self):

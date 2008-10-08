@@ -44,7 +44,7 @@ def getSentMessageString(obj):
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
