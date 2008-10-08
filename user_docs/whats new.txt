@@ -28,6 +28,8 @@ Changes since 0.6 P2:
 * fix: Say all should no longer cause certain SAPI5 synthesizers to crash.
 * fix: Say all should now work correctly with the sapi4activeVoice driver.
 * fix: Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.
+* change: The title command (NVDA+t) now only reports the title instead of the entire object. If the foreground object has no name, the application's process name is used.
+* new: If the title command (NVDA+t) is pressed twice, it spells the title. If pressed thrice, it is copied to the clipboard.
 
 
 Changes since 0.6 P1:

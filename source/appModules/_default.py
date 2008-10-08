@@ -636,8 +636,15 @@ class AppModule(appModuleHandler.AppModule):
 			title=obj.appModule.appName
 			if not isinstance(title,basestring) or not title or title.isspace():
 				title=_("no title")
-		speech.speakMessage(title)
-	script_title.__doc__=_("Reports the title of the current application or foreground window")
+		repeatCount=scriptHandler.getLastScriptRepeateCount()
+		if repeatCount==0:
+			speech.speakMessage(title)
+		elif repeatCount==1:
+			speech.speakSpelling(title)
+		else:
+			if api.copyToClip(title):
+				speech.speakMessage(_("%s copied to clipboard")%title)
+	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard")
 
 	def script_speakForeground(self,keyPress):
 		obj=api.getForegroundObject()
