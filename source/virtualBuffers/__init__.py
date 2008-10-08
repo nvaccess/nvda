@@ -25,6 +25,7 @@ import cursorManager
 from gui import scriptUI
 import virtualBufferHandler
 import eventHandler
+import braille
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -75,6 +76,8 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return VBufClient_getBufferTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
+		if start==end:
+			return ""
 		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
@@ -163,6 +166,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
 		virtualBufferHandler.reportPassThrough(self)
+		braille.handler.handleGainFocus(self)
 
 	def event_virtualBuffer_loseFocus(self):
 		"""Triggered when this virtual buffer loses focus.

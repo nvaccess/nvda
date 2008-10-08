@@ -15,6 +15,7 @@ import textHandler
 import api
 import speech
 import config
+import braille
 
 class CursorManager(baseObject.ScriptableObject):
 	"""
@@ -48,6 +49,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def _set_selection(self, info):
 		info.updateSelection()
+		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textHandler.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		info=self.makeTextInfo(posConstant)
@@ -277,3 +279,4 @@ class ReviewCursorManager(CursorManager):
 
 	def _set_selection(self, info):
 		self._selection = info.copy()
+		braille.handler.handleCaretMove(self)

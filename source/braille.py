@@ -214,8 +214,23 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
+	def _getSelection(self):
+		"""Retrieve the selection.
+		@return: The selection.
+		@rtype: L{textHandler.TextInfo}
+		"""
+		return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+
+	def _setSelection(self, info):
+		"""Set the selection.
+		@param info: The range to which the selection should be moved.
+		@type info: L{textHandler.TextInfo}
+		"""
+		info.updateSelection()
+
 	def update(self):
-		caret = self.obj.makeTextInfo(textHandler.POSITION_CARET)
+		caret = self._getSelection()
+		caret.collapse()
 		# Get the line at the caret.
 		self._line = line = caret.copy()
 		line.expand(textHandler.UNIT_LINE)
@@ -248,7 +263,7 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textHandler.UNIT_CHARACTER, pos)
-		dest.updateCaret()
+		self._setSelection(dest)
 
 	def nextLine(self):
 		dest = self._line.copy()
@@ -256,7 +271,7 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		dest.updateCaret()
+		self._setSelection(dest)
 
 	def previousLine(self):
 		dest = self._line.copy()
@@ -266,7 +281,18 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		dest.updateCaret()
+		self._setSelection(dest)
+
+class CursorManagerRegion(TextInfoRegion):
+
+	def _isMultiline(self):
+		return True
+
+	def _getSelection(self):
+		return self.obj.selection
+
+	def _setSelection(self, info):
+		self.obj.selection = info
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -473,7 +499,6 @@ def getContextRegionsForNVDAObject(obj):
 		yield NVDAObjectRegion(parent, appendText=" ")
 
 def getFocusRegionsForNVDAObject(obj):
-	# TODO: Handle VirtualBuffers.
 	useTextInfo = (obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states)
 	yield NVDAObjectRegion(obj, appendText=" " if useTextInfo else "")
 	if useTextInfo:
@@ -516,8 +541,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display.cursorPos = self.buffer.cursorWindowPos
 
 	def handleGainFocus(self, obj):
+		# Late import to avoid circular import.
+		from virtualBuffers import VirtualBuffer
+		if isinstance(obj, VirtualBuffer):
+			regions = itertools.chain(getContextRegionsForNVDAObject(obj.rootNVDAObject),
+				(NVDAObjectRegion(obj.rootNVDAObject, appendText=" "), CursorManagerRegion(obj)))
+		else:
+			regions = itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj))
 		self.buffer.clear()
-		for region in itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj)):
+		for region in regions:
 			self.buffer.regions.append(region)
 			region.update()
 		self.buffer.update()
