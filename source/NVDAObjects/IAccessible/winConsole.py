@@ -22,6 +22,7 @@ import speech
 from . import IAccessible
 from .. import NVDAObjectTextInfo
 import controlTypes
+import braille
 
 class WinConsole(IAccessible):
 
@@ -117,6 +118,7 @@ class WinConsole(IAccessible):
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
 			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+		braille.handler.handleCaretMove(self)
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
