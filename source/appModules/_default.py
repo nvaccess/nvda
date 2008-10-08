@@ -631,8 +631,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_title(self,keyPress):
 		obj=api.getForegroundObject()
-		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
+		title=obj.name
+		if not isinstance(title,basestring) or not title or title.isspace():
+			title=obj.appModule.appName
+			if not isinstance(title,basestring) or not title or title.isspace():
+				title=_("no title")
+		speech.speakMessage(title)
 	script_title.__doc__=_("Reports the title of the current application or foreground window")
 
 	def script_speakForeground(self,keyPress):
