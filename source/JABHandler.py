@@ -318,6 +318,18 @@ def event_enterJavaWindow(hwnd):
 	if obj==api.getForegroundObject():
 		return
 	eventHandler.queueEvent("foreground",obj)
+	vmID=c_int()
+	accContext=c_int()
+	bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
+	jabContext=JABContext(hwnd=hwnd,vmID=vmID.value,accContext=accContext.value)
+	focusObject=NVDAObjects.JAB.JAB(jabContext=jabContext)
+	activeChild=focusObject.activeChild
+	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
+		focusObject=activeChild
+	eventHandler.queueEvent("gainFocus",focusObject)
+	lastFocusNVDAObject=focusObject
+
+
 
 def isJavaWindow(hwnd):
 	if not isRunning:

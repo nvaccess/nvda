@@ -198,12 +198,6 @@ class JAB(Window):
 	def _isEqual(self,other):
 		return isinstance(other,JAB) and self.jabContext==other.jabContext
 
-	def __ne__(self,other):
-		if (self.__class__!=other.__class__) or (self.jabContext!=other.jabContext):
-			return True
-		else:
-			return False
- 
 	def _get_name(self):
 		return self._JABAccContextInfo.name
 
