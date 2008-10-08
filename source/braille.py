@@ -150,10 +150,11 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
-	if role:
+	if role is not None:
 		roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
 	else:
 		role = propertyValues.get("_role")
+		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in speech.silentValuesForRoles:
 		textList.append(value)
@@ -163,7 +164,8 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
 		negativeStates = speech.processNegativeStates(role, states, speech.REASON_FOCUS, None)
 		textList.extend(negativeStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in negativeStates)
-	textList.append(roleText)
+	if roleText:
+		textList.append(roleText)
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
