@@ -81,7 +81,7 @@ def queueScript(script,keyPress):
 def executeScript(script,keyPress):
 	"""Executes a given script (function) passing it the given keyPress.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
-	Use L{getLastScriptRepeateCount} to find out this count value.
+	Use L{getLastScriptRepeatCount} to find out this count value.
 	@param script: the function or method that should be executed. The function or method must take an argument of 'keyPress'.
 	@type script: callable.
 	@param keyPress: the key press that activated this script
@@ -106,7 +106,7 @@ def executeScript(script,keyPress):
 	finally:
 		_isScriptRunning=False
 
-def getLastScriptRepeateCount():
+def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
 	This should only be called from with in a script.
 	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
