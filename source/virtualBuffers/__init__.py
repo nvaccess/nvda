@@ -127,9 +127,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self.passThrough=False
+		self._passThrough=False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
+
+	def _get_passThrough(self):
+		return self._passThrough
+
+	def _set_passThrough(self, state):
+		self._passThrough = state
+		if state:
+			braille.handler.handleGainFocus(api.getFocusObject())
+		else:
+			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
