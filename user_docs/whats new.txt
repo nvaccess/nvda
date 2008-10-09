@@ -28,7 +28,11 @@ Changes since 0.6 P2:
 * fix: Say all should no longer cause certain SAPI5 synthesizers to crash.
 * fix: Say all should now work correctly with the sapi4activeVoice driver.
 * fix: Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.
+* fix: Fix mouse tracking in Java objects. (#185)
+* new: Handle some additional states on Java controls.
+* fix: NVDA no longer reports Java tree view items with no children as being collapsed.
 * change: The title command (NVDA+t) now only reports the title instead of the entire object. If the foreground object has no name, the application's process name is used.
+* fix: Announce the object with focus when a Java window comes to the foreground. Previously, only the top-level Java object was announced.
 * new: If the title command (NVDA+t) is pressed twice, it spells the title. If pressed thrice, it is copied to the clipboard.
 
 
