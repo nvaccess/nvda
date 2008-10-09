@@ -225,8 +225,8 @@ class WinConsole(IAccessible):
 		self.event_gainFocus()
 
 	def event_gainFocus(self):
-		super(WinConsole,self).event_gainFocus()
 		self.connectConsole()
+		super(WinConsole,self).event_gainFocus()
 		for line in self.prevConsoleVisibleLines:
 			if not line.isspace() and len(line)>0: 
 				speech.speakText(line)
