@@ -76,18 +76,28 @@ JABRolesToNVDARoles={
 }
 
 JABStatesToNVDAStates={
+	"busy":controlTypes.STATE_BUSY,
 	"checked":controlTypes.STATE_CHECKED,
 	"focused":controlTypes.STATE_FOCUSED,
 	"selected":controlTypes.STATE_SELECTED,
 	"pressed":controlTypes.STATE_PRESSED,
 	"expanded":controlTypes.STATE_EXPANDED,
 	"collapsed":controlTypes.STATE_COLLAPSED,
+	"iconified":controlTypes.STATE_ICONIFIED,
+	"modal":controlTypes.STATE_MODAL,
+	"multi_line":controlTypes.STATE_MULTILINE,
+	"focusable":controlTypes.STATE_FOCUSABLE,
 	"editable":controlTypes.STATE_EDITABLE,
 }
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
 class JABTextInfo(NVDAObjectTextInfo):
+
+	def _getOffsetFromPoint(self,x,y):
+		info=self.jabContext.getAccessibleTextInfo(x,y)
+		offset=max(min(info.indexAtPoint,info.charCount-1),0)
+		return offset
 
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
@@ -188,12 +198,6 @@ class JAB(Window):
 	def _isEqual(self,other):
 		return isinstance(other,JAB) and self.jabContext==other.jabContext
 
-	def __ne__(self,other):
-		if (self.__class__!=other.__class__) or (self.jabContext!=other.jabContext):
-			return True
-		else:
-			return False
- 
 	def _get_name(self):
 		return self._JABAccContextInfo.name
 
@@ -217,9 +221,16 @@ class JAB(Window):
 		log.debug("states: %s"%self.JABStates)
 		stateSet=set()
 		stateString=self.JABStates
-		for state in stateString.split(','):
+		stateStrings=stateString.split(',')
+		for state in stateStrings:
 			if JABStatesToNVDAStates.has_key(state):
 				stateSet.add(JABStatesToNVDAStates[state])
+		if "visible" not in stateStrings:
+			stateSet.add(controlTypes.STATE_INVISIBLE)
+		if "showing" not in stateStrings:
+			stateSet.add(controlTypes.STATE_OFFSCREEN)
+		if "expandable" not in stateStrings:
+			stateSet.discard(controlTypes.STATE_COLLAPSED)
 		return stateSet
 
 	def _get_value(self):
@@ -321,19 +332,6 @@ class JAB(Window):
 			if jabContext:
 				children.append(JAB(jabContext=jabContext))
 		return children
-
-	def event_mouseMove(self,x,y):
-		mouseEntered=self._mouseEntered
-		super(JAB,self).event_mouseMove(x,y)
-		info=self.jabContext.getAccessibleTextInfo(x,y)
-		offset=max(min(info.indexAtPoint,info.charCount-1),0)
-		if self._lastMouseTextOffsets is None or offset<self._lastMouseTextOffsets[0] or offset>=self._lastMouseTextOffsets[1]:   
-			if mouseEntered:
-				speech.cancelSpeech()
-			info=self.makeTextInfo(textHandler.Bookmark(self.TextInfo,(offset,offset)))
-			info.expand(textHandler.UNIT_WORD)
-			speech.speakText(info.text)
-			self._lastMouseTextOffsets=(info._startOffset,info._endOffset)
 
 	def event_stateChange(self):
 		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()

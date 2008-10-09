@@ -68,7 +68,7 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			info=obj.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info.text)
@@ -99,7 +99,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 
 	def script_dateTime(self,keyPress):
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
@@ -192,7 +192,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		if scriptHandler.getLastScriptRepeateCount()>=1:
+		if scriptHandler.getLastScriptRepeatCount()>=1:
 			textList=[]
 			if isinstance(curObject.name,basestring) and len(curObject.name)>0 and not curObject.name.isspace():
 				textList.append(curObject.name)
@@ -208,7 +208,7 @@ class AppModule(appModuleHandler.AppModule):
 						textList.append(info.text)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
-				if scriptHandler.getLastScriptRepeateCount()==1:
+				if scriptHandler.getLastScriptRepeatCount()==1:
 					speech.speakSpelling(text)
 				else:
 					if api.copyToClip(text):
@@ -382,7 +382,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_review_currentLine(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textHandler.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info)
 		else:
 			speech.speakSpelling(info._get_text())
@@ -423,7 +423,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_review_currentWord(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textHandler.UNIT_WORD)
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info)
 		else:
 			speech.speakSpelling(info._get_text())
@@ -472,7 +472,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_review_currentCharacter(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textHandler.UNIT_CHARACTER)
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info,handleSymbols=True)
 		else:
 			try:
@@ -600,7 +600,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.findObjectWithFocus() #getFocusObject()
 		if isinstance(focusObject,NVDAObject):
-			if scriptHandler.getLastScriptRepeateCount()==0:
+			if scriptHandler.getLastScriptRepeatCount()==0:
 				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
 			else:
 				speech.speakSpelling(focusObject.name)
@@ -615,7 +615,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		text = api.getStatusBarText(obj)
 
-		if scriptHandler.getLastScriptRepeateCount()==0:
+		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakMessage(text)
 		else:
 			speech.speakSpelling(text)
@@ -634,9 +634,20 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_title(self,keyPress):
 		obj=api.getForegroundObject()
-		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-	script_title.__doc__=_("Reports the title of the current application or foreground window")
+		title=obj.name
+		if not isinstance(title,basestring) or not title or title.isspace():
+			title=obj.appModule.appName
+			if not isinstance(title,basestring) or not title or title.isspace():
+				title=_("no title")
+		repeatCount=scriptHandler.getLastScriptRepeatCount()
+		if repeatCount==0:
+			speech.speakMessage(title)
+		elif repeatCount==1:
+			speech.speakSpelling(title)
+		else:
+			if api.copyToClip(title):
+				speech.speakMessage(_("%s copied to clipboard")%title)
+	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard")
 
 	def script_speakForeground(self,keyPress):
 		obj=api.getForegroundObject()
@@ -656,7 +667,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(obj,NVDAObject): 
 			speech.speakMessage(_("no navigator object"))
 			return
-		if scriptHandler.getLastScriptRepeateCount()>=1:
+		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
 				speech.speakMessage(_("copied to clipboard"))
 		else:
