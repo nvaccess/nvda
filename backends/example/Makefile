@@ -8,13 +8,12 @@
 
 TOPDIR=..\..
 !include $(TOPDIR)\make.opts
-LINKERFLAGS=$(LINKERFLAGS) /libpath:$(OUTDIR)
 CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\VBufBackend_example.dll
 
 $(OUTDIR)\VBufBase.lib:
-	cd ..\..\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
+	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
 $(OUTDIR)\VBufBackend_example.dll: example.obj $(OUTDIR)\VBufBase.lib
 	$(LINKER) -dll $** /out:$@ $(LINKERFLAGS)
