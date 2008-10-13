@@ -11,8 +11,10 @@
 
 using namespace std;
 
-#define test(expr, msg, input, output) if (!(expr)) wcerr << L"fail: " << msg << L": " << input << L" -> " << output << endl;
-#define testNoIO(expr, msg) if (!(expr)) wcerr << L"fail: " << msg << endl;
+int failCount=0;
+
+#define test(expr, msg, input, output) if (!(expr)) { wcerr << L"fail: " << msg << L": " << input << L" -> " << output << endl; failCount++;}
+#define testNoIO(expr, msg) if (!(expr)) { wcerr << L"fail: " << msg << endl; failCount++;}
 
 void test_getNameForURL() {
 	wstring s, n;
@@ -140,4 +142,8 @@ void test_multiValueAttribsStringToMap() {
 int main(int argc, char *argv[]) {
 	test_getNameForURL();
 	test_multiValueAttribsStringToMap();
+	if(failCount>0) {
+		wcerr<<L"number of failed tests: "<<failCount<<endl;
+	}
+	return failCount;
 }
