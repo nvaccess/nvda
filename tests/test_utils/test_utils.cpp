@@ -1,5 +1,5 @@
 /**
- * tests/test_utils.cpp
+ * tests/test_utils/test_utils.cpp
  * Part of the NV  Virtual Buffer Library
  * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
  * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
@@ -7,7 +7,7 @@
  */
 
 #include <iostream>
-#include "../base/utils.h"
+#include <base/utils.h>
 
 using namespace std;
 
@@ -16,7 +16,6 @@ using namespace std;
 
 void test_getNameForURL() {
 	wstring s, n;
-
 	n = getNameForURL(s);
 	test(n.empty(), L"empty", s, n);
 
