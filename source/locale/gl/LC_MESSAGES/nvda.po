@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2372\n"
-"POT-Creation-Date: 2008-10-09 18:07+Hora estándar romance\n"
-"PO-Revision-Date: 2008-10-09 18:30+0100\n"
+"Project-Id-Version: r2429\n"
+"POT-Creation-Date: 2008-10-12 12:14+Hora estándar romance\n"
+"PO-Revision-Date: 2008-10-12 12:43+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: ga <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -188,7 +188,7 @@ msgstr "non se puido cargá-lo módulo predeterminado"
 #: virtualBuffers\__init__.py:230
 #: virtualBuffers_new\__init__.py:169
 msgid "on"
-msgstr "activado"
+msgstr "ativado"
 
 #: appModules\_default.py:56
 #: appModules\_default.py:124
@@ -211,7 +211,7 @@ msgstr "activado"
 #: virtualBuffers\__init__.py:230
 #: virtualBuffers_new\__init__.py:169
 msgid "off"
-msgstr "desactivado"
+msgstr "desativado"
 
 #: appModules\_default.py:58
 msgid "keyboard help %s"
@@ -219,7 +219,7 @@ msgstr "axuda de teclado %s"
 
 #: appModules\_default.py:59
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "Acende e apaga a axuda de teclado. Cando se activa, pulsando unha tecla no teclado diráseche que script está asociado con ela, se hai algún."
+msgstr "Acende e apaga a axuda de teclado. Cando se ativa, pulsando unha tecla no teclado diráseche que script está asociado con ela, se hai algún."
 
 #: appModules\_default.py:72
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
@@ -295,7 +295,7 @@ msgstr "dicir palabras ó se escreber"
 
 #: appModules\_default.py:140
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Activa e desactiva a fala das palabras ó se escreber"
+msgstr "Ativa e desativa a fala das palabras ó se escreber"
 
 #: appModules\_default.py:149
 msgid "speak command keys"
@@ -303,7 +303,7 @@ msgstr "dicir teclas de comando"
 
 #: appModules\_default.py:150
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Activa e desactiva a fala das teclas ó se escreber, as cales non son caracteres específicamente"
+msgstr "Ativa e desativa a fala das teclas ó se escreber, as cales non son caracteres específicamente"
 
 #: appModules\_default.py:159
 msgid "speak punctuation"
@@ -311,7 +311,7 @@ msgstr "dicir a pontoación"
 
 #: appModules\_default.py:160
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "Activa ou desactiva a fala da pontoación. Cando estea activada NVDA dirá os nomes dos signos de pontoación, cando estea desactivada será cousa do sintetizador como dicilos."
+msgstr "Ativa ou desativa a fala da pontoación. Cando estea ativada NVDA dirá os nomes dos signos de pontoación, cando estea desativada será cousa do sintetizador como dicilos."
 
 #: appModules\_default.py:163
 msgid "Move mouse to navigator"
@@ -323,7 +323,7 @@ msgstr "o obxecto non ten posición"
 
 #: appModules\_default.py:178
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Move o punteiro do rato ó navegador de obxectos actual."
+msgstr "Move o punteiro do rato ó navegador de obxectos atual."
 
 #: appModules\_default.py:181
 msgid "Move navigator object to mouse"
@@ -331,7 +331,7 @@ msgstr "Mover o navegador de obxectos ó rato"
 
 #: appModules\_default.py:185
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "Pon o navegador de obxectos no actual obxecto baixo o punteiro do rato e fálao"
+msgstr "Pon o navegador de obxectos no atual obxecto baixo o punteiro do rato e fálao"
 
 #: appModules\_default.py:190
 #: appModules\_default.py:221
@@ -858,6 +858,7 @@ msgid "carriage return"
 msgstr "Retorno de carro"
 
 #: characterSymbols.py:23
+#: keyUtils.py:120
 msgid "space"
 msgstr "espazo"
 
@@ -2374,6 +2375,174 @@ msgstr "&editar"
 msgid "&Remove"
 msgstr "&Borrar"
 
+#: keyUtils.py:111
+msgid "backspace"
+msgstr "retroceso"
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr "bloqueo maiúsculas"
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr "control"
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr "alt"
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "shift"
+
+#: keyUtils.py:116
+msgid "windows"
+msgstr "windows"
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr "intro"
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr "intro teclado numérico"
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr "escape"
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr "retroceso de páxina"
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr "avance de páxina"
+
+#: keyUtils.py:123
+msgid "end"
+msgstr "fin"
+
+#: keyUtils.py:124
+msgid "home"
+msgstr "comezo"
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "suprimir"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "frecha esquerda"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "frecha dereita"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "frecha arriba"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "frecha abaixo"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "aplicacións"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr "bloqueo numérico"
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr "imprimir pantalla"
+
+#: keyUtils.py:133
+msgid "scrol lock"
+msgstr "desprazamento de pantalla"
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr "esquerda teclado numérico"
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr "dereita teclado numérico"
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr "arriba teclado numérico"
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr "abaixo teclado numérico"
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr "retroceso de páxina teclado numérico"
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr "avance de páxina teclado numérico"
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr "fin teclado numérico"
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr "comezo teclado numérico"
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr "barra teclado numérico"
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr "estrela teclado numérico"
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr "menos teclado numérico"
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr "máis teclado numérico"
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "control esquerda"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "control dereita"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "windows esquerda"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "shift esquerda"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "shift dereita"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "alt esquerda"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "alt dereita"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "windows dereita"
+
 #: keyboardHandler.py:52
 msgid "caps lock %s"
 msgstr "bloqueo maiúsculas %s"
@@ -2390,19 +2559,19 @@ msgstr "pausa"
 msgid "%s keyboard layout"
 msgstr "%s composición do teclado"
 
-#: keyboardHandler.py:158
+#: keyboardHandler.py:166
 msgid "Description: %s"
 msgstr "Descripción: %s"
 
-#: keyboardHandler.py:159
+#: keyboardHandler.py:167
 msgid "Location: %s"
 msgstr "Situación: %s"
 
-#: keyboardHandler.py:172
+#: keyboardHandler.py:180
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erro no keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:205
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erro no keyboardHandler.internal_keyUpEvent"
 
@@ -3291,3 +3460,4 @@ msgstr "l=tecla rápida para lista"
 #: virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
 msgstr "i=tecla rápida para elemento de lista"
+

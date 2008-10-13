@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2422\n"
+"Project-Id-Version: r2429\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-10-08 13:30+0200\n"
+"PO-Revision-Date: 2008-10-12 11:30+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgid "underline"
 msgstr "souligné"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:266
+#: NVDAObjects\JAB\__init__.py:260
 msgid "%d of %d"
 msgstr "%d sur %d"
 
@@ -130,8 +130,8 @@ msgstr "Impossible de charger le module par défaut"
 #: appModules\_default.py:53 appModules\_default.py:127
 #: appModules\_default.py:137 appModules\_default.py:147
 #: appModules\_default.py:157 appModules\_default.py:627
-#: appModules\_default.py:696 appModules\_default.py:706
-#: appModules\_default.py:716 appModules\winamp.py:74 appModules\winamp.py:84
+#: appModules\_default.py:703 appModules\_default.py:713
+#: appModules\_default.py:723 appModules\winamp.py:74 appModules\winamp.py:84
 #: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
 #: virtualBufferHandler.py:93 virtualBuffers\__init__.py:230
 msgid "on"
@@ -140,9 +140,9 @@ msgstr "activé"
 #: appModules\_default.py:56 appModules\_default.py:124
 #: appModules\_default.py:134 appModules\_default.py:144
 #: appModules\_default.py:154 appModules\_default.py:531
-#: appModules\_default.py:624 appModules\_default.py:676
-#: appModules\_default.py:693 appModules\_default.py:703
-#: appModules\_default.py:713 appModules\winamp.py:76 appModules\winamp.py:86
+#: appModules\_default.py:624 appModules\_default.py:683
+#: appModules\_default.py:700 appModules\_default.py:710
+#: appModules\_default.py:720 appModules\winamp.py:76 appModules\winamp.py:86
 #: gui\settingsDialogs.py:451 keyboardHandler.py:52 keyboardHandler.py:54
 #: keyboardHandler.py:56 virtualBufferHandler.py:93
 #: virtualBuffers\__init__.py:230
@@ -295,11 +295,11 @@ msgstr ""
 #: appModules\_default.py:268 appModules\_default.py:281
 #: appModules\_default.py:294 appModules\_default.py:317
 #: appModules\_default.py:340 appModules\_default.py:349
-#: appModules\_default.py:658
+#: appModules\_default.py:665
 msgid "no navigator object"
 msgstr "pas d'objet de navigation"
 
-#: appModules\_default.py:212
+#: appModules\_default.py:212 appModules\_default.py:646
 msgid "%s copied to clipboard"
 msgstr "%s copié dans le presse-papier"
 
@@ -662,35 +662,41 @@ msgstr "Bascule de l'annonce des informations quand la souris se déplace"
 msgid "no title"
 msgstr "pas de titre"
 
-#: appModules\_default.py:640
-msgid "Reports the title of the current application or foreground window"
-msgstr "Annonce le titre de l'application dans la fenêtre en avant-plan"
-
 #: appModules\_default.py:647
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed thrice, copies the title to the "
+"clipboard"
+msgstr ""
+"Annonce le titre de l'application en cours ou de la fenêtre en avant-plan. "
+"Deux appuis épelle le titre, trois appuis copie le titre dans le presse-"
+"papier."
+
+#: appModules\_default.py:654
 msgid "speaks the current foreground object"
 msgstr "Dit l'objet en avant-plan"
 
-#: appModules\_default.py:662 cursorManager.py:221
+#: appModules\_default.py:669 cursorManager.py:221
 msgid "copied to clipboard"
 msgstr "copié dans le presse-papier"
 
-#: appModules\_default.py:666
+#: appModules\_default.py:673
 msgid "Control ID: %s"
 msgstr "identificateur de contrôle %s"
 
-#: appModules\_default.py:667
+#: appModules\_default.py:674
 msgid "Class: %s"
 msgstr "classe: %s"
 
-#: appModules\_default.py:669
+#: appModules\_default.py:676
 msgid "internal text: %s"
 msgstr "texte interne: %s"
 
-#: appModules\_default.py:670
+#: appModules\_default.py:677
 msgid "text: %s"
 msgstr "texte: %s"
 
-#: appModules\_default.py:672
+#: appModules\_default.py:679
 msgid ""
 "reports some information about the current navigator object, mainly useful "
 "for developers. When pressed 2 times it copies control id, class and "
@@ -700,36 +706,35 @@ msgstr ""
 "utiles pour les développeurs. pressée deux fois, copie control id,  classe "
 "et texte internedans le presse-papier"
 
-#: appModules\_default.py:677 gui\settingsDialogs.py:452
+#: appModules\_default.py:684 gui\settingsDialogs.py:452
 msgid "Beep for visible"
 msgstr "émettre des bips quand la barre est visible"
 
-#: appModules\_default.py:678 gui\settingsDialogs.py:453
+#: appModules\_default.py:685 gui\settingsDialogs.py:453
 msgid "Beep for all"
 msgstr "émettre des bips dans tous les cas"
 
-#: appModules\_default.py:679 gui\settingsDialogs.py:454
+#: appModules\_default.py:686 gui\settingsDialogs.py:454
 msgid "Speak each 10 percent"
 msgstr "annoncer tous les 10 pourcent"
 
-#: appModules\_default.py:689
+#: appModules\_default.py:696
 msgid ""
 "Toggles how NVDA reports progress bar updates. It can beep for all the "
 "progress bars or just for the progressbars in the foreground. Additionally "
 "it is possible to have current value spoken each 10 percent or it is "
 "possible to completely disable this reporting."
 msgstr ""
-"Bascule de l'annonce de mise à jour des barres de progression."
-"NVDA peut émettre des bips pour toutes les barres de progression"
-"ou seulement pour celles qui sont en avant plan."
-"De plus, il est possible d'annoncer la progression tous les 10% "
-"ou de complètement désactiver cette annonce."
+"Bascule de l'annonce de mise à jour des barres de progression.NVDA peut é"
+"mettre des bips pour toutes les barres de progressionou seulement pour "
+"celles qui sont en avant plan.De plus, il est possible d'annoncer la "
+"progression tous les 10% ou de complètement désactiver cette annonce."
 
-#: appModules\_default.py:698
+#: appModules\_default.py:705
 msgid "report dynamic content changes"
 msgstr "Annonce les changements dynamiques de contenu"
 
-#: appModules\_default.py:699
+#: appModules\_default.py:706
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -737,53 +742,53 @@ msgstr ""
 "Bascule de l'annonce de changement dynamique de contenu,tel qu'un nouveau "
 "texte dans une fenêtre DOS"
 
-#: appModules\_default.py:708
+#: appModules\_default.py:715
 msgid "caret moves review cursor"
 msgstr "Le pointeur de revue d'écran suit le curseur applicatif"
 
-#: appModules\_default.py:709
+#: appModules\_default.py:716
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "bascule du suivi du curseur applicatif par le pointeur de revue d'écran"
 
-#: appModules\_default.py:718
+#: appModules\_default.py:725
 msgid "focus moves navigator object"
 msgstr "Le focus déplace l'objet de navigation"
 
-#: appModules\_default.py:719
+#: appModules\_default.py:726
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "bascule du mouvement de l'objet de navigation lié au changement de focus"
 
-#: appModules\_default.py:731
+#: appModules\_default.py:738
 msgid "no system battery"
 msgstr "Pas de batterie sur cette machine"
 
-#: appModules\_default.py:733
+#: appModules\_default.py:740
 msgid "%d percent"
 msgstr "%d pourcent"
 
-#: appModules\_default.py:734
+#: appModules\_default.py:741
 msgid "AC power on"
 msgstr "Alimentation connectée"
 
-#: appModules\_default.py:736
+#: appModules\_default.py:743
 msgid "%d hours and %d minutes remaining"
 msgstr "%d heures et %d minutes restantes"
 
-#: appModules\_default.py:738
+#: appModules\_default.py:745
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Annonce l'état de la batterie et le temps restant si l'alimentation n'est "
 "pas connectée"
 
-#: appModules\_default.py:742
+#: appModules\_default.py:749
 msgid "Pass next key through"
 msgstr "Passe la touche suivante directement à l'application"
 
-#: appModules\_default.py:743
+#: appModules\_default.py:750
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -791,15 +796,15 @@ msgstr ""
 "La touche suivante ne sera pas traitée par NVDA,elle sera passée "
 "directement à Windows"
 
-#: appModules\_default.py:748
+#: appModules\_default.py:755
 msgid "Currently running application is %s."
 msgstr "l'application en cours d'exécution est %s."
 
-#: appModules\_default.py:751
+#: appModules\_default.py:758
 msgid "and currently loaded module is %s"
 msgstr "et le module en cours est %s"
 
-#: appModules\_default.py:752
+#: appModules\_default.py:759
 msgid ""
 "Speaks filename of the active application along with name of the currently "
 "loaded appmodule"
@@ -807,49 +812,49 @@ msgstr ""
 "Annonce le nom de fichier de l'application en coursainsi que le script en "
 "cours"
 
-#: appModules\_default.py:756
+#: appModules\_default.py:763
 msgid "Shows the NVDA general settings dialog"
 msgstr "Affiche le dialogue  Paramètres généraux de NVDA"
 
-#: appModules\_default.py:760
+#: appModules\_default.py:767
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Affiche le dialogue synthétiseurs de NVDA"
 
-#: appModules\_default.py:764
+#: appModules\_default.py:771
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Affiche le dialogue paramètres vocaux de NVDA"
 
-#: appModules\_default.py:768
+#: appModules\_default.py:775
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Affiche le dialogue Paramètres du clavier de NVDA"
 
-#: appModules\_default.py:772
+#: appModules\_default.py:779
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Affiche le dialogue paramètres de la souris de NVDA"
 
-#: appModules\_default.py:776
+#: appModules\_default.py:783
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Affiche le dialogue présentation des objets de NVDA"
 
-#: appModules\_default.py:780
+#: appModules\_default.py:787
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Affiche le dialogue tampon virtuel de NVDA"
 
-#: appModules\_default.py:784
+#: appModules\_default.py:791
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Affiche le dialogue format des documents de NVDA"
 
-#: appModules\_default.py:788
+#: appModules\_default.py:795
 msgid "Saves the current NVDA configuration"
 msgstr "sauvegarde la configuration courante de NVDA"
 
-#: appModules\_default.py:792
+#: appModules\_default.py:799
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "Recharge la configuration sauvegardée de NVDA, annulant les changements en "
 "cours"
 
-#: appModules\_default.py:800
+#: appModules\_default.py:807
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
 "Active la console Python de NVDA, essentiellement utile pour les "
@@ -947,7 +952,7 @@ msgstr "nouvelle ligne"
 msgid "carriage return"
 msgstr "retour chariot"
 
-#: characterSymbols.py:23
+#: characterSymbols.py:23 keyUtils.py:120
 msgid "space"
 msgstr "espace"
 
@@ -1694,7 +1699,7 @@ msgstr "iconisé"
 
 #: controlTypes.py:333
 msgid "off screen"
-msgstr "hors de l'écran"
+msgstr "hors écran"
 
 #: controlTypes.py:334
 msgid "selectable"
@@ -2462,6 +2467,174 @@ msgstr "&éditer"
 msgid "&Remove"
 msgstr "&Supprimer"
 
+#: keyUtils.py:111
+msgid "backspace"
+msgstr "Effacement arrière"
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr "verrouillage majuscule"
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr "contrôle"
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr "alt"
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "majuscule"
+
+#: keyUtils.py:116
+msgid "windows"
+msgstr "Windows"
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr "Entrer"
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr "Entrer du pavé numérique"
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr "échap"
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr "page précédente"
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr "page suivante"
+
+#: keyUtils.py:123
+msgid "end"
+msgstr "fin"
+
+#: keyUtils.py:124
+msgid "home"
+msgstr "début"
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "effacement"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "flèche gauche"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "flèche droite"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "flèche haut"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "flèche bas"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "applications"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr "verrouillage numérique"
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr "aperçu"
+
+#: keyUtils.py:133
+msgid "scrol lock"
+msgstr "arrêt défilement"
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr "flèche gauche du pavé numérique"
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr "flèche droite du pavé numérique"
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr "flèche haut du pavé numérique"
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr "flèche bas du pavé numérique"
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr "page précédente du pavé numérique"
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr "page suivante du pavé numérique"
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr "touche fin du pavé numérique"
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr "touche début du pavé numérique"
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr "barre oblique du pavé numérique"
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr "étoile du pavé numérique"
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr "moins du pavé numérique"
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr "plus du pavé numérique"
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "contrôle de gauche"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "contrôle de droite"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "touche windows de gauche"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "majuscule de gauche"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "majuscule de droite"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "alt de gauche"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "alt de droite"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "touche windows de droite"
+
 #: keyboardHandler.py:52
 msgid "caps lock %s"
 msgstr "verrouillage majuscule %s"
@@ -2478,19 +2651,19 @@ msgstr "arrêt défilement %s"
 msgid "%s keyboard layout"
 msgstr "Configuration de clavier %s"
 
-#: keyboardHandler.py:158
+#: keyboardHandler.py:166
 msgid "Description: %s"
 msgstr "description: %s"
 
-#: keyboardHandler.py:159
+#: keyboardHandler.py:167
 msgid "Location: %s"
 msgstr "position: %s"
 
-#: keyboardHandler.py:172
+#: keyboardHandler.py:180
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:205
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyUpEvent"
 

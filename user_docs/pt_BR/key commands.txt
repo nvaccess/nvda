@@ -6,11 +6,14 @@ Nota: Quando uma tecla for precedida pela palavra "num", é porque ela está no 
 
 COMANDOS GLOBAIS
 
+Control: pausa a fala;
+Shift: continua a fala;
+
 NVDA+1 - ajuda de teclado:
 Esse comando ativa o modo ajuda de teclado, para que ao pressionar qualquer combinação de teclas você apenas escute o nome do comando e a ação que ele produz quando executado. Para desativar esse modo, pressione NVDA+1 novamente.
 
 NVDA+t - título:
-Anuncia o título da aplicação atualmente ativa.
+Anuncia o título da aplicação atualmente ativa. Se pressionada duas vezes, soletra o título; se pressionada três vezes, copia-o para a área de transferência.
 
 NVDA+b - fala janela em foco:
 Fala o conteúdo da janela atualmente ativa. Útil em caixas de diálogo para ler informações que você não tenha prestado atenção quando foram lidas pela primeira vez.
@@ -27,32 +30,14 @@ Alterna entre os três modos de fala: fala, bipes e desligado.
 NVDA+f12 - data e hora:
 Anuncia a hora atual; se pressionar duas vezes rapidamente anuncia a data atual.
 
-NVDA+2 - alterna fala de caracteres digitados:
-Liga e desliga a fala de caracteres conforme você os digita.
-
-NVDA+3 - alterna fala de palavras digitadas:
-Liga e desliga a fala de palavras conforme você as digita.
-
-NVDA+4 - alterna fala de teclas de comando:
-Liga e desliga a fala de quaisquer teclas conforme você as pressiona.
-
-NVDA+p - alterna fala da pontuação:
-Liga e desliga a fala dos sinais de pontuação conforme o NVDA vai falando.
-
 NVDA+End - anuncia barra de status:
 Anuncia a barra de status da aplicação atual, caso encontre alguma.
 
 NVDA+f - anuncia formatação:
 Anuncia informações de formatação na posição atual de um documento.
 
-NVDA+m - alterna monitoração do mouse:
-Liga e desliga o anúncio do objeto ou palavra na posição atual do ponteiro do mouse conforme este se move.
-
 Control+NVDA+f1 - fala nome da aplicação:
 Anuncia e soletra o nome da aplicação atual. Anuncia também o módulo do NVDA atualmente carregado.
-
-NVDA+u - alterna bipe em barras de progresso:
-Liga e desliga os bipes que indicam mudanças em barras de progresso.
 
 NVDA+Shift+b - diz carga da bateria:
 Anuncia a carga atual da bateria e se o equipamento está ligado na tomada.
@@ -74,9 +59,41 @@ Permite que a próxima tecla seja enviada diretamente ao sistema, sem executar o
 
 Shift+NVDA+seta cima - anuncia seleção atual:
 Anuncia o texto atualmente selecionado em campos de edição e documentos. Se não houver seleção ele diz isso.
-
+	
 NVDA+seta cima- anuncia linha atual:
 Anuncia a linha atual em campos de edição e documentos.
+
+NVDA+seta baixo - diz tudo:
+Inicia a leitura a partir da posição atual num documento ou campo de edição.
+
+NVDA+f1 - informações sobre o navegador de objetos:
+Lê informações sobre o objeto de navegação atual (útil para desenvolvedores).
+
+Control+NVDA+c - salva configuração:
+Salva a configuração.
+
+Control+NVDA+r - reverte à configuração:
+Volta à última configuração salva.
+
+Alterar opções encontradas nas janelas de configurações
+
+NVDA+2 - alterna fala de caracteres digitados:
+Liga e desliga a fala de caracteres conforme você os digita.
+
+NVDA+3 - alterna fala de palavras digitadas:
+Liga e desliga a fala de palavras conforme você as digita.
+
+NVDA+4 - alterna fala de teclas de comando:
+Liga e desliga a fala de quaisquer teclas conforme você as pressiona.
+
+NVDA+p - alterna fala da pontuação:
+Liga e desliga a fala dos sinais de pontuação conforme o NVDA vai falando.
+
+NVDA+m - alterna monitoração do mouse:
+Liga e desliga o anúncio do objeto ou palavra na posição atual do ponteiro do mouse conforme este se move.
+
+NVDA+u - alterna bipe em barras de progresso:
+Controla o modo como o NVDA anuncia atualizações em barras de progresso. Pode bipar para as barras dentro da janela ativa, que é o padrão, bipar para todas as barras atualmente em progresso no sistema, ou falar o progresso a cada dez pontos percentuais.
 
 Control+NVDA+seta esquerda - parâmetro anterior:
 Move e anuncia o parâmetro de voz anterior.
@@ -90,22 +107,45 @@ Aumenta o parâmetro de voz atual.
 Control+NVDA+seta baixo - diminui parâmetro:
 Diminui o parâmetro de voz atual.
 
-NVDA+seta baixo - diz tudo:
-Inicia a leitura a partir da posição atual num documento ou campo de edição.
+Mostrar janelas de configuração
+
+Control+NVDA+g - ativar janela de opções gerais:
+Exibe a janela de opções gerais.
+
+Control+NVDA+s - ativar janela de sintetizadores:
+Exibe a janela para seleção de sintetizadores.
+
+Control+NVDA+v - Ativar janela de vozes
+Exibe a janela de opções de vozes.
+
+Control+NVDA+k - ativar janela de teclado
+Exibe a janela de opções de teclado.
+
+Control+NVDA+m - ativar janela de mouse:
+Exibe a janela de opções de mouse.
+
+Control+NVDA+o - ativar janela dee objetos:
+Exibe a janela de opções para apresentação de objetos.
+
+Control+NVDA+b - ativar janela de exibidores virtuais:
+Exibe a janela de opções para os exibidores virtuais.
+
+Control+NVDA+d - ativar janela de documentos:
+Exibe a janela de opções para formatação de documentos.
+
+Control+NVDA+z - ativar python console:
+Exibe o terminal do Python.
 
 NAVEGAÇÃO ENTRE OBJETOS
 
 NVDA+num 5 - objeto de navegação atual:
-Anuncia o objeto de navegação atual.
+Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto; se pressionada três vezes, copia-o para a ârea de transferência.
 
 Shift+NVDA+num 5 - dimenções do objeto de navegação atual:
 Anuncia tamanho e posição do objeto de navegação atual.
 
 Control+Shift+NVDA+num 5 - local do objeto de navegação:
 Anuncia os ancestrais do objeto de navegação atual.
-
-NVDA+num menos - objeto de navegação para o foco:
-Coloca como objeto de navegação atual aquele que está com foco.
 
 NVDA+num 8 - objeto de navegação pai:
 Coloca como objeto de navegação o pai do atual, isto é, aquele que o contém.
@@ -126,7 +166,7 @@ Shift+NVDA+num 6 - próximo objeto de navegação em fluxo:
 Coloca como objeto de navegação aquele depois do atual no fluxo total dos objetos, quer dizer, não necessariamente no mesmo nível.
 
 NVDA+num Enter - ação padrão do objeto de navegação:
-Executa a ação padrão do objeto atual, por exemplo, pressiona um botão, ativa um item de lista.
+Executa a ação padrão do objeto atual, por exemplo, pressiona um botão, ativa um item de lista, etc.
 
 NVDA+num barra - move mouse para objeto de navegação:
 Move o ponteiro do mouse para o objeto de navegação atual.
@@ -134,23 +174,26 @@ Move o ponteiro do mouse para o objeto de navegação atual.
 NVDA+num asterisco - move objeto de navegação para mouse:
 Coloca como objeto de navegação aquele sob o ponteiro do mouse.
 
-num barra - clique esquerdo:
-Clica uma vez com o botão esquerdo do mouse onde ele esteja.
-
-num asterisco - clique direito:
-Clica uma vez com o botão direito do mouse onde ele esteja.
-
-NVDA+num mais - diz tudo em objetos de navegação:
-Começa a ler todos os objetos a partir do próximo, no fluxo total dos objetos.
-
 num menos - move cursor de revisão para cursor da aplicação:
 Move o cursor de revisão para a posição atual do cursor da aplicação.
 
 Control+num menos - move cursor da aplicação para cursor de revisão:
 Move o cursor da aplicação para a posição atual do cursor de revisão.
 
+NVDA+num menos - objeto de navegação para o foco:
+Coloca como objeto de navegação atual aquele que está com foco.
+
+num barra - clique esquerdo:
+Clica uma vez com o botão esquerdo do mouse onde ele esteja.
+
+num asterisco - clique direito:
+Clica uma vez com o botão direito do mouse onde ele esteja.
+
 num mais - diz tudo com cursor de revisão:
 Usa o cursor de revisão para ler da posição atual até o final do texto atualmente revisível.
+
+NVDA+num mais - diz tudo em objetos de navegação:
+Começa a ler todos os objetos a partir do próximo, no fluxo total dos objetos.
 
 LER OBJETOS
 
@@ -205,19 +248,25 @@ NVDA+f5: atualiza o exibidor (não funciona em Firefox 2 e Internet Explorer);
 
 TECLAS RÁPIDAS PARA avançar ENTRE ELEMENTOS DE MESMO TIPO EM EXIBIDORES VIRTUAIS (USE SHIFT PARA RETROCEDER)
 
+Teclas que funcionam em todos os navegadores:
 h: cabeçalho;
-1..6: cabeçalhos de nível 1 ao 6;
 l: lista;
 i: item de lista;
-k: linque;
 t: tabela;
+k: linque;
+p: parágrafo (no Firefox 3 use control+cima/baixo);
 f: campo de formulário;
+
+Teclas que só funcionam no Firefox 3:
+u: linque não visitado;
+v: linque visitado;
 e: campo de edição;
 b: botão;
-r: botão de opção;
-c: caixa combinada;
 x: caixa de seleção;
-m: freime;
-s: separador;
-g: gráfico;
+c: caixa combinada;
+r: botão de opção;
 q: bloco de citação.
+s: separador;
+m: freime;
+g: gráfico;
+1..6: cabeçalhos de nível 1 ao 6.

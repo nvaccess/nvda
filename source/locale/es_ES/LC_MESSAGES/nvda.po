@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2372\n"
-"POT-Creation-Date: 2008-10-09 18:07+Hora estándar romance\n"
-"PO-Revision-Date: 2008-10-09 18:14+0100\n"
+"Project-Id-Version: r2429\n"
+"POT-Creation-Date: 2008-10-12 12:14+Hora estándar romance\n"
+"PO-Revision-Date: 2008-10-12 12:29+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español en Tifloclub <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -858,6 +858,7 @@ msgid "carriage return"
 msgstr "Retorno de carro"
 
 #: characterSymbols.py:23
+#: keyUtils.py:120
 msgid "space"
 msgstr "espacio"
 
@@ -2374,6 +2375,174 @@ msgstr "&editar"
 msgid "&Remove"
 msgstr "E&liminar"
 
+#: keyUtils.py:111
+msgid "backspace"
+msgstr "retroceso"
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr "bloqueo mayúsculas"
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr "control"
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr "alt"
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "shift"
+
+#: keyUtils.py:116
+msgid "windows"
+msgstr "windows"
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr "intro"
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr "intro teclado numérico"
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr "escape"
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr "retroceso página"
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr "avance página"
+
+#: keyUtils.py:123
+msgid "end"
+msgstr "fin"
+
+#: keyUtils.py:124
+msgid "home"
+msgstr "inicio"
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "suprimir"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "flecha izquierda"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "flecha derecha"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "flecha arriba"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "flecha abajo"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "aplicaciones"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr "bloqueo numérico"
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr "pausa"
+
+#: keyUtils.py:133
+msgid "scrol lock"
+msgstr "desplazamiento de pantalla"
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr "izquierda teclado numérico"
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr "derecha teclado numérico"
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr "arriba teclado numérico"
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr "abajo teclado numérico"
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr "retroceso página teclado numérico"
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr "avance Página teclado numérico"
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr "fin teclado numérico"
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr "Inicio teclado numérico"
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr "barra teclado numérico"
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr "asterisco teclado numérico"
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr "menos teclado numérico"
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr "más teclado numérico"
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "control izquierda"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "control derecha"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "windows izquierda"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "shift izquierda"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "shift derecha"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "alt izquierda"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "alt derecha"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "windows derecha"
+
 #: keyboardHandler.py:52
 msgid "caps lock %s"
 msgstr "bloqueo mayúsculas %s"
@@ -2390,19 +2559,19 @@ msgstr "pausa"
 msgid "%s keyboard layout"
 msgstr "%s disposición de teclado"
 
-#: keyboardHandler.py:158
+#: keyboardHandler.py:166
 msgid "Description: %s"
 msgstr "Descripción: %s"
 
-#: keyboardHandler.py:159
+#: keyboardHandler.py:167
 msgid "Location: %s"
 msgstr "Situación: %s"
 
-#: keyboardHandler.py:172
+#: keyboardHandler.py:180
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Error en keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:205
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Error en keyboardHandler.internal_keyUpEvent"
 
@@ -3291,3 +3460,4 @@ msgstr "l=tecla rápida para lista"
 #: virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
 msgstr "i=tecla rápida para elemento de lista"
+

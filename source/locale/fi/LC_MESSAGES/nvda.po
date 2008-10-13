@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2426\n"
+"Project-Id-Version: r2429\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-10-09 07:06+0300\n"
+"PO-Revision-Date: 2008-10-12 13:41+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -966,7 +966,7 @@ msgstr "rivinvaihto"
 msgid "carriage return"
 msgstr "rivinvaihto"
 
-#: characterSymbols.py:23
+#: characterSymbols.py:23 keyUtils.py:120
 msgid "space"
 msgstr "väli"
 
@@ -2483,6 +2483,174 @@ msgstr "&Muokkaa"
 msgid "&Remove"
 msgstr "&Poista"
 
+#: keyUtils.py:111
+msgid "backspace"
+msgstr "poista merkki"
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr "caps lock"
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr "control"
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr "alt"
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "shift"
+
+#: keyUtils.py:116
+msgid "windows"
+msgstr "windows"
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr "enter"
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr "laskimen enter"
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr "esc"
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr "page up"
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr "page down"
+
+#: keyUtils.py:123
+msgid "end"
+msgstr "end"
+
+#: keyUtils.py:124
+msgid "home"
+msgstr "home"
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "del"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "vasen"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "oikea"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "ylös"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "alas"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "sovellukset"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr "num lock"
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr "print screen"
+
+#: keyUtils.py:133
+msgid "scrol lock"
+msgstr "scroll lock"
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr "laskimen vasen"
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr "laskimen oikea"
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr "laskimen ylös"
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr "laskimen alas"
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr "laskimen page up"
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr "laskimen page down"
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr "laskimen end"
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr "laskimen home"
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr "laskimen kautta"
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr "laskimen tähti"
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr "laskimen miinus"
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr "laskimen plus"
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "vasen control"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "oikea control"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "vasen windows"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "vasen shift"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "oikea shift"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "vasen alt"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "oikea alt"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "oikea windows"
+
 #: keyboardHandler.py:52
 msgid "caps lock %s"
 msgstr "caps lock %s"
@@ -2499,19 +2667,19 @@ msgstr "scroll lock %s"
 msgid "%s keyboard layout"
 msgstr "näppäimistöasettelu %s"
 
-#: keyboardHandler.py:158
+#: keyboardHandler.py:166
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:159
+#: keyboardHandler.py:167
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: keyboardHandler.py:172
+#: keyboardHandler.py:180
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:205
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 
