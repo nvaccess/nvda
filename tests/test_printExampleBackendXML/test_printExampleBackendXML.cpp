@@ -22,9 +22,9 @@ int main(int argc, char* argv[]) {
 	#endif
 	VBufContainer_t* buffer=new VBufContainer_t(1,1,testBackendPath);
 	std::wstring s;
-	buffer->storageBuffer->lock.acquire();
-	buffer->storageBuffer->getTextInRange(0,buffer->storageBuffer->getTextLength(),s,true);
-	buffer->storageBuffer->lock.release();
+	buffer->lock.acquire();
+	buffer->getTextInRange(0,buffer->getTextLength(),s,true);
+	buffer->lock.release();
 	delete buffer;
 	if(s!=correctXMLString) {
 		std::wcerr<<L"Bad XML: "<<s<<std::endl;

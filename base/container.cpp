@@ -13,17 +13,15 @@
 #include "backend.h"
 #include "container.h"
 
-VBufContainer_t::VBufContainer_t(int docHandle, int ID, const wchar_t* backendPath): storageBuffer(NULL), backendLib(NULL), backend(NULL) {
+VBufContainer_t::VBufContainer_t(int docHandle, int ID, const wchar_t* backendPath): VBufStorage_buffer_t(), backendLib(NULL), backend(NULL) {
 	DEBUG_MSG(L"initializing container with docHandle "<<docHandle<<L", ID "<<ID<<L", backendPath \""<<backendPath<<L"\"");
-	this->storageBuffer=new VBufStorage_buffer_t();
-	DEBUG_MSG(L"storage buffer created at "<<this->storageBuffer);
 	this->backendLib=LoadLibrary(backendPath);
 	if(this->backendLib) {
 		DEBUG_MSG(L"backend library loaded at address "<<this->backendLib);
 		VBufBackend_create_proc createBackend=(VBufBackend_create_proc)GetProcAddress(this->backendLib,"VBufBackend_create");
 		if(createBackend) {
 			DEBUG_MSG(L"found VBufBackend_create at address "<<createBackend);
-			this->backend=createBackend(docHandle,ID,storageBuffer);
+			this->backend=createBackend(docHandle,ID,this);
 			DEBUG_MSG(L"backend is at "<<this->backend);
 		} else {
 			DEBUG_MSG(L"could not find VBufBackend_create in backend library");
@@ -43,6 +41,4 @@ VBufContainer_t::~VBufContainer_t() {
 		DEBUG_MSG(L"Freeing backend library");
 		FreeLibrary(backendLib);
 	}
-	DEBUG_MSG(L"deleting storage buffer");
-	delete this->storageBuffer;
 }

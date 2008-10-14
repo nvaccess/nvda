@@ -18,24 +18,19 @@
 /**
  * Holds together a storage buffer, along with a backend, and locking methods, to make a virtual buffer.
  */
-class VBUFLIBENTRY VBufContainer_t {
+class VBUFLIBENTRY VBufContainer_t : public VBufStorage_buffer_t  {
 	private:
 /**
  * a handle to the backend's library
  */
 	HMODULE backendLib;
 
-	public:
-
-/**
- * The storage buffer for this container
- */
-	VBufStorage_buffer_t* storageBuffer;
-
 /**
  * The backend for this virtual buffer
  */
 	VBufBackend_t* backend;
+
+	public:
 
 /**
  * Constructor
