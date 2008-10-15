@@ -640,6 +640,7 @@ Tries to force this object to take the focus.
 	def event_stateChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
@@ -663,14 +664,17 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_valueChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_caret(self):
 		if self is api.getFocusObject():

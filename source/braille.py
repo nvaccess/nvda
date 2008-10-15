@@ -606,6 +606,21 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
 
+	def handleUpdate(self, obj):
+		# Optimisation: It is very likely that it is the focus object that is being updated.
+		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.
+		for region in reversed(list(self.buffer.visibleRegions)):
+			if hasattr(region, "obj") and region.obj == obj:
+				break
+		else:
+			# No region for this object.
+			return
+		self.buffer.saveWindow()
+		region.update()
+		self.buffer.update()
+		self.buffer.restoreWindow(ignoreErrors=True)
+		self.update()
+
 	def handleReviewMove(self):
 		if self.tether != self.TETHER_REVIEW:
 			return
