@@ -251,7 +251,7 @@ class TextInfoRegion(Region):
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
 		self.rawText += (chunk.text or "").rstrip("\r\n\0\v\f") + " "
 		# If this is not the first line, hide all previous regions.
-		start = self.obj.makeTextInfo(textHandler.POSITION_FIRST)
+		start = caret.obj.makeTextInfo(textHandler.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
@@ -295,6 +295,20 @@ class CursorManagerRegion(TextInfoRegion):
 
 	def _setSelection(self, info):
 		self.obj.selection = info
+
+class ReviewTextInfoRegion(TextInfoRegion):
+
+	def __init__(self):
+		super(ReviewTextInfoRegion, self).__init__(api.getReviewPosition().obj)
+
+	def _getSelection(self):
+		return api.getReviewPosition()
+
+	def _setSelection(self, info):
+		api.setReviewPosition(info)
+
+	def _isMultiline(self):
+		return True
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -507,12 +521,25 @@ def getFocusRegionsForNVDAObject(obj):
 		yield TextInfoRegion(obj)
 
 class BrailleHandler(baseObject.AutoPropertyObject):
+	TETHER_FOCUS = "focus"
+	TETHER_REVIEW = "review"
 
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.buffer = self.mainBuffer
+		self._tether = self.TETHER_FOCUS
+
+	def _get_tether(self):
+		return self._tether
+
+	def _set_tether(self, tether):
+		self._tether = tether
+		if tether == self.TETHER_REVIEW:
+			self.handleReviewMove()
+		else:
+			self.handleGainFocus(api.getFocusObject())
 
 	def setDisplayByName(self, name):
 		if not name:
@@ -543,6 +570,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display.cursorPos = self.buffer.cursorWindowPos
 
 	def handleGainFocus(self, obj):
+		if self.tether != self.TETHER_FOCUS:
+			return
 		# Late import to avoid circular import.
 		from virtualBuffers import VirtualBuffer
 		if isinstance(obj, VirtualBuffer):
@@ -562,6 +591,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.update()
 
 	def handleCaretMove(self, obj):
+		if self.tether != self.TETHER_FOCUS:
+			return
 		if not self.buffer.regions:
 			return
 		region = self.buffer.regions[-1]
@@ -571,6 +602,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.buffer.update()
 		self.buffer.restoreWindow(ignoreErrors=True)
+		if region.brailleCursorPos is not None:
+			self.buffer.scrollTo(region, region.brailleCursorPos)
+		self.update()
+
+	def handleReviewMove(self):
+		if self.tether != self.TETHER_REVIEW:
+			return
+		reviewPos = api.getReviewPosition()
+		region = self.buffer.regions[-1] if self.buffer.regions else None
+		if not (region and region.obj == reviewPos.obj):
+			# We're reviewing a different object.
+			self.buffer.clear()
+			region = ReviewTextInfoRegion()
+			self.buffer.regions.append(region)
+		region.update()
+		self.buffer.update()
 		if region.brailleCursorPos is not None:
 			self.buffer.scrollTo(region, region.brailleCursorPos)
 		self.update()
