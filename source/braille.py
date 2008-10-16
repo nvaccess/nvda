@@ -206,6 +206,11 @@ class NVDAObjectRegion(Region):
 	def routeTo(self, braillePos):
 		self.obj.doDefaultAction()
 
+class ReviewNVDAObjectRegion(NVDAObjectRegion):
+
+	def routeTo(self, braillePos):
+		pass
+
 class TextInfoRegion(Region):
 
 	def __init__(self, obj):
@@ -297,9 +302,6 @@ class CursorManagerRegion(TextInfoRegion):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
-
-	def __init__(self):
-		super(ReviewTextInfoRegion, self).__init__(api.getReviewPosition().obj)
 
 	def _getSelection(self):
 		return api.getReviewPosition()
@@ -494,7 +496,11 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			if not ignoreErrors:
 				raise
 
-def getContextRegionsForNVDAObject(obj):
+def getContextRegions(obj):
+	# Late import to avoid circular import.
+	from virtualBuffers import VirtualBuffer
+	if isinstance(obj,VirtualBuffer):
+		obj=obj.rootNVDAObject
 	ancestors=[]
 	ancestor=obj.parent
 	while ancestor:
@@ -514,11 +520,21 @@ def getContextRegionsForNVDAObject(obj):
 			continue
 		yield NVDAObjectRegion(parent, appendText=" ")
 
-def getFocusRegionsForNVDAObject(obj):
-	useTextInfo = (obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states)
-	yield NVDAObjectRegion(obj, appendText=" " if useTextInfo else "")
-	if useTextInfo:
-		yield TextInfoRegion(obj)
+def getFocusRegions(obj, review=False):
+	# Late import to avoid circular import.
+	from virtualBuffers import VirtualBuffer
+	from cursorManager import CursorManager
+	if isinstance(obj, CursorManager):
+		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
+	elif (obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states):
+		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
+	else:
+		region2 = None
+	if isinstance(obj, VirtualBuffer):
+		obj = obj.rootNVDAObject
+	yield (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
+	if region2:
+		yield region2
 
 class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
@@ -572,13 +588,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def handleGainFocus(self, obj):
 		if self.tether != self.TETHER_FOCUS:
 			return
-		# Late import to avoid circular import.
-		from virtualBuffers import VirtualBuffer
-		if isinstance(obj, VirtualBuffer):
-			regions = itertools.chain(getContextRegionsForNVDAObject(obj.rootNVDAObject),
-				(NVDAObjectRegion(obj.rootNVDAObject, appendText=" "), CursorManagerRegion(obj)))
-		else:
-			regions = itertools.chain(getContextRegionsForNVDAObject(obj), getFocusRegionsForNVDAObject(obj))
+		self._doNewRegions(itertools.chain(getContextRegions(obj), getFocusRegions(obj)))
+
+	def _doNewRegions(self, regions):
 		self.buffer.clear()
 		for region in regions:
 			self.buffer.regions.append(region)
@@ -598,6 +610,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.buffer.regions[-1]
 		if region.obj is not obj:
 			return
+		self._doCursorMove(region)
+
+	def _doCursorMove(self, region):
 		self.buffer.saveWindow()
 		region.update()
 		self.buffer.update()
@@ -626,16 +641,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		reviewPos = api.getReviewPosition()
 		region = self.buffer.regions[-1] if self.buffer.regions else None
-		if not (region and region.obj == reviewPos.obj):
+		if region and region.obj == reviewPos.obj:
+			self._doCursorMove(region)
+		else:
 			# We're reviewing a different object.
-			self.buffer.clear()
-			region = ReviewTextInfoRegion()
-			self.buffer.regions.append(region)
-		region.update()
-		self.buffer.update()
-		if region.brailleCursorPos is not None:
-			self.buffer.scrollTo(region, region.brailleCursorPos)
-		self.update()
+			self._doNewRegions(getFocusRegions(reviewPos.obj, review=True))
 
 def initialize():
 	global handler
