@@ -544,6 +544,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
+		self.messageBuffer = BrailleBuffer(self)
+		self._messageCallLater = None
 		self.buffer = self.mainBuffer
 		self._tether = self.TETHER_FOCUS
 
@@ -585,62 +587,119 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display.display(self.buffer.windowBrailleCells)
 		self.display.cursorPos = self.buffer.cursorWindowPos
 
+	def scrollForward(self):
+		self.buffer.scrollForward()
+		if self.buffer is self.messageBuffer:
+			self._resetMessageTimer()
+
+	def scrollBack(self):
+		self.buffer.scrollBack()
+		if self.buffer is self.messageBuffer:
+			self._resetMessageTimer()
+
+	def routeTo(self, windowPos):
+		self.buffer.routeTo(windowPos)
+		if self.buffer is self.messageBuffer:
+			self._dismissMessage()
+
+	def message(self, text):
+		"""Display a message to the user which times out after a configured interval.
+		The timeout will be reset if the user scrolls the display.
+		The message will be dismissed immediately if the user presses a cursor routing key.
+		@postcondition: The message is displayed.
+		"""
+		if self.buffer is self.messageBuffer:
+			self.buffer.clear()
+		else:
+			self.buffer = self.messageBuffer
+		region = TextRegion(text)
+		region.update()
+		self.buffer.regions.append(region)
+		self.buffer.update()
+		self.update()
+		self._resetMessageTimer()
+
+	def _resetMessageTimer(self):
+		"""Reset the message timeout.
+		@precondition: A message is currently being displayed.
+		"""
+		# Configured timeout is in seconds.
+		timeout = config.conf["braille"]["messageTimeout"] * 1000
+		if self._messageCallLater:
+			self._messageCallLater.Restart(timeout)
+		else:
+			self._messageCallLater = wx.CallLater(timeout, self._dismissMessage)
+
+	def _dismissMessage(self):
+		"""Dismiss the current message.
+		@precondition: A message is currently being displayed.
+		@postcondition: The display returns to the main buffer.
+		"""
+		self.buffer.clear()
+		self.buffer = self.mainBuffer
+		self._messageCallLater.Stop()
+		self._messageCallLater = None
+		self.update()
+
 	def handleGainFocus(self, obj):
 		if self.tether != self.TETHER_FOCUS:
 			return
 		self._doNewRegions(itertools.chain(getContextRegions(obj), getFocusRegions(obj)))
 
 	def _doNewRegions(self, regions):
-		self.buffer.clear()
+		self.mainBuffer.clear()
 		for region in regions:
-			self.buffer.regions.append(region)
+			self.mainBuffer.regions.append(region)
 			region.update()
-		self.buffer.update()
+		self.mainBuffer.update()
 		# Last region should receive focus.
-		self.buffer.focus(region)
+		self.mainBuffer.focus(region)
 		if region.brailleCursorPos is not None:
-			self.buffer.scrollTo(region, region.brailleCursorPos)
-		self.update()
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		if self.buffer is self.mainBuffer:
+			self.update()
 
 	def handleCaretMove(self, obj):
 		if self.tether != self.TETHER_FOCUS:
 			return
-		if not self.buffer.regions:
+		if not self.mainBuffer.regions:
 			return
-		region = self.buffer.regions[-1]
+		region = self.mainBuffer.regions[-1]
 		if region.obj is not obj:
 			return
 		self._doCursorMove(region)
 
 	def _doCursorMove(self, region):
-		self.buffer.saveWindow()
+		self.mainBuffer.saveWindow()
 		region.update()
-		self.buffer.update()
-		self.buffer.restoreWindow(ignoreErrors=True)
+		self.mainBuffer.update()
+		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if region.brailleCursorPos is not None:
-			self.buffer.scrollTo(region, region.brailleCursorPos)
-		self.update()
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		if self.buffer is self.mainBuffer:
+			self.update()
 
 	def handleUpdate(self, obj):
 		# Optimisation: It is very likely that it is the focus object that is being updated.
 		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.
-		for region in reversed(list(self.buffer.visibleRegions)):
+		for region in reversed(list(self.mainBuffer.visibleRegions)):
 			if hasattr(region, "obj") and region.obj == obj:
 				break
 		else:
 			# No region for this object.
 			return
-		self.buffer.saveWindow()
+		self.mainBuffer.saveWindow()
 		region.update()
-		self.buffer.update()
-		self.buffer.restoreWindow(ignoreErrors=True)
-		self.update()
+		self.mainBuffer.update()
+		self.mainBuffer.restoreWindow(ignoreErrors=True)
+		if self.buffer is self.mainBuffer:
+			self.update()
 
 	def handleReviewMove(self):
 		if self.tether != self.TETHER_REVIEW:
 			return
 		reviewPos = api.getReviewPosition()
-		region = self.buffer.regions[-1] if self.buffer.regions else None
+		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
 			self._doCursorMove(region)
 		else:

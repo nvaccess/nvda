@@ -5,11 +5,11 @@ import comInterfaces.HTBRAILLEDRIVERSERVERLib as constants
 class Sink:
 	def onKeysPressed(self, this, keys, routing_pos):
 		if constants.KEY_ROUTING in keys:
-			braille.handler.buffer.routeTo(routing_pos)
+			braille.handler.routeTo(routing_pos)
 		elif constants.KEY_UP in keys:
-			braille.handler.buffer.scrollBack()
+			braille.handler.scrollBack()
 		elif constants.KEY_DOWN in keys:
-			braille.handler.buffer.scrollForward()
+			braille.handler.scrollForward()
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""HandyTech braille display driver.

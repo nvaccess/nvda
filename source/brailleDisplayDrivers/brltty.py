@@ -71,10 +71,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		try:
 			if keyType == brlapi.KEY_TYPE_CMD:
 				if command == brlapi.KEY_CMD_FWINLT:
-					braille.handler.buffer.scrollBack()
+					braille.handler.scrollBack()
 				elif command == brlapi.KEY_CMD_FWINRT:
-					braille.handler.buffer.scrollForward()
+					braille.handler.scrollForward()
 				elif command == brlapi.KEY_CMD_ROUTE:
-					braille.handler.buffer.routeTo(argument)
+					braille.handler.routeTo(argument)
 		except:
 			log.error("Error executing key press action", exc_info=True)
