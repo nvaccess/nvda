@@ -32,6 +32,7 @@ import ctypes
 from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
+import ui
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -55,7 +56,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			state=_("off")
 			globalVars.keyboardHelp=False
-		speech.speakMessage(_("keyboard help %s")%state)
+		ui.message(_("keyboard help %s")%state)
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
 	def script_reportCurrentLine(self,keyPress):
@@ -75,13 +76,13 @@ class AppModule(appModuleHandler.AppModule):
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
 
 	def script_leftMouseClick(self,keyPress):
-		speech.speakMessage(_("left click"))
+		ui.message(_("left click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
 
 	def script_rightMouseClick(self,keyPress):
-		speech.speakMessage(_("right click"))
+		ui.message(_("right click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
@@ -103,7 +104,7 @@ class AppModule(appModuleHandler.AppModule):
 			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
-		speech.speakMessage(text)
+		ui.message(text)
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
 
 	def script_increaseSynthSetting(self,keyPress):
@@ -163,7 +164,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
 	def script_moveMouseToNavigatorObject(self,keyPress):
-		speech.speakMessage(_("Move mouse to navigator"))
+		ui.message(_("Move mouse to navigator"))
 		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
@@ -181,7 +182,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object")
 
 	def script_moveNavigatorObjectToMouse(self,keyPress):
-		speech.speakMessage(_("Move navigator object to mouse"))
+		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
 		api.setNavigatorObject(obj)
 		speech.speakObject(obj)
@@ -611,12 +612,12 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportStatusLine(self,keyPress):
 		obj = api.getStatusBar()
 		if not obj:
-			speech.speakMessage(_("no status bar found"))
+			ui.message(_("no status bar found"))
 			return
 		text = api.getStatusBarText(obj)
 
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakMessage(text)
+			ui.message(text)
 		else:
 			speech.speakSpelling(text)
 		api.setNavigatorObject(obj)
@@ -629,7 +630,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			config.conf["mouse"]["enableMouseTracking"]=True
-		speech.speakMessage(_("Mouse tracking")+" "+onOff)
+		ui.message(_("Mouse tracking")+" "+onOff)
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 
 	def script_title(self,keyPress):
@@ -641,12 +642,12 @@ class AppModule(appModuleHandler.AppModule):
 				title=_("no title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
 		if repeatCount==0:
-			speech.speakMessage(title)
+			ui.message(title)
 		elif repeatCount==1:
 			speech.speakSpelling(title)
 		else:
 			if api.copyToClip(title):
-				speech.speakMessage(_("%s copied to clipboard")%title)
+				ui.message(_("%s copied to clipboard")%title)
 	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard")
 
 	def script_speakForeground(self,keyPress):
@@ -695,7 +696,7 @@ class AppModule(appModuleHandler.AppModule):
 				break
 		config.conf["presentation"]["reportProgressBarUpdates"]=progressLabels[new][0]
 		speech.cancelSpeech()
-		speech.speakMessage(progressLabels[new][1])
+		ui.message(progressLabels[new][1])
 	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles how NVDA reports progress bar updates. It can beep for all the progress bars or just for the progressbars in the foreground. Additionally it is possible to have current value spoken each 10 percent or it is possible to completely disable this reporting.")
 
 	def script_toggleReportDynamicContentChanges(self,keyPress):
@@ -705,7 +706,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			globalVars.reportDynamicContentChanges=True
-		speech.speakMessage(_("report dynamic content changes")+" "+onOff)
+		ui.message(_("report dynamic content changes")+" "+onOff)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,keyPress):
@@ -715,7 +716,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			globalVars.caretMovesReviewCursor=True
-		speech.speakMessage(_("caret moves review cursor")+" "+onOff)
+		ui.message(_("caret moves review cursor")+" "+onOff)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,keyPress):
@@ -725,7 +726,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			globalVars.focusMovesNavigatorObject=True
-		speech.speakMessage(_("focus moves navigator object")+" "+onOff)
+		ui.message(_("focus moves navigator object")+" "+onOff)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
@@ -738,18 +739,18 @@ class AppModule(appModuleHandler.AppModule):
 			log.error("error accessing system power status")
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
-			speech.speakMessage(_("no system battery"))
+			ui.message(_("no system battery"))
 			return
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
-		speech.speakMessage(text)
+		ui.message(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
 
 	def script_passNextKeyThrough(self,keyPress):
 		keyboardHandler.passNextKeyThrough()
-		speech.speakMessage(_("Pass next key through"))
+		ui.message(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
 
 	def script_speakApplicationName(self,keyPress):
