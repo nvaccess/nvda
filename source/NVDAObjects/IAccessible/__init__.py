@@ -910,23 +910,8 @@ class Dialog(IAccessible):
 				textList.append(childText)
 		return " ".join(textList)
 
-	def event_foreground(self):
-		super(IAccessible,self).event_foreground()
-		text=self.getDialogText(self)
-		if text and not text.isspace():
-			speech.speakText(text)
-
-	def event_focusEntered(self):
-		super(IAccessible,self).event_focusEntered()
-		text=self.getDialogText(self)
-		if text and not text.isspace():
-			speech.speakText(text)
-
-	def event_gainFocus(self):
-		super(IAccessible,self).event_gainFocus()
-		text=self.getDialogText(self)
-		if text and not text.isspace():
-			speech.speakText(text)
+	def _get_description(self):
+		return self.getDialogText(self)
 
 class PropertyPage(Dialog):
 
