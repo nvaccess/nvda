@@ -34,6 +34,9 @@ Changes since 0.6 P2:
 * change: The title command (NVDA+t) now only reports the title instead of the entire object. If the foreground object has no name, the application's process name is used.
 * fix: Announce the object with focus when a Java window comes to the foreground. Previously, only the top-level Java object was announced.
 * new: If the title command (NVDA+t) is pressed twice, it spells the title. If pressed thrice, it is copied to the clipboard.
+* new: Keyboard help now reads the names of modifier keys when pressed alone.
+* new: Key names announced by keyboard help are now translatable.
+* new: Added support for the recognized text field in SiRecognizer. (#198)
 
 
 Changes since 0.6 P1:

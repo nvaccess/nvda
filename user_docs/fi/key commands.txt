@@ -11,7 +11,7 @@ NVDA+1: näppäinohje
 Tämä komento ottaa käyttöön näppäinohjeen, jossa NVDA kertoo mitä tahansa näppäinyhdistelmää painettaessa kyseisen näppäinyhdistelmän ja minkä toiminnon se suorittaa. Poista näppäinohje käytöstä painamalla uudelleen NVDA+1.
 
 NVDA+t: nimi
-Kertoo aktiivisen ikkunan nimen.
+Kertoo aktiivisen sovelluksen nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle.
 
 NVDA+b: lue ikkuna
 Lukee aktiivisen sovelluksen sisällön. Hyödyllinen valintaikkunoiden lukemiseen.
@@ -28,32 +28,14 @@ Vaihtaa kolmen puhetilan välillä (puhe, äänimerkit ja pois käytöstä).
 NVDA+F12: aika ja päiväys
 Kertoo kellonajan, painamalla kaksi kertaa nopeasti kertoo päiväyksen.
 
-NVDA+2: lue kirjoitetut merkit
-Ottaa käyttöön tai poistaa käytöstä kirjoitettujen merkkien lukemisen.
-
-NVDA+3: lue kirjoitetut sanat
-Ottaa käyttöön tai poistaa käytöstä kirjoitettujen sanojen lukemisen.
-
-NVDA+4: lue komentonäppäimet
-Ottaa käyttöön tai poistaa käytöstä minkä tahansa näppäinten lukemisen.
-
-NVDA+p: lue välimerkit
-Ottaa käyttöön tai poistaa käytöstä välimerkkisymbolien lukemisen.
-
 NVDA+End: lue tilarivi
 Lukee nykyisen sovelluksen tilarivin, jos sellainen löytyy.
 
 NVDA+f: lue muotoilutiedot
 Kertoo asiakirjan nykyisen kohdan muotoilutiedot.
 
-NVDA+m: hiiren seuranta
-Ottaa käyttöön tai poistaa käytöstä Hiiren alla olevan objektin tai sanan lukemisen.
-
 Control+NVDA+f1: lue sovelluksen nimi
 Kertoo aktiivisen sovelluksen nimen ja tavaa sen. Ilmoittaa myös käytössä olevan NVDA-sovellusmoduulin.
-
-NVDA+u: äänimerkit edistymispalkin päivittyessä
-Ottaa käyttöön ja poistaa käytöstä äänimerkin, joka ilmaisee edistymispalkin päivittymistä.
 
 NVDA+shift+b: akun tila
 Kertoo akun varauksen tason ja onko verkkovirta käytössä.
@@ -79,18 +61,6 @@ Lukee valitun tekstin muokkaussäätimissä ja asiakirjoissa. Jos valintaa ei ole, 
 NVDA+ylänuoli: lue nykyinen rivi
 Lukee nykyisen rivin muokkaussäätimissä ja asiakirjoissa.
 
-Control+NVDA+vasen nuoli: edellinen asetus
-Ilmoittaa edellisen puheasetuksen ja siirtyy siihen.
- 
-Control+NVDA+oikea nuoli: seuraava asetus
-Ilmoittaa seuraavan puheasetuksen ja siirtyy siihen
-
-Control+NVDA+ylänuoli: suurenna asetusta
-Nostaa nykyistä puheasetusta
-
-Control+NVDA+alanuoli: pienennä asetusta
-Laskee nykyistä puheasetusta
-
 NVDA+alanuoli: lue kaikki
 Lukee kaiken asiakirjan tai muokkaussäätimen tekstin nykyisestä paikasta lähtien.
 
@@ -102,6 +72,36 @@ Tallentaa asetukset.
 
 Control+NVDA+r: palauta tallennetut asetukset
 Palauttaa käyttöön nvda.ini-tiedostoon tallennetut asetukset.
+
+NVDA+2: lue kirjoitetut merkit
+Ottaa käyttöön tai poistaa käytöstä kirjoitettujen merkkien lukemisen.
+
+NVDA+3: lue kirjoitetut sanat
+Ottaa käyttöön tai poistaa käytöstä kirjoitettujen sanojen lukemisen.
+
+NVDA+4: lue komentonäppäimet
+Ottaa käyttöön tai poistaa käytöstä minkä tahansa näppäinten lukemisen.
+
+NVDA+p: lue välimerkit
+Ottaa käyttöön tai poistaa käytöstä välimerkkisymbolien lukemisen.
+
+NVDA+m: hiiren seuranta
+Ottaa käyttöön tai poistaa käytöstä Hiiren alla olevan objektin tai sanan lukemisen.
+
+NVDA+u: äänimerkit edistymispalkin päivittyessä
+Säätää, miten edistymispalkkien päivittymisistä ilmoitetaan. NVDA voi joko antaa äänimerkin kaikkien aktiivisen ikkunan edistymispalkkien kohdalla (oletus), antaa äänimerkin koko järjestelmän kaikkien edistymispalkkien kohdalla tai kertoa joka 10. prosentin puheena.
+
+Control+NVDA+vasen nuoli: edellinen asetus
+Ilmoittaa edellisen puheasetuksen ja siirtyy siihen.
+ 
+Control+NVDA+oikea nuoli: seuraava asetus
+Ilmoittaa seuraavan puheasetuksen ja siirtyy siihen
+
+Control+NVDA+ylänuoli: suurenna asetusta
+Nostaa nykyistä puheasetusta
+
+Control+NVDA+alanuoli: pienennä asetusta
+Laskee nykyistä puheasetusta
 
 Asetusvalintaikkunoiden avaaminen:
 
@@ -135,16 +135,13 @@ Avaa Python-konsolin.
 Navigointiobjektilla navigoiminen
 
 NVDA+laskinnäppäimistön 5: lue nykyinen navigointiobjekti
-Kertoo nykyisen navigointiobjektin.
+Kertoo nykyisen navigointiobjektin. Kahdesti painettaessa objektin nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle.
 
 Shift+NVDA+laskinnäppäimistön 5: navigointiobjektin koko ja sijainti
 Kertoo nykyisen navigointiobjektin koon ja sijainnin.
  
 Control+Shift+NVDA+laskinnäppäimistön 5: missä olen
 Kertoo, missä navigointiobjekti on.
-
-NVDA+laskinnäppäimistön miinus: siirrä navigointiobjekti kohdistukseen
-Siirtää navigointiobjektin siihen objektiin, jossa kohdistus on.
 
 NVDA+laskinnäppäimistön 8: ylemmän tason objekti
 Siirtää navigointiobjektin sitä ylemmän tason objektiin (ts. objektiin, jossa navigointiobjekti on).
@@ -173,23 +170,26 @@ Siirrä hiirikohdistin nykyiseen navigointiobjektiin
 NVDA+laskinnäppäimistön *: siirrä navigointiobjekti hiiren kohdalle
 Siirtää navigointiobjektin hiirikohdistimen alla olevaan objektiin
 
-Laskinnäppäimistön /: hiiren vasen napsautus
-Napsauttaa kerran hiiren vasenta painiketta hiiren sen hetkisessä sijainnissa.
-
-Laskinnäppäimistön *: hiiren oikea napsautus
-Napsauttaa kerran hiiren oikeaa painiketta hiiren sen hetkisessä sijainnissa.
-
-NVDA+laskinnäppäimistön plus: lue kaikki objektit
-Lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa järjestyksessä.
-
 Laskinnäppäimistön miinus: siirrä tarkastelukohdistin järjestelmäkohdistimen kohdalle
 Siirtää tarkastelukohdistimen järjestelmäkohdistimen kohdalle.
 
 Control+laskinnäppäimistön miinus: siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle
 Siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle
 
+NVDA+laskinnäppäimistön miinus: siirrä navigointiobjekti kohdistukseen
+Siirtää navigointiobjektin siihen objektiin, jossa kohdistus on.
+
+Laskinnäppäimistön /: hiiren vasen napsautus
+Napsauttaa kerran hiiren vasenta painiketta hiiren sen hetkisessä sijainnissa.
+
+Laskinnäppäimistön *: hiiren oikea napsautus
+Napsauttaa kerran hiiren oikeaa painiketta hiiren sen hetkisessä sijainnissa.
+
 Laskinnäppäimistön plus: lue kaikki tarkastelukohdistimesta lähtien
 Lukee kaiken tekstin tarkastelukohdistimen nykyisestä paikasta lähtien.
+
+NVDA+laskinnäppäimistön plus: lue kaikki objektit
+Lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa järjestyksessä.
 
 Objektien lukeminen
 
@@ -244,15 +244,15 @@ NVDA+f5: päivitä näennäispuskuri (ei toimi Firefox 2:ssa tai Internet Exploreris
 
 Näennäispuskurin pikanäppäimet seuraavaan elementtiin siirtymiseksi (käytä shiftiä näiden näppäinten kanssa siirtyäksesi edelliseen):
 
-Sekä vanhan että uuden näennäispuskurin tukemat näppäimet:
+Sekä vanhan että uuden näennäispuskurin tukemat komennot:
 h: otsikko
 l: luettelo
 i: luettelon osa
 t: taulukko
 k: linkki
-p: kappale (käytetään vain vanhassa näennäispuskurissa, käytä uudessa näennäispuskurissa näppäimiä Control+ylä/alanuoli)
+p: kappale (käytetään vain vanhassa näennäispuskurissa, käytä uudessa näppäimiä Control+ylä/alanuoli)
 f: lomakekenttä
-Näppäimet, joita vanha näennäispuskuri ei tue:
+Komennot, joita vanha näennäispuskuri ei tue:
 u: avaamaton linkki
 v: avattu linkki
 e: muokkauskenttä

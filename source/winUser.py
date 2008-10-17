@@ -74,6 +74,7 @@ GW_OWNER=4
 #Window messages
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
+WM_PAINT=0x000F
 #Clipboard formats
 CF_TEXT=1
 #mapVirtualKey constants
@@ -377,3 +378,14 @@ def getPreviousWindow(hwnd):
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
+
+def updateWindow(hwnd):
+	return user32.UpdateWindow(hwnd)
+
+def invalidateRect(hwnd):
+	return user32.InvalidateRect(hwnd,None,False)
+
+def getKeyNameText(scanCode,extended):
+	buf=create_unicode_buffer(32)
+	user32.GetKeyNameTextW((scanCode<<16)|(extended<<24),buf,31)
+	return buf.value
