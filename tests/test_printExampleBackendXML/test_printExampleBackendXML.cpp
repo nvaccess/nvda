@@ -13,7 +13,7 @@
 
 std::wstring correctXMLString=L"<control controlIdentifier_docHandle=\"1\" controlIdentifier_ID=\"1\" role=\"document\"><control controlIdentifier_docHandle=\"1\" controlIdentifier_ID=\"2\" level=\"1\" role=\"heading\"><text>Test for Virtual Buffer Library</text></control><control controlIdentifier_docHandle=\"1\" controlIdentifier_ID=\"3\" role=\"paragraph\"><text>This content has been rendered by the Test backend. For a much better example of how the Virtual buffer library can be used, please visit the </text><control controlIdentifier_docHandle=\"1\" controlIdentifier_ID=\"4\" role=\"link\" value=\"http://www.nvda-project.org/\"><text>NVDA website</text></control><text>where you can find the NVDA screen reader.</text></control><control controlIdentifier_docHandle=\"1\" controlIdentifier_ID=\"5\" role=\"paragraph\"><text>Copyright (c)2008 NV Access</text></control></control>";
 
-#define testBackendPath L"VBufBackend_example.dll"
+#define testBackendPath "VBufBackend_example.dll"
 
 int main(int argc, char* argv[]) {
 	#ifdef DEBUG

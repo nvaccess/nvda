@@ -13,9 +13,12 @@ CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=1
 VERSION=2.0
 NEEDEDLIBS=kernel32.lib
 
-all: $(OUTDIR)\VBufBase.dll
+all: $(TOPDIR)\remoteApi\remoteApi.h $(OUTDIR)\VBufBase.dll
 
-$(OUTDIR)\VBufBase.dll: storage.obj utils.obj lock.obj backend.obj container.obj debug.obj
+$(TOPDIR)\remoteApi\remoteApi.h: $(TOPDIR)\remoteApi\remoteApi.idl
+	cd $(TOPDIR)\remoteApi && $(MAKE) /nologo DEBUG=$(DEBUG)
+
+$(OUTDIR)\VBufBase.dll: storage.obj utils.obj lock.obj backend.obj container.obj remoteApi.obj debug.obj
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	$(LINKER) -dll $** $(NEEDEDLIBS) /out:$@ $(LINKERFLAGS) /VERSION:$(VERSION) 
 

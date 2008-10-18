@@ -9,6 +9,7 @@
 #ifndef VIRTUALBUFFER_LIBENTRY_H
 #define VIRTUALBUFFER_LIBENTRY_H
 
+#ifdef _WIN32
 #ifdef VBUFLIBENTRYTYPE
 #if VBUFLIBENTRYTYPE==1
 #define VBUFLIBENTRY __declspec(dllexport)
@@ -17,6 +18,11 @@
 #endif
 #else
 #define VBUFLIBENTRY
+#endif
+#endif
+
+#ifdef _POSIX
+#define VBUFLIBENTRY 
 #endif
 
 #endif

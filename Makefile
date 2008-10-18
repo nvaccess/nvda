@@ -15,8 +15,9 @@ all:
 	cd tests && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
-	cd base && $(MAKE) /nologo clean
 	cd backends && $(MAKE) /nologo clean
+	cd base && $(MAKE) /nologo clean
+	cd remoteApi && $(MAKE) /nologo clean
 	cd tests && $(MAKE) /nologo clean
 
 distclean: clean

@@ -6,19 +6,33 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#define UNICODE
-
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#ifdef _POSIX
+#include <dlfcn.h>
+#endif
 #include "debug.h"
 #include "storage.h"
 #include "backend.h"
 #include "container.h"
 
-VBufContainer_t::VBufContainer_t(int docHandle, int ID, const wchar_t* backendPath): VBufStorage_buffer_t(), backendLib(NULL), backend(NULL) {
+VBufContainer_t::VBufContainer_t(int docHandle, int ID, const char* backendPath): VBufStorage_buffer_t(), backendLib(NULL), backend(NULL) {
 	DEBUG_MSG(L"initializing container with docHandle "<<docHandle<<L", ID "<<ID<<L", backendPath \""<<backendPath<<L"\"");
+	#ifdef _WIN32
 	this->backendLib=LoadLibrary(backendPath);
+	#endif
+	#ifdef _POSIX
+	this->backendLib=dlopen(backendPath,RTLD_LAZY);
+	#endif
 	if(this->backendLib) {
 		DEBUG_MSG(L"backend library loaded at address "<<this->backendLib);
-		VBufBackend_create_proc createBackend=(VBufBackend_create_proc)GetProcAddress(this->backendLib,"VBufBackend_create");
+		#ifdef _WIN32
+		VBufBackend_create_proc createBackend=(VBufBackend_create_proc)GetProcAddress((HMODULE)(this->backendLib),"VBufBackend_create");
+		#endif
+		#ifdef _POSIX
+		VBufBackend_create_proc createBackend=(VBufBackend_create_proc)dlsym(this->backendLib,"VBufBackend_create");
+		#endif
 		if(createBackend) {
 			DEBUG_MSG(L"found VBufBackend_create at address "<<createBackend);
 			this->backend=createBackend(docHandle,ID,this);
@@ -39,6 +53,11 @@ VBufContainer_t::~VBufContainer_t() {
 	}
 	if(this->backendLib) {
 		DEBUG_MSG(L"Freeing backend library");
-		FreeLibrary(backendLib);
+		#ifdef _WIN32
+		FreeLibrary((HMODULE)backendLib);
+		#endif
+		#ifdef _POSIX
+		dlclose(backendLib);
+		#endif
 	}
 }

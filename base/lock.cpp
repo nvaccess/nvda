@@ -6,32 +6,42 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include "debug.h"
-#include "Lock.h"
+#include "lock.h"
 
 VBufLock_t::VBufLock_t() {
 	DEBUG_MSG(L"initializing lock");
+	#ifdef _WIN32
 	lockHandle=new CRITICAL_SECTION;
 	DEBUG_MSG(L"critical section at address "<<lockHandle);
 	InitializeCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
+	#endif
 }
 
 void VBufLock_t::acquire() {
 	DEBUG_MSG(L"acquiring lock...");
+	#ifdef _WIN32
 	EnterCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
+	#endif
 	DEBUG_MSG(L"acquired.");
 }
 
 void VBufLock_t::release() {
 	DEBUG_MSG(L"Releasing lock...");
+	#ifdef _WIN32
 	LeaveCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
+	#endif
 	DEBUG_MSG(L"Released.");
 }
 
 VBufLock_t::~VBufLock_t() {
 	DEBUG_MSG(L"Lock being destroied");
 	DEBUG_MSG(L"Deleting critical section");
+	#ifdef _WIN32
 	DeleteCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
 	delete lockHandle;
+	#endif
 }

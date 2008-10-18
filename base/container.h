@@ -9,7 +9,6 @@
 #ifndef VIRTUALBUFFER_CONTAINER_H
 #define VIRTUALBUFFER_CONTAINER_H
 
-#include <windows.h>
 #include "libEntry.h"
 #include "storage.h"
 #include "backend.h"
@@ -23,7 +22,7 @@ class VBUFLIBENTRY VBufContainer_t : public VBufStorage_buffer_t  {
 /**
  * a handle to the backend's library
  */
-	HMODULE backendLib;
+	void* backendLib;
 
 /**
  * The backend for this virtual buffer
@@ -38,7 +37,7 @@ class VBUFLIBENTRY VBufContainer_t : public VBufStorage_buffer_t  {
  * @param ID uniquely identifies the object with in the window or document the virtual buffer will start rendering from
  * @param backendPath an absolute path to the backend library you wish to manage the virtual buffer
  */
-	VBufContainer_t(int docHandle, int ID, const wchar_t* backendPath);
+	VBufContainer_t(int docHandle, int ID, const char* backendPath);
 
 /**
  * destructor
