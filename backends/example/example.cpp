@@ -6,7 +6,7 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#include "../../base/base.h"
+#include <base/base.h>
 
 class __declspec(dllexport) TestVBufBackend_t: public VBufBackend_t {
 	public:
