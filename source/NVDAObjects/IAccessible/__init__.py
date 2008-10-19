@@ -869,8 +869,7 @@ class Groupbox(IAccessible):
 		return super(Groupbox,self)._get_description()
 
 class Dialog(IAccessible):
-	"""
-	Based on NVDAObject but on foreground events, the dialog contents gets read.
+	"""Overrides the description property to obtain dialog text.
 	"""
 
 	@classmethod
@@ -885,11 +884,11 @@ class Dialog(IAccessible):
 		for index in range(childCount):
 			childStates=children[index].states
 			childRole=children[index].role
-		#We don't want to handle invisible or unavailable objects
+			#We don't want to handle invisible or unavailable objects
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
-		#For particular objects, we want to decend in to them and get their childrens' message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
+			#For particular objects, we want to decend in to them and get their childrens' message text
+			if childRole in (controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
 				textList.append(cls.getDialogText(children[index]))
 				continue
 			#For now we get text from static text, readonly edit fields, and labels
@@ -897,7 +896,7 @@ class Dialog(IAccessible):
 				#We should ignore text objects directly after a grouping object as its probably the grouping's description
 				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
 					continue
-			#Like the last one, but a graphic might be before the grouping's description
+				#Like the last one, but a graphic might be before the grouping's description
 				if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
 					continue
 				childName=children[index].name
