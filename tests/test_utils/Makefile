@@ -8,16 +8,12 @@
 
 TOPDIR=../..
 !include $(TOPDIR)\make.opts
-CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\test_utils.exe
 	cd $(OUTDIR) && .\test_utils.exe
 
-$(OUTDIR)\VBufBase.lib:
-	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
-
-$(OUTDIR)\test_utils.exe: test_utils.obj $(OUTDIR)\VBufBase.lib
-	$(LINKER) $** $(LINKERFLAGS) /out:$@
+$(OUTDIR)\test_utils.exe: test_utils.cpp $(TOPDIR)\base\utils.cpp
+	cl $(CPPFLAGS) $** /link $(LINKERFLAGS) /out:$@
 
 clean:
 	-del *.obj 2>NUL

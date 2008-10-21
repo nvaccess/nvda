@@ -11,16 +11,15 @@ TOPDIR=..
 CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=1
 
 VERSION=2.0
-NEEDEDLIBS=kernel32.lib
 
-all: $(TOPDIR)\remoteApi\remoteApi.h $(OUTDIR)\VBufBase.dll
+all: $(OUTDIR)\VBufBase.dll
 
-$(TOPDIR)\remoteApi\remoteApi.h: $(TOPDIR)\remoteApi\remoteApi.idl
-	cd $(TOPDIR)\remoteApi && $(MAKE) /nologo DEBUG=$(DEBUG)
+$(TOPDIR)\remoteApi\remoteApi_s.c: $(TOPDIR)\remoteApi\remoteApi.idl $(TOPDIR)\remoteApi\remoteApi.acf
+	cd $(TOPDIR)\remoteApi && $(MAKE) DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBase.dll: storage.obj utils.obj lock.obj backend.obj container.obj remoteApi.obj debug.obj
+$(OUTDIR)\VBufBase.dll: storage.cpp utils.cpp lock.cpp backend.cpp container.cpp remoteApi.cpp rpcSrv.cpp $(TOPDIR)\remoteApi\remoteApi_s.c debug.cpp
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
-	$(LINKER) -dll $** $(NEEDEDLIBS) /out:$@ $(LINKERFLAGS) /VERSION:$(VERSION) 
+	cl $(CPPFLAGS)  $** /link rpcrt4.lib kernel32.lib /dll /out:$@ /version:$(VERSION)
 
 clean:
 	-del *.obj 2>NUL

@@ -1,8 +1,10 @@
 #include <remoteApi/remoteApi.h>
 #include "container.h"
 
-VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const char* backendPath) {
-	return (VBufRemote_bufferHandle_t)new VBufContainer_t(docHandle,ID,backendPath);
+extern "C" {
+
+VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const unsigned char* backendPath) {
+	return (VBufRemote_bufferHandle_t)new VBufContainer_t(docHandle,ID,(char*)backendPath);
 }
 
 void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
@@ -104,10 +106,4 @@ int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int 
 	return res;
 }
 
-//Special cleanup method when client is lost
-
-void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
-	VBufContainer_t* realBuf=(VBufContainer_t*)buffer;
-	realBuf->lock.acquire();
-	VBufRemote_destroyBuffer(&buffer);
 }
