@@ -15,7 +15,7 @@ all: $(OUTDIR)\VBufBackend_example.dll
 $(OUTDIR)\VBufBase.lib:
 	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBackend_example.dll: example.obj $(OUTDIR)\VBufBase.lib
+$(OUTDIR)\VBufBackend_example.dll: example.obj create.obj $(OUTDIR)\VBufBase.lib
 	$(LINKER) -dll $** /out:$@ $(LINKERFLAGS)
 
 clean:
