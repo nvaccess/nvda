@@ -548,6 +548,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
 		self._tether = self.TETHER_FOCUS
+		#: Whether braille is enabled.
+		#: @type: bool
+		self.enabled = False
 
 	def _get_tether(self):
 		return self._tether
@@ -567,6 +570,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		try:
 			self.display = _getDisplayDriver(name)()
 			self.displaySize = self.display.numCells
+			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s" % name)
 			self.configDisplay()
@@ -608,6 +612,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		The message will be dismissed immediately if the user presses a cursor routing key.
 		@postcondition: The message is displayed.
 		"""
+		if not self.enabled:
+			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
 		else:
@@ -642,6 +648,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.update()
 
 	def handleGainFocus(self, obj):
+		if not self.enabled:
+			return
 		if self.tether != self.TETHER_FOCUS:
 			return
 		self._doNewRegions(itertools.chain(getContextRegions(obj), getFocusRegions(obj)))
@@ -660,6 +668,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleCaretMove(self, obj):
+		if not self.enabled:
+			return
 		if self.tether != self.TETHER_FOCUS:
 			return
 		if not self.mainBuffer.regions:
@@ -680,6 +690,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleUpdate(self, obj):
+		if not self.enabled:
+			return
 		# Optimisation: It is very likely that it is the focus object that is being updated.
 		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.
 		for region in reversed(list(self.mainBuffer.visibleRegions)):
@@ -696,6 +708,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleReviewMove(self):
+		if not self.enabled:
+			return
 		if self.tether != self.TETHER_REVIEW:
 			return
 		reviewPos = api.getReviewPosition()
@@ -741,11 +755,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 
 	def _get_numCells(self):
 		"""Obtain the number of braille cells on this  display.
+		@note: 0 indicates that braille should be disabled.
 		@return: The number of cells.
 		@rtype: int
 		"""
-		# Zero wouldn't make sense even for a null device ;-)
-		return 80
+		return 0
 
 	def display(self, cells):
 		"""Display the given braille cells.
