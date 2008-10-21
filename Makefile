@@ -12,6 +12,7 @@ TOPDIR=.
 all: 
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd backends && $(MAKE) /nologo DEBUG=$(DEBUG)
+	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 tests:
 	cd tests && $(MAKE) /nologo DEBUG=$(DEBUG)
@@ -19,6 +20,7 @@ tests:
 clean:
 	cd backends && $(MAKE) /nologo clean
 	cd base && $(MAKE) /nologo clean
+	cd client && $(MAKE) /nologo clean
 	cd remoteApi && $(MAKE) /nologo clean
 	cd tests && $(MAKE) /nologo clean
 
