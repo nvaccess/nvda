@@ -856,4 +856,5 @@ class BrailleSettingsDialog(SettingsDialog):
 			val = None
 		if 1 <= val <= 20:
 			config.conf["braille"]["messageTimeout"] = val
+		braille.handler.configDisplay()
 		super(BrailleSettingsDialog,  self).onOk(evt)
