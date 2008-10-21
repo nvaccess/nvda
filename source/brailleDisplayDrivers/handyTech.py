@@ -1,6 +1,9 @@
+import _winreg
 import comtypes.client
 import braille
-import comInterfaces.HTBRAILLEDRIVERSERVERLib as constants
+
+COM_CLASS = "HtBrailleDriverServer.HtBrailleDriver"
+constants = None
 
 class Sink:
 	def onKeysPressed(self, this, keys, routing_pos):
@@ -17,8 +20,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "handyTech"
 	description = _("HandyTech braille displays")
 
+	@classmethod
+	def check(cls):
+		try:
+			_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS).Close()
+			return True
+		except:
+			return False
+
 	def __init__(self):
-		self._server = comtypes.client.CreateObject("HtBrailleDriverServer.HtBrailleDriver")
+		global constants
+		self._server = comtypes.client.CreateObject(COM_CLASS)
+		import comInterfaces.HTBRAILLEDRIVERSERVERLib as constants
 		# Keep the connection object so it won't become garbage
 		self.advise = comtypes.client.GetEvents(self._server, Sink())
 		self._server.initialize()
