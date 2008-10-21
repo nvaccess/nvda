@@ -788,7 +788,7 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &Display"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display"))
 		driverList = braille.getDisplayList()
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
@@ -800,8 +800,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(label)
 		sizer.Add(self.displayList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &Table"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
 		try:
@@ -813,13 +814,46 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(self.tableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
+		self.expandAtCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("E&xpand to computer braille for the word at the cursor"))
+		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
+		settingsSizer.Add(self.expandAtCursorCheckBox, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
+		sizer.Add(label)
+		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
+		sizer.Add(self.cursorBlinkRateEdit)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Message timeout (sec)"))
+		sizer.Add(label)
+		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
+		sizer.Add(self.cursorBlinkRateEdit)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
 	def postInit(self):
 		self.displayList.SetFocus()
 
 	def onOk(self, evt):
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		display = self.displayNames[self.displayList.GetSelection()]
 		if not braille.handler.setDisplayByName(display):
 			wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING).ShowModal()
 			return 
+		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
+		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
+		try:
+			val = int(self.cursorBlinkRateEdit.GetValue())
+		except (ValueError, TypeError):
+			val = None
+		if 0 <= val <= 2000:
+			config.conf["braille"]["cursorBlinkRate"] = val
+		try:
+			val = int(self.messageTimeoutEdit.GetValue())
+		except (ValueError, TypeError):
+			val = None
+		if 1 <= val <= 20:
+			config.conf["braille"]["messageTimeout"] = val
 		super(BrailleSettingsDialog,  self).onOk(evt)
