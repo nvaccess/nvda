@@ -33,6 +33,7 @@ from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
 import ui
+import braille
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -809,3 +810,13 @@ class AppModule(appModuleHandler.AppModule):
 		pythonConsole.consoleUI.updateNamespaceSnapshotVars()
 		pythonConsole.activate()
 	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
+
+	def script_braille_toggleTether(self, keyPress):
+		if braille.handler.tether == braille.handler.TETHER_FOCUS:
+			braille.handler.tether = braille.handler.TETHER_REVIEW
+			tetherMsg = _("review")
+		else:
+			braille.handler.tether = braille.handler.TETHER_FOCUS
+			tetherMsg = _("focus")
+		ui.message(_("Braille tethered to %s") % tetherMsg)
+	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
