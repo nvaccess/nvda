@@ -58,6 +58,8 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
+		# The explicit inclusion of ui can be removed once ui is imported by a bundled module.
+		"includes": ["ui"],
 	}},
 	zipfile = None,
 	data_files=[
