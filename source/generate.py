@@ -8,7 +8,7 @@
 This script:
 * Generates Python code for COM interfaces to avoid doing this at runtime;
 * Compiles source language files into binary form for use by NVDA;
-* Compiles appModules and synthDrivers into Python byte code to eliminate the need to do this on launch.
+* Compiles appModules, synthDrivers and brailleDisplayDrivers into Python byte code to eliminate the need to do this on launch.
 This should be run prior to executing NVDA from a clean source tree for the first time and before building a binary distribution with py2exe.
 """
 
@@ -33,7 +33,7 @@ COM_INTERFACES = (
 	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
 	("SAPI 4", comtypes.client.CreateObject, "ActiveVoice.ActiveVoice"),
 )
-COMPILE_DIRS = ("appModules", "synthDrivers")
+COMPILE_DIRS = ("appModules", "synthDrivers", "brailleDisplayDrivers")
 
 def main():
 	print "COM interfaces:"
