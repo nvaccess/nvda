@@ -82,6 +82,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
+	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
+	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
+	# Therefore, disable assertions for now.
+	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
@@ -92,6 +96,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
+	import braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -199,6 +206,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating braille")
+	try:
+		braille.terminate()
+	except:
+		log.error("Error terminating braille",exc_info=True)
 	log.debug("Terminating speech")
 	try:
 		speech.terminate()

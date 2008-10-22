@@ -21,6 +21,7 @@ import config
 import controlTypes
 import appModuleHandler
 import virtualBufferHandler
+import braille
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
@@ -639,6 +640,7 @@ Tries to force this object to take the focus.
 	def event_stateChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
@@ -649,6 +651,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		api.setNavigatorObject(self)
 		self.reportFocus()
+		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""
@@ -661,14 +664,21 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def event_valueChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
+
+	def event_caret(self):
+		if self is api.getFocusObject():
+			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):
 		newTime=time.time()
@@ -685,7 +695,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return None
 
 	def _get_basicCaretOffset(self):
-		return 0
+		raise NotImplementedError
 
 	def _set_basicCaretOffset(self,offset):
 		pass

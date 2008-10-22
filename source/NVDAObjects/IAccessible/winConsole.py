@@ -21,6 +21,8 @@ import winUser
 import speech
 from . import IAccessible
 from .. import NVDAObjectTextInfo
+import controlTypes
+import braille
 
 class WinConsole(IAccessible):
 
@@ -116,6 +118,7 @@ class WinConsole(IAccessible):
 		#Update the review cursor position with the caret position
 		if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
 			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+		braille.handler.handleCaretMove(self)
 		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
 		if eventID!=winUser.EVENT_CONSOLE_CARET:
 			self.lastConsoleEvent=eventID
@@ -222,8 +225,8 @@ class WinConsole(IAccessible):
 		self.event_gainFocus()
 
 	def event_gainFocus(self):
-		super(WinConsole,self).event_gainFocus()
 		self.connectConsole()
+		super(WinConsole,self).event_gainFocus()
 		for line in self.prevConsoleVisibleLines:
 			if not line.isspace() and len(line)>0: 
 				speech.speakText(line)
@@ -263,6 +266,9 @@ class WinConsole(IAccessible):
 		time.sleep(0.01)
 		self.connectConsole()
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
+
+	def _get_role(self):
+		return controlTypes.ROLE_TERMINAL
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+c","protectConsoleKillKey"),

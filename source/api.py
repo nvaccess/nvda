@@ -192,6 +192,8 @@ def setReviewPosition(reviewPosition):
 	"""
 	globalVars.reviewPosition=reviewPosition
 	globalVars.navigatorObject=None
+	import braille
+	braille.handler.handleReviewMove()
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
@@ -215,6 +217,8 @@ def setNavigatorObject(obj):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 	globalVars.reviewPosition=None
+	import braille
+	braille.handler.handleReviewMove()
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.

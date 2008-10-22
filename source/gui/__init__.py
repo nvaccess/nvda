@@ -189,6 +189,9 @@ class MainFrame(wx.Frame):
 	def onVoiceCommand(self,evt):
 		self._popupSettingsDialog(VoiceSettingsDialog)
 
+	def onBrailleCommand(self,evt):
+		self._popupSettingsDialog(BrailleSettingsDialog)
+
 	def onKeyboardSettingsCommand(self,evt):
 		self._popupSettingsDialog(KeyboardSettingsDialog)
 
@@ -241,6 +244,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume  to use"))
 		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
+		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse sape, object under mouse"))
