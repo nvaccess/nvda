@@ -556,7 +556,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		return self._tether
 
 	def _set_tether(self, tether):
+		if tether == self._tether:
+			return
 		self._tether = tether
+		self.mainBuffer.clear()
 		if tether == self.TETHER_REVIEW:
 			self.handleReviewMove()
 		else:
