@@ -49,7 +49,7 @@ outputDevice = string(default=default)
 
 # Braille settings
 [braille]
-	display = string(default=brltty)
+	display = string(default=noBraille)
 	translationTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
