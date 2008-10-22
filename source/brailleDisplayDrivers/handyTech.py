@@ -8,7 +8,7 @@ constants = None
 class Sink:
 	def onKeysPressed(self, this, keys, routing_pos):
 		if constants.KEY_ROUTING in keys:
-			braille.handler.routeTo(routing_pos + 1)
+			braille.handler.routeTo(routing_pos - 1)
 		elif constants.KEY_UP in keys:
 			braille.handler.scrollBack()
 		elif constants.KEY_DOWN in keys:
