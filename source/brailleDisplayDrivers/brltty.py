@@ -18,10 +18,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	@classmethod
 	def check(cls):
 		try:
-			c = brlapi.Connection()
-			del c
+			brlapi
 			return True
-		except:
+		except NameError:
 			pass
 		return False
 
