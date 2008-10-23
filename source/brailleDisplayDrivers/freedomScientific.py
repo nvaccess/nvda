@@ -59,7 +59,7 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 				braille.handler.scrollForward()
 		elif a==4 and c==1 and d==0: #press down bottom row routing key
 			braille.handler.routeTo(b)
-		return
+		return 0
 	return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
 nvdaFsBrlWndCls=WNDCLASSEXW()
