@@ -834,7 +834,7 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 			self._cursorBlinkTimer = None
 		self._cursorBlinkUp = True
 		self._displayWithCursor()
-		if self._cursorBlinkRate:
+		if self._cursorBlinkRate and self._cursorPos is not None:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(self._cursorBlinkRate)
 
