@@ -39,7 +39,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._cursorBlinkRate = 1000
 		self._server.configureCursor(self._cursorBlinkRate, self._cursorShape)
 
-	def __del__(self):
+	def terminate(self):
+		super(BrailleDisplayDriver, self).terminate()
 		self._server.terminate()
 
 	def _get_numCells(self):

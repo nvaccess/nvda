@@ -1,3 +1,4 @@
+import time
 import wx
 import braille
 from logHandler import log
@@ -31,13 +32,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
 
-	def __del__(self):
+	def terminate(self):
+		super(BrailleDisplayDriver, self).terminate()
 		# Exceptions might be raised if initialisation failed. Just ignore them.
 		try:
 			self._keyCheckTimer.Stop()
+			self._keyCheckTimer = None
 		except:
 			pass
 		try:
+			# Give BRLTTY a chance to write the last piece of data to the display.
+			time.sleep(0.05)
 			self._con.leaveTtyMode()
 		except:
 			pass

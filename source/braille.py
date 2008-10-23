@@ -571,8 +571,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = 0
 			return
 		try:
-			self.display = _getDisplayDriver(name)()
-			self.displaySize = self.display.numCells
+			newDisplay = _getDisplayDriver(name)
+			if newDisplay == self.display.__class__:
+				# This is the same driver as was already set, so just re-initialise it.
+				self.display.terminate()
+				newDisplay = self.display
+				newDisplay.__init__()
+			else:
+				newDisplay = newDisplay()
+				if self.display:
+					self.display.terminate()
+				self.display = newDisplay
+			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s" % name)
@@ -731,6 +741,8 @@ def initialize():
 
 def terminate():
 	global handler
+	if handler.display:
+		handler.display.terminate()
 	handler = None
 
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
@@ -755,6 +767,18 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@rtype: bool
 		"""
 		return False
+
+	def terminate(self):
+		"""Terminate this display driver.
+		This will be called when NVDA is finished with this display driver.
+		It should close any open connections, perform cleanup, etc.
+		Subclasses should call the superclass method first.
+		@postcondition: This instance can no longer be used unless it is constructed again.
+		"""
+		# Clear the display.
+		self.cursorPos = None
+		self.cursorBlinkRate = 0
+		self.display([])
 
 	def _get_numCells(self):
 		"""Obtain the number of braille cells on this  display.
@@ -807,6 +831,7 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 	def _initCursor(self):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
 		self._cursorBlinkUp = True
 		self._displayWithCursor()
 		if self._cursorBlinkRate:
