@@ -59,7 +59,8 @@ setup(
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
 		# The explicit inclusion of ui can be removed once ui is imported by a bundled module.
-		"includes": ["ui"],
+		# The explicit inclusion of brlapi is required because it is only imported by the brltty display driver, which is not a bundled module.
+		"includes": ["ui", "brlapi"],
 	}},
 	zipfile = None,
 	data_files=[
