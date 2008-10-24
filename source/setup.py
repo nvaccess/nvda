@@ -34,6 +34,16 @@ def getRecursiveDataFiles(dest,source):
 	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
 
+def getOptionalIncludes():
+	includes = []
+	try:
+		# The explicit inclusion of brlapi is required because it is only imported by the brltty display driver, which is not a bundled module.
+		import brlapi
+		includes.append("brlapi")
+	except:
+		pass
+	return includes
+
 setup(
 	name = name,
 	version=version,
@@ -59,8 +69,7 @@ setup(
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
 		# The explicit inclusion of ui can be removed once ui is imported by a bundled module.
-		# The explicit inclusion of brlapi is required because it is only imported by the brltty display driver, which is not a bundled module.
-		"includes": ["ui", "brlapi"],
+		"includes": ["ui"] + getOptionalIncludes(),
 	}},
 	zipfile = None,
 	data_files=[
