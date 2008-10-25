@@ -2,48 +2,45 @@ NvDA 按鍵列表
 
 以下所說的 NVDA 鍵是指插入鍵。你也可以把他改成大寫鎖住鍵。
 
-通用按鍵
-
+通用按鍵：
 Control: 中斷朗讀
 Shift: 繼續朗讀
-NVDA+pageUp: 加快朗讀速度
-NVDA+pageDown: 減慢朗讀速度
 NVDA+1: 鍵盤學習模式開關
 NVDA+t: 朗讀標題
 NVDA+b: 朗讀視窗內容
-NVDA+n: 打開 NVDA 視窗
+NVDA+n: 打開 NVDA 功能表
 NVDA+q: 結束 NVDA
 NVDA+s: 語音模式切換
-NVDA+F12: 按一次朗讀時間，按兩次朗讀日期
-NVDA+2: 邊打邊唸字元開關
-NVDA+3: 邊打邊唸自詞開關
-NVDA+4: 邊打邊唸鍵盤開關
-NVDA+p: 標點符號朗讀開關
+NVDA+F12: 按一次報出時間，按兩次報出日期
 NVDA+End: 朗讀狀態列
-NVDA+f: 朗讀格式資訊
-NVDA+m: 滑鼠追蹤朗讀開關
-Control+NVDA+F1: 讀出應用程式的名稱
-NVDA+u: 進度列更新的逼逼聲開關
-NVDA+Shift+b: 讀出電池狀態
+NVDA+f: 報出文件格式資訊
+Control+NVDA+F1: 報出應用程式名稱與所載入的軟體模組
+NVDA+Shift+b: 報出電池狀態
 NVDA+5: 動態內容更新朗讀開關
 NVDA+6: 瀏覽游標跟隨打字游標開關
 NVDA+7: 瀏覽目標跟隨焦點變更開關
-NVDA+Tab: 讀出目前焦點
-NVDA+F2: 暫停下一個 NVDA 按鍵的功能
-Shift+NVDA+上: 讀出選取內容
-NVDA+上: 讀出整行內容
-Control+NVDA+左: 上一個語音設定項目
-Control+NVDA+右: 下一個語音設定項目
-Control+NVDA+上: 增加語音設定值
-Control+NVDA+下: 減少語音設定值
-NVDA+下: 朗讀到全篇結束
-NVDA+f1: 讀出目前瀏覽物件的技術資訊
-Control+NVDA+c: 儲存設定
-Control+NVDA+r: 還原設定
+NVDA+Tab: 報出焦點
+NVDA+F2: 暫停 NVDA 按鍵的功能
+Shift+NVDA+游標往上: 讀出選取的文字內容
+NVDA+游標往上: 讀出游標所在整行內容
+NVDA+游標往下: 從游標位置開始朗讀全部文字內容
+NVDA+f1: 報出瀏覽目標的技術資訊
+Control+NVDA+c: 儲存 NVDA 的設定
+Control+NVDA+r: 還原 NVDA 的設定
 
+變更設定：
+NVDA+2: 邊打邊唸字元開關
+NVDA+3: 邊打邊唸自詞開關
+NVDA+4: 邊打邊唸按鍵開關
+NVDA+p: 朗讀標點開關
+NVDA+m: 朗讀鼠標開關
+NVDA+u: 進度列音效切換
+Control+NVDA+游標往左: 上一個語音設定項目
+Control+NVDA+游標往右: 下一個語音設定項目
+Control+NVDA+游標往上: 增加語音設定值
+Control+NVDA+游標往下: 減少語音設定值
 
-顯示 NVDA 設定對話框
-
+顯示 NVDA 設定對話框：
 Control+NVDA+g: 叫出一般設定對話框
 Control+NVDA+s: 叫出語音合成器設定對話框
 Control+NVDA+v: 叫出語音設定對話框
@@ -54,32 +51,28 @@ Control+NVDA+b: 叫出虛擬游標設定對話框
 Control+NVDA+d: 叫出文件格式設定對話框
 Control+NVDA+z: 叫出 python 工作台對話框
 
-
-物件瀏覽
-
-NVDA+小鍵盤5: 讀出當前的瀏覽物件
-Shift+NVDA+小鍵盤5: 讀出瀏覽物件的大小與位置
-Control+Shift+NVDA+小鍵盤5: 讀出瀏覽物件所在
-NVDA+小鍵盤-: 移動瀏覽目標到焦點
+瀏覽目標：
+NVDA+小鍵盤5: 讀出當前的瀏覽目標
+Shift+NVDA+小鍵盤5: 讀出瀏覽目標的大小與位置
+Control+Shift+NVDA+小鍵盤5: 讀出瀏覽目標所屬
 NVDA+小鍵盤8: 移動瀏覽目標道上一曾
 NVDA+小見2: 移動瀏覽目標到下一曾
 NVDA+小鍵盤4: 移動瀏覽目標到上一個物件（只限同一層級）
 Shift+NVDA+小鍵盤4: 移動瀏覽目標到上一個物件（不限同一層級）
 NVDA+小鍵盤6: 移動瀏覽目標到下一個物件（只限同一層級）
 Shift+NVDA+小鍵盤6: 移動瀏覽目標到下一個物件（不限同一層級）
-NVDA+小鍵盤Enter: 點擊瀏覽物件
-NVDA+小鍵盤/: 移動滑鼠到瀏覽物件
-NVDA+小鍵盤*: 移動瀏覽目標到滑鼠
+NVDA+小鍵盤Enter: 點擊瀏覽目標
+NVDA+小鍵盤/: 移動鼠標到瀏覽目標
+NVDA+小鍵盤*: 移動瀏覽目標到鼠標
+小鍵盤-: 移動瀏覽游標到打字游標
+Control+小鍵盤-: 移動打自由標到瀏覽游標
+NVDA+小鍵盤-: 移動瀏覽目標到焦點
 小鍵盤/: 滑鼠左鍵
 小鍵盤*: 滑鼠右鍵
+小鍵盤+: 從瀏覽游標位置開始朗讀朗讀全部文字內容
 NVDA+小鍵盤+: 從瀏覽目標開始依序朗讀所有物件
-小鍵盤-: 移動瀏覽游標到打自由標
-Control+小鍵盤-: 移動打自由標到瀏覽游標
-小鍵盤+: 從瀏覽游標所在開始朗讀到全篇結束
 
-
-朗讀物件
-
+朗讀物件：
 小鍵盤1: 移動瀏覽游標到前一個字元
 shift+小鍵盤1: 移動瀏覽游標到行首
 小鍵盤2: 朗讀瀏覽游標字元
@@ -94,9 +87,7 @@ shift+小鍵盤7: 移動瀏覽游標到第一行
 小鍵盤9: 移動瀏覽游標到後一行
 shift+小鍵盤9: 移動瀏覽游標到最後一行
 
-
-Firefox3 的虛擬游標指令 (有些可用於 IE 或 Firefox2)
-
+Firefox3 的虛擬游標指令 (有些可用於 IE 或 Firefox2)：
 NVDA+space: 虛擬游標開關
 Control+NVDA+f: 螢幕字串搜尋 (Firefox2/IE 用 Control+f)
 NVDA+F3: 繼續搜尋
@@ -104,22 +95,23 @@ NVDA+F7: 連結列表（在 Firefox2/IE 無效）
 NVDA+F5: 畫面重整（在 Firefox2/IE 無效）
 
 以下為網業物件的快速移動鍵，家 Shift 為反向跳躍：
-
-b: 按鈕
-c: 下拉方塊
-e: 可編輯欄位
-f: 表單
-g: 圖片
 h: 標題
-1-6: 1-6 號標題
-i: 清單項目
-k: 連結
 l: 清單
-m: 頁框
-q: 區快
-r: 單選紐
-s: 分隔區
+i: 清單項目
 t: 表格
+k: 連結
+b: 按鈕
+Control+游標往上或下: 段落
+c: 下拉方塊
+f: 表單
 u: 未進入過的連結
 v: 已進入過的連結
+e: 可編輯欄位
 x: 核取方塊
+c: 下啦方塊
+r: 單選紐
+q: 區快
+s: 分隔區
+m: 頁框
+g: 圖片
+1-6: 1-6 號標題
