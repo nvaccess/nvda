@@ -10,6 +10,9 @@ import ctypes
 import pythoncom
 import win32com.client
 import comtypes.automation
+import wx
+import gui
+import gui.scriptUI
 import IAccessibleHandler
 import controlTypes
 import speech
@@ -18,6 +21,42 @@ from . import IAccessible
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
+
+class CellEditDialog(gui.scriptUI.ModalDialog):
+
+	def __init__(self,message,title,default,callback):
+		super(CellEditDialog,self).__init__(callback)
+		self._title=title
+		self._message=message
+		self._default=default
+
+	def onCellTextChar(self,evt):
+		if evt.GetKeyCode() == wx.WXK_RETURN:
+			if evt.AltDown():
+				i=self._cellText.GetInsertionPoint()
+				self._cellText.Replace(i,i,"\n")
+			else:
+				self.dialog.AddPendingEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+			return
+		evt.Skip(True)
+
+	def makeDialog(self):
+		d=wx.Dialog(gui.mainFrame, wx.ID_ANY, title=self._title)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		mainSizer.Add(wx.StaticText(d,wx.ID_ANY, label=self._message))
+		self._cellText=wx.TextCtrl(d, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE|wx.TE_PROCESS_ENTER)
+		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
+		self._cellText.SetValue(self._default)
+		mainSizer.Add(self._cellText)
+		mainSizer.Add(d.CreateButtonSizer(wx.OK|wx.CANCEL))
+		d.SetSizer(mainSizer)
+		self._cellText.SetFocus()
+		return d
+
+	def getResponse(self,response):
+		if response!=wx.ID_CANCEL:
+			return self._cellText.GetValue()
+		return self._default
 
 class ExcelGrid(IAccessible):
 
@@ -95,6 +134,11 @@ class ExcelGrid(IAccessible):
 		self.speakSelection()
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 
+	def script_editCell(self,keyPress):
+		cell=self.getSelectedRange().Item(1)
+		formulaDialog=CellEditDialog(_("Cell content:"),_("NVDA Excel Cell Editor"),cell.formula,lambda text: setattr(cell,'formula',text))
+		formulaDialog.run()
+
 	def text_reportPresentation(self,offset):
 		"""Reports the current font name, font size, font attributes of the active cell"""
 		speech.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
@@ -133,4 +177,5 @@ class ExcelGrid(IAccessible):
 	("Shift+ExtendedEnd","moveByCell"),
 	("Shift+Control+ExtendedHome","moveByCell"),
 	("Shift+Control+ExtendedEnd","moveByCell"),
+	("f2","editCell"),
 ]]

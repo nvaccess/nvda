@@ -1,6 +1,7 @@
 What's New in NVDA
 
 Changes since 0.6 P2:
+*New: As Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing, when the user presses f2 on a cell. 
 * change: If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
 * fix: The last chunk of audio is no longer cut off when using NVDA with eSpeak on a remote desktop server.
 * change: Improve performance of eSpeak with some Windows Vista audio drivers.
