@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2453\n"
+"Project-Id-Version: r2461\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-10-24 08:22+0300\n"
+"PO-Revision-Date: 2008-10-28 07:25+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "taso %s"
 #: NVDAObjects\IAccessible\__init__.py:708
 #: NVDAObjects\IAccessible\sysListView32.py:224
 msgid "%s of %s"
-msgstr "%s kautta %s"
+msgstr "%s / %s"
 
 #: NVDAObjects\IAccessible\__init__.py:85
 msgid "contains %s items"
@@ -39,41 +39,49 @@ msgstr "%s upotettu objekti"
 msgid "embedded object"
 msgstr "upotettu objekti"
 
-#: NVDAObjects\IAccessible\excel.py:63
+#: NVDAObjects\IAccessible\excel.py:46
+msgid "NVDA Excel Cell Editor"
+msgstr "Solueditori"
+
+#: NVDAObjects\IAccessible\excel.py:48
+msgid "Enter cell contents"
+msgstr "Syötä solun sisältö"
+
+#: NVDAObjects\IAccessible\excel.py:100
 msgid "through"
 msgstr "kautta"
 
-#: NVDAObjects\IAccessible\excel.py:63 controlTypes.py:313
+#: NVDAObjects\IAccessible\excel.py:100 controlTypes.py:313
 msgid "selected"
 msgstr "valittu"
 
-#: NVDAObjects\IAccessible\excel.py:67
+#: NVDAObjects\IAccessible\excel.py:104
 msgid "has formula"
 msgstr "sisältää kaavan"
 
-#: NVDAObjects\IAccessible\excel.py:96
+#: NVDAObjects\IAccessible\excel.py:133
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "Siirtyy soluun ja lukee sen koordinaatit ja sisällön"
 
-#: NVDAObjects\IAccessible\excel.py:100
+#: NVDAObjects\IAccessible\excel.py:142
 msgid "font"
 msgstr "fontti"
 
-#: NVDAObjects\IAccessible\excel.py:101
+#: NVDAObjects\IAccessible\excel.py:143
 msgid "point"
 msgstr "piste"
 
-#: NVDAObjects\IAccessible\excel.py:103 controlTypes.py:297 speech.py:702
+#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:702
 #: textBuffer.py:266 textBuffer.py:318
 msgid "bold"
 msgstr "lihavointi"
 
-#: NVDAObjects\IAccessible\excel.py:105 speech.py:707 textBuffer.py:273
+#: NVDAObjects\IAccessible\excel.py:147 speech.py:707 textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
 msgstr "kursiivi"
 
-#: NVDAObjects\IAccessible\excel.py:107 characterSymbols.py:50
+#: NVDAObjects\IAccessible\excel.py:149 characterSymbols.py:50
 #: controlTypes.py:299 textBuffer.py:280 textBuffer.py:322
 msgid "underline"
 msgstr "alleviivaus"
@@ -81,7 +89,7 @@ msgstr "alleviivaus"
 #: NVDAObjects\IAccessible\sysTreeView32.py:150
 #: NVDAObjects\JAB\__init__.py:260
 msgid "%d of %d"
-msgstr "%d kautta %d"
+msgstr "%d / %d"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:159
 msgid "%s items"
@@ -726,7 +734,7 @@ msgstr "Äänimerkki kaikille edistymispalkeille"
 
 #: appModules\_default.py:691 gui\settingsDialogs.py:455
 msgid "Speak each 10 percent"
-msgstr "Lue joka kymmenes prosentti"
+msgstr "Lue joka 10. prosentti"
 
 #: appModules\_default.py:701
 msgid ""
@@ -737,9 +745,8 @@ msgid ""
 msgstr ""
 "Säätää, miten edistymispalkkien päivittymisestä ilmoitetaan. NVDA voi "
 "antaa äänimerkin kaikkien edistymispalkkien kohdalla tai vain sellaisten, "
-"jotka ovat näkyvissä. Nykyinen arvo voidaan lisäksi lukea joka "
-"kymmenennen prosentin välein, tai ilmoittaminen voidaan poistaa kokonaan "
-"käytöstä."
+"jotka ovat näkyvissä. Nykyinen arvo voidaan lisäksi lukea joka 10. "
+"prosentin välein, tai ilmoittaminen voidaan poistaa kokonaan käytöstä."
 
 #: appModules\_default.py:710
 msgid "report dynamic content changes"
@@ -2541,7 +2548,7 @@ msgstr "Merkk&ien maksimimäärä rivillä"
 
 #: gui\settingsDialogs.py:513
 msgid "&Number of lines per page"
-msgstr "R&ivien maksimimäärä sivulla"
+msgstr "R&ivejä sivulla"
 
 #: gui\settingsDialogs.py:518
 msgid "Use &screen layout (when supported)"
@@ -2631,7 +2638,7 @@ msgstr "Ilmoita tyylim&ääritteet"
 
 #: gui\settingsDialogs.py:616
 msgid "Report spelling errors"
-msgstr "Ilmoita oikeinkirjoitusvirheet"
+msgstr "Ilmoita kirjoitusv&irheet"
 
 #: gui\settingsDialogs.py:619
 msgid "Report &pages"
