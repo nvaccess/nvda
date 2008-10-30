@@ -1,12 +1,15 @@
 import _winreg
 import comtypes.client
 import braille
+from logHandler import log
 
 COM_CLASS = "HtBrailleDriverServer.HtBrailleDriver"
 constants = None
 
 class Sink:
-	def onKeysPressed(self, this, keys, routing_pos):
+	def onKeysPressed(self, keys_arg, routing_pos):
+		# keys_arg is VARIANT. Indexing by 0 gives actual value.
+		keys = keys_arg[0]
 		if constants.KEY_ROUTING in keys:
 			braille.handler.routeTo(routing_pos - 1)
 		elif constants.KEY_UP in keys:
