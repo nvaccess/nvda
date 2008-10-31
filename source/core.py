@@ -19,7 +19,7 @@ import globalVars
 from logHandler import log
 
 def resetConfiguration():
-	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
+	"""Loads the configuration, installs the correct language support and initializes audio so that it will use the configured synth and speech settings.
 	"""
 	import config
 	import speech
@@ -69,7 +69,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
-	log.debug("Creating wx application instance")
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -81,6 +80,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.speakMessage(_("Loading subsystems, please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
+	log.debug("Creating wx application instance")
 	app = wx.App(redirect=False)
 	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
 	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
