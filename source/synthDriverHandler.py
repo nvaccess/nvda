@@ -18,11 +18,8 @@ __path__=['.\\synthDrivers']
 _curSynth=None
 
 def changeVoice(synth, voice):
-	voiceName=synth.getVoiceInfoByID(voice).name
-	voiceName=voiceName.replace('\\','_')
-	fileName="%s/%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,voiceName)
-	speechDictHandler.dictionaries["voice"].load(fileName)
 	synth.voice = voice
+	speechDictHandler.reflectVoiceChange(synth)
 
 def getSynthList():
 	synthList=[]
