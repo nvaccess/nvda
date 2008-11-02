@@ -14,7 +14,7 @@ import api
 
 dictionaries = {}
 dictTypes = ("temp", "smart", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath="speechdicts"
+speechDictsPath=u"speechdicts"
 smartDicts = []
 
 class SpeechDictEntry:
@@ -82,15 +82,18 @@ class SpeechDict(list):
 		return text
 
 class SmartDict(SpeechDict):
-	fileName = ""
+	fileName = None
 	compiled = None
 	pattern = ""
 	loaded = False
+	name = None
 
-	def __init__(self, fileName):
+	def __init__(self, fileName=None, name=None):
 		"""loads regexpr from the file"""
 		super(list,self).__init__()
 		self.fileName = fileName
+		self.name = name
+		if fileName is None: return
 		file = codecs.open(fileName,"r","utf_8_sig",errors="replace")
 		s = file.readline()
 		if not s.startswith("#!"): raise RuntimeError("No regexpr found at starting of file %s"%fileName)
@@ -98,6 +101,14 @@ class SmartDict(SpeechDict):
 		self.pattern = s.rstrip('\r\n')
 		self.compiled = re.compile(self.pattern)
 		file.close()
+
+	def setPattern(self, pattern):
+		self.pattern = pattern
+		self.compiled = re.compile(self.pattern)
+
+	def setName(self,name):
+		self.name = name
+		self.fileName= u"%s/%s.sdic" % (speechDictsPath, api.validateFile(name))
 
 	def matches(self, value):
 		return self.compiled.search(value) is not None
@@ -145,7 +156,7 @@ def initialize():
 	counter = 0
 	for name in os.listdir(speechDictsPath):
 		if not name.endswith(".sdic"): continue
-		smartDicts.append(SmartDict("%s/%s"%(speechDictsPath, name)))
+		smartDicts.append(SmartDict("%s/%s"%(speechDictsPath, name), name[:-5]))
 		counter += 1
 	if counter > 0:
 		log.info("found %d smart dictionaries"%counter)

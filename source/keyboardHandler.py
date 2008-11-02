@@ -216,7 +216,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 #Register internal key press event with  operating system
 
 def initialize():
-	"""Initialises keyboard support."""
+	"""Initializes keyboard support."""
 	if keyHookLib.initialize(internal_keyDownEvent,internal_keyUpEvent) < 0:
 		raise RuntimeError("Error initializing keyHook")
 
