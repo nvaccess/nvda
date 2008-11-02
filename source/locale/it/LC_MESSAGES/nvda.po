@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-02 14:34+ora solare Europa occidentale\n"
-"PO-Revision-Date: 2008-10-22 16:32+0100\n"
+"PO-Revision-Date: 2008-10-30 16:34+0100\n"
 "Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
 "Language-Team: IT <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -41,32 +41,40 @@ msgstr "%s oggetto"
 msgid "embedded object"
 msgstr "Oggetto"
 
-#: NVDAObjects\IAccessible\excel.py:63
+#: NVDAObjects\IAccessible\excel.py:46
+msgid "NVDA Excel Cell Editor"
+msgstr "Editor cella exel di nvda"
+
+#: NVDAObjects\IAccessible\excel.py:48
+msgid "Enter cell contents"
+msgstr "Inserisci il contenuto della cella"
+
+#: NVDAObjects\IAccessible\excel.py:100
 msgid "through"
 msgstr "Attraverso"
 
-#: NVDAObjects\IAccessible\excel.py:63
+#: NVDAObjects\IAccessible\excel.py:100
 #: controlTypes.py:313
 msgid "selected"
 msgstr "Selezionato"
 
-#: NVDAObjects\IAccessible\excel.py:67
+#: NVDAObjects\IAccessible\excel.py:104
 msgid "has formula"
 msgstr "Con formula"
 
-#: NVDAObjects\IAccessible\excel.py:96
+#: NVDAObjects\IAccessible\excel.py:133
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "Sposta su una cella e legge le sue coordinate e il contenuto"
 
-#: NVDAObjects\IAccessible\excel.py:100
+#: NVDAObjects\IAccessible\excel.py:142
 msgid "font"
 msgstr "Font"
 
-#: NVDAObjects\IAccessible\excel.py:101
+#: NVDAObjects\IAccessible\excel.py:143
 msgid "point"
 msgstr "Punto"
 
-#: NVDAObjects\IAccessible\excel.py:103
+#: NVDAObjects\IAccessible\excel.py:145
 #: controlTypes.py:297
 #: speech.py:702
 #: textBuffer.py:266
@@ -74,14 +82,14 @@ msgstr "Punto"
 msgid "bold"
 msgstr "Grassetto"
 
-#: NVDAObjects\IAccessible\excel.py:105
+#: NVDAObjects\IAccessible\excel.py:147
 #: speech.py:707
 #: textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
 msgstr "Corsivo"
 
-#: NVDAObjects\IAccessible\excel.py:107
+#: NVDAObjects\IAccessible\excel.py:149
 #: characterSymbols.py:50
 #: controlTypes.py:299
 #: textBuffer.py:280
@@ -815,78 +823,202 @@ msgid "sent: %s"
 msgstr "Inviato: %s"
 
 #: braille.py:26
+msgid "Arabic grade 1"
+msgstr "Arabo grado 1"
+
+#: braille.py:27
+msgid "Welsh grade 1"
+msgstr "Gallese grado 1"
+
+#: braille.py:28
+msgid "Welsh grade 2"
+msgstr "Gallese grado 2"
+
+#: braille.py:29
+msgid "Czech grade 1"
+msgstr "Ceco grado 1"
+
+#: braille.py:30
+msgid "Danish grade 1"
+msgstr "Danese grado 1"
+
+#: braille.py:31
+msgid "German grade 0"
+msgstr "Tedesco grado 0"
+
+#: braille.py:32
+msgid "German grade 1"
+msgstr "Tedesco grado 1"
+
+#: braille.py:33
+msgid "German grade 2"
+msgstr "Tedesco grado 2"
+
+#: braille.py:34
+msgid "English (U.K.) grade 1"
+msgstr "Inglese (Regno Unito) grado 1"
+
+#: braille.py:35
+msgid "English (U.K.) grade 2"
+msgstr "Inglese (Regno Unito) grado 2"
+
+#: braille.py:36
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Inglese (Stati Uniti) braille computer 6 punti"
 
-#: braille.py:27
+#: braille.py:37
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Inglese (Stati Uniti) braille computer 8 punti"
 
-#: braille.py:28
+#: braille.py:38
+msgid "English (U.S.) grade 1"
+msgstr "Inglese (Stati Uniti) grado 1"
+
+#: braille.py:39
+msgid "English (U.S.) grade 2"
+msgstr "Inglese (Stati Uniti) grado 1"
+
+#: braille.py:40
+msgid "Spanish grade 1"
+msgstr "Spagnolo grado 1"
+
+#: braille.py:41
+msgid "French (Canada) grade 1"
+msgstr "Francese (Canada) grado 1"
+
+#: braille.py:42
+msgid "French (Canada) grade 2"
+msgstr "Francese (Canada) grado 2"
+
+#: braille.py:43
+msgid "French (France) grade 1"
+msgstr "Francese (Francia) grado 1"
+
+#: braille.py:44
+msgid "French (France) grade 2"
+msgstr "Francese (Francia) grado 2"
+
+#: braille.py:45
+msgid "Greek (Greece) grade 1"
+msgstr "Greco (Grecia) grado 1"
+
+#: braille.py:46
+msgid "Hindi grade 1"
+msgstr "Hindi grado 1"
+
+#: braille.py:47
+msgid "Italian grade 1"
+msgstr "Italiano grado 1"
+
+#: braille.py:48
+msgid "Latvian grade 1"
+msgstr "Lettone grado 1"
+
+#: braille.py:49
+msgid "Dutch (Belgium) grade 1"
+msgstr "Tedesco (Belgio) grado 1"
+
+#: braille.py:50
+msgid "Dutch (netherlands) grade 1"
+msgstr "Tedesco (Paesi Bassi) grado 1"
+
+#: braille.py:51
+msgid "Norwegian grade 0"
+msgstr "Norvegese grado 0"
+
+#: braille.py:52
+msgid "Norwegian grade 1"
+msgstr "Norvegese grado 1"
+
+#: braille.py:53
+msgid "Norwegian grade 2"
+msgstr "Norvegese grado 2"
+
+#: braille.py:54
+msgid "Norwegian grade 3"
+msgstr "Norvegese grado 3"
+
+#: braille.py:55
+msgid "Polish grade 1"
+msgstr "Polacco grado 1"
+
+#: braille.py:56
+msgid "Portuguese grade 1"
+msgstr "Portoghese grado 1"
+
+#: braille.py:57
+msgid "Swedish grade 1"
+msgstr "Svedese grado 1"
+
+#: braille.py:58
+msgid "Slovak"
+msgstr "Slovacco"
+
+#: braille.py:59
 msgid "Unified English Braille Code grade 1"
 msgstr "Inglese codice braille unificato grado 1"
 
-#: braille.py:29
+#: braille.py:60
 msgid "Unified English Braille Code grade 2"
 msgstr "Inglese codice braille unificato grado 2"
 
-#: braille.py:33
+#: braille.py:64
 msgid "edt"
 msgstr "Edt"
 
-#: braille.py:35
+#: braille.py:66
 msgid "mnubar"
 msgstr "Mnubar"
 
-#: braille.py:36
+#: braille.py:67
 msgid "mnu"
 msgstr "Mnu"
 
-#: braille.py:38
+#: braille.py:69
 msgid "btn"
 msgstr "Btn"
 
-#: braille.py:39
+#: braille.py:70
 msgid "chk"
 msgstr "Chk"
 
-#: braille.py:40
+#: braille.py:71
 msgid "rbtn"
 msgstr "Rbtn"
 
-#: braille.py:41
+#: braille.py:72
 msgid "cbo"
 msgstr "Cbo"
 
-#: braille.py:42
+#: braille.py:73
 msgid "lnk"
 msgstr "Lnk"
 
-#: braille.py:43
+#: braille.py:74
 msgid "dlg"
 msgstr "Dlg"
 
-#: braille.py:47
+#: braille.py:78
 msgid "(x)"
 msgstr "(x)"
 
-#: braille.py:48
+#: braille.py:79
 msgid "sel"
 msgstr "Sel"
 
-#: braille.py:49
+#: braille.py:80
 msgid "submnu"
 msgstr "Submnu"
 
-#: braille.py:52
+#: braille.py:83
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:180
+#: braille.py:211
 msgid "lvl %s"
 msgstr "Lvl %s"
 
-#: brailleDisplayDrivers\handyTech.py:21
+#: brailleDisplayDrivers\handyTech.py:24
 msgid "HandyTech braille displays"
 msgstr "Display braille HandyTech"
 
@@ -1742,232 +1874,232 @@ msgstr "Trova un testo dalla posizione del cursore"
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "Trova l'occorrenza precedente del testo precedentemente inseritodalla posizione del cursore"
 
-#: gui\__init__.py:145
+#: gui\__init__.py:146
 msgid "configuration applied"
 msgstr "Configurazione applicata"
 
-#: gui\__init__.py:150
+#: gui\__init__.py:151
 msgid "configuration saved"
 msgstr "Configurazione salvata"
 
-#: gui\__init__.py:153
+#: gui\__init__.py:154
 msgid "Could not save configuration - probably read only file system"
 msgstr "Non posso salvare la configurazione, probabilmente il file e' di sola lettura"
 
-#: gui\__init__.py:153
+#: gui\__init__.py:154
 #: gui\logViewer.py:73
 msgid "Error"
 msgstr "Errore"
 
-#: gui\__init__.py:162
+#: gui\__init__.py:163
 msgid "Default dictionary"
 msgstr "Dizionario di default"
 
-#: gui\__init__.py:165
+#: gui\__init__.py:166
 msgid "Voice dictionary (%s)"
 msgstr "Dizionario specifico per la voce (%s)"
 
-#: gui\__init__.py:168
+#: gui\__init__.py:169
 msgid "Temporary dictionary"
 msgstr "Dizionario temporaneo"
 
-#: gui\__init__.py:174
+#: gui\__init__.py:177
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Siete sicuri di voler uscire da Nvda?"
 
-#: gui\__init__.py:174
-#: gui\__init__.py:301
+#: gui\__init__.py:177
+#: gui\__init__.py:305
 msgid "Exit NVDA"
 msgstr "Esci da nvda"
 
-#: gui\__init__.py:215
+#: gui\__init__.py:219
 msgid "copyright"
 msgstr "Copyright"
 
-#: gui\__init__.py:215
+#: gui\__init__.py:219
 msgid "url"
 msgstr "Url"
 
-#: gui\__init__.py:215
+#: gui\__init__.py:219
 msgid "version"
 msgstr "Versione"
 
-#: gui\__init__.py:217
-#: gui\__init__.py:292
+#: gui\__init__.py:221
+#: gui\__init__.py:296
 msgid "About NVDA"
 msgstr "Informazioni su nvda"
 
-#: gui\__init__.py:241
+#: gui\__init__.py:245
 msgid "&General settings..."
 msgstr "Impostazioni &generali..."
 
-#: gui\__init__.py:241
+#: gui\__init__.py:245
 #: gui\settingsDialogs.py:88
 msgid "General settings"
 msgstr "Impostazioni generali"
 
-#: gui\__init__.py:243
+#: gui\__init__.py:247
 msgid " the synthesizer to use"
 msgstr " il sintetizzatore da usare"
 
-#: gui\__init__.py:243
+#: gui\__init__.py:247
 msgid "&Synthesizer..."
 msgstr "&Sintetizzatore..."
 
-#: gui\__init__.py:245
+#: gui\__init__.py:249
 msgid "&Voice settings..."
 msgstr "Impostazioni &voce..."
 
-#: gui\__init__.py:245
+#: gui\__init__.py:249
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Scegli la voce, la velocita', il tono e il volume da usare"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:251
 msgid "B&raille settings..."
 msgstr "Impostazioni b&raille..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:253
 msgid "&Keyboard Settings..."
 msgstr "Impostazioni &tastiera..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:253
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "Configura le impostazioni della tastiera, la lettura dei caratteri digitati, delle parole o dei tasti di comando"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:255
 msgid "&Mouse settings..."
 msgstr "Impostazioni &mouse..."
 
-#: gui\__init__.py:251
+#: gui\__init__.py:255
 msgid "Change reporting of mouse sape, object under mouse"
 msgstr "Configura la lettura degli oggetti sotto il mouse e altre impostazioni"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:257
 msgid "&Object presentation..."
 msgstr "Presentazione &oggetti..."
 
-#: gui\__init__.py:253
+#: gui\__init__.py:257
 msgid "Change reporting of objects"
 msgstr "Configura la lettura degli oggetti"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:259
 msgid "Change virtual buffers specific settings"
 msgstr "Cambia le impostazioni del buffer virtuale"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:259
 msgid "Virtual &buffers..."
 msgstr "&Buffer virtuale..."
 
-#: gui\__init__.py:257
+#: gui\__init__.py:261
 msgid "Change Settings of document properties"
 msgstr "Cambia le impostazioni delle proprieta' del documento"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:261
 msgid "Document &formatting..."
 msgstr "&Formattazione documento..."
 
-#: gui\__init__.py:260
+#: gui\__init__.py:264
 msgid "&Default dictionary..."
 msgstr "Dizionario di &default..."
 
-#: gui\__init__.py:260
+#: gui\__init__.py:264
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Dialogo dove potete creare il dizionario di default aggiungendo voci all'elenco"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:266
 msgid "&Voice dictionary..."
 msgstr "Dizionario specifico per la &voce..."
 
-#: gui\__init__.py:262
+#: gui\__init__.py:266
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Dialogo dove potete creare un dizionario specifico per la voce aggiungendo voci all'elenco"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:268
 msgid "&Temporary dictionary..."
 msgstr "Dizionario &temporaneo..."
 
-#: gui\__init__.py:264
+#: gui\__init__.py:268
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Dialogo dove potete creare un dizionario tempporaneo aggiungendo voci"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:270
 msgid "Speech &dictionaries"
 msgstr "&Dizionari"
 
-#: gui\__init__.py:267
+#: gui\__init__.py:271
 msgid "&Preferences"
 msgstr "&Preferenze"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:274
 msgid "View log"
 msgstr "Visualizza log"
 
-#: gui\__init__.py:272
+#: gui\__init__.py:276
 msgid "Python console"
 msgstr "Console python"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:278
 msgid "Tools"
 msgstr "Strumenti"
 
-#: gui\__init__.py:277
+#: gui\__init__.py:281
 msgid "User guide"
 msgstr "Manuale"
 
-#: gui\__init__.py:279
+#: gui\__init__.py:283
 msgid "Key Command Quick Reference"
 msgstr "Guida rapida"
 
-#: gui\__init__.py:281
+#: gui\__init__.py:285
 msgid "What's &new"
 msgstr "Novita'"
 
-#: gui\__init__.py:283
+#: gui\__init__.py:287
 msgid "Web site"
 msgstr "Sito web"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:289
 msgid "License"
 msgstr "Licenza"
 
-#: gui\__init__.py:287
+#: gui\__init__.py:291
 msgid "Contributors"
 msgstr "Collaboratori"
 
-#: gui\__init__.py:289
+#: gui\__init__.py:293
 msgid "We&lcome dialog"
 msgstr "Finestra di benvenuto"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:296
 msgid "About..."
 msgstr "Informazioni su..."
 
-#: gui\__init__.py:294
+#: gui\__init__.py:298
 msgid "&Help"
 msgstr "&Aiuto"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:300
 msgid "&Revert to saved configuration"
 msgstr "&Torna alla configurazione salvata"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:300
 msgid "Reset all settings to saved state"
 msgstr "Riporta tutte le impostazioni a quelle salvate"
 
-#: gui\__init__.py:298
+#: gui\__init__.py:302
 msgid "&Save configuration"
 msgstr "&Salva configurazione"
 
-#: gui\__init__.py:298
+#: gui\__init__.py:302
 msgid "Write the current configuration to nvda.ini"
 msgstr "Salva la configurazione nel file nvda.ini"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:305
 #: gui\logViewer.py:33
 msgid "E&xit"
 msgstr "E&sci"
 
-#: gui\__init__.py:355
+#: gui\__init__.py:361
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -1980,20 +2112,20 @@ msgstr ""
 "La maggior parte dei comandi per controllare NVDA richiedono di premere e mantenere premuto il tasto NVDA mentre si digitano altri tasti. Per impostazione predefinita si utilizzano i tasti insert (del tastierino numerico e della tastiera estesa) come tasto NVDA. Puoi anche scegliere di usare CapsLock come tasto NVDA.\n"
 "Puoi premere in qualsiasi momento NVDA+n per attivare il menu di nvda. Da questo menu puoi configurare NVDA, ottenere aiuto e accedere ad altre funzioni.\n"
 
-#: gui\__init__.py:365
+#: gui\__init__.py:371
 msgid "Welcome to NVDA"
 msgstr "Benvenuto in nvda"
 
-#: gui\__init__.py:369
+#: gui\__init__.py:375
 msgid "Options"
 msgstr "Opzioni"
 
-#: gui\__init__.py:370
+#: gui\__init__.py:376
 #: gui\settingsDialogs.py:377
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Utilizza caps lock come tasto funzione per nvda"
 
-#: gui\__init__.py:373
+#: gui\__init__.py:379
 msgid "Show this dialog when NVDA starts"
 msgstr "Mostra questa finestra all'avvio di nvda"
 
