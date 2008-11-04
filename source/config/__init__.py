@@ -47,6 +47,14 @@ outputDevice = string(default=default)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 
+# Braille settings
+[braille]
+	display = string(default=noBraille)
+	translationTable = string(default=en-us-comp8.ctb)
+	expandAtCursor = boolean(default=true)
+	cursorBlinkRate = integer(default=500,min=0,max=2000)
+	messageTimeout = integer(default=4,min=1,max=20)
+
 # Presentation settings
 [presentation]
 		reportClassOfClientObjects = boolean(default=false)
@@ -128,7 +136,8 @@ conf = None
 mtime = 0
 
 def load():
-	"""Loads the configuration from the configFile. It also takes note of the file's modification time so that L{save} won't loose any changes made to the file while NVDA is running. 
+	"""Loads the configuration from the configFile.
+	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
 	"""
 	global conf, mtime
 	# If the config file exists, store its mtime.

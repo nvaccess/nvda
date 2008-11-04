@@ -193,7 +193,7 @@ class MSHTML(IAccessible):
 			super(MSHTML,self).reportFocus()
 		lastMSHTMLEditGainFocusTimeStamp=timeStamp
 
-	def event_looseFocus(self):
+	def event_loseFocus(self):
 		if hasattr(self,'domElement'):
 			self.TextInfo=NVDAObjects.NVDAObjectTextInfo
 

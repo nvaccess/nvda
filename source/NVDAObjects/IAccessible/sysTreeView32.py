@@ -150,7 +150,7 @@ class TreeViewItem(IAccessible):
 		return _("%d of %d")%(index,numItems)
 
 	def event_stateChange(self):
-		if id(self)==id(api.getFocusObject()) and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
+		if self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
 			announceContains=True
 		else:
 			announceContains=False
@@ -161,7 +161,7 @@ class TreeViewItem(IAccessible):
 	def event_gainFocus(self):
 		global oldLevel
 		newLevel=self.treeLevel
- 		if newLevel!=oldLevel and id(self)==id(api.getFocusObject()):
+ 		if newLevel!=oldLevel and self is api.getFocusObject():
 			speech.speakMessage(_("level %d")%newLevel)
 			oldLevel=newLevel
 		super(self.__class__,self).event_gainFocus()

@@ -34,6 +34,16 @@ def getRecursiveDataFiles(dest,source):
 	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
 
+def getOptionalIncludes():
+	includes = []
+	try:
+		# The explicit inclusion of brlapi is required because it is only imported by the brltty display driver, which is not a bundled module.
+		import brlapi
+		includes.append("brlapi")
+	except:
+		pass
+	return includes
+
 setup(
 	name = name,
 	version=version,
@@ -58,6 +68,8 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
+		# The explicit inclusion of ui can be removed once ui is imported by a bundled module.
+		"includes": ["ui"] + getOptionalIncludes(),
 	}},
 	zipfile = None,
 	data_files=[
@@ -70,5 +82,6 @@ setup(
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("speechdicts", glob("speechdicts/*.dic")),
-	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers'),
+		("louis/tables",glob("louis/tables/*"))
+	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers')+getRecursiveDataFiles('brailleDisplayDrivers','brailleDisplayDrivers'),
 )

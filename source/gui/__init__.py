@@ -35,6 +35,7 @@ evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
 
 ### Globals
 mainFrame = None
+isExitDialog=False
 #: A list of top level windows excluding L{mainFrame} which are currently instantiated and which should be destroyed on exit.
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
@@ -168,12 +169,15 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
+		global isExitDialog
 		canExit=False
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
+			isExitDialog=True
 			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
+			isExitDialog=False
 			self.postPopup()
 		else:
 			canExit=True
@@ -188,6 +192,9 @@ class MainFrame(wx.Frame):
 
 	def onVoiceCommand(self,evt):
 		self._popupSettingsDialog(VoiceSettingsDialog)
+
+	def onBrailleCommand(self,evt):
+		self._popupSettingsDialog(BrailleSettingsDialog)
 
 	def onKeyboardSettingsCommand(self,evt):
 		self._popupSettingsDialog(KeyboardSettingsDialog)
@@ -241,6 +248,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume  to use"))
 		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
+		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse sape, object under mouse"))
@@ -320,7 +329,9 @@ def showGui():
  	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
 
 def quit():
-	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
+	global isExitDialog
+	if not isExitDialog:
+		wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
 
 def restart():
 	globalVars.restart=True

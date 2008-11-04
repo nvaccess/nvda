@@ -24,11 +24,12 @@ import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
+import api
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
 
-#Dictionary of windowHandle:appModule paires used to hold the currently running modules
+#Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
 #Variable to hold the active (focused) appModule
 activeModule=None
@@ -54,16 +55,15 @@ class TProcessEntry32(ctypes.Structure):
 		("szExeFile", ctypes.c_char * 259)
 	]
 
-def getAppName(window,includeExt=False):
-	"""Finds out the application name of the given window.
-	@param window: the window handle of the application you wish to get the name of.
-	@type window: int
+def getAppNameFromProcessID(processID,includeExt=False):
+	"""Finds out the application name of the given process.
+	@param processID: the ID of the process handle of the application you wish to get the name of.
+	@type processID: int
 	@param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
 	@type window: bool
 	@returns: application name
 	@rtype: str
 	"""
-	processID=winUser.getWindowThreadProcessID(winUser.getAncestor(window,winUser.GA_ROOTOWNER))[0]
 	if processID==NVDAProcessID:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
@@ -124,68 +124,39 @@ def getActiveModule():
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.window.Window):
 		return
-	return getAppModuleFromWindow(obj.windowHandle)
+	return getAppModuleFromProcessID(obj.windowProcessID)
 
-def getAppModuleFromWindow(windowHandle):
-	"""Finds the appModule that is for the given window handle.
-	This window handle can be any window with in an application, not just the app main window.
-	@param windowHandle: The window for which you wish to find the appModule.
-	@type windowHandle: int
+def getAppModuleFromProcessID(processID):
+	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
+	@param processID: The ID of the process for which you wish to find the appModule.
+	@type processID: int
 	@returns: the appModule, or None if there isn't one
 	@rtype: appModule 
 	"""
-	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
-	log.debug("appWindow %s, from window %s"%(appWindow,windowHandle))
-	mod=runningTable.get(appWindow)
-	if mod:
-		log.debug("found appModule %s"%mod)
-	else:
-		log.debug("no appModule")
+	mod=runningTable.get(processID)
+	if not mod:
+		appName=getAppNameFromProcessID(processID)
+		modClass=fetchAppModuleClass(appName)
+		if modClass: 
+			mod=modClass(processID,appName=appName)
+			if modClass!=AppModule:
+				log.info("Loaded appModule %s"%(mod.appName))
+			loadKeyMap(mod.appName,mod)
+		runningTable[processID]=mod
 	return mod
 
-def update(windowHandle):
-	"""Removes any appModules connected with windows that no longer exist, and uses the given window handle to try and load a new appModule if need be.
-	@param windowHandle: any window in an application
-	@type windowHandle: int
+def update(processID):
+	"""Removes any appModules from te cache who's process has died, and also tries to load a new appModule for the given process ID if need be.
+	@param processID: the ID of the process.
+	@type processID: int
 	"""
-	global activeModule
-	for w in [x for x in runningTable if not winUser.isWindow(x)]:
-		if isinstance(activeModule,AppModule) and w==activeModule.appWindow: 
-			if hasattr(activeModule,"event_appLooseFocus"):
-				log.debug("calling appLoseFocus event on appModule %s"%activeModule)
-				activeModule.event_appLooseFocus()
-			activeModule=None
-		log.debug("application %s closed, window %s"%(runningTable[w].appName,w))
-		del runningTable[w]
-	appWindow=winUser.getAncestor(windowHandle,winUser.GA_ROOTOWNER)
-	log.debug("Using window %s, got appWindow %s"%(windowHandle,appWindow))
-	if appWindow<=0:
-		log.debug("bad appWindow")
-		return
-	if appWindow not in runningTable:
-		log.debug("new appWindow")
-		appName=getAppName(appWindow)
-		if not appName:
-			log.debugWarning("could not get application name from window %s (%s)"%(appWindow,winUser.getClassName(appWindow)))
-			return
-		mod=fetchModule(appName)
-		if mod: 
-			mod=mod(appName,appWindow)
-			if mod.__class__!=AppModule:
-				log.info("Loaded appModule %s"%(mod.appName))
-			loadKeyMap(appName,mod)
-		runningTable[appWindow]=mod
-	activeAppWindow=winUser.getAncestor(winUser.getForegroundWindow(),winUser.GA_ROOTOWNER)
-	if isinstance(activeModule,AppModule) and activeAppWindow!=activeModule.appWindow: 
-		log.debug("appModule %s lost focus"%activeModule)
-		if hasattr(activeModule,"event_appLooseFocus"):
-			activeModule.event_appLooseFocus()
-		activeModule=None
-	if not activeModule and activeAppWindow in runningTable:
-		activeModule=runningTable[activeAppWindow]
-		log.debug("appModule %s gained focus"%activeModule)
-		if hasattr(activeModule,"event_appGainFocus"):
-			activeModule.event_appGainFocus()
+	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
+		log.debug("application %s closed"%deadMod.appName)
+		del runningTable[deadMod.processID];
+		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
+			if hasattr(deadMod,'event_appLoseFocus'):
+				deadMod.event_appLoseFocus();
+		getAppModuleFromProcessID(processID)
 
 def loadKeyMap(appName,mod):
 	"""Loads a key map in to the given appModule, with the given name. if the key map exists. It takes in to account what layout NVDA is currently set to.
@@ -214,18 +185,18 @@ def loadKeyMap(appName,mod):
 	log.debug("added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
   	return True
 
-def fetchModule(appName):
+def fetchAppModuleClass(appName):
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	It only returns the class, it must be initialized with a name and a window to actually be used.
 	@param appName: the application name for which an appModule should be found.
 	@type appName: str
 	@returns: the appModule, or None if not found
-	@rtype: appModule
+	@rtype: AppModule
 	"""  
 	mod=None
 	if moduleExists(appName):
 		try:
-			mod=__import__(appName,globals(),locals(),[]).appModule
+			mod=__import__(appName,globals(),locals(),[]).AppModule
 		except:
 			log.error("Error in appModule %s"%appName,exc_info=True)
 			speech.speakMessage(_("Error in appModule %s")%appName)
@@ -239,7 +210,7 @@ def initialize():
 	"""
 	global NVDAProcessID,default
 	NVDAProcessID=os.getpid()
-	defaultModClass=fetchModule('_default')
+	defaultModClass=fetchAppModuleClass('_default')
 	if defaultModClass:
 		default=defaultModClass('_default',winUser.getDesktopWindow())
 	if default:
@@ -257,13 +228,22 @@ class AppModule(baseObject.ScriptableObject):
 	"""AppModule base class
 	@var appName: the application name
 	@type appName: str
-	@var appWindow: the application main window
-	@type appWindow: int
+	@var processID: the ID of the process this appModule is for.
+	@type processID: int
 	"""
 
-	def __init__(self,appName,appWindow):
+	def __init__(self,processID,appName=None):
+		self.processID=processID
+		if appName is None:
+			appName=getAppNameFromProcessID(processID)
 		self.appName=appName
-		self.appWindow=appWindow
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
 	def __repr__(self):
-		return "AppModule (appName %s, appWindow %s) at address %x"%(self.appName,self.appWindow,id(self))
+		return "AppModule (appName %s, process ID %s) at address %x"%(self.appName,self.processID,id(self))
+
+	def _get_isAlive(self):
+		return bool(winKernel.waitForSingleObject(self.processHandle,0))
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)

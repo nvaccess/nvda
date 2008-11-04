@@ -70,19 +70,20 @@ def setForegroundObject(obj):
 
 def setFocusObject(obj):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
-Before overriding the last object, this function calls event_looseFocus on the object to notify it that it is loosing focus. 
+Before overriding the last object, this function calls event_loseFocus on the object to notify it that it is loosing focus. 
 @param obj: the object that will be stored as the focus object
 @type obj: NVDAObjects.NVDAObject
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_looseFocus"):
+	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
 		try:
-			globalVars.focusObject.event_looseFocus()
+			globalVars.focusObject.event_loseFocus()
 		except:
-			log.error("event_looseFocus in focusObject", exc_info=True)
+			log.error("event_loseFocus in focusObject", exc_info=True)
 	oldFocusLine=globalVars.focusAncestors
 	oldFocusLine.append(globalVars.focusObject)
+	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
 	ancestors=[]
 	tempObj=obj
 	matchedOld=False
@@ -95,7 +96,12 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
 				# Copy the old ancestors up to and including this object.
-				ancestors=oldFocusLine[0:index+1]+ancestors
+				origAncestors=oldFocusLine[0:index+1]
+				#make sure to cache the last old ancestor as a parent on the first new ancestor so as not to leave a broken parent cache
+				if len(ancestors)>0:
+					ancestors[0].parent=origAncestors[-1]
+				origAncestors.extend(ancestors)
+				ancestors=origAncestors
 				focusDifferenceLevel=index+1
 				# We don't need to process any more in either this loop or the outer loop; we have all of the ancestors.
 				matchedOld=True
@@ -108,6 +114,13 @@ Before overriding the last object, this function calls event_looseFocus on the o
 		parent=tempObj.parent
 		tempObj.parent=parent # Cache the parent.
 		tempObj=parent
+	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
+	for removedMod in oldAppModuleSet-newAppModuleSet:
+		if hasattr(removedMod,'event_appLoseFocus'):
+			removedMod.event_appLoseFocus()
+  	for addedMod in newAppModuleSet-oldAppModuleSet:
+		if hasattr(addedMod,'event_appGainFocus'):
+			addedMod.event_appGainFocus()
 	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
 		virtualBufferObject=None
 		for o in ancestors[focusDifferenceLevel:]+[obj]:
@@ -115,10 +128,14 @@ Before overriding the last object, this function calls event_looseFocus on the o
 			if virtualBufferObject:
 				break
 		obj.virtualBuffer=virtualBufferObject
-		if virtualBufferObject and hasattr(virtualBufferObject,"event_virtualBuffer_firstEnter"):
-			virtualBufferObject.event_virtualBuffer_firstEnter()
-	elif obj.virtualBuffer:
-		virtualBufferHandler.reportPassThrough(obj.virtualBuffer)
+		if virtualBufferObject and hasattr(virtualBufferObject,"event_virtualBuffer_firstGainFocus"):
+			virtualBufferObject.event_virtualBuffer_firstGainFocus()
+	oldVirtualBuffer=globalVars.focusObject.virtualBuffer if globalVars.focusObject else None
+	if obj.virtualBuffer is not oldVirtualBuffer:
+		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
+			oldVirtualBuffer.event_virtualBuffer_loseFocus()
+		if hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
+			obj.virtualBuffer.event_virtualBuffer_gainFocus()
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
@@ -152,15 +169,45 @@ def setDesktopObject(obj):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.desktopObject=obj
 
+def getReviewPosition():
+	"""Retreaves the current TextInfo instance representing the user's review position. If it is not set, it uses the user's set navigator object and creates a TextInfo from that.
+	"""
+	if globalVars.reviewPosition: 
+		return globalVars.reviewPosition
+	else:
+		try:
+			globalVars.reviewPosition=globalVars.navigatorObject.virtualBuffer.makeTextInfo(globalVars.navigatorObject)
+			return globalVars.reviewPosition
+		except:
+			pass
+		try:
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_CARET)
+			return globalVars.reviewPosition
+		except:
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_FIRST)
+			return globalVars.reviewPosition
+
+def setReviewPosition(reviewPosition):
+	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
+	"""
+	globalVars.reviewPosition=reviewPosition
+	globalVars.navigatorObject=None
+	import braille
+	braille.handler.handleReviewMove()
+
 def getNavigatorObject():
-	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. 
+	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
 @returns: the current navigator object
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	return globalVars.navigatorObject
+	if globalVars.navigatorObject:
+		return globalVars.navigatorObject
+	else:
+		globalVars.navigatorObject=globalVars.reviewPosition.NVDAObjectAtStart
+		return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
-	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus.  
+	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. It also sets the current review position to None so that next time the review position is asked for, it is created from the navigator object.  
 @param obj: the object that will be set as the current navigator object
 @type obj: NVDAObjects.NVDAObject  
 """
@@ -169,10 +216,9 @@ def setNavigatorObject(obj):
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
-	try:
-		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_CARET)
-	except:
-		globalVars.reviewPosition=obj.makeTextInfo(textHandler.POSITION_FIRST)
+	globalVars.reviewPosition=None
+	import braille
+	braille.handler.handleReviewMove()
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -233,6 +279,19 @@ def copyToClip(text):
 		if got == text:
 			return True
 	return False
+
+def getClipData():
+	"""Receives text from the windows clipboard.
+@returns: Clipboard text
+@rtype: string
+"""
+	text = ""
+	win32clipboard.OpenClipboard()
+	try:
+		text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+	finally:
+		win32clipboard.CloseClipboard()
+	return text
 
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.

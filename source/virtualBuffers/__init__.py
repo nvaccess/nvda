@@ -4,6 +4,7 @@ import time
 import os
 import winsound
 import XMLFormatting
+import IAccessibleHandler
 import baseObject
 from keyUtils import sendKey
 import scriptHandler
@@ -24,10 +25,38 @@ import api
 import cursorManager
 from gui import scriptUI
 import virtualBufferHandler
+import eventHandler
+import braille
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+		return obj
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		foundObj=False
+		while obj and obj!=self.obj:
+			try:
+				docHandle=obj.IAccessibleObject.windowHandle
+				ID=obj.IAccessibleObject.uniqueID
+				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
+				return start,end
+			except:
+				obj=obj.parent
+
+	def __init__(self,obj,position):
+		self.obj=obj
+		if isinstance(position,NVDAObjects.NVDAObject):
+			start,end=self._getOffsetsFromNVDAObject(position)
+			position=textHandler.Offsets(start,end)
+		super(VirtualBufferTextInfo,self).__init__(obj,position)
+
+	def _get_NVDAObjectAtStart(self):
+		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getLineNumFromOffset(offset):
 		#virtualBuffers have no concept of line numbers
@@ -50,6 +79,8 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return VBufClient_getBufferTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
+		if start==end:
+			return ""
 		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
 		return text
 
@@ -110,9 +141,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self.passThrough=False
+		self._passThrough=False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
+
+	def _get_passThrough(self):
+		return self._passThrough
+
+	def _set_passThrough(self, state):
+		self._passThrough = state
+		if state:
+			braille.handler.handleGainFocus(api.getFocusObject())
+		else:
+			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
 		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
@@ -134,14 +175,27 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _get_windowHandle(self):
 		return self.rootNVDAObject.windowHandle
 
-	def event_virtualBuffer_firstEnter(self):
-		"""Triggered the first time this virtual buffer is entered.
+	def event_virtualBuffer_firstGainFocus(self):
+		"""Triggered the first time this virtual buffer ever gains focus.
 		"""
 		speech.cancelSpeech()
 		virtualBufferHandler.reportPassThrough(self)
 		speech.speakObjectProperties(self.rootNVDAObject,name=True)
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+
+	def event_virtualBuffer_gainFocus(self):
+		"""Triggered when this virtual buffer gains focus.
+		This event is only fired upon entering this buffer when it was not the current buffer before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
+		"""
+		virtualBufferHandler.reportPassThrough(self)
+		braille.handler.handleGainFocus(self)
+
+	def event_virtualBuffer_loseFocus(self):
+		"""Triggered when this virtual buffer loses focus.
+		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
+		"""
 
 	def _calculateLineBreaks(self,text):
 		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
@@ -159,8 +213,27 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _activateContextMenuForField(self,docHandle,ID):
 		pass
 
-	def _caretMovedToField(self,docHandle,ID,reason=speech.REASON_CARET):
-		pass
+	def _set_selection(self, info, reason=speech.REASON_CARET):
+		super(VirtualBuffer, self)._set_selection(info)
+		if isScriptWaiting() or not info.isCollapsed:
+			return
+		api.setReviewPosition(info)
+		obj = info.NVDAObjectAtStart
+		if obj == self.rootNVDAObject:
+			return
+		obj.scrollIntoView()
+		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
+			obj.setFocus()
+		self.passThrough=self.shouldPassThrough(obj,reason=reason)
+		virtualBufferHandler.reportPassThrough(self)
+
+	def _shouldSetFocusToObj(self, obj):
+		"""Determine whether an object should receive focus.
+		Subclasses should override this method.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		return False
 
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
@@ -173,14 +246,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _caretMovementScriptHelper(self, *args, **kwargs):
 		if self.VBufHandle is None:
 			return 
-		noKeyWaiting=not isScriptWaiting()
-		if noKeyWaiting:
-			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-		if noKeyWaiting:
-			docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,self.selection._startOffset)
-			if ID!=0 and (docHandle!=oldDocHandle or ID!=oldID):
-				self._caretMovedToField(docHandle,ID)
 
 	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
@@ -230,9 +296,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		info.updateCaret()
 		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
-		self._caretMovedToField(docHandle, ID,reason=self.REASON_QUICKNAV)
+		info.collapse()
+		self._set_selection(info, reason=self.REASON_QUICKNAV)
 
 	@classmethod
 	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -279,10 +345,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 				self._activateField(docHandle, ID)
 			else:
 				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
-				info.updateCaret()
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-				self._caretMovedToField(docHandle,ID)
+				info.collapse()
+				self.selection = info
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")

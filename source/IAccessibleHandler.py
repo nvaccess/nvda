@@ -391,6 +391,7 @@ IAccessibleStatesToNVDAStates={
 	STATE_SYSTEM_READONLY:controlTypes.STATE_READONLY,
 	STATE_SYSTEM_EXPANDED:controlTypes.STATE_EXPANDED,
 	STATE_SYSTEM_COLLAPSED:controlTypes.STATE_COLLAPSED,
+	STATE_SYSTEM_OFFSCREEN:controlTypes.STATE_OFFSCREEN,
 	STATE_SYSTEM_INVISIBLE:controlTypes.STATE_INVISIBLE,
 	STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
 	STATE_SYSTEM_LINKED:controlTypes.STATE_LINKED,
@@ -759,7 +760,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@rtype: boolean
 	"""
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=liveNVDAObjectTable.get('focus',None)
 	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
@@ -804,7 +805,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 		# However, it is still a valid event, so return True.
 		return True
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
@@ -884,7 +885,7 @@ def processForegroundWinEvent(window,objectID,childID):
 	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
 	#Notify appModuleHandler of this new foreground window
-	appModuleHandler.update(window)
+	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
@@ -923,6 +924,7 @@ def initialize():
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 		eventHandler.queueEvent('gainFocus',focusObject)
+		liveNVDAObjectTable['focus']=focusObject
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:

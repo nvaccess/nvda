@@ -9,6 +9,7 @@ import time
 import ctypes
 import difflib
 import pythoncom
+import api
 import globalVars
 from logHandler import log
 import queueHandler
@@ -20,6 +21,8 @@ import winUser
 import speech
 from . import IAccessible
 from .. import NVDAObjectTextInfo
+import controlTypes
+import braille
 
 class WinConsole(IAccessible):
 
@@ -71,8 +74,8 @@ class WinConsole(IAccessible):
 		self.basicTextLineLength=lineLength
 		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
-			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
+		if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
 		self.monitorThread=threading.Thread(target=self.monitorThreadFunc)
 		self.monitorThread.start()
 		pythoncom.PumpWaitingMessages()
@@ -112,12 +115,8 @@ class WinConsole(IAccessible):
 		if window!=self.windowHandle:
 			return
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		#Update the review cursor position with the caret position
-		if globalVars.caretMovesReviewCursor and self==globalVars.reviewPosition.obj:
-			globalVars.reviewPosition=self.makeTextInfo(textHandler.POSITION_CARET)
-		#For any events other than caret movement, we want to let the monitor thread know that there might be text to speak
-		if eventID!=winUser.EVENT_CONSOLE_CARET:
-			self.lastConsoleEvent=eventID
+		#Notify the monitor thread that an event has occurred
+		self.lastConsoleEvent=eventID
 		if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
 			x=winUser.LOWORD(objectID)
 			y=winUser.HIWORD(objectID)
@@ -141,6 +140,10 @@ class WinConsole(IAccessible):
 				if consoleEvent and timeSinceLast==5:
 					# There is a new event and there has been enough time since the last one was handled, so handle this.
 					timeSinceLast=0
+					#Update the review cursor position with the caret position
+					if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+						queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self.makeTextInfo(textHandler.POSITION_CARET))
+					queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.handleCaretMove, self)
 					if globalVars.reportDynamicContentChanges:
 						text=self.consoleVisibleText
 						self.basicText=text
@@ -221,13 +224,13 @@ class WinConsole(IAccessible):
 		self.event_gainFocus()
 
 	def event_gainFocus(self):
-		super(WinConsole,self).event_gainFocus()
 		self.connectConsole()
+		super(WinConsole,self).event_gainFocus()
 		for line in self.prevConsoleVisibleLines:
 			if not line.isspace() and len(line)>0: 
 				speech.speakText(line)
 
-	def event_looseFocus(self):
+	def event_loseFocus(self):
 		self.disconnectConsole()
 
 	def calculateNewText(self,newLines,oldLines):
@@ -262,6 +265,9 @@ class WinConsole(IAccessible):
 		time.sleep(0.01)
 		self.connectConsole()
 		self.lastConsoleEvent=winUser.EVENT_CONSOLE_UPDATE_REGION
+
+	def _get_role(self):
+		return controlTypes.ROLE_TERMINAL
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+c","protectConsoleKillKey"),

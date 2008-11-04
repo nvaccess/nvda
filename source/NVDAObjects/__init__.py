@@ -21,11 +21,12 @@ import config
 import controlTypes
 import appModuleHandler
 import virtualBufferHandler
+import braille
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def __eq__(self,other):
-		if id(self)==id(other) or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
+		if self is other or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
 			return True
 		else:
 			return False
@@ -101,7 +102,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getSentenceOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
-	_getParagraphOffsets=_getLineOffsets
+	def _getParagraphOffsets(self,offset):
+		return self._getLineOffsets(offset)
 
 	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
 		end=offset+1
@@ -576,6 +578,10 @@ Tries to force this object to take the focus.
 """
 		pass
 
+	def scrollIntoView(self):
+		"""Scroll this object into view on the screen if possible.
+		"""
+
 	def _get_labeledBy(self):
 		return None
 
@@ -632,8 +638,9 @@ Tries to force this object to take the focus.
 				speech.speakText(text)
 
 	def event_stateChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
@@ -644,6 +651,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		api.setNavigatorObject(self)
 		self.reportFocus()
+		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""
@@ -651,19 +659,26 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 """
 		speech.cancelSpeech()
 		api.setNavigatorObject(self)
-		speech.speakObjectProperties(self,name=True,role=True,reason=speech.REASON_FOCUS)
+		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
 
 	def event_valueChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_nameChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
 
 	def event_descriptionChange(self):
-		if id(self)==id(api.getFocusObject()):
+		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
+
+	def event_caret(self):
+		if self is api.getFocusObject():
+			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):
 		newTime=time.time()
@@ -680,7 +695,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		return None
 
 	def _get_basicCaretOffset(self):
-		return 0
+		raise NotImplementedError
 
 	def _set_basicCaretOffset(self,offset):
 		pass
@@ -738,7 +753,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_LINE)
 			speech.speakTextInfo(info)
 
@@ -759,7 +774,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakTextInfo(info,handleSymbols=True,extraDetail=True)
 
@@ -780,7 +795,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_WORD)
 			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True)
 
@@ -801,7 +816,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
@@ -828,7 +843,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info
+				api.setReviewPosition(info)
 
 	def script_delete(self,keyPress):
 		try:
@@ -847,7 +862,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
-				globalVars.reviewPosition=info.copy()
+				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
 			speech.speakTextInfo(info,handleSymbols=True)
 

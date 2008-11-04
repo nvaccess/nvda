@@ -1,6 +1,7 @@
 What's New in NVDA
 
 Changes since 0.6 P2:
+*New: As Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing, when the user presses f2 on a cell. 
 * change: If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
 * fix: The last chunk of audio is no longer cut off when using NVDA with eSpeak on a remote desktop server.
 * change: Improve performance of eSpeak with some Windows Vista audio drivers.
@@ -21,6 +22,26 @@ Changes since 0.6 P2:
 * fix: Fix the issue where tabbing to a checked checkbox in a Mozilla Gecko virtual buffer and pressing space would not announce that the checkbox was being unchecked.
 * fix: Correctly report partially checked checkboxes in Mozilla applications.
 * change: Rate is now the default setting in the speech synthesizer settings ring.
+* new: In virtual buffers, the review cursor now reviews the text of the buffer, rather than just the internal text of the navigator object (which is often not useful to the user). This means that you can navigate the virtual buffer hierarchically using object navigation and the review cursor will move to that point in the buffer.
+* fix: If the text selection expands or shrinks in both directions, read the selection as one chunk instead of two.
+* change: Improve the loading and unloading of appModules.
+* fix: When reading with the mouse, text in Mozilla Gecko edit fields should now be read.
+* fix: Say all should no longer cause certain SAPI5 synthesizers to crash.
+* fix: Say all should now work correctly with the sapi4activeVoice driver.
+* fix: Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.
+* fix: Fix mouse tracking in Java objects. (#185)
+* new: Handle some additional states on Java controls.
+* fix: NVDA no longer reports Java tree view items with no children as being collapsed.
+* change: The title command (NVDA+t) now only reports the title instead of the entire object. If the foreground object has no name, the application's process name is used.
+* fix: Announce the object with focus when a Java window comes to the foreground. Previously, only the top-level Java object was announced.
+* new: If the title command (NVDA+t) is pressed twice, it spells the title. If pressed thrice, it is copied to the clipboard.
+* new: Keyboard help now reads the names of modifier keys when pressed alone.
+* new: Key names announced by keyboard help are now translatable.
+* new: Added support for the recognized text field in SiRecognizer. (#198)
+* fix: When entering both a dialog and a property page inside that dialog, the text of the property page is no longer spoken twice.
+* new: Support for braille displays!
+* new: In Microsoft Excel, pressing f2 to edit a cell now presents an NVDA dialog to edit the cell's content. Previously, there was no accessible way to edit a cell in Excel with NVDA. This is a temporary solution until NVDA has display hooks which can track the cursor and text in Excel's formula bar.
+* new: Added a command (NVDA+c) to report the text on the Windows clipboard. (#193)
 
 
 Changes since 0.6 P1:

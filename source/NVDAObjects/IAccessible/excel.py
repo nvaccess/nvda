@@ -10,6 +10,9 @@ import ctypes
 import pythoncom
 import win32com.client
 import comtypes.automation
+import wx
+import gui
+import gui.scriptUI
 import IAccessibleHandler
 import controlTypes
 import speech
@@ -18,6 +21,40 @@ from . import IAccessible
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
+
+class CellEditDialog(gui.scriptUI.ModalDialog):
+
+	def __init__(self,cell):
+		super(CellEditDialog,self).__init__(None)
+		self._cell=cell
+
+	def onCellTextChar(self,evt):
+		if evt.GetKeyCode() == wx.WXK_RETURN:
+			if evt.AltDown():
+				i=self._cellText.GetInsertionPoint()
+				self._cellText.Replace(i,i,"\n")
+			else:
+				self.onOk(None)
+			return
+		evt.Skip(True)
+
+	def onOk(self,evt):
+		self._cell.formula=self._cellText.GetValue()
+		self.dialog.EndModal(wx.ID_OK)
+
+	def makeDialog(self):
+		d=wx.Dialog(gui.mainFrame, wx.ID_ANY, title=_("NVDA Excel Cell Editor"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		mainSizer.Add(wx.StaticText(d,wx.ID_ANY, label=_("Enter cell contents")))
+		self._cellText=wx.TextCtrl(d, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
+		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
+		self._cellText.SetValue(self._cell.formula)
+		mainSizer.Add(self._cellText)
+		mainSizer.Add(d.CreateButtonSizer(wx.OK|wx.CANCEL))
+		d.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		d.SetSizer(mainSizer)
+		self._cellText.SetFocus()
+		return d
 
 class ExcelGrid(IAccessible):
 
@@ -95,6 +132,11 @@ class ExcelGrid(IAccessible):
 		self.speakSelection()
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 
+	def script_editCell(self,keyPress):
+		cell=self.getSelectedRange().Item(1)
+		cellEditDialog=CellEditDialog(cell)
+		cellEditDialog.run()
+
 	def text_reportPresentation(self,offset):
 		"""Reports the current font name, font size, font attributes of the active cell"""
 		speech.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
@@ -133,4 +175,5 @@ class ExcelGrid(IAccessible):
 	("Shift+ExtendedEnd","moveByCell"),
 	("Shift+Control+ExtendedHome","moveByCell"),
 	("Shift+Control+ExtendedEnd","moveByCell"),
+	("f2","editCell"),
 ]]

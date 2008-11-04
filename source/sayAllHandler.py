@@ -106,26 +106,26 @@ def readTextHelper_generator(info,cursor):
 		if (sendCount-receiveCount)<=10:
 			if keepReading:
 				bookmark=reader.bookmark
-				index=hash(bookmark)
+				index=sendCount
 				delta=reader.move(textHandler.UNIT_READINGCHUNK,1,endPoint="end")
 				if delta<=0:
 					keepReading=False
 					continue
 				speech.speakTextInfo(reader,reason=speech.REASON_SAYALL,index=index)
 				sendCount+=1
-				cursorIndexMap[index]=(bookmark,sendCount)
+				cursorIndexMap[index]=bookmark
 				reader.collapse(end=True)
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
 			oldSpokenIndex=spokenIndex
-			data=cursorIndexMap.get(spokenIndex,None)
-			if data is not None:
-				bookmark,receiveCount=data
+			receiveCount=spokenIndex
+			bookmark=cursorIndexMap.get(spokenIndex,None)
+			if bookmark is not None:
 				updater=reader.obj.makeTextInfo(bookmark)
 				if cursor==CURSOR_CARET:
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
-					globalVars.reviewPosition=updater
+					api.setReviewPosition(updater)
 		while speech.isPaused:
 			yield
 		yield

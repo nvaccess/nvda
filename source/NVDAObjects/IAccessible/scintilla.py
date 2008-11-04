@@ -209,6 +209,12 @@ class Scintilla(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
+	def _get_states(self):
+		states = super(Scintilla, self)._get_states()
+		# Scintilla controls are always multiline.
+		states.add(controlTypes.STATE_MULTILINE)
+		return states
+
 #We want all the standard text editing key commands to be handled by NVDA
 [Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

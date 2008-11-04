@@ -148,7 +148,7 @@ class Gecko_ia2(VirtualBuffer):
 					nextHandler()
 				virtualBufferHandler.reportPassThrough(self)
 				newInfo.collapse()
-				newInfo.updateCaret()
+				self._set_selection(newInfo,reason=speech.REASON_FOCUS)
 		else:
 			# The virtual buffer caret was already at the focused node.
 			if not self.passThrough:
@@ -161,19 +161,8 @@ class Gecko_ia2(VirtualBuffer):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
 
-	def _caretMovedToField(self,docHandle,ID,reason=speech.REASON_CARET):
-		try:
-			pacc,accChildID=IAccessibleHandler.accessibleObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-			if not (pacc==self.rootNVDAObject.IAccessibleObject and accChildID==self.rootNVDAObject.IAccessibleChildID):
-				obj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=accChildID)
-				api.setNavigatorObject(obj)
-				obj.IAccessibleObject.scrollTo(GECKO_SCROLL_TYPE_ANYWHERE)
-				if not eventHandler.isPendingEvents('gainFocus') and controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT:
-					obj.setFocus()
-				self.passThrough=self.shouldPassThrough(obj,reason=reason)
-				virtualBufferHandler.reportPassThrough(self)
-		except:
-			pass
+	def _shouldSetFocusToObj(self, obj):
+		return controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
 	def _activateField(self,docHandle,ID):
 		try:
@@ -283,7 +272,7 @@ class Gecko_ia2(VirtualBuffer):
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
 				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 				newInfo.collapse()
-				newInfo.updateCaret()
+				self.selection=newInfo
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
@@ -337,8 +326,7 @@ class Gecko_ia2(VirtualBuffer):
 		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
 		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
-		newInfo.updateCaret()
-		self._caretMovedToField(newDocHandle, newID, reason=speech.REASON_FOCUS)
+		self._set_selection(newInfo,reason=speech.REASON_FOCUS)
 		return True
 
 	def script_tab(self, keyPress):

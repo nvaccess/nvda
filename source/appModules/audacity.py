@@ -9,7 +9,7 @@ import winUser
 import controlTypes
 from NVDAObjects.IAccessible import edit
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if controlTypes.STATE_FOCUSED in obj.states:

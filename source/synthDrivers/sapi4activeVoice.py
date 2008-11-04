@@ -76,7 +76,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	#Events
 
-	def BookMark(self,x,y,z,markNum):
+	def BookMark(self,this,hi,lo,markNum):
 		self._lastIndex=markNum-1
 
 	def _get_rate(self):

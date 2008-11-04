@@ -11,7 +11,7 @@ import controlTypes
 
 oldActivePannel=0
 
-class appModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="TMyListBox":

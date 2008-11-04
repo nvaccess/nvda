@@ -4,14 +4,14 @@ Many of these commands use the NVDA key. The NVDA key is the insert key found ei
 
 Global commands 
 
-Control: Breaks down speech
+Control: Pause speech
 Shift: Continue speech
 
 NVDA+1: keyboardHelp
-This command turns on keyboard help mode so you can press any combination of keys on the keyboard and NVDA will tell you its name and what command it performs if it has one. To turn off keyboard help, press NVDA+1 again.
+turns on keyboard help mode so you can press any combination of keys on the keyboard and NVDA will tell you its name and what command it performs if it has one. To turn off keyboard help, press NVDA+1 again.
 
 NVDA+t: title
-Announces the title of the currently active application
+Announces the title of the currently active application. Spels it when pressed twice and copyes to the clipboard when pressed thrice.
 
 NVDA+b: speakForeground
 Speaks the content of the currently active application. Useful to read information in a dialog box that you perhaps missed when it first was announced.
@@ -28,35 +28,17 @@ Toggles between the three speech modes (talk, beeps and off).
 NVDA+F12: dateTime
 Announces the current time, pressing twice quickly announces the current date.
 
-NVDA+2: toggleSpeakTypedCharacters
-Turns on or off the speaking of characters when you type them.
-
-NVDA+3: toggleSpeakTypedWords
-Turns on or off the speaking of words as you type them.
-
-NVDA+4: toggleSpeakCommandKeys
-Turns on or off the speaking of any keys as you type them.
-
-NVDA+p: toggleSpeakPunctuation
-Turns on or off the speaking of punctuation symbols as NVDA speaks information.
-
 NVDA+End: reportStatusLine
 Announces the status bar of the current application if it can find one.
 
 NVDA+f: reportFormatting
 Announces formatting information at the current position in a document
 
-NVDA+m: toggleMouseTracking
-Turns on or off announcement of the object or word at the mouse pointer's current position, as it moves.
-
 Control+NVDA+f1: speakApplicationName
 Announces the currently active application's name, and also spells it out. It also announces the currently loaded NVDA app module.
 
-NVDA+u: toggleBeepOnProgressBarUpdates
-Turns on and off the beeping to indicate when a progress bar changes.
-
 NVDA+Shift+b: say_battery_status
-Announces the current battery level and whether or not you're plugged in to AC power.
+Announces the current battery level and whether AC power is plugged in.
 
 NVDA+5: toggleReportDynamicContentChanges
 Turns on and off the automatic speaking of content changes (such as when new text appears in a dos console window).
@@ -79,6 +61,38 @@ Announces the current selection in edit controls and documents. If there is no s
 NVDA+upArrow: reportCurrentLine
 Announces the current line in edit controls and documents.
 
+NVDA+downArrow: sayAll
+Starts reading from the current position in a document or edit control 
+
+NVDA+f1: test_navigatorWindowInfo
+Reads Information about the current navigator object (mainly useful for developers).
+
+Control+NVDA+c: saveConfiguration
+Saves the configuration.
+
+Control+NVDA+r: revertToSavedConfiguration
+Resets the configuration.
+
+Change Settings (found in the settings dialogues)
+
+NVDA+2: toggleSpeakTypedCharacters
+Turns on or off the speaking of characters when you type them.
+
+NVDA+3: toggleSpeakTypedWords
+Turns on or off the speaking of words as you type them.
+
+NVDA+4: toggleSpeakCommandKeys
+Turns on or off the speaking of any keys as you type them.
+
+NVDA+p: toggleSpeakPunctuation
+Turns on or off the speaking of punctuation symbols as NVDA speaks information.
+
+NVDA+m: toggleMouseTracking
+Turns on or off announcement of the object or word at the mouse pointer's current position, as it moves.
+
+NVDA+u: toggleBeepOnProgressBarUpdates
+Controls how NVDA anounces progress bar updates. It can either beep for all the progress bars within the active window (default), beep for all the bars currently in progress within the whole system, or it can even anounce each 10 percent by speech.
+
 Control+NVDA+leftArrow: previousSetting
 Moves to and announces the previous voice setting
  
@@ -91,19 +105,7 @@ Increases the current voice setting
 Control+NVDA+downArrow: decreaseSetting
 decreases the current voice setting
 
-NVDA+downArrow: sayAll
-Starts reading from the current position in a document or edit control 
-
-NVDA+f1: test_navigatorWindowInfo
-Reads Informations aboutthe current navigator object }hich are mainly useful for developers.
-
-Control+NVDA+c: saveConfiguration
-Saves the configuration.
-
-Control+NVDA+r: revertToSavedConfiguration
-Resets the configuration.
-
-Show dialogues:
+Show dialogues
 
 Control+NVDA+g: activateGeneralSettingsDialog
 Shows the general settings dialog.
@@ -127,24 +129,21 @@ Control+NVDA+b: activateVirtualBuffersDialog
 Shows the virtual buffer settings dialog.
 
 Control+NVDA+d: activateDocumentFormattingDialog
-Shows the document formating setings dialog.
+Shows the document formatting settings dialog.
 
 Control+NVDA+z: activatePythonConsole
-Shows the python console dialog.
+Shows the python console.
 
 navigator object navigation
 
 NVDA+numPad5: navigatorObject_current
-Announces the current navigator object.
+Announces the current navigator object. If pressed twice spels it out and if pressed three times copyes its name and value to the clipboard.
 
 Shift+NVDA+numPad5: navigatorObject_currentDimensions
 Announces the size and location of the current navigator object.
  
 Control+Shift+NVDA+numPad5: navigatorObject_where
 Announces the ancestors of the current navigator object.
-
-NVDA+numPadSubtract: navigatorObject_toFocus
-Sets the navigator object to the current object with focus.
 
 NVDA+numPad8: navigatorObject_parent
 Sets the navigator object to the current navigator object's parent (i.e. the object that contains it).
@@ -173,64 +172,67 @@ Move the mouse pointer to the current navigator object
 NVDA+numPadMultiply: moveNavigatorObjectToMouse
 Sets the navigator object to the current object under the mouse pointer
 
-numPadDivide: leftMouseClick
-Clicks the left mouse button once where ever it may be at the time.
-
-numPadMultiply: rightMouseClick
-Clicks the right mouse button once where ever it may be at the time.
-
-NVDA+numPadAdd: navigatorObject_sayAll
-Starts to read all the objects after the navigator object, in flow order.
-
 numpadSubtract: review_moveToCaret
 Moves the review cursor to the location of the caret.
 
 Control+numpadSubtract: review_moveCaretHere
 Moves the caret to the location of the review cursor
 
-numpadAdd: review_sayAll
-Uses the review cursor to read from its position to the end of the currently reviewable text
+NVDA+numPadSubtract: navigatorObject_toFocus
+Sets the navigator object to the current object with focus.
 
-reading objeckts
+numPadDivide: leftMouseClick
+Clicks the left mouse button once where ever it may be at the time.
+
+numPadMultiply: rightMouseClick
+Clicks the right mouse button once where ever it may be at the time.
+
+numpadAdd: review_sayAll
+Uses the review cursor to read from its position to the end of the currently reviewable text.
+
+NVDA+numPadAdd: navigatorObject_sayAll
+Starts to read all the objects after the navigator object, in flow order.
+
+reading objects
 
 numpad1: review_previousCharacter
-Moves the review cursor to the previous character
+Moves the review cursor to the previous character.
 
 Shift+numpad1: review_startOfLine
-Moves the review cursor to the start of the line
+Moves the review cursor to the start of the line.
 
 numpad2: review_currentCharacter
-speaks the character at the review cursor
+speaks the character at the review cursor.
 
 numpad3: review_nextCharacter
-Moves the review cursor to the next character
+Moves the review cursor to the next character.
 
 Shift+numpad3: review_endOfLine
-Moves the review cursor to the end of the line
+Moves the review cursor to the end of the line.
 
 numpad4: review_previousWord
-Moves the review cursor to the previous word
+Moves the review cursor to the previous word.
 
 numpad5: review_currentWord
-speaks the word at the review cursor
+speaks the word at the review cursor.
 
 numpad6: review_nextWord
-Moves the review cursor to the next word
+Moves the review cursor to the next word.
 
 numpad7: review_previousLine
-Moves the review cursor to the previous line
+Moves the review cursor to the previous line.
 
 Shift+numpad7: review_top
-Moves the review cursor to the first line
+Moves the review cursor to the first line.
  
 numpad8: review_currentLine
-speaks the line at the review cursor
+speaks the line at the review cursor.
 
 numpad9: review_nextLine
-Moves the review cursor to the previous line
+Moves the review cursor to the previous line.
 
 Shift+numpad9: review_bottom
-Moves the review cursor to the last line
+Moves the review cursor to the last line.
 
 VirtualBuffer commands for Firefox3 (some of these may work for Internet Explorer or Firefox2):
 

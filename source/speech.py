@@ -286,28 +286,33 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 	startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
 	endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 	endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
-	if startToEnd>0 or endToStart<0:
-		if speakSelected and not newInfo.isCollapsed:
-			selectedTextList.append(newInfo.text)
-		if speakUnselected and not oldInfo.isCollapsed:
-			unselectedTextList.append(oldInfo.text)
+	if speakSelected and oldInfo.isCollapsed:
+		selectedTextList.append(newInfo.text)
+	elif speakUnselected and newInfo.isCollapsed:
+		unselectedTextList.append(oldInfo.text)
 	else:
-		if speakSelected and startToStart<0 and not newInfo.isCollapsed:
-			tempInfo=newInfo.copy()
-			tempInfo.setEndPoint(oldInfo,"endToStart")
-			selectedTextList.append(tempInfo.text)
-		if speakSelected and endToEnd>0 and not newInfo.isCollapsed:
-			tempInfo=newInfo.copy()
-			tempInfo.setEndPoint(oldInfo,"startToEnd")
-			selectedTextList.append(tempInfo.text)
-		if startToStart>0 and not oldInfo.isCollapsed:
-			tempInfo=oldInfo.copy()
-			tempInfo.setEndPoint(newInfo,"endToStart")
-			unselectedTextList.append(tempInfo.text)
-		if endToEnd<0 and not oldInfo.isCollapsed:
-			tempInfo=oldInfo.copy()
-			tempInfo.setEndPoint(newInfo,"startToEnd")
-			unselectedTextList.append(tempInfo.text)
+		if startToEnd>0 or endToStart<0:
+			if speakSelected and not newInfo.isCollapsed:
+				selectedTextList.append(newInfo.text)
+			if speakUnselected and not oldInfo.isCollapsed:
+				unselectedTextList.append(oldInfo.text)
+		else:
+			if speakSelected and startToStart<0 and not newInfo.isCollapsed:
+				tempInfo=newInfo.copy()
+				tempInfo.setEndPoint(oldInfo,"endToStart")
+				selectedTextList.append(tempInfo.text)
+			if speakSelected and endToEnd>0 and not newInfo.isCollapsed:
+				tempInfo=newInfo.copy()
+				tempInfo.setEndPoint(oldInfo,"startToEnd")
+				selectedTextList.append(tempInfo.text)
+			if startToStart>0 and not oldInfo.isCollapsed:
+				tempInfo=oldInfo.copy()
+				tempInfo.setEndPoint(newInfo,"endToStart")
+				unselectedTextList.append(tempInfo.text)
+			if endToEnd<0 and not oldInfo.isCollapsed:
+				tempInfo=oldInfo.copy()
+				tempInfo.setEndPoint(newInfo,"startToEnd")
+				unselectedTextList.append(tempInfo.text)
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
@@ -374,6 +379,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_MODAL)
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
+	positiveStates.discard(controlTypes.STATE_OFFSCREEN)
 	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
 		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
 		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM) and controlTypes.STATE_SELECTABLE in states:
