@@ -40,6 +40,7 @@ Changes since 0.6 P2:
 * new: Added support for the recognized text field in SiRecognizer. (#198)
 * fix: When entering both a dialog and a property page inside that dialog, the text of the property page is no longer spoken twice.
 * new: Support for braille displays!
+* new: In Microsoft Excel, pressing f2 to edit a cell now presents an NVDA dialog to edit the cell's content. Previously, there was no accessible way to edit a cell in Excel with NVDA. This is a temporary solution until NVDA has display hooks which can track the cursor and text in Excel's formula bar.
 
 
 Changes since 0.6 P1:
