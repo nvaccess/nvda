@@ -549,7 +549,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		vbuf.passThrough = not vbuf.passThrough
 		virtualBufferHandler.reportPassThrough(vbuf)
-	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus interaction mode. When in focus interaction mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 
 	def script_quit(self,keyPress):
 		gui.quit()

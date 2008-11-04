@@ -90,6 +90,6 @@ def reportPassThrough(virtualBuffer):
 	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
 	"""
 	if virtualBuffer.passThrough != reportPassThrough.last:
-		speech.speakMessage(_("focus interaction mode") if virtualBuffer.passThrough else _("browse mode"))
+		speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
 		reportPassThrough.last = virtualBuffer.passThrough
 reportPassThrough.last = False
