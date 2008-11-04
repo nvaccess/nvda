@@ -27,6 +27,7 @@ from gui import scriptUI
 import virtualBufferHandler
 import eventHandler
 import braille
+import queueHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -225,7 +226,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
 			obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
-		virtualBufferHandler.reportPassThrough(self)
+		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.

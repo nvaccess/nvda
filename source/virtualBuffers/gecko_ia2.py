@@ -146,7 +146,6 @@ class Gecko_ia2(VirtualBuffer):
 					speech.speakObject(obj,speech.REASON_ONLYCACHE)
 				else:
 					nextHandler()
-				virtualBufferHandler.reportPassThrough(self)
 				newInfo.collapse()
 				self._set_selection(newInfo,reason=speech.REASON_FOCUS)
 		else:
