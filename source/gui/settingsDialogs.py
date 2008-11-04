@@ -557,6 +557,10 @@ class VirtualBuffersDialog(SettingsDialog):
 		settingsSizer.Add(self.paragraphsCheckBox,border=10,flag=wx.BOTTOM)
 		self.framesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report f&rames"))
 		self.framesCheckBox.SetValue(config.conf["virtualBuffers"]["reportFrames"])
+		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
+		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
+		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
@@ -589,6 +593,8 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportParagraphs"]=self.paragraphsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportFrames"]=self.framesCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		super(VirtualBuffersDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
