@@ -107,7 +107,8 @@ outputDevice = string(default=default)
 	reportBlockQuotes = boolean(default=true)
 	reportParagraphs = boolean(default=false)
 	reportFrames = boolean(default=true)
-	autoPassThrough = boolean(default=true)
+	autoPassThroughOnFocusChange = boolean(default=true)
+	autoPassThroughOnCaretMove = boolean(default=false)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]

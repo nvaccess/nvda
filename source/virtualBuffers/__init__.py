@@ -362,7 +362,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@param reason: The reason for this query; one of the speech reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
 		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
-		if reason and not config.conf["virtualBuffers"]["autoPassThrough"]:
+		if reason and (
+			(reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
 			return self.passThrough
 		states = obj.states
