@@ -557,11 +557,13 @@ class VirtualBuffersDialog(SettingsDialog):
 		settingsSizer.Add(self.paragraphsCheckBox,border=10,flag=wx.BOTTOM)
 		self.framesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report f&rames"))
 		self.framesCheckBox.SetValue(config.conf["virtualBuffers"]["reportFrames"])
+		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
 		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
 		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
-		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
+		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.maxLengthEdit.SetFocus()
