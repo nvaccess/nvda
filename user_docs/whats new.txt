@@ -42,6 +42,9 @@ Changes since 0.6 P2:
 * new: Support for braille displays!
 * new: In Microsoft Excel, pressing f2 to edit a cell now presents an NVDA dialog to edit the cell's content. Previously, there was no accessible way to edit a cell in Excel with NVDA. This is a temporary solution until NVDA has display hooks which can track the cursor and text in Excel's formula bar.
 * new: Added a command (NVDA+c) to report the text on the Windows clipboard. (#193)
+* change: Instead of virtual buffer pass through on and off, NVDA now reports focus mode (pass through on) and browse mode (pass through off).
+* new: You can now press escape when in focus mode to return to browse mode.
+* new: In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)
 
 
 Changes since 0.6 P1:
