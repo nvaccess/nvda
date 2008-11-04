@@ -280,6 +280,19 @@ def copyToClip(text):
 			return True
 	return False
 
+def getClipData():
+	"""Receives text from the windows clipboard.
+@returns: Clipboard text
+@rtype: string
+"""
+	text = ""
+	win32clipboard.OpenClipboard()
+	try:
+		text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+	finally:
+		win32clipboard.CloseClipboard()
+	return text
+
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.

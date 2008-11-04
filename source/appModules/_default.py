@@ -820,3 +820,17 @@ class AppModule(appModuleHandler.AppModule):
 			tetherMsg = _("focus")
 		ui.message(_("Braille tethered to %s") % tetherMsg)
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
+
+	def script_reportClipboardText(self,keyPress):
+		try:
+			text = api.getClipData()
+		except:
+			text = None
+		if not text or not isinstance(text,basestring) or text.isspace():
+			ui.message(_("There is no text on the clipboard"))
+			return
+		if len(text) < 1024: 
+			ui.message(text)
+		else:
+			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
+	script_reportClipboardText.__doc__ = _("Reports the text on the Windows clipboard")
