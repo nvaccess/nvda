@@ -138,8 +138,8 @@ class Gecko_ia2(VirtualBuffer):
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
 				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
+				speech.cancelSpeech()
 				if not self.passThrough:
-					speech.cancelSpeech()
 					# We read the info from the buffer instead of the control itself.
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 					# However, we still want to update the speech property cache so that property changes will be spoken properly.
