@@ -59,10 +59,6 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
-	def _getLineNumFromOffset(offset):
-		#virtualBuffers have no concept of line numbers
-		return 0
-
 	def _getSelectionOffsets(self):
 		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
 		return (start,end)
