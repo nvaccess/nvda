@@ -58,12 +58,13 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-def executeEvent(eventName,obj):
+def executeEvent(eventName,obj,**kwargs):
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	@param obj: the object the event is for
 	@type obj: L{NVDAObjects.NVDAObject}
+	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	if eventName=="gainFocus":
 		doPreGainFocus(obj)
@@ -71,7 +72,7 @@ def executeEvent(eventName,obj):
 		doPreForeground(obj)
 	elif eventName=="documentLoadComplete":
 		doPreDocumentLoadComplete(obj)
-	executeEvent_appModuleLevel(eventName,obj)
+	executeEvent_appModuleLevel(eventName,obj,**kwargs)
 
 def doPreGainFocus(obj):
 	api.setFocusObject(obj)
@@ -117,27 +118,27 @@ def doPreDocumentLoadComplete(obj):
 					v.event_virtualBuffer_gainFocus()
 
 
-def executeEvent_appModuleLevel(name,obj):
+def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule
 	if hasattr(appModule,"event_%s"%name):
-		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_defaultAppModuleLevel(name,obj)) 
+		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_defaultAppModuleLevel(name,obj,**kwargs),**kwargs) 
 	else:
-		executeEvent_defaultAppModuleLevel(name,obj)
+		executeEvent_defaultAppModuleLevel(name,obj,**kwargs)
 
-def executeEvent_defaultAppModuleLevel(name,obj):
+def executeEvent_defaultAppModuleLevel(name,obj,**kwargs):
 	default=appModuleHandler.default
 	if hasattr(default,"event_%s"%name):
-		getattr(default,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj)) 
+		getattr(default,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs) 
 	else:
-		executeEvent_virtualBufferLevel(name,obj)
+		executeEvent_virtualBufferLevel(name,obj,**kwargs)
 
-def executeEvent_virtualBufferLevel(name,obj):
+def executeEvent_virtualBufferLevel(name,obj,**kwargs):
 	virtualBuffer=obj.virtualBuffer
 	if hasattr(virtualBuffer,'event_%s'%name):
-		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj))
+		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
 	else:
-		executeEvent_NVDAObjectLevel(name,obj)
+		executeEvent_NVDAObjectLevel(name,obj,**kwargs)
 
-def executeEvent_NVDAObjectLevel(name,obj):
+def executeEvent_NVDAObjectLevel(name,obj,**kwargs):
 	if hasattr(obj,'event_%s'%name):
-		getattr(obj,'event_%s'%name)()
+		getattr(obj,'event_%s'%name)(**kwargs)

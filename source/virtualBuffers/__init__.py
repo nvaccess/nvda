@@ -7,6 +7,7 @@ import XMLFormatting
 import IAccessibleHandler
 import baseObject
 from keyUtils import sendKey
+import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
 import NVDAObjects
@@ -26,8 +27,11 @@ from gui import scriptUI
 import virtualBufferHandler
 import eventHandler
 import braille
+import queueHandler
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
+
+	UNIT_CONTROLFIELD = "controlField"
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
@@ -54,10 +58,6 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
-
-	def _getLineNumFromOffset(offset):
-		#virtualBuffers have no concept of line numbers
-		return 0
 
 	def _getSelectionOffsets(self):
 		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
@@ -116,10 +116,21 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 	def _getLineNumFromOffset(self, offset):
 		return None
 
+	def _get_fieldIdentifierAtStart(self):
+		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle, self._startOffset)
+
+	def _getUnitOffsets(self, unit, offset):
+		if unit == self.UNIT_CONTROLFIELD:
+			docHandle, ID = self.fieldIdentifierAtStart
+			return VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle, docHandle, ID)
+		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
+
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
 		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
 
 class VirtualBuffer(cursorManager.CursorManager):
+
+	REASON_QUICKNAV = "quickNav"
 
 	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
 		self.backendLibPath=os.path.abspath(backendLibPath)
@@ -199,7 +210,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _activateContextMenuForField(self,docHandle,ID):
 		pass
 
-	def _set_selection(self, info):
+	def _set_selection(self, info, reason=speech.REASON_CARET):
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
@@ -210,6 +221,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		obj.scrollIntoView()
 		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
 			obj.setFocus()
+		self.passThrough=self.shouldPassThrough(obj,reason=reason)
+		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -282,7 +296,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info.setEndPoint(fieldInfo, "endToEnd")
 		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
 		info.collapse()
-		self.selection = info
+		self._set_selection(info, reason=self.REASON_QUICKNAV)
 
 	@classmethod
 	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -337,12 +351,80 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")
 
+	def shouldPassThrough(self, obj, reason=None):
+		"""Determine whether pass through mode should be enabled or disabled for a given object.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@param reason: The reason for this query; one of the speech reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
+		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
+		"""
+		if reason and (
+			(reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+		):
+			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
+			return self.passThrough
+		states = obj.states
+		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
+			return False
+		role = obj.role
+		if reason == self.REASON_QUICKNAV:
+			return False
+		if reason == speech.REASON_CARET:
+			return role == controlTypes.ROLE_EDITABLETEXT
+		if reason == speech.REASON_FOCUS and role == controlTypes.ROLE_LISTITEM:
+			return True
+		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+			return True
+		return False
+
+	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
+		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
+			return nextHandler()
+		if keyPress[1] in ("extendedhome", "extendedend"):
+			# Home, end, control+home and control+end should not disable pass through.
+			return nextHandler()
+		script = self.getScript(keyPress)
+		if not script:
+			return nextHandler()
+
+		# We've hit the edge of the focused control.
+		# Therefore, move the virtual caret to the same edge of the field.
+		info = self.makeTextInfo(textHandler.POSITION_CARET)
+		info.expand(info.UNIT_CONTROLFIELD)
+		if keyPress[1] in ("extendedleft", "extendedup", "extendedprior"):
+			info.collapse()
+		else:
+			info.collapse(end=True)
+			info.move(textHandler.UNIT_CHARACTER, -1)
+		info.updateCaret()
+
+		scriptHandler.queueScript(script, keyPress)
+
+	def script_disablePassThrough(self, keyPress):
+		if not self.passThrough:
+			return sendKey(keyPress)
+		self.passThrough = False
+		virtualBufferHandler.reportPassThrough(self)
+	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
+
+	def script_collapseOrExpandControl(self, keyPress):
+		sendKey(keyPress)
+		if not self.passThrough:
+			return
+		self.passThrough = False
+		virtualBufferHandler.reportPassThrough(self)
+	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
 	("NVDA+v","toggleScreenLayout"),
 	("NVDA+f7","linksList"),
+	("escape","disablePassThrough"),
+	("alt+extendedUp","collapseOrExpandControl"),
+	("alt+extendedDown","collapseOrExpandControl"),
 ]]
 
 # Add quick navigation scripts.

@@ -41,6 +41,9 @@ Changes since 0.6 P2:
 * fix: When entering both a dialog and a property page inside that dialog, the text of the property page is no longer spoken twice.
 * new: Support for braille displays!
 * new: Added a command (NVDA+c) to report the text on the Windows clipboard. (#193)
+* change: Instead of virtual buffer pass through on and off, NVDA now reports focus mode (pass through on) and browse mode (pass through off).
+* new: You can now press escape when in focus mode to return to browse mode.
+* new: In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)
 
 
 Changes since 0.6 P1:

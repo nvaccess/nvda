@@ -125,7 +125,11 @@ class Gecko_ia2(VirtualBuffer):
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
 			except:
-				#log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
+				# This object is not in the virtual buffer, even though it resides beneath the document.
+				# Automatic pass through should be enabled in certain circumstances where this occurs.
+				if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
+					self.passThrough=True
+					virtualBufferHandler.reportPassThrough(self)
 				return nextHandler()
 			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
 			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
@@ -133,8 +137,9 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
+				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
+				speech.cancelSpeech()
 				if not self.passThrough:
-					speech.cancelSpeech()
 					# We read the info from the buffer instead of the control itself.
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 					# However, we still want to update the speech property cache so that property changes will be spoken properly.
@@ -142,11 +147,12 @@ class Gecko_ia2(VirtualBuffer):
 				else:
 					nextHandler()
 				newInfo.collapse()
-				self.selection=newInfo
+				self._set_selection(newInfo,reason=speech.REASON_FOCUS)
 		else:
-			# The virtual buffer caret was already at the focused node, so we don't speak it.
-			# However, we still want to update the speech property cache so that property changes will be spoken properly.
+			# The virtual buffer caret was already at the focused node.
 			if not self.passThrough:
+				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
 			else:
 				return nextHandler()
@@ -160,9 +166,7 @@ class Gecko_ia2(VirtualBuffer):
 	def _activateField(self,docHandle,ID):
 		try:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-			role=obj.role
-			states=obj.states
-			if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+			if self.shouldPassThrough(obj):
 				obj.setFocus()
 				self.passThrough=True
 				virtualBufferHandler.reportPassThrough(self)
@@ -321,7 +325,7 @@ class Gecko_ia2(VirtualBuffer):
 		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
 		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
 		newInfo.collapse()
-		self.selection=newInfo
+		self._set_selection(newInfo,reason=speech.REASON_FOCUS)
 		return True
 
 	def script_tab(self, keyPress):
