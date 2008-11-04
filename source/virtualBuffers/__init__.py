@@ -379,7 +379,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return False
 
 	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
-		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThrough"]:
+		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
 			return nextHandler()
 		if keyPress[1] in ("extendedhome", "extendedend"):
 			# Home, end, control+home and control+end should not disable pass through.
