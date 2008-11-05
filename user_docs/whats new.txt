@@ -44,6 +44,7 @@ Changes since 0.6 P2:
 * change: Instead of virtual buffer pass through on and off, NVDA now reports focus mode (pass through on) and browse mode (pass through off).
 * new: You can now press escape when in focus mode to return to browse mode.
 * new: In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)
+* new: Rewritten SAPI4 synthesizer driver which replaces the sapi4serotek and sapi4activeVoice drivers and should fix the problems encountered with these drivers.
 
 
 Changes since 0.6 P1:
