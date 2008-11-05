@@ -68,12 +68,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def terminate(self):
 		del self.tts
 
-	def _paramToPercent(self, current, min, max):
-		return int(round(float(current - min) / (max - min) * 100))
-
-	def _percentToParam(self, percent, min, max):
-		return int(round(float(percent) / 100 * (max - min) + min))
-
 	#Events
 
 	def BookMark(self,this,hi,lo,markNum):

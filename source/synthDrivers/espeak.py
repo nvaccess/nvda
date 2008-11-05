@@ -25,12 +25,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	def _paramToPercent(self, current, min, max):
-		return int(round(float(current - min) / (max - min) * 100))
-
-	def _percentToParam(self, percent, min, max):
-		return int(round(float(percent) / 100 * (max - min) + min))
-
 	def initialize(self):
 		_espeak.initialize()
 		lang=languageHandler.getLanguage()
