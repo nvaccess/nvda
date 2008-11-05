@@ -30,6 +30,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		self._con.enterTtyModeWithPath()
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
+		# BRLTTY simulates key presses for braille typing keys, so let BRLTTY handle them.
+		# NVDA may eventually implement this itself, but there's no reason to deny BRLTTY users this functionality in the meantime.
+		self._con.ignoreKeys(brlapi.rangeType_type, (long(brlapi.KEY_TYPE_SYM),))
 
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
