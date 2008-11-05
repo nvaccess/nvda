@@ -73,7 +73,7 @@ class TTSMOUTH(Structure):
 def TextSDATA(text):
     d = SDATA()
     d.pData = cast(c_wchar_p(text), c_void_p)
-    d.dwSize = (len(text) * sizeof(c_wchar)) + 1
+    d.dwSize = (len(text) + 1) * sizeof(c_wchar)
     return d
 
 class ITTSAttributesW(IUnknown):
