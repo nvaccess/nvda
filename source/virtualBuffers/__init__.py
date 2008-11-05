@@ -146,6 +146,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return self._passThrough
 
 	def _set_passThrough(self, state):
+		if self._passThrough == state:
+			return
 		self._passThrough = state
 		if state:
 			braille.handler.handleGainFocus(api.getFocusObject())
