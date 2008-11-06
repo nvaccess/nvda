@@ -122,8 +122,8 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type volume: int
 	@ivar variant: The current variant of the voice.
 	@type variant: str
-	@ivar availableVariants: a dictionary of available variants, keyed by variant identifier, values are the full variant name. 
-	@type availableVariants: dict of strings
+	@ivar availableVariants: The available variants of the voice.
+	@type availableVariants: [L{VoiceInfo}, ...]
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
@@ -227,7 +227,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _get_availableVariants(self):
-		return {}
+		return []
 
 	def _get_inflection(self):
 		return 0

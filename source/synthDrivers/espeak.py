@@ -101,11 +101,5 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._variant = val if val in self._variantDict else "none"
 		_espeak.setVoiceAndVariant(variant=val)
 
-	def _get_variantCount(self):
-		return len(self._variantDict)
-
-	def getVariantName(self,num):
-		return self._variantDict.values()[num]
-
-	def getVariantIdentifier(self,num):
-		return self._variantDict.keys()[num]
+	def _get_availableVariants(self):
+		return [synthDriverHandler.VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]

@@ -215,9 +215,8 @@ class VoiceSettingsDialog(SettingsDialog):
 			try:
 				curVoice=getSynth().voice
 				voiceIndex=[x.ID for x in self._voices].index(curVoice)
-				if voiceIndex>=0:
-					self.voiceList.SetSelection(voiceIndex)
-			except:
+				self.voiceList.SetSelection(voiceIndex)
+			except ValueError:
 				pass
 			self.voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
 			voiceListSizer.Add(voiceListLabel)
@@ -227,12 +226,14 @@ class VoiceSettingsDialog(SettingsDialog):
 			variantListSizer=wx.BoxSizer(wx.HORIZONTAL)
 			variantListLabel=wx.StaticText(self,-1,label=_("V&ariant"))
 			variantListID=wx.NewId()
-			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=[getSynth().getVariantName(x) for x in range(0,getSynth().variantCount)])
-			currentVariant=getSynth().variant
-			for x in range(0,getSynth().variantCount):
-				if currentVariant==getSynth().getVariantIdentifier(x):
-					break
-			self.variantList.SetSelection(x)
+			self._variants=getSynth().availableVariants
+			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=[x.name for x in self._variants])
+			try:
+				curVariant=getSynth().variant
+				variantIndex=[x.ID for x in self._variants].index(curVariant)
+				self.variantList.SetSelection(variantIndex)
+			except ValueError:
+				pass
 			self.variantList.Bind(wx.EVT_CHOICE,self.onVariantChange)
 			variantListSizer.Add(variantListLabel)
 			variantListSizer.Add(self.variantList)
@@ -303,9 +304,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.volumeSlider.SetValue(volume)
 
 	def onVariantChange(self,evt):
-		val=evt.GetSelection()
-		s=getSynth()
-		s.variant=s.getVariantIdentifier(val)
+		getSynth().variant=self._variants[evt.GetSelection()].ID
 
 	def onRateChange(self,evt):
 		val=evt.GetSelection()
@@ -342,7 +341,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		if getSynth().hasVoice:
 			config.conf["speech"][getSynth().name]["voice"]=self._voices[self.voiceList.GetSelection()].ID
 		if getSynth().hasVariant:
-			config.conf["speech"][getSynth().name]["variant"]=getSynth().getVariantIdentifier(self.variantList.GetSelection())
+			config.conf["speech"][getSynth().name]["variant"]=self._variants[self.variantList.GetSelection()].ID
 		if getSynth().hasRate:
 			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
 		if getSynth().hasPitch:

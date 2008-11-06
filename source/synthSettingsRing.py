@@ -46,12 +46,11 @@ class VoiceSynthSetting(SynthSetting):
 			if curID==v.ID:
 				return e 
 
-
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
-		curID=self._voices[value].ID
-		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),curID)
-		config.conf["speech"][synthDriverHandler.getSynth().name]["voice"]=curID
+		ID=self._voices[value].ID
+		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),ID)
+		config.conf["speech"][synthDriverHandler.getSynth().name]["voice"]=ID
 
 	def _getReportValue(self, val):
 		return self._voices[val].name
@@ -59,22 +58,22 @@ class VoiceSynthSetting(SynthSetting):
 class VariantSynthSetting(SynthSetting):
 
 	def __init__(self):
-		super(VariantSynthSetting,self).__init__("variant",0,synthDriverHandler.getSynth().variantCount-1)
+		self._variants=synthDriverHandler.getSynth().availableVariants
+		super(VariantSynthSetting,self).__init__("variant",0,len(self._variants)-1)
 
 	def _get_value(self):
-		currentVariant=synthDriverHandler.getSynth().variant
-		for x in xrange(0,synthDriverHandler.getSynth().variantCount):
-			if currentVariant==synthDriverHandler.getSynth().getVariantIdentifier(x):
-				break
-		return x
+		curID=synthDriverHandler.getSynth().variant
+		for e,v in enumerate(self._variants):
+			if curID==v.ID:
+				return e 
 
 	def _set_value(self,value):
-		value=synthDriverHandler.getSynth().getVariantIdentifier(value)
-		synthDriverHandler.getSynth().variant=value
-		config.conf["speech"][synthDriverHandler.getSynth().name]["variant"]=value
+		ID=self._variants[value].ID
+		synthDriverHandler.getSynth().variant=ID
+		config.conf["speech"][synthDriverHandler.getSynth().name]["variant"]=ID
 
 	def _getReportValue(self, val):
-		return synthDriverHandler.getSynth().getVariantName(val)
+		return self._variants[val].name
 
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
