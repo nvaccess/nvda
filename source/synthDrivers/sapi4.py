@@ -66,9 +66,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self.voice=str(self._enginesList[0].gModeID)
 
 	def speakText(self,text,index=None):
+		flags=0
 		if index is not None:
-			text="\mrk=%d\\%s"%(index,text)
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, TTSDATAFLAG_TAGGED,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
+			text="\mrk=%d\\%s"%(index,text.replace('\\','\\\\'))
+			flags+=TTSDATAFLAG_TAGGED
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
