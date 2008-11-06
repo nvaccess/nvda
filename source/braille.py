@@ -144,7 +144,15 @@ class Region(object):
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
+		# HACK: Work around a liblouis bug whereby an empty braille translation is returned.
+		if not self.brailleCells:
+			# Just provide a space.
+			self.brailleCells.append(0)
+			self.brailleToRawPos.append(0)
 		if self.cursorPos is not None:
+			# HACK: Work around a liblouis bug whereby the returned cursor position is not within the braille cells returned.
+			if brailleCursorPos >= len(self.brailleCells):
+				brailleCursorPos = len(self.brailleCells) - 1
 			self.brailleCursorPos = brailleCursorPos
 
 	def routeTo(self, braillePos):

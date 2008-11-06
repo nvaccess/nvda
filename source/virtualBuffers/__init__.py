@@ -146,6 +146,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return self._passThrough
 
 	def _set_passThrough(self, state):
+		if self._passThrough == state:
+			return
 		self._passThrough = state
 		if state:
 			braille.handler.handleGainFocus(api.getFocusObject())
@@ -364,15 +366,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
 			return self.passThrough
+		if reason == self.REASON_QUICKNAV:
+			return False
 		states = obj.states
 		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
 			return False
 		role = obj.role
-		if reason == self.REASON_QUICKNAV:
-			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT
-		if reason == speech.REASON_FOCUS and role == controlTypes.ROLE_LISTITEM:
+		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
 			return True
 		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
 			return True

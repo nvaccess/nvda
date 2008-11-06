@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: r2461\n"
-"POT-Creation-Date: 2008-10-28 08:26+China Standard Time\n"
-"PO-Revision-Date: 2008-10-29 23:31+0800\n"
+"Project-Id-Version: r2474\n"
+"POT-Creation-Date: 2008-11-05 18:59+China Standard Time\n"
+"PO-Revision-Date: 2008-11-05 20:48+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +22,10 @@ msgstr "第 %s 級"
 # NVDAObjects\IAccessible\__init__.py:416
 # NVDAObjects\IAccessible\sysListView32.py:14
 #: NVDAObjects\IAccessible\__init__.py:79
-#: NVDAObjects\IAccessible\__init__.py:708
+#: NVDAObjects\IAccessible\__init__.py:710
 #: NVDAObjects\IAccessible\sysListView32.py:224
 msgid "%s of %s"
-msgstr "第 %s 項共有 %s 項"
+msgstr "第 %s 項共 %s 項"
 
 # virtualBuffers\IAccessible\MSHTML.py:239
 # virtualBuffers\IAccessible\MSHTML.py:242
@@ -211,8 +211,7 @@ msgstr "未能載入預設的模組"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: virtualBufferHandler.py:93
-#: virtualBuffers\__init__.py:244
+#: virtualBuffers\__init__.py:258
 msgid "on"
 msgstr "開"
 
@@ -247,8 +246,7 @@ msgstr "開"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: virtualBufferHandler.py:93
-#: virtualBuffers\__init__.py:244
+#: virtualBuffers\__init__.py:258
 msgid "off"
 msgstr "關"
 
@@ -729,8 +727,8 @@ msgstr "切換語音模式為關、逼逼聲或講話. 設成關的時候 NVDA �
 
 # appModules\_default.py:354
 #: appModules\_default.py:552
-msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "切換虛擬緩衝直通開關, 開的時候按鍵指令可直接操作目前的控制項"
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgstr "在瀏覽模式和打字模式兩者之間切換, 在打字模式下按鍵指令可直接操作目前焦點的控制項, 在瀏覽模式下則可使用方向鍵控制游標在文件之內移動"
 
 # appModules\_default.py:358
 #: appModules\_default.py:556
@@ -1021,6 +1019,18 @@ msgstr "點字游標移到 %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "把點字游標移到系統焦點或瀏覽焦點"
 
+#: appModules\_default.py:830
+msgid "There is no text on the clipboard"
+msgstr "現時沒有文字在剪貼簿之內"
+
+#: appModules\_default.py:835
+msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgstr "現有大量文字在剪貼簿之內, 共有 %s 個字元之多"
+
+#: appModules\_default.py:836
+msgid "Reports the text on the Windows clipboard"
+msgstr "報出剪貼簿內的文字"
+
 # appModules\msimn.py:14
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -1116,43 +1126,43 @@ msgstr "送出 %s"
 
 #: braille.py:26
 msgid "Arabic grade 1"
-msgstr "阿拉伯語等級 1"
+msgstr "阿拉伯語一級點字"
 
 #: braille.py:27
 msgid "Welsh grade 1"
-msgstr "威爾斯語等級 1"
+msgstr "威爾斯語一級點字"
 
 #: braille.py:28
 msgid "Welsh grade 2"
-msgstr "威爾斯語等級 2"
+msgstr "威爾斯語二級點字"
 
 #: braille.py:29
 msgid "Czech grade 1"
-msgstr "捷克語等級 1"
+msgstr "捷克語一級點字"
 
 #: braille.py:30
 msgid "Danish grade 1"
-msgstr "丹麥語等級 1"
+msgstr "丹麥語一級點字"
 
 #: braille.py:31
 msgid "German grade 0"
-msgstr "德語等級 0"
+msgstr "德語零級點字"
 
 #: braille.py:32
 msgid "German grade 1"
-msgstr "德語等級 1"
+msgstr "德語一級點字"
 
 #: braille.py:33
 msgid "German grade 2"
-msgstr "德語等級 2"
+msgstr "德語二級點字"
 
 #: braille.py:34
 msgid "English (U.K.) grade 1"
-msgstr "英式英語等級 1"
+msgstr "英式英語一級點字"
 
 #: braille.py:35
 msgid "English (U.K.) grade 2"
-msgstr "英式英語等級 2"
+msgstr "英式英語二級點字"
 
 #: braille.py:36
 msgid "English (U.S.) 6 dot computer braille"
@@ -1164,83 +1174,83 @@ msgstr "美式英語八點電腦點字"
 
 #: braille.py:38
 msgid "English (U.S.) grade 1"
-msgstr "美式英語等級 1"
+msgstr "美式英語一級點字"
 
 #: braille.py:39
 msgid "English (U.S.) grade 2"
-msgstr "美式英語等級 2"
+msgstr "美式英語二級點字"
 
 #: braille.py:40
 msgid "Spanish grade 1"
-msgstr "西班牙語等級 1"
+msgstr "西班牙語一級點字"
 
 #: braille.py:41
 msgid "French (Canada) grade 1"
-msgstr "法語 (加拿大) 等級 1"
+msgstr "法語 (加拿大) 一級點字"
 
 #: braille.py:42
 msgid "French (Canada) grade 2"
-msgstr "法語 (加拿大) 等級 2"
+msgstr "法語 (加拿大) 二級點字"
 
 #: braille.py:43
 msgid "French (France) grade 1"
-msgstr "法語 (法國) 等級 1"
+msgstr "法語 (法國) 一級點字"
 
 #: braille.py:44
 msgid "French (France) grade 2"
-msgstr "法語 (法國) 等級 2"
+msgstr "法語 (法國) 二級點字"
 
 #: braille.py:45
 msgid "Greek (Greece) grade 1"
-msgstr "希臘語 (希臘) 等級 1"
+msgstr "希臘語 (希臘) 一級點字"
 
 #: braille.py:46
 msgid "Hindi grade 1"
-msgstr "北印度語等級 1"
+msgstr "北印度語一級點字"
 
 #: braille.py:47
 msgid "Italian grade 1"
-msgstr "意大利語等級 1"
+msgstr "意大利語一級點字"
 
 #: braille.py:48
 msgid "Latvian grade 1"
-msgstr "拉脫維亞語等級 1"
+msgstr "拉脫維亞語一級點字"
 
 #: braille.py:49
 msgid "Dutch (Belgium) grade 1"
-msgstr "荷蘭語 (比利時) 等級 1"
+msgstr "荷蘭語 (比利時) 一級點字"
 
 #: braille.py:50
 msgid "Dutch (netherlands) grade 1"
-msgstr "荷蘭語 (荷蘭) 等級 1"
+msgstr "荷蘭語 (荷蘭) 一級點字"
 
 #: braille.py:51
 msgid "Norwegian grade 0"
-msgstr "挪威語等級 0"
+msgstr "挪威語零級點字"
 
 #: braille.py:52
 msgid "Norwegian grade 1"
-msgstr "挪威語等級 1"
+msgstr "挪威語一級點字"
 
 #: braille.py:53
 msgid "Norwegian grade 2"
-msgstr "挪威語等級 2"
+msgstr "挪威語二級點字"
 
 #: braille.py:54
 msgid "Norwegian grade 3"
-msgstr "挪威語等級 3"
+msgstr "挪威語三級點字"
 
 #: braille.py:55
 msgid "Polish grade 1"
-msgstr "波蘭語等級 1"
+msgstr "波蘭語一級點字"
 
 #: braille.py:56
 msgid "Portuguese grade 1"
-msgstr "葡萄牙語等級 1"
+msgstr "葡萄牙語一級點字"
 
 #: braille.py:57
 msgid "Swedish grade 1"
-msgstr "瑞典語等級 1"
+msgstr "瑞典語一級點字"
 
 #: braille.py:58
 msgid "Slovak"
@@ -1248,11 +1258,11 @@ msgstr "斯洛法克語"
 
 #: braille.py:59
 msgid "Unified English Braille Code grade 1"
-msgstr "統一化英語點字碼等級 1"
+msgstr "統一化英語點字碼一級點字"
 
 #: braille.py:60
 msgid "Unified English Braille Code grade 2"
-msgstr "統一化英語點字碼等級 2"
+msgstr "統一化英語點字碼二級點字"
 
 # IAccessibleHandler.py:137
 # controlTypes.py:87
@@ -1320,11 +1330,11 @@ msgid "( )"
 msgstr "( )"
 
 # textBuffer.py:213
-#: braille.py:211
+#: braille.py:219
 msgid "lvl %s"
 msgstr "lvl %s"
 
-#: brailleDisplayDrivers\handyTech.py:21
+#: brailleDisplayDrivers\handyTech.py:24
 msgid "HandyTech braille displays"
 msgstr "Handytech 點字顯示器"
 
@@ -3130,14 +3140,14 @@ msgstr "報出清單項目(&I)"
 
 # gui\settingsDialogs.py:331
 #: gui\settingsDialogs.py:537
-#: gui\settingsDialogs.py:631
+#: gui\settingsDialogs.py:639
 msgid "Report &headings"
 msgstr "報出標題(&H)"
 
 # gui\settingsDialogs.py:334
 # gui\settingsDialogs.py:415
 #: gui\settingsDialogs.py:540
-#: gui\settingsDialogs.py:625
+#: gui\settingsDialogs.py:633
 msgid "Report &tables"
 msgstr "報出表格(&T)"
 
@@ -3158,7 +3168,7 @@ msgstr "報出表單欄位(&F)"
 
 # gui\settingsDialogs.py:346
 #: gui\settingsDialogs.py:552
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:645
 msgid "Report block &quotes"
 msgstr "報出引述區(&Q)"
 
@@ -3172,177 +3182,185 @@ msgstr "報出起段(&P)"
 msgid "Report f&rames"
 msgstr "報出框架(&M)"
 
+#: gui\settingsDialogs.py:561
+msgid "Automatic focus mode for focus changes"
+msgstr "每當焦點改變時自動開關打字模式"
+
+#: gui\settingsDialogs.py:564
+msgid "Automatic focus mode for caret movement"
+msgstr "每當游標移動時自動開關打字模式"
+
 # gui\__init__.py:273
-#: gui\settingsDialogs.py:595
+#: gui\settingsDialogs.py:603
 msgid "Document formatting"
 msgstr "文件格式"
 
 # gui\settingsDialogs.py:474
-#: gui\settingsDialogs.py:598
+#: gui\settingsDialogs.py:606
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "報出游標經過後的文字格式(可能讓系統反應較慢)"
 
 # gui\settingsDialogs.py:397
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:609
 msgid "Report font &name"
 msgstr "報出字體名稱(&N)"
 
 # gui\settingsDialogs.py:400
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:612
 msgid "Report font &size"
 msgstr "報出字體大小(&S)"
 
 # gui\settingsDialogs.py:403
-#: gui\settingsDialogs.py:607
+#: gui\settingsDialogs.py:615
 msgid "Report font attri&butes"
 msgstr "報出字體屬性(&B)"
 
 # gui\settingsDialogs.py:418
-#: gui\settingsDialogs.py:610
+#: gui\settingsDialogs.py:618
 msgid "Report &alignment"
 msgstr "報出排列方式(&A)"
 
 # gui\settingsDialogs.py:406
-#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:621
 msgid "Report st&yle"
 msgstr "報出文字型態(&Y)"
 
 # gui\settingsDialogs.py:412
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:624
 msgid "Report spelling errors"
 msgstr "報出拼錯字"
 
 # gui\settingsDialogs.py:409
-#: gui\settingsDialogs.py:619
+#: gui\settingsDialogs.py:627
 msgid "Report &pages"
 msgstr "報出頁數(&P)"
 
 # gui\settingsDialogs.py:412
-#: gui\settingsDialogs.py:622
+#: gui\settingsDialogs.py:630
 msgid "Report &line numbers"
 msgstr "報出行數(&L)"
 
 # gui\settingsDialogs.py:322
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:636
 msgid "Report &links"
 msgstr "報出連結(&L)"
 
 # gui\settingsDialogs.py:325
-#: gui\settingsDialogs.py:634
+#: gui\settingsDialogs.py:642
 msgid "Report l&ists"
 msgstr "報出清單(&I)"
 
 # gui\settingsDialogs.py:639
-#: gui\settingsDialogs.py:664
+#: gui\settingsDialogs.py:672
 msgid "Edit dictionary entry"
 msgstr "編輯字庫項目"
 
 # gui\settingsDialogs.py:129
-#: gui\settingsDialogs.py:667
+#: gui\settingsDialogs.py:675
 msgid "&Pattern"
 msgstr "原來文字(&P)"
 
 # gui\settingsDialogs.py:633
 # gui\settingsDialogs.py:639
-#: gui\settingsDialogs.py:670
+#: gui\settingsDialogs.py:678
 msgid "&Replacement"
 msgstr "代替文字(&R)"
 
 # controlTypes.py:131
 # virtualBuffers\IAccessible\gecko.py:41
-#: gui\settingsDialogs.py:673
+#: gui\settingsDialogs.py:681
 msgid "&Comment"
 msgstr "註釋(&C)"
 
 # gui\settingsDialogs.py:607
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:684
 msgid "Case &sensitive"
 msgstr "大小寫需相符(&S)"
 
 # gui\settingsDialogs.py:609
-#: gui\settingsDialogs.py:678
+#: gui\settingsDialogs.py:686
 msgid "Regular &expression"
 msgstr "正規表達式(&E)"
 
 # gui\settingsDialogs.py:593
-#: gui\settingsDialogs.py:700
+#: gui\settingsDialogs.py:708
 msgid "&Dictionary entries"
 msgstr "字庫項目(&D)"
 
 # controlTypes.py:131
 # virtualBuffers\IAccessible\gecko.py:41
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:711
 msgid "Comment"
 msgstr "註釋"
 
 # gui\settingsDialogs.py:597
-#: gui\settingsDialogs.py:704
+#: gui\settingsDialogs.py:712
 msgid "Pattern"
 msgstr "原來文字"
 
 # gui\settingsDialogs.py:598
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:713
 msgid "Replacement"
 msgstr "代替文字"
 
 # gui\settingsDialogs.py:637
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:714
 msgid "case sensitive"
 msgstr "大小寫需相符"
 
 # gui\settingsDialogs.py:638
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:715
 msgid "Regular expression"
 msgstr "正規表達式"
 
 # gui\settingsDialogs.py:605
-#: gui\settingsDialogs.py:714
+#: gui\settingsDialogs.py:722
 msgid "&Add"
 msgstr "新增(&A)"
 
 # IAccessibleHandler.py:137
 # controlTypes.py:87
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:725
 msgid "&edit"
 msgstr "編輯(&E)"
 
 # gui\settingsDialogs.py:611
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:728
 msgid "&Remove"
 msgstr "移除(&R)"
 
 # gui\__init__.py:245
-#: gui\settingsDialogs.py:787
+#: gui\settingsDialogs.py:795
 msgid "Braille Settings"
 msgstr "點字設定"
 
-#: gui\settingsDialogs.py:791
+#: gui\settingsDialogs.py:799
 msgid "Braille &display"
 msgstr "點字顯示器(&D)"
 
 # textBuffer.py:219
-#: gui\settingsDialogs.py:805
+#: gui\settingsDialogs.py:813
 msgid "Translation &table"
 msgstr "點字轉換表(&T)"
 
-#: gui\settingsDialogs.py:817
+#: gui\settingsDialogs.py:825
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "把游標之下的文字以完整電腦點字顯示(&X)"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:830
 msgid "Cursor blink rate (ms)"
 msgstr "游標閃動速率 (以千分之一秒計)(&C)"
 
-#: gui\settingsDialogs.py:830
+#: gui\settingsDialogs.py:838
 msgid "Message timeout (sec)"
 msgstr "訊息顯示時間長度 (以秒計)(&M)"
 
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:851
 msgid "Braille Display Error"
 msgstr "連接點字顯示器失敗"
 
 # gui\settingsDialogs.py:103
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:851
 msgid "Could not load the %s display."
 msgstr "未能連接點字顯示器 %s"
 
@@ -3994,519 +4012,522 @@ msgstr ""
 "http://www.gnu.org/licenses/gpl.html\n"
 "或者參閱包含在本程式之內的 copying.txt 檔案."
 
-# api.py:145
-# api.py:148
 #: virtualBufferHandler.py:93
-msgid "virtual buffer pass through"
-msgstr "虛擬緩衝直通"
+msgid "browse mode"
+msgstr "瀏覽模式"
+
+# controlTypes.py:141
+#: virtualBufferHandler.py:93
+msgid "focus mode"
+msgstr "打字模式"
 
 # virtualBuffers\__init__.py:293
-#: virtualBuffers\__init__.py:228
+#: virtualBuffers\__init__.py:242
 #: virtualBuffers_old\__init__.py:295
 msgid "activates the current object in the virtual buffer"
 msgstr "嘗試啟動當前項目"
 
 # controlTypes.py:144
-#: virtualBuffers\__init__.py:240
+#: virtualBuffers\__init__.py:254
 msgid "Refreshed"
 msgstr "重新整理"
 
 # virtualBuffers_new\__init__.py:277
-#: virtualBuffers\__init__.py:245
+#: virtualBuffers\__init__.py:259
 msgid "use screen layout %s"
 msgstr "套用畫面檢視方式 %s"
 
 # virtualBuffers\__init__.py:342
-#: virtualBuffers\__init__.py:338
+#: virtualBuffers\__init__.py:352
 msgid "displays a list of links"
 msgstr "顯示超連結清單"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:350
+#: virtualBuffers\__init__.py:432
 msgid "no next heading"
 msgstr "沒有下一個標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:350
+#: virtualBuffers\__init__.py:432
 #: virtualBuffers_old\__init__.py:318
 msgid "moves to the next heading"
 msgstr "移到下一個標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:351
+#: virtualBuffers\__init__.py:433
 msgid "no previous heading"
 msgstr "沒有上一個標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:351
+#: virtualBuffers\__init__.py:433
 #: virtualBuffers_old\__init__.py:329
 msgid "moves to the previous heading"
 msgstr "移到上一個標題"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:352
+#: virtualBuffers\__init__.py:434
 msgid "moves to the next heading at level 1"
 msgstr "移到下一個第一級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:352
+#: virtualBuffers\__init__.py:434
 msgid "no next heading at level 1"
 msgstr "沒有下一個第一級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:353
+#: virtualBuffers\__init__.py:435
 msgid "moves to the previous heading at level 1"
 msgstr "移到上一個第一級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:353
+#: virtualBuffers\__init__.py:435
 msgid "no previous heading at level 1"
 msgstr "沒有上一個第一級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:354
+#: virtualBuffers\__init__.py:436
 msgid "moves to the next heading at level 2"
 msgstr "移到下一個第二級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:354
+#: virtualBuffers\__init__.py:436
 msgid "no next heading at level 2"
 msgstr "沒有下一個第二級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:355
+#: virtualBuffers\__init__.py:437
 msgid "moves to the previous heading at level 2"
 msgstr "移到上一個第二級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:355
+#: virtualBuffers\__init__.py:437
 msgid "no previous heading at level 2"
 msgstr "沒有上一個第二級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:356
+#: virtualBuffers\__init__.py:438
 msgid "moves to the next heading at level 3"
 msgstr "移到下一個第三級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:356
+#: virtualBuffers\__init__.py:438
 msgid "no next heading at level 3"
 msgstr "沒有下一個第三級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:357
+#: virtualBuffers\__init__.py:439
 msgid "moves to the previous heading at level 3"
 msgstr "移到上一個第三級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:357
+#: virtualBuffers\__init__.py:439
 msgid "no previous heading at level 3"
 msgstr "沒有上一個第三級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:358
+#: virtualBuffers\__init__.py:440
 msgid "moves to the next heading at level 4"
 msgstr "移到下一個第四級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:358
+#: virtualBuffers\__init__.py:440
 msgid "no next heading at level 4"
 msgstr "沒有下一個第四級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:359
+#: virtualBuffers\__init__.py:441
 msgid "moves to the previous heading at level 4"
 msgstr "移到上一個第四級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:359
+#: virtualBuffers\__init__.py:441
 msgid "no previous heading at level 4"
 msgstr "沒有上一個第四級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:360
+#: virtualBuffers\__init__.py:442
 msgid "moves to the next heading at level 5"
 msgstr "移到下一個第五級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:360
+#: virtualBuffers\__init__.py:442
 msgid "no next heading at level 5"
 msgstr "沒有下一個第五級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:361
+#: virtualBuffers\__init__.py:443
 msgid "moves to the previous heading at level 5"
 msgstr "移到上一個第五級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:361
+#: virtualBuffers\__init__.py:443
 msgid "no previous heading at level 5"
 msgstr "沒有上一個第五級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:362
+#: virtualBuffers\__init__.py:444
 msgid "moves to the next heading at level 6"
 msgstr "移到下一個第六級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:362
+#: virtualBuffers\__init__.py:444
 msgid "no next heading at level 6"
 msgstr "沒有下一個第六級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:363
+#: virtualBuffers\__init__.py:445
 msgid "moves to the previous heading at level 6"
 msgstr "移到上一個第六級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:363
+#: virtualBuffers\__init__.py:445
 msgid "no previous heading at level 6"
 msgstr "沒有上一個第六級標題了"
 
 # textBuffer.py:219
-#: virtualBuffers\__init__.py:364
+#: virtualBuffers\__init__.py:446
 msgid "no next table"
 msgstr "沒有下一個表格了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:364
+#: virtualBuffers\__init__.py:446
 #: virtualBuffers_old\__init__.py:362
 msgid "moves to the next table"
 msgstr "移到下一個表格"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:365
+#: virtualBuffers\__init__.py:447
 msgid "no previous table"
 msgstr "沒有上一個表格了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:365
+#: virtualBuffers\__init__.py:447
 #: virtualBuffers_old\__init__.py:373
 msgid "moves to the previous table"
 msgstr "移到上一個表格"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:366
+#: virtualBuffers\__init__.py:448
 msgid "no next link"
 msgstr "沒有下一個連結了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:366
+#: virtualBuffers\__init__.py:448
 #: virtualBuffers_old\__init__.py:384
 msgid "moves to the next link"
 msgstr "移到下一個連結"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:367
+#: virtualBuffers\__init__.py:449
 msgid "no previous link"
 msgstr "沒有上一個連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:367
+#: virtualBuffers\__init__.py:449
 #: virtualBuffers_old\__init__.py:395
 msgid "moves to the previous link"
 msgstr "移到上一個連結"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:368
+#: virtualBuffers\__init__.py:450
 msgid "moves to the next visited link"
 msgstr "移到下一個到訪過的連結"
 
 # virtualBuffers_new\__init__.py:352
-#: virtualBuffers\__init__.py:368
+#: virtualBuffers\__init__.py:450
 msgid "no next visited link"
 msgstr "沒有下一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:369
+#: virtualBuffers\__init__.py:451
 msgid "moves to the previous visited link"
 msgstr "移到上一個到訪過的連結"
 
 # virtualBuffers_new\__init__.py:357
-#: virtualBuffers\__init__.py:369
+#: virtualBuffers\__init__.py:451
 msgid "no previous visited link"
 msgstr "沒有上一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:370
+#: virtualBuffers\__init__.py:452
 msgid "moves to the next unvisited link"
 msgstr "移到下一個未到過的連結"
 
 # virtualBuffers_new\__init__.py:362
-#: virtualBuffers\__init__.py:370
+#: virtualBuffers\__init__.py:452
 msgid "no next unvisited link"
 msgstr "沒有下一個未到過的連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:371
+#: virtualBuffers\__init__.py:453
 msgid "moves to the previous unvisited link"
 msgstr "移到上一個未到過的連結"
 
 # virtualBuffers_new\__init__.py:367
-#: virtualBuffers\__init__.py:371
+#: virtualBuffers\__init__.py:453
 msgid "no previous unvisited link"
 msgstr "沒有上一個未到過的連結了"
 
 # virtualBuffers\__init__.py:449
-#: virtualBuffers\__init__.py:372
+#: virtualBuffers\__init__.py:454
 msgid "moves to the next form field"
 msgstr "移到下一個表單欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:372
+#: virtualBuffers\__init__.py:454
 msgid "no next form field"
 msgstr "沒有下一個表單欄位了"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:373
+#: virtualBuffers\__init__.py:455
 msgid "no previous form field"
 msgstr "沒有上一個表單欄位了"
 
 # virtualBuffers\__init__.py:460
-#: virtualBuffers\__init__.py:373
+#: virtualBuffers\__init__.py:455
 #: virtualBuffers_old\__init__.py:461
 msgid "moves to the previous form field"
 msgstr "移到上一個表單欄位"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:374
+#: virtualBuffers\__init__.py:456
 msgid "no next list"
 msgstr "沒有下一個清單了"
 
 # virtualBuffers\__init__.py:405
-#: virtualBuffers\__init__.py:374
+#: virtualBuffers\__init__.py:456
 #: virtualBuffers_old\__init__.py:406
 msgid "moves to the next list"
 msgstr "移到下一個清單"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:375
+#: virtualBuffers\__init__.py:457
 msgid "no previous list"
 msgstr "沒有上一個清單了"
 
 # virtualBuffers\__init__.py:416
-#: virtualBuffers\__init__.py:375
+#: virtualBuffers\__init__.py:457
 #: virtualBuffers_old\__init__.py:417
 msgid "moves to the previous list"
 msgstr "移到上一個清單"
 
 # virtualBuffers\__init__.py:426
 # virtualBuffers\__init__.py:437
-#: virtualBuffers\__init__.py:376
+#: virtualBuffers\__init__.py:458
 msgid "no next list item"
 msgstr "沒有下一個清單項目了"
 
 # virtualBuffers\__init__.py:427
-#: virtualBuffers\__init__.py:376
+#: virtualBuffers\__init__.py:458
 #: virtualBuffers_old\__init__.py:428
 msgid "moves to the next list item"
 msgstr "移到下一個清單項目"
 
 # virtualBuffers\__init__.py:426
 # virtualBuffers\__init__.py:437
-#: virtualBuffers\__init__.py:377
+#: virtualBuffers\__init__.py:459
 msgid "no previous list item"
 msgstr "沒有上一個清單項目了"
 
 # virtualBuffers\__init__.py:438
-#: virtualBuffers\__init__.py:377
+#: virtualBuffers\__init__.py:459
 #: virtualBuffers_old\__init__.py:439
 msgid "moves to the previous list item"
 msgstr "移到上一個清單項目"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:378
+#: virtualBuffers\__init__.py:460
 msgid "moves to the next button"
 msgstr "移到下一個按鈕"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:378
+#: virtualBuffers\__init__.py:460
 msgid "no next button"
 msgstr "沒有下一個按鈕了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:379
+#: virtualBuffers\__init__.py:461
 msgid "moves to the previous button"
 msgstr "移到上一個按鈕"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:379
+#: virtualBuffers\__init__.py:461
 msgid "no previous button"
 msgstr "沒有上一個按鈕了"
 
 # virtualBuffers\__init__.py:449
-#: virtualBuffers\__init__.py:380
+#: virtualBuffers\__init__.py:462
 msgid "moves to the next edit field"
 msgstr "移到下一個文字編輯欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:380
+#: virtualBuffers\__init__.py:462
 msgid "no next edit field"
 msgstr "沒有下一個文字編輯欄位了"
 
 # virtualBuffers\__init__.py:460
-#: virtualBuffers\__init__.py:381
+#: virtualBuffers\__init__.py:463
 msgid "moves to the previous edit field"
 msgstr "移到上一個文字編輯欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:381
+#: virtualBuffers\__init__.py:463
 msgid "no previous edit field"
 msgstr "沒有上一個文字編輯欄位了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:382
+#: virtualBuffers\__init__.py:464
 msgid "moves to the next frame"
 msgstr "移到下一個頁框"
 
 # controlTypes.py:111
-#: virtualBuffers\__init__.py:382
+#: virtualBuffers\__init__.py:464
 msgid "no next frame"
 msgstr "沒有下一個頁框了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:383
+#: virtualBuffers\__init__.py:465
 msgid "moves to the previous frame"
 msgstr "移到上一個頁框"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:383
+#: virtualBuffers\__init__.py:465
 msgid "no previous frame"
 msgstr "沒有上一個頁框了"
 
 # virtualBuffers\__init__.py:339
-#: virtualBuffers\__init__.py:384
+#: virtualBuffers\__init__.py:466
 msgid "moves to the next separator"
 msgstr "移到下一個格位符"
 
 # controlTypes.py:117
-#: virtualBuffers\__init__.py:384
+#: virtualBuffers\__init__.py:466
 msgid "no next separator"
 msgstr "沒有下一個隔位符了"
 
 # virtualBuffers\__init__.py:350
-#: virtualBuffers\__init__.py:385
+#: virtualBuffers\__init__.py:467
 msgid "moves to the previous separator"
 msgstr "移到上一個格位符"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:385
+#: virtualBuffers\__init__.py:467
 msgid "no previous separator"
 msgstr "沒有上一個格位符了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:386
+#: virtualBuffers\__init__.py:468
 msgid "moves to the next radio button"
 msgstr "移到下一個單選鈕"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:386
+#: virtualBuffers\__init__.py:468
 msgid "no next radio button"
 msgstr "沒有下一個單選鈕了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:387
+#: virtualBuffers\__init__.py:469
 msgid "moves to the previous radio button"
 msgstr "移到上一個單選鈕"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:387
+#: virtualBuffers\__init__.py:469
 msgid "no previous radio button"
 msgstr "沒有上一個單選鈕了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:388
+#: virtualBuffers\__init__.py:470
 msgid "moves to the next combo box"
 msgstr "移到下一個下拉方塊"
 
 # controlTypes.py:92
-#: virtualBuffers\__init__.py:388
+#: virtualBuffers\__init__.py:470
 msgid "no next combo box"
 msgstr "沒有下一個下拉方塊了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:389
+#: virtualBuffers\__init__.py:471
 msgid "moves to the previous combo box"
 msgstr "移到上一個下拉方塊"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:389
+#: virtualBuffers\__init__.py:471
 msgid "no previous combo box"
 msgstr "沒有上一個下拉方塊了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:390
+#: virtualBuffers\__init__.py:472
 msgid "moves to the next check box"
 msgstr "移到下一個核取方塊"
 
 # controlTypes.py:84
-#: virtualBuffers\__init__.py:390
+#: virtualBuffers\__init__.py:472
 msgid "no next check box"
 msgstr "沒有下一個核取方塊了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:391
+#: virtualBuffers\__init__.py:473
 msgid "moves to the previous check box"
 msgstr "移到上一個核取方塊"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:391
+#: virtualBuffers\__init__.py:473
 msgid "no previous check box"
 msgstr "沒有上一個核取方塊了"
 
 # virtualBuffers\__init__.py:339
-#: virtualBuffers\__init__.py:392
+#: virtualBuffers\__init__.py:474
 msgid "moves to the next graphic"
 msgstr "移到下一張圖片"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:392
+#: virtualBuffers\__init__.py:474
 msgid "no next graphic"
 msgstr "沒有下一張圖片了"
 
 # virtualBuffers\__init__.py:350
-#: virtualBuffers\__init__.py:393
+#: virtualBuffers\__init__.py:475
 msgid "moves to the previous graphic"
 msgstr "移到上一張圖片"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:393
+#: virtualBuffers\__init__.py:475
 msgid "no previous graphic"
 msgstr "沒有上一張圖片了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:394
+#: virtualBuffers\__init__.py:476
 msgid "moves to the next block quote"
 msgstr "移到下一個引述區"
 
 # controlTypes.py:127
-#: virtualBuffers\__init__.py:394
+#: virtualBuffers\__init__.py:476
 msgid "no next block quote"
 msgstr "沒有下一個引述區了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:395
+#: virtualBuffers\__init__.py:477
 msgid "moves to the previous block quote"
 msgstr "移到上一個引述區"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:395
+#: virtualBuffers\__init__.py:477
 msgid "no previous block quote"
 msgstr "沒有上一個引述區了"
 
@@ -4686,3 +4707,4 @@ msgstr "i=清單項目快速鍵"
 #: virtualBuffers_old\adobe.py:317
 msgid "protected %s"
 msgstr "保密 %s"
+
