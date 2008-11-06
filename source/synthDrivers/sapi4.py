@@ -139,8 +139,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
-			language="en"
-			voices.append(synthDriverHandler.VoiceInfo(ID,name,language))
+			voices.append(synthDriverHandler.VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):

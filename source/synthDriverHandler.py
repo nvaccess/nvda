@@ -270,11 +270,10 @@ class VoiceInfo(object):
 	"""Provides information about a single synthesizer voice.
 	"""
 
-	def __init__(self,ID,name,language):
+	def __init__(self,ID,name):
 		#: The unique identifier of the voice.
 		#: @type: str
 		self.ID=ID
 		#: The name of the voice, visible to the user.
 		#: @type: str
 		self.name=name
-		self.language=language
