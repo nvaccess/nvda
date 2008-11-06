@@ -110,10 +110,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
 	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
 	The methods L{speakText}, L{cancel} and L{pause} should be overridden as appropriate.
-	@ivar voice: unique string identifying the current voice.
-	@type voice: string
-	@ivar availableVoices: a dictionary of available voices, keyed by voice identifier, values being a dictionary of name, language etc.
-	@ivar availableVoices: dict of dicts
+	@ivar voice: Unique string identifying the current voice.
+	@type voice: str
+	@ivar availableVoices: The available voices.
+	@ivar availableVoices: [L{VoiceInfo}, ...]
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -200,7 +200,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _get_availableVoices(self):
-		return{}
+		return[]
 
 	def _get_rate(self):
 		return 0
@@ -267,8 +267,14 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return int(round(float(percent) / 100 * (max - min) + min))
 
 class VoiceInfo(object):
+	"""Provides information about a single synthesizer voice.
+	"""
 
 	def __init__(self,ID,name,language):
+		#: The unique identifier of the voice.
+		#: @type: str
 		self.ID=ID
+		#: The name of the voice, visible to the user.
+		#: @type: str
 		self.name=name
 		self.language=language
