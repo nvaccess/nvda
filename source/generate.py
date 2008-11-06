@@ -31,7 +31,6 @@ COM_INTERFACES = (
 	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
 	("Rich Edit library", comtypes.client.GetModule, "msftedit.dll"),
 	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
-	("SAPI 4", comtypes.client.CreateObject, "ActiveVoice.ActiveVoice"),
 )
 COMPILE_DIRS = ("appModules", "synthDrivers", "brailleDisplayDrivers")
 
