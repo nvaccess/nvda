@@ -54,14 +54,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def cancel(self):
 		_audiologic.TtsStop()
 
+	def _get_availableVoices(self):
+		return [SynthDriverHandler.VoiceInfo("", "Tts3")]
+
 	def _get_voice(self):
-		return 1
-
-	def _get_voiceCount(self):
-		return 1
-
-	def getVoiceName(self,num):
-		return "Tts3"
+		return ""
 
 	def _get_rate(self):
 		return self._paramToPercent(_audiologic.TtsGetProsody('Speed') ,_audiologic.minRate, _audiologic.maxRate) 
