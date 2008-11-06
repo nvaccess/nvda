@@ -210,11 +210,12 @@ class VoiceSettingsDialog(SettingsDialog):
 			voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
 			voiceListLabel=wx.StaticText(self,-1,label=_("&Voice"))
 			voiceListID=wx.NewId()
-			self.voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[getSynth().getVoiceName(x) for x in range(1,getSynth().voiceCount+1)])
+			self._voices=getSynth().availableVoices
+			self.voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[x.name for x in self._voices])
 			try:
-				voiceIndex=getSynth().voice
-				voiceIndex-=1
-				if voiceIndex>=0 and voiceIndex<getSynth().voiceCount:
+				curVoice=getSynth().voice
+				voiceIndex=[x.ID for x in self._voices].index(curVoice)
+				if voiceIndex>=0:
 					self.voiceList.SetSelection(voiceIndex)
 			except:
 				pass
@@ -293,7 +294,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.voiceList.SetFocus()
 
 	def onVoiceChange(self,evt):
-		changeVoice(getSynth(),evt.GetSelection()+1)
+		changeVoice(getSynth(),self._voices[evt.GetSelection()].ID)
 		rate=getSynth().rate
 		self.rateSlider.SetValue(rate)
 		pitch=getSynth().pitch
@@ -339,7 +340,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		if getSynth().hasVoice:
-			config.conf["speech"][getSynth().name]["voice"]=self.voiceList.GetSelection()+1
+			config.conf["speech"][getSynth().name]["voice"]=self._voices[self.voiceList.GetSelection()].ID
 		if getSynth().hasVariant:
 			config.conf["speech"][getSynth().name]["variant"]=getSynth().getVariantIdentifier(self.variantList.GetSelection())
 		if getSynth().hasRate:

@@ -63,7 +63,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._enginesList=self._fetchEnginesList()
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
-		self.voice=1
+		self.voice=str(self._enginesList[0].gModeID)
 
 	def speakText(self,text,index=None):
 		if index is not None:
@@ -80,11 +80,21 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self._ttsCentral.AudioResume()
 
 	def _set_voice(self,val):
-		self._voice=val-1
+		try:
+			val=GUID(val)
+		except:
+			val=self._enginesList[0].gModeID
+		mode=None
+		for mode in self._enginesList:
+			if mode.gModeID==val:
+				break
+		if mode is None:
+			raise ValueError("no such mode: %s"%val)
+		self._currentMode=mode
 		self._ttsAudio=CoCreateInstance(CLSID_MMAudioDest,IAudioMultiMediaDevice)
 		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
 		self._ttsCentral=POINTER(ITTSCentralW)()
-		self._ttsEngines.Select(self._enginesList[self._voice].gModeID,byref(self._ttsCentral),self._ttsAudio)
+		self._ttsEngines.Select(self._currentMode.gModeID,byref(self._ttsCentral),self._ttsAudio)
 		self._ttsAttrs=self._ttsCentral.QueryInterface(ITTSAttributes)
 		#Find out rate limits
 		oldVal=DWORD()
@@ -122,13 +132,16 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._ttsAttrs.VolumeSet(oldVal.value)
 
 	def _get_voice(self):
-		return self._voice+1
+		return str(self._currentMode.gModeID)
 
-	def getVoiceName(self,val):
-		return self._enginesList[val-1].szModeName
-
-	def _get_voiceCount(self):
-		return len(self._enginesList)
+	def _get_availableVoices(self):
+		voices=[]
+		for mode in self._enginesList:
+			ID=str(mode.gModeID)
+			name="%s - %s"%(mode.szModeName,mode.szProductName)
+			language="en"
+			voices.append(synthDriverHandler.VoiceInfo(ID,name,language))
+		return voices
 
 	def _get_rate(self):
 		val=DWORD()

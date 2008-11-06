@@ -37,15 +37,24 @@ class SynthSetting(baseObject.AutoPropertyObject):
 class VoiceSynthSetting(SynthSetting):
 
 	def __init__(self):
-		super(VoiceSynthSetting,self).__init__("voice",1,synthDriverHandler.getSynth().voiceCount)
+		self._voices=synthDriverHandler.getSynth().availableVoices
+		super(VoiceSynthSetting,self).__init__("voice",0,len(self._voices)-1)
+
+	def _get_value(self):
+		curID=synthDriverHandler.getSynth().voice
+		for e,v in enumerate(self._voices):
+			if curID==v.ID:
+				return e 
+
 
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
-		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),value)
-		config.conf["speech"][synthDriverHandler.getSynth().name]["voice"]=value
+		curID=self._voices[value].ID
+		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),curID)
+		config.conf["speech"][synthDriverHandler.getSynth().name]["voice"]=curID
 
 	def _getReportValue(self, val):
-		return synthDriverHandler.getSynth().getVoiceName(val)
+		return self._voices[val].name
 
 class VariantSynthSetting(SynthSetting):
 

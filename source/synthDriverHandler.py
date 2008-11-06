@@ -18,7 +18,7 @@ __path__=['.\\synthDrivers']
 _curSynth=None
 
 def changeVoice(synth, voice):
-	voiceName=synth.getVoiceName(voice).replace('\\','_')
+	voiceName=voice.replace('\\','_')
 	fileName="%s/%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,voiceName)
 	speechDictHandler.dictionaries["voice"].load(fileName)
 	synth.voice = voice
@@ -110,10 +110,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
 	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
 	The methods L{speakText}, L{cancel} and L{pause} should be overridden as appropriate.
-	@ivar voice: The current voice.
-	@type voice: int
-	@ivar voiceCount: The number of available voices.
-	@type voiceCount: int
+	@ivar voice: unique string identifying the current voice.
+	@type voice: string
+	@ivar availableVoices: a dictionary of available voices, keyed by voice identifier, values being a dictionary of name, language etc.
+	@ivar availableVoices: dict of dicts
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -122,8 +122,8 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type volume: int
 	@ivar variant: The current variant of the voice.
 	@type variant: str
-	@ivar variantCount: The number of available variants.
-	@type variantCount: int
+	@ivar availableVariants: a dictionary of available variants, keyed by variant identifier, values are the full variant name. 
+	@type availableVariants: dict of strings
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
@@ -194,16 +194,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 
 	def _get_voice(self):
-		return 1
+		raise NotImplementedError
 
 	def _set_voice(self, value):
 		pass
 
-	def _get_voiceCount(self):
-		return 1
-
-	def getVoiceName(self, num):
-		return ""
+	def _get_availableVoices(self):
+		return{}
 
 	def _get_rate(self):
 		return 0
@@ -224,13 +221,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _get_variant(self):
-		return "none"
+		raise NotImplementedError
 
 	def _set_variant(self, value):
 		pass
 
-	def _get_variantCount(self):
-		return 1
+	def _get_availableVariants(self):
+		return {}
 
 	def _get_inflection(self):
 		return 0
@@ -268,3 +265,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type max: int
 		"""
 		return int(round(float(percent) / 100 * (max - min) + min))
+
+class VoiceInfo(object):
+
+	def __init__(self,ID,name,language):
+		self.ID=ID
+		self.name=name
+		self.language=language
