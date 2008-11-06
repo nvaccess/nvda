@@ -366,12 +366,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
 			return self.passThrough
+		if reason == self.REASON_QUICKNAV:
+			return False
 		states = obj.states
 		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
 			return False
 		role = obj.role
-		if reason == self.REASON_QUICKNAV:
-			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
