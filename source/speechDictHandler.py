@@ -86,9 +86,9 @@ class SmartDict(SpeechDict):
 	compiled = None
 	pattern = ""
 	loaded = False
-	name = None
+	name = ""
 
-	def __init__(self, fileName=None, name=None):
+	def __init__(self, fileName=None, name=""):
 		"""loads regexpr from the file"""
 		super(list,self).__init__()
 		self.fileName = fileName
@@ -116,7 +116,7 @@ class SmartDict(SpeechDict):
 	def save(self,fileName=None):
 		if fileName is not None:
 			self.fileName = fileName
-		file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+		file = codecs.open(self.fileName,"w","utf_8_sig",errors="replace")
 		file.write("#!%s\r\n" % self.pattern)
 		for entry in self:
 			if entry.comment:
