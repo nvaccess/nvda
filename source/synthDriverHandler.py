@@ -56,7 +56,11 @@ def setSynth(name):
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
 			if newSynth.hasVoice:
-				changeVoice(newSynth,config.conf["speech"][name]["voice"])
+				voice=config.conf["speech"][name]["voice"]
+				try:
+					changeVoice(newSynth,voice)
+				except LookupError:
+					log.warning("No such voice: %s" % voice)
 			if newSynth.hasVariant:
 				newSynth.variant=config.conf["speech"][name]["variant"]
 			if newSynth.hasRate:
@@ -290,10 +294,12 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type ID: string
 		@returns: the voice info instance
 		@rtype: L{VoiceInfo}
+		@raise LookupError: If there was no such voice.
 		"""
 		for v in self.availableVoices:
 			if v.ID==ID:
 				return v
+		raise LookupError("No such voice")
 
 class VoiceInfo(object):
 	"""Provides information about a single synthesizer voice.
