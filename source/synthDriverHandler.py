@@ -18,7 +18,8 @@ __path__=['.\\synthDrivers']
 _curSynth=None
 
 def changeVoice(synth, voice):
-	voiceName=voice.replace('\\','_')
+	voiceName=synth.getVoiceInfoByID(voice).name
+	voiceName=voiceName.replace('\\','_')
 	fileName="%s/%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,voiceName)
 	speechDictHandler.dictionaries["voice"].load(fileName)
 	synth.voice = voice
@@ -157,12 +158,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		return False
 
-	def initialize(self):
+	def __init__(self):
 		"""Initialize this synth driver.
 		This method can also set default settings for the synthesizer.
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
+
 
 	def terminate(self):
 		"""Terminate this synth driver.
@@ -199,8 +201,16 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def _set_voice(self, value):
 		pass
 
+	def _getAvailableVoices(self):
+		"""fetches a list of voices that the synth supports.
+		@returns: a list of L{VoiceInfo} instances representing the available voices
+		@rtype: list
+		"""
+
 	def _get_availableVoices(self):
-		return[]
+		if not hasattr(self,'_availableVoices'):
+			self._availableVoices=self._getAvailableVoices()
+		return self._availableVoices
 
 	def _get_rate(self):
 		return 0
@@ -226,8 +236,16 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def _set_variant(self, value):
 		pass
 
+	def _getAvailableVariants(self):
+		"""fetches a list of variants that the synth supports.
+		@returns: a list of L{VoiceInfo} instances representing the available variants
+		@rtype: list
+		"""
+ 
 	def _get_availableVariants(self):
-		return []
+		if not hasattr(self,'_availableVariants'):
+			self._availableVariants=self._getAvailableVariants()
+		return self._availableVariants
 
 	def _get_inflection(self):
 		return 0
@@ -265,6 +283,17 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type max: int
 		"""
 		return int(round(float(percent) / 100 * (max - min) + min))
+
+	def getVoiceInfoByID(self,ID):
+		"""Looks up a L{VoiceInfo} instance representing a particular voice, by its ID.
+		@param ID: the ID of the voice
+		@type ID: string
+		@returns: the voice info instance
+		@rtype: L{VoiceInfo}
+		"""
+		for v in self.availableVoices:
+			if v.ID==ID:
+				return v
 
 class VoiceInfo(object):
 	"""Provides information about a single synthesizer voice.

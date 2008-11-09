@@ -136,7 +136,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _get_voice(self):
 		return str(self._currentMode.gModeID)
 
-	def _get_availableVoices(self):
+	def _getAvailableVoices(self):
 		voices=[]
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
