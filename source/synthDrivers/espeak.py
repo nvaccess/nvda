@@ -75,7 +75,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):
-		return [synthDriverHandler.VoiceInfo(voice.identifier, voice.name) for voice in _espeak.getVoiceList()]
+		return [synthDriverHandler.VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier)) for voice in _espeak.getVoiceList()]
 
 	def _get_voice(self):
 		curVoice = _espeak.getCurrentVoice()
