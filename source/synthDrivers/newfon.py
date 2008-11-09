@@ -76,7 +76,7 @@ class SynthDriver(SynthDriver):
 	hasVolume = True
 	hasPitch = True
 	_pitch = 50
-	availableVoices = (VoiceInfo(0, _("male 1")), VoiceInfo(1, _("female 1")), VoiceInfo(2, _("male 2")), VoiceInfo(3, _("female 2")))
+	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
 
 	@classmethod
 	def check(cls):
@@ -115,11 +115,11 @@ class SynthDriver(SynthDriver):
 
 	def _get_voice(self):
 		global newfon_lib
-		return newfon_lib.get_voice()
+		return str(newfon_lib.get_voice())
 
 	def _set_voice(self, value):
 		global newfon_lib
-		newfon_lib.set_voice(value )
+		newfon_lib.set_voice(int(value))
 
 	def _get_rate(self):
 		global newfon_lib
