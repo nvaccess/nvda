@@ -74,7 +74,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _set_volume(self,volume):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
-	def _get_availableVoices(self):
+	def _getAvailableVoices(self):
 		return [synthDriverHandler.VoiceInfo(voice.identifier, voice.name) for voice in _espeak.getVoiceList()]
 
 	def _get_voice(self):
@@ -101,5 +101,5 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._variant = val if val in self._variantDict else "none"
 		_espeak.setVoiceAndVariant(variant=val)
 
-	def _get_availableVariants(self):
+	def _getAvailableVariants(self):
 		return [synthDriverHandler.VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]

@@ -48,7 +48,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def terminate(self):
 		del self.tts
 
-	def _get_availableVoices(self):
+	def _getAvailableVoices(self):
 		voices=[]
 		for v in self.tts.GetVoices():
 			ID=v.Id

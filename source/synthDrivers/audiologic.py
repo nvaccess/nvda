@@ -54,7 +54,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def cancel(self):
 		_audiologic.TtsStop()
 
-	def _get_availableVoices(self):
+	def _getAvailableVoices(self):
 		return [SynthDriverHandler.VoiceInfo("", "Tts3")]
 
 	def _get_voice(self):
