@@ -49,8 +49,15 @@ class VoiceSynthSetting(SynthSetting):
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
 		ID=self._voices[value].ID
-		synthDriverHandler.changeVoice(synthDriverHandler.getSynth(),ID)
-		config.conf["speech"][synthDriverHandler.getSynth().name]["voice"]=ID
+		synth=synthDriverHandler.getSynth()
+		synthDriverHandler.changeVoice(synth,ID)
+		synthName=synth.name
+		config.conf["speech"][synthName]["voice"]=ID
+		# Voice parameters may change when the voice changes, so update the config.
+		config.conf["speech"][synthName]["rate"]=synth.rate
+		config.conf["speech"][synthName]["pitch"]=synth.pitch
+		config.conf["speech"][synthName]["inflection"]=synth.inflection
+		config.conf["speech"][synthName]["volume"]=synth.volume
 
 	def _getReportValue(self, val):
 		return self._voices[val].name
