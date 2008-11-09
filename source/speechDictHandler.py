@@ -117,7 +117,7 @@ class SmartDict(SpeechDict):
 		if fileName is not None:
 			self.fileName = fileName
 		file = codecs.open(self.fileName,"w","utf_8_sig",errors="replace")
-		file.write("#!%s\r\n" % self.pattern)
+		file.write("#!%s\r\n\r\n" % self.pattern)
 		for entry in self:
 			if entry.comment:
 				file.write("#%s\r\n"%entry.comment)

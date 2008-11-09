@@ -17,6 +17,7 @@ import speech
 import queueHandler
 import core
 from settingsDialogs import *
+from smartDictManager import SmartDictManagerDialog
 import speechDictHandler
 import languageHandler
 import logViewer
@@ -168,6 +169,9 @@ class MainFrame(wx.Frame):
 	def onTemporaryDictionaryCommand(self,evt):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
+	def onSmartDictManagerCommand(self,evt):
+		self._popupSettingsDialog(SmartDictManagerDialog)
+
 	def onExitCommand(self, evt):
 		global isExitDialog
 		canExit=False
@@ -267,6 +271,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Smart Dictionary Manager..."),_("dialog where you can manage Smart dictionaries"))
+		self.Bind(wx.EVT_MENU, frame.onSmartDictManagerCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
