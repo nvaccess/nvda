@@ -3,7 +3,7 @@
 #Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-import synthDriverHandler
+from synthDriverHandler import SynthDriver,VoiceInfo
 from ctypes import *
 import os
 import re
@@ -68,7 +68,7 @@ def preprocessText(text):
 	text = text.replace("j", u"дж")
 	return text
 
-class SynthDriver(synthDriverHandler.SynthDriver):
+class SynthDriver(SynthDriver):
 	name="newfon"
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
 	hasVoice=True
@@ -76,6 +76,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	hasVolume = True
 	hasPitch = True
 	_pitch = 50
+	availableVoices = (VoiceInfo(0, _("male 1")), VoiceInfo(1, _("female 1")), VoiceInfo(2, _("male 2")), VoiceInfo(3, _("female 2")))
 
 	@classmethod
 	def check(cls):
@@ -114,19 +115,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def _get_voice(self):
 		global newfon_lib
-		return newfon_lib.get_voice() +1
+		return newfon_lib.get_voice()
 
 	def _set_voice(self, value):
 		global newfon_lib
-		newfon_lib.set_voice(value -1)
-
-	def _get_voiceCount(self):
-		global newfon_lib
-		return newfon_lib.get_voiceCount()
-
-	def getVoiceName(self, num):
-		global newfon_lib
-		return newfon_lib.getVoiceName(num -1)
+		newfon_lib.set_voice(value )
 
 	def _get_rate(self):
 		global newfon_lib
