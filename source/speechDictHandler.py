@@ -141,13 +141,13 @@ def getFileName(type, synth=synthDriverHandler.getSynth()):
 	if type is "default":
 		return "%s/default.dic"%speechDictsPath
 	elif type is "voice":
-		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(synth.name),api.validateFile(synth.getVoiceInfoByID(voice).name)))
+		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(synth.name),api.validateFile(synth.getVoiceInfoByID(synth.voice).name))
 	return None
 
 def reflectVoiceChange(synth):
 	"""updates the speech dictionaries reflecting voice change"""
 	dictionaries["voice"].load(getFileName("voice", synth))
-	name = "%s-%s" %(synth.name, synth.getVoiceInfoByID(voice).name)
+	name = "%s-%s" %(synth.name, synth.getVoiceInfoByID(synth.voice).name)
 	del dictionaries["smart"][:]
 	[(dict.load(), dictionaries["smart"].append(dict)) for dict in smartDicts if dict.matches(name)]
 
