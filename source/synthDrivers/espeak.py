@@ -29,13 +29,11 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		_espeak.initialize()
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
-		self._voiceList=_espeak.getVoiceList()
 		self._variantDict=_espeak.getVariantDict()
 		self.variant="max"
 		self.rate=30
 		self.pitch=40
 		self.inflection=75
-
 
 	def speakText(self,text,index=None):
 		_espeak.speak(text, index=index)
@@ -76,26 +74,19 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _set_volume(self,volume):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
+	def _getAvailableVoices(self):
+		return [synthDriverHandler.VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier)) for voice in _espeak.getVoiceList()]
+
 	def _get_voice(self):
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
-			return 0
-		for index, voice in enumerate(self._voiceList):
-			if voice.identifier.split('+')[0] == curVoice.identifier.split('+')[0]:
-				return index + 1
-		return 0
+			return ""
+		return curVoice.identifier.split('+')[0]
 
-	def _set_voice(self, index):
-		if index == 0:
+	def _set_voice(self, identifier):
+		if not identifier:
 			return
-		_espeak.setVoiceAndVariant(voice=self._voiceList[index - 1].identifier)
-
-	def _get_voiceCount(self):
-		return len(self._voiceList)
-
-	def getVoiceName(self,num):
-		num=num-1
-		return "%s (%s)"%(self._voiceList[num].name,self._voiceList[num].identifier)
+		_espeak.setVoiceAndVariant(voice=identifier)
 
 	def _get_lastIndex(self):
 		return _espeak.lastIndex
@@ -110,11 +101,5 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._variant = val if val in self._variantDict else "none"
 		_espeak.setVoiceAndVariant(variant=val)
 
-	def _get_variantCount(self):
-		return len(self._variantDict)
-
-	def getVariantName(self,num):
-		return self._variantDict.values()[num]
-
-	def getVariantIdentifier(self,num):
-		return self._variantDict.keys()[num]
+	def _getAvailableVariants(self):
+		return [synthDriverHandler.VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]

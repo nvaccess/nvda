@@ -63,12 +63,14 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._enginesList=self._fetchEnginesList()
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
-		self.voice=1
+		self.voice=str(self._enginesList[0].gModeID)
 
 	def speakText(self,text,index=None):
+		flags=0
 		if index is not None:
-			text="\mrk=%d\\%s"%(index,text)
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, TTSDATAFLAG_TAGGED,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
+			text="\mrk=%d\\%s"%(index,text.replace('\\','\\\\'))
+			flags+=TTSDATAFLAG_TAGGED
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
@@ -80,55 +82,73 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self._ttsCentral.AudioResume()
 
 	def _set_voice(self,val):
-		self._voice=val-1
+		try:
+			val=GUID(val)
+		except:
+			val=self._enginesList[0].gModeID
+		mode=None
+		for mode in self._enginesList:
+			if mode.gModeID==val:
+				break
+		if mode is None:
+			raise ValueError("no such mode: %s"%val)
+		self._currentMode=mode
 		self._ttsAudio=CoCreateInstance(CLSID_MMAudioDest,IAudioMultiMediaDevice)
 		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
 		self._ttsCentral=POINTER(ITTSCentralW)()
-		self._ttsEngines.Select(self._enginesList[self._voice].gModeID,byref(self._ttsCentral),self._ttsAudio)
+		self._ttsEngines.Select(self._currentMode.gModeID,byref(self._ttsCentral),self._ttsAudio)
 		self._ttsAttrs=self._ttsCentral.QueryInterface(ITTSAttributes)
 		#Find out rate limits
-		oldVal=DWORD()
-		self._ttsAttrs.SpeedGet(byref(oldVal))
-		self._ttsAttrs.SpeedSet(TTSATTR_MINSPEED)
-		newVal=DWORD()
-		self._ttsAttrs.SpeedGet(byref(newVal))
-		self._minRate=newVal.value
-		self._ttsAttrs.SpeedSet(TTSATTR_MAXSPEED)
-		self._ttsAttrs.SpeedGet(byref(newVal))
-		# ViaVoice (and perhaps other synths) doesn't seem to like the speed being set to maximum.
-		self._maxRate=newVal.value-1
-		self._ttsAttrs.SpeedSet(oldVal.value)
+		self.hasRate=bool(mode.dwFeatures&TTSFEATURE_SPEED)
+		if self.hasRate:
+			oldVal=DWORD()
+			self._ttsAttrs.SpeedGet(byref(oldVal))
+			self._ttsAttrs.SpeedSet(TTSATTR_MINSPEED)
+			newVal=DWORD()
+			self._ttsAttrs.SpeedGet(byref(newVal))
+			self._minRate=newVal.value
+			self._ttsAttrs.SpeedSet(TTSATTR_MAXSPEED)
+			self._ttsAttrs.SpeedGet(byref(newVal))
+			# ViaVoice (and perhaps other synths) doesn't seem to like the speed being set to maximum.
+			self._maxRate=newVal.value-1
+			self._ttsAttrs.SpeedSet(oldVal.value)
 		#Find out pitch limits
-		oldVal=WORD()
-		self._ttsAttrs.PitchGet(byref(oldVal))
-		self._ttsAttrs.PitchSet(TTSATTR_MINPITCH)
-		newVal=WORD()
-		self._ttsAttrs.PitchGet(byref(newVal))
-		self._minPitch=newVal.value
-		self._ttsAttrs.PitchSet(TTSATTR_MAXPITCH)
-		self._ttsAttrs.PitchGet(byref(newVal))
-		self._maxPitch=newVal.value
-		self._ttsAttrs.PitchSet(oldVal.value)
+		self.hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
+		if self.hasPitch:
+			oldVal=WORD()
+			self._ttsAttrs.PitchGet(byref(oldVal))
+			self._ttsAttrs.PitchSet(TTSATTR_MINPITCH)
+			newVal=WORD()
+			self._ttsAttrs.PitchGet(byref(newVal))
+			self._minPitch=newVal.value
+			self._ttsAttrs.PitchSet(TTSATTR_MAXPITCH)
+			self._ttsAttrs.PitchGet(byref(newVal))
+			self._maxPitch=newVal.value
+			self._ttsAttrs.PitchSet(oldVal.value)
 		#Find volume limits
-		oldVal=DWORD()
-		self._ttsAttrs.VolumeGet(byref(oldVal))
-		self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
-		newVal=DWORD()
-		self._ttsAttrs.VolumeGet(byref(newVal))
-		self._minVolume=newVal.value
-		self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
-		self._ttsAttrs.VolumeGet(byref(newVal))
-		self._maxVolume=newVal.value
-		self._ttsAttrs.VolumeSet(oldVal.value)
+		self.hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
+		if self.hasVolume:
+			oldVal=DWORD()
+			self._ttsAttrs.VolumeGet(byref(oldVal))
+			self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
+			newVal=DWORD()
+			self._ttsAttrs.VolumeGet(byref(newVal))
+			self._minVolume=newVal.value
+			self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
+			self._ttsAttrs.VolumeGet(byref(newVal))
+			self._maxVolume=newVal.value
+			self._ttsAttrs.VolumeSet(oldVal.value)
 
 	def _get_voice(self):
-		return self._voice+1
+		return str(self._currentMode.gModeID)
 
-	def getVoiceName(self,val):
-		return self._enginesList[val-1].szModeName
-
-	def _get_voiceCount(self):
-		return len(self._enginesList)
+	def _getAvailableVoices(self):
+		voices=[]
+		for mode in self._enginesList:
+			ID=str(mode.gModeID)
+			name="%s - %s"%(mode.szModeName,mode.szProductName)
+			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+		return voices
 
 	def _get_rate(self):
 		val=DWORD()

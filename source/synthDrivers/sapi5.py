@@ -26,7 +26,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	hasRate=True
 	hasPitch=True
 	hasVolume=True
-	hasIndexing=True
 
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"
@@ -41,22 +40,21 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			return False
 
 	def initialize(self):
-		try:
-			self.tts = comtypes.client.CreateObject(COM_CLASS)
-			self._pitch=50
-			self.voice=1
-			return True
-		except:
-			return False
+		self.tts = comtypes.client.CreateObject(COM_CLASS)
+		self._pitch=50
+		self.voice=self.tts.GetVoices()[0].Id
+
 
 	def terminate(self):
 		del self.tts
 
-	def _get_voiceCount(self):
-		return len(self.tts.GetVoices())
-
-	def getVoiceName(self,num):
-		return self.tts.GetVoices()[num-1].GetDescription()
+	def _getAvailableVoices(self):
+		voices=[]
+		for v in self.tts.GetVoices():
+			ID=v.Id
+			name=v.GetDescription()
+			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+		return voices
 
 	def _get_rate(self):
 		return (self.tts.rate*5)+50
@@ -88,15 +86,15 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self.tts.Volume = value
 
 	def _set_voice(self,value):
-		if value>self.voiceCount:
-			value=1
-		self.tts=comtypes.client.CreateObject('sapi.SPVoice')
-		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
-		if outputDeviceID>=0:
-			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
-		self.tts.Voice=self.tts.GetVoices()[value-1]
-		self._voice=value
-
+		for v in self.tts.GetVoices():
+			if value==v.Id:
+				self.tts=comtypes.client.CreateObject('sapi.spVoice')
+				outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
+				if outputDeviceID>=0:
+					self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+				self.tts.voice=v
+				self._voice=value
+				break
 
 	def speakText(self,text,index=None):
 		flags=constants.SVSFIsXML

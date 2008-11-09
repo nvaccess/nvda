@@ -142,15 +142,15 @@ class BgThread(threading.Thread):
 
 	def run(self):
 		global isSpeaking
-		try:
-			while True:
-				func, args, kwargs = bgQueue.get()
-				if not func:
-					break
+		while True:
+			func, args, kwargs = bgQueue.get()
+			if not func:
+				break
+			try:
 				func(*args, **kwargs)
-				bgQueue.task_done()
-		except:
-			log.error("bgThread.run", exc_info=True)
+			except:
+				log.error("Error running function from queue", exc_info=True)
+			bgQueue.task_done()
 
 def _bgExec(func, *args, **kwargs):
 	global bgQueue

@@ -207,75 +207,68 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		if getSynth().hasVoice:
-			voiceListSizer=wx.BoxSizer(wx.HORIZONTAL)
-			voiceListLabel=wx.StaticText(self,-1,label=_("&Voice"))
-			voiceListID=wx.NewId()
-			self.voiceList=wx.Choice(self,voiceListID,name="Voice:",choices=[getSynth().getVoiceName(x) for x in range(1,getSynth().voiceCount+1)])
+			sizer=wx.BoxSizer(wx.HORIZONTAL)
+			label=wx.StaticText(self,wx.ID_ANY,label=_("&Voice"))
+			self._voices=getSynth().availableVoices
+			self.voiceList=wx.Choice(self,wx.ID_ANY,name="Voice:",choices=[x.name for x in self._voices])
 			try:
-				voiceIndex=getSynth().voice
-				voiceIndex-=1
-				if voiceIndex>=0 and voiceIndex<getSynth().voiceCount:
-					self.voiceList.SetSelection(voiceIndex)
-			except:
+				curVoice=getSynth().voice
+				voiceIndex=[x.ID for x in self._voices].index(curVoice)
+				self.voiceList.SetSelection(voiceIndex)
+			except ValueError:
 				pass
 			self.voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
-			voiceListSizer.Add(voiceListLabel)
-			voiceListSizer.Add(self.voiceList)
-			settingsSizer.Add(voiceListSizer,border=10,flag=wx.BOTTOM)
+			sizer.Add(label)
+			sizer.Add(self.voiceList)
+			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		if getSynth().hasVariant:
-			variantListSizer=wx.BoxSizer(wx.HORIZONTAL)
-			variantListLabel=wx.StaticText(self,-1,label=_("V&ariant"))
-			variantListID=wx.NewId()
-			self.variantList=wx.Choice(self,variantListID,name="Variant:",choices=[getSynth().getVariantName(x) for x in range(0,getSynth().variantCount)])
-			currentVariant=getSynth().variant
-			for x in range(0,getSynth().variantCount):
-				if currentVariant==getSynth().getVariantIdentifier(x):
-					break
-			self.variantList.SetSelection(x)
+			sizer=wx.BoxSizer(wx.HORIZONTAL)
+			label=wx.StaticText(self,wx.ID_ANY,label=_("V&ariant"))
+			self._variants=getSynth().availableVariants
+			self.variantList=wx.Choice(self,wx.ID_ANY,name="Variant:",choices=[x.name for x in self._variants])
+			try:
+				curVariant=getSynth().variant
+				variantIndex=[x.ID for x in self._variants].index(curVariant)
+				self.variantList.SetSelection(variantIndex)
+			except ValueError:
+				pass
 			self.variantList.Bind(wx.EVT_CHOICE,self.onVariantChange)
-			variantListSizer.Add(variantListLabel)
-			variantListSizer.Add(self.variantList)
-			settingsSizer.Add(variantListSizer,border=10,flag=wx.BOTTOM)
-		if getSynth().hasRate:
-			rateSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-			rateSliderLabel=wx.StaticText(self,-1,label=_("&Rate"))
-			rateSliderID=wx.NewId()
-			self.rateSlider=wx.Slider(self,rateSliderID,value=getSynth().rate,minValue=0,maxValue=100,name="Rate:")
-			self._setSliderStepSizes(self.rateSlider,getSynth().rateMinStep)
-			self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
-			rateSliderSizer.Add(rateSliderLabel)
-			rateSliderSizer.Add(self.rateSlider)
-			settingsSizer.Add(rateSliderSizer,border=10,flag=wx.BOTTOM)
-		if getSynth().hasPitch:
-			pitchSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-			pitchSliderLabel=wx.StaticText(self,-1,label=_("&Pitch"))
-			pitchSliderID=wx.NewId()
-			self.pitchSlider=wx.Slider(self,pitchSliderID,value=getSynth().pitch,minValue=0,maxValue=100)
-			self._setSliderStepSizes(self.pitchSlider,getSynth().pitchMinStep)
-			self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
-			pitchSliderSizer.Add(pitchSliderLabel)
-			pitchSliderSizer.Add(self.pitchSlider)
-			settingsSizer.Add(pitchSliderSizer,border=10,flag=wx.BOTTOM)
-		if getSynth().hasInflection:
-			inflectionSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-			inflectionSliderLabel=wx.StaticText(self,-1,label=_("&Inflection"))
-			inflectionSliderID=wx.NewId()
-			self.inflectionSlider=wx.Slider(self,inflectionSliderID,value=getSynth().inflection,minValue=0,maxValue=100)
-			self._setSliderStepSizes(self.inflectionSlider,getSynth().inflectionMinStep)
-			self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
-			inflectionSliderSizer.Add(inflectionSliderLabel)
-			inflectionSliderSizer.Add(self.inflectionSlider)
-			settingsSizer.Add(inflectionSliderSizer,border=10,flag=wx.BOTTOM)
-		if getSynth().hasVolume:
-			volumeSliderSizer=wx.BoxSizer(wx.HORIZONTAL)
-			volumeSliderLabel=wx.StaticText(self,-1,label=_("V&olume"))
-			volumeSliderID=wx.NewId()
-			self.volumeSlider=wx.Slider(self,volumeSliderID,value=getSynth().volume,minValue=0,maxValue=100)
-			self._setSliderStepSizes(self.volumeSlider,getSynth().volumeMinStep)
-			self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
-			volumeSliderSizer.Add(volumeSliderLabel)
-			volumeSliderSizer.Add(self.volumeSlider)
-			settingsSizer.Add(volumeSliderSizer,border=10,flag=wx.BOTTOM)
+			sizer.Add(label)
+			sizer.Add(self.variantList)
+			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Rate"))
+		self.rateSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="Rate:")
+		self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
+		self._setSliderStepSizes(self.rateSlider,getSynth().rateMinStep)
+		sizer.Add(label)
+		sizer.Add(self.rateSlider)
+		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Pitch"))
+		self.pitchSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
+		self._setSliderStepSizes(self.pitchSlider,getSynth().pitchMinStep)
+		self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
+		sizer.Add(label)
+		sizer.Add(self.pitchSlider)
+		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Inflection"))
+		self.inflectionSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
+		self._setSliderStepSizes(self.inflectionSlider,getSynth().inflectionMinStep)
+		self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
+		sizer.Add(label)
+		sizer.Add(self.inflectionSlider)
+		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label=_("V&olume"))
+		self.volumeSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
+		self._setSliderStepSizes(self.volumeSlider,getSynth().volumeMinStep)
+		self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
+		sizer.Add(label)
+		sizer.Add(self.volumeSlider)
+		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		self._setVoiceParameters()
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
@@ -292,19 +285,34 @@ class VoiceSettingsDialog(SettingsDialog):
 	def postInit(self):
 		self.voiceList.SetFocus()
 
+	def _setVoiceParameters(self):
+		if getSynth().hasRate:
+			self.rateSlider.Enable()
+			self.rateSlider.SetValue(getSynth().rate)
+		else:
+			self.rateSlider.Disable()
+		if getSynth().hasPitch:
+			self.pitchSlider.Enable()
+			self.pitchSlider.SetValue(getSynth().pitch)
+		else:
+			self.pitchSlider.Disable()
+		if getSynth().hasInflection:
+			self.inflectionSlider.Enable()
+			self.inflectionSlider.SetValue(getSynth().inflection)
+		else:
+			self.inflectionSlider.Disable()
+		if getSynth().hasVolume:
+			self.volumeSlider.Enable()
+			self.volumeSlider.SetValue(getSynth().volume)
+		else:
+			self.volumeSlider.Disable()
+
 	def onVoiceChange(self,evt):
-		changeVoice(getSynth(),evt.GetSelection()+1)
-		rate=getSynth().rate
-		self.rateSlider.SetValue(rate)
-		pitch=getSynth().pitch
-		self.pitchSlider.SetValue(pitch)
-		volume=getSynth().volume
-		self.volumeSlider.SetValue(volume)
+		changeVoice(getSynth(),self._voices[evt.GetSelection()].ID)
+		self._setVoiceParameters()
 
 	def onVariantChange(self,evt):
-		val=evt.GetSelection()
-		s=getSynth()
-		s.variant=s.getVariantIdentifier(val)
+		getSynth().variant=self._variants[evt.GetSelection()].ID
 
 	def onRateChange(self,evt):
 		val=evt.GetSelection()
@@ -339,9 +347,9 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		if getSynth().hasVoice:
-			config.conf["speech"][getSynth().name]["voice"]=self.voiceList.GetSelection()+1
+			config.conf["speech"][getSynth().name]["voice"]=self._voices[self.voiceList.GetSelection()].ID
 		if getSynth().hasVariant:
-			config.conf["speech"][getSynth().name]["variant"]=getSynth().getVariantIdentifier(self.variantList.GetSelection())
+			config.conf["speech"][getSynth().name]["variant"]=self._variants[self.variantList.GetSelection()].ID
 		if getSynth().hasRate:
 			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
 		if getSynth().hasPitch:

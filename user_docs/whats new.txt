@@ -45,6 +45,9 @@ Changes since 0.6 P2:
 * new: You can now press escape when in focus mode to return to browse mode.
 * new: In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)
 * new: Rewritten SAPI4 synthesizer driver which replaces the sapi4serotek and sapi4activeVoice drivers and should fix the problems encountered with these drivers.
+* change: Voices are now stored in the configuration file by ID instead of by index. This makes voice settings more reliable across systems and configuration changes. The voice setting will not be preserved in old configurations and an error may be logged the first time a synthesizer is used. (#19)
+* fix: The eSpeak synthesizer driver no longer stops speaking completely after a single error.
+* fix: Fix the issue whereby updated voice parameters (rate, pitch, etc.) were not saved when the voice was changed from the synthesizer settings ring.
 
 
 Changes since 0.6 P1:
