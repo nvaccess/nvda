@@ -50,6 +50,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Core starting")
 	log.debug("loading config")
 	import config
+	try:
+		config.initConfigDir()
+	except OSError:
+		log.warning("Could not  create config dir")
 	config.load()
 	log.debug("Trying to save config")
 	try:
