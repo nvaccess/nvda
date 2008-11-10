@@ -55,9 +55,9 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 		d=(lParam>>24)&0xFF
 		if a==5: #wizzwheels
 			if bool((b>>3)&1) is bool((b>>4)&1):
-				braille.handler.scrollBack()
+				queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.scrollBack)
 			else:
-				braille.handler.scrollForward()
+				queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.scrollForward)
 		elif a==4 and c==1 and d==0: #press down bottom row routing key
 			queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.routeTo,b)
 		return 0
