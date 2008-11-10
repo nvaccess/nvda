@@ -49,8 +49,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getSelectionOffsets(self):
 		return self.obj.basicSelectionOffsets
 
-	def _setSelectionOffsets(self):
-		self.obj.basicSelectionOffsets=(self._startOffset,self._endOffset)
+	def _setSelectionOffsets(self,start,end):
+		self.obj.basicSelectionOffsets=(start,end)
 
 	def _getTextRange(self,start,end):
 		text=self._getStoryText()
@@ -703,8 +703,9 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_basicSelectionOffsets(self):
 		return [0,0]
 
-	def _set_basicSelectionOffsets(self):
-		pass
+	def _set_basicSelectionOffsets(self,offsets):
+		raise NotImplementedError
+
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
