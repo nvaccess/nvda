@@ -112,7 +112,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			# ViaVoice (and perhaps other synths) doesn't seem to like the speed being set to maximum.
 			self._maxRate=newVal.value-1
 			self._ttsAttrs.SpeedSet(oldVal.value)
-			if self.maxRate<=self.minRate:
+			if self._maxRate<=self._minRate:
 				self.hasRate=False
 		#Find out pitch limits
 		self.hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
@@ -127,7 +127,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self._ttsAttrs.PitchGet(byref(newVal))
 			self._maxPitch=newVal.value
 			self._ttsAttrs.PitchSet(oldVal.value)
-			if self.maxPitch<=self.minPitch:
+			if self._maxPitch<=self._minPitch:
 				self.hasPitch=False
 		#Find volume limits
 		self.hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
@@ -142,7 +142,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self._ttsAttrs.VolumeGet(byref(newVal))
 			self._maxVolume=newVal.value
 			self._ttsAttrs.VolumeSet(oldVal.value)
-			if self.maxVolume<=self.minVolume:
+			if self._maxVolume<=self._minVolume:
 				self.hasVolume=False
 
 	def _get_voice(self):
