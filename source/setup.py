@@ -106,7 +106,6 @@ setup(
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
-		("speechdicts", glob("speechdicts/*.dic")),
 		("louis/tables",glob("louis/tables/*"))
 	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers')+getRecursiveDataFiles('brailleDisplayDrivers','brailleDisplayDrivers'),
 )
