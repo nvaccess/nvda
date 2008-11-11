@@ -98,7 +98,7 @@ setup(
 	}},
 	zipfile = None,
 	data_files=[
-		(".",glob("*.dll")),
+		(".",glob("*.dll")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("appModules", glob("appModules/*.py*")),
