@@ -25,7 +25,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	def initialize(self):
+	def __init__(self):
 		_espeak.initialize()
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)

@@ -34,7 +34,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	def initialize(self):
+	def __init__(self):
 		self.frame = None
 		try:
 			self.frame = SynthFrame()

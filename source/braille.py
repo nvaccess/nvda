@@ -140,7 +140,8 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"])], unicode(self.rawText), mode=mode, cursorPos=self.cursorPos or 0)
+		text=unicode(self.rawText).replace('\0','')
+		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"])], text, mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
@@ -272,7 +273,10 @@ class TextInfoRegion(Region):
 		@param info: The range to which the selection should be moved.
 		@type info: L{textHandler.TextInfo}
 		"""
-		info.updateSelection()
+		try:
+			info.updateSelection()
+		except NotImplementedError:
+			log.debugWarning("", exc_info=True)
 
 	def update(self):
 		caret = self._getSelection()
