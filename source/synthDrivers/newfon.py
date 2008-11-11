@@ -58,18 +58,38 @@ englishPronunciation= {
 #ukrainian to russian character map
 #ukrainian soft "g" is not supported, becouse synth does not contain this phonem :(
 ukrainianPronunciation = {
-u"і": u"и",
 u"и": u"ы",
+u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
-u"є": u"йе"
+u"є": u"йе",
+u"ц": u"тс"
 }
+ukrainianPronunciationA = [u"и", u"і",u"ї",u"е",u"є",u"ц"]
 
 def replaceEnglishLetter(match):
 	return "%s " % letters[match.group(1)]
 
 def replaceEnglishLetters(match):
 	return re_englishLetter.sub(replaceEnglishLetter, match.group(1))
+
+def preprocessText(text):
+	text = text.lower()
+	if len(text) == 1:
+		return letters[text] if letters.has_key(text) else text
+	text = re_letterAfterNumber.sub(r"\1 \2", text)
+	text = re_abbreviations.sub(replaceEnglishLetters, text)
+	text = re_individualLetters.sub(replaceEnglishLetter, text)
+	for s in englishPronunciation:
+		text = text.replace(s, englishPronunciation[s])
+	return text
+
+def preprocessUkrainianText(text):
+	if len(text) == 1:
+		return ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
+	for s in ukrainianPronunciationA:
+		text = text.replace(s, ukrainianPronunciation[s])
+	return text
 
 class SynthDriver(SynthDriver):
 	name="newfon"
@@ -103,25 +123,10 @@ class SynthDriver(SynthDriver):
 		newfon_lib.terminate()
 		newfon_lib=None
 
-	def preprocessText(self,text):
-		text = text.lower()
-		if len(text) == 1:
-			text = letters[text] if letters.has_key(text) else text
-			if self._variant == "ukr":
-				text = ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
-			return text
-		text = re_letterAfterNumber.sub(r"\1 \2", text)
-		text = re_abbreviations.sub(replaceEnglishLetters, text)
-		text = re_individualLetters.sub(replaceEnglishLetter, text)
-		for s in englishPronunciation:
-			text = text.replace(s, englishPronunciation[s])
-		if self._variant == "ukr":
-			for s in ukrainianPronunciation:
-				text = text.replace(s, ukrainianPronunciation[s])
-		return text
-
 	def speakText(self, text, index=None):
-		text = self.preprocessText(text)
+		text = preprocessText(text)
+		if self._variant == "ukr":
+			text = preprocessUkrainianText(text)
 		global newfon_lib
 		if index is not None: 
 			newfon_lib.speakText(text,index)
