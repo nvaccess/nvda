@@ -11,10 +11,11 @@ import os
 import codecs
 import synthDriverHandler
 import api
+import config
 
 dictionaries = {}
-dictTypes = ("temp", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath="speechdicts"
+dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
+speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechdicts")
 
 class SpeechDictEntry:
 
@@ -86,16 +87,8 @@ def processText(text):
 		text=dictionaries[type].sub(text)
 	return text
 
-def getFileName(type):
-	if type is "default":
-		return "%s/default.dic"%speechDictsPath
-	elif type is "voice":
-		s=synthDriverHandler.getSynth()
-		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(s.name),validateFile(s.getVoiceName(s.voice)))
-	return None
-
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	dictionaries["default"].load(getFileName("default"))
-
+	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	dictionaries["builtin"].load("builtin.dic")
