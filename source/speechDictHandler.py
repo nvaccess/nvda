@@ -67,13 +67,17 @@ class SpeechDict(list):
 	def save(self,fileName=None):
 		if not fileName:
 			fileName=getattr(self,'fileName',None)
-		if fileName:
-			file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
-			for entry in self:
-				if entry.comment:
-					file.write("#%s\r\n"%entry.comment)
-				file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
-			file.close()
+		if not fileName:
+			return
+		dirName=os.path.dirname(fileName)
+		if not os.path.isdir(dirName):
+			os.makedirs(dirName)
+		file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+		for entry in self:
+			if entry.comment:
+				file.write("#%s\r\n"%entry.comment)
+			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
+		file.close()
 
 	def sub(self, text):
 		for entry in self:

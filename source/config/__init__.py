@@ -161,6 +161,8 @@ def save():
 	"""Saves the configuration to the config file.
 	"""
 	global conf
+	if not os.path.isdir(globalVars.configPath):
+		os.makedirs(globalVars.configPath)
 	try:
 		# Copy default settings and formatting.
 		conf.validate(val, copy = True)
@@ -200,8 +202,3 @@ def getUserDefaultConfigPath():
 		return os.path.expandvars("$appdata\\nvda")
 	else:
 		return ".\\"
-
-def initConfigDir():
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
-	if not os.path.isdir(globalVars.appArgs.configPath):
-		os.mkdir(globalVars.appArgs.configPath)

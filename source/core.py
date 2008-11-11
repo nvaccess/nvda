@@ -48,12 +48,9 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
 	log.debug("loading config")
 	import config
-	try:
-		config.initConfigDir()
-	except OSError:
-		log.warning("Could not  create config dir")
 	config.load()
 	log.debug("Trying to save config")
 	try:
