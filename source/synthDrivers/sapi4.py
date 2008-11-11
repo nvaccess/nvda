@@ -56,7 +56,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			enginesList.append(mode)
 		return enginesList
 
-	def initialize(self):
+	def __init__(self):
 		self.lastIndex=None
 		self._bufSink=SynthDriverBufSink(self)
 		self._ttsEngines=CoCreateInstance(CLSID_TTSEnumerator, ITTSEnumW)
