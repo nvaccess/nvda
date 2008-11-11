@@ -327,13 +327,13 @@ def getStatusBarText(obj):
 		text = ""
 	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
 
-def validateFile(name):
-	"""Replaces invalid characters in a given string to make a windows compatible filename.
-@returns: A string holding altered name.
-@rtype: string
-@param name: text to makea file name of
-@type text: string
-"""
+def filterFileName(name):
+	"""Replaces invalid characters in a given string to make a windows compatible file name.
+	@param name: The file name to filter.
+	@type name: str
+	@returns: The filtered file name.
+	@rtype: str
+	"""
 	invalidChars=':?*\|<>/"'
 	for c in invalidChars:
 		name=name.replace(c,'_')
