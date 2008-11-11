@@ -273,7 +273,10 @@ class TextInfoRegion(Region):
 		@param info: The range to which the selection should be moved.
 		@type info: L{textHandler.TextInfo}
 		"""
-		info.updateSelection()
+		try:
+			info.updateSelection()
+		except NotImplementedError:
+			log.debugWarning("", exc_info=True)
 
 	def update(self):
 		caret = self._getSelection()

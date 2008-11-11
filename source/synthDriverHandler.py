@@ -47,12 +47,12 @@ def setSynth(name):
 	if name=='auto':
 		name='espeak'
 	try:
-		newSynth=__import__(name,globals(),None,[]).SynthDriver()
+		newSynth=__import__(name,globals(),None,[]).SynthDriver
 		if _curSynth and _curSynth.name == newSynth.name:
 			_curSynth.cancel()
 			_curSynth.terminate()
 			_curSynth = None
-		newSynth.initialize()
+		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
 			if newSynth.hasVoice:
@@ -172,7 +172,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
-
 
 	def terminate(self):
 		"""Terminate this synth driver.

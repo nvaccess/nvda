@@ -33,7 +33,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		except:
 			return False
 
-	def initialize(self):
+	def __init__(self):
 		try:
 			_audiologic.TtsOpen()
 			return True 

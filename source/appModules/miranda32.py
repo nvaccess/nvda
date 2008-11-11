@@ -78,7 +78,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.__class__=mirandaIMContactList
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
-		elif (obj.windowClassName=="MButtonClass")|(obj.windowClassName=="TSButtonClass"):
+		elif obj.windowClassName=="MButtonClass" or obj.windowClassName=="TSButtonClass" or obj.windowClassName=="CLCButtonClass":
 			obj.__class__=mirandaIMButton
 		elif obj.windowClassName=="Hyperlink":
 			obj.__class__=mirandaIMHyperlink
@@ -114,7 +114,7 @@ class mirandaIMContactList(IAccessible):
 	def _get_role(self):
 		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		iType=winUser.sendMessage(self.windowHandle,CLM_GETITEMTYPE,hItem,0)
-		if iType==CLCIT_DIVIDER|iType==CLCIT_INVALID: #some clists treat invalid as divider
+		if iType==CLCIT_DIVIDER or iType==CLCIT_INVALID: #some clists treat invalid as divider
 			return controlTypes.ROLE_SEPARATOR
 		else:
 			return controlTypes.ROLE_TREEVIEWITEM

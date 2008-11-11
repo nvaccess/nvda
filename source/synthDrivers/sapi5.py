@@ -39,7 +39,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		except:
 			return False
 
-	def initialize(self):
+	def __init__(self):
 		self.tts = comtypes.client.CreateObject(COM_CLASS)
 		self._pitch=50
 		self.voice=self.tts.GetVoices()[0].Id
