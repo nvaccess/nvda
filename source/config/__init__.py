@@ -204,6 +204,6 @@ def isInstalledCopy():
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
-		return os.path.expandvars("$appdata\\nvda")
+		return os.path.expandvars(u'$appdata\\nvda')
 	else:
-		return ".\\"
+		return u'.\\'
