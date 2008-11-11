@@ -85,7 +85,7 @@ class SynthDriver(SynthDriver):
 		else:
 			return False
 
-	def initialize(self):
+	def __init__(self):
 		global newfon_lib
 		newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
 		newfon_lib.getVoiceName.restype = c_char_p
