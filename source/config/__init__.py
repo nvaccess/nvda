@@ -161,8 +161,8 @@ def save():
 	"""Saves the configuration to the config file.
 	"""
 	global conf
-	if not os.path.isdir(globalVars.configPath):
-		os.makedirs(globalVars.configPath)
+	if not os.path.isdir(globalVars.appArgs.configPath):
+		os.makedirs(globalVars.appArgs.configPath)
 	try:
 		# Copy default settings and formatting.
 		conf.validate(val, copy = True)
