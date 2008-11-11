@@ -162,7 +162,12 @@ def save():
 	"""
 	global conf
 	if not os.path.isdir(globalVars.appArgs.configPath):
-		os.makedirs(globalVars.appArgs.configPath)
+		try:
+			os.makedirs(globalVars.appArgs.configPath)
+		except OSError, e:
+			log.warning("Could not create configuration directory")
+			log.debugWarning("", exc_info=True)
+			raise e
 	try:
 		# Copy default settings and formatting.
 		conf.validate(val, copy = True)
