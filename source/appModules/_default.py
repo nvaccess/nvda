@@ -638,7 +638,7 @@ class AppModule(appModuleHandler.AppModule):
 		obj=api.getForegroundObject()
 		title=obj.name
 		if not isinstance(title,basestring) or not title or title.isspace():
-			title=obj.appModule.appName
+			title=obj.appModule.appName  if obj.appModule else None
 			if not isinstance(title,basestring) or not title or title.isspace():
 				title=_("no title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
