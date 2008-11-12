@@ -33,7 +33,7 @@ confspec = ConfigObj(StringIO(
 outputDevice = string(default=default)
 
 	[[__many__]]
-		variant = string
+		variant = string(default=None)
 		rate = integer(default=50,min=0,max=100)
 		pitch = integer(default=50,min=0,max=100)
 		inflection = integer(default=50,min=0,max=100)
