@@ -49,9 +49,8 @@ msgid "NVDA Excel Cell Editor"
 msgstr ""
 
 #: NVDAObjects\IAccessible\excel.py:48
-#, fuzzy
 msgid "Enter cell contents"
-msgstr "vnitřní text: %s"
+msgstr "Vložte obsah buňky"
 
 #: NVDAObjects\IAccessible\excel.py:100
 msgid "through"
@@ -651,7 +650,10 @@ msgid ""
 "pass straight through to the application, allowing you to interact directly "
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
-msgstr ""
+msgstr "Zapíná a vypíná propouštění přes virtuální prohlížeč. Při zapnutém "
+"propouštění můžete procházet formulářové prvky na webových stránkách či v dokumentech "
+"a přímo je upravovat, zatímco při vypnutém propouštění se můžete po dokumentu či "
+"webové stránce pouze pohybovat kurzorovými šipkami, využívat navygační klávesy atd."
 
 #: appModules\_default.py:556
 msgid "Quits NVDA!"
@@ -713,6 +715,8 @@ msgid ""
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
 "clipboard"
 msgstr ""
+"Přečte titulek aktuálního aplikačního okna, nebo okna v popředí."
+"Po dvojitém stisku bude titulek vyhláskován a po trojitém bude skopírován do schránky."
 
 #: appModules\_default.py:659
 msgid "speaks the current foreground object"
@@ -919,19 +923,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 
 #: appModules\_default.py:830
-#, fuzzy
 msgid "There is no text on the clipboard"
-msgstr "%s zkopírováno do schránky"
+msgstr "Žádný text ve schránce"
 
 #: appModules\_default.py:835
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
-msgstr ""
+msgstr "Schránka obsahuje velké množství textu v počtu %s znaků."
 
 #: appModules\_default.py:836
-#, fuzzy
 msgid "Reports the text on the Windows clipboard"
-msgstr "Hlásit &objekt pod kurzorem myši"
+msgstr "Přečte text ve schránce"
 
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -1088,67 +1090,64 @@ msgid "Greek (Greece) grade 1"
 msgstr ""
 
 #: braille.py:46
-#, fuzzy
 msgid "Hindi grade 1"
-msgstr "Podřízený"
+msgstr "Hindský plnopis"
 
 #: braille.py:47
 msgid "Italian grade 1"
-msgstr ""
+msgstr "Italský plnopis"
 
 #: braille.py:48
-#, fuzzy
 msgid "Latvian grade 1"
-msgstr "Jazyk"
+msgstr "Lotyšský plnopis"
 
 #: braille.py:49
 msgid "Dutch (Belgium) grade 1"
-msgstr ""
+msgstr "Holandskobelgický plnopis"
 
 #: braille.py:50
 msgid "Dutch (netherlands) grade 1"
-msgstr ""
+msgstr "Holandský plnopis"
 
 #: braille.py:51
 msgid "Norwegian grade 0"
-msgstr ""
+msgstr "Norština"
 
 #: braille.py:52
 msgid "Norwegian grade 1"
-msgstr ""
+msgstr "Norský plnopis"
 
 #: braille.py:53
 msgid "Norwegian grade 2"
-msgstr ""
+msgstr "norský zkratkopis"
 
 #: braille.py:54
 msgid "Norwegian grade 3"
-msgstr ""
+msgstr "Norský stupeň 3"
 
 #: braille.py:55
 msgid "Polish grade 1"
-msgstr ""
+msgstr "Polský plnopis"
 
 #: braille.py:56
 msgid "Portuguese grade 1"
-msgstr ""
+msgstr "Portugalský plnopis"
 
 #: braille.py:57
 msgid "Swedish grade 1"
-msgstr ""
+msgstr "Švédský plnopis"
 
 #: braille.py:58
-#, fuzzy
 msgid "Slovak"
-msgstr "hodiny"
+msgstr "Slovenština"
 
 #: braille.py:59
 msgid "Unified English Braille Code grade 1"
-msgstr ""
+msgstr "Jednotný anglický brail plnopis"
 
 #: braille.py:60
 msgid "Unified English Braille Code grade 2"
-msgstr ""
+msgstr "jednotný anglický brail skratkopis"
 
 #: braille.py:64
 #, fuzzy
@@ -1221,12 +1220,11 @@ msgstr "ůroveň %s"
 
 #: brailleDisplayDrivers\handyTech.py:24
 msgid "HandyTech braille displays"
-msgstr ""
+msgstr "Braillské řádky HandyTech"
 
 #: brailleDisplayDrivers\noBraille.py:7
-#, fuzzy
 msgid "No braille"
-msgstr "žádné podřazené objekty"
+msgstr "žádný řádek"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18 speech.py:75
@@ -2177,9 +2175,8 @@ msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Umožňuje zvolit hlas, jeho tempo, výšku a hlasitost"
 
 #: gui\__init__.py:251
-#, fuzzy
 msgid "B&raille settings..."
-msgstr "&Obecné nastavení..."
+msgstr "&Braillské nastavení..."
 
 #: gui\__init__.py:253
 msgid "&Keyboard Settings..."
@@ -2825,18 +2822,16 @@ msgid "&Remove"
 msgstr "&Odstranit"
 
 #: gui\settingsDialogs.py:803
-#, fuzzy
 msgid "Braille Settings"
-msgstr "Obecné Nastavení"
+msgstr "Braillské nastavení"
 
 #: gui\settingsDialogs.py:807
 msgid "Braille &display"
-msgstr ""
+msgstr "Braillský řádek"
 
 #: gui\settingsDialogs.py:821
-#, fuzzy
 msgid "Translation &table"
-msgstr "mimo tabulku"
+msgstr "Překladová tabulka"
 
 #: gui\settingsDialogs.py:833
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -2844,7 +2839,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:838
 msgid "Cursor blink rate (ms)"
-msgstr ""
+msgstr "Rychlost blikání kurzoru v milisekundách"
 
 #: gui\settingsDialogs.py:846
 msgid "Message timeout (sec)"
@@ -2852,12 +2847,11 @@ msgstr ""
 
 #: gui\settingsDialogs.py:859
 msgid "Braille Display Error"
-msgstr ""
+msgstr "Chyba braillského řádku"
 
 #: gui\settingsDialogs.py:859
-#, fuzzy
 msgid "Could not load the %s display."
-msgstr "Nezdařilo se načtení hlasového výstupu %s"
+msgstr "Nemohu načíst řádek %s"
 
 #: keyUtils.py:111
 msgid "backspace"
@@ -3377,14 +3371,12 @@ msgstr ""
 "Viz též soubor Copying.txt přiložený k tomuto programu."
 
 #: virtualBufferHandler.py:93
-#, fuzzy
 msgid "browse mode"
-msgstr "Řádek %d"
+msgstr "propouštění vypnuto"
 
 #: virtualBufferHandler.py:93
-#, fuzzy
 msgid "focus mode"
-msgstr "má fokus"
+msgstr "Propouštění zapnuto"
 
 #: virtualBuffers\__init__.py:244
 #: virtualBuffers_old\__init__.py:295
