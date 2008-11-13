@@ -9,7 +9,7 @@ from ctypes.wintypes import *
 import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible, PropertyPage
-import appModuleHandler
+import _default
 import speech
 import controlTypes
 from keyUtils import sendKey
@@ -71,7 +71,7 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 #other constants
 ANSILOGS=(1001,1006)
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":

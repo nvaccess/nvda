@@ -30,13 +30,6 @@ def findScript_appModuleLevel(keyPress):
 	func=appModule.getScript(keyPress) if appModule else None
 	if func:
 		return func
-	return findScript_defaultAppModuleLevel(keyPress)
-
-def findScript_defaultAppModuleLevel(keyPress):
-	default=appModuleHandler.default
-	func=default.getScript(keyPress)
-	if func:
-		return func
 	return findScript_virtualBufferLevel(keyPress)
 
 def findScript_virtualBufferLevel(keyPress):

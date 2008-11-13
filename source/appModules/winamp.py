@@ -11,7 +11,7 @@ import winUser
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
-import appModuleHandler
+import _default
 import speech
 import locale
 import controlTypes
@@ -51,7 +51,7 @@ def getRepeat():
 	global hwndWinamp
 	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp

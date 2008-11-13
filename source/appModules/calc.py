@@ -1,7 +1,7 @@
-import appModuleHandler
+import _default
 import speech
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def __init__(self,*args,**kwargs):
 		super(AppModule,self).__init__(*args,**kwargs)

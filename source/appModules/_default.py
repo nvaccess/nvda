@@ -760,7 +760,7 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("Currently running application is %s.")%s)
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			speech.speakMessage(_("and currently loaded module is %s") % mod.appName)
+			speech.speakMessage(_("and currently loaded module is %s") % mod.appModuleName)
 	script_speakApplicationName.__doc__ = _("Speaks filename of the active application along with name of the currently loaded appmodule")
 
 	def script_activateGeneralSettingsDialog(self,keyPress):

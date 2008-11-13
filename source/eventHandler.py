@@ -121,14 +121,7 @@ def doPreDocumentLoadComplete(obj):
 def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule
 	if hasattr(appModule,"event_%s"%name):
-		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_defaultAppModuleLevel(name,obj,**kwargs),**kwargs) 
-	else:
-		executeEvent_defaultAppModuleLevel(name,obj,**kwargs)
-
-def executeEvent_defaultAppModuleLevel(name,obj,**kwargs):
-	default=appModuleHandler.default
-	if hasattr(default,"event_%s"%name):
-		getattr(default,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs) 
+		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs)
 	else:
 		executeEvent_virtualBufferLevel(name,obj,**kwargs)
 

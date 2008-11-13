@@ -410,10 +410,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 		if layout!=oldLayout:
 			config.conf['keyboard']['keyboardLayout']=layout
 			for m in appModuleHandler.runningTable.values():
-				if m.__class__==appModuleHandler.AppModule:
-					continue
-				appModuleHandler.loadKeyMap(m.appName,m)
-		appModuleHandler.loadKeyMap(appModuleHandler.default.appName,appModuleHandler.default)
+				m.loadKeyMap()
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()

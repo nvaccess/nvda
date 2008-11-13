@@ -10,7 +10,7 @@ import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
 import textHandler
-import appModuleHandler
+import _default
 import speech
 import cursorManager
 
@@ -31,7 +31,7 @@ u'Historik',
 u'Előzmények',
 ])
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
