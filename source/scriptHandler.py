@@ -83,13 +83,13 @@ def executeScript(script,keyPress):
 	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
 	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
-	if _isScriptRunning and lastScriptRef==script:
+	if _isScriptRunning and lastScriptRef==script.im_func:
 		return sendKey(keyPress)
 	_isScriptRunning=True
 	try:
 		scriptTime=time.time()
-		scriptRef=weakref.ref(script)
-		if (scriptTime-_lastScriptTime)<=0.5 and script==lastScriptRef:
+		scriptRef=weakref.ref(script.im_func)
+		if (scriptTime-_lastScriptTime)<=0.5 and script.im_func==lastScriptRef:
 			_lastScriptCount+=1
 		else:
 			_lastScriptCount=0
