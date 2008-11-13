@@ -67,7 +67,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj=virtualBuffer
 		try:
 			info=obj.makeTextInfo(textHandler.POSITION_CARET)
-		except:
+		except NotImplementedError:
 			info=obj.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
@@ -515,7 +515,11 @@ class AppModule(appModuleHandler.AppModule):
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_moveToCaret(self,keyPress):
-		info=api.getReviewPosition().obj.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=api.getReviewPosition().obj.makeTextInfo(textHandler.POSITION_CARET)
+		except NotImplementedError:
+				ui.message(_("No caret"))
+				return
 		api.setReviewPosition(info.copy())
 		info.expand(textHandler.UNIT_LINE)
 		speech.speakTextInfo(info)
@@ -577,7 +581,10 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			if hasattr(v,'TextInfo') and not v.passThrough:
 				o=v
-			info=o.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=o.makeTextInfo(textHandler.POSITION_CARET)
+			except NotImplementedError:
+				info=o.makeTextInfo(textHandler.POSITION_FIRST)
 			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
@@ -590,7 +597,10 @@ class AppModule(appModuleHandler.AppModule):
 			"reportBlockQuotes":False,
 		}
 		o=api.getFocusObject()
-		info=o.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			info=o.makeTextInfo(textHandler.POSITION_CARET)
+		except NotImplementedError:
+			return
 		info.expand(textHandler.UNIT_CHARACTER)
 		formatField=textHandler.FormatField()
 		for field in info.getInitialFields(formatConfig):
