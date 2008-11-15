@@ -11,10 +11,11 @@ import os
 import codecs
 import synthDriverHandler
 import api
+import config
 
 dictionaries = {}
-dictTypes = ("temp", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath="speechdicts"
+dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
+speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechdicts")
 
 class SpeechDictEntry:
 
@@ -66,13 +67,17 @@ class SpeechDict(list):
 	def save(self,fileName=None):
 		if not fileName:
 			fileName=getattr(self,'fileName',None)
-		if fileName:
-			file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
-			for entry in self:
-				if entry.comment:
-					file.write("#%s\r\n"%entry.comment)
-				file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
-			file.close()
+		if not fileName:
+			return
+		dirName=os.path.dirname(fileName)
+		if not os.path.isdir(dirName):
+			os.makedirs(dirName)
+		file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+		for entry in self:
+			if entry.comment:
+				file.write("#%s\r\n"%entry.comment)
+			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
+		file.close()
 
 	def sub(self, text):
 		for entry in self:
@@ -86,16 +91,8 @@ def processText(text):
 		text=dictionaries[type].sub(text)
 	return text
 
-def getFileName(type):
-	if type is "default":
-		return "%s/default.dic"%speechDictsPath
-	elif type is "voice":
-		s=synthDriverHandler.getSynth()
-		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(s.name),validateFile(s.getVoiceName(s.voice)))
-	return None
-
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	dictionaries["default"].load(getFileName("default"))
-
+	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	dictionaries["builtin"].load("builtin.dic")

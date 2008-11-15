@@ -18,11 +18,11 @@ __path__=['.\\synthDrivers']
 _curSynth=None
 
 def changeVoice(synth, voice):
-	voiceName=synth.getVoiceInfoByID(voice).name
-	voiceName=voiceName.replace('\\','_')
-	fileName="%s/%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,voiceName)
-	speechDictHandler.dictionaries["voice"].load(fileName)
+	import api
+	voiceName = synth.getVoiceInfoByID(voice).name
 	synth.voice = voice
+	fileName=r"%s\%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,api.filterFileName(voiceName))
+	speechDictHandler.dictionaries["voice"].load(fileName)
 
 def getSynthList():
 	synthList=[]
@@ -61,6 +61,10 @@ def setSynth(name):
 					changeVoice(newSynth,voice)
 				except LookupError:
 					log.warning("No such voice: %s" % voice)
+					# Update the configuration with the correct voice.
+					config.conf["speech"][name]["voice"]=newSynth.voice
+					# We need to call changeVoice here so voice dictionaries can be managed
+					changeVoice(newSynth,newSynth.voice)
 			if newSynth.hasVariant:
 				newSynth.variant=config.conf["speech"][name]["variant"]
 			if newSynth.hasRate:
@@ -74,7 +78,7 @@ def setSynth(name):
 		else:
 			if newSynth.hasVoice:
 				config.conf["speech"][name]["voice"]=newSynth.voice
-				#We need to call changeVoice here so voice dictionries can be managed
+				#We need to call changeVoice here so voice dictionaries can be managed
 				changeVoice(newSynth,newSynth.voice)
 			if newSynth.hasVariant:
 				config.conf["speech"][name]["variant"]=newSynth.variant

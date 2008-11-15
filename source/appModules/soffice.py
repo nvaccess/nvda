@@ -4,14 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import appModuleHandler
+import _default
 import controlTypes
 import speech
 import api
 
 inDocument=False
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_gainFocus(self,obj,nextHandler):
 		global inDocument

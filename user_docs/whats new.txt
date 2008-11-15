@@ -48,6 +48,8 @@ Changes since 0.6 P2:
 * change: Voices are now stored in the configuration file by ID instead of by index. This makes voice settings more reliable across systems and configuration changes. The voice setting will not be preserved in old configurations and an error may be logged the first time a synthesizer is used. (#19)
 * fix: The eSpeak synthesizer driver no longer stops speaking completely after a single error.
 * fix: Fix the issue whereby updated voice parameters (rate, pitch, etc.) were not saved when the voice was changed from the synthesizer settings ring.
+* new: The NVDA application now includes a manifest, which means that it no longer runs in compatibility mode in Windows Vista.
+* new: The configuration file and speech dictionaries are now saved in the user's application data directory if NVDA was installed using the installer. This is necessary for Windows Vista and also allows multiple users to have individual NVDA configurations.
 
 
 Changes since 0.6 P1:

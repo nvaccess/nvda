@@ -62,7 +62,7 @@ Note that the binding is performed on the instance, not the class. To bind on th
 @type scriptName: string
 """
 		scriptName="script_%s"%scriptName
-    		func=getattr(self,scriptName,None)
+    		func=getattr(self.__class__,scriptName,None)
 		if func:
             			self.bindKeyToFunc_runtime(keyName,func)
       		else:

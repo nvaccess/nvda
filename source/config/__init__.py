@@ -2,15 +2,16 @@
 """ 
 
 import globalVars
-#: The name of the configuration file.
-#: @type: str
-configFileName = globalVars.appArgs.configFileName
-
+import _winreg
 import os
 from cStringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
 from logHandler import log
+import ctypes
+
+CSIDL_APPDATA=26
+MAX_PATH=256
 
 val = Validator()
 
@@ -36,7 +37,7 @@ confspec = ConfigObj(StringIO(
 outputDevice = string(default=default)
 
 	[[__many__]]
-		variant = string
+		variant = string(default=None)
 		rate = integer(default=50,min=0,max=100)
 		pitch = integer(default=50,min=0,max=100)
 		inflection = integer(default=50,min=0,max=100)
@@ -134,16 +135,13 @@ confspec.newlines = "\r\n"
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
-mtime = 0
 
 def load():
 	"""Loads the configuration from the configFile.
 	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
 	"""
-	global conf, mtime
-	# If the config file exists, store its mtime.
-	if os.path.isfile(configFileName):
-		mtime = os.path.getmtime(configFileName)
+	global conf
+	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
 	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
@@ -163,15 +161,17 @@ def updateSynthConfig(name):
 	else:
 		return False
 
-def save(force = False):
-	"""Saves the configuration to the config file. However it does not if the file's modification time has changed and L{force} is not true.
-	@param force: if true then the modification time of the file will be ignored.
-	@type force: boolean
+def save():
+	"""Saves the configuration to the config file.
 	"""
-	global conf, mtime
-	# If the file has changed since it was read, don't save over the top of it.
-	if not force and os.path.isfile(configFileName) and os.path.getmtime(configFileName) != mtime:
-		return
+	global conf
+	if not os.path.isdir(globalVars.appArgs.configPath):
+		try:
+			os.makedirs(globalVars.appArgs.configPath)
+		except OSError, e:
+			log.warning("Could not create configuration directory")
+			log.debugWarning("", exc_info=True)
+			raise e
 	try:
 		# Copy default settings and formatting.
 		conf.validate(val, copy = True)
@@ -181,7 +181,6 @@ def save(force = False):
 		log.warning("Could not save configuration - probably read only file system")
 		log.debugWarning("", exc_info=True)
 		raise e
-	mtime = os.path.getmtime(configFileName)
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -193,3 +192,23 @@ def saveOnExit():
 			save()
 		except:
 			pass
+
+def isInstalledCopy():
+	"""Checks to see if this running copy of NVDA is installed on the system"""
+	try:
+		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		try:
+			instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
+		except:
+			instDir=""
+		_winreg.CloseKey(k)
+		return os.path.normpath(os.getcwdu()).lower()==os.path.normpath(instDir).lower()
+	except:
+		return False
+
+def getUserDefaultConfigPath():
+	buf=ctypes.create_unicode_buffer(MAX_PATH)
+	if isInstalledCopy() and ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
+		return u'%s\\nvda'%buf.value
+	else:
+		return u'.\\'
