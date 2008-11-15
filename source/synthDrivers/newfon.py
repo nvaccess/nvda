@@ -12,7 +12,6 @@ re_englishLetter = re.compile(r"([a-z])", re.I)
 re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
 re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
 re_letterAfterNumber = re.compile(r"(\d)(\D)", re.LOCALE)
-newfon_lib = None
 
 letters = {
 'a': u"эй",
@@ -103,72 +102,63 @@ class SynthDriver(SynthDriver):
 	_pitch = 50
 	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
 	availableVariants = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
+	newfon_lib = None
+	sdrvxpdbDll = None
+	dictDll = None
 
 	@classmethod
 	def check(cls):
-		if os.path.isfile('synthDrivers/newfon_nvda.dll'):
-			return True
-		else:
-			return False
+		return os.path.isfile('synthDrivers/newfon_nvda.dll')
 
 	def __init__(self):
-		global newfon_lib
-		newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
-		newfon_lib.getVoiceName.restype = c_char_p
-		newfon_lib.speakText.argtypes = [c_char_p, c_int]
-		if not newfon_lib.initialize(): raise Exception
+		self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")
+		self.dict_lib = windll.LoadLibrary(r"synthDrivers\dict.dll")
+		self.newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
+		self.newfon_lib.speakText.argtypes = [c_char_p, c_int]
+		if not self.newfon_lib.initialize(): raise Exception
 
 	def terminate(self):
-		global newfon_lib
-		newfon_lib.terminate()
-		newfon_lib=None
+		self.newfon_lib.terminate()
+		del self.newfon_lib
+		del self.dict_lib
+		del self.sdrvxpdb_lib
 
 	def speakText(self, text, index=None):
 		text = preprocessText(text)
 		if self._variant == "ukr":
 			text = preprocessUkrainianText(text)
-		global newfon_lib
 		if index is not None: 
-			newfon_lib.speakText(text,index)
+			self.newfon_lib.speakText(text,index)
 		else:
-			newfon_lib.speakText(text,-1)
+			self.newfon_lib.speakText(text,-1)
 
 	def _get_lastIndex(self):
-		global newfon_lib
-		return newfon_lib.get_lastIndex()
+		return self.newfon_lib.get_lastIndex()
 
 	def cancel(self):
-		global newfon_lib
-		newfon_lib.cancel()
+		self.newfon_lib.cancel()
 
 	def _get_voice(self):
-		global newfon_lib
-		return str(newfon_lib.get_voice())
+		return str(self.newfon_lib.get_voice())
 
 	def _set_voice(self, value):
-		global newfon_lib
-		newfon_lib.set_voice(int(value))
+		self.newfon_lib.set_voice(int(value))
 
 	def _get_rate(self):
-		global newfon_lib
-		return newfon_lib.get_rate()
+		return self.newfon_lib.get_rate()
 
 	def _set_rate(self, value):
-		global newfon_lib
-		newfon_lib.set_rate(value)
+		self.newfon_lib.set_rate(value)
 
 	def _get_volume(self):
-		global newfon_lib
-		return newfon_lib.get_volume()
+		return self.newfon_lib.get_volume()
 
 	def _set_volume(self, value):
-		global newfon_lib
-		newfon_lib.set_volume(value)
+		self.newfon_lib.set_volume(value)
 
 	def _set_pitch(self, value):
-		global newfon_lib
 		if value <= 50: value = 50
-		newfon_lib.set_accel(value/5 -10 )
+		self.newfon_lib.set_accel(value/5 -10 )
 		self._pitch = value
 
 	def _get_pitch(self):
