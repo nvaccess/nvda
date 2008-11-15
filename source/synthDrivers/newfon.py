@@ -111,8 +111,10 @@ class SynthDriver(SynthDriver):
 		return os.path.isfile('synthDrivers/newfon_nvda.dll')
 
 	def __init__(self):
-		self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")
-		self.dict_lib = windll.LoadLibrary(r"synthDrivers\dict.dll")
+		self.hasDictLib = os.path.isfile('synthDrivers/dict.dll')
+		if self.hasDictLib:
+			self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")
+			self.dict_lib = windll.LoadLibrary(r"synthDrivers\dict.dll")
 		self.newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
 		self.newfon_lib.speakText.argtypes = [c_char_p, c_int]
 		if not self.newfon_lib.initialize(): raise Exception
@@ -120,8 +122,9 @@ class SynthDriver(SynthDriver):
 	def terminate(self):
 		self.newfon_lib.terminate()
 		del self.newfon_lib
-		del self.dict_lib
-		del self.sdrvxpdb_lib
+		if self.hasDictLib:
+			del self.dict_lib
+			del self.sdrvxpdb_lib
 
 	def speakText(self, text, index=None):
 		text = preprocessText(text)
