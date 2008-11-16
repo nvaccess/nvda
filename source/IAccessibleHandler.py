@@ -163,6 +163,7 @@ import globalVars
 from logHandler import log
 import JABHandler
 import eventHandler
+import winKernel
 import winUser
 import speech
 import sayAllHandler
@@ -1102,3 +1103,17 @@ def splitIA2Attribs(attribsString):
 		# Add this key/value pair to the dict.
 		attribsDict[key] = tmp
 	return attribsDict
+
+def getProcessHandleFromHwnd(windowHandle):
+	"""Retreaves a process handle of the process who owns the window.
+	If Windows Vista, uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process who is elevated.
+	if older than Windows Vista, just uses OpenProcess from user32.dll instead.
+	@param windowHandle: a window of a process you wish to retreave a process handle for
+	@type windowHandle: integer
+	@returns: a process handle with read, write and operation access
+	@rtype: integer
+	"""
+	try:
+		return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
+	except:
+		return winKernel.openProcess(winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE|winKernel.PROCESS_VM_OPERATION,False,winUser.getWindowThreadProcessID(windowHandle)[0])

@@ -1,4 +1,5 @@
 import ctypes
+import IAccessibleHandler
 import speech
 import textHandler
 import winKernel
@@ -196,7 +197,7 @@ class Scintilla(IAccessible):
 		self.TextInfo=ScintillaTextInfo
 		self._lastMouseTextOffsets=None
 		super(Scintilla,self).__init__(*args,**kwargs)
-		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)

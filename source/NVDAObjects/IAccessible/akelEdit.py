@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 
 import edit
+import IAccessibleHandler
 import winUser
 import winKernel
 import ctypes
@@ -75,7 +76,7 @@ class AkelEdit(edit.RichEdit20):
 	def __init__(self,*args,**kwargs):
 		super(edit.Edit,self).__init__(*args,**kwargs)
 		self.TextInfo=AkelEditTextInfo
-		self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		if self.TextInfo is AkelEditTextInfo:
