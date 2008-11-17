@@ -72,8 +72,7 @@ def replaceEnglishLetter(match):
 def replaceEnglishLetters(match):
 	return re_englishLetter.sub(replaceEnglishLetter, match.group(1))
 
-def preprocessText(text):
-	text = text.lower()
+def preprocessEnglishText(text):
 	if len(text) == 1:
 		return letters[text] if letters.has_key(text) else text
 	text = re_letterAfterNumber.sub(r"\1 \2", text)
@@ -127,9 +126,10 @@ class SynthDriver(SynthDriver):
 			del self.sdrvxpdb_lib
 
 	def speakText(self, text, index=None):
-		text = preprocessText(text)
+		text = text.lower()
 		if self._variant == "ukr":
 			text = preprocessUkrainianText(text)
+		text = preprocessEnglishText(text)
 		if index is not None: 
 			self.newfon_lib.speakText(text,index)
 		else:
