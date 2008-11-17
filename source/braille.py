@@ -212,12 +212,12 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionString = propertyValues["positionString"]
-	if positionString:
-		textList.append(positionString)
-	level = propertyValues.get("level")
-	if level:
-		textList.append(_("lvl %s") % level)
+	positionInfo = propertyValues["positionInfo"]
+	if positionInfo:
+		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
+			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
+		if 'level' in positionInfo:
+			textList.append(_('level %s')%positionInfo['level'])
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -239,7 +239,7 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionString=obj.positionString)
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 

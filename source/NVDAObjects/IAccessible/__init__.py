@@ -66,27 +66,8 @@ def processGeckoDescription(obj):
 		return
 	if rawDescription.startswith('Description: '):
 		obj.description=rawDescription[13:]
-		return
-	m=re_gecko_level.match(rawDescription)
-	groups=m.groups() if m else []
-	if len(groups)>=1:
-		level=_("level %s")%groups[0]
 	else:
-		level=None
-	m=re_gecko_position.match(rawDescription)
-	groups=m.groups() if m else []
-	if len(groups)==2:
-		positionString=_("%s of %s")%(groups[0],groups[1])
-	else:
-		positionString=None
-	m=re_gecko_contains.match(rawDescription)
-	groups=m.groups() if m else []
-	if len(groups)>=1:
-		contains=_("contains %s items")%groups[0]
-	else:
-		contains=None
-		obj.positionString=" ".join([x for x in level,positionString,contains if x])
-	obj.description=""
+		obj.description=""
 
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
@@ -699,16 +680,25 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			except:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
 
-	def _get_positionString(self):
-		position=""
-		childID=self.IAccessibleChildID
-		if childID>0:
+	def _get_positionInfo(self):
+		info={}
+		try:
+			groupPosition=list(self.IAccessibleObject.groupPosition)
+		except:
+			groupPosition=[0,0,0]
+		if groupPosition[2]==0 and self.IAccessibleChildID>0:
+			groupPosition[2]=self.IAccessibleChildID
+		if groupPosition[1]==0:
 			parent=self.parent
 			if parent:
-				parentChildCount=parent.childCount
-				if parentChildCount>=childID:
-					position=_("%s of %s")%(childID,parentChildCount)
-		return position
+				groupPosition[1]=parent.childCount
+		if groupPosition[0]:
+			info['level']=groupPosition[0]
+		if groupPosition[1]:
+			info['similarItemsInGroup']=groupPosition[1]
+		if groupPosition[2]:
+			info['indexInGroup']=groupPosition[2]
+		return info
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):

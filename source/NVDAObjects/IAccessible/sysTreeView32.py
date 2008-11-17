@@ -131,23 +131,26 @@ class TreeViewItem(IAccessible):
 	def _get_childCount(self):
 		return len(self.children)
 
-	def _get_positionString(self):
-		if self.IAccessibleChildID==0:
-			return super(self.__class__,self)._get_positionString()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
-		if not hItem:
-			return None
-		newItem=hItem
-		index=0
-		while newItem>0:
-			index+=1
-			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,newItem)
-		newItem=hItem
-		numItems=index-1
-		while newItem>0:
-			numItems+=1
-			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
-		return _("%d of %d")%(index,numItems)
+	def _get_positionInfo(self):
+		info=super(TreeViewItem,self)._get_positionInfo()
+		if self.IAccessibleChildID>0:
+			hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+			if not hItem:
+				return info
+			newItem=hItem
+			index=0
+			while newItem>0:
+				index+=1
+				newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,newItem)
+			newItem=hItem
+			numItems=index-1
+			while newItem>0:
+				numItems+=1
+				newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
+			info['indexInGroup']=index
+			info['similarItemsInGroup']=numItems
+		return info
+
 
 	def event_stateChange(self):
 		if self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):

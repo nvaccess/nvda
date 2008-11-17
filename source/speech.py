@@ -193,9 +193,20 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 	beenCanceled=False
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
+	positionInfo=None
 	for name,value in allowedProperties.iteritems():
-		if value:
+		if name.startswith('positionInfo_') and value:
+			if positionInfo is None:
+				positionInfo=obj.positionInfo
+		elif value:
 			newPropertyValues[name]=getattr(obj,name)
+	if positionInfo:
+		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
+			newPropertyValues['positionInfo_level']=positionInfo['level']
+		if allowedProperties.get('positionInfo_indexInGroup',False) and 'indexInGroup' in positionInfo:
+			newPropertyValues['positionInfo_indexInGroup']=positionInfo['indexInGroup']
+		if allowedProperties.get('positionInfo_similarItemsInGroup',False) and 'similarItemsInGroup' in positionInfo:
+			newPropertyValues['positionInfo_similarItemsInGroup']=positionInfo['similarItemsInGroup']
 	#Fetched the cached properties and update them with the new ones
 	oldCachedPropertyValues=getattr(obj,'_speakObjectPropertiesCache',{}).copy()
 	cachedPropertyValues=oldCachedPropertyValues.copy()
@@ -225,13 +236,15 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	isEditable=bool(obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionString':True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
 		allowProperties["keyboardShortcut"]=False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
-		allowProperties["positionString"]=False
+		allowProperties["positionInfo_level"]=False
+		allowProperties["positionInfo_indexInGroup"]=False
+		allowProperties["positionInfo_similarItemsInGroup"]=False
 	if isEditable:
 		allowProperties['value']=False
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
@@ -541,12 +554,10 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	textList=[]
 	if 'name' in propertyValues:
 		textList.append(propertyValues['name'])
-		del propertyValues['name']
 	if 'role' in propertyValues:
 		role=propertyValues['role']
 		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or role not in silentRolesOnFocus:
 			textList.append(controlTypes.speechRoleLabels[role])
-		del propertyValues['role']
 	elif '_role' in propertyValues:
 		role=propertyValues['_role']
 	else:
@@ -554,16 +565,13 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'value' in propertyValues:
 		if not role in silentValuesForRoles:
 			textList.append(propertyValues['value'])
-		del propertyValues['value']
 	states=propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
 	if states is not None:
 		positiveStates=processPositiveStates(role,realStates,reason,states)
 		textList.extend([controlTypes.speechStateLabels[x] for x in positiveStates])
-		del propertyValues['states']
 	if 'negativeStates' in propertyValues:
 		negativeStates=propertyValues['negativeStates']
-		del propertyValues['negativeStates']
 	else:
 		negativeStates=None
 	if negativeStates is not None or (reason != REASON_CHANGE and states is not None):
@@ -571,22 +579,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
-		del propertyValues['description']
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
-		del propertyValues['keyboardShortcut']
-	if 'positionString' in propertyValues:
-		textList.append(propertyValues['positionString'])
-		del propertyValues['positionString']
-	if 'level' in propertyValues:
-		levelNo=propertyValues['level']
-		del propertyValues['level']
-		if levelNo is not None or reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS):
-			textList.append(_("level %s")%levelNo)
-	for name,value in propertyValues.items():
-		if not name.startswith('_') and value is not None and value is not "":
-			textList.append(name)
-			textList.append(unicode(value))
+	if 'positionInfo_indexInGroup' in propertyValues and 'positionInfo_similarItemsInGroup' in propertyValues:
+		textList.append(_("%s of %s")%(propertyValues['positionInfo_indexInGroup'],propertyValues['positionInfo_similarItemsInGroup']))
+	if 'positionInfo_level' in propertyValues:
+		textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
@@ -615,7 +613,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
-	levelText=getSpeechTextForProperties(reason=reason,level=level)
+	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
 		if role==controlTypes.ROLE_LINK:
 			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
