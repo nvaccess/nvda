@@ -206,7 +206,7 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			self._focusEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 			return
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID)
@@ -223,7 +223,7 @@ class OrderedWinEventLimiter(object):
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
-		self._genericEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+		self._genericEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.

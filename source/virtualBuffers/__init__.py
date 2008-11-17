@@ -284,7 +284,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return sendKey(keyPress)
 		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
 		try:
-			docHandle, ID, startOffset, endOffset = self._iterNodesByType(nodeType, direction, startOffset).next()
+			docHandle, ID, startOffset, endOffset = next(self._iterNodesByType(nodeType, direction, startOffset))
 		except StopIteration:
 			speech.speakMessage(errorMessage)
 			return

@@ -152,7 +152,7 @@ def speakSpelling(text):
 	gen=_speakSpellingGen(text)
 	try:
 		# Speak the first character before this function returns.
-		gen.next()
+		next(gen)
 	except StopIteration:
 		return
 	queueHandler.registerGeneratorObject(gen)
