@@ -307,7 +307,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			newClass=getattr(mod,classString)
 		else:
 			newClass=globals()[classString]
-		obj=Window.__new__(newClass,windowHandle=windowHandle)
+		obj=Window.__new__(newClass)
 		obj.windowClassName=windowClassName
 		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 		return obj
