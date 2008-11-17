@@ -62,6 +62,7 @@ setup(
 ],
 	windows = [{
 		"script":"nvda.pyw",
+		"uac_info": ("asInvoker", False),
 		"icon_resources":[(1,"images/nvda.ico")],
 	}],
 	options = {"py2exe": {
