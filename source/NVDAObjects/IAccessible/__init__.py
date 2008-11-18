@@ -694,9 +694,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				groupPosition[1]=parent.childCount
 		if groupPosition[0]:
 			info['level']=groupPosition[0]
-		if groupPosition[1]:
+		if groupPosition[2]>0 and groupPosition[1]>=groupPosition[2]:
 			info['similarItemsInGroup']=groupPosition[1]
-		if groupPosition[2]:
 			info['indexInGroup']=groupPosition[2]
 		return info
 
