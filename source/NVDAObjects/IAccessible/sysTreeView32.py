@@ -130,24 +130,25 @@ class TreeViewItem(IAccessible):
 		return len(self.children)
 
 	def _get_positionInfo(self):
-		info=super(TreeViewItem,self)._get_positionInfo()
-		if self.IAccessibleChildID>0:
-			info['level']=self.treeLevel
-			hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
-			if not hItem:
-				return info
-			newItem=hItem
-			index=0
-			while newItem>0:
-				index+=1
-				newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,newItem)
-			newItem=hItem
-			numItems=index-1
-			while newItem>0:
-				numItems+=1
-				newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
-			info['indexInGroup']=index
-			info['similarItemsInGroup']=numItems
+		if self.IAccessibleChildID==0:
+			return super(TreeViewItem,self)._get_positionInfo()
+		info={}
+		info['level']=self.treeLevel
+		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		if not hItem:
+			return info
+		newItem=hItem
+		index=0
+		while newItem>0:
+			index+=1
+			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,newItem)
+		newItem=hItem
+		numItems=index-1
+		while newItem>0:
+			numItems+=1
+			newItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
+		info['indexInGroup']=index
+		info['similarItemsInGroup']=numItems
 		return info
 
 

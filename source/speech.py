@@ -588,7 +588,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)
-		if level and role==controlTypes.ROLE_TREEVIEWITEM and level!=oldTreeviewLevel:
+		if level is not None and role==controlTypes.ROLE_TREEVIEWITEM and level!=oldTreeviewLevel:
 			textList.insert(0,_("level %s")%level)
 			oldTreeviewLevel=level
 		elif level:
