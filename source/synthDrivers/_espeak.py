@@ -256,6 +256,7 @@ def espeak_errcheck(res, func, args):
 def initialize():
 	global espeakDLL, bgThread, bgQueue, player
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+	espeakDLL.espeak_Info.restype=c_char_p
 	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
 	espeakDLL.espeak_SetVoiceByName.errcheck=espeak_errcheck
 	espeakDLL.espeak_SetVoiceByProperties.errcheck=espeak_errcheck
@@ -284,6 +285,9 @@ def terminate():
 	player.close()
 	player=None
 	espeakDLL=None
+
+def info():
+	return espeakDLL.espeak_Info()
 
 def getVariantDict():
 	dir='synthDrivers\\espeak-data\\voices\\!v'
