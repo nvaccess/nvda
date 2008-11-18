@@ -7,8 +7,6 @@ import controlTypes
 import speech
 from . import IAccessible
 
-oldLevel=None
-
 TV_FIRST=0x1100
 TVIS_STATEIMAGEMASK=0xf000
 
@@ -134,6 +132,7 @@ class TreeViewItem(IAccessible):
 	def _get_positionInfo(self):
 		info=super(TreeViewItem,self)._get_positionInfo()
 		if self.IAccessibleChildID>0:
+			info['level']=self.treeLevel
 			hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
 			if not hItem:
 				return info
@@ -160,11 +159,3 @@ class TreeViewItem(IAccessible):
 		super(self.__class__,self).event_stateChange()
 		if announceContains:
 			speech.speakMessage(_("%s items")%self.childCount)
-
-	def event_gainFocus(self):
-		global oldLevel
-		newLevel=self.treeLevel
- 		if newLevel!=oldLevel and self is api.getFocusObject():
-			speech.speakMessage(_("level %d")%newLevel)
-			oldLevel=newLevel
-		super(self.__class__,self).event_gainFocus()

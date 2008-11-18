@@ -40,6 +40,7 @@ REASON_SAYALL=6
 REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
+oldTreeviewLevel=None
 
 
 def initialize():
@@ -551,6 +552,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		speakText(text,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
+	global oldTreeviewLevel
 	textList=[]
 	if 'name' in propertyValues:
 		textList.append(propertyValues['name'])
@@ -584,7 +586,13 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'positionInfo_indexInGroup' in propertyValues and 'positionInfo_similarItemsInGroup' in propertyValues:
 		textList.append(_("%s of %s")%(propertyValues['positionInfo_indexInGroup'],propertyValues['positionInfo_similarItemsInGroup']))
 	if 'positionInfo_level' in propertyValues:
-		textList.append(_('level %s')%propertyValues['positionInfo_level'])
+		level=propertyValues.get('positionInfo_level',None)
+		role=propertyValues.get('role',None)
+		if level and role==controlTypes.ROLE_TREEVIEWITEM and level!=oldTreeviewLevel:
+			textList.insert(0,_("level %s")%level)
+			oldTreeviewLevel=level
+		elif level:
+			textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
