@@ -13,7 +13,9 @@ RPC_STATUS startServer() {
 	//Set the protocol
 	std::ostringstream endPoint;
 	endPoint<<"nvVBufSrv_"<<GetCurrentProcessId();
-	if((status=RpcServerUseProtseqEp((RPC_CSTR)"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_CSTR)(endPoint.str().c_str()),NULL))!=RPC_S_OK) {
+	status=RpcServerUseProtseqEp((RPC_CSTR)"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_CSTR)(endPoint.str().c_str()),NULL);
+	//We can ignore the error where the endpoint is already set
+	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
 		fprintf(stderr,"Error setting protocol\n");
 		return status;
 	}
@@ -38,7 +40,7 @@ RPC_STATUS startServer() {
 
 void stopServer() {
 	printf("unregistering interface...\n");
-	RpcServerUnregisterIf(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,1);
+	RpcServerUnregisterIfEx(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,1);
 	printf("Done\n");
 }
 
