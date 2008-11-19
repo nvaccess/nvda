@@ -18,10 +18,10 @@ class Sink:
 			braille.handler.scrollForward()
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	"""HandyTech braille display driver.
+	"""Handy Tech braille display driver.
 	"""
 	name = "handyTech"
-	description = _("HandyTech braille displays")
+	description = _("Handy Tech braille displays")
 
 	@classmethod
 	def check(cls):
