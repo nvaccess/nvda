@@ -774,7 +774,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	//Search forward for the next line ending.
 	node = initNode;
 	relative = offset - initBufferStart;
-	bufferStart = offset;
+	bufferStart = initBufferStart;
 	bufferEnd = initBufferEnd;
 	int lineEnd = bufferEnd;
 	do {
@@ -812,7 +812,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	//Search backward for the previous line ending.
 	node = initNode;
 	relative = offset - initBufferStart;
-	bufferStart = offset;
+	bufferStart = initBufferStart;
 	bufferEnd = initBufferEnd;
 	int lineStart = bufferStart;
 	do {
