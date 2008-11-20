@@ -51,9 +51,10 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeByDepthFirst(bool move
 			DEBUG_MSG(L"Moving to first child");
 			tempNode=tempNode->firstChild;
 		} else {
-			while(tempNode->parent!=NULL&&tempNode->parent!=limitNode&&tempNode->next==NULL) {
+			while(tempNode!=NULL&&tempNode->next==NULL) {
 				DEBUG_MSG(L"moving past parent");
 				tempNode=tempNode->parent;
+				if(tempNode==limitNode) tempNode=NULL;
 			}
 			if(tempNode==NULL||tempNode->next==NULL) {
 				DEBUG_MSG(L"cannot move any further, returning NULL");
@@ -70,9 +71,10 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeByDepthFirst(bool move
 			tempNode=tempNode->lastChild;
 			relativeOffset=this->length-tempNode->length;
 		} else {
-			while(tempNode->parent!=NULL&&tempNode->parent!=limitNode&&tempNode->previous==NULL) {
+			while(tempNode!=NULL&&tempNode->previous==NULL) {
 				DEBUG_MSG(L"moving past parent");
 				tempNode=tempNode->parent;
+				if(tempNode==limitNode) tempNode=NULL;
 			}
 			if(tempNode==NULL||tempNode->previous==NULL) {
 				DEBUG_MSG(L"cannot move any further, returning NULL");
@@ -806,6 +808,10 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 		}
 		//Move on to the next node.
 		node = node->nextNodeByDepthFirst(false,limitNode,&tempRelativeStart);
+		//If not using screen layout, make sure not to pass in to another control field node
+		if(!useScreenLayout&&node&&node->firstChild) {
+			node=NULL;
+		}
 		if(node) {
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
@@ -844,6 +850,10 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 		}
 		//Move on to the previous node.
 		node = node->nextNodeByDepthFirst(true,limitNode,&tempRelativeStart);
+		//If not using screen layout, make sure not to pass in to another control field node
+		if(!useScreenLayout&&node&&node->firstChild) {
+			node=NULL;
+		}
 		if(node) {
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
