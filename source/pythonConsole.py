@@ -11,6 +11,8 @@ import speech
 import queueHandler
 import api
 import gui
+from logHandler import log
+import braille
 
 #: The singleton Python console UI instance.
 consoleUI = None
@@ -163,6 +165,10 @@ class ConsoleUI(wx.Frame):
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
 			"mouse": api.getMouseObject(),
+			"log": log,
+			"queueHandler": queueHandler,
+			"speech": speech,
+			"braille": braille,
 		})
 
 def initialize():

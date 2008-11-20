@@ -154,7 +154,8 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
-	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", "UTF-8")
+	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
+	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
