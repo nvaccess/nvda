@@ -30,7 +30,7 @@ speechMode=2
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
-typedWord=""
+curWordChars=[]
 REASON_FOCUS=1
 REASON_MOUSE=2
 REASON_QUERY=3
@@ -270,7 +270,8 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
-	global beenCanceled
+	global beenCanceled, curWordChars
+	curWordChars=[]
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -353,20 +354,22 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				speakMessage(_("selected %s")%text)
 
 def speakTypedCharacters(ch):
-	global typedWord
+	global curWordChars;
 	if api.isTypingProtected():
-		ch="*"
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
-		speakSpelling(ch)
-	if config.conf["keyboard"]["speakTypedWords"]: 
-		if ch.isalnum():
-			typedWord="".join([typedWord,ch])
-		elif len(typedWord)>0:
-			speakText(typedWord)
-			if log.isEnabledFor(log.IO): log.io("typedword: %s"%typedWord)
-			typedWord=""
+		realChar="*"
 	else:
-		typedWord=""
+		realChar=ch
+	if ch.isalnum():
+		curWordChars.append(realChar)
+	elif len(curWordChars)>0:
+		typedWord="".join(curWordChars)
+		curWordChars=[]
+		if log.isEnabledFor(log.IO):
+			log.io("typed word: %s"%typedWord)
+		if config.conf["keyboard"]["speakTypedWords"]: 
+			speakText(typedWord)
+	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
 	controlTypes.ROLE_LISTITEM,
