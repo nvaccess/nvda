@@ -765,8 +765,12 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	DEBUG_MSG(L"Starting at node "<<initNode->getDebugInfo());
 	std::set<int> possibleBreaks;
 	//Find the node at which to limit the search for line endings.
-	VBufStorage_fieldNode_t* limitNode;
-	for(limitNode=initNode->parent;limitNode!=NULL&&!limitNode->isBlock;limitNode=limitNode->parent);
+	VBufStorage_fieldNode_t* limitNode=NULL;
+	if(useScreenLayout) {
+		for(limitNode=initNode->parent;limitNode!=NULL&&!limitNode->isBlock;limitNode=limitNode->parent);
+	} else {
+		limitNode=initNode->parent;
+	}
 	DEBUG_MSG(L"limit node is "<<limitNode->getDebugInfo());
 	//Some needed variables for searching back and forward
 	VBufStorage_fieldNode_t* node=NULL;
