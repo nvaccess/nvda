@@ -16,9 +16,6 @@ import api
 import sayAllHandler
 import controlTypes
 import textHandler
-#Before importing virtualBuffer_lib, force ctypes to use virtualBuffer.dll from the lib dir, not the current dir
-ctypes.cdll.virtualBuffer=ctypes.cdll.LoadLibrary('lib\\virtualBuffer.dll')
-from virtualBuffer_lib import *
 import globalVars
 import config
 import api
@@ -29,13 +26,23 @@ import eventHandler
 import braille
 import queueHandler
 
+VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
+
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
 
 	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
+		startOffset=ctypes.c_int()
+		endOffset=ctypes.c_int()
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+		docHandle=docHandle.value
+		ID=ID.value
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+		if not obj:
+			obj=self.obj.rootNVDAObject
 		return obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
@@ -44,8 +51,11 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			try:
 				docHandle=obj.IAccessibleObject.windowHandle
 				ID=obj.IAccessibleObject.uniqueID
-				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
-				return start,end
+				node=VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle,docHandle,ID)
+				startOffset=ctypes.c_int()
+				endOffset=ctypes.c_int()
+				VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle,node,ctypes.byref(startOffset),ctypes.byref(endOffset))
+				return startOffset.value,endOffset.value
 			except:
 				obj=obj.parent
 
@@ -60,11 +70,13 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getSelectionOffsets(self):
-		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
-		return (start,end)
+		start=ctypes.c_int()
+		end=ctypes.c_int()
+		VBufClient.VBufRemote_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
+		return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
-		VBufClient_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
+		VBufClient.VBufRemote_setSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -73,56 +85,57 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufClient_getBufferTextLength(self.obj.VBufHandle)
+		return VBufClient.VBufRemote_getTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
-		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		return text
+		text=ctypes.c_wchar_p()
+		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
+		return text.value
 
 	def _getWordOffsets(self,offset):
 		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
-		line_startOffset,line_endOffset=VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,False)
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
-		return (max(line_startOffset,word_startOffset),min(line_endOffset,word_endOffset))
+		return (max(lineStart.value,word_startOffset),min(lineEnd.value,word_endOffset))
 
 	def _getLineOffsets(self,offset):
-		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"])
-
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		return lineStart.value,lineEnd.value
+ 
 	def _getParagraphOffsets(self,offset):
-		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
 		return attrs
-
-	def getInitialFields(self,formatConfig=None):
-		XMLContext=VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
-		ancestry=XMLFormatting.XMLContextParser().parse(XMLContext)
-		for index in xrange(len(ancestry)):
-			ancestry[index]=self._normalizeControlField(ancestry[index])
-		return ancestry
-
-	def getTextWithFields(self,formatConfig=None):
-		start=self._startOffset
-		end=self._endOffset
-		XMLText=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		commandList=XMLFormatting.RelativeXMLParser().parse(XMLText)
-		for index in xrange(len(commandList)):
-			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
-				commandList[index].field=self._normalizeControlField(commandList[index].field)
-		return commandList
 
 	def _getLineNumFromOffset(self, offset):
 		return None
 
 	def _get_fieldIdentifierAtStart(self):
-		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle, self._startOffset)
+		startOffset=ctypes.c_int()
+		endOffset=ctypes.c_int()
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+		return docHandle.value,ID.value
 
 	def _getUnitOffsets(self, unit, offset):
 		if unit == self.UNIT_CONTROLFIELD:
-			docHandle, ID = self.fieldIdentifierAtStart
-			return VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle, docHandle, ID)
+			startOffset=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			docHandle=ctypes.c_int()
+			ID=ctypes.c_int()
+			VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
@@ -155,11 +168,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
+		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.windowProcessID)
+		if not self.bindingHandle:
+			raise RuntimeError("Could not inject VBuf lib")
+		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootWindowHandle,self.rootID,self.backendLibPath)
+		if not self.VBufHandle:
+			raise RuntimeError("Could not remotely create virtualBuffer")
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
-			VBufClient_destroyBuffer(self.VBufHandle)
+			import winsound
+			winsound.Beep(880,60)
+			VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
+			VBufClient.VBufClient_disconnect(self.bindingHandle)
+			winsound.Beep(3000,60)
 			self.VBufHandle=None
 
 	def makeTextInfo(self,position):
@@ -238,8 +260,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		start,end=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
-		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		docHandle,ID=info.fieldIdentifierAtStart
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 

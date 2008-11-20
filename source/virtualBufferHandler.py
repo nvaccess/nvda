@@ -34,7 +34,7 @@ def update(obj):
 	#Gecko with IAccessible2 support
 	if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT:
 		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and windowClassName=="MozillaContentWindowClass":
-			classString="virtualBuffers.gecko_ia2.Gecko_ia2"
+			classString="virtualBuffers.example.Example"
 		else:
 			return
 	#Gecko only with IAccessible support
