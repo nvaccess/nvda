@@ -52,6 +52,7 @@ Changes since 0.6 P2:
 * new: Added support for position information for IAccessible2 controls.
 * change: The level of a tree view item is now announced first if it has changed from the previously focused item for all tree views. Previously, this was only occurring for native Windows (SysTreeView32) tree views.
 * fix: Improved the speaking of typed characters and words.
+* fix: Some new text that was previously not spoken in text console applications (such as some text adventure games) is now spoken.
 
 
 Changes since 0.6 P1:

@@ -150,7 +150,7 @@ class WinConsole(IAccessible):
 						lineLength=self.getConsoleHorizontalLength()
 						newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 						outLines=self.calculateNewText(newLines,self.prevConsoleVisibleLines)
-						if consoleEvent != winUser.EVENT_CONSOLE_UPDATE_SIMPLE and not (len(outLines) == 1 and len(outLines[0]) <= 1):
+						if not (len(outLines) == 1 and len(outLines[0]) <= 1):
 							for line in outLines:
 								queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, line)
 						self.prevConsoleVisibleLines=newLines
