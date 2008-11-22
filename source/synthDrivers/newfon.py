@@ -13,6 +13,7 @@ re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
 re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
 re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
+re_omittedCharacters = re.compile(r"[\(\)\*]+")
 
 letters = {
 'a': u"эй",
@@ -131,6 +132,7 @@ class SynthDriver(SynthDriver):
 
 	def speakText(self, text, index=None):
 		text = text.lower()
+		text = re_omittedCharacters.sub(" ", text)
 		text = re_afterNumber.sub(r"\1-\2", text)
 		if self._variant == "ukr":
 			text = preprocessUkrainianText(text)
