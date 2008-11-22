@@ -12,6 +12,7 @@ re_englishLetter = re.compile(r"([a-z])", re.I)
 re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
 re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
 re_letterAfterNumber = re.compile(r"(\d)(\D)", re.LOCALE)
+re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
 
 letters = {
 'a': u"эй",
@@ -72,6 +73,9 @@ def replaceEnglishLetter(match):
 def replaceEnglishLetters(match):
 	return re_englishLetter.sub(replaceEnglishLetter, match.group(1))
 
+def replaceUkrainianApostrophe(match):
+	return u"ь%s" % match.group(1)
+
 def preprocessEnglishText(text):
 	if len(text) == 1:
 		return letters[text] if letters.has_key(text) else text
@@ -85,6 +89,7 @@ def preprocessEnglishText(text):
 def preprocessUkrainianText(text):
 	if len(text) == 1:
 		return ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
+	text = re_ukrainianApostrophe.sub(replaceUkrainianApostrophe, text)
 	for s in ukrainianPronunciationA:
 		text = text.replace(s, ukrainianPronunciation[s])
 	return text
