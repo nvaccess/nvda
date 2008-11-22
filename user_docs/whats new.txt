@@ -27,7 +27,6 @@ Changes since 0.6 P2:
 * change: Improve the loading and unloading of appModules.
 * fix: When reading with the mouse, text in Mozilla Gecko edit fields should now be read.
 * fix: Say all should no longer cause certain SAPI5 synthesizers to crash.
-* fix: Say all should now work correctly with the sapi4activeVoice driver.
 * fix: Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.
 * fix: Fix mouse tracking in Java objects. (#185)
 * new: Handle some additional states on Java controls.
@@ -50,6 +49,10 @@ Changes since 0.6 P2:
 * fix: Fix the issue whereby updated voice parameters (rate, pitch, etc.) were not saved when the voice was changed from the synthesizer settings ring.
 * new: The NVDA application now includes a manifest, which means that it no longer runs in compatibility mode in Windows Vista.
 * new: The configuration file and speech dictionaries are now saved in the user's application data directory if NVDA was installed using the installer. This is necessary for Windows Vista and also allows multiple users to have individual NVDA configurations.
+* new: Added support for position information for IAccessible2 controls.
+* change: The level of a tree view item is now announced first if it has changed from the previously focused item for all tree views. Previously, this was only occurring for native Windows (SysTreeView32) tree views.
+* fix: Improved the speaking of typed characters and words.
+* fix: Some new text that was previously not spoken in text console applications (such as some text adventure games) is now spoken.
 
 
 Changes since 0.6 P1:

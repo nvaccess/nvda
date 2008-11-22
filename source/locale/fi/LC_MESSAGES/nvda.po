@@ -3,29 +3,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2499\n"
+"Project-Id-Version: r2509\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-11-13 15:07+0200\n"
+"PO-Revision-Date: 2008-11-18 08:33+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-
-#: NVDAObjects\IAccessible\__init__.py:73 speech.py:585
-msgid "level %s"
-msgstr "taso %s"
-
-#: NVDAObjects\IAccessible\__init__.py:79
-#: NVDAObjects\IAccessible\__init__.py:710
-#: NVDAObjects\IAccessible\sysListView32.py:224
-msgid "%s of %s"
-msgstr "%s / %s"
-
-#: NVDAObjects\IAccessible\__init__.py:85
-msgid "contains %s items"
-msgstr "sisältää %s kohdetta"
 
 #: NVDAObjects\IAccessible\edit.py:528
 msgid "unknown"
@@ -71,12 +57,12 @@ msgstr "fontti"
 msgid "point"
 msgstr "piste"
 
-#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:702
+#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:708
 #: textBuffer.py:266 textBuffer.py:318
 msgid "bold"
 msgstr "lihavointi"
 
-#: NVDAObjects\IAccessible\excel.py:147 speech.py:707 textBuffer.py:273
+#: NVDAObjects\IAccessible\excel.py:147 speech.py:713 textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
 msgstr "kursiivi"
@@ -86,18 +72,9 @@ msgstr "kursiivi"
 msgid "underline"
 msgstr "alleviivaus"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:260
-msgid "%d of %d"
-msgstr "%d / %d"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:159
+#: NVDAObjects\IAccessible\sysTreeView32.py:161
 msgid "%s items"
 msgstr "%s kohdetta"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:165
-msgid "level %d"
-msgstr "taso %d"
 
 #: NVDAObjects\IAccessible\winword.py:317
 #: NVDAObjects\IAccessible\winword.py:333
@@ -130,7 +107,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:142 appModules\_default.py:152
 #: appModules\_default.py:162 appModules\_default.py:642
 #: appModules\_default.py:718 appModules\_default.py:728
-#: appModules\_default.py:738 appModules\winamp.py:74 appModules\winamp.py:84
+#: appModules\_default.py:738 appModules\winamp.py:75 appModules\winamp.py:85
 #: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
 #: virtualBuffers\__init__.py:260
 msgid "on"
@@ -141,7 +118,7 @@ msgstr "käytössä"
 #: appModules\_default.py:159 appModules\_default.py:540
 #: appModules\_default.py:639 appModules\_default.py:698
 #: appModules\_default.py:715 appModules\_default.py:725
-#: appModules\_default.py:735 appModules\winamp.py:76 appModules\winamp.py:86
+#: appModules\_default.py:735 appModules\winamp.py:77 appModules\winamp.py:87
 #: gui\settingsDialogs.py:457 keyboardHandler.py:52 keyboardHandler.py:54
 #: keyboardHandler.py:56 virtualBuffers\__init__.py:260
 msgid "off"
@@ -190,7 +167,7 @@ msgstr ""
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:100 speech.py:242 speech.py:326 speech.py:339
+#: appModules\_default.py:100 speech.py:256 speech.py:340 speech.py:353
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -1172,9 +1149,13 @@ msgstr "alavko"
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:220
-msgid "lvl %s"
-msgstr "tso %s"
+#: braille.py:218 speech.py:587
+msgid "%s of %s"
+msgstr "%s / %s"
+
+#: braille.py:220 speech.py:592 speech.py:595
+msgid "level %s"
+msgstr "taso %s"
 
 #: brailleDisplayDrivers\handyTech.py:24
 msgid "HandyTech braille displays"
@@ -1184,7 +1165,7 @@ msgstr "HandyTech-pistenäytöt"
 msgid "No braille"
 msgstr "Ei pistenäyttöä"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:75 speech.py:529
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:543
 msgid "blank"
 msgstr "tyhjä"
 
@@ -1419,7 +1400,7 @@ msgstr "kuplailmoitus"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:190 speech.py:750
+#: controlTypes.py:190 speech.py:756
 msgid "link"
 msgstr "linkki"
 
@@ -1844,12 +1825,12 @@ msgstr "edustan väri"
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:302 speech.py:724 textBuffer.py:287 textBuffer.py:294
+#: controlTypes.py:302 speech.py:730 textBuffer.py:287 textBuffer.py:294
 #: textBuffer.py:324
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:303 speech.py:726 textBuffer.py:326
+#: controlTypes.py:303 speech.py:732 textBuffer.py:326
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -2977,134 +2958,134 @@ msgstr "NVDA Python-konsoli"
 msgid "end of text"
 msgstr "tekstin loppu"
 
-#: speech.py:167
+#: speech.py:168
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:321
+#: speech.py:335
 msgid "selecting %s"
 msgstr "valitaan %s"
 
-#: speech.py:332
+#: speech.py:346
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: speech.py:334
+#: speech.py:348
 msgid "selection removed"
 msgstr "valinta poistettu"
 
-#: speech.py:571 virtualBuffers_old\MSHTML.py:126
+#: speech.py:581 virtualBuffers_old\MSHTML.py:126
 #: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
 #: virtualBuffers_old\adobe.py:305 virtualBuffers_old\adobe.py:309
 #: virtualBuffers_old\gecko.py:297 virtualBuffers_old\gecko.py:301
 msgid "not %s"
 msgstr "ei %s"
 
-#: speech.py:629 speech.py:633 speech.py:637 speech.py:643 speech.py:649
-#: speech.py:750 virtualBuffers_old\__init__.py:195
+#: speech.py:635 speech.py:639 speech.py:643 speech.py:649 speech.py:655
+#: speech.py:756 virtualBuffers_old\__init__.py:195
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: speech.py:631 virtualBuffers_old\MSHTML.py:258
+#: speech.py:637 virtualBuffers_old\MSHTML.py:258
 #: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:262 virtualBuffers_old\adobe.py:273
 #: virtualBuffers_old\gecko.py:254 virtualBuffers_old\gecko.py:265
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
-#: speech.py:647
+#: speech.py:653
 msgid "in %s"
 msgstr "%s"
 
-#: speech.py:667
+#: speech.py:673
 msgid "page %s"
 msgstr "sivu %s"
 
-#: speech.py:674 textBuffer.py:242 textBuffer.py:310
+#: speech.py:680 textBuffer.py:242 textBuffer.py:310
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: speech.py:676
+#: speech.py:682
 msgid "default style"
 msgstr "oletustyyli"
 
-#: speech.py:696
+#: speech.py:702
 msgid "line %s"
 msgstr "rivi %s"
 
-#: speech.py:702
+#: speech.py:708
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#: speech.py:707
+#: speech.py:713
 msgid "no italic"
 msgstr "ei kursivointia"
 
-#: speech.py:712
+#: speech.py:718
 msgid "no strikethrough"
 msgstr "ei yliviivausta"
 
-#: speech.py:712
+#: speech.py:718
 msgid "strikethrough"
 msgstr "yliviivattu"
 
-#: speech.py:717
+#: speech.py:723
 msgid "not underlined"
 msgstr "ei alleviivausta"
 
-#: speech.py:717
+#: speech.py:723
 msgid "underlined"
 msgstr "alleviivattu"
 
-#: speech.py:728
+#: speech.py:734
 msgid "baseline"
 msgstr "perusviiva"
 
-#: speech.py:736
+#: speech.py:742
 msgid "align left"
 msgstr "tasaus vasemmalla"
 
-#: speech.py:738
+#: speech.py:744
 msgid "align center"
 msgstr "tasaus keskellä"
 
-#: speech.py:740
+#: speech.py:746
 msgid "align right"
 msgstr "tasaus oikealla"
 
-#: speech.py:742
+#: speech.py:748
 msgid "align justify"
 msgstr "tasaus molemmissa reunoissa"
 
-#: speech.py:744
+#: speech.py:750
 msgid "align default"
 msgstr "oletustasaus"
 
-#: speech.py:757
+#: speech.py:763
 msgid "spelling error"
 msgstr "oikeinkirjoitusvirhe"
 
-#: speech.py:759
+#: speech.py:765
 msgid "out of spelling error"
 msgstr "oikeinkirjoitusvirheen loppu"
 
-#: speech.py:773 textBuffer.py:219
+#: speech.py:779 textBuffer.py:219
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: speech.py:782
+#: speech.py:788
 msgid "table with %s columns and %s rows"
 msgstr "taulukko jossa %s saraketta ja %s riviä"
 
-#: speech.py:787
+#: speech.py:793
 msgid "column %s"
 msgstr "sarake %s"
 
-#: speech.py:791
+#: speech.py:797
 msgid "row %s"
 msgstr "rivi %s"
 
-#: synthDrivers\_espeak.py:290
+#: synthDrivers\_espeak.py:294
 msgid "none"
 msgstr "ei mitään"
 

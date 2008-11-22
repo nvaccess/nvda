@@ -73,7 +73,7 @@ def pumpAll():
 			continue
 		try:
 			log.debug("pumping generator %d"%ID)
-			gen.next()
+			next(gen)
 		except StopIteration:
 			log.debug("generator %s finished"%ID)
 			del generators[ID]

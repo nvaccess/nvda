@@ -131,14 +131,15 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		if virtualBufferObject and hasattr(virtualBufferObject,"event_virtualBuffer_firstGainFocus"):
 			virtualBufferObject.event_virtualBuffer_firstGainFocus()
 	oldVirtualBuffer=globalVars.focusObject.virtualBuffer if globalVars.focusObject else None
+	# Set global focus variables before calling event_virtualBuffer_gainFocus.
+	globalVars.focusDifferenceLevel=focusDifferenceLevel
+	globalVars.focusObject=obj
+	globalVars.focusAncestors=ancestors
 	if obj.virtualBuffer is not oldVirtualBuffer:
 		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
 			oldVirtualBuffer.event_virtualBuffer_loseFocus()
 		if hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
 			obj.virtualBuffer.event_virtualBuffer_gainFocus()
-	globalVars.focusDifferenceLevel=focusDifferenceLevel
-	globalVars.focusObject=obj
-	globalVars.focusAncestors=ancestors
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True

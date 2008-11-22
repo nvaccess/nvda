@@ -317,7 +317,7 @@ class Gecko_ia2(VirtualBuffer):
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
-			newDocHandle, newID, newStart, newEnd = self._iterNodesByType("focusable", direction, caretInfo._startOffset).next()
+			newDocHandle, newID, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
 		except StopIteration:
 			return False
 

@@ -212,12 +212,12 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionString = propertyValues["positionString"]
-	if positionString:
-		textList.append(positionString)
-	level = propertyValues.get("level")
-	if level:
-		textList.append(_("lvl %s") % level)
+	positionInfo = propertyValues["positionInfo"]
+	if positionInfo:
+		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
+			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
+		if 'level' in positionInfo:
+			textList.append(_('level %s')%positionInfo['level'])
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -239,7 +239,7 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionString=obj.positionString)
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -539,18 +539,51 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			if not ignoreErrors:
 				raise
 
-def getContextRegions(obj):
+def getFocusContextRegions(obj, oldFocusRegions=None):
 	# Late import to avoid circular import.
 	from virtualBuffers import VirtualBuffer
-	if isinstance(obj,VirtualBuffer):
-		obj=obj.rootNVDAObject
-	ancestors=[]
-	ancestor=obj.parent
-	while ancestor:
-		ancestors.append(ancestor)
-		ancestor=ancestor.parent
-	ancestors.reverse()
-	for parent in ancestors[1:]:
+	ancestors = api.getFocusAncestors()
+
+	ancestorsEnd = len(ancestors)
+	if isinstance(obj, VirtualBuffer):
+		obj = obj.rootNVDAObject
+		# We only want the ancestors of the buffer's root NVDAObject.
+		if obj != api.getFocusObject():
+			# Search backwards through the focus ancestors to find the index of obj.
+			for index, ancestor in itertools.izip(xrange(len(ancestors) - 1, 0, -1), reversed(ancestors)):
+				if obj == ancestor:
+					ancestorsEnd = index
+					break
+
+	if oldFocusRegions:
+		# We have the regions from the previous focus, so use the focus difference level to avoid rebuilding regions which are the same.
+		# The focus difference level is generally where the new ancestors begin.
+		# However, we must ensure that it is not beyond the last ancestor we wish to consider.
+		# Also, we don't ever want to fetch ancestor 0 (the desktop).
+		newAncestorsStart = max(min(api.getFocusDifferenceLevel(), ancestorsEnd), 1)
+		# Search backwards through the old regions to find the last common region.
+		for index, region in itertools.izip(xrange(len(oldFocusRegions) - 1, -1, -1), reversed(oldFocusRegions)):
+			ancestorIndex = getattr(region, "_focusAncestorIndex", None)
+			if ancestorIndex is None:
+				continue
+			if ancestorIndex < newAncestorsStart:
+				# This is the last common region.
+				# An ancestor may have been skipped and not have a region, which means that we need to grab new ancestors from this point.
+				newAncestorsStart = ancestorIndex + 1
+				commonRegionsEnd = index + 1
+				break
+		else:
+			# No common regions were found.
+			commonRegionsEnd = 0
+			newAncestorsStart = 1
+		# Yield the common regions.
+		for region in oldFocusRegions[0:commonRegionsEnd]:
+			yield region
+	else:
+		# Fetch all ancestors.
+		newAncestorsStart = 1
+
+	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		role=parent.role
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_MENUITEM):
 			continue
@@ -561,7 +594,10 @@ def getContextRegions(obj):
 		states=parent.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			continue
-		yield NVDAObjectRegion(parent, appendText=" ")
+		region = NVDAObjectRegion(parent, appendText=" ")
+		region._focusAncestorIndex = index
+		region.update()
+		yield region
 
 def getFocusRegions(obj, review=False):
 	# Late import to avoid circular import.
@@ -575,8 +611,11 @@ def getFocusRegions(obj, review=False):
 		region2 = None
 	if isinstance(obj, VirtualBuffer):
 		obj = obj.rootNVDAObject
-	yield (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
+	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
+	region.update()
+	yield region
 	if region2:
+		region2.update()
 		yield region2
 
 class BrailleHandler(baseObject.AutoPropertyObject):
@@ -708,13 +747,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		if self.tether != self.TETHER_FOCUS:
 			return
-		self._doNewRegions(itertools.chain(getContextRegions(obj), getFocusRegions(obj)))
+		self._doNewObject(itertools.chain(getFocusContextRegions(obj, oldFocusRegions=self.mainBuffer.regions), getFocusRegions(obj)))
 
-	def _doNewRegions(self, regions):
+	def _doNewObject(self, regions):
 		self.mainBuffer.clear()
 		for region in regions:
 			self.mainBuffer.regions.append(region)
-			region.update()
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
@@ -774,7 +812,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._doCursorMove(region)
 		else:
 			# We're reviewing a different object.
-			self._doNewRegions(getFocusRegions(reviewPos.obj, review=True))
+			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
 
 def initialize():
 	global handler

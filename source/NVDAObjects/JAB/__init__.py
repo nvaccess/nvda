@@ -249,16 +249,15 @@ class JAB(Window):
 		else:
 			return False
 
-	def _get_positionString(self):
+	def _get_positionInfo(self):
 		if self._JABAccContextInfo.childrenCount:
-			return None
+			return {}
 		parent=self.parent
 		if not isinstance(parent,JAB) or (self.role!=controlTypes.ROLE_RADIOBUTTON and parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]):
-			return None
+			return {}
 		index=self._JABAccContextInfo.indexInParent+1
 		childCount=parent._JABAccContextInfo.childrenCount
-		return _("%d of %d")%(index,childCount)
-
+		return {'indexInGroup':index,'similarItemsInGroup':childCount}
 
 
 	def _get_activeChild(self):

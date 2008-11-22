@@ -686,7 +686,7 @@ class Edit(IAccessible):
 			self.TextInfo=ITextDocumentTextInfo
 		else:
 			self.TextInfo=EditTextInfo
-		self.editProcessHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		winKernel.closeHandle(self.editProcessHandle)

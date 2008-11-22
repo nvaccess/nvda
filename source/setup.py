@@ -14,34 +14,10 @@ from versionInfo import *
 from py2exe import build_exe
 import wx
 
-RT_MANIFEST = 24 #resource number for manifest
-
-NVDAManifestText="""
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-<assemblyIdentity
-    version="6.0.0.0"
-    processorArchitecture="x86"
-    name="%(name)s"
-    type="win32"
-/>
-<description>%(description)s</description>
-<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
-<security>
-<requestedPrivileges>
-<requestedExecutionLevel
-level="AsInvoker"
-uiAccess="false" />
-</requestedPrivileges>
-</security>
-</trustInfo>
-</assembly>
-"""%vars()
-
 # py2exe insists on excluding certain dlls that don't seem to exist on many systems, so hackishly force them to be included.
 origIsSystemDLL = build_exe.isSystemDLL
 def isSystemDLL(pathname):
-	if os.path.basename(pathname).lower() in ("msvcp71.dll", "gdiplus.dll","mfc71.dll"):
+	if os.path.basename(pathname).lower() in ("msvcp71.dll", "msvcp90.dll", "gdiplus.dll","mfc71.dll", "mfc90.dll"):
 		return 0
 	return origIsSystemDLL(pathname)
 build_exe.isSystemDLL = isSystemDLL
@@ -86,8 +62,8 @@ setup(
 ],
 	windows = [{
 		"script":"nvda.pyw",
+		"uac_info": ("asInvoker", False),
 		"icon_resources":[(1,"images/nvda.ico")],
-		"other_resources":[(RT_MANIFEST,1,NVDAManifestText)],
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
@@ -98,7 +74,7 @@ setup(
 	}},
 	zipfile = None,
 	data_files=[
-		(".",glob("*.dll")+["builtin.dic"]),
+		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("comInterfaces", glob("comInterfaces/*.pyc")),
 		("appModules", glob("appModules/*.py*")),

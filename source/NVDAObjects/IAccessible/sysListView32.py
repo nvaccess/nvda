@@ -7,6 +7,7 @@
 import time
 from ctypes import *
 from ctypes.wintypes import *
+import IAccessibleHandler
 import controlTypes
 import speech
 import api
@@ -101,7 +102,7 @@ class NMLVDispInfoStruct(Structure):
 
 def getListGroupInfo(windowHandle,groupIndex):
 	(processID,threadID)=winUser.getWindowThreadProcessID(windowHandle)
-	processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,processID)
+	processHandle=IAccessibleHandler.getProcessHandleFromHwnd(windowHandle)
 	localInfo=LVGROUP()
 	localInfo.cbSize=sizeof(LVGROUP)
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
@@ -219,9 +220,11 @@ class ListItem(IAccessible):
 	def _get_value(self):
 		return super(ListItem,self)._get_description()
 
-	def _get_positionString(self):
+	def _get_positionInfo(self):
+		info=super(ListItem,self)._get_positionInfo()
 		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
-		return _("%s of %s")%(self.IAccessibleChildID,totalCount)
+		info['similarItemsInGroup']=totalCount
+		return info
 
 	def event_stateChange(self):
 		if self.hasFocus:

@@ -6,6 +6,7 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+import IAccessibleHandler
 import winKernel
 import winUser
 from keyUtils import sendKey
@@ -90,7 +91,7 @@ class winampPlaylistEditor(winampMainWindow):
 
 	def __init__(self,*args,**kwargs):
 		super(winampPlaylistEditor,self).__init__(*args,**kwargs)
-		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
