@@ -11,7 +11,7 @@ import re
 re_englishLetter = re.compile(r"([a-z])", re.I)
 re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
 re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
-re_letterAfterNumber = re.compile(r"(\d)(\D)", re.LOCALE)
+re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
 re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
 
 letters = {
@@ -79,7 +79,6 @@ def replaceUkrainianApostrophe(match):
 def preprocessEnglishText(text):
 	if len(text) == 1:
 		return letters[text] if letters.has_key(text) else text
-	text = re_letterAfterNumber.sub(r"\1 \2", text)
 	text = re_abbreviations.sub(replaceEnglishLetters, text)
 	text = re_individualLetters.sub(replaceEnglishLetter, text)
 	for s in englishPronunciation:
@@ -132,6 +131,7 @@ class SynthDriver(SynthDriver):
 
 	def speakText(self, text, index=None):
 		text = text.lower()
+		text = re_afterNumber.sub(r"\1-\2", text)
 		if self._variant == "ukr":
 			text = preprocessUkrainianText(text)
 		text = preprocessEnglishText(text)
