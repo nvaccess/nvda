@@ -10,7 +10,7 @@ import textHandler
 import api
 import eventHandler
 import IAccessibleHandler
-import appModuleHandler
+import _default
 import speech
 from keyUtils import key, sendKey
 
@@ -32,7 +32,7 @@ envelopeNames={
 	1037:_("From:"),
 }
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		controlID=obj.windowControlID

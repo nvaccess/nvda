@@ -11,10 +11,11 @@ import os
 import codecs
 import synthDriverHandler
 import api
+import config
 
 dictionaries = {}
-dictTypes = ("temp", "smart", "voice", "default") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath=u"speechdicts"
+dictTypes = ("temp", "smart", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
+speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechdicts")
 smartDicts = []
 
 class SpeechDictEntry:
@@ -68,13 +69,14 @@ class SpeechDict(list):
 	def save(self,fileName=None):
 		if not fileName:
 			fileName=getattr(self,'fileName',None)
-		if fileName:
-			file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
-			for entry in self:
-				if entry.comment:
-					file.write("#%s\r\n"%entry.comment)
-				file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
-			file.close()
+		if not fileName:
+			return
+		file = codecs.open(fileName,"w","utf_8_sig",errors="replace")
+		for entry in self:
+			if entry.comment:
+				file.write("#%s\r\n"%entry.comment)
+			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
+		file.close()
 
 	def sub(self, text):
 		for entry in self:
@@ -108,7 +110,7 @@ class SmartDict(SpeechDict):
 
 	def setName(self,name):
 		self.name = name
-		self.fileName= u"%s/%s.sdic" % (speechDictsPath, api.validateFile(name))
+		self.fileName= getFileName("smart", name=self.name)
 
 	def matches(self, value):
 		return self.compiled.search(value) is not None
@@ -132,16 +134,19 @@ def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	for type in dictTypes:
-		if type != "smart":
-			text=dictionaries[type].sub(text)
+		if type == "smart": continue
+		text=dictionaries[type].sub(text)
 	for smart in dictionaries["smart"]: text=smart.sub(text) 
 	return text
 
-def getFileName(type, synth=synthDriverHandler.getSynth()):
+def getFileName(type, synth=synthDriverHandler.getSynth(), name=None):
 	if type is "default":
-		return "%s/default.dic"%speechDictsPath
+		return os.path.join(speechDictsPath, "default.dic")
+	elif type is "smart":
+		return "%s/%s.sdic" % (speechDictsPath, api.filterFileName(name))
 	elif type is "voice":
-		return "%s/%s-%s.dic"%(speechDictsPath,api.validateFile(synth.name),api.validateFile(synth.getVoiceInfoByID(synth.voice).name))
+		return "%s/%s-%s.dic"%(speechDictsPath,api.filterFileName(synth.name),api.filterFileName(synth.getVoiceInfoByID(synth.voice).name))
+	elif type is "builtin": return "builtin.dic"
 	return None
 
 def reflectVoiceChange(synth):
@@ -152,6 +157,9 @@ def reflectVoiceChange(synth):
 	[(dict.load(), dictionaries["smart"].append(dict)) for dict in smartDicts if dict.matches(name)]
 
 def initialize():
+	#create speechDicts folder if appropriate
+	if not os.path.isdir(speechDictsPath):
+		os.makedirs(speechDictsPath)
 	#search for the smart dictionaries
 	counter = 0
 	for name in os.listdir(speechDictsPath):
@@ -165,3 +173,4 @@ def initialize():
 		dictionaries[type]=SpeechDict()
 	dictionaries["smart"] = []
 	dictionaries["default"].load(getFileName("default"))
+	dictionaries["builtin"].load(getFileName("builtin"))

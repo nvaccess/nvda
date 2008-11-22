@@ -6,7 +6,7 @@
 
 import time
 import win32com.client
-import appModuleHandler
+import _default
 import api
 import eventHandler
 import speech
@@ -44,7 +44,7 @@ def getSentMessageString(obj):
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role

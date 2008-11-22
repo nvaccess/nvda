@@ -156,7 +156,7 @@ def sayAllHelper_generator(fromOffset,toOffset,func_nextChunkOffsets,func_getTex
 		if loopCount>4:
 			yield
 			yield
-		updateGen.next()
+		next(updateGen)
 		if loopCount>4:
 			yield
 			yield

@@ -14,7 +14,6 @@ Name "NVDA"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
 !define NVDASourceDir "..\source\dist"
-!define NVDAConfig "nvda.ini"
 !define SNDLogo "nvda_logo.wav"
 
 !define INSTDIR_REG_ROOT "HKLM"
@@ -312,7 +311,6 @@ rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
 FunctionEnd
 
 ; Uninstall functions
-var PreserveConfig
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
@@ -347,15 +345,6 @@ SetShellVarContext all
 
 ;end uninstall, after uninstall from all logged paths has been performed
 !insertmacro UNINSTALL.LOG_END_UNINSTALL
-
-; Warn about configuration file
-IfFileExists "$INSTDIR\${NVDAConfig}" +1 +2
-MessageBox MB_ICONQUESTION|MB_YESNO|MB_DefButton2 $(msg_NVDAConfigFound) IDYES +1 IDNO PreserveConfiguration
-goto Continue
-PreserveConfiguration:
-CopyFiles /SILENT "$INSTDIR\${NVDAConfig}" "$PLUGINSDIR\${NVDAConfig}"
-strcpy $preserveConfig "1"
-Continue:
 !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
 Delete "$SMPROGRAMS\$StartMenuFolder\*.*"
 RmDir "$SMPROGRAMS\$StartMenuFolder"
@@ -363,16 +352,7 @@ Delete $DESKTOP\${PRODUCT}.lnk"
 Delete $INSTDIR\${PRODUCT}.url"
 DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
 DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
-StrCmp $PreserveConfig 1 +1 NoPreserveConfig
-CreateDirectory $INSTDIR
-CopyFiles /SILENT "$PLUGINSDIR\${NVDAConfig}" "$INSTDIR\${NVDAConfig}"
-goto End
-NoPreserveConfig:
-Delete $INSTDIR\${NVDAConfig}
 Rmdir $INSTDIR
-Goto End
-
-End:
 SectionEnd
 
 Function un.onUninstSuccess

@@ -44,12 +44,12 @@ def setSynth(name):
 	if name=='auto':
 		name='espeak'
 	try:
-		newSynth=__import__(name,globals(),None,[]).SynthDriver()
+		newSynth=__import__(name,globals(),None,[]).SynthDriver
 		if _curSynth and _curSynth.name == newSynth.name:
 			_curSynth.cancel()
 			_curSynth.terminate()
 			_curSynth = None
-		newSynth.initialize()
+		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
 			if newSynth.hasVoice:
@@ -58,6 +58,10 @@ def setSynth(name):
 					changeVoice(newSynth,voice)
 				except LookupError:
 					log.warning("No such voice: %s" % voice)
+					# Update the configuration with the correct voice.
+					config.conf["speech"][name]["voice"]=newSynth.voice
+					# We need to call changeVoice here so voice dictionaries can be managed
+					changeVoice(newSynth,newSynth.voice)
 			if newSynth.hasVariant:
 				newSynth.variant=config.conf["speech"][name]["variant"]
 			if newSynth.hasRate:
@@ -71,7 +75,7 @@ def setSynth(name):
 		else:
 			if newSynth.hasVoice:
 				config.conf["speech"][name]["voice"]=newSynth.voice
-				#We need to call changeVoice here so voice dictionries can be managed
+				#We need to call changeVoice here so voice dictionaries can be managed
 				changeVoice(newSynth,newSynth.voice)
 			if newSynth.hasVariant:
 				config.conf["speech"][name]["variant"]=newSynth.variant
@@ -165,7 +169,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
-
 
 	def terminate(self):
 		"""Terminate this synth driver.

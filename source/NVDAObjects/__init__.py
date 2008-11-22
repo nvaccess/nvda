@@ -49,8 +49,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getSelectionOffsets(self):
 		return self.obj.basicSelectionOffsets
 
-	def _setSelectionOffsets(self):
-		self.obj.basicSelectionOffsets=(self._startOffset,self._endOffset)
+	def _setSelectionOffsets(self,start,end):
+		self.obj.basicSelectionOffsets=(start,end)
 
 	def _getTextRange(self,start,end):
 		text=self._getStoryText()
@@ -348,8 +348,8 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type states: set
 @ivar description: The object's description. (e.g. Further info to describe the button's action to go with the label) 
 @type description: string
-@ivar positionString: a description of where the object is in relation to other objects around it. (e.g. a list item might say 2 of 5).
-@type positionString: string
+@ivar positionInfo: A dict of 'indexInGroup', 'similarItemsInGroup', and 'level', describing the object's position.
+@type positionInfo: dict
 @ivar location: The object's location. (A tuple of left, top, width, depth).
 @type location: 4-tuple (int)
 @ivar next: gets the next logical NVDA object in the tree
@@ -585,8 +585,8 @@ Tries to force this object to take the focus.
 	def _get_labeledBy(self):
 		return None
 
-	def _get_positionString(self):
-		return None
+	def _get_positionInfo(self):
+		return {}
 
 	def _get_isProtected(self):
 		return False
@@ -703,8 +703,9 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 	def _get_basicSelectionOffsets(self):
 		return [0,0]
 
-	def _set_basicSelectionOffsets(self):
-		pass
+	def _set_basicSelectionOffsets(self,offsets):
+		raise NotImplementedError
+
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)

@@ -163,6 +163,7 @@ import globalVars
 from logHandler import log
 import JABHandler
 import eventHandler
+import winKernel
 import winUser
 import speech
 import sayAllHandler
@@ -205,7 +206,7 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			self._focusEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 			return
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID)
@@ -222,7 +223,7 @@ class OrderedWinEventLimiter(object):
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
-		self._genericEventCache[(eventID,window,objectID,childID)]=self._eventCounter.next()
+		self._genericEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
@@ -313,6 +314,7 @@ IAccessibleRolesToNVDARoles={
 	ROLE_SYSTEM_WHITESPACE:controlTypes.ROLE_WHITESPACE,
 	ROLE_SYSTEM_IPADDRESS:controlTypes.ROLE_IPADDRESS,
 	ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
+	ROLE_SYSTEM_CLOCK:controlTypes.ROLE_CLOCK,
 	#IAccessible2 roles
 	IA2_ROLE_UNKNOWN:controlTypes.ROLE_UNKNOWN,
 	IA2_ROLE_CANVAS:controlTypes.ROLE_CANVAS,
@@ -1102,3 +1104,17 @@ def splitIA2Attribs(attribsString):
 		# Add this key/value pair to the dict.
 		attribsDict[key] = tmp
 	return attribsDict
+
+def getProcessHandleFromHwnd(windowHandle):
+	"""Retreaves a process handle of the process who owns the window.
+	If Windows Vista, uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process who is elevated.
+	if older than Windows Vista, just uses OpenProcess from user32.dll instead.
+	@param windowHandle: a window of a process you wish to retreave a process handle for
+	@type windowHandle: integer
+	@returns: a process handle with read, write and operation access
+	@rtype: integer
+	"""
+	try:
+		return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
+	except:
+		return winKernel.openProcess(winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE|winKernel.PROCESS_VM_OPERATION,False,winUser.getWindowThreadProcessID(windowHandle)[0])

@@ -6,12 +6,13 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+import IAccessibleHandler
 import winKernel
 import winUser
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
-import appModuleHandler
+import _default
 import speech
 import locale
 import controlTypes
@@ -51,7 +52,7 @@ def getRepeat():
 	global hwndWinamp
 	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp
@@ -90,7 +91,7 @@ class winampPlaylistEditor(winampMainWindow):
 
 	def __init__(self,*args,**kwargs):
 		super(winampPlaylistEditor,self).__init__(*args,**kwargs)
-		self.processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,self.windowProcessID)
+		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)

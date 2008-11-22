@@ -13,6 +13,7 @@
 @type re_keyScript: regular expression
 """
 
+import itertools
 import re
 import ctypes
 import os
@@ -31,10 +32,6 @@ __path__=['.\\appModules']
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
-#Variable to hold the active (focused) appModule
-activeModule=None
-#variable to hold the default appModule instance
-default=None
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 
@@ -110,17 +107,6 @@ def getKeyMapFileName(appName,layout):
 		log.debug("No keymapFile for %s"%appName)
 		return None
 
-def getActiveModule():
-	"""Finds the appModule that is for the current foreground window.
-	@returns: the active appModule
-	@rtype: appModule
-	"""
-	fg=winUser.getForegroundWindow()
-	mod=getAppModuleFromWindow(fg)
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("Using window %s (%s), got appModule %s"%(fg,winUser.getClassName(fg),mod))
-	return mod
-
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.window.Window):
 		return
@@ -136,12 +122,11 @@ def getAppModuleFromProcessID(processID):
 	mod=runningTable.get(processID)
 	if not mod:
 		appName=getAppNameFromProcessID(processID)
-		modClass=fetchAppModuleClass(appName)
-		if modClass: 
-			mod=modClass(processID,appName=appName)
-			if modClass!=AppModule:
-				log.info("Loaded appModule %s"%(mod.appName))
-			loadKeyMap(mod.appName,mod)
+		mod=fetchAppModule(processID,appName)
+		if not mod:
+			mod=fetchAppModule(processID,appName,useDefault=True)
+		if not mod:
+			raise RuntimeError("error fetching default appModule")
 		runningTable[processID]=mod
 	return mod
 
@@ -158,70 +143,35 @@ def update(processID):
 				deadMod.event_appLoseFocus();
 		getAppModuleFromProcessID(processID)
 
-def loadKeyMap(appName,mod):
-	"""Loads a key map in to the given appModule, with the given name. if the key map exists. It takes in to account what layout NVDA is currently set to.
-	@param appName: the application name
-	@type appName: str
-	@param mod: the appModule
-	@type mod: appModule
-	"""  
-	layout=config.conf["keyboard"]["keyboardLayout"]
-	keyMapFileName=getKeyMapFileName(appName,layout)
-	if not keyMapFileName:
-		return False
-	keyMapFile=open(keyMapFileName,'r')
-	bindCount=0
-	#If the appModule already has a running keyMap, clear it
-	if '_keyMap' in mod.__dict__:
-		mod._keyMap={}
-	for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
-		m=re_keyScript.match(line)
-		if m:
-			try:
-				mod.bindKey_runtime(m.group('key'),m.group('script'))
-				bindCount+=1
-			except:
-				log.error("error binding %s to %s in module %s"%(m.group('script'),m.group('key'),appName))
-	log.debug("added %s bindings to module %s from file %s"%(bindCount,appName,keyMapFileName))
-  	return True
-
-def fetchAppModuleClass(appName):
+def fetchAppModule(processID,appName,useDefault=False):
 	"""Returns an appModule found in the appModules directory, for the given application name.
-	It only returns the class, it must be initialized with a name and a window to actually be used.
+	@param processID: process ID for it to be associated with
+	@type processID: integer
 	@param appName: the application name for which an appModule should be found.
 	@type appName: str
 	@returns: the appModule, or None if not found
 	@rtype: AppModule
 	"""  
 	mod=None
+	friendlyAppName=appName
+	if useDefault:
+		appName='_default'
 	if moduleExists(appName):
 		try:
-			mod=__import__(appName,globals(),locals(),[]).AppModule
+			mod=__import__(appName,globals(),locals(),[]).AppModule(processID,friendlyAppName)
 		except:
-			log.error("Error in appModule %s"%appName,exc_info=True)
+			log.error("error in appModule %s"%appName,exc_info=True)
 			speech.speakMessage(_("Error in appModule %s")%appName)
-			raise RuntimeError
-	if mod is None:
-		return AppModule
-	return mod
+	if mod and isinstance(mod,AppModule):
+		mod.loadKeyMap()
+		return mod
+
 
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
 	global NVDAProcessID,default
 	NVDAProcessID=os.getpid()
-	defaultModClass=fetchAppModuleClass('_default')
-	if defaultModClass:
-		default=defaultModClass('_default',winUser.getDesktopWindow())
-	if default:
-		if loadKeyMap('_default',default):
-			log.info("loaded default appModule")
-		else:
-			speech.speakMessage(_("Could not load default module keyMap"))
-			raise RuntimeError("appModuleHandler.initialize: could not load default module keymap")
-	else:
-		speech.speakMessage(_("Could not load default module "))
-		raise RuntimeError("appModuleHandler.initialize: could not load default module ")
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
@@ -240,10 +190,37 @@ class AppModule(baseObject.ScriptableObject):
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
 	def __repr__(self):
-		return "AppModule (appName %s, process ID %s) at address %x"%(self.appName,self.processID,id(self))
+		return "<%s (appName %s, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
+
+	def _get_appModuleName(self):
+		return "%s.%s"%(self.__class__.__module__.split('.')[-1],self.__class__.__name__)
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
+
+	def loadKeyMap(self):
+		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
+		"""  
+		if '_keyMap' in self.__dict__:
+			self._keyMap={}
+		layout=config.conf["keyboard"]["keyboardLayout"]
+		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
+			name=modClass.__module__.split('.')[-1]
+			keyMapFileName=getKeyMapFileName(name,layout)
+			if not keyMapFileName:
+				continue
+			keyMapFile=open(keyMapFileName,'r')
+			bindCount=0
+			#If the appModule already has a running keyMap, clear it
+			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
+				m=re_keyScript.match(line)
+				if m:
+					try:
+						self.bindKey_runtime(m.group('key'),m.group('script'))
+						bindCount+=1
+					except:
+						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
+			log.debug("added %s bindings to appModule %s from file %s"%(bindCount,self,keyMapFileName))

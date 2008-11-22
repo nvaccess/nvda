@@ -1,6 +1,7 @@
 from ctypes import *
 from ctypes.wintypes import *
 import braille
+import queueHandler
 
 #Try to load the fs braille dll
 try:
@@ -54,11 +55,11 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 		d=(lParam>>24)&0xFF
 		if a==5: #wizzwheels
 			if bool((b>>3)&1) is bool((b>>4)&1):
-				braille.handler.scrollBack()
+				queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.scrollBack)
 			else:
-				braille.handler.scrollForward()
+				queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.scrollForward)
 		elif a==4 and c==1 and d==0: #press down bottom row routing key
-			braille.handler.routeTo(b)
+			queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.routeTo,b)
 		return 0
 	return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 

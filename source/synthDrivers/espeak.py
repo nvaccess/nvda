@@ -9,6 +9,7 @@ import Queue
 import threading
 import languageHandler
 import synthDriverHandler
+from logHandler import log
 
 class SynthDriver(synthDriverHandler.SynthDriver):
 	name = "espeak"
@@ -25,8 +26,9 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	def initialize(self):
+	def __init__(self):
 		_espeak.initialize()
+		log.info("Using eSpeak version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._variantDict=_espeak.getVariantDict()

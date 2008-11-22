@@ -1,7 +1,7 @@
-import appModuleHandler
+import _default
 import speech
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_appGainFocus(self):
 		speech.speechMode=speech.speechMode_off

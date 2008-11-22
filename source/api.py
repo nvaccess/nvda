@@ -131,14 +131,15 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		if virtualBufferObject and hasattr(virtualBufferObject,"event_virtualBuffer_firstGainFocus"):
 			virtualBufferObject.event_virtualBuffer_firstGainFocus()
 	oldVirtualBuffer=globalVars.focusObject.virtualBuffer if globalVars.focusObject else None
+	# Set global focus variables before calling event_virtualBuffer_gainFocus.
+	globalVars.focusDifferenceLevel=focusDifferenceLevel
+	globalVars.focusObject=obj
+	globalVars.focusAncestors=ancestors
 	if obj.virtualBuffer is not oldVirtualBuffer:
 		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
 			oldVirtualBuffer.event_virtualBuffer_loseFocus()
 		if hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
 			obj.virtualBuffer.event_virtualBuffer_gainFocus()
-	globalVars.focusDifferenceLevel=focusDifferenceLevel
-	globalVars.focusObject=obj
-	globalVars.focusAncestors=ancestors
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
@@ -327,13 +328,13 @@ def getStatusBarText(obj):
 		text = ""
 	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
 
-def validateFile(name):
-	"""Replaces invalid characters in a given string to make a windows compatible filename.
-@returns: A string holding altered name.
-@rtype: string
-@param name: text to makea file name of
-@type text: string
-"""
+def filterFileName(name):
+	"""Replaces invalid characters in a given string to make a windows compatible file name.
+	@param name: The file name to filter.
+	@type name: str
+	@returns: The filtered file name.
+	@rtype: str
+	"""
 	invalidChars=':?*\|<>/"'
 	for c in invalidChars:
 		name=name.replace(c,'_')

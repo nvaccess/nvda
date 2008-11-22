@@ -4,14 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import appModuleHandler
+import _default
 from NVDAObjects.IAccessible import IAccessible
 import speech
 import controlTypes
 
 oldActivePannel=0
 
-class AppModule(appModuleHandler.AppModule):
+class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="TMyListBox":
