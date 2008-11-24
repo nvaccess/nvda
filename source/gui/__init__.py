@@ -25,7 +25,7 @@ import api
 
 ### Constants
 appTitle = "NVDA"
-NVDA_PATH = os.getcwd()
+NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()

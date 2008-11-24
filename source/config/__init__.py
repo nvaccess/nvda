@@ -207,8 +207,8 @@ def isInstalledCopy():
 		return False
 
 def getUserDefaultConfigPath():
-	buf=ctypes.create_unicode_buffer(MAX_PATH)
-	if isInstalledCopy() and ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
-		return u'%s\\nvda'%buf.value
-	else:
-		return u'.\\'
+	if isInstalledCopy():
+		buf=ctypes.create_unicode_buffer(MAX_PATH)
+		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
+			return u'%s\\nvda'%buf.value
+	return u'.\\'
