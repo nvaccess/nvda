@@ -133,7 +133,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	REASON_QUICKNAV = "quickNav"
 
 	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
-		self.backendLibPath=os.path.abspath(backendLibPath)
+		self.backendLibPath=os.path.join(os.getcwdu(),backendLibPath)
 		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
