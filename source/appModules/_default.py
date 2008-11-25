@@ -844,3 +844,26 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
 	script_reportClipboardText.__doc__ = _("Reports the text on the Windows clipboard")
+
+	def script_review_markStartForCopy(self, keyPress):
+		self._copyStartMarker = api.getReviewPosition().copy()
+		ui.message(_("Start marked"))
+	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be copied")
+
+	def script_review_copy(self, keyPress):
+		if not getattr(self, "_copyStartMarker", None):
+			ui.message(_("No start marker set"))
+			return
+		pos = api.getReviewPosition().copy()
+		if self._copyStartMarker.obj != pos.obj:
+			ui.message(_("The start marker must reside within the same object"))
+			return
+		pos.collapse()
+		pos.setEndPoint(self._copyStartMarker, "startToStart")
+		if pos.copyToClipboard():
+			ui.message(_("Review selection copied to clipboard"))
+		else:
+			ui.message(_("No text to copy"))
+			return
+		self._copyStartMarker = None
+	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard")
