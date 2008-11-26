@@ -53,7 +53,7 @@ Changes since 0.6 P2:
 * change: The level of a tree view item is now announced first if it has changed from the previously focused item for all tree views. Previously, this was only occurring for native Windows (SysTreeView32) tree views.
 * fix: Improved the speaking of typed characters and words.
 * fix: Some new text that was previously not spoken in text console applications (such as some text adventure games) is now spoken.
-* new: Added the ability to copy text to the clipboard using the review cursor. NVDA+[ sets the start marker to the current position of the review cursor. NVDA+] retrieves the text between the start marker and the current position of the review cursor and copies it to the clipboard. (#240)
+* new: Added the ability to copy text to the clipboard using the review cursor. NVDA+f9 sets the start marker to the current position of the review cursor. NVDA+f10 retrieves the text between the start marker and the current position of the review cursor and copies it to the clipboard. (#240)
 
 
 Changes since 0.6 P1:
