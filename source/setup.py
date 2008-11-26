@@ -10,6 +10,7 @@ gettext.install("nvda", unicode=True)
 from distutils.core import setup
 import py2exe
 from glob import glob
+import fnmatch
 from versionInfo import *
 from py2exe import build_exe
 import wx
@@ -28,9 +29,10 @@ def getLocaleDataFiles():
 	wxLocaleFiles=[(os.path.dirname(f)[len(wxDir)+1:], (f,)) for f in glob(wxDir+"/locale/*/LC_MESSAGES/*.mo")]
 	return NVDALocaleFiles+wxLocaleFiles
 
-def getRecursiveDataFiles(dest,source):
+def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
-	rulesList.append((dest,filter(os.path.isfile,glob("%s/*"%source))))
+	rulesList.append((dest,
+		[f for f in glob("%s/*"%source) if not any(fnmatch.fnmatch(f,exclude) for exclude in excludes) and os.path.isfile(f)]))
 	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
 
@@ -77,11 +79,11 @@ setup(
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("comInterfaces", glob("comInterfaces/*.pyc")),
-		("appModules", glob("appModules/*.py*")),
+		("appModules", glob("appModules/*.pyc")),
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
-	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers')+getRecursiveDataFiles('brailleDisplayDrivers','brailleDisplayDrivers'),
+	] + getLocaleDataFiles()+getRecursiveDataFiles('documentation','../user_docs')+getRecursiveDataFiles('synthDrivers','synthDrivers',excludes=('*.py',))+getRecursiveDataFiles('brailleDisplayDrivers','brailleDisplayDrivers',excludes=('*.py',)),
 )

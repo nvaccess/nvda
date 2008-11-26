@@ -26,7 +26,11 @@ def changeVoice(synth, voice):
 
 def getSynthList():
 	synthList=[]
-	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if (x.endswith('.py') and not x.startswith('_'))]:
+	names = set()
+	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
+		if name.startswith('_') or ext not in ('.py', '.pyc') or name in names:
+			continue
+		names.add(name)
 		try:
 			synth=__import__(name,globals(),locals(),[]).SynthDriver
 			if synth.check():
