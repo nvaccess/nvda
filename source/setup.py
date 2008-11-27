@@ -24,13 +24,18 @@ def isSystemDLL(pathname):
 build_exe.isSystemDLL = isSystemDLL
 
 class py2exe(build_exe.py2exe):
-	"""Overridden py2exe command to run generate.py first.
+	"""Overridden py2exe command to:
+		* Run generate.py first
+		* Don't copy w9xpopen, as NVDA will never run on Win9x
 	"""
 
 	def run(self):
 		import generate
 		generate.main()
 		build_exe.py2exe.run(self)
+
+	def copy_w9xpopen(self, modules, dlls):
+		pass
 
 def getLocaleDataFiles():
 	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
