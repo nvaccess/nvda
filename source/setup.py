@@ -8,7 +8,7 @@ import os
 import gettext
 gettext.install("nvda", unicode=True)
 from distutils.core import setup
-import py2exe
+import py2exe as py2exeModule
 from glob import glob
 import fnmatch
 from versionInfo import *
@@ -22,6 +22,15 @@ def isSystemDLL(pathname):
 		return 0
 	return origIsSystemDLL(pathname)
 build_exe.isSystemDLL = isSystemDLL
+
+class py2exe(build_exe.py2exe):
+	"""Overridden py2exe command to run generate.py first.
+	"""
+
+	def run(self):
+		import generate
+		generate.main()
+		build_exe.py2exe.run(self)
 
 def getLocaleDataFiles():
 	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
@@ -62,6 +71,7 @@ setup(
 'Programming Language :: Python',
 'Operating System :: Microsoft :: Windows',
 ],
+	cmdclass={"py2exe": py2exe},
 	windows = [{
 		"script":"nvda.pyw",
 		"uac_info": ("asInvoker", False),
