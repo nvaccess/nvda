@@ -127,4 +127,5 @@ class SmartDictManagerDialog(wx.Dialog):
 
 	def onCloseClick(self, evt):
 		speechDictHandler.smartDicts = list(self.smartDicts)
+		speechDictHandler.reflectVoiceChange()
 		self.Destroy()

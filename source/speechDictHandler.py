@@ -149,8 +149,10 @@ def getFileName(type, synth=synthDriverHandler.getSynth(), name=None):
 	elif type is "builtin": return "builtin.dic"
 	return None
 
-def reflectVoiceChange(synth):
+def reflectVoiceChange(synth=None):
 	"""updates the speech dictionaries reflecting voice change"""
+	if synth == None:
+		synth = synthDriverHandler.getSynth()
 	dictionaries["voice"].load(getFileName("voice", synth))
 	name = "%s-%s" %(synth.name, synth.getVoiceInfoByID(synth.voice).name)
 	del dictionaries["smart"][:]
