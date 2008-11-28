@@ -22,6 +22,8 @@ def changeVoice(synth, voice):
 	speechDictHandler.reflectVoiceChange(synth)
 
 def getSynthList():
+	"""returns list of a tuples (name,description,fileName) of nvda synthesizers, which successfully passed a check.
+"""
 	synthList=[]
 	names = set()
 	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
@@ -31,7 +33,7 @@ def getSynthList():
 		try:
 			synth=__import__(name,globals(),locals(),[]).SynthDriver
 			if synth.check():
-				synthList.append((synth.name,synth.description))
+				synthList.append((synth.name,synth.description,name))
 		except:
 			pass
 	return synthList
