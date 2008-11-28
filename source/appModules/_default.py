@@ -610,7 +610,7 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakMessage(speechText)
 
 	def script_reportCurrentFocus(self,keyPress):
-		focusObject=api.findObjectWithFocus() #getFocusObject()
+		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
 			if scriptHandler.getLastScriptRepeatCount()==0:
 				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
