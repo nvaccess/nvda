@@ -16,6 +16,8 @@ import speechDictHandler
 __path__=['.\\synthDrivers']
 
 _curSynth=None
+#cache
+listOfAllSynthsAndTheirVoices = None
 
 def changeVoice(synth, voice):
 	synth.voice = voice
@@ -37,6 +39,32 @@ def getSynthList():
 		except:
 			pass
 	return synthList
+
+def getListOfAllSynthsAndTheirVoices():
+	"""Returns tuple of a tuples(synthName,tuple(voices)) of all available voices.
+"""
+	global listOfAllSynthsAndTheirVoices
+	if listOfAllSynthsAndTheirVoices is not None:
+		return listOfAllSynthsAndTheirVoices
+	synths = getSynthList()
+	listOfAllSynthsAndTheirVoices = []
+	for s in synths:
+		if s[0] == getSynth().name: 
+			synth = getSynth()
+		else:
+			synth=__import__(s[2],globals(),None,[]).SynthDriver
+			synth = synth()
+		#look all available voices
+		voices = []
+		if synth.availableVoices is not None:
+			for v in synth.availableVoices:
+				voices.append(v.name)
+		if s[0] != getSynth().name: 
+			synth.terminate()
+			del synth
+		listOfAllSynthsAndTheirVoices.append((s[0], tuple(voices)))
+	listOfAllSynthsAndTheirVoices= tuple(listOfAllSynthsAndTheirVoices)
+	return listOfAllSynthsAndTheirVoices
 
 def getSynth():
 	return _curSynth
