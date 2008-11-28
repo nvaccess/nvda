@@ -1165,4 +1165,5 @@ _staticMap={
 	("ATL:EDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("WindowsForms10.RichEdit20W.app.0.378734a",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
+	("WindowsForms10.EDIT.app.0.11c7a8c",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }

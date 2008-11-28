@@ -307,7 +307,7 @@ functionEnd
 
 Function .onGUIEnd
 ; Clean up the temporary folder
-rmdir /R /REBOOTOK $PLUGINSTDIR\${NVDATempDir}
+rmdir /R /REBOOTOK "$PLUGINSDIR\${NVDATempDir}"
 FunctionEnd
 
 ; Uninstall functions
@@ -380,9 +380,9 @@ StrCpy $hmci $0
 ; Checks format support
 SendMessage $hmci 0x0490 0 0 $0
 IntCmp $0 0 nosup
-; if you want mci window to be hidden 
+; if you want mci window to be hidden
 ShowWindow $hmci SW_HIDE
-; you can use "STR:play" or "STR:play repeat", but I saw "repeat" problems with midi files  
+; you can use "STR:play" or "STR:play repeat", but I saw "repeat" problems with midi files 
 SendMessage $hmci 0x0465 0 "STR:play"
 ;SendMessage $hmci ${WM_CLOSE} 0 0
 

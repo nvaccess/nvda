@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2509\n"
+"Project-Id-Version: r2529\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-11-18 08:33+0200\n"
+"PO-Revision-Date: 2008-11-26 09:05+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -57,12 +57,12 @@ msgstr "fontti"
 msgid "point"
 msgstr "piste"
 
-#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:708
+#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:711
 #: textBuffer.py:266 textBuffer.py:318
 msgid "bold"
 msgstr "lihavointi"
 
-#: NVDAObjects\IAccessible\excel.py:147 speech.py:713 textBuffer.py:273
+#: NVDAObjects\IAccessible\excel.py:147 speech.py:716 textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
 msgstr "kursiivi"
@@ -72,7 +72,7 @@ msgstr "kursiivi"
 msgid "underline"
 msgstr "alleviivaus"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:161
+#: NVDAObjects\IAccessible\sysTreeView32.py:162
 msgid "%s items"
 msgstr "%s kohdetta"
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:100 speech.py:256 speech.py:340 speech.py:353
+#: appModules\_default.py:100 speech.py:256 speech.py:341 speech.py:354
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "valittu %s"
@@ -885,6 +885,42 @@ msgstr "Leikepöydällä on paljon tekstiä. Pituus %s merkkiä"
 msgid "Reports the text on the Windows clipboard"
 msgstr "Lukee leikepöydällä olevan tekstin"
 
+#: appModules\_default.py:850
+msgid "Start marked"
+msgstr "Alku merkitty"
+
+#: appModules\_default.py:851
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Merkitsee tarkastelukohdistimen nykyisen paikan kopioitavan tekstin "
+"alkukohdaksi"
+
+#: appModules\_default.py:855
+msgid "No start marker set"
+msgstr "Alkumerkkiä ei asetettu"
+
+#: appModules\_default.py:859
+msgid "The start marker must reside within the same object"
+msgstr "Alkumerkin on oltava samassa objektissa"
+
+#: appModules\_default.py:864
+msgid "Review selection copied to clipboard"
+msgstr "Valinta kopioitu leikepöydälle"
+
+#: appModules\_default.py:866
+msgid "No text to copy"
+msgstr "Ei kopioitavaa tekstiä"
+
+#: appModules\_default.py:869
+msgid ""
+"Retrieves the text from the previously set start marker to the current "
+"position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Hakee tekstin aiemmin asetetusta alkumerkistä tarkastelukohdistimen "
+"nykyiseen paikkaan asti ja kopioi sen leikepöydälle"
+
 #: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "Liitteet"
@@ -1149,29 +1185,29 @@ msgstr "alavko"
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:218 speech.py:587
+#: braille.py:218 speech.py:590
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:220 speech.py:592 speech.py:595
+#: braille.py:220 speech.py:595 speech.py:598
 msgid "level %s"
 msgstr "taso %s"
 
 #: brailleDisplayDrivers\handyTech.py:24
-msgid "HandyTech braille displays"
-msgstr "HandyTech-pistenäytöt"
+msgid "Handy Tech braille displays"
+msgstr "Handy Tech"
 
 #: brailleDisplayDrivers\noBraille.py:7
 msgid "No braille"
 msgstr "Ei pistenäyttöä"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:543
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:546
 msgid "blank"
 msgstr "tyhjä"
 
 #: characterSymbols.py:19
 msgid "null"
-msgstr "nolla"
+msgstr "tyhjä"
 
 #: characterSymbols.py:20 controlTypes.py:193
 msgid "tab"
@@ -1400,7 +1436,7 @@ msgstr "kuplailmoitus"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:190 speech.py:756
+#: controlTypes.py:190 speech.py:759
 msgid "link"
 msgstr "linkki"
 
@@ -1825,12 +1861,12 @@ msgstr "edustan väri"
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:302 speech.py:730 textBuffer.py:287 textBuffer.py:294
+#: controlTypes.py:302 speech.py:733 textBuffer.py:287 textBuffer.py:294
 #: textBuffer.py:324
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:303 speech.py:732 textBuffer.py:326
+#: controlTypes.py:303 speech.py:735 textBuffer.py:326
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -2950,7 +2986,7 @@ msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
-#: pythonConsole.py:61
+#: pythonConsole.py:63
 msgid "NVDA Python Console"
 msgstr "NVDA Python-konsoli"
 
@@ -2962,126 +2998,126 @@ msgstr "tekstin loppu"
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:335
+#: speech.py:336
 msgid "selecting %s"
 msgstr "valitaan %s"
 
-#: speech.py:346
+#: speech.py:347
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: speech.py:348
+#: speech.py:349
 msgid "selection removed"
 msgstr "valinta poistettu"
 
-#: speech.py:581 virtualBuffers_old\MSHTML.py:126
+#: speech.py:584 virtualBuffers_old\MSHTML.py:126
 #: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
 #: virtualBuffers_old\adobe.py:305 virtualBuffers_old\adobe.py:309
 #: virtualBuffers_old\gecko.py:297 virtualBuffers_old\gecko.py:301
 msgid "not %s"
 msgstr "ei %s"
 
-#: speech.py:635 speech.py:639 speech.py:643 speech.py:649 speech.py:655
-#: speech.py:756 virtualBuffers_old\__init__.py:195
+#: speech.py:638 speech.py:642 speech.py:646 speech.py:652 speech.py:658
+#: speech.py:759 virtualBuffers_old\__init__.py:195
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: speech.py:637 virtualBuffers_old\MSHTML.py:258
+#: speech.py:640 virtualBuffers_old\MSHTML.py:258
 #: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:262 virtualBuffers_old\adobe.py:273
 #: virtualBuffers_old\gecko.py:254 virtualBuffers_old\gecko.py:265
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
-#: speech.py:653
+#: speech.py:656
 msgid "in %s"
 msgstr "%s"
 
-#: speech.py:673
+#: speech.py:676
 msgid "page %s"
 msgstr "sivu %s"
 
-#: speech.py:680 textBuffer.py:242 textBuffer.py:310
+#: speech.py:683 textBuffer.py:242 textBuffer.py:310
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: speech.py:682
+#: speech.py:685
 msgid "default style"
 msgstr "oletustyyli"
 
-#: speech.py:702
+#: speech.py:705
 msgid "line %s"
 msgstr "rivi %s"
 
-#: speech.py:708
+#: speech.py:711
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#: speech.py:713
+#: speech.py:716
 msgid "no italic"
 msgstr "ei kursivointia"
 
-#: speech.py:718
+#: speech.py:721
 msgid "no strikethrough"
 msgstr "ei yliviivausta"
 
-#: speech.py:718
+#: speech.py:721
 msgid "strikethrough"
 msgstr "yliviivattu"
 
-#: speech.py:723
+#: speech.py:726
 msgid "not underlined"
 msgstr "ei alleviivausta"
 
-#: speech.py:723
+#: speech.py:726
 msgid "underlined"
 msgstr "alleviivattu"
 
-#: speech.py:734
+#: speech.py:737
 msgid "baseline"
 msgstr "perusviiva"
 
-#: speech.py:742
+#: speech.py:745
 msgid "align left"
 msgstr "tasaus vasemmalla"
 
-#: speech.py:744
+#: speech.py:747
 msgid "align center"
 msgstr "tasaus keskellä"
 
-#: speech.py:746
+#: speech.py:749
 msgid "align right"
 msgstr "tasaus oikealla"
 
-#: speech.py:748
+#: speech.py:751
 msgid "align justify"
 msgstr "tasaus molemmissa reunoissa"
 
-#: speech.py:750
+#: speech.py:753
 msgid "align default"
 msgstr "oletustasaus"
 
-#: speech.py:763
+#: speech.py:766
 msgid "spelling error"
 msgstr "oikeinkirjoitusvirhe"
 
-#: speech.py:765
+#: speech.py:768
 msgid "out of spelling error"
 msgstr "oikeinkirjoitusvirheen loppu"
 
-#: speech.py:779 textBuffer.py:219
+#: speech.py:782 textBuffer.py:219
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: speech.py:788
+#: speech.py:791
 msgid "table with %s columns and %s rows"
 msgstr "taulukko jossa %s saraketta ja %s riviä"
 
-#: speech.py:793
+#: speech.py:796
 msgid "column %s"
 msgstr "sarake %s"
 
-#: speech.py:797
+#: speech.py:800
 msgid "row %s"
 msgstr "rivi %s"
 
@@ -3092,8 +3128,8 @@ msgstr "ei mitään"
 #: synthDrivers\display.py:31
 msgid "A virtual synth which displays text in a window"
 msgstr ""
-"Virtuaalisyntetisaattori, joka näyttää ikkunassa tekstin, jota tavallinen "
-"syntetisaattori lukisi"
+"Virtuaalisyntetisaattori, joka näyttää ikkunassa tavallisen "
+"syntetisaattorin lukeman tekstin"
 
 #: synthDrivers\silence.py:13
 msgid "No speech"

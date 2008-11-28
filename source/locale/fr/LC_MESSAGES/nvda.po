@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2521\n"
+"Project-Id-Version: r2534\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2008-11-21 14:30+0200\n"
+"PO-Revision-Date: 2008-11-27 11:40+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr "fin de ligne"
 msgid "beginning of row"
 msgstr "début de ligne"
 
-#: appModuleHandler.py:164
+#: appModuleHandler.py:165
 msgid "Error in appModule %s"
 msgstr "Erreur dans appmodule %s"
 
@@ -874,6 +874,42 @@ msgstr ""
 msgid "Reports the text on the Windows clipboard"
 msgstr "Annonce le texte dans le presse-papier"
 
+#: appModules\_default.py:850
+msgid "Start marked"
+msgstr "début marqué"
+
+#: appModules\_default.py:851
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr "marque la position actuelle du curseur de revue d'écran "
+"comme début du texte à copier"
+
+#: appModules\_default.py:855
+msgid "No start marker set"
+msgstr "pas de marque de début"
+
+#: appModules\_default.py:859
+msgid "The start marker must reside within the same object"
+msgstr "La marque de début doit être dans le même objet"
+
+#: appModules\_default.py:864
+msgid "Review selection copied to clipboard"
+msgstr "revue de la sélection copiée dans le presse-papier"
+
+#: appModules\_default.py:866
+msgid "No text to copy"
+msgstr "pas de texte à copier"
+
+#: appModules\_default.py:869
+msgid ""
+"Retrieves the text from the previously set start marker to the current "
+"position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Prend le texte depuis la position de départ marquée précédemment "
+"jusqu'à la position actuelle du curseur de revue d'écran "
+"et le copie dans le presse-papier."
+
 #: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "pièces jointes"
@@ -1138,11 +1174,11 @@ msgstr "smnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:218 speech.py:590
+#: braille.py:222 speech.py:590
 msgid "%s of %s"
 msgstr "%s sur %s"
 
-#: braille.py:220 speech.py:595 speech.py:598
+#: braille.py:224 speech.py:595 speech.py:598
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -3740,6 +3776,3 @@ msgstr "i=accès rapide aux éléments de liste"
 #: virtualBuffers_old\adobe.py:317
 msgid "protected %s"
 msgstr "%s protégé"
-
-#~ msgid "level %d"
-#~ msgstr "niveau %d"

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R2515\n"
-"POT-Creation-Date: 2008-11-19 15:32+China Standard Time\n"
-"PO-Revision-Date: 2008-11-19 21:47+0800\n"
+"Project-Id-Version: NVDA R2531\n"
+"POT-Creation-Date: 2008-11-26 07:49+China Standard Time\n"
+"PO-Revision-Date: 2008-11-27 05:19+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "點"
 # textBuffer.py:318
 #: NVDAObjects\IAccessible\excel.py:145
 #: controlTypes.py:297
-#: speech.py:708
+#: speech.py:711
 #: textBuffer.py:266
 #: textBuffer.py:318
 msgid "bold"
@@ -83,7 +83,7 @@ msgstr "粗體"
 # textBuffer.py:273
 # textBuffer.py:320
 #: NVDAObjects\IAccessible\excel.py:147
-#: speech.py:713
+#: speech.py:716
 #: textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
@@ -252,8 +252,8 @@ msgstr "沒有選取文字"
 # textBuffer.py:549
 #: appModules\_default.py:100
 #: speech.py:256
-#: speech.py:340
-#: speech.py:353
+#: speech.py:341
+#: speech.py:354
 #: textBuffer.py:537
 #: textBuffer.py:541
 #: textBuffer.py:543
@@ -990,6 +990,36 @@ msgstr "現有大量文字在剪貼簿之內, 共有 %s 個字元之多"
 msgid "Reports the text on the Windows clipboard"
 msgstr "報出剪貼簿內的文字"
 
+#: appModules\_default.py:850
+msgid "Start marked"
+msgstr "開始位置"
+
+# appModules\_default.py:336
+#: appModules\_default.py:851
+msgid "Marks the current position of the review cursor as the start of text to be copied"
+msgstr "訂定要複製文字的開始位置"
+
+#: appModules\_default.py:855
+msgid "No start marker set"
+msgstr "沒有訂定開始位置"
+
+#: appModules\_default.py:859
+msgid "The start marker must reside within the same object"
+msgstr "訂定的開始位置必須在同一物件中"
+
+# appModules\_default.py:576
+#: appModules\_default.py:864
+msgid "Review selection copied to clipboard"
+msgstr "把區域內的文字複製到剪貼簿"
+
+#: appModules\_default.py:866
+msgid "No text to copy"
+msgstr "沒有文字可複製"
+
+#: appModules\_default.py:869
+msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
+msgstr "把開始位置和目前瀏覽游標位置之間的文字複製到剪貼簿"
+
 # appModules\msimn.py:14
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -1292,20 +1322,20 @@ msgstr "( )"
 # NVDAObjects\IAccessible\__init__.py:416
 # NVDAObjects\IAccessible\sysListView32.py:14
 #: braille.py:218
-#: speech.py:587
+#: speech.py:590
 msgid "%s of %s"
 msgstr "第 %s 項共 %s 項"
 
 # textBuffer.py:213
 #: braille.py:220
-#: speech.py:592
 #: speech.py:595
+#: speech.py:598
 msgid "level %s"
 msgstr "第 %s 級"
 
 #: brailleDisplayDrivers\handyTech.py:24
-msgid "HandyTech braille displays"
-msgstr "Handytech 點字顯示器"
+msgid "Handy Tech braille displays"
+msgstr "Handy tech 點字顯示器"
 
 #: brailleDisplayDrivers\noBraille.py:7
 msgid "No braille"
@@ -1317,7 +1347,7 @@ msgstr "不用點字顯示器"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: speech.py:76
-#: speech.py:543
+#: speech.py:546
 msgid "blank"
 msgstr "空白"
 
@@ -1626,7 +1656,7 @@ msgstr "工具提示"
 
 # controlTypes.py:98
 #: controlTypes.py:190
-#: speech.py:756
+#: speech.py:759
 msgid "link"
 msgstr "連結"
 
@@ -2182,7 +2212,7 @@ msgstr "背景色"
 # textBuffer.py:294
 # textBuffer.py:324
 #: controlTypes.py:302
-#: speech.py:730
+#: speech.py:733
 #: textBuffer.py:287
 #: textBuffer.py:294
 #: textBuffer.py:324
@@ -2191,7 +2221,7 @@ msgstr "上標"
 
 # textBuffer.py:326
 #: controlTypes.py:303
-#: speech.py:732
+#: speech.py:735
 #: textBuffer.py:326
 msgid "subscript"
 msgstr "下標"
@@ -3600,7 +3630,7 @@ msgstr "大寫 %s"
 # textBuffer.py:541
 # textBuffer.py:543
 # textBuffer.py:549
-#: speech.py:335
+#: speech.py:336
 msgid "selecting %s"
 msgstr "選中 %s"
 
@@ -3609,13 +3639,13 @@ msgstr "選中 %s"
 # textBuffer.py:545
 # textBuffer.py:547
 # textBuffer.py:551
-#: speech.py:346
+#: speech.py:347
 msgid "unselecting %s"
 msgstr "取消選中 %s"
 
 # NVDAObjects\IAccessible\excel.py:64
 # controlTypes.py:142
-#: speech.py:348
+#: speech.py:349
 msgid "selection removed"
 msgstr "已選中的都移除了"
 
@@ -3626,7 +3656,7 @@ msgstr "已選中的都移除了"
 # virtualBuffers\IAccessible\MSHTML.py:298
 # virtualBuffers\IAccessible\gecko.py:282
 # virtualBuffers\IAccessible\gecko.py:286
-#: speech.py:581
+#: speech.py:584
 #: virtualBuffers_old\MSHTML.py:126
 #: virtualBuffers_old\MSHTML.py:314
 #: virtualBuffers_old\MSHTML.py:318
@@ -3638,12 +3668,12 @@ msgid "not %s"
 msgstr "沒 %s"
 
 # virtualBuffers\__init__.py:193
-#: speech.py:635
-#: speech.py:639
-#: speech.py:643
-#: speech.py:649
-#: speech.py:655
-#: speech.py:756
+#: speech.py:638
+#: speech.py:642
+#: speech.py:646
+#: speech.py:652
+#: speech.py:658
+#: speech.py:759
 #: virtualBuffers_old\__init__.py:195
 msgid "out of %s"
 msgstr "離開 %s"
@@ -3652,7 +3682,7 @@ msgstr "離開 %s"
 # virtualBuffers\IAccessible\MSHTML.py:242
 # virtualBuffers\IAccessible\MSHTML.py:249
 # virtualBuffers\IAccessible\gecko.py:250
-#: speech.py:637
+#: speech.py:640
 #: virtualBuffers_old\MSHTML.py:258
 #: virtualBuffers_old\MSHTML.py:261
 #: virtualBuffers_old\MSHTML.py:268
@@ -3670,123 +3700,123 @@ msgstr "有 %s 個項目"
 # virtualBuffers\IAccessible\MSHTML.py:298
 # virtualBuffers\IAccessible\gecko.py:282
 # virtualBuffers\IAccessible\gecko.py:286
-#: speech.py:653
+#: speech.py:656
 msgid "in %s"
 msgstr "在 %s"
 
 # textBuffer.py:207
-#: speech.py:673
+#: speech.py:676
 msgid "page %s"
 msgstr "第 %s 頁"
 
 # textBuffer.py:242
 # textBuffer.py:310
-#: speech.py:680
+#: speech.py:683
 #: textBuffer.py:242
 #: textBuffer.py:310
 msgid "style %s"
 msgstr "樣式 %s"
 
 # appModuleHandler.py:207
-#: speech.py:682
+#: speech.py:685
 msgid "default style"
 msgstr "預設樣式"
 
 # textBuffer.py:213
-#: speech.py:702
+#: speech.py:705
 msgid "line %s"
 msgstr "第 %s 行"
 
 # textBuffer.py:268
-#: speech.py:708
+#: speech.py:711
 msgid "no bold"
 msgstr "沒有粗體"
 
 # textBuffer.py:275
-#: speech.py:713
+#: speech.py:716
 msgid "no italic"
 msgstr "沒有斜體"
 
 # NVDAObjects\IAccessible\excel.py:64
-#: speech.py:718
+#: speech.py:721
 msgid "no strikethrough"
 msgstr "沒有刪除線"
 
 # NVDAObjects\IAccessible\excel.py:64
-#: speech.py:718
+#: speech.py:721
 msgid "strikethrough"
 msgstr "刪除線"
 
 # textBuffer.py:282
-#: speech.py:723
+#: speech.py:726
 msgid "not underlined"
 msgstr "沒有加底線"
 
 # NVDAObjects\IAccessible\excel.py:108
 # textBuffer.py:280
 # textBuffer.py:322
-#: speech.py:723
+#: speech.py:726
 msgid "underlined"
 msgstr "已加底線"
 
 # characterSymbols.py:50
-#: speech.py:734
+#: speech.py:737
 msgid "baseline"
 msgstr "基線"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:742
+#: speech.py:745
 msgid "align left"
 msgstr "靠左對齊"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:744
+#: speech.py:747
 msgid "align center"
 msgstr "置中對齊"
 
 # NVDAObjects\IAccessible\winword.py:278
-#: speech.py:746
+#: speech.py:749
 msgid "align right"
 msgstr "靠右對齊"
 
-#: speech.py:748
+#: speech.py:751
 msgid "align justify"
 msgstr "左右對齊"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:750
+#: speech.py:753
 msgid "align default"
 msgstr "預設排列"
 
-#: speech.py:763
+#: speech.py:766
 msgid "spelling error"
 msgstr "拼錯字"
 
-#: speech.py:765
+#: speech.py:768
 msgid "out of spelling error"
 msgstr "離開拼錯字"
 
 # textBuffer.py:219
-#: speech.py:779
+#: speech.py:782
 #: textBuffer.py:219
 msgid "out of table"
 msgstr "離開表格"
 
 # textBuffer.py:225
-#: speech.py:788
+#: speech.py:791
 msgid "table with %s columns and %s rows"
 msgstr "表格有 %s 列和 %s 行"
 
 # textBuffer.py:236
-#: speech.py:793
+#: speech.py:796
 msgid "column %s"
 msgstr "第 %s 列"
 
 # textBuffer.py:231
-#: speech.py:797
+#: speech.py:800
 msgid "row %s"
 msgstr "第 %s 行"
 

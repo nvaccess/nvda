@@ -86,8 +86,9 @@ def moduleExists(name):
 	@returns: True if it exists, false otherwise.
 	@rtype: bool
 	"""
-	res=os.path.isfile('appModules/%s.py'%name)
-	log.debug("Does appModules/%s.py exist: %s"%(name,res))
+	fname='appModules/%s'%name
+	res=os.path.isfile('%s.pyc'%fname) or os.path.isfile('%s.py'%fname)
+	log.debug("Does appModules/%s.py{c,} exist: %s"%(name,res))
 	return res
 
 def getKeyMapFileName(appName,layout):
