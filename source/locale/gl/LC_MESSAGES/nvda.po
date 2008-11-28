@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2501\n"
-"POT-Creation-Date: 2008-11-14 16:33+Hora estándar romance\n"
-"PO-Revision-Date: 2008-11-14 16:41+0100\n"
+"Project-Id-Version: r2539\n"
+"POT-Creation-Date: 2008-11-27 15:25+Hora estándar romance\n"
+"PO-Revision-Date: 2008-11-27 16:15+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: ga <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -15,21 +15,6 @@ msgstr ""
 "X-Poedit-Language: Galician\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-
-#: NVDAObjects\IAccessible\__init__.py:73
-#: speech.py:585
-msgid "level %s"
-msgstr "nivel %s"
-
-#: NVDAObjects\IAccessible\__init__.py:79
-#: NVDAObjects\IAccessible\__init__.py:710
-#: NVDAObjects\IAccessible\sysListView32.py:224
-msgid "%s of %s"
-msgstr "%s de %s"
-
-#: NVDAObjects\IAccessible\__init__.py:85
-msgid "contains %s items"
-msgstr "contén %s elementos"
 
 #: NVDAObjects\IAccessible\edit.py:528
 msgid "unknown"
@@ -79,14 +64,14 @@ msgstr "ponto"
 
 #: NVDAObjects\IAccessible\excel.py:145
 #: controlTypes.py:297
-#: speech.py:702
+#: speech.py:711
 #: textBuffer.py:266
 #: textBuffer.py:318
 msgid "bold"
 msgstr "negriña"
 
 #: NVDAObjects\IAccessible\excel.py:147
-#: speech.py:707
+#: speech.py:716
 #: textBuffer.py:273
 #: textBuffer.py:320
 msgid "italic"
@@ -100,18 +85,9 @@ msgstr "cursiva"
 msgid "underline"
 msgstr "subliñado"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:150
-#: NVDAObjects\JAB\__init__.py:260
-msgid "%d of %d"
-msgstr "%d de %d"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:159
+#: NVDAObjects\IAccessible\sysTreeView32.py:162
 msgid "%s items"
 msgstr "%s elementos"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:165
-msgid "level %d"
-msgstr "nivel %d"
 
 #: NVDAObjects\IAccessible\winword.py:317
 #: NVDAObjects\IAccessible\winword.py:333
@@ -166,7 +142,7 @@ msgstr "voz"
 msgid "variant"
 msgstr "variante"
 
-#: appModuleHandler.py:164
+#: appModuleHandler.py:165
 msgid "Error in appModule %s"
 msgstr "Erro no módulo app %s"
 
@@ -179,8 +155,8 @@ msgstr "Erro no módulo app %s"
 #: appModules\_default.py:718
 #: appModules\_default.py:728
 #: appModules\_default.py:738
-#: appModules\winamp.py:74
-#: appModules\winamp.py:84
+#: appModules\winamp.py:75
+#: appModules\winamp.py:85
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
@@ -200,8 +176,8 @@ msgstr "ativado"
 #: appModules\_default.py:715
 #: appModules\_default.py:725
 #: appModules\_default.py:735
-#: appModules\winamp.py:76
-#: appModules\winamp.py:86
+#: appModules\winamp.py:77
+#: appModules\winamp.py:87
 #: gui\settingsDialogs.py:457
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
@@ -245,9 +221,9 @@ msgid "no selection"
 msgstr "sen seleción"
 
 #: appModules\_default.py:100
-#: speech.py:242
-#: speech.py:326
-#: speech.py:339
+#: speech.py:256
+#: speech.py:341
+#: speech.py:354
 #: textBuffer.py:537
 #: textBuffer.py:541
 #: textBuffer.py:543
@@ -789,6 +765,34 @@ msgstr "O portapapeis contén unha porción grande de texto. É de %s caracteres
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto no portapapeis de Windows"
 
+#: appModules\_default.py:850
+msgid "Start marked"
+msgstr "Comezo marcado"
+
+#: appModules\_default.py:851
+msgid "Marks the current position of the review cursor as the start of text to be copied"
+msgstr "Marca a posición actual do cursor de revisión como o comezo do texto para seren copiado"
+
+#: appModules\_default.py:855
+msgid "No start marker set"
+msgstr "Non se puxo marca de comezo"
+
+#: appModules\_default.py:859
+msgid "The start marker must reside within the same object"
+msgstr "A marca de comezo debe residir dentro do mesmo obxecto"
+
+#: appModules\_default.py:864
+msgid "Review selection copied to clipboard"
+msgstr "Selección de revisión copiada para o portapapeis"
+
+#: appModules\_default.py:866
+msgid "No text to copy"
+msgstr "Non hai texto para copiar"
+
+#: appModules\_default.py:869
+msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
+msgstr "Colle o texto da marca de comezo previamente posta na posición actual do cursor de revisión e cópiao no portapapeis"
+
 #: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "adxuntos"
@@ -1055,13 +1059,20 @@ msgstr "smn"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:220
-msgid "lvl %s"
-msgstr "lvl %s"
+#: braille.py:222
+#: speech.py:590
+msgid "%s of %s"
+msgstr "%s de %s"
+
+#: braille.py:224
+#: speech.py:595
+#: speech.py:598
+msgid "level %s"
+msgstr "nivel %s"
 
 #: brailleDisplayDrivers\handyTech.py:24
-msgid "HandyTech braille displays"
-msgstr "Liñas Braille HandyTech"
+msgid "Handy Tech braille displays"
+msgstr "Liñas braille Handy Tech"
 
 #: brailleDisplayDrivers\noBraille.py:7
 msgid "No braille"
@@ -1069,8 +1080,8 @@ msgstr "Sen braille"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:75
-#: speech.py:529
+#: speech.py:76
+#: speech.py:546
 msgid "blank"
 msgstr "en branco"
 
@@ -1320,7 +1331,7 @@ msgid "tool tip"
 msgstr "consello"
 
 #: controlTypes.py:190
-#: speech.py:750
+#: speech.py:759
 msgid "link"
 msgstr "liga"
 
@@ -1750,7 +1761,7 @@ msgid "background color"
 msgstr "color do fondo"
 
 #: controlTypes.py:302
-#: speech.py:724
+#: speech.py:733
 #: textBuffer.py:287
 #: textBuffer.py:294
 #: textBuffer.py:324
@@ -1758,7 +1769,7 @@ msgid "superscript"
 msgstr "superíndice"
 
 #: controlTypes.py:303
-#: speech.py:726
+#: speech.py:735
 #: textBuffer.py:326
 msgid "subscript"
 msgstr "subíndice"
@@ -2857,7 +2868,7 @@ msgstr "Erro no keyboardHandler.internal_keyUpEvent"
 msgid "%s cursor"
 msgstr "%s cursor"
 
-#: pythonConsole.py:61
+#: pythonConsole.py:63
 msgid "NVDA Python Console"
 msgstr "Consola de python para NVDA"
 
@@ -2865,23 +2876,23 @@ msgstr "Consola de python para NVDA"
 msgid "end of text"
 msgstr "remate do texto"
 
-#: speech.py:167
+#: speech.py:168
 msgid "cap %s"
 msgstr "maius %s"
 
-#: speech.py:321
+#: speech.py:336
 msgid "selecting %s"
 msgstr "seleccionando %s"
 
-#: speech.py:332
+#: speech.py:347
 msgid "unselecting %s"
 msgstr "Deseleccionando %s"
 
-#: speech.py:334
+#: speech.py:349
 msgid "selection removed"
 msgstr "selección eliminada"
 
-#: speech.py:571
+#: speech.py:584
 #: virtualBuffers\MSHTML.py:123
 #: virtualBuffers\MSHTML.py:302
 #: virtualBuffers\MSHTML.py:306
@@ -2899,12 +2910,12 @@ msgstr "selección eliminada"
 msgid "not %s"
 msgstr "non %s"
 
-#: speech.py:629
-#: speech.py:633
-#: speech.py:637
-#: speech.py:643
-#: speech.py:649
-#: speech.py:750
+#: speech.py:638
+#: speech.py:642
+#: speech.py:646
+#: speech.py:652
+#: speech.py:658
+#: speech.py:759
 #: virtualBuffers_new\__init__.py:73
 #: virtualBuffers_new\__init__.py:81
 #: virtualBuffers_new\__init__.py:85
@@ -2912,7 +2923,7 @@ msgstr "non %s"
 msgid "out of %s"
 msgstr "fora de %s"
 
-#: speech.py:631
+#: speech.py:640
 #: virtualBuffers\MSHTML.py:247
 #: virtualBuffers\MSHTML.py:250
 #: virtualBuffers\MSHTML.py:257
@@ -2931,103 +2942,103 @@ msgstr "fora de %s"
 msgid "with %s items"
 msgstr "con %s elementos"
 
-#: speech.py:647
+#: speech.py:656
 #: virtualBuffers_new\__init__.py:83
 msgid "in %s"
 msgstr "en %s"
 
-#: speech.py:667
+#: speech.py:676
 msgid "page %s"
 msgstr "páxina %s"
 
-#: speech.py:674
+#: speech.py:683
 #: textBuffer.py:242
 #: textBuffer.py:310
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:676
+#: speech.py:685
 msgid "default style"
 msgstr "estilo predeterminado"
 
-#: speech.py:696
+#: speech.py:705
 msgid "line %s"
 msgstr "líña %s"
 
-#: speech.py:702
+#: speech.py:711
 msgid "no bold"
 msgstr "non hai negriñas"
 
-#: speech.py:707
+#: speech.py:716
 msgid "no italic"
 msgstr "non hai cursivas"
 
-#: speech.py:712
+#: speech.py:721
 msgid "no strikethrough"
 msgstr "non hai tachado"
 
-#: speech.py:712
+#: speech.py:721
 msgid "strikethrough"
 msgstr "Tachado"
 
-#: speech.py:717
+#: speech.py:726
 msgid "not underlined"
 msgstr "non hai subliñado"
 
-#: speech.py:717
+#: speech.py:726
 msgid "underlined"
 msgstr "subliñado"
 
-#: speech.py:728
+#: speech.py:737
 msgid "baseline"
 msgstr "liña de base"
 
-#: speech.py:736
+#: speech.py:745
 msgid "align left"
 msgstr "aliñamento á esquerda"
 
-#: speech.py:738
+#: speech.py:747
 msgid "align center"
 msgstr "aliñamento ó centro"
 
-#: speech.py:740
+#: speech.py:749
 msgid "align right"
 msgstr "aliñamento á dereita"
 
-#: speech.py:742
+#: speech.py:751
 msgid "align justify"
 msgstr "aliñamento xustificar"
 
-#: speech.py:744
+#: speech.py:753
 msgid "align default"
 msgstr "aliñamento predeterminado"
 
-#: speech.py:757
+#: speech.py:766
 msgid "spelling error"
 msgstr "erro de ortografía"
 
-#: speech.py:759
+#: speech.py:768
 msgid "out of spelling error"
 msgstr "Fóra do erro de ortografía"
 
-#: speech.py:773
+#: speech.py:782
 #: textBuffer.py:219
 msgid "out of table"
 msgstr "fora da táboa"
 
-#: speech.py:782
+#: speech.py:791
 msgid "table with %s columns and %s rows"
 msgstr "táboa con %s columnas e %s filas"
 
-#: speech.py:787
+#: speech.py:796
 msgid "column %s"
 msgstr "columna %s"
 
-#: speech.py:791
+#: speech.py:800
 msgid "row %s"
 msgstr "fila %s"
 
-#: synthDrivers\_espeak.py:290
+#: synthDrivers\_espeak.py:294
 msgid "none"
 msgstr "non"
 
@@ -3166,7 +3177,7 @@ msgstr ""
 
 #: virtualBufferHandler.py:93
 msgid "browse mode"
-msgstr "modo examinar"
+msgstr "modo navegación"
 
 #: virtualBufferHandler.py:93
 msgid "focus mode"
@@ -3742,9 +3753,4 @@ msgstr "l=tecla rápida para lista"
 #: virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
 msgstr "i=tecla rápida para elemento de lista"
-
-#~ msgid "Could not load default module keyMap"
-#~ msgstr "non se puido cargá-lo módulo de mapa de teclado predeterminado"
-#~ msgid "Could not load default module "
-#~ msgstr "non se puido cargá-lo módulo predeterminado"
 

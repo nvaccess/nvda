@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2518\n"
+"Project-Id-Version: r2538\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2008-11-20 16:55+Central Europe Standard Time\n"
+"PO-Revision-Date: 2008-11-28 15:50+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgstr "koniec riadku"
 msgid "beginning of row"
 msgstr "začiatok riadku"
 
-#: appModuleHandler.py:164
+#: appModuleHandler.py:165
 msgid "Error in appModule %s"
 msgstr "Chyba v aplikačnom module \"%s\"."
 
@@ -920,6 +920,42 @@ msgstr "V schránke je veľké množstvo textu; %s znakov"
 msgid "Reports the text on the Windows clipboard"
 msgstr "Prečíta obsah schránky windows"
 
+#: appModules\_default.py:850
+msgid "Start marked"
+msgstr "začiatok označený"
+
+#: appModules\_default.py:851
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Označí aktuálnu pozíciu prehliadacieho kurzora ako začiatok textu, "
+"ktorý bude skopírovaný do schránky"
+
+#: appModules\_default.py:855
+msgid "No start marker set"
+msgstr "nie je označený začiatok"
+
+#: appModules\_default.py:859
+msgid "The start marker must reside within the same object"
+msgstr "Začiatok musí byť pozíciou textu tohoto istého objektu"
+
+#: appModules\_default.py:864
+msgid "Review selection copied to clipboard"
+msgstr "Výber prehliadacieho kurzora skopírovaný do schránky"
+
+#: appModules\_default.py:866
+msgid "No text to copy"
+msgstr "Nie je vybraný žiadny text na skopírovanie"
+
+#: appModules\_default.py:869
+msgid ""
+"Retrieves the text from the previously set start marker to the current "
+"position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Získa text od pred tým nastavenej počiatočnej značky po aktuálnu pozíciu a "
+"skopíruje ho do schránky windows."
+
 #: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "Prílohy"
@@ -1187,11 +1223,11 @@ msgstr "pmnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:218 speech.py:590
+#: braille.py:222 speech.py:590
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: braille.py:220 speech.py:595
+#: braille.py:224 speech.py:595
 #: speech.py:598
 msgid "level %s"
 msgstr "úroveň %s"
@@ -2810,7 +2846,7 @@ msgstr "Prekladová &tabuľka"
 
 #: gui\settingsDialogs.py:830
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr ""
+msgstr "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom"
 
 #: gui\settingsDialogs.py:835
 msgid "Cursor blink rate (ms)"
