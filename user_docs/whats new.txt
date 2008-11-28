@@ -55,6 +55,7 @@ Changes since 0.6 P2:
 * fix: Some new text that was previously not spoken in text console applications (such as some text adventure games) is now spoken.
 * new: Added the ability to copy text to the clipboard using the review cursor. NVDA+f9 sets the start marker to the current position of the review cursor. NVDA+f10 retrieves the text between the start marker and the current position of the review cursor and copies it to the clipboard. (#240)
 * new: Added support for some edit controls in pinacle tv software.
+* fix: NVDA now ignores focus changes in background windows. Previously, a background focus change could be treated as if the real focus changed.
 
 
 Changes since 0.6 P1:

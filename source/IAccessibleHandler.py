@@ -799,6 +799,11 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	windowClassName=winUser.getClassName(window)
 	if windowClassName in ("Progman","Shell_TrayWnd"):
 		return False
+	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
+	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
+	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
+		# This is a focus event from a background window, so ignore it.
+		return False
 	oldFocus=liveNVDAObjectTable.get('focus',None)
 	#If the existing focus has the same win event params as these, then ignore this event
 	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
