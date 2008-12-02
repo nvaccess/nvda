@@ -764,14 +764,15 @@ class AppModule(appModuleHandler.AppModule):
 		ui.message(_("Pass next key through"))
  	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
 
-	def script_speakApplicationName(self,keyPress):
+	def script_reportAppModuleInfo(self,keyPress):
 		focus=api.getFocusObject()
-		s=appModuleHandler.getAppNameFromProcessID(focus.windowProcessID,True)
-		speech.speakMessage(_("Currently running application is %s.")%s)
+		appName=appModuleHandler.getAppNameFromProcessID(focus.windowProcessID,True)
+		message = _("Currently running application is %s") % appName
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			speech.speakMessage(_("and currently loaded module is %s") % mod.appModuleName)
-	script_speakApplicationName.__doc__ = _("Speaks filename of the active application along with name of the currently loaded appmodule")
+			message += _(" and currently loaded module is %s") % mod.appModuleName.split(".")[0]
+		ui.message(message)
+	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
 
 	def script_activateGeneralSettingsDialog(self,keyPress):
 		mainFrame.onGeneralSettingsCommand(None)
