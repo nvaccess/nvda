@@ -779,30 +779,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
-		if self.IAccessibleRole in [IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP,IAccessibleHandler.ROLE_SYSTEM_MENUBAR]:
-			parent=self.parent
-			if parent and parent.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
-				speech.cancelSpeech()
 		Window.event_gainFocus(self)
-
-	def event_menuStart(self):
-		focusObject=api.getFocusObject()
-		if focusObject.role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUBAR):
-			speech.cancelSpeech()
-			eventHandler.executeEvent("gainFocus", self)
-
-	def event_menuEnd(self):
-		oldFocus=api.getFocusObject()
-		if self.IAccessibleRole in (IAccessibleHandler.ROLE_SYSTEM_MENUITEM,IAccessibleHandler.ROLE_SYSTEM_MENUPOPUP) and self!=oldFocus:
-			return
-		api.processPendingEvents()
-		focusObject=api.getFocusObject()
-		if focusObject!=self and (focusObject.role not in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_POPUPMENU) or focusObject!=oldFocus) and focusObject!=api.getDesktopObject():
-			return
-		speech.cancelSpeech()
-		obj=api.findObjectWithFocus()
-		IAccessibleHandler.processFocusNVDAEvent(obj,needsFocusedState=False)
-
 
 	def event_selection(self):
 		return self.event_stateChange()
