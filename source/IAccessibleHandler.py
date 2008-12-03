@@ -926,28 +926,33 @@ def processDestroyWinEvent(window,objectID,childID):
 	except KeyError:
 		pass
 
-def processMenuWinEvent(eventID, window, objectID, childID):
-	"""Process a menu win event.
-	This function is only called if there was no valid focus in this pump.
-	For menuStart events, focus is directed to the menu (if appropriate).
-	For menuEnd events, the focus is found and an event generated for it (if appropriate).
+def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
+	"""Process a menuStart win event.
+	@postcondition: Focus will be directed to the menu if appropriate.
 	"""
+	if validFocus and liveNVDAObjectTable["focus"].IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
+		# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
+		return
 	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 	if not NVDAEvent:
 		return
 	eventName, obj = NVDAEvent
-	if eventID in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
-		# menuStart
-		if obj.IAccessibleRole != ROLE_SYSTEM_MENUPOPUP:
-			# menuStart on anything other than a menu is silly.
-			return
-		processFocusNVDAEvent(obj, needsFocusedState=False)
-	else:
-		# menuEnd
-		# A menuEnd has been received with no focus event, so we probably need to find the focus and fake it.
-		# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
-		import wx
-		wx.CallLater(50, _menuEndFakeFocus, liveNVDAObjectTable["focus"])
+	if obj.IAccessibleRole != ROLE_SYSTEM_MENUPOPUP:
+		# menuStart on anything other than a menu is silly.
+		return
+	processFocusNVDAEvent(obj, needsFocusedState=False)
+
+def processMenuEndWinEvent(eventID, window, objectID, childID, validFocus):
+	"""Process a menuEnd win event.
+	@postcondition: The focus will be found and an event generated for it if appropriate.
+	"""
+	if validFocus:
+		# A valid gainFocus should always override a menuEnd event.
+		return
+	# A menuEnd has been received with no focus event, so we probably need to find the focus and fake it.
+	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
+	import wx
+	wx.CallLater(50, _menuEndFakeFocus, liveNVDAObjectTable["focus"])
 
 def _menuEndFakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
@@ -1010,9 +1015,12 @@ def pumpAll():
 		if processFocusWinEvent(*(focusWinEvent[1:])):
 			validFocus=True
 			break
-	if not validFocus and menuEvent:
-		# There was no valid focus event, so try the menu event as a last resort.
-		processMenuWinEvent(*menuEvent)
+	if menuEvent:
+		# Try the menu event as a last resort.
+		if menuEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
+			processMenuStartWinEvent(*menuEvent, validFocus=validFocus)
+		else:
+			processMenuEndWinEvent(*menuEvent, validFocus=validFocus)
 
 def terminate():
 	for handle in winEventHookIDs:
