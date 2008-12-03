@@ -61,7 +61,7 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 
   ;Start Menu Folder Page Configuration
 Var StartMenuFolder
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM" 
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${PRODUCT}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
 
@@ -223,11 +223,17 @@ pop $oldNVDAWindowHandle
 IntCmp $1 1 +1 Continue
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
+IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
+GetFullPathName /SHORT $0 "$APPDATA\nvda"
+Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m -c $0"
+goto Running
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
+Running:
 Banner::destroy
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
-Strcmp $0 "" +3 +1
-MessageBox MB_OK "A previous version of NVDA has been found on your system, it will be uninstalled before continuing."
+Strcmp $0 "" +4 +1
+IfFileExists "$0" +1 +3
+MessageBox MB_OK $(Msg_UninsPrev)
 Exec "$0"
 FunctionEnd
 
@@ -288,7 +294,7 @@ intcmp $1 1 +1 End
 intcmp $2 $oldNVDAWindowHandle End +1
 System::Call 'user32.dll::GetWindowThreadProcessId(i r2, *i .r3) i .r4'
 System::Call 'kernel32.dll::OpenProcess(i 1048576, i 0, i r3) i .r4'
-System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)' 
+System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)'
 System::Call 'kernel32.dll::WaitForSingleObject(i r4, i 10000) i .r5'
 end:
 FunctionEnd
@@ -386,7 +392,7 @@ SendMessage $hmci 0x0490 0 0 $0
 IntCmp $0 0 nosup
 ; if you want mci window to be hidden
 ShowWindow $hmci SW_HIDE
-; you can use "STR:play" or "STR:play repeat", but I saw "repeat" problems with midi files 
+; you can use "STR:play" or "STR:play repeat", but I saw "repeat" problems with midi files
 SendMessage $hmci 0x0465 0 "STR:play"
 ;SendMessage $hmci ${WM_CLOSE} 0 0
 
