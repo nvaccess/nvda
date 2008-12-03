@@ -225,6 +225,10 @@ MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
 Banner::destroy
+ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
+Strcmp $0 "" +3 +1
+MessageBox MB_OK "A previous version of NVDA has been found on your system, it will be uninstalled before continuing."
+Exec "$0"
 FunctionEnd
 
 Section "install" section_install
