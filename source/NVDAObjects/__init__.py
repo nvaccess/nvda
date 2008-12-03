@@ -644,7 +644,6 @@ Tries to force this object to take the focus.
 
 	def event_focusEntered(self):
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
-			speech.cancelSpeech()
 			return
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
 
@@ -653,8 +652,6 @@ Tries to force this object to take the focus.
 This code is executed if a gain focus event is received by this object.
 """
 		api.setNavigatorObject(self)
-		if self.role == controlTypes.ROLE_POPUPMENU:
-			speech.cancelSpeech()
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 
