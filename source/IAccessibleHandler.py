@@ -176,6 +176,8 @@ import config
 import mouseHandler
 import controlTypes
 
+MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
+
 class OrderedWinEventLimiter(object):
 	"""Collects and limits winEvents based on whether they are focus changes, or just generic (all other ones).
 
@@ -193,6 +195,7 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache={}
 		self._eventHeap=[]
 		self._eventCounter=itertools.count()
+		self._lastMenuEvent=None
 
 	def addEvent(self,eventID,window,objectID,childID):
 		"""Adds a winEvent to the limiter.
@@ -206,6 +209,9 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
+			if objectID in (OBJID_SYSMENU,OBJID_MENU) and childID==0:
+				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
+				return
 			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 			return
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
@@ -223,6 +229,11 @@ class OrderedWinEventLimiter(object):
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
+		elif eventID in MENU_EVENTIDS:
+			if self._lastMenuEvent:
+				# We only care about the most recent menu event.
+				del self._genericEventCache[self._lastMenuEvent]
+			self._lastMenuEvent=(eventID,window,objectID,childID)
 		self._genericEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 
 	def flushEvents(self):
@@ -230,6 +241,7 @@ class OrderedWinEventLimiter(object):
 		"""
 		g=self._genericEventCache
 		self._genericEventCache={}
+		self._lastMenuEvent=None
 		for k,v in g.iteritems():
 			heapq.heappush(self._eventHeap,(v,)+k)
 		f=self._focusEventCache
@@ -914,6 +926,40 @@ def processDestroyWinEvent(window,objectID,childID):
 	except KeyError:
 		pass
 
+def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
+	"""Process a menuStart win event.
+	@postcondition: Focus will be directed to the menu if appropriate.
+	"""
+	if validFocus and liveNVDAObjectTable["focus"].IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
+		# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
+		return
+	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
+	if not NVDAEvent:
+		return
+	eventName, obj = NVDAEvent
+	if obj.IAccessibleRole != ROLE_SYSTEM_MENUPOPUP:
+		# menuStart on anything other than a menu is silly.
+		return
+	processFocusNVDAEvent(obj, needsFocusedState=False)
+
+def processMenuEndWinEvent(eventID, window, objectID, childID, validFocus):
+	"""Process a menuEnd win event.
+	@postcondition: The focus will be found and an event generated for it if appropriate.
+	"""
+	if validFocus:
+		# A valid gainFocus should always override a menuEnd event.
+		return
+	# A menuEnd has been received with no focus event, so we probably need to find the focus and fake it.
+	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
+	import wx
+	wx.CallLater(50, _menuEndFakeFocus, liveNVDAObjectTable["focus"])
+
+def _menuEndFakeFocus(oldFocus):
+	if oldFocus is not api.getFocusObject():
+		# The focus has changed - no need to fake it.
+		return
+	processFocusNVDAEvent(api.findObjectWithFocus())
+
 #Register internal object event with IAccessible
 cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
@@ -943,6 +989,8 @@ def pumpAll():
 	#Receive all the winEvents from the limiter for this cycle
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
+	validFocus=False
+	menuEvent=None
 	for winEvent in winEvents:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
@@ -951,17 +999,28 @@ def pumpAll():
 		else:
 			for focusWinEvent in reversed(focusWinEvents):
 				if processFocusWinEvent(*(focusWinEvent[1:])):
+					validFocus=True
 					break
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
 				processForegroundWinEvent(*(winEvent[1:]))
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
+			elif winEvent[0] in MENU_EVENTIDS:
+				# Handle this later.
+				menuEvent=winEvent
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
 		if processFocusWinEvent(*(focusWinEvent[1:])):
+			validFocus=True
 			break
+	if menuEvent:
+		# Try the menu event as a last resort.
+		if menuEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
+			processMenuStartWinEvent(*menuEvent, validFocus=validFocus)
+		else:
+			processMenuEndWinEvent(*menuEvent, validFocus=validFocus)
 
 def terminate():
 	for handle in winEventHookIDs:
