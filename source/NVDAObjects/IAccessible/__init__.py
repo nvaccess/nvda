@@ -1053,6 +1053,11 @@ class MenuItem(IAccessible):
 		else:
 			return None
 
+	def event_gainFocus(self):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super(MenuItem, self).event_gainFocus()
+
 ###class mappings
 
 _staticMap={
