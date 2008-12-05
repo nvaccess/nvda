@@ -844,7 +844,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(label)
 		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
-		sizer.Add(self.cursorBlinkRateEdit)
+		sizer.Add(self.messageTimeoutEdit)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 	def postInit(self):
