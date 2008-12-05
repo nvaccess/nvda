@@ -707,8 +707,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_alert(self):
 		speech.cancelSpeech()
-		speech.speakObject(self)
-		self.speakDescendantObjects()
+		speech.speakObject(self, reason=speech.REASON_FOCUS)
+		for child in self.recursiveDescendants:
+			if controlTypes.STATE_FOCUSABLE in child.states:
+				speech.speakObject(child, reason=speech.REASON_FOCUS)
 
 	def event_caret(self):
 		super(IAccessible, self).event_caret()
