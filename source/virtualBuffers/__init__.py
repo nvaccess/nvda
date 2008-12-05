@@ -28,6 +28,7 @@ import virtualBufferHandler
 import eventHandler
 import braille
 import queueHandler
+from logHandler import log
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -218,6 +219,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		api.setReviewPosition(info)
 		obj = info.NVDAObjectAtStart
+		if not obj:
+			log.debugWarning("Invalid NVDAObjectAtStart")
+			return
 		if obj == self.rootNVDAObject:
 			return
 		obj.scrollIntoView()
