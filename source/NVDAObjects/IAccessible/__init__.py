@@ -860,8 +860,8 @@ class Dialog(IAccessible):
 			if childRole in (controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
 				textList.append(cls.getDialogText(children[index]))
 				continue
-			#For now we get text from static text, readonly edit fields, and labels
-			if childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL) or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates):
+			#For now we get text from non-focusable static text, readonly edit fields, and labels
+			if (childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL) or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates)) and controlTypes.STATE_FOCUSABLE not in childStates:
 				#We should ignore text objects directly after a grouping object as its probably the grouping's description
 				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
 					continue
