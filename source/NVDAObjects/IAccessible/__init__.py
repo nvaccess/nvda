@@ -862,22 +862,23 @@ class Dialog(IAccessible):
 			if childRole in (controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
 				textList.append(cls.getDialogText(children[index]))
 				continue
-			#For now we get text from non-focusable static text, readonly edit fields, and labels
-			if (childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL) or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates)) and controlTypes.STATE_FOCUSABLE not in childStates:
-				#We should ignore text objects directly after a grouping object as its probably the grouping's description
-				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
-					continue
-				#Like the last one, but a graphic might be before the grouping's description
-				if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
-					continue
-				childName=children[index].name
-				#Ignore object's that have another object directly after them with the same name, this object is probably just a label for that object. But, graphics, Windows, static text and separators are ok
-				if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
-					continue
-				childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
-				if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
-					childText=children[index].basicText
-				textList.append(childText)
+			# We only want text from non-focusable static text, readonly edit fields, and labels
+			if not ((childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL) or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates)) and controlTypes.STATE_FOCUSABLE not in childStates):
+				continue
+			#We should ignore text objects directly after a grouping object as its probably the grouping's description
+			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
+				continue
+			#Like the last one, but a graphic might be before the grouping's description
+			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
+				continue
+			childName=children[index].name
+			#Ignore object's that have another object directly after them with the same name, this object is probably just a label for that object. But, graphics, Windows, static text and separators are ok
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
+				continue
+			childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
+			if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
+				childText=children[index].basicText
+			textList.append(childText)
 		return " ".join(textList)
 
 	def _get_description(self):
