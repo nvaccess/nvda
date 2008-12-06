@@ -10,6 +10,27 @@ import gui
 from logHandler import log
 import speechDictHandler
 from settingsDialogs import DictionaryDialog
+from synthDriverHandler  import getListOfAllSynthsAndTheirVoices
+
+class SmartDictionaryMatchesDialog(wx.Dialog):
+	def __init__(self,parent,smartDict):
+		super(SmartDictionaryMatchesDialog,self).__init__(parent,title=_("dictionary matches"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		tree = wx.TreeCtrl(self,id=wx.NewId(), style=wx.TR_HIDE_ROOT)
+		synths = getListOfAllSynthsAndTheirVoices()
+		treeID=tree.AddRoot(_("Synthesizers"))
+		for s in synths:
+			if not smartDict.matches(s[0]): continue
+			id = tree.AppendItem(treeID,s[0])
+			for v in s[1]:
+				if not smartDict.matches("%s-%s" %(s[0],v)): continue
+				tree.AppendItem(id,v)
+		mainSizer.Add(tree)
+		buttonSizer=self.CreateButtonSizer(wx.OK)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		tree.SetFocus()
 
 class SmartDictDialog(wx.Dialog):
 	"""For creating|modifying smart dictionary."""
@@ -17,6 +38,7 @@ class SmartDictDialog(wx.Dialog):
 
 	def __init__(self,parent,_title,smartDict):
 		super(SmartDictDialog,self).__init__(parent,title=_title)
+		self.smartDict = smartDict
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("Name")))
@@ -27,12 +49,23 @@ class SmartDictDialog(wx.Dialog):
 		self.patternTextCtrl=wx.TextCtrl(self,wx.NewId())
 		self.patternTextCtrl.SetValue(smartDict.pattern)
 		settingsSizer.Add(self.patternTextCtrl)
+		buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
+		showMatchesButtonID=wx.NewId()
+		showMatchesButton=wx.Button(self,showMatchesButtonID,_("Show &matches..."),wx.DefaultPosition)
+		self.Bind(wx.EVT_BUTTON,self.onShowMatchesClick,id=showMatchesButtonID)
+		buttonSizer.Add(showMatchesButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.nameTextCtrl.SetFocus()
+
+	def onShowMatchesClick(self, evt):
+		smartDictionaryMatchesDialog =  SmartDictionaryMatchesDialog(self,self.smartDict)
+		smartDictionaryMatchesDialog.ShowModal()
+		smartDictionaryMatchesDialog.Destroy()
 
 class SmartDictManagerDialog(wx.Dialog):
 	"""shows the list of smart dictionaries and provides manipulating actions"""

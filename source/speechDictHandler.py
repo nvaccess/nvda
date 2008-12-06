@@ -113,6 +113,7 @@ class SmartDict(SpeechDict):
 		self.fileName= getFileName("smart", name=self.name)
 
 	def matches(self, value):
+		if self.compiled is None: return False
 		return self.compiled.search(value) is not None
 
 	def save(self,fileName=None):
