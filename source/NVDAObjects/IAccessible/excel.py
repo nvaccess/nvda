@@ -39,7 +39,7 @@ class CellEditDialog(gui.scriptUI.ModalDialog):
 		evt.Skip(True)
 
 	def onOk(self,evt):
-		self._cell.formula=self._cellText.GetValue()
+		self._cell.formulaLocal=self._cellText.GetValue()
 		self.dialog.EndModal(wx.ID_OK)
 
 	def makeDialog(self):
@@ -48,7 +48,7 @@ class CellEditDialog(gui.scriptUI.ModalDialog):
 		mainSizer.Add(wx.StaticText(d,wx.ID_ANY, label=_("Enter cell contents")))
 		self._cellText=wx.TextCtrl(d, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
 		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
-		self._cellText.SetValue(self._cell.formula)
+		self._cellText.SetValue(self._cell.formulaLocal)
 		mainSizer.Add(self._cellText)
 		mainSizer.Add(d.CreateButtonSizer(wx.OK|wx.CANCEL))
 		d.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)

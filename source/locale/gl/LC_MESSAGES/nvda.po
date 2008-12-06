@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2539\n"
-"POT-Creation-Date: 2008-11-27 15:25+Hora estándar romance\n"
-"PO-Revision-Date: 2008-11-27 16:15+0100\n"
+"Project-Id-Version: r2551\n"
+"POT-Creation-Date: 2008-12-04 15:49+Hora estándar romance\n"
+"PO-Revision-Date: 2008-12-04 15:58+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: ga <tifloclub@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -682,116 +682,120 @@ msgid "The next key that is pressed will not be handled at all by NVDA, it will 
 msgstr "A seguinte tecla que se prema non será manipulada polo NVDA, será deixada pasar direitamente a Windows."
 
 #: appModules\_default.py:770
-msgid "Currently running application is %s."
-msgstr "A aplicación en execución actualmente é %s."
+msgid "Currently running application is %s"
+msgstr "Actualmente a aplicación en execución é %s"
 
 #: appModules\_default.py:773
-msgid "and currently loaded module is %s"
-msgstr "e o módulo actualmente carregado é %s"
+msgid " and currently loaded module is %s"
+msgstr " e o módulo actualmente cargado é %s"
 
-#: appModules\_default.py:774
-msgid "Speaks filename of the active application along with name of the currently loaded appmodule"
-msgstr "Di o nome de ficheiro da aplicación activa xunto co nome do appmodule actualmente carregado"
+#: appModules\_default.py:775
+msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+msgstr "Di o nome do ficheiro da aplicación activa xunto co nome do appModule actualmente cargado"
 
-#: appModules\_default.py:778
+#: appModules\_default.py:779
 msgid "Shows the NVDA general settings dialog"
 msgstr "Amosa o diálogo Opcións Xerais do NVDA"
 
-#: appModules\_default.py:782
+#: appModules\_default.py:783
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Amosa o diálogo Sintetizadores do NVDA"
 
-#: appModules\_default.py:786
+#: appModules\_default.py:787
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Amosa o diálogo Opcións de Voz do NVDA"
 
-#: appModules\_default.py:790
+#: appModules\_default.py:791
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Amosa o diálogo Opcións de teclado do NVDA"
 
-#: appModules\_default.py:794
+#: appModules\_default.py:795
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Amosa o diálogo Opcións do Rato do NVDA"
 
-#: appModules\_default.py:798
+#: appModules\_default.py:799
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Amosa o diálogo Presentación de obxectos do NVDA"
 
-#: appModules\_default.py:802
+#: appModules\_default.py:803
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Amosa o diálogo Opcións do Modo Virtual do NVDA"
 
-#: appModules\_default.py:806
+#: appModules\_default.py:807
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Amosa o diálogo Opcións de Formateado de documentos do NVDA"
 
-#: appModules\_default.py:810
+#: appModules\_default.py:811
 msgid "Saves the current NVDA configuration"
 msgstr "Garda a configuración actual do NVDA"
 
-#: appModules\_default.py:814
+#: appModules\_default.py:815
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "Carga a configuración do NVDA, sen ter en conta os trocos actuais"
 
-#: appModules\_default.py:822
+#: appModules\_default.py:823
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Activa a Consola de Python do NVDA, útil principalmente para desenrolo"
 
-#: appModules\_default.py:827
+#: appModules\_default.py:828
 msgid "review"
 msgstr "árb"
 
-#: appModules\_default.py:830
+#: appModules\_default.py:831
 msgid "focus"
 msgstr "foc"
 
-#: appModules\_default.py:831
+#: appModules\_default.py:832
 msgid "Braille tethered to %s"
 msgstr "O Braille segue a %s"
 
-#: appModules\_default.py:832
+#: appModules\_default.py:833
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Activar ou desactivar o seguemento do braille entre o foco e a posición de revisión"
 
-#: appModules\_default.py:840
+#: appModules\_default.py:841
 msgid "There is no text on the clipboard"
 msgstr "Non hai texto no portapapeis"
 
-#: appModules\_default.py:845
+#: appModules\_default.py:846
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "O portapapeis contén unha porción grande de texto. É de %s caracteres de longa"
 
-#: appModules\_default.py:846
+#: appModules\_default.py:847
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto no portapapeis de Windows"
 
-#: appModules\_default.py:850
+#: appModules\_default.py:851
 msgid "Start marked"
 msgstr "Comezo marcado"
 
-#: appModules\_default.py:851
+#: appModules\_default.py:852
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Marca a posición actual do cursor de revisión como o comezo do texto para seren copiado"
 
-#: appModules\_default.py:855
+#: appModules\_default.py:856
 msgid "No start marker set"
 msgstr "Non se puxo marca de comezo"
 
-#: appModules\_default.py:859
+#: appModules\_default.py:860
 msgid "The start marker must reside within the same object"
 msgstr "A marca de comezo debe residir dentro do mesmo obxecto"
 
-#: appModules\_default.py:864
+#: appModules\_default.py:865
 msgid "Review selection copied to clipboard"
 msgstr "Selección de revisión copiada para o portapapeis"
 
-#: appModules\_default.py:866
+#: appModules\_default.py:867
 msgid "No text to copy"
 msgstr "Non hai texto para copiar"
 
-#: appModules\_default.py:869
+#: appModules\_default.py:870
 msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
 msgstr "Colle o texto da marca de comezo previamente posta na posición actual do cursor de revisión e cópiao no portapapeis"
+
+#: appModules\explorer.py:16
+msgid "Start"
+msgstr "Comezo"
 
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -2872,7 +2876,7 @@ msgstr "%s cursor"
 msgid "NVDA Python Console"
 msgstr "Consola de python para NVDA"
 
-#: sayAllHandler.py:152
+#: sayAllHandler.py:154
 msgid "end of text"
 msgstr "remate do texto"
 
@@ -3753,4 +3757,3 @@ msgstr "l=tecla rápida para lista"
 #: virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
 msgstr "i=tecla rápida para elemento de lista"
-

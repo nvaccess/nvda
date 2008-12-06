@@ -103,7 +103,9 @@ def readTextHelper_generator(info,cursor):
 	keepUpdating=True
 	oldSpokenIndex=None
 	while keepUpdating:
-		if (sendCount-receiveCount)<=10:
+		# receiveCount might be None if other speech was interspersed with this say all.
+		# In this case, we want to send more text in case this was the last chunk spoken.
+		if receiveCount is None or (sendCount-receiveCount)<=10:
 			if keepReading:
 				bookmark=reader.bookmark
 				index=sendCount

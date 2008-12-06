@@ -56,6 +56,9 @@ Changes since 0.6 P2:
 * new: Added the ability to copy text to the clipboard using the review cursor. NVDA+f9 sets the start marker to the current position of the review cursor. NVDA+f10 retrieves the text between the start marker and the current position of the review cursor and copies it to the clipboard. (#240)
 * new: Added support for some edit controls in pinacle tv software.
 * fix: NVDA now ignores focus changes in background windows. Previously, a background focus change could be treated as if the real focus changed.
+* fix: Improved the detection of the focus when leaving context menus. Previously, NVDA often didn't react at all when leaving a context menu.
+* fix: NVDA now announces when the context menu is activated in the Start menu.
+* fix: The classic Start menu is now announced as Start menu instead of Application menu.
 
 
 Changes since 0.6 P1:
