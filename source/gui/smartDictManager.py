@@ -11,26 +11,70 @@ from logHandler import log
 import speechDictHandler
 from settingsDialogs import DictionaryDialog
 from synthDriverHandler  import getListOfAllSynthsAndTheirVoices
+from re import escape
 
-class SmartDictionaryMatchesDialog(wx.Dialog):
+class SmartDictMatchesDialog(wx.Dialog):
 	def __init__(self,parent,smartDict):
-		super(SmartDictionaryMatchesDialog,self).__init__(parent,title=_("dictionary matches"))
+		super(SmartDictMatchesDialog,self).__init__(parent,title=_("dictionary matches"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		tree = wx.TreeCtrl(self,id=wx.NewId(), style=wx.TR_HIDE_ROOT)
 		synths = getListOfAllSynthsAndTheirVoices()
 		treeID=tree.AddRoot(_("Synthesizers"))
+		synthAdded=False
 		for s in synths:
-			if not smartDict.matches(s[0]): continue
-			id = tree.AppendItem(treeID,s[0])
 			for v in s[1]:
 				if not smartDict.matches("%s-%s" %(s[0],v)): continue
+				if not synthAdded:
+					id = tree.AppendItem(treeID,s[0])
+					synthAdded = True
 				tree.AppendItem(id,v)
+			synthAdded=False
 		mainSizer.Add(tree)
 		buttonSizer=self.CreateButtonSizer(wx.OK)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		tree.SetFocus()
+
+class SmartDictChooseMatchesDialog(wx.Dialog):
+	def __init__(self,parent,smartDict):
+		super(SmartDictChooseMatchesDialog,self).__init__(parent,title=_("dictionary matches"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		self.list = wx.ListBox(self,id=wx.NewId(), style=wx.LB_MULTIPLE, name=_("Choose items"))
+		synths = getListOfAllSynthsAndTheirVoices()
+		for s in synths:
+			rootID = self.list.Append(s[0])
+			if smartDict.matches(s[0]): self.list.Select(rootID)
+			childID = rootID
+			for v in s[1]:
+				childID = self.list.Append(v,rootID)
+				if smartDict.matches("%s-%s" %(s[0],v)): self.list.Select(childID)
+			self.list.SetClientData(rootID,childID)
+		mainSizer.Add(self.list)
+		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.list.SetFocus()
+
+	def processSelection(self):
+		"""This will process user selection and construct the regular expression."""
+		synthChecked = False
+		regExpr = []
+		for item in self.list.GetSelections():
+			#determine whether it is synth or voice
+			data = self.list.GetClientData(item)
+			isSynth = (data >= item)
+			if isSynth: 
+				synthChecked = self.list.IsSelected(item)
+				if synthChecked: 
+					regExpr.append(escape(self.list.GetString(item)))
+					continue
+			else:
+				#ignore voice  if  synth is allready checked
+				if synthChecked: continue
+			if self.list.IsSelected(item): regExpr.append(escape(self.list.GetString(item)))
+		return "(%s)" % "|".join(regExpr)
 
 class SmartDictDialog(wx.Dialog):
 	"""For creating|modifying smart dictionary."""
@@ -54,6 +98,10 @@ class SmartDictDialog(wx.Dialog):
 		showMatchesButton=wx.Button(self,showMatchesButtonID,_("Show &matches..."),wx.DefaultPosition)
 		self.Bind(wx.EVT_BUTTON,self.onShowMatchesClick,id=showMatchesButtonID)
 		buttonSizer.Add(showMatchesButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
+		chooseMatchesButtonID=wx.NewId()
+		chooseMatchesButton=wx.Button(self,chooseMatchesButtonID,_("&Choose matches..."),wx.DefaultPosition)
+		self.Bind(wx.EVT_BUTTON,self.onChooseMatchesClick,id=chooseMatchesButtonID)
+		buttonSizer.Add(chooseMatchesButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
@@ -63,9 +111,17 @@ class SmartDictDialog(wx.Dialog):
 		self.nameTextCtrl.SetFocus()
 
 	def onShowMatchesClick(self, evt):
-		smartDictionaryMatchesDialog =  SmartDictionaryMatchesDialog(self,self.smartDict)
-		smartDictionaryMatchesDialog.ShowModal()
-		smartDictionaryMatchesDialog.Destroy()
+		self.smartDict.setPattern(self.patternTextCtrl.GetValue())
+		smartDictMatchesDialog =  SmartDictMatchesDialog(self,self.smartDict)
+		smartDictMatchesDialog.ShowModal()
+		smartDictMatchesDialog.Destroy()
+
+	def onChooseMatchesClick(self, evt):
+		self.smartDict.setPattern(self.patternTextCtrl.GetValue())
+		smartDictChooseMatchesDialog = SmartDictChooseMatchesDialog(self,self.smartDict)
+		if smartDictChooseMatchesDialog.ShowModal():
+			self.patternTextCtrl.SetValue(smartDictChooseMatchesDialog.processSelection())
+		smartDictChooseMatchesDialog.Destroy()
 
 class SmartDictManagerDialog(wx.Dialog):
 	"""shows the list of smart dictionaries and provides manipulating actions"""
