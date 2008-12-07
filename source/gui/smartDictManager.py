@@ -11,7 +11,18 @@ from logHandler import log
 import speechDictHandler
 from settingsDialogs import DictionaryDialog
 from synthDriverHandler  import getListOfAllSynthsAndTheirVoices
-from re import escape
+from re import escape, error
+
+def trySetPattern(pattern,smartDict):
+	"""Try to compile pattern as regular expression. if there are syntax error, popup dialog for the user and return @False"""
+	try:
+		smartDict.setPattern(pattern)
+	except error,e:
+		d = wx.MessageDialog(gui.mainFrame, _("Error in pattern: %s" % str(e)), _("error"), wx.OK|wx.ICON_ERROR)
+		d.ShowModal()
+		d.Destroy()
+		return False
+	return True
 
 class SmartDictMatchesDialog(wx.Dialog):
 	def __init__(self,parent,smartDict):
@@ -111,13 +122,13 @@ class SmartDictDialog(wx.Dialog):
 		self.nameTextCtrl.SetFocus()
 
 	def onShowMatchesClick(self, evt):
-		self.smartDict.setPattern(self.patternTextCtrl.GetValue())
+		if not trySetPattern(self.patternTextCtrl.GetValue(),self.smartDict): return
 		smartDictMatchesDialog =  SmartDictMatchesDialog(self,self.smartDict)
 		smartDictMatchesDialog.ShowModal()
 		smartDictMatchesDialog.Destroy()
 
 	def onChooseMatchesClick(self, evt):
-		self.smartDict.setPattern(self.patternTextCtrl.GetValue())
+		if not trySetPattern(self.patternTextCtrl.GetValue(),self.smartDict): return
 		smartDictChooseMatchesDialog = SmartDictChooseMatchesDialog(self,self.smartDict)
 		if smartDictChooseMatchesDialog.ShowModal():
 			self.patternTextCtrl.SetValue(smartDictChooseMatchesDialog.processSelection())
@@ -180,7 +191,7 @@ class SmartDictManagerDialog(wx.Dialog):
 		smartDictDialog = SmartDictDialog(self, _("New smart dictionary"), smartDict)
 		if smartDictDialog.ShowModal()==wx.ID_OK:
 			smartDict.setName(smartDictDialog.nameTextCtrl.GetValue())
-			smartDict.setPattern(smartDictDialog.patternTextCtrl.GetValue())
+			trySetPattern(smartDictDialog.patternTextCtrl.GetValue(),smartDict)
 			smartDict.save()
 			self.smartDicts.append(smartDict)
 			self.dictList.Append((smartDict.name, smartDict.pattern))
@@ -208,7 +219,7 @@ class SmartDictManagerDialog(wx.Dialog):
 			if oldName != smartDictDialog.nameTextCtrl.GetValue():
 				if os.access(smartDict.fileName, os.F_OK): os.remove(smartDict.fileName)
 			smartDict.setName(smartDictDialog.nameTextCtrl.GetValue())
-			smartDict.setPattern(smartDictDialog.patternTextCtrl.GetValue())
+			trySetPattern(smartDictDialog.patternTextCtrl.GetValue(),smartDict)
 			smartDict.save()
 			self.dictList.SetStringItem(i,0,smartDict.name)
 			self.dictList.SetStringItem(i,1,smartDict.pattern)
