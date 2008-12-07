@@ -105,8 +105,8 @@ class SmartDict(SpeechDict):
 		file.close()
 
 	def setPattern(self, pattern):
+		self.compiled = re.compile(pattern)
 		self.pattern = pattern
-		self.compiled = re.compile(self.pattern)
 
 	def setName(self,name):
 		self.name = name
