@@ -59,6 +59,7 @@ Changes since 0.6 P2:
 * fix: Improved the detection of the focus when leaving context menus. Previously, NVDA often didn't react at all when leaving a context menu.
 * fix: NVDA now announces when the context menu is activated in the Start menu.
 * fix: The classic Start menu is now announced as Start menu instead of Application menu.
+* new: When announcing selected text for long selections (512 characters or more), NVDA now speaks the number of selected characters, rather than speaking the entire selection. (#249)
 
 
 Changes since 0.6 P1:
