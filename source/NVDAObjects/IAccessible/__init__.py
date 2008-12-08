@@ -979,7 +979,7 @@ class ProgressBar(IAccessible):
 		if config.conf["presentation"]["reportProgressBarUpdates"] !="off":
 			val=self.value
 			if val:
-				val=val.rstrip('%').rstrip('\x00')
+				val=val.rstrip('%\x00')
 			if val and val!=globalVars.lastProgressValue:
 				if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
 					tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
