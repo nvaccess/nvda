@@ -253,7 +253,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		try:
 			info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 			if not info.isCollapsed:
-				speakMessage(_("selected %s")%info.text)
+				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textHandler.UNIT_READINGCHUNK)
 				speakMessage(info.text)
@@ -283,6 +283,12 @@ This function will not speak if L{speechMode} is false.
 	text=processText(text)
 	if text and not text.isspace():
 		getSynth().speakText(text,index=index)
+
+def speakSelectionMessage(message,text):
+	if len(text) < 512:
+		speakMessage(message % text)
+	else:
+		speakMessage(message % _("%d characters") % len(text))
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
 	"""Speaks a change in selection, either selected or unselected text.
@@ -333,25 +339,25 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("selecting %s")%text)
+				speakSelectionMessage(_("selecting %s"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=processSymbol(text)
-			speakMessage(_("selected %s")%text)
+			speakSelectionMessage(_("selected %s"),text)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("unselecting %s")%text)
+				speakSelectionMessage(_("unselecting %s"),text)
 		elif len(unselectedTextList)>0:
 			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("selected %s")%text)
+				speakSelectionMessage(_("selected %s"),text)
 
 def speakTypedCharacters(ch):
 	global curWordChars;
