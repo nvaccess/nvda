@@ -56,7 +56,6 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !define MUI_UNINSTALLER
 !define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
 !define MUI_CUSTOMFUNCTION_ABORT userAbort
-!define MUI_CUSTOMFUNCTION_UnGUIInit un.NVDA_GUIInit
 !define MUI_CUSTOMPAGECOMMANDS
 
   ;Start Menu Folder Page Configuration
@@ -72,6 +71,7 @@ Var StartMenuFolder
 ;Pages
 !InsertMacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\copying.txt"
+page custom pagePrevInstall
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 !insertmacro MUI_PAGE_INSTFILES
@@ -230,12 +230,20 @@ goto Running
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
 Running:
 Banner::destroy
+functionEnd
+
+function pagePrevInstall
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
-Strcmp $0 "" +4 +1
-IfFileExists "$0" +1 +3
+ReadRegStr $1 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallDirectory"
+Strcmp $0 "" +1 +2
+abort
+IfFileExists "$0" +2 +1 
+abort
 MessageBox MB_OK $(Msg_UninsPrev)
-Exec "$0"
-FunctionEnd
+HideWindow
+ExecWait "$0 /S _?=$1"
+bringToFront
+functionEnd
 
 Section "install" section_install
 SetShellVarContext all
@@ -329,11 +337,6 @@ StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log
 !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
-FunctionEnd
-
-Function un.NVDA_GUIInit
-MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON1 $(msg_RemoveNVDA)  IDYES +2
-Abort
 FunctionEnd
 
 Section "Uninstall"
