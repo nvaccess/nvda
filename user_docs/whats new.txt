@@ -59,6 +59,8 @@ Changes since 0.6 P2:
 * fix: Improved the detection of the focus when leaving context menus. Previously, NVDA often didn't react at all when leaving a context menu.
 * fix: NVDA now announces when the context menu is activated in the Start menu.
 * fix: The classic Start menu is now announced as Start menu instead of Application menu.
+* fix: Improved the reading of alerts such as those encountered in Mozilla Firefox. The text should no longer be read multiple times and other extraneous information will no longer be read.
+* fix: The text of focusable, read-only edit fields will no longer be included when retrieving the text of dialogs. This fixes, for example, the automatic reading of the entire license agreement in installers.
 
 
 Changes since 0.6 P1:
