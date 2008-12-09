@@ -248,7 +248,7 @@ delete "$2"
 bringToFront
 functionEnd
 
-Section "install" section_install
+Section "install"
 SetShellVarContext all
 SetOutPath "$INSTDIR"
 ; open and close uninstallation log after ennumerating all the files being copied
@@ -270,11 +270,7 @@ CreateDirectory "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
 
 strcpy $NVDAInstalled "1"
-SectionEnd
-
-Section Shortcuts
-SetShellVarContext all
-SetOutPath "$INSTDIR\"
+;Shortcuts
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
@@ -285,10 +281,7 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\
 !insertmacro MUI_STARTMENU_WRITE_END
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
-SectionEnd
-
-Section Uninstaller
- SetShellVarContext all
+;Generate uninstaller info
 CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${VERSION}"
