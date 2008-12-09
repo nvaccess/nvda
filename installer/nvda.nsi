@@ -241,7 +241,10 @@ IfFileExists "$0" +2 +1
 abort
 MessageBox MB_OK $(Msg_UninsPrev)
 HideWindow
-ExecWait "$0 /S _?=$1"
+GetTempFileName $2
+CopyFiles "$0" "$2"
+ExecWait "$2 /S _?=$1"
+delete "$2"
 bringToFront
 functionEnd
 
