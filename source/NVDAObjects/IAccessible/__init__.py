@@ -858,8 +858,8 @@ class Dialog(IAccessible):
 			#We don't want to handle invisible or unavailable objects
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
-			#For particular objects, we want to decend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
+			#For particular objects, we want to descend in to them and get their children's message text
+			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
 				textList.append(cls.getDialogText(children[index]))
 				continue
 			# We only want text from certain controls.
