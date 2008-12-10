@@ -707,8 +707,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def event_alert(self):
 		speech.cancelSpeech()
-		speech.speakObject(self)
-		self.speakDescendantObjects()
+		speech.speakObject(self, reason=speech.REASON_FOCUS)
+		for child in self.recursiveDescendants:
+			if controlTypes.STATE_FOCUSABLE in child.states:
+				speech.speakObject(child, reason=speech.REASON_FOCUS)
 
 	def event_caret(self):
 		super(IAccessible, self).event_caret()
@@ -850,32 +852,39 @@ class Dialog(IAccessible):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in range(childCount):
+		for index in xrange(childCount):
 			childStates=children[index].states
 			childRole=children[index].role
 			#We don't want to handle invisible or unavailable objects
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
-			#For particular objects, we want to decend in to them and get their childrens' message text
+			#For particular objects, we want to decend in to them and get their children's message text
 			if childRole in (controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
 				textList.append(cls.getDialogText(children[index]))
 				continue
-			#For now we get text from static text, readonly edit fields, and labels
-			if childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL) or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates):
-				#We should ignore text objects directly after a grouping object as its probably the grouping's description
-				if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
-					continue
-				#Like the last one, but a graphic might be before the grouping's description
-				if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
-					continue
-				childName=children[index].name
-				#Ignore object's that have another object directly after them with the same name, this object is probably just a label for that object. But, graphics, Windows, static text and separators are ok
-				if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
-					continue
-				childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
-				if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
-					childText=children[index].basicText
-				textList.append(childText)
+			# We only want text from certain controls.
+			if not (
+				 # Static text, labels and links
+				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
+				# Read-only, non-focusable edit fields
+				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_FOCUSABLE not in childStates)
+			):
+				continue
+			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
+			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
+				continue
+			#Like the last one, but a graphic might be before the grouping's description
+			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
+				continue
+			childName=children[index].name
+			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
+			#However, graphics, Windows, static text, separators and non-focusable, read-only edit fields are ok.
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
+				continue
+			childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
+			if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
+				childText=children[index].basicText
+			textList.append(childText)
 		return " ".join(textList)
 
 	def _get_description(self):
