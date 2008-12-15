@@ -14,7 +14,18 @@ class UIA(Window):
 		try:
 			return UIAHandler.handler.IUIAutomationInstance.CompareElements(self.UIAElement,other.UIAElement)
 		except:
+			from logHandler import log
+			log.error("ding",exc_info=True)
 			return False
+
+	def _get_UIAExpandCollapsePattern(self):
+		if not hasattr(self,'_UIAExpandCollapsePattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_ExpandCollapsePatternId)
+			if punk:
+				self._UIAExpandCollapsePattern=punk.QueryInterface(UIAHandler.IUIAutomationExpandCollapsePattern)
+			else:
+				self._UIAExpandCollapsePattern=None
+		return self._UIAExpandCollapsePattern
 
 	def _get_name(self):
 		return self.UIAElement.currentName
@@ -36,6 +47,12 @@ class UIA(Window):
 			states.add(controlTypes.STATE_FOCUSABLE)
 		if self.UIAElement.currentIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
+		if self.UIAExpandCollapsePattern:
+			s=self.UIAExpandCollapsePattern.currentExpandCollapseState
+			if s==0:
+				states.add(controlTypes.STATE_COLLAPSED)
+			elif s==1:
+				states.add(controlTypes.STATE_EXPANDED)
 		return states
 
 	def _get_parent(self):
