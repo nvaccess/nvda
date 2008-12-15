@@ -1,11 +1,10 @@
-import weakref
+import UIAHandler
 import controlTypes
 from NVDAObjects.window import Window
 
 class UIA(Window):
 
-	def __init__(self,UIAHandlerInstance,UIAElement):
-		self.UIAHandlerRef=weakref.ref(UIAHandlerInstance)
+	def __init__(self,UIAElement):
 		self.UIAElement=UIAElement
 		super(UIA,self).__init__(UIAElement.currentNativeWindowHandle)
 
@@ -13,7 +12,7 @@ class UIA(Window):
 		if not isinstance(other,UIA):
 			return False
 		try:
-			return self.UIAHandlerRef().IUIAutomationInstance.CompareElements(self.UIAElement,other.UIAElement)
+			return UIAHandler.handler.IUIAutomationInstance.CompareElements(self.UIAElement,other.UIAElement)
 		except:
 			return False
 
@@ -21,7 +20,7 @@ class UIA(Window):
 		return self.UIAElement.currentName
 
 	def _get_role(self):
-		return self.UIAHandlerRef().UIAControlTypesToNVDARoles[self.UIAElement.currentControlType]
+		return UIAHandler.UIAControlTypesToNVDARoles[self.UIAElement.currentControlType]
 
 	def _get_description(self):
 		return self.UIAElement.currentHelpText
@@ -41,31 +40,31 @@ class UIA(Window):
 
 	def _get_parent(self):
 		try:
-			parentElement=self.UIAHandlerRef().IUIAutomationTreeWalkerInstance.GetParentElement(self.UIAElement)
+			parentElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetParentElement(self.UIAElement)
 		except:
 			parentElement=None
 		if parentElement:
-			return UIA(self.UIAHandlerRef(),parentElement)
+			return UIA(parentElement)
 
 	def _get_previous(self):
-		previousSiblingElement=self.UIAHandlerRef().IUIAutomationTreeWalkerInstance.GetPreviousSiblingElement(self.UIAElement)
+		previousSiblingElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetPreviousSiblingElement(self.UIAElement)
 		if previousSiblingElement:
-			return UIA(self.UIAHandlerRef(),previousSiblingElement)
+			return UIA(previousSiblingElement)
 
 	def _get_next(self):
-		nextSiblingElement=self.UIAHandlerRef().IUIAutomationTreeWalkerInstance.GetNextSiblingElement(self.UIAElement)
+		nextSiblingElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetNextSiblingElement(self.UIAElement)
 		if nextSiblingElement:
-			return UIA(self.UIAHandlerRef(),nextSiblingElement)
+			return UIA(nextSiblingElement)
 
 	def _get_firstChild(self):
-		firstChildElement=self.UIAHandlerRef().IUIAutomationTreeWalkerInstance.GetFirstChildElement(self.UIAElement)
+		firstChildElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetFirstChildElement(self.UIAElement)
 		if firstChildElement:
-			return UIA(self.UIAHandlerRef(),firstChildElement)
+			return UIA(firstChildElement)
 
 	def _get_lastChild(self):
-		lastChildElement=self.UIAHandlerRef().IUIAutomationTreeWalkerInstance.GetlastChildElement(self.UIAElement)
+		lastChildElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetlastChildElement(self.UIAElement)
 		if lastChildElement:
-			return UIA(self.UIAHandlerRef(),lastChildElement)
+			return UIA(lastChildElement)
 
 	def _get_windowProcessID(self):
 		return self.UIAElement.currentProcessId
