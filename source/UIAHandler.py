@@ -4,6 +4,7 @@ from comtypes import *
 import weakref
 from comInterfaces.UIAutomationClient import *
 import api
+import queueHandler
 import controlTypes
 import NVDAObjects.UIA
 import eventHandler
@@ -14,16 +15,14 @@ class UIAEventListener(COMObject):
 	def __init__(self,UIAHandlerInstance):
 		self.UIAHandlerRef=weakref.ref(UIAHandlerInstance)
 		super(UIAEventListener,self).__init__()
-		self.log=open("log.txt","w")
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		pass
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
-		self.log.write("focus event: %s %s\n"%(sender.currentName,sender.currentLocalizedControlType))
 		obj=NVDAObjects.UIA.UIA(self.UIAHandlerRef(),sender)
 		eventHandler.queueEvent("gainFocus",obj)
-
+		queueHandler.pumpAll()
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyID,newValue):
 		pass
