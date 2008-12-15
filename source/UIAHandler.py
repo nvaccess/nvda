@@ -64,6 +64,11 @@ class UIAEventListener(COMObject):
 		pass
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+		if not sender.currentHasKeyboardFocus:
+			return
+		if self.UIAHandlerRef().IUIAutomationInstance.CompareElements(sender,self.UIAHandlerRef().focusedElement):
+			return
+		self.UIAHandlerRef().focusedElement=sender
 		obj=NVDAObjects.UIA.UIA(sender)
 		eventHandler.queueEvent("gainFocus",obj)
 		queueHandler.pumpAll()
@@ -81,6 +86,7 @@ class UIAHandler(object):
 		rawViewCondition=self.IUIAutomationInstance.RawViewCondition
 		self.IUIAutomationTreeWalkerInstance=self.IUIAutomationInstance.CreateTreeWalker(rawViewCondition)
 		self.rootUIAutomationElement=self.IUIAutomationInstance.GetRootElement()
+		self.focusedElement=self.IUIAutomationInstance.GetFocusedElement()
 		self.eventListener=UIAEventListener(self)
 
 	def registerEvents(self):
