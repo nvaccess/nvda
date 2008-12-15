@@ -69,3 +69,13 @@ class UIA(Window):
 
 	def _get_windowProcessID(self):
 		return self.UIAElement.currentProcessId
+
+	def _get_location(self):
+		r=self.UIAElement.currentBoundingRectangle
+		left=r.left
+		top=r.top
+		width=r.right-left
+		height=r.bottom-top
+		return left,top,width,height
+
+ 
