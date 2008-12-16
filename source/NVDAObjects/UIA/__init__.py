@@ -14,8 +14,6 @@ class UIA(Window):
 		try:
 			return UIAHandler.handler.IUIAutomationInstance.CompareElements(self.UIAElement,other.UIAElement)
 		except:
-			from logHandler import log
-			log.error("ding",exc_info=True)
 			return False
 
 	def _get_UIAExpandCollapsePattern(self):
@@ -26,6 +24,15 @@ class UIA(Window):
 			else:
 				self._UIAExpandCollapsePattern=None
 		return self._UIAExpandCollapsePattern
+
+	def _get_UIATogglePattern(self):
+		if not hasattr(self,'_UIATogglePattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TogglePatternId)
+			if punk:
+				self._UIATogglePattern=punk.QueryInterface(UIAHandler.IUIAutomationTogglePattern)
+			else:
+				self._UIATogglePattern=None
+		return self._UIATogglePattern
 
 	def _get_name(self):
 		return self.UIAElement.currentName
@@ -53,6 +60,13 @@ class UIA(Window):
 				states.add(controlTypes.STATE_COLLAPSED)
 			elif s==1:
 				states.add(controlTypes.STATE_EXPANDED)
+		if self.UIATogglePattern:
+			s=self.UIATogglePattern.currentToggleState
+			r=self.role
+			if r in (controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX) and s:
+				states.add(controlTypes.STATE_CHECKED)
+			elif s:
+				states.add(controlTypes.STATE_PRESSED)
 		return states
 
 	def _get_parent(self):
