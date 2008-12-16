@@ -53,3 +53,6 @@ class AppModule(_default.AppModule):
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
 				return sendKey(key("SHIFT+TAB"))
 		return nextHandler()
+
+	def event_foreground(self,obj,nextHandler):
+		return self.event_gainFocus(obj,nextHandler)
