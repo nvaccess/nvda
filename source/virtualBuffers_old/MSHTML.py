@@ -57,7 +57,7 @@ class MSHTML(virtualBuffer):
 			except:
 				log.error("onchange",exc_info=True)
 
-		def onreadystatechange(self,arg,event):
+		def onreadystatechange(self,event):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 
