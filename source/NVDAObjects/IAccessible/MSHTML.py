@@ -165,8 +165,11 @@ class MSHTML(IAccessible):
 
 
 	def _get_isContentEditable(self):
-		if hasattr(self,'domElement') and self.domElement.isContentEditable:
-			return True
+		if hasattr(self,'domElement'): 
+			try:
+				return bool(self.domElement.isContentEditable)
+			except:
+				return False
 		else:
 			return False
 
