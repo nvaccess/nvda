@@ -56,7 +56,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _get_voice(self):
 		return ""
 
-	def _set_voice(self):
+	def _set_voice(self, voice):
 		pass
 
 	def _get_rate(self):
