@@ -723,6 +723,10 @@ class Edit(IAccessible):
 		return controlTypes.ROLE_EDITABLETEXT
 
 	def event_caret(self):
+		#Make sure that this object *really* has the focus before bothering to speak any possible selection change
+		api.processPendingEvents()
+		if self is not api.getFocusObject() or eventHandler.isPendingEvents('gainFocus'):
+			return
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
 		braille.handler.handleCaretMove(self)
