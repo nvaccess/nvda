@@ -706,6 +706,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return super(IAccessible,self).event_valueChange()
 
 	def event_alert(self):
+		# If the focus is within the alert object, don't report anything for it.
+		if eventHandler.isPendingEvents("gainFocus"):
+			# The alert event might be fired before the focus.
+			api.processPendingEvents()
+		if self in api.getFocusAncestors():
+			return
 		speech.cancelSpeech()
 		speech.speakObject(self, reason=speech.REASON_FOCUS)
 		for child in self.recursiveDescendants:
