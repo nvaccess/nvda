@@ -10,6 +10,7 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import globalVars
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -729,6 +730,8 @@ class Edit(IAccessible):
 			return
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
+		if globalVars.caretMovesReviewCursor:
+			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
 		braille.handler.handleCaretMove(self)
 		self.detectPossibleSelectionChange()
 
