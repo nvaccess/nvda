@@ -510,12 +510,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		@return: The recursive descendants of this object.
 		@rtype: generator of L{NVDAObject}
 		"""
-		child = self.firstChild
-		while child:
+		for child in self.children:
 			yield child
 			for recursiveChild in child.recursiveDescendants:
 				yield recursiveChild
-			child = child.next
 
 	def getNextInFlow(self,down=None,up=None):
 		"""Retreaves the next object in depth first tree traversal order
