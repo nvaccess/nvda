@@ -11,7 +11,7 @@ import comtypes.client
 comtypes.client.gen_dir='.\\comInterfaces'
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
-
+import nvwave
 import os
 import time
 import logHandler
@@ -52,6 +52,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.load()
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\start.wav")
 	log.debug("Trying to save config")
 	try:
 		config.save()
