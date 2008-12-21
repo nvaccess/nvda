@@ -10,6 +10,7 @@ import ctypes.wintypes
 kernel32=ctypes.windll.kernel32
 
 #Constants
+INFINITE = 0xffffffff
 #Process control
 PROCESS_ALL_ACCESS=0x1F0FFF
 PROCESS_VM_OPERATION=0x8

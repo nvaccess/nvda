@@ -11,15 +11,13 @@ from __future__ import with_statement
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+from winKernel import *
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
 )
 
 winmm = windll.winmm
-kernel32 = windll.kernel32
-
-INFINITE = 0xffffffff
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -251,7 +249,7 @@ def _getOutputDevices():
 	caps = WAVEOUTCAPS()
 	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
 		try:
-			windll.winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
+			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
 			yield devID, caps.szPname
 		except WindowsError:
 			# It seems that in certain cases, Windows includes devices which cannot be accessed.
@@ -273,7 +271,7 @@ def outputDeviceIDToName(ID):
 	"""
 	caps = WAVEOUTCAPS()
 	try:
-		windll.winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
+		winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
 	except WindowsError:
 		raise LookupError("No such device ID")
 	return caps.szPname
