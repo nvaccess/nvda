@@ -14,6 +14,7 @@ from ctypes.wintypes import *
 from winKernel import *
 import wave
 import config
+from thread import start_new_thread
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -298,11 +299,14 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 	else:
 		raise LookupError("No such device name")
 
-def playWaveFile(fileName):
+def playWaveFile(fileName, async=True):
 	"""plays a specified wave file.
 """
+	if async:
+		start_new_thread(playWaveFile,(fileName,),{"async" : False})
+		return
 	f = wave.open(fileName,"r")
-	if f is None: return False
+	if f is None: return
 	player = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
 	player.feed(f.readframes(f.getnframes()))
 	player.idle()
