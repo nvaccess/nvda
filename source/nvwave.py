@@ -12,6 +12,8 @@ import threading
 from ctypes import *
 from ctypes.wintypes import *
 from winKernel import *
+import wave
+import config
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -75,7 +77,7 @@ class WAVEOUTCAPS(Structure):
 	# Set argument types.
 winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
 
-# Initialise error checking.
+# Initialize error checking.
 def _winmm_errcheck(res, func, args):
 	if res != MMSYSERR_NOERROR:
 		buf = create_unicode_buffer(256)
@@ -295,3 +297,12 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 		return WAVE_MAPPER
 	else:
 		raise LookupError("No such device name")
+
+def playWaveFile(fileName):
+	"""plays a specified wave file.
+"""
+	f = wave.open(fileName,"r")
+	if f is None: return False
+	player = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	player.feed(f.readframes(f.getnframes()))
+	player.idle()
