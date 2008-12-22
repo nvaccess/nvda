@@ -11,6 +11,7 @@ import pythoncom
 import win32com.client
 import comtypes.automation
 import wx
+import eventHandler
 import gui
 import gui.scriptUI
 import IAccessibleHandler
@@ -19,6 +20,7 @@ import speech
 from keyUtils import sendKey, key
 from . import IAccessible
 import appModuleHandler
+import NVDAObjects.window
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -123,19 +125,15 @@ class ExcelGrid(IAccessible):
 		return cell.Font.Underline
 
 	def event_gainFocus(self):
-		super(ExcelGrid,self).event_gainFocus()
-		self.speakSelection()
+		eventHandler.executeEvent("gainFocus",ExcelCell(self,self.getSelectedRange()))
 
 	def script_moveByCell(self,keyPress):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
-		self.speakSelection()
+		obj=ExcelCell(self,self.getSelectedRange())
+		eventHandler.queueEvent("gainFocus",obj)
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
-
-	def script_editCell(self,keyPress):
-		cell=self.getSelectedRange().Item(1)
-		cellEditDialog=CellEditDialog(cell)
-		cellEditDialog.run()
+	script_moveByCell.canPropagate=True
 
 	def text_reportPresentation(self,offset):
 		"""Reports the current font name, font size, font attributes of the active cell"""
@@ -175,5 +173,58 @@ class ExcelGrid(IAccessible):
 	("Shift+ExtendedEnd","moveByCell"),
 	("Shift+Control+ExtendedHome","moveByCell"),
 	("Shift+Control+ExtendedEnd","moveByCell"),
-	("f2","editCell"),
 ]]
+
+class ExcelCell(NVDAObjects.window.Window):
+
+	def __init__(self,parentNVDAObject,cellRange):
+		self.parent=parentNVDAObject
+		self.firstCell=cellRange.Item(1)
+		count=cellRange.count
+		if count>1:
+			self.lastCell=cellRange.Item(count)
+		else:
+			self.lastCell=None
+		super(ExcelCell,self).__init__(parentNVDAObject.windowHandle)
+
+	def _isEqual(self,other):
+		if not super(ExcelCell,self)._isEqual(other):
+			return False
+		thisFirstAddr=self.parent.getCellAddress(self.firstCell)
+		otherFirstAddr=other.parent.getCellAddress(other.firstCell)
+		if thisFirstAddr!=otherFirstAddr:
+			return False
+		thisLastAddr=self.parent.getCellAddress(self.lastCell) if self.lastCell else ""
+		otherLastAddr=other.parent.getCellAddress(other.lastCell) if other.lastCell else ""
+		if thisLastAddr==otherLastAddr:
+			return False
+		return True
+
+	def _get_name(self):
+		firstAddr=self.parent.getCellAddress(self.firstCell)
+		if not self.lastCell:
+			return firstAddr
+		lastAddr=self.parent.getCellAddress(self.lastCell)
+		return _("selected")
+
+	def _get_role(self):
+		if self.lastCell:
+			return controlTypes.ROLE_GROUPING
+		else:
+			return controlTypes.ROLE_TABLECELL
+
+	def _get_value(self):
+		if not self.lastCell: 
+			return self.parent.getCellText(self.firstCell)
+		else:
+			return ("%s %s "+_("through")+" %s %s")%(self.parent.getCellAddress(self.firstCell),self.parent.getCellText(self.firstCell),self.parent.getCellAddress(self.lastCell),self.parent.getCellText(self.lastCell))
+
+	def _get_description(self):
+		if not self.lastCell and self.parent.cellHasFormula(self.firstCell):
+			return _("has formula")
+
+	def script_editCell(self,keyPress):
+		cellEditDialog=CellEditDialog(self.parent.getActiveCell())
+		cellEditDialog.run()
+
+ExcelCell.bindKey("f2","editCell")
