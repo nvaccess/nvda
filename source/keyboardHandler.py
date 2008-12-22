@@ -162,9 +162,17 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
+				brailleTextList=[]
+				brailleTextList.append("+".join(labelList))
 				scriptDescription = scriptHandler.getScriptDescription(script)
-				if scriptDescription: queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
-				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptHandler.getScriptLocation(script))
+				if scriptDescription:
+					brailleTextList.append(scriptDescription)
+					queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
+				scriptLocation=scriptHandler.getScriptLocation(script)
+				brailleTextList.append(scriptLocation)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
+				import braille
+				braille.handler.message("\t\t".join(brailleTextList))
 			else:
 				scriptHandler.queueScript(script,keyPress)
 		if script or globalVars.keyboardHelp:
