@@ -387,7 +387,11 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		return True
  
 	def __eq__(self,other):
-		return self is other or self._isEqual(other)
+		if self is other:
+			return True
+		if type(self) is not type(other):
+			return False
+		return self._isEqual(other)
  
 	def __ne__(self,other):
 		return not self.__eq__(other)
