@@ -1,11 +1,10 @@
+#define UNICODE
 #include <cstdio>
 #include <map>
 #include <sstream>
 #include <windows.h>
 #include <remoteApi/remoteApi.h>
 #include "client.h"
-
-#define VBufLibPath "c:\\users\\mick\\programming\\bzr\\nvVBufLib\\main\\build\\VBufBase.dll"
 
 typedef struct {
 	int processID;
@@ -17,10 +16,10 @@ std::map<handle_t,remoteServerInfo_t> remoteServerMap;
 
 handle_t VBufClient_connect(int processID) {
 	RPC_STATUS rpcStatus;
-	std::ostringstream addr;
-	addr<<"ncalrpc:[nvVBufSrv_"<<processID<<"]";
+	std::wostringstream addr;
+	addr<<L"ncalrpc:[nvVBufSrv_"<<processID<<L"]";
 	handle_t bindingHandle;
-	if((rpcStatus=RpcBindingFromStringBinding((RPC_CSTR)(addr.str().c_str()),&bindingHandle))!=RPC_S_OK) {
+	if((rpcStatus=RpcBindingFromStringBinding((RPC_WSTR)(addr.str().c_str()),&bindingHandle))!=RPC_S_OK) {
 		fprintf(stderr,"Error creating binding handle from string binding, rpc code 0X%X\n",rpcStatus);
 		return NULL;
 	} 
@@ -30,6 +29,8 @@ handle_t VBufClient_connect(int processID) {
 		RpcBindingFree(&bindingHandle);
 		return NULL;
 	}
+	wchar_t VBufLibPath[1024];
+	GetFullPathName(L"VBufBase.dll",1024,VBufLibPath,NULL);
 	void* remoteVBufLibPath=VirtualAllocEx(processHandle,NULL,sizeof(VBufLibPath),MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
 	if(remoteVBufLibPath==NULL) {
 		fprintf(stderr,"Could not allocate remoteVBufLibPath\n");
@@ -44,7 +45,7 @@ handle_t VBufClient_connect(int processID) {
 		RpcBindingFree(&bindingHandle);
 		return NULL;
 	}
-	HANDLE remoteThread=CreateRemoteThread(processHandle,NULL,0,(LPTHREAD_START_ROUTINE)LoadLibraryA,remoteVBufLibPath,0,NULL);
+	HANDLE remoteThread=CreateRemoteThread(processHandle,NULL,0,(LPTHREAD_START_ROUTINE)LoadLibrary,remoteVBufLibPath,0,NULL);
 	if(remoteThread==0) {
 		fprintf(stderr,"Could not create remote thread\n");
 		VirtualFreeEx(processHandle,remoteVBufLibPath,0,MEM_RELEASE);
