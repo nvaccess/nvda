@@ -95,10 +95,10 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		for index in xrange(oldFocusLineLength-1,-1,-1):
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
-				# Copy the old ancestors up to and including this object.
-				origAncestors=oldFocusLine[0:index+1]
+				# Copy the old ancestors up to but excluding this object. If this is not the old focus object, include it as well.
+				origAncestors=oldFocusLine[0:(index if index==oldFocusLineLength-1 else index+1)]
 				#make sure to cache the last old ancestor as a parent on the first new ancestor so as not to leave a broken parent cache
-				if len(ancestors)>0:
+				if ancestors and origAncestors:
 					ancestors[0].parent=origAncestors[-1]
 				origAncestors.extend(ancestors)
 				ancestors=origAncestors
