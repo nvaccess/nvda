@@ -82,7 +82,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		except:
 			log.error("event_loseFocus in focusObject", exc_info=True)
 	oldFocusLine=globalVars.focusAncestors
-	oldFocusLine.append(globalVars.focusObject)
+	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
+	if globalVars.focusObject: 
+		oldFocusLine.append(globalVars.focusObject)
 	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
 	ancestors=[]
 	tempObj=obj
@@ -95,8 +97,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		for index in xrange(oldFocusLineLength-1,-1,-1):
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
-				# Copy the old ancestors up to but excluding this object. If this is not the old focus object, include it as well.
-				origAncestors=oldFocusLine[0:(index if index==oldFocusLineLength-1 else index+1)]
+				# Copy the old ancestors up to and including this object.
+				origAncestors=oldFocusLine[0:index+1]
 				#make sure to cache the last old ancestor as a parent on the first new ancestor so as not to leave a broken parent cache
 				if ancestors and origAncestors:
 					ancestors[0].parent=origAncestors[-1]
@@ -108,12 +110,13 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				break
 		if matchedOld:
 			break
-		if tempObj is not obj: #we don't want to add the new focus to the new focus ancestors
-			# We're moving backwards along the ancestor chain, so add this to the start of the list.
-			ancestors.insert(0,tempObj)
+		# We're moving backwards along the ancestor chain, so add this to the start of the list.
+		ancestors.insert(0,tempObj)
 		parent=tempObj.parent
 		tempObj.parent=parent # Cache the parent.
 		tempObj=parent
+	#Remove the final new ancestor as this will be the new focus object
+	del ancestors[-1]
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
 		if hasattr(removedMod,'event_appLoseFocus'):
