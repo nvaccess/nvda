@@ -343,8 +343,7 @@ StrCpy $LANGUAGE $0
 FunctionEnd
 
 Function un.onUninstSuccess
-HideWindow
-MessageBox MB_ICONINFORMATION|MB_OK $(msg_NVDASuccessfullyRemoved)
+MessageBox MB_ICONINFORMATION|MB_TOPMOST|MB_OK $(msg_NVDASuccessfullyRemoved)
 FunctionEnd
 
 Function isNVDARunning
