@@ -606,8 +606,8 @@ class AppModule(appModuleHandler.AppModule):
 		for field in info.getInitialFields(formatConfig):
 			if isinstance(field,textHandler.FormatField):
 				formatField.update(field)
-		speechText=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
-		speech.speakMessage(speechText)
+		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
+		ui.message(text)
 
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.getFocusObject()
