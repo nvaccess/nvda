@@ -109,19 +109,19 @@ class AppModule(appModuleHandler.AppModule):
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
 
 	def script_increaseSynthSetting(self,keyPress):
-		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
+		ui.message("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
 	script_increaseSynthSetting.__doc__=_("Increases the currently active setting in the synth settings ring")
 
 	def script_decreaseSynthSetting(self,keyPress):
-		speech.speakMessage("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
+		ui.message("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
 	script_decreaseSynthSetting.__doc__=_("Decreases the currently active setting in the synth settings ring")
 
 	def script_nextSynthSetting(self,keyPress):
-		speech.speakMessage("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
+		ui.message("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
 	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
 
 	def script_previousSynthSetting(self,keyPress):
-		speech.speakMessage("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
+		ui.message("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress):
@@ -131,7 +131,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
-		speech.speakMessage(_("speak typed characters")+" "+onOff)
+		ui.message(_("speak typed characters")+" "+onOff)
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
 	def script_toggleSpeakTypedWords(self,keyPress):
@@ -141,7 +141,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			config.conf["keyboard"]["speakTypedWords"]=True
-		speech.speakMessage(_("speak typed words")+" "+onOff)
+		ui.message(_("speak typed words")+" "+onOff)
 	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
 
 	def script_toggleSpeakCommandKeys(self,keyPress):
@@ -151,7 +151,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
-		speech.speakMessage(_("speak command keys")+" "+onOff)
+		ui.message(_("speak command keys")+" "+onOff)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
 	def script_toggleSpeakPunctuation(self,keyPress):
@@ -161,7 +161,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			onOff=_("on")
 			config.conf["speech"]["speakPunctuation"]=True
-		speech.speakMessage(_("speak punctuation")+" "+onOff)
+		ui.message(_("speak punctuation")+" "+onOff)
 	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
 	def script_moveMouseToNavigatorObject(self,keyPress):
@@ -543,7 +543,7 @@ class AppModule(appModuleHandler.AppModule):
 		elif newMode==speech.speechMode_talk:
 			name=_("talk")
 		speech.cancelSpeech()
-		speech.speakMessage(_("speech mode %s")%name)
+		ui.message(_("speech mode %s")%name)
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 

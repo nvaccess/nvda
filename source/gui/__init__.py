@@ -10,6 +10,7 @@ import sys
 import wx
 from wx.lib import newevent
 import globalVars
+import ui
 from logHandler import log
 import config
 import versionInfo
@@ -143,12 +144,12 @@ class MainFrame(wx.Frame):
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration applied"))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration applied"))
 
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration saved"))
+			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
 			self.prePopup()
 			wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
