@@ -955,7 +955,7 @@ class MozillaListItem(IAccessible):
 
 	def _get_children(self):
 		children=super(MozillaListItem,self)._get_children()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccesssibleHandler.ROLE_SYSTEM_STATICTEXT]):
+		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)):
 			del children[0]
 		return children
 
