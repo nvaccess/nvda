@@ -140,6 +140,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
 		self._passThrough=False
+		self.disableAutoPassThrough = False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
 
@@ -365,7 +366,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
 		if reason and (
-			(reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			self.disableAutoPassThrough
+			or (reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
 			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
@@ -411,6 +413,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.passThrough:
 			return sendKey(keyPress)
 		self.passThrough = False
+		self.disableAutoPassThrough = False
 		virtualBufferHandler.reportPassThrough(self)
 	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
 
