@@ -14,6 +14,13 @@ import fnmatch
 from versionInfo import *
 from py2exe import build_exe
 import wx
+import imp
+
+def getModuleExtention(thisModType):
+	for ext,mode,modType in imp.get_suffixes():
+		if modType==thisModType:
+			return ext
+	raise ValueError("unknown mod type %s"%thisModType)
 
 # py2exe insists on excluding certain dlls that don't seem to exist on many systems, so hackishly force them to be included.
 origIsSystemDLL = build_exe.isSystemDLL
@@ -35,14 +42,16 @@ class py2exe(build_exe.py2exe):
 		import generate
 		generate.main()
 		# Add the files just generated.
+		compiledModExtention=getModuleExtention(imp.PY_COMPILED)
+		sourceModExtention=getModuleExtention(imp.PY_SOURCE)
 		self.distribution.data_files.extend(
 			[
-				("comInterfaces", glob("comInterfaces/*.pyc")),
-				("appModules", glob("appModules/*.pyc")),
+				("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
+				("appModules", glob("appModules/*%s"%compiledModExtention)),
 			]
 			+ getLocaleDataFiles()
-			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*.py",))
-			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*.py",))
+			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,))
+			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,))
 		)
 		build_exe.py2exe.run(self)
 
