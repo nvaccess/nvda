@@ -65,7 +65,7 @@ roleLabels = {
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	controlTypes.ROLE_LISTITEM: None,
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
-	controlTypes.ROLE_MENU: _("mnu"),
+	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	controlTypes.ROLE_MENUITEM: None,
 	controlTypes.ROLE_BUTTON: _("btn"),
 	controlTypes.ROLE_CHECKBOX: _("chk"),
