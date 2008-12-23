@@ -131,7 +131,7 @@ class ExcelGrid(IAccessible):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
 		obj=ExcelCell(self,self.getSelectedRange())
-		eventHandler.queueEvent("gainFocus",obj)
+		eventHandler.executeEvent('gainFocus',obj)
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 	script_moveByCell.canPropagate=True
 
