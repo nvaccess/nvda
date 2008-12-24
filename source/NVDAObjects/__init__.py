@@ -678,6 +678,8 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.cancelSpeech()
 		api.setNavigatorObject(self)
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
+		if not eventHandler.isPendingEvents('gainFocus'):
+			braille.handler.handleGainFocus(self)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
