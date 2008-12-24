@@ -8,10 +8,11 @@
 
 #Bit of a dance to force comtypes generated interfaces in to our directory
 import comtypes.client
-comtypes.client.gen_dir='.\\comInterfaces'
-import sys
-sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
+import comtypes.gen
+import comInterfaces
+comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+import sys
 import os
 import time
 import logHandler
