@@ -108,7 +108,7 @@ setup(
 		"excludes": ["comInterfaces"],
 		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
 		# The explicit inclusion of ui can be removed once ui is imported by a bundled module.
-		"includes": ["ui"] + getOptionalIncludes(),
+		"includes": getOptionalIncludes(),
 	}},
 	zipfile = None,
 	data_files=[
