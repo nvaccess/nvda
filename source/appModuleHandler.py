@@ -149,7 +149,8 @@ def fetchAppModule(processID,appName,useDefault=False):
 	try:
 		found=imp.find_module(appName,__path__)
 		try:
-			mod=imp.load_module(appName,*found).AppModule(processID,friendlyAppName)
+			#best to use imp.load_module but then imports of other appModules in this module fail
+			mod=__import__(appName,globals(),locals(),[]).AppModule(processID,friendlyAppName)
 		except:
 			log.error("error in appModule %s"%appName,exc_info=True)
 			speech.speakMessage(_("Error in appModule %s")%appName)
