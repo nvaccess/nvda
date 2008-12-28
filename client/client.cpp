@@ -1,10 +1,14 @@
 #define UNICODE
 #include <cstdio>
+#include <cassert>
 #include <map>
 #include <sstream>
 #include <windows.h>
 #include <remoteApi/remoteApi.h>
 #include "client.h"
+
+#define VBufClientLibName L"VBufClient.dll"
+#define VBufBaseLibName L"VBufBase.dll"
 
 typedef struct {
 	int processID;
@@ -13,6 +17,16 @@ typedef struct {
 } remoteServerInfo_t;
 
 std::map<handle_t,remoteServerInfo_t> remoteServerMap;
+
+HINSTANCE VBufClientLibHandle=0;
+
+#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
+BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		VBufClientLibHandle=hModule;
+	}
+	return TRUE;
+}
 
 handle_t VBufClient_connect(int processID) {
 	RPC_STATUS rpcStatus;
@@ -30,7 +44,10 @@ handle_t VBufClient_connect(int processID) {
 		return NULL;
 	}
 	wchar_t VBufLibPath[1024];
-	GetFullPathName(L"VBufBase.dll",1024,VBufLibPath,NULL);
+	assert(VBufClientLibHandle); //we need a valid handle for current dll
+	int i=GetModuleFileName(VBufClientLibHandle,VBufLibPath,1024);
+	assert(i>0); //size of path must be greater than 0
+	wcscpy(VBufLibPath+(i-wcslen(VBufClientLibName)),VBufBaseLibName);
 	void* remoteVBufLibPath=VirtualAllocEx(processHandle,NULL,sizeof(VBufLibPath),MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
 	if(remoteVBufLibPath==NULL) {
 		fprintf(stderr,"Could not allocate remoteVBufLibPath\n");
