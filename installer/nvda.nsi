@@ -84,7 +84,8 @@ Var StartMenuFolder
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
-!define MUI_FINISHPAGE_NOREBOOTSUPPORT
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_FUNCTION makeRunAppOnInstSuccess
 !insertmacro MUI_PAGE_FINISH
 
 ;Confirm uninstall page
@@ -159,7 +160,7 @@ ReserveFile "waves\${SNDLogo}"
 ;Global variables
 
 Var oldNVDAWindowHandle
- Var NVDAInstalled ;"1" if NVDA has been installed
+var runAppOnInstSuccess
 var hmci
 
 ;-----
@@ -185,7 +186,6 @@ CreateDirectory "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\virtualBuffer.dll" "$INSTDIR\lib\virtualBuffer.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
-strcpy $NVDAInstalled "1"
 ;Shortcuts
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
@@ -194,11 +194,11 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\d
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-!insertmacro MUI_STARTMENU_WRITE_END
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+!insertmacro MUI_STARTMENU_WRITE_END
 ;Items for uninstaller
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${VERSION}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayVersion" "${VERSION}"
@@ -240,6 +240,7 @@ SectionEnd
 ;Functions
 
 Function .onInit
+strcpy $runAppOnInstSuccess "0"
 ; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
 IfFileExists "$PROGRAMFILES\NVDA" 0
 Delete "$PROGRAMFILES\NVDA"
@@ -317,9 +318,10 @@ FunctionEnd
 function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-;call manualQuitNVDA
 Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+strcmp $runAppOnInstSuccess "1" +1 end
 Exec "$INSTDIR\${NVDAApp}"
+end:
 FunctionEnd
 
 function .oninstFailed
@@ -329,6 +331,10 @@ functionEnd
 Function .onGUIEnd
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK "$PLUGINSDIR\${NVDATempDir}"
+FunctionEnd
+
+function makeRunAppOnInstSuccess
+strcpy $runAppOnInstSuccess "1"
 FunctionEnd
 
 ; Uninstall functions
