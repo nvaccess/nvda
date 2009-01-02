@@ -219,6 +219,34 @@ class VBufStorage_fieldNode_t {
 	VBufStorage_buffer_t* getBuffer() const;
 
 /**
+ * points to this node's parent control field node.
+ * it is garenteed that this node will be one of the parent's children (firstChild [next next...] or lastChild [previous previous...]).
+ */
+	VBufStorage_controlFieldNode_t* getParent();
+
+/**
+ * points to the node directly before this node that shares the same parent as this node. 
+ */
+	VBufStorage_fieldNode_t* getPrevious();
+
+/**
+ * points to the node directly after this node that shares the same parent as this node.
+ */
+	VBufStorage_fieldNode_t* getNext();
+
+/**
+ * points to this node's first child. 
+ * The child will have no previous node, and it will have this node as its parent.
+ */
+	VBufStorage_fieldNode_t* getFirstChild();
+
+/**
+ * points to this node's last child.
+ * the child will have no next node, and it will have this node as its parent.
+ */
+	VBufStorage_fieldNode_t* getLastChild();
+
+/**
  * Adds an attribute to this field.
  * @param name the name of the attribute
  * @param value the value of the attribute.

@@ -17,8 +17,20 @@
  */
 class VBUFLIBENTRY VBufBackend_t {
 	protected:
+
+/**
+ * identifies the window or document where the backend starts rendering from
+ */
 	int rootDocHandle;
+
+/**
+ * Represents the ID in the window or document where the backend starts rendering
+ */
 	int rootID;
+
+/**
+ * The storage buffer the backend uses for rendering
+ */
 	VBufStorage_buffer_t* storageBuffer;
 
 	public:
@@ -31,7 +43,22 @@ class VBUFLIBENTRY VBufBackend_t {
  */
 	VBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
 
-/*
+/**
+ * identifies the window or document where the backend starts rendering from
+ */
+	int getRootDocHandle();
+
+/**
+ * Represents the ID in the window or document where the backend starts rendering
+ */
+	int getRootID();
+
+/**
+ * The storage buffer the backend uses for rendering
+ */
+	VBufStorage_buffer_t* getStorageBuffer();
+
+/**
  * Destructor
  */
 	virtual ~VBufBackend_t();

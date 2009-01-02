@@ -14,6 +14,18 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg, VBufStorage_buffer_t* 
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg<<L", storageBuffer "<<storageBufferArg);
 }
 
+int VBufBackend_t::getRootDocHandle() {
+	return rootDocHandle;
+}
+
+int VBufBackend_t::getRootID() {
+	return rootID;
+}
+
+VBufStorage_buffer_t*  VBufBackend_t::getStorageBuffer() {
+	return storageBuffer;
+}
+
 VBufBackend_t::~VBufBackend_t() {
 	DEBUG_MSG(L"Backend being destroied");
 }

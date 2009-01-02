@@ -250,6 +250,31 @@ VBufStorage_buffer_t* VBufStorage_fieldNode_t::getBuffer() const {
 	return buffer;
 }
 
+VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getParent() {
+	DEBUG_MSG(L"parent at "<<parent);
+	return parent;
+}
+
+VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getPrevious() {
+	DEBUG_MSG(L"previous at "<<previous);
+	return previous;
+}
+
+VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getNext() {
+	DEBUG_MSG(L"next at "<<next);
+	return next;
+}
+
+VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getFirstChild() {
+	DEBUG_MSG(L"first child at "<<firstChild);
+	return firstChild;
+}
+
+VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getLastChild() {
+	DEBUG_MSG(L"last child at "<<lastChild);
+	return lastChild;
+}
+
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
 	DEBUG_MSG(L"Adding attribute "<<name<<L" with value "<<value);
 	this->attributes[name]=value;
