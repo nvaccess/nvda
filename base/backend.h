@@ -24,8 +24,6 @@ class VBUFLIBENTRY VBufBackend_t {
 	public:
 
 /**
- * 
-/**
  * constructor
  * @param docHandle uniquely identifies the document or window containing the content to ve rendered
  * @param ID uniquely identifies where to start rendering from in the document or window

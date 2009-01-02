@@ -124,6 +124,7 @@ class VBufStorage_fieldNode_t {
 /**
  * moves to the next node, in depth-first order.
 * @param moveBackwards if true then it will use lastChild and previous, rather than firstChild and next.
+ * @param limitNode the node which can not be passed
  * @param relativeStartOffset memory to place the start offset of the next node relative to the start offset of the original node
  * @return the next node.
  */
@@ -186,7 +187,7 @@ class VBufStorage_fieldNode_t {
 
 /**
  * Associates this node with the given buffer.
- * @param the buffer to associate with.
+ * @param buffer the buffer to associate with.
  * @return true if successfull, false otherwise.
  */
 	virtual void associateWithBuffer(VBufStorage_buffer_t* buffer);
@@ -199,6 +200,7 @@ class VBufStorage_fieldNode_t {
 /**
  * constructor.
  * @param length the length in characters this node should be, usually left as  its default.
+ * @param isBlock true if this node should be a block element, false otherwise
  */
 	VBufStorage_fieldNode_t(int length, bool isBlock);
 
@@ -472,7 +474,7 @@ class VBufStorage_buffer_t {
  * Finds a field node that contains particular attributes.
  * @param offset offset in the buffer to start searching from
  * @param direction which direction to search
- * @param attributesString the attributes the node should contain
+ * @param attribsString the attributes the node should contain
  * @param startOffset memory where the start offset of the found node can be placed
  * @param endOffset memory where the end offset of the found node will be placed
  * @return the found field node
@@ -505,6 +507,7 @@ class VBufStorage_buffer_t {
  * Retreaves the text in the buffer between given offsets, optionally containing markup.
  * @param startOffset the offset to start from
  * @param endOffset the offset to end at. Use -1 to mean end of buffer.
+ * @param text where to place the found text
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */

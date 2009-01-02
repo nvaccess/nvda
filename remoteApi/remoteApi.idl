@@ -85,7 +85,7 @@ interface VBufRemote {
  * @param buffer the virtual buffer to use
  * @param offset offset in the buffer to start searching from
  * @param direction which direction to search
- * @param attributesString the attributes the node should contain
+ * @param attribsString the attributes the node should contain
  * @param startOffset memory where the start offset of the found node can be placed
  * @param endOffset memory where the end offset of the found node will be placed
  * @return the found field node
@@ -122,6 +122,7 @@ interface VBufRemote {
  * @param buffer the virtual buffer to use
  * @param startOffset the offset to start from
  * @param endOffset the offset to end at. Use -1 to mean end of buffer.
+ * @param text: receives a pointer to the text in the given range
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
