@@ -564,6 +564,16 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	return textFieldNode;
 }
 
+bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer) {
+	assert(buffer); //Buffer can't be NULL
+	assert(buffer!=this); //cannot merge a buffer into itself
+	assert(buffer->rootNode); //buffer must contain nodes
+	insertSubtree(parent,previous,buffer->rootNode);
+	buffer->rootNode=NULL;
+	delete buffer;
+	return true;
+}
+
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	if(!isNodeInBuffer(node)) {
 		DEBUG_MSG(L"Node is not in this buffer, returning false");
