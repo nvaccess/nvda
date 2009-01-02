@@ -380,13 +380,6 @@ class VBufStorage_buffer_t {
 	void forgetControlFieldNode(VBufStorage_controlFieldNode_t* node);
 
 /**
- * finds out if the given node exists in this buffer.
- * @param node the node you wish to check.
- * @return true if it is in the buffer, false otherwise.
- */
-	bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
-
-/**
  * Inserts the given fieldNode in to the buffer's tree of nodes.
  * Associates the node with this buffer and makes all needed connections with other nodes in the buffer's node tree.
  * @param parent a control field already in the buffer that should be the inserted node's parent, note if also specifying previous then parent can be NULL.
@@ -436,6 +429,13 @@ class VBufStorage_buffer_t {
  * @return the newly added text field.
  */
 	VBufStorage_textFieldNode_t* addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text);
+
+/**
+ * finds out if the given node exists in this buffer.
+ * @param node the node you wish to check.
+ * @return true if it is in the buffer, false otherwise.
+ */
+	bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
 
 /**
  * inserts the content of a   buffer in to this buffer at a particular position and then deletes that buffer.
