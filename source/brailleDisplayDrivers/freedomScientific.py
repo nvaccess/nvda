@@ -24,7 +24,7 @@ HCURSOR=c_long
 
 #Standard window class stuff
 
-WNDPROC=CFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
+WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
 class WNDCLASSEXW(Structure):
 	_fields_=[
