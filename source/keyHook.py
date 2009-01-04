@@ -32,7 +32,7 @@ def initialize(downCallback,upCallback):
 	global hookID, keyDownCallback, keyUpCallback
 	keyDownCallback=downCallback
 	keyUpCallback=upCallback
-	hookID=windll.user32.SetWindowsHookExW(WH_KEYBOARD_LL,keyboardHook,0,0)
+	hookID=windll.user32.SetWindowsHookExW(WH_KEYBOARD_LL,keyboardHook,windll.kernel32.GetModuleHandleW(None),0)
 	if hookID==0:
 		raise OSError("Could not register hook")
 
