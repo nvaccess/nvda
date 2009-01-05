@@ -1,12 +1,88 @@
 import UIAHandler
 import controlTypes
+import textHandler
 from NVDAObjects.window import Window
+from NVDAObjects import NVDAObjectTextInfo
 
+class UIATextInfo(textHandler.TextInfo):
+
+	NVDAUnitsToUIAUnits={
+		"character":UIAHandler.TextUnit_Character,
+		"word":UIAHandler.TextUnit_Word,
+		"line":UIAHandler.TextUnit_Line,
+		"paragraph":UIAHandler.TextUnit_Paragraph,
+	}
+
+	def __init__(self,obj,position):
+		super(UIATextInfo,self).__init__(obj,position)
+		if isinstance(position,UIAHandler.IUIAutomationTextRange):
+			self._rangeObj=position.Clone()
+		elif position==textHandler.POSITION_CARET or position==textHandler.POSITION_SELECTION:
+			self._rangeObj=self.obj.UIATextPattern.GetSelection()[0].clone()
+		else:
+			self._rangeObj=self.obj.UIATextPattern.DocumentRange
+
+	def _get_text(self):
+		return self._rangeObj.GetText(-1)
+
+	def expand(self,unit):
+		UIAUnit=self.NVDAUnitsToUIAUnits[unit]
+		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
+
+	def move(self,unit,direction,endPoint=None):
+		UIAUnit=self.NVDAUnitsToUIAUnits[unit]
+		if endPoint=="start":
+			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
+		elif endPoint=="end":
+			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
+		else:
+			res=self._rangeObj.Move(UIAUnit,direction)
+		return res
+
+	def copy(self):
+		return self.__class__(self.obj,self._rangeObj)
+
+	def collapse(self,end=False):
+		if end:
+			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+		else:
+			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+
+	def compareEndPoints(self,other,which):
+		if which.startswith('start'):
+			src=UIAHandler.TextPatternRangeEndpoint_Start
+		else:
+			src=UIAHandler.TextPatternRangeEndpoint_End
+		if which.endswith('Start'):
+			target=UIAHandler.TextPatternRangeEndpoint_Start
+		else:
+			target=UIAHandler.TextPatternRangeEndpoint_End
+		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
+
+			
 class UIA(Window):
 
 	def __init__(self,UIAElement):
 		self.UIAElement=UIAElement
 		super(UIA,self).__init__(UIAElement.currentNativeWindowHandle)
+		if self.UIATextPattern:
+			self.TextInfo=UIATextInfo
+			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
+				("ExtendedUp","moveByLine"),
+				("ExtendedDown","moveByLine"),
+				("control+ExtendedUp","moveByLine"),
+				("control+ExtendedDown","moveByLine"),
+				("ExtendedLeft","moveByCharacter"),
+				("ExtendedRight","moveByCharacter"),
+				("Control+ExtendedLeft","moveByWord"),
+				("Control+ExtendedRight","moveByWord"),
+				("ExtendedHome","moveByCharacter"),
+				("ExtendedEnd","moveByCharacter"),
+				("control+extendedHome","moveByLine"),
+				("control+extendedEnd","moveByLine"),
+				("ExtendedDelete","delete"),
+				("Back","backspace"),
+			]]
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
@@ -33,6 +109,15 @@ class UIA(Window):
 			else:
 				self._UIATogglePattern=None
 		return self._UIATogglePattern
+
+	def _get_UIATextPattern(self):
+		if not hasattr(self,'_UIATextPattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TextPatternId)
+			if punk:
+				self._UIATextPattern=punk.QueryInterface(UIAHandler.IUIAutomationTextPattern)
+			else:
+				self._UIATextPattern=None
+		return self._UIATextPattern
 
 	def _get_name(self):
 		return self.UIAElement.currentName
