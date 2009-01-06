@@ -496,12 +496,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;child=child->next) {
 		deleteSubtree(child);
 	}
-	VBufStorage_controlFieldNode_t* controlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(node);
-	if(controlFieldNode) {
-		DEBUG_MSG(L"Removing this controlFieldNode from the controlFieldNodesByIdentifier cache");
-		assert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==1); //There must be 1 controlFieldNode with this identifier cached
-		controlFieldNodesByIdentifier.erase(controlFieldNode->identifier);
-	}
+	node->disassociateFromBuffer();
 	DEBUG_MSG(L"deleting node at "<<node);
 	delete node;
 	DEBUG_MSG(L"Deleted subtree");
@@ -820,7 +815,8 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	int lineEnd = bufferEnd;
 	do {
 		if(node->length>0&&node->firstChild==NULL) {
-			std::wstring& text = dynamic_cast<VBufStorage_textFieldNode_t*>(node)->text;
+			std::wstring text;
+			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative; i < node->length; i++) {
 				if (text[i] == '\n') {
@@ -862,7 +858,8 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	int lineStart = bufferStart;
 	do {
 		if(node->length>0&&node->firstChild==NULL) {
-			std::wstring& text = dynamic_cast<VBufStorage_textFieldNode_t*>(node)->text;
+			std::wstring text;
+			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative - 1; i >= 0; i--) {
 				if (text[i] == '\n') {
