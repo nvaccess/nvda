@@ -1001,7 +1001,7 @@ class ProgressBar(IAccessible):
 		if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
 			tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
 		elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,val)
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%int(val))
 		globalVars.lastProgressValue=val
 
 class InternetExplorerClient(IAccessible):
