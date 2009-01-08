@@ -9,6 +9,7 @@
 !include "MUI2.nsh"
 !include "WinMessages.nsh"
 !include "Library.nsh"
+!include "FileFunc.nsh"
 
 ;--------
 ;Settings
@@ -65,7 +66,7 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !insertmacro MUI_PAGE_LICENSE "..\copying.txt"
 
 ;Page to handle previous installs
-page custom pagePrevInstall
+page custom pagePrevInstall leavePagePrevInstall
 
 ;Directory selection page
 !insertmacro MUI_PAGE_DIRECTORY
@@ -89,12 +90,14 @@ Var StartMenuFolder
 !insertmacro MUI_PAGE_FINISH
 
 ;Confirm uninstall page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE un.handleNonInteractive 
 !insertmacro MUI_UNPAGE_CONFIRM
 
 ;Uninstall page
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ;Uninstall finnish page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE un.handleNonInteractive 
 !InsertMacro MUI_UNPAGE_FINISH
 
 ;--------------------------------
@@ -162,6 +165,7 @@ ReserveFile "waves\${SNDLogo}"
 Var oldNVDAWindowHandle
 var runAppOnInstSuccess
 var hmci
+var prevUninstallChoice
 
 ;-----
 ;Sections
@@ -285,13 +289,40 @@ Strcmp $0 "" +1 +2
 abort
 IfFileExists "$0" +2 +1 
 abort
-MessageBox MB_OK $(Msg_UninsPrev)
+!insertmacro MUI_HEADER_TEXT "Previous Installation found" "A previous installation of NVDA was found on your system. It is strongly recommended that you uninstall it before continuing with the installation."
+nsDialogs::Create 1018
+${NSD_CreateLabel} 0 0 100% 48u $(msg_pagePrevInstallLabel)
+${NSD_CreateCheckBox} 30u 50u -30u 8u $(msg_pagePrevInstallUninstallCheckBox)
+pop $0
+${NSD_OnClick} $0 updatePrevUninstChoice
+SendMessage $0 ${BM_SETCHECK} ${BST_CHECKED} 0
+strcpy $prevUninstallChoice "1"
+${NSD_SetFocus} $0
+nsDialogs::Show
+FunctionEnd
+
+function updatePrevUninstChoice
+pop $0 ;The checkbox
+${NSD_GetState} $0 $1
+IntCmp $1 ${BST_CHECKED} doChecked doUnchecked
+doChecked:
+strcpy $prevUninstallChoice "1"
+goto continue
+doUnchecked:
+strcpy $prevUninstallChoice "0"
+continue:
+FunctionEnd
+
+Function leavePagePrevInstall
+strcmp $prevUninstallChoice "1" doPrevUninstall end
+doPrevUninstall:
+ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
+ReadRegStr $1 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallDirectory"
 HideWindow
-GetTempFileName $2
-CopyFiles "$0" "$2"
-ExecWait "$2 /S _?=$1"
-delete "$2"
+ExecWait "$0 /nonInteractive _?=$1"
+delete "$0"
 bringToFront
+end:
 functionEnd
 
 function manualQuitNVDA
@@ -333,6 +364,9 @@ function makeRunAppOnInstSuccess
 strcpy $runAppOnInstSuccess "1"
 FunctionEnd
 
+;Uninstall variables
+var un.isNonInteractive
+
 ; Uninstall functions
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
@@ -342,11 +376,33 @@ StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log
 !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+clearErrors
+strcpy $un.isNonInteractive "0"
+${GetParameters} $0
+${GetOptions} $0 "nonInteractive" $1
+ifErrors +2 +1
+strcpy $un.isNonInteractive "1"
+ifSilent +1 continue
+banner::show /nounload /set 76 "Uninstalling NVDA, please wait..." "NVDA Uninstaller"
+continue:
 FunctionEnd
 
-Function un.onUninstSuccess
-MessageBox MB_ICONINFORMATION|MB_TOPMOST|MB_OK $(msg_NVDASuccessfullyRemoved)
+function un.handleNonInteractive
+strcmp $un.isNonInteractive "1" +1 +2
+abort
 FunctionEnd
+
+function un.onUninstSuccess
+ifSilent +1 continue
+banner::destroy
+continue:
+functionEnd
+
+function un.onUninstFailed
+ifSilent +1 continue
+banner::destroy
+continue:
+functionEnd
 
 Function isNVDARunning
 FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"
