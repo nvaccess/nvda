@@ -34,7 +34,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self):
 		global constants
 		self._server = comtypes.client.CreateObject(COM_CLASS)
-		import comInterfaces.HTBRAILLEDRIVERSERVERLib as constants
+		import comtypes.gen.HTBRAILLEDRIVERSERVERLib as constants
 		# Keep the connection object so it won't become garbage
 		self.advise = comtypes.client.GetEvents(self._server, Sink())
 		self._server.initialize()
