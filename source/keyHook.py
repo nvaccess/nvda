@@ -43,7 +43,7 @@ def initialize(downCallback,upCallback):
 		raise OSError("Could not register hook")
 
 def terminate():
-	global hookID, keyDownCallbac, keyUpCallback
+	global hookID, keyDownCallback, keyUpCallback
 	if windll.user32.UnhookWindowsHookEx(hookID)==0:
 		raise OSError("could not unregister hook %s"%hookID)
 	hookID=0
