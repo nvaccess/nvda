@@ -991,18 +991,18 @@ class ProgressBar(IAccessible):
 	BASE_BEEP_FREQ=110
 
 	def event_valueChange(self):
-		if config.conf["presentation"]["reportProgressBarUpdates"] !="off":
-			val=self.value
-			if val:
-				val=val.rstrip('%\x00')
-			if val and val!=globalVars.lastProgressValue:
-				if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
-					tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
-				elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-					queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,val)
-				globalVars.lastProgressValue=val
-		else:
-			super(ProgressBar,self).event_valueChange()
+		if config.conf["presentation"]["reportProgressBarUpdates"]=="off":
+			return super(ProgressBar,self).event_valueChange()
+		val=self.value
+		if val:
+			val=val.rstrip('%\x00')
+		if not val or val==globalVars.lastProgressValue:
+			return
+		if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
+			tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
+		elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,val)
+		globalVars.lastProgressValue=val
 
 class InternetExplorerClient(IAccessible):
 
