@@ -603,6 +603,9 @@ Tries to force this object to take the focus.
 	def _get_positionInfo(self):
 		return {}
 
+	def _get_processID(self):
+		raise RuntimeError
+
 	def _get_isProtected(self):
 		return False
 

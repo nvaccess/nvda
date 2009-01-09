@@ -39,7 +39,7 @@ class WinConsole(Window):
 		if not winUser.isWindow(self.windowHandle):
 			return
 		#Get the process ID of the console this NVDAObject is fore
-		processID=self.windowProcessID
+		processID=self.processID
 		if processID<=0:
 			log.debugWarning("Could not get valid processID from window "%self.windowHandle)
 			return

@@ -98,9 +98,9 @@ def getKeyMapFileName(appName,layout):
 		return None
 
 def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.window.Window):
+	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.windowProcessID)
+	return getAppModuleFromProcessID(obj.processID)
 
 def getAppModuleFromProcessID(processID):
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.

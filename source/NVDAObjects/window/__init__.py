@@ -60,7 +60,7 @@ An NVDAObject for a window
 		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u"\0"
 
-	def _get_windowProcessID(self):
+	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):
 			return self._processIDThreadID[0]
 		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
