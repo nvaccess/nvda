@@ -873,8 +873,8 @@ class Dialog(IAccessible):
 			if not (
 				 # Static text, labels and links
 				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
-				# Read-only, non-focusable edit fields
-				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_FOCUSABLE not in childStates)
+				# Read-only, non-multiline edit fields
+				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
 			):
 				continue
 			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
@@ -885,7 +885,7 @@ class Dialog(IAccessible):
 				continue
 			childName=child.name
 			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
-			#However, graphics, Windows, static text, separators and non-focusable, read-only edit fields are ok.
+			#However, graphics, static text, separators and Windows are ok.
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 				continue
 			childText=child.makeTextInfo(textHandler.POSITION_ALL).text
