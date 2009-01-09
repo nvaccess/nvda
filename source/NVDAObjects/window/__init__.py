@@ -79,6 +79,15 @@ An NVDAObject for a window
 		if parentHandle:
 			return self.__class__(windowHandle=parentHandle)
 
+	def _get_states(self):
+		states=super(Window,self)._get_states()
+		style=self.windowStyle
+		if not style&winUser.WS_VISIBLE:
+			states.add(controlTypes.STATE_INVISIBLE)
+		if style&winUser.WS_DISABLED:
+			states.add(controlTypes.STATE_UNAVAILABLE)
+		return states
+
 	def _get_windowStyle(self):
 		return winUser.getWindowStyle(self.windowHandle)
 
