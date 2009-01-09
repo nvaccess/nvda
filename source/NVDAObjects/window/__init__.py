@@ -4,10 +4,9 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import weakref
 import ctypes
 import winUser
-import speech
+import controlTypes
 from NVDAObjects import NVDAObject
 
 class Window(NVDAObject):
@@ -38,6 +37,9 @@ An NVDAObject for a window
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
+
+	def _get_role(self):
+		return controlTypes.ROLE_WINDOW
 
 	def _get_windowClassName(self):
 		if hasattr(self,"_windowClassName"):
