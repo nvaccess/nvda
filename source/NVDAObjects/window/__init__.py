@@ -74,6 +74,21 @@ An NVDAObject for a window
 		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
 		return self._processIDThreadID[1]
 
+	def _get_next(self):
+		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
+		if nextWindow:
+			return Window(nextWindow)
+
+	def _get_previous(self):
+		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
+		if prevWindow:
+			return Window(prevWindow)
+
+	def _get_firstChild(self):
+		childWindow=winUser.getTopWindow(self.windowHandle)
+		if childWindow:
+			return Window(childWindow)
+
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:

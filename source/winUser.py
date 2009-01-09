@@ -71,6 +71,7 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 #getWindow
+GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
 #Window messages
@@ -352,6 +353,9 @@ def getCaretPos():
 	point=POINT()
 	user32.GetCaretPos(byref(point))
 	return [point.x,point.y]
+
+def getTopWindow(hwnd):
+	return user32.GetTopWindow(hwnd)
 
 def getWindowText(hwnd):
 	buf=create_unicode_buffer(1024)
