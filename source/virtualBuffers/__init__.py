@@ -219,15 +219,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
-		obj = info.NVDAObjectAtStart
-		if not obj:
-			log.debugWarning("Invalid NVDAObjectAtStart")
-			return
+		if reason == speech.REASON_FOCUS:
+			obj = api.getFocusObject()
+		else:
+			obj = info.NVDAObjectAtStart
+			if not obj:
+				log.debugWarning("Invalid NVDAObjectAtStart")
+				return
 		if obj == self.rootNVDAObject:
 			return
-		obj.scrollIntoView()
-		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
-			obj.setFocus()
+		if reason != speech.REASON_FOCUS:
+			obj.scrollIntoView()
+			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
+				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
