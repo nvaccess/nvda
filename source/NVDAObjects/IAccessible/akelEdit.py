@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from NVDAObjects.window.akelEdit import AkelEdit
+from NVDAObjects.akelEdit import AkelEdit
 from . import IAccessible
 
 AkelEdit=type("AkelEdit",(AkelEdit,IAccessible),{})

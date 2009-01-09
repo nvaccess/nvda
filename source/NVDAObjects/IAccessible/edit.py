@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 from . import IAccessible
-from NVDAObjects.window.edit import *
+from NVDAObjects.edit import *
 
 #Create IAccessible versions of some edit window NVDAObjects using mixins
 for cls in (Edit,RichEdit,RichEdit20,RichEdit30,RichEdit50):

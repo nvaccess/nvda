@@ -7,8 +7,8 @@ import winUser
 import globalVars
 import controlTypes
 import config
-from . import Window
-from .. import NVDAObjectTextInfo
+from window import Window
+from . import NVDAObjectTextInfo
 import locale
 
 #Window messages

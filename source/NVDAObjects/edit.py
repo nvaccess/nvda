@@ -24,8 +24,8 @@ from keyUtils import key, sendKey
 from scriptHandler import isScriptWaiting
 import IAccessibleHandler
 import controlTypes
-from . import Window
-from .. import NVDAObjectTextInfo
+from window import Window
+from . import NVDAObjectTextInfo
 import braille
 
 ignoreCaretEvents=False

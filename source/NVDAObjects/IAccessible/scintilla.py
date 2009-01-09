@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from NVDAObjects.window.scintilla import Scintilla
+from NVDAObjects.scintilla import Scintilla
 from . import IAccessible
 
 Scintilla=type("Scintilla",(Scintilla,IAccessible),{})
