@@ -859,14 +859,15 @@ class Dialog(IAccessible):
 		textList=[]
 		childCount=len(children)
 		for index in xrange(childCount):
-			childStates=children[index].states
-			childRole=children[index].role
+			child=children[index]
+			childStates=child.states
+			childRole=child.role
 			#We don't want to handle invisible or unavailable objects
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
-				textList.append(cls.getDialogText(children[index]))
+				textList.append(cls.getDialogText(child))
 				continue
 			# We only want text from certain controls.
 			if not (
@@ -882,14 +883,14 @@ class Dialog(IAccessible):
 			#Like the last one, but a graphic might be before the grouping's description
 			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
 				continue
-			childName=children[index].name
+			childName=child.name
 			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
 			#However, graphics, Windows, static text, separators and non-focusable, read-only edit fields are ok.
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 				continue
-			childText=children[index].makeTextInfo(textHandler.POSITION_ALL).text
-			if not childText or childText.isspace() and children[index].TextInfo!=NVDAObjectTextInfo:
-				childText=children[index].basicText
+			childText=child.makeTextInfo(textHandler.POSITION_ALL).text
+			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
+				childText=child.basicText
 			textList.append(childText)
 		return " ".join(textList)
 
