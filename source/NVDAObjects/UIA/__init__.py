@@ -59,7 +59,6 @@ class UIATextInfo(textHandler.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-			
 class UIA(Window):
 
 	def __init__(self,UIAElement):
@@ -182,7 +181,7 @@ class UIA(Window):
 		if lastChildElement:
 			return UIA(lastChildElement)
 
-	def _get_windowProcessID(self):
+	def _get_processID(self):
 		return self.UIAElement.currentProcessId
 
 	def _get_location(self):
@@ -192,5 +191,4 @@ class UIA(Window):
 		width=r.right-left
 		height=r.bottom-top
 		return left,top,width,height
-
  
