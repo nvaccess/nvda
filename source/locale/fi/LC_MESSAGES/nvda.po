@@ -1,17 +1,21 @@
 # Suomenkielinen lokalisointi NVDA:lle
-# Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2615\n"
+"Project-Id-Version: r2642\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2008-12-24 09:42+0200\n"
+"PO-Revision-Date: 2009-01-09 17:35+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
+
+#: NVDAObjects\IAccessible\__init__.py:1005 appModules\_default.py:758
+msgid "%d percent"
+msgstr "%d prosenttia"
 
 #: NVDAObjects\IAccessible\edit.py:529
 msgid "unknown"
@@ -100,7 +104,7 @@ msgstr "rivin loppu"
 msgid "beginning of row"
 msgstr "rivin alku"
 
-#: appModuleHandler.py:155
+#: appModuleHandler.py:156
 msgid "Error in appModule %s"
 msgstr "Virhe sovellusmoduulissa %s"
 
@@ -109,7 +113,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:162 appModules\_default.py:645
 #: appModules\_default.py:721 appModules\_default.py:731
 #: appModules\_default.py:741 appModules\winamp.py:75 appModules\winamp.py:85
-#: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
+#: keyboardHandler.py:51 keyboardHandler.py:53 keyboardHandler.py:55
 #: virtualBuffers\__init__.py:265
 msgid "on"
 msgstr "käytössä"
@@ -120,8 +124,8 @@ msgstr "käytössä"
 #: appModules\_default.py:642 appModules\_default.py:701
 #: appModules\_default.py:718 appModules\_default.py:728
 #: appModules\_default.py:738 appModules\winamp.py:77 appModules\winamp.py:87
-#: gui\settingsDialogs.py:457 keyboardHandler.py:52 keyboardHandler.py:54
-#: keyboardHandler.py:56 virtualBuffers\__init__.py:265
+#: gui\settingsDialogs.py:457 keyboardHandler.py:51 keyboardHandler.py:53
+#: keyboardHandler.py:55 virtualBuffers\__init__.py:265
 msgid "off"
 msgstr "pois käytöstä"
 
@@ -760,10 +764,6 @@ msgstr ""
 msgid "no system battery"
 msgstr "järjestelmässä ei akkua"
 
-#: appModules\_default.py:758
-msgid "%d percent"
-msgstr "%d prosenttia"
-
 #: appModules\_default.py:759
 msgid "AC power on"
 msgstr "verkkovirta käytössä"
@@ -1355,9 +1355,9 @@ msgid "tilda"
 msgstr "mato"
 
 #: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:264
-#: virtualBuffers_old\MSHTML.py:271 virtualBuffers_old\adobe.py:268
-#: virtualBuffers_old\adobe.py:279 virtualBuffers_old\gecko.py:260
-#: virtualBuffers_old\gecko.py:271
+#: virtualBuffers_old\MSHTML.py:271 virtualBuffers_old\adobe.py:266
+#: virtualBuffers_old\adobe.py:277 virtualBuffers_old\gecko.py:258
+#: virtualBuffers_old\gecko.py:269
 msgid "bullet"
 msgstr "nuoli"
 
@@ -1427,7 +1427,7 @@ msgstr "luettelo"
 
 #: controlTypes.py:186
 msgid "list item"
-msgstr "luettelon osa"
+msgstr "luettelon kohta"
 
 #: controlTypes.py:187
 msgid "graphic"
@@ -2295,7 +2295,7 @@ msgstr ""
 "Voit myös määrittää NVDA:n käyttämään CapsLock-näppäintä NVDA-"
 "näppäimenä.\n"
 "Paina NVDA+n avataksesi NVDA-valikon milloin tahansa.\n"
-"Tästä valikosta voit määrittää NVDA:n asetuksia, saada ohjeita ja "
+"Tästä valikosta voit määrittää NVDA:n asetuksia, lukea ohjeita ja "
 "käyttää muita NVDA:n toimintoja.\n"
 
 #: gui\__init__.py:372
@@ -2475,7 +2475,7 @@ msgstr "Sano &iso ennen isoja kirjaimia"
 
 #: gui\settingsDialogs.py:281
 msgid "&Beep for capitals"
-msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
+msgstr "Äänimerkki iso&jen kirjainten kohdalla"
 
 #: gui\settingsDialogs.py:368
 msgid "Keyboard Settings"
@@ -2491,7 +2491,7 @@ msgstr "Näppäimistöasettelu"
 
 #: gui\settingsDialogs.py:388
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Käytä laskinnäppäimistön Insert-näppäintä NVDA-näppäimenä"
+msgstr "Käytä laskimen Insert-näppäintä NVDA-näppäimenä"
 
 #: gui\settingsDialogs.py:391
 msgid "Use extended Insert as an NVDA modifier key"
@@ -2563,7 +2563,7 @@ msgstr "Lue &ensin objektin tila"
 
 #: gui\settingsDialogs.py:483
 msgid "Report progress &bar updates"
-msgstr "Ilmoita edistymispalkkien p&äivittymiset"
+msgstr "Ilmoita edistymispalkkien p&äivitykset"
 
 #: gui\settingsDialogs.py:486
 msgid "Report progress bar updates"
@@ -2575,11 +2575,11 @@ msgstr "Näennäispuskurit"
 
 #: gui\settingsDialogs.py:513
 msgid "&Maximum number of characters on one line"
-msgstr "Merkk&ien maksimimäärä rivillä"
+msgstr "Merkk&ien enimmäismäärä rivillä"
 
 #: gui\settingsDialogs.py:518
 msgid "&Number of lines per page"
-msgstr "R&ivejä sivulla"
+msgstr "R&ivien enimmäismäärä sivulla"
 
 #: gui\settingsDialogs.py:523
 msgid "Use &screen layout (when supported)"
@@ -2590,200 +2590,163 @@ msgid "Report &virtual presentation on focus changes"
 msgstr "Ilmoita koh&distuksen muuttuessa"
 
 #: gui\settingsDialogs.py:530
-msgid "Update the content &dynamically"
-msgstr "Päivitä sisältöä d&ynaamisesti"
-
-#: gui\settingsDialogs.py:533
-msgid "Report lin&ks"
-msgstr "Ilmoita &linkit"
-
-#: gui\settingsDialogs.py:536
-msgid "Report &lists"
-msgstr "Ilmoita l&uettelot"
-
-#: gui\settingsDialogs.py:539
-msgid "Report list &items"
-msgstr "Ilmoita luettelon &osat"
-
-#: gui\settingsDialogs.py:542 gui\settingsDialogs.py:644
-msgid "Report &headings"
-msgstr "Ilmoita ot&sikot"
-
-#: gui\settingsDialogs.py:545 gui\settingsDialogs.py:638
-msgid "Report &tables"
-msgstr "Ilmoita t&aulukot"
-
-#: gui\settingsDialogs.py:548
-msgid "Report &graphics"
-msgstr "Ilmoita kuv&at"
-
-#: gui\settingsDialogs.py:551
-msgid "Report f&orms"
-msgstr "Ilmoita lo&makkeet"
-
-#: gui\settingsDialogs.py:554
-msgid "Report form &fields"
-msgstr "Ilmoita lomakek&entät"
-
-#: gui\settingsDialogs.py:557 gui\settingsDialogs.py:650
-msgid "Report block &quotes"
-msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
-
-#: gui\settingsDialogs.py:560
-msgid "Report &paragraphs"
-msgstr "Ilmoita ka&ppaleet"
-
-#: gui\settingsDialogs.py:563
-msgid "Report f&rames"
-msgstr "Ilmoita ke&hykset"
-
-#: gui\settingsDialogs.py:566
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen kohdistustila kohdistusmuutoksille"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:533
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen kohdistustila kohdistimen liikuttamiseen"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:560
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:563
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"Ilmoita kohdistimen jälkeiset muotoilumuutokset (saattaa aiheuttaa "
-"hidastumista)"
+"Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
-#: gui\settingsDialogs.py:614
+#: gui\settingsDialogs.py:566
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:617
+#: gui\settingsDialogs.py:569
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:620
+#: gui\settingsDialogs.py:572
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:623
+#: gui\settingsDialogs.py:575
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:578
 msgid "Report st&yle"
 msgstr "Ilmoita tyylim&ääritteet"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:581
 msgid "Report spelling errors"
 msgstr "Ilmoita kirjoitusv&irheet"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:584
 msgid "Report &pages"
 msgstr "Ilmoita sivunume&rot"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:587
 msgid "Report &line numbers"
 msgstr "Ilmoita rivi&numerot"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:590
+msgid "Report &tables"
+msgstr "Ilmoita t&aulukot"
+
+#: gui\settingsDialogs.py:593
 msgid "Report &links"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:596
+msgid "Report &headings"
+msgstr "Ilmoita ot&sikot"
+
+#: gui\settingsDialogs.py:599
 msgid "Report l&ists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:677
+#: gui\settingsDialogs.py:602
+msgid "Report block &quotes"
+msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
+
+#: gui\settingsDialogs.py:629
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:680
+#: gui\settingsDialogs.py:632
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:683
+#: gui\settingsDialogs.py:635
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:686
+#: gui\settingsDialogs.py:638
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:689
+#: gui\settingsDialogs.py:641
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:643
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:665
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:668
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:669
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:670
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:671
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:672
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:679
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:682
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:733
+#: gui\settingsDialogs.py:685
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:800
+#: gui\settingsDialogs.py:752
 msgid "Braille Settings"
 msgstr "Pistenäyttöasetukset"
 
-#: gui\settingsDialogs.py:804
+#: gui\settingsDialogs.py:756
 msgid "Braille &display"
 msgstr "Piste&näyttö"
 
-#: gui\settingsDialogs.py:818
+#: gui\settingsDialogs.py:770
 msgid "Translation &table"
 msgstr "Piste&taulukko"
 
-#: gui\settingsDialogs.py:830
+#: gui\settingsDialogs.py:782
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
-#: gui\settingsDialogs.py:835
+#: gui\settingsDialogs.py:787
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumistaajuus (ms)"
 
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:795
 msgid "Message timeout (sec)"
 msgstr "&Ilmoitusten aikakatkaisu (sek)"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:808
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:808
 msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
@@ -2955,39 +2918,39 @@ msgstr "oikea alt"
 msgid "right windows"
 msgstr "oikea windows"
 
-#: keyboardHandler.py:52
+#: keyboardHandler.py:51
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:76
+#: keyboardHandler.py:75
 msgid "%s keyboard layout"
 msgstr "näppäimistöasettelu %s"
 
-#: keyboardHandler.py:170
+#: keyboardHandler.py:168
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:173
+#: keyboardHandler.py:171
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: keyboardHandler.py:188
+#: keyboardHandler.py:186
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:221
+#: keyboardHandler.py:218
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:156
+#: mouseHandler.py:153
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
@@ -3021,8 +2984,8 @@ msgstr "valinta poistettu"
 
 #: speech.py:590 virtualBuffers_old\MSHTML.py:126
 #: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
-#: virtualBuffers_old\adobe.py:305 virtualBuffers_old\adobe.py:309
-#: virtualBuffers_old\gecko.py:297 virtualBuffers_old\gecko.py:301
+#: virtualBuffers_old\adobe.py:303 virtualBuffers_old\adobe.py:307
+#: virtualBuffers_old\gecko.py:295 virtualBuffers_old\gecko.py:299
 msgid "not %s"
 msgstr "ei %s"
 
@@ -3033,8 +2996,8 @@ msgstr "%s loppuu"
 
 #: speech.py:646 virtualBuffers_old\MSHTML.py:258
 #: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
-#: virtualBuffers_old\adobe.py:262 virtualBuffers_old\adobe.py:273
-#: virtualBuffers_old\gecko.py:254 virtualBuffers_old\gecko.py:265
+#: virtualBuffers_old\adobe.py:260 virtualBuffers_old\adobe.py:271
+#: virtualBuffers_old\gecko.py:252 virtualBuffers_old\gecko.py:263
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
@@ -3530,19 +3493,19 @@ msgstr "siirtää edellisen luettelon kohdalle"
 
 #: virtualBuffers\__init__.py:467
 msgid "no next list item"
-msgstr "ei seuraavaa luettelon osaa"
+msgstr "ei seuraavaa luettelon kohtaa"
 
 #: virtualBuffers\__init__.py:467 virtualBuffers_old\__init__.py:428
 msgid "moves to the next list item"
-msgstr "siirtää seuraavan luettelon osan kohdalle"
+msgstr "siirtää seuraavaan luettelon kohtaann"
 
 #: virtualBuffers\__init__.py:468
 msgid "no previous list item"
-msgstr "ei edellistä luettelon osaa"
+msgstr "ei edellistä luettelon kohtaa"
 
 #: virtualBuffers\__init__.py:468 virtualBuffers_old\__init__.py:439
 msgid "moves to the previous list item"
-msgstr "siirtää edellisen luettelon osan kohdalle"
+msgstr "siirtää edelliseen luettelon kohtaan"
 
 #: virtualBuffers\__init__.py:469
 msgid "moves to the next button"
@@ -3688,19 +3651,19 @@ msgstr "siirtää edellisen kappaleenvaihdollisen sisennyksen kohdalle"
 msgid "no previous block quote"
 msgstr "ei edellistä kappaleenvaihdollista sisennystä"
 
-#: virtualBuffers_old\MSHTML.py:155 virtualBuffers_old\adobe.py:175
-#: virtualBuffers_old\gecko.py:172
+#: virtualBuffers_old\MSHTML.py:155 virtualBuffers_old\adobe.py:173
+#: virtualBuffers_old\gecko.py:170
 msgid "loading document %s"
 msgstr "ladataan dokumenttia %s"
 
-#: virtualBuffers_old\MSHTML.py:163 virtualBuffers_old\adobe.py:184
-#: virtualBuffers_old\gecko.py:181
+#: virtualBuffers_old\MSHTML.py:163 virtualBuffers_old\adobe.py:182
+#: virtualBuffers_old\gecko.py:179
 msgid "done"
 msgstr "valmis"
 
 #: virtualBuffers_old\MSHTML.py:267 virtualBuffers_old\MSHTML.py:274
-#: virtualBuffers_old\adobe.py:272 virtualBuffers_old\adobe.py:285
-#: virtualBuffers_old\gecko.py:264 virtualBuffers_old\gecko.py:277
+#: virtualBuffers_old\adobe.py:270 virtualBuffers_old\adobe.py:283
+#: virtualBuffers_old\gecko.py:262 virtualBuffers_old\gecko.py:275
 msgid "definition"
 msgstr "määritelmä"
 
@@ -3747,7 +3710,7 @@ msgstr "ei enempää luetteloita"
 
 #: virtualBuffers_old\__init__.py:427 virtualBuffers_old\__init__.py:438
 msgid "no more list items"
-msgstr "ei enempää luettelon osia"
+msgstr "ei enempää luettelon kohtia"
 
 #: virtualBuffers_old\__init__.py:449 virtualBuffers_old\__init__.py:460
 msgid "no more form fields"
@@ -3795,8 +3758,8 @@ msgstr "l=luettelo"
 
 #: virtualBuffers_old\__init__.py:515 virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
-msgstr "i=luettelon osa"
+msgstr "i=luettelon kohta"
 
-#: virtualBuffers_old\adobe.py:317
+#: virtualBuffers_old\adobe.py:315
 msgid "protected %s"
 msgstr "suojattu %s"
