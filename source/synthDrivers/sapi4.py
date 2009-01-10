@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import _winreg
-from comtypes import COMObject
+from comtypes import COMObject, COMError
 from ctypes import *
 import synthDriverHandler
 from logHandler import log
@@ -101,48 +101,57 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		#Find out rate limits
 		self.hasRate=bool(mode.dwFeatures&TTSFEATURE_SPEED)
 		if self.hasRate:
-			oldVal=DWORD()
-			self._ttsAttrs.SpeedGet(byref(oldVal))
-			self._ttsAttrs.SpeedSet(TTSATTR_MINSPEED)
-			newVal=DWORD()
-			self._ttsAttrs.SpeedGet(byref(newVal))
-			self._minRate=newVal.value
-			self._ttsAttrs.SpeedSet(TTSATTR_MAXSPEED)
-			self._ttsAttrs.SpeedGet(byref(newVal))
-			# ViaVoice (and perhaps other synths) doesn't seem to like the speed being set to maximum.
-			self._maxRate=newVal.value-1
-			self._ttsAttrs.SpeedSet(oldVal.value)
-			if self._maxRate<=self._minRate:
+			try:
+				oldVal=DWORD()
+				self._ttsAttrs.SpeedGet(byref(oldVal))
+				self._ttsAttrs.SpeedSet(TTSATTR_MINSPEED)
+				newVal=DWORD()
+				self._ttsAttrs.SpeedGet(byref(newVal))
+				self._minRate=newVal.value
+				self._ttsAttrs.SpeedSet(TTSATTR_MAXSPEED)
+				self._ttsAttrs.SpeedGet(byref(newVal))
+				# ViaVoice (and perhaps other synths) doesn't seem to like the speed being set to maximum.
+				self._maxRate=newVal.value-1
+				self._ttsAttrs.SpeedSet(oldVal.value)
+				if self._maxRate<=self._minRate:
+					self.hasRate=False
+			except COMError:
 				self.hasRate=False
 		#Find out pitch limits
 		self.hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
 		if self.hasPitch:
-			oldVal=WORD()
-			self._ttsAttrs.PitchGet(byref(oldVal))
-			self._ttsAttrs.PitchSet(TTSATTR_MINPITCH)
-			newVal=WORD()
-			self._ttsAttrs.PitchGet(byref(newVal))
-			self._minPitch=newVal.value
-			self._ttsAttrs.PitchSet(TTSATTR_MAXPITCH)
-			self._ttsAttrs.PitchGet(byref(newVal))
-			self._maxPitch=newVal.value
-			self._ttsAttrs.PitchSet(oldVal.value)
-			if self._maxPitch<=self._minPitch:
+			try:
+				oldVal=WORD()
+				self._ttsAttrs.PitchGet(byref(oldVal))
+				self._ttsAttrs.PitchSet(TTSATTR_MINPITCH)
+				newVal=WORD()
+				self._ttsAttrs.PitchGet(byref(newVal))
+				self._minPitch=newVal.value
+				self._ttsAttrs.PitchSet(TTSATTR_MAXPITCH)
+				self._ttsAttrs.PitchGet(byref(newVal))
+				self._maxPitch=newVal.value
+				self._ttsAttrs.PitchSet(oldVal.value)
+				if self._maxPitch<=self._minPitch:
+					self.hasPitch=False
+			except COMError:
 				self.hasPitch=False
 		#Find volume limits
 		self.hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
 		if self.hasVolume:
-			oldVal=DWORD()
-			self._ttsAttrs.VolumeGet(byref(oldVal))
-			self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
-			newVal=DWORD()
-			self._ttsAttrs.VolumeGet(byref(newVal))
-			self._minVolume=newVal.value
-			self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
-			self._ttsAttrs.VolumeGet(byref(newVal))
-			self._maxVolume=newVal.value
-			self._ttsAttrs.VolumeSet(oldVal.value)
-			if self._maxVolume<=self._minVolume:
+			try:
+				oldVal=DWORD()
+				self._ttsAttrs.VolumeGet(byref(oldVal))
+				self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
+				newVal=DWORD()
+				self._ttsAttrs.VolumeGet(byref(newVal))
+				self._minVolume=newVal.value
+				self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
+				self._ttsAttrs.VolumeGet(byref(newVal))
+				self._maxVolume=newVal.value
+				self._ttsAttrs.VolumeSet(oldVal.value)
+				if self._maxVolume<=self._minVolume:
+					self.hasVolume=False
+			except COMError:
 				self.hasVolume=False
 
 	def _get_voice(self):

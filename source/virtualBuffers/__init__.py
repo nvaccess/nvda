@@ -140,6 +140,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
 		self._passThrough=False
+		self.disableAutoPassThrough = False
 		self.rootWindowHandle=self.rootNVDAObject.windowHandle
 		self.rootID=0
 
@@ -365,7 +366,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
 		if reason and (
-			(reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			self.disableAutoPassThrough
+			or (reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
 			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
@@ -380,7 +382,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return role == controlTypes.ROLE_EDITABLETEXT
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
 			return True
-		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_TAB, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
 			return True
 		return False
 
@@ -411,6 +413,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.passThrough:
 			return sendKey(keyPress)
 		self.passThrough = False
+		self.disableAutoPassThrough = False
 		virtualBufferHandler.reportPassThrough(self)
 	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
 

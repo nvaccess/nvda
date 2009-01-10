@@ -18,8 +18,7 @@ from logHandler import log
 import config
 import IAccessibleHandler
 import JABHandler
-
-mouseHookLib=ctypes.cdll.LoadLibrary('lib/mouseHook.dll')
+import mouseHook
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -72,7 +71,6 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 
 #Internal mouse event
 
-@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
@@ -139,8 +137,7 @@ def initialize():
 	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
 	screenWidth,screenHeight=api.getDesktopObject().location[2:]
-	if mouseHookLib.initialize(internal_mouseEvent) < 0:
-		raise RuntimeError("Error initializing mouseHook")
+	mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
@@ -158,5 +155,4 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	if mouseHookLib.terminate() < 0:
-		raise RuntimeError("Error terminating mouseHook")
+	mouseHook.terminate()

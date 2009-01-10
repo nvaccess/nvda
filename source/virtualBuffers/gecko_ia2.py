@@ -137,8 +137,11 @@ class Gecko_ia2(VirtualBuffer):
 			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
 			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
 			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
+				if not self.passThrough:
+					# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
+					# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
+					speech.cancelSpeech()
 				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
-				speech.cancelSpeech()
 				if not self.passThrough:
 					# We read the info from the buffer instead of the control itself.
 					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)

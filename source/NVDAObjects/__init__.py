@@ -387,7 +387,11 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		return True
  
 	def __eq__(self,other):
-		return self is other or self._isEqual(other)
+		if self is other:
+			return True
+		if type(self) is not type(other):
+			return False
+		return self._isEqual(other)
  
 	def __ne__(self,other):
 		return not self.__eq__(other)
@@ -674,6 +678,8 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		speech.cancelSpeech()
 		api.setNavigatorObject(self)
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
+		if not eventHandler.isPendingEvents('gainFocus'):
+			braille.handler.handleGainFocus(self)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():

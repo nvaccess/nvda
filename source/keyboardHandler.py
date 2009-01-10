@@ -20,8 +20,7 @@ import queueHandler
 import config
 import _winreg
 import api
-
-keyHookLib=ctypes.cdll.LoadLibrary('lib/keyHook.dll')
+import keyHook
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
@@ -75,7 +74,6 @@ def speakKeyboardLayout(layout):
 	key.Close()
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%s keyboard layout")%s)
 
-@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by keyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
@@ -162,9 +160,17 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if script:
 			scriptName=scriptHandler.getScriptName(script)
 			if globalVars.keyboardHelp and scriptName!="keyboardHelp":
+				brailleTextList=[]
+				brailleTextList.append("+".join(labelList))
 				scriptDescription = scriptHandler.getScriptDescription(script)
-				if scriptDescription: queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
-				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptHandler.getScriptLocation(script))
+				if scriptDescription:
+					brailleTextList.append(scriptDescription)
+					queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Description: %s")%scriptDescription)
+				scriptLocation=scriptHandler.getScriptLocation(script)
+				brailleTextList.append(scriptLocation)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
+				import braille
+				braille.handler.message("\t\t".join(brailleTextList))
 			else:
 				scriptHandler.queueScript(script,keyPress)
 		if script or globalVars.keyboardHelp:
@@ -180,7 +186,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		speech.speakMessage(_("Error in keyboardHandler.internal_keyDownEvent"))
 		return True
 
-@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
@@ -217,9 +222,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 def initialize():
 	"""Initialises keyboard support."""
-	if keyHookLib.initialize(internal_keyDownEvent,internal_keyUpEvent) < 0:
-		raise RuntimeError("Error initializing keyHook")
+	keyHook.initialize(internal_keyDownEvent,internal_keyUpEvent)
 
 def terminate():
-	if keyHookLib.terminate() < 0:
-		raise RuntimeError("Error terminating keyHook")
+	keyHook.terminate()
