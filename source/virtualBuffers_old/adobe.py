@@ -106,8 +106,6 @@ class Adobe(virtualBuffer):
 		return nextHandler()
 
 	def event_reorder(self,obj,nextHandler):
-		if not config.conf["virtualBuffers"]["updateContentDynamically"]:
-			return nextHandler() 
 		if self.rootNVDAObject.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_BUSY:
 			return nextHandler()
 		#obj.speakObject()

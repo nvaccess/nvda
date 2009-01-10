@@ -9,6 +9,7 @@
 !include "MUI2.nsh"
 !include "WinMessages.nsh"
 !include "Library.nsh"
+!include "FileFunc.nsh"
 
 ;--------
 ;Settings
@@ -65,7 +66,7 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !insertmacro MUI_PAGE_LICENSE "..\copying.txt"
 
 ;Page to handle previous installs
-page custom pagePrevInstall
+page custom pagePrevInstall leavePagePrevInstall
 
 ;Directory selection page
 !insertmacro MUI_PAGE_DIRECTORY
@@ -84,16 +85,19 @@ Var StartMenuFolder
 !define MUI_FINISHPAGE_TEXT_LARGE
 !define MUI_FINISHPAGE_LINK $(msg_NVDAWebSite)
 !define MUI_FINISHPAGE_LINK_LOCATION ${WEBSITE}
-!define MUI_FINISHPAGE_NOREBOOTSUPPORT
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_FUNCTION makeRunAppOnInstSuccess
 !insertmacro MUI_PAGE_FINISH
 
 ;Confirm uninstall page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE un.handleNonInteractive 
 !insertmacro MUI_UNPAGE_CONFIRM
 
 ;Uninstall page
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ;Uninstall finnish page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE un.handleNonInteractive 
 !InsertMacro MUI_UNPAGE_FINISH
 
 ;--------------------------------
@@ -159,8 +163,9 @@ ReserveFile "waves\${SNDLogo}"
 ;Global variables
 
 Var oldNVDAWindowHandle
- Var NVDAInstalled ;"1" if NVDA has been installed
+var runAppOnInstSuccess
 var hmci
+var prevUninstallChoice
 
 ;-----
 ;Sections
@@ -180,12 +185,9 @@ CreateDirectory "$INSTDIR\lib"
 !undef LIBRARY_COM
 ; Install libraries
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\NVDAHelper.dll" "$INSTDIR\lib\NVDAHelper.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\keyHook.dll" "$INSTDIR\lib\keyHook.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\mouseHook.dll" "$INSTDIR\lib\mouseHook.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\virtualBuffer.dll" "$INSTDIR\lib\virtualBuffer.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
-strcpy $NVDAInstalled "1"
 ;Shortcuts
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
@@ -194,11 +196,11 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\d
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-!insertmacro MUI_STARTMENU_WRITE_END
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+!insertmacro MUI_STARTMENU_WRITE_END
 ;Items for uninstaller
-CreateShortCut "$SMPROGRAMS\${PRODUCT}\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${VERSION}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayVersion" "${VERSION}"
@@ -215,8 +217,6 @@ SetShellVarContext all
 
 ; Uninstall libraries
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\keyHook.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\mouseHook.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\virtualBuffer.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_gecko_ia2.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\IAccessible2Proxy.dll"
@@ -240,6 +240,7 @@ SectionEnd
 ;Functions
 
 Function .onInit
+strcpy $runAppOnInstSuccess "0"
 ; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
 IfFileExists "$PROGRAMFILES\NVDA" 0
 Delete "$PROGRAMFILES\NVDA"
@@ -288,13 +289,40 @@ Strcmp $0 "" +1 +2
 abort
 IfFileExists "$0" +2 +1 
 abort
-MessageBox MB_OK $(Msg_UninsPrev)
+!insertmacro MUI_HEADER_TEXT "Previous Installation found" "A previous installation of NVDA was found on your system. It is strongly recommended that you uninstall it before continuing with the installation."
+nsDialogs::Create 1018
+${NSD_CreateLabel} 0 0 100% 48u $(msg_pagePrevInstallLabel)
+${NSD_CreateCheckBox} 30u 50u -30u 8u $(msg_pagePrevInstallUninstallCheckBox)
+pop $0
+${NSD_OnClick} $0 updatePrevUninstChoice
+SendMessage $0 ${BM_SETCHECK} ${BST_CHECKED} 0
+strcpy $prevUninstallChoice "1"
+${NSD_SetFocus} $0
+nsDialogs::Show
+FunctionEnd
+
+function updatePrevUninstChoice
+pop $0 ;The checkbox
+${NSD_GetState} $0 $1
+IntCmp $1 ${BST_CHECKED} doChecked doUnchecked
+doChecked:
+strcpy $prevUninstallChoice "1"
+goto continue
+doUnchecked:
+strcpy $prevUninstallChoice "0"
+continue:
+FunctionEnd
+
+Function leavePagePrevInstall
+strcmp $prevUninstallChoice "1" doPrevUninstall end
+doPrevUninstall:
+ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
+ReadRegStr $1 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallDirectory"
 HideWindow
-GetTempFileName $2
-CopyFiles "$0" "$2"
-ExecWait "$2 /S _?=$1"
-delete "$2"
+ExecWait "$0 /nonInteractive _?=$1"
+delete "$0"
 bringToFront
+end:
 functionEnd
 
 function manualQuitNVDA
@@ -317,9 +345,10 @@ FunctionEnd
 function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-;call manualQuitNVDA
 Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+strcmp $runAppOnInstSuccess "1" +1 end
 Exec "$INSTDIR\${NVDAApp}"
+end:
 FunctionEnd
 
 function .oninstFailed
@@ -331,6 +360,13 @@ Function .onGUIEnd
 rmdir /R /REBOOTOK "$PLUGINSDIR\${NVDATempDir}"
 FunctionEnd
 
+function makeRunAppOnInstSuccess
+strcpy $runAppOnInstSuccess "1"
+FunctionEnd
+
+;Uninstall variables
+var un.isNonInteractive
+
 ; Uninstall functions
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
@@ -340,12 +376,33 @@ StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log
 !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+clearErrors
+strcpy $un.isNonInteractive "0"
+${GetParameters} $0
+${GetOptions} $0 "nonInteractive" $1
+ifErrors +2 +1
+strcpy $un.isNonInteractive "1"
+ifSilent +1 continue
+banner::show /nounload /set 76 "Uninstalling NVDA, please wait..." "NVDA Uninstaller"
+continue:
 FunctionEnd
 
-Function un.onUninstSuccess
-HideWindow
-MessageBox MB_ICONINFORMATION|MB_OK $(msg_NVDASuccessfullyRemoved)
+function un.handleNonInteractive
+strcmp $un.isNonInteractive "1" +1 +2
+abort
 FunctionEnd
+
+function un.onUninstSuccess
+ifSilent +1 continue
+banner::destroy
+continue:
+functionEnd
+
+function un.onUninstFailed
+ifSilent +1 continue
+banner::destroy
+continue:
+functionEnd
 
 Function isNVDARunning
 FindWindow $0 "${NVDAWindowClass}" "${NVDAWindowTitle}"

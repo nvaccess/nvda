@@ -46,10 +46,11 @@ class AppModule(_default.AppModule):
 			obj.editAPIHasITextDocument=True
 			obj.editValueUnit=textHandler.UNIT_STORY
 
-	def event_gainFocus(self,obj,nextHandler):
+	def event_foreground(self,obj,nextHandler):
+		nextHandler()
 		#Force focus to move to something sane when landing on an outlook express message window
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==IAccessibleHandler.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
 				return sendKey(key("SHIFT+TAB"))
-		return nextHandler()
+

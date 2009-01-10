@@ -19,7 +19,7 @@ winEventHookID=None
 def handleTypedCharacter(window,wParam,lParam):
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(wParam))
 
-@ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
+@ctypes.WINFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		if eventID==EVENT_TYPEDCHARACTER:
