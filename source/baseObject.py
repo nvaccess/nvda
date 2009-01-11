@@ -33,6 +33,9 @@ class AutoPropertyType(type):
 			g=dict.get('_get_%s'%x,None)
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
+			if x in dict:
+				methodsString=",".join([str(i) for i in g,s,d if i])
+				raise TypeError("%s is already a class attribute, cannot create descriptor with methods %s"%(x,methodsString))
 			if g and not s and not d:
 				setattr(self,x,getter(g))
 			else:
