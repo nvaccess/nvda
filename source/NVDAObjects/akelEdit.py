@@ -73,9 +73,10 @@ class AkelEditTextInfo(edit.EditTextInfo):
 
 class AkelEdit(edit.RichEdit20):
 
+	TextInfo=AkelEditTextInfo
+
 	def __init__(self,*args,**kwargs):
 		super(edit.Edit,self).__init__(*args,**kwargs)
-		self.TextInfo=AkelEditTextInfo
 		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):

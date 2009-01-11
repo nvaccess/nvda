@@ -683,10 +683,6 @@ class Edit(Window):
 
 	def __init__(self,*args,**kwargs):
 		super(Edit,self).__init__(*args,**kwargs)
-		if self.editAPIVersion>1 and self.ITextDocumentObject:
-			self.TextInfo=ITextDocumentTextInfo
-		else:
-			self.TextInfo=EditTextInfo
 		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):

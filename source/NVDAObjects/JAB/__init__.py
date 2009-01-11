@@ -168,7 +168,6 @@ class JAB(Window):
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		Window.__init__(self,windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
-			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
@@ -194,6 +193,11 @@ class JAB(Window):
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 			  	]]
+
+	def _get_TextInfo(self):
+		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
+			return JABTextInfo
+		return super(JAB,self).TextInfo
 
 	def _isEqual(self,other):
 		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext

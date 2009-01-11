@@ -44,8 +44,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 class Gecko_ia2(VirtualBuffer):
 
+	TextInfo=Gecko_ia2_TextInfo
+
 	def __init__(self,rootNVDAObject):
-		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll",TextInfo=Gecko_ia2_TextInfo)
+		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll")
 		rootWindowHandle=getattr(self.rootNVDAObject,'event_windowHandle',0)
 		if not rootWindowHandle:
 			rootWindowHandle=self.rootNVDAObject.windowHandle

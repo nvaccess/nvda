@@ -338,8 +338,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			pass
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
-			self.TextInfo=IA2TextTextInfo
-			replacedTextInfo=True
 			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 				hasEditableState=True
 			else:
@@ -370,6 +368,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
+
+	def _get_TextInfo(self):
+		if hasattr(self,'IAccessibleTextObject'):
+			return IA2TextTextInfo
+		return super(IAccessible,self).TextInfo
 
 	def _isEqual(self,other):
 		if self.IAccessibleChildID!=other.IAccessibleChildID:

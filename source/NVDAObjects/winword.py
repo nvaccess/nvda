@@ -286,8 +286,9 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 
 class WordDocument(Window):
 
+	TextInfo=WordDocumentTextInfo
+
 	def __init__(self,*args,**kwargs):
-		self.TextInfo=WordDocumentTextInfo
 		super(WordDocument,self).__init__(*args,**kwargs)
 
 	def _get_role(self):
