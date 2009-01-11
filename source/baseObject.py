@@ -10,6 +10,34 @@
 from new import instancemethod
 from keyUtils import key
 
+class getter(object):
+
+	def __init__(self,fget):
+		self.fget=fget
+
+	def __get__(self,instance,owner):
+		return self.fget(instance)
+
+	def setter(self,func):
+		return property(fget=self._func,fset=func)
+
+	def deleter(self,func):
+		return property(fget=self._func,fdel=func)
+
+class AutoPropertyType(type):
+
+	def __init__(self,name,bases,dict):
+		super(AutoPropertyType,self).__init__(name,bases,dict)
+		propSet=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
+		for x in propSet:
+			g=dict.get('_get_%s'%x,None)
+			s=dict.get('_set_%s'%x,None)
+			d=dict.get('_del_%s'%x,None)
+			if g and not s and not d:
+				setattr(self,x,getter(g))
+			else:
+				setattr(self,x,property(fget=g,fset=s,fdel=d))
+
 class AutoPropertyObject(object):
 
 	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
@@ -17,18 +45,7 @@ class AutoPropertyObject(object):
 _set_x will make a property x with a setter (you can set its value).
 If there is a _get_x but no _set_x then setting x will override the property completely.
 """
-
-	def __getattr__(self,name):
-		if not name.startswith('_get_') and hasattr(self,'_get_%s'%name):
-			return getattr(self,'_get_%s'%name)()
-		else:
-			raise AttributeError("object has no attribute '%s'"%name)
- 
-	def __setattr__(self,name,value):
-		if not name.startswith('_set_') and hasattr(self,'_set_%s'%name):
-			getattr(self,'_set_%s'%name)(value)
-		else:
-			super(AutoPropertyObject,self).__setattr__(name,value)
+	__metaclass__=AutoPropertyType
 
 class ScriptableObject(AutoPropertyObject):
 
