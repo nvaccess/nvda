@@ -28,6 +28,7 @@ import eventHandler
 import braille
 import queueHandler
 from logHandler import log
+import keyUtils
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -440,7 +441,70 @@ class VirtualBuffer(cursorManager.CursorManager):
 		virtualBufferHandler.reportPassThrough(self)
 	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
 
-[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
+	def _tabOverride(self, direction):
+		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
+		This is done because many nodes are not focusable and it is thus possible for the virtual buffer caret to be unsynchronised with the focus.
+		In this case, we want tab/shift+tab to move to the next/previous focusable node relative to the virtual buffer caret.
+		If the virtual buffer caret is not within the focused node, the tab/shift+tab key should be passed through to allow normal tab order navigation.
+		Note that this method does not pass the key through itself if it is not overridden. This should be done by the calling script if C{False} is returned.
+		@param direction: The direction in which to move.
+		@type direction: str
+		@return: C{True} if the tab order was overridden, C{False} if not.
+		@rtype: bool
+		"""
+		if self.VBufHandle is None:
+			return False
+
+		# We only want to override the tab order if the caret is not within the focused node.
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			caretDocHandle,caretID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,caretInfo._startOffset)
+		except:
+			return False
+		focus = api.getFocusObject()
+		try:
+			focusDocHandle=focus.IAccessibleObject.windowHandle
+			focusID=focus.IAccessibleObject.uniqueID
+		except:
+			log.debugWarning("error getting focus windowHandle or uniqueID", exc_info=True)
+			return False
+		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
+			return False
+		try:
+			start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,focusDocHandle,focusID)
+		except:
+			return False
+		focusInfo=self.makeTextInfo(textHandler.Offsets(start,end))
+		startToStart=focusInfo.compareEndPoints(caretInfo,"startToStart")
+		startToEnd=focusInfo.compareEndPoints(caretInfo,"startToEnd")
+		endToStart=focusInfo.compareEndPoints(caretInfo,"endToStart")
+		endToEnd=focusInfo.compareEndPoints(caretInfo,"endToEnd")
+		if not ((startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0):
+			return False
+
+		# If we reach here, we do want to override tab/shift+tab if possible.
+		# Find the next/previous focusable node.
+		try:
+			newDocHandle, newID, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
+		except StopIteration:
+			return False
+
+		# Finally, speak, move to and set focus to this node.
+		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
+		newInfo.collapse()
+		self._set_selection(newInfo,reason=speech.REASON_FOCUS)
+		return True
+
+	def script_tab(self, keyPress):
+		if not self._tabOverride("next"):
+			keyUtils.sendKey(keyPress)
+
+	def script_shiftTab(self, keyPress):
+		if not self._tabOverride("previous"):
+			keyUtils.sendKey(keyPress)
+
+[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
@@ -449,7 +513,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("escape","disablePassThrough"),
 	("alt+extendedUp","collapseOrExpandControl"),
 	("alt+extendedDown","collapseOrExpandControl"),
-]]
+	("tab", "tab"),
+	("shift+tab", "shiftTab"),
+)]
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav
