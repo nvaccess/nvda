@@ -195,13 +195,6 @@ class Scintilla(Window):
 
 	TextInfo=ScintillaTextInfo
 
-	def __init__(self,*args,**kwargs):
-		super(Scintilla,self).__init__(*args,**kwargs)
-		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		winKernel.closeHandle(self.processHandle)
-
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)

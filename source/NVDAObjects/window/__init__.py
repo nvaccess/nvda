@@ -5,9 +5,31 @@
 #See the file COPYING for more details.
 
 import ctypes
+import winKernel
 import winUser
 import controlTypes
 from NVDAObjects import NVDAObject
+
+class WindowProcessHandleContainer(object):
+	"""
+	Manages a Windows process handle. On instanciation it retreaves an open process handle from the process of the provided window, and closes the handle on deletion. 
+	@ivar windowHandle: the handle of the window the whos process handle was requested
+	@type windowHandle: int
+	@ivar processHandle: The actual handle which can be used in any win32 calls that need it.
+	@type processHandle: int
+	"""
+ 
+	def __init__(self,windowHandle):
+		"""
+		@param windowHandle: the handle of the window whos process handle should be retreaved.
+		@type windowHandle: int
+		"""
+		self.windowHandle=windowHandle
+		import IAccessibleHandler
+		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)
 
 class Window(NVDAObject):
 	"""
@@ -110,3 +132,9 @@ An NVDAObject for a window
 		if not hasattr(self,'_isWindowUnicode'):
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
  		return self._isWindowUnicode
+
+	def _get_processHandle(self):
+		if not hasattr(self,'_processHandleContainer'):
+			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
+		return self._processHandleContainer.processHandle
+

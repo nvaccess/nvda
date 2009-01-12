@@ -53,7 +53,7 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		global ignoreCaretEvents
 		ignoreCaretEvents=True
 		ciChar=AECHARINDEX()
-		processHandle=self.obj.editProcessHandle
+		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
 		winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
@@ -63,7 +63,7 @@ class AkelEditTextInfo(edit.EditTextInfo):
 
 	def _getStoryLength(self):
 		ciChar=AECHARINDEX()
-		processHandle=self.obj.editProcessHandle
+		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_LASTCHAR,internalCiChar)
 		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
@@ -74,14 +74,6 @@ class AkelEditTextInfo(edit.EditTextInfo):
 class AkelEdit(edit.RichEdit20):
 
 	TextInfo=AkelEditTextInfo
-
-	def __init__(self,*args,**kwargs):
-		super(edit.Edit,self).__init__(*args,**kwargs)
-		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		if self.TextInfo is AkelEditTextInfo:
-			winKernel.closeHandle(self.editProcessHandle)
 
 	def _get_TextInfo(self):
 		return AkelEditTextInfo

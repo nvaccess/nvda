@@ -163,7 +163,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 
 	def _getPointFromOffset(self,offset):
 		if self.obj.editAPIVersion==1:
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			p=PointLStruct(0,0)
 			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
@@ -185,7 +185,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		(left,top,width,height)=self.obj.location
 		if self.obj.editAPIVersion>=1:
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			p=PointLStruct(x-left,y-top)
 			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
@@ -206,7 +206,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			charFormatStruct=CharFormat2AStruct
 		charFormat=charFormatStruct()
 		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-		processHandle=self.obj.editProcessHandle
+		processHandle=self.obj.processHandle
 		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
 		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
@@ -252,7 +252,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winUser.sendMessage(self.obj.windowHandle,EM_EXGETSEL,0, internalCharRange)
 			winKernel.readProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
@@ -267,7 +267,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			charRange=CharRangeStruct()
 			charRange.cpMin=start
 			charRange.cpMax=end
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
 			winUser.sendMessage(self.obj.windowHandle,EM_EXSETSEL,0, internalCharRange)
@@ -292,7 +292,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				info.codepage=1200
 			else:
 				info.codepage=0
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalInfo=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
 			textLen=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
@@ -313,7 +313,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				textRange=TextRangeAStruct()
 			textRange.chrg.cpMin=start
 			textRange.chrg.cpMax=end
-			processHandle=self.obj.editProcessHandle
+			processHandle=self.obj.processHandle
 			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			textRange.lpstrText=internalBuf
 			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -432,7 +432,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 			charFormatStruct=CharFormat2AStruct
 		charFormat=charFormatStruct()
 		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-		processHandle=self.obj.editProcessHandle
+		processHandle=self.obj.processHandle
 		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
 		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
@@ -681,13 +681,6 @@ class Edit(Window):
 	editAPIUnicode=True
 	editValueUnit=textHandler.UNIT_LINE
 
-	def __init__(self,*args,**kwargs):
-		super(Edit,self).__init__(*args,**kwargs)
-		self.editProcessHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		winKernel.closeHandle(self.editProcessHandle)
-
 	def _get_TextInfo(self):
 		if self.editAPIVersion>1 and self.ITextDocumentObject:
 			return ITextDocumentTextInfo
@@ -695,6 +688,7 @@ class Edit(Window):
 			return EditTextInfo
 
 	def _get_ITextDocumentObject(self):
+		return None
 		if not hasattr(self,'_ITextDocumentObject'):
 			try:
 				ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
