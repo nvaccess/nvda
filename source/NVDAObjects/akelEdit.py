@@ -75,9 +75,6 @@ class AkelEdit(edit.RichEdit20):
 
 	TextInfo=AkelEditTextInfo
 
-	def _get_TextInfo(self):
-		return AkelEditTextInfo
-
 [AkelEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Control+ExtendedUp","moveByLine"),
 	("Control+ExtendedDown","moveByLine"),
