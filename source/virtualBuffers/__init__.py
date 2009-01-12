@@ -489,11 +489,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 		except StopIteration:
 			return False
 
-		# Finally, speak, move to and set focus to this node.
-		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
-		speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
-		newInfo.collapse()
-		self._set_selection(newInfo,reason=speech.REASON_FOCUS)
+		# Finally, focus the node.
+		obj = self.getNVDAObjectFromIdentifier(newDocHandle, newID)
+		if obj == api.getFocusObject():
+			# This node is already focused, so we need to move to and speak this node here.
+			newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+			newCaret = newInfo.copy()
+			newCaret.collapse()
+			self._set_selection(newCaret,reason=speech.REASON_FOCUS)
+			if self.passThrough:
+				obj.event_gainFocus()
+			else:
+				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
+		else:
+			# This node doesn't have the focus, so just set focus to it. The gainFocus event will handle the rest.
+			obj.setFocus()
 		return True
 
 	def script_tab(self, keyPress):
