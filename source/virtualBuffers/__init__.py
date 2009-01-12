@@ -4,7 +4,6 @@ import time
 import os
 import winsound
 import XMLFormatting
-import IAccessibleHandler
 import baseObject
 from keyUtils import sendKey
 import scriptHandler
@@ -36,7 +35,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+		obj=self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 		return obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
@@ -175,6 +174,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def _get_windowHandle(self):
 		return self.rootNVDAObject.windowHandle
+
+	def getNVDAObjectFromIdentifier(self, docHandle, ID):
+		"""Retrieve an NVDAObject for a given node identifier.
+		Subclasses must override this method.
+		@param docHandle: The document handle.
+		@type docHandle: int
+		@param ID: The ID of the node.
+		@type ID: int
+		@return: The NVDAObject.
+		@rtype: L{NVDAObjects.NVDAObject}
+		"""
+		raise NotImplementedError
 
 	def event_virtualBuffer_firstGainFocus(self):
 		"""Triggered the first time this virtual buffer ever gains focus.

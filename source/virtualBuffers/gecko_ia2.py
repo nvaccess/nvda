@@ -90,6 +90,9 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
+	def getNVDAObjectFromIdentifier(self, docHandle, ID):
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, IAccessibleHandler.OBJID_CLIENT, ID)
+
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
 			 nextHandler()
