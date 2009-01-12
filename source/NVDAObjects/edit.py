@@ -688,7 +688,6 @@ class Edit(Window):
 			return EditTextInfo
 
 	def _get_ITextDocumentObject(self):
-		return None
 		if not hasattr(self,'_ITextDocumentObject'):
 			try:
 				ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
