@@ -196,7 +196,6 @@ class Scintilla(Window):
 	TextInfo=ScintillaTextInfo
 
 	def __init__(self,*args,**kwargs):
-		self._lastMouseTextOffsets=None
 		super(Scintilla,self).__init__(*args,**kwargs)
 		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
 

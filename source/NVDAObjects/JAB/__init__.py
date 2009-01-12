@@ -156,7 +156,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 class JAB(Window):
 
 	def __init__(self,windowHandle=None,jabContext=None):
-		self._lastMouseTextOffsets=None
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:
