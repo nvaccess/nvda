@@ -445,7 +445,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
 		This is done because many nodes are not focusable and it is thus possible for the virtual buffer caret to be unsynchronised with the focus.
 		In this case, we want tab/shift+tab to move to the next/previous focusable node relative to the virtual buffer caret.
-		If the virtual buffer caret is not within the focused node, the tab/shift+tab key should be passed through to allow normal tab order navigation.
+		If the virtual buffer caret is within the focused node, the tab/shift+tab key should be passed through to allow normal tab order navigation.
 		Note that this method does not pass the key through itself if it is not overridden. This should be done by the calling script if C{False} is returned.
 		@param direction: The direction in which to move.
 		@type direction: str
