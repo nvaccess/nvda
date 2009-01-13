@@ -214,16 +214,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
 
-	def _calculateLineBreaks(self,text):
-		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
-		lastBreak=0
-		lineBreakOffsets=[]
-		for offset in range(len(text)):
-			if offset-lastBreak>maxLineLength and offset>0 and text[offset-1].isspace() and not text[offset].isspace():
-				lineBreakOffsets.append(offset)
-				lastBreak=offset
-		return lineBreakOffsets
-
 	def _activateField(self,docHandle,ID):
 		pass
 
