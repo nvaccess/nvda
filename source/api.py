@@ -138,6 +138,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
+	if globalVars.focusMovesNavigatorObject:
+		setNavigatorObject(obj)
 	if obj.virtualBuffer is not oldVirtualBuffer:
 		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
 			oldVirtualBuffer.event_virtualBuffer_loseFocus()
