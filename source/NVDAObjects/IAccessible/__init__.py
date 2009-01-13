@@ -329,7 +329,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
-		Window.__init__(self,windowHandle=windowHandle)
+		super(IAccessible,self).__init__(windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
 		try:
@@ -789,7 +789,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
-		Window.event_gainFocus(self)
+		super(IAccessible,self).event_gainFocus()
 
 	def event_selection(self):
 		return self.event_stateChange()
