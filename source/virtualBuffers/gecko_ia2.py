@@ -104,7 +104,6 @@ class Gecko_ia2(VirtualBuffer):
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		api.setNavigatorObject(obj)
 		if self.VBufHandle is None:
 			return nextHandler()
 		if obj==self.rootNVDAObject:
