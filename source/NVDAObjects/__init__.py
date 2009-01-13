@@ -376,10 +376,11 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
+	TextInfo=NVDAObjectTextInfo
+
 	def __init__(self):
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
-		self.TextInfo=NVDAObjectTextInfo
 		if hasattr(self.appModule,'event_NVDAObject_init'):
 			self.appModule.event_NVDAObject_init(self)
 
@@ -670,7 +671,6 @@ Tries to force this object to take the focus.
 		"""
 This code is executed if a gain focus event is received by this object.
 """
-		api.setNavigatorObject(self)
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 
@@ -679,10 +679,14 @@ This code is executed if a gain focus event is received by this object.
 This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
 """
 		speech.cancelSpeech()
-		api.setNavigatorObject(self)
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
 		if not eventHandler.isPendingEvents('gainFocus'):
 			braille.handler.handleGainFocus(self)
+
+	def event_becomeNavigatorObject(self):
+		"""Called when this object becomes the navigator object.
+		"""
+		braille.handler.handleReviewMove()
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():

@@ -193,14 +193,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(Window):
 
-	def __init__(self,*args,**kwargs):
-		self.TextInfo=ScintillaTextInfo
-		self._lastMouseTextOffsets=None
-		super(Scintilla,self).__init__(*args,**kwargs)
-		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		winKernel.closeHandle(self.processHandle)
+	TextInfo=ScintillaTextInfo
 
 #The name of the object is gotten by the standard way of getting a window name, can't use MSAA name (since it contains all the text)
 	def _get_name(self):
