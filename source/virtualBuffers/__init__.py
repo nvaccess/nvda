@@ -215,6 +215,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
 
+	def event_becomeNavigatorObject(self, obj, nextHandler):
+		if self.passThrough:
+			nextHandler()
+
+	def event_caret(self, obj, nextHandler):
+		if self.passThrough:
+			nextHandler()
+
 	def _activateField(self,docHandle,ID):
 		pass
 
