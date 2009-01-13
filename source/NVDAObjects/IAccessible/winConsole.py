@@ -74,7 +74,7 @@ class WinConsole(IAccessible):
 		self.basicTextLineLength=lineLength
 		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+		if globalVars.caretMovesReviewCursor and self==api.getNavigatorObject():
 			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
 		self.monitorThread=threading.Thread(target=self.monitorThreadFunc)
 		self.monitorThread.start()
@@ -141,7 +141,7 @@ class WinConsole(IAccessible):
 					# There is a new event and there has been enough time since the last one was handled, so handle this.
 					timeSinceLast=0
 					#Update the review cursor position with the caret position
-					if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+					if globalVars.caretMovesReviewCursor and self==api.getNavigatorObject():
 						queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self.makeTextInfo(textHandler.POSITION_CARET))
 					queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.handleCaretMove, self)
 					if globalVars.reportDynamicContentChanges:
