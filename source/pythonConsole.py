@@ -3,6 +3,7 @@ To use, call L{initialize} to create a singleton instance of the console GUI. Th
 """
 
 import __builtin__
+import os
 import code
 import sys
 import wx
@@ -79,7 +80,21 @@ class ConsoleUI(wx.Frame):
 
 		#: The namespace available to the console. This can be updated externally.
 		#: @type: dict
-		self.namespace = {}
+		# Populate with useful modules.
+		self.namespace = {
+			"sys": sys,
+			"os": os,
+			"wx": wx,
+			"log": log,
+			"api": api,
+			"queueHandler": queueHandler,
+			"speech": speech,
+			"braille": braille,
+		}
+		#: The variables last added to the namespace containing a snapshot of NVDA's state.
+		#: @type: dict
+		self._namespaceSnapshotVars = None
+
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, locals=self.namespace)
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
@@ -92,6 +107,7 @@ class ConsoleUI(wx.Frame):
 
 	def onClose(self, evt):
 		self.Hide()
+		self.removeNamespaceSnapshotVars()
 
 	def output(self, data):
 		self.outputCtrl.write(data)
@@ -157,7 +173,7 @@ class ConsoleUI(wx.Frame):
 		"""Update the console namespace with a snapshot of NVDA's current state.
 		This creates/updates variables for the current focus, navigator object, etc.
 		"""
-		self.namespace.update({
+		self._namespaceSnapshotVars = {
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
 			"focusAnc": list(api.getFocusAncestors()),
@@ -165,11 +181,22 @@ class ConsoleUI(wx.Frame):
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
 			"mouse": api.getMouseObject(),
-			"log": log,
-			"queueHandler": queueHandler,
-			"speech": speech,
-			"braille": braille,
-		})
+			"brlRegions": braille.handler.buffer.regions,
+		}
+		self.namespace.update(self._namespaceSnapshotVars)
+
+	def removeNamespaceSnapshotVars(self):
+		"""Remove the variables from the console namespace containing the last snapshot of NVDA's state.
+		This removes the variables added by L{updateNamespaceSnapshotVars}.
+		"""
+		if not self._namespaceSnapshotVars:
+			return
+		for key in self._namespaceSnapshotVars:
+			try:
+				del self.namespace[key]
+			except KeyError:
+				pass
+		self._namespaceSnapshotVars = None
 
 def initialize():
 	"""Initialize the NVDA Python console GUI.
