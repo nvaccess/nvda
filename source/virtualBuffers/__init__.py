@@ -40,14 +40,13 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
-		foundObj=False
 		while obj and obj!=self.obj:
 			try:
-				docHandle=obj.IAccessibleObject.windowHandle
-				ID=obj.IAccessibleObject.uniqueID
+				docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
 				return start,end
 			except:
+				log.error("",exc_info=True)
 				obj=obj.parent
 
 	def __init__(self,obj,position):
@@ -141,8 +140,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.VBufHandle=None
 		self._passThrough=False
 		self.disableAutoPassThrough = False
-		self.rootWindowHandle=self.rootNVDAObject.windowHandle
-		self.rootID=0
+		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -157,7 +155,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
+		self.VBufHandle=VBufClient_createBuffer(self.rootDocHandle,self.rootID,self.backendLibPath)
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
@@ -173,9 +171,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def isAlive(self):
 		pass
 
-	def _get_windowHandle(self):
-		return self.rootNVDAObject.windowHandle
-
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -185,6 +180,15 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@type ID: int
 		@return: The NVDAObject.
 		@rtype: L{NVDAObjects.NVDAObject}
+		"""
+		raise NotImplementedError
+
+	def getIdentifierFromNVDAObject(self,obj):
+		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
+		@param obj: the NVDAObject to retreave the field identifier from.
+		@type obj: L{NVDAObject}
+		@returns: a the field identifier as a doc handle and ID paire.
+		@rtype: 2-tuple.
 		"""
 		raise NotImplementedError
 
@@ -463,10 +467,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return False
 		focus = api.getFocusObject()
 		try:
-			focusDocHandle=focus.IAccessibleObject.windowHandle
-			focusID=focus.IAccessibleObject.uniqueID
+			focusDocHandle,focusID=self.getIdentifierFromNVDAObject(focus)
 		except:
-			log.debugWarning("error getting focus windowHandle or uniqueID", exc_info=True)
+			log.debugWarning("error getting focus identifier", exc_info=True)
 			return False
 		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
 			return False

@@ -45,14 +45,6 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll",TextInfo=Gecko_ia2_TextInfo)
-		rootWindowHandle=getattr(self.rootNVDAObject,'event_windowHandle',0)
-		if not rootWindowHandle:
-			rootWindowHandle=self.rootNVDAObject.windowHandle
-		self.rootWindowHandle=rootWindowHandle
-		try:
-			self.rootID=self.rootNVDAObject.IAccessibleObject.uniqueID
-		except:
-			self.rootID=0
 		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
@@ -91,6 +83,11 @@ class Gecko_ia2(VirtualBuffer):
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, IAccessibleHandler.OBJID_CLIENT, ID)
+
+	def getIdentifierFromNVDAObject(self,obj):
+		docHandle=obj.IAccessibleObject.windowHandle
+		ID=obj.IAccessibleObject.uniqueID
+		return docHandle,ID
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
