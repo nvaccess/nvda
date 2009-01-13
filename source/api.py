@@ -18,6 +18,7 @@ import winUser
 import controlTypes
 import win32clipboard
 import win32con
+import eventHandler
 
 #User functions
 
@@ -223,8 +224,7 @@ def setNavigatorObject(obj):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 	globalVars.reviewPosition=None
-	import braille
-	braille.handler.handleReviewMove()
+	eventHandler.executeEvent("becomeNavigatorObject",obj)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
