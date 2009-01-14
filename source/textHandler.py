@@ -149,7 +149,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
 """
-		self.obj=obj
+		self.obj=weakref.proxy(obj) if type(obj)!=weakref.ProxyType else obj
 		self.basePosition=position
 
 
