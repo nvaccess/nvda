@@ -284,20 +284,21 @@ functionEnd
 
 function pagePrevInstall
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
-ReadRegStr $1 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallDirectory"
 Strcmp $0 "" +1 +2
 abort
 IfFileExists "$0" +2 +1 
 abort
 !insertmacro MUI_HEADER_TEXT "Previous Installation found" "A previous installation of NVDA was found on your system. It is strongly recommended that you uninstall it before continuing with the installation."
 nsDialogs::Create 1018
-${NSD_CreateLabel} 0 0 100% 48u $(msg_pagePrevInstallLabel)
-${NSD_CreateCheckBox} 30u 50u -30u 8u $(msg_pagePrevInstallUninstallCheckBox)
 pop $0
-${NSD_OnClick} $0 updatePrevUninstChoice
-SendMessage $0 ${BM_SETCHECK} ${BST_CHECKED} 0
+${NSD_CreateLabel} 0 0 100% 48u $(msg_pagePrevInstallLabel)
+pop $1
+${NSD_CreateCheckBox} 30u 50u -30u 8u $(msg_pagePrevInstallUninstallCheckBox)
+pop $2
+${NSD_OnClick} $2 updatePrevUninstChoice
+SendMessage $2 ${BM_SETCHECK} ${BST_CHECKED} 0
 strcpy $prevUninstallChoice "1"
-${NSD_SetFocus} $0
+${NSD_SetFocus} $2
 nsDialogs::Show
 FunctionEnd
 
@@ -317,10 +318,12 @@ Function leavePagePrevInstall
 strcmp $prevUninstallChoice "1" doPrevUninstall end
 doPrevUninstall:
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
-ReadRegStr $1 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallDirectory"
+${GetParent} $0 $1
+GetTempFileName $2
+CopyFiles "$0" "$2"
 HideWindow
-ExecWait "$0 /nonInteractive _?=$1"
-delete "$0"
+ExecWait "$2 /nonInteractive _?=$1"
+delete "$2"
 bringToFront
 end:
 functionEnd

@@ -724,7 +724,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				try:
+					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				except (NotImplementedError, RuntimeError):
+					pass
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
@@ -744,7 +747,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				parent=parent.parent
 			if not caretInDocument:
 				return
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=self.makeTextInfo(textHandler.POSITION_CARET)
+			except RuntimeError:
+				return
 			info.expand(textHandler.UNIT_CHARACTER)
 			try:
 				char=ord(info.text)
@@ -1164,6 +1170,7 @@ _staticMap={
 	("TskRichEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("ATL:EDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
+	("RichEdit20WPT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("WindowsForms10.RichEdit20W.app.0.378734a",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
 	("WindowsForms10.EDIT.app.0.11c7a8c",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }
