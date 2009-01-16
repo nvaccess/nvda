@@ -7,8 +7,6 @@
 import time
 import re
 import ctypes
-import pythoncom
-import win32com.client
 import comtypes.automation
 import wx
 import eventHandler
@@ -61,15 +59,10 @@ class ExcelGrid(Window):
 
 	def __init__(self,*args,**vars):
 		super(ExcelGrid,self).__init__(*args,**vars)
-		ptr=ctypes.c_void_p()
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
 		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
-		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-		o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
-		t=o.GetTypeInfo()
-		a=t.GetTypeAttr()
-		oleRepr=win32com.client.build.DispatchItem(attr=a)
-		self.excelObject=win32com.client.CDispatch(o,oleRepr)
+		self.excelObject=comtypes.client.dynamic.Dispatch(ptr)
 
 	def _get_role(self):
 		return controlTypes.ROLE_TABLE
@@ -84,7 +77,7 @@ class ExcelGrid(Window):
 	activeCell=property(fget=getActiveCell)
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address)
+		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
 	def getCellText(self,cell):
 		return cell.Text

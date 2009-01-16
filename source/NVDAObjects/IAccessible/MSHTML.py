@@ -8,8 +8,6 @@ import time
 import ctypes
 import comtypes.client
 import comtypes.automation
-import pythoncom
-import win32com.client
 from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
@@ -116,7 +114,11 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		self._rangeObj.setEndPoint(which,other._rangeObj)
 
 	def _get_text(self):
-		return self._rangeObj.text
+		text=self._rangeObj.text
+		if not text:
+			text=""
+		return text
+
 
 	def move(self,unit,direction, endPoint=None):
 		if unit in [textHandler.UNIT_READINGCHUNK,textHandler.UNIT_LINE]:
@@ -149,13 +151,9 @@ class MSHTML(IAccessible):
 
 	def getDOMElementFromIAccessible(self):
 		s=self.IAccessibleObject.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(IID_IHTMLElement))
-		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-		o=pythoncom._univgw.interface(interfaceAddress,pythoncom.IID_IDispatch)
-		t=o.GetTypeInfo()
-		a=t.GetTypeAttr()
-		oleRepr=win32com.client.build.DispatchItem(attr=a)
-		return win32com.client.CDispatch(o,oleRepr)
+		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
+		return comtypes.client.dynamic.Dispatch(ptr)
 
 	def _get_value(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
