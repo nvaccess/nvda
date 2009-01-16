@@ -299,6 +299,7 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 	else:
 		raise LookupError("No such device name")
 
+wavePlayer = None
 def playWaveFile(fileName, async=True):
 	"""plays a specified wave file.
 """
@@ -307,6 +308,9 @@ def playWaveFile(fileName, async=True):
 		return
 	f = wave.open(fileName,"r")
 	if f is None: return
-	player = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
-	player.feed(f.readframes(f.getnframes()))
-	player.idle()
+	global wavePlayer
+	if wavePlayer is not None:
+		wavePlayer.stop()
+	wavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	wavePlayer.feed(f.readframes(f.getnframes()))
+	wavePlayer.idle()
