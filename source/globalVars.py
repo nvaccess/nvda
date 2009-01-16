@@ -37,6 +37,7 @@ mouseOldX=None
 mouseOldY=None
 navigatorObject=None
 reviewPosition=None
+reviewPositionObj=None
 navigatorTracksFocus=True
 keyboardHelp=False
 keyCounter=0
