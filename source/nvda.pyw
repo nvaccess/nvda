@@ -9,7 +9,7 @@
 import os
 import sys
 import tempfile
-import nvwave
+import config
 import locale
 import gettext
 import time
@@ -17,7 +17,6 @@ import optparse
 import win32gui
 import win32con
 import globalVars
-import config
 import logHandler
 from logHandler import log
 import winUser
@@ -108,8 +107,6 @@ except:
 	sys.exit(1)
 finally:
 	winUser.setSystemScreenReaderFlag(False)
-	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\exit.wav",async=False)
 if globalVars.restart:
 	os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
 	sys.exit(0)

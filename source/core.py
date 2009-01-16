@@ -92,11 +92,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
-		import winsound
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		if not globalVars.appArgs.minimal:
-			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import braille
@@ -165,6 +164,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\exit.wav",async=False)
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()
