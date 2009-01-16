@@ -34,7 +34,7 @@ An NVDAObject for a window
 		NVDAObject.__init__(self)
 
 	def _isEqual(self,other):
-		return super(Window,self)._isEqual(other) and isinstance(other,Window) and other.windowHandle==self.windowHandle
+		return super(Window,self)._isEqual(other) and other.windowHandle==self.windowHandle
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)

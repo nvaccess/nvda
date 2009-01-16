@@ -4,7 +4,6 @@ import time
 import os
 import winsound
 import XMLFormatting
-import IAccessibleHandler
 import baseObject
 from keyUtils import sendKey
 import scriptHandler
@@ -29,6 +28,7 @@ import eventHandler
 import braille
 import queueHandler
 from logHandler import log
+import keyUtils
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
@@ -36,18 +36,17 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+		obj=self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 		return obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
-		foundObj=False
 		while obj and obj!=self.obj:
 			try:
-				docHandle=obj.IAccessibleObject.windowHandle
-				ID=obj.IAccessibleObject.uniqueID
+				docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
 				return start,end
 			except:
+				log.error("",exc_info=True)
 				obj=obj.parent
 
 	def __init__(self,obj,position):
@@ -140,8 +139,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
 		self._passThrough=False
-		self.rootWindowHandle=self.rootNVDAObject.windowHandle
-		self.rootID=0
+		self.disableAutoPassThrough = False
+		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -156,7 +155,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.VBufHandle=VBufClient_createBuffer(self.rootWindowHandle,self.rootID,self.backendLibPath)
+		self.VBufHandle=VBufClient_createBuffer(self.rootDocHandle,self.rootID,self.backendLibPath)
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
@@ -172,8 +171,26 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def isAlive(self):
 		pass
 
-	def _get_windowHandle(self):
-		return self.rootNVDAObject.windowHandle
+	def getNVDAObjectFromIdentifier(self, docHandle, ID):
+		"""Retrieve an NVDAObject for a given node identifier.
+		Subclasses must override this method.
+		@param docHandle: The document handle.
+		@type docHandle: int
+		@param ID: The ID of the node.
+		@type ID: int
+		@return: The NVDAObject.
+		@rtype: L{NVDAObjects.NVDAObject}
+		"""
+		raise NotImplementedError
+
+	def getIdentifierFromNVDAObject(self,obj):
+		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
+		@param obj: the NVDAObject to retreave the field identifier from.
+		@type obj: L{NVDAObject}
+		@returns: a the field identifier as a doc handle and ID paire.
+		@rtype: 2-tuple.
+		"""
+		raise NotImplementedError
 
 	def event_virtualBuffer_firstGainFocus(self):
 		"""Triggered the first time this virtual buffer ever gains focus.
@@ -197,15 +214,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
 
-	def _calculateLineBreaks(self,text):
-		maxLineLength=config.conf["virtualBuffers"]["maxLineLength"]
-		lastBreak=0
-		lineBreakOffsets=[]
-		for offset in range(len(text)):
-			if offset-lastBreak>maxLineLength and offset>0 and text[offset-1].isspace() and not text[offset].isspace():
-				lineBreakOffsets.append(offset)
-				lastBreak=offset
-		return lineBreakOffsets
+	def event_becomeNavigatorObject(self, obj, nextHandler):
+		if self.passThrough:
+			nextHandler()
+
+	def event_caret(self, obj, nextHandler):
+		if self.passThrough:
+			nextHandler()
 
 	def _activateField(self,docHandle,ID):
 		pass
@@ -218,15 +233,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
-		obj = info.NVDAObjectAtStart
-		if not obj:
-			log.debugWarning("Invalid NVDAObjectAtStart")
-			return
+		if reason == speech.REASON_FOCUS:
+			obj = api.getFocusObject()
+		else:
+			obj = info.NVDAObjectAtStart
+			if not obj:
+				log.debugWarning("Invalid NVDAObjectAtStart")
+				return
 		if obj == self.rootNVDAObject:
 			return
-		obj.scrollIntoView()
-		if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
-			obj.setFocus()
+		if reason != speech.REASON_FOCUS:
+			obj.scrollIntoView()
+			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
+				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
@@ -365,7 +384,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
 		if reason and (
-			(reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			self.disableAutoPassThrough
+			or (reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
 			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
@@ -380,7 +400,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return role == controlTypes.ROLE_EDITABLETEXT
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
 			return True
-		if role in (controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_LIST,controlTypes.ROLE_SLIDER) or controlTypes.STATE_EDITABLE in states:
+		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_TAB, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
 			return True
 		return False
 
@@ -411,6 +431,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.passThrough:
 			return sendKey(keyPress)
 		self.passThrough = False
+		self.disableAutoPassThrough = False
 		virtualBufferHandler.reportPassThrough(self)
 	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
 
@@ -422,7 +443,79 @@ class VirtualBuffer(cursorManager.CursorManager):
 		virtualBufferHandler.reportPassThrough(self)
 	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
 
-[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in [
+	def _tabOverride(self, direction):
+		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
+		This is done because many nodes are not focusable and it is thus possible for the virtual buffer caret to be unsynchronised with the focus.
+		In this case, we want tab/shift+tab to move to the next/previous focusable node relative to the virtual buffer caret.
+		If the virtual buffer caret is within the focused node, the tab/shift+tab key should be passed through to allow normal tab order navigation.
+		Note that this method does not pass the key through itself if it is not overridden. This should be done by the calling script if C{False} is returned.
+		@param direction: The direction in which to move.
+		@type direction: str
+		@return: C{True} if the tab order was overridden, C{False} if not.
+		@rtype: bool
+		"""
+		if self.VBufHandle is None:
+			return False
+
+		# We only want to override the tab order if the caret is not within the focused node.
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		try:
+			caretDocHandle,caretID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,caretInfo._startOffset)
+		except:
+			return False
+		focus = api.getFocusObject()
+		try:
+			focusDocHandle,focusID=self.getIdentifierFromNVDAObject(focus)
+		except:
+			log.debugWarning("error getting focus identifier", exc_info=True)
+			return False
+		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
+			return False
+		try:
+			start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,focusDocHandle,focusID)
+		except:
+			return False
+		focusInfo=self.makeTextInfo(textHandler.Offsets(start,end))
+		startToStart=focusInfo.compareEndPoints(caretInfo,"startToStart")
+		startToEnd=focusInfo.compareEndPoints(caretInfo,"startToEnd")
+		endToStart=focusInfo.compareEndPoints(caretInfo,"endToStart")
+		endToEnd=focusInfo.compareEndPoints(caretInfo,"endToEnd")
+		if not ((startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0):
+			return False
+
+		# If we reach here, we do want to override tab/shift+tab if possible.
+		# Find the next/previous focusable node.
+		try:
+			newDocHandle, newID, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
+		except StopIteration:
+			return False
+
+		# Finally, focus the node.
+		obj = self.getNVDAObjectFromIdentifier(newDocHandle, newID)
+		if obj == api.getFocusObject():
+			# This node is already focused, so we need to move to and speak this node here.
+			newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+			newCaret = newInfo.copy()
+			newCaret.collapse()
+			self._set_selection(newCaret,reason=speech.REASON_FOCUS)
+			if self.passThrough:
+				obj.event_gainFocus()
+			else:
+				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
+		else:
+			# This node doesn't have the focus, so just set focus to it. The gainFocus event will handle the rest.
+			obj.setFocus()
+		return True
+
+	def script_tab(self, keyPress):
+		if not self._tabOverride("next"):
+			keyUtils.sendKey(keyPress)
+
+	def script_shiftTab(self, keyPress):
+		if not self._tabOverride("previous"):
+			keyUtils.sendKey(keyPress)
+
+[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
@@ -431,7 +524,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("escape","disablePassThrough"),
 	("alt+extendedUp","collapseOrExpandControl"),
 	("alt+extendedDown","collapseOrExpandControl"),
-]]
+	("tab", "tab"),
+	("shift+tab", "shiftTab"),
+)]
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav

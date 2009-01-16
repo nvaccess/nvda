@@ -10,7 +10,7 @@ Changes since 0.6 P2:
 * fix: If speak typed words is enabled, announce the word when enter is pressed.
 * fix: Fix some character set issues in richedit documents.
 * change: Read by sentence in richedit controls if possible.
-* change: The announcement of links, headings, lists and block quotes in documents is now configured in the Document Formatting preferences dialog. This includes Mozilla Gecko virtual buffers.
+*Change: reporting of links, headings, tables, lists and block quotes can now be configured from the Document Formatting settings dialog. Previously to configure these settings for virtual buffers, the virtual buffer settings dialog would have been used. Now all documents share this configuration.
 * new: Support for formatting in IAccessible2 text controls, including Mozilla applications.
 * new: Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
 * fix: The NVDA log viewer now uses richedit instead of just edit to display the log. This improves reading by word with NVDA and allows it to read log text beyond 65535 bytes.

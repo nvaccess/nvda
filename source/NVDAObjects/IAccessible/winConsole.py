@@ -55,7 +55,7 @@ class WinConsole(IAccessible):
 		if not res:
 			raise OSError("consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
-		self.cConsoleEventHook=ctypes.CFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
+		self.cConsoleEventHook=ctypes.WINFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		#Register this callback with all the win events we need, storing the given handles for removal later
 		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)
@@ -74,7 +74,7 @@ class WinConsole(IAccessible):
 		self.basicTextLineLength=lineLength
 		self.prevConsoleVisibleLines=[self.basicText[x:x+lineLength] for x in xrange(0,len(self.basicText),lineLength)]
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
-		if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+		if globalVars.caretMovesReviewCursor and self==api.getNavigatorObject():
 			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
 		self.monitorThread=threading.Thread(target=self.monitorThreadFunc)
 		self.monitorThread.start()
@@ -141,7 +141,7 @@ class WinConsole(IAccessible):
 					# There is a new event and there has been enough time since the last one was handled, so handle this.
 					timeSinceLast=0
 					#Update the review cursor position with the caret position
-					if globalVars.caretMovesReviewCursor and self==api.getReviewPosition().obj:
+					if globalVars.caretMovesReviewCursor and self==api.getNavigatorObject():
 						queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self.makeTextInfo(textHandler.POSITION_CARET))
 					queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.handleCaretMove, self)
 					if globalVars.reportDynamicContentChanges:

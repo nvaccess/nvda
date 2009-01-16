@@ -196,7 +196,7 @@ class JAB(Window):
 			  	]]
 
 	def _isEqual(self,other):
-		return isinstance(other,JAB) and self.jabContext==other.jabContext
+		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext
 
 	def _get_name(self):
 		return self._JABAccContextInfo.name

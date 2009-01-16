@@ -8,9 +8,11 @@
 
 #Bit of a dance to force comtypes generated interfaces in to our directory
 import comtypes.client
-comtypes.client.gen_dir='.\\comInterfaces'
+import comtypes.gen
+import comInterfaces
+comtypes.gen.__path__.append(comInterfaces.__path__[0])
+
 import sys
-sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 import nvwave
 import os
 import time
@@ -140,7 +142,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if config.conf["general"]["showWelcomeDialogAtStartup"]:
 			wx.CallAfter(gui.WelcomeDialog.run)
 		else:
-			speech.speakMessage(_("NVDA started"))
+			import ui
+			ui.message(_("NVDA started"))
 	import queueHandler
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."

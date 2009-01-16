@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import imp
 import itertools
 import os
 import wx
@@ -64,7 +65,7 @@ roleLabels = {
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	controlTypes.ROLE_LISTITEM: None,
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
-	controlTypes.ROLE_MENU: _("mnu"),
+	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	controlTypes.ROLE_MENUITEM: None,
 	controlTypes.ROLE_BUTTON: _("btn"),
 	controlTypes.ROLE_CHECKBOX: _("chk"),
@@ -89,8 +90,9 @@ def _getDisplayDriver(name):
 def getDisplayList():
 	displayList = []
 	names = set()
+	modExtentions=[x[0] for x in imp.get_suffixes()]
 	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
-		if name.startswith('_') or ext not in ('.py', '.pyc') or name in names:
+		if name.startswith('_') or ext not in modExtentions or name in names:
 			continue
 		names.add(name)
 		try:
@@ -270,7 +272,10 @@ class TextInfoRegion(Region):
 		@return: The selection.
 		@rtype: L{textHandler.TextInfo}
 		"""
-		return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		try:
+			return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		except:
+			return self.obj.makeTextInfo(textHandler.POSITION_FIRST)
 
 	def _setSelection(self, info):
 		"""Set the selection.
