@@ -15,6 +15,7 @@ import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
 import textHandler
+from logHandler import log
 import speech
 import controlTypes
 from . import IAccessible
@@ -25,49 +26,44 @@ lastMSHTMLEditGainFocusTimeStamp=0
 
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
-IID_DispHTMLGenericElement=comtypes.GUID('{3050F563-98B5-11CF-BB82-00AA00BDCE0B}')
-IID_DispHTMLTextAreaElement=comtypes.GUID('{3050F521-98B5-11CF-BB82-00AA00BDCE0B}')
-IID_IHTMLInputTextElement=comtypes.GUID('{3050F2A6-98B5-11CF-BB82-00AA00BDCE0B}')
 
 class MSHTMLTextInfo(textHandler.TextInfo):
 
-	def _getRangeOffsets(self):
-		mark=self._rangeObj.getBookmark()
-		lineNum=(ord(mark[8])-self.obj._textRangeLineNumBias)/2
-		start=(ord(mark[2])-self.obj._textRangeOffsetBias)-lineNum
-		if ord(mark[1])==3:
-			end=(ord(mark[40])-self.obj._textRangeOffsetBias)-lineNum
-		else:
-			end=start
-		return [start,end]
-
 	def _expandToLine(self,textRange):
-		oldSelMark=self.obj.domElement.document.selection.createRange().getBookmark()
-		curMark=textRange.getBookmark()
-		self.obj.domElement.document.selection.createRange().moveToBookmark(curMark)
-		api.processPendingEvents()
-		sendKey(key("ExtendedEnd"))
-		api.processPendingEvents()
-		textRange.setEndPoint("endToEnd",self.obj.domElement.document.selection.createRange())
-		sendKey(key("ExtendedHome"))
-		api.processPendingEvents()
-		textRange.setEndPoint("startToStart",self.obj.domElement.document.selection.createRange())
-		self.obj.domElement.document.selection.createRange().moveToBookmark(oldSelMark)
+		parent=textRange.parentElement()
+		if not parent.isMultiline: #fastest solution for single line edits (<input type="text">)
+			textRange.expand("textEdit")
+			return
+		parentRect=parent.getBoundingClientRect()
+		#This can be simplified when comtypes is fixed
+		lineTop=comtypes.client.dynamic._Dispatch(textRange._comobj).offsetTop
+		lineLeft=parentRect.left+parent.clientLeft
+		#editable documents have a different right most boundary to <textarea> elements.
+		if self.obj.IHTMLElement.document.body.isContentEditable:
+			lineRight=parentRect.right 
+		else:
+			lineRight=parentRect.left+parent.clientWidth
+		tempRange=textRange.duplicate()
+		tempRange.moveToPoint(lineLeft,lineTop)
+		textRange.setEndPoint("startToStart",tempRange)
+		tempRange.moveToPoint(lineRight,lineTop)
+		textRange.setEndPoint("endToStart",tempRange)
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(MSHTMLTextInfo,self).__init__(obj,position)
-		if self.obj.domElement.uniqueID!=self.obj.domElement.document.activeElement.uniqueID:
-			raise RuntimeError("Only works with currently selected element")
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
 			return
-		self._rangeObj=self.obj.domElement.document.selection.createRange().duplicate()
-		if position==textHandler.POSITION_SELECTION:
-			pass
-		elif position==textHandler.POSITION_CARET:
+		if position in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
+			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
+				raise RuntimeError("Only works with currently selected element")
+			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+			if position==textHandler.POSITION_CARET:
+				self._rangeObj.collapse()
+			return
+		self._rangeObj=self.obj.IHTMLElement.createTextRange()
+		if position==textHandler.POSITION_FIRST:
 			self._rangeObj.collapse()
-		elif position==textHandler.POSITION_FIRST:
-			self._rangeObj.move("textedit",-1)
 		elif position==textHandler.POSITION_LAST:
 			self._rangeObj.expand("textedit")
 			self.collapse(True)
@@ -86,7 +82,11 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		if unit==textHandler.UNIT_READINGCHUNK:
 			unit=textHandler.UNIT_SENTENCE
 		if unit in [textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_SENTENCE,textHandler.UNIT_PARAGRAPH]:
-			self._rangeObj.expand(unit)
+			res=self._rangeObj.expand(unit)
+			if not res and unit=="word": #IHTMLTxtRange.expand fails to handle word when at the start of a field
+				res=self._rangeObj.moveEnd(unit,1)
+				if res:
+					self._rangeObj.moveStart(unit,-1)
 		elif unit==textHandler.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
 		elif unit==textHandler.UNIT_STORY:
@@ -147,45 +147,80 @@ class MSHTML(IAccessible):
 
 	def __init__(self,*args,**kwargs):
 		super(MSHTML,self).__init__(*args,**kwargs)
-		self.domElement=self.getDOMElementFromIAccessible()
+		try:
+			self.IHTMLElement.createTextRange()
+			self.TextInfo=MSHTMLTextInfo
+		except:
+			pass
+		if self.TextInfo==MSHTMLTextInfo:
+			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
+				("ExtendedUp","moveByLine"),
+				("ExtendedDown","moveByLine"),
+				("ExtendedLeft","moveByCharacter"),
+				("ExtendedRight","moveByCharacter"),
+				("Control+ExtendedLeft","moveByWord"),
+				("Control+ExtendedRight","moveByWord"),
+				("Shift+ExtendedRight","changeSelection"),
+				("Shift+ExtendedLeft","changeSelection"),
+				("Shift+ExtendedHome","changeSelection"),
+				("Shift+ExtendedEnd","changeSelection"),
+				("Shift+ExtendedUp","changeSelection"),
+				("Shift+ExtendedDown","changeSelection"),
+				("Control+Shift+ExtendedLeft","changeSelection"),
+				("Control+Shift+ExtendedRight","changeSelection"),
+				("ExtendedHome","moveByCharacter"),
+				("ExtendedEnd","moveByCharacter"),
+				("control+extendedHome","moveByLine"),
+				("control+extendedEnd","moveByLine"),
+				("control+shift+extendedHome","changeSelection"),
+				("control+shift+extendedEnd","changeSelection"),
+				("ExtendedDelete","moveByCharacter"),
+				("Back","backspace"),
+			]]
 
-	def getDOMElementFromIAccessible(self):
-		s=self.IAccessibleObject.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
-		return comtypes.client.dynamic.Dispatch(ptr)
+	def _get_IHTMLElement(self):
+		if not hasattr(self,'_IHTMLElement'):
+			s=self.IAccessibleObject.QueryInterface(IServiceProvider)
+			interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
+			ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
+			self._IHTMLElement=comtypes.client.dynamic.Dispatch(ptr)
+		return self._IHTMLElement
 
 	def _get_value(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
 			return ""
 		else:
-			return super(MSHTML,self)._get_value()
+			return super(MSHTML,self).value
 
+	def _get_role(self):
+		if self.IHTMLElement.tagName.lower()=="body":
+			return controlTypes.ROLE_DOCUMENT
+		return super(MSHTML,self).role
+
+	def _get_states(self):
+		states=super(MSHTML,self).states
+		if self.IHTMLElement.isContentEditable:
+			states.add(controlTypes.STATE_EDITABLE)
+		if self.IHTMLElement.isMultiline:
+			states.add(controlTypes.STATE_MULTILINE)
+		return states
 
 	def _get_isContentEditable(self):
-		if hasattr(self,'domElement'): 
+		if hasattr(self,'IHTMLElement'): 
 			try:
-				return bool(self.domElement.isContentEditable)
+				return bool(self.IHTMLElement.isContentEditable)
 			except:
 				return False
 		else:
 			return False
 
 	def event_gainFocus(self):
-		if self.isContentEditable:
-			biasRange=self.domElement.document.selection.createRange().duplicate()
-			biasRange.move("textedit",-1)
-			biasMark=biasRange.getBookmark()
-			self._textRangeLineNumBias=ord(biasMark[8])
-			self._textRangeOffsetBias=ord(biasMark[2])
-			self.TextInfo=MSHTMLTextInfo
-			self.role=controlTypes.ROLE_EDITABLETEXT
-		else:
+		if not self.isContentEditable:
 			vbuf=self.virtualBuffer
 			if vbuf and vbuf.passThrough:
 				vbuf.passThrough=True
 				virtualBufferHandler.reportPassThrough(vbuf)
-		IAccessible.event_gainFocus(self)
+		super(MSHTML,self).event_gainFocus()
 
 	def reportFocus(self):
 		global lastMSHTMLEditGainFocusTimeStamp
@@ -193,32 +228,3 @@ class MSHTML(IAccessible):
 		if self.isContentEditable and (timeStamp-lastMSHTMLEditGainFocusTimeStamp)>0.5:
 			super(MSHTML,self).reportFocus()
 		lastMSHTMLEditGainFocusTimeStamp=timeStamp
-
-	def event_loseFocus(self):
-		if hasattr(self,'domElement'):
-			self.TextInfo=NVDAObjects.NVDAObjectTextInfo
-
-[MSHTML.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
-	("ExtendedDelete","moveByCharacter"),
-	("Back","backspace"),
-]]
