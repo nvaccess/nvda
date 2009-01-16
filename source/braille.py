@@ -272,7 +272,10 @@ class TextInfoRegion(Region):
 		@return: The selection.
 		@rtype: L{textHandler.TextInfo}
 		"""
-		return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		try:
+			return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+		except:
+			return self.obj.makeTextInfo(textHandler.POSITION_FIRST)
 
 	def _setSelection(self, info):
 		"""Set the selection.

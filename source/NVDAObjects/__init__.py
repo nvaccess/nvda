@@ -668,7 +668,8 @@ Tries to force this object to take the focus.
 This code is executed if a gain focus event is received by this object.
 """
 		self.reportFocus()
-		braille.handler.handleGainFocus(self)
+		if not eventHandler.isPendingEvents("gainFocus"):
+			braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""
@@ -700,7 +701,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		braille.handler.handleUpdate(self)
 
 	def event_caret(self):
-		if self is api.getFocusObject():
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):

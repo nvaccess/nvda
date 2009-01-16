@@ -722,7 +722,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				try:
+					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				except (NotImplementedError, RuntimeError):
+					pass
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
@@ -742,7 +745,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				parent=parent.parent
 			if not caretInDocument:
 				return
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			try:
+				info=self.makeTextInfo(textHandler.POSITION_CARET)
+			except RuntimeError:
+				return
 			info.expand(textHandler.UNIT_CHARACTER)
 			try:
 				char=ord(info.text)
