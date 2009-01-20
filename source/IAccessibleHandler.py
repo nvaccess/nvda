@@ -1027,10 +1027,11 @@ def terminate():
 		winUser.unhookWinEvent(handle)
 
 def getIAccIdentity(pacc,childID):
-	stringPtr,stringSize=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
+	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
+	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	s=p.contents.raw
-	fields=struct.unpack('IIII',s)
+	identityString=stringPtr.contents.raw
+	fields=struct.unpack('IIiI',identityString)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:
