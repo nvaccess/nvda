@@ -419,7 +419,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if self.role==controlTypes.ROLE_EDITABLETEXT:
 			#Make sure to cache the parent
 			parent=self.parent=self.parent
-			if parent.role==controlTypes.ROLE_COMBOBOX:
+			if parent and parent.role==controlTypes.ROLE_COMBOBOX:
 				return ""
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
