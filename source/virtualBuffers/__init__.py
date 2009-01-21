@@ -429,7 +429,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptHandler.queueScript(script, keyPress)
 
 	def script_disablePassThrough(self, keyPress):
-		if not self.passThrough:
+		if not self.passThrough or self.disableAutoPassThrough:
 			return sendKey(keyPress)
 		self.passThrough = False
 		self.disableAutoPassThrough = False

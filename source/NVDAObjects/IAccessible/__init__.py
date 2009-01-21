@@ -315,8 +315,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			event_objectID=Identity['objectID']
 		if event_childID is None and Identity and 'childID' in Identity:
 			event_childID=Identity['childID']
-		if event_childID is None:
-			event_childID=IAccessibleChildID
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
 		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -326,6 +324,8 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				event_childID=IAccessibleObject.uniqueID
 			except:
 				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
+		if event_childID is None:
+			event_childID=IAccessibleChildID
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -417,6 +417,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return True
 
 	def _get_name(self):
+		#The edit field in a combo box should not have a label
+		if self.role==controlTypes.ROLE_EDITABLETEXT:
+			#Make sure to cache the parent
+			parent=self.parent=self.parent
+			if parent and parent.role==controlTypes.ROLE_COMBOBOX:
+				return ""
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
