@@ -44,7 +44,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def speakText(self,text,index=None):
 		if not self.frame:
-			self.initialize()
+			self.__init__()
 			if not self.frame:
 				return
 		self.frame.textCtrl.AppendText(text + "\n")
