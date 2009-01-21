@@ -14,7 +14,7 @@ from keyUtils import sendKey, key
 import config
 import textHandler
 import controlTypes
-from window import Window
+from . import Window
  
 #Word constants
 

@@ -241,7 +241,7 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	def __new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	def old__new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
 """  
@@ -293,6 +293,63 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
 		return obj
 
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		windowHandle=kwargs.get('windowHandle',None)
+		IAccessibleObject=kwargs.get('IAccessibleObject',None)
+		IAccessibleChildID=kwargs.get('IAccessibleChildID',None)
+		event_windowHandle=kwargs.get('event_windowHandle',None)
+		event_objectID=kwargs.get('event_objectID',None)
+		event_childID=kwargs.get('event_childID',None)
+		if windowHandle and not IAccessibleObject:
+			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				windowHandle=IAccessibleObject.windowHandle
+			except:
+				log.debugWarning("IAccessible2::windowHandle failed",exc_info=True)
+			#Mozilla Gecko: we can never use a MozillaWindowClass window
+			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
+				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
+		if not windowHandle and event_windowHandle:
+			windowHandle=event_windowHandle
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			raise RuntimeError("Can't get a window handle from IAccessible")
+		try:
+			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+		except:
+			Identity=None
+		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
+			event_windowHandle=Identity['windowHandle']
+		if event_objectID is None and Identity and 'objectID' in Identity:
+			event_objectID=Identity['objectID']
+		if event_childID is None and Identity and 'childID' in Identity:
+			event_childID=Identity['childID']
+		if event_windowHandle is None:
+			event_windowHandle=windowHandle
+		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			event_objectID=IAccessibleHandler.OBJID_CLIENT
+		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				event_childID=IAccessibleObject.uniqueID
+			except:
+				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
+		if event_childID is None:
+			event_childID=IAccessibleChildID
+		kwargs['windowHandle']=windowHandle
+		kwargs['IAccessibleObject']=IAccessibleObject
+		kwargs['IAccessibleChildID']=IAccessibleChildID
+		kwargs['event_windowHandle']=event_windowHandle
+		kwargs['event_objectID']=event_objectID
+		kwargs['event_childID']=event_childID
+		clsList.append(IAccessible)
+		if event_objectID in (0,-4):
+			return super(IAccessible,cls).findBestClass(clsList,kwargs)
+		else:
+			return super(Window,cls).findBestClass(clsList,kwargs)
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
@@ -308,27 +365,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
-		Identity=self.IAccessibleIdentity
-		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
-			event_windowHandle=Identity['windowHandle']
-		if event_objectID is None and Identity and 'objectID' in Identity:
-			event_objectID=Identity['objectID']
-		if event_childID is None and Identity and 'childID' in Identity:
-			event_childID=Identity['childID']
-		if event_childID is None:
-			event_childID=IAccessibleChildID
-		if event_windowHandle is None:
-			event_windowHandle=windowHandle
-		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			event_objectID=IAccessibleHandler.OBJID_CLIENT
-		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				event_childID=IAccessibleObject.uniqueID
-			except:
-				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
+		if not windowHandle:
+			raise RuntimeError("windowHandle is None")
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
@@ -470,6 +511,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_role(self):
 		IARole=self.IAccessibleRole
+		if IARole==IAccessibleHandler.ROLE_SYSTEM_CLIENT:
+			superRole=super(IAccessible,self).role
+			if superRole!=controlTypes.ROLE_WINDOW:
+					return superRole
 		if isinstance(IARole,basestring):
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)

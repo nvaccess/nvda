@@ -16,7 +16,7 @@ import IAccessibleHandler
 import controlTypes
 import speech
 from keyUtils import sendKey, key
-from window import Window
+from . import Window
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
