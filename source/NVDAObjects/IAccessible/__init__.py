@@ -458,6 +458,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return True
 
 	def _get_name(self):
+		#The edit field in a combo box should not have a label
+		if self.role==controlTypes.ROLE_EDITABLETEXT:
+			#Make sure to cache the parent
+			parent=self.parent=self.parent
+			if parent and parent.role==controlTypes.ROLE_COMBOBOX:
+				return ""
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:

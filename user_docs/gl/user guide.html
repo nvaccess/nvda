@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1>Guía do Usuario de NVDA 0.6</h1>
-<span>Última actualización 20 de Xullo do 2008</span>
+<span>Derradeira actualización 23 de Decembro do 2008</span>
 
 <h2>Táboa de Contido</h2>
 <ul>
@@ -12,10 +12,11 @@
 <ul>
 <li><a href="#1.1">1.1. Características Xerais</a></li>
 <li><a href="#1.2">1.2. Internacionalización</a></li>
-<li><a href="#1.3">1.3. Soporte de Síntesis de Voz</a></li>
-<li><a href="#1.4">1.4. Innovación e experimentación</a></li>
-<li><a href="#1.5">1.5. Deseño e implementación</a></li>
-<li><a href="#1.6">1.6. Licencia e copyright</a></li>
+<li><a href="#1.3">1.3. Soporte de Síntese de Voz</a></li>
+<li><a href="#1.4">1.4. Soporte de Braille</a></li>
+<li><a href="#1.5">1.5. Innovación e experimentación</a></li>
+<li><a href="#1.6">1.6. Deseño e implementación</a></li>
+<li><a href="#1.7">1.7. Licencia e copyright</a></li>
 </ul>
 <li><a href="#2">2. Requerimentos do Sistema</a></li> 
 <li><a href="#3">3. Obtendo NVDA</a></li>
@@ -32,45 +33,47 @@
 <li><a href="#6">6. O menú NVDA</a></li>
 <ul>
 <li><a href="#6.1">6.1. Acesando ó menú NVDA</a></li>
-<li><a href="#6.2">6.2. Gardando e Recargando a Configuración</a></li>
-<li><a href="#6.3">6.3 O Menú Preferencias</a></li>
+<li><a href="#6.2">6.2. Configurando NVDA</a></li>
+<li><a href="#6.2.1">6.2.1 O Menú Preferencias</a></li>
+<li><a href="#6.2.1.1">6.2.1.1. Opcións xerais</a></li>
+<li><a href="#6.2.1.2">6.2.1.2. Seleción de Sintetizador</a></li>
+<li><a href="#6.2.1.3">6.2.1.3. Opcións de Voz</a></li>
+<li><a href="#6.2.1.4">6.2.1.4. Opcións de Braille</a></li>
+<li><a href="#6.2.1.5">6.2.1.5. Opcións de Teclado</a></li>
+<li><a href="#6.2.1.6">6.2.1.6. Opcións do Rato</a></li>
+<li><a href="#6.2.1.7">6.2.1.7. Opcións de Presentación de Objetos</a></li>
+<li><a href="#6.2.1.8">6.2.1.8. Opcións do Modo Virtual</a></li>
+<li><a href="#6.2.1.9">6.2.1.9. Opcións de Formato de Documentos</a></li>
+<li><a href="#6.2.2">6.2.2: Gardando e Revertindo Configuración</a></li>
 </ul>
 <li><a href="#7">7. Navegando co NVDA</a></li>
 <ul>
-<li><a href="#7.1">7.1. Navegando co Foco</a></li>
-<li><a href="#7.2">7.2. Navegador de Obxectos</a></li>
-<li><a href="#7.3">7.3. Revisando Texto nonObxecto Actual</a></li>
-<li><a href="#7.4">7.4. Navegando co Cursor do Sistema</a></li>
+<li><a href="#7.1">7.1. Navegando co foco</a></li>
+<li><a href="#7.2">7.2. Navegando co Cursor do Sistema</a></li>
+<li><a href="#7.3">7.3. Navegación de obxectos</a></li>
+<li><a href="#7.4">7.4. Revisando Texto no Obxecto Actual</a></li>
 <li><a href="#7.5">7.5. Navegando co Rato</a></li>
 </ul>
 <li><a href="#8">8. Modo Virtual</a></li>
 <ul>
 <li><a href="#8.1">8.1. Navegación con unha Soa Letra</a></li>
-<li><a href="#8.2">8.2. Paso a Través dos Formularios e Modo Virtual</a></li>
+<li><a href="#8.2">8.2. Formularios e modos Foco/revisión</a></li>
 <li><a href="#8.3">8.3. A lista de Ligas</a></li>
 </ul>
-<li><a href="#9">9. Configurando NVDA</a></li>
-<li><a href="#9.1">9.1. Opcións Xerais</a></li>
-<li><a href="#9.2">9.2. Selección do Sintetizador</a></li>
-<li><a href="#9.3">9.3. Opcións de Voz</a></li>
-<li><a href="#9.4">9.4. Opcións de Teclado</a></li>
-<li><a href="#9.5">9.5. Opcións do Rato</a></li>
-<li><a href="#9.6">9.6. Opcións de Presentación de Obxectos</a></li>
-<li><a href="#9.7">9.7. Opcións do Modo Virtual</a></li>
-<li><a href="#9.8">9.8. Opcións de Formato de Documento</a></li>
+<li><a href="#9">9. Resolución de problemas</a></li>
 </ul>
 </ul>
 <h2 id="1">1. Introducción</h2>
-<h3 id="1.1">Características Xerais</h3>
+<h3 id="1.1">1.1. Características Xerais</h3>
 <p>
-Proporcionando un apoio de voz sintética, NVDA permite a persoas cegas e deficientes visuais acesar e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros.
+Proporcionando un apoio de voz sintética, NVDA permite ás persoas cegas e deficientes visuais acesar e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros.
 </p>
 <p>
 O máis subliñable inclúe:
 </p>
 <li>Capacidade de executarse enteiramente dende unha memoria USB ou outros medios portátiles sen a necesidade de instalación</li>
-<li>Navegación pola web co <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a></li>
 <li>Instalador parlante sinxelo de utilizar</li>
+<li>Navegación pola web co <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a></li>
 <li>Traballando co correo electrónico utilizando <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3</a></li>
 <li>Soporte primario para Microsoft Internet Explorer</li>
 <li>Soporte básico para Microsoft Outlook Express / Windows Mail</li>
@@ -80,30 +83,35 @@ O máis subliñable inclúe:
 <li>soporte primario para IBM Lotus Symphony</li>
 <li>soporte para Sistema de Ordes de Windows e aplicacións de consola </li>
 <li>Anunciado automático de texto baixo o rato e indicación  audible opcional da posición do rato</li>
+<li>Soporte Braille para liñas que son manexadas ou por controladores braille de Freedom Scientific ou por BRLTTY.</li>
 </ul>
-<h3 id="1.2">Internacionalización</h3>
+<h3 id="1.2">1.2. Internacionalización</h3>
 <p>
 É importante que calquera persoa no mundo, non importa qué lingua fale, teña o mesmo acceso ás tecnoloxías. Actualmente NVDA foi traducido a unhass 20 linguas incluindo: Portugués do Brasil, Checo, Finés, Francés, Alemán, Húngaro, Italiano, Portugués, Eslovaco, Español, Sueco, Chinese Tradicional, Vietnamita, Afrikaans, Galego, Croata, xaponés, Polaco, Ruso, Tailandés e Ucraniano.   
 </p>
-<h3 id="1.3">Soporte de Síntesis de Voz</h3>
+<h3 id="1.3">1.3. Soporte de Síntesis de Voz</h3>
 <p>
 Aparte de proporcionar as súas mesaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular.
 </p>
 <p>
-NVDA está integrado co <a href="http://espeak.sourceforge.net/">eSpeak</a>, un sintetizador de voz multilingüe, libre, de código aberto. Adicionalmente, NVDA pode utilizar motores de voz tanto SAPI4 coma SAPI5  para proporcionar saída de voz, tanto coma o sintetizador de voz Audiologic.
+NVDA está integrado co <a href="http://espeak.sourceforge.net/">eSpeak</a>, un sintetizador de voz multilingüe, libre, de código aberto. Adicionalmente, NVDA pode utilizar motores de voz tanto SAPI4 coma SAPI5  para proporcionar saída de voz, así coma o sintetizador de voz Audiologic.
 </p>
-<h3 id="1.4">Innovación e Experimentación</h3>
+<h3 id="1.4">1.4. Soporte de Braille</h3>
+<p>
+Para usuarios que posúan unha liña de braille efímero, NVDA pode amosar a súa información en braille. NVDA soporta as liñas Pacmate e Focus de Freedom Scientific, liñas Handy Tech, ademáis de moitas outras soportadas polo paquete BRLTTY  se está dispoñible.
+</p>
+<h3 id="1.5">1.5. Innovación e Experimentación</h3>
 <p>
 NVDA non está restrinxido pola necesidade de seguir modas e demandas de mercado. Os lectores de pantalla comerciales implementan características realmente boas, pero algunhas veces esto predisponse polo que quere o mercado, en lugar do que será realmente útil para o usuario. NVDA non será sempre tan estable coma outros lectores de pantalla, pero certamente pode actuar  coma unha ferramenta de proba experimental.  Pode probar sinxela e rápidamente novas ideas e características quizáis non vistas noutros lectores de pantalla para o sistema Operativo Windows. Un exemplo de esto é a capacidade de NVDA de utilizar pitidos para comunicar ó usuario que unha barra de progreso estase a mover. O pitido máis alto, o remate da barra de progreso está a chegar. A xente engadiu esta característica a outros lectores de pantalla a través de scripts persoalizados, pero nunca foi oficialmente adoptado completamente no corazón de ningún outro lector de pantalla para Windows.  
  </p>
-<h3 id="1.5">Deseño e Implementación</h3>
+<h3 id="1.6">1.6. Deseño e Implementación</h3>
 <p>
 NVDA está escrito no <a href="http://www.python.org/">lenguaxe de programación Python</a>, e está construido cun deseño modular, e moito do seu código pode ser extendido con facilidade e engadido en orden a soportar novos programas e/o controles en Windows. Os módulos App poden ser escritos para engadir total soporte para unha aplicación específica, os modos virtuales poden ser escritos para permitir a NVDA amosar documentos complexos ou outros datos, e os obxectos de NVDA poden ser escritos para engadir soporte para controles específicos ou Windows. NVDA sempre intenta facer ós controles e elementos dun programa ou Sistema Operativo tan accesibles como sexa possible, tal que o usuario poida atopar activamente calquera información que requira. Así NVDA non ten que ver con características especiais tales como filtrar e anunciar información particular que pense que o usuario poderá querer conocer. 
 </p>
 <p>
 Para comunicarse co sistema Operativo e os programas, NVDA utiliza unha mistura de funcións do Sistema Operativo, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge e interfaces de programación específicas proporcionadas por certas aplicacións. NVDA non utiliza ningún controlador interceptador de Vídeo especial ou ganchos de display, e sempre intentará sacar tanta información dende os interfaces específicos de Accesibilidade como sexa possible, antes de recurrir a outros medios. 
  </p>
-<h3 id="1.6">Licencia e Copyright</h3>
+<h3 id="1.7">1.7. Licencia e Copyright</h3>
 <p>
 NVDA é copyright © 2006-2008 colaboradores do NVDA.
 </p>
@@ -113,13 +121,14 @@ Para máis detalles, podes <a href="http://www.gnu.org/licenses/old-licenses/gpl-
 </p>
 <h2 id="2">2. Requerimentos do Sistema</h2>
 <ul>
-<li>Sistemas Operativos: todos os sabores de Windows XP e Windows Vista (incluindo Sistemas Operativos Server), poderán funcionar parcialmente en Windows 2000</li>
+<li>Sistemas Operativos: todas as versións de 32 bits de Windows XP e Windows Vista (incluindo Sistemas Operativos Server), poderá funcionar parcialmente en Windows 2000 e versións de 64 bits de Windows XP</li>
 <li>Memoria: 256 mb de RAM ou máis</li>
 <li>Velocidade do procesador: 1.0 ghz ou superior</li>
+<li>Aproximadamente 50 MB de espacio dispoñible.</li>
 </ul>
 <h2 id="3">3. Obtendo NVDA</h2>
 <p>
-Sei non tes aínda unha copia do NVDA, podes descargala dende o sitio web de NVDA en: 
+Se non tes aínda unha copia do NVDA, podes descargala dende o sitio web de NVDA en: 
 <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
 </p>
 <p>
@@ -134,10 +143,10 @@ Actualmente hai dúas formas de NVDA empaquetado. Unha é un Instalador que che fa
 Se xa tes o instalador do NVDA, sixelamente preme intro ou fai doble clic sobor do ficheiro e o instalador arrancará.
 </p>
 <p>
-Cando o instalador se cargue, escoitarás a música de instalación do NVDA. Unha vez cargado, unha copia temporal do NVDA permitirache seguir os indicativos do instalador e instalar NVDA. Nota que se tiveras executado outra copia de NVDA ó mesmo tempo de iniciar o instalador, unha mesaxe aparecerá decíndoche que a túa copia previa de NVDA será pechada. Cando premas intro sobre esta mesaxe, o instalador pechará a copia previa e iniciará a súa propria copia. Esto é necesario para que o instalador poida actualizar apropriadamente calqera ficheiro trocado.
+Cando o instalador se cargue, escoitarás a música de instalación do NVDA. Unha vez cargado, unha copia temporal do NVDA permitirache seguir os indicativos do instalador e instalar NVDA. Nota que se tiveras executado outra copia de NVDA ó mesmo tempo de iniciar o instalador, unha mesaxe aparecerá decíndoche que a túa copia previa de NVDA será pechada. Cando premas intro sobre esta mesaxe, o instalador pechará a copia previa e iniciará a súa propria copia. Esto é necesario para que o instalador poida actualizar apropriadamente calqera ficheiro trocado. En este ponto, se tes outra copia do NVDA xa instalada, o instalador de NVDA desinstalaráa por ti, e entón comezará a instalar NVDA.
 </p>
 <p>
-Unha vez que teñas completado exitosamente a instalación, o instalador finalmente arrancará a nova copia instalada do NVDA por ti.
+Unha vez que teñas compretado exitosamente a instalación, o instalador avisarache de que a instalación do NVDA rematou, e pregúntache sobre a reinicialización do sistema. É moi importante que reinicialices o sistema sen falta ou terás consecuencias indesexables.
 </p>
 <h3 id="4.2">4.2. O ficheiro Zip Portátil</h3>
 <p>
@@ -179,30 +188,285 @@ O menú NVDA permíteche controlar as opcións do NVDA, acesar á axuda, gardar/volt
 </p>
 <h3 id="6.1">6.1. Acesando ó menú NVDA</h3>
 <p>
-Para obter o menú de NVDA dende calquer lugar en Windows mentres NVDA estea executándose, preme NVDA+n. Cando o menú se amose, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. O menú Preferencias permíteche configurar a NVDA como prefiras, o menú ferramentas contén unha ou dúas ferramentas útiles tales como o Visor de Logs de NVDA e a Consola Python de NVDA para desenrroladores, o menú Axuda permíteche acesar á guía do usuario, a unha referencia rápida de teclas, e moito máis. O menú NVDA tamén contén elementos que che permiten gardar ou voltar á configuración actual, e tamén saír do NVDA todo á vez.    
+Para obter o menú de NVDA dende calquer lugar en Windows mentres NVDA estea executándose, preme NVDA+n. Tamén podes obter o menú do NVDA a través da bandexa de windows.  Ou facendo clic dereito sobre o icono do nvda localizado na bandexa do sistema, ou acesando á bandexa do sistema premendo a tecla co logo de windows+B, pulsar flecha abaixo ate o icono do NVDA e premendo a tecla aplicacións localizada cerca da tecla control da dereita na maioría dos teclados. Cando o menú se amose, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. O menú Preferencias permíteche configurar a NVDA como prefiras, o menú ferramentas contén unha ou dúas ferramentas útiles tales como o Visor de Logs de NVDA e a Consola Python de NVDA para desenrroladores, o menú Axuda permíteche acesar á guía do usuario, a unha referencia rápida de teclas, e moito máis. O menú NVDA tamén contén elementos que che permiten gardar ou voltar á configuración actual, e tamén saír do NVDA todo á vez, aíndaque esto pode ser  realizado máis eficientemente premendo NVDA+Q.
 </p>
 <p>
-O menú NVDA tamén pode ser accesible dende o icono NVDA n Bandexa do Sistema de Windows. Ou facendo clic co botón dereito do rato sobre o icono, ou moverse á Bandexa do Sistema premendo a tecla windows+b e movendo as teclas del cursor ó icono do NVDA e premendo a tecla aplicacións.
+As opcións baixo o menú Preferencias tamén poden ser acesadas a través de ordes de atallos de teclado, así como as opcións de gardar e recuperar as opcións de configuración discutidas nesta sección. Para máis información acerca de esto, por favor visita a guía de referencia rápida para unha lista de ordes de atallo.   
+</p>
+<h3 id="6.2">6.2. Configurando NVDA</h3>
+<h4 id="6.2.1">6.2.1 Preferencias</h4>
+<h5 id="6.2.1.1">6.2.1.1. Opcións xerais</h5>
+<p>
+O cadro de diálogo Opcións Xerais atópase no menú Preferencias. Tamén pode accederse a el premendo NVDA+Control+G. Para gardar as opcións despóis de modificalas, preme o botón Aceptar. Para cancelalas, preme o botón Cancelar ou a tecla escape. Contén as seguintes opcións:
+</p>
+<h6>Lingua</h6>
+<p>
+Un cadro combinado que che permite selecionar a lingua en que debería amosarse a interface do usuario e os mensaxes do NVDA. Hai moitas linguas, nembargantes a última elección na lista é chamada "Windows". Esta elección dirá ó NVDA que utilice a lingua no que Windows estea actualmente axustado (en Opcións Rexionais e de Idioma no Panel de Control).
+Por favor nota que NVDA debe ser iniciado cando se troque a lingua, NVDA preguntarache se desexas reiniciar se fas trocos na selección e premes Aceptar.
+</p>
+<h6>Gardar Configuración ó Saír</h6>
+<p>
+Esta opción é unha casiña de verificación que, cuando se verifica, dice a NVDA que guarde automáticamente la actual configuración cuando salgas de NVDA. 
+</p>
+<h6>Avisar antes de Saír do NVDA</h6>
+<p>
+Esta opción é unha casiña de verificación que che permite escoller se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. Cando estea verificada, un diálogo aparecerá cando intentes saír do NVDA preguntándotee se queres ou non saír.
+</p>
+<h6>Nivel do Log</h6>
+<p>
+Este é un cadro combinado que che permite escoller canto NVDA porá no log según se executa. xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado amigable. Sen embargo se estás querendo proporcionar información nun informe sobre un fallo etc, entón poderá ser unha boa opción.
+</p>  
+<h5 id="6.2.1.2">6.2.1.2. Seleción de Sintetizador</h5>
+<p>
+O diálogo Sintetizador, que se atopa en "Sintetizadores..." no menú Preferencias, permíteche selecionar que sintetizador debería utilizar NVDA para falar.
+</p>
+<p>
+O diálogo contén un so cadro combinado, que lista todos os sintetizadores dispoñibles. Elixe o sintetizador que queiras utilizar cas teclas de cursor, e logo preme aceptar. Se hai un erro cargando o sintetizador, un cadro de mensaxe alertarache do feito, e conservará o sintetizador anterior cargado.
+</p>
+<p>
+A lista actual de sintetizadores soportados por NVDA é:
+eSpeak, SAPI4, SAPI5, Audiologic, Display, e Silence. 
+  </p>
+<p>
+O sintetizador eSpeak está compilado directamente no NVDA, e non depende de ningún outro controlador en especial ou librería SAPI para ser instalado. NVDA arranca utilizando eSpeak predeterminadamente. Este sintetizador debería funcionar en calquer sistema no que funcione NVDA, así que definitivamente funcionará cando se execute NVDA dende unha unidade de memoria USB ou un CD, ou en calquer outro sistema.
+</p>
+<p>
+A opción Sapi4 permíteche utilizar o sintetizador Ssapi. As voces que son incluidas baixo Ssapi4 inclúen as voces de eloquence, así como outras voces Ssapi4 que poderás ter instaladas no teu sistema.
+</p>
+<p>
+O sintetizador Sapi5 permíteche utilizar as voces de microsoft que están incluidas na túa máquina. en XP, a voz Ssapi5 predeterminada é Microsoft Sam. En Vista, a voz predeterminada é Microsoft Anna. Dependendo de cales voces teñas instaladas, outras poderán ser amosadas baixo Ssapi5.
+</p>
+<p>
+O sintetizador Display é útil para os desenvolvedores videntes que desexen ler que está a falar NVDA,  según proban ó NVDA cas súas aplicacións.
+</p>
+<p>
+O controlador de sintetizador Silence non é que sexa útil, ó menos que queras non ter ninguhna voz mentres se executa NVDA.
+</p>
+<p>
+Porfavor nota que non importa cantas voces diferentes SAPI4 ou SAPI5  (ou motores) que teñas instalados no teu sistema, só  os actuais sintetizadores SAPI4 e SAPI5 amosaranse no diálogo sintetizadores. Para selecionar un dos motores (voces), seleciona ou SAPI4 ou SAPI5, e logo no diálogo Opcións de Voz, podes escoller a voz que queras.
+ </p>
+<h5 id="6.2.1.3">6.2.1.3. Opcións de Voz</h5>
+<p>
+O diálogo Opcións de Voz, atopado no menú Preferencias ou accedido mediante a presión de NVDA+Control+V, contén opcións que che permiten modificar o son da voz. Tamén podes configurar moitas das opcións dende calquer lugar premendo NVDA+Control xunto cunha das teclas de cursor. As flechas esquerda e dereita móvente a través de varias opcións, as teclas de flechas arriba e abaixo incrementan ou decrementan esa opción respectivamente.
+</p>
+<p>
+O cadro de diálogo de opcións de voz contén as seguintes:
+</p>
+<h6>Voz</h6>
+<p>
+A primeira opción que obtés en este diálogo é un cadro combinado, que lista todas as voces do sintetizador actual que tes instalado. Podes utilizar as teclas de cursor para escoitar todas as varias elecións. As flechas esquerda e arriba suben pola lista, mentres que as flechas dereita e abaixo moven cara abaixo pola lista.
+</p>
+<h6>Variante</h6>
+<p>
+Se estás utilizando o sintetizador Espeak empaquetado xunto co NVDA, este é un cadro combinado que che permite selecionar a variante ca que o sintetizador debería falar. As variantes de Espeak son bastante semellantes ás voces, tal que proporcionan atributos lixeiramente diferentes para a voz de ESpeak. Algunhas variantes soarán como un home, algunhas como unha muller, e algunhas como se tiveran carraspeira.
+</p>
+<h6>Velocidade</h6>
+<p>
+Esta opción permíteche trocar a velocidade da voz. Esta é unha barra de desprazamento que vai dende 0 ate 100, (sendo 0 a velocidade máis lenta e sendo 100 a máis rápida).
+</p>
+<h6>Ton</h6>
+<p>
+Esta opción permíteche trocar o ton da voz. Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o ton máis baixo e sendo 100 o máis alto).
+</p>
+<h6>Volume</h6>
+<p>
+Esta opción é unha barra de desprazamento que vai dende 0 ate 100, (sendo 0 o volume máis baixo e sendo 100 o máis alto).
+</p>
+<h6>Entoación</h6>
+<p>
+Esta opción é unha barra de desprazamento que permíteche escoller canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak proporciona esta opción actualmente).
+</p>
+<h6>Dicir toda a Pontoación</h6>
+<p>
+Esta opción é unha casiña de verificación, que cando se verifica di a NVDA que fale todos os símbolos de pontoación como palabras (moi útil para probas de lectura). Cando se desverifica, NVDA deixa a pontoación sen alterar, así o sintetizador todavía lerá frases ca entoación correcta, sen embargo os símbolos non serían falados en voz alta.
+</p>
+<h6>Aumentar ton para maiúsculas</h6>
+<p>
+Esta opción, se está verificada, aumentará o ton para maiúsculas.
+</p>
+<h6>Dicir" Maius" antes de Maiúsculas</h6>
+<p>
+Esta opción é unha casiña de verificación, que cando está verificada di a NVDA que diga a palabra "maius" antes de calquer letra en maiúscula, cando se navega sobre ela ou falándoo cando está sendo escribida. 
+Normalmente, NVDA eleva o ton lixeiramente para calquer letra maiúscula, pero algúns sintetizadores poderán non soportar esto ben, así quizáis esta opción poderá ser de utilidade.
+</p>
+<h6>Pitar para Maiúsculas</h6>
+<p>
+Se esta casiña de verificación está verificada, NVDA emitirá un pequeno pitido cada vez que estea falando un caracter en maiúscula. Como a casiña de verificación 'dicir maius para maiúsculas', esta é útil para sintetizadores que non poidan modificar o seu ton para as letras maiúsculas.
+</p>
+<h5 id="6.2.1.4">6.2.1.4. Opcións de Braille</h5>
+<p>
+O cadro de diálogo de Opcións de braille pode ser invocado indo ó menú preferencias e entón ir á opción opcións de braille.
+</p>
+<h6>Liña Braille</h6>
+<p>
+A primeira opción ca que te encontrarás no diálogo de opcións de braille é un cadro combinado que di "Liña braille". presentaráseche con tres opcións. Móvete entre estas opcións cas flechas.
+</p>
+<p>
+Sen braille siñifica que non estás utilizando braille.
+</p>
+<p>
+Freedom Scientific é para liñas braille Freedom Scientific Focus/Pacmate. Nota que esta opción só aparece se tes o controlador braille de Freedom Scientific instalado, mira <a href="http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp">Página Official de controladores Braille para Freedom Scientific</a>  para máis información sobre cómo obter e instalar los controladores.
+</p>
+<p>
+Handy Tech é para as liñas Handy Tech. Nota que esta opción só existirá se tes instalado o controlador universal <a href="ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe">Handy Tech</a>
+</p>
+<p>
+BRLTTY permíteche utilizar unha grande lista de liñas braille.  Por favor instala o <a href="http://brl.thefreecat.org/brltty/">Instalador para Windows de BRLTTY</a> para ter soporte para estas liñas. 
+</p>
+<h6>Tabla de Transcripción</h6>
+<p>
+A seguinte opción que virá neste diálogo é o cadro combinado para as táboas braille. Neste cadro combinado, atoparás táboas braille para diferentes idiomas. Podes moverte de táboa braille a táboa braille na lista utilizando as flechas.
+</p>
+<h6>Expandir a braille de ordenador para a palabra no cursor</h6>
+<p>
+Esta opción permite á palabra que está baixo o cursor ser amosada en braille de ordenador non contraído.
+</p>
+<h6>Velocidade de Parpadeo do Cursor</h6>
+<p>
+Esta opción é un campo numérico que che permite trocar a velocidade de parpadeo do cursor en milésimas de segundo.
+</p>
+<h6>nDuración do Mensaxe (en seg)</h6>
+<p>
+Esta opción é un campo numérico que controla durante canto tempo se amosan os mensaxes do sistema na liña braille.
+</p>
+<h6>Miscelánea</h6>
+<p>
+Cando se preme NVDA+Control+T, podes controlar que vai a ser amosado na liña braille. As dúas opcións son foco e revisión. Foco amosa que vai a ser accedido a través das flechas, a tecla tab, en poucas palabras, navegación co foco. Revisión permíteche revisar que está na pantalla, esto é, navegación de obxectos. Podes moverte rápidamente entre estas opcións premendo control+NVDA+T.
+</p>
+<h5 id="6.2.1.5">6.2.1.5. Opcións de Teclado</h5>
+<p>
+Este cadro de diálogo atópase no menú Preferencias, baixo "Opcións de teclado...". Alternativamente, Pode ser accedido premendo NVDA+Control+K.  Contén as seguintes opcións:
+</p>
+<h6>Disposición do Teclado</h6>
+<p>
+Este cadro combinado permíteche escoller que tipo de distribución de teclado debería utilizar NVDA. Actualmente os dous que veñen co NVDA son Desktop e Laptop.
+</p>
+<h6>Utilizar BloqMayus coma unha tecla modificadora do NVDA</h6>
+<p>
+Se esta casiña de verificación está verificada, o BloqMayus pode ser utilizado coma unha tecla modificadora do NVDA.
+</p>
+<h6>Utilizar o insert estendido coma unha tecla modificadora do NVDA</h6>
+<p>
+Se esta casiña de verificación está verificada, a tecla insert (normalmente atopada enriba das teclas de flecha, preto de inicio e fin) pode ser utilizada coma unha tecla modificadora do NVDA.
+</p>
+<h6>Utilizar insert do teclado numérico como tecla modificadora do NVDA</h6>
+<p>
+Se esta casiña de verificación está verificada, a tecla insert do teclado numérico pode ser utilizada como unha tecla modificadora do NVDA.
+</p>
+<h6>Falar caracteres ó se escreber</h6>
+<p>
+Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todos os caracteres segundo se escreben no teclado.  Tamén podes configurar esta opción dende calquer lugar premendo NVDA+2.
+ </p>
+<h6>Falar palabras ó se escreber</h6>
+<p>
+Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todas as palabras ó se escreber no teclado.  Podes tamén configurar esta opción dende calquer lugar premendo NVDA+3.
+</p>
+<h6>Falar teclas de ordes</h6>
+<p>
+Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todas as teclas que non sexan caracteres ó se escreber no teclado. Esto inclúe combinacións de teclas tales coma control más calquer outra letra. Tamén podes configurar esta opción dende calquer lugar premendo NVDA+4.
+</p>
+<h5 id="6.2.1.6">6.2.1.6. Opciones do Rato</h5>
+<p>
+O diálogo de Opcións do Rato atópase no menú Preferencias, baixo "Opcións do Rato...". Alternativamente, pode ser accedido premendo NVDA+Control+M.  Contén as seguintes opcións:
+</p>
+<h6>Anunciar Trocos na Forma do Rato</h6>
+<p>
+Unha casiña de verificación, que cando se verifica siñifica que NVDA anunciará a forma do punteiro do rato cada vez que troque . O punteiro do rato en Windows troca a súa forma para comunicar certa información tal coma cando algo é editable, ou cando algo é cargable etc. 
+</p>
+<h6>Anunciar texto baixo o Rato</h6>
+<p>
+Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará o texto actualmente baixo o punteiro do rato, segundo o movas pola pantalla. Esto permíteche atopar cousas na pantalla, movendo físicamente o rato, antes que tratar de atopalas a través do navegador de obxectos. 
+</p>
+<h6>Anunciar rol cando o rato entra nos Obxectos</h6>
+<p>
+Se esta casiña de verificación está activada, NVDA anunciará o rol (tipo) de  obxecto cando o rato se mova preto del.
+</p>
+<h6>Reproducir audio cando se mova o rato</h6>
+<p>
+Verificando esta casiña de verificación fas que NVDA reproduza pitidos cando o rato se mova, así que o usuario poida resolver onde está o rato con respecto ás dimensións da pantalla.
+</p>
+<h6>O Brilo controla o volume do audio</h6>
+<p>
+Se a casiña de verificación 'reproducir audio cando o rato se mova' está verificada, entón verificando esta casiña de verificación siñifica que o volume dos pitidos de audio está controlado por cómo o brilo da pantalla estea baixo o rato. Esto poderá causar algúns problemas de rendemento en Windows Vista, así que está desverificado predeterminadamente.
+</p>
+<h5 id="6.2.1.7">6.2.1.7. Opcións de Presentación de Obxectos</h5>
+<p>
+Atópase no menú Preferencias baixo "Presentación de Obxectos..." ou premendo NVDA+Control+O, este cadro de diálogo contén as seguintes opcións:
+</p>
+<h6>Anunciar Consellos</h6>
+<p>
+Unha casiña de verificación que cando está verificada di ó NVDA que anuncie consellos segundo aparezan. Moitas ventás e controles amosan un pequeno mensaxe (ou consello) cando moves o punteiro do rato sobre eles, ou algunhas veces cando te moves co foco por eles.
+</p>
+<h6>Anunciar globos de axuda</h6>
+<p>
+Esta casiña de verificación cando está verificada di ó NVDA que anuncie os globos de axuda cando aparezan.  Os globos de axuda son coma pequenos consellos, pero normalmente son máis longos, e están asociados con eventos do Sistema tales coma un cable de rede sendo desenchufado, ou quizáis alertarte acerca de problemas de seguridade de Windows.
+</p>
+<h6>Anunciar Teclas de Atallo dos Obxectos</h6>
+<p>
+Cando esta casiña de verificación está verificada, NVDA incluirá a tecla de atallo que estea asociada con certo obxecto ou control cando sexa anunciado. Por exemplo o menú Archivo en unha barra de menú poderá ter unha tecla de atallo alt+a.
+</p>
+<h6>Anunciar Descripcións de Obxectos</h6>
+<p>
+Desverifica esta casiña de verificación se coidas que non necesitas escoitar a descripción anunciada xunto cos obxectos.
+</p>
+<h6>Dicir o estado do Obxecto Primeiro</h6>
+<p>
+Cando esta casiña de verificación está verificada, NVDA anunciará o estado dun obxecto antes de anunciar calquer outra información. Por exemplo un botón con un nome "reproducir" e un estado "premedo" será anunciado como "premedo botón" en lugar de "reproducir botón premedo". Esto é ás veces útil se estás tabulando sobre un montón de obxectos do mesmo tipo, pero só estás realmente interesado en ver se  están "premedos", ou "verificados" etc.
+</p>
+<h6>Pitar nas Barras de Progreso</h6>
+<p>
+Unha barra de progreso é un control que se parece un pouco a unha regra. Segundo unha tarefa está sendo lentamente completada, a barra vai sendo remarcada máis. Tamén amosa un valor de porcentaxe, dicíndocho numéricamente cando vaia avanzando ó longo dela. As barras de progreso son amosadas para cousas coma carga dunha páxina web, baixando o teu correo, ou procesando un ficheiro de son etc. Se esta casiña de verificación está verificada, NVDA utilizará pitidos para facerche saber cómo avanza a barra de progreso ó moverse. Esto é ás veces moito máis agradable que escoitar montóns de números.
+</p>
+<h5 id="6.2.1.8">6.2.1.8. Opcións do Modo Virtual</h5>
+<p>
+O diálogo de opcións do Modo Virtual pode ser atopado no menú Preferencias, baixo "Modo Virtual...". Alternativamente, pode ser accedido premendo NVDA+Control+B. Nota: dado que o soporte do modo virtual está sendo reescrito para aplicacións tales coma microsoft internet explorer, outlook, e Adobe Reader, algunhas das características que son presentadas neste diálogo soamente se aplican ós modos virtuales que xa foron completados, tales coma os atopados para Mozilla Firefox 3.0, Thunderbird 3.0, e Seamonkey 2.0.
+</p>
+<p>
+O diálogo contén as seguintes opcións:
+</p>
+<h6>Máximo Número de Caracteres nunha Liña</h6>
+<p>
+Este campo pon a anchura máxima dunha liña do modo virtual (en caracteres). Non se garantiza que todas as liñas rematarán sendo de esta anchura ou por debaixo, pero a maior parte debería ser así.
+</p> 
+<h6>Máximo número de Liñas por Páxina</h6>
+<p>
+Se ben en realidade os modos virtuales non teñen páxinas, este campo axusta a cantidade de liñas que moverás cando premas Avance de páxina ou Retroceso de páxina mentres esteas nun modo virtual.
+</p>
+<h6>Anunciar a presentación do modo Virtual cando o foco troque</h6>
+<p>
+Esta casiña de verificación cando está verificada di ó NVDA que anuncie o texto e a presentación de información no modo virtual para un control, segundo obteña o foco, en lugar que simplemente preguntando a Windows pola información do control. Por exemplo, tabulando a unha liga chamada "gatos" dirá "liga: gatos" en lugar de "gatos: liga" porque nos modos virtuais cando se navega, o tipo sempre é dito antes que o texto. Poderá ser convinte que en certos casos non teñamos pois esta opción habilitada xa que esto siñifica que o control será anunciado nun orde algo mellor. Non obstante, para algúns navegadores de internet, poderás obter un anunciado da información máis exacto cando esto estea habilitado.
+</p>
+<h6>Configurando o anunciado de campos tais coma ligas e cabeceiras</h6>
+<p>
+Versións anteriores de NVDA permitíanche utilizar as opcións do diálogo do Modo Virtual para configurar se NVDA debería anunciar o tipo de campo ó que entraches mentres les o contido dunha web. Exemplos de tipos de campo son ligas, cabeceiras, táboas, e listas. Para configurar éstos , porfavor atopa as novas opcións no diálogo de <a href="#6.2.1.9">Opcións de Formato de Documentos</a>. Estas opcións agora non só afectan ós modos virtuales, senon a calquer documento que poida causar que estos tipos de campos sexan anunciados.
+</p>  
+<h6>Modo de foco automático para trocos do foco</h6>
+<p>
+Esta opción permite ó modo foco ser invocado se o foco troca. Por exemplo, cando nunha páxina web, se premes tab e caes sobre un formulario, se esta opción está verificada, o modo foco será invocado automáticamente.
+</p>
+<h6>Modo foco automático para movemento de flechas</h6>
+<p>
+Esta opción, cando está verificada, permite a NVDA entrar e abandoar o modo foco cando se utilizan as flechas. Por exemplo, se se vai pulsando flecha abaixo por unha páxina web e caes sobre un cadro de edición, NVDA activará automáticamente o modo foco. Se pulsas as flechas para saír do cadro de edición, NVDA volverá a poñerse en modo revisión .
+</p>
+<h5 id="6.2.1.9">6.2.1.9. Opcións de Formato de Documentos</h5>
+<p>
+Este cadro de diálogo atópase no menú Preferencias, baixo "Formato de Documento...". Alternativamente, este cadro de diálogo pode ser invocado premendo NVDA+Control+D. Todas as casiñas de verificación neste diálogo son para configurar que tipo de formato desexas escoitar automáticamente cando movas o cursor polos documentos tal como en Wordpad ou Microsoft Word. Por Exemplo, se verificas a casiña de verificación anunciar o nome da fonte, cada vez que navegues polo texto cunha fonte diferente, o nome da fonte será anunciado.
+</p>
+<p>
+Podes configurar o anunciado de nomes da fonte, tamano da fonte, atributos da fonte, estilo, alineamento do texto, estilo do texto, táboas, números de páxina, números de liña, erros de ortografía, ligas, cabeceiras, listas e citas.
 </p>
 <h3 id="6.2">6.2. Gardando e Recargando a configuración</h3>
 <p>
-NVDA arquiva as súas opcións nun ficheiro chamado nvda.ini no seu directorio. Probablemente nunca terás que tocar este ficheiro, pero para usuarios avanzados, este ficheiro lles permite trocar algunhas opcións extra que non teñen cadros de diálogo aínda para facelo.
+NVDA arquiva as súas opcións nun ficheiro chamado nvda.ini no seu directorio. Probablemente nunca terás que tocar este ficheiro, pero para usuarios avanzados, este ficheiro permítelles trocar algunhas opcións extra que non teñen cadros de diálogo aínda para facelo.
 </p>
 <p>
-NVDA non garda automáticamente as túas opcións, así se saes do NVDA, e logo o reinicias, as opcións voltarán ós valores orixinais. Para gardar as opcións, podes ou elexir o elemento Gardar configuración no menú NVDA, ou premer NVDA+Control+c dende calquer lugar.
+NVDA non garda automáticamente as túas opcións, así se saes do NVDA, e logo o reinicias, as opcións voltarán ós valores orixinais. Nota, nembargantes, que esta opción predeterminada pode ser trocada baixo as opcións xerais no menú preferencias. Para gardar as opcións, podes ou elexir o elemento Gardar configuración no menú NVDA, ou premer NVDA+Control+c dende calquer lugar.
 </p>
 <p>
 Se o NVDA está nun sistema de ficheiros de só lectura, tal coma nun CD, non será posible gardar as túas opcións, e dirácho.
 </p>
 <p>
 Se nunca te trucas cas túas opcións e necesitas voltar ás opcións gardadas, podes ou elexir o elemento "voltar á configuración gardada" no menú NVDA, ou podes premer NVDA+Control+r dende calquer lugar.    
-</p>
-<h3 id="6.3">6.3. O menú Preferencias</h3>
-<p>
-No menú NVDA, hai un menú Preferencias que contén moitos elementos de menú que abren cadros de diálogo para que controles varias opcións do NVDA.
-</p>
-<p>
-Podes controlar Opcións xerais, Selección de sintetizador, opcións de voz, opcións de teclado, opcións do rato, presentación de obxectos, opcións do modo virtual, e opcións de formato de documento.
 </p>
 <h2 id="7">7. Navegando co NVDA</h2>
 <h3 id="7.1">7.1. Navegando co Foco</h3>
@@ -220,7 +484,17 @@ Hai algunhas ordes de teclado útiles cando nos movemos co foco:
 <li>NVDA+b - le toda a ventá en primeiro plano (útil para ler un cadro de diálogo)</li>
 <li>NVDA+t - Anuncia o título da ventá actual en primeiro plano</li>
 </ul>
-<h3 id="7.2">7.2. Navegador de Obxectos</h3>
+<h3 id="7.2">7.2. Navegando co Cursor do Sistema</h3>
+<p>
+Cando o foco está sobre un obxecto que ten un cursor de edición (cursor do sistema), podes moverte cas flechas e editar coma o farías normalmente. NVDA anunciará segundo te movas por caracteres, verbaS, lIÑAS, E tamén anunciará a selección E non selección dO texto.
+</p>
+<p>
+Cando te movas co cursor do sistema, a posición do cursor de revisión tamén será actualizado para emparellalo ó cursor do sistema.
+</p>
+<p>
+Tamén podes ler todo o texto (dicir todo) con NVDA+flecha abaixo. Nota que aíndaque esto é diferente ó máis do teclado numérico o que só move o cursor de revisión, éste move o cursor do sistema segundo se move.
+</p>
+<h3 id="7.3">7.3. Navegador de Obxectos</h3>
 <p>
 Se desexas votar un pequeno vistazo polo Sistema Operativo, pero sen mover o foco, podes utilizar o navegador de obxectos de NVDA. Esto permíteche moverte de un obxecto cara outro nunha árbore estructurada. 
 </p>
@@ -263,9 +537,9 @@ nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactiva
 <p>
 Cando te movas co foco, o actual navegador de obxectos troca xunto con el. Nembargantes, se desexas bloquear o navegador de obxectos nun obxecto específico, para que non troque co foco, podes desactivar o Foco Move ó Navegador de Obxectos con NVDA+7.
 </p>
-<h3 id="7.3">7.3. Revisando o Texto no Obxecto Actual</h3>
+<h3 id="7.4">7.4. Revisando o Texto no Obxecto Actual</h3>
 <p>
-Algunhas veces poderías querer saber como se deletrea algo, ou quizáis necesites ler algo por verbas. Podes revisar o texto dentro do actual obxecto cas teclas do teclado numérico:
+NVDA permíteche ler o contido do navegador de obxectos actual, por caracteres, palabras ou liñas. Esto é principalmente útil na consola do Dos de windows, e outros lugares onde hai un cursor do sistema limitado ou non existente.
 </p>
 <ul>
 <li>Shift+7 teclado numérico: liña superior</li>
@@ -287,24 +561,11 @@ Algunhas veces poderías querer saber como se deletrea algo, ou quizáis necesites
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
 </p>
 <p>
-Para a maioría dos obxectos, o texto dentro está composto do nome, valor e descripción. Sen embargo para obxectos que actualmente teñan texto real, ou contido editable, entón o texto é o texto actual no obxecto.
-</p>
-<p>
-Por exemplo: un elemento de lista nunha lista terá texto que contén o seu nome, valor e descripción. Pero un campo de edición, ou unha ventá de consola do dos, terá o texto actual que estea no campo ou na ventá.
-</p>
-<p>
-Cando un obxecto contén un cursor de edición (cursor do sistema), e móvese, o cursor de revisión tamén é actualizado a esa posición. Se queres que o cursor de revisión permaneza onde estea, e non movelo co cursor do sistema, podes desactivar Cursor Move Cursor de Revisión premendo NVDA+6.
+Cando un obxecto contén un cursor de edición (cursor do sistema), e se move, o cursor de revisión tamén é actualizado a esa posición. Se queres que o cursor de revisión permaneza onde estea, e non movelo co cursor do sistema, podes desactivar Cursor Move Cursor de Revisión premendo NVDA+6.
  </p>
-<h3 id="7.4">7.4. Navegando co Cursor do Sistema</h3>
 <p>
-Cando o foco está sobre un obxecto que ten un cursor de edición (cursor do sistema), podes moverte cas flechas e editar coma o farías normalmente. NVDA anunciará segundo te movas por caracteres, verbaS, lIÑAS, E tamén anunciará a selección E non selección dO texto.
-</p>
-<p>
-Cando te movas co cursor do sistema, a posición do cursor de revisión tamén será actualizado para emparellalo ó cursor do sistema.
-</p>
-<p>
-Tamén podes ler todo o texto (dicir todo) con NVDA+flecha abaixo. Nota que aíndaque esto é diferente ó máis do teclado numérico o que só move o cursor de revisión, éste move o cursor do sistema segundo se move.
-</p>
+É posible copiar partes do texto que esteas revisando. Por exemplo, poderás desexar copiar unha dirección de internet que alguén che enviou nun texto nun programa de chat. Para copiar texto, comeza movendo o cursor de revisión ó primeiro caracter do texto que desexas copiar, e preme NVDA+f9. Entón móvete cara o remate do texto, e preme NVDA+f10. O texto será copiado agora ó portapapeis tal que poidas pegalo onde queiras. Nota que se o programa que estás utilizando xa che permite moverte ó longo do texto utilizando o cursor do sistema, e copiar utilizando a orde normal control+c, entón sempre obterás mellores resultados utilizando esta.
+</p> 
 <h3 id="7.5">7.5. Navegando co Rato</h3>
 <p>
 Cando moves o rato, NVDA informa predeterminadamente do texto que está directamente baixo o punteiro do rato, segundo se move sobre el. Onde estea soportado, NVDA lerá o valor dun parágrafo de texto, aíndaque algúns controles só poderán ler por liñas.
@@ -326,7 +587,7 @@ Os documentos comprexos de só letura, como páxinas web, son representados en NVD
 Un modo virtual (en inglés Virtual Buffer) é unha representación cha testual do documento, que permite ó usuario moverse ó longo del, para ler o texto e campos que estean no documento. Aparte de moverse por el, tamén podes premer intro ou espazo sobre ligas e botóns para activalos, premer intro ou espazo sobre campos de edición para logo editar o seu contido, premer intro ou espazo sobre casiñas de verificación ou botóns de opción para seleccionalos, e premer intro ou espazo sobre cadros combinados para logo poder trocar a súa selección.
 </p>
 <p>
-Segundo te movas por un campo, o tipo de campo (tal como liga, cabeceira, lista etc) é falado, sen embargo esta información non está físicamente na memoria intermedia, o que siñifica que podes moverte a través do texto como normalmente.
+Mentres se está nun modo virtual, hai dous modos de interactuación. O Modo revisión é onde podes moverte ó longo de todo o texto utilizando un cursor virtual. O modo Foco é onde podes interactuar direitamente cun control (campo de edición, cadro combinado, botóns de opción) utilizando en cada ocasión as teclas que utilizarías normalmente. Cando se está en modo revisión, NVDA trocará automáticamente a modo foco se tabulas ou fas clic sobre un control en particular que o requira. Podes tamén trocar manhualmente a modo foco con NVDA+espazo. Se NVDA trocou automáticamente a modo foco porque se pulsou tab ou se fixo clic, trocarase a modo revisión unha vez que tabules ou fagas clic en algo que non o requira. Non obstante, se trocaches a modo foco con NVDA+espazo, permanecerá en modo foco ata que volvas manualmente a modo revisión. En calquer ocasión en que estea en modo foco, podes trocar manualmente a modo revisión premendo escape, ou NVDA+espazo. O diálogo de opcións do modo virtual no menú Preferencias no menú de NVDA permíteche deshabilitar o troco automático do modo revisión e do modo foco.
 </p>
 <p>
 Actualmente NVDA utiliza o Modo Virtual para lectura de documentos de Mozilla Firefox, Microsoft Internet Explorer, e Adobe Reader.
@@ -336,7 +597,7 @@ Nota que o modo virtual utilizado para Internet Explorer e Adobe Reader é moito 
 </p> 
 <h3 id="8.1">8.1. Navegación cunha Soa Letra</h3>
 <p>
-Para unha navegación máis rápida, NVDA tamén proporciona teclas dun só caracter para saltar a certos campos nun modo virtual.
+Mentres se está en modo revisión, para unha navegación máis rápida, NVDA tamén proporciona teclas dun só caracter para saltar a certos campos nun modo virtual.
 </p>
 <p>
 por elas mesmas saltan ó seguinte campo, ca tecla shift saltan ó anterior campo.
@@ -370,229 +631,19 @@ Teclas non soportadas polo modo virtual antigo:
 <li>g: gráfico</li>
 <li>1 a 6: cabeceiras de 1 a 6 respectivamente</li> 
 </ul>
-<h3 id="8.2">8.2. Formularioss e Paso a Través do Modo Virtual</h3>
+<h3 id="8.2">8.2. Formularioss e modos foco/revisión</h3>
 <p>
-Algunhas veces poderás desexar interactuar con campos de formulario cas teclas do modo virtual fora deste modo. O paso a través do modo virtual é creado para este problema, e pode ser activado e desactivado con NVDA+espacio.
-</p>
-<p>
-Sen embargo xeralmente, cando se preme sobre un campo de formulario activarase automáticamente, e cando se cargue una nova páxina desactivarase.
+Algunhas veces poderás desexar interactuar con campos de formulario cas teclas do modo virtual fora deste modo. O modo foco é creado para este problema, e pode ser activado e desactivado con NVDA+espacio.
 </p>
 <h3 id="8.3">8.3. A Lista de ligas</h3>
 <p>
 Para acceder a unha lista de ligas para o actual modo virtual, preme NVDA+f7. Dende o diálogo que aparece, podes seleccionar a liga na que esteas interesado, e entón ou te moves cara el ou o activas utilizando os botóns proporcionados.
 </p>
-<h2 id="9">9. Configurando NVDA</h2>
-<h3 id="9.1">9.1. Opcións Xerais</h3>
+<h3 id="9">9. información Adicional</h3>
 <p>
-O cadro de diálogo Opcións Xerais atópase no menú Preferencias. Contén as seguintes opcións:
-</p>
-<h4>Lingua</h4>
-<p>
-Un cadro combinado que che permite seleccionar a lingua na que debería amosarse o interface de usuario e as mensaxes do NVDA. Hai moitas linguas, non obstante a última elección na lista é chamada "Windows". Esta elección dirá a NVDA que utilice a lingua na que Windows estea actualmente axustado (en Opcións Rexionales e de lingua no Panel de Control).
-Por favor nota que NVDA debe ser iniciado cando se troque a lingua, NVDA preguntarache se desexas reiniciar se fas modificacións na selección e preme Aceptar.
-</p>
-<h4>Gardar Configuración ó Saír</h4>
-<p>
-Unha casiña de verificación que cando se verifica di ó NVDA que garde automáticamente a actual configuración cando saias do NVDA. 
-</p>
-<h4>Avisar antes de Saír do NVDA</h4>
-<p>
-Unha casiña de verificación que che permite afirmar si ou non NVDA debería preguntar se estás seguro cando queras saír do NVDA.
-</p>
-<h4>Nivel do Log</h4>
-<p>
-Un cadro combinado que che permite elexir canto NVDA porá no log segundo se executa. Xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado fácil. Sen embargo se estás querendo proporcionar información nun informe sobre un fallo etc, entón poderá ser unha idea axustalo a un nivel máis alto.
-</p>  
-<h3 id="9.2">9.2. Selección do Sintetizador</h3>
-<p>
-O diálogo Sintetizador, que se atopa en "Sintetizadores..." no menú Preferencias, permíteche seleccionar que sintetizador debería utilizar NVDA para falar.
-</p>
-<p>
-O diálogo contén un so cadro combinado, que lista todos os sintetizadores dispoñibles. Elixe o sintetizador que queras utilizar cas teclas de cursor, e logo preme aceptar. Se hai un error cargando o sintetizador, un cadro de mensaxe alertarache do feito, e conserva o sintetizador anterior cargado.
-</p>
-<p>
-A lista actual de sintetizadores soportados por NVDA é:
-eSpeak, SAPI4, SAPI5, Audiologic, Display, e Silence. 
-  </p>
-<p>
-O sintetizador eSpeak está compilado directamente en NVDA, e non depende de ningún outro controlador en especial ou librería SAPI para ser instalado. NVDA arranca utilizando eSpeak predeterminadamente. Este sintetizador debería funcionar en calquer sistema no que funcione NVDA, así que definitivamente funcionará cando se execute NVDA dende unha unidade de memoria USB ou un CD, en calquer outro sistema.
-</p>
-<p>
-NVDA actualmente ten dous controladores SAPI4. a xente informa diferentes resultados con ambos controladores, así que por favor proba os dous e utiliza o que funcione mellor para ti.
-</p>
-<p>
-O sintetizador Display é útil para os desenroladores videntes que desexen ler que está a falar o NVDA, según proban o NVDA cas súas aplicacións.
-</p>
-<p>
-O controlador de sintetizador Silence non é que sexa útil, ó menos que queras non ter ningunha voz mentres se executa NVDA.
-</p>
-<p>
-Porfavor nota que non importa cantas voces diferentes SAPI4 ou SAPI5  (ou motores) que teñas instalados no teu sistema, só  os actuais sintetizadores SAPI4 e SAPI5 se amosarán no diálogo sintetizadores. Para seleccionar un dos motores (voces), selecciona ou SAPI4 ou SAPI5, e logo no diálogo Opcións de Voz, podes elexir a voz que queras.
- </p>
-<h3 id="9.3">9.3. Opcións de Voz</h3>
-<p>
-O diálogo Opcións de Voz, atópase no menú Preferencias, contén opcións que che permiten modificar o son da voz. Tamén podes configurar moitas das opcións dende calquer lugar premendo NVDA+Control xunto cunha das teclas de cursor. As flechas esquerda e dereita móvente a través de varias opcións, as teclas de flechas arriba e abaixo incrementan ou decrementan esa opción respectivamente.
-</p>
-<p>
-Este cadro de diálogo contén as seguintes opcións:
-</p>
-<h4>Voz</h4>
-<p>
-Un cadro combinado, que lista todas as voces do sintetizador actual. Podes utilizar as teclas de cursor para listar todas as varias eleccións.
-</p>
-<h4>Variante</h4>
-<p>
-Un cadro combinado que che permite seleccionar a variante ca que o sintetizador debería falar. Actualmente só eSpeak soporta esta opción. As variantes de ESpeak son un pouco como voces, según proporcionan uns atributos lixeiramente diferentes á voz de eSpeak.
-</p>
-<h4>Velocidade</h4>
-<p>
-Unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 a velocidade máis lenta e sendo 100 a máis rápida).
-</p>
-<h4>Ton</h4>
-<p>
-Unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o ton máis baixo e siendo 100 o máis alto).
-</p>
-<h4>Volume</h4>
-<p>
-Unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o volume máis baixo e sendo 100 o máis alto).
-</p>
-<h4>Entoación</h4>
-<p>
-Unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar.
-</p>
-<h4>Falar toda a Pontoación</h4>
-<p>
-Unha casiña de verificación, que cando se verifica di a NVDA que fale todos os símbolos de pontoación como verbas (moi útil para probas de lectura). Cando se desverifica, NVDA deixa a pontoación sen alterar, así o sintetizador aínda lerá frases ca entoación correcta, sen embargo os símbolos non serían falados en voz alta.
-</p>
-<h4>Dicir" Maius" para Maiúsculas</h4>
-<p>
-Unha casiña de verificación, que cando está verificada di a NVDA que diga a verba "maius" antes de calquer letra en maiúscula, cando se navega sobre ela ou falándoo cando está sendo escrita. 
-Normalmente, NVDA eleva o ton lixeiramente para calquer letra maiúscula, pero algúns sintetizadores poderán non soportar esto ben, así quizáis esta opción poderá ser de utilidad.
-</p>
-<h4>Pitar para Maiúsculas</h4>
-<p>
-Se esta casiña de verificación está verificada, NVDA emitirá un pequeno pitido cada vez que estea falando un caracter en maiúscula. Como a casiña de verificación 'dicir maius para maiúsculas', esta é útil para sintetizadores que non podan modificar o seu ton para as letras maiúsculas.
-</p>
-<h3 id="9.4">9.4. Opcións de Teclado</h3>
-<p>
-Este cadro de diálogo atópase no menú Preferencias, baixo "Opcións de teclado...". Contiene las siguientes opciones:
-</p>
-<h4>Disposición do Teclado</h4>
-<p>
-Este cadro combinado che permite elexir qué tipo de distribución de teclado debería utilizar NVDA. Actualmente os dous que veñen co NVDA son Desktop e Laptop.
-</p>
-<h4>Utilizar BloqMaius como unha tecla modificadora de NVDA</h4>
-<p>
-Se esta casiña de verificación está verificada, o BloqMaius pode ser utilizado como unha tecla modificadora de NVDA.
-</p>
-<h4>Utilizar o insert extendido como unha tecla modificadora de NVDA</h4>
-<p>
-Se esta casiña de verificación está verificada, a tecla insert (normalmente atopada enriba das teclas de flecha, cerca de inicio e fin) pode ser utilizada como unha tecla modificadora de NVDA.
-</p>
-<h4>Utilizar insert do teclado numérico como tecla modificadora de NVDA</h4>
-<p>
-Se esta casiña de verificación está verificada, a tecla insert do teclado numérico pode ser utilizada como unha tecla modificadora de NVDA.
-</p>
-<h4>Falar caracteres ó escribir</h4>
-<p>
-Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todos os caracteres segundo os escribes no teclado.  Tamén podes configurar esta opción dende calquer lugar premendo NVDA+2.
- </p>
-<h4>Falar verbas ó escribir</h4>
-<p>
-Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todas as verbas ó escribilas no teclado.  Podes tamén configurar esta opción dende calquer lugar premendo NVDA+3.
-</p>
-<h4>Falar teclas de ordes</h4>
-<p>
-Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará todas as teclas que non sexan caracteres ó escribilas no teclado. Esto inclúe combinacións de teclas tales como control máis calquer outra letra. Tamén podes configurar esta opción dende calquer lugar premendo NVDA+2.
-</p>
-<h3 id="9.5">9.5. Opcións do Rato</h3>
-<p>
-O diálogo de Opcións do Rato atópase no menú Preferencias, baixo "Opcións do Rato...". Contén as seguintes opcións:
-</p>
-<h4>Anunciar Cambios na Forma do Rato</h4>
-<p>
-Unha casiña de verificación, que cando se verifica siñifica que NVDA anunciará a forma do punteiro do rato cada vez que troque. O punteiro do rato en Windows troca a súa forma para comunicar certa información tal como cando algo é editable, ou cando algo é cargable etc. 
-</p>
-<h4>Anunciar texto baixo el Ratón</h4>
-<p>
-Unha casiña de verificación que cando está verificada siñifica que NVDA anunciará o texto actualmente baixo o punteiro do rato, según o moves pola pantalla. Esto permíteche atopar cousas na pantalla, movendo físicamente o rato, antes que tratar de atopalas a través do navegador de obxectos. 
-</p>
-<h4>Anunciar rol cando o rato entra nos Objetos</h4>
-<p>
-Se esta casiña de verificación está activada, NVDA anunciará o rol (tipo) de  obxecto cando o rato se mova preto del.
-</p>
-<h4>Reproducir audio cando se mova o rato</h4>
-<p>
-Verificando esta casiña de verificación fas que NVDA reproduza pitidos cando o rato se mova, así que o usuario poda resolver onde está o rato con respecto ás dimensións da pantalla.
-</p>
-<h4>O Brilo controla o volume do audio</h4>
-<p>
-Se a casiña de verificación 'reproducir audio cando o rato se mova' está verificada, entón verificando esta casiña de verificación siñifica que o volume dos pitidos de audio está controlado por como o brilo da pantalla estea baixo o rato. Esto poderá causar algúns problemas de rendimento en Windows Vista, así que está desverificado predeterminadamente.
-</p>
-<h3 id="9.6">9.6. Opcións de Presentación de Obxectos</h3>
-<p>
-Atópase no menú Preferencias baixo "Presentación de Obxectos..." Este cadro de diálogo contén as seguintes opcións:
-</p>
-<h4>Anunciar Consellos</h4>
-<p>
-Unha casiña de verificación que cando está verificada di a NVDA que anuncie consellos según aparezan. Moitas ventás e controis amosan un pequeno mensaxe (ou consello) cando moves o punteiro do rato sobre eles, ou algunhas veces cando te moves co foco por eles.
-</p>
-<h4>Anunciar globos de axuda</h4>
-<p>
-Esta casiña de verificación cando está verificada di a NVDA que anuncie os globos de axuda cando aparezan.  Os globos de axuda son como pequenos consellos, pero normalmente son máis grandes, e están asociados con eventos do Sistema tales como un cable de red sendo desenchufado, ou quizáis alertarte acerca de problemas de seguridade de Windows.
-</p>
-<h4>Anunciar Teclas de Atallo dos Obxectos</h4>
-<p>
-Cando esta casiña de verificación está verificada, NVDA incluirá a tecla de atallo que estea asociada con certo obxecto ou control cando sexa anunciado. Por exemplo o menú Archivo nunha barra de menú poderá ter unha tecla de atallo alt+a.
-</p>
-<h4>Anunciar Descripcións de Obxectos</h4>
-<p>
-Desverifica esta casiña de verificación se crees que non necesitas escoitar a descripción anunciada xunto cos obxectos.
-</p>
-<h4>Dicir o estado do Objeto Primeiro</h4>
-<p>
-Cando esta casiña de verificación está verificada, NVDA anunciará o estado dun obxecto antes de anunciar calquer outra información. Por exemplo un botón con un nome "reproducir" e un estado "premedo" será anunciado como "premedo botón" en lugar de "reproducir botón premedo". Esto é ás veces útil se estás tabulando sobre un montón de obxectos do mesmo tipo, pero só estás realmente interesado en ver si  están "premedos", ou "verificados" etc.
-</p>
-<h4>Pitar en Barras de Progreso</h4>
-<p>
-Unha barra de progreso é un control que se parece un pouco a unha regra. Segundo unha tarea está sendo lentamente compretada, a barra vai sendo remarcada máis. Tamén amosa un valor de porcentaxe, decíndocho numéricamente cando vaia avanzando ó longo de ela. As barras de progreso son amosadas para cousas como carga dunha páxina web, baixando o teu correo, ou procesando un ficheiro de son etc. Se esta casiña de verificación está verificada, NVDA utilizará pitidos para facerche saber cómo avanza a barra de progreso ó moverse. Esto é ás veces moito máis agradable que escoitar montóns de números.
-</p>
-<h3 id="9.7">9.7. Opcións do Modo Virtual</h3>
-<p>
-O diálogo de opcións do Modo Virtual pode ser atopado no menú Preferencias, baixo "Modo Virtual...". Nota que moitas destas opcións neste diálogo só poderán afectar ó Modo Virtual antigo (utilizado por Internet Explorer e Adobe Reader). No futuro actualizaciones de NVDA deberían resolver este problema.
-</p>
-<p>
-O diálogo contén as seguintes opcións:
-</p>
-<h4>Máximo Número de Caracteres Nunha Liña</h4>
-<p>
-Este campo pon a anchura máxima dunha liña do modo virtual (en caracteres). Non se garantiza que todas as liñas acabarán sendo de esta anchura ou por debaixo, pero a maior parte debería ser así.
-</p> 
-<h4>Máximo número de Liñas por Páxina</h4>
-<p>
-Se ben en realidade os modos virtuais non teñen páxinas, este campo axusta a cantidade de liñas que moverás cando premas Avance de páxina ou Retroceso de páxina mentres esteas nun modo virtual.
-</p>
-<h4>Anunciar a presentación do modo Virtual cando o foco troque</h4>
-<p>
-Esta casiña de verificación cando está verificada di a NVDA que anuncie o texto e a presentación de información no modo virtual para un control, según obteña o foco, en lugar de que sinxelamente preguntando a Windows pola información do control. Por exemplo, tabulando a unha liga chamada "gatos" dirá "liga gatos" en lugar de "gatos liga" porque nos modos virtuais cando se navega, o tipo sempre é dito antes que o texto. Poderá ser convinte que en certos casos non teñamos pois esta opción habilitada xa que esto siñifica que o control será anunciado en un orden algo mellor. Non obstante, para algúns navegadores de internet, poderás obter un anunciado da información máis exacta cando esto estea habilitado.
-</p>
-<h4>Actualizar o Contido Dinámicamente</h4>
-<p>
-Cando esta casiña de verificación está verificada, os modos virtuais teñen a capacidade para seren actualizados según a páxina troque, debido a tales cousas como un script de java. Actualmente NVDA só soporta actualización dinámica para Mozilla Firefox, pero deseablemente Internet Explorer tamén soportará esta característica en futuras revisións.
-</p>
-<h4>Opcións específicas de Anunciado de Campos</h4>
-<p>
-As outras once casillas de verificación ou así neste cadro de diálogo che permiten configurar que tipo de información é anunciada cando se navega polo modo virtual. Por exemplo, anunciar ligas, dirá a verba "liga" antes de calquer texto que sexa unha liga cando estea verificada.
-</p>
-<p>
-Podes configurar ligas, cabeceiras, gráficos, listas, elementos de lista, táboas, formularios, campos de formulario, citas, marcos e parágrafos.
-</p>
-<h3 id="9.8">9.8. Opcións de Formato de Documento</h3>
-<p>
-Este cadro de diálogo atópase no menú Preferencias, baixo "Formato de Documento...". Todas as casiñas de verificación neste diálogo son para configurar qué tipo de formato desexas escoitar automáticamente cando movas o cursor polos documentos tal como en Wordpad ou Microsoft Word. Por Exemplo, se verificas a casiña de verificación anunciar o nome da fonte, cada vez que navegues polo texto con unha fonte diferente, o nome da fonte será anunciado.
-</p>
-<p>
-Podes configurar nomes da fonte, tamaño da fonte, atributos da fonte, alineamento do texto, estilo do texto, táboas, números de páxina, e números de liña.
+Posto que NVDA está sendo actualizado constantemente, non hai garantía de que todas as ordes proporcionadas aquí nesta Guía do Usuario se aplicarán aínda. Se tes calquer problema con calquera das ordes presentadas nesta Guía do Usuario, por favor visita:
+<a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
+para máis asistencia. 
 </p>
 </body>
 </html>
