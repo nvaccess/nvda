@@ -344,6 +344,20 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
+		accRole=IAccessibleObject.accRole(IAccessibleChildID)
+		windowClassName=cls.normalizeWindowClassName(winUser.getClassName(windowHandle))
+		for key in ((windowClassName,accRole),(None,accRole),(windowClassName,None)):
+			newCls=None
+			classString=_staticMap.get(key,None)
+			if classString and classString.find('.')>0:
+				modString,classString=os.path.splitext(classString)
+				classString=classString[1:]
+				mod=__import__(modString,globals(),locals(),[])
+				newCls=getattr(mod,classString)
+			elif classString:
+				newCls=globals()[classString]
+			if newCls:
+				clsList.append(newCls)
 		clsList.append(IAccessible)
 		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
@@ -1149,12 +1163,7 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_GROUPING):"Groupbox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
-	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
-	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit50",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
@@ -1164,7 +1173,6 @@ _staticMap={
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
-	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
 	("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SHELLDLL_DefView_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
@@ -1173,12 +1181,8 @@ _staticMap={
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
-	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TMaskEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
-	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.Edit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
@@ -1186,45 +1190,18 @@ _staticMap={
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
-	("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winword.WordDocument",
-	("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"excel.ExcelGrid",
-	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
-	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("ToolbarWindow32",None):"ToolbarWindow32",
-	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
-	("ThunderRT6TextBox",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-	("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("THppEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TUnicodeTextEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TTextEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TPropInspEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TFilterbarEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("EditControl",None):"edit.Edit",
-	("AkelEditW",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
-	("AkelEditA",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
-	("TRichEditViewer",None):"edit.RichEdit",
 	("AVL_AVView","Page"):"adobe.Page",
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
-	("TNavigableTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TNavigableTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TskRichEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("ATL:EDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
-	("RichEdit20WPT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("WindowsForms10.RichEdit20W.app.0.378734a",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("WindowsForms10.EDIT.app.0.11c7a8c",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }
