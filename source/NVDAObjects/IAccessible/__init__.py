@@ -911,6 +911,9 @@ class Dialog(IAccessible):
 	def _get_description(self):
 		return self.getDialogText(self)
 
+	def _get_value(self):
+		return None
+
 class PropertyPage(Dialog):
 
 	def _get_role(self):
