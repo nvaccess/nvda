@@ -345,10 +345,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
 		clsList.append(IAccessible)
-		if event_objectID in (0,-4):
+		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
 		else:
-			return super(Window,cls).findBestClass(clsList,kwargs)
+			return clsList,kwargs
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
