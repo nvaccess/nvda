@@ -241,58 +241,6 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	def old__new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
-		"""
-Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
-"""  
-		if windowHandle and not IAccessibleObject:
-			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
-		elif not windowHandle and not IAccessibleObject:
-			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
-		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				windowHandle=IAccessibleObject.windowHandle
-			except:
-				log.debugWarning("IAccessible2::windowHandle failed",exc_info=True)
-			#Mozilla Gecko: we can never use a MozillaWindowClass window
-			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
-				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
-		if not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
-		if not windowHandle and event_windowHandle:
-			windowHandle=event_windowHandle
-		elif not windowHandle:
-			return None #We really do need a window handle
-		windowClassName=winUser.getClassName(windowHandle)
-		try:
-			IAccessibleRole=0
-			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-				IAccessibleRole=IAccessibleObject.role()
-			if IAccessibleRole==0:
-				IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
-		except:
-			IAccessibleRole=0
-		classString=None
-		if _staticMap.has_key((windowClassName,IAccessibleRole)):
-			classString=_staticMap[(windowClassName,IAccessibleRole)]
-		elif _staticMap.has_key((windowClassName,None)):
-			classString=_staticMap[(windowClassName,None)]
-		elif _staticMap.has_key((None,IAccessibleRole)):
-			classString=_staticMap[(None,IAccessibleRole)]
-		if classString is None:
-			classString="IAccessible"
-		if classString.find('.')>0:
-			modString,classString=os.path.splitext(classString)
-			classString=classString[1:]
-			mod=__import__(modString,globals(),locals(),[])
-			newClass=getattr(mod,classString)
-		else:
-			newClass=globals()[classString]
-		obj=Window.__new__(newClass)
-		obj.windowClassName=windowClassName
-		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
-		return obj
-
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowHandle=kwargs.get('windowHandle',None)
