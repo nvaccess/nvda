@@ -4,12 +4,17 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import re
 import ctypes
 import ctypes.wintypes
 import winKernel
 import winUser
 import controlTypes
 from NVDAObjects import NVDAObject
+
+re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
+re_ATL=re.compile(r'^ATL:(.*)$')
+
 
 class WindowProcessHandleContainer(object):
 	"""
@@ -50,7 +55,7 @@ An NVDAObject for a window
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
-		windowClassName=windowClassMap.get(windowClassName,windowClassName)
+		windowClassName=cls.normalizeWindowClassName(windowClassName)
 		newCls=Window
 		if windowClassName=="Edit":
 			newCls=__import__("edit",globals(),locals(),[]).Edit
@@ -171,6 +176,35 @@ An NVDAObject for a window
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
 		return self._processHandleContainer.processHandle
 
+	@classmethod
+	def normalizeWindowClassName(cls,name):
+		"""
+		Removes unneeded information from a window class name (e.g. ATL: and windows forms info), and or maps it to a much more well-known compatible class name.
+		Conversions are also cached for future normalizations. 
+		@param name: the window class name to normalize
+		@type name: string
+		@returns: the normalized window class name
+		@rtype: string
+		"""
+		try:
+			return cls.normalizedWindowClassNameCache[name]
+		except KeyError:
+			pass
+		newName=windowClassMap.get(name,None)
+		if not newName:
+			for r in (re_WindowsForms,re_ATL):
+				m=re.match(r,name)
+				if m:
+					newName=m.group(1)
+					newName=windowClassMap.get(newName,newName)
+					break
+		if not newName:
+			newName=name
+		cls.normalizedWindowClassNameCache[name]=newName
+		return newName
+
+	normalizedWindowClassNameCache={}
+
 windowClassMap={
 	"TTntEdit.UnicodeClass":"Edit",
 	"TMaskEdit":"Edit",
@@ -192,7 +226,6 @@ windowClassMap={
 	"EditControl":"Edit",
 	"TNavigableTntMemo.UnicodeClass":"Edit",
 	"TNavigableTntEdit.UnicodeClass":"Edit",
-	"ATL:EDIT":"Edit",
 	"WindowsForms10.EDIT.app.0.11c7a8c":"Edit",
 	"TRichEditViewer":"RichEdit",
 	"RichEdit20A":"RichEdit20",
