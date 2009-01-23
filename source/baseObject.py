@@ -36,6 +36,13 @@ class AutoPropertyType(type):
 			if x in dict:
 				methodsString=",".join([str(i) for i in g,s,d if i])
 				raise TypeError("%s is already a class attribute, cannot create descriptor with methods %s"%(x,methodsString))
+			if not g:
+				# There's a setter or deleter, but no getter.
+				# This means it could be in one of the base classes.
+				for base in bases:
+					g = getattr(base,'_get_%s'%x,None)
+					if g:
+						break
 			if g and not s and not d:
 				setattr(self,x,getter(g))
 			else:
