@@ -5,9 +5,8 @@
 #See the file COPYING for more details.
 
 import ctypes
+import comtypes.client
 import comtypes.automation
-import win32com.client
-import pythoncom
 import IAccessibleHandler
 import globalVars
 import speech
@@ -15,7 +14,7 @@ from keyUtils import sendKey, key
 import config
 import textHandler
 import controlTypes
-from window import Window
+from . import Window
  
 #Word constants
 
@@ -296,15 +295,10 @@ class WordDocument(Window):
 
 	def _get_WinwordDocumentObject(self):
 		if not hasattr(self,'_WinwordDocumentObject'): 
-			ptr=ctypes.c_void_p()
+			ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
 			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 				raise OSError("No native object model")
-			#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-			o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
-			t=o.GetTypeInfo()
-			a=t.GetTypeAttr()
-			oleRepr=win32com.client.build.DispatchItem(attr=a)
-			self._WinwordDocumentObject=win32com.client.CDispatch(o,oleRepr)
+			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(ptr)
  		return self._WinwordDocumentObject
 
 	def _get_WinwordSelectionObject(self):
@@ -316,9 +310,9 @@ class WordDocument(Window):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)-1
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
 		if rowIndex<lastRowIndex:
 			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex+1].range
 			info.collapse()
@@ -332,9 +326,9 @@ class WordDocument(Window):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)-1
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
 		if rowIndex>0:
 			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex-1].range
 			info.collapse()
@@ -348,9 +342,9 @@ class WordDocument(Window):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)-1
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
 		if columnIndex<lastColumnIndex:
 			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex+1].cells[rowIndex].range
 			info.collapse()
@@ -364,9 +358,9 @@ class WordDocument(Window):
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)-1
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)-1
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)-1
+		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)
+		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
+		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
 		if columnIndex>0:
 			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex-1].cells[rowIndex].range
 			info.collapse()

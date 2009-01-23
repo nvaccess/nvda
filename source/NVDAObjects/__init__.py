@@ -9,6 +9,7 @@ from new import instancemethod
 import time
 import re
 import weakref
+from logHandler import log
 import eventHandler
 import baseObject
 import speech
@@ -376,7 +377,42 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
+	_dynamicClassCache={}
+	_isDynamicClass=False
+
 	TextInfo=NVDAObjectTextInfo
+
+	def __new__(cls,*args,**kwargs):
+		if 'findBestClass' not in cls.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%cls.__name__)
+		try:
+			clsList,kwargs=cls.findBestClass([],kwargs)
+		except:
+			log.debugWarning("findBestClass failed",exc_info=True)
+			return None
+		bases=[]
+		for index in xrange(len(clsList)):
+			if index==0 or not issubclass(clsList[index-1],clsList[index]):
+				bases.append(clsList[index])
+		if len(bases) == 1:
+			# We only have one base, so there's no point in creating a dynamic type.
+			newCls=bases[0]
+		else:
+			bases=tuple(bases)
+			newCls=NVDAObject._dynamicClassCache.get(bases,None)
+			if not newCls:
+				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
+				newCls=type(name,bases,{})
+				NVDAObject._dynamicClassCache[bases]=newCls
+		obj=super(NVDAObject,cls).__new__(newCls)
+		obj.factoryClass=cls
+		obj.__init__(*args,**kwargs)
+		return obj
+
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(NVDAObject)
+		return clsList,kwargs
 
 	def __init__(self):
 		self._mouseEntered=None
@@ -680,8 +716,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 """
 		speech.cancelSpeech()
 		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
-		if not eventHandler.isPendingEvents('gainFocus'):
-			braille.handler.handleGainFocus(self)
+		braille.handler.handleGainFocus(self)
 
 	def event_becomeNavigatorObject(self):
 		"""Called when this object becomes the navigator object.
@@ -704,7 +739,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		braille.handler.handleUpdate(self)
 
 	def event_caret(self):
-		if self is api.getFocusObject():
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):
