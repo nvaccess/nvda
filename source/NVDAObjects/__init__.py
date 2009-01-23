@@ -382,9 +382,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 
 	TextInfo=NVDAObjectTextInfo
 
-	def __new__(cls,**kwargs):
+	def __new__(cls,*args,**kwargs):
 		if 'findBestClass' not in cls.__dict__:
-			raise TypeError("Cannot instanciate class %s as it does not implement findBestClass"%cls.__name__)
+			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%cls.__name__)
 		try:
 			clsList,kwargs=cls.findBestClass([],kwargs)
 		except:
@@ -402,7 +402,7 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 			NVDAObject._dynamicClassCache[bases]=newCls
 		obj=super(NVDAObject,cls).__new__(newCls)
 		obj.factoryClass=cls
-		obj.__init__(**kwargs)
+		obj.__init__(*args,**kwargs)
 		return obj
 
 	@classmethod
