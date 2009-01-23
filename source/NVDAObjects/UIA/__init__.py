@@ -18,9 +18,16 @@ class UIATextInfo(textHandler.TextInfo):
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.Clone()
 		elif position==textHandler.POSITION_CARET or position==textHandler.POSITION_SELECTION:
-			self._rangeObj=self.obj.UIATextPattern.GetSelection()[0].clone()
+			sel=self.obj.UIATextPattern.GetSelection()
+			if sel.length>0:
+				self._rangeObj=sel.getElement(0).clone()
+			else:
+				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 		else:
 			self._rangeObj=self.obj.UIATextPattern.DocumentRange
+
+	def _get_bookmark(self):
+		return self.copy()
 
 	def _get_text(self):
 		return self._rangeObj.GetText(-1)
