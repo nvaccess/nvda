@@ -292,9 +292,13 @@ the NVDAObject for IAccessible
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
-		accRole=IAccessibleObject.accRole(IAccessibleChildID)
+		role=0
+		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			role=IAccessibleObject.role()
+		if not role:
+			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=cls.normalizeWindowClassName(winUser.getClassName(windowHandle))
-		for key in ((windowClassName,accRole),(None,accRole),(windowClassName,None)):
+		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
 			newCls=None
 			classString=_staticMap.get(key,None)
 			if classString and classString.find('.')>0:
