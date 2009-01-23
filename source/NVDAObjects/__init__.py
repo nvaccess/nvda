@@ -394,12 +394,16 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		for index in xrange(len(clsList)):
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
-		bases=tuple(bases)
-		newCls=NVDAObject._dynamicClassCache.get(bases,None)
-		if not newCls:
-			name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
-			newCls=type(name,bases,{})
-			NVDAObject._dynamicClassCache[bases]=newCls
+		if len(bases) == 1:
+			# We only have one base, so there's no point in creating a dynamic type.
+			newCls=bases[0]
+		else:
+			bases=tuple(bases)
+			newCls=NVDAObject._dynamicClassCache.get(bases,None)
+			if not newCls:
+				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
+				newCls=type(name,bases,{})
+				NVDAObject._dynamicClassCache[bases]=newCls
 		obj=super(NVDAObject,cls).__new__(newCls)
 		obj.factoryClass=cls
 		obj.__init__(*args,**kwargs)
