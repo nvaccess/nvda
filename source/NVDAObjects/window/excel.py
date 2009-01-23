@@ -169,6 +169,11 @@ class ExcelGrid(Window):
 
 class ExcelCell(Window):
 
+	@classmethod
+	def findBestClass(cls, clsList, kwargs):
+		# This class can be directly instantiated.
+		return (cls,), kwargs
+
 	def __init__(self,parentNVDAObject,cellRange):
 		self.parent=parentNVDAObject
 		self.firstCell=cellRange.Item(1)
