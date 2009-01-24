@@ -69,7 +69,7 @@ class UIAEventListener(COMObject):
 		if self.UIAHandlerRef().IUIAutomationInstance.CompareElements(sender,self.UIAHandlerRef().focusedElement):
 			return
 		self.UIAHandlerRef().focusedElement=sender
-		obj=NVDAObjects.UIA.UIA(sender)
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		eventHandler.queueEvent("gainFocus",obj)
 		queueHandler.pumpAll()
 
@@ -98,11 +98,11 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-	desktopObject=NVDAObjects.UIA.UIA(handler.rootUIAutomationElement)
+	desktopObject=NVDAObjects.UIA.UIA(UIAElement=handler.rootUIAutomationElement)
 	api.setDesktopObject(desktopObject)
 	api.setFocusObject(desktopObject)
 	focusedElement=handler.IUIAutomationInstance.getFocusedElement()
-	focusObject=NVDAObjects.UIA.UIA(focusedElement)
+	focusObject=NVDAObjects.UIA.UIA(UIAElement=focusedElement)
 	eventHandler.queueEvent("gainFocus",focusObject)
 	handler.registerEvents()
 
