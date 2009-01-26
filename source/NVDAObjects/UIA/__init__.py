@@ -137,6 +137,24 @@ class UIA(Window):
 				self._UIATogglePattern=None
 		return self._UIATogglePattern
 
+	def _get_UIARangeValuePattern(self):
+		if not hasattr(self,'_UIARangeValuePattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_RangeValuePatternId)
+			if punk:
+				self._UIARangeValuePattern=punk.QueryInterface(UIAHandler.IUIAutomationRangeValuePattern)
+			else:
+				self._UIARangeValuePattern=None
+		return self._UIARangeValuePattern
+
+	def _get_UIAValuePattern(self):
+		if not hasattr(self,'_UIAValuePattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_ValuePatternId)
+			if punk:
+				self._UIAValuePattern=punk.QueryInterface(UIAHandler.IUIAutomationValuePattern)
+			else:
+				self._UIAValuePattern=None
+		return self._UIAValuePattern
+
 	def _get_UIATextPattern(self):
 		if not hasattr(self,'_UIATextPattern'):
 			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TextPatternId)
@@ -223,4 +241,9 @@ class UIA(Window):
 		width=r.right-left
 		height=r.bottom-top
 		return left,top,width,height
- 
+
+	def _get_value(self):
+		if self.UIARangeValuePattern:
+			return str(self.UIARangeValuePattern.currentValue) 
+		elif self.UIAValuePattern:
+			return self.UIAValuePattern.currentValue
