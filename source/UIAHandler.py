@@ -8,6 +8,7 @@ import queueHandler
 import controlTypes
 import NVDAObjects.UIA
 import eventHandler
+from logHandler import log
 
 UIAControlTypesToNVDARoles={
 	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
@@ -51,6 +52,20 @@ UIAControlTypesToNVDARoles={
 	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
 }
 
+UIAPropertyIdsToNVDAEventNames={
+	UIA_NamePropertyId:"nameChange",
+	UIA_ExpandCollapseExpandCollapseStatePropertyId:"stateChange",
+	UIA_ToggleToggleStatePropertyId:"stateChange",
+	UIA_HasKeyboardFocusPropertyId:"stateChange",
+	UIA_IsKeyboardFocusablePropertyId:"stateChange",
+	UIA_IsEnabledPropertyId:"stateChange",
+	UIA_IsPasswordPropertyId:"stateChange",
+	UIA_IsOffscreenPropertyId:"stateChange",
+	UIA_ValueValuePropertyId:"valueChange",
+	UIA_RangeValueValuePropertyId:"valueChange",
+}
+
+
 handler=None
 
 class UIAEventListener(COMObject):
@@ -64,6 +79,10 @@ class UIAEventListener(COMObject):
 		pass
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+		try:
+			sender.currentNativeWindowHandle
+		except COMError:
+			return
 		if not sender.currentHasKeyboardFocus:
 			return
 		if self.UIAHandlerRef().IUIAutomationInstance.CompareElements(sender,self.UIAHandlerRef().focusedElement):
@@ -73,8 +92,22 @@ class UIAEventListener(COMObject):
 		eventHandler.queueEvent("gainFocus",obj)
 		queueHandler.pumpAll()
 
-	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyID,newValue):
-		pass
+	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
+		try:
+			sender.currentNativeWindowHandle
+		except COMError:
+			return
+		try:
+			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
+			if NVDAEventName:
+				obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+				focus=api.getFocusObject()
+				if obj==focus:
+					obj=focus
+				eventHandler.queueEvent(NVDAEventName,obj)
+				queueHandler.pumpAll()
+		except:
+			log.error("property change event",exc_info=True)
 
 	def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
 		pass
@@ -82,7 +115,7 @@ class UIAEventListener(COMObject):
 class UIAHandler(object):
 
 	def __init__(self):
-		self.IUIAutomationInstance=comtypes.client.CreateObject(CUIAutomation)
+		self.IUIAutomationInstance=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 		rawViewCondition=self.IUIAutomationInstance.RawViewCondition
 		self.IUIAutomationTreeWalkerInstance=self.IUIAutomationInstance.CreateTreeWalker(rawViewCondition)
 		self.rootUIAutomationElement=self.IUIAutomationInstance.GetRootElement()
@@ -91,6 +124,7 @@ class UIAHandler(object):
 
 	def registerEvents(self):
 		self.IUIAutomationInstance.AddFocusChangedEventHandler(None,self.eventListener)
+		self.IUIAutomationInstance.AddPropertyChangedEventHandler(self.rootUIAutomationElement,TreeScope_Subtree,None,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
 
 	def unregisterEvents(self):
 		self.IUIAutomationInstance.RemoveAllEventHandlers()
