@@ -317,7 +317,7 @@ def event_enterJavaWindow(hwnd):
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getForegroundObject():
 		return
-	eventHandler.queueEvent("foreground",obj)
+	eventHandler.queueEvent("gainFocus",obj)
 	vmID=c_int()
 	accContext=c_int()
 	bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
