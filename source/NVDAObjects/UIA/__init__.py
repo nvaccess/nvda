@@ -249,7 +249,7 @@ class UIA(Window):
 
 	def _get_value(self):
 		if self.UIARangeValuePattern:
-			return str(self.UIARangeValuePattern.currentValue) 
+			return "%g"%self.UIARangeValuePattern.currentValue
 		elif self.UIAValuePattern:
 			return self.UIAValuePattern.currentValue
 
