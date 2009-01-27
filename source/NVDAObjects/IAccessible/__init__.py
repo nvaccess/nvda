@@ -1043,12 +1043,6 @@ class SysLink(IAccessible):
 	def reportFocus(self):
 		pass
 
-class TaskList(IAccessible):
-	"""Silences foreground speaking on the Windows Task List (alt+tab)"""
-
-	def event_foreground(self):
-		pass
-
 class TaskListIcon(IAccessible):
 
 	def _get_role(self):
@@ -1154,7 +1148,6 @@ _staticMap={
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
-	("#32771",IAccessibleHandler.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
