@@ -1,5 +1,5 @@
 #IAccessiblehandler.py
-#A part of NonVisual Desktop Access (NVDA)
+	#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -663,7 +663,7 @@ def accLocation(ia,child):
 		return None
 
 winEventIDsToNVDAEventNames={
-winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
+winUser.EVENT_SYSTEM_FOREGROUND:"gainFocus",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
@@ -773,7 +773,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
-	#Notify appModuleHandler of this new foreground window
+	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=liveNVDAObjectTable.get('focus',None)

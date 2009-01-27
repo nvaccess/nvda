@@ -141,7 +141,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			wx.CallAfter(gui.WelcomeDialog.run)
 		else:
 			import ui
-			ui.message(_("NVDA started"))
+			braille.handler.message(_("NVDA started"))
 	import queueHandler
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."

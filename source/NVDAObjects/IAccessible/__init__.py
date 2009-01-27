@@ -1043,6 +1043,12 @@ class SysLink(IAccessible):
 	def reportFocus(self):
 		pass
 
+class TaskList(IAccessible):
+	"""Silences foreground speaking on the Windows Task List (alt+tab)"""
+
+	def event_foreground(self):
+		pass
+
 class TaskListIcon(IAccessible):
 
 	def _get_role(self):
@@ -1086,6 +1092,12 @@ class ToolbarWindow32(IAccessible):
 			speech.cancelSpeech()
 
 		return not eventHandler.isPendingEvents("gainFocus")
+class MenuBar(IAccessible):
+
+	"""Silence speaking the foreground on menu bars."""
+
+	def event_foreground(self):
+		pass
 
 class MenuItem(IAccessible):
 
@@ -1142,6 +1154,7 @@ _staticMap={
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
+	("#32771",IAccessibleHandler.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
@@ -1149,6 +1162,7 @@ _staticMap={
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
+	(None,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):"MenuBar",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
