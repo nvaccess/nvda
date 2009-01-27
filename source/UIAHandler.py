@@ -65,6 +65,21 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_RangeValueValuePropertyId:"valueChange",
 }
 
+UIAEventIdsToNVDAEventNames={
+	#UIA_Text_TextChangedEventId:"textChanged",
+	#UIA_MenuModeStartEventId:"menuModeStart",
+	#UIA_SelectionItem_ElementSelectedEventId:"stateChange",
+	UIA_MenuOpenedEventId:"gainFocus",
+	#UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
+	#UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
+	UIA_MenuModeEndEventId:"menuModeEnd",
+	#UIA_Text_TextSelectionChangedEventId:"caret",
+	#UIA_ToolTipOpenedEventId:"show",
+	#UIA_MenuClosedEventId:"menuClosed",
+	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
+	#UIA_ToolTipClosedEventId:"hide",
+}
+
 
 handler=None
 
@@ -76,6 +91,26 @@ class UIAEventListener(COMObject):
 		super(UIAEventListener,self).__init__()
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
+		if eventID==UIA_MenuModeEndEventId:
+			focus=self.UIAHandlerRef().IUIAutomationInstance.GetFocusedElement()
+			self.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(focus)
+			return
+		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
+		if not NVDAEventName:
+			return
+		try:
+			sender.currentNativeWindowHandle
+		except COMError:
+			return
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
+		eventHandler.queueEvent(NVDAEventName,obj)
+		queueHandler.pumpAll()
+
 		pass
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
@@ -125,6 +160,8 @@ class UIAHandler(object):
 	def registerEvents(self):
 		self.IUIAutomationInstance.AddFocusChangedEventHandler(None,self.eventListener)
 		self.IUIAutomationInstance.AddPropertyChangedEventHandler(self.rootUIAutomationElement,TreeScope_Subtree,None,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
+		for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			self.IUIAutomationInstance.addAutomationEventHandler(x,self.rootUIAutomationElement,TreeScope_Subtree,None,self.eventListener)
 
 	def unregisterEvents(self):
 		self.IUIAutomationInstance.RemoveAllEventHandlers()
