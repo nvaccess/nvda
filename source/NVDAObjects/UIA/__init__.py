@@ -1,5 +1,7 @@
 import UIAHandler
 import controlTypes
+import speech
+import api
 import textHandler
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo
@@ -80,6 +82,9 @@ class UIA(Window):
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
 		kwargs['UIAElement']=UIAElement
+		UIAClassName=UIAElement.currentClassName
+		if UIAClassName=="SensitiveSlider":
+			clsList.append(SensitiveSlider) 
 		clsList.append(UIA)
 		if windowHandle:
 			return super(UIA,cls).findBestClass(clsList,kwargs)
@@ -247,3 +252,16 @@ class UIA(Window):
 			return str(self.UIARangeValuePattern.currentValue) 
 		elif self.UIAValuePattern:
 			return self.UIAValuePattern.currentValue
+
+class SensitiveSlider(UIA):
+	"""A slider that tends to give focus to its thumb control"""
+
+	def event_focusEntered(self):
+		self.reportFocus()
+
+	def event_valueChange(self):
+		focusParent=api.getFocusObject().parent
+		if self==focusParent:
+			speech.speakObjectProperties(self,value=True,reason=speech.REASON_CHANGE)
+		else:
+			super(SensitiveSlider,self).event_valueChange()
