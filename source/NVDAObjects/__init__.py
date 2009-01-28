@@ -355,7 +355,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
 				newCls=type(name,bases,{})
 				self._dynamicClassCache[bases]=newCls
-		obj=self.__new__(newCls,*args,**kwargs)
+		obj=self.__new__(newCls)
 		obj.factoryClass=self
 		if isinstance(obj,self):
 			obj.__init__(*args,**kwargs)

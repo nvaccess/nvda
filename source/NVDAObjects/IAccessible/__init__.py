@@ -292,6 +292,8 @@ the NVDAObject for IAccessible
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
+		if event_objectID==IAccessibleHandler.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
+			clsList.append(JavaVMRoot)
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			role=IAccessibleObject.role()
@@ -826,36 +828,22 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-class IAccessibleWindow(IAccessible):
+class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
-		child=super(IAccessibleWindow,self)._get_firstChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_lastChild(self):
-		child=super(IAccessibleWindow,self)._get_lastChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_children(self):
-		children=super(IAccessibleWindow,self)._get_children()
-		if children:
-			return children
 		children=[]
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-			if obj:
-				children.append(obj)
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			children.append(obj)
 		return children
 
 class Groupbox(IAccessible):
@@ -1111,8 +1099,6 @@ class MenuItem(IAccessible):
 ###class mappings
 
 _staticMap={
-	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
-	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"IAccessibleWindow",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
