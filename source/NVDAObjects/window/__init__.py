@@ -139,17 +139,17 @@ An NVDAObject for a window
 	def _get_next(self):
 		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
 		if nextWindow:
-			return Window(nextWindow)
+			return self.factoryClass(windowHandle=nextWindow)
 
 	def _get_previous(self):
 		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
 		if prevWindow:
-			return Window(prevWindow)
+			return self.factoryClass(windowHandle=prevWindow)
 
 	def _get_firstChild(self):
 		childWindow=winUser.getTopWindow(self.windowHandle)
 		if childWindow:
-			return Window(childWindow)
+			return self.factoryClass(windowHandle=childWindow)
 
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
