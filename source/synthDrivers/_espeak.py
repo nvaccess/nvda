@@ -152,11 +152,18 @@ class BgThread(threading.Thread):
 				log.error("Error running function from queue", exc_info=True)
 			bgQueue.task_done()
 
-def _bgExec(func, *args, **kwargs):
-	global bgQueue
-	bgQueue.put((func, args, kwargs))
+def _execWhenDone(func, *args, **kwargs):
+	global bgQueue, isSpeaking
+	# This can't be a kwarg in the function definition because it will consume the first non-keywor dargument which is meant for func.
+	mustBeAsync = kwargs.pop("mustBeAsync", False)
+	if mustBeAsync or isSpeaking or not bgQueue.empty():
+		# Either this operation must be asynchronous or There is still an operation in progress.
+		# Therefore, run this asynchronously in the background thread.
+		bgQueue.put((func, args, kwargs))
+	else:
+		func(*args, **kwargs)
 
-def _speakBg(msg, index=None):
+def _speak(msg, index=None):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
@@ -164,7 +171,7 @@ def _speakBg(msg, index=None):
 
 def speak(msg, index=None, wait=False):
 	global bgQueue
-	_bgExec(_speakBg, msg, index)
+	_execWhenDone(_speak, msg, index, mustBeAsync=True)
 	if wait:
 		bgQueue.join()
 
@@ -176,7 +183,7 @@ def stop():
 	try:
 		while True:
 			item = bgQueue.get_nowait()
-			if item[0] != _speakBg:
+			if item[0] != _speak:
 				params.append(item)
 	except Queue.Empty:
 		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
@@ -191,7 +198,7 @@ def pause(switch):
 	player.pause(switch)
 
 def setParameter(param,value,relative):
-	_bgExec(espeakDLL.espeak_SetParameter,param,value,relative)
+	_execWhenDone(espeakDLL.espeak_SetParameter,param,value,relative)
 
 def getParameter(param,current):
 	return espeakDLL.espeak_GetParameter(param,current)
@@ -216,9 +223,9 @@ def setVoice(voice):
 	setVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	_bgExec(espeakDLL.espeak_SetVoiceByName,name)
+	_execWhenDone(espeakDLL.espeak_SetVoiceByName,name)
 
-def _setVoiceAndVariantBg(voice=None, variant=None):
+def _setVoiceAndVariant(voice=None, variant=None):
 	res = getCurrentVoice().identifier.split("+")
 	if not voice:
 		voice = res[0]
@@ -236,9 +243,9 @@ def _setVoiceAndVariantBg(voice=None, variant=None):
 			espeakDLL.espeak_SetVoiceByName(voice)
 
 def setVoiceAndVariant(voice=None, variant=None):
-	_bgExec(_setVoiceAndVariantBg, voice=voice, variant=variant)
+	_execWhenDone(_setVoiceAndVariant, voice=voice, variant=variant)
 
-def setVoiceByLanguage(lang):
+def _setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
 	v.languages=lang
@@ -247,6 +254,9 @@ def setVoiceByLanguage(lang):
 	except:
 		v.languages="en"
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
+
+def setVoiceByLanguage(lang):
+	_execWhenDone(_setVoiceByLanguage, lang)
 
 def espeak_errcheck(res, func, args):
 	if res != EE_OK:
