@@ -6,8 +6,9 @@
 
 """NVDA core"""
 
-#Bit of a dance to force comtypes generated interfaces in to our directory
+# Do this first to initialise comtypes.client.gen_dir and the comtypes.gen search path.
 import comtypes.client
+# Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])

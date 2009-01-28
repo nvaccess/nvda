@@ -330,6 +330,37 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _get_bookmark(self):
 		return textHandler.Offsets(self._startOffset,self._endOffset)
 
+class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
+	_dynamicClassCache={}
+
+	def __call__(self,*args,**kwargs):
+		if 'findBestClass' not in self.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%self.__name__)
+		try:
+			clsList,kwargs=self.findBestClass([],kwargs)
+		except:
+			log.debugWarning("findBestClass failed",exc_info=True)
+			return None
+		bases=[]
+		for index in xrange(len(clsList)):
+			if index==0 or not issubclass(clsList[index-1],clsList[index]):
+				bases.append(clsList[index])
+		if len(bases) == 1:
+			# We only have one base, so there's no point in creating a dynamic type.
+			newCls=bases[0]
+		else:
+			bases=tuple(bases)
+			newCls=self._dynamicClassCache.get(bases,None)
+			if not newCls:
+				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
+				newCls=type(name,bases,{})
+				self._dynamicClassCache[bases]=newCls
+		obj=self.__new__(newCls,*args,**kwargs)
+		obj.factoryClass=self
+		if isinstance(obj,self):
+			obj.__init__(*args,**kwargs)
+		return obj
+
 class NVDAObject(baseObject.ScriptableObject):
 	"""
 The baseType NVDA object. All other NVDA objects are based on this one.
@@ -377,37 +408,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
-	_dynamicClassCache={}
-	_isDynamicClass=False
+	__metaclass__=DynamicNVDAObjectType
 
 	TextInfo=NVDAObjectTextInfo
-
-	def __new__(cls,*args,**kwargs):
-		if 'findBestClass' not in cls.__dict__:
-			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%cls.__name__)
-		try:
-			clsList,kwargs=cls.findBestClass([],kwargs)
-		except:
-			log.debugWarning("findBestClass failed",exc_info=True)
-			return None
-		bases=[]
-		for index in xrange(len(clsList)):
-			if index==0 or not issubclass(clsList[index-1],clsList[index]):
-				bases.append(clsList[index])
-		if len(bases) == 1:
-			# We only have one base, so there's no point in creating a dynamic type.
-			newCls=bases[0]
-		else:
-			bases=tuple(bases)
-			newCls=NVDAObject._dynamicClassCache.get(bases,None)
-			if not newCls:
-				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
-				newCls=type(name,bases,{})
-				NVDAObject._dynamicClassCache[bases]=newCls
-		obj=super(NVDAObject,cls).__new__(newCls)
-		obj.factoryClass=cls
-		obj.__init__(*args,**kwargs)
-		return obj
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
