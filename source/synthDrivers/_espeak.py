@@ -153,10 +153,10 @@ class BgThread(threading.Thread):
 			bgQueue.task_done()
 
 def _execWhenDone(func, *args, **kwargs):
-	global bgQueue, isSpeaking
+	global bgQueue
 	# This can't be a kwarg in the function definition because it will consume the first non-keywor dargument which is meant for func.
 	mustBeAsync = kwargs.pop("mustBeAsync", False)
-	if mustBeAsync or isSpeaking or not bgQueue.empty():
+	if mustBeAsync or bgQueue.unfinished_tasks != 0:
 		# Either this operation must be asynchronous or There is still an operation in progress.
 		# Therefore, run this asynchronously in the background thread.
 		bgQueue.put((func, args, kwargs))
@@ -185,6 +185,7 @@ def stop():
 			item = bgQueue.get_nowait()
 			if item[0] != _speak:
 				params.append(item)
+			bgQueue.task_done()
 	except Queue.Empty:
 		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
 		pass
