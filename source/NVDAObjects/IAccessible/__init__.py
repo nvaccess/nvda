@@ -299,7 +299,7 @@ the NVDAObject for IAccessible
 			role=IAccessibleObject.role()
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
-		windowClassName=cls.normalizeWindowClassName(winUser.getClassName(windowHandle))
+		windowClassName=winUser.getClassName(windowHandle)
 		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
 			newCls=None
 			classString=_staticMap.get(key,None)
