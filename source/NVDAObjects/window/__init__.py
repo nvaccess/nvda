@@ -57,9 +57,11 @@ An NVDAObject for a window
 		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
 		windowClassName=cls.normalizeWindowClassName(windowClassName)
 		newCls=Window
-		if windowClassName=="#32771":
+		if windowClassName=="#32769":
+			newCls=Desktop
+		elif windowClassName=="#32771":
 			newCls=TaskList
-		if windowClassName=="Edit":
+		elif windowClassName=="Edit":
 			newCls=__import__("edit",globals(),locals(),[]).Edit
 		elif windowClassName=="RichEdit":
 			newCls=__import__("edit",globals(),locals(),[]).RichEdit
@@ -211,6 +213,11 @@ class TaskList(Window):
 
 	def event_foreground(self):
 		pass
+
+class Desktop(Window):
+
+	def _get_name(self):
+		return _("Desktop")
 
 windowClassMap={
 	"TTntEdit.UnicodeClass":"Edit",
