@@ -334,10 +334,14 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
 	def __call__(self,*args,**kwargs):
+		if 'findBestAPIClass' not in self.__dict__:
+			APIClass=self
+		else:
+			APIClass=self.findBestAPIClass(**kwargs)
 		if 'findBestClass' not in self.__dict__:
 			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%self.__name__)
 		try:
-			clsList,kwargs=self.findBestClass([],kwargs)
+			clsList,kwargs=APIClass.findBestClass([],kwargs)
 		except:
 			log.debugWarning("findBestClass failed",exc_info=True)
 			return None
@@ -411,6 +415,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	__metaclass__=DynamicNVDAObjectType
 
 	TextInfo=NVDAObjectTextInfo
+
+	@classmethod
+	def findBestAPIClass(cls,**kwargs):
+		return cls
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):

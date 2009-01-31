@@ -53,6 +53,18 @@ An NVDAObject for a window
 """
 
 	@classmethod
+	def findBestAPIClass(cls,windowHandle=None):
+		windowClassName=winUser.getClassName(windowHandle)
+		if windowClassName=="#32769":
+			return Window
+		import JABHandler
+		if JABHandler.isJavaWindow(windowHandle):
+			import NVDAObjects.JAB
+			return NVDAObjects.JAB.JAB
+		import NVDAObjects.IAccessible
+		return NVDAObjects.IAccessible.IAccessible
+
+	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
 		windowClassName=cls.normalizeWindowClassName(windowClassName)
