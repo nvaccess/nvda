@@ -209,7 +209,7 @@ def getBrailleTextForProperties(**propertyValues):
 		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
 		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
 		negativeStates = speech.processNegativeStates(role, states, speech.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in negativeStates)
+		textList.extend(negativeStateLabels.get(state, _("not %s") % controlTypes.speechStateLabels[state]) for state in negativeStates)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")

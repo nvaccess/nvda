@@ -55,20 +55,6 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
-def processGeckoDescription(obj):
-	#Don't do this if the description property is overridden
-	if obj.__class__._get_description!=IAccessible._get_description:
-		return 
-	if not obj.windowClassName.startswith('Mozilla'):
-		return
-	rawDescription=obj.description
-	if not isinstance(rawDescription,basestring):
-		return
-	if rawDescription.startswith('Description: '):
-		obj.description=rawDescription[13:]
-	else:
-		obj.description=""
-
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
@@ -292,12 +278,14 @@ the NVDAObject for IAccessible
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
+		if event_objectID==IAccessibleHandler.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
+			clsList.append(JavaVMRoot)
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			role=IAccessibleObject.role()
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
-		windowClassName=cls.normalizeWindowClassName(winUser.getClassName(windowHandle))
+		windowClassName=winUser.getClassName(windowHandle)
 		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
 			newCls=None
 			classString=_staticMap.get(key,None)
@@ -310,6 +298,9 @@ the NVDAObject for IAccessible
 				newCls=globals()[classString]
 			if newCls:
 				clsList.append(newCls)
+		if windowClassName.startswith('Mozilla'):
+			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
+			clsList.append( mozCls)
 		clsList.append(IAccessible)
 		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
@@ -337,8 +328,6 @@ the NVDAObject for IAccessible
 		if not windowHandle:
 			raise RuntimeError("windowHandle is None")
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
-		#Mozilla Gecko objects use the description property to report other info
-		processGeckoDescription(self)
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except:
@@ -554,13 +543,6 @@ the NVDAObject for IAccessible
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0)
-		#Special code to support Mozilla node_child_of relation (for comboboxes)
-		if self.windowClassName.startswith('Mozilla'):
-			res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
-			if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if newObj:
-					return newObj
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
@@ -826,36 +808,22 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-class IAccessibleWindow(IAccessible):
+class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
-		child=super(IAccessibleWindow,self)._get_firstChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_lastChild(self):
-		child=super(IAccessibleWindow,self)._get_lastChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_children(self):
-		children=super(IAccessibleWindow,self)._get_children()
-		if children:
-			return children
 		children=[]
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-			if obj:
-				children.append(obj)
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			children.append(obj)
 		return children
 
 class Groupbox(IAccessible):
@@ -958,39 +926,6 @@ class ConsoleWindowClass(IAccessible):
 	def event_nameChange(self):
 		pass
 
-class MozillaUIWindowClass_application(IAccessible):
-
-	def _get_value(self):
-		return None
-
-	def event_nameChange(self):
-		if self.windowHandle==api.getForegroundObject().windowHandle:
-			speech.speakObjectProperties(self,name=True,reason=speech.REASON_QUERY)
-
-class MozillaDocument(IAccessible):
-
-	def _get_value(self):
-		return 
-
-class MozillaListItem(IAccessible):
-
-	def _get_name(self):
-		name=super(MozillaListItem,self)._get_name()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			children=super(MozillaListItem,self)._get_children()
-			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
-				name=children[0].value
-		return name
-
-	def _get_children(self):
-		children=super(MozillaListItem,self)._get_children()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)):
-			del children[0]
-		return children
-
-class SHELLDLL_DefView_client(IAccessible):
-
-	speakOnGainFocus=False
 
 class List(IAccessible):
 
@@ -1111,8 +1046,6 @@ class MenuItem(IAccessible):
 ###class mappings
 
 _staticMap={
-	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
-	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"IAccessibleWindow",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
@@ -1123,15 +1056,13 @@ _staticMap={
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
-	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
+	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"mozilla.application",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
-	("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SHELLDLL_DefView_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",

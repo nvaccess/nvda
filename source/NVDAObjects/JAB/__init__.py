@@ -155,6 +155,11 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 class JAB(Window):
 
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(JAB)
+		return clsList,kwargs
+
 	def __init__(self,windowHandle=None,jabContext=None):
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
@@ -266,7 +271,7 @@ class JAB(Window):
 	def _get_activeChild(self):
 		jabContext=self.jabContext.getActiveDescendent()
 		if jabContext:
-			return JAB(jabContext=jabContext)
+			return self.factoryClass(jabContext=jabContext)
 		else:
 			return None
 
@@ -274,9 +279,9 @@ class JAB(Window):
 		if not hasattr(self,'_parent'):
 			jabContext=self.jabContext.getAccessibleParentFromContext()
 			if jabContext:
-				self._parent=JAB(jabContext=jabContext)
+				self._parent=self.factoryClass(jabContext=jabContext)
 			else:
-				self._parent=NVDAObjects.IAccessible.IAccessible(windowHandle=self.jabContext.hwnd)
+				self._parent=api.getDesktopObject()
 		return self._parent
  
 	def _get_next(self):
@@ -292,7 +297,7 @@ class JAB(Window):
 		childInfo=jabContext.getAccessibleContextInfo()
 		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return JAB(jabContext=jabContext)
+		return self.factoryClass(jabContext=jabContext)
 
 	def _get_previous(self):
 		parent=self.parent
@@ -307,14 +312,14 @@ class JAB(Window):
 		childInfo=jabContext.getAccessibleContextInfo()
 		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
 			return None
-		return JAB(jabContext=jabContext)
+		return self.factoryClass(jabContext=jabContext)
 
 	def _get_firstChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
 		jabContext=self.jabContext.getAccessibleChildFromContext(0)
 		if jabContext:
-			return JAB(jabContext=jabContext)
+			return self.factoryClass(jabContext=jabContext)
 		else:
 			return None
 
@@ -323,7 +328,7 @@ class JAB(Window):
 			return None
 		jabContext=self.jabContext.getAccessibleChildFromContext(self._JABAccContextInfo.childrenCount-1)
 		if jabContext:
-			return JAB(jabContext=jabContext)
+			return self.factoryClass(jabContext=jabContext)
 		else:
 			return None
 
@@ -332,7 +337,7 @@ class JAB(Window):
 		for index in range(self._JABAccContextInfo.childrenCount):
 			jabContext=self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
-				children.append(JAB(jabContext=jabContext))
+				children.append(self.factoryClass(jabContext=jabContext))
 		return children
 
 	def event_stateChange(self):

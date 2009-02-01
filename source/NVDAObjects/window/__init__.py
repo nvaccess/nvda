@@ -53,13 +53,27 @@ An NVDAObject for a window
 """
 
 	@classmethod
+	def findBestAPIClass(cls,windowHandle=None):
+		windowClassName=winUser.getClassName(windowHandle)
+		if windowClassName=="#32769":
+			return Window
+		import JABHandler
+		if JABHandler.isJavaWindow(windowHandle):
+			import NVDAObjects.JAB
+			return NVDAObjects.JAB.JAB
+		import NVDAObjects.IAccessible
+		return NVDAObjects.IAccessible.IAccessible
+
+	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
 		windowClassName=cls.normalizeWindowClassName(windowClassName)
 		newCls=Window
-		if windowClassName=="#32771":
+		if windowClassName=="#32769":
+			newCls=Desktop
+		elif windowClassName=="#32771":
 			newCls=TaskList
-		if windowClassName=="Edit":
+		elif windowClassName=="Edit":
 			newCls=__import__("edit",globals(),locals(),[]).Edit
 		elif windowClassName=="RichEdit":
 			newCls=__import__("edit",globals(),locals(),[]).RichEdit
@@ -138,16 +152,22 @@ An NVDAObject for a window
 
 	def _get_next(self):
 		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
+		while nextWindow and (not winUser.isWindowVisible(nextWindow) or not winUser.isWindowEnabled(nextWindow)):
+			nextWindow=winUser.getWindow(nextWindow,winUser.GW_HWNDNEXT)
 		if nextWindow:
 			return self.factoryClass(windowHandle=nextWindow)
 
 	def _get_previous(self):
 		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
+		while prevWindow and (not winUser.isWindowVisible(prevWindow) or not winUser.isWindowEnabled(prevWindow)):
+			prevWindow=winUser.getWindow(prevWindow,winUser.GW_HWNDPREV)
 		if prevWindow:
 			return self.factoryClass(windowHandle=prevWindow)
 
 	def _get_firstChild(self):
 		childWindow=winUser.getTopWindow(self.windowHandle)
+		while childWindow and (not winUser.isWindowVisible(childWindow) or not winUser.isWindowEnabled(childWindow)):
+			childWindow=winUser.getWindow(childWindow,winUser.GW_HWNDNEXT)
 		if childWindow:
 			return self.factoryClass(windowHandle=childWindow)
 
@@ -211,6 +231,11 @@ class TaskList(Window):
 
 	def event_foreground(self):
 		pass
+
+class Desktop(Window):
+
+	def _get_name(self):
+		return _("Desktop")
 
 windowClassMap={
 	"TTntEdit.UnicodeClass":"Edit",
