@@ -4,11 +4,32 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import weakref
 import ctypes
+import winKernel
 import winUser
-import speech
+import controlTypes
 from NVDAObjects import NVDAObject
+
+class WindowProcessHandleContainer(object):
+	"""
+	Manages a Windows process handle. On instanciation it retreaves an open process handle from the process of the provided window, and closes the handle on deletion. 
+	@ivar windowHandle: the handle of the window the whos process handle was requested
+	@type windowHandle: int
+	@ivar processHandle: The actual handle which can be used in any win32 calls that need it.
+	@type processHandle: int
+	"""
+ 
+	def __init__(self,windowHandle):
+		"""
+		@param windowHandle: the handle of the window whos process handle should be retreaved.
+		@type windowHandle: int
+		"""
+		self.windowHandle=windowHandle
+		import IAccessibleHandler
+		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
+
+	def __del__(self):
+		winKernel.closeHandle(self.processHandle)
 
 class Window(NVDAObject):
 	"""
@@ -39,6 +60,9 @@ An NVDAObject for a window
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
 
+	def _get_role(self):
+		return controlTypes.ROLE_WINDOW
+
 	def _get_windowClassName(self):
 		if hasattr(self,"_windowClassName"):
 			return self._windowClassName
@@ -60,7 +84,7 @@ An NVDAObject for a window
 		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value+u"\0"
 
-	def _get_windowProcessID(self):
+	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):
 			return self._processIDThreadID[0]
 		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
@@ -72,10 +96,34 @@ An NVDAObject for a window
 		self._processIDThreadID=winUser.getWindowThreadProcessID(self.windowHandle)
 		return self._processIDThreadID[1]
 
+	def _get_next(self):
+		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
+		if nextWindow:
+			return Window(nextWindow)
+
+	def _get_previous(self):
+		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
+		if prevWindow:
+			return Window(prevWindow)
+
+	def _get_firstChild(self):
+		childWindow=winUser.getTopWindow(self.windowHandle)
+		if childWindow:
+			return Window(childWindow)
+
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
 			return self.__class__(windowHandle=parentHandle)
+
+	def _get_states(self):
+		states=super(Window,self)._get_states()
+		style=self.windowStyle
+		if not style&winUser.WS_VISIBLE:
+			states.add(controlTypes.STATE_INVISIBLE)
+		if style&winUser.WS_DISABLED:
+			states.add(controlTypes.STATE_UNAVAILABLE)
+		return states
 
 	def _get_windowStyle(self):
 		return winUser.getWindowStyle(self.windowHandle)
@@ -84,3 +132,9 @@ An NVDAObject for a window
 		if not hasattr(self,'_isWindowUnicode'):
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
  		return self._isWindowUnicode
+
+	def _get_processHandle(self):
+		if not hasattr(self,'_processHandleContainer'):
+			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
+		return self._processHandleContainer.processHandle
+

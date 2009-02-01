@@ -50,6 +50,8 @@ GUI_POPUPMENUMODE=0x00000010
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
 SPIF_SENDCHANGE=2
+WS_DISABLED=0x8000000
+WS_VISIBLE=0x10000000
 WS_POPUP=0x80000000
 WS_GROUP=0x20000
 BS_GROUPBOX=7
@@ -69,6 +71,7 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 #getWindow
+GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
 #Window messages
@@ -350,6 +353,9 @@ def getCaretPos():
 	point=POINT()
 	user32.GetCaretPos(byref(point))
 	return [point.x,point.y]
+
+def getTopWindow(hwnd):
+	return user32.GetTopWindow(hwnd)
 
 def getWindowText(hwnd):
 	buf=create_unicode_buffer(1024)

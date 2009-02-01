@@ -769,7 +769,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportAppModuleInfo(self,keyPress):
 		focus=api.getFocusObject()
-		appName=appModuleHandler.getAppNameFromProcessID(focus.windowProcessID,True)
+		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
 		message = _("Currently running application is %s") % appName
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
