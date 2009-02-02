@@ -344,13 +344,23 @@ def isJavaWindow(hwnd):
 		return False
 	return bridgeDll.isJavaWindow(hwnd)
 
+def _errcheck(res, func, args):
+	if not res:
+		raise RuntimeError("Result %d" % res)
+
 def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll=cdll.WINDOWSACCESSBRIDGE
-		res=bridgeDll.Windows_run()
-		if not res:
-			raise RuntimeError('Windows_run') 
+		for func in (
+			bridgeDll.Windows_run, bridgeDll.getAccessibleContextFromHWND, bridgeDll.getVersionInfo, 
+			bridgeDll.getAccessibleContextInfo, bridgeDll.getAccessibleTextInfo, bridgeDll.getAccessibleTextItems,
+			bridgeDll.getAccessibleTextSelectionInfo, bridgeDll.getAccessibleTextRange, bridgeDll.getAccessibleTextLineBounds,
+			bridgeDll.getCurrentAccessibleValueFromContext, bridgeDll.selectTextRange, bridgeDll.setCaretPosition,
+			bridgeDll.getAccessibleContextWithFocus, 
+		):
+			func.errcheck = _errcheck
+		bridgeDll.Windows_run()
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 		bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
