@@ -103,26 +103,34 @@ class JABContext(object):
 		startIndex=c_int()
 		endIndex=c_int()
 		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
-		start=max(startIndex.value,0)
-		end=max(endIndex.value,0)
+		start=startIndex.value
+		end=endIndex.value
 		log.debug("line bounds: start %s, end %s"%(start,end))
+		if end<start:
+			# Invalid or empty line.
+			return (0,-1)
 		ok=False
+		# OpenOffice sometimes returns offsets encompassing more than one line, so try to narrow them down.
+		# Try to retract the end offset.
 		while not ok:
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,end,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
 			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempStart>(index+1):
+				# This line starts after the requested index, so set end to point at the line before.
 				end=tempStart-1
 			else:
 				ok=True
 		ok=False
+		# Try to retract the start.
 		while not ok:
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,start,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
 			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempEnd<(index-1):
+				# This line ends before the requested index, so set start to point at the line after.
 				start=tempEnd+1
 			else:
 				ok=True
