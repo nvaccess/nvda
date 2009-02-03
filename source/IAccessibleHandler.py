@@ -6,6 +6,8 @@
 
 from __future__ import with_statement
 
+MAX_WINEVENTS=500
+
 #Constants
 #OLE constants
 REGCLS_SINGLEUSE = 0       # class object only generates one instance
@@ -991,7 +993,7 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	menuEvent=None
-	for winEvent in winEvents:
+	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
 			focusWinEvents.append(winEvent)
