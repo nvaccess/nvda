@@ -9,11 +9,10 @@ Changes since 0.6 P2:
 * fix: Eliminate the lag when moving by units other than character (word, line, etc.) towards the bottom of large plain text documents in Mozilla Gecko virtual buffers. (#155)
 * fix: If speak typed words is enabled, announce the word when enter is pressed.
 * fix: Fix some character set issues in richedit documents.
-* change: Read by sentence in richedit controls if possible.
 *Change: reporting of links, headings, tables, lists and block quotes can now be configured from the Document Formatting settings dialog. Previously to configure these settings for virtual buffers, the virtual buffer settings dialog would have been used. Now all documents share this configuration.
 * new: Support for formatting in IAccessible2 text controls, including Mozilla applications.
 * new: Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
-* fix: The NVDA log viewer now uses richedit instead of just edit to display the log. This improves reading by word with NVDA and allows it to read log text beyond 65535 bytes.
+* fix: The NVDA log viewer now uses richedit instead of just edit to display the log. This improves reading by word with NVDA.
 * new: NVDA can be configured to beep for either all or only visible progress bars. Alternatively, it can be configured to speak progress bar values every 10%.
 * fix: Fix some issues related to embedded objects in richedit controls.
 * new: Links can now be identified in richedit controls.
@@ -40,7 +39,7 @@ Changes since 0.6 P2:
 * new: Support for braille displays!
 * new: Added a command (NVDA+c) to report the text on the Windows clipboard. (#193)
 * change: Instead of virtual buffer pass through on and off, NVDA now reports focus mode (pass through on) and browse mode (pass through off).
-* new: You can now press escape when in focus mode to return to browse mode.
+* new: In virtualBuffers, if NVDA automatically switches to focus mode, you can use the escape key to switch back to browse mode. NVDA+space can still also be used. 
 * new: In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)
 * new: Rewritten SAPI4 synthesizer driver which replaces the sapi4serotek and sapi4activeVoice drivers and should fix the problems encountered with these drivers.
 * change: Voices are now stored in the configuration file by ID instead of by index. This makes voice settings more reliable across systems and configuration changes. The voice setting will not be preserved in old configurations and an error may be logged the first time a synthesizer is used. (#19)
@@ -64,6 +63,9 @@ Changes since 0.6 P2:
 *Fix: NVDA no longer announces the unselection of text when leaving some edit controls (example: Internet Explorer address bar, Thunderbird 3 email address fields).
 *Fix: When opening plain text emails in Outlook Express and Windows Mail, focus is correctly placed in the message ready for the user to read it. Previously the user had to press tab or click on the message in order to use cursor keys to read it.
 * fix: Fixed several major issues with the "Speak command keys" functionality.
+*Fix: NVDA can now read text past 65535 characters in standard edit controls (e.g. a large file in Notepad).
+*Fix: Improved line reading in MSHTML edit fields (Outlook Express editable messages and Internet Explorer text input fields).
+* fix: NVDA no longer sometimes freezes completely when editing text in OpenOffice. (#148, #180)
 
 
 Changes since 0.6 P1:

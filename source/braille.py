@@ -143,7 +143,7 @@ class Region(object):
 		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
 		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
 		"""
-		mode = louis.dotsIO
+		mode = louis.dotsIO | louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')

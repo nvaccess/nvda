@@ -102,7 +102,8 @@ class JABTextInfo(NVDAObjectTextInfo):
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 		offset=textInfo.caretIndex
-		if offset==-1:
+		# OpenOffice sometimes returns nonsense, so treat charCount < offset as no caret.
+		if offset==-1 or textInfo.charCount<offset:
 			raise RuntimeError("no available caret in this object")
 		return offset
 
@@ -143,9 +144,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
-		#If start and end are 0, then something is broken in java
-		if start==0 and end==0:
-			return super(JABTextInfo,self)._getLineOffsets(offset)
 		#Java gives end as the last character, not one past the last character
 		end=end+1
 		return [start,end]

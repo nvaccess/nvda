@@ -17,10 +17,10 @@ def queueEvent(eventName,obj):
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
 	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
 
 def _queueEventCallback(eventName,obj):
 	curCount=_pendingEventCountsByName.get(eventName,0)
