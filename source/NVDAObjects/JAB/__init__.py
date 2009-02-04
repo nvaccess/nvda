@@ -95,14 +95,15 @@ re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		info=self.jabContext.getAccessibleTextInfo(x,y)
+		info=self.obj.jabContext.getAccessibleTextInfo(x,y)
 		offset=max(min(info.indexAtPoint,info.charCount-1),0)
 		return offset
 
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 		offset=textInfo.caretIndex
-		if offset==-1:
+		# OpenOffice sometimes returns nonsense, so treat charCount < offset as no caret.
+		if offset==-1 or textInfo.charCount<offset:
 			raise RuntimeError("no available caret in this object")
 		return offset
 
@@ -143,9 +144,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
-		#If start and end are 0, then something is broken in java
-		if start==0 and end==0:
-			return super(JABTextInfo,self)._getLineOffsets(offset)
 		#Java gives end as the last character, not one past the last character
 		end=end+1
 		return [start,end]
@@ -156,7 +154,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 class JAB(Window):
 
 	def __init__(self,windowHandle=None,jabContext=None):
-		self._lastMouseTextOffsets=None
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:
@@ -168,7 +165,6 @@ class JAB(Window):
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		Window.__init__(self,windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
-			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
@@ -194,6 +190,11 @@ class JAB(Window):
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 			  	]]
+
+	def _get_TextInfo(self):
+		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
+			return JABTextInfo
+		return super(JAB,self).TextInfo
 
 	def _isEqual(self,other):
 		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext

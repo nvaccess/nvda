@@ -329,7 +329,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
-		Window.__init__(self,windowHandle=windowHandle)
+		super(IAccessible,self).__init__(windowHandle=windowHandle)
 		#Mozilla Gecko objects use the description property to report other info
 		processGeckoDescription(self)
 		try:
@@ -338,8 +338,6 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			pass
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
-			self.TextInfo=IA2TextTextInfo
-			replacedTextInfo=True
 			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 				hasEditableState=True
 			else:
@@ -366,10 +364,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				]]
 		except:
 			pass
-		self._lastMouseTextOffsets=None
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
+
+	def _get_TextInfo(self):
+		if hasattr(self,'IAccessibleTextObject'):
+			return IA2TextTextInfo
+		return super(IAccessible,self).TextInfo
 
 	def _isEqual(self,other):
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
@@ -799,7 +801,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
-		Window.event_gainFocus(self)
+		super(IAccessible,self).event_gainFocus()
 
 	def event_selection(self):
 		return self.event_stateChange()

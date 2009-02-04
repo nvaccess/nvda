@@ -137,7 +137,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			mainKey="extended%s"%mainKey
 		keyPress=(modifiers,mainKey)
 		if log.isEnabledFor(log.IO): log.io("key press: %s"%keyName(keyPress))
-		if globalVars.keyboardHelp or (config.conf["keyboard"]["speakCommandKeys"] and not ( not keyPress[0] and config.conf["keyboard"]["speakTypedCharacters"])):
+		speakCommandKeys=config.conf["keyboard"]["speakCommandKeys"]
+		if globalVars.keyboardHelp or speakCommandKeys:
 			labelList = []
 			if modifiers:
 				for mod in modifiers: 
@@ -153,7 +154,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 					labelList.append(unichr(ch))
 				else:
 					labelList.append(keyPress[1])
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"+".join(labelList))
+			if not speakCommandKeys or (speakCommandKeys and (
+				# An alphanumeric key has a label of only 1 character.
+				# Therefore, a command key either has a label longer than 1 character (except space)...
+				(labelList[-1]!="space" and len(labelList[-1])>1)
+				# or it has modifiers other than shift; e.g. control+f is a command key, but shift+f is not.
+				or (modifiers and modifiers!=frozenset(("shift",)))
+			)):
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"+".join(labelList))
 		if not globalVars.keyboardHelp and (mainKey in ('extendeddivide', 'multiply', 'subtract', 'add', 'extendedreturn')) and (bool(winUser.getKeyState(winUser.VK_NUMLOCK)&1)):
 			return True
 		script=scriptHandler.findScript(keyPress)

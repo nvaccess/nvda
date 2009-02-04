@@ -43,8 +43,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 class Gecko_ia2(VirtualBuffer):
 
+	TextInfo=Gecko_ia2_TextInfo
+
 	def __init__(self,rootNVDAObject):
-		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll",TextInfo=Gecko_ia2_TextInfo)
+		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll")
 		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):

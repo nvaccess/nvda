@@ -376,10 +376,11 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 @type _text_lastReportedPresentation: dict
 """
 
+	TextInfo=NVDAObjectTextInfo
+
 	def __init__(self):
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
-		self.TextInfo=NVDAObjectTextInfo
 		if hasattr(self.appModule,'event_NVDAObject_init'):
 			self.appModule.event_NVDAObject_init(self)
 
@@ -602,6 +603,9 @@ Tries to force this object to take the focus.
 
 	def _get_positionInfo(self):
 		return {}
+
+	def _get_processID(self):
+		raise RuntimeError
 
 	def _get_isProtected(self):
 		return False
