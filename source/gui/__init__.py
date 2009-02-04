@@ -23,6 +23,7 @@ import languageHandler
 import logViewer
 import winUser
 import api
+import tandem
 
 ### Constants
 appTitle = "NVDA"
@@ -185,6 +186,12 @@ class MainFrame(wx.Frame):
 		if canExit:
 			wx.GetApp().ExitMainLoop()
 
+	def onStartTandemServerCommand(self, evt):
+		tandem.startTandemServer()
+
+	def onStopTandemServerCommand(self, evt):
+		tandem.stopTandemServer()
+
 	def onGeneralSettingsCommand(self,evt):
 		self._popupSettingsDialog(GeneralSettingsDialog)
 
@@ -270,6 +277,13 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+
+		menu_tandem = wx.Menu()
+		item = menu_tandem.Append(wx.ID_ANY, _("Start tandem server"))
+		self.Bind(wx.EVT_MENU, frame.onStartTandemServerCommand, item)
+		item = menu_tandem.Append(wx.ID_ANY, _("Stop tandem server"))
+		self.Bind(wx.EVT_MENU, frame.onStopTandemServerCommand, item)
+		self.menu.AppendMenu(wx.ID_ANY, _("NVDA tandem"), menu_tandem)
 
 		menu_tools = wx.Menu()
 		item = menu_tools.Append(wx.ID_ANY, _("View log"))

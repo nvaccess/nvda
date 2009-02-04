@@ -62,13 +62,14 @@ class TandemServer(asynchat.async_chat):
 	lobby = Lobby()
 
 	def __init__(self):
+		log.info("Starting tandem server")
 		asynchat.async_chat.__init__(self)
 		globalVars.tandemServerActive = True
 		self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.set_reuse_addr()
 		self.bind(('', 2402))
 		self.listen(2)
-		log.info("starting listening tandem connections")
+		log.debug("Listening tandem connections")
 
 	def handle_accept(self):
 		sock, addr = self.accept()
@@ -79,6 +80,7 @@ class TandemServer(asynchat.async_chat):
 	def close(self):
 		for client in self.lobby.clients: client.close_when_done()
 		globalVars.tandemServerActive = False
+		log.info("Tandem server stopped")
 
 def update():
 	asyncore.poll()
