@@ -11,30 +11,15 @@ serverPort = 2402
 
 #global definitions
 server = None
-class Lobby(object):
-	clients = None
-	def __init__(self):
-		self.clients = set()
-
-	def leave(self, client):
-		self.clients.remove(client)
-
-	def join(self, client):
-		self.clients.add(client)
-
-	def send_to_all(self, data):
-		for client in self.clients:
-			client.push(data)
-
 class Session(asynchat.async_chat):
 	inputBuf = ""
-	lobby = None
+	parent = None
 
-	def __init__(self,conn,lobby):
+	def __init__(self,conn,parent):
 		asynchat.async_chat.__init__(self, conn)
 		self.set_terminator("konec")
-		self.lobby = lobby
-		self.lobby.join(self)
+		self.parent = parent
+		self.parent.clients.append(self)
 
 	def collect_incoming_data(self, data):
 		self.inputBuf+=data
@@ -54,12 +39,12 @@ class Session(asynchat.async_chat):
 		self.inputBuf = ""
 
 	def handle_close(self):
-		self.lobby.leave(self)
+		self.parent.clients.remove(self)
 		log.info("disconected tandem client")
 		asynchat.async_chat.handle_close(self)
 
 class TandemServer(asynchat.async_chat):
-	lobby = Lobby()
+	clients = []
 
 	def __init__(self):
 		log.info("Starting tandem server")
@@ -75,10 +60,14 @@ class TandemServer(asynchat.async_chat):
 		sock, addr = self.accept()
 		log.info("incoming tandem connection")
 		log.debug(addr)
-		client = Session(sock, self.lobby)
+		client = Session(sock, self)
+
+	def sendToAll(self,data):
+		for client in self.clients:
+			client.push(data)
 
 	def close(self):
-		for client in self.lobby.clients: client.close_when_done()
+		for client in self.clients: client.close_when_done()
 		globalVars.tandemServerActive = False
 		log.info("Tandem server stopped")
 
