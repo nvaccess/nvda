@@ -49,7 +49,11 @@ class JABContext(object):
 
 	def __del__(self):
 		if isRunning:
-			bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+			try:
+				bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+			except:
+				log.debugWarning("Error releasing java object",exc_info=True)
+
 
 	def __eq__(self,jabContext):
 		if self.vmID==jabContext.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
@@ -321,7 +325,10 @@ def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_enterJavaWindow(hwnd):
-	jabContext=JABContext(hwnd=hwnd)
+	try:
+		jabContext=JABContext(hwnd=hwnd)
+	except:
+		return
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getForegroundObject():
 		return

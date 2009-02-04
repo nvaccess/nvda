@@ -95,7 +95,7 @@ re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		info=self.jabContext.getAccessibleTextInfo(x,y)
+		info=self.obj.jabContext.getAccessibleTextInfo(x,y)
 		offset=max(min(info.indexAtPoint,info.charCount-1),0)
 		return offset
 
