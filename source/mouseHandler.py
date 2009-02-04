@@ -35,6 +35,7 @@ mouseShapeChanged=0
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
+currentMouseWindow=0
 
 def updateMouseShape(name):
 	global curMouseShape, mouseShapeChanged
@@ -89,23 +90,25 @@ def internal_mouseEvent(msg,x,y,injected):
 	return True
 
 def executeMouseMoveEvent(x,y):
+	global currentMouseWindow
 	oldMouseObject=api.getMouseObject()
 	try:
 		(oldLeft,oldTop,oldWidth,oldHeight)=oldMouseObject.location
 	except:
 		oldLeft=oldTop=oldWidth=oldHeight=0
 	mouseObject=oldMouseObject
-	windowAtPoint=ctypes.windll.user32.WindowFromPoint(x,y)
-	if JABHandler.isRunning and JABHandler.isJavaWindow(windowAtPoint):
+	oldMouseWindow=currentMouseWindow
+	currentMouseWindow=ctypes.windll.user32.WindowFromPoint(x,y)
+	if JABHandler.isRunning and JABHandler.isJavaWindow(currentMouseWindow):
 		if not isinstance(oldMouseObject,NVDAObjects.JAB.JAB) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
-			oldJabContext=JABHandler.JABContext(hwnd=windowAtPoint)
+			oldJabContext=JABHandler.JABContext(hwnd=currentMouseWindow)
 		else:
 			oldJabContext=oldMouseObject.jabContext
 		res=oldJabContext.getAccessibleContextAt(x,y)
 		if res:
 			mouseObject=NVDAObjects.JAB.JAB(jabContext=res)
 	else: #not a java window
-		if not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
+		if currentMouseWindow!=oldMouseWindow or not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
 			mouseObject=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
 		else:
 			res=IAccessibleHandler.accHitTest(oldMouseObject.IAccessibleObject,oldMouseObject.IAccessibleChildID,x,y)
