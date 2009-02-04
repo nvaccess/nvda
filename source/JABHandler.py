@@ -303,14 +303,16 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_stateChange(vmID,accContext,oldState,newState):
+	global lastFocusNVDAObject
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
 	stateList=newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU]:
+		if focus!=obj and lastFocusNVDAObject!=obj and obj.role in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU):
 			eventHandler.queueEvent("gainFocus",obj)
+			lastFocusNVDAObject=obj
 			return
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
 		obj=focus
@@ -341,6 +343,8 @@ def event_enterJavaWindow(hwnd):
 	activeChild=focusObject.activeChild
 	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
 		focusObject=activeChild
+	if focusObject.role==controlTypes.ROLE_UNKNOWN:
+		return
 	eventHandler.queueEvent("gainFocus",focusObject)
 	lastFocusNVDAObject=focusObject
 
