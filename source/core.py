@@ -82,6 +82,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		speech.speakMessage(_("Loading subsystems, please wait..."))
+	import tandem
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
@@ -155,6 +156,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
+				tandem.update()
 			except:
 				log.error("errors in this core pump cycle",exc_info=True)
 	log.debug("starting core pump")

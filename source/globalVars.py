@@ -50,3 +50,4 @@ appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True
 inCaretMovement=False
+tandemServerActive = False
