@@ -25,13 +25,41 @@ serverPort = 2402
 #global definitions
 server = None
 
+class ConnectionList:
+	conns = []
+
+	def __init__(self,onJoin,onLeave):
+		self.onJoin = onJoin
+		self.onLeave = onLeave
+
+	def join(self,conn):
+		self.conns.append(conn)
+		self.onJoin(conn)
+
+	def leave(self,conn):
+		self.conns.remove(conn)
+		self.onLeave(conn)
+
+	def sendToAll(self,data):
+		for conn in self.conns:
+			conn.push(data+terminator)
+
+	def closeAll(self):
+		for conn in self.conns: conn.close_when_done()
+
 class Session(asynchat.async_chat):
 	inputBuf = ""
 
-	def __init__(self,conn):
+	def __init__(self,connectionList,sock=None):
 		global terminator
-		asynchat.async_chat.__init__(self, conn)
+		asynchat.async_chat.__init__(self,sock)
 		self.set_terminator(terminator)
+		self.connectionList = connectionList
+		self.connectionList.join(self)
+
+	def handle_close(self):
+		self.connectionList.leave(self)
+		asynchat.async_chat.handle_close(self)
 
 	def collect_incoming_data(self, data):
 		self.inputBuf+=data
@@ -65,26 +93,12 @@ class Session(asynchat.async_chat):
 		elif command == command_closeConnection:
 			self.close_when_done()
 
-class ServerSession(Session):
-	parent = None
-
-	def __init__(self,conn,parent):
-		Session.__init__(self, conn)
-		self.parent = parent
-		self.parent.clients.append(self)
-
-	def handle_close(self):
-		self.parent.clients.remove(self)
-		log.info("disconected tandem client")
-		asynchat.async_chat.handle_close(self)
-
 class TandemServer(asynchat.async_chat):
-	clients = []
-
 	def __init__(self):
 		log.info("Starting tandem server")
 		asynchat.async_chat.__init__(self)
 		globalVars.tandemServerActive = True
+		self.clients = ConnectionList(self.logJoiningClient, self.logLeavingClient)
 		self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.set_reuse_addr()
 		self.bind(('', 2402))
@@ -95,16 +109,27 @@ class TandemServer(asynchat.async_chat):
 		sock, addr = self.accept()
 		log.info("incoming tandem connection")
 		log.debug(addr)
-		client = ServerSession(sock, self)
+		client = Session(self.clients,sock)
 
 	def sendToAll(self,data):
-		for client in self.clients:
-			client.push(data+terminator)
+		clients.sendToAll(data)
 
 	def close(self):
-		for client in self.clients: client.close_when_done()
+		clients.closeAll()
 		globalVars.tandemServerActive = False
 		log.info("Tandem server stopped")
+
+	def logJoiningClient(self,client):
+		log.info("Connected tandem client")
+
+	def logLeavingClient(self,client):
+		log.info("Disconnected tandem client")
+
+class ClientSession(Session):
+	def __init__(self,connectionList,addr):
+		Session.__init__(self,connectionList)
+		self.create_socket (socket.AF_INET, socket.SOCK_STREAM)
+		self.connect((addr,serverPort))
 
 class TandemSynthDriver(SynthDriver):
 	"""A proxy SynthDriver which transports all operations to clients, also performing they on local side."""
