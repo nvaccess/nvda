@@ -11,32 +11,41 @@ serverPort = 2402
 
 #global definitions
 server = None
+
 class Session(asynchat.async_chat):
 	inputBuf = ""
-	parent = None
 
-	def __init__(self,conn,parent):
+	def __init__(self,conn):
 		asynchat.async_chat.__init__(self, conn)
 		self.set_terminator("konec")
-		self.parent = parent
-		self.parent.clients.append(self)
 
 	def collect_incoming_data(self, data):
 		self.inputBuf+=data
 
 	def found_terminator(self):
-		log.io("Remote client command: %s"%self.inputBuf)
+		log.io("Incoming tandem command: %s"%self.inputBuf)
 		command = self.inputBuf[0]
 		self.inputBuf= self.inputBuf[1:]
+		self.processCommand(command,self.inputBuf)
+		self.inputBuf = ""
+
+	def processCommand(self,command,data):
 		if command == command_keyDown:
-			vkCode,scanCode,extended,injected = self.inputBuf.split(" ")
+			vkCode,scanCode,extended,injected = data.split(" ")
 			keyboardHandler.internal_keyDownEvent(vkCode,scanCode,extended,injected)
 		elif command == command_keyUp:
-			vkCode,scanCode,extended,injected = self.inputBuf.split(" ")
+			vkCode,scanCode,extended,injected = data.split(" ")
 			keyboardHandler.internal_keyUpEvent(vkCode,scanCode,extended,injected)
 		elif command == command_closeConnection:
 			self.close_when_done()
-		self.inputBuf = ""
+
+class ServerSession(Session):
+	parent = None
+
+	def __init__(self,conn,parent):
+		Session.__init__(self, conn)
+		self.parent = parent
+		self.parent.clients.append(self)
 
 	def handle_close(self):
 		self.parent.clients.remove(self)
@@ -60,7 +69,7 @@ class TandemServer(asynchat.async_chat):
 		sock, addr = self.accept()
 		log.info("incoming tandem connection")
 		log.debug(addr)
-		client = Session(sock, self)
+		client = ServerSession(sock, self)
 
 	def sendToAll(self,data):
 		for client in self.clients:
