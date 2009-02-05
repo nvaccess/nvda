@@ -59,6 +59,9 @@ def setSynth(name):
 			_curSynth.terminate()
 			_curSynth = None
 		newSynth=newSynth()
+		if globalVars.tandemServerActive:
+			import tandem
+			newSynth = tandem.TandemSynthDriver(newSynth)
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
 			if newSynth.hasVoice:
