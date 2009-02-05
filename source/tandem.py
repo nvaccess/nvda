@@ -3,6 +3,7 @@ import globalVars
 import keyboardHandler
 from logHandler import log
 from synthDriverHandler import SynthDriver
+import winUser
 
 #constants
 terminator = "konec"
@@ -45,10 +46,22 @@ class Session(asynchat.async_chat):
 	def processCommand(self,command,data):
 		if command == command_keyDown:
 			vkCode,scanCode,extended,injected = data.split(" ")
-			keyboardHandler.internal_keyDownEvent(vkCode,scanCode,extended,injected)
+			res = keyboardHandler.internal_keyDownEvent(int(vkCode),int(scanCode),bool(extended),bool(injected))
+			if not res: return
+			if extended:
+				flags = 1
+			else:
+				flags = 0
+			winUser.keybd_event(int(vkCode),0,flags,0)
 		elif command == command_keyUp:
 			vkCode,scanCode,extended,injected = data.split(" ")
-			keyboardHandler.internal_keyUpEvent(vkCode,scanCode,extended,injected)
+			res = keyboardHandler.internal_keyUpEvent(int(vkCode),int(scanCode),bool(extended),bool(injected))
+			if not res: return
+			if extended:
+				flags = 1
+			else:
+				flags = 0
+			winUser.keybd_event(int(vkCode),0,flags+2,0)
 		elif command == command_closeConnection:
 			self.close_when_done()
 
