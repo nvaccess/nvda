@@ -1,5 +1,6 @@
 import asyncore, asynchat, socket
 import globalVars
+from synthDriverHandler import getSynth
 import keyboardHandler
 from logHandler import log
 from synthDriverHandler import SynthDriver
@@ -94,6 +95,15 @@ class Session(asynchat.async_chat):
 			winUser.keybd_event(int(vkCode),0,flags+2,0)
 		elif command == command_closeConnection:
 			self.close_when_done()
+		elif command == command_speakText:
+			index, text = data.split(" ")
+			if index == "None": 
+				index = None
+			else:
+				index = int(index)
+			getSynth().speakText(text,index)
+		elif command == command_cancelSpeech:
+			getSynth().cancel()
 
 class TandemServer(asynchat.async_chat):
 	def __init__(self):
