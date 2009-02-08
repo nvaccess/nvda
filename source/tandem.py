@@ -4,6 +4,7 @@ import keyboardHandler
 from logHandler import log
 from synthDriverHandler import SynthDriver
 import winUser
+from gui import scriptUI
 
 #constants
 terminator = "konec"
@@ -24,6 +25,7 @@ serverPort = 2402
 
 #global definitions
 server = None
+remoteConnectionList = None
 
 class ConnectionList:
 	conns = []
@@ -101,7 +103,7 @@ class TandemServer(asynchat.async_chat):
 		self.clients = ConnectionList(self.logJoiningClient, self.logLeavingClient)
 		self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.set_reuse_addr()
-		self.bind(('', 2402))
+		self.bind(('', serverPort))
 		self.listen(2)
 		log.debug("Listening tandem connections")
 
@@ -130,6 +132,9 @@ class ClientSession(Session):
 		Session.__init__(self,connectionList)
 		self.create_socket (socket.AF_INET, socket.SOCK_STREAM)
 		self.connect((addr,serverPort))
+
+	def handle_connect(self):
+		log.info("connection established")
 
 class TandemSynthDriver(SynthDriver):
 	"""A proxy SynthDriver which transports all operations to clients, also performing they on local side."""
@@ -254,3 +259,28 @@ def stopTandemServer():
 	if server is None: return
 	server.close()
 	server = None
+
+def onJoinClient(client):
+	log.info("Connecting  to remote machine")
+
+def onLeaveClient(client):
+	log.info("Disconnected from remote machine")
+
+def connectToServer():
+	d = scriptUI.TextEntryDialog(_("Enter remote server's IP address"),callback=handleAddressDialog)
+	d.run()
+
+def handleAddressDialog(text):
+	global remoteConnectionList
+	if remoteConnectionList is None: remoteConnectionList = ConnectionList(onJoinClient,onLeaveClient)
+	ClientSession(remoteConnectionList,text)
+	globalVars.tandemClientActive = True
+
+def sendKey(keyDown, vkCode,scanCode,extended,injected):
+	global remoteConnectionList
+	#have python expr ? true : false syntax? 
+	if keyDown: 
+		comm = command_keyDown
+	else:
+		comm = command_keyUp
+	remoteConnectionList.sendToAll(comm+"%d %d %s %s"%(vkCode,scanCode,extended,injected))

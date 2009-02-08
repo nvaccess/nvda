@@ -15,6 +15,7 @@ import speech
 from keyUtils import key, keyName, sendKey, localizedKeyLabels
 import scriptHandler
 import globalVars
+import tandem
 from logHandler import log
 import queueHandler
 import config
@@ -77,6 +78,8 @@ def speakKeyboardLayout(layout):
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by keyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
+	if globalVars.tandemClientActive:
+		tandem.sendKey(True,vkCode,scanCode,extended,injected)
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
 		#Injected keys should be ignored
@@ -196,6 +199,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
+	if globalVars.tandemClientActive:
+		tandem.sendKey(False,vkCode,scanCode,extended,injected)
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
 		lastPressedKeyTime=time.time()

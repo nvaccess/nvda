@@ -192,6 +192,9 @@ class MainFrame(wx.Frame):
 	def onStopTandemServerCommand(self, evt):
 		tandem.stopTandemServer()
 
+	def onConnectToServerCommand(self, evt):
+		tandem.connectToServer()
+
 	def onGeneralSettingsCommand(self,evt):
 		self._popupSettingsDialog(GeneralSettingsDialog)
 
@@ -283,6 +286,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onStartTandemServerCommand, item)
 		item = menu_tandem.Append(wx.ID_ANY, _("Stop tandem server"))
 		self.Bind(wx.EVT_MENU, frame.onStopTandemServerCommand, item)
+		item = menu_tandem.Append(wx.ID_ANY, _("Connect to tandem"))
+		self.Bind(wx.EVT_MENU, frame.onConnectToServerCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("NVDA tandem"), menu_tandem)
 
 		menu_tools = wx.Menu()

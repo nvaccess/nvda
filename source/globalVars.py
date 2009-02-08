@@ -51,3 +51,4 @@ settingsRing = None
 speechDictionaryProcessing=True
 inCaretMovement=False
 tandemServerActive = False
+tandemClientActive = False
