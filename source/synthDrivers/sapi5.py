@@ -40,10 +40,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			return False
 
 	def __init__(self):
-		self.tts = comtypes.client.CreateObject(COM_CLASS)
 		self._pitch=50
-		self.voice=self.tts.GetVoices()[0].Id
-
+		self._initTts()
 
 	def terminate(self):
 		del self.tts
@@ -66,7 +64,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return self.tts.volume
 
 	def _get_voice(self):
-		return self._voice
+		return self.tts.voice.Id
  
 	def _get_lastIndex(self):
 		bookmark=self.tts.status.LastBookmark
@@ -85,16 +83,21 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def _set_volume(self,value):
 		self.tts.Volume = value
 
+	def _initTts(self):
+		self.tts=comtypes.client.CreateObject(COM_CLASS)
+		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
+		if outputDeviceID>=0:
+			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+
 	def _set_voice(self,value):
 		for v in self.tts.GetVoices():
 			if value==v.Id:
-				self.tts=comtypes.client.CreateObject('sapi.spVoice')
-				outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
-				if outputDeviceID>=0:
-					self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
-				self.tts.voice=v
-				self._voice=value
 				break
+		else:
+			# Voice not found.
+			return
+		self._initTts()
+		self.tts.voice=v
 
 	def speakText(self,text,index=None):
 		flags=constants.SVSFIsXML
