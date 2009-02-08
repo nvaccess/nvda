@@ -68,6 +68,8 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			self._rangeObj.expand("textedit")
 			self.collapse(True)
 			self._rangeObj.move("character",-1)
+		elif position==textHandler.POSITION_ALL:
+			self._rangeObj.expand("textedit")
 		elif isinstance(position,textHandler.Bookmark):
 			if position.infoClass==self.__class__:
 				self._rangeObj.moveToBookmark(position.data)
