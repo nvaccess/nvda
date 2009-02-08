@@ -159,7 +159,7 @@ class JAB(Window):
 		elif jabContext and not windowHandle:
 			windowHandle=jabContext.hwnd
 		elif not windowHandle and not jabContext:
-			raise ArguementError("Give either a valid window handle or jab context")
+			raise TypeError("Give either a valid window handle or jab context")
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
