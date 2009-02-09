@@ -138,7 +138,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if not isinstance(other,UIA):
 			return False
 		try:
-			return UIAHandler.handler.IUIAutomationInstance.CompareElements(self.UIAElement,other.UIAElement)
+			return UIAHandler.handler.clientObject.CompareElements(self.UIAElement,other.UIAElement)
 		except:
 			return False
 
@@ -228,29 +228,29 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_parent(self):
 		try:
-			parentElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetParentElement(self.UIAElement)
+			parentElement=UIAHandler.handler.treeWalker.GetParentElement(self.UIAElement)
 		except:
 			parentElement=None
 		if parentElement:
 			return UIA(UIAElement=parentElement)
 
 	def _get_previous(self):
-		previousSiblingElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetPreviousSiblingElement(self.UIAElement)
+		previousSiblingElement=UIAHandler.handler.treeWalker.GetPreviousSiblingElement(self.UIAElement)
 		if previousSiblingElement:
 			return UIA(UIAElement=previousSiblingElement)
 
 	def _get_next(self):
-		nextSiblingElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetNextSiblingElement(self.UIAElement)
+		nextSiblingElement=UIAHandler.handler.treeWalker.GetNextSiblingElement(self.UIAElement)
 		if nextSiblingElement:
 			return UIA(UIAElement=nextSiblingElement)
 
 	def _get_firstChild(self):
-		firstChildElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetFirstChildElement(self.UIAElement)
+		firstChildElement=UIAHandler.handler.treeWalker.GetFirstChildElement(self.UIAElement)
 		if firstChildElement:
 			return UIA(UIAElement=firstChildElement)
 
 	def _get_lastChild(self):
-		lastChildElement=UIAHandler.handler.IUIAutomationTreeWalkerInstance.GetlastChildElement(self.UIAElement)
+		lastChildElement=UIAHandler.handler.treeWalker.GetlastChildElement(self.UIAElement)
 		if lastChildElement:
 			return UIA(UIAElement=lastChildElement)
 

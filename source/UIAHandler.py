@@ -92,7 +92,7 @@ class UIAEventListener(COMObject):
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if eventID==UIA_MenuModeEndEventId:
-			focus=self.UIAHandlerRef().IUIAutomationInstance.GetFocusedElement()
+			focus=self.UIAHandlerRef().clientObject.GetFocusedElement()
 			self.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(focus)
 			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
@@ -116,7 +116,7 @@ class UIAEventListener(COMObject):
 			return
 		if not sender.currentHasKeyboardFocus:
 			return
-		if self.UIAHandlerRef().IUIAutomationInstance.CompareElements(sender,self.UIAHandlerRef().focusedElement):
+		if self.UIAHandlerRef().clientObject.CompareElements(sender,self.UIAHandlerRef().focusedElement):
 			return
 		self.UIAHandlerRef().focusedElement=sender
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
@@ -145,26 +145,25 @@ class UIAEventListener(COMObject):
 class UIAHandler(object):
 
 	def __init__(self):
-		self.IUIAutomationInstance=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
-		rawViewCondition=self.IUIAutomationInstance.RawViewCondition
-		self.IUIAutomationTreeWalkerInstance=self.IUIAutomationInstance.CreateTreeWalker(rawViewCondition)
-		self.rootUIAutomationElement=self.IUIAutomationInstance.GetRootElement()
-		self.focusedElement=self.IUIAutomationInstance.GetFocusedElement()
+		self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+		self.treeWalker=self.clientObject.RawViewWalker
+		self.rootElement=self.clientObject.GetRootElement()
+		self.focusedElement=self.clientObject.GetFocusedElement()
 		self.eventListener=UIAEventListener(self)
 
 	def registerEvents(self):
-		self.IUIAutomationInstance.AddFocusChangedEventHandler(None,self.eventListener)
-		self.IUIAutomationInstance.AddPropertyChangedEventHandler(self.rootUIAutomationElement,TreeScope_Subtree,None,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
+		self.clientObject.AddFocusChangedEventHandler(None,self.eventListener)
+		self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,None,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
 		for x in UIAEventIdsToNVDAEventNames.iterkeys():  
-			self.IUIAutomationInstance.addAutomationEventHandler(x,self.rootUIAutomationElement,TreeScope_Subtree,None,self.eventListener)
+			self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,None,self.eventListener)
 
 	def unregisterEvents(self):
-		self.IUIAutomationInstance.RemoveAllEventHandlers()
+		self.clientObject.RemoveAllEventHandlers()
 
 def initialize():
 	global handler
 	handler=UIAHandler()
-	focusedElement=handler.IUIAutomationInstance.getFocusedElement()
+	focusedElement=handler.clientObject.getFocusedElement()
 	focusObject=NVDAObjects.UIA.UIA(UIAElement=focusedElement)
 	eventHandler.queueEvent("gainFocus",focusObject)
 	handler.registerEvents()
