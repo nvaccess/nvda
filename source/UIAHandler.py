@@ -169,9 +169,6 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-	desktopObject=NVDAObjects.UIA.UIA(UIAElement=handler.rootUIAutomationElement)
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
 	focusedElement=handler.IUIAutomationInstance.getFocusedElement()
 	focusObject=NVDAObjects.UIA.UIA(UIAElement=focusedElement)
 	eventHandler.queueEvent("gainFocus",focusObject)
