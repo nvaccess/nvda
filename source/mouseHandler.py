@@ -88,8 +88,8 @@ def internal_mouseEvent(msg,x,y,injected):
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
 	oldMouseObject=api.getMouseObject()
-	import NVDAObjects.window
-	mouseObject=NVDAObjects.window.Window.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
+	desktopObject=api.getDesktopObject()
+	mouseObject=desktopObject.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
 	if not mouseObject:
 		return
 	try:

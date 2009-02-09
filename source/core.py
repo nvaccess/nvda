@@ -121,6 +121,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.Init(lang,wxLang)
 	except:
 		pass
+	import api
+	import winUser
+	import NVDAObjects.window
+	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
