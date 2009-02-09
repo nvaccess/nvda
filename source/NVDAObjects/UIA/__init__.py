@@ -4,7 +4,7 @@ import speech
 import api
 import textHandler
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
 
 class UIATextInfo(textHandler.TextInfo):
 
@@ -68,7 +68,7 @@ class UIATextInfo(textHandler.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-class UIA(Window):
+class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
