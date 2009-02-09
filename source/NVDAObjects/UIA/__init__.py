@@ -1,3 +1,5 @@
+from comtypes import COMError
+import weakref
 import UIAHandler
 import controlTypes
 import speech
@@ -70,6 +72,8 @@ class UIATextInfo(textHandler.TextInfo):
 
 class UIA(AutoSelectDetectionNVDAObject,Window):
 
+	liveNVDAObjectTable=weakref.WeakValueDictionary()
+
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowHandle=kwargs.get('windowHandle',None)
@@ -90,6 +94,20 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return super(UIA,cls).findBestClass(clsList,kwargs)
 		else:
 			return clsList,kwargs
+
+	def __new__(cls,windowHandle=None,UIAElement=None):
+		try:
+			runtimeId=UIAElement.getRuntimeId()
+		except COMError:
+			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
+			return None
+		obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+		if not obj:
+			obj=super(UIA,cls).__new__(cls)
+			if not obj:
+				return None
+			cls.liveNVDAObjectTable[runtimeId]=obj
+		return obj
 
 	def __init__(self,windowHandle=None,UIAElement=None):
 		if getattr(self,'_doneInit',False):

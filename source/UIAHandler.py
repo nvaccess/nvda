@@ -105,13 +105,9 @@ class UIAEventListener(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		focus=api.getFocusObject()
-		if obj==focus:
-			obj=focus
+		obj.UIAElement=sender
 		eventHandler.queueEvent(NVDAEventName,obj)
 		queueHandler.pumpAll()
-
-		pass
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		try:
@@ -124,6 +120,7 @@ class UIAEventListener(COMObject):
 			return
 		self.UIAHandlerRef().focusedElement=sender
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		obj.UIAElement=sender
 		eventHandler.queueEvent("gainFocus",obj)
 		queueHandler.pumpAll()
 
@@ -136,9 +133,7 @@ class UIAEventListener(COMObject):
 			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 			if NVDAEventName:
 				obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-				focus=api.getFocusObject()
-				if obj==focus:
-					obj=focus
+				obj.UIAElement=sender
 				eventHandler.queueEvent(NVDAEventName,obj)
 				queueHandler.pumpAll()
 		except:
