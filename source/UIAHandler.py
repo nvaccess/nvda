@@ -147,15 +147,19 @@ class UIAHandler(object):
 	def __init__(self):
 		self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 		self.treeWalker=self.clientObject.RawViewWalker
-		self.rootElement=self.clientObject.GetRootElement()
-		self.focusedElement=self.clientObject.GetFocusedElement()
+		r=self.clientObject.CreateCacheRequest()
+		for propertyId in (UIA_ControlTypePropertyId,UIA_NativeWindowHandlePropertyId,UIA_ProcessIdPropertyId):
+			r.addProperty(propertyId)
+		self.baseCacheRequest=r
+		self.rootElement=self.clientObject.GetRootElementBuildCache(self.baseCacheRequest)
+		self.focusedElement=self.clientObject.GetFocusedElementBuildCache(self.baseCacheRequest)
 		self.eventListener=UIAEventListener(self)
 
 	def registerEvents(self):
-		self.clientObject.AddFocusChangedEventHandler(None,self.eventListener)
-		self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,None,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
+		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self.eventListener)
+		self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
 		for x in UIAEventIdsToNVDAEventNames.iterkeys():  
-			self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,None,self.eventListener)
+			self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self.eventListener)
 
 	def unregisterEvents(self):
 		self.clientObject.RemoveAllEventHandlers()
@@ -163,8 +167,7 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-	focusedElement=handler.clientObject.getFocusedElement()
-	focusObject=NVDAObjects.UIA.UIA(UIAElement=focusedElement)
+	focusObject=NVDAObjects.UIA.UIA(UIAElement=handler.focusedElement)
 	eventHandler.queueEvent("gainFocus",focusObject)
 	handler.registerEvents()
 

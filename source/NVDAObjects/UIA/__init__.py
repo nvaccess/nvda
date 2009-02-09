@@ -79,9 +79,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		windowHandle=kwargs.get('windowHandle',None)
 		UIAElement=kwargs.get('UIAElement',None)
 		if windowHandle and not UIAElement:
-			UIAElement=UIAHandler.handler.UIAutomationInstance.GetElementByHandle(windowHandle)
+			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		elif UIAElement and not windowHandle:
-			windowHandle=UIAElement.currentNativeWindowHandle
+			windowHandle=UIAElement.cachedNativeWindowHandle
 		else:
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
@@ -191,7 +191,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self.UIAElement.currentName
 
 	def _get_role(self):
-		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.currentControlType,controlTypes.ROLE_UNKNOWN)
+		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
 			return super(UIA,self).role
 		return role
@@ -228,34 +228,34 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_parent(self):
 		try:
-			parentElement=UIAHandler.handler.treeWalker.GetParentElement(self.UIAElement)
+			parentElement=UIAHandler.handler.treeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		except:
 			parentElement=None
 		if parentElement:
 			return UIA(UIAElement=parentElement)
 
 	def _get_previous(self):
-		previousSiblingElement=UIAHandler.handler.treeWalker.GetPreviousSiblingElement(self.UIAElement)
+		previousSiblingElement=UIAHandler.handler.treeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if previousSiblingElement:
 			return UIA(UIAElement=previousSiblingElement)
 
 	def _get_next(self):
-		nextSiblingElement=UIAHandler.handler.treeWalker.GetNextSiblingElement(self.UIAElement)
+		nextSiblingElement=UIAHandler.handler.treeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if nextSiblingElement:
 			return UIA(UIAElement=nextSiblingElement)
 
 	def _get_firstChild(self):
-		firstChildElement=UIAHandler.handler.treeWalker.GetFirstChildElement(self.UIAElement)
+		firstChildElement=UIAHandler.handler.treeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if firstChildElement:
 			return UIA(UIAElement=firstChildElement)
 
 	def _get_lastChild(self):
-		lastChildElement=UIAHandler.handler.treeWalker.GetlastChildElement(self.UIAElement)
+		lastChildElement=UIAHandler.handler.treeWalker.GetlastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if lastChildElement:
 			return UIA(UIAElement=lastChildElement)
 
 	def _get_processID(self):
-		return self.UIAElement.currentProcessId
+		return self.UIAElement.cachedProcessId
 
 	def _get_location(self):
 		r=self.UIAElement.currentBoundingRectangle
