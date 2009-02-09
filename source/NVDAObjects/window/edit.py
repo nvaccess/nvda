@@ -681,10 +681,11 @@ class Edit(Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
+	useITextDocumentSupport=False
 	editValueUnit=textHandler.UNIT_LINE
 
 	def _get_TextInfo(self):
-		if self.editAPIVersion>1 and self.ITextDocumentObject:
+		if self.editAPIVersion>1 and self.useITextDocumentSupport and self.ITextDocumentObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo

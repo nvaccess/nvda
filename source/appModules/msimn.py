@@ -43,7 +43,7 @@ class AppModule(_default.AppModule):
 		#Then set the object's name to the label 
 		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
-			obj.editAPIHasITextDocument=True
+			obj.useITextDocumentSupport=True
 			obj.editValueUnit=textHandler.UNIT_STORY
 
 	def event_foreground(self,obj,nextHandler):

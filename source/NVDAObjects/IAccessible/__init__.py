@@ -236,7 +236,7 @@ the NVDAObject for IAccessible
 		event_objectID=kwargs.get('event_objectID',None)
 		event_childID=kwargs.get('event_childID',None)
 		if windowHandle and not IAccessibleObject:
-			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_WINDOW,0)
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				windowHandle=IAccessibleObject.windowHandle
@@ -306,6 +306,18 @@ the NVDAObject for IAccessible
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
 		else:
 			return clsList,kwargs
+
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
+			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,oldNVDAObject.IAccessibleChildID,x,y)
+		else:
+			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+		if not res:
+			return
+		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
+			return oldNVDAObject
+		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -532,6 +544,14 @@ the NVDAObject for IAccessible
 		location=IAccessibleHandler.accLocation(self.IAccessibleObject,self.IAccessibleChildID)
 		return location
 
+	def isPointInObject(self,x,y):
+		if self.windowHandle and not super(IAccessible,self).isPointInObject(x,y):
+			return False
+		res=IAccessibleHandler.accHitTest(self.IAccessibleObject,self.IAccessibleChildID,x,y)
+		if not res or res[0]!=self.IAccessibleObject or res[1]!=self.IAccessibleChildID:
+			return False
+		return True
+
 	def _get_labeledBy(self):
 		try:
 			(pacc,accChild)=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_LABELLED_BY)
@@ -548,86 +568,58 @@ the NVDAObject for IAccessible
 		if groupboxObj:
 			return groupboxObj
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-		if res:
-			try:
-				parentRole=res[0].accRole(res[1])
-			except:
-				log.debugWarning("parent has bad role",exc_info=True)
-				return None
-			if parentRole!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			res=IAccessibleHandler.accParent(res[0],res[1])
-			if res:
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-		return super(IAccessible,self)._get_parent()
+		if not res:
+			return super(IAccessible,self).parent
+		parent=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if parent and parent.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=parent.windowHandle)!=IAccessible:
+			return super(IAccessible,self).parent
+		return parent
 
 	def _get_next(self):
-		next=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
-		if not next:
-			next=None
-			parent=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-			if not IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS) and (parent and parent[0].accRole(parent[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW): 
-				parentNext=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_NEXT)
-				if parentNext and parentNext[0].accRole(parentNext[1])>0:
-					next=parentNext
-		if next and next[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1])
-		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-			child=IAccessibleHandler.accChild(next[0],-4)
-			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
-				next=child
-		if next and next[0].accRole(next[1])>0:
-			return IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1])
- 
+		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
+		if not res:
+			parent=self.parent
+			if not parent or parent.windowHandle!=self.windowHandle:
+				return super(IAccessible,self).next
+			return None
+		next=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if next and next.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=next.windowHandle)!=IAccessible:
+			return super(IAccessible,self).next
+		return next
+
 	def _get_previous(self):
-		previous=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
-		if not previous:
-			previous=None
-			parent=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
-			if not IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) and (parent and parent[0].accRole(parent[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW): 
-				parentPrevious=IAccessibleHandler.accNavigate(parent[0],parent[1],IAccessibleHandler.NAVDIR_PREVIOUS)
-				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
-					previous=parentPrevious
-		if previous and previous[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1])
-		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-			child=IAccessibleHandler.accChild(previous[0],-4)
-			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
-				previous=child
-		if previous and previous[0].accRole(previous[1])>0:
-			return IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1])
+		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
+		if not res:
+			parent=self.parent
+			if not parent or parent.windowHandle!=self.windowHandle:
+				return super(IAccessible,self).previous
+			return None
+		previous=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if previous and previous.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=previous.windowHandle)!=IAccessible:
+			return super(IAccessible,self).previous
+		return previous
 
 	def _get_firstChild(self):
-		firstChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
-		if not firstChild and self.IAccessibleChildID==0:
-			children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,1)
-			if len(children)>0:
-				firstChild=children[0]
-		if firstChild and firstChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1])
-		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-			child=IAccessibleHandler.accChild(firstChild[0],-4)
-			if not child:
-				child=IAccessibleHandler.accNavigate(firstChild[0],firstChild[1],IAccessibleHandler.NAVDIR_FIRSTCHILD)
-			if child and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
-				firstChild=child
-		if firstChild and firstChild[0].accRole(firstChild[1])>0:
-			obj=IAccessible(IAccessibleObject=firstChild[0],IAccessibleChildID=firstChild[1])
-			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return obj
+		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
+		if not res:
+			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CLIENT:
+				return super(IAccessible,self).firstChild
+			return None
+		firstChild=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if firstChild and firstChild.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=firstChild.windowHandle)!=IAccessible:
+			return super(IAccessible,self).firstChild
+		return firstChild
 
 	def _get_lastChild(self):
-		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
-		if lastChild and lastChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1])
-		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-			child=IAccessibleHandler.accChild(lastChild[0],-4)
-			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
-				lastChild=child
-		if lastChild and lastChild[0].accRole(lastChild[1])>0:
-			obj=IAccessible(IAccessibleObject=lastChild[0],IAccessibleChildID=lastChild[1])
-			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return obj
+		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
+		if not res:
+			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CLIENT:
+				return super(IAccessible,self).lastChild
+			return None
+		lastChild=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if lastChild and lastChild.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=lastChild.windowHandle)!=IAccessible:
+			return super(IAccessible,self).lastChild
+		return lastChild
 
 	def _get_children(self):
 		try:

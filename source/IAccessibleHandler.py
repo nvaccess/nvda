@@ -6,6 +6,8 @@
 
 from __future__ import with_statement
 
+MAX_WINEVENTS=500
+
 #Constants
 #OLE constants
 REGCLS_SINGLEUSE = 0       # class object only generates one instance
@@ -962,16 +964,6 @@ def _menuEndFakeFocus(oldFocus):
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
-	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
-		raise OSError("can not get desktop object")
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
-	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
-	if foregroundObject:
-		eventHandler.queueEvent('gainFocus',foregroundObject)
 	focusObject=api.findObjectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 		eventHandler.queueEvent('gainFocus',focusObject)
@@ -989,7 +981,7 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	menuEvent=None
-	for winEvent in winEvents:
+	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
 			focusWinEvents.append(winEvent)
