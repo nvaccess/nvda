@@ -115,7 +115,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		self._doneInit=True
 		self.UIAElement=UIAElement
 		super(UIA,self).__init__(windowHandle)
-		if self.UIATextPattern:
+		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 				("ExtendedUp","moveByLine"),
@@ -211,18 +211,18 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			states.add(controlTypes.STATE_FOCUSABLE)
 		if self.UIAElement.currentIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
-		if self.UIAExpandCollapsePattern:
-			s=self.UIAExpandCollapsePattern.currentExpandCollapseState
-			if s==0:
+		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
+		if s!=UIAHandler.handler.reservedNotSupportedValue:
+			if s==UIAHandler.ExpandCollapseState_Collapsed:
 				states.add(controlTypes.STATE_COLLAPSED)
-			elif s==1:
+			elif s==UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.STATE_EXPANDED)
-		if self.UIATogglePattern:
-			s=self.UIATogglePattern.currentToggleState
+		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			r=self.role
-			if r in (controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX) and s:
+			if r in (controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX) and s==UIAHandler.ToggleState_On:
 				states.add(controlTypes.STATE_CHECKED)
-			elif s:
+			elif s==UIAHandler.ToggleState_On:
 				states.add(controlTypes.STATE_PRESSED)
 		return states
 
@@ -266,10 +266,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return left,top,width,height
 
 	def _get_value(self):
-		if self.UIARangeValuePattern:
-			return "%g"%self.UIARangeValuePattern.currentValue
-		elif self.UIAValuePattern:
-			return self.UIAValuePattern.currentValue
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueValuePropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return "%g"%val
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
 
 class SensitiveSlider(UIA):
 	"""A slider that tends to give focus to its thumb control"""
