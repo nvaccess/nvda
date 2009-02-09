@@ -425,6 +425,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 		clsList.append(NVDAObject)
 		return clsList,kwargs
 
+	@classmethod
+	def objectFromPoint(x,y,oldNVDAObject=None):
+		raise NotImplementedError
+
 	def __init__(self):
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n

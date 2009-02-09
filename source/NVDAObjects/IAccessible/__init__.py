@@ -307,6 +307,18 @@ the NVDAObject for IAccessible
 		else:
 			return clsList,kwargs
 
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
+			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,oldNVDAObject.IAccessibleChildID,x,y)
+		else:
+			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+		if not res:
+			return
+		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
+			return oldNVDAObject
+		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
@@ -531,6 +543,14 @@ the NVDAObject for IAccessible
 	def _get_location(self):
 		location=IAccessibleHandler.accLocation(self.IAccessibleObject,self.IAccessibleChildID)
 		return location
+
+	def isPointInObject(self,x,y):
+		if self.windowHandle and not super(IAccessible,self).isPointInObject(x,y):
+			return False
+		res=IAccessibleHandler.accHitTest(self.IAccessibleObject,self.IAccessibleChildID,x,y)
+		if not res or res[0]!=self.IAccessibleObject or res[1]!=self.IAccessibleChildID:
+			return False
+		return True
 
 	def _get_labeledBy(self):
 		try:

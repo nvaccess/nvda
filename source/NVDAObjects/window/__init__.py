@@ -98,6 +98,19 @@ An NVDAObject for a window
 			clsList.append(Window)
 		return super(Window,cls).findBestClass(clsList,kwargs)
 
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None):
+		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
+		if not windowHandle:
+			return
+		newCls=Window.findBestAPIClass(windowHandle=windowHandle)
+		if newCls!=Window:
+			return newCls.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
+		newNVDAObject=Window(windowHandle=windowHandle)
+		if oldNVDAObject==newNVDAObject:
+			return oldNVDAObject
+		return newNVDAObject
+
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
