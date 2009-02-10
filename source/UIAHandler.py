@@ -92,7 +92,7 @@ class UIAEventListener(COMObject):
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if eventID==UIA_MenuModeEndEventId:
-			focus=self.UIAHandlerRef().clientObject.GetFocusedElement()
+			focus=self.UIAHandlerRef().clientObject.GetFocusedElementBuildCache(self.UIAHandlerRef().baseCacheRequest)
 			self.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(focus)
 			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
