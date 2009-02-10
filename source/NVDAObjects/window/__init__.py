@@ -61,6 +61,10 @@ An NVDAObject for a window
 		if JABHandler.isJavaWindow(windowHandle):
 			import NVDAObjects.JAB
 			return NVDAObjects.JAB.JAB
+		import UIAHandler
+		if UIAHandler.handler:
+			import NVDAObjects.UIA
+			return NVDAObjects.UIA.UIA
 		import NVDAObjects.IAccessible
 		return NVDAObjects.IAccessible.IAccessible
 
