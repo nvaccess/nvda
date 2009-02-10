@@ -207,9 +207,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		states=set()
 		if self.UIAElement.currentHasKeyboardFocus:
 			states.add(controlTypes.STATE_FOCUSED)
-		if self.UIAElement.currentIsKeyboardFocusable:
+		if self.UIAElement.cachedIsKeyboardFocusable:
 			states.add(controlTypes.STATE_FOCUSABLE)
-		if self.UIAElement.currentIsPassword:
+		if self.UIAElement.cachedIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
 		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
