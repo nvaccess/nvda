@@ -148,7 +148,7 @@ class UIAHandler(object):
 		self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 		self.treeWalker=self.clientObject.RawViewWalker
 		r=self.clientObject.CreateCacheRequest()
-		for propertyId in (UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_NativeWindowHandlePropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId):
+		for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_NativeWindowHandlePropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId):
 			r.addProperty(propertyId)
 		self.baseCacheRequest=r
 		self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue

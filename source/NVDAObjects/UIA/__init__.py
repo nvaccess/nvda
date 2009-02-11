@@ -87,7 +87,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
 		kwargs['UIAElement']=UIAElement
-		UIAClassName=UIAElement.currentClassName
+		UIAClassName=UIAElement.cachedClassName
 		if UIAClassName=="UIItem":
 			clsList.append(UIItem)
 		elif UIAClassName=="SensitiveSlider":
