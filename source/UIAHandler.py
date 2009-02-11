@@ -163,7 +163,7 @@ class UIAHandler(object):
 			self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self.eventListener)
 
 	def unregisterEvents(self):
-		self.clientObject.RemoveAllEventHandlers()
+		pass #self.clientObject.RemoveAllEventHandlers()
 
 def initialize():
 	global handler
