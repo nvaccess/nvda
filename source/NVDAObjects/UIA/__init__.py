@@ -88,7 +88,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		kwargs['windowHandle']=windowHandle
 		kwargs['UIAElement']=UIAElement
 		UIAClassName=UIAElement.currentClassName
-		if UIAClassName=="SensitiveSlider":
+		if UIAClassName=="UIItem":
+			clsList.append(UIItem)
+		elif UIAClassName=="SensitiveSlider":
 			clsList.append(SensitiveSlider) 
 		clsList.append(UIA)
 		if windowHandle:
@@ -298,6 +300,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
+
+class UIItem(UIA):
+	"""UIA list items in an Items View repeate the name as the value"""
+
+	def _get_value(self):
+		return ""
 
 class SensitiveSlider(UIA):
 	"""A slider that tends to give focus to its thumb control"""
