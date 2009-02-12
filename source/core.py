@@ -144,13 +144,16 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
-	speech.cancelSpeech()
 	if not globalVars.appArgs.minimal:
 		if config.conf["general"]["showWelcomeDialogAtStartup"]:
 			wx.CallAfter(gui.WelcomeDialog.run)
 		else:
 			import ui
 			braille.handler.message(_("NVDA started"))
+	if api.getFocusObject()==api.getDesktopObject():
+		focusObject=api.getDesktopObject().objectWithFocus()
+		import eventHandler
+		eventHandler.queueEvent('gainFocus',focusObject)
 	import queueHandler
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
