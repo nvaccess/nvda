@@ -103,6 +103,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(x,y),UIAHandler.handler.baseCacheRequest)
 		return UIA(UIAElement=UIAElement)
 
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+		return UIA(UIAElement=UIAElement)
+
 	def __new__(cls,windowHandle=None,UIAElement=None):
 		try:
 			runtimeId=UIAElement.getRuntimeId()
