@@ -355,6 +355,10 @@ the NVDAObject for IAccessible
 		except:
 			pass
 		try:
+			self.IAccessibleTableObject=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable)
+		except:
+			pass
+		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
 			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 				hasEditableState=True
@@ -650,6 +654,16 @@ the NVDAObject for IAccessible
 			return children
 		except:
 			return []
+
+	def _get_rowCount(self):
+		if hasattr(self,'IAccessibleTableObject'):
+			return self.IAccessibleTableObject.nRows
+		raise NotImplementedError
+
+	def _get_ColumnCount(self):
+		if hasattr(self,'IAccessibleTableObject'):
+			return self.IAccessibleTableObject.nColumns
+		raise NotImplementedError
 
 	def doDefaultAction(self):
 		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)

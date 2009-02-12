@@ -48,7 +48,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Task switcher is gone, but no foreground or focus event was fired.
 		# We must therefore find and restore the correct focus.
 		speech.cancelSpeech()
-		IAccessibleHandler.processFocusNVDAEvent(api.findObjectWithFocus())
+		IAccessibleHandler.processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
 
 	def script_keyboardHelp(self,keyPress):
 		if not globalVars.keyboardHelp:
