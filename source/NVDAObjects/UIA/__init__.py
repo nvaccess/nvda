@@ -87,11 +87,14 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
 		kwargs['UIAElement']=UIAElement
+		UIAControlType=UIAElement.cachedControlType
 		UIAClassName=UIAElement.cachedClassName
 		if UIAClassName=="UIItem":
 			clsList.append(UIItem)
 		elif UIAClassName=="SensitiveSlider":
 			clsList.append(SensitiveSlider) 
+		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
+			clsList.append(TreeviewItem)
 		clsList.append(UIA)
 		if windowHandle:
 			return super(UIA,cls).findBestClass(clsList,kwargs)
@@ -307,6 +310,14 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
+
+class TreeviewItem(UIA):
+
+	def _get_value(self):
+		return ""
+
+	def _get_positionInfo(self):
+		return {'level':super(TreeviewItem,self).value}
 
 class UIItem(UIA):
 	"""UIA list items in an Items View repeate the name as the value"""
