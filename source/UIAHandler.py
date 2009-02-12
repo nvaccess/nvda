@@ -126,19 +126,16 @@ class UIAEventListener(COMObject):
 		queueHandler.pumpAll()
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
-		try:
-			sender.currentNativeWindowHandle
-		except COMError:
+		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
+		if not NVDAEventName:
 			return
-		try:
-			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
-			if NVDAEventName:
-				obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-				obj.UIAElement=sender
-				eventHandler.queueEvent(NVDAEventName,obj)
-				queueHandler.pumpAll()
-		except:
-			log.error("property change event",exc_info=True)
+		runtimeId=sender.getRuntimeId()
+		obj=NVDAObjects.UIA.UIA.liveNVDAObjectTable.get(runtimeId,None)
+		if not obj:
+			return
+		obj.UIAElement=sender
+		eventHandler.queueEvent(NVDAEventName,obj)
+		queueHandler.pumpAll()
 
 	def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
 		pass
