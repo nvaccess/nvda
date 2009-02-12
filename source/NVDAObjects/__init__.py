@@ -591,6 +591,36 @@ class NVDAObject(baseObject.ScriptableObject):
 			child=child.next
 		return children
 
+	def _get_rowNumber(self):
+		"""Retreaves the row number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_columnNumber(self):
+		"""Retreaves the column number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		"""Retreaves the number of rows this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_columnCount(self):
+		"""Retreaves the number of columns this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_table(self):
+		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
 	def _get_recursiveDescendants(self):
 		"""Recursively traverse and return the descendants of this object.
 		This is a depth-first forward traversal.
@@ -777,7 +807,7 @@ Tries to force this object to take the focus.
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
 			speech.cancelSpeech()
 			return
-		speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,reason=speech.REASON_FOCUS)
+		speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""
