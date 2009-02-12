@@ -229,6 +229,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			states.add(controlTypes.STATE_FOCUSABLE)
 		if self.UIAElement.cachedIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
+		if self.UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+			states.add(controlTypes.STATE_SELECTABLE)
+			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
+				states.add(controlTypes.STATE_SELECTED)
 		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if s==UIAHandler.ExpandCollapseState_Collapsed:
