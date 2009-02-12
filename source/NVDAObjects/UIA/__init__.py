@@ -206,7 +206,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 
 	def _get_description(self):
-		return self.UIAElement.currentHelpText
+		itemStatus=self.UIAElement.currentItemStatus
+		helpText=self.UIAElement.currentHelpText
+		return " ".join([x for x in itemStatus,helpText if x])
 
 	def _get_keyboardShortcut(self):
 		return self.UIAElement.currentAccessKey
