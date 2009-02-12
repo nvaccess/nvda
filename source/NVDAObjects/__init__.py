@@ -429,6 +429,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	def objectFromPoint(x,y,oldNVDAObject=None):
 		raise NotImplementedError
 
+	@classmethod
+	def objectWithFocus(cls):
+		raise NotImplementedError
+
 	def __init__(self):
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
@@ -716,7 +720,7 @@ Tries to force this object to take the focus.
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
 			speech.cancelSpeech()
 			return
-		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
+		speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""

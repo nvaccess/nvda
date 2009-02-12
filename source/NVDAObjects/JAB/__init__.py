@@ -170,6 +170,20 @@ class JAB(Window):
 			return oldNVDAObject
 		return JAB(jabContext=newJabContext)
 
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		vmID=ctypes.c_int()
+		accContext=ctypes.c_int()
+		JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
+		jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
+		focusObject=JAB(jabContext=jabContext)
+		activeChild=focusObject.activeChild
+		if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
+			focusObject=activeChild
+		if focusObject.role==controlTypes.ROLE_UNKNOWN:
+			return
+		return focusObject
+
 	def __init__(self,windowHandle=None,jabContext=None):
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)

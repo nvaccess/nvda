@@ -958,13 +958,13 @@ def _menuEndFakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	processFocusNVDAEvent(api.findObjectWithFocus())
+	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
 
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	focusObject=api.findObjectWithFocus()
+	focusObject=api.getDesktopObject().objectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
 		eventHandler.queueEvent('gainFocus',focusObject)
 		liveNVDAObjectTable['focus']=focusObject
