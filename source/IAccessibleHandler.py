@@ -968,7 +968,6 @@ cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)
 def initialize():
 	focusObject=api.getDesktopObject().objectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		eventHandler.queueEvent('gainFocus',focusObject)
 		liveNVDAObjectTable['focus']=focusObject
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
