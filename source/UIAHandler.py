@@ -166,9 +166,6 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-	focusObject=api.getDesktopObject().objectWithFocus()
-	if isinstance(focusObject,NVDAObjects.UIA.UIA):
-		eventHandler.queueEvent("gainFocus",focusObject)
 	handler.registerEvents()
 
 def terminate():
