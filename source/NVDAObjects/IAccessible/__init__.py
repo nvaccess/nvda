@@ -655,15 +655,52 @@ the NVDAObject for IAccessible
 		except:
 			return []
 
+	def _get_rowNumber(self):
+		table=self.table
+		if table:
+			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			index=int(index)
+			return table.IAccessibleTableObject.rowIndex(index)+1
+		raise NotImplementedError
+
+	def _get_columnNumber(self):
+		table=self.table
+		if table:
+			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			index=int(index)
+			return table.IAccessibleTableObject.columnIndex(index)+1
+		raise NotImplementedError
+
 	def _get_rowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
 			return self.IAccessibleTableObject.nRows
 		raise NotImplementedError
 
-	def _get_ColumnCount(self):
+	def _get_columnCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
 			return self.IAccessibleTableObject.nColumns
 		raise NotImplementedError
+
+	def _get_table(self):
+		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			return None
+		table=getattr(self,'_table',None)
+		if table:
+			return table
+		attribs=self.IAccessibleObject.attributes
+		if attribs and 'table-cell-index:' in attribs:
+			checkAncestors=True
+		else:
+			checkAncestors=False
+		obj=self.parent
+		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
+			obj=obj.parent=obj.parent
+		if not obj or not hasattr(obj,'IAccessibleTableObject'):
+			return None
+		self._table=obj
+		return obj
 
 	def doDefaultAction(self):
 		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)
