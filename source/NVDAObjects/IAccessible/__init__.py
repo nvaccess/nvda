@@ -83,7 +83,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return point
 
 	def _getCaretOffset(self):
-		offset=self.obj.IAccessibleTextObject.caretOffset
+		try:
+			offset=self.obj.IAccessibleTextObject.caretOffset
+		except COMError:
+			log.debugWarning("IAccessibleText::caretOffset failed", exc_info=True)
+			raise RuntimeError("Retrieving caret offset failed")
 		if offset<0:
 			raise RuntimeError("no active caret in this object")
 		return offset
