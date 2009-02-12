@@ -111,6 +111,19 @@ An NVDAObject for a window
 			return oldNVDAObject
 		return newNVDAObject
 
+	@classmethod
+	def objectWithFocus(cls):
+		fg=winUser.getForegroundWindow()
+		threadID=winUser.getWindowThreadProcessID(fg)[1]
+		threadInfo=winUser.getGUIThreadInfo(threadID)
+		windowHandle=threadInfo.hwndFocus
+		if not windowHandle:
+			windowHandle=fg
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window:
+			return APIClass.objectWithFocus(windowHandle=windowHandle)
+		return Window(windowHandle=windowHandle)
+
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")

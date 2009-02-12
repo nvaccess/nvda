@@ -319,6 +319,16 @@ the NVDAObject for IAccessible
 			return oldNVDAObject
 		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		prevObj=None
+		while obj and obj!=prevObj:
+			prevObj=obj
+			obj=obj.activeChild
+		return prevObj
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object

@@ -429,6 +429,10 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	def objectFromPoint(x,y,oldNVDAObject=None):
 		raise NotImplementedError
 
+	@classmethod
+	def objectWithFocus(cls):
+		raise NotImplementedError
+
 	def __init__(self):
 		self._mouseEntered=None
 		self.textRepresentationLineLength=None #Use \r and or \n
