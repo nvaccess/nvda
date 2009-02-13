@@ -236,7 +236,8 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	isEditable=bool(obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
+	from NVDAObjects import NVDAObjectTextInfo
+	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
