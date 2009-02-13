@@ -156,6 +156,7 @@ from comtypes.automation import *
 from comtypes.server import *
 from comtypes import GUID
 import comtypes.client
+import comtypes.client.lazybind
 import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
@@ -436,7 +437,7 @@ eventCounter=itertools.count()
 eventHeap=[]
 
 def normalizeIAccessible(pacc):
-	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
+	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
 	elif not isinstance(pacc,IAccessible):
 		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
@@ -500,7 +501,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,byref(realCount))
 	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
+		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
 			children[childNum]=(normalizeIAccessible(children[childNum]),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
@@ -578,7 +579,7 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -593,7 +594,7 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
@@ -608,7 +609,7 @@ def accHitTest(ia,child,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -629,7 +630,7 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 				new_ia=normalizeIAccessible(res)
 				new_child=0
 			else:
@@ -648,7 +649,7 @@ def accNavigate(ia,child,direction):
 		if isinstance(res,int):
 			new_ia=ia
 			new_child=res
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		else:
