@@ -693,7 +693,10 @@ the NVDAObject for IAccessible
 		table=getattr(self,'_table',None)
 		if table:
 			return table
-		attribs=self.IAccessibleObject.attributes
+		try:
+			attribs=self.IAccessibleObject.attributes
+		except COMError:
+			attribs=None
 		if attribs and 'table-cell-index:' in attribs:
 			checkAncestors=True
 		else:
