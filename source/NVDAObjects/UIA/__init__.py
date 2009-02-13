@@ -296,6 +296,30 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return Window(windowHandle=lastChildWindowHandle)
 		return UIA(UIAElement=lastChildElement)
 
+	def _get_rowNumber(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val+1
+		raise NotImplementedError
+
+	def _get_columnNumber(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemColumnPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val+1
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridRowCountPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		raise NotImplementedError
+
+	def _get_columnCount(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridColumnCountPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		raise NotImplementedError
+
 	def _get_processID(self):
 		return self.UIAElement.cachedProcessId
 
