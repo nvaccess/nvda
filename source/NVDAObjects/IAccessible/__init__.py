@@ -781,22 +781,23 @@ the NVDAObject for IAccessible
 
 	def _get_positionInfo(self):
 		info={}
-		try:
-			groupPosition=list(self.IAccessibleObject.groupPosition)
-		except:
-			groupPosition=[0,0,0]
-		if groupPosition[2]==0 and self.IAccessibleChildID>0:
-			groupPosition[2]=self.IAccessibleChildID
-		if groupPosition[1]==0:
-			parent=self.parent
-			if parent:
-				groupPosition[1]=parent.childCount
-		if groupPosition[0]:
-			info['level']=groupPosition[0]
-		if groupPosition[2]>0 and groupPosition[1]>=groupPosition[2]:
-			info['similarItemsInGroup']=groupPosition[1]
-			info['indexInGroup']=groupPosition[2]
-		return info
+		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				level,similarItemsInGroup,indexInGroup=self.IAccessibleObject.groupPosition
+			except COMError:
+				return {}
+			if level>0:
+				info['level']=level
+			if indexInGroup<=similarItemsInGroup and indexInGroup>0:
+				info['similarItemsInGroup']=similarItemsInGroup
+				info['indexInGroup']=indexInGroup
+			return info
+		indexInGroup=self.IAccessibleChildID
+		if indexInGroup>0:
+			parent=self.parent=self.parent
+			similarItemsInGroup=parent.childCount
+			if indexInGroup<=similarItemsInGroup:
+				return dict(similarItemsInGroup=similarItemsInGroup,indexInGroup=indexInGroup)
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
