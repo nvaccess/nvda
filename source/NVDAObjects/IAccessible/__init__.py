@@ -868,6 +868,13 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
+class Window(IAccessible):
+
+	def _get_states(self):
+		states=super(Window,self).states
+		states.discard(controlTypes.STATE_FOCUSED)
+		return states
+
 class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
@@ -1106,6 +1113,7 @@ class MenuItem(IAccessible):
 ###class mappings
 
 _staticMap={
+	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"Window",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
