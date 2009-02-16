@@ -19,8 +19,8 @@ from keyUtils import sendKey, key
 import winKernel
 import winUser
 import speech
-from window import Window
-from . import NVDAObjectTextInfo
+from . import Window
+from .. import NVDAObjectTextInfo
 import controlTypes
 import braille
 

@@ -200,7 +200,10 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
-			newPropertyValues[name]=getattr(obj,name)
+			try:
+				newPropertyValues[name]=getattr(obj,name)
+			except NotImplementedError:
+				pass
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -238,7 +241,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -603,6 +606,14 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeviewLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
+	if 'rowNumber' in propertyValues:
+		textList.append(_("row %s")%propertyValues['rowNumber'])
+	if 'columnNumber' in propertyValues:
+		textList.append(_("column %s")%propertyValues['columnNumber'])
+	rowCount=propertyValues.get('rowCount',0)
+	columnCount=propertyValues.get('columnCount',0)
+	if rowCount or columnCount:
+		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):

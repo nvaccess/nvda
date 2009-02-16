@@ -153,6 +153,37 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 class JAB(Window):
 
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(JAB)
+		return clsList,kwargs
+
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+		jabContext=JABHandler.JABContext(hwnd=windowHandle)
+		if not jabContext:
+			return
+		newJabContext=jabContext.getAccessibleContextAt(x,y)
+		if not newJabContext:
+			return
+		if isinstance(oldNVDAObject,JAB) and newJabContext==oldNVDAObject.jabContext:
+			return oldNVDAObject
+		return JAB(jabContext=newJabContext)
+
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		vmID=ctypes.c_int()
+		accContext=ctypes.c_int()
+		JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
+		jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
+		focusObject=JAB(jabContext=jabContext)
+		activeChild=focusObject.activeChild
+		if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
+			focusObject=activeChild
+		if focusObject.role==controlTypes.ROLE_UNKNOWN:
+			return
+		return focusObject
+
 	def __init__(self,windowHandle=None,jabContext=None):
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
@@ -274,13 +305,13 @@ class JAB(Window):
 			if jabContext:
 				self._parent=JAB(jabContext=jabContext)
 			else:
-				self._parent=NVDAObjects.IAccessible.IAccessible(windowHandle=self.jabContext.hwnd)
+				self._parent=super(JAB,self).parent
 		return self._parent
  
 	def _get_next(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return None
+			return super(JAB,self).next
 		newIndex=self._JABAccContextInfo.indexInParent+1
 		if newIndex>=parent._JABAccContextInfo.childrenCount:
 			return None
@@ -295,7 +326,7 @@ class JAB(Window):
 	def _get_previous(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return None
+			return super(JAB,self).previous
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
 			return None

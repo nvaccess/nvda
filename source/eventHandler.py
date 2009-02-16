@@ -66,18 +66,26 @@ def executeEvent(eventName,obj,**kwargs):
 	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
-	if eventName=="gainFocus":
-		doPreGainFocus(obj)
-	elif eventName=="foreground":
-		doPreForeground(obj)
-	elif eventName=="documentLoadComplete":
-		doPreDocumentLoadComplete(obj)
+	if eventName=="gainFocus" and not doPreGainFocus(obj):
+		return
+	elif eventName=="foreground" and not doPreForeground(obj):
+		return
+	elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		return
 	executeEvent_appModuleLevel(eventName,obj,**kwargs)
 
 def doPreGainFocus(obj):
+	oldForeground=api.getForegroundObject()
 	api.setFocusObject(obj)
+	newForeground=api.getForegroundObject()
+	if newForeground is not oldForeground:
+		executeEvent('foreground',newForeground)
+		if obj is newForeground:
+			return False
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+		if parent is newForeground:
+			continue
 		role=parent.role
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
 			continue
@@ -98,10 +106,11 @@ globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"):
 	elif CoCallCancellationHandler.isRunning:
 		import wx
 		wx.CallAfter(CoCallCancellationHandler.stop)
-
+	return True
+ 
 def doPreForeground(obj):
-	api.setFocusObject(obj)
 	speech.cancelSpeech()
+	return True
 
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
@@ -116,7 +125,7 @@ def doPreDocumentLoadComplete(obj):
 					v.event_virtualBuffer_firstGainFocus()
 				if hasattr(v,"event_virtualBuffer_gainFocus"):
 					v.event_virtualBuffer_gainFocus()
-
+	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule

@@ -16,7 +16,7 @@ import IAccessibleHandler
 import controlTypes
 import speech
 from keyUtils import sendKey, key
-from window import Window
+from . import Window
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
@@ -168,6 +168,11 @@ class ExcelGrid(Window):
 ]]
 
 class ExcelCell(Window):
+
+	@classmethod
+	def findBestClass(cls, clsList, kwargs):
+		# This class can be directly instantiated.
+		return (cls,), kwargs
 
 	def __init__(self,parentNVDAObject,cellRange):
 		self.parent=parentNVDAObject

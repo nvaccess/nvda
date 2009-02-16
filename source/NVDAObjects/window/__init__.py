@@ -4,11 +4,17 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import re
 import ctypes
+import ctypes.wintypes
 import winKernel
 import winUser
 import controlTypes
 from NVDAObjects import NVDAObject
+
+re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
+re_ATL=re.compile(r'^ATL:(.*)$')
+
 
 class WindowProcessHandleContainer(object):
 	"""
@@ -46,6 +52,78 @@ An NVDAObject for a window
 @type windowProcessID: list of two ints
 """
 
+	@classmethod
+	def findBestAPIClass(cls,windowHandle=None):
+		windowClassName=winUser.getClassName(windowHandle)
+		if windowClassName=="#32769":
+			return Window
+		import JABHandler
+		if JABHandler.isJavaWindow(windowHandle):
+			import NVDAObjects.JAB
+			return NVDAObjects.JAB.JAB
+		import NVDAObjects.IAccessible
+		return NVDAObjects.IAccessible.IAccessible
+
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
+		windowClassName=cls.normalizeWindowClassName(windowClassName)
+		newCls=Window
+		if windowClassName=="#32769":
+			newCls=Desktop
+		elif windowClassName=="#32771":
+			newCls=TaskList
+		elif windowClassName=="Edit":
+			newCls=__import__("edit",globals(),locals(),[]).Edit
+		elif windowClassName=="RichEdit":
+			newCls=__import__("edit",globals(),locals(),[]).RichEdit
+		elif windowClassName=="RichEdit20":
+			newCls=__import__("edit",globals(),locals(),[]).RichEdit20
+		elif windowClassName=="RICHEDIT50W":
+			newCls=__import__("edit",globals(),locals(),[]).RichEdit50
+		elif windowClassName=="Scintilla":
+			newCls=__import__("scintilla",globals(),locals(),[]).Scintilla
+		elif windowClassName=="AkelEditW":
+			newCls=__import__("akelEdit",globals(),locals(),[]).AkelEdit
+		elif windowClassName=="AkelEditA":
+			newCls=__import__("akelEdit",globals(),locals(),[]).AkelEdit
+		elif windowClassName=="ConsoleWindowClass":
+			newCls=__import__("winConsole",globals(),locals(),[]).WinConsole
+		elif windowClassName=="_WwG":
+			newCls=__import__("winword",globals(),locals(),[]).WordDocument
+		elif windowClassName=="EXCEL7":
+			newCls=__import__("excel",globals(),locals(),[]).ExcelGrid
+		clsList.append(newCls)
+		if newCls!=Window:
+			clsList.append(Window)
+		return super(Window,cls).findBestClass(clsList,kwargs)
+
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None):
+		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
+		if not windowHandle:
+			return
+		newCls=Window.findBestAPIClass(windowHandle=windowHandle)
+		if newCls!=Window:
+			return newCls.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
+		newNVDAObject=Window(windowHandle=windowHandle)
+		if oldNVDAObject==newNVDAObject:
+			return oldNVDAObject
+		return newNVDAObject
+
+	@classmethod
+	def objectWithFocus(cls):
+		fg=winUser.getForegroundWindow()
+		threadID=winUser.getWindowThreadProcessID(fg)[1]
+		threadInfo=winUser.getGUIThreadInfo(threadID)
+		windowHandle=threadInfo.hwndFocus
+		if not windowHandle:
+			windowHandle=fg
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window:
+			return APIClass.objectWithFocus(windowHandle=windowHandle)
+		return Window(windowHandle=windowHandle)
+
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
@@ -76,7 +154,9 @@ An NVDAObject for a window
 		return self._windowControlID
 
 	def _get_location(self):
-		return winUser.getClientRect(self.windowHandle)
+		r=ctypes.wintypes.RECT()
+		ctypes.windll.user32.GetWindowRect(self.windowHandle,ctypes.byref(r))
+		return (r.left,r.top,r.right-r.left,r.bottom-r.top)
 
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
@@ -98,23 +178,29 @@ An NVDAObject for a window
 
 	def _get_next(self):
 		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
+		while nextWindow and (not winUser.isWindowVisible(nextWindow) or not winUser.isWindowEnabled(nextWindow)):
+			nextWindow=winUser.getWindow(nextWindow,winUser.GW_HWNDNEXT)
 		if nextWindow:
-			return Window(nextWindow)
+			return Window(windowHandle=nextWindow)
 
 	def _get_previous(self):
 		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
+		while prevWindow and (not winUser.isWindowVisible(prevWindow) or not winUser.isWindowEnabled(prevWindow)):
+			prevWindow=winUser.getWindow(prevWindow,winUser.GW_HWNDPREV)
 		if prevWindow:
-			return Window(prevWindow)
+			return Window(windowHandle=prevWindow)
 
 	def _get_firstChild(self):
 		childWindow=winUser.getTopWindow(self.windowHandle)
+		while childWindow and (not winUser.isWindowVisible(childWindow) or not winUser.isWindowEnabled(childWindow)):
+			childWindow=winUser.getWindow(childWindow,winUser.GW_HWNDNEXT)
 		if childWindow:
-			return Window(childWindow)
+			return Window(windowHandle=childWindow)
 
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
-			return self.__class__(windowHandle=parentHandle)
+			return Window(windowHandle=parentHandle)
 
 	def _get_states(self):
 		states=super(Window,self)._get_states()
@@ -138,3 +224,71 @@ An NVDAObject for a window
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
 		return self._processHandleContainer.processHandle
 
+	@classmethod
+	def normalizeWindowClassName(cls,name):
+		"""
+		Removes unneeded information from a window class name (e.g. ATL: and windows forms info), and or maps it to a much more well-known compatible class name.
+		Conversions are also cached for future normalizations. 
+		@param name: the window class name to normalize
+		@type name: string
+		@returns: the normalized window class name
+		@rtype: string
+		"""
+		try:
+			return cls.normalizedWindowClassNameCache[name]
+		except KeyError:
+			pass
+		newName=windowClassMap.get(name,None)
+		if not newName:
+			for r in (re_WindowsForms,re_ATL):
+				m=re.match(r,name)
+				if m:
+					newName=m.group(1)
+					newName=windowClassMap.get(newName,newName)
+					break
+		if not newName:
+			newName=name
+		cls.normalizedWindowClassNameCache[name]=newName
+		return newName
+
+	normalizedWindowClassNameCache={}
+
+class TaskList(Window):
+
+	def event_foreground(self):
+		pass
+
+class Desktop(Window):
+
+	def _get_name(self):
+		return _("Desktop")
+
+windowClassMap={
+	"TTntEdit.UnicodeClass":"Edit",
+	"TMaskEdit":"Edit",
+	"TTntMemo.UnicodeClass":"Edit",
+	"TRichEdit":"Edit",
+	"TInEdit.UnicodeClass":"Edit",
+	"TEdit":"Edit",
+	"TFilenameEdit":"Edit",
+	"TSpinEdit":"Edit",
+	"ThunderRT6TextBox":"Edit",
+	"TMemo":"Edit",
+	"RICHEDIT":"Edit",
+	"TPasswordEdit":"Edit",
+	"THppEdit.UnicodeClass":"Edit",
+	"TUnicodeTextEdit.UnicodeClass":"Edit",
+	"TTextEdit":"Edit",
+	"TPropInspEdit":"Edit",
+	"TFilterbarEdit.UnicodeClass":"Edit",
+	"EditControl":"Edit",
+	"TNavigableTntMemo.UnicodeClass":"Edit",
+	"TNavigableTntEdit.UnicodeClass":"Edit",
+	"WindowsForms10.EDIT.app.0.11c7a8c":"Edit",
+	"TRichEditViewer":"RichEdit",
+	"RichEdit20A":"RichEdit20",
+	"RichEdit20W":"RichEdit20",
+	"TskRichEdit.UnicodeClass":"RichEdit20",
+	"RichEdit20WPT":"RichEdit20",
+	"WindowsForms10.RichEdit20W.app.0.378734a":"RichEdit20",
+}

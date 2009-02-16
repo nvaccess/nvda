@@ -1,5 +1,5 @@
 #IAccessiblehandler.py
-#A part of NonVisual Desktop Access (NVDA)
+	#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -666,7 +666,7 @@ def accLocation(ia,child):
 		return None
 
 winEventIDsToNVDAEventNames={
-winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
+winUser.EVENT_SYSTEM_FOREGROUND:"gainFocus",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
@@ -776,7 +776,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
-	#Notify appModuleHandler of this new foreground window
+	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=liveNVDAObjectTable.get('focus',None)
@@ -961,25 +961,14 @@ def _menuEndFakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	processFocusNVDAEvent(api.findObjectWithFocus())
+	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
 
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
-	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
-		raise OSError("can not get desktop object")
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
-	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
-	if foregroundObject:
-		eventHandler.queueEvent('gainFocus',foregroundObject)
-	focusObject=api.findObjectWithFocus()
+	focusObject=api.getDesktopObject().objectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		eventHandler.queueEvent('gainFocus',focusObject)
 		liveNVDAObjectTable['focus']=focusObject
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
