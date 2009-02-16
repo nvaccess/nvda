@@ -581,8 +581,13 @@ the NVDAObject for IAccessible
 			return None
 
 	def _correctRelationForWindow(self,obj):
-		if obj and obj.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=obj.windowHandle)!=IAccessible:
-			return Window(windowHandle=obj.windowHandle)
+		if not obj:
+			return None
+		windowHandle=obj.windowHandle
+		if windowHandle!=self.windowHandle:
+			APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+			if not issubclass(APIClass,IAccessible):
+				return APIClass(windowHandle=windowHandle)
 		return obj
  
 	def _get_parent(self):
