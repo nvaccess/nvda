@@ -7,7 +7,7 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self, obj):
 		# It seems that context menus always get the name "context" and this cannot be overridden.
 		# Fudge the name of the NVDA system tray menu to make it more friendly.
-		if obj.role == controlTypes.ROLE_POPUPMENU and not obj.parent.parent.parent:
+		if obj.role == controlTypes.ROLE_POPUPMENU and not obj.parent.parent:
 			obj.name=gui.appTitle
 
 	def event_gainFocus(self, obj, nextHandler):
