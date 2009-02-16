@@ -533,6 +533,9 @@ class VirtualBuffersDialog(SettingsDialog):
 		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+		self.virtualBufferPassthroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of virtual buffer mode  changes"))
+		self.virtualBufferPassthroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["virtualBufferPassthroughAudioIndication"])
+		settingsSizer.Add(self.virtualBufferPassthroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.maxLengthEdit.SetFocus()
@@ -554,6 +557,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=self.presentationfocusCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["virtualBufferPassthroughAudioIndication"]=self.virtualBufferPassthroughAudioIndicationCheckBox.IsChecked()
 		super(VirtualBuffersDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
