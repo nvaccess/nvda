@@ -179,8 +179,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
-	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\exit.wav",async=False)
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()
@@ -235,4 +233,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\exit.wav",async=False)
 	log.debug("core done")
