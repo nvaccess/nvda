@@ -55,20 +55,6 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
-def processGeckoDescription(obj):
-	#Don't do this if the description property is overridden
-	if obj.__class__._get_description!=IAccessible._get_description:
-		return 
-	if not obj.windowClassName.startswith('Mozilla'):
-		return
-	rawDescription=obj.description
-	if not isinstance(rawDescription,basestring):
-		return
-	if rawDescription.startswith('Description: '):
-		obj.description=rawDescription[13:]
-	else:
-		obj.description=""
-
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
@@ -83,7 +69,11 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 		return point
 
 	def _getCaretOffset(self):
-		offset=self.obj.IAccessibleTextObject.caretOffset
+		try:
+			offset=self.obj.IAccessibleTextObject.caretOffset
+		except COMError:
+			log.debugWarning("IAccessibleText::caretOffset failed", exc_info=True)
+			raise RuntimeError("Retrieving caret offset failed")
 		if offset<0:
 			raise RuntimeError("no active caret in this object")
 		return offset
@@ -241,14 +231,18 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	def __new__(cls,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
-		"""
-Checks the window class and IAccessible role against a map of IAccessible sub-types, and if a match is found, returns that rather than just IAccessible.
-"""  
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		windowHandle=kwargs.get('windowHandle',None)
+		IAccessibleObject=kwargs.get('IAccessibleObject',None)
+		IAccessibleChildID=kwargs.get('IAccessibleChildID',None)
+		event_windowHandle=kwargs.get('event_windowHandle',None)
+		event_objectID=kwargs.get('event_objectID',None)
+		event_childID=kwargs.get('event_childID',None)
 		if windowHandle and not IAccessibleObject:
-			(IAccessibleObject,IAccessibleChildID)=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,-4,0)
-		elif not windowHandle and not IAccessibleObject:
-			raise ArgumentError("Give either a windowHandle, or windowHandle, childID, objectID, or IAccessibleObject")
+			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+			if IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS) or IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT):
+				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_WINDOW,0)
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				windowHandle=IAccessibleObject.windowHandle
@@ -257,41 +251,89 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			#Mozilla Gecko: we can never use a MozillaWindowClass window
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
-		if not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle and event_windowHandle:
 			windowHandle=event_windowHandle
-		elif not windowHandle:
-			return None #We really do need a window handle
-		windowClassName=winUser.getClassName(windowHandle)
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			raise RuntimeError("Can't get a window handle from IAccessible")
 		try:
-			IAccessibleRole=0
-			if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-				IAccessibleRole=IAccessibleObject.role()
-			if IAccessibleRole==0:
-				IAccessibleRole=IAccessibleObject.accRole(IAccessibleChildID)
+			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
-			IAccessibleRole=0
-		classString=None
-		if _staticMap.has_key((windowClassName,IAccessibleRole)):
-			classString=_staticMap[(windowClassName,IAccessibleRole)]
-		elif _staticMap.has_key((windowClassName,None)):
-			classString=_staticMap[(windowClassName,None)]
-		elif _staticMap.has_key((None,IAccessibleRole)):
-			classString=_staticMap[(None,IAccessibleRole)]
-		if classString is None:
-			classString="IAccessible"
-		if classString.find('.')>0:
-			modString,classString=os.path.splitext(classString)
-			classString=classString[1:]
-			mod=__import__(modString,globals(),locals(),[])
-			newClass=getattr(mod,classString)
+			Identity=None
+		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
+			event_windowHandle=Identity['windowHandle']
+		if event_objectID is None and Identity and 'objectID' in Identity:
+			event_objectID=Identity['objectID']
+		if event_childID is None and Identity and 'childID' in Identity:
+			event_childID=Identity['childID']
+		if event_windowHandle is None:
+			event_windowHandle=windowHandle
+		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			event_objectID=IAccessibleHandler.OBJID_CLIENT
+		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				event_childID=IAccessibleObject.uniqueID
+			except:
+				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
+		if event_childID is None:
+			event_childID=IAccessibleChildID
+		kwargs['windowHandle']=windowHandle
+		kwargs['IAccessibleObject']=IAccessibleObject
+		kwargs['IAccessibleChildID']=IAccessibleChildID
+		kwargs['event_windowHandle']=event_windowHandle
+		kwargs['event_objectID']=event_objectID
+		kwargs['event_childID']=event_childID
+		if event_objectID==IAccessibleHandler.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
+			clsList.append(JavaVMRoot)
+		role=0
+		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			role=IAccessibleObject.role()
+		if not role:
+			role=IAccessibleObject.accRole(IAccessibleChildID)
+		windowClassName=winUser.getClassName(windowHandle)
+		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
+			newCls=None
+			classString=_staticMap.get(key,None)
+			if classString and classString.find('.')>0:
+				modString,classString=os.path.splitext(classString)
+				classString=classString[1:]
+				mod=__import__(modString,globals(),locals(),[])
+				newCls=getattr(mod,classString)
+			elif classString:
+				newCls=globals()[classString]
+			if newCls:
+				clsList.append(newCls)
+		if windowClassName.startswith('Mozilla'):
+			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
+			clsList.append( mozCls)
+		clsList.append(IAccessible)
+		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
+			return super(IAccessible,cls).findBestClass(clsList,kwargs)
 		else:
-			newClass=globals()[classString]
-		obj=Window.__new__(newClass)
-		obj.windowClassName=windowClassName
-		obj.__init__(windowHandle=windowHandle,IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=event_windowHandle,event_objectID=event_objectID,event_childID=event_childID)
-		return obj
+			return clsList,kwargs
+
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
+			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,oldNVDAObject.IAccessibleChildID,x,y)
+		else:
+			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+		if not res:
+			return
+		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
+			return oldNVDAObject
+		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		prevObj=None
+		while obj and obj!=prevObj:
+			prevObj=obj
+			obj=obj.activeChild
+		return prevObj
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -308,38 +350,22 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			return
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
-		Identity=self.IAccessibleIdentity
-		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
-			event_windowHandle=Identity['windowHandle']
-		if event_objectID is None and Identity and 'objectID' in Identity:
-			event_objectID=Identity['objectID']
-		if event_childID is None and Identity and 'childID' in Identity:
-			event_childID=Identity['childID']
-		if event_childID is None:
-			event_childID=IAccessibleChildID
-		if event_windowHandle is None:
-			event_windowHandle=windowHandle
-		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			event_objectID=IAccessibleHandler.OBJID_CLIENT
-		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				event_childID=IAccessibleObject.uniqueID
-			except:
-				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
-		Window.__init__(self,windowHandle=windowHandle)
-		#Mozilla Gecko objects use the description property to report other info
-		processGeckoDescription(self)
+		if not windowHandle:
+			raise RuntimeError("windowHandle is None")
+		super(IAccessible,self).__init__(windowHandle=windowHandle)
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except:
 			pass
 		try:
+			self.IAccessibleTableObject=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable)
+		except:
+			pass
+		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
-			self.TextInfo=IA2TextTextInfo
-			replacedTextInfo=True
 			if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_TEXT:
 				hasEditableState=True
 			else:
@@ -366,10 +392,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				]]
 		except:
 			pass
-		self._lastMouseTextOffsets=None
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
+
+	def _get_TextInfo(self):
+		if hasattr(self,'IAccessibleTextObject'):
+			return IA2TextTextInfo
+		return super(IAccessible,self).TextInfo
 
 	def _isEqual(self,other):
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
@@ -415,6 +445,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		return True
 
 	def _get_name(self):
+		#The edit field in a combo box should not have a label
+		if self.role==controlTypes.ROLE_EDITABLETEXT:
+			#Make sure to cache the parent
+			parent=self.parent=self.parent
+			if parent and parent.role==controlTypes.ROLE_COMBOBOX:
+				return ""
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
@@ -468,6 +504,10 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 
 	def _get_role(self):
 		IARole=self.IAccessibleRole
+		if IARole==IAccessibleHandler.ROLE_SYSTEM_CLIENT:
+			superRole=super(IAccessible,self).role
+			if superRole!=controlTypes.ROLE_WINDOW:
+					return superRole
 		if isinstance(IARole,basestring):
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
@@ -524,6 +564,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		location=IAccessibleHandler.accLocation(self.IAccessibleObject,self.IAccessibleChildID)
 		return location
 
+	def isPointInObject(self,x,y):
+		if self.windowHandle and not super(IAccessible,self).isPointInObject(x,y):
+			return False
+		res=IAccessibleHandler.accHitTest(self.IAccessibleObject,self.IAccessibleChildID,x,y)
+		if not res or res[0]!=self.IAccessibleObject or res[1]!=self.IAccessibleChildID:
+			return False
+		return True
+
 	def _get_labeledBy(self):
 		try:
 			(pacc,accChild)=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_LABELLED_BY)
@@ -532,16 +580,14 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		except:
 			return None
 
+	def _correctRelationForWindow(self,obj):
+		if obj and obj.windowHandle!=self.windowHandle and Window.findBestAPIClass(windowHandle=obj.windowHandle)!=IAccessible:
+			return Window(windowHandle=obj.windowHandle)
+		return obj
+ 
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0)
-		#Special code to support Mozilla node_child_of relation (for comboboxes)
-		if self.windowClassName.startswith('Mozilla'):
-			res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
-			if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if newObj:
-					return newObj
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
@@ -554,11 +600,11 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				log.debugWarning("parent has bad role",exc_info=True)
 				return None
 			if parentRole!=IAccessibleHandler.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS): 
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				return self._correctRelationForWindow(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 			res=IAccessibleHandler.accParent(res[0],res[1])
 			if res:
-				return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-		return super(IAccessible,self)._get_parent()
+				return self._correctRelationForWindow(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+		return super(IAccessible,self).parent
 
 	def _get_next(self):
 		next=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_NEXT)
@@ -570,13 +616,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentNext and parentNext[0].accRole(parentNext[1])>0:
 					next=parentNext
 		if next and next[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1])
+			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1]))
 		if next and next[0].accRole(next[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(next[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
 				next=child
 		if next and next[0].accRole(next[1])>0:
-			return IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1])
+			return self._correctRelationForWindow(IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1]))
  
 	def _get_previous(self):
 		previous=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_PREVIOUS)
@@ -588,13 +634,13 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
 					previous=parentPrevious
 		if previous and previous[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1])
+			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1]))
 		if previous and previous[0].accRole(previous[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(previous[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
 				previous=child
 		if previous and previous[0].accRole(previous[1])>0:
-			return IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1])
+			return self._correctRelationForWindow(IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1]))
 
 	def _get_firstChild(self):
 		firstChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_FIRSTCHILD)
@@ -603,7 +649,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 			if len(children)>0:
 				firstChild=children[0]
 		if firstChild and firstChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1])
+			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1]))
 		if firstChild and firstChild[0].accRole(firstChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(firstChild[0],-4)
 			if not child:
@@ -613,12 +659,12 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if firstChild and firstChild[0].accRole(firstChild[1])>0:
 			obj=IAccessible(IAccessibleObject=firstChild[0],IAccessibleChildID=firstChild[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return obj
+				return self._correctRelationForWindow(obj)
 
 	def _get_lastChild(self):
 		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVDIR_LASTCHILD)
 		if lastChild and lastChild[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1])
+			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1]))
 		if lastChild and lastChild[0].accRole(lastChild[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(lastChild[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],IAccessibleHandler.NAVDIR_NEXT):
@@ -626,7 +672,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 		if lastChild and lastChild[0].accRole(lastChild[1])>0:
 			obj=IAccessible(IAccessibleObject=lastChild[0],IAccessibleChildID=lastChild[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return obj
+				return self._correctRelationForWindow(obj)
 
 	def _get_children(self):
 		try:
@@ -640,13 +686,63 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 				if child[0]==self.IAccessibleObject:
 					children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
 				elif child[0].accRole(child[1])==IAccessibleHandler.ROLE_SYSTEM_WINDOW:
-					children.append(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0))
+					children.append(self._correctRelationForWindow(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),IAccessibleHandler.OBJID_CLIENT,0)))
 				else:
-					children.append(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1]))
+					children.append(self._correctRelationForWindow(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])))
 			children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 			return children
 		except:
 			return []
+
+	def _get_rowNumber(self):
+		table=self.table
+		if table:
+			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			index=int(index)
+			return table.IAccessibleTableObject.rowIndex(index)+1
+		raise NotImplementedError
+
+	def _get_columnNumber(self):
+		table=self.table
+		if table:
+			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			index=int(index)
+			return table.IAccessibleTableObject.columnIndex(index)+1
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		if hasattr(self,'IAccessibleTableObject'):
+			return self.IAccessibleTableObject.nRows
+		raise NotImplementedError
+
+	def _get_columnCount(self):
+		if hasattr(self,'IAccessibleTableObject'):
+			return self.IAccessibleTableObject.nColumns
+		raise NotImplementedError
+
+	def _get_table(self):
+		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			return None
+		table=getattr(self,'_table',None)
+		if table:
+			return table
+		try:
+			attribs=self.IAccessibleObject.attributes
+		except COMError:
+			attribs=None
+		if attribs and 'table-cell-index:' in attribs:
+			checkAncestors=True
+		else:
+			checkAncestors=False
+		obj=self.parent
+		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
+			obj=obj.parent=obj.parent
+		if not obj or not hasattr(obj,'IAccessibleTableObject'):
+			return None
+		self._table=obj
+		return obj
 
 	def doDefaultAction(self):
 		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)
@@ -793,7 +889,7 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
-		Window.event_gainFocus(self)
+		super(IAccessible,self).event_gainFocus()
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -807,36 +903,22 @@ Checks the window class and IAccessible role against a map of IAccessible sub-ty
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-class IAccessibleWindow(IAccessible):
+class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
-		child=super(IAccessibleWindow,self)._get_firstChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_lastChild(self):
-		child=super(IAccessibleWindow,self)._get_lastChild()
-		if child:
-			return child
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			return NVDAObjects.JAB.JAB(jabContext=jabContext)
-		return None
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		return NVDAObjects.JAB.JAB(jabContext=jabContext)
 
 	def _get_children(self):
-		children=super(IAccessibleWindow,self)._get_children()
-		if children:
-			return children
 		children=[]
-		if JABHandler.isJavaWindow(self.windowHandle):
-			jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
-			obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-			if obj:
-				children.append(obj)
+		jabContext=JABHandler.JABContext(hwnd=self.windowHandle)
+		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			children.append(obj)
 		return children
 
 class Groupbox(IAccessible):
@@ -903,6 +985,9 @@ class Dialog(IAccessible):
 	def _get_description(self):
 		return self.getDialogText(self)
 
+	def _get_value(self):
+		return None
+
 class PropertyPage(Dialog):
 
 	def _get_role(self):
@@ -936,39 +1021,6 @@ class ConsoleWindowClass(IAccessible):
 	def event_nameChange(self):
 		pass
 
-class MozillaUIWindowClass_application(IAccessible):
-
-	def _get_value(self):
-		return None
-
-	def event_nameChange(self):
-		if self.windowHandle==api.getForegroundObject().windowHandle:
-			speech.speakObjectProperties(self,name=True,reason=speech.REASON_QUERY)
-
-class MozillaDocument(IAccessible):
-
-	def _get_value(self):
-		return 
-
-class MozillaListItem(IAccessible):
-
-	def _get_name(self):
-		name=super(MozillaListItem,self)._get_name()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
-			children=super(MozillaListItem,self)._get_children()
-			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
-				name=children[0].value
-		return name
-
-	def _get_children(self):
-		children=super(MozillaListItem,self)._get_children()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)):
-			del children[0]
-		return children
-
-class SHELLDLL_DefView_client(IAccessible):
-
-	speakOnGainFocus=False
 
 class List(IAccessible):
 
@@ -1064,6 +1116,12 @@ class ToolbarWindow32(IAccessible):
 			speech.cancelSpeech()
 
 		return not eventHandler.isPendingEvents("gainFocus")
+class MenuBar(IAccessible):
+
+	"""Silence speaking the foreground on menu bars."""
+
+	def event_foreground(self):
+		pass
 
 class MenuItem(IAccessible):
 
@@ -1083,8 +1141,6 @@ class MenuItem(IAccessible):
 ###class mappings
 
 _staticMap={
-	(None,IAccessibleHandler.ROLE_SYSTEM_WINDOW):"IAccessibleWindow",
-	(None,IAccessibleHandler.ROLE_SYSTEM_CLIENT):"IAccessibleWindow",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",IAccessibleHandler.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,IAccessibleHandler.ROLE_SYSTEM_DIALOG):"Dialog",
@@ -1093,23 +1149,15 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_GROUPING):"Groupbox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
-	("Edit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TRxRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
-	("RichEdit20",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RichEdit20A",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RichEdit20W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("RICHEDIT50W",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit50",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
-	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"MozillaUIWindowClass_application",
+	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"mozilla.application",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"MozillaListItem",
-	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
-	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"MozillaDocument",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
-	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
-	("SHELLDLL_DefView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SHELLDLL_DefView_client",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",
@@ -1117,12 +1165,8 @@ _staticMap={
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
 	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
-	("TTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TMaskEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
-	("TRichEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"edit.Edit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
@@ -1130,45 +1174,19 @@ _staticMap={
 	("ATL:SysListView32",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
-	("_WwG",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"winword.WordDocument",
-	("EXCEL7",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"excel.ExcelGrid",
-	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
-	("TInEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("ToolbarWindow32",None):"ToolbarWindow32",
-	("TFilenameEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TSpinEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
-	("ThunderRT6TextBox",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TMemo",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("RICHEDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-	("TPasswordEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
+	(None,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):"MenuBar",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("THppEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TUnicodeTextEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TTextEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TPropInspEdit",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TFilterbarEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("EditControl",None):"edit.Edit",
-	("AkelEditW",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
-	("AkelEditA",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
-	("TRichEditViewer",None):"edit.RichEdit",
 	("AVL_AVView","Page"):"adobe.Page",
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
-	("TNavigableTntMemo.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TNavigableTntEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
-	("TskRichEdit.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("ATL:EDIT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
-	("RichEdit20WPT",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("WindowsForms10.RichEdit20W.app.0.378734a",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.RichEdit20",
-	("WindowsForms10.EDIT.app.0.11c7a8c",IAccessibleHandler.ROLE_SYSTEM_TEXT):"edit.Edit",
 }

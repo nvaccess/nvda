@@ -45,7 +45,7 @@ TABLES = (
 	("Fr-Fr-g2.ctb", _("French (France) grade 2")),
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
-	("it-it-g1.utb", _("Italian grade 1")),
+	("it-it-g1.utb2", _("Italian grade 1")),
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
 	("Nl-Nl-g1.utb", _("Dutch (netherlands) grade 1")),
@@ -143,7 +143,7 @@ class Region(object):
 		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
 		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
 		"""
-		mode = louis.dotsIO
+		mode = louis.dotsIO | louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
@@ -209,7 +209,7 @@ def getBrailleTextForProperties(**propertyValues):
 		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
 		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
 		negativeStates = speech.processNegativeStates(role, states, speech.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in negativeStates)
+		textList.extend(negativeStateLabels.get(state, _("not %s") % controlTypes.speechStateLabels[state]) for state in negativeStates)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")

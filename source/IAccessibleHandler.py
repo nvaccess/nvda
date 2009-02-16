@@ -1,10 +1,12 @@
 #IAccessiblehandler.py
-#A part of NonVisual Desktop Access (NVDA)
+	#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 from __future__ import with_statement
+
+MAX_WINEVENTS=500
 
 #Constants
 #OLE constants
@@ -154,6 +156,7 @@ from comtypes.automation import *
 from comtypes.server import *
 from comtypes import GUID
 import comtypes.client
+import comtypes.client.lazybind
 import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
@@ -434,7 +437,7 @@ eventCounter=itertools.count()
 eventHeap=[]
 
 def normalizeIAccessible(pacc):
-	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
+	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
 	elif not isinstance(pacc,IAccessible):
 		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
@@ -498,7 +501,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,byref(realCount))
 	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
+		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
 			children[childNum]=(normalizeIAccessible(children[childNum]),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
@@ -576,7 +579,7 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -591,7 +594,7 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
@@ -606,7 +609,7 @@ def accHitTest(ia,child,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -627,7 +630,7 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 				new_ia=normalizeIAccessible(res)
 				new_child=0
 			else:
@@ -646,7 +649,7 @@ def accNavigate(ia,child,direction):
 		if isinstance(res,int):
 			new_ia=ia
 			new_child=res
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		else:
@@ -663,7 +666,7 @@ def accLocation(ia,child):
 		return None
 
 winEventIDsToNVDAEventNames={
-winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
+winUser.EVENT_SYSTEM_FOREGROUND:"gainFocus",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
@@ -773,7 +776,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
-	#Notify appModuleHandler of this new foreground window
+	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=liveNVDAObjectTable.get('focus',None)
@@ -958,25 +961,14 @@ def _menuEndFakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	processFocusNVDAEvent(api.findObjectWithFocus())
+	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
 
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
-	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
-		raise OSError("can not get desktop object")
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
-	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
-	if foregroundObject:
-		eventHandler.queueEvent('gainFocus',foregroundObject)
-	focusObject=api.findObjectWithFocus()
+	focusObject=api.getDesktopObject().objectWithFocus()
 	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		eventHandler.queueEvent('gainFocus',focusObject)
 		liveNVDAObjectTable['focus']=focusObject
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
@@ -991,7 +983,7 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	menuEvent=None
-	for winEvent in winEvents:
+	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
 			focusWinEvents.append(winEvent)
@@ -1027,10 +1019,11 @@ def terminate():
 		winUser.unhookWinEvent(handle)
 
 def getIAccIdentity(pacc,childID):
-	stringPtr,stringSize=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
+	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
+	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	s=p.contents.raw
-	fields=struct.unpack('IIII',s)
+	identityString=stringPtr.contents.raw
+	fields=struct.unpack('IIiI',identityString)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:

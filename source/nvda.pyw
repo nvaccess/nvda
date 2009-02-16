@@ -47,7 +47,8 @@ if getattr(sys, "frozen", None):
 	os.chdir(sys.prefix)
 	logFileName='%s\\nvda.log'%tempfile.gettempdir()
 else:
-	os.chdir(sys.path[0])
+	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
+	os.chdir(os.path.normpath(os.path.dirname(__file__)))
 	logFileName='nvda.log'
 
 #Localization settings

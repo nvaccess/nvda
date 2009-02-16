@@ -1,8 +1,7 @@
 import controlTypes
-import edit
 from . import IAccessible
 
-class TRichView(edit.Edit):
+class TRichView(IAccessible):
 
 	def _get_name(self):
 		pass
@@ -10,7 +9,7 @@ class TRichView(edit.Edit):
 	def _get_role(self):
 		return controlTypes.ROLE_STATICTEXT
 
-class TRichViewEdit(edit.Edit):
+class TRichViewEdit(IAccessible):
 
 	def _get_name(self):
 		pass
@@ -33,7 +32,7 @@ class TTabSheet(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_PROPERTYPAGE
 
-class TRxRichEdit(edit.RichEdit20):
+class TRxRichEdit(IAccessible):
 
 	def _get_name(self):
 		return None

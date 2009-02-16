@@ -49,7 +49,11 @@ class JABContext(object):
 
 	def __del__(self):
 		if isRunning:
-			bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+			try:
+				bridgeDll.releaseJavaObject(self.vmID,self.accContext)
+			except:
+				log.debugWarning("Error releasing java object",exc_info=True)
+
 
 	def __eq__(self,jabContext):
 		if self.vmID==jabContext.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
@@ -103,26 +107,34 @@ class JABContext(object):
 		startIndex=c_int()
 		endIndex=c_int()
 		bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,index,byref(startIndex),byref(endIndex))
-		start=max(startIndex.value,0)
-		end=max(endIndex.value,0)
+		start=startIndex.value
+		end=endIndex.value
 		log.debug("line bounds: start %s, end %s"%(start,end))
+		if end<start:
+			# Invalid or empty line.
+			return (0,-1)
 		ok=False
+		# OpenOffice sometimes returns offsets encompassing more than one line, so try to narrow them down.
+		# Try to retract the end offset.
 		while not ok:
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,end,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
 			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempStart>(index+1):
+				# This line starts after the requested index, so set end to point at the line before.
 				end=tempStart-1
 			else:
 				ok=True
 		ok=False
+		# Try to retract the start.
 		while not ok:
 			bridgeDll.getAccessibleTextLineBounds(self.vmID,self.accContext,start,byref(startIndex),byref(endIndex))
 			tempStart=max(startIndex.value,0)
 			tempEnd=max(endIndex.value,0)
 			log.debug("line bounds: tempStart %s, tempEnd %s"%(tempStart,tempEnd))
 			if tempEnd<(index-1):
+				# This line ends before the requested index, so set start to point at the line after.
 				start=tempEnd+1
 			else:
 				ok=True
@@ -291,14 +303,16 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_stateChange(vmID,accContext,oldState,newState):
+	global lastFocusNVDAObject
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	focus=api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
 	stateList=newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if focus!=obj and obj.role in [controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU]:
+		if focus!=obj and lastFocusNVDAObject!=obj and obj.role in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU):
 			eventHandler.queueEvent("gainFocus",obj)
+			lastFocusNVDAObject=obj
 			return
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
 		obj=focus
@@ -313,11 +327,14 @@ def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_enterJavaWindow(hwnd):
-	jabContext=JABContext(hwnd=hwnd)
+	try:
+		jabContext=JABContext(hwnd=hwnd)
+	except:
+		return
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	if obj==api.getForegroundObject():
 		return
-	eventHandler.queueEvent("foreground",obj)
+	eventHandler.queueEvent("gainFocus",obj)
 	vmID=c_int()
 	accContext=c_int()
 	bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
@@ -326,6 +343,8 @@ def event_enterJavaWindow(hwnd):
 	activeChild=focusObject.activeChild
 	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
 		focusObject=activeChild
+	if focusObject.role==controlTypes.ROLE_UNKNOWN:
+		return
 	eventHandler.queueEvent("gainFocus",focusObject)
 	lastFocusNVDAObject=focusObject
 
@@ -336,13 +355,23 @@ def isJavaWindow(hwnd):
 		return False
 	return bridgeDll.isJavaWindow(hwnd)
 
+def _errcheck(res, func, args):
+	if not res:
+		raise RuntimeError("Result %d" % res)
+
 def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll=cdll.WINDOWSACCESSBRIDGE
-		res=bridgeDll.Windows_run()
-		if not res:
-			raise RuntimeError('Windows_run') 
+		for func in (
+			bridgeDll.Windows_run, bridgeDll.getAccessibleContextFromHWND, bridgeDll.getVersionInfo, 
+			bridgeDll.getAccessibleContextInfo, bridgeDll.getAccessibleTextInfo, bridgeDll.getAccessibleTextItems,
+			bridgeDll.getAccessibleTextSelectionInfo, bridgeDll.getAccessibleTextRange, bridgeDll.getAccessibleTextLineBounds,
+			bridgeDll.getCurrentAccessibleValueFromContext, bridgeDll.selectTextRange, bridgeDll.setCaretPosition,
+			bridgeDll.getAccessibleContextWithFocus, 
+		):
+			func.errcheck = _errcheck
+		bridgeDll.Windows_run()
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 		bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)

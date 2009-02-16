@@ -48,7 +48,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Task switcher is gone, but no foreground or focus event was fired.
 		# We must therefore find and restore the correct focus.
 		speech.cancelSpeech()
-		IAccessibleHandler.processFocusNVDAEvent(api.findObjectWithFocus())
+		IAccessibleHandler.processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
 
 	def script_keyboardHelp(self,keyPress):
 		if not globalVars.keyboardHelp:
@@ -195,19 +195,19 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
-			textList=[]
-			if isinstance(curObject.name,basestring) and len(curObject.name)>0 and not curObject.name.isspace():
-				textList.append(curObject.name)
-			if isinstance(curObject.value,basestring) and len(curObject.value)>0 and not curObject.value.isspace():
-				textList.append(curObject.value)
+			textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			if curObject.TextInfo!=NVDAObjectTextInfo:
-				info=curObject.makeTextInfo(textHandler.POSITION_SELECTION)
-				if info.text and not info.isCollapsed:
-					textList.append(info.text)
-				else:
-					info.expand(textHandler.UNIT_READINGCHUNK)
-					if info.text:
+				try:
+					info=curObject.makeTextInfo(textHandler.POSITION_SELECTION)
+					if not info.isCollapsed:
 						textList.append(info.text)
+					else:
+						info.expand(textHandler.UNIT_READINGCHUNK)
+						if not info.isCollapsed:
+							textList.append(info.text)
+				except (RuntimeError, NotImplementedError):
+					# No caret or selection on this object.
+					pass
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -217,7 +217,6 @@ class AppModule(appModuleHandler.AppModule):
 						speech.speakMessage(_("%s copied to clipboard")%text)
 		else:
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		return False
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard")
 
 	def script_navigatorObject_currentDimensions(self,keyPress):
@@ -769,7 +768,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportAppModuleInfo(self,keyPress):
 		focus=api.getFocusObject()
-		appName=appModuleHandler.getAppNameFromProcessID(focus.windowProcessID,True)
+		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
 		message = _("Currently running application is %s") % appName
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:

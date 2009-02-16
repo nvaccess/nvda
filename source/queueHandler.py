@@ -9,8 +9,7 @@ from Queue import Queue
 import globalVars
 from logHandler import log
 
-MAX_ITEMS=500
-eventQueue=Queue(MAX_ITEMS)
+eventQueue=Queue()
 eventQueue.__name__="eventQueue"
 generators={}
 lastGeneratorObjID=0
@@ -32,14 +31,7 @@ def cancelGeneratorObject(generatorObjID):
 		pass
 
 def queueFunction(queue,func,*args,**kwargs):
-	if not queue.full():
-		queue.put_nowait((func,args,kwargs))
-	else:
-		argsText=",".join([str(x) for x in args])
-		kwargsText=",".join(["%s=%s"%(x,y) for x,y in kwargs.items()])
-		funcText="%s(%s)"%(func.__name__,",".join([x for x in (argsText,kwargsText) if x]))
-		queueText=queue.__name__
-		log.debugWarning("Queue full when trying to add function %s to %s"%(funcText,queueText))
+	queue.put_nowait((func,args,kwargs))
 
 def isRunningGenerators():
 	res=len(generators)>0

@@ -46,7 +46,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
 				return start,end
 			except:
-				log.error("",exc_info=True)
+				log.debugWarning("",exc_info=True)
 				obj=obj.parent
 
 	def __init__(self,obj,position):
@@ -132,9 +132,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	REASON_QUICKNAV = "quickNav"
 
-	def __init__(self,rootNVDAObject,backendLibPath=None,TextInfo=VirtualBufferTextInfo):
+	TextInfo=VirtualBufferTextInfo
+
+	def __init__(self,rootNVDAObject,backendLibPath=None):
 		self.backendLibPath=os.path.join(os.getcwdu(),backendLibPath)
-		self.TextInfo=TextInfo
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
@@ -428,7 +429,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptHandler.queueScript(script, keyPress)
 
 	def script_disablePassThrough(self, keyPress):
-		if not self.passThrough:
+		if not self.passThrough or self.disableAutoPassThrough:
 			return sendKey(keyPress)
 		self.passThrough = False
 		self.disableAutoPassThrough = False

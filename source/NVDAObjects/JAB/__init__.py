@@ -95,14 +95,15 @@ re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		info=self.jabContext.getAccessibleTextInfo(x,y)
+		info=self.obj.jabContext.getAccessibleTextInfo(x,y)
 		offset=max(min(info.indexAtPoint,info.charCount-1),0)
 		return offset
 
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 		offset=textInfo.caretIndex
-		if offset==-1:
+		# OpenOffice sometimes returns nonsense, so treat charCount < offset as no caret.
+		if offset==-1 or textInfo.charCount<offset:
 			raise RuntimeError("no available caret in this object")
 		return offset
 
@@ -143,9 +144,6 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 	def _getLineOffsets(self,offset):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
-		#If start and end are 0, then something is broken in java
-		if start==0 and end==0:
-			return super(JABTextInfo,self)._getLineOffsets(offset)
 		#Java gives end as the last character, not one past the last character
 		end=end+1
 		return [start,end]
@@ -155,20 +153,49 @@ class JABTextInfo(NVDAObjectTextInfo):
 
 class JAB(Window):
 
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(JAB)
+		return clsList,kwargs
+
+	@classmethod
+	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+		jabContext=JABHandler.JABContext(hwnd=windowHandle)
+		if not jabContext:
+			return
+		newJabContext=jabContext.getAccessibleContextAt(x,y)
+		if not newJabContext:
+			return
+		if isinstance(oldNVDAObject,JAB) and newJabContext==oldNVDAObject.jabContext:
+			return oldNVDAObject
+		return JAB(jabContext=newJabContext)
+
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		vmID=ctypes.c_int()
+		accContext=ctypes.c_int()
+		JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
+		jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
+		focusObject=JAB(jabContext=jabContext)
+		activeChild=focusObject.activeChild
+		if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
+			focusObject=activeChild
+		if focusObject.role==controlTypes.ROLE_UNKNOWN:
+			return
+		return focusObject
+
 	def __init__(self,windowHandle=None,jabContext=None):
-		self._lastMouseTextOffsets=None
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:
 			windowHandle=jabContext.hwnd
 		elif not windowHandle and not jabContext:
-			raise ArguementError("Give either a valid window handle or jab context")
+			raise TypeError("Give either a valid window handle or jab context")
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		Window.__init__(self,windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
-			self.TextInfo=JABTextInfo
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 					("ExtendedUp","moveByLine"),
@@ -194,6 +221,11 @@ class JAB(Window):
 					("ExtendedDelete","delete"),
 					("Back","backspace"),
 			  	]]
+
+	def _get_TextInfo(self):
+		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
+			return JABTextInfo
+		return super(JAB,self).TextInfo
 
 	def _isEqual(self,other):
 		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext
@@ -273,13 +305,13 @@ class JAB(Window):
 			if jabContext:
 				self._parent=JAB(jabContext=jabContext)
 			else:
-				self._parent=NVDAObjects.IAccessible.IAccessible(windowHandle=self.jabContext.hwnd)
+				self._parent=super(JAB,self).parent
 		return self._parent
  
 	def _get_next(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return None
+			return super(JAB,self).next
 		newIndex=self._JABAccContextInfo.indexInParent+1
 		if newIndex>=parent._JABAccContextInfo.childrenCount:
 			return None
@@ -294,7 +326,7 @@ class JAB(Window):
 	def _get_previous(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return None
+			return super(JAB,self).previous
 		newIndex=self._JABAccContextInfo.indexInParent-1
 		if newIndex<0:
 			return None

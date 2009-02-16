@@ -22,7 +22,7 @@ _watcherThread=None
 def _coreGenerator():
 	global _lastFocusProcessID
 	while True:
-		_lastFocusProcessID=api.getFocusObject().windowProcessID
+		_lastFocusProcessID=api.getFocusObject().processID
 		_coreAliveEvent.set()
 		yield
 		yield

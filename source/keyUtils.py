@@ -130,7 +130,7 @@ localizedKeyLabels={
 	'extendedapps': _("applications"),
 	'extendednumlock': _("num lock"),
 	'extendedsnapshot': _("snapshot"),
-	'scroll': _("scrol lock"),
+	'scroll': _("scroll lock"),
 	'left': _("numpad left"),
 	'right': _("numpad right"),
 	'up': _("numpad up"),

@@ -22,18 +22,6 @@ import eventHandler
 
 #User functions
 
-def findObjectWithFocus():
-	"""Walks the object hyerarchy starting at the desktop Window (root object) and follows the activeChild property of each object until it can not go any further - this will be the object with focus.
-@returns: object with focus
-@rtype: L{NVDAObjects.NVDAObject}
-"""
-	obj=getDesktopObject()
-	prevObj=None
-	while obj and obj!=prevObj:
-		prevObj=obj
-		obj=obj.activeChild
-	return prevObj
-
 def getFocusObject():
 	"""
 Gets the current object with focus.
@@ -47,15 +35,15 @@ def getForegroundObject():
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	numAncestors=len(globalVars.focusAncestors)
-	if numAncestors<=1:
-		return globalVars.focusObject
-	elif globalVars.focusAncestors[1].role==controlTypes.ROLE_WINDOW:
-		if numAncestors==2:
-			return globalVars.focusObject
-		return globalVars.focusAncestors[2]
-	else:
-		return globalVars.focusAncestors[1]
+	import NVDAObjects.IAccessible
+	focusLine=list(globalVars.focusAncestors)
+	focusLine.append(globalVars.focusObject)
+	focusLineLength=len(focusLine)
+	if focusLineLength<=2:
+		return focusLine[-1]
+	if isinstance(focusLine[1],NVDAObjects.IAccessible.IAccessible) and focusLine[1].role==controlTypes.ROLE_WINDOW:
+		return focusLine[2]
+	return focusLine[1]
 
 def setForegroundObject(obj):
 	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).

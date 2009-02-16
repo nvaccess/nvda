@@ -19,15 +19,15 @@ from keyUtils import sendKey, key
 import winKernel
 import winUser
 import speech
-from . import IAccessible
+from . import Window
 from .. import NVDAObjectTextInfo
 import controlTypes
 import braille
 
-class WinConsole(IAccessible):
+class WinConsole(Window):
 
 	def __init__(self,*args,**vars):
-		IAccessible.__init__(self,*args,**vars)
+		super(WinConsole,self).__init__(*args,**vars)
 		self.consoleEventHookHandles=[] #Holds the handles for all the win events we register so we can remove them later
 
 	def connectConsole(self):
@@ -39,7 +39,7 @@ class WinConsole(IAccessible):
 		if not winUser.isWindow(self.windowHandle):
 			return
 		#Get the process ID of the console this NVDAObject is fore
-		processID=self.windowProcessID
+		processID=self.processID
 		if processID<=0:
 			log.debugWarning("Could not get valid processID from window "%self.windowHandle)
 			return

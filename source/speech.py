@@ -200,7 +200,10 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
-			newPropertyValues[name]=getattr(obj,name)
+			try:
+				newPropertyValues[name]=getattr(obj,name)
+			except NotImplementedError:
+				pass
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -236,8 +239,9 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	isEditable=bool(obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True}
+	from NVDAObjects import NVDAObjectTextInfo
+	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -602,6 +606,14 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeviewLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
+	if 'rowNumber' in propertyValues:
+		textList.append(_("row %s")%propertyValues['rowNumber'])
+	if 'columnNumber' in propertyValues:
+		textList.append(_("column %s")%propertyValues['columnNumber'])
+	rowCount=propertyValues.get('rowCount',0)
+	columnCount=propertyValues.get('columnCount',0)
+	if rowCount or columnCount:
+		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
@@ -642,9 +654,9 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType in ("end_removedFromControlFieldStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return roleText+_("with %s items")%childCount
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return _("out of %s")%roleText
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 		return roleText

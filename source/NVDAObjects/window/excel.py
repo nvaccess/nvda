@@ -1,4 +1,4 @@
-#appModules/excel.py
+#NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -7,8 +7,6 @@
 import time
 import re
 import ctypes
-import pythoncom
-import win32com.client
 import comtypes.automation
 import wx
 import eventHandler
@@ -18,9 +16,8 @@ import IAccessibleHandler
 import controlTypes
 import speech
 from keyUtils import sendKey, key
-from . import IAccessible
+from . import Window
 import appModuleHandler
-import NVDAObjects.window
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -58,19 +55,14 @@ class CellEditDialog(gui.scriptUI.ModalDialog):
 		self._cellText.SetFocus()
 		return d
 
-class ExcelGrid(IAccessible):
+class ExcelGrid(Window):
 
 	def __init__(self,*args,**vars):
-		IAccessible.__init__(self,*args,**vars)
-		ptr=ctypes.c_void_p()
+		super(ExcelGrid,self).__init__(*args,**vars)
+		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
 		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
-		#We use pywin32 for large IDispatch interfaces since it handles them much better than comtypes
-		o=pythoncom._univgw.interface(ptr.value,pythoncom.IID_IDispatch)
-		t=o.GetTypeInfo()
-		a=t.GetTypeAttr()
-		oleRepr=win32com.client.build.DispatchItem(attr=a)
-		self.excelObject=win32com.client.CDispatch(o,oleRepr)
+		self.excelObject=comtypes.client.dynamic.Dispatch(ptr)
 
 	def _get_role(self):
 		return controlTypes.ROLE_TABLE
@@ -85,7 +77,7 @@ class ExcelGrid(IAccessible):
 	activeCell=property(fget=getActiveCell)
 
 	def getCellAddress(self,cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address)
+		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
 	def getCellText(self,cell):
 		return cell.Text
@@ -175,7 +167,12 @@ class ExcelGrid(IAccessible):
 	("Shift+Control+ExtendedEnd","moveByCell"),
 ]]
 
-class ExcelCell(NVDAObjects.window.Window):
+class ExcelCell(Window):
+
+	@classmethod
+	def findBestClass(cls, clsList, kwargs):
+		# This class can be directly instantiated.
+		return (cls,), kwargs
 
 	def __init__(self,parentNVDAObject,cellRange):
 		self.parent=parentNVDAObject
