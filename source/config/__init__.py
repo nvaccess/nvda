@@ -99,6 +99,7 @@ outputDevice = string(default=default)
 	updateContentDynamically = boolean(default=true)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
+	virtualBufferPassthroughAudioIndication= boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]

@@ -15,6 +15,8 @@ import NVDAObjects.IAccessible
 import controlTypes
 import NVDAObjects.window
 import speech
+import config
+import nvwave
 import IAccessibleHandler
 
 runningTable=set()
@@ -85,11 +87,15 @@ def cleanupVirtualBuffers():
 		killVirtualBuffer(v)
 
 def reportPassThrough(virtualBuffer):
-	"""Speaks the state of virtualBufferPassThroughMode if it has changed.
+	"""Announces to user the state of virtualBufferPassThroughMode if it has changed, by sound or speech.
 	@param virtualBuffer: The current virtual buffer.
 	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
 	"""
 	if virtualBuffer.passThrough != reportPassThrough.last:
-		speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
+		if config.conf["virtualBuffers"]["virtualBufferPassthroughAudioIndication"]:
+			sound = "waves\\focusMode.wav" if virtualBuffer.passThrough else "waves\\browseMode.wav"
+			nvwave.playWaveFile(sound)
+		else:
+			speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
 		reportPassThrough.last = virtualBuffer.passThrough
 reportPassThrough.last = False
