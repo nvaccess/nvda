@@ -14,7 +14,6 @@ from ctypes.wintypes import *
 import winKernel
 import wave
 import config
-from thread import start_new_thread
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -299,18 +298,22 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 	else:
 		raise LookupError("No such device name")
 
-wavePlayer = None
+fileWavePlayer = None
+fileWavePlayerThread=None
 def playWaveFile(fileName, async=True):
 	"""plays a specified wave file.
 """
-	if async:
-		start_new_thread(playWaveFile,(fileName,),{"async" : False})
-		return
+	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
-	if f is None: return
-	global wavePlayer
-	if wavePlayer is not None:
-		wavePlayer.stop()
-	wavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
-	wavePlayer.feed(f.readframes(f.getnframes()))
-	wavePlayer.idle()
+	if f is None: raise RuntimeError("can not open file %s"%fileName)
+	if fileWavePlayer is not None:
+		fileWavePlayer.stop()
+	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	fileWavePlayer.feed(f.readframes(f.getnframes()))
+	if async:
+		if fileWavePlayerThread is not None:
+			fileWavePlayerThread.join()
+		fileWavePlayerThread=threading.Thread(target=fileWavePlayer.idle)
+		fileWavePlayerThread.start()
+	else:
+		fileWavePlayer.idle()
