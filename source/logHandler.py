@@ -6,6 +6,7 @@ import logging
 from logging import _levelNames as levelNames
 import inspect
 import winsound
+import nvwave
 from types import MethodType
 import globalVars
 
@@ -108,7 +109,7 @@ class FileHandler(logging.FileHandler):
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 		elif record.levelno>=logging.ERROR:
-			winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
+			nvwave.playWaveFile("waves\\error.wav")
 		return logging.FileHandler.handle(self,record)
 
 class StreamRedirector(object):

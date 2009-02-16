@@ -11,15 +11,16 @@ from __future__ import with_statement
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import winKernel
+import wave
+import config
+from thread import start_new_thread
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
 )
 
 winmm = windll.winmm
-kernel32 = windll.kernel32
-
-INFINITE = 0xffffffff
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -77,7 +78,7 @@ class WAVEOUTCAPS(Structure):
 	# Set argument types.
 winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
 
-# Initialise error checking.
+# Initialize error checking.
 def _winmm_errcheck(res, func, args):
 	if res != MMSYSERR_NOERROR:
 		buf = create_unicode_buffer(256)
@@ -120,7 +121,7 @@ class WavePlayer(object):
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
 		self._waveout = None
-		self._waveout_event = kernel32.CreateEventW(None, False, False, None)
+		self._waveout_event = winKernel.kernel32.CreateEventW(None, False, False, None)
 		self._waveout_lock = threading.RLock()
 		self._lock = threading.RLock()
 		self.open()
@@ -179,7 +180,7 @@ class WavePlayer(object):
 				return
 			assert self._waveout, "waveOut None before wait"
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
-				kernel32.WaitForSingleObject(self._waveout_event, INFINITE)
+				winKernel.waitForSingleObject(self._waveout_event, winKernel.INFINITE)
 			with self._waveout_lock:
 				assert self._waveout, "waveOut None after wait"
 				winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
@@ -244,14 +245,14 @@ class WavePlayer(object):
 
 	def __del__(self):
 		self.close()
-		kernel32.CloseHandle(self._waveout_event)
+		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
 	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
 		try:
-			windll.winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
+			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
 			yield devID, caps.szPname
 		except WindowsError:
 			# It seems that in certain cases, Windows includes devices which cannot be accessed.
@@ -273,7 +274,7 @@ def outputDeviceIDToName(ID):
 	"""
 	caps = WAVEOUTCAPS()
 	try:
-		windll.winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
+		winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
 	except WindowsError:
 		raise LookupError("No such device ID")
 	return caps.szPname
@@ -297,3 +298,19 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 		return WAVE_MAPPER
 	else:
 		raise LookupError("No such device name")
+
+wavePlayer = None
+def playWaveFile(fileName, async=True):
+	"""plays a specified wave file.
+"""
+	if async:
+		start_new_thread(playWaveFile,(fileName,),{"async" : False})
+		return
+	f = wave.open(fileName,"r")
+	if f is None: return
+	global wavePlayer
+	if wavePlayer is not None:
+		wavePlayer.stop()
+	wavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	wavePlayer.feed(f.readframes(f.getnframes()))
+	wavePlayer.idle()

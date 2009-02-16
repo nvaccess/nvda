@@ -14,6 +14,7 @@ import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
 import sys
+import nvwave
 import os
 import time
 import logHandler
@@ -54,6 +55,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.load()
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\start.wav")
 	log.debug("Trying to save config")
 	try:
 		config.save()
@@ -92,11 +95,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
-		import winsound
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		if not globalVars.appArgs.minimal:
-			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import braille
@@ -231,4 +233,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\exit.wav",async=False)
 	log.debug("core done")
