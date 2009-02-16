@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core. it also handles the playing of the exit sound."""
+"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
  
 import os
 import sys
