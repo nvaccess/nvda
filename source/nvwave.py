@@ -11,7 +11,7 @@ from __future__ import with_statement
 import threading
 from ctypes import *
 from ctypes.wintypes import *
-from winKernel import *
+import winKernel
 import wave
 import config
 from thread import start_new_thread
@@ -121,7 +121,7 @@ class WavePlayer(object):
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
 		self._waveout = None
-		self._waveout_event = kernel32.CreateEventW(None, False, False, None)
+		self._waveout_event = winKernel.kernel32.CreateEventW(None, False, False, None)
 		self._waveout_lock = threading.RLock()
 		self._lock = threading.RLock()
 		self.open()
@@ -180,7 +180,7 @@ class WavePlayer(object):
 				return
 			assert self._waveout, "waveOut None before wait"
 			while not (self._prev_whdr.dwFlags & WHDR_DONE):
-				kernel32.WaitForSingleObject(self._waveout_event, INFINITE)
+				winKernel.waitForSingleObject(self._waveout_event, winKernel.INFINITE)
 			with self._waveout_lock:
 				assert self._waveout, "waveOut None after wait"
 				winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
@@ -245,7 +245,7 @@ class WavePlayer(object):
 
 	def __del__(self):
 		self.close()
-		kernel32.CloseHandle(self._waveout_event)
+		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
 
 def _getOutputDevices():
