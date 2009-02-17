@@ -187,14 +187,11 @@ def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
 		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
-		try:
-			instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
-		except:
-			instDir=""
-		_winreg.CloseKey(k)
-		return os.path.normpath(os.getcwdu()).lower()==os.path.normpath(instDir).lower()
-	except:
+		instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
+	except WindowsError:
 		return False
+	_winreg.CloseKey(k)
+	return os.stat(instDir)==os.stat(os.getcwdu()) 
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
