@@ -248,6 +248,16 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				states.add(controlTypes.STATE_PRESSED)
 		return states
 
+	def _correctRelationForWindow(self,obj):
+		if not obj:
+			return None
+		windowHandle=obj.windowHandle
+		if windowHandle and self.windowHandle and windowHandle!=self.windowHandle:
+			APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+			if not issubclass(APIClass,UIA):
+				return APIClass(windowHandle=windowHandle)
+		return obj
+
 	def _get_parent(self):
 		try:
 			parentElement=UIAHandler.handler.treeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
@@ -255,46 +265,31 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			parentElement=None
 		if not parentElement:
 			return super(UIA,self).parent
-		parentWindowHandle=parentElement.cachedNativeWindowHandle
-		if parentWindowHandle and self.windowHandle and parentWindowHandle!=self.windowHandle and super(UIA,self).findBestAPIClass(windowHandle=parentWindowHandle)!=UIA:
-			return Window(windowHandle=parentWindowHandle)
-		return UIA(UIAElement=parentElement)
+		return self._correctRelationForWindow(UIA(UIAElement=parentElement))
 
 	def _get_previous(self):
 		previousElement=UIAHandler.handler.treeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not previousElement:
 			return None
-		previousWindowHandle=previousElement.cachedNativeWindowHandle
-		if previousWindowHandle and self.windowHandle and previousWindowHandle!=self.windowHandle and super(UIA,self).findBestAPIClass(windowHandle=previousWindowHandle)!=UIA:
-			return Window(windowHandle=previousWindowHandle)
-		return UIA(UIAElement=previousElement)
+		return self._correctRelationForWindow(UIA(UIAElement=previousElement))
 
 	def _get_next(self):
 		nextElement=UIAHandler.handler.treeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not nextElement:
 			return None
-		nextWindowHandle=nextElement.cachedNativeWindowHandle
-		if nextWindowHandle and self.windowHandle and nextWindowHandle!=self.windowHandle and super(UIA,self).findBestAPIClass(windowHandle=nextWindowHandle)!=UIA:
-			return Window(windowHandle=nextWindowHandle)
-		return UIA(UIAElement=nextElement)
+		return self._correctRelationForWindow(UIA(UIAElement=nextElement))
 
 	def _get_firstChild(self):
 		firstChildElement=UIAHandler.handler.treeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not firstChildElement:
 			return None
-		firstChildWindowHandle=firstChildElement.cachedNativeWindowHandle
-		if firstChildWindowHandle and self.windowHandle and firstChildWindowHandle!=self.windowHandle and super(UIA,self).findBestAPIClass(windowHandle=firstChildWindowHandle)!=UIA:
-			return Window(windowHandle=firstChildWindowHandle)
-		return UIA(UIAElement=firstChildElement)
+		return self._correctRelationForWindow(UIA(UIAElement=firstChildElement))
 
 	def _get_lastChild(self):
 		lastChildElement=UIAHandler.handler.treeWalker.GetLastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not lastChildElement:
 			return None
-		lastChildWindowHandle=lastChildElement.cachedNativeWindowHandle
-		if lastChildWindowHandle and self.windowHandle and lastChildWindowHandle!=self.windowHandle and super(UIA,self).findBestAPIClass(windowHandle=lastChildWindowHandle)!=UIA:
-			return Window(windowHandle=lastChildWindowHandle)
-		return UIA(UIAElement=lastChildElement)
+		return self._correctRelationForWindow(UIA(UIAElement=lastChildElement))
 
 	def _get_rowNumber(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowPropertyId,True)
