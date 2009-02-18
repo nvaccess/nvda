@@ -176,6 +176,8 @@ class AppModule(baseObject.ScriptableObject):
 	@type processID: int
 	"""
 
+	_overlayClassCache={}
+
 	def __init__(self,processID,appName=None):
 		self.processID=processID
 		if appName is None:
@@ -187,13 +189,29 @@ class AppModule(baseObject.ScriptableObject):
 		return "<%s (appName %s, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
 
 	def _get_appModuleName(self):
-		return "%s.%s"%(self.__class__.__module__.split('.')[-1],self.__class__.__name__)
+		return self.__class__.__module__.split('.')[-1]
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
+
+	def overlayCustomNVDAObjectClass(self,obj,customClass):
+		"""Overlays the given custom class on to the class structure of the given NVDAObject.
+		@param obj: the NVDAObject that should be overlayed.
+		@type obj: NVDAObject
+		@param customClass: the class to overlay
+		@type customClass: NVDAObject class
+		"""
+		oldClass=obj.__class__
+		cacheKey=(self.__class__,customClass,oldClass)
+		newClass=self._overlayClassCache.get(cacheKey,None)
+		if not newClass:
+			newName="%s_%sAppModule_%s"%(customClass.__name__,self.appModuleName,oldClass.__name__)
+			newClass=type(newName,(customClass,)+oldClass.__mro__,{})
+			self._overlayClassCache[cacheKey]=newClass
+		obj.__class__=newClass
 
 	def loadKeyMap(self):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.

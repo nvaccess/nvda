@@ -9,9 +9,9 @@ import controlTypes
 import api
 import speech
 import eventHandler
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.window import Window
 
-class ClassicStartMenu(IAccessible):
+class ClassicStartMenu(Window):
 	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
 	name = _("Start")
 
@@ -25,7 +25,7 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU and obj.parent.windowClassName == "SysPager":
 			# Classic Start menu.
-			obj.__class__ = ClassicStartMenu
+			self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
