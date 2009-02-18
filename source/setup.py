@@ -102,6 +102,9 @@ setup(
 		"script":"nvda.pyw",
 		"uac_info": ("asInvoker", False),
 		"icon_resources":[(1,"images/nvda.ico")],
+		"version":"0.0.0.0",
+		"product_version":version,
+		"copyright":copyright,
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
