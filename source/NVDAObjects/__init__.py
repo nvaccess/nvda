@@ -417,6 +417,14 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	@classmethod
+	def objectInForeground(cls):
+		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		@return: the foreground object
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
 	def __init__(self):
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.

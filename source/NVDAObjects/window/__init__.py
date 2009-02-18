@@ -124,6 +124,14 @@ An NVDAObject for a window
 			return APIClass.objectWithFocus(windowHandle=windowHandle)
 		return Window(windowHandle=windowHandle)
 
+	@classmethod
+	def objectInForeground(cls):
+		windowHandle=winUser.getForegroundWindow()
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectInForeground.im_func!=Window.objectInForeground.im_func:
+			return APIClass.objectInForeground(windowHandle=windowHandle)
+		return APIClass(windowHandle=windowHandle)
+
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
