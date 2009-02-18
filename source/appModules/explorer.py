@@ -25,7 +25,7 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU and obj.parent.windowClassName == "SysPager":
 			# Classic Start menu.
-			self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu)
+			self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):

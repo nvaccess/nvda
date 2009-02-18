@@ -197,7 +197,7 @@ class AppModule(baseObject.ScriptableObject):
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
 
-	def overlayCustomNVDAObjectClass(self,obj,customClass):
+	def overlayCustomNVDAObjectClass(self,obj,customClass,outerMost=False):
 		"""Overlays the given custom class on to the class structure of the given NVDAObject.
 		@param obj: the NVDAObject that should be overlayed.
 		@type obj: NVDAObject
@@ -209,7 +209,11 @@ class AppModule(baseObject.ScriptableObject):
 		newClass=self._overlayClassCache.get(cacheKey,None)
 		if not newClass:
 			newName="%s_%sAppModule_%s"%(customClass.__name__,self.appModuleName,oldClass.__name__)
-			newClass=type(newName,(customClass,)+oldClass.__mro__,{})
+			if outerMost:
+				bases=(customClass,oldClass)
+			else:
+				bases=(oldClass,customClass)
+			newClass=type(newName,bases,{})
 			self._overlayClassCache[cacheKey]=newClass
 		obj.__class__=newClass
 
