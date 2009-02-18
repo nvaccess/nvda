@@ -103,10 +103,10 @@ An NVDAObject for a window
 		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
 		if not windowHandle:
 			return
-		newCls=Window.findBestAPIClass(windowHandle=windowHandle)
-		if newCls!=Window:
-			return newCls.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
-		newNVDAObject=Window(windowHandle=windowHandle)
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectFromPoint.im_func!=Window.objectFromPoint.im_func:
+			return APIClass.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
+		newNVDAObject=APIClass(windowHandle=windowHandle)
 		if oldNVDAObject==newNVDAObject:
 			return oldNVDAObject
 		return newNVDAObject
@@ -120,9 +120,9 @@ An NVDAObject for a window
 		if not windowHandle:
 			windowHandle=fg
 		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-		if APIClass!=Window:
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectWithFocus.im_func!=Window.objectWithFocus.im_func:
 			return APIClass.objectWithFocus(windowHandle=windowHandle)
-		return Window(windowHandle=windowHandle)
+		return APIClass(windowHandle=windowHandle)
 
 	@classmethod
 	def objectInForeground(cls):
