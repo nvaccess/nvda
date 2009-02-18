@@ -327,7 +327,11 @@ the NVDAObject for IAccessible
 
 	@classmethod
 	def objectWithFocus(cls,windowHandle=None):
+		if not windowHandle:
+			return None
 		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
+		if not res:
+			return None
 		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 		prevObj=None
 		while obj and obj!=prevObj:
