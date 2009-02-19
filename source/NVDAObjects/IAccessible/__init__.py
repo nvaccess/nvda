@@ -1144,12 +1144,6 @@ class ToolbarWindow32(IAccessible):
 			speech.cancelSpeech()
 
 		return not eventHandler.isPendingEvents("gainFocus")
-class MenuBar(IAccessible):
-
-	"""Silence speaking the foreground on menu bars."""
-
-	def event_foreground(self):
-		pass
 
 class MenuItem(IAccessible):
 
@@ -1209,7 +1203,6 @@ _staticMap={
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-	(None,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):"MenuBar",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
