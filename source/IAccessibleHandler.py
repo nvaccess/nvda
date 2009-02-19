@@ -673,7 +673,7 @@ winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
 winUser.EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 winUser.EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
-winUser.EVENT_SYSTEM_SWITCHSTART:"switchStart",
+# We don't need switchStart.
 winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
@@ -945,19 +945,16 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 		return
 	processFocusNVDAEvent(obj, needsFocusedState=False)
 
-def processMenuEndWinEvent(eventID, window, objectID, childID, validFocus):
-	"""Process a menuEnd win event.
+def processFakeFocusWinEvent(eventID, window, objectID, childID):
+	"""Process a fake focus win event.
 	@postcondition: The focus will be found and an event generated for it if appropriate.
 	"""
-	if validFocus:
-		# A valid gainFocus should always override a menuEnd event.
-		return
-	# A menuEnd has been received with no focus event, so we probably need to find the focus and fake it.
+	# A suitable event for faking the focus has been received with no focus event, so we probably need to find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
 	import wx
-	wx.CallLater(50, _menuEndFakeFocus, liveNVDAObjectTable["focus"])
+	wx.CallLater(50, _fakeFocus, liveNVDAObjectTable["focus"])
 
-def _menuEndFakeFocus(oldFocus):
+def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
@@ -982,7 +979,7 @@ def pumpAll():
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
 	validFocus=False
-	menuEvent=None
+	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
@@ -998,21 +995,23 @@ def pumpAll():
 				processForegroundWinEvent(*(winEvent[1:]))
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
-			elif winEvent[0] in MENU_EVENTIDS:
-				# Handle this later.
-				menuEvent=winEvent
+			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
+				# If there is no valid focus event, we may need to use this to fake the focus later.
+				fakeFocusEvent=winEvent
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
 		if processFocusWinEvent(*(focusWinEvent[1:])):
 			validFocus=True
 			break
-	if menuEvent:
-		# Try the menu event as a last resort.
-		if menuEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
-			processMenuStartWinEvent(*menuEvent, validFocus=validFocus)
-		else:
-			processMenuEndWinEvent(*menuEvent, validFocus=validFocus)
+	if fakeFocusEvent:
+		# Try this as a last resort.
+		if fakeFocusEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
+			# menuStart needs to be handled specially and might act even if there was a valid focus event.
+			processMenuStartWinEvent(*fakeFocusEvent, validFocus=validFocus)
+		elif not validFocus:
+			# Other fake focus events only need to be handled if there was no valid focus event.
+			processFakeFocusWinEvent(*fakeFocusEvent)
 
 def terminate():
 	for handle in winEventHookIDs:

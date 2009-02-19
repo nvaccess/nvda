@@ -37,19 +37,6 @@ import braille
 
 class AppModule(appModuleHandler.AppModule):
 
-	def event_switchStart(self,obj,nextHandler):
-		speech.cancelSpeech()
-
-	def event_switchEnd(self,obj,nextHandler):
-		oldFocus = api.getFocusObject()
-		api.processPendingEvents()
-		if oldFocus != api.getFocusObject():
-			return
-		# Task switcher is gone, but no foreground or focus event was fired.
-		# We must therefore find and restore the correct focus.
-		speech.cancelSpeech()
-		IAccessibleHandler.processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
-
 	def script_keyboardHelp(self,keyPress):
 		if not globalVars.keyboardHelp:
  			state=_("on")
