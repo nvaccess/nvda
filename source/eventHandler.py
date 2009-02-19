@@ -77,25 +77,13 @@ def executeEvent(eventName,obj,**kwargs):
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
 	api.setFocusObject(obj)
-	newForeground=api.getForegroundObject()
-	if newForeground is not oldForeground:
-		executeEvent('foreground',newForeground)
-		if obj is newForeground:
-			return False
+	if globalVars.focusDifferenceLevel<=1:
+		newForeground=api.getDesktopObject().objectInForeground()
+		api.setForegroundObject(newForeground)
+		doPreForeground(newForeground)
+		#executeEvent('foreground',newForeground)
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
-		if parent is newForeground:
-			continue
-		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
-			continue
-		name=parent.name
-		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION,controlTypes.ROLE_GROUPING) and not name and not description:
-			continue
-		states=parent.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
-			continue
 		executeEvent("focusEntered",parent)
 	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
 (globalVars.focusAncestors[1].windowClassName=="TformMain" and 

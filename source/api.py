@@ -35,15 +35,7 @@ def getForegroundObject():
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	import NVDAObjects.IAccessible
-	focusLine=list(globalVars.focusAncestors)
-	focusLine.append(globalVars.focusObject)
-	focusLineLength=len(focusLine)
-	if focusLineLength<=2:
-		return focusLine[-1]
-	if isinstance(focusLine[1],NVDAObjects.IAccessible.IAccessible) and focusLine[1].role==controlTypes.ROLE_WINDOW:
-		return focusLine[2]
-	return focusLine[1]
+	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
 	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
