@@ -266,6 +266,8 @@ class TaskList(Window):
 
 class Desktop(Window):
 
+	isPresentableFocusAncestor = False
+
 	def _get_name(self):
 		return _("Desktop")
 
