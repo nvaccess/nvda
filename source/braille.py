@@ -606,15 +606,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		newAncestorsStart = 1
 
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
-		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_MENUITEM):
-			continue
-		name=parent.name
-		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION) and not name and not description:
-			continue
-		states=parent.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=" ")
 		region._focusAncestorIndex = index
