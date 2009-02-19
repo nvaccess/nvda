@@ -19,6 +19,7 @@ import controlTypes
 import win32clipboard
 import win32con
 import eventHandler
+import braille
 
 #User functions
 
@@ -119,6 +120,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
+	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if globalVars.focusMovesNavigatorObject:
 		setNavigatorObject(obj)
 	if obj.virtualBuffer is not oldVirtualBuffer:
