@@ -923,6 +923,14 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
+	def _get_isPresentableFocusAncestor(self):
+		IARole = self.IAccessibleRole
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
+			return True
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			return False
+		return super(IAccessible, self).isPresentableFocusAncestor
+
 class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
