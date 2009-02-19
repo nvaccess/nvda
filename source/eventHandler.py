@@ -68,8 +68,6 @@ def executeEvent(eventName,obj,**kwargs):
 	"""
 	if eventName=="gainFocus" and not doPreGainFocus(obj):
 		return
-	elif eventName=="foreground" and not doPreForeground(obj):
-		return
 	elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 		return
 	executeEvent_appModuleLevel(eventName,obj,**kwargs)
@@ -80,8 +78,7 @@ def doPreGainFocus(obj):
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
 		api.setForegroundObject(newForeground)
-		doPreForeground(newForeground)
-		#executeEvent('foreground',newForeground)
+		executeEvent('foreground',newForeground)
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
@@ -96,10 +93,6 @@ globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"):
 		wx.CallAfter(CoCallCancellationHandler.stop)
 	return True
  
-def doPreForeground(obj):
-	speech.cancelSpeech()
-	return True
-
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):

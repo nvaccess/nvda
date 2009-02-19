@@ -840,12 +840,11 @@ This code is executed if a gain focus event is received by this object.
 		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
+		"""Called when the foreground window changes.
+		This method should only perform tasks specific to the foreground window changing.
+		L{event_focusEntered} or L{event_gainFocus} will be called for this object, so this method should not speak/braille the object, etc.
 		"""
-This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
-"""
 		speech.cancelSpeech()
-		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
-		braille.handler.handleGainFocus(self)
 
 	def event_becomeNavigatorObject(self):
 		"""Called when this object becomes the navigator object.
