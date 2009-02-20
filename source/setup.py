@@ -47,11 +47,11 @@ class py2exe(build_exe.py2exe):
 		self.distribution.data_files.extend(
 			[
 				("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
-				("appModules", glob("appModules/*%s"%compiledModExtention)),
+				("appModules", glob("appModules/*.py*")),
 			]
 			+ getLocaleDataFiles()
-			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,))
-			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,))
+			+ getRecursiveDataFiles("synthDrivers", "synthDrivers")
+			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers")
 		)
 		build_exe.py2exe.run(self)
 
