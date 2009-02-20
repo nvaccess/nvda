@@ -12,12 +12,18 @@ _pendingEventCountsByName={}
 _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 
+#: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
+lastQueuedFocusObject=None
+
 def queueEvent(eventName,obj):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
+	global lastQueuedFocusObject
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
+	if eventName=="gainFocus":
+		lastQueuedFocusObject=obj
 	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1

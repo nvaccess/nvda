@@ -261,7 +261,7 @@ class OrderedWinEventLimiter(object):
 #The win event limiter for all winEvents
 winEventLimiter=OrderedWinEventLimiter()
 
-#A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params, or special usage strings, like 'focus' or 'foreground' etc.
+#A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 IAccessibleRolesToNVDARoles={
@@ -779,7 +779,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
-	focus=liveNVDAObjectTable.get('focus',None)
+	focus=eventHandler.lastQueuedFocusObject
 	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
 		NVDAEvent=("caret",focus)
 	else:
@@ -819,10 +819,10 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
 		# This is a focus event from a background window, so ignore it.
 		return False
-	oldFocus=liveNVDAObjectTable.get('focus',None)
+	oldFocus=eventHandler.lastQueuedFocusObject
 	#If the existing focus has the same win event params as these, then ignore this event
 	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
-	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible)  and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
 		# Don't actually process the event, as it is the same as the current focus.
 		# However, it is still a valid event, so return True.
 		return True
@@ -876,7 +876,6 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 			testObj=parent
 		if not testObj:
 			return False
-	liveNVDAObjectTable['focus']=obj
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
@@ -899,12 +898,12 @@ def processForegroundWinEvent(window,objectID,childID):
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False
-	oldFocus=liveNVDAObjectTable.get('focus',None)
+	oldFocus=eventHandler.lastQueuedFocusObject
 	#If this foreground win event's window is an ancestor of the existing focus's window, then ignore it
-	if oldFocus and winUser.isDescendantWindow(window,oldFocus.windowHandle):
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,oldFocus.windowHandle):
 		return False
 	#If the existing focus has the same win event params as these, then ignore this event
-	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
@@ -916,7 +915,6 @@ def processForegroundWinEvent(window,objectID,childID):
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
-	liveNVDAObjectTable['focus']=NVDAEvent[1]
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
@@ -933,9 +931,11 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
 	@postcondition: Focus will be directed to the menu if appropriate.
 	"""
-	if validFocus and liveNVDAObjectTable["focus"].IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
-		# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
-		return
+	if validFocus:
+		lastFocus=eventHandler.lastQueuedFocusObject
+		if isinstance(lastFocus,NVDAObjects.IAccessible.IAccessible) and lastFocus.IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
+			# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
+			return
 	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 	if not NVDAEvent:
 		return
@@ -952,7 +952,7 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	# A suitable event for faking the focus has been received with no focus event, so we probably need to find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
 	import wx
-	wx.CallLater(50, _fakeFocus, liveNVDAObjectTable["focus"])
+	wx.CallLater(50, _fakeFocus, api.getFocusObject())
 
 def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
@@ -965,8 +965,6 @@ cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)
 
 def initialize():
 	focusObject=api.getDesktopObject().objectWithFocus()
-	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		liveNVDAObjectTable['focus']=focusObject
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
