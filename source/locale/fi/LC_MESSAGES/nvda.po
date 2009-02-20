@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2734\n"
+"Project-Id-Version: r2751\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-02-17 08:48+0200\n"
+"PO-Revision-Date: 2009-02-20 07:36+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:1069 appModules\_default.py:757
+#: NVDAObjects\IAccessible\__init__.py:1083 appModules\_default.py:757
 msgid "%d percent"
 msgstr "%d prosenttia"
 
@@ -21,7 +21,7 @@ msgstr "%d prosenttia"
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: NVDAObjects\window\__init__.py:264
+#: NVDAObjects\window\__init__.py:272
 msgid "Desktop"
 msgstr "Työpöytä"
 
@@ -1069,12 +1069,16 @@ msgid "French (Canada) grade 2"
 msgstr "Ranska (Kanada), grade 2"
 
 #: braille.py:44
-msgid "French (France) grade 1"
-msgstr "Ranska (Ranska), grade 1"
+msgid "French (unified) 6 dot computer braille"
+msgstr "Ranska (yhdenmukaistettu), 6 pisteen tietokonemerkistö"
 
 #: braille.py:45
-msgid "French (France) grade 2"
-msgstr "Ranska (Ranska), grade 2"
+msgid "French (unified) 8 dot computer braille"
+msgstr "Ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
+
+#: braille.py:46
+msgid "French (unified) Grade 2"
+msgstr "Ranska (yhdenmukaistettu), grade 2"
 
 #: braille.py:46
 msgid "Greek (Greece) grade 1"
@@ -3271,7 +3275,12 @@ msgstr "Ilmainen, avoimen lähdekoodin ruudunlukuohjelma Windowsille"
 
 #: versionInfo.py:44
 msgid ""
-"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+msgstr "Copyright (C) 2006-2009 NVDA-avustajat <http://www.nvda-project.org/>"
+
+#: versionInfo.py:45
+msgid ""
+"%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are "
 "free to share or change this software in any way you like as long as you "
 "distribute the licence along with the software, and make all source code "
@@ -3282,7 +3291,6 @@ msgid ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2008 NVDA-avustajat <http://www.nvda-project.org/>\n"
 "%(name)s on suojattu GNU General Public License (versio 2) -lisenssillä. "
 "Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa millä tahansa tavalla, "
 "kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien "
