@@ -273,10 +273,20 @@ def internal_event_focusGained(vmID, event,source):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
+	tempContext=accContext
+	while tempContext:
+		try:
+			tempContext=bridgeDll.getActiveDescendent(vmID,tempContext)
+		except:
+			tempContext=None
+		if tempContext and bridgeDll.isSameObject(vmID,accContext,tempContext):
+			tempContext=None
+		if tempContext:
+			bridgeDll.releaseJavaObject(vmID,accContext)
+			accContext=tempContext
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
-	focus=api.getFocusObject()
 	focus=eventHandler.lastQueuedFocusObject
 	if (isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext):
 		return 
@@ -284,9 +294,6 @@ def event_gainFocus(vmID,accContext):
 	if obj.role==controlTypes.ROLE_UNKNOWN:
 		return
 	eventHandler.queueEvent("gainFocus",obj)
-	activeChild=obj.activeChild
-	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN and activeChild.jabContext!=jabContext:
-		eventHandler.queueEvent("gainFocus",activeChild)
 
 @CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
@@ -322,25 +329,17 @@ def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_enterJavaWindow(hwnd):
-	try:
-		jabContext=JABContext(hwnd=hwnd)
-	except:
-		return
-	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj==api.getForegroundObject():
-		return
-	eventHandler.queueEvent("gainFocus",obj)
 	vmID=c_int()
 	accContext=c_int()
-	bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
-	jabContext=JABContext(hwnd=hwnd,vmID=vmID.value,accContext=accContext.value)
-	focusObject=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	activeChild=focusObject.activeChild
-	if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
-		focusObject=activeChild
-	if focusObject.role==controlTypes.ROLE_UNKNOWN:
+	try:
+		bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
+	except:
 		return
-	eventHandler.queueEvent("gainFocus",focusObject)
+	vmIDsToWindowHandles[vmID.value]=hwnd
+	lastFocus=eventHandler.lastQueuedFocusObject
+	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:
+		return
+	internalQueueFunction(event_gainFocus,vmID.value,accContext.value)
 
 def isJavaWindow(hwnd):
 	if not isRunning:
