@@ -12,12 +12,18 @@ _pendingEventCountsByName={}
 _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 
+#: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
+lastQueuedFocusObject=None
+
 def queueEvent(eventName,obj):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
+	global lastQueuedFocusObject
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
+	if eventName=="gainFocus":
+		lastQueuedFocusObject=obj
 	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
@@ -68,8 +74,6 @@ def executeEvent(eventName,obj,**kwargs):
 	"""
 	if eventName=="gainFocus" and not doPreGainFocus(obj):
 		return
-	elif eventName=="foreground" and not doPreForeground(obj):
-		return
 	elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 		return
 	executeEvent_appModuleLevel(eventName,obj,**kwargs)
@@ -77,25 +81,12 @@ def executeEvent(eventName,obj,**kwargs):
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
 	api.setFocusObject(obj)
-	newForeground=api.getForegroundObject()
-	if newForeground is not oldForeground:
+	if globalVars.focusDifferenceLevel<=1:
+		newForeground=api.getDesktopObject().objectInForeground()
+		api.setForegroundObject(newForeground)
 		executeEvent('foreground',newForeground)
-		if obj is newForeground:
-			return False
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
-		if parent is newForeground:
-			continue
-		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
-			continue
-		name=parent.name
-		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION,controlTypes.ROLE_GROUPING) and not name and not description:
-			continue
-		states=parent.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
-			continue
 		executeEvent("focusEntered",parent)
 	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
 (globalVars.focusAncestors[1].windowClassName=="TformMain" and 
@@ -108,10 +99,6 @@ globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"):
 		wx.CallAfter(CoCallCancellationHandler.stop)
 	return True
  
-def doPreForeground(obj):
-	speech.cancelSpeech()
-	return True
-
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):

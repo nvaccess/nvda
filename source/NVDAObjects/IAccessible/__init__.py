@@ -329,10 +329,7 @@ the NVDAObject for IAccessible
 	def objectWithFocus(cls,windowHandle=None):
 		if not windowHandle:
 			return None
-		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return None
-		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		obj=getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 		prevObj=None
 		while obj and obj!=prevObj:
 			prevObj=obj
@@ -343,10 +340,7 @@ the NVDAObject for IAccessible
 	def objectInForeground(cls,windowHandle=None):
 		if not windowHandle:
 			return None
-		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return None
-		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		return getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -923,6 +917,14 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
+	def _get_isPresentableFocusAncestor(self):
+		IARole = self.IAccessibleRole
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
+			return True
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			return False
+		return super(IAccessible, self).isPresentableFocusAncestor
+
 class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
@@ -1136,12 +1138,6 @@ class ToolbarWindow32(IAccessible):
 			speech.cancelSpeech()
 
 		return not eventHandler.isPendingEvents("gainFocus")
-class MenuBar(IAccessible):
-
-	"""Silence speaking the foreground on menu bars."""
-
-	def event_foreground(self):
-		pass
 
 class MenuItem(IAccessible):
 
@@ -1201,7 +1197,6 @@ _staticMap={
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-	(None,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):"MenuBar",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

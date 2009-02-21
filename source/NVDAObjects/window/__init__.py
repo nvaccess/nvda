@@ -262,11 +262,11 @@ An NVDAObject for a window
 	normalizedWindowClassNameCache={}
 
 class TaskList(Window):
-
-	def event_foreground(self):
-		pass
+	isPresentableFocusAncestor = False
 
 class Desktop(Window):
+
+	isPresentableFocusAncestor = False
 
 	def _get_name(self):
 		return _("Desktop")
