@@ -272,10 +272,12 @@ class Desktop(Window):
 		return _("Desktop")
 
 windowClassMap={
+	"EDIT":"Edit",
 	"TTntEdit.UnicodeClass":"Edit",
 	"TMaskEdit":"Edit",
 	"TTntMemo.UnicodeClass":"Edit",
 	"TRichEdit":"Edit",
+	"TRichViewEdit":"Edit",
 	"TInEdit.UnicodeClass":"Edit",
 	"TEdit":"Edit",
 	"TFilenameEdit":"Edit",
@@ -292,11 +294,9 @@ windowClassMap={
 	"EditControl":"Edit",
 	"TNavigableTntMemo.UnicodeClass":"Edit",
 	"TNavigableTntEdit.UnicodeClass":"Edit",
-	"WindowsForms10.EDIT.app.0.11c7a8c":"Edit",
 	"TRichEditViewer":"RichEdit",
 	"RichEdit20A":"RichEdit20",
 	"RichEdit20W":"RichEdit20",
 	"TskRichEdit.UnicodeClass":"RichEdit20",
 	"RichEdit20WPT":"RichEdit20",
-	"WindowsForms10.RichEdit20W.app.0.378734a":"RichEdit20",
 }
