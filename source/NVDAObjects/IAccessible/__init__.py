@@ -329,10 +329,7 @@ the NVDAObject for IAccessible
 	def objectWithFocus(cls,windowHandle=None):
 		if not windowHandle:
 			return None
-		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return None
-		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		obj=getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 		prevObj=None
 		while obj and obj!=prevObj:
 			prevObj=obj
@@ -343,10 +340,7 @@ the NVDAObject for IAccessible
 	def objectInForeground(cls,windowHandle=None):
 		if not windowHandle:
 			return None
-		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return None
-		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		return getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
