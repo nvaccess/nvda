@@ -279,7 +279,11 @@ def event_gainFocus(vmID,accContext):
 			tempContext=bridgeDll.getActiveDescendent(vmID,tempContext)
 		except:
 			tempContext=None
-		if tempContext and bridgeDll.isSameObject(vmID,accContext,tempContext):
+		try:
+			depth=bridgeDll.getObjectDepth(vmID,tempContext)
+		except:
+			depth=-1
+		if tempContext and (depth<=0 or bridgeDll.isSameObject(vmID,accContext,tempContext)):
 			tempContext=None
 		if tempContext:
 			bridgeDll.releaseJavaObject(vmID,accContext)
