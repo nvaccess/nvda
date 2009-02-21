@@ -109,19 +109,39 @@ class AppModule(appModuleHandler.AppModule):
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
 
 	def script_increaseSynthSetting(self,keyPress):
-		ui.message("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.increase()))
+		settingName=globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(_("No settings"))
+			return
+		settingValue=globalVars.settingsRing.increase()
+		ui.message("%s %s" % (settingName,settingValue))
 	script_increaseSynthSetting.__doc__=_("Increases the currently active setting in the synth settings ring")
 
 	def script_decreaseSynthSetting(self,keyPress):
-		ui.message("%s %s" % (globalVars.settingsRing.currentSettingName, globalVars.settingsRing.decrease()))
+		settingName=globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(_("No settings"))
+			return
+		settingValue=globalVars.settingsRing.decrease()
+		ui.message("%s %s" % (settingName,settingValue))
 	script_decreaseSynthSetting.__doc__=_("Decreases the currently active setting in the synth settings ring")
 
 	def script_nextSynthSetting(self,keyPress):
-		ui.message("%s %s"%(globalVars.settingsRing.next(), globalVars.settingsRing._get_currentSettingValue()))
+		nextSettingName=globalVars.settingsRing.next()
+		if not nextSettingName:
+			ui.message(_("No settings"))
+			return
+		nextSettingValue=globalVars.settingsRing.currentSettingValue
+		ui.message("%s %s"%(nextSettingName,nextSettingValue))
 	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
 
 	def script_previousSynthSetting(self,keyPress):
-		ui.message("%s %s"%(globalVars.settingsRing.previous(), globalVars.settingsRing._get_currentSettingValue()))
+		previousSettingName=globalVars.settingsRing.previous()
+		if not previousSettingName:
+			ui.message(_("No settings"))
+			return
+		previousSettingValue=globalVars.settingsRing.currentSettingValue
+		ui.message("%s %s"%(previousSettingName,previousSettingValue))
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 
 	def script_toggleSpeakTypedCharacters(self,keyPress):
