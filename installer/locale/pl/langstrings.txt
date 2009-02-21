@@ -1,27 +1,27 @@
 ;Polish
-LangString msg_WelcomePageTitle ${LANG_POLISH} "Instalator programu ${PRODUCT}, Wersja ${VERSION}"
-LangString msg_WelcomePageText ${LANG_POLISH} "Witamy w kreatorze instalacji programu ${PRODUCT} bezp³atnego i powszechnie dostêpnego screen readera pracuj¹cego w systemie Windows.$\n\
-Wszelkie prawa zastrze¿one  2006 -2008 Michael Curran.$\n\
-Ten kreator przeprowadzi Ciê przez proces instalacji programu ${PRODUCT}; Zaleca siê zamkniêcie wszystkich innych aplikacji przed kontynuowaniem instalacji.$\n"
-LangString msg_NVDAWebSite ${LANG_POLISH} "OdwiedŸ oficjaln¹ stronê programu NVDA"
-LangString msg_NVDARunning ${LANG_POLISH} "Inna kopia programu NVDA jest ju¿ uruchomiona. Zostanie ona zamkniêta, przed procesem instalacji."
-LangString msg_pagePrevInstallLabel ${LANG_POLISH} "W systemie jest zainstalowana wczeœniejsza wersja NVDA, zostanie ona odinstalowana przed kontynuowaniem instalacji."
-LangString msg_pagePrevInstallUninstallCheckBox ${LANG_POLISH} "Odinstaluj (Zalecane)"
+LangString msg_WelcomePageTitle ${LANG_POLISH} "Instalator ${PRODUCT}, wersja ${VERSION}"
+LangString msg_WelcomePageText ${LANG_POLISH} "Witamy w instalatorze programu ${PRODUCT} (Non-Visual Desktop Access), darmowego i wolnego oprogramowania udŸwiêkawiaj¹cego dla systemu Microsoft Windows.$\n\
+Copyright 2006-2009 Wspó³autorzy NVDA.$\n\
+Ten kreator przeprowadzi ciê przez proces instalacji programu ${PRODUCT}. Przed kontynuowaniem instalacji zaleca siê zamkniêcie wszystkich dzia³aj¹cych aplikacji.$\n"
+LangString msg_NVDAWebSite ${LANG_POLISH} "OdwiedŸ oficjaln¹ stronê NVDA (w jêzyku angielskim)"
+LangString msg_NVDARunning ${LANG_POLISH} "Inna kopia programu NVDA jest ju¿ uruchomiona. Zostanie ona zamkniêta zanim instalator bêdzie móg³ kontynuowaæ."
+LangString msg_pagePrevInstallLabel ${LANG_POLISH} "Instalator wykry³, ¿e w systemie jest zainstalowana poprzednia wersja NVDA. Jest wysoce zalecane odinstalowanie jej przed przed kontynuowaniem tej instalacji."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_POLISH} "Odinstaluj (zalecane)"
 LangString shortcut_uninstall $(LANG_POLISH) "Odinstaluj"
 LangString shortcut_website $(LANG_POLISH) "Strona domowa"
-LangString shortcut_readme $(LANG_POLISH) "Przeczytaj"
+LangString shortcut_readme $(LANG_POLISH) "Czytaj to"
 LangString shortcut_userguide $(LANG_POLISH) "Podrêcznik u¿ytkownika"
 LangString path_userguide $(LANG_POLISH) "pl\user guide.html"
 LangString path_readmefile $(LANG_POLISH) "pl\readme.txt"
 LangString UNLOG_HEADER ${LANG_POLISH} "======= Plik rejestru deinstalatora \
                                          proszê nie edytowaæ tego pliku ======="
-LangString UNLOG_DAT_NOT_FOUND ${LANG_POLISH} "${UNINST_DAT} nie odnaleziony, \
-                                          nie mo¿na wykonaæ deinstalacji."
-LangString UNLOG_DEL_FILE ${LANG_POLISH} 'Usuñ Plik "$R9"?'
-LangString UNLOG_DEL_DIR ${LANG_POLISH} 'Usuñ Katalog "$R9"?'
-LangString UNLOG_EMPTY_DIR ${LANG_POLISH} "Zosta³a wykryta wczeœniejsza instalacja w $0.$\n\
-                                            Wymagany jest brakuj¹cy plik ${UNINSTALL_LOG}.dat.$\n$\n\
-                                            Zdecydowanie zaleca siê wybranie innego \
-                                            katalogu i wykonanie nowej instalacji."
-LangString UNLOG_ERROR_LOG ${LANG_POLISH} "B³êdny wpis w ${UNINSTALL_LOG}."
-LangString UNLOG_ERROR_CREATE ${LANG_POLISH} "B³¹d tworzenia ${UNINSTALL_LOG}."
+LangString UNLOG_DAT_NOT_FOUND ${LANG_POLISH} "${UNINST_DAT} nie znaleziony, \
+                                          nie mo¿na odinstalowaæ programu."
+LangString UNLOG_DEL_FILE ${LANG_POLISH} 'Usun¹æ plik "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_POLISH} 'Usun¹æ katalog "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_POLISH} "Wykryto wczeœniejsz¹ instalacjê w $0.$\n\
+                                            Brakuje niezbêdnego pliku ${UNINSTALL_LOG}.dat.$\n$\n\
+                                            Zalecane jest wybranie nowego pustego \
+                                            katalogu i wykonanie œwie¿ej instalacji."
+LangString UNLOG_ERROR_LOG ${LANG_POLISH} "B³¹d w pliku ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_POLISH} "B³¹d tworzenia pliku ${UNINSTALL_LOG}."

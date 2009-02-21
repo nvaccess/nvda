@@ -283,7 +283,17 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		self.voiceList.SetFocus()
+		if hasattr(self,'voiceList'):
+			self.voiceList.SetFocus()
+			return
+		if hasattr(self,'variantList'):
+			self.variantList.SetFocus()
+			return
+		for s in (self.rateSlider,self.pitchSlider,self.inflectionSlider,self.volumeSlider):
+			if s.IsEnabled():
+				s.SetFocus()
+				return
+		self.punctuationCheckBox.SetFocus()
 
 	def _setVoiceParameters(self):
 		if getSynth().hasRate:
