@@ -6,6 +6,7 @@ import appModuleHandler
 import virtualBufferHandler
 import globalVars
 import controlTypes
+from logHandler import log
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -44,7 +45,7 @@ def _queueEventCallback(eventName,obj):
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
 	elif curCount==1:
 		del _pendingEventCountsByNameAndObj[(eventName,obj)]
-	executeEvent(eventName,obj)
+		executeEvent(eventName,obj)
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?
@@ -72,11 +73,15 @@ def executeEvent(eventName,obj,**kwargs):
 	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
-	if eventName=="gainFocus" and not doPreGainFocus(obj):
-		return
-	elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
-		return
-	executeEvent_appModuleLevel(eventName,obj,**kwargs)
+	try:
+		if eventName=="gainFocus" and not doPreGainFocus(obj):
+			return
+		elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+			return
+		executeEvent_appModuleLevel(eventName,obj,**kwargs)
+	except:
+		log.error("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs),exc_info=True)
+
 
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
