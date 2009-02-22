@@ -341,6 +341,9 @@ class VoiceSettingsDialog(SettingsDialog):
 		getSynth().volume=val
 
 	def onCancel(self,evt):
+		#unbind voice and variant change events as wx closes combo boxes on cancel
+		self.voiceList.Unbind(wx.EVT_CHOICE)
+		self.variantList.Unbind(wx.EVT_CHOICE)
 		if getSynth().hasVoice:
 			changeVoice(getSynth(),config.conf["speech"][getSynth().name]["voice"])
 		if getSynth().hasVariant:
