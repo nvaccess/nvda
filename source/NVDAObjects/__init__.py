@@ -763,7 +763,7 @@ Tries to force this object to take the focus.
 			return False
 		name = self.name
 		description = self.description
-		if role in (controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
+		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
 			return False
 		return True
 
