@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import imp
 import os
 import config
 import baseObject
@@ -26,7 +27,12 @@ def changeVoice(synth, voice):
 
 def getSynthList():
 	synthList=[]
-	for name in [os.path.splitext(x)[0] for x in os.listdir(__path__[0]) if (x.endswith('.py') and not x.startswith('_'))]:
+	names = set()
+	modExtentions=[x[0] for x in imp.get_suffixes()]
+	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
+		if name.startswith('_') or ext not in modExtentions or name in names:
+			continue
+		names.add(name)
 		try:
 			synth=__import__(name,globals(),locals(),[]).SynthDriver
 			if synth.check():

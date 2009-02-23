@@ -171,8 +171,8 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			return ""
 		info=self._IDs[ID]
 		role=info["role"]
-		vbc=config.conf["virtualBuffers"]
-		if (role==controlTypes.ROLE_LINK and vbc["reportLinks"]) or (role==controlTypes.ROLE_LIST and vbc["reportLists"]) or (role==controlTypes.ROLE_LISTITEM and vbc["reportListItems"]) or (role==controlTypes.ROLE_HEADING and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING1 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING2 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING3 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING4 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING5 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING6 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_TABLE and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEHEADER and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEFOOTER and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEROW and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLECELL and vbc["reportTables"]) or (role==controlTypes.ROLE_GRAPHIC and vbc["reportGraphics"]) or (role==controlTypes.ROLE_FORM and vbc["reportForms"]) or ((role in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_COMBOBOX]) and vbc["reportFormFields"]) or (role==controlTypes.ROLE_PARAGRAPH and vbc["reportParagraphs"]) or (role==controlTypes.ROLE_BLOCKQUOTE and vbc["reportBlockQuotes"]) or (role==controlTypes.ROLE_FRAME and vbc["reportFrames"]):
+		vbc=config.conf["documentFormatting"]
+		if (role==controlTypes.ROLE_LINK and vbc["reportLinks"]) or (role==controlTypes.ROLE_LIST and vbc["reportLists"]) or (role==controlTypes.ROLE_LISTITEM and vbc["reportLists"]) or (role==controlTypes.ROLE_HEADING and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING1 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING2 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING3 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING4 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING5 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_HEADING6 and vbc["reportHeadings"]) or (role==controlTypes.ROLE_TABLE and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEHEADER and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEFOOTER and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLEROW and vbc["reportTables"]) or (role==controlTypes.ROLE_TABLECELL and vbc["reportTables"]) or (role==controlTypes.ROLE_GRAPHIC or (role in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_COMBOBOX])) or (role==controlTypes.ROLE_BLOCKQUOTE and vbc["reportBlockQuotes"]) or (role==controlTypes.ROLE_FRAME):
 			msg=info["typeString"] if info["typeString"] else controlTypes.speechRoleLabels[info["role"]]
 			if callable(info["stateTextFunc"]):
 				msg+=" "+info["stateTextFunc"](info["node"])
@@ -189,8 +189,8 @@ class virtualBuffer(textBuffer.TextBufferObject):
 			return ""
 		info=self._IDs[ID]
 		role=info["role"]
-		vbc=config.conf["virtualBuffers"]
-		if (role==controlTypes.ROLE_LIST and vbc["reportLists"]) or (role==controlTypes.ROLE_TABLE and vbc["reportTables"]) or (role==controlTypes.ROLE_FORM and vbc["reportForms"]) or (role==controlTypes.ROLE_EDITABLETEXT and vbc["reportFormFields"]) or (role==controlTypes.ROLE_BLOCKQUOTE and vbc["reportBlockQuotes"]) or (role==controlTypes.ROLE_PARAGRAPH and vbc["reportParagraphs"]) or (role==controlTypes.ROLE_FRAME and vbc["reportFrames"]):
+		vbc=config.conf["documentFormatting"]
+		if (role==controlTypes.ROLE_LIST and vbc["reportLists"]) or (role==controlTypes.ROLE_TABLE and vbc["reportTables"]) or (role==controlTypes.ROLE_EDITABLETEXT)  or (role==controlTypes.ROLE_BLOCKQUOTE and vbc["reportBlockQuotes"]) or (role==controlTypes.ROLE_FRAME): 
 			typeString=info["typeString"] if info["typeString"] else controlTypes.speechRoleLabels[info["role"]]
 			return _("out of %s")%typeString
 		else:

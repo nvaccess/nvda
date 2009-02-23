@@ -10,6 +10,7 @@ import sys
 import wx
 from wx.lib import newevent
 import globalVars
+import ui
 from logHandler import log
 import config
 import versionInfo
@@ -25,7 +26,7 @@ import api
 
 ### Constants
 appTitle = "NVDA"
-NVDA_PATH = os.getcwd()
+NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
 ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
@@ -143,12 +144,12 @@ class MainFrame(wx.Frame):
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration applied"))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration applied"))
 
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("configuration saved"))
+			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
 			self.prePopup()
 			wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
@@ -252,7 +253,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse sape, object under mouse"))
+		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
@@ -283,9 +284,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
 		item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt", False)), item)
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt")), item)
 		item = menu_help.Append(wx.ID_ANY, _("Web site"))
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+		item = menu_help.Append(wx.ID_ANY, _("Readme"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
 		item = menu_help.Append(wx.ID_ANY, _("License"))
 		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
 		item = menu_help.Append(wx.ID_ANY, _("Contributors"))

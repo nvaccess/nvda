@@ -30,17 +30,6 @@ Bascule entre les trois modes de parole (parole, bips et silence).
 NVDA+F12: dateTime
 Annonce l'heure. Une double pression annonce la date.
 
-NVDA+2: toggleSpeakTypedCharacters
-Active ou désactive l'écho clavier par caractère.
-
-NVDA+3: toggleSpeakTypedWords
-Active ou désactive l'écho clavier par mot.
-
-NVDA+4: toggleSpeakCommandKeys
-Active ou désactive l'annonce de toutes les touches à la frappe.
-
-NVDA+p: toggleSpeakPunctuation
-Active ou désactive l'annonce des ponctuations.
 
 NVDA+End: reportStatusLine
 Annonce la barre d'état de l'application courante si NVDA en trouve une.
@@ -48,15 +37,9 @@ Annonce la barre d'état de l'application courante si NVDA en trouve une.
 NVDA+f: reportFormatting
 annonce les informations de formatage à la position courante dans un document.
 
-NVDA+m: toggleMouseTracking
-
-active ou désactive l'annonce des objets sous la souris quand elle se déplace.
-
 Control+NVDA+f1: speakApplicationName
 annonce le nom de l'application courante puis l'épelle. Annonce également le nom du module NVDA en cours.
 
-NVDA+u: toggleBeepOnProgressBarUpdates
-active ou désactive les bips indiquant l'évolution d'une barre de progression.
 
 NVDA+maj+b: say_battery_status
 annonce le niveau de la batterie et si oui ou non vous êtes connecté au secteur.
@@ -82,6 +65,42 @@ annonce la sélection encours dans un document ou une zone d'édition. Signale éga
 NVDA+flèche haut: reportCurrentLine
 annonce la ligne courante dans une zone d''édition ou un document.
 
+NVDA+flèche bas: sayAll
+démarre la lecture à la position courante dans un document ou une zone d'édition.
+
+NVDA+f1: test_navigatorWindowInfo
+Lit les informations concernant l'objet de navigation courant (principalement utile pour les développeurs).
+
+Control+NVDA+c: saveConfiguration
+Sauvegarde la configuration.
+
+Control+NVDA+r: revertToSavedConfiguration
+Réinitialise la configuration.
+
+
+Modifier les paramètres des dialogues de paramétrage
+
+NVDA+2: toggleSpeakTypedCharacters
+Active ou désactive l'écho clavier par caractère.
+
+NVDA+3: toggleSpeakTypedWords
+Active ou désactive l'écho clavier par mot.
+
+NVDA+4: toggleSpeakCommandKeys
+Active ou désactive l'annonce de toutes les touches à la frappe.
+
+NVDA+p: toggleSpeakPunctuation
+Active ou désactive l'annonce des ponctuations.
+
+NVDA+m: toggleMouseTracking
+active ou désactive l'annonce des objets sous la souris quand elle se déplace.
+
+NVDA+u: toggleBeepOnProgressBarUpdates
+Contrôle la manière dont NVDA annonce l'évolution des barres de progression.
+Il peut émettre un bip à chaque évolution dans la fenêtre courante (défaut),
+émettre un bip à l'évolution de n'importe quelle barre dans le système,
+ou faire une annonce vocale tous les 10%.
+
 Control+NVDA+flèche gauche: previousSetting
 va au paramètre vocal précédent et l'annonce.
  
@@ -94,8 +113,35 @@ augmente le paramètre vocal courant.
 Control+NVDA+flèche bas: decreaseSetting
 diminue le paramètre vocal courant.
 
-NVDA+flèche bas: sayAll
-démarre la lecture à la position courante dans un document ou une zone d'édition.
+
+Affichage des dialogues
+
+Control+NVDA+g: activateGeneralSettingsDialog
+Affiche le dialogue des paramètres généraux.
+
+Control+NVDA+s: activateSynthesizerDialog
+Affiche le dialogue de choix du synthétiseur.
+
+Control+NVDA+v: activateVoiceDialog
+Affiche le dialogue des paramètres vocaux.
+
+Control+NVDA+k: activateKeyboardSettingsDialog
+Affiche le dialogue des paramètres du clavier.
+
+Control+NVDA+m: activateMouseSettingsDialog
+Affiche le dialogue des paramètres de la souris.
+
+Control+NVDA+o: activateObjectPresentationDialog
+Affiche le dialogue de présentation des objets.
+
+Control+NVDA+b: activateVirtualBuffersDialog
+Affiche le dialogue des tampons virtuels.
+
+Control+NVDA+d: activateDocumentFormattingDialog
+Affiche le dialogue de formatage des documents.
+
+Control+NVDA+z: activatePythonConsole
+Affiche la console Python.
 
 
 Naviguer avec l'objet de navigation

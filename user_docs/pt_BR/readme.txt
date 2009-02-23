@@ -1,5 +1,5 @@
 Acesso Não-Visual ao Ambiente de Trabalho (NVDA)
-Endereço: http://www.nvda-project.org/
+Endereço eletrônico: http://www.nvda-project.org/
 
 O NVDA (Acesso Não-Visual ao Ambiente de Trabalho) é um leitor de telas gratuito e aberto para o sistema operacional Microsoft Windows. Ele habilita pessoas cegas ou com baixa visão a acessar computadores que rodam Windows a um custo não maior que alguém que enxergue. O NVDA permite ao usuário saber o que se passa na tela, consultando o sistema e usando fala sintética para transmitir as informações.
 

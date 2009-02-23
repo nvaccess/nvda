@@ -4,12 +4,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core. it also handles the playing of the startup and exit sounds."""
+"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
  
 import os
 import sys
 import tempfile
-import winsound
 import locale
 import gettext
 import time
@@ -48,7 +47,8 @@ if getattr(sys, "frozen", None):
 	os.chdir(sys.prefix)
 	logFileName='%s\\nvda.log'%tempfile.gettempdir()
 else:
-	os.chdir(sys.path[0])
+	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
+	os.chdir(os.path.normpath(os.path.dirname(__file__)))
 	logFileName='nvda.log'
 
 #Localization settings
@@ -99,9 +99,6 @@ logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 
 log.info("Starting NVDA")
-
-if not globalVars.appArgs.minimal:
-	winsound.PlaySound("waves\\start.wav",winsound.SND_FILENAME|winsound.SND_ASYNC)
 winUser.setSystemScreenReaderFlag(True)
 try:
 	import core
@@ -111,8 +108,6 @@ except:
 	sys.exit(1)
 finally:
 	winUser.setSystemScreenReaderFlag(False)
-	if not globalVars.appArgs.minimal:
-		winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
 if globalVars.restart:
 	os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
 	sys.exit(0)

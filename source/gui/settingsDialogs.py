@@ -283,7 +283,17 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		self.voiceList.SetFocus()
+		if hasattr(self,'voiceList'):
+			self.voiceList.SetFocus()
+			return
+		if hasattr(self,'variantList'):
+			self.variantList.SetFocus()
+			return
+		for s in (self.rateSlider,self.pitchSlider,self.inflectionSlider,self.volumeSlider):
+			if s.IsEnabled():
+				s.SetFocus()
+				return
+		self.punctuationCheckBox.SetFocus()
 
 	def _setVoiceParameters(self):
 		if getSynth().hasRate:
@@ -331,6 +341,11 @@ class VoiceSettingsDialog(SettingsDialog):
 		getSynth().volume=val
 
 	def onCancel(self,evt):
+		#unbind voice and variant change events as wx closes combo boxes on cancel
+		if getSynth().hasVoice:
+			self.voiceList.Unbind(wx.EVT_CHOICE)
+		if getSynth().hasVariant:
+			self.variantList.Unbind(wx.EVT_CHOICE)
 		if getSynth().hasVoice:
 			changeVoice(getSynth(),config.conf["speech"][getSynth().name]["voice"])
 		if getSynth().hasVariant:
@@ -527,48 +542,15 @@ class VirtualBuffersDialog(SettingsDialog):
 		self.presentationfocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &virtual presentation on focus changes"))
 		self.presentationfocusCheckBox.SetValue(config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"])
 		settingsSizer.Add(self.presentationfocusCheckBox,border=10,flag=wx.BOTTOM)
-		self.updateCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Update the content &dynamically"))
-		self.updateCheckBox.SetValue(config.conf["virtualBuffers"]["updateContentDynamically"])
-		settingsSizer.Add(self.updateCheckBox,border=10,flag=wx.BOTTOM)
-		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lin&ks"))
-		self.linksCheckBox.SetValue(config.conf["virtualBuffers"]["reportLinks"])
-		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
-		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &lists"))
-		self.listsCheckBox.SetValue(config.conf["virtualBuffers"]["reportLists"])
-		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
-		self.listItemsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report list &items"))
-		self.listItemsCheckBox.SetValue(config.conf["virtualBuffers"]["reportListItems"])
-		settingsSizer.Add(self.listItemsCheckBox,border=10,flag=wx.BOTTOM)
-		self.headingsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &headings"))
-		self.headingsCheckBox.SetValue(config.conf["virtualBuffers"]["reportHeadings"])
-		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
-		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
-		self.tablesCheckBox.SetValue(config.conf["virtualBuffers"]["reportTables"])
-		settingsSizer.Add(self.tablesCheckBox,border=10,flag=wx.BOTTOM)
-		self.graphicsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &graphics"))
-		self.graphicsCheckBox.SetValue(config.conf["virtualBuffers"]["reportGraphics"])
-		settingsSizer.Add(self.graphicsCheckBox,border=10,flag=wx.BOTTOM)
-		self.formsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report f&orms"))
-		self.formsCheckBox.SetValue(config.conf["virtualBuffers"]["reportForms"])
-		settingsSizer.Add(self.formsCheckBox,border=10,flag=wx.BOTTOM)
-		self.formFieldsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report form &fields"))
-		self.formFieldsCheckBox.SetValue(config.conf["virtualBuffers"]["reportFormFields"])
-		settingsSizer.Add(self.formFieldsCheckBox,border=10,flag=wx.BOTTOM)
-		self.blockQuotesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report block &quotes"))
-		self.blockQuotesCheckBox.SetValue(config.conf["virtualBuffers"]["reportBlockQuotes"])
-		settingsSizer.Add(self.blockQuotesCheckBox,border=10,flag=wx.BOTTOM)
-		self.paragraphsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraphs"))
-		self.paragraphsCheckBox.SetValue(config.conf["virtualBuffers"]["reportParagraphs"])
-		settingsSizer.Add(self.paragraphsCheckBox,border=10,flag=wx.BOTTOM)
-		self.framesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report f&rames"))
-		self.framesCheckBox.SetValue(config.conf["virtualBuffers"]["reportFrames"])
-		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
 		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
 		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
 		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
+		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
+		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.maxLengthEdit.SetFocus()
@@ -588,20 +570,9 @@ class VirtualBuffersDialog(SettingsDialog):
 			config.conf["virtualBuffers"]["linesPerPage"]=newPageLines
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=self.presentationfocusCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["updateContentDynamically"]=self.updateCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportLinks"]=self.linksCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportLists"]=self.listsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportListItems"]=self.listItemsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportTables"]=self.tablesCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportGraphics"]=self.graphicsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportForms"]=self.formsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportFormFields"]=self.formFieldsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportParagraphs"]=self.paragraphsCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["reportFrames"]=self.framesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		super(VirtualBuffersDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
@@ -844,7 +815,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(label)
 		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
-		sizer.Add(self.cursorBlinkRateEdit)
+		sizer.Add(self.messageTimeoutEdit)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 	def postInit(self):

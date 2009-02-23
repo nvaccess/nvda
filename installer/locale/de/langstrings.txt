@@ -1,31 +1,27 @@
 ;German
 LangString msg_WelcomePageTitle ${LANG_GERMAN} "Setup für ${PRODUCT}, Version ${VERSION}"
-LangString msg_WelcomePageText ${LANG_GERMAN} "Willkommen zur Instalation von ${PRODUCT}, dem freien und quelloffenen Screen Reader für Windows.$\n\
-Copyright 2006 - 2008 NVDA Contributers.$\n\
-Das Instalationsprogramm wird Sie durch die einzelnen Schritte von ${PRODUCT} führen. Es wird empfohlen, das sie alle anderen Programme schließen, bevor Sie mit der Instalation fortfahren.$\n"
-LangString msg_READMEText ${LANG_GERMAN} "Readme-Datei lesen (Empfohlen)"
-LangString msg_NVDAWebSite ${LANG_GERMAN} "Offizielle NVDA-Webseite besuchen"
-LangString msg_NVDARunning ${LANG_GERMAN} "Es läuft bereits eine Instanz von NVDA! Sie wird beendet, um fortzufahren."
-LangString msg_SpeechInstall ${LANG_GERMAN} "Sind Sie sicher, dass Sie die NVDA-Instalation mit der Sprachunterstützung fortsetzen möchten? Drücken Sie die Eingabetaste um mit der Sprache fortzufahren, oder drücken Sie ESCAPE um abzubrechen."
+LangString msg_WelcomePageText ${LANG_GERMAN} "Willkommen zur Instalation von ${PRODUCT}, dem freien Screen Reader für Windows!$\nCopyright © 2006 - 2009, die NVDA-Autoren.$\nDas Instalationsprogramm wird Sie durch die einzelnen Schritte von ${PRODUCT} führen. Es wird empfohlen, dass Sie alle anderen Programme schließen, bevor Sie mit der Instalation fortfahren.$\n"
+LangString msg_NVDAWebSite ${LANG_GERMAN} "NVDA-Homepage besuchen"
+LangString msg_NVDARunning ${LANG_GERMAN} "Da bereits eine Instanz von NVDA läuft, wird diese beendet, um fortfahren zu können."
+LangString msg_pagePrevInstallLabel ${LANG_GERMANN} "Es wurde eine ältere Installation von NVDA auf ihrem Computer gefunden. Es wird empfohlen, dass Sie diese zuerst deinstallieren, bevor Sie die Instalation fortsetzen."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_GERMAN} "Deinstallallation (empfohlen)"
+LangString msg_SpeechInstall ${LANG_GERMAN} "Sind Sie sicher, dass Sie die NVDA-Instalation mit der Sprachunterstützung fortsetzen möchten? Drücken Sie die Eingabetaste um mit der Sprache fortzufahren oder drücken Sie die ESCAPE-Taste um abzubrechen."
 LangString msg_RemoveNVDA ${LANG_GERMAN} "Sind Sie sicher, dass Sie $(^Name) und alle dazu gehörigen Komponenten entfernen möchten?"
 LangString msg_NVDAConfigFound ${LANG_GERMAN} "Es wurden bereits Konfigurationsdateien für NVDA auf Ihrem System entdeckt. Sind Sie sicher, dass Sie diese entfernen möchten?"
+LangString Msg_UninsPrev ${LANG_GERMAN} "Da das Installationsprogramm eine ältere Version von NVDA auf ihrem Betriebssystem gefunden hat, wird diese deinstalliert, um fortfahren zu können."
 LangString msg_NVDASuccessfullyRemoved ${LANG_GERMAN} "$(^Name) wurde erfolgreich von Ihrem Computer entfernt!"
-LangString shortcut_Wiki $(LANG_GERMAN) "NVDA Info WIKI"
+LangString shortcut_Wiki $(LANG_GERMAN) "NVDA-Wiki"
 LangString shortcut_uninstall $(LANG_GERMAN) "Deinstallieren"
-LangString shortcut_website $(LANG_GERMAN) "Website"
+LangString shortcut_website $(LANG_GERMAN) "Internetseite"
 LangString shortcut_readme $(LANG_GERMAN) "Readme"
 LangString shortcut_userguide $(LANG_GERMAN) "Benutzerhandbuch"
 LangString path_userguide $(LANG_GERMAN) "de\User Guide.html"
 LangString path_readmefile $(LANG_GERMAN) "de\Readme.txt"
-LangString UNLOG_HEADER ${LANG_GERMAN} "=========== Deinstallationsverlauf \
-                                         Diese Datei bitte nicht verändern! ==========="
-LangString UNLOG_DAT_NOT_FOUND ${LANG_GERMAN} "${UNINST_DAT} nicht gefunden! \
-                                                War nicht in der Lage, die Deinstallation durchzuführen."
-LangString UNLOG_DEL_FILE ${LANG_GERMAN} 'Sind Sie sicher, dass Sie die Datei "$R9" wirklich löschen möchten?'
-LangString UNLOG_DEL_DIR ${LANG_GERMAN} 'Sind Sie sicher, dass Sie den Ordner "$R9" wirklich löschen möchten?'
-LangString UNLOG_EMPTY_DIR ${LANG_GERMAN} "Eine vorherige Installation wurde in $0.$ erkannt!\n\
-                                            Erforderliche Datei ${UNINSTALL_LOG}.dat fehlt!$\n$\n\
-                                            Es wird empfohlen, ein \
-                                            leerer Ordner auszuwählen und eine neuinstallation zu starten!"
-LangString UNLOG_ERROR_LOG ${LANG_GERMAN} "Fehler in dem Deinstallationsverlauf: ${UNINSTALL_LOG}."
-LangString UNLOG_ERROR_CREATE ${LANG_GERMAN} "Fehler beim Erstellen des Deinstallationsverlaufs: ${UNINSTALL_LOG}."
+LangString UNLOG_HEADER ${LANG_GERMAN} "=========== Deinstallationsprotokoll: Diese Datei bitte nicht verändern! ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_GERMAN} "${UNINST_DAT} nicht gefunden! Konnte die Deinstallation nicht durchführen."
+LangString UNLOG_DEL_FILE ${LANG_GERMAN} "Sind Sie sicher, dass Sie die Datei $R9 wirklich entfernen möchten?"
+LangString UNLOG_DEL_DIR ${LANG_GERMAN} "Sind Sie sicher, dass Sie den Ordner $R9 wirklich entfernen möchten?"
+LangString UNLOG_EMPTY_DIR ${LANG_GERMAN} "Eine bisherige Installation wurde in $0 erkannt!$\n\
+Erforderliche Datei ${UNINSTALL_LOG}.dat fehlt!$\n$\nEs wird empfohlen, ein leerer Ordner auszuwählen und eine erneute Installation zu starten!"
+LangString UNLOG_ERROR_LOG ${LANG_GERMAN} "Fehler in dem Deinstallationsprotokoll: ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_GERMAN} "Fehler beim Erstellen des Deinstallationsprotokolls: ${UNINSTALL_LOG}."

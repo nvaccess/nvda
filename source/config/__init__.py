@@ -97,19 +97,9 @@ outputDevice = string(default=default)
 	useScreenLayout = boolean(default=True)
 	reportVirtualPresentationOnFocusChanges = boolean(default=true)
 	updateContentDynamically = boolean(default=true)
-	reportLinks = boolean(default=true)
-	reportLists = boolean(default=true) 
-	reportListItems = boolean(default=true)
-	reportHeadings = boolean(default=true)
-	reportTables = boolean(default=false)
-	reportGraphics = boolean(default=true)
-	reportForms = boolean(default=false)
-	reportFormFields = boolean(default=true)
-	reportBlockQuotes = boolean(default=true)
-	reportParagraphs = boolean(default=false)
-	reportFrames = boolean(default=true)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
+	passThroughAudioIndication = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -197,18 +187,15 @@ def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
 		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
-		try:
-			instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
-		except:
-			instDir=""
-		_winreg.CloseKey(k)
-		return os.path.normpath(os.getcwdu()).lower()==os.path.normpath(instDir).lower()
-	except:
+		instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
+	except WindowsError:
 		return False
+	_winreg.CloseKey(k)
+	return os.stat(instDir)==os.stat(os.getcwdu()) 
 
 def getUserDefaultConfigPath():
-	buf=ctypes.create_unicode_buffer(MAX_PATH)
-	if isInstalledCopy() and ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
-		return u'%s\\nvda'%buf.value
-	else:
-		return u'.\\'
+	if isInstalledCopy():
+		buf=ctypes.create_unicode_buffer(MAX_PATH)
+		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
+			return u'%s\\nvda'%buf.value
+	return u'.\\'

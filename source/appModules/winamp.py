@@ -89,13 +89,6 @@ class winampMainWindow(IAccessible):
 
 class winampPlaylistEditor(winampMainWindow):
 
-	def __init__(self,*args,**kwargs):
-		super(winampPlaylistEditor,self).__init__(*args,**kwargs)
-		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		winKernel.closeHandle(self.processHandle)
-
 	def _get_name(self):
 		curIndex=winUser.sendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
 		if curIndex <0:

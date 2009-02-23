@@ -6,6 +6,7 @@ import logging
 from logging import _levelNames as levelNames
 import inspect
 import winsound
+import nvwave
 from types import MethodType
 import globalVars
 
@@ -25,6 +26,8 @@ def makeModulePathFromFilePath(path):
 	curPath = path
 	while curPath:
 		curPath, curPathCom = os.path.split(curPath)
+		if not curPathCom:
+			break
 		curPathCom = os.path.splitext(curPathCom)[0]
 		# __init__ is the root module of a package, so skip it.
 		if curPathCom != "__init__":
@@ -44,7 +47,7 @@ def getCodePath(f):
 	@returns: the dotted module.class.attribute path
 	@rtype: string
 	"""
-	path=makeModulePathFromFilePath(f.f_code.co_filename)
+	path=makeModulePathFromFilePath(os.path.relpath(f.f_code.co_filename))
 	funcName=f.f_code.co_name
 	if funcName.startswith('<'):
 		funcName=""
@@ -106,7 +109,7 @@ class FileHandler(logging.FileHandler):
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 		elif record.levelno>=logging.ERROR:
-			winsound.PlaySound("waves\\error.wav",winsound.SND_FILENAME|winsound.SND_PURGE|winsound.SND_ASYNC)
+			nvwave.playWaveFile("waves\\error.wav")
 		return logging.FileHandler.handle(self,record)
 
 class StreamRedirector(object):

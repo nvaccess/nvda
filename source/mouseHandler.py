@@ -11,15 +11,10 @@ import winUser
 import queueHandler
 import api
 import speech
-import NVDAObjects.JAB
-import NVDAObjects.IAccessible
 import globalVars
 from logHandler import log
 import config
-import IAccessibleHandler
-import JABHandler
-
-mouseHookLib=ctypes.cdll.LoadLibrary('lib/mouseHook.dll')
+import mouseHook
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -36,6 +31,7 @@ mouseShapeChanged=0
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
+currentMouseWindow=0
 
 def updateMouseShape(name):
 	global curMouseShape, mouseShapeChanged
@@ -72,7 +68,6 @@ def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
 
 #Internal mouse event
 
-@ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def internal_mouseEvent(msg,x,y,injected):
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
@@ -91,28 +86,10 @@ def internal_mouseEvent(msg,x,y,injected):
 	return True
 
 def executeMouseMoveEvent(x,y):
+	global currentMouseWindow
 	oldMouseObject=api.getMouseObject()
-	try:
-		(oldLeft,oldTop,oldWidth,oldHeight)=oldMouseObject.location
-	except:
-		oldLeft=oldTop=oldWidth=oldHeight=0
-	mouseObject=oldMouseObject
-	windowAtPoint=ctypes.windll.user32.WindowFromPoint(x,y)
-	if JABHandler.isRunning and JABHandler.isJavaWindow(windowAtPoint):
-		if not isinstance(oldMouseObject,NVDAObjects.JAB.JAB) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
-			oldJabContext=JABHandler.JABContext(hwnd=windowAtPoint)
-		else:
-			oldJabContext=oldMouseObject.jabContext
-		res=oldJabContext.getAccessibleContextAt(x,y)
-		if res:
-			mouseObject=NVDAObjects.JAB.JAB(jabContext=res)
-	else: #not a java window
-		if not isinstance(oldMouseObject,NVDAObjects.IAccessible.IAccessible) or x<oldLeft or x>(oldLeft+oldWidth) or y<oldTop or y>(oldTop+oldHeight):
-			mouseObject=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
-		else:
-			res=IAccessibleHandler.accHitTest(oldMouseObject.IAccessibleObject,oldMouseObject.IAccessibleChildID,x,y)
-			if res:
-				mouseObject=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+	desktopObject=api.getDesktopObject()
+	mouseObject=desktopObject.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
 	if not mouseObject:
 		return
 	try:
@@ -133,14 +110,14 @@ def executeMouseMoveEvent(x,y):
 def initialize():
 	global curMousePos, screenDC, screenWidth, screenHeight
 	(x,y)=winUser.getCursorPos()
-	mouseObj=NVDAObjects.IAccessible.getNVDAObjectFromPoint(x,y)
+	import NVDAObjects.window
+	mouseObj=NVDAObjects.window.Window.objectFromPoint(x,y)
 	if not mouseObj:
 		mouseObj=api.getDesktopObject()
 	api.setMouseObject(mouseObj)
 	curMousePos=(x,y)
 	screenWidth,screenHeight=api.getDesktopObject().location[2:]
-	if mouseHookLib.initialize(internal_mouseEvent) < 0:
-		raise RuntimeError("Error initializing mouseHook")
+	mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
@@ -158,5 +135,4 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	if mouseHookLib.terminate() < 0:
-		raise RuntimeError("Error terminating mouseHook")
+	mouseHook.terminate()

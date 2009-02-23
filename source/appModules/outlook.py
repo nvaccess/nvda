@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import time
-import win32com.client
+import comtypes.client
 import _default
 import api
 import eventHandler
@@ -16,9 +16,9 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 
 try:
-	nativeOm=win32com.client.GetActiveObject("outlook.application")
+	nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
 except:
-	nativeOm=win32com.client.Dispatch("outlook.application")
+	nativeOm=comtypes.client.CreateObject("outlook.Application",dynamic=True)
 outlookVersion=int(nativeOm.version.split('.')[0])
 
 def getContactString(obj):

@@ -31,7 +31,7 @@ class MSHTML(virtualBuffer):
 		def __init__(self,virtualBufferObject):
 			self.virtualBufferObject=virtualBufferObject
 
-		def ondeactivate(self,arg,event):
+		def ondeactivate(self,event):
 			try:
 				domNode=event.srcElement
 				if domNode.nodeName not in ["INPUT","SELECT","TEXTAREA"]:
@@ -57,7 +57,7 @@ class MSHTML(virtualBuffer):
 			except:
 				log.error("onchange",exc_info=True)
 
-		def onreadystatechange(self,arg,event):
+		def onreadystatechange(self,event):
 			if self.virtualBufferObject.isDocumentComplete():
 				self.virtualBufferObject.loadDocument()
 

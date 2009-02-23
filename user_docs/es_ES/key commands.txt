@@ -12,7 +12,7 @@ NVDA+1: AyudaDeTeclado
 Esta orden activa el modo de ayuda de teclado tal que puedas presionar cualquier combinación de teclas en el teclado y NVDA te dirá su nombre y qué orden lleva a cabo si tiene una. Para desactivar la ayuda de teclado, presiona NVDA+1 de nuevo.
 
 NVDA+t: título
-Anuncia el título de la aplicación actualmente activa.
+Anuncia el título de la aplicación actualmente activa. La deletrea cuando se presiona dos veces rápidamente y lo copia al portapapeles cuando se presiona tres veces rápidamente.
 
 NVDA+b: verbalizarFondo
 Verbaliza el contenido de la aplicación actualmente activa. Útil para leer información en un cuadro de diálogo que quizás te perdiste cuando fue anunciado por primera vez.
@@ -29,32 +29,14 @@ Conmuta entre los tres modos de voz (hablar, pitidos y desactivado).
 NVDA+F12: fechaYHora
 Anuncia la hora actual, presionando dos veces rápidamente anuncia la fecha actual.
 
-NVDA+2: conmutarVerbalizaciónDeCaracteresAlEscribir
-Activa o desactiva la verbalización de caracteres cuando los tecleas.
-
-NVDA+3: conmutarVerbalizaciónDePalabrasAlEscribir
-Activa o desactiva la verbalización de las palabras al escribirlas.
-
-NVDA+4: conmutarVerbalizaciónDeTeclasDeÓrdenes
-Activa o desactiva la verbalización de cualquier tecla al teclearla.
-
-NVDA+p: conmutarVerbalizaciónDePuntuación
-Activa o desactiva la verbalización de símbolos de puntuación cuando NVDA verbaliza información.
-
 NVDA+Fin: anunciarLíneaDeEstado
 Anuncia la barra de estado de la aplicación actual si puede encontrar una.
 
 NVDA+f: anunciarFormato
 Anuncia la información de formato en la posición actual en un documento
 
-NVDA+m: conmutarSeguimientoDelRatón
-Activa o desactiva el anunciado del objeto o palabra en la actual posición del puntero del ratón, según se mueva.
-
 Control+NVDA+f1: verbalizarNombreDeAplicación
 Anuncia el nombre de la aplicación actualmente activa, y también la deletrea. También anuncia el módulo de aplicación de NVDA cargado actualmente.
-
-NVDA+u: conmutarPitidosEnActualizaciónDeBarrasDeProgreso
-Activa y desactiva el pitado para indicar cuándo cambia una barra de progreso.
 
 NVDA+shift+b: decir_estado_batería
 Anuncia el nivel actual de la batería y si estás o no enchufado a la fuente de alimentación.
@@ -80,6 +62,39 @@ Anuncia la selección actual en controles de edición y documentos. Si no hay sele
 NVDA+Flecha Arriba: anunciarLíneaActual
 Anuncia la línea actual en controles de edición y documentos.
 
+NVDA+flecha Abajo: Leer Todo
+Comienza la lectura desde la posición actual en un documento o control de edición.
+
+NVDA+f1: infoTest_ventanaNavegador
+Lee Informaciones acerca del navegador de objetos actual las cuales son principalmente útiles para desarrolladores.
+
+Control+NVDA+c: guardarConfiguración
+Guarda la configuración.
+
+Control+NVDA+r: volverAConfiguraciónGuardada
+Restaura la configuración.
+
+
+Opciones de Cambio (encontradas en los diálogos de opciones)
+
+NVDA+2: conmutarVerbalizaciónDeCaracteresAlEscribir
+Activa o desactiva la verbalización de caracteres cuando los tecleas.
+
+NVDA+3: conmutarVerbalizaciónDePalabrasAlEscribir
+Activa o desactiva la verbalización de las palabras al escribirlas.
+
+NVDA+4: conmutarVerbalizaciónDeTeclasDeÓrdenes
+Activa o desactiva la verbalización de cualquier tecla al teclearla.
+
+NVDA+p: conmutarVerbalizaciónDePuntuación
+Activa o desactiva la verbalización de símbolos de puntuación cuando NVDA verbaliza información.
+
+NVDA+m: conmutarSeguimientoDelRatón
+Activa o desactiva el anunciado del objeto o palabra en la actual posición del puntero del ratón, según se mueva.
+
+NVDA+u: conmutarPitidosEnActualizaciónDeBarrasDeProgreso
+Controla cómo NVDA anuncia las actualizaciones de las barras de progreso. Puede, o pitar para todas las barras de dentro de la ventana activa (predeterminado), pitar para todas las barras actualmente en progreso dentro de todo el sistema, o puede anunciar cada diez por ciento mediante la voz.
+
 Control+NVDA+Flecha Izquierda: opciónAnterior
 Se mueve y anuncia la anterior opción de voz
  
@@ -92,17 +107,6 @@ Incrementa la opción de voz actual
 Control+NVDA+flecha Abajo: decrementarOpción
 Decrementa la actual opción de voz
 
-NVDA+flecha Abajo: Leer Todo
-Comienza la lectura desde la posición actual en un documento o control de edición.
-
-NVDA+f1: infoTest_ventanaNavegador
-Lee Informaciones acerca del navegador de objetos actual las cuales son principalmente útiles para desarrolladores.
-
-Control+NVDA+c: guardarConfiguración
-Guarda la configuración.
-
-Control+NVDA+r: volverAConfiguraciónGuardada
-Restaura la configuración.
 
 
 Mostrar diálogos:
@@ -138,16 +142,13 @@ Muestra el diálogo de consola de python.
 Navegación en el Navegador de Objetos
 
 NVDA+5 teclado numérico: actualNavegadorDeObjetos
-Anuncia el navegador de objetos actual.
+Anuncia el navegador de objetos actual. Si se presionó dos veces rápidamente lo deletrea y si se presionó tres veces rápidamente copia su nombre y valor al portapapeles.
 
 Shift+NVDA+5 teclado Numérico: dimensionesDelActualNavegadorDeObjetos
 Anuncia el tamaño y localización del actual navegador de objetos.
 
 Control+Shift+NVDA+5 Teclado Numérico: dóndeNavegadorDeObjetos
 Anuncia los ancestros del navegador de objetos actual.
-
-NVDA+Menos: navegadorDeObjetosAlFoco
-Pone el navegador de objetos en el actual objeto con el foco.
 
 NVDA+8 Teclado Numérico: padreNavegadorDeObjetos
 Pone el navegador de objetos en el navegador de objetos padre del actual (es decir, en el objeto que lo contiene).
@@ -176,23 +177,26 @@ Mueve el puntero del ratón al actual objeto del navegador
 NVDA+Multiplicar teclado Numérico: moverNavegadorDeObjetosAlRatón
 Pone el navegador de objetos en el actual objeto bajo el puntero del ratón
 
-Dividir Teclado Numérico: clicIzquierdoDelRatón
-Hace clic con el botón izquierdo del ratón una vez donde quiera que esté.
-
-Multiplicar teclado numérico: clicDerechoDelRatón
-Hace clic con el botón derecho del ratón una vez donde quiera que esté.
-
-NVDA+Más Teclado Numérico: LeerTodoNavegadorDeObjetos
-Comienza la lectura de todos los objetos después del navegador de objetos, en orden al flujo.
-
 Menos Teclado numérico: revisiónMueveACursor
 Mueve el cursor de revisión a la localización del cursor del sistema.
 
 Control+Menos Teclado Numérico: revisiónMueveCursorSistemaAquí
 Mueve el cursor del sistema a la localización del cursor de revisión
 
+NVDA+Menos Teclado Numérico: navegadorDeObjetosAlFoco
+Pone el navegador de objetos en el actual objeto con el foco.
+
+Dividir Teclado Numérico: clicIzquierdoDelRatón
+Hace clic con el botón izquierdo del ratón una vez donde quiera que esté.
+
+Multiplicar teclado numérico: clicDerechoDelRatón
+Hace clic con el botón derecho del ratón una vez donde quiera que esté.
+
 Más Teclado Numérico: revisiónLeerTodo
 Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
+
+NVDA+Más Teclado Numérico: LeerTodoNavegadorDeObjetos
+Comienza la lectura de todos los objetos después del navegador de objetos, en orden al flujo.
 
 
 Leyendo objetos
