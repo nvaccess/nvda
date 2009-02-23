@@ -194,6 +194,15 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				self._UIAValuePattern=None
 		return self._UIAValuePattern
 
+	def _get_UIAInvokePattern(self):
+		if not hasattr(self,'_UIAInvokePattern'):
+			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_InvokePatternId)
+			if punk:
+				self._UIAInvokePattern=punk.QueryInterface(UIAHandler.IUIAutomationInvokePattern)
+			else:
+				self._UIAInvokePattern=None
+		return self._UIAInvokePattern
+
 	def _get_UIATextPattern(self):
 		if not hasattr(self,'_UIATextPattern'):
 			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TextPatternId)
@@ -335,6 +344,26 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
+
+	def _get_actionCount(self):
+		if self.UIAInvokePattern:
+			return 1
+		return 0
+
+	def getActionName(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if index==0 and self.UIAInvokePattern:
+			return _("invoke")
+		raise NotImplementedError
+
+	def doAction(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if index==0 and self.UIAInvokePattern:
+			self.UIAInvokePattern.Invoke()
+			return
+		raise NotImplementedError
 
 class TreeviewItem(UIA):
 
