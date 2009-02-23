@@ -90,13 +90,6 @@ class AppModule(_default.AppModule):
 
 class mirandaIMContactList(IAccessible):
 
-	def __init__(self,*args,**kwargs):
-		super(mirandaIMContactList,self).__init__(*args,**kwargs)
-		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
-
-	def __del__(self):
-		winKernel.closeHandle(self.processHandle)
-
 	def _get_name(self):
 		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		internalBuf=winKernel.virtualAllocEx(self.processHandle,None,MAXITEMTEXTLEN,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)

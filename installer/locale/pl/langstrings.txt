@@ -1,19 +1,27 @@
 ;Polish
-LangString msg_WelcomePageTitle ${LANG_POLISH} "Witamy W kreatorze instalacji programu ${PRODUCT}, bezp³atnego i powszechnie dostêpnego screenreadera pracuj¹cego w systemie Windows"
-LangString msg_WelcomePageText ${LANG_POLISH} "Wszelkie prawa zastrze¿one-  2006 -2008 Michael Curran.\n\
-Ten kreator przeprowadzi ciê przez proces instalacji programu ${PRODUCT}\n\
-Zalecane jest zamkniêcie wszystkich uruchomionych aplikacji przed rospoczêciem procesu instalacji. Pozwoli to zainstalowaæ i uaktualniæ niektóre pliki systemowe bez potrzeby restartowania komputera.$\n"
-LangString msg_READMEText ${LANG_POLISH} "przeczytaj plik README.txt (zalecane)"
-LangString msg_NVDAWebSite ${LANG_POLISH} "OdwiedŸ oficjaln¹ stronê programu NVDA"
-LangString msg_NVDARunning ${LANG_POLISH} "Uwaga! Inna kopia programu NVDA jest ju¿ uruchomiona. Zostanie ona zamkniêta, zanim instalator podejmie proces instalacji."
-LangString msg_SpeechInstall ${LANG_POLISH} "Czy chcia³byœ korzystaæ ze wsparcia g³osowego podczas instalacji NVDA? Naciœnij klawisz ENTER jeœli chcesz kontynuowaæ ze wsparciem g³osowym, jeœli nie, naciœnij klawisz ESCAPE."
-LangString msg_RemoveNVDA ${LANG_POLISH} "Czy jesteœ pewien, ¿e chcesz ca³kowicie usun¹æ $(^Name) i wszystkie jego sk³adniki?"
-LangString msg_NVDAConfigFound ${LANG_POLISH} "Instalator znalaz³ ju¿ istniej¹cy plik konfiguracyjny dla programu NVDA. Czy chcia³byœ usun¹æ ten plik?"
-LangString msg_NVDASuccessfullyRemoved ${LANG_POLISH} "$(^Name) zosta³ pomyœlnie usuniêty z twojego komputera."
-LangString shortcut_Wiki $(LANG_polish) "NVDA Info WIKI"
-LangString shortcut_uninstall $(LANG_POLISH) "Uninstall"
-LangString shortcut_website $(LANG_POLISH) "Website"
-LangString shortcut_readme $(LANG_POLISH) "Readme"
-LangString shortcut_userguide $(LANG_POLISH) "User Guide"
+LangString msg_WelcomePageTitle ${LANG_POLISH} "Instalator ${PRODUCT}, wersja ${VERSION}"
+LangString msg_WelcomePageText ${LANG_POLISH} "Witamy w instalatorze programu ${PRODUCT} (Non-Visual Desktop Access), darmowego i wolnego oprogramowania udŸwiêkawiaj¹cego dla systemu Microsoft Windows.$\n\
+Copyright 2006-2009 Wspó³autorzy NVDA.$\n\
+Ten kreator przeprowadzi ciê przez proces instalacji programu ${PRODUCT}. Przed kontynuowaniem instalacji zaleca siê zamkniêcie wszystkich dzia³aj¹cych aplikacji.$\n"
+LangString msg_NVDAWebSite ${LANG_POLISH} "OdwiedŸ oficjaln¹ stronê NVDA (w jêzyku angielskim)"
+LangString msg_NVDARunning ${LANG_POLISH} "Inna kopia programu NVDA jest ju¿ uruchomiona. Zostanie ona zamkniêta zanim instalator bêdzie móg³ kontynuowaæ."
+LangString msg_pagePrevInstallLabel ${LANG_POLISH} "Instalator wykry³, ¿e w systemie jest zainstalowana poprzednia wersja NVDA. Jest wysoce zalecane odinstalowanie jej przed przed kontynuowaniem tej instalacji."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_POLISH} "Odinstaluj (zalecane)"
+LangString shortcut_uninstall $(LANG_POLISH) "Odinstaluj"
+LangString shortcut_website $(LANG_POLISH) "Strona domowa"
+LangString shortcut_readme $(LANG_POLISH) "Czytaj to"
+LangString shortcut_userguide $(LANG_POLISH) "Podrêcznik u¿ytkownika"
 LangString path_userguide $(LANG_POLISH) "pl\user guide.html"
 LangString path_readmefile $(LANG_POLISH) "pl\readme.txt"
+LangString UNLOG_HEADER ${LANG_POLISH} "======= Plik rejestru deinstalatora \
+                                         proszê nie edytowaæ tego pliku ======="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_POLISH} "${UNINST_DAT} nie znaleziony, \
+                                          nie mo¿na odinstalowaæ programu."
+LangString UNLOG_DEL_FILE ${LANG_POLISH} 'Usun¹æ plik "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_POLISH} 'Usun¹æ katalog "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_POLISH} "Wykryto wczeœniejsz¹ instalacjê w $0.$\n\
+                                            Brakuje niezbêdnego pliku ${UNINSTALL_LOG}.dat.$\n$\n\
+                                            Zalecane jest wybranie nowego pustego \
+                                            katalogu i wykonanie œwie¿ej instalacji."
+LangString UNLOG_ERROR_LOG ${LANG_POLISH} "B³¹d w pliku ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_POLISH} "B³¹d tworzenia pliku ${UNINSTALL_LOG}."

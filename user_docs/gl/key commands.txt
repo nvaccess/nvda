@@ -13,7 +13,7 @@ NVDA+1: AxudaDoTeclado
 Esta orden activa o modo de axuda do teclado tal que podes premer calquer combinación de teclas no teclado e NVDA dirache o seu nome e que orden leva a cabo se ten unha. Para desactivar a axuda do teclado, preme NVDA+1 de novo.
 
 NVDA+t: título
-Anuncia o título da aplicación actualmente activa.
+Anuncia o título da aplicación actualmente activa. Deletréaa cando se preme dúas veces rápidamente e cópiao ó portapapeis cando se preme tres veces rápidamente.
 
 NVDA+b: verbalizarFondo
 Verbaliza o contido da aplicación actualmente activa. Útil para leer información nun cadro de diálogo que quizáis te perdeches cando foi anunciado por primeira vez.
@@ -30,32 +30,14 @@ Conmuta entre os tres modos de voz (falar, pitidos e desactivado).
 NVDA+F12: DataEHora
 Anuncia a hora actual, premendo dúas veces rápidamente anuncia a data actual.
 
-NVDA+2: conmutarVerbalizaciónDeCaracteresOEscribir
-Activa ou desactiva a verbalización de caracteres cando os escrebes.
-
-NVDA+3: conmutarVerbalizaciónDeVerbasOEscreber
-Activa ou desactiva a verbalización das verbas ó as escreber.
-
-NVDA+4: conmutarVerbalizaciónDeTeclasDeOrdes
-Activa ou desactiva a verbalización de calquera tecla ó se escreber.
-
-NVDA+p: conmutarVerbalizaciónDePontoación
-Activa ou desactiva a verbalización dos símbolos de pontoación cando NVDA verbaliza información.
-
 NVDA+Fin: anunciarLiñaDeEstado
 Anuncia a barra de estado da aplicación actual se pode atopar unha.
 
 NVDA+f: anunciarFormato
 Anuncia a información de formato na posición actual nun documento
 
-NVDA+m: conmutarSeguementoDoRato
-Activa ou desactiva o anunciado do obxecto ou verba na actual posición do punteiro do rato, segundo se mova.
-
 Control+NVDA+f1: verbalizarNomeDaAplicación
 Anuncia o nome da aplicación actualmente activa, e tamén deletréaa. Tamén anuncia o módulo da aplicación do NVDA cargado actualmente.
-
-NVDA+u: conmutarPitidosNaActualizaciónDeBarrasDeProgreso
-Activa e desactiva o pitado para indicar cando troca unha barra de progreso.
 
 NVDA+shift+b: dicir_estado_batería
 Anuncia o nivel actual da batería e se estás ou non enchufado á fonte de alimentación.
@@ -81,18 +63,6 @@ Anuncia a selección actual nos controles de edición e documentos. Se non hai sel
 NVDA+Flecha Arriba: anunciarLiñaActual
 Anuncia a liña actual nos controles de edición e documentos.
 
-Control+NVDA+Flecha Esquerda: opciónAnterior
-Móvese e anuncia a anterior opción de voz
- 
-Control+NVDA+Flecha Dereita: opciónSeguinte
-Móvese e anuncia a seguinte opción de voz
-
-Control+NVDA+Flecha Arriba: incrementarOpción
-Incrementa a opción de voz actual
-
-Control+NVDA+flecha Abaixo: decrementarOpción
-Decrementa a actual opción de voz
-
 NVDA+flecha Abaixo: LerTodo
 Comeza a letura dende a posición actual nun documento ou control de edición.
 
@@ -106,9 +76,42 @@ Control+NVDA+r: voltarÁConfiguraciónGardada
 Restaura a configuración..
 
 
+Opcións de Troco (atopadas nos diálogos de opcións)
+
+NVDA+2: conmutarVerbalizaciónDeCaracteresOEscribir
+Activa ou desactiva a verbalización de caracteres cando os escrebes.
+
+NVDA+3: conmutarVerbalizaciónDeVerbasOEscreber
+Activa ou desactiva a verbalización das verbas ó as escreber.
+
+NVDA+4: conmutarVerbalizaciónDeTeclasDeOrdes
+Activa ou desactiva a verbalización de calquera tecla ó se escreber.
+
+NVDA+p: conmutarVerbalizaciónDePontoación
+Activa ou desactiva a verbalización dos símbolos de pontoación cando NVDA verbaliza información.
+
+NVDA+m: conmutarSeguementoDoRato
+Activa ou desactiva o anunciado do obxecto ou verba na actual posición do punteiro do rato, segundo se mova.
+
+NVDA+u: conmutarPitidosNaActualizaciónDeBarrasDeProgreso
+Controla como o NVDA anuncia as actualizacións das barras de progreso. Pode, ou pitar para todas as barras de dentro da ventá activa (predeterminado), pitar para todas as barras actualmente en progreso dentro de todo o sistema, ou pode anunciar cada dez por cento mediante a voz.
+
+Control+NVDA+Flecha Esquerda: opciónAnterior
+Móvese e anuncia a anterior opción de voz
+ 
+Control+NVDA+Flecha Dereita: opciónSeguinte
+Móvese e anuncia a seguinte opción de voz
+
+Control+NVDA+Flecha Arriba: incrementarOpción
+Incrementa a opción de voz actual
+
+Control+NVDA+flecha Abaixo: decrementarOpción
+Decrementa a actual opción de voz
+
+
 Amosar diálogos:
 
-Control+NVDA+g: activvarDiálogoOpciónXerais
+Control+NVDA+g: activarDiálogoOpciónXerais
 Amosa o diálogo de Opcións Xerais.
 
 Control+NVDA+s: activarDiálogoSintetizadores
@@ -117,7 +120,7 @@ Amosa o diálogo de selección dos sintetizadores.
 Control+NVDA+v: activarDiálogoVoz
 Amosa o diálogo de opcións da voz.
 
-Control+NVDA+k: activaRDiálogoOpciónsDeTeclado
+Control+NVDA+k: activarDiálogoOpciónsDeTeclado
 Amosa o diálogo de opcións do teclado.
 
 Control+NVDA+m: activarDiálogoPociónsDoRato
@@ -137,11 +140,10 @@ Amosa o diálogo da consola de python.
 
 
 
-
 Navegación do Navegador de Obxectos
 
 NVDA+5 teclado numérico: actualNavegadorDeObxectos
-Anuncia o navegador de obxectos actual.
+Anuncia o navegador de obxectos actual. Se se premeu dúas veces rápidamente deletréao e se se premeu tres veces rápidamente copia o seu nome e valor ó portapapeis.
 
 Shift+NVDA+5 teclado Numérico: dimensiónDeActualNavegadorDeobxectos
 Anuncia o tamaño e localización do actual navegador de obxectos.

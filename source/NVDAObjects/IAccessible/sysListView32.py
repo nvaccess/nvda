@@ -147,6 +147,11 @@ class List(List):
 
 class GroupingItem(Window):
 
+	@classmethod
+	def findBestClass(cls, clsList, kwargs):
+		# This class can be directly instantiated.
+		return (cls,), kwargs
+
 	def __init__(self,parent,groupInfo):
 		super(GroupingItem,self).__init__(parent.windowHandle)
 		self.parent=parent
@@ -197,7 +202,7 @@ class ListItem(IAccessible):
 	def _get_lvAppImageID(self):
 		item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
 		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
-		processHandle=winKernel.openProcess(winKernel.PROCESS_VM_OPERATION|winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE,False,processID)
+		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
 		winUser.sendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)

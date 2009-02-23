@@ -13,6 +13,7 @@
 @type re_keyScript: regular expression
 """
 
+import imp
 import itertools
 import re
 import ctypes
@@ -79,17 +80,6 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	log.debug("appName: %s"%appName)
 	return appName
 
-def moduleExists(name):
-	"""Checks if an appModule by the given application name exists.
-	@param name: the application name
-	@type name: str
-	@returns: True if it exists, false otherwise.
-	@rtype: bool
-	"""
-	res=os.path.isfile('appModules/%s.py'%name)
-	log.debug("Does appModules/%s.py exist: %s"%(name,res))
-	return res
-
 def getKeyMapFileName(appName,layout):
 	"""Finds the file path for the key map file, given the application name and keyboard layout.
 	@param appName: name of application
@@ -108,9 +98,9 @@ def getKeyMapFileName(appName,layout):
 		return None
 
 def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.window.Window):
+	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.windowProcessID)
+	return getAppModuleFromProcessID(obj.processID)
 
 def getAppModuleFromProcessID(processID):
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
@@ -156,12 +146,16 @@ def fetchAppModule(processID,appName,useDefault=False):
 	friendlyAppName=appName
 	if useDefault:
 		appName='_default'
-	if moduleExists(appName):
+	try:
+		found=imp.find_module(appName,__path__)
 		try:
+			#best to use imp.load_module but then imports of other appModules in this module fail
 			mod=__import__(appName,globals(),locals(),[]).AppModule(processID,friendlyAppName)
 		except:
 			log.error("error in appModule %s"%appName,exc_info=True)
 			speech.speakMessage(_("Error in appModule %s")%appName)
+	except ImportError: #find_module couldn't find an appModule
+		pass
 	if mod and isinstance(mod,AppModule):
 		mod.loadKeyMap()
 		return mod
@@ -182,6 +176,8 @@ class AppModule(baseObject.ScriptableObject):
 	@type processID: int
 	"""
 
+	_overlayClassCache={}
+
 	def __init__(self,processID,appName=None):
 		self.processID=processID
 		if appName is None:
@@ -193,13 +189,33 @@ class AppModule(baseObject.ScriptableObject):
 		return "<%s (appName %s, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
 
 	def _get_appModuleName(self):
-		return "%s.%s"%(self.__class__.__module__.split('.')[-1],self.__class__.__name__)
+		return self.__class__.__module__.split('.')[-1]
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
+
+	def overlayCustomNVDAObjectClass(self,obj,customClass,outerMost=False):
+		"""Overlays the given custom class on to the class structure of the given NVDAObject.
+		@param obj: the NVDAObject that should be overlayed.
+		@type obj: NVDAObject
+		@param customClass: the class to overlay
+		@type customClass: NVDAObject class
+		"""
+		oldClass=obj.__class__
+		cacheKey=(self.__class__,customClass,oldClass)
+		newClass=self._overlayClassCache.get(cacheKey,None)
+		if not newClass:
+			newName="%s_%sAppModule_%s"%(customClass.__name__,self.appModuleName,oldClass.__name__)
+			if outerMost:
+				bases=(customClass,oldClass)
+			else:
+				bases=(oldClass,customClass)
+			newClass=type(newName,bases,{})
+			self._overlayClassCache[cacheKey]=newClass
+		obj.__class__=newClass
 
 	def loadKeyMap(self):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.

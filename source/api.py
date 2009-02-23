@@ -18,20 +18,10 @@ import winUser
 import controlTypes
 import win32clipboard
 import win32con
+import eventHandler
+import braille
 
 #User functions
-
-def findObjectWithFocus():
-	"""Walks the object hyerarchy starting at the desktop Window (root object) and follows the activeChild property of each object until it can not go any further - this will be the object with focus.
-@returns: object with focus
-@rtype: L{NVDAObjects.NVDAObject}
-"""
-	obj=getDesktopObject()
-	prevObj=None
-	while obj and obj!=prevObj:
-		prevObj=obj
-		obj=obj.activeChild
-	return prevObj
 
 def getFocusObject():
 	"""
@@ -46,15 +36,7 @@ def getForegroundObject():
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
-	numAncestors=len(globalVars.focusAncestors)
-	if numAncestors<=1:
-		return globalVars.focusObject
-	elif globalVars.focusAncestors[1].role==controlTypes.ROLE_WINDOW:
-		if numAncestors==2:
-			return globalVars.focusObject
-		return globalVars.focusAncestors[2]
-	else:
-		return globalVars.focusAncestors[1]
+	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
 	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
@@ -82,7 +64,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		except:
 			log.error("event_loseFocus in focusObject", exc_info=True)
 	oldFocusLine=globalVars.focusAncestors
-	oldFocusLine.append(globalVars.focusObject)
+	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
+	if globalVars.focusObject: 
+		oldFocusLine.append(globalVars.focusObject)
 	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
 	ancestors=[]
 	tempObj=obj
@@ -98,7 +82,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				# Copy the old ancestors up to and including this object.
 				origAncestors=oldFocusLine[0:index+1]
 				#make sure to cache the last old ancestor as a parent on the first new ancestor so as not to leave a broken parent cache
-				if len(ancestors)>0:
+				if ancestors and origAncestors:
 					ancestors[0].parent=origAncestors[-1]
 				origAncestors.extend(ancestors)
 				ancestors=origAncestors
@@ -108,12 +92,13 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				break
 		if matchedOld:
 			break
-		if tempObj is not obj: #we don't want to add the new focus to the new focus ancestors
-			# We're moving backwards along the ancestor chain, so add this to the start of the list.
-			ancestors.insert(0,tempObj)
+		# We're moving backwards along the ancestor chain, so add this to the start of the list.
+		ancestors.insert(0,tempObj)
 		parent=tempObj.parent
 		tempObj.parent=parent # Cache the parent.
 		tempObj=parent
+	#Remove the final new ancestor as this will be the new focus object
+	del ancestors[-1]
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
 		if hasattr(removedMod,'event_appLoseFocus'):
@@ -131,14 +116,18 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		if virtualBufferObject and hasattr(virtualBufferObject,"event_virtualBuffer_firstGainFocus"):
 			virtualBufferObject.event_virtualBuffer_firstGainFocus()
 	oldVirtualBuffer=globalVars.focusObject.virtualBuffer if globalVars.focusObject else None
+	# Set global focus variables before calling event_virtualBuffer_gainFocus.
+	globalVars.focusDifferenceLevel=focusDifferenceLevel
+	globalVars.focusObject=obj
+	globalVars.focusAncestors=ancestors
+	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
+	if globalVars.focusMovesNavigatorObject:
+		setNavigatorObject(obj)
 	if obj.virtualBuffer is not oldVirtualBuffer:
 		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
 			oldVirtualBuffer.event_virtualBuffer_loseFocus()
 		if hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
 			obj.virtualBuffer.event_virtualBuffer_gainFocus()
-	globalVars.focusDifferenceLevel=focusDifferenceLevel
-	globalVars.focusObject=obj
-	globalVars.focusAncestors=ancestors
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
@@ -176,21 +165,26 @@ def getReviewPosition():
 		return globalVars.reviewPosition
 	else:
 		try:
-			globalVars.reviewPosition=globalVars.navigatorObject.virtualBuffer.makeTextInfo(globalVars.navigatorObject)
+			obj=globalVars.navigatorObject.virtualBuffer
+			globalVars.reviewPosition=obj.makeTextInfo(globalVars.navigatorObject)
+			globalVars.reviewPositionObj=obj
 			return globalVars.reviewPosition
 		except:
 			pass
 		try:
 			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_CARET)
+			globalVars.reviewPositionObj=globalVars.navigatorObject
 			return globalVars.reviewPosition
 		except:
 			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_FIRST)
+			globalVars.reviewPositionObj=globalVars.navigatorObject
 			return globalVars.reviewPosition
 
 def setReviewPosition(reviewPosition):
 	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
 	"""
 	globalVars.reviewPosition=reviewPosition
+	globalVars.reviewPositionObj=reviewPosition.obj
 	globalVars.navigatorObject=None
 	import braille
 	braille.handler.handleReviewMove()
@@ -217,8 +211,8 @@ def setNavigatorObject(obj):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 	globalVars.reviewPosition=None
-	import braille
-	braille.handler.handleReviewMove()
+	globalVars.reviewPositionObj=None
+	eventHandler.executeEvent("becomeNavigatorObject",obj)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.

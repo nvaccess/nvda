@@ -6,12 +6,15 @@
 
 """NVDA core"""
 
-#Bit of a dance to force comtypes generated interfaces in to our directory
+# Do this first to initialise comtypes.client.gen_dir and the comtypes.gen search path.
 import comtypes.client
-comtypes.client.gen_dir='.\\comInterfaces'
-import sys
-sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
+# Append our comInterfaces directory to the comtypes.gen search path.
+import comtypes.gen
+import comInterfaces
+comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+import sys
+import nvwave
 import os
 import time
 import logHandler
@@ -52,6 +55,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.load()
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\start.wav")
 	log.debug("Trying to save config")
 	try:
 		config.save()
@@ -90,11 +95,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
-		import winsound
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		if not globalVars.appArgs.minimal:
-			winsound.PlaySound("waves\\exit.wav",winsound.SND_FILENAME)
+			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import braille
@@ -114,11 +118,19 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	else:
 		wxLang=lang
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
 	try:
 		locale.Init(lang,wxLang)
 	except:
 		pass
+	import api
+	import winUser
+	import NVDAObjects.window
+	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
@@ -134,12 +146,16 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
-	speech.cancelSpeech()
 	if not globalVars.appArgs.minimal:
 		if config.conf["general"]["showWelcomeDialogAtStartup"]:
 			wx.CallAfter(gui.WelcomeDialog.run)
 		else:
-			speech.speakMessage(_("NVDA started"))
+			import ui
+			braille.handler.message(_("NVDA started"))
+	if api.getFocusObject()==api.getDesktopObject():
+		focusObject=api.getDesktopObject().objectWithFocus()
+		import eventHandler
+		eventHandler.queueEvent('gainFocus',focusObject)
 	import queueHandler
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
@@ -217,4 +233,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
+	if not globalVars.appArgs.minimal:
+		nvwave.playWaveFile("waves\\exit.wav",async=False)
 	log.debug("core done")

@@ -1,2029 +1,3337 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-11-03 13:55+Финляндия (зима)\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Sadovoy Aleksey <aleksey_s@voliacable.com>\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2008-12-21 16:28+0200\n"
+"PO-Revision-Date: 2008-12-21 17:05+0200\n"
+"Last-Translator: Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
+"In cooperation with Volodymyr Perig <vova-mobile@hotmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#: NVDAObjects\IAccessible\edit.py:529
+msgid "unknown"
+msgstr "Невідомо"
 
-#: IAccessibleHandler.py:136 controlTypes.py:158
-msgid "window"
-msgstr "вікно"
+#: NVDAObjects\IAccessible\edit.py:531
+msgid "%s embedded object"
+msgstr "%s Вбудований об'єкт"
 
-#: IAccessibleHandler.py:137 characterSymbols.py:20 controlTypes.py:179
-msgid "tab"
-msgstr "таб"
+#: NVDAObjects\IAccessible\edit.py:533 controlTypes.py:235
+msgid "embedded object"
+msgstr "Вбудований об'єкт"
 
-#: IAccessibleHandler.py:138 controlTypes.py:165
-msgid "edit"
-msgstr "редагування"
+#: NVDAObjects\IAccessible\excel.py:46
+msgid "NVDA Excel Cell Editor"
+msgstr "NVDA Редактор елемента Excel"
 
-#: IAccessibleHandler.py:139 controlTypes.py:166
-msgid "button"
-msgstr "кнопка"
+#: NVDAObjects\IAccessible\excel.py:48
+msgid "Enter cell contents"
+msgstr "Введіть вміст комірки"
 
-#: IAccessibleHandler.py:140
-msgid "Tree view"
-msgstr "дерево"
-
-#: IAccessibleHandler.py:144
-msgid "sub menu"
-msgstr "підменю"
-
-#: IAccessibleHandler.py:196 speech.py:271
-#: virtualBuffers\IAccessible\MSHTML.py:115
-#: virtualBuffers\IAccessible\MSHTML.py:294
-#: virtualBuffers\IAccessible\MSHTML.py:298
-#: virtualBuffers\IAccessible\adobe.py:289
-#: virtualBuffers\IAccessible\adobe.py:293
-#: virtualBuffers\IAccessible\gecko.py:282
-#: virtualBuffers\IAccessible\gecko.py:286
-msgid "not %s"
-msgstr "не %s"
-
-#: NVDAObjects\IAccessible\__init__.py:69
-#: NVDAObjects\IAccessible\__init__.py:494
-#: NVDAObjects\IAccessible\sysListView32.py:83
-msgid "%s of %s"
-msgstr "%s із %s"
-
-#: NVDAObjects\IAccessible\__init__.py:73
-msgid "%s items"
-msgstr "%s елементів"
-
-#: NVDAObjects\IAccessible\__init__.py:779
-#: NVDAObjects\IAccessible\sysTreeView32.py:137
-msgid "%d items"
-msgstr "%d елементів"
-
-#: NVDAObjects\IAccessible\excel.py:64
+#: NVDAObjects\IAccessible\excel.py:100
 msgid "through"
 msgstr "по"
 
-#: NVDAObjects\IAccessible\excel.py:64 controlTypes.py:298
+#: NVDAObjects\IAccessible\excel.py:100 controlTypes.py:313
 msgid "selected"
-msgstr "виділено"
+msgstr "Виділено"
 
-#: NVDAObjects\IAccessible\excel.py:68
+#: NVDAObjects\IAccessible\excel.py:104
 msgid "has formula"
-msgstr "має формулу"
+msgstr "Містить формулу"
 
-#: NVDAObjects\IAccessible\excel.py:97
+#: NVDAObjects\IAccessible\excel.py:133
 msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "переходить до наступного осередку таблиці та  промовляє його положення і зміст"
+msgstr ""
+"Переходить до комірки, і читає її "
+"координати і вміст"
 
-#: NVDAObjects\IAccessible\excel.py:101
+#: NVDAObjects\IAccessible\excel.py:142
 msgid "font"
-msgstr "шрифт"
+msgstr "Шрифт"
 
-#: NVDAObjects\IAccessible\excel.py:102
+#: NVDAObjects\IAccessible\excel.py:143
 msgid "point"
-msgstr "розмір"
+msgstr "Розмір"
 
-#: NVDAObjects\IAccessible\excel.py:104 controlTypes.py:283 textBuffer.py:266
-#: textBuffer.py:318
+#: NVDAObjects\IAccessible\excel.py:145 controlTypes.py:297 speech.py:717
+#: textBuffer.py:266 textBuffer.py:318
 msgid "bold"
-msgstr "напівжирний"
+msgstr "Напівжирний"
 
-#: NVDAObjects\IAccessible\excel.py:106 textBuffer.py:273 textBuffer.py:320
+#: NVDAObjects\IAccessible\excel.py:147 speech.py:722 textBuffer.py:273
+#: textBuffer.py:320
 msgid "italic"
-msgstr "курсив"
+msgstr "Курсив"
 
-#: NVDAObjects\IAccessible\excel.py:108 characterSymbols.py:50
-#: controlTypes.py:285 textBuffer.py:280 textBuffer.py:322
+#: NVDAObjects\IAccessible\excel.py:149 characterSymbols.py:50
+#: controlTypes.py:299 textBuffer.py:280 textBuffer.py:322
 msgid "underline"
-msgstr "підкреслений"
+msgstr "Підкреслений"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:132
-#: NVDAObjects\JAB\__init__.py:245
-msgid "%d of %d"
-msgstr "%d із %d"
+#: NVDAObjects\IAccessible\sysTreeView32.py:162
+msgid "%s items"
+msgstr "%s элементів"
 
-#: NVDAObjects\IAccessible\winword.py:156
-msgid "with %s columns and %s rows"
-msgstr "з %d стовпців і %d рядків"
-
-#: NVDAObjects\IAccessible\winword.py:284
-#: NVDAObjects\IAccessible\winword.py:300
-#: NVDAObjects\IAccessible\winword.py:316
-#: NVDAObjects\IAccessible\winword.py:332
+#: NVDAObjects\IAccessible\winword.py:317
+#: NVDAObjects\IAccessible\winword.py:333
+#: NVDAObjects\IAccessible\winword.py:349
+#: NVDAObjects\IAccessible\winword.py:365
 msgid "not in table"
-msgstr "не в таблиці"
-
-#: NVDAObjects\IAccessible\winword.py:293
+msgstr "За межами таблиці"
+	
+#: NVDAObjects\IAccessible\winword.py:326
 msgid "bottom of column"
-msgstr "кінець стовпця"
+msgstr "Кінець стовпчика"
 
-#: NVDAObjects\IAccessible\winword.py:309
+#: NVDAObjects\IAccessible\winword.py:342
 msgid "top of column"
-msgstr "верх стовпця"
+msgstr "Початок стовпчика"
 
-#: NVDAObjects\IAccessible\winword.py:325
+#: NVDAObjects\IAccessible\winword.py:358
 msgid "end of row"
-msgstr "кінець рядка"
+msgstr "Кінець рядка"
 
-#: NVDAObjects\IAccessible\winword.py:341
+#: NVDAObjects\IAccessible\winword.py:374
 msgid "beginning of row"
-msgstr "початок рядка"
+msgstr "Початок рядка"
 
-#: NVDAObjects\__init__.py:610 NVDAObjects\__init__.py:621
-#: NVDAObjects\__init__.py:659 textBuffer.py:364 textBuffer.py:391
-#: textBuffer.py:412 textBuffer.py:433 virtualBuffers\__init__.py:275
-msgid "top"
-msgstr "верхній край"
-
-#: NVDAObjects\__init__.py:641 NVDAObjects\__init__.py:648
-#: NVDAObjects\__init__.py:679 textBuffer.py:369 textBuffer.py:382
-#: textBuffer.py:403 textBuffer.py:424 virtualBuffers\__init__.py:290
-msgid "bottom"
-msgstr "нижній край"
-
-#: NVDAObjects\__init__.py:688 NVDAObjects\__init__.py:699
-msgid "left"
-msgstr "лівий"
-
-#: NVDAObjects\__init__.py:721 NVDAObjects\__init__.py:737
-msgid "right"
-msgstr "правий"
-
-#: _synthSettingsRing.py:55
-msgid "volume"
-msgstr "гучність"
-
-#: _synthSettingsRing.py:56
-msgid "rate"
-msgstr "швидкість"
-
-#: _synthSettingsRing.py:57
-msgid "pitch"
-msgstr "висота"
-
-#: _synthSettingsRing.py:58
-msgid "inflection"
-msgstr "інтонація"
-
-#: _synthSettingsRing.py:59
-msgid "voice"
-msgstr "голос"
-
-#: _synthSettingsRing.py:60
-msgid "variant"
-msgstr "варіант"
-
-#: api.py:176 api.py:179
-msgid "virtual buffer pass through"
-msgstr "пропуск віртуального буферу"
-
-#: api.py:176 appModules\_default.py:48 appModules\_default.py:106
-#: appModules\_default.py:116 appModules\_default.py:126
-#: appModules\_default.py:136 appModules\_default.py:423
-#: appModules\_default.py:503 appModules\_default.py:541
-#: appModules\_default.py:551 appModules\_default.py:561
-#: appModules\_default.py:571 keyboardHandler.py:51 keyboardHandler.py:53
-#: keyboardHandler.py:55 speech.py:405 speech.py:411
-msgid "off"
-msgstr "виключено"
-
-#: api.py:179 appModules\_default.py:45 appModules\_default.py:109
-#: appModules\_default.py:119 appModules\_default.py:129
-#: appModules\_default.py:139 appModules\_default.py:506
-#: appModules\_default.py:544 appModules\_default.py:554
-#: appModules\_default.py:564 appModules\_default.py:574 keyboardHandler.py:51
-#: keyboardHandler.py:53 keyboardHandler.py:55 speech.py:400
-msgid "on"
-msgstr "включено"
-
-#: appModuleHandler.py:202
+#: appModuleHandler.py:165
 msgid "Error in appModule %s"
-msgstr "помилка в програмному модулі %s"
+msgstr "Помилка у модулі %s"
 
-#: appModuleHandler.py:218
-msgid "Could not load default module keyMap"
-msgstr "не можу завантажити клавіатурну розкладку для модулю по умовчанню"
+#: appModules\_default.py:55 appModules\_default.py:132
+#: appModules\_default.py:142 appModules\_default.py:152
+#: appModules\_default.py:162 appModules\_default.py:642
+#: appModules\_default.py:718 appModules\_default.py:728
+#: appModules\_default.py:738 appModules\winamp.py:75 appModules\winamp.py:85
+#: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
+#: virtualBuffers\__init__.py:264
+msgid "on"
+msgstr "Увімкнено"
 
-#: appModuleHandler.py:221
-msgid "Could not load default module "
-msgstr "не можу завантажіти модуль по умовчанню"
+#: appModules\_default.py:58 appModules\_default.py:129
+#: appModules\_default.py:139 appModules\_default.py:149
+#: appModules\_default.py:159 appModules\_default.py:540
+#: appModules\_default.py:639 appModules\_default.py:698
+#: appModules\_default.py:715 appModules\_default.py:725
+#: appModules\_default.py:735 appModules\winamp.py:77 appModules\winamp.py:87
+#: gui\settingsDialogs.py:457 keyboardHandler.py:52 keyboardHandler.py:54
+#: keyboardHandler.py:56 virtualBuffers\__init__.py:264
+msgid "off"
+msgstr "Вимкнено"
 
-#: appModules\_default.py:50
+#: appModules\_default.py:60
 msgid "keyboard help %s"
-msgstr "%s клавиатурну підказку"
+msgstr "Клавіатурну довідку %s"
 
-#: appModules\_default.py:51
-msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "включає и відключає клавіатурну підказку.  якщо підказка включена, при натисненні будь-якої клавиші промовляється інформация про назначену на неї функцію."
+#: appModules\_default.py:61
+msgid ""
+"Turns keyboard help on and off. When on, pressing a key on the keyboard will "
+"tell you what script is associated with it, if any."
+msgstr ""
+"Вмикає та вимикає режим клавіатурної "
+"довідки. При увімкненому режимі, під час "
+"натиснення клавіш, читається опис "
+"відповідної команди"
 
-#: appModules\_default.py:68
-msgid "Reports the current date and time"
-msgstr "промовляе поточну дату і час"
+#: appModules\_default.py:77
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Читає рядок під курсором додатка. Якщо "
+"натиснуто двічі, читає її по символах"
 
-#: appModules\_default.py:74 appModules\_default.py:81
-msgid "rate %d%%"
-msgstr "швидкість %d відсотків"
+#: appModules\_default.py:80
+msgid "left click"
+msgstr "Лівий клік мишею"
 
-#: appModules\_default.py:75
-msgid "Increases the speech rate by 5 percent"
-msgstr "збільшує швидкість мови на 5 відсотків."
+#: appModules\_default.py:83
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr ""
+"Виконує разовий клік лівою кнопкою миші у "
+"поточній позиції вказівника"
 
-#: appModules\_default.py:82
-msgid "decreases the speech rate by 5 percent"
-msgstr "зменшує швидкість мови на 5 відсотків."
+#: appModules\_default.py:86
+msgid "right click"
+msgstr "Правий клік мишею"
 
-#: appModules\_default.py:87
-msgid "Increases currently active setting in the synth settings ring"
-msgstr "збільшує поточний параметр сінтезатору в колі параметрів синтезатору."
+#: appModules\_default.py:89
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr ""
+"Виконує разовий клік правою кнопкою миші "
+"у поточній позиції вказівника"
 
-#: appModules\_default.py:92
-msgid "Decreases currently active setting in the synth settings ring"
-msgstr "зменшує поточний параметр сінтезатору в колі параметрів синтезатору."
+#: appModules\_default.py:98 cursorManager.py:220
+msgid "no selection"
+msgstr "Немає виділення"
 
-#: appModules\_default.py:97
-msgid "Moves to the next available setting in the synth settings ring"
-msgstr "перемикає на наступний доступний параметер в коли параметрів синтезатору."
+#: appModules\_default.py:100 speech.py:256 speech.py:347 speech.py:360
+#: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
+msgid "selected %s"
+msgstr "Виділено %s"
 
-#: appModules\_default.py:102
-msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "перемикає на попередній доступний параметер в коли параметрів синтезатору."
+#: appModules\_default.py:101
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"Читає виділений фрагмент у редакторі, або "
+"у елементі редагування. Якщо виділення "
+"відсутнє - також сповіщає про це"
 
-#: appModules\_default.py:111
-msgid "speak typed characters"
-msgstr "Промовляти символи при друку"
+#: appModules\_default.py:109
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr ""
+"Якщо натиснуто один раз - читає поточний "
+"час, а якщо двічі - дату"
 
-#: appModules\_default.py:112
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "перемикає промовляння символів при друку"
+#: appModules\_default.py:113
+msgid "Increases the currently active setting in the synth settings ring"
+msgstr ""
+"Збільшує значення активного параметра у "
+"кільці налаштувань синтезатора"
+
+#: appModules\_default.py:117
+msgid "Decreases the currently active setting in the synth settings ring"
+msgstr ""
+"Зменшує значення активного параметра у "
+"кільці налаштувань синтезатора"
 
 #: appModules\_default.py:121
+msgid "Moves to the next available setting in the synth settings ring"
+msgstr ""
+"Переходить до наступного параметра у "
+"кільці налаштувань синтезатора"
+
+#: appModules\_default.py:125
+msgid "Moves to the previous available setting in the synth settings ring"
+msgstr ""
+"Переходить до попереднього параметра у "
+"кільці налаштувань синтезатора"
+
+#: appModules\_default.py:134
+msgid "speak typed characters"
+msgstr "Виголошувати символи, що вводяться"
+
+#: appModules\_default.py:135
+msgid "Toggles on and off the speaking of typed characters"
+msgstr ""
+"Перемикає виголошування символів під час "
+"введення"
+
+#: appModules\_default.py:144
 msgid "speak typed words"
-msgstr "промовляти слова при друку"
-
-#: appModules\_default.py:122
-msgid "Toggles on and off the speaking of typed words"
-msgstr "перемикає промовляння слів при друку"
-
-#: appModules\_default.py:131
-msgid "speak command keys"
-msgstr "промовляти керівни клавіши"
-
-#: appModules\_default.py:132
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "перемикає промовляння назв натиснених не алфавітних клавіш"
-
-#: appModules\_default.py:141
-msgid "speak punctuation"
-msgstr "промовляти пунктуацію"
-
-#: appModules\_default.py:142
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "перемикає промовляння пунктуації. якщо включено, NVDA буде називати пунктуацію в тексті, якщо ні - текст буденадсилатися синтезатору без змін."
+msgstr "виголошувати слова, що вводяться"
 
 #: appModules\_default.py:145
+msgid "Toggles on and off the speaking of typed words"
+msgstr ""
+"Перемикає виголошування слів під час "
+"введення"
+
+#: appModules\_default.py:154
+msgid "speak command keys"
+msgstr "Виголошувати командні клавіші"
+
+#: appModules\_default.py:155
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr ""
+"Перемикає виголошування клавіш, які не є "
+"символами"
+
+#: appModules\_default.py:164
+msgid "speak punctuation"
+msgstr "Промовляти пунктуацію"
+
+#: appModules\_default.py:165
+msgid ""
+"Toggles on and off the speaking of punctuation. When on NVDA will say the "
+"names of punctuation symbols, when off it will be up to the synthesizer as "
+"to how it speaks punctuation"
+msgstr ""
+"Перемикає промовляння пунктуації. Якщо "
+"увімкнено, NVDA обробляє знаки пунктуації, а"
+" якщо Вимкнено, озвучення залежить від "
+"активного синтезатора"
+
+#: appModules\_default.py:168
 msgid "Move mouse to navigator"
-msgstr "перемістити мишку до навігатору"
+msgstr "Привести мишку до навігатора"
 
-#: appModules\_default.py:150
+#: appModules\_default.py:180
 msgid "object has no location"
-msgstr "у об'єкту немає розміщення"
+msgstr "У об'єкта немає розташування"
 
-#: appModules\_default.py:153
-msgid "Moves the mouse pointer to the current navigator object."
-msgstr "переміщує курсор мишки до об'єкту навігатору"
+#: appModules\_default.py:183
+msgid "Moves the mouse pointer to the current navigator object"
+msgstr ""
+"Переміщує вказівник мишки до навігатора"
 
-#: appModules\_default.py:156
+#: appModules\_default.py:186
 msgid "Move navigator object to mouse"
-msgstr "перемістити навігатор до мишки"
+msgstr "Привести навігатор до мишки"
 
-#: appModules\_default.py:165 appModules\_default.py:206
-#: appModules\_default.py:226 appModules\_default.py:239
-#: appModules\_default.py:252 appModules\_default.py:265
-#: appModules\_default.py:278 appModules\_default.py:301
-#: appModules\_default.py:324 appModules\_default.py:333
-#: appModules\_default.py:527
+#: appModules\_default.py:190
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
+msgstr ""
+"Встановлює навігатор біля поточного "
+"елемента під мишкою та озвучує його"
+
+#: appModules\_default.py:195 appModules\_default.py:226
+#: appModules\_default.py:247 appModules\_default.py:260
+#: appModules\_default.py:273 appModules\_default.py:286
+#: appModules\_default.py:299 appModules\_default.py:322
+#: appModules\_default.py:345 appModules\_default.py:354
+#: appModules\_default.py:680
 msgid "no navigator object"
-msgstr "немає об'єкту навігатору"
+msgstr "Немає об'єкта навігатора"
 
-#: appModules\_default.py:199
+#: appModules\_default.py:217 appModules\_default.py:661
 msgid "%s copied to clipboard"
-msgstr "%s записано в буфер обміну"
-
-#: appModules\_default.py:201
-msgid "Copies name and value of current navigator object to the clipboard"
-msgstr "записує назву та зміст об'єкту навігатору в буфер обміну."
-
-#: appModules\_default.py:201
-msgid "Reports the current navigator object"
-msgstr "промовляє поточний об'єкт навігатору"
-
-#: appModules\_default.py:201
-msgid "or, if pressed three times,"
-msgstr "або якщо натиснути 3 рази"
-
-#: appModules\_default.py:209
-msgid "No location information for navigator object"
-msgstr "немає інформації про знаходження об'єкту навігатору"
-
-#: appModules\_default.py:211
-msgid "%d wide by %d high, located %d from left and %d from top"
-msgstr "ширина %d, висота %d, ліворуч %d і %d зверху"
-
-#: appModules\_default.py:212
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "промовляє ширину, висоту и розміщення об'єкту навігатору"
-
-#: appModules\_default.py:217 appModules\_default.py:485
-msgid "no focus"
-msgstr "немає фокусу"
-
-#: appModules\_default.py:219
-msgid "move to focus"
-msgstr "перемістити до фокусу"
+msgstr "%s скопійовано до буферу обміну"
 
 #: appModules\_default.py:221
-msgid "Sets the navigator object to the current focus"
-msgstr "переносить навігатор до об'єкту під фокусом"
+msgid ""
+"Reports the current navigator object or, if pressed three times, Copies name "
+"and value of current navigator object to the clipboard"
+msgstr ""
+"Повідомляє об'єкт навігатора або, якщо "
+"натиснуто тричі, копіює назву і значення "
+"об'єкта навігатора до буферу обміну"
+
+#: appModules\_default.py:229
+msgid "No location information for navigator object"
+msgstr ""
+"Немає інформації про розташування об'єкта"
+" навігатора"
+
+#: appModules\_default.py:232
+msgid ""
+"Object edges positioned %.1f per cent right from left of screen, %.1f per "
+"cent down from top of screen, %.1f per cent left from right of screen, %.1f "
+"up from bottom of screen"
+msgstr ""
+"Межі об'єкта розташовані %.1f відсотки "
+"справа від лівого краю екрана, %.1f відсотки"
+" знизу від верхнього краю экрана, %.1f "
+"відсотки зліва від правого краю экрана, %."
+"1f відсотки зверху від нижнього краю "
+"екрана."
 
 #: appModules\_default.py:233
+msgid "Reports the hight, width and position of the current navigator object"
+msgstr ""
+"Повідомляє висоту, ширину та розташування"
+" об'єкта навігатора"
+
+#: appModules\_default.py:238 appModules\_default.py:620
+msgid "no focus"
+msgstr "Немає фокусу"
+
+#: appModules\_default.py:240
+msgid "move to focus"
+msgstr "Привести до фокусу"
+
+#: appModules\_default.py:242
+msgid "Sets the navigator object to the current focus"
+msgstr ""
+"Встановлює об'єкт навігатора на поточний "
+"фокус"
+
+#: appModules\_default.py:254
 msgid "No parents"
-msgstr "немає батьківського"
+msgstr "Немає батьківського"
 
-#: appModules\_default.py:234
-msgid "Sets the navigator object to the parent of the object it is currently on."
-msgstr "встановлює навігатор на батьківський об'єкт поточного"
+#: appModules\_default.py:255
+msgid ""
+"Sets the navigator object to the parent of the object it is currently on and "
+"speaks it"
+msgstr ""
+"Приводить навігатор до батьківського "
+"об'єкта, відносно поточного і читає його"
 
-#: appModules\_default.py:246
+#: appModules\_default.py:267
 msgid "No next"
-msgstr "немає наступного"
+msgstr "Немає наступного"
 
-#: appModules\_default.py:247
-msgid "Sets the navigator object to the next object to the one it is currently on"
-msgstr "встановлює навигатор на наступній об'єкт відносно поточного"
+#: appModules\_default.py:268
+msgid ""
+"Sets the navigator object to the object next to the one it is currently on "
+"and speaks it"
+msgstr ""
+"Встановлює навігатор на наступний об'єкт, "
+"відносно поточного і читає його"
 
-#: appModules\_default.py:259
+#: appModules\_default.py:280
 msgid "No previous"
-msgstr "немає попереднього"
+msgstr "Немає попереднього"
 
-#: appModules\_default.py:260
-msgid "Sets the navigator object to the previous object to the one it is currently on"
-msgstr "встановлює навигатор на попередній об'єкт відносно поточного"
+#: appModules\_default.py:281
+msgid ""
+"Sets the navigator object to the object previous to the one it is currently "
+"on and speaks it"
+msgstr ""
+"Встановлює навігатор на попередній об'єкт"
+", відносно поточного і читає його"
 
-#: appModules\_default.py:272
+#: appModules\_default.py:293
 msgid "No children"
-msgstr "немає дочірнього"
+msgstr "Немає дочірнього"
 
-#: appModules\_default.py:273
-msgid "Sets the navigator object to the first child object to the one it is currently on"
-msgstr "Встановлює навігатор на першій дочірній об'єкт поточного"
+#: appModules\_default.py:294
+msgid ""
+"Sets the navigator object to the first child object of the one it is "
+"currently on and speaks it"
+msgstr ""
+"Встановлює навігатор на перший дочірній "
+"об'єкт, відносно поточного і читає його"
 
-#: appModules\_default.py:295
+#: appModules\_default.py:316
 msgid "end of flow"
-msgstr "кінець потоку"
+msgstr "Кінець потоку"
 
-#: appModules\_default.py:296
-msgid "Sets the navigator object to the object this object flows to."
-msgstr "встановлює навігатор на об'єкт потоку, до якого належить поточний"
+#: appModules\_default.py:317
+msgid ""
+"Sets the navigator object to the object this object flows to and speaks it"
+msgstr ""
+"Встановлює навігатор на об'єкт потоку, до "
+"якого належить поточний об'єкт і читає "
+"його"
 
-#: appModules\_default.py:318
+#: appModules\_default.py:339
 msgid "Beginning of flow"
-msgstr "початок потоку"
+msgstr "Початок потоку"
 
-#: appModules\_default.py:319
-msgid "Sets the navigator object to the object this object flows from."
-msgstr "встановлює навігатор на перший об'єкт потоку, що належить поточному об'єкт"
+#: appModules\_default.py:340
+msgid ""
+"Sets the navigator object to the object this object flows from and speaks it"
+msgstr ""
+"Встановлює навігатор на об'єкт, який "
+"спричинив потік поточного об'єкта і читає "
+"його"
 
-#: appModules\_default.py:327
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "виконує дію по умовчанню над поточним об'єктом під навігатором. Наприклад, натискує кнопку або відмічає прапорець."
+#: appModules\_default.py:348
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Виконує встановлену дію поточного об'єкта"
+" навігатора, наприклад, натискає його, якщ"
+"о це кнопка"
 
-#: appModules\_default.py:338
+#: appModules\_default.py:359
 msgid "inside"
-msgstr "в середині"
+msgstr "Всередині"
 
-#: appModules\_default.py:341
-msgid "Reports where the current navigator object is by reporting each of its ancestors"
-msgstr "промовляє розміщення навігатору"
+#: appModules\_default.py:362
+msgid ""
+"Reports where the current navigator object is by reporting each of its "
+"ancestors"
+msgstr ""
+"Повідомляє розташування поточного "
+"об'єкта навігатора в ієрархії, озвучуючи "
+"його батьківські об'єкти"
 
-#: appModules\_default.py:346
-msgid "Moves the review cursor to the top line of the current navigator object"
-msgstr "переміщує курсор огляду на перший рядок об'єкту навигатору"
+#: appModules\_default.py:368 appModules\_default.py:380
+#: appModules\_default.py:421 textBuffer.py:364 textBuffer.py:391
+#: textBuffer.py:412 textBuffer.py:433 virtualBuffers_old\__init__.py:274
+msgid "top"
+msgstr "Верхній"
 
-#: appModules\_default.py:351
-msgid "Moves the review cursor to the previous line of the current navigator object"
-msgstr "переміщує курсор огляду на попередній рядок об'єкту навигатору"
+#: appModules\_default.py:370
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на перший "
+"рядок об'єкта навігатора і читає його"
 
-#: appModules\_default.py:356
-msgid "Reports the line of the current navigator object where the review cursor is situated"
-msgstr "читає поточний рядок об'єкту навігатору, в якому розміщений курсор огляду"
-
-#: appModules\_default.py:361
-msgid "Moves the review cursor to the next line of the current navigator object"
-msgstr "переміщує курсор огляду на наступній рядок об'єкту навигатору"
-
-#: appModules\_default.py:366
-msgid "Moves the review cursor to the bottom line of the current navigator object"
-msgstr "переміщує курсор огляду на останній рядок об'єкту навигатору"
-
-#: appModules\_default.py:371
-msgid "Moves the review cursor to the previous word of the current navigator object"
-msgstr "переміщує курсор огляду на попереднє слово об'єкту навигатору"
-
-#: appModules\_default.py:376
-msgid "Speaks the word of the current navigator object where the review cursor is situated"
-msgstr "читає поточнє слово об'єкту навігатору, в якому розміщений курсор огляду"
-
-#: appModules\_default.py:381
-msgid "Moves the review cursor to the next word of the current navigator object"
-msgstr "переміщує курсор огляду на наступне слово об'єкту навигатору"
-
-#: appModules\_default.py:386
-msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
-msgstr "переміщує курсор перегляду на початок рядка"
+#: appModules\_default.py:382
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на "
+"попередній рядок об'єкта навігатора і "
+"читає його"
 
 #: appModules\_default.py:391
-msgid "Moves the review cursor to the previous character of the current navigator object"
-msgstr "переміщує курсор огляду на попередній символ об'єкту навігатору"
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled"
+msgstr ""
+"читає рядок під переглядовим курсором "
+"об'єкта навігатора. Якщо натиснути двічі, "
+"промовляє його по буквах"
 
-#: appModules\_default.py:396
-msgid "Reports the character of the current navigator object where the review cursor is situated"
-msgstr "промовляє поточний символ під курсором огляду"
+#: appModules\_default.py:401 appModules\_default.py:409
+#: appModules\_default.py:442 textBuffer.py:369 textBuffer.py:382
+#: textBuffer.py:403 textBuffer.py:424 virtualBuffers_old\__init__.py:289
+msgid "bottom"
+msgstr "Нижній"
 
-#: appModules\_default.py:401
-msgid "Moves the review cursor to the next character of the current navigator object"
-msgstr "переміщує курсор огляду на наступній символ об'єкту навігатору"
-
-#: appModules\_default.py:406
-msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
-msgstr "переміщує курсор перегляду в кінець рядка"
+#: appModules\_default.py:403
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на "
+"наступний рядок об'єкта навігатора і "
+"читає його"
 
 #: appModules\_default.py:411
-msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "переміщує курсор перегляду до системного курсору"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на останні"
+"й рядок об'єкта навігатора і читає його"
 
-#: appModules\_default.py:416
-msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "перемищує системний курсор до курсору перегляду"
+#: appModules\_default.py:423
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на "
+"попереднє слово об'єкта навігатора і "
+"читає його"
 
-#: appModules\_default.py:425
-msgid "beeps"
-msgstr "сигнали"
+#: appModules\_default.py:432
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the word will be spelled"
+msgstr ""
+"читає слово під переглядовим курсором "
+"об'єкта навігатора. Якщо натиснуто двічі, "
+"читає його по буквах"
 
-#: appModules\_default.py:427
-msgid "talk"
-msgstr "мова"
+#: appModules\_default.py:444
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на наступ"
+"не слово об'єкта навігатора і читає його"
 
-#: appModules\_default.py:428
-msgid "speech mode %s"
-msgstr "мову %s"
+#: appModules\_default.py:452 appModules\_default.py:464
+#: appModules\totalcmd.py:35
+msgid "left"
+msgstr "Лівий"
 
-#: appModules\_default.py:430
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "перемикає режими мови. виключено - NVDA не буде читати ничого, сигналы - NVDA буде пищати замість читання, включено - NVDA буде нормально розмовляти."
+#: appModules\_default.py:454
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор до початку "
+"поточного рядка об'єкта навігатора і "
+"читає символ під курсором"
 
-#: appModules\_default.py:434
-msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "перемикає підтримку віртуальних буферів. коли виключено - клавиші надсилаються елементам управління, без обробки швідкої навігації."
-
-#: appModules\_default.py:438
-msgid "Quits NVDA!"
-msgstr "Завершує роботу NVDA."
-
-#: appModules\_default.py:442
-msgid "Shows the NVDA interface window"
-msgstr "Показує вікно інтерфейсу NVDA"
-
-#: appModules\_default.py:448
-msgid "reads from review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "читає від курсору перегляду до кінця з переміщенням його в продовж чітання"
-
-#: appModules\_default.py:453
-msgid "reads from navigator object "
-msgstr "читає від навігатору"
-
-#: appModules\_default.py:463
-msgid "reads from system caret up to end of text, moving the caret as it goes"
-msgstr "читає від системного курсору до кінця з переміщенням його в продовж чітання"
+#: appModules\_default.py:472
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на "
+"попередній символ об'єкта навігатора і "
+"читає його"
 
 #: appModules\_default.py:486
-msgid "reports the object with focus"
-msgstr "промовляє об'єкт в фокусі"
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. If this key is pressed twice, ascii and hexadecimal "
+"values are spoken for the character"
+msgstr ""
+"Читає символ під переглядовим курсором "
+"об'єкта навігатора. Якщо натиснуто двічі, "
+"читає ASCII і шістнадцятирічне значення"
 
-#: appModules\_default.py:492
-msgid "no status bar found"
-msgstr "Статусний рядок не знайдено"
+#: appModules\_default.py:496 appModules\_default.py:513
+#: appModules\totalcmd.py:37
+msgid "right"
+msgstr "Правий"
 
-#: appModules\_default.py:499
-msgid "reads the current aplication status bar and moves the navigation cursor to it"
-msgstr "чітає статусний рядок поточної программи і переміщує на нього навігатор"
-
-#: appModules\_default.py:508
-msgid "Report object under mouse"
-msgstr "промовляти об'єкт під мишкою"
-
-#: appModules\_default.py:509
-msgid "Toggles on and off the reporting of objects under the mouse"
-msgstr "перемикає промовляння об'єкту під мишкою"
+#: appModules\_default.py:504
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на "
+"наступний символ об'єкта навігатора і "
+"читає його"
 
 #: appModules\_default.py:515
-msgid "Reports the title of the current application or foreground window"
-msgstr "чітає заголовок поточного вікна"
-
-#: appModules\_default.py:522
-msgid "speaks the current foreground object"
-msgstr "промовляє поточне вікно"
-
-#: appModules\_default.py:531
-msgid "Control ID: %s"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr ""
+"Переміщає переглядовий курсор в кінець "
+"поточного рядка об'єкта навігатора і "
+"читає символ під курсором"
 
-#: appModules\_default.py:532
+#: appModules\_default.py:521
+msgid "No caret"
+msgstr "Нема курсору"
+
+#: appModules\_default.py:526
+msgid ""
+"Moves the review cursor to the position of the system caret, in the current "
+"navigator object"
+msgstr ""
+"Приводить переглядовий курсор до сист"
+"емного курсора поточного об'єкта "
+"навігатора"
+
+#: appModules\_default.py:533
+msgid ""
+"Moves the system caret to the position of the review cursor , in the current "
+"navigator object"
+msgstr ""
+"Приводить системний курсор до перегляд"
+"ового курсора поточного об'єкта "
+"навігатора"
+
+#: appModules\_default.py:542
+msgid "beeps"
+msgstr "Сигнали"
+
+#: appModules\_default.py:544
+msgid "talk"
+msgstr "Мовлення"
+
+#: appModules\_default.py:546
+msgid "speech mode %s"
+msgstr "Режим озвучення %s"
+
+#: appModules\_default.py:548
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Перемикає режим озвучення NVDA між ви"
+"мкнено, Сигналы, Мовлення. При Вимкнено, "
+"NVDA нічого не читає. При режимі Сигналы, NVDA "
+"видає високочастотні звуки, коли на "
+"екрані з'являється нова інформація. При "
+"режимі Мовлення NVDA озвучує події активни"
+"м синтезатором"
+
+#: appModules\_default.py:556
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Перемикає між режимами Огляду і Р"
+"едагування. В режимі редагування клавіші "
+"передаються, безпосередньо, додатку, "
+"дозволяючи взаємодіяти з активним "
+"елементом керування. В режимі огляду "
+"можна переглядати вміст документа, "
+"використовуючи курсор, швидкі клавіші NVDA "
+"і т.д."
+
+#: appModules\_default.py:560
+msgid "Quits NVDA!"
+msgstr "Завершує роботу NVDA!"
+
+#: appModules\_default.py:564
+msgid "Shows the NVDA menu"
+msgstr "Викликає меню NVDA"
+
+#: appModules\_default.py:569
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Читає від переглядового курсора до кінця "
+"тексту, із переміщеннямм переглядового "
+"курсора за текстом"
+
+#: appModules\_default.py:574
+msgid "reads from the navigator object "
+msgstr "Читає від об'єкта навігатора"
+
+#: appModules\_default.py:589
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"Читає від системного курсора до кінця "
+"тексту, із переміщенням системного "
+"курсора за текстом"
+
+#: appModules\_default.py:621
+msgid "reports the object with focus"
+msgstr "читає об'єкт у фокусі"
+
+#: appModules\_default.py:626
+msgid "no status bar found"
+msgstr "Не вдалося знайти рядок стану"
+
+#: appModules\_default.py:635
+msgid "reads the current application status bar and moves the navigator to it"
+msgstr ""
+"читає рядок стану поточного додатка і "
+"приводить туди навігатор"
+
+#: appModules\_default.py:644
+msgid "Mouse tracking"
+msgstr "Відстеження мишки"
+
+#: appModules\_default.py:645
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr ""
+"Перемикає озвучення інформації під час "
+"переміщення вказівника мышки"
+
+#: appModules\_default.py:653
+msgid "no title"
+msgstr "Немає заголовка"
+
+#: appModules\_default.py:662
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed thrice, copies the title to the "
+"clipboard"
+msgstr ""
+"Повідомляє заголовок поточного додатка "
+"або вікна на передньому плані. При "
+"подвійному натисненні, відтворює його "
+"посимвольно. При потрійному натисненні, "
+"копіює заголовок в буфер обміну"
+
+#: appModules\_default.py:669
+msgid "speaks the current foreground object"
+msgstr "Читає об'єкт на передньому плані"
+
+#: appModules\_default.py:684 cursorManager.py:223
+msgid "copied to clipboard"
+msgstr "Скопійовано у буфер обміну"
+
+#: appModules\_default.py:688
+msgid "Control ID: %s"
+msgstr "Контрол ID: %s"
+
+#: appModules\_default.py:689
 msgid "Class: %s"
-msgstr "клас: %s"
+msgstr "Клас: %s"
 
-#: appModules\_default.py:534
+#: appModules\_default.py:691
 msgid "internal text: %s"
 msgstr "Внутрішній текст: %s"
 
-#: appModules\_default.py:535
+#: appModules\_default.py:692
 msgid "text: %s"
-msgstr "текст: %s"
+msgstr "Текст: %s"
 
-#: appModules\_default.py:537
-msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "промовляє технічну інформацію про об'єкт: control id, клас, внутрішній текст. Може бути корисним для розробщиків"
+#: appModules\_default.py:694
+msgid ""
+"reports some information about the current navigator object, mainly useful "
+"for developers. When pressed 2 times it copies control id, class and "
+"internal text to the windows clipboard"
+msgstr ""
+"Повідомляє технічну інформацію про об'єкт"
+", головним чином, використовується "
+"розробниками. Якщо натиснути двічі - вміст"
+" Контрол ID, клас, внутрішній текст "
+"копіюється до буферу обміну Windows"
 
-#: appModules\_default.py:546
-msgid "Beep on progress bar updates"
-msgstr "сигнали зміни індикаторів виконання"
+#: appModules\_default.py:699 gui\settingsDialogs.py:458
+msgid "Beep for visible"
+msgstr "Сигнал для видимого"
 
-#: appModules\_default.py:547
-msgid "Toggles on and off the beeping on progress bar updates"
-msgstr "перемикає сигнали зміни індикаторів виконання"
+#: appModules\_default.py:700 gui\settingsDialogs.py:459
+msgid "Beep for all"
+msgstr "Сигнал для усіх"
 
-#: appModules\_default.py:556
+#: appModules\_default.py:701 gui\settingsDialogs.py:460
+msgid "Speak each 10 percent"
+msgstr "Промовляти кожні 10 відсотків"
+
+#: appModules\_default.py:711
+msgid ""
+"Toggles how NVDA reports progress bar updates. It can beep for all the "
+"progress bars or just for the progressbars in the foreground. Additionally "
+"it is possible to have current value spoken each 10 percent or it is "
+"possible to completely disable this reporting."
+msgstr ""
+"Перемикає озвучення NVDA змін стану "
+"індикаторів виконання. Доступне "
+"озвучення усіх індикаторів виконання, лиш"
+"е індикатора на передньому плані, додат"
+"кове читання кожних 10 відсотків змін або "
+"вимкнення озвучення."
+
+#: appModules\_default.py:720
 msgid "report dynamic content changes"
-msgstr "чітать зміни динамічного змісту"
+msgstr "Читати зміну динамічного контенту"
 
-#: appModules\_default.py:557
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "перемикає промовляння зміни динамічного змісту, наприклад нового тексту в дос-консолі"
+#: appModules\_default.py:721
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Перемикає читання змін динамічного "
+"контенту, наприклад, озвучення нового "
+"тексту у DOS консолях"
 
-#: appModules\_default.py:566
+#: appModules\_default.py:730
 msgid "caret moves review cursor"
-msgstr "звязати курсор перегляду із системним"
+msgstr ""
+"Прив'язка переглядового курсора до "
+"системного"
 
-#: appModules\_default.py:567
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "перемикає слідування курсору перегляду за системним"
+#: appModules\_default.py:731
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"Вмикає або вимикає переміщення перегляд"
+"ового курсора під час руху системного "
+"курсора"
 
-#: appModules\_default.py:576
+#: appModules\_default.py:740
 msgid "focus moves navigator object"
-msgstr "звязати перемищення навігатора із фокусом"
+msgstr "Прив'язка навігатора до фокусу"
 
-#: appModules\_default.py:577
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "переключає слідування навигатору  за фокусом"
+#: appModules\_default.py:741
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"Вмикає або вимикає переміщення "
+"навігатора при зміні фокусу"
 
-#: appModules\_default.py:589
+#: appModules\_default.py:753
 msgid "no system battery"
-msgstr "Не знайдено індикатору батареї"
+msgstr "В системі немає батареї"
 
-#: appModules\_default.py:591
+#: appModules\_default.py:755
 msgid "%d percent"
 msgstr "%d відсотків"
 
-#: appModules\_default.py:592
+#: appModules\_default.py:756
 msgid "AC power on"
-msgstr "вімкнено в електро мережу"
+msgstr "Підключено живлення від електромережі"
 
-#: appModules\_default.py:594
+#: appModules\_default.py:758
 msgid "%d hours and %d minutes remaining"
-msgstr "лишилось %d годин і %d хвилин"
+msgstr "Залишилось %d годин і %d хвилин"
 
-#: appModules\_default.py:596
+#: appModules\_default.py:760
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "промовляє стан батареї, якщо невімкнено в електро мережу"
+msgstr ""
+"Повідомляє стан батареї і час, що "
+"залишився до розрядження, при "
+"відключеному живленні від електромережі"
 
-#: appModules\_default.py:600
+#: appModules\_default.py:764
 msgid "Pass next key through"
-msgstr "Пропустити наступну клавішу"
+msgstr "Пропуск клавіші"
 
-#: appModules\_default.py:601
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "наступна натиснена клавіша не буде оброблятися NVDA"
+#: appModules\_default.py:765
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Наступне натиснення клавіші або "
+"комбінації клавіш не буде оброблятися NVDA, "
+"а буде передано, безпосередньо, Windows."
 
-#: appModules\_default.py:605
-msgid "Currently running application is %s."
-msgstr "запущена програма: %s."
+#: appModules\_default.py:770
+msgid "Currently running application is %s"
+msgstr "Назва активного додатка %s"
 
-#: appModules\_default.py:607
-msgid "Speaks name of current active running application"
-msgstr "Називає им'я активної программи"
+#: appModules\_default.py:773
+#, fuzzy
+msgid " and currently loaded module is %s"
+msgstr "Завантажений модуль: %s"
+
+#: appModules\_default.py:775
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Повідомляє назву  виконуваного файла активного додатка і завантаженого для нього "
+"модуля."
+
+#: appModules\_default.py:779
+msgid "Shows the NVDA general settings dialog"
+msgstr ""
+"Викликає діалог загальних налаштувань NVDA"
+
+#: appModules\_default.py:783
+msgid "Shows the NVDA synthesizer dialog"
+msgstr ""
+"Викликає діалог вибору та налаштувань "
+"використовуваного синтезатора NVDA"
+
+#: appModules\_default.py:787
+msgid "Shows the NVDA voice settings dialog"
+msgstr ""
+"Викликає діалог налаштувань "
+"використовуваного голосу NVDA"
+
+#: appModules\_default.py:791
+msgid "Shows the NVDA keyboard settings dialog"
+msgstr ""
+"Викликає діалог клавіатурних налаштувань"
+" NVDA"
+
+#: appModules\_default.py:795
+msgid "Shows the NVDA mouse settings dialog"
+msgstr "Викликає діалог налаштувань мышки NVDA"
+
+#: appModules\_default.py:799
+msgid "Shows the NVDA object presentation settings dialog"
+msgstr ""
+"Викликає діалог налаштувань "
+"представлення об'єктів NVDA"
+
+#: appModules\_default.py:803
+msgid "Shows the NVDA virtual buffers settings dialog"
+msgstr ""
+"Викликає діалог налаштувань озвучення "
+"віртуальних буферів NVDA"
+
+#: appModules\_default.py:807
+msgid "Shows the NVDA document formatting settings dialog"
+msgstr ""
+"Викликає діалог налаштувань озвучення "
+"форматування документу NVDA"
+
+#: appModules\_default.py:811
+msgid "Saves the current NVDA configuration"
+msgstr ""
+"Зберігає поточну конфігурацію "
+"налаштувань NVDA"
+
+#: appModules\_default.py:815
+msgid "loads the saved NVDA configuration, overriding current changes"
+msgstr ""
+"Завантажує конфігурацію налаштувань NVDA, "
+"застосовуючи її замість поточної"
+
+#: appModules\_default.py:823
+msgid "Activates the NVDA Python Console, primarily useful for development"
+msgstr ""
+"Активовує Python консоль NVDA, Головним чином, "
+"використовується розробниками"
+
+#: appModules\_default.py:828
+msgid "review"
+msgstr "Огляд"
+
+#: appModules\_default.py:831
+msgid "focus"
+msgstr "Фокус"
+
+#: appModules\_default.py:832
+msgid "Braille tethered to %s"
+msgstr "Брайль прив'язаний до %s"
+
+#: appModules\_default.py:833
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr ""
+"Перемикає прив'язку Брайля між позицією "
+"фокусу і огляду"
+
+#: appModules\_default.py:841
+msgid "There is no text on the clipboard"
+msgstr "У буфері обміну немає тексту"
+
+#: appModules\_default.py:846
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
+msgstr ""
+"Буфер обміну містить великий об'єм тексту"
+". він становить %s символів."
+
+#: appModules\_default.py:847
+msgid "Reports the text on the Windows clipboard"
+msgstr "Читає текст у буфері обміну"
+
+#: appModules\_default.py:851
+msgid "Start marked"
+msgstr "Помічено початок"
+
+#: appModules\_default.py:852
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr "Помічає поточну позицію переглядового курсора як початкову для копіювання"
+
+#: appModules\_default.py:856
+msgid "No start marker set"
+msgstr "Початок не відмічено"
+
+#: appModules\_default.py:860
+msgid "The start marker must reside within the same object"
+msgstr "Помітка початку повинна знаходитися в одному об'єкті з кінцевою"
+
+#: appModules\_default.py:865
+msgid "Review selection copied to clipboard"
+msgstr "виділення перегляду скопійовано до буферу обміну"
+
+#: appModules\_default.py:867
+msgid "No text to copy"
+msgstr "текст для копіювання відсутній"
+
+#: appModules\_default.py:870
+msgid ""
+"Retrieves the text from the previously set start marker to the current "
+"position of the review cursor and copies it to the clipboard"
+msgstr "Копіює в буфер обміну інформацію від попередньо встановленої помітки до поточної позиції переглядового курсору"
+
+#: appModules\explorer.py:16
+msgid "Start"
+msgstr "пуск"
+
+#: appModules\msimn.py:19
+msgid "Attachments"
+msgstr "Вкладення"
+
+#: appModules\msimn.py:20
+msgid "To:"
+msgstr "Кому:"
 
 #: appModules\msimn.py:21
-msgid "Attachments"
-msgstr "вкладення"
+msgid "Newsgroup:"
+msgstr "Група новин:"
 
 #: appModules\msimn.py:22
-msgid "To:"
-msgstr "кому:"
+msgid "CC:"
+msgstr "Копія:"
 
 #: appModules\msimn.py:23
-msgid "Newsgroup:"
-msgstr "группа новин:"
+msgid "Subject:"
+msgstr "Тема:"
 
-#: appModules\msimn.py:24
-msgid "CC:"
-msgstr "копія:"
+#: appModules\msimn.py:24 appModules\msimn.py:32
+msgid "From:"
+msgstr "Від:"
 
 #: appModules\msimn.py:25
-msgid "Subject:"
-msgstr "тема:"
+msgid "Date:"
+msgstr "Дата:"
 
-#: appModules\msimn.py:26 appModules\msimn.py:34
-msgid "From:"
-msgstr "від: "
+#: appModules\msimn.py:26
+msgid "Forward to:"
+msgstr "Переслати:"
 
 #: appModules\msimn.py:27
-msgid "Date:"
-msgstr "дата:"
+msgid "Answer to:"
+msgstr "Відповісти:"
 
 #: appModules\msimn.py:28
-msgid "Forward to:"
-msgstr "перенаправлено"
-
-#: appModules\msimn.py:29
-msgid "Answer to:"
-msgstr "відповідь на:"
-
-#: appModules\msimn.py:30
 msgid "Organisation:"
 msgstr "Організація:"
 
-#: appModules\msimn.py:31
+#: appModules\msimn.py:29
 msgid "Distribution:"
-msgstr "дизтрибуція:"
+msgstr "Дистрибуція:"
 
-#: appModules\msimn.py:32
+#: appModules\msimn.py:30
 msgid "Key words:"
-msgstr "ключеві слова:"
+msgstr "Ключові слова:"
 
-#: appModules\msimn.py:33
+#: appModules\msimn.py:31
 msgid "BCC:"
-msgstr "прихована копия:"
+msgstr "Сліпа копія:"
 
 #: appModules\outlook.py:30 appModules\outlook.py:43
 msgid "subject: %s"
-msgstr "тема: %s"
+msgstr "Тема: %s"
 
 #: appModules\outlook.py:31
 msgid "received: %s"
-msgstr "отримано: %s"
+msgstr "Отримано: %s"
 
 #: appModules\outlook.py:35
 msgid "unread"
-msgstr "не прочітано"
+msgstr "Непрочитано"
 
 #: appModules\outlook.py:37
 msgid "attachment"
-msgstr "з вкладеннями"
+msgstr "Вкладення"
 
 #: appModules\outlook.py:44
 msgid "sent: %s"
-msgstr "відправлено: %s"
+msgstr "Відправлено: %s"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:66
+#: braille.py:26
+msgid "Arabic grade 1"
+msgstr "Arabic grade 1"
+
+#: braille.py:27
+msgid "Welsh grade 1"
+msgstr "Welsh grade 1"
+
+#: braille.py:28
+msgid "Welsh grade 2"
+msgstr "Welsh grade 2"
+
+#: braille.py:29
+msgid "Czech grade 1"
+msgstr "Czech grade 1"
+
+#: braille.py:30
+msgid "Danish grade 1"
+msgstr "Danish grade 1"
+
+#: braille.py:31
+msgid "German grade 0"
+msgstr "German grade 0"
+
+#: braille.py:32
+msgid "German grade 1"
+msgstr "German grade 1"
+
+#: braille.py:33
+msgid "German grade 2"
+msgstr "German grade 2"
+
+#: braille.py:34
+msgid "English (U.K.) grade 1"
+msgstr "English (U.K.) grade 1"
+
+#: braille.py:35
+msgid "English (U.K.) grade 2"
+msgstr "English (U.K.) grade 2"
+
+#: braille.py:36
+msgid "English (U.S.) 6 dot computer braille"
+msgstr "English (U.S.) 6 dot computer braille"
+
+#: braille.py:37
+msgid "English (U.S.) 8 dot computer braille"
+msgstr "English (U.S.) 8 dot computer braille"
+
+#: braille.py:38
+msgid "English (U.S.) grade 1"
+msgstr "English (U.S.) grade 1"
+
+#: braille.py:39
+msgid "English (U.S.) grade 2"
+msgstr "English (U.S.) grade 2"
+
+#: braille.py:40
+msgid "Spanish grade 1"
+msgstr "Spanish grade 1"
+
+#: braille.py:41
+msgid "French (Canada) grade 1"
+msgstr "French (Canada) grade 1"
+
+#: braille.py:42
+msgid "French (Canada) grade 2"
+msgstr "French (Canada) grade 2"
+
+#: braille.py:43
+msgid "French (France) grade 1"
+msgstr "French (France) grade 1"
+
+#: braille.py:44
+msgid "French (France) grade 2"
+msgstr "French (France) grade 2"
+
+#: braille.py:45
+msgid "Greek (Greece) grade 1"
+msgstr "Greek (Greece) grade 1"
+
+#: braille.py:46
+msgid "Hindi grade 1"
+msgstr "Hindi grade 1"
+
+#: braille.py:47
+msgid "Italian grade 1"
+msgstr "Italian grade 1"
+
+#: braille.py:48
+msgid "Latvian grade 1"
+msgstr "Latvian grade 1"
+
+#: braille.py:49
+msgid "Dutch (Belgium) grade 1"
+msgstr "Dutch (Belgium) grade 1"
+
+#: braille.py:50
+msgid "Dutch (netherlands) grade 1"
+msgstr "Dutch (netherlands) grade 1"
+
+#: braille.py:51
+msgid "Norwegian grade 0"
+msgstr "Norwegian grade 0"
+
+#: braille.py:52
+msgid "Norwegian grade 1"
+msgstr "Norwegian grade 1"
+
+#: braille.py:53
+msgid "Norwegian grade 2"
+msgstr "Norwegian grade 2"
+
+#: braille.py:54
+msgid "Norwegian grade 3"
+msgstr "Norwegian grade 3"
+
+#: braille.py:55
+msgid "Polish grade 1"
+msgstr "Polish grade 1"
+
+#: braille.py:56
+msgid "Portuguese grade 1"
+msgstr "Portuguese grade 1"
+
+#: braille.py:57
+msgid "Swedish grade 1"
+msgstr "Swedish grade 1"
+
+#: braille.py:58
+msgid "Slovak"
+msgstr "Slovak"
+
+#: braille.py:59
+msgid "Unified English Braille Code grade 1"
+msgstr "Unified English Braille Code grade 1"
+
+#: braille.py:60
+msgid "Unified English Braille Code grade 2"
+msgstr "Unified English Braille Code grade 2"
+
+#: braille.py:64
+msgid "edt"
+msgstr "ред"
+
+#: braille.py:66
+msgid "mnubar"
+msgstr "меню"
+
+#: braille.py:67
+msgid "mnu"
+msgstr "меню"
+
+#: braille.py:69
+msgid "btn"
+msgstr "кнп"
+
+#: braille.py:70
+msgid "chk"
+msgstr "прпор"
+
+#: braille.py:71
+msgid "rbtn"
+msgstr "ркнопк"
+
+#: braille.py:72
+msgid "cbo"
+msgstr "кспис"
+
+#: braille.py:73
+msgid "lnk"
+msgstr "псл"
+
+#: braille.py:74
+msgid "dlg"
+msgstr "длг"
+
+#: braille.py:78
+msgid "(x)"
+msgstr "(x)"
+
+#: braille.py:79
+msgid "sel"
+msgstr "вид"
+
+#: braille.py:80
+msgid "submnu"
+msgstr "пдмню"
+
+#: braille.py:83
+msgid "( )"
+msgstr "( )"
+
+#: braille.py:222 speech.py:596
+msgid "%s of %s"
+msgstr "%s із %s"
+
+#: braille.py:224 speech.py:601 speech.py:604
+msgid "level %s"
+msgstr "Рівень %s"
+
+#: brailleDisplayDrivers\handyTech.py:24
+#, fuzzy
+msgid "Handy Tech braille displays"
+msgstr "HandyTech braille displays"
+
+#: brailleDisplayDrivers\noBraille.py:7
+msgid "No braille"
+msgstr "Без брайля"
+
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:552
 msgid "blank"
-msgstr "пусто"
+msgstr "чисто"
 
 #: characterSymbols.py:19
 msgid "null"
 msgstr "пусто"
 
+#: characterSymbols.py:20 controlTypes.py:193
+msgid "tab"
+msgstr "Таб"
+
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "перехід рядку"
+msgstr "Переведення рядка"
 
 #: characterSymbols.py:22
 msgid "carriage return"
-msgstr "вертання каретки"
+msgstr "Повернення каретки"
 
-#: characterSymbols.py:23
+#: characterSymbols.py:23 keyUtils.py:120
 msgid "space"
-msgstr "пробіл"
+msgstr "Пробіл"
 
 #: characterSymbols.py:24
 msgid "bang"
-msgstr "знак оклику!"
+msgstr "Знак оклику"
 
 #: characterSymbols.py:25
 msgid "quote"
-msgstr "лапки"
+msgstr "Лапки"
 
 #: characterSymbols.py:26
 msgid "number"
-msgstr "номер"
+msgstr "Номер"
 
 #: characterSymbols.py:27
 msgid "dollar"
-msgstr "долар"
+msgstr "Доллар"
 
 #: characterSymbols.py:28
 msgid "percent"
-msgstr "відсоток"
+msgstr "Відсоток"
 
 #: characterSymbols.py:29
 msgid "and"
-msgstr "амперсент"
+msgstr "Амперсанд"
 
 #: characterSymbols.py:30
 msgid "tick"
-msgstr "апостроф"
+msgstr "Апостроф"
 
 #: characterSymbols.py:31
 msgid "left paren"
-msgstr "ліва дужка"
+msgstr "Ліва кругла дужка"
 
 #: characterSymbols.py:32
 msgid "right paren"
-msgstr "права дужка"
+msgstr "Права кругла дужка"
 
 #: characterSymbols.py:33
 msgid "star"
-msgstr "зірка"
+msgstr "Зірочка"
 
 #: characterSymbols.py:34
 msgid "plus"
-msgstr "плюс"
+msgstr "Плюс"
 
 #: characterSymbols.py:35
 msgid "comma"
-msgstr "кома"
+msgstr "Кома"
 
 #: characterSymbols.py:36
 msgid "dash"
-msgstr "тире"
+msgstr "Мінус"
 
 #: characterSymbols.py:37
 msgid "dot"
-msgstr "крапка"
+msgstr "Крапка"
 
 #: characterSymbols.py:38
 msgid "slash"
-msgstr "дріб"
+msgstr "Похила риска"
 
 #: characterSymbols.py:39
 msgid "colon"
-msgstr "двокрапка"
+msgstr "Двокрапка"
 
 #: characterSymbols.py:40
 msgid "semi"
-msgstr "крапка з комою"
+msgstr "Крапка з комою"
 
 #: characterSymbols.py:41
 msgid "less"
-msgstr "менше"
+msgstr "Менше"
 
 #: characterSymbols.py:42
 msgid "equals"
-msgstr "дорівнює"
+msgstr "Дорівнює"
 
 #: characterSymbols.py:43
 msgid "greater"
-msgstr "більше"
+msgstr "Більше"
 
 #: characterSymbols.py:44
 msgid "question"
-msgstr "знак питання?"
+msgstr "Знак питання"
 
 #: characterSymbols.py:45
 msgid "at"
-msgstr "собачка"
+msgstr "Песик"
 
 #: characterSymbols.py:46
 msgid "left bracket"
-msgstr "ліва квадратна дужка"
+msgstr "Ліва квадратна дужка"
 
 #: characterSymbols.py:47
 msgid "back slash"
-msgstr "бекслеш"
+msgstr "Зворотна похила риска"
 
 #: characterSymbols.py:48
 msgid "right bracket"
-msgstr "права квадратна дужка"
+msgstr "Права квадратна дужка"
 
-#: characterSymbols.py:49 controlTypes.py:249
+#: characterSymbols.py:49 controlTypes.py:263
 msgid "caret"
-msgstr "кришка"
+msgstr "Кришка"
 
 #: characterSymbols.py:51
 msgid "graav"
-msgstr "обернений апостроф"
+msgstr "Зворотній апостроф"
 
 #: characterSymbols.py:52
 msgid "left brace"
-msgstr "ліва фігурна дужка"
+msgstr "Ліва фігурна дужка"
 
 #: characterSymbols.py:53
 msgid "bar"
-msgstr "вертикаль"
+msgstr "Вертикальна риска"
 
 #: characterSymbols.py:54
 msgid "right brace"
-msgstr "права фігурна дужка"
+msgstr "Права фігурна дужка"
 
 #: characterSymbols.py:55
 msgid "tilda"
-msgstr "тільда"
+msgstr "Тільда"
 
-#: controlTypes.py:157
-msgid "unknown object"
-msgstr "невідомий об'єкт"
+#: characterSymbols.py:56 virtualBuffers_old\MSHTML.py:264
+#: virtualBuffers_old\MSHTML.py:271 virtualBuffers_old\adobe.py:268
+#: virtualBuffers_old\adobe.py:279 virtualBuffers_old\gecko.py:260
+#: virtualBuffers_old\gecko.py:271
+msgid "bullet"
+msgstr "Маркер"
 
-#: controlTypes.py:159
-msgid "title bar"
-msgstr "заголовок вікна"
-
-#: controlTypes.py:160
-msgid "pane"
-msgstr "область"
-
-#: controlTypes.py:161
-msgid "dialog"
-msgstr "діалог"
-
-#: controlTypes.py:162
-msgid "check box"
-msgstr "прапорець"
-
-#: controlTypes.py:163
-msgid "radio button"
-msgstr "радіо кнопка"
-
-#: controlTypes.py:164
-msgid "text"
-msgstr "текст"
-
-#: controlTypes.py:167
-msgid "menu bar"
-msgstr "меню"
-
-#: controlTypes.py:168
-msgid "menu item"
-msgstr "елемент меню"
-
-#: controlTypes.py:169
-msgid "popup menu"
-msgstr "вспливаюче меню"
-
-#: controlTypes.py:170
-msgid "combo box"
-msgstr "поле вибору"
+#: characterSymbols.py:57
+msgid "dot dot dot"
+msgstr "Три крапки"
 
 #: controlTypes.py:171
-msgid "list"
-msgstr "список"
+msgid "unknown object"
+msgstr "Невідомий об'єкт"
 
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #: controlTypes.py:172
-msgid "list item"
-msgstr "елемент спіску"
+msgid "window"
+msgstr "Вікно"
 
 #: controlTypes.py:173
-msgid "graphic"
-msgstr "зображення"
+msgid "title bar"
+msgstr "Заголовок вікна"
 
 #: controlTypes.py:174
-msgid "help balloon"
-msgstr "системне повідомлення"
+msgid "pane"
+msgstr "Область"
 
 #: controlTypes.py:175
-msgid "tool tip"
-msgstr "вспливаюча підказка"
+msgid "dialog"
+msgstr "Діалог"
 
 #: controlTypes.py:176
-msgid "link"
-msgstr "ссилка"
+msgid "check box"
+msgstr "Прапорець"
 
 #: controlTypes.py:177
-msgid "tree view"
-msgstr "дерево"
+msgid "radio button"
+msgstr "Радіокнопка"
 
 #: controlTypes.py:178
-msgid "tree view item"
-msgstr "елемент дерева"
+msgid "text"
+msgstr "Текст"
+
+#: controlTypes.py:179
+msgid "edit"
+msgstr "Редактор"
 
 #: controlTypes.py:180
-msgid "tab control"
-msgstr "сторінка"
+msgid "button"
+msgstr "Кнопка"
 
 #: controlTypes.py:181
-msgid "slider"
-msgstr "повзунок"
+msgid "menu bar"
+msgstr "Рядок меню"
 
 #: controlTypes.py:182
-msgid "progress bar"
-msgstr "індикатор виконання"
+msgid "menu item"
+msgstr "Елемент меню"
 
-#: controlTypes.py:183
-msgid "scroll bar"
-msgstr "листання"
+#: controlTypes.py:183 controlTypes.py:290
+msgid "menu"
+msgstr "Меню"
 
 #: controlTypes.py:184
-msgid "status bar"
-msgstr "статусний рядок"
+msgid "combo box"
+msgstr "Комбінованый список"
 
 #: controlTypes.py:185
-msgid "table"
-msgstr "таблиця"
+msgid "list"
+msgstr "Список"
 
 #: controlTypes.py:186
-msgid "cell"
-msgstr "елемент таблиці"
+msgid "list item"
+msgstr "Елемент списку"
 
 #: controlTypes.py:187
-msgid "column"
-msgstr "стовпчик"
+msgid "graphic"
+msgstr "Графіка"
 
 #: controlTypes.py:188
-msgid "row"
-msgstr "рядок"
+msgid "help balloon"
+msgstr "Виринаюче системне повідомлення"
 
 #: controlTypes.py:189
-msgid "frame"
-msgstr "фрейм"
+msgid "tool tip"
+msgstr "Підказка"
 
-#: controlTypes.py:190
-msgid "tool bar"
-msgstr "панель інструментів"
+#: controlTypes.py:190 speech.py:765
+msgid "link"
+msgstr "Посилання"
 
 #: controlTypes.py:191
-msgid "column header"
-msgstr "заголовок стовпчіка"
+msgid "tree view"
+msgstr "Дерево"
 
 #: controlTypes.py:192
-msgid "row header"
-msgstr "заголовок рядка"
-
-#: controlTypes.py:193
-msgid "drop down button"
-msgstr "натиснута кнопка"
+msgid "tree view item"
+msgstr "Елемент дерева"
 
 #: controlTypes.py:194
-msgid "clock"
-msgstr "годинник"
+msgid "tab control"
+msgstr "Вкладка"
 
 #: controlTypes.py:195
-msgid "separator"
-msgstr "роздільник"
+msgid "slider"
+msgstr "Повзунок"
 
 #: controlTypes.py:196
-msgid "form"
-msgstr "форма"
+msgid "progress bar"
+msgstr "Індикатор виконання"
 
 #: controlTypes.py:197
-msgid "heading"
-msgstr "заголовок"
+msgid "scroll bar"
+msgstr "Прокрутка"
 
 #: controlTypes.py:198
-msgid "heading 1"
-msgstr "заголовок першого рівню"
+msgid "status bar"
+msgstr "Рядок стану"
 
 #: controlTypes.py:199
-msgid "heading 2"
-msgstr "заголовок другого рівню"
+msgid "table"
+msgstr "Таблиця"
 
 #: controlTypes.py:200
-msgid "heading 3"
-msgstr "заголовок третього рівню"
+msgid "cell"
+msgstr "Комірка"
 
 #: controlTypes.py:201
-msgid "heading 4"
-msgstr "заголовок четвертого рівню"
+msgid "column"
+msgstr "Стовпчик"
 
 #: controlTypes.py:202
-msgid "heading 5"
-msgstr "заголовок п'ятого рівню"
+msgid "row"
+msgstr "Рядок"
 
 #: controlTypes.py:203
-msgid "heading 6"
-msgstr "заголовок шостого рівню"
+msgid "frame"
+msgstr "Фрейм"
 
 #: controlTypes.py:204
+msgid "tool bar"
+msgstr "Панель інструментів"
+
+#: controlTypes.py:205
+msgid "column header"
+msgstr "Заголовок стовпчика"
+
+#: controlTypes.py:206
+msgid "row header"
+msgstr "Заголовок рядка"
+
+#: controlTypes.py:207
+msgid "drop down button"
+msgstr "Натиснута кнопка"
+
+#: controlTypes.py:208
+msgid "clock"
+msgstr "Годинник"
+
+#: controlTypes.py:209
+msgid "separator"
+msgstr "Роздільник"
+
+#: controlTypes.py:210
+msgid "form"
+msgstr "Форма"
+
+#: controlTypes.py:211
+msgid "heading"
+msgstr "Заголовок"
+
+#: controlTypes.py:212
+msgid "heading 1"
+msgstr "Заголовок 1"
+
+#: controlTypes.py:213
+msgid "heading 2"
+msgstr "Заголовок 2"
+
+#: controlTypes.py:214
+msgid "heading 3"
+msgstr "Заголовок 3"
+
+#: controlTypes.py:215
+msgid "heading 4"
+msgstr "Заголовок 4"
+
+#: controlTypes.py:216
+msgid "heading 5"
+msgstr "Заголовок 5"
+
+#: controlTypes.py:217
+msgid "heading 6"
+msgstr "Заголовок 6"
+
+#: controlTypes.py:218
 msgid "paragraph"
 msgstr "абзац"
 
-#: controlTypes.py:205
+#: controlTypes.py:219
 msgid "block quote"
-msgstr "цитування"
+msgstr "Цитата"
 
-#: controlTypes.py:206
+#: controlTypes.py:220
 msgid "table header"
-msgstr "заголовок таблиці"
+msgstr "Заголовок таблиці"
 
-#: controlTypes.py:207
+#: controlTypes.py:221
 msgid "table body"
 msgstr "тіло таблиці"
 
-#: controlTypes.py:208
+#: controlTypes.py:222
 msgid "table footer"
-msgstr "нижній колонтитул таблиці"
+msgstr "Нижній колонтитул таблиці"
 
-#: controlTypes.py:209 virtualBuffers\IAccessible\adobe.py:36
-#: virtualBuffers\IAccessible\gecko.py:41
+#: controlTypes.py:223 virtualBuffers_old\adobe.py:40
+#: virtualBuffers_old\gecko.py:44
 msgid "document"
-msgstr "документ"
+msgstr "Документ"
 
-#: controlTypes.py:210
+#: controlTypes.py:224
 msgid "animation"
-msgstr "анімація"
+msgstr "Анімація"
 
-#: controlTypes.py:211
+#: controlTypes.py:225
 msgid "application"
-msgstr "програма"
+msgstr "Додаток"
 
-#: controlTypes.py:212
+#: controlTypes.py:226
 msgid "box"
-msgstr "блок"
+msgstr "Блок"
 
-#: controlTypes.py:213
+#: controlTypes.py:227
 msgid "grouping"
 msgstr "групування"
 
-#: controlTypes.py:214
-msgid "property page"
-msgstr "сторінка властивостей"
-
-#: controlTypes.py:215
-msgid "canvas"
-msgstr "підкладка"
-
-#: controlTypes.py:216
-msgid "caption"
-msgstr "напис"
-
-#: controlTypes.py:217
-msgid "check menu item"
-msgstr "відмічений елемент меню"
-
-#: controlTypes.py:218
-msgid "date edit"
-msgstr "введення дати"
-
-#: controlTypes.py:219
-msgid "icon"
-msgstr "значок"
-
-#: controlTypes.py:220
-msgid "directory pane"
-msgstr "область папок"
-
-#: controlTypes.py:221
-msgid "embedded object"
-msgstr "внутрішній об'єкт"
-
-#: controlTypes.py:222
-msgid "end note"
-msgstr "пояснення"
-
-#: controlTypes.py:223
-msgid "footer"
-msgstr "нижній колонтитул"
-
-#: controlTypes.py:224
-msgid "foot note"
-msgstr "зноска"
-
-#: controlTypes.py:225
-msgid "glass pane"
-msgstr "скляна область"
-
-#: controlTypes.py:226
-msgid "header"
-msgstr "заголовок"
-
-#: controlTypes.py:227
-msgid "image map"
-msgstr "малюнок"
-
 #: controlTypes.py:228
-msgid "input window"
-msgstr "вікно введення"
+msgid "property page"
+msgstr "Сторінка властивостей"
 
 #: controlTypes.py:229
-msgid "label"
-msgstr "ярлик"
+msgid "canvas"
+msgstr "Підкладка"
 
 #: controlTypes.py:230
-msgid "note"
-msgstr "примітка"
+msgid "caption"
+msgstr "Підпис"
 
 #: controlTypes.py:231
-msgid "page"
-msgstr "сторінка"
+msgid "check menu item"
+msgstr "Елемент меню позначено"
 
 #: controlTypes.py:232
-msgid "radio menu item"
-msgstr "радио кнопка меню"
+msgid "date edit"
+msgstr "Редактор дати"
 
 #: controlTypes.py:233
-msgid "layered pane"
-msgstr "багатошарова область"
+msgid "icon"
+msgstr "Значок"
 
 #: controlTypes.py:234
-msgid "redundant object"
-msgstr "надлишковий об'єкт"
-
-#: controlTypes.py:235
-msgid "root pane"
-msgstr "корньова область"
+msgid "directory pane"
+msgstr "Область папок"
 
 #: controlTypes.py:236
-msgid "edit bar"
-msgstr "рядок редагування"
+msgid "end note"
+msgstr "Пояснення"
 
 #: controlTypes.py:237
-msgid "terminal"
-msgstr "термінал"
+msgid "footer"
+msgstr "Нижній колонтитул"
 
 #: controlTypes.py:238
-msgid "rich edit"
-msgstr "багаторядковий редактор"
+msgid "foot note"
+msgstr "Зноска"
 
 #: controlTypes.py:239
-msgid "ruler"
-msgstr "лінійка"
+msgid "glass pane"
+msgstr "Дзеркальна область"
 
 #: controlTypes.py:240
-msgid "scroll pane"
-msgstr "область листання"
+msgid "header"
+msgstr "Заголовок"
 
 #: controlTypes.py:241
-msgid "section"
-msgstr "секція"
+msgid "image map"
+msgstr "Малюнок"
 
 #: controlTypes.py:242
-msgid "shape"
-msgstr "обрис"
+msgid "input window"
+msgstr "Вікно введення"
 
 #: controlTypes.py:243
-msgid "split pane"
-msgstr "розділена область"
+msgid "label"
+msgstr "Ярлик"
 
 #: controlTypes.py:244
-msgid "view port"
-msgstr "оглядове віконце"
+msgid "note"
+msgstr "Нотатка"
 
 #: controlTypes.py:245
-msgid "tear off menu"
-msgstr "розрив меню"
+msgid "page"
+msgstr "Сторінка"
 
 #: controlTypes.py:246
-msgid "text frame"
-msgstr "текстовий фрейм"
+msgid "radio menu item"
+msgstr "Елемент радіоменю"
 
 #: controlTypes.py:247
-msgid "toggle button"
-msgstr "перемикач"
+msgid "layered pane"
+msgstr "Багатошарове вікно"
 
 #: controlTypes.py:248
-msgid "border"
-msgstr "рамка"
+msgid "redundant object"
+msgstr "Збитковий об'єкт"
+
+#: controlTypes.py:249
+msgid "root pane"
+msgstr "Коренева область"
 
 #: controlTypes.py:250
-msgid "character"
-msgstr "символ"
+msgid "edit bar"
+msgstr "Рядок редагування"
 
 #: controlTypes.py:251
-msgid "chart"
-msgstr "схема"
+msgid "terminal"
+msgstr "Термінал"
 
 #: controlTypes.py:252
-msgid "cursor"
-msgstr "курсор"
+msgid "rich edit"
+msgstr "Багаторядковий редактор"
 
 #: controlTypes.py:253
-msgid "diagram"
-msgstr "діаграма"
+msgid "ruler"
+msgstr "Лінійка"
 
 #: controlTypes.py:254
-msgid "dial"
-msgstr "телефонний диск"
+msgid "scroll pane"
+msgstr "Область прокрутки"
 
 #: controlTypes.py:255
-msgid "drop list"
-msgstr "скинути список"
+msgid "section"
+msgstr "Секція"
 
 #: controlTypes.py:256
-msgid "split button"
-msgstr "розділена кнопка"
+msgid "shape"
+msgstr "фігура"
 
 #: controlTypes.py:257
-msgid "menu button"
-msgstr "кнопка меню"
+msgid "split pane"
+msgstr "Область роздільника"
 
 #: controlTypes.py:258
-msgid "drop down button grid"
-msgstr "натиснена кнопка в таблиці"
+msgid "view port"
+msgstr "Вікно огляду"
 
 #: controlTypes.py:259
+msgid "tear off menu"
+msgstr "Розривне меню"
+
+#: controlTypes.py:260
+msgid "text frame"
+msgstr "Текстовий фрейм"
+
+#: controlTypes.py:261
+msgid "toggle button"
+msgstr "Кнопка-перемикач"
+
+#: controlTypes.py:262
+msgid "border"
+msgstr "Рамка"
+
+#: controlTypes.py:264
+msgid "character"
+msgstr "Символ"
+
+#: controlTypes.py:265
+msgid "chart"
+msgstr "Схема"
+
+#: controlTypes.py:266
+msgid "cursor"
+msgstr "Курсор"
+
+#: controlTypes.py:267
+msgid "diagram"
+msgstr "Діаграма"
+
+#: controlTypes.py:268
+msgid "dial"
+msgstr "Набірний диск"
+
+#: controlTypes.py:269
+msgid "drop list"
+msgstr "випадаючий список"
+
+#: controlTypes.py:270
+msgid "split button"
+msgstr "Кнопка-роздільник"
+
+#: controlTypes.py:271
+msgid "menu button"
+msgstr "Кнопка меню"
+
+#: controlTypes.py:272
+msgid "drop down button grid"
+msgstr "Натиснута кнопка комірки"
+
+#: controlTypes.py:273
 msgid "equation"
 msgstr "рівняння"
 
-#: controlTypes.py:260
+#: controlTypes.py:274
 msgid "grip"
-msgstr "чарунка"
+msgstr "Комірка"
 
-#: controlTypes.py:261
+#: controlTypes.py:275
 msgid "hot key field"
-msgstr "поле для введення клавіш"
+msgstr "Поле гарячої клавіші"
 
-#: controlTypes.py:262
+#: controlTypes.py:276
 msgid "indicator"
 msgstr "індикатор"
 
-#: controlTypes.py:263
-msgid "spin button"
-msgstr "кнопка обертання"
-
-#: controlTypes.py:264
-msgid "sound"
-msgstr "звук"
-
-#: controlTypes.py:265
-msgid "white space"
-msgstr "біле поле"
-
-#: controlTypes.py:266
-msgid "tree view button"
-msgstr "кнопка дерева"
-
-#: controlTypes.py:267
-msgid "IP address"
-msgstr "ip адреса"
-
-#: controlTypes.py:268
-msgid "desktop icon"
-msgstr "значок робочого столу"
-
-#: controlTypes.py:269
-msgid "alert"
-msgstr "попередження"
-
-#: controlTypes.py:270
-msgid "internal frame"
-msgstr "внутріній фрейм"
-
-#: controlTypes.py:271
-msgid "desktop pane"
-msgstr "область робочого столу"
-
-#: controlTypes.py:272
-msgid "option pane"
-msgstr "область параметру"
-
-#: controlTypes.py:273
-msgid "color chooser"
-msgstr "вибір кольору"
-
-#: controlTypes.py:274
-msgid "file chooser"
-msgstr "вибір файлу"
-
-#: controlTypes.py:275
-msgid "filler"
-msgstr "наповнювач"
-
-#: controlTypes.py:276
-msgid "menu"
-msgstr "меню"
-
 #: controlTypes.py:277
-msgid "panel"
-msgstr "панель"
+msgid "spin button"
+msgstr "Кнопка прокручування"
 
 #: controlTypes.py:278
-msgid "password edit"
-msgstr "введення пароля"
+msgid "sound"
+msgstr "Звук"
 
 #: controlTypes.py:279
-msgid "font chooser"
-msgstr "вибір шрифту"
+msgid "white space"
+msgstr "чистий простір"
 
 #: controlTypes.py:280
-msgid "line"
-msgstr "рядок"
+msgid "tree view button"
+msgstr "Кнопка дерева"
 
 #: controlTypes.py:281
-msgid "font name"
-msgstr "назва шрифту"
+msgid "IP address"
+msgstr "IP адреса"
 
 #: controlTypes.py:282
-msgid "font size"
-msgstr "розмір шрифту"
+msgid "desktop icon"
+msgstr "Значок робочого столу"
+
+#: controlTypes.py:283 controlTypes.py:307
+msgid "alert"
+msgstr "Попередження"
 
 #: controlTypes.py:284
-msgid "ITALIC"
-msgstr "курсив"
+msgid "IFrame"
+msgstr "IФрейм"
+
+#: controlTypes.py:285
+msgid "desktop pane"
+msgstr "Область робочого столу"
 
 #: controlTypes.py:286
-msgid "foreground color"
-msgstr "колір шрифту"
+msgid "option pane"
+msgstr "Область параметра"
 
 #: controlTypes.py:287
-msgid "background color"
-msgstr "колір фону"
+msgid "color chooser"
+msgstr "Вибір кольору"
 
-#: controlTypes.py:288 textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
-msgid "superscript"
-msgstr "надрядковий"
+#: controlTypes.py:288
+msgid "file chooser"
+msgstr "Вибір файла"
 
-#: controlTypes.py:289 textBuffer.py:326
-msgid "subscript"
-msgstr "підрядковий"
-
-#: controlTypes.py:290
-msgid "style"
-msgstr "стиль"
+#: controlTypes.py:289
+msgid "filler"
+msgstr "Заповнювач"
 
 #: controlTypes.py:291
-msgid "indent"
-msgstr "відступ"
+msgid "panel"
+msgstr "Панель"
 
 #: controlTypes.py:292
-msgid "alignment"
-msgstr "вирівнювання"
+msgid "password edit"
+msgstr "Редактор пароля"
+
+#: controlTypes.py:293
+msgid "font chooser"
+msgstr "Вибір шрифта"
+
+#: controlTypes.py:294
+msgid "line"
+msgstr "Рядок"
+
+#: controlTypes.py:295
+msgid "font name"
+msgstr "Назва шрифта"
 
 #: controlTypes.py:296
-msgid "unavailable"
-msgstr "недоступно"
+msgid "font size"
+msgstr "Розмір шрифта"
 
-#: controlTypes.py:297
-msgid "focused"
-msgstr "активно"
-
-#: controlTypes.py:299
-msgid "busy"
-msgstr "занято"
+#: controlTypes.py:298
+msgid "ITALIC"
+msgstr "Курсив"
 
 #: controlTypes.py:300
-msgid "pressed"
-msgstr "натиснуто"
+msgid "foreground color"
+msgstr "Колір шрифта"
 
 #: controlTypes.py:301
-msgid "checked"
-msgstr "відмічено"
+msgid "background color"
+msgstr "Колір фону"
 
-#: controlTypes.py:302
-msgid "half checked"
-msgstr "частково відмічено"
+#: controlTypes.py:302 speech.py:739 textBuffer.py:287 textBuffer.py:294
+#: textBuffer.py:324
+msgid "superscript"
+msgstr "Надрядковий"
 
-#: controlTypes.py:303
-msgid "read only"
-msgstr "не змінне"
+#: controlTypes.py:303 speech.py:741 textBuffer.py:326
+msgid "subscript"
+msgstr "Підрядковий"
 
 #: controlTypes.py:304
-msgid "expanded"
-msgstr "відкрито"
+msgid "style"
+msgstr "Стиль"
 
 #: controlTypes.py:305
-msgid "collapsed"
-msgstr "закрито"
+msgid "indent"
+msgstr "Відступ"
 
 #: controlTypes.py:306
-msgid "invisible"
-msgstr "невидимо"
-
-#: controlTypes.py:307
-msgid "visited"
-msgstr "відвідана"
-
-#: controlTypes.py:308
-msgid "linked"
-msgstr "зв'язано"
-
-#: controlTypes.py:309
-msgid "subMenu"
-msgstr "під меню"
-
-#: controlTypes.py:310 virtualBuffers\IAccessible\MSHTML.py:287
-msgid "protected"
-msgstr "захищено"
+msgid "alignment"
+msgstr "Вирівнювання"
 
 #: controlTypes.py:311
-msgid "required"
-msgstr "необхідно"
+msgid "unavailable"
+msgstr "Недоступно"
 
-#: core.py:55
-msgid "configuration applied"
-msgstr "конфігурація застосована!"
+#: controlTypes.py:312
+msgid "focused"
+msgstr "Активно"
+
+#: controlTypes.py:314
+msgid "busy"
+msgstr "Зайнято"
+
+#: controlTypes.py:315
+msgid "pressed"
+msgstr "Натиснуто"
+
+#: controlTypes.py:316
+msgid "checked"
+msgstr "Позначено"
+
+#: controlTypes.py:317
+msgid "half checked"
+msgstr "Частково позначено"
+
+#: controlTypes.py:318
+msgid "read only"
+msgstr "Лише для читання"
+
+#: controlTypes.py:319
+msgid "expanded"
+msgstr "Відкрито"
+
+#: controlTypes.py:320
+msgid "collapsed"
+msgstr "Закрито"
+
+#: controlTypes.py:321
+msgid "invisible"
+msgstr "Невидимо"
+
+#: controlTypes.py:322
+msgid "visited"
+msgstr "Відвідане"
+
+#: controlTypes.py:323
+msgid "linked"
+msgstr "Пов'язано"
+
+#: controlTypes.py:324
+msgid "subMenu"
+msgstr "Підменю"
+
+#: controlTypes.py:325 virtualBuffers_old\MSHTML.py:306
+msgid "protected"
+msgstr "Захищено"
+
+#: controlTypes.py:326
+msgid "required"
+msgstr "Необхідно"
+
+#: controlTypes.py:327
+msgid "defunct"
+msgstr "Неіснуючий"
+
+#: controlTypes.py:328
+msgid "invalid entry"
+msgstr "Неправильне введення"
+
+#: controlTypes.py:329
+msgid "modal"
+msgstr "Модальний"
+
+#: controlTypes.py:330
+msgid "has auto complete"
+msgstr "Містить автозапам'ятовування"
+
+#: controlTypes.py:331
+msgid "multi line"
+msgstr "Багаторядковий"
+
+#: controlTypes.py:332
+msgid "iconified"
+msgstr "Означений"
+
+#: controlTypes.py:333
+msgid "off screen"
+msgstr "Екранне"
+
+#: controlTypes.py:334
+msgid "selectable"
+msgstr "Доступне для виділення"
+
+#: controlTypes.py:335
+msgid "focusable"
+msgstr "можливий фокус"
+
+#: controlTypes.py:336 virtualBuffers_old\MSHTML.py:336
+msgid "clickable"
+msgstr "За кліком"
+
+#: controlTypes.py:337
+msgid "editable"
+msgstr "можливо редагувати"
+
+#: controlTypes.py:338
+msgid "checkable"
+msgstr "Позначуваний"
 
 #: core.py:82
 msgid "Loading subsystems, please wait..."
-msgstr "завантаження підсистем, будьласка, зачикайте."
-
-#: core.py:95
-msgid "NVDA started"
-msgstr "NVDA готов"
-
-#: gui\__init__.py:23
-msgid ""
-"NVDA - Quick Start document\n"
-"\n"
-"NVDA (%(description)s)\n"
-"Version: %(version)s\n"
-"URL: %(url)s\n"
-"Please send bugs and suggestions to: %(maintainer)s <%(maintainer_email)s>.\n"
-"\n"
-"--- Copyright Info ---\n"
-"%(copyrightInfo)s\n"
-"----------------------\n"
-"\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
-"\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
-"\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
-"\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
-"\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
-"\n"
-"Some usefull key commands when using NVDA are:\n"
-"\n"
-"General key strokes:\n"
-"control - interupt speech\n"
-"insert+1 - turns keyboard help on and off\n"
-"insert+upArrow - reports the object with focus\n"
-"insert+downArrow - starts sayAll (press control or any other key to stop)\n"
-"insert+t speak title\n"
-"insert+f12 - report time and date\n"
-"insert+2 - turn speaking of typed characters on and off\n"
-"insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
-"insert+pageUp - increase rate of speech\n"
-"insert+pageDown - decrease rate of speech\n"
-"insert+p - turn reading of punctuation on and off\n"
-"insert+s - toggle speech modes (off, talk and beeps)\n"
-"insert+m - turn  reading of objects under the mouse on and off\n"
-"insert+f - report current font (when in a document)\n"
-"\n"
-"Object navigation:\n"
-"insert+numpadAdd - Where am I\n"
-"insert+numpad5 - current object\n"
-"shift+insert+numpad5 - dimensions and location of current object\n"
-"insert+numpad8 - parent object\n"
-"insert+numpad4 - previous object\n"
-"insert+numpad6 - next object\n"
-"insert+numpad2 - first child object\n"
-"insert+numpadMinus - move to focus object\n"
-" insert+end - move to statusbar\n"
-"insert+numpadDivide - Move mouse to current navigator object\n"
-"insert+numpadMultiply - move to mouse\n"
-"insert+numpadEnter - activate current object\n"
-"\n"
-"Reviewing the current object:\n"
-"shift+numpad7 - move to top line\n"
-"numpad7 - previous line\n"
-"numpad8 - current line\n"
-"numpad9 - next line\n"
-"shift+numpad9 - bottom line\n"
-"numpad4 - previous word\n"
-"numpad5 - current word\n"
-"numpad6 - next word\n"
-"shift+numpad1 - start of line\n"
-"numpad1 - previous character\n"
-"numpad2 - current character\n"
-"numpad3 - next character\n"
-"shift+numpad3 - end of line\n"
 msgstr ""
+"Завантаження підсистем, зачекайте будь "
+"ласка..."
 
-#: gui\__init__.py:139
-msgid "&Revert to saved configuration\tCtrl+R"
-msgstr "&Повернутись до збереженої конфігурації\tCtrl+R"
+#: core.py:142
+msgid "NVDA started"
+msgstr "NVDA запущений"
 
-#: gui\__init__.py:139
-msgid "Reset all setting back to nvda.ini"
-msgstr "встановити вси налаштування из NVDA.ini"
+#: cursorManager.py:71 virtualBuffers_old\__init__.py:464
+msgid "Find"
+msgstr "Пошук"
 
-#: gui\__init__.py:141
-msgid "&Save configuration\tCtrl+S"
-msgstr "&Зберегти конфігурацію\tCtrl+S"
+#: cursorManager.py:71 virtualBuffers_old\__init__.py:464
+msgid "Type the text you wish to find"
+msgstr "Введіть текст для пошуку"
 
-#: gui\__init__.py:141
-msgid "Write the current configuration to nvda.ini"
-msgstr "записати поточну конфігурацію в NVDA.ini"
+#: cursorManager.py:85
+msgid "text \"%s\" not found"
+msgstr "Текст \"%s\" не знайдений"
 
-#: gui\__init__.py:143
-msgid "E&xit"
-msgstr "Ви&хід"
+#: cursorManager.py:85 virtualBuffers_old\__init__.py:474
+msgid "Find Error"
+msgstr "Помилка пошуку"
 
-#: gui\__init__.py:143 gui\__init__.py:235
-msgid "Exit NVDA"
-msgstr "вихід из NVDA"
+#: cursorManager.py:91
+msgid "find a text string from the current cursor position"
+msgstr ""
+"Пошук текстової послідовності із "
+"поточної позиції курсора"
 
-#: gui\__init__.py:145 gui\__init__.py:146
-msgid "&NVDA"
-msgstr "&NVDA"
+#: cursorManager.py:98
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Пошук наступного входження текстової "
+"послідовності із поточної позиції "
+"курсора"
 
-#: gui\__init__.py:149
-msgid "&User interface...\tCtrl+Shift+U"
-msgstr "Інтерфейс користувача...\tCtrl+Shift+U"
+#: cursorManager.py:105
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Пошук попереднього входження текстової "
+"послідовности із поточної позиції "
+"курсора"
 
-#: gui\__init__.py:149
-msgid "Change user interface settings"
-msgstr "Змінити параметри інтерфейсу користувача"
+#: gui\__init__.py:146
+msgid "configuration applied"
+msgstr "Конфігурацію застосовано"
 
-#: gui\__init__.py:152
-msgid " the synthesizer to use"
-msgstr "Використовуваний синтезатор"
-
-#: gui\__init__.py:152
-msgid "&Synthesizer...\tCtrl+Shift+S"
-msgstr "Синтезатор...\tCtrl+Shift+S"
-
-#: gui\__init__.py:155
-msgid "&Voice settings...\tCtrl+Shift+V"
-msgstr "Параметри мови...\tCtrl+Shift+V"
-
-#: gui\__init__.py:155
-msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "Вибрати голос, швидкисть, висоту и гучнисть мови"
-
-#: gui\__init__.py:158
-msgid "&Keyboard Settings...\tCtrl+K"
-msgstr "Параметри клавіатури...\tCtrl+K"
-
-#: gui\__init__.py:158
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Налаштування клавіатурної розкладки, промовляння символив і слів при друку"
-
-#: gui\__init__.py:161
-msgid "&Mouse settings...\tCtrl+M"
-msgstr "Параметри мишки...\tCtrl+M"
-
-#: gui\__init__.py:161
-msgid "Change reporting of mouse sape, object under mouse"
-msgstr "Зміна промови форми курсору мишки, промовляння об'єктів під мишкою"
-
-#: gui\__init__.py:164
-msgid "&Object presentation...\tCtrl+Shift+O"
-msgstr "Об'єкт...\tCtrl+Shift+O"
-
-#: gui\__init__.py:164
-msgid "Change reporting of objects"
-msgstr "Зміна промовляння об'єктів"
-
-#: gui\__init__.py:167
-msgid "Change virtual buffers specific settings"
-msgstr "Зміна налаштувань віртуальних буферів"
-
-#: gui\__init__.py:167
-msgid "Virtual &buffers...\tCtrl+Shift+B"
-msgstr "Віртуальні буфери...\tCtrl+Shift+B"
-
-#: gui\__init__.py:170
-msgid "Change Settings of document properties"
-msgstr "Зміна налаштувань що до документів"
-
-#: gui\__init__.py:170
-msgid "Document &formatting...\tCtrl+Shift+F"
-msgstr "Документ і форматування...\tCtrl+Shift+F"
-
-#: gui\__init__.py:172 gui\__init__.py:173
-msgid "&Preferences"
-msgstr "&Параметри"
-
-#: gui\__init__.py:176
-msgid "NVDA homepage"
-msgstr "Домашня сторінка NVDA"
-
-#: gui\__init__.py:176
-msgid "Opens NVDA homepage in the default browser"
-msgstr "Відкриває домашню сторінку NVDA"
-
-#: gui\__init__.py:179
-msgid "NVDA wiki"
-msgstr "NVDA wiki"
-
-#: gui\__init__.py:179
-msgid "Opens NVDA wiki in the default browser"
-msgstr "Відкриває сторінку NVDA енциклопедії"
-
-#: gui\__init__.py:181
-msgid "About..."
-msgstr "Про програму..."
-
-#: gui\__init__.py:181 gui\__init__.py:295
-msgid "About NVDA"
-msgstr "Про NVDA"
-
-#: gui\__init__.py:183 gui\__init__.py:184
-msgid "&Help"
-msgstr "&Допомога"
-
-#: gui\__init__.py:196 gui\scriptUI.py:52 gui\scriptUI.py:61
-#: gui\scriptUI.py:74
-msgid "NVDA"
-msgstr "NVDA"
-
-#: gui\__init__.py:223
+#: gui\__init__.py:151
 msgid "configuration saved"
-msgstr "Конфігурацію збережено."
+msgstr "Конфігурацію збережено"
 
-#: gui\__init__.py:225
+#: gui\__init__.py:154
 msgid "Could not save configuration - probably read only file system"
-msgstr "неможливо зберегти конфігурацію. можліво NVDA запущено з доступного тількі для читання носію."
+msgstr ""
+"Невдалося зберегти конфігурацію. Можли"
+"во, NVDA запущений із області, доступної лиш"
+"е для читання"
 
-#: gui\__init__.py:235
-msgid "Press OK to quit NVDA"
-msgstr "Натисніть OK, щоб вийти із NVDA"
+#: gui\__init__.py:154 gui\logViewer.py:73
+msgid "Error"
+msgstr "Помилка"
 
-#: gui\__init__.py:251
-msgid "User interface settings"
-msgstr "Налаштування інтерфейсу користувача"
+#: gui\__init__.py:163
+msgid "Default dictionary"
+msgstr "Загальний словник"
 
-#: gui\__init__.py:255
-msgid "Synthesizer"
-msgstr "Синтезатор"
+#: gui\__init__.py:166
+msgid "Voice dictionary (%s)"
+msgstr "Голосовий словник (%s)"
 
-#: gui\__init__.py:259
-msgid "Voice settings"
-msgstr "Параметри мови"
+#: gui\__init__.py:169
+msgid "Temporary dictionary"
+msgstr "Тимчасовий словник"
 
-#: gui\__init__.py:263
-msgid "Keyboard Settings"
-msgstr "Параметри клавіатури"
+#: gui\__init__.py:177
+msgid "Are you sure you want to quit NVDA?"
+msgstr ""
+"Ви впевнені, що хочете завершити роботу "
+"NVDA?"
 
-#: gui\__init__.py:267
-msgid "Mouse settings"
-msgstr "Параметри мишки"
+#: gui\__init__.py:177 gui\__init__.py:305
+msgid "Exit NVDA"
+msgstr "Вихід із NVDA"
 
-#: gui\__init__.py:271
-msgid "Object presentation"
-msgstr "об'єкт"
-
-#: gui\__init__.py:275
-msgid "virtual buffers"
-msgstr "Віртуальні буфери"
-
-#: gui\__init__.py:279
-msgid "Document formatting"
-msgstr "Форматування документів"
-
-#: gui\__init__.py:294
+#: gui\__init__.py:219
 msgid "copyright"
 msgstr "Авторське право"
 
-#: gui\__init__.py:294
-msgid "maintainer"
-msgstr "Головний розробщик"
-
-#: gui\__init__.py:294
+#: gui\__init__.py:219
 msgid "url"
-msgstr "URL"
+msgstr "url"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:219
 msgid "version"
 msgstr "Версія"
 
+#: gui\__init__.py:221 gui\__init__.py:296
+msgid "About NVDA"
+msgstr "Про NVDA"
+
+#: gui\__init__.py:245
+msgid "&General settings..."
+msgstr "&Загальні налаштування..."
+
+#: gui\__init__.py:245 gui\settingsDialogs.py:88
+msgid "General settings"
+msgstr "Загальні налаштування"
+
+#: gui\__init__.py:247
+msgid " the synthesizer to use"
+msgstr "Використовуваний синтезатор"
+
+#: gui\__init__.py:247
+msgid "&Synthesizer..."
+msgstr "&Синтезатор..."
+
+#: gui\__init__.py:249
+msgid "&Voice settings..."
+msgstr "&Голоси..."
+
+#: gui\__init__.py:249
+msgid "Choose the voice, rate, pitch and volume  to use"
+msgstr ""
+"Вибір голосу, швидкості, висоти та "
+"гучності синтезатора"
+
+#: gui\__init__.py:251
+msgid "B&raille settings..."
+msgstr "&Брайль..."
+
+#: gui\__init__.py:253
+msgid "&Keyboard Settings..."
+msgstr "&Клавіатура..."
+
+#: gui\__init__.py:253
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Налаштування розкладки клавіатури, "
+"читання символів, що вводяться, слів та "
+"командних клавіш"
+
+#: gui\__init__.py:255
+msgid "&Mouse settings..."
+msgstr "&Мишка..."
+
+#: gui\__init__.py:255
+msgid "Change reporting of mouse sape, object under mouse"
+msgstr ""
+"Зміна читання форми вказівника мишки, "
+"об'єктів під вказівником мишки та інше"
+
+#: gui\__init__.py:257
+msgid "&Object presentation..."
+msgstr "&Представлення об'єктів..."
+
+#: gui\__init__.py:257
+msgid "Change reporting of objects"
+msgstr "Зміна читання об'єктів"
+
+#: gui\__init__.py:259
+msgid "Change virtual buffers specific settings"
+msgstr ""
+"Зміна спеціальних налаштувань віртуальни"
+"х буферів"
+
+#: gui\__init__.py:259
+msgid "Virtual &buffers..."
+msgstr "Віртуальні &буфери..."
+
+#: gui\__init__.py:261
+msgid "Change Settings of document properties"
+msgstr ""
+"Зміна читання форматування документів"
+
+#: gui\__init__.py:261
+msgid "Document &formatting..."
+msgstr "&Форматування документа..."
+
+#: gui\__init__.py:264
+msgid "&Default dictionary..."
+msgstr "&Загальний словник..."
+
+#: gui\__init__.py:264
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr ""
+"Діалог, у якому ви можете сформувати "
+"загальний словник, додаючи необхідні "
+"статті у список"
+
+#: gui\__init__.py:266
+msgid "&Voice dictionary..."
+msgstr "&Голосовий словник......"
+
+#: gui\__init__.py:266
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Діалог, у якому ви можете сформувати "
+"голосовий словник, додаючи необхідні "
+"статті у список"
+
+#: gui\__init__.py:268
+msgid "&Temporary dictionary..."
+msgstr "&Тимчасовий словник..."
+
+#: gui\__init__.py:268
+msgid ""
+"dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Діалог, у якому ви можете сформувати "
+"тимчасовий словник, додаючи необхідні "
+"статті"
+
+#: gui\__init__.py:270
+msgid "Speech &dictionaries"
+msgstr "&Мовленнєві словники"
+
+#: gui\__init__.py:271
+msgid "&Preferences"
+msgstr "&Параметри"
+
+#: gui\__init__.py:274
+msgid "View log"
+msgstr "Переглянути журнал роботи"
+
+#: gui\__init__.py:276
+msgid "Python console"
+msgstr "Консоль Python"
+
+#: gui\__init__.py:278
+msgid "Tools"
+msgstr "Інструменти"
+
+#: gui\__init__.py:281
+msgid "User guide"
+msgstr "Посібник користувача"
+
+#: gui\__init__.py:283
+msgid "Key Command Quick Reference"
+msgstr "Список клавіатурних команд"
+
+#: gui\__init__.py:285
+msgid "What's &new"
+msgstr "Що &нового"
+
+#: gui\__init__.py:287
+msgid "Web site"
+msgstr "Веб сайт"
+
+#: gui\__init__.py:289
+msgid "License"
+msgstr "Ліцензійна угода"
+
+#: gui\__init__.py:291
+msgid "Contributors"
+msgstr "Список розробників"
+
+#: gui\__init__.py:293
+msgid "We&lcome dialog"
+msgstr "Діалог \"&Ласкаво просимо\""
+
+#: gui\__init__.py:296
+msgid "About..."
+msgstr "Про програму..."
+
+#: gui\__init__.py:298
+msgid "&Help"
+msgstr "&Довідка"
+
+#: gui\__init__.py:300
+msgid "&Revert to saved configuration"
+msgstr ""
+"&Повернутися до збереженої конфігурації"
+
+#: gui\__init__.py:300
+msgid "Reset all settings to saved state"
+msgstr ""
+"Скинути усі налаштування до збереженого "
+"стану"
+
+#: gui\__init__.py:302
+msgid "&Save configuration"
+msgstr "&Зберегти конфігурацію"
+
+#: gui\__init__.py:302
+msgid "Write the current configuration to nvda.ini"
+msgstr "Записати поточну конфігурацію в nvda.ini"
+
+#: gui\__init__.py:305 gui\logViewer.py:33
+msgid "E&xit"
+msgstr "В&ихід"
+
+#: gui\__init__.py:361
+msgid ""
+"Welcome to NVDA!\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
+msgstr ""
+"Ласкаво просимо у NVDA!\n"
+"Більшість команд NVDA вводяться із "
+"утримуванням клавіші-модифікатора NVDA при "
+"натисненні інших клавіш.\n"
+"Типово, використовується insert на цифровому"
+" блоці і звичайний insert як клавіша-"
+"модифікатор NVDA.\n"
+"Також, можна налаштувати NVDA на "
+"використання CapsLock як клавіші-"
+"модифікатора NVDA.\n"
+"Натискайте NVDA+n у будь-який час для "
+"активації меню NVDA.\n"
+"Із цього меню ви можете налаштовувати NVDA, "
+"отримувати доступ до довідки та інших "
+"функцій програми.\n"
+
+#: gui\__init__.py:371
+msgid "Welcome to NVDA"
+msgstr "Ласкаво просимо у NVDA"
+
+#: gui\__init__.py:375
+msgid "Options"
+msgstr "Параметри"
+
+#: gui\__init__.py:376 gui\settingsDialogs.py:385
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr ""
+"Використовувати CapsLock  як клавішу-"
+"модифікатор NVDA"
+
+#: gui\__init__.py:379
+msgid "Show this dialog when NVDA starts"
+msgstr ""
+"Показувати цей діалог під час запуску NVDA"
+
+#: gui\logViewer.py:17
+msgid "NVDA Log Viewer"
+msgstr "Переглядач журналу NVDA"
+
+#: gui\logViewer.py:28
+msgid "Refresh\tF5"
+msgstr "Оновити\tF5"
+
+#: gui\logViewer.py:35
+msgid "Log"
+msgstr "Log"
+
+#: gui\logViewer.py:65
+msgid "Save As"
+msgstr "Зберегти як"
+
+#: gui\logViewer.py:73
+msgid "Error saving log: %s"
+msgstr "Помилка збереження журналу: %s"
+
+#: gui\scriptUI.py:53 gui\scriptUI.py:62 gui\scriptUI.py:74
+msgid "NVDA"
+msgstr "NVDA"
+
 #: gui\scriptUI.py:109
 msgid "Links List"
-msgstr "список ссилок"
+msgstr "Список посилань"
 
-#: gui\scriptUI.py:120
+#: gui\scriptUI.py:123
 msgid "&Activate Link"
-msgstr "&Актувати ссилку"
+msgstr "&Активувати посилання"
 
-#: gui\scriptUI.py:121
+#: gui\scriptUI.py:124
 msgid "&Move to link"
-msgstr "&Переміститись на ссилку"
+msgstr "&Перейти до посилання"
 
-#: gui\settingsDialogs.py:41
+#: gui\settingsDialogs.py:90
+msgid "info"
+msgstr "Інфо"
+
+#: gui\settingsDialogs.py:91
+msgid "debug warning"
+msgstr "Попередження відлагодження"
+
+#: gui\settingsDialogs.py:92
+msgid "input/output"
+msgstr "Введення/Вивід"
+
+#: gui\settingsDialogs.py:93
+msgid "debug"
+msgstr "Відлагодження"
+
+#: gui\settingsDialogs.py:98
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&Мова (потрібен перезапуск)"
+msgstr ""
+"&Мова (для застосування потрібне "
+"перезавантаження)"
 
-#: gui\settingsDialogs.py:45
+#: gui\settingsDialogs.py:102
 msgid "Language"
 msgstr "Мова"
 
-#: gui\settingsDialogs.py:54
-msgid "&Hide user interface on startup"
-msgstr "Не показувати &вікно інтерфейсу при запуску"
-
-#: gui\settingsDialogs.py:57
+#: gui\settingsDialogs.py:111
 msgid "&Save configuration on exit"
-msgstr "&Зберігати конфігурацію при виході"
+msgstr ""
+"Автозбереження &конфігурації при виході"
 
-#: gui\settingsDialogs.py:60
+#: gui\settingsDialogs.py:114
 msgid "&Warn before exiting NVDA"
-msgstr "&Запитувати перед закриттям NVDA"
+msgstr ""
+"&Запитувати підтвердження при виході із "
+"NVDA"
 
-#: gui\settingsDialogs.py:78
+#: gui\settingsDialogs.py:118
+msgid "L&ogging level"
+msgstr "Рівень запису у журнал &звіту"
+
+#: gui\settingsDialogs.py:121
+msgid "Log level"
+msgstr "Рівень звітності"
+
+#: gui\settingsDialogs.py:142
 msgid "Error in %s language file"
-msgstr "Помилка в файли мови %s"
+msgstr "Помилка у %s мовному файлі"
 
-#: gui\settingsDialogs.py:78
+#: gui\settingsDialogs.py:142
 msgid "Language Error"
-msgstr "Помилка в файлі мови"
+msgstr "Помилка мови"
 
-#: gui\settingsDialogs.py:85
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Для застосування зміни мови необхідно зберігти конфігурацію і перезапустити NVDA. Натисніть enter для проведення цієї процедури зараз, або натиснить кнопку \"скасувати\" якщо бажаєте зробити це пізніше самостійно."
+#: gui\settingsDialogs.py:151
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Для застосування зміни мови необхідне "
+"збереження конфігурації та "
+"перезавантаження NVDA. Натисніть Ентер для "
+"виконання процедури або натисніть "
+"\"Скасувати\" для виходу з діалогу і "
+"подальшого виконання дій вручну"
 
-#: gui\settingsDialogs.py:85
+#: gui\settingsDialogs.py:151
 msgid "Language Configuration Change"
 msgstr "Зміна налаштувань мови"
 
-#: gui\settingsDialogs.py:97
+#: gui\settingsDialogs.py:157
+msgid "Synthesizer"
+msgstr "Синтезатор"
+
+#: gui\settingsDialogs.py:161
 msgid "&Synthesizer"
 msgstr "&Синтезатор"
 
-#: gui\settingsDialogs.py:112
+#: gui\settingsDialogs.py:176
 msgid "Output &device"
-msgstr "пристрій виводу &звуку"
+msgstr "&Пристрій виводу"
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:196
 msgid "Could not load the %s synthesizer."
-msgstr "Неможливо завантажити синтезатор %s"
+msgstr "Не вдалося завантажити синтезатор %s."
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:196
 msgid "Synthesizer Error"
-msgstr "Помилка синтезатору"
+msgstr "Помилка синтезатора"
 
-#: gui\settingsDialogs.py:159
+#: gui\settingsDialogs.py:201
+msgid "Voice settings"
+msgstr "Голоса"
+
+#: gui\settingsDialogs.py:211
 msgid "&Voice"
 msgstr "&Голос"
 
-#: gui\settingsDialogs.py:175
+#: gui\settingsDialogs.py:226
 msgid "V&ariant"
 msgstr "В&аріант"
 
-#: gui\settingsDialogs.py:187
+#: gui\settingsDialogs.py:240
 msgid "&Rate"
 msgstr "&Швидкість"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:248
 msgid "&Pitch"
 msgstr "&Висота"
 
-#: gui\settingsDialogs.py:205
+#: gui\settingsDialogs.py:256
 msgid "&Inflection"
 msgstr "&Інтонація"
 
-#: gui\settingsDialogs.py:214
+#: gui\settingsDialogs.py:264
 msgid "V&olume"
-msgstr "Г&учність"
+msgstr "Гу&чність"
 
-#: gui\settingsDialogs.py:221
+#: gui\settingsDialogs.py:272
 msgid "&Speak all punctuation"
-msgstr "&Промовляти всю пунктуацію"
+msgstr "&Читати всю пунктуацію"
 
-#: gui\settingsDialogs.py:224
+#: gui\settingsDialogs.py:275
 msgid "Raise pitch for capitals"
-msgstr "Змінювати висоту голосу для великих букв"
+msgstr ""
+"Змінювати висоту голосу для великих літер"
 
-#: gui\settingsDialogs.py:227
+#: gui\settingsDialogs.py:278
 msgid "Say &cap before capitals"
-msgstr "Промовляти \"Велика\" перед великою буквою"
+msgstr ""
+"Промовляти \"&Велика\" перед великими "
+"літерами"
 
-#: gui\settingsDialogs.py:230
+#: gui\settingsDialogs.py:281
 msgid "&Beep for capitals"
-msgstr "Сигнал перед великою буквою"
+msgstr "&Сигнал перед великими літерами"
 
-#: gui\settingsDialogs.py:312
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Використовувати CapsLock як клавішу NVDA"
+#: gui\settingsDialogs.py:368
+msgid "Keyboard Settings"
+msgstr "Клавіатура"
 
-#: gui\settingsDialogs.py:315
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Використовувати numpad Insert як клавішу NVDA"
+#: gui\settingsDialogs.py:372
+msgid "&Keyboard layout"
+msgstr "&Розкладка клавіатуры"
 
-#: gui\settingsDialogs.py:318
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Використовувати extended Insert як клавішу NVDA"
-
-#: gui\settingsDialogs.py:321
-msgid "Speak typed &characters"
-msgstr "Промовляти &символи при друку"
-
-#: gui\settingsDialogs.py:324
-msgid "Speak typed &words"
-msgstr "промовляти сл&ова при друку"
-
-#: gui\settingsDialogs.py:327
-msgid "Speak command &keys"
-msgstr "промовляти &керівни клавіши"
-
-#: gui\settingsDialogs.py:353
-msgid "Report mouse &shape changes"
-msgstr "Промовляти зміну &форми курсору мишки"
-
-#: gui\settingsDialogs.py:356
-msgid "Report &object under mouse"
-msgstr "Промовляти &об'єкт під курсором мишки"
-
-#: gui\settingsDialogs.py:359
-msgid "play audio coordinates when mouse moves"
-msgstr "&Озвучувати перемищення мишки"
-
-#: gui\settingsDialogs.py:382
-msgid "Report &tooltips"
-msgstr "Промовляти вспливаючі підказки"
-
-#: gui\settingsDialogs.py:385
-msgid "Report &help balloons"
-msgstr "Промовляты системні повідомлення"
+#: gui\settingsDialogs.py:377
+msgid "Keyboard layout"
+msgstr "Розкладка клавіатуры"
 
 #: gui\settingsDialogs.py:388
-msgid "Report object shortcut &keys"
-msgstr "Промовляти &клавіші швидкого доступу для об'єктів"
+msgid "Use numpad Insert as an NVDA modifier key"
+msgstr ""
+"Використовувати Insert на цифровому блоці, я"
+"к клавішу-модифікатор NVDA"
 
 #: gui\settingsDialogs.py:391
-msgid "Report object &position information"
-msgstr "Промовляти позицію об'єкта"
+msgid "Use extended Insert as an NVDA modifier key"
+msgstr ""
+"Використовувати звичайний Insert як клавішу-"
+"модифікатор NVDA"
 
 #: gui\settingsDialogs.py:394
-msgid "Report object &group names"
-msgstr "Промовляти назву групи, до якої належить об'єкт"
+msgid "Speak typed &characters"
+msgstr "Читати &Символи під час введення"
 
 #: gui\settingsDialogs.py:397
-msgid "Say object &state first"
-msgstr "Промовляти стан об'єкта на початку"
+msgid "Speak typed &words"
+msgstr "Читати &Слова під час введення"
 
 #: gui\settingsDialogs.py:400
-msgid "&Beep on progress bar updates"
-msgstr "сигнали зміни &індикаторів виконання"
+msgid "Speak command &keys"
+msgstr "Промовляти &Командні клавіші"
 
-#: gui\settingsDialogs.py:427
-msgid "&Maximum number of characters on one line"
-msgstr "&Максимальна кількість символів в одному рядку"
+#: gui\settingsDialogs.py:423
+msgid "Mouse settings"
+msgstr "Мишка"
+
+#: gui\settingsDialogs.py:426
+msgid "Report mouse &shape changes"
+msgstr "Читати зміни &Форми вказівника мишки"
+
+#: gui\settingsDialogs.py:429
+msgid "Report &text under the mouse"
+msgstr "Читати &текст під вказівником мишки"
 
 #: gui\settingsDialogs.py:432
-msgid "&Number of lines per page"
-msgstr "&Кількість рядків на сторінку"
+msgid "Report &role when mouse enters object"
+msgstr ""
+"Читати &зміну об'єкта при наведенні мишки"
 
-#: gui\settingsDialogs.py:437
-msgid "Report &virtual presentation on focus changes"
-msgstr "Промовляти віртуальне уявлення при зміні фокусу"
+#: gui\settingsDialogs.py:435
+msgid "play audio coordinates when mouse moves"
+msgstr ""
+"Сигнал, що змінюється під час переміщення "
+"мишки"
 
-#: gui\settingsDialogs.py:440
-msgid "Update the content &dynamically"
-msgstr "Змінювати зміст динамічно"
+#: gui\settingsDialogs.py:438
+msgid "brightness controls audio coordinates volume"
+msgstr ""
+"Яскравість впливає на рівень звукового "
+"сигнала переміщення мишки"
 
-#: gui\settingsDialogs.py:443
-msgid "Report lin&ks"
-msgstr "Промовляти ссилки"
-
-#: gui\settingsDialogs.py:446
-msgid "Report &lists"
-msgstr "Промовляти списки"
-
-#: gui\settingsDialogs.py:449
-msgid "Report list &items"
-msgstr "Промовляти елементи списку"
-
-#: gui\settingsDialogs.py:452
-msgid "Report &headings"
-msgstr "Промовляти заголовки"
-
-#: gui\settingsDialogs.py:455 gui\settingsDialogs.py:539
-msgid "Report &tables"
-msgstr "Промовляти таблиці"
-
-#: gui\settingsDialogs.py:458
-msgid "Report &graphics"
-msgstr "Промовляти графіку"
-
-#: gui\settingsDialogs.py:461
-msgid "Report f&orms"
-msgstr "Промовляти форми"
+#: gui\settingsDialogs.py:455
+msgid "Object presentation"
+msgstr "Представлення об'єкта"
 
 #: gui\settingsDialogs.py:464
-msgid "Report form &fields"
-msgstr "Промовляти поля в формах"
+msgid "Report &tooltips"
+msgstr "Читати &Підказки"
 
 #: gui\settingsDialogs.py:467
-msgid "Report block &quotes"
-msgstr "Промовляти цитування"
+msgid "Report &help balloons"
+msgstr ""
+"Читати &Виринаючі системні повідомлення"
 
 #: gui\settingsDialogs.py:470
-msgid "Report &paragraphs"
-msgstr "промовляти абзаци"
+msgid "Report object shortcut &keys"
+msgstr "Читати &Гарячі клавіші об'єкта"
 
 #: gui\settingsDialogs.py:473
-msgid "Report f&rames"
-msgstr "Промовляти фрейми"
+msgid "Report object &position information"
+msgstr "Читати &Позицію об'єкта"
+
+#: gui\settingsDialogs.py:476
+msgid "Report object &descriptions"
+msgstr "читати &опис об'єкта"
+
+#: gui\settingsDialogs.py:479
+msgid "Say object &state first"
+msgstr "З початку читати &Стан об'єкта"
+
+#: gui\settingsDialogs.py:483
+msgid "Report progress &bar updates"
+msgstr ""
+"Звукові сигнали оновлення &індикаторів "
+"виконання"
+
+#: gui\settingsDialogs.py:486
+msgid "Report progress bar updates"
+msgstr ""
+"Звукові сигнали оновлення індикаторів "
+"виконання"
+
+#: gui\settingsDialogs.py:510
+msgid "virtual buffers"
+msgstr "Віртуальні буфери"
+
+#: gui\settingsDialogs.py:513
+msgid "&Maximum number of characters on one line"
+msgstr "&Максимальне число символів у рядку"
 
 #: gui\settingsDialogs.py:518
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Читати зміну форматування після курсору (може викликати відставання)"
+msgid "&Number of lines per page"
+msgstr "&Число рядків на сторінці"
 
-#: gui\settingsDialogs.py:521
-msgid "Report font &name"
-msgstr "Промовляти назву шрифту"
-
-#: gui\settingsDialogs.py:524
-msgid "Report font &size"
-msgstr "Промовляти розмір шрифту"
+#: gui\settingsDialogs.py:523
+msgid "Use &screen layout (when supported)"
+msgstr ""
+"Використовувати &екранне представлення "
+"(якщо підтримується)"
 
 #: gui\settingsDialogs.py:527
-msgid "Report font attri&butes"
-msgstr "промовляти атрибути шрифту"
+msgid "Report &virtual presentation on focus changes"
+msgstr ""
+"Читати &Віртуальне представлення при "
+"зміні фокуса"
 
 #: gui\settingsDialogs.py:530
-msgid "Report st&yle"
-msgstr "Промовляти стиль"
+msgid "Update the content &dynamically"
+msgstr "&Динамічно оновляти зміст"
 
 #: gui\settingsDialogs.py:533
-msgid "Report &pages"
-msgstr "Промовляти номери сторинок"
+msgid "Report lin&ks"
+msgstr "З'ясовувати &Посилання"
 
 #: gui\settingsDialogs.py:536
-msgid "Report &line numbers"
-msgstr "Промовляти номери рядків"
+msgid "Report &lists"
+msgstr "З'ясовувати &Списки"
 
-#: gui\settingsDialogs.py:542
+#: gui\settingsDialogs.py:539
+msgid "Report list &items"
+msgstr "З'ясовувати &Елементи списку"
+
+#: gui\settingsDialogs.py:542 gui\settingsDialogs.py:644
+msgid "Report &headings"
+msgstr "З'ясовувати &Заголовки"
+
+#: gui\settingsDialogs.py:545 gui\settingsDialogs.py:638
+msgid "Report &tables"
+msgstr "З'ясовувати &Таблиці"
+
+#: gui\settingsDialogs.py:548
+msgid "Report &graphics"
+msgstr "З'ясовувати &Графіку"
+
+#: gui\settingsDialogs.py:551
+msgid "Report f&orms"
+msgstr "З'ясовувати &Форми"
+
+#: gui\settingsDialogs.py:554
+msgid "Report form &fields"
+msgstr "З'ясовувати &Поля форм"
+
+#: gui\settingsDialogs.py:557 gui\settingsDialogs.py:650
+msgid "Report block &quotes"
+msgstr "З'ясовувати &Цитати"
+
+#: gui\settingsDialogs.py:560
+msgid "Report &paragraphs"
+msgstr "З'ясовувати &абзаци"
+
+#: gui\settingsDialogs.py:563
+msgid "Report f&rames"
+msgstr "З'ясовувати &Фрейми"
+
+#: gui\settingsDialogs.py:566
+msgid "Automatic focus mode for focus changes"
+msgstr ""
+"Автоматичний перехід в режим редагування "
+"при зміні фокуса"
+
+#: gui\settingsDialogs.py:569
+msgid "Automatic focus mode for caret movement"
+msgstr ""
+"Автоматичний перехід в режим редагування "
+"при переміщенні курсора"
+
+#: gui\settingsDialogs.py:608
+msgid "Document formatting"
+msgstr "Форматування документа"
+
+#: gui\settingsDialogs.py:611
+msgid "Announce formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"Промовляти зміни формату після курсора "
+"(може викликати відставання)"
+
+#: gui\settingsDialogs.py:614
+msgid "Report font &name"
+msgstr "Промовляти назву &Шрифта"
+
+#: gui\settingsDialogs.py:617
+msgid "Report font &size"
+msgstr "Промовляти &Розмір шрифта"
+
+#: gui\settingsDialogs.py:620
+msgid "Report font attri&butes"
+msgstr "Промовляти &Атрибути шрифта"
+
+#: gui\settingsDialogs.py:623
 msgid "Report &alignment"
-msgstr "Промовляти вирівнювання"
+msgstr "Промовляти &Вирівнювання"
 
-#: keyboardHandler.py:51
+#: gui\settingsDialogs.py:626
+msgid "Report st&yle"
+msgstr "Промовляти &Стиль"
+
+#: gui\settingsDialogs.py:629
+msgid "Report spelling errors"
+msgstr "Промовляти граматичні помилки"
+
+#: gui\settingsDialogs.py:632
+msgid "Report &pages"
+msgstr "Промовляти &Сторінки"
+
+#: gui\settingsDialogs.py:635
+msgid "Report &line numbers"
+msgstr "Промовляти &Номери рядків"
+
+#: gui\settingsDialogs.py:641
+msgid "Report &links"
+msgstr "З'ясовувати &Посилання"
+
+#: gui\settingsDialogs.py:647
+msgid "Report l&ists"
+msgstr "З'ясовувати &Списки"
+
+#: gui\settingsDialogs.py:677
+msgid "Edit dictionary entry"
+msgstr "Змінити словникову статтю"
+
+#: gui\settingsDialogs.py:680
+msgid "&Pattern"
+msgstr "&Шаблон"
+
+#: gui\settingsDialogs.py:683
+msgid "&Replacement"
+msgstr "&Заміна"
+
+#: gui\settingsDialogs.py:686
+msgid "&Comment"
+msgstr "&Коментарій"
+
+#: gui\settingsDialogs.py:689
+msgid "Case &sensitive"
+msgstr "Враховувати &регістр"
+
+#: gui\settingsDialogs.py:691
+msgid "Regular &expression"
+msgstr "Регулярний &вираз"
+
+#: gui\settingsDialogs.py:713
+msgid "&Dictionary entries"
+msgstr "&Словникові статті"
+
+#: gui\settingsDialogs.py:716
+msgid "Comment"
+msgstr "Коментарій"
+
+#: gui\settingsDialogs.py:717
+msgid "Pattern"
+msgstr "Шаблон"
+
+#: gui\settingsDialogs.py:718
+msgid "Replacement"
+msgstr "Заміна"
+
+#: gui\settingsDialogs.py:719
+msgid "case sensitive"
+msgstr "Враховувати регістр"
+
+#: gui\settingsDialogs.py:720
+msgid "Regular expression"
+msgstr "Регулярний вираз"
+
+#: gui\settingsDialogs.py:727
+msgid "&Add"
+msgstr "&Додати"
+
+#: gui\settingsDialogs.py:730
+msgid "&edit"
+msgstr "&Змінити"
+
+#: gui\settingsDialogs.py:733
+msgid "&Remove"
+msgstr "Ви&далити"
+#: gui\settingsDialogs.py:800
+msgid "Braille Settings"
+msgstr "Налаштування брайля"
+
+#: gui\settingsDialogs.py:804
+msgid "Braille &display"
+msgstr "Брайлівський &Дисплей"
+
+#: gui\settingsDialogs.py:818
+msgid "Translation &table"
+msgstr "Брайлівська &Таблиця"
+
+#: gui\settingsDialogs.py:830
+msgid "E&xpand to computer braille for the word at the cursor"
+msgstr ""
+"&слово під курсором у форматі комп'ютер"
+"ного брайля"
+
+#: gui\settingsDialogs.py:835
+msgid "Cursor blink rate (ms)"
+msgstr "Швидкість мигання курсора (мс)"
+
+#: gui\settingsDialogs.py:843
+msgid "Message timeout (sec)"
+msgstr "Час затримки повідомлень (сек)"
+
+#: gui\settingsDialogs.py:856
+msgid "Braille Display Error"
+msgstr "Помилка брайлівського дисплея"
+
+#: gui\settingsDialogs.py:856
+msgid "Could not load the %s display."
+msgstr "Не вдалося завантажити дисплей %s."
+
+#: keyUtils.py:111
+msgid "backspace"
+msgstr "Backspace"
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr "caps lock"
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr "ctrl"
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr "alt"
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "shift"
+
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#: keyUtils.py:116
+msgid "windows"
+msgstr "windows"
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr "enter"
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr "numpad enter"
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr "escape"
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr "Сторінка вгору"
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr "Сторінка вниз"
+
+#: keyUtils.py:123
+msgid "end"
+msgstr "в кінець"
+
+#: keyUtils.py:124
+msgid "home"
+msgstr "на початок"
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "delete"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "стрілка вліво"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "стрілка вправо"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "стрілка вгору"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "Стрілка вниз"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "applications"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr "num lock"
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr "snapshot"
+
+#: keyUtils.py:133
+msgid "scrol lock"
+msgstr "scrol lock"
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr "numpad left"
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr "numpad right"
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr "numpad up"
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr "numpad down"
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr "numpad page up"
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr "numpad page down"
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr "numpad end"
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr "numpad home"
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr "numpad slash"
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr "numpad star"
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr "numpad minus"
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr "numpad plus"
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "лівий control"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "правий control"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "ліва windows"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "лівий shift"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "правий shift"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "лівий alt"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "Правий альт"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "права windows"
+
+#: keyboardHandler.py:52
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:54
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:55
+#: keyboardHandler.py:56
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:139
+#: keyboardHandler.py:76
+msgid "%s keyboard layout"
+msgstr "%s Розкладка"
+
+#: keyboardHandler.py:166
 msgid "Description: %s"
 msgstr "Опис: %s"
 
-#: keyboardHandler.py:140
+#: keyboardHandler.py:167
 msgid "Location: %s"
-msgstr "Розміщення: %s"
+msgstr "Розташування: %s"
 
-#: keyboardHandler.py:153
+#: keyboardHandler.py:180
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Помилка в keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:189
+#: keyboardHandler.py:213
 msgid "Error in keyboardHandler.internal_keyUpEvent"
-msgstr "Помилка в keyboardHandler.internal_keyUpEvent"
+msgstr "Помилка у keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:138
+#: mouseHandler.py:156
 msgid "%s cursor"
 msgstr "%s курсор"
 
-#: sayAllHandler.py:147
+#: pythonConsole.py:63
+msgid "NVDA Python Console"
+msgstr "NVDA Консоль Python"
+
+#: sayAllHandler.py:154
 msgid "end of text"
 msgstr "Кінець тексту"
 
-#: speech.py:202
+#: speech.py:168
 msgid "cap %s"
-msgstr "Велика %s"
+msgstr "велика %s"
 
-#: speech.py:297
-msgid "level %d"
-msgstr "Рівень %D"
+#: speech.py:291
+msgid "%d characters"
+msgstr "%d Символів"
 
-#: speech.py:301
-msgid "contains %s"
-msgstr "Містить %s"
+#: speech.py:342
+msgid "selecting %s"
+msgstr "Виділяю %s"
 
-#: speech.py:305 speech.py:464 textBuffer.py:537 textBuffer.py:541
-#: textBuffer.py:543 textBuffer.py:549
-msgid "selected %s"
-msgstr "Виділено %s"
+#: speech.py:353
+msgid "unselecting %s"
+msgstr "Не выділяю %s"
 
-#: speech.py:391
-msgid "in"
-msgstr "в"
+#: speech.py:355
+msgid "selection removed"
+msgstr "Виділення видалено"
 
-#: speech.py:396 speech.py:414
-msgid "out of"
-msgstr "за межами"
+#: speech.py:590 virtualBuffers_old\MSHTML.py:126
+#: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
+#: virtualBuffers_old\adobe.py:305 virtualBuffers_old\adobe.py:309
+#: virtualBuffers_old\gecko.py:297 virtualBuffers_old\gecko.py:301
+msgid "not %s"
+msgstr "Не %s"
 
-#: speech.py:470 textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
-msgid "unselected %s"
-msgstr "скасовано виділення %s"
+#: speech.py:644 speech.py:648 speech.py:652 speech.py:658 speech.py:664
+#: speech.py:765 virtualBuffers_old\__init__.py:195
+msgid "out of %s"
+msgstr "поза %s"
 
-#: speech.py:472
-msgid "selection deleted"
-msgstr "Виділення вилучено!"
+#: speech.py:646 virtualBuffers_old\MSHTML.py:258
+#: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
+#: virtualBuffers_old\adobe.py:262 virtualBuffers_old\adobe.py:273
+#: virtualBuffers_old\gecko.py:254 virtualBuffers_old\gecko.py:265
+msgid "with %s items"
+msgstr "із %s элементів"
 
-#: synthDrivers\silence.py:21
-msgid "No speech,  a template synthesizer"
-msgstr "Без мові, шаблон для синтезатору"
+#: speech.py:662
+msgid "in %s"
+msgstr "в %s"
+
+#: speech.py:682
+msgid "page %s"
+msgstr "Сторінка %s"
+
+#: speech.py:689 textBuffer.py:242 textBuffer.py:310
+msgid "style %s"
+msgstr "Стиль %s"
+
+#: speech.py:691
+msgid "default style"
+msgstr "Типовий стиль"
+
+#: speech.py:711
+msgid "line %s"
+msgstr "Рядок %s"
+
+#: speech.py:717
+msgid "no bold"
+msgstr "не напівжирний"
+
+#: speech.py:722
+msgid "no italic"
+msgstr "не курсив"
+
+#: speech.py:727
+msgid "no strikethrough"
+msgstr "не закреслений"
+
+#: speech.py:727
+msgid "strikethrough"
+msgstr "Закреслений"
+
+#: speech.py:732
+msgid "not underlined"
+msgstr "Не підкреслений"
+
+#: speech.py:732
+msgid "underlined"
+msgstr "Підкреслений"
+
+#: speech.py:743
+msgid "baseline"
+msgstr "Базова лінія"
+
+#: speech.py:751
+msgid "align left"
+msgstr "Вирівнювання за лівим краєм"
+
+#: speech.py:753
+msgid "align center"
+msgstr "Вирівнювання за центром"
+
+#: speech.py:755
+msgid "align right"
+msgstr "Вирівнювання за правим краєм"
+
+#: speech.py:757
+msgid "align justify"
+msgstr "Вирівнювання за шириною"
+
+#: speech.py:759
+msgid "align default"
+msgstr " Типове вирівнювання "
+
+#: speech.py:772
+msgid "spelling error"
+msgstr "Граматична помилка"
+
+#: speech.py:774
+msgid "out of spelling error"
+msgstr "Поза граматичною помилкою"
+
+#: speech.py:788 textBuffer.py:219
+msgid "out of table"
+msgstr "Поза таблицею"
+
+#: speech.py:797
+msgid "table with %s columns and %s rows"
+msgstr "Таблиця із %s стовпців і %s рядків"
+
+#: speech.py:802
+msgid "column %s"
+msgstr "Стовпчик %s"
+
+#: speech.py:806
+msgid "row %s"
+msgstr "Рядок %s"
+
+#: synthDrivers\_espeak.py:294
+msgid "none"
+msgstr "Нічого"
+
+#: synthDrivers\display.py:31
+msgid "A virtual synth which displays text in a window"
+msgstr ""
+"Віртуальний синтезатор, який показує "
+"текст у вікні"
+
+#: synthDrivers\newfon.py:99
+msgid "russian newfon synthesizer by Sergey Shishmintzev"
+msgstr "Російський синтезатор написаний Сергієм Шишмінцевим"
+
+#: synthDrivers\newfon.py:107
+msgid "female 1"
+msgstr "Жіночий 1"
+
+#: synthDrivers\newfon.py:107
+msgid "female 2"
+msgstr "Жіночий 2"
+
+#: synthDrivers\newfon.py:107
+msgid "male 1"
+msgstr "чоловічий 1"
+
+#: synthDrivers\newfon.py:107
+msgid "male 2"
+msgstr "чоловічий 2"
+
+#: synthDrivers\silence.py:13
+msgid "No speech"
+msgstr "Без мовлення"
+
+#: synthSettingsRing.py:94
+msgid "rate"
+msgstr "Швидкість"
+
+#: synthSettingsRing.py:95
+msgid "pitch"
+msgstr "Висота"
+
+#: synthSettingsRing.py:96
+msgid "volume"
+msgstr "Гучність"
+
+#: synthSettingsRing.py:97
+msgid "inflection"
+msgstr "Інтонація"
+
+#: synthSettingsRing.py:98
+msgid "voice"
+msgstr "Голос"
+
+#: synthSettingsRing.py:99
+msgid "variant"
+msgstr "Варіант"
 
 #: textBuffer.py:207
 msgid "page %d"
@@ -2031,15 +3339,11 @@ msgstr "Сторінка %d"
 
 #: textBuffer.py:213
 msgid "line %d"
-msgstr "рядок %d"
-
-#: textBuffer.py:219
-msgid "out of table"
-msgstr "За межами таблиці"
+msgstr "Рядок %d"
 
 #: textBuffer.py:225
 msgid "table with %d columns and %d rows"
-msgstr "Таблиця із %d стовпців і %d рядків"
+msgstr "Таблиця із %d стовпчиків і %d рядків"
 
 #: textBuffer.py:231
 msgid "row %d"
@@ -2049,41 +3353,37 @@ msgstr "Рядок %d"
 msgid "column %d"
 msgstr "Стовпчик %d"
 
-#: textBuffer.py:242 textBuffer.py:310
-msgid "style %s"
-msgstr "Стиль %s"
-
 #: textBuffer.py:248 textBuffer.py:312
 msgid "alignment %s"
 msgstr "Вирівнювання %s"
 
 #: textBuffer.py:254 textBuffer.py:314
 msgid "font name %s"
-msgstr "Назва шрифту: %s"
+msgstr "Шрифт %s"
 
 #: textBuffer.py:260 textBuffer.py:316
 msgid "font size %d"
-msgstr "розмір шрифту: %d"
+msgstr "Розмір %d"
 
 #: textBuffer.py:268
 msgid "not bold"
-msgstr "не напів жирний"
+msgstr "Не напівжирний"
 
 #: textBuffer.py:275
 msgid "not italic"
-msgstr "не курсив"
+msgstr "Не курсив"
 
 #: textBuffer.py:282
 msgid "not underline"
-msgstr "не пидкреслений"
+msgstr "Не підкреслений"
 
 #: textBuffer.py:289
 msgid "not superscript"
-msgstr "не над рядком"
+msgstr "Не надрядковий"
 
 #: textBuffer.py:296
 msgid "not subscript"
-msgstr "не під рядком"
+msgstr "Не підрядковий"
 
 #: textBuffer.py:470 textBuffer.py:498 textBuffer.py:506
 msgid "Moves and then reads the current line"
@@ -2091,11 +3391,11 @@ msgstr "переходить і читає поточний рядок"
 
 #: textBuffer.py:474
 msgid "reads the current line"
-msgstr "читає поточний рядок"
+msgstr "Читає поточний рядок"
 
 #: textBuffer.py:482
 msgid "Moves and reads the current character"
-msgstr "Переходить і читає поточний символ"
+msgstr "переходить і читає поточний символ "
 
 #: textBuffer.py:490
 msgid "Moves and reads the current word"
@@ -2103,247 +3403,633 @@ msgstr "переходить і читає поточне слово"
 
 #: textBuffer.py:514
 msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "в ручну переходить на наступний параграф і читає його"
+msgstr ""
+"Вручну переходить на наступний абзац і "
+"читає його"
 
 #: textBuffer.py:522
 msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "в ручну переходить на попередній параграф і читає його"
+msgstr ""
+"Вручну переходить на попередній абзац і "
+"читає його"
 
 #: textBuffer.py:534
 msgid "no selections"
 msgstr "Немає виділення"
 
+#: textBuffer.py:545 textBuffer.py:547 textBuffer.py:551
+msgid "unselected %s"
+msgstr "Не виділено %s"
+
 #: textBuffer.py:553
 msgid "Moves and reads the current selection"
-msgstr "Переходить і читає виділене"
+msgstr "переходить і читає поточне виділення"
 
 #: textBuffer.py:559
 msgid "Deletes the character and reads the new current character"
-msgstr "видаляє символ и читає новий"
+msgstr ""
+"Видаляє символ і читає новий поточний "
+"символ"
 
 #: textBuffer.py:573
 msgid "Reads the character before the current character and then deletes it"
-msgstr "Читає попередній символі видаляє його"
+msgstr ""
+"Читає попередній символ і видаляє його"
 
-#: versionInfo.py:8
+#: versionInfo.py:40
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:10
+#: versionInfo.py:42
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Бескоштовний читач екрану для MS Windows з відкритим кодом"
-
-#: versionInfo.py:14
-msgid ""
-"Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s росповсюджуєтся по ліцензії GNU General Public License. Ви можете вільно росповсюджувати або змінювати це програмне забезпечення, при умові дотримування ліцензії, і робити код доступним для кожного бажаючого.  це відноситься як до оригінального, так і до зміненого коду цього програмного забезпечення, а також для програмного забезпечення, що частково використовує код данного.\n"
-"більш детальніше ви можете ознайомитися з ліцензією на сайті: \n"
-"http://www.gnu.org/licenses/gpl.html\n"
-"або в файлі Copying.txt що розповсюджується разом з програмою."
 msgstr ""
+"Вільна програма екранного доступу із "
+"відкритим джерельним кодом для Windows"
 
-#: virtualBuffers\IAccessible\MSHTML.py:136
-#: virtualBuffers\IAccessible\adobe.py:159
-#: virtualBuffers\IAccessible\gecko.py:157
+#: versionInfo.py:44
+msgid ""
+"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
+"%(name)s is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as you "
+"distribute the licence along with the software, and make all source code "
+"available to anyone who wants it. This applies to both origional and "
+"modified copies of the software, plus any software that uses code taken from "
+"this software.\n"
+"For further details, you can view the licence online at:\n"
+"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"Or see the file Copying.txt that came with this software."
+msgstr ""
+"Авторське право (C) 2006-2008 NVDA Contributors <http://www."
+"nvda-project.org/>\n"
+"%(name)s захищається GNU General Public License (Version 2). Ви "
+"можете вільно розповсюджувати і "
+"змінювати ц програмне забезпечення, якщо "
+"дотримуєтеся ліцензійної угоди і "
+"зберігаєте файл ліцензії у незмінному "
+"вигляді у програмі при розповсюдженні, "
+"дозволяючи і іншим отримувати доступ до "
+"оригіналу.Також, дозволяється змінювати "
+"програмне забезпечення, яке використовує "
+"код, взятий із цього пакету та його части"
+"н.\n"
+"Отримати додаткову інформацію, що "
+"стосується цієї ліцензії ви можете на "
+"сайті:\n"
+"http://www.gnu.org/licenses/gpl.html\n"
+"або із файла, що постачається разом із "
+"програмою Copying.txt."
+
+#: virtualBufferHandler.py:93
+msgid "browse mode"
+msgstr "Режим огляду"
+
+#: virtualBufferHandler.py:93
+msgid "focus mode"
+msgstr "Режим редагування"
+
+#: virtualBuffers\__init__.py:248 virtualBuffers_old\__init__.py:295
+msgid "activates the current object in the virtual buffer"
+msgstr ""
+"Приводить у дію поточний об'єкт у "
+"віртуальному буфері"
+
+#: virtualBuffers\__init__.py:260
+msgid "Refreshed"
+msgstr "Оновлено"
+
+#: virtualBuffers\__init__.py:265
+msgid "use screen layout %s"
+msgstr ""
+"Використовувати екранне представлення %s"
+
+#: virtualBuffers\__init__.py:358
+msgid "displays a list of links"
+msgstr "Показує список посилань"
+
+#: virtualBuffers\__init__.py:438
+msgid "no next heading"
+msgstr "Немає наступного заголовка"
+
+#: virtualBuffers\__init__.py:438 virtualBuffers_old\__init__.py:318
+msgid "moves to the next heading"
+msgstr "Переходить до наступного заголовка"
+
+#: virtualBuffers\__init__.py:439
+msgid "no previous heading"
+msgstr "Немає попереднього заголовка"
+
+#: virtualBuffers\__init__.py:439 virtualBuffers_old\__init__.py:329
+msgid "moves to the previous heading"
+msgstr "Переходить до попереднього заголовка"
+
+#: virtualBuffers\__init__.py:440
+msgid "moves to the next heading at level 1"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"1"
+
+#: virtualBuffers\__init__.py:440
+msgid "no next heading at level 1"
+msgstr "Немає наступного заголовка рівня 1"
+
+#: virtualBuffers\__init__.py:441
+msgid "moves to the previous heading at level 1"
+msgstr ""
+"переходить на попередній заголовок рівня "
+"1"
+
+#: virtualBuffers\__init__.py:441
+msgid "no previous heading at level 1"
+msgstr "Немає попереднього заголовка рівня 1"
+
+#: virtualBuffers\__init__.py:442
+msgid "moves to the next heading at level 2"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"2"
+
+#: virtualBuffers\__init__.py:442
+msgid "no next heading at level 2"
+msgstr "Немає наступного заголовка рівня 2"
+
+#: virtualBuffers\__init__.py:443
+msgid "moves to the previous heading at level 2"
+msgstr ""
+"переходить до попереднього заголовка "
+"рівня 2"
+
+#: virtualBuffers\__init__.py:443
+msgid "no previous heading at level 2"
+msgstr "Немає попереднього заголовка рівня 2"
+
+#: virtualBuffers\__init__.py:444
+msgid "moves to the next heading at level 3"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"3"
+
+#: virtualBuffers\__init__.py:444
+msgid "no next heading at level 3"
+msgstr "Немає наступного заголовка рівня 3"
+
+#: virtualBuffers\__init__.py:445
+msgid "moves to the previous heading at level 3"
+msgstr ""
+"переходить до попереднього заголовка "
+"рівня 3"
+
+#: virtualBuffers\__init__.py:445
+msgid "no previous heading at level 3"
+msgstr "Немає попереднього заголовка рівня 3"
+
+#: virtualBuffers\__init__.py:446
+msgid "moves to the next heading at level 4"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"4"
+
+#: virtualBuffers\__init__.py:446
+msgid "no next heading at level 4"
+msgstr "Немає наступного заголовка рівня 4"
+
+#: virtualBuffers\__init__.py:447
+msgid "moves to the previous heading at level 4"
+msgstr ""
+"переходить до попереднього заголовка "
+"рівня 4"
+
+#: virtualBuffers\__init__.py:447
+msgid "no previous heading at level 4"
+msgstr "Немає попереднього заголовка уровня 4"
+
+#: virtualBuffers\__init__.py:448
+msgid "moves to the next heading at level 5"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"5"
+
+#: virtualBuffers\__init__.py:448
+msgid "no next heading at level 5"
+msgstr "Немає наступного заголовка рівня 5"
+
+#: virtualBuffers\__init__.py:449
+msgid "moves to the previous heading at level 5"
+msgstr ""
+"переходить до попереднього заголовка "
+"рівня 5"
+
+#: virtualBuffers\__init__.py:449
+msgid "no previous heading at level 5"
+msgstr "Немає попереднього заголовка рівня 5"
+
+#: virtualBuffers\__init__.py:450
+msgid "moves to the next heading at level 6"
+msgstr ""
+"переходить до наступного заголовка рівня "
+"6"
+
+#: virtualBuffers\__init__.py:450
+msgid "no next heading at level 6"
+msgstr "Немає наступного заголовка рівня 6"
+
+#: virtualBuffers\__init__.py:451
+msgid "moves to the previous heading at level 6"
+msgstr ""
+"переходить до попереднього заголовка "
+"рівня 6"
+
+#: virtualBuffers\__init__.py:451
+msgid "no previous heading at level 6"
+msgstr "Немає попереднього заголовка рівня 6"
+
+#: virtualBuffers\__init__.py:452
+msgid "no next table"
+msgstr "Немає наступної таблиці"
+
+#: virtualBuffers\__init__.py:452 virtualBuffers_old\__init__.py:362
+msgid "moves to the next table"
+msgstr "переходить до наступної таблиці"
+
+#: virtualBuffers\__init__.py:453
+msgid "no previous table"
+msgstr "Немає попередньої таблиці"
+
+#: virtualBuffers\__init__.py:453 virtualBuffers_old\__init__.py:373
+msgid "moves to the previous table"
+msgstr "переходить до попередньої таблиці"
+
+#: virtualBuffers\__init__.py:454
+msgid "no next link"
+msgstr "Немає наступного посилання"
+
+#: virtualBuffers\__init__.py:454 virtualBuffers_old\__init__.py:384
+msgid "moves to the next link"
+msgstr "Переходить до наступного посилання"
+
+#: virtualBuffers\__init__.py:455
+msgid "no previous link"
+msgstr "Немає попереднього посилання"
+
+#: virtualBuffers\__init__.py:455 virtualBuffers_old\__init__.py:395
+msgid "moves to the previous link"
+msgstr "Переходить до попереднього посилання"
+
+#: virtualBuffers\__init__.py:456
+msgid "moves to the next visited link"
+msgstr ""
+"Переходить до наступного відвіданого "
+"посилання"
+
+#: virtualBuffers\__init__.py:456
+msgid "no next visited link"
+msgstr ""
+"Немає наступного відвіданого посилання"
+
+#: virtualBuffers\__init__.py:457
+msgid "moves to the previous visited link"
+msgstr ""
+"Переходить до попереднього відвіданого "
+"посилання"
+
+#: virtualBuffers\__init__.py:457
+msgid "no previous visited link"
+msgstr ""
+"Немає попереднього відвіданого посилання"
+
+#: virtualBuffers\__init__.py:458
+msgid "moves to the next unvisited link"
+msgstr ""
+"Переходить до наступного не відвіданого "
+"посилання"
+
+#: virtualBuffers\__init__.py:458
+msgid "no next unvisited link"
+msgstr ""
+"Немає наступного не відвіданого "
+"посилання"
+
+#: virtualBuffers\__init__.py:459
+msgid "moves to the previous unvisited link"
+msgstr ""
+"Переходить до попереднього не відвіда"
+"ного посилання"
+
+#: virtualBuffers\__init__.py:459
+msgid "no previous unvisited link"
+msgstr ""
+"Немає попереднього не відвіданого "
+"посилання"
+
+#: virtualBuffers\__init__.py:460
+msgid "moves to the next form field"
+msgstr "Переходить до наступного поля форми"
+
+#: virtualBuffers\__init__.py:460
+msgid "no next form field"
+msgstr "Немає наступного поля форми"
+
+#: virtualBuffers\__init__.py:461
+msgid "no previous form field"
+msgstr "Немає попереднього поля форми"
+
+#: virtualBuffers\__init__.py:461 virtualBuffers_old\__init__.py:461
+msgid "moves to the previous form field"
+msgstr "переходить до попереднього поля формы"
+
+#: virtualBuffers\__init__.py:462
+msgid "no next list"
+msgstr "Немає наступного списку"
+
+#: virtualBuffers\__init__.py:462 virtualBuffers_old\__init__.py:406
+msgid "moves to the next list"
+msgstr "переходить до наступного списку"
+
+#: virtualBuffers\__init__.py:463
+msgid "no previous list"
+msgstr "Немає попереднього списку"
+
+#: virtualBuffers\__init__.py:463 virtualBuffers_old\__init__.py:417
+msgid "moves to the previous list"
+msgstr "Переходить до попереднього списку"
+
+#: virtualBuffers\__init__.py:464
+msgid "no next list item"
+msgstr "Немає наступного елемента списку"
+
+#: virtualBuffers\__init__.py:464 virtualBuffers_old\__init__.py:428
+msgid "moves to the next list item"
+msgstr ""
+"Переходить до наступного елемента списку"
+
+#: virtualBuffers\__init__.py:465
+msgid "no previous list item"
+msgstr "Немає попереднього елемента списку"
+
+#: virtualBuffers\__init__.py:465 virtualBuffers_old\__init__.py:439
+msgid "moves to the previous list item"
+msgstr ""
+"Переходить до попереднього елемента "
+"списку"
+
+#: virtualBuffers\__init__.py:466
+msgid "moves to the next button"
+msgstr "Переходить до наступної кнопки"
+
+#: virtualBuffers\__init__.py:466
+msgid "no next button"
+msgstr "Немає наступної кнопки"
+
+#: virtualBuffers\__init__.py:467
+msgid "moves to the previous button"
+msgstr "Переходить до попередньої кнопки"
+
+#: virtualBuffers\__init__.py:467
+msgid "no previous button"
+msgstr "Немає попередньої кнопки"
+
+#: virtualBuffers\__init__.py:468
+msgid "moves to the next edit field"
+msgstr "Переходить до наступного поля редактора"
+
+#: virtualBuffers\__init__.py:468
+msgid "no next edit field"
+msgstr "Немає наступного поля редактора"
+
+#: virtualBuffers\__init__.py:469
+msgid "moves to the previous edit field"
+msgstr ""
+"Переходить до попереднього поля "
+"редактора"
+
+#: virtualBuffers\__init__.py:469
+msgid "no previous edit field"
+msgstr "Немає попереднього поля редактора"
+
+#: virtualBuffers\__init__.py:470
+msgid "moves to the next frame"
+msgstr "Переходить до наступного фрейму"
+
+#: virtualBuffers\__init__.py:470
+msgid "no next frame"
+msgstr "Немає наступного фрейму"
+
+#: virtualBuffers\__init__.py:471
+msgid "moves to the previous frame"
+msgstr "Переходить до попереднього фрейму"
+
+#: virtualBuffers\__init__.py:471
+msgid "no previous frame"
+msgstr "Немає попереднього фрейму"
+
+#: virtualBuffers\__init__.py:472
+msgid "moves to the next separator"
+msgstr "Переходить до наступного роздільника"
+
+#: virtualBuffers\__init__.py:472
+msgid "no next separator"
+msgstr "Немає наступного роздільника"
+
+#: virtualBuffers\__init__.py:473
+msgid "moves to the previous separator"
+msgstr "Переходить до попереднього роздільника"
+#: virtualBuffers\__init__.py:473
+msgid "no previous separator"
+msgstr "Немає попереднього роздільника"
+
+#: virtualBuffers\__init__.py:474
+msgid "moves to the next radio button"
+msgstr "Переходить до наступної радіокнопки"
+
+#: virtualBuffers\__init__.py:474
+msgid "no next radio button"
+msgstr "Немає попередньої радіокнопки"
+
+#: virtualBuffers\__init__.py:475
+msgid "moves to the previous radio button"
+msgstr "Переходить до наступної радіокнопки"
+
+#: virtualBuffers\__init__.py:475
+msgid "no previous radio button"
+msgstr "Немає попередньої радіокнопки"
+
+#: virtualBuffers\__init__.py:476
+msgid "moves to the next combo box"
+msgstr "Переходить до наступного комбінованого списку"
+
+#: virtualBuffers\__init__.py:476
+msgid "no next combo box"
+msgstr "Немає наступного комбінованого списку"
+
+#: virtualBuffers\__init__.py:477
+msgid "moves to the previous combo box"
+msgstr "Переходить до попереднього комбінованого списку"
+
+#: virtualBuffers\__init__.py:477
+msgid "no previous combo box"
+msgstr "Немає попереднього комбінованого списку"
+
+#: virtualBuffers\__init__.py:478
+msgid "moves to the next check box"
+msgstr "Переходить до наступного прапорця"
+
+#: virtualBuffers\__init__.py:478
+msgid "no next check box"
+msgstr "Немає наступного прапорця"
+
+#: virtualBuffers\__init__.py:479
+msgid "moves to the previous check box"
+msgstr "Переходить до попереднього прапорця"
+
+#: virtualBuffers\__init__.py:479
+msgid "no previous check box"
+msgstr "Немає попереднього прапорця"
+
+#: virtualBuffers\__init__.py:480
+msgid "moves to the next graphic"
+msgstr "Переходить до наступної графіки"
+
+#: virtualBuffers\__init__.py:480
+msgid "no next graphic"
+msgstr "Немає наступної графіки"
+
+#: virtualBuffers\__init__.py:481
+msgid "moves to the previous graphic"
+msgstr "Переходить до попередньої графіки"
+
+#: virtualBuffers\__init__.py:481
+msgid "no previous graphic"
+msgstr "Немає попередньої графіки"
+
+#: virtualBuffers\__init__.py:482
+msgid "moves to the next block quote"
+msgstr "Переходить до наступної цитати"
+
+#: virtualBuffers\__init__.py:482
+msgid "no next block quote"
+msgstr "Немає наступної цитати"
+
+#: virtualBuffers\__init__.py:483
+msgid "moves to the previous block quote"
+msgstr "Переходить до попередньої цитатуи"
+
+#: virtualBuffers\__init__.py:483
+msgid "no previous block quote"
+msgstr "Немає попередньої цитати"
+
+#: virtualBuffers_old\MSHTML.py:155 virtualBuffers_old\adobe.py:175
+#: virtualBuffers_old\gecko.py:172
 msgid "loading document %s"
-msgstr "завантаження документу: %s"
+msgstr "Завантаження документа %s"
 
-#: virtualBuffers\IAccessible\MSHTML.py:144
-#: virtualBuffers\IAccessible\adobe.py:168
-#: virtualBuffers\IAccessible\gecko.py:166
+#: virtualBuffers_old\MSHTML.py:163 virtualBuffers_old\adobe.py:184
+#: virtualBuffers_old\gecko.py:181
 msgid "done"
 msgstr "Готово"
 
-#: virtualBuffers\IAccessible\MSHTML.py:239
-#: virtualBuffers\IAccessible\MSHTML.py:242
-#: virtualBuffers\IAccessible\MSHTML.py:249
-#: virtualBuffers\IAccessible\adobe.py:246
-#: virtualBuffers\IAccessible\adobe.py:257
-#: virtualBuffers\IAccessible\gecko.py:239
-#: virtualBuffers\IAccessible\gecko.py:250
-msgid "with %s items"
-msgstr "з %s елементів"
-
-#: virtualBuffers\IAccessible\MSHTML.py:245
-#: virtualBuffers\IAccessible\MSHTML.py:252
-#: virtualBuffers\IAccessible\adobe.py:252
-#: virtualBuffers\IAccessible\adobe.py:263
-#: virtualBuffers\IAccessible\gecko.py:245
-#: virtualBuffers\IAccessible\gecko.py:256
-msgid "bullet"
-msgstr "маркер"
-
-#: virtualBuffers\IAccessible\MSHTML.py:248
-#: virtualBuffers\IAccessible\MSHTML.py:255
-#: virtualBuffers\IAccessible\adobe.py:256
-#: virtualBuffers\IAccessible\adobe.py:269
-#: virtualBuffers\IAccessible\gecko.py:249
-#: virtualBuffers\IAccessible\gecko.py:262
+#: virtualBuffers_old\MSHTML.py:267 virtualBuffers_old\MSHTML.py:274
+#: virtualBuffers_old\adobe.py:272 virtualBuffers_old\adobe.py:285
+#: virtualBuffers_old\gecko.py:264 virtualBuffers_old\gecko.py:277
 msgid "definition"
-msgstr "визначення"
+msgstr "Визначення"
 
-#: virtualBuffers\IAccessible\MSHTML.py:283
+#: virtualBuffers_old\MSHTML.py:302
 msgid "file upload"
-msgstr "поле завантаження файлу"
+msgstr "Завантаження файла"
 
-#: virtualBuffers\IAccessible\MSHTML.py:316
-msgid "clickable"
-msgstr "можна клікнути"
-
-#: virtualBuffers\IAccessible\adobe.py:301
-#: virtualBuffers\IAccessible\gecko.py:294
-msgid "protected %s"
-msgstr "захищено %s"
-
-#: virtualBuffers\__init__.py:196
-msgid "out of %s"
-msgstr "за межами %s"
-
-#: virtualBuffers\__init__.py:277
+#: virtualBuffers_old\__init__.py:276
 msgid "moves one page up in the virtual buffer's current document"
-msgstr "Перемиіщує на одну сторінку вгору в документі"
+msgstr ""
+"Переходить на одну сторінку вгору у "
+"документі у віртуальному буфері"
 
-#: virtualBuffers\__init__.py:292
+#: virtualBuffers_old\__init__.py:291
 msgid "moves one page down in the virtual buffer's current document"
-msgstr "Перемиіщує на одну сторінку вниз в документі"
+msgstr ""
+"Переходить на одну сторінку донизу у "
+"документі у віртуальному буфері"
 
-#: virtualBuffers\__init__.py:296
-msgid "activates the current object in the virtual buffer"
-msgstr "активує поточний об'єкт віртуального буферу"
-
-#: virtualBuffers\__init__.py:319 virtualBuffers\__init__.py:330
+#: virtualBuffers_old\__init__.py:317 virtualBuffers_old\__init__.py:328
 msgid "no more headings"
-msgstr "більше заголовків немає"
+msgstr "Більше немає заголовків"
 
-#: virtualBuffers\__init__.py:320
-msgid "moves to the next heading"
-msgstr "Перейти до наступного заголовку"
-
-#: virtualBuffers\__init__.py:331
-msgid "moves to the previous heading"
-msgstr "Перейти до попереднього заголовку"
-
-#: virtualBuffers\__init__.py:341 virtualBuffers\__init__.py:352
+#: virtualBuffers_old\__init__.py:339 virtualBuffers_old\__init__.py:350
 msgid "no more paragraphs"
-msgstr "Більше абзаців немає"
+msgstr "Більше немає абзаців"
 
-#: virtualBuffers\__init__.py:342
+#: virtualBuffers_old\__init__.py:340
 msgid "moves to the next paragraph"
-msgstr "Перейти до наступного абзацу"
+msgstr "Переходить до наступного абзацу"
 
-#: virtualBuffers\__init__.py:353
+#: virtualBuffers_old\__init__.py:351
 msgid "moves to the previous paragraph"
-msgstr "Перейти до попереднього абзацу"
+msgstr "Переходить до попереднього абзацу"
 
-#: virtualBuffers\__init__.py:363 virtualBuffers\__init__.py:374
+#: virtualBuffers_old\__init__.py:361 virtualBuffers_old\__init__.py:372
 msgid "no more tables"
-msgstr "Більше таблиць немає"
+msgstr "Більше немає таблиць"
 
-#: virtualBuffers\__init__.py:364
-msgid "moves to the next table"
-msgstr "Перейти до наступної таблиці"
-
-#: virtualBuffers\__init__.py:375
-msgid "moves to the previous table"
-msgstr "Перейти до попередньої таблиці"
-
-#: virtualBuffers\__init__.py:385 virtualBuffers\__init__.py:396
+#: virtualBuffers_old\__init__.py:383 virtualBuffers_old\__init__.py:394
 msgid "no more links"
-msgstr "бильше ссилок немає"
+msgstr "Більше немає посилань"
 
-#: virtualBuffers\__init__.py:386
-msgid "moves to the next link"
-msgstr "перейти до наступної ссилки"
-
-#: virtualBuffers\__init__.py:397
-msgid "moves to the previous link"
-msgstr "перейти до попередньої ссилки"
-
-#: virtualBuffers\__init__.py:407 virtualBuffers\__init__.py:418
+#: virtualBuffers_old\__init__.py:405 virtualBuffers_old\__init__.py:416
 msgid "no more lists"
-msgstr "Більше списків немає"
+msgstr "Більше немає списків"
 
-#: virtualBuffers\__init__.py:408
-msgid "moves to the next list"
-msgstr "Перейти до наступного списку"
-
-#: virtualBuffers\__init__.py:419
-msgid "moves to the previous list"
-msgstr "Перейти до попереднього списку"
-
-#: virtualBuffers\__init__.py:429 virtualBuffers\__init__.py:440
+#: virtualBuffers_old\__init__.py:427 virtualBuffers_old\__init__.py:438
 msgid "no more list items"
-msgstr "Більше елементів списку немає"
+msgstr "Більше немає елементів списку"
 
-#: virtualBuffers\__init__.py:430
-msgid "moves to the next list item"
-msgstr "Перейти до наступного елементу списку"
-
-#: virtualBuffers\__init__.py:441
-msgid "moves to the previous list item"
-msgstr "Перейти до попереднього елементу списку"
-
-#: virtualBuffers\__init__.py:451 virtualBuffers\__init__.py:462
+#: virtualBuffers_old\__init__.py:449 virtualBuffers_old\__init__.py:460
 msgid "no more form fields"
-msgstr "Більше полів форми немає"
+msgstr "Більше немає полів форми"
 
-#: virtualBuffers\__init__.py:452
+#: virtualBuffers_old\__init__.py:450
 msgid "Moves to the next form field"
-msgstr "перейти до наступного поля форми"
+msgstr "Переходить до наступного поля форми"
 
-#: virtualBuffers\__init__.py:463
-msgid "moves to the previous form field"
-msgstr "перейти до попереднього поля форми"
-
-#: virtualBuffers\__init__.py:466
-msgid "Find"
-msgstr "пошук"
-
-#: virtualBuffers\__init__.py:466
-msgid "Type the text you wish to find"
-msgstr "Введіть текст, який ви бажаєте знайти:"
-
-#: virtualBuffers\__init__.py:476
-msgid "Find Error"
-msgstr "помилка пошуку"
-
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers_old\__init__.py:474
 msgid "text: \"%s\" not found"
-msgstr "не знайдено \"%s\""
+msgstr "Текст \"%s\" не знайдено"
 
-#: virtualBuffers\__init__.py:482
+#: virtualBuffers_old\__init__.py:480
 msgid "find a text pattern from the current cursor's position"
-msgstr "пошук текстової послідовності від позиції курсору"
+msgstr ""
+"Пошук текстової послідовності із "
+"поточної позиції курсора"
 
-#: virtualBuffers\__init__.py:486
+#: virtualBuffers_old\__init__.py:484
 msgid "find next occurrence of text"
-msgstr "пошук наступного входження тексту"
+msgstr "Знайти наступне входження тексту"
 
-#: virtualBuffers\__init__.py:505 virtualBuffers\__init__.py:506
+#: virtualBuffers_old\__init__.py:503 virtualBuffers_old\__init__.py:504
 msgid "h=headingQuickKey"
-msgstr "h=Швидка клавіша заголовку"
+msgstr "h=Швидка клавіша заголовка"
 
-#: virtualBuffers\__init__.py:507 virtualBuffers\__init__.py:508
+#: virtualBuffers_old\__init__.py:505 virtualBuffers_old\__init__.py:506
 msgid "f=formFieldQuickKey"
-msgstr "f=швидка клавіша поля форми"
+msgstr "f=Швидка клавіша поля форми"
 
-#: virtualBuffers\__init__.py:509 virtualBuffers\__init__.py:510
+#: virtualBuffers_old\__init__.py:507 virtualBuffers_old\__init__.py:508
 msgid "p=paragraphQuickKey"
-msgstr "p=швидка клавіша абзацу"
+msgstr "p=Швидка клавіша абзацу"
 
-#: virtualBuffers\__init__.py:511 virtualBuffers\__init__.py:512
+#: virtualBuffers_old\__init__.py:509 virtualBuffers_old\__init__.py:510
 msgid "t=tableQuickKey"
-msgstr "t=швидка клавіша таблиці"
+msgstr "t=Швидка клавіша таблиці"
 
-#: virtualBuffers\__init__.py:513 virtualBuffers\__init__.py:514
+#: virtualBuffers_old\__init__.py:511 virtualBuffers_old\__init__.py:512
 msgid "k=linkQuickKey"
-msgstr "k=швидка клавіша ссилки"
+msgstr "k=Швидка клавіша посилання"
 
-#: virtualBuffers\__init__.py:515 virtualBuffers\__init__.py:516
+#: virtualBuffers_old\__init__.py:513 virtualBuffers_old\__init__.py:514
 msgid "l=listQuickKey"
-msgstr "l=швидка клавіша списку"
+msgstr "l=Швидка клавіша списку"
 
-#: virtualBuffers\__init__.py:517 virtualBuffers\__init__.py:518
+#: virtualBuffers_old\__init__.py:515 virtualBuffers_old\__init__.py:516
 msgid "i=listItemQuickKey"
-msgstr "i=швидка клавіша елементу списку"
+msgstr "i=Швидка клавіша елемента списку"
 
+#: virtualBuffers_old\adobe.py:317
+msgid "protected %s"
+msgstr "Захищено %s"

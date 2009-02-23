@@ -30,7 +30,7 @@ speechMode=2
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
-typedWord=""
+curWordChars=[]
 REASON_FOCUS=1
 REASON_MOUSE=2
 REASON_QUERY=3
@@ -200,7 +200,10 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
-			newPropertyValues[name]=getattr(obj,name)
+			try:
+				newPropertyValues[name]=getattr(obj,name)
+			except NotImplementedError:
+				pass
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -236,8 +239,9 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 		speakText(text,index=index)
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
-	isEditable=bool(obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states)
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True}
+	from NVDAObjects import NVDAObjectTextInfo
+	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -253,7 +257,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		try:
 			info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
 			if not info.isCollapsed:
-				speakMessage(_("selected %s")%info.text)
+				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textHandler.UNIT_READINGCHUNK)
 				speakMessage(info.text)
@@ -270,7 +274,8 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
-	global beenCanceled
+	global beenCanceled, curWordChars
+	curWordChars=[]
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -282,6 +287,12 @@ This function will not speak if L{speechMode} is false.
 	text=processText(text)
 	if text and not text.isspace():
 		getSynth().speakText(text,index=index)
+
+def speakSelectionMessage(message,text):
+	if len(text) < 512:
+		speakMessage(message % text)
+	else:
+		speakMessage(message % _("%d characters") % len(text))
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
 	"""Speaks a change in selection, either selected or unselected text.
@@ -332,41 +343,43 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("selecting %s")%text)
+				speakSelectionMessage(_("selecting %s"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=processSymbol(text)
-			speakMessage(_("selected %s")%text)
+			speakSelectionMessage(_("selected %s"),text)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("unselecting %s")%text)
+				speakSelectionMessage(_("unselecting %s"),text)
 		elif len(unselectedTextList)>0:
 			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=processSymbol(text)
-				speakMessage(_("selected %s")%text)
+				speakSelectionMessage(_("selected %s"),text)
 
 def speakTypedCharacters(ch):
-	global typedWord
+	global curWordChars;
 	if api.isTypingProtected():
-		ch="*"
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
-		speakSpelling(ch)
-	if config.conf["keyboard"]["speakTypedWords"]: 
-		if ch.isalnum():
-			typedWord="".join([typedWord,ch])
-		elif len(typedWord)>0:
-			speakText(typedWord)
-			if log.isEnabledFor(log.IO): log.io("typedword: %s"%typedWord)
-			typedWord=""
+		realChar="*"
 	else:
-		typedWord=""
+		realChar=ch
+	if ch.isalnum():
+		curWordChars.append(realChar)
+	elif len(curWordChars)>0:
+		typedWord="".join(curWordChars)
+		curWordChars=[]
+		if log.isEnabledFor(log.IO):
+			log.io("typed word: %s"%typedWord)
+		if config.conf["keyboard"]["speakTypedWords"]: 
+			speakText(typedWord)
+	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
 	controlTypes.ROLE_LISTITEM,
@@ -593,6 +606,14 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeviewLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
+	if 'rowNumber' in propertyValues:
+		textList.append(_("row %s")%propertyValues['rowNumber'])
+	if 'columnNumber' in propertyValues:
+		textList.append(_("column %s")%propertyValues['columnNumber'])
+	rowCount=propertyValues.get('rowCount',0)
+	columnCount=propertyValues.get('columnCount',0)
+	if rowCount or columnCount:
+		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
@@ -622,20 +643,20 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
-	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM):
+	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB):
 		if role==controlTypes.ROLE_LINK:
 			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
 		else:
 			return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative","start_inControlFieldStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER)): 
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative","start_inControlFieldStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON)):
 		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType in ("end_removedFromControlFieldStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
 		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return roleText+_("with %s items")%childCount
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		return _("out of %s")%roleText
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
 		return roleText

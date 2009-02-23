@@ -3,19 +3,15 @@ LangString msg_WelcomePageTitle ${LANG_JAPANESE} "${PRODUCT} バージョン ${VERSIO
 LangString msg_WelcomePageText ${LANG_JAPANESE} "ようこそ、${PRODUCT}(Non-Visual Desktop Access)のインストールへ。${PRODUCT} は、無償でオープンソースの Microsoft Windows 用スクリーンリーダーです。$\n\
 Copyright 2006 - 2008 NVDA Contributers.$\n\
 このウィザードで、${PRODUCT} のインストールをご案内します。なお、このセットアップを続行する前に、他のアプリケーションはすべて終了させてください。$\n"
-LangString msg_READMEText ${LANG_JAPANESE} "README ファイルを開く（推奨）"
 LangString msg_NVDAWebSite ${LANG_JAPANESE} "NVDA 公式 Web サイトを開く"
 LangString msg_NVDARunning ${LANG_JAPANESE} "すでに NVDA が起動しています。インストールを続行するために、自動的に終了します。"
-LangString msg_SpeechInstall ${LANG_JAPANESE} "NVDA をインストールする間、音声による説明を聞きますか？ 音声を聞くには、ENTER キーを押してください。音声が必要ない場合は、ESCAPEキーを押してください。"
-LangString msg_RemoveNVDA ${LANG_JAPANESE} "本当に $(^Name) およびそのすべてのコンポーネントを完全に削除してもよいですか？"
-LangString msg_NVDAConfigFound ${LANG_JAPANESE} "インストーラが、NVDA の設定ファイルを発見しました。NVDA の設定ファイルを削除しますか？"
-LangString msg_NVDASuccessfullyRemoved ${LANG_JAPANESE} "$(^Name) は、あなたのコンピュータから無事に削除されました。"
-LangString shortcut_Wiki $(LANG_JAPANESE) "NVDA 情報 Wiki"
+LangString msg_pagePrevInstallLabel ${LANG_JAPANESE} "以前にインストールされた、前のバージョンのNVDAがシステムにみつかりました。インストールを行う前に、これを削除することを強くお勧めします。"
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_JAPANESE} "アンインストール(推奨)"
 LangString shortcut_uninstall $(LANG_JAPANESE) "アンインストール"
 LangString shortcut_website $(LANG_JAPANESE) "Web サイト"
 LangString shortcut_readme $(LANG_JAPANESE) "お読みください"
-LangString shortcut_userguide $(LANG_JAPANESE) "ユーザーガイド"
-LangString path_userguide $(LANG_JAPANESE) "en\user guide.html"
+LangString shortcut_userguide $(LANG_JAPANESE) "ユーザーガイド（翻訳中）"
+LangString path_userguide $(LANG_JAPANESE) "ja\user guide.html"
 LangString path_readmefile $(LANG_JAPANESE) "ja\readme.txt"
 LangString UNLOG_HEADER ${LANG_JAPANESE} "=========== Uninstaller Log \
                                          このファイルを編集しないでください ==========="

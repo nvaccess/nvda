@@ -9,6 +9,7 @@ from new import instancemethod
 import time
 import re
 import weakref
+from logHandler import log
 import eventHandler
 import baseObject
 import speech
@@ -329,70 +330,136 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _get_bookmark(self):
 		return textHandler.Offsets(self._startOffset,self._endOffset)
 
+class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
+	_dynamicClassCache={}
+
+	def __call__(self,*args,**kwargs):
+		if 'findBestAPIClass' not in self.__dict__:
+			APIClass=self
+		else:
+			APIClass=self.findBestAPIClass(**kwargs)
+		if 'findBestClass' not in self.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%self.__name__)
+		try:
+			clsList,kwargs=APIClass.findBestClass([],kwargs)
+		except:
+			log.debugWarning("findBestClass failed",exc_info=True)
+			return None
+		bases=[]
+		for index in xrange(len(clsList)):
+			if index==0 or not issubclass(clsList[index-1],clsList[index]):
+				bases.append(clsList[index])
+		if len(bases) == 1:
+			# We only have one base, so there's no point in creating a dynamic type.
+			newCls=bases[0]
+		else:
+			bases=tuple(bases)
+			newCls=self._dynamicClassCache.get(bases,None)
+			if not newCls:
+				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
+				newCls=type(name,bases,{})
+				self._dynamicClassCache[bases]=newCls
+		obj=self.__new__(newCls,*args,**kwargs)
+		obj.factoryClass=self
+		if isinstance(obj,self):
+			obj.__init__(*args,**kwargs)
+		return obj
+
 class NVDAObject(baseObject.ScriptableObject):
 	"""
-The baseType NVDA object. All other NVDA objects are based on this one.
-@ivar _hashLimit: The limit in size for a hash of this object
-@type _hashLimit: int
-@ivar _hashPrime: the prime number used in calculating this object's hash
-@type _hashPrime: int
-@ivar _keyMap: A dictionary that stores key:method  key to script mappings. 
-@type _keyMap: dict
-@ivar name: The objects name or label. (e.g. the text of a list item, label of a button)
-@type name: string
-@ivar value: the object's value. (e.g. content of an edit field, percentage on a progresss bar)
-@type value: string
-@ivar role: The object's chosen role. (NVDA uses the set of IAccessible role constants for roles, however sometimes if there is no suitable role, this can be a string)
-@type role: int or string
-@ivar states: The object's states. (NVDA uses state constants for its states)
-@type states: set
-@ivar description: The object's description. (e.g. Further info to describe the button's action to go with the label) 
-@type description: string
-@ivar positionInfo: A dict of 'indexInGroup', 'similarItemsInGroup', and 'level', describing the object's position.
-@type positionInfo: dict
-@ivar location: The object's location. (A tuple of left, top, width, depth).
-@type location: 4-tuple (int)
-@ivar next: gets the next logical NVDA object in the tree
-@type next: L{NVDAObject}
-@ivar previous: gets the previous logical NVDA object in the tree
-@type previous: L{NVDAObject}
-@ivar parent: gets the parent NVDA object to this one in the tree 
-@type parent: L{NVDAObject}
-@ivar firstChild: gets the first child NVDA object to this one in the tree 
-@type firstChild: L{NVDAObject}
-@ivar children: gets a list of child NVDA objects directly under this one in the tree
-@type children: list of L{NVDAObject}
-@ivar childCount: The number of child NVDA objects under this one in the tree
-@type childCount: int
-@ivar hasFocus: if true then the object believes it has focus
-@type hasFocus: boolean 
-@ivar isProtected: if true then this object should be treeted like a password field.
-@type isProtected: boolean 
-@ivar text_caretPosition: the caret position in this object's text as an offset from 0
-@type text_caretPosition: int
-@ivar text_characterCount: the number of characters in this object's text
-@type text_characterCount: int
-@ivar _text_lastReportedPresentation: a dictionary to store all the last reported attribute values such as font, page number, table position etc.
-@type _text_lastReportedPresentation: dict
-"""
+	NVDA's representation of a control or widget in the Operating System. Provides information such as a name, role, value, description etc.
+	"""
+
+	__metaclass__=DynamicNVDAObjectType
+
+	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
+
+	@classmethod
+	def findBestAPIClass(cls):
+		"""Chooses the most appropriate API-level NVDAObject class that should be used instead of this class.
+		An API-level NVDAObject is an NVDAObject that takes a specific set of arguments for instanciation.
+		@return: the suitable API-level subclass.
+		@rtype: L{NVDAObject} class
+		"""  
+		return cls
+
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		"""Chooses a most appropriate inheritence list of classes with subclasses first.
+		The list of classes can be used to dynamically create an NVDAObject class using the most appropriate NVDAObject subclass at each API level.
+		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
+		Since the method may need to fetch extra info to calculate the suitable classes, a kwargs dictionary is returned containing the original arguments plus any new ones.
+		@param kwargs: a dictionary of keyword arguments which would normally be passed to the class for instanciation.
+		@return: the list of classes and the updated kwargs dictionary
+		@rtype: tuple of list of L{NVDAObject} classes, and dictionary
+		"""
+		clsList.append(NVDAObject)
+		return clsList,kwargs
+
+	@classmethod
+	def objectFromPoint(x,y,oldNVDAObject=None):
+		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
+		@param x: the x coordinate.
+		@type x: int
+		@param y: the y coordinate.
+		@param y: int
+		@param oldNVDAObject: an optional NVDAObject instance which will be possibly made use of for speed (for instance if the control at the given coordinates is the same as the old NVDAObject then the old NVDAObject will be returned).
+		@return: The object at the given x and y coordinates.
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
+	@classmethod
+	def objectWithFocus(cls):
+		"""Retreaves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
+		@return: the object with focus.
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
+	@classmethod
+	def objectInForeground(cls):
+		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		@return: the foreground object
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
 
 	def __init__(self):
-		self._mouseEntered=None
-		self.textRepresentationLineLength=None #Use \r and or \n
-		self.TextInfo=NVDAObjectTextInfo
+		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
+		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
 		if hasattr(self.appModule,'event_NVDAObject_init'):
 			self.appModule.event_NVDAObject_init(self)
 
 	def _isEqual(self,other):
+		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
+		@param other: the other object to compare with.
+		@type other: L{NVDAObject}
+		@return: True if equal, false otherwise.
+		@rtype: boolean
+		"""
 		return True
  
 	def __eq__(self,other):
-		return self is other or self._isEqual(other)
+		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal.
+		"""
+		if self is other:
+			return True
+		if type(self) is not type(other):
+			return False
+		return self._isEqual(other)
  
 	def __ne__(self,other):
+		"""The opposite to L{NVDAObject.__eq__}
+		"""
 		return not self.__eq__(other)
 
 	def _get_virtualBuffer(self):
+		"""Retreaves the virtualBuffer associated with this object.
+		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
+		@return: the virtualBuffer
+		@rtype: L{virtualBuffers.VirtualBuffer}
+		""" 
 		if hasattr(self,'_virtualBuffer'):
 			v=self._virtualBuffer
 			if isinstance(v,weakref.ref):
@@ -409,16 +476,18 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 			return v
 
 	def _set_virtualBuffer(self,obj):
+		"""Specifically sets a virtualBuffer to be associated with this object.
+		"""
 		if obj:
 			self._virtualBuffer=weakref.ref(obj)
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
 			self._virtualBuffer=None
 
-
-
-
-
 	def _get_appModule(self):
+		"""Retreaves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+		@return: the appModule
+		@rtype: L{appModuleHandler.AppModule}
+		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)
 			if a:
@@ -428,81 +497,148 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 			return self._appModuleRef()
 
 	def _get_name(self):
-		return None
+		"""The name or label of this object (example: the text of a button).
+		@rtype: basestring
+		"""
+		return ""
 
 	def _get_role(self):
+		"""The role or type of control this object represents (example: button, list, dialog).
+		@return: a ROLE_* constant from L{controlTypes}
+		@rtype: int
+		"""  
 		return controlTypes.ROLE_UNKNOWN
 
 	def _get_value(self):
-		return None
+		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
+		@rtype: basestring
+		"""   
+		return ""
 
 	def _get_description(self):
-		return None
+		"""The description or help text of this object.
+		@rtype: basestring
+		"""
+		return ""
 
 	def _get_actionStrings(self):
+		"""retreaves a list of actions that can be performed on this object (example: press, activate).
+		@rtype: list of baseString
+		"""
 		return []
 
 	def doAction(self,index):
-		return
-
-	def _get_groupName(self):
-		focus=api.getFocusObject()
-		foreground=api.getForegroundObject()
-		if self!=focus or foreground.role!=controlTypes.ROLE_DIALOG: 
-			return None
-		try:
-			curLocation=self.location
-			groupObjA=groupObjB=self
-			groupObj=None
-			while not groupObj and (groupObjA or groupObjB):
-				groupObjA=groupObjA.previous
-				groupObjB=groupObjB.parent
-				if groupObjA and groupObjA.role==controlTypes.ROLE_GROUPING:
-					groupObj=groupObjA
-					continue
-				if groupObjB and groupObjB.role==controlTypes.ROLE_GROUPING:
-					groupObj=groupObjB
-					continue
-			if groupObj:
-				groupLocation=groupObj.location
-				if curLocation and groupLocation and (curLocation[0]>=groupLocation[0]) and (curLocation[1]>=groupLocation[1]) and ((curLocation[0]+curLocation[2])<=(groupLocation[0]+groupLocation[2])) and ((curLocation[1]+curLocation[3])<=(groupLocation[1]+groupLocation[3])):
-					name=groupObj.name
-					return name
-			return None
-		except:
-			return None
+		"""Performs the action identified by the given index on this object.
+		The index relates to the list of actions retreaved by the actionStrings property.
+		"""
+		pass
 
 	def _get_keyboardShortcut(self):
-		return None
+		"""The shortcut key that activates this object(example: alt+t).
+		@rtype: basestring
+		"""
+		return ""
 
 	def _get_states(self):
+		"""Retreaves the current states of this object (example: selected, focused).
+		@return: a set of  STATE_* constants from L{controlTypes}.
+		@rtype: set of int
+		"""
 		return set()
 
 	def _get_location(self):
-		return (0,0,0,0)
+		"""The location of this object on the screen.
+		@return: left, top, width and height of the object.
+		@rtype: tuple of int
+		"""
+		raise NotImplementedError
 
 	def _get_parent(self):
+		"""Retreaves this object's parent (the object that contains this object).
+		@return: the parent object if it exists else None.
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_next(self):
+		"""Retreaves the object directly after this object with the same parent.
+		@return: the next object if it exists else None.
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_previous(self):
+		"""Retreaves the object directly before this object with the same parent.
+		@return: the previous object if it exists else None.
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_firstChild(self):
+		"""Retreaves the first object that this object contains.
+		@return: the first child object if it exists else None.
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_lastChild(self):
+		"""Retreaves the last object that this object contains.
+		@return: the last child object if it exists else None.
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_children(self):
+		"""Retreaves a list of all the objects directly contained by this object (who's parent is this object).
+		@rtype: list of L{NVDAObject}
+		"""
 		children=[]
 		child=self.firstChild
 		while child:
 			children.append(child)
 			child=child.next
 		return children
+
+	def _get_rowNumber(self):
+		"""Retreaves the row number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_columnNumber(self):
+		"""Retreaves the column number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		"""Retreaves the number of rows this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_columnCount(self):
+		"""Retreaves the number of columns this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_table(self):
+		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
+	def _get_recursiveDescendants(self):
+		"""Recursively traverse and return the descendants of this object.
+		This is a depth-first forward traversal.
+		@return: The recursive descendants of this object.
+		@rtype: generator of L{NVDAObject}
+		"""
+		for child in self.children:
+			yield child
+			for recursiveChild in child.recursiveDescendants:
+				yield recursiveChild
 
 	def getNextInFlow(self,down=None,up=None):
 		"""Retreaves the next object in depth first tree traversal order
@@ -555,6 +691,9 @@ The baseType NVDA object. All other NVDA objects are based on this one.
 	_get_previousInFlow=getPreviousInFlow
 
 	def _get_childCount(self):
+		"""Retreaves the number of children this object contains.
+		@rtype: int
+		"""
 		return len(self.children)
 
 	def doDefaultAction(self):
@@ -564,11 +703,15 @@ Performs the default action on this object. (e.g. clicks a button)
 		pass
 
 	def _get_activeChild(self):
+		"""Retreaves the child of this object that currently has, or contains, the focus.
+		@return: the active child if it has one else None
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def _get_hasFocus(self):
 		"""
-Returns true of this object has focus, false otherwise.
+Returns true if this object has focus, false otherwise.
 """
 		return False
 
@@ -581,21 +724,59 @@ Tries to force this object to take the focus.
 	def scrollIntoView(self):
 		"""Scroll this object into view on the screen if possible.
 		"""
+		raise NotImplementedError
 
 	def _get_labeledBy(self):
+		"""Retreaves the object that this object is labeled by (example: the static text label beside an edit field).
+		@return: the label object if it has one else None.
+		@rtype: L{NVDAObject} or None 
+		"""
 		return None
 
 	def _get_positionInfo(self):
+		"""Retreaves position information for this object such as its level, its index with in a group, and the number of items in that group.
+		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
+		@rtype: dict
+		"""
 		return {}
 
+	def _get_processID(self):
+		"""Retreaves an identifyer of the process this object is a part of.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
 	def _get_isProtected(self):
+		"""
+		@return: True if this object is protected (hides its input for passwords), or false otherwise
+		@rtype: boolean
+		"""
 		return False
 
+	def _get_isPresentableFocusAncestor(self):
+		"""Determine if this object should be presented to the user in the focus ancestry.
+		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
+		@rtype: bool
+		"""
+		role = self.role
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+			return False
+		name = self.name
+		description = self.description
+		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
+			return False
+		return True
 
 	def _get_statusBar(self):
+		"""Finds the closest status bar in relation to this object.
+		@return: the found status bar else None
+		@rtype: L{NVDAObject} or None
+		"""
 		return None
 
 	def speakDescendantObjects(self,hashList=None):
+		"""Speaks all the descendants of this object.
+		"""
 		if hashList is None:
 			hashList=[]
 		for child in self.children:
@@ -606,6 +787,8 @@ Tries to force this object to take the focus.
 				child.speakDescendantObjects(hashList=hashList)
 
 	def reportFocus(self):
+		"""Announces this object in a way suitable such that it gained focus.
+		"""
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
 	def event_mouseMove(self,x,y):
@@ -643,23 +826,30 @@ Tries to force this object to take the focus.
 		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
-		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
+		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
+			speech.cancelSpeech()
+			return
+		if self.isPresentableFocusAncestor:
+			speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""
 This code is executed if a gain focus event is received by this object.
 """
-		api.setNavigatorObject(self)
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
+		"""Called when the foreground window changes.
+		This method should only perform tasks specific to the foreground window changing.
+		L{event_focusEntered} or L{event_gainFocus} will be called for this object, so this method should not speak/braille the object, etc.
 		"""
-This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
-"""
 		speech.cancelSpeech()
-		api.setNavigatorObject(self)
-		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
+
+	def event_becomeNavigatorObject(self):
+		"""Called when this object becomes the navigator object.
+		"""
+		braille.handler.handleReviewMove()
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
@@ -677,7 +867,7 @@ This method will speak the object if L{speakOnForeground} is true and this objec
 		braille.handler.handleUpdate(self)
 
 	def event_caret(self):
-		if self is api.getFocusObject():
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
 
 	def _get_basicText(self):

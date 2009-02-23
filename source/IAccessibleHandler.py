@@ -1,10 +1,12 @@
 #IAccessiblehandler.py
-#A part of NonVisual Desktop Access (NVDA)
+	#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 from __future__ import with_statement
+
+MAX_WINEVENTS=500
 
 #Constants
 #OLE constants
@@ -154,6 +156,7 @@ from comtypes.automation import *
 from comtypes.server import *
 from comtypes import GUID
 import comtypes.client
+import comtypes.client.lazybind
 import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
@@ -176,6 +179,8 @@ import config
 import mouseHandler
 import controlTypes
 
+MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
+
 class OrderedWinEventLimiter(object):
 	"""Collects and limits winEvents based on whether they are focus changes, or just generic (all other ones).
 
@@ -193,6 +198,7 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache={}
 		self._eventHeap=[]
 		self._eventCounter=itertools.count()
+		self._lastMenuEvent=None
 
 	def addEvent(self,eventID,window,objectID,childID):
 		"""Adds a winEvent to the limiter.
@@ -206,6 +212,9 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
+			if objectID in (OBJID_SYSMENU,OBJID_MENU) and childID==0:
+				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
+				return
 			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 			return
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
@@ -223,6 +232,11 @@ class OrderedWinEventLimiter(object):
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
+		elif eventID in MENU_EVENTIDS:
+			if self._lastMenuEvent:
+				# We only care about the most recent menu event.
+				del self._genericEventCache[self._lastMenuEvent]
+			self._lastMenuEvent=(eventID,window,objectID,childID)
 		self._genericEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
 
 	def flushEvents(self):
@@ -230,6 +244,7 @@ class OrderedWinEventLimiter(object):
 		"""
 		g=self._genericEventCache
 		self._genericEventCache={}
+		self._lastMenuEvent=None
 		for k,v in g.iteritems():
 			heapq.heappush(self._eventHeap,(v,)+k)
 		f=self._focusEventCache
@@ -246,7 +261,7 @@ class OrderedWinEventLimiter(object):
 #The win event limiter for all winEvents
 winEventLimiter=OrderedWinEventLimiter()
 
-#A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params, or special usage strings, like 'focus' or 'foreground' etc.
+#A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 IAccessibleRolesToNVDARoles={
@@ -422,7 +437,7 @@ eventCounter=itertools.count()
 eventHeap=[]
 
 def normalizeIAccessible(pacc):
-	if isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
+	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
 	elif not isinstance(pacc,IAccessible):
 		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
@@ -486,7 +501,7 @@ def accessibleChildren(ia,startIndex,numChildren):
 	windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,byref(realCount))
 	children=[x.value for x in children[0:realCount.value]]
 	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
+		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
 			children[childNum]=(normalizeIAccessible(children[childNum]),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
@@ -564,7 +579,7 @@ def accSelect(ia,child,flags):
 def accFocus(ia):
 	try:
 		res=ia.accFocus
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -579,7 +594,7 @@ def accFocus(ia):
 def accHitTest(ia,child,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int) and res!=child:
@@ -594,7 +609,7 @@ def accHitTest(ia,child,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
@@ -615,7 +630,7 @@ def accParent(ia,child):
 	try:
 		if not child:
 			res=ia.accParent
-			if isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 				new_ia=normalizeIAccessible(res)
 				new_child=0
 			else:
@@ -634,7 +649,7 @@ def accNavigate(ia,child,direction):
 		if isinstance(res,int):
 			new_ia=ia
 			new_child=res
-		elif isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		else:
@@ -651,14 +666,14 @@ def accLocation(ia,child):
 		return None
 
 winEventIDsToNVDAEventNames={
-winUser.EVENT_SYSTEM_FOREGROUND:"foreground",
+winUser.EVENT_SYSTEM_FOREGROUND:"gainFocus",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUEND:"menuEnd",
 winUser.EVENT_SYSTEM_MENUPOPUPSTART:"menuStart",
 winUser.EVENT_SYSTEM_MENUPOPUPEND:"menuEnd",
 winUser.EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
-winUser.EVENT_SYSTEM_SWITCHSTART:"switchStart",
+# We don't need switchStart.
 winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
@@ -761,10 +776,10 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
-	#Notify appModuleHandler of this new foreground window
+	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
-	focus=liveNVDAObjectTable.get('focus',None)
+	focus=eventHandler.lastQueuedFocusObject
 	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
 		NVDAEvent=("caret",focus)
 	else:
@@ -799,10 +814,15 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	windowClassName=winUser.getClassName(window)
 	if windowClassName in ("Progman","Shell_TrayWnd"):
 		return False
-	oldFocus=liveNVDAObjectTable.get('focus',None)
+	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
+	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
+	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
+		# This is a focus event from a background window, so ignore it.
+		return False
+	oldFocus=eventHandler.lastQueuedFocusObject
 	#If the existing focus has the same win event params as these, then ignore this event
 	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
-	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible)  and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
 		# Don't actually process the event, as it is the same as the current focus.
 		# However, it is still a valid event, so return True.
 		return True
@@ -856,7 +876,6 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 			testObj=parent
 		if not testObj:
 			return False
-	liveNVDAObjectTable['focus']=obj
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
@@ -879,12 +898,12 @@ def processForegroundWinEvent(window,objectID,childID):
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False
-	oldFocus=liveNVDAObjectTable.get('focus',None)
+	oldFocus=eventHandler.lastQueuedFocusObject
 	#If this foreground win event's window is an ancestor of the existing focus's window, then ignore it
-	if oldFocus and winUser.isDescendantWindow(window,oldFocus.windowHandle):
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,oldFocus.windowHandle):
 		return False
 	#If the existing focus has the same win event params as these, then ignore this event
-	if oldFocus and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
 		return False
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
@@ -896,7 +915,6 @@ def processForegroundWinEvent(window,objectID,childID):
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,useCache=False)
 	if not NVDAEvent:
 		return False
-	liveNVDAObjectTable['focus']=NVDAEvent[1]
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
@@ -909,24 +927,44 @@ def processDestroyWinEvent(window,objectID,childID):
 	except KeyError:
 		pass
 
+def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
+	"""Process a menuStart win event.
+	@postcondition: Focus will be directed to the menu if appropriate.
+	"""
+	if validFocus:
+		lastFocus=eventHandler.lastQueuedFocusObject
+		if isinstance(lastFocus,NVDAObjects.IAccessible.IAccessible) and lastFocus.IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
+			# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
+			return
+	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
+	if not NVDAEvent:
+		return
+	eventName, obj = NVDAEvent
+	if obj.IAccessibleRole != ROLE_SYSTEM_MENUPOPUP:
+		# menuStart on anything other than a menu is silly.
+		return
+	processFocusNVDAEvent(obj, needsFocusedState=False)
+
+def processFakeFocusWinEvent(eventID, window, objectID, childID):
+	"""Process a fake focus win event.
+	@postcondition: The focus will be found and an event generated for it if appropriate.
+	"""
+	# A suitable event for faking the focus has been received with no focus event, so we probably need to find the focus and fake it.
+	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
+	import wx
+	wx.CallLater(50, _fakeFocus, api.getFocusObject())
+
+def _fakeFocus(oldFocus):
+	if oldFocus is not api.getFocusObject():
+		# The focus has changed - no need to fake it.
+		return
+	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
+
 #Register internal object event with IAccessible
-cWinEventCallback=CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
+cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	desktopObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getDesktopWindow(),OBJID_CLIENT,0)
-	if not isinstance(desktopObject,NVDAObjects.IAccessible.IAccessible):
-		raise OSError("can not get desktop object")
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
-	foregroundObject=NVDAObjects.IAccessible.getNVDAObjectFromEvent(winUser.getForegroundWindow(),OBJID_CLIENT,0)
-	if foregroundObject:
-		eventHandler.queueEvent('gainFocus',foregroundObject)
-	focusObject=api.findObjectWithFocus()
-	if isinstance(focusObject,NVDAObjects.IAccessible.IAccessible):
-		eventHandler.queueEvent('gainFocus',focusObject)
-		liveNVDAObjectTable['focus']=focusObject
+	focusObject=api.getDesktopObject().objectWithFocus()
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
@@ -938,7 +976,9 @@ def pumpAll():
 	#Receive all the winEvents from the limiter for this cycle
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
-	for winEvent in winEvents:
+	validFocus=False
+	fakeFocusEvent=None
+	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
 			focusWinEvents.append(winEvent)
@@ -946,27 +986,41 @@ def pumpAll():
 		else:
 			for focusWinEvent in reversed(focusWinEvents):
 				if processFocusWinEvent(*(focusWinEvent[1:])):
+					validFocus=True
 					break
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
 				processForegroundWinEvent(*(winEvent[1:]))
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
+			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
+				# If there is no valid focus event, we may need to use this to fake the focus later.
+				fakeFocusEvent=winEvent
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
 		if processFocusWinEvent(*(focusWinEvent[1:])):
+			validFocus=True
 			break
+	if fakeFocusEvent:
+		# Try this as a last resort.
+		if fakeFocusEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
+			# menuStart needs to be handled specially and might act even if there was a valid focus event.
+			processMenuStartWinEvent(*fakeFocusEvent, validFocus=validFocus)
+		elif not validFocus:
+			# Other fake focus events only need to be handled if there was no valid focus event.
+			processFakeFocusWinEvent(*fakeFocusEvent)
 
 def terminate():
 	for handle in winEventHookIDs:
 		winUser.unhookWinEvent(handle)
 
 def getIAccIdentity(pacc,childID):
-	stringPtr,stringSize=pacc.QueryInterface(IAccIdentity).getIdentityString(childID)
+	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
+	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	s=p.contents.raw
-	fields=struct.unpack('IIII',s)
+	identityString=stringPtr.contents.raw
+	fields=struct.unpack('IIiI',identityString)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:

@@ -1,21 +1,22 @@
 <html>
 <head>
-<title>NVDA 0.6 -käyttöohje</title>
+<title>NVDA 0.6 käyttöohje</title>
 </head>
 <body>
-<h1>NVDA 0.6 -käyttöohje</h1>
-<span>Päivitetty viimeksi 24. heinäkuuta 2008</span>
+<h1>NVDA 0.6 käyttöohje</h1>
+<span>Päivitetty viimeksi 9. tammikuuta 2009</span>
 
 <h2>Sisällys</h2>
 <ul>
 <li><a href="#1">1. Johdanto</a></li>
 <ul>
 <li><a href="#1.1">1.1. Yleiset ominaisuudet</a></li>
-<li><a href="#1.2">1.2. Internationalisointi</a></li>
+<li><a href="#1.2">1.2. Kansainvälistäminen</a></li>
 <li><a href="#1.3">1.3. Tuetut puhesyntetisaattorit</a></li>
-<li><a href="#1.4">1.4. Keksiminen ja kokeileminen</a></li>
-<li><a href="#1.5">1.5. Suunnittelu ja toteutus</a></li>
-<li><a href="#1.6">1.6. Lisenssi ja tekijänoikeustiedot</a></li>
+<li><a href="#1.4">1.4. Tuetut pistenäytöt</a></li>
+<li><a href="#1.5">1.5. Keksiminen ja kokeilu</a></li>
+<li><a href="#1.6">1.6. Suunnittelu ja toteutus</a></li>
+<li><a href="#1.7">1.7. Lisenssi ja tekijänoikeustiedot</a></li>
 </ul>
 <li><a href="#2">2. Järjestelmävaatimukset</a></li> 
 <li><a href="#3">3. NVDA:n hankkiminen</a></li>
@@ -24,7 +25,7 @@
 <li><a href="#4.1">4.1. Asennusohjelma</a></li>
 <li><a href="#4.2">4.2. Zip-tiedosto</a></li>
 </ul>
-<li><a href="#5">5. Aloittaminen</a></li>
+<li><a href="#5">5. Käytön aloittaminen</a></li>
 <ul>
 <li><a href="#5.1">5.1. NVDA:n käynnistäminen</li>
 <li><a href="#5.2">5.2. Tietoja NVDA:n näppäinkomennoista</li>
@@ -32,15 +33,29 @@
 <li><a href="#6">6. NVDA-valikko</a></li>
 <ul>
 <li><a href="#6.1">6.1. NVDA-valikon käyttäminen</a></li>
-<li><a href="#6.2">6.2. Asetusten tallentaminen ja lataaminen</a></li>
-<li><a href="#6.3">6.3 Asetukset-valikko</a></li>
+<li><a href="#6.2">6.2. NVDA:n asetusten säätäminen</a></li>
+<ul>
+<li><a href="#6.2.1">6.2.1 Asetukset-valikko</a></li>
+<ul>
+<li><a href="#6.2.1.1">6.2.1.1. Yleiset asetukset</a></li>
+<li><a href="#6.2.1.2">6.2.1.2. Puhesyntetisaattorin valinta</a></li>
+<li><a href="#6.2.1.3">6.2.1.3. Ääniasetukset</a></li>
+<li><a href="#6.2.1.4">6.2.1.4. Pistenäytön asetukset</a></li>
+<li><a href="#6.2.1.5">6.2.1.5. Näppäimistöasetukset</a></li>
+<li><a href="#6.2.1.6">6.2.1.6. Hiiriasetukset</a></li>
+<li><a href="#6.2.1.7">6.2.1.7. Objektien lukuasetukset</a></li>
+<li><a href="#6.2.1.8">6.2.1.8. Näennäispuskurin asetukset</a></li>
+<li><a href="#6.2.1.9">6.2.1.9. Asiakirjojen muotoiluasetukset</a></li>
+</ul>
+<li><a href="#6.2.2">6.2.2: Asetusten tallentaminen ja palauttaminen</a></li>
+</ul>
 </ul>
 <li><a href="#7">7. NVDA:lla navigoiminen</a></li>
 <ul>
-<li><a href="#7.1">7.1. Kohdistuksella navigoiminen</a></li>
-<li><a href="#7.2">7.2. Objektinavigointi</a></li>
-<li><a href="#7.3">7.3. Tekstin tarkasteleminen nykyisessä objektissa</a></li>
-<li><a href="#7.4">7.4. Järjestelmäkohdistimella navigoiminen</a></li>
+<li><a href="#7.1">7.1. Kohdistuksen mukaan navigoiminen</a></li>
+<li><a href="#7.2">7.2. Järjestelmäkohdistimella navigoiminen</a></li>
+<li><a href="#7.3">7.3. Objektinavigointi</a></li>
+<li><a href="#7.4">7.4. Tekstin tarkasteleminen nykyisessä objektissa</a></li>
 <li><a href="#7.5">7.5. Hiirellä navigoiminen</a></li>
 </ul>
 <li><a href="#8">8. Näennäispuskurit</a></li>
@@ -49,299 +64,543 @@
 <li><a href="#8.2">8.2. Lomakkeet ja näennäispuskurin läpivientitila</a></li>
 <li><a href="#8.3">8.3. Linkkilista</a></li>
 </ul>
-<li><a href="#9">9. NVDA:n asetusten määrittäminen</a></li>
-<li><a href="#9.1">9.1. Yleiset asetukset</a></li>
-<li><a href="#9.2">9.2. Puhesyntetisaattorin valinta</a></li>
-<li><a href="#9.3">9.3. Ääniasetukset</a></li>
-<li><a href="#9.4">9.4. Näppäimistöasetukset</a></li>
-<li><a href="#9.5">9.5. Hiiriasetukset</a></li>
-<li><a href="#9.6">9.6. Objektien lukuasetukset</a></li>
-<li><a href="#9.7">9.7. Näennäispuskurin asetukset</a></li>
-<li><a href="#9.8">9.8. Asiakirjojen muotoiluasetukset</a></li>
-</ul>
+<li><a href="#9">9. NVDA:n vianmääritys</a></li>
 </ul>
 <h2 id="1">1. Johdanto</h2>
-<h3 id="1.1">Yleiset ominaisuudet</h3>
+<h3 id="1.1">1.1. Yleiset ominaisuudet</h3>
 <p>
-Tarjoten palautteen synteettisenä puheena, NVDA sallii sokeiden ja heikkonäköisten käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
+NVDA:n (Non-Visual Desktop Access) avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
 </p>
 <p>
 Tärkeimpiin ominaisuuksiin kuuluvat:
 </p>
 <ul>
-<li>Mahdollisuus käyttää kokonaan USB-muistitikulta tai muulta siirrettävältä medialta tarvitsematta asennusta</li>
-<li>Internetin selaaminen <a href="http://www.getfirefox.com/">Mozilla Firefox 3:lla</a></li>
+<li>Mahdollisuus käyttää kokonaan USB-muistitikulta tai muulta siirrettävältä medialta ilman asennusta</li>
 <li>Helppokäyttöinen puhuva asennusohjelma</li>
+<li>Internetin selaaminen <a href="http://www.getfirefox.com/">Mozilla Firefox 3:lla</a></li>
 <li>Sähköpostin käyttäminen <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3:lla</a></li>
-<li>Varhainen tuki Microsoft Internet Explorerille</li>
-<li>Alkeellinen tuki Microsoft Outlook Expressille / Windows Mailille</li>
-<li>Alkeellinen tuki Microsoft Wordille ja Excelille</li>
+<li>Varhainen tuki Internet Explorerille</li>
+<li>Alkeellinen tuki Outlook Expressille / Windows Mailille</li>
+<li>Tuki Microsoft Wordille ja Excelille</li>
 <li>Tuki esteettömille Java-sovelluksille</li>
 <li>Varhainen tuki Adobe Readerille</li>
 <li>Varhainen tuki IBM Lotus Symphonylle</li>
 <li>Tuki Windowsin komentokehotteelle ja konsolisovelluksille</li>
-<li>Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkeillä</li>
-</ul>
-<h3 id="1.2">Internationalisointi</h3>
+<li>Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren paikan ilmaiseminen äänimerkeillä</li>
+<li>Tuki Freedom Scientificin pistenäyttöajurin ja BRLTTY:n tukemille pistenäytöille</li></ul>
+<h3 id="1.2">1.2. Kansainvälistäminen</h3>
 <p>
-On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat. NVDA on tällä hetkellä käännetty yli 20 kielelle, mukaan lukien Brasilian portugali, tsekki, suomi, ranska, saksa, unkari, italia, portugali, Slovakki, Espanja, ruotsi, perinteinen kiina, vietnami, afrikaans, galisia, kroatia, japani, puola, venäjä, thai ja ukraina.   
+On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat. NVDA on tällä hetkellä käännetty yli 20 kielelle, mukaan lukien Brasilian portugali, kroatia, tsekki, suomi, ranska, galicia, saksa, unkari, italia, japani, portugali, venäjä, slovakki, espanja, thai, perinteinen kiina, ukraina, afrikaans, puola ja vietnam.
 </p>
-<h3 id="1.3">Tuetut puhesyntetisaattorit</h3>
+<h3 id="1.3">1.3. Tuetut puhesyntetisaattorit</h3>
 <p>
-Sen lisäksi, että NVDA tarjoaa ilmoituksensa ja käyttöliittymänsä useilla kielillä, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu</p>
-<p>
-NVDA:n mukana tulee <a href="http://espeak.sourceforge.net/">eSpeak</a>, monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori. NVDA voi lisäksi käyttää puheen tulostamiseen SAPI4- ja SAPI5-, sekä Audiologic-puhesyntetisaattoreita.
+Sen lisäksi, että NVDA tarjoaa ilmoituksensa ja käyttöliittymänsä useilla kielillä, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
 </p>
-<h3 id="1.4">Keksiminen ja kokeileminen</h3>
+<p>
+NVDA:n mukana tulee <a href="http://espeak.sourceforge.net/">eSpeak</a>, monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori. NVDA voi lisäksi käyttää puheen tuottamiseen SAPI4- ja SAPI5-, sekä Audiologic-puhesyntetisaattoreita.
+</p>
+<h3 id="1.4">1.4. Tuetut pistenäytöt</h3>
+<p>
+NVDA voi tulostaa tietonsa pistekirjoituksella niille käyttäjille, joilla on pistenäyttö. NVDA tukee Pacmate-, Focus- ja Handy Tech -pistenäyttöjä ja lisäksi monia muita, jos BRLTTY-ohjelmisto on käytettävissä,.
+</p>
+<h3 id="1.5">1.5. Keksiminen ja kokeilu</h3>
 <p>
 NVDA:ta ei rajoita tarve seurata markkinasuuntauksia tai -tarpeita. Kaupallisissa ruudunlukuohjelmissa otetaan käyttöön todella hyödyllisiä ominaisuuksia, mutta toisinaan tämä voi olla puolueellista: käyttöön otetaan ominaisuuksia, joita markkinat haluavat sen sijaan, että kehitettäisiin jotain, mikä olisi käyttäjälle todella hyödyllistä. NVDA ei ole välttämättä yhtä vakaa kuin kaupalliset ruudunlukuohjelmat, mutta se toimii varmasti koe- ja testaustyökaluna. Sillä voi helposti ja nopeasti testata uusia ideoita ja ominaisuuksia, joita ei ehkä ole nähty muissa Windows-ruudunlukuohjelmissa. Tästä on esimerkkinä NVDA:n kyky ilmoittaa käyttäjälle äänimerkeillä edistymispalkin liikkumisesta. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on. Tämä ominaisuus on lisätty muihin ruudunlukuohjelmiin mukautetuilla skripteillä ja muilla sellaisilla, mutta sitä ei ole koskaan virallisesti täysin sovitettu minkään Windows-ruudunlukuohjelman ytimeen.
 </p>
-<h3 id="1.5">Suunnittelu ja toteutus</h3>
+<h3 id="1.6">1.6. Suunnittelu ja toteutus</h3>
 <p>
-NVDA on kirjoitettu <a href="http://www.python.org/">Python-ohjelmointikielellä</a> ja koottu käyttäen modulaarista suunnittelua. Suurinta osaa NVDA:n koodista voidaan laajentaa ja uutta koodia lisätä, jotta saataisiin tuki uusille Windows-ohjelmille ja/tai -säätimille. Sovellukselle voidaan lisätä yleistuki kirjoittamalla sovellusmoduuleita, näennäispuskureita voidaan kirjoittaa mahdollistamaan monimutkaisten asiakirjojen tai muun tiedon näyttämisen, ja NVDA-objekteja voidaan kirjoittaa lisäämään tuki tietyille säätimille tai ikkunoille. NVDA yrittää aina tehdä ohjelman tai käyttöjärjestelmän säätimet ja osat niin esteettömiksi kuin mahdollista, jotta käyttäjä voi aktiivisesti etsiä kaiken tarvitsemansa tiedon. NVDA:ssa ei ole erikoisominaisuuksia, kuten tietyn tiedon suodattamista tai ilmoittamista.
+NVDA on kirjoitettu <a href="http://www.python.org/">Python-ohjelmointikielellä</a>  ja koottu käyttäen modulaarista suunnittelua. Suurinta osaa NVDA:n koodista voidaan laajentaa ja uutta koodia lisätä, jotta saataisiin tuki uusille Windows-ohjelmille ja/tai -säätimille. Sovellukselle voidaan lisätä yleistuki kirjoittamalla sovellusmoduuleita, näennäispuskureita voidaan kirjoittaa mahdollistamaan monimutkaisten asiakirjojen tai muun tiedon näyttämisen, ja NVDA-objekteja voidaan kirjoittaa lisäämään tuki tietyille säätimille tai ikkunoille. NVDA yrittää aina tehdä ohjelman tai käyttöjärjestelmän säätimet ja osat niin esteettömiksi kuin mahdollista, jotta käyttäjä voi aktiivisesti etsiä kaiken tarvitsemansa tiedon. NVDA:ssa ei ole erikoisominaisuuksia, kuten tietyn tiedon suodattamista tai ilmoittamista.
 </p>
 <p>
-NVDA käyttää ohjelmien ja käyttöjärjestelmän kanssa kommunikoimiseen käyttöjärjestelmäfunktioiden, Microsoft Active Accessibilityn (MSAA), IAccessible2:n, Java Access Bridgen ja tiettyjen sovellusten tarjoamien ohjelmointirajapintojen sekoitusta. NVDA ei käytä videokaappausajureita tai näyttöhakoja, ja yrittää aina saada esteettömyyysrajapinnoilta niin paljon tietoja kuin mahdollista ennen muihin keinoihin turvautumista.
+NVDA käyttää ohjelmien ja käyttöjärjestelmän kanssa kommunikointiin käyttöjärjestelmäfunktioiden, Microsoft Active Accessibilityn (MSAA), IAccessible2:n, Java Access Bridgen ja tiettyjen sovellusten tarjoamien ohjelmointirajapintojen sekoitusta. NVDA ei käytä videokaappausajureita tai näyttöhakoja, ja yrittää aina saada esteettömyyysrajapinnoilta niin paljon tietoja kuin mahdollista ennen muihin keinoihin turvautumista.
 </p>
-<h3 id="1.6">Lisenssi ja tekijänoikeustiedot</h3>
+<h3 id="1.7">1.7. Lisenssi ja tekijänoikeustiedot</h3>
 <p>
-NVDA on copyright © 2006-2008 NVDA contributors.
+NVDA on copyright © 2006-2009 NVDA-avustajat.
 </p>
 <p>
-NVDA on suojattu GNU General Public License (versio 2) -lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa millä tahansa tavalla, kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä muokattuja että alkuperäisiä ohjelmistokopioita, lisäksi kaikkia tämän ohjelmiston koodia käyttäviä ohjelmistoja. Saadaksesi lisätietoja, voit <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">tarkastella koko lisenssiä.</a>
+NVDA on suojattu GNU General Public License (versio 2) -lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa millä tahansa tavalla, kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä muokattuja että alkuperäisiä ohjelmistokopioita, lisäksi kaikkia tämän ohjelmiston koodia käyttäviä ohjelmistoja. Voit <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">tarkastella koko lisenssiä</a> saadaksesi lisätietoja.
 </p>
 <h2 id="2">2. Järjestelmävaatimukset</h2>
 <ul>
-<li>Käyttöjärjestelmät: Kaikki Windows XP:n ja Windows Vistan versiot (palvelinversiot mukaan lukien), saattaa toimia osittain myös Windows 2000:ssa</li>
-<li>Muisti: 256 Mt tai enemmän RAM-muistia</li>
-<li>Prosessorin nopeus: 1 GHz tai nopeampi</li>
-</ul>
+<li>Käyttöjärjestelmät: kaikki 32-bittiset Windows XP:n ja Windows Vistan versiot (palvelinversiot mukaan lukien), voi toimia osittain Windows 2000:ssa ja 64-bittisissä Windows XP:n versioissa.</li>
+<li>Muistia (RAM): 256 Mt tai enemmän</li>
+<li>Prosessori: 1 GHz tai nopeampi</li>
+<li>Noin 50 Mt levytilaa.</li></ul>
 <h2 id="3">3. NVDA:n hankkiminen</h2>
 <p>
-Jos sinulla ei vielä ole NVDA:ta, voit ladata sen NVDA:n web-sivustolta osoitteesta: : 
+Jos sinulla ei vielä ole NVDA:ta, voit ladata sen NVDA:n omalta web-sivustolta osoitteesta: : 
 <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
 </p>
 <p>
-Löydät viimeisimmän NVDA-version latauslinkin Download-osiosta.
+Viimeisimmän version latauslinkki löytyy Download-osiosta.
 </p>
 <p>
-NVDA on paketoitu kahdella tavalla. Yksi on puhuva asennusohjelma, joka opastaa NVDA:n asennuksessa, jotta voit milloin tahansa käynnistää sen Käynnistä-valikosta. Toinen on täysin siirrettävän NVDA:n version sisältävä Zip-tiedosto, jota voit käyttää mistä tahansa, USB-muistitikku tai CD mukaan lukien.
- </p>
+NVDA on saatavilla kahdella tavalla. Ensimmäinen on puhuva asennusohjelma, joka opastaa NVDA:n asennuksessa, jotta voit milloin tahansa käynnistää sen Käynnistä-valikosta. Toinen on täysin siirrettävän NVDA:n version sisältävä Zip-tiedosto, jota voit käyttää mistä tahansa, USB-muistitikku tai CD mukaan lukien.
+</p>
 <h2 id="4">4. NVDA:n asentaminen</h2>
 <h3 id="4.1">4.1. Asennusohjelma</h3>
 <p>
 Jos sinulla on jo NVDA:n asennusohjelma, voit yksinkertaisesti joko painaa Enteriä tiedoston kohdalla tai kaksoisnapsauttaa sitä, jolloin asennusohjelma käynnistyy.
 </p>
 <p>
-Kuulet asennusohjelman latautuessa NVDA:n asennusmusiikin. Kun asennusohjelma on latautunut, NVDA:n tilapäiskopio sallii sinun seurata asennusohjelman kehotteita ja asentaa NVDA:n. Huomaa, että jos käytit asennusohjelman käynnistyksen aikana toista NVDA:n kopiota, esiin tulee ilmoitus, jossa kerrotaan, että aikaisempi NVDA-kopio suljetaan. Kun painat Enteriä tässä ilmoituksessa, asennusohjelma sulkee aiemman kopion ja käynnistää omansa. Tämä on tarpeen, jotta asennusohjelma voi päivittää kaikki muuttuneet tiedostot.
+Kuulet asennusohjelman latautuessa NVDA:n asennusmusiikin.. Kun asennusohjelma on käynnistynyt, voit NVDA:n tilapäiskopion avulla seurata asennusohjelman kehotteita ja asentaa NVDA:n. Huomaa, että jos käytit asennusohjelman käynnistyksen aikana toista NVDA:n kopiota, esiin tulee ilmoitus, jossa kerrotaan, että aikaisempi NVDA:n kopio suljetaan. Kun hyväksyt ilmoituksen painamalla Enteriä, asennusohjelma sulkee aiemman kopion ja käynnistää omansa. Tämä on tarpeen, jotta asennusohjelma voi päivittää kaikki muuttuneet tiedostot. Jos sinulla on jo toinen NVDA:n versio asennettuna, asennusohjelma poistaa sen tässä vaiheessa. Tämän jälkeen NVDA:n asennus alkaa.
 </p>
 <p>
-Kun asennus on valmis, asennusohjelma käynnistää lopuksi juuri asennetun NVDA:n.
+Kun asennus on onnistuneesti suoritettu, asennusohjelma ilmoittaa siitä ja pyytää sinua käynnistämään tietokoneesi uudelleen. On erittäin tärkeää, että käynnistät koneesi uudelleen, koska muuten voi ilmetä ikäviä toimintahäiriöitä.
 </p>
 <h3 id="4.2">4.2. Zip-tiedosto</h3>
 <p>
-Jos sinulla on NVDA:n Zip-tiedosto, sinun tarvitsee vain purkaa se haluamaasi hakemistoon kovalevylläsi tai siirrettävällä tallennusvälineellä. 
+Jos sinulla on NVDA:n Zip-tiedosto, sinun tarvitsee vain purkaa se haluamaasi hakemistoon kovalevylläsi tai siirrettävällä tallennusvälineellä.
 </p>
-<h2 id="5">5. Aloittaminen</h2>
+<h2 id="5">5. Käytön aloittaminen</h2>
 <h3 id="5.1">5.1. NVDA:n käynnistäminen</h3>
 <p>
-Jos olet asentanut NVDA:n sen omalla asennusohjelmalla, voit käynnistää NVDA:n joko painamalla Ctrl+Alt+n, tai valitsemalla Käynnistä-valikosta Ohjelmat / NVDA / NVDA.
+Jos olet asentanut NVDA:n sen omalla asennusohjelmalla, voit käynnistää NVDA:n joko painamalla Ctrl+Alt+n tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
 </p>
 <p>
-Käynnistääksesi siirrettävän version, mene hakemistoon, johon olet purkanut NVDA:n Zip-tiedoston ja paina sitten Enteriä tai kaksoisnapsauta nvda.exe:n kohdalla.
+Käynnistääksesi Zip-tiedostosta puretun siirrettävän version, mene hakemistoon, johon olet purkanut NVDA:n ja paina sitten Enteriä tai kaksoisnapsauta nvda.exe:n kohdalla.
+ </p>
+<p>
+Kun NVDA käynnistyy, kuulet ensin joukon nousevia ääniä, jotka kertovat, että NVDA latautuu. Sitten sinun pitäisi kuulla sen sanovan "NVDA käynnissä". Riippuen siitä, kuinka nopea tietokoneesi on, tai jos käytät NVDA:ta USB-muistitikulta tai muulta hitaammalta tallennusvälineeltä, käynnistyminen saattaa kestää jonkin aikaa. Jos käynnistyminen kestää erityisen kauan, NVDA:n pitäisi sanoa "Ladataan alajärjestelmiä. Odota...”
 </p>
 <p>
-Kuulet NVDA:n käynnistyessä ensin joukon nousevia ääniä, jotka kertovat, että NVDA latautuu. Sitten sinun tulisi kuulla sen sanovan "NVDA käynnissä". Riippuen siitä, kuinka nopea tietokoneesi on, tai jos käytät NVDA:ta USB-muistitikulta tai muulta hitaammalta tallennusvälineeltä, käynnistyminen saattaa kestää jonkin aikaa. Jos käynnistyminen kestää erityisen kauan, NVDA:n tulisi sanoa "Ladataan alajärjestelmiä. Odota...”
+Jos et kuule mitään tällaista, tai kuulet Windowsin virheestä ilmoittavan äänen tai joukon laskevia ääniä, silloin tämä tarkoittaa, että NVDA:ssa on ohjelmavirhe ja että sinun on ilmoitettava siitä kehittäjille. Tarkista NVDA:n web-sivustolta, miten vioista ilmoitetaan.
 </p>
 <p>
-Jos et kuule mitään tällaista, tai kuulet Windowsin virheestä ilmoittavan äänen tai joukon laskevia ääniä, silloin tämä tarkoittaa, että NVDA:ssa on virhe ja että sinun on luultavasti ilmoitettava viasta kehittäjille. Tarkista NVDA:n web-sivustolta, miten vioista ilmoitetaan.
-</p>
-<p>
-Kun NVDA käynnistyy ensimmäistä kertaa, sinua tervehditään valintaikkunalla, jokatarjoaa joitakin perustietoja NVDA-näppäimestä ja -valikosta. (Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista). Valintaikkuna sisältää myös kaksi valintaruutua. Ensimmäinen antaa sinun säätää, tulisiko NVDA:n käyttää Capslock-näppäintä NVDA-näppäimenä, ja toisella voit säätää, haluatko tämän Tervetuloa-valintaikkunan tulevan näkyviin jokaisella NVDA:n käynnistyskerralla.
+Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, joka tarjoaa joitakin perustietoja NVDA-näppäimestä ja -valikosta. (Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista). Valintaikkunassa on myös kaksi valintaruutua. Ensimmäisen avulla voit säätää, käyttääkö NVDA Capslock-näppäintä NVDA-näppäimenä, ja toisella voit määrittää, haluatko tämän Tervetuloa-valintaikkunan tulevan näkyviin jokaisella NVDA:n käynnistyskerralla.
 </p>
 <h3 id="5.2">5.2. Tietoja NVDA:n näppäinkomennoista</h3>
 <p>
-Suurin osa NVDA:n näppäinkomennoista koostuvat tavallisesti NVDA-näppäimen painamisesta yhdessä yhden tai useamman muun näppäimen kanssa. Poikkeuksena tähän ovat tekstin tarkastelukomennot, jotka käyttävät vain pelkkiä laskinnäppäimistön näppäimiä.
+Suurin osa NVDA:n näppäinkomennoista koostuu yleensä NVDA-näppäimen painamisesta yhdessä yhden tai useamman muun näppäimen kanssa. Poikkeuksena tähän ovat tekstin tarkastelukomennot, jotka käyttävät pelkkiä laskinnäppäimistön näppäimiä.
 </p>
 <p>
-Oletuksena laskinnäppäimistön ja laajennettua Insert-näppäintä voidaan molempia käyttää NVDA-näppäimenä. Voit kuitenkin määrittää NVDA:n myös niin, että Capslock-näppäinkin muuttuu NVDA-näppäimeksi. Näin määritettynä Capslockin painaminen tai alhaalla pitäminen toimii NVDA-näppäimenä, mutta sen kahdesti painaminen nopeasti peräkkäin saa sen toimimaan normaalina Capslock-näppäimenä.
- </p>
-<p>
-Tässä käyttöohjeessa on kaikkialla mainittu useita näppäinkomentoja, mutta helpoin tapa tutkia niitä kaikkia on käyttää näppäinohjetta.
+Oletuksena sekä laskinnäppäimistön että laajennettua Insert-näppäintä voidaan käyttää NVDA-näppäimenä. Voit kuitenkin määrittää NVDA:n myös niin, että Capslock-näppäinkin muuttuu NVDA-näppäimeksi. Näin määritettynä Capslockin painaminen tai alhaalla pitäminen toimii NVDA-näppäimenä, mutta sen kahdesti painaminen nopeasti peräkkäin saa sen toimimaan normaalina Capslock-näppäimenä.
 </p>
 <p>
-Ota näppäinohje käyttöön painamalla Insert+1. Poista se käytöstä painamalla uudelleen Insert+1. Kun näppäinohje on käytössä, minkä tahansa näppäimen painaminen ilmoittaa, mitä kyseinen näppäin tekee. Näppäinohje-tilassa näppäimet eivät tee niiden varsinaisia toimintoja, joten voit painaa mitä näppäimiä haluat.
+Tässä käyttöohjeessa on mainittu useita näppäinkomentoja, mutta helpoin tapa tutkia niitä kaikkia on käyttää näppäinohjetta.
+</p>
+<p>
+Ota näppäinohje käyttöön painamalla NVDA+1. Poista se käytöstä painamalla uudelleen NVDA+1. Kun näppäinohje on käytössä, minkä tahansa näppäimen painaminen ilmoittaa, mitä kyseinen näppäin tekee. Näppäinohje-tilassa näppäimet eivät tee niiden varsinaisia toimintoja, joten voit painaa mitä näppäimiä haluat.
 </p>
 <h2 id="6">6. NVDA-valikko</h2>
 <p>
-NVDA-valikosta voit määrittää NVDA:n asetuksia, käyttää ohjetta, tallentaa/palauttaa asetuksesi ja lopettaa NVDA:n. 
+NVDA-valikosta voit määrittää NVDA:n asetuksia, lukea ohjetta, tallentaa/palauttaa asetuksesi ja lopettaa NVDA:n.
 </p>
 <h3 id="6.1">6.1. NVDA-valikon käyttäminen</h3>
 <p>
-Päästäksesi NVDA-valikkoon kaikkialta Windowsista NVDA:n ollessa käynnissä, paina NVDA+n. Kun valikko tulee näkyviin, voit liikkua siinä nuolinäppäimillä ja valita  haluamasi kohdan Enterillä. Asetukset-valikosta voit määrittää NVDA:n haluamallasi tavalla, Työkalut-valikko sisältää pari hyödyllistä työkalua, kuten NVDA:n lokinäyttäjän ja Python-konsolin kehittäjille, Ohje-valikosta pääset lukemaan käyttöohjetta, näppäinkomentojen pikaopasta ja paljon muuta. NVDA-valikko sisältää myös kohdat, joista voit tallentaa tai palauttaa nykyiset asetuksesi ja jopa lopettaa NVDA:n kokonaan.
+Päästäksesi NVDA-valikkoon kaikkialta Windowsista NVDA:n ollessa käynnissä, paina NVDA+N. NVDA-valikkoon pääsee myös Windowsin järjestelmätarjottimella olevasta NVDA:n kuvakkeesta. Voit joko napsauttaa kuvaketta hiiren oikealla painikkeella tai siirtyä järjestelmätarjottimelle painamalla Windows-näppäin+b, menemällä nuolinäppäimillä NVDA-kuvakkeen kohdalle ja painamalla Sovellukset-näppäintä, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Control-näppäimen vasemmalta puolelta. Kun valikko tulee näkyviin, voit liikkua siinä nuolinäppäimillä ja valita haluamasi kohdan Enterillä. Asetukset-valikosta voit määrittää NVDA:n haluamallasi tavalla, Työkalut-valikko sisältää hyödyllisiä työkaluja, kuten NVDA:n lokinäyttäjän ja Python-konsolin kehittäjille, Ohje-valikosta pääset lukemaan käyttöohjetta, näppäinkomentojen pikaopasta ja paljon muuta. Voit myös tallentaa tai palauttaa nykyiset asetuksesi NVDA-valikosta. NVDA voidaan myös lopettaa NVDA-valikon kautta, mutta tämän voi tehdä nopeammin painamalla NVDA+Q.
 </p>
 <p>
-NVDA-valikkoon pääsee myös Windowsin järjestelmätarjottimella olevasta NVDA:n kuvakkeesta. Voit joko napsauttaa kuvaketta hiiren oikealla painikkeella tai siirtyä järjestelmätarjottimelle painamalla Windows-näppäin+b, menemällä nuolinäppäimillä NVDA-kuvakkeen kohdalle ja painamalla Sovellukset-näppäintä.
+Asetukset-valikossa oleviin asetuksiin pääsee käsiksi myös pikanäppäimillä, kuten myös tässä kappaleessa mainittuihin asetusten tallennus ja palautusvaihtoehtoihin. Lue näppäinkomentojen pikaopasta saadaksesi tästä lisätietoja.
 </p>
-<h3 id="6.2">6.2. Asetusten tallentaminen ja lataaminen</h3>
+<h3 id="6.2">6.2. NVDA:n asetusten säätäminen</h3>
+<h4 id="6.2.1">6.2.1 Asetukset-valikko</h4>
+<h5 id="6.2.1.1">6.2.1.1. Yleiset asetukset</h5>
 <p>
-NVDA tallentaa asetuksensa hakemistossaan olevaan nvda.ini-nimiseen tiedostoon. Sinun ei luultavasti koskaan tarvitse koskea siihen, mutta kokeneet käyttäjät voivat muuttaa tästä tiedostosta joitakin lisäasetuksia, joilla ei vielä ole omia asetusvalintaikkunoitaan.
+Yleiset asetukset -valintaikkuna löytyy Asetukset-valikosta. Sen saa auki myös painamalla NVDA+Control+G. Paina OK tallentaaksesi asetuksiin tekemäsi muutokset. Peruuta muutokset painamalla Peruuta tai Esc-näppäintä. Valintaikkuna sisältää seuraavat asetukset:
+</p>
+<h6>Kieli</h6>
+<p>
+Yhdistelmäruutu, josta voit valita kielen, jolla NVDA:n käyttöliittymä ja ilmoitukset näytetään. Kieliä on useita. Oletuksena on valittuna vaihtoehto "Windows", joka käskee NVDA:n käyttää kieltä, jota Windows on asetettu käyttämään (Aluekohtaiset ja kieliasetukset Ohjauspaneelissa). Huomaa, että NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
+</p>
+<h6>Tallenna asetukset lopetettaessa</h6>
+<p>
+Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun lopetat NVDA:n.
+</p>
+<h6>Vahvista NVDA:n lopettaminen</h6>
+<p>
+Valintaruutu, jolla voit määrittää, haluatko NVDA:n kysyvän vahvistuksen lopetettaessa. Kun tämä on valittuna, aina NVDA:ta lopetettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko varmasti lopettaa.
+</p>
+<h6>Lokitaso</h6>
+<p>
+Yhdistelmäruutu, josta voit valita, kuinka paljon NVDA kirjaa tietoja lokiin käynnissä ollessaan. Käyttäjien ei normaalisti tarvitse  koskea tähän. Jos kuitenkin haluat antaa tietoja vikailmoituksessa jne, tästä asetuksesta voi olla hyötyä.
+</p>  
+<h5 id="6.2.1.2">6.2.1.2. Puhesyntetisaattorin valinta</h5>
+<p>
+Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori..." tai johon pääsee painamalla NVDA+Control+S, voit valita, mitä puhesyntetisaattoria NVDA käyttää.
 </p>
 <p>
-NVDA ei automaattisesti tallenna asetuksiasi, joten jos suljet NVDA:n ja käynnistät sen uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa. Voit tallentaa asetukset joko valitsemalla NVDA-valikosta Tallenna asetukset -kohdan tai painamalla missä tahansa NVDA+Control+C.
+Tämä valintaikkuna sisältää yhdistelmäruudun, joka luettelee kaikki käytettävissä olevat puhesyntetisaattorit. Valitse haluamasi nuolinäppäimillä ja paina sitten OK. Jos puhesyntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään ja vanha syntetisaattori pidetään ladattuna.
+</p>
+<p>
+Tämänhetkinen lista NVDA:n tukemista puhesyntetisaattoreista:
+eSpeak, SAPI4, SAPI5, Audiologic, Display, ja Silence. 
+  </p>
+<p>
+eSpeak-puhesyntetisaattori on sisäänrakennettu NVDA:han, joten se ei ole riippuvainen mistään erikoisajureista tai ajonaikaisista SAPI-komponenteista. NVDA käyttää eSpeak:ia oletuksena. Tämän syntetisaattorin pitäisi toimia kaikissa niissä järjestelmissä, joissa NVDA:kin toimii, joten se toimii varmasti käytettäessä NVDA:ta USB-muistitikulta tai CD:ltä.
+</p>
+<p>
+Sapi4-vaihtoehto mahdollistaa SAPI 4 -puhesyntetisaattoreiden käytön, joihin kuuluu IBM ViaVoice (JAWSin Eloquence) sekä muut mahdollisesti asentamasi SAPI 4 -syntetisaattorit.
+</p>
+<p>
+Sapi5-vaihtoehto mahdollistaa Windowsin mukana tulevien Microsoft-puhesyntetisaattoreiden käytön. Windows XP:ssä on oletuksena Microsoft Sam, Vistassa on Microsoft Anna. Muitakin syntetisaattoreita voi olla käytettävissä SAPI5-vaihtoehdon valittuasi riippuen siitä, mitä syntetisaattoreita olet asentanut.
+</p>
+<p>
+Display-syntetisaattori on käyttökelpoinen sovelluksiaan NVDA:n kanssa testaaville näkeville kehittäjille, jotka haluavat nähdä, mitä NVDA puhuu.
+</p>
+<p>
+Silence-syntetisaattori ei ole kovin hyödyllinen, ellet sitten halua käyttää puhetta lainkaan.
+</p>
+<p>
+Huomaa, että riippumatta siitä, kuinka monta SAPI4 tai SAPI5-puheääntä (tai syntetisaattoria) järjestelmässäsi on asennettuna, ainoastaan varsinaiset SAPI4- tai SAPI5-syntetisaattorit näkyvät Syntetisaattori-valintaikkunassa. Valitaksesi jonkin puheäänen, valitse joko SAPI4 tai SAPI5, jonka jälkeen voit Ääniasetukset-valintaikkunasta valita haluamasi puheäänen.
+</p>
+<h5 id="6.2.1.3">6.2.1.3. Ääniasetukset</h5>
+<p>
+Ääniasetukset-valintaikkuna, joka löytyy Asetukset-valikosta, tai johon pääsee painamalla NVDA+Control+V, sisältää asetuksia, joilla voit vaikuttaa siihen, miltä puhe kuulostaa. Voit myös määrittää monia näistä asetuksista mistä tahansa painamalla NVDA+Control ja jotain nuolinäppäintä. Vasen ja oikea nuolinäppäin siirtää eri asetusten välillä, ylä- ja alanuolet vastaavasti suurentavat tai pienentävät asetusta.
+</p>
+<p>
+Valintaikkuna sisältää seuraavat asetukset:
+</p>
+<h6>Puheääni</h6>
+<p>
+Tässä valintaikkunassa on ensimmäisenä yhdistelmäruutu, joka luettelee kaikki käytössä olevan syntetisaattorin puheäänet. Voit käyttää nuolinäppäimiä kuunnellaksesi kaikkia eri vaihtoehtoja. Vasen ja ylänuoli siirtävät ylöspäin listassa, kun taas oikea ja alanuoli siirtävät alas.
+</p>
+<h6>Muunnelma</h6>
+<p>
+Jos käytät NVDA:n mukana tulevaa eSpeak-syntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman. Muunnelmat ovat melkein kuin puheääniä, koska jokainen niistä antaa eSpeakin puheäänille hieman eri määreitä. Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin kuin sammakolta.
+</p>
+<h6>Nopeus</h6>
+<p>
+Tällä liukusäätimellä voit muuttaa puheen nopeutta. Mahdollisia ovat nopeuden arvot 0 - 100 (0=hitain ja 100=nopein).
+</p>
+<h6>Korkeus</h6>
+<p>
+Tällä liukusäätimellä voit muuttaa puheen korkeutta. Mahdollisia ovat korkeuden arvot 0 - 100 (0=matalin ja 100=korkein).
+</p>
+<h6>Voimakkuus</h6>
+<p>
+Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Mahdollisia ovat voimakkuuden arvot 0 - 100 (0=hiljaisin ja 100=voimakkain).
+</p>
+<h6>Sävy</h6>
+<p>
+Tällä liukusäätimellä voit määrittää syntetisaattorin käyttämän äänensävyn korkeuden nousuja ja laskuja). (eSpeak on tällä hetkellä ainoa syntetisaattori, joka tarjoaa tämän vaihtoehdon).
+</p>
+<h6>Lue kaikki välimerkit</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee kaikki välimerkkisymbolit sanoina (erittäin hyödyllinen oikolukemiseen). Kun tämä ei ole valittuna, NVDA jättää välimerkit entiselleen, joten syntetisaattori lukee silti lauseet oikealla äänensävyllä. Välimerkkejä ei kuitenkaan lueta.
+</p>
+<h6>Nosta äänenkorkeutta isojen kirjainten kohdalla</h6>
+<p>
+Kun tämä asetus on käytössä, syntetisaattorin äänenkorkeutta nostetaan aina isojen kirjainten kohdalla.
+</p>
+<h6>Sano "ISO" ennen isoja kirjaimia</h6>
+<p>
+Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista isoa kirjainta siirryttäessä nuolinäppäimillä sen kohdalle tai kirjoitettaessa. Yleensä NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin syntetisaattorit eivät ehkä tue tätä kunnolla, joten tälle asetukselle voi olla käyttöä.
+</p>
+<h6>Äänimerkki isojen kirjainten kohdalla</h6>
+<p>
+Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun yksittäinen iso kirjain luetaan. Kuten 'sano iso isojen kirjainten kohdalla' -asetus, tämäkin on käyttökelpoinen syntetisaattoreille, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
+</p>
+<h5 id="6.2.1.4">6.2.1.4. Pistenäytön asetukset</h5>
+<p>
+Pistenäytön asetukset -valintaikkuna löytyy Asetukset-valikon "Pistenäyttö..." -kohdasta.
+</p>
+<h6>Pistenäyttö</h6>
+<p>
+Pistenäytön asetukset -valintaikkunassa on ensimmäisenä "Pistenäyttö"-yhdistelmäruutu, jossa on kolme vaihtoehtoa. Liiku niiden välillä nuolinäppäimillä.
+</p>
+<p>
+"Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
+</p>
+<p>
+"Freedom Scientific" on tarkoitettu Focus- ja Pacmate-pistenäytöille. Huomaa, että tämä vaihtoehto näkyy vain, jos Freedom Scientificin pistenäyttöajuri on asennettu. Katso lisätietoja ajurin hankkimisesta ja asentamisesta <a href="http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp">viralliselta Freedom Scientificin pistenäyttöajureiden sivulta.</a>
+</p>
+<p>
+"Handy Tech" on tarkoitettu Handy Tech -pistenäytöille. Huomaa, että tämä vaihtoehto on käytettävissä vain, jos olet asentanut <a href="ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe">Handy Techin yleisajurin.</a>
+</p>
+<p>
+BRLTTY:n avulla voit käyttää monia eri pistenäyttöjä. Asenna <a href="http://brl.thefreecat.org/brltty/">BRLTTY:n Windows-versio</a> saadaksesi tuen näille pistenäytöille.
+</p>
+<h6>Pistetaulukko</h6>
+<p>
+Seuraavana tässä valintaikkunassa on "Pistetaulukko"-yhdistelmäruutu. Tästä voit valita pistetaulukkoja eri kielille. Voit liikkua vaihtoehtojen välillä nuolinäppäimillä.
+</p>
+<h6>Laajenna kohdistimen kohdalla oleva sana</h6>
+<p>
+Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
+</p>
+<h6>Kohdistimen vilkkumistaajuus</h6>
+<p>
+Tällä asetuksella voit muuttaa kohdistimen vilkkumistaajuutta millisekunteina.
+</p>
+<h6>Ilmoitusten aikakatkaisu (sek)</h6>
+<p>
+Tämä asetus säätää, kuinka kauan järjestelmän ilmoitukset näytetään pistenäytöllä.
+</p>
+<h6>Sekalaiset</h6>
+<p>
+Painamalla NVDA+Control+T voit säätää, mitä pistenäytöllä näytetään. Vaihtoehdot ovat kohdistus ja tarkastelukohdistin. Kohdistus näyttää, mitä nuolinäppäimillä selataan ja missä Sarkain-näppäimellä liikutaan, lyhyesti sanottuna tämä tarkoittaa kohdistusnavigointia. Tarkastelukohdistimen avulla voit tarkastella, mitä ruudulla on (ts. objektinavigointi). Vaihda näiden asetusten välillä painamalla Control+NVDA+T.
+</p>
+<h5 id="6.2.1.5">6.2.1.5. Näppäimistöasetukset</h5>
+<p>
+Tämä valintaikkuna löytyy Asetukset-valikosta, "Näppäimistö..." -kohdasta. Vaihtoehtoisesti siihen pääsee painamalla NVDA+Control+K. Se sisältää seuraavat asetukset:
+</p>
+<h6>Näppäimistöasettelu</h6>
+<p>
+Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA käyttää. Vaihtoehdot ovat Desktop ja Laptop.
+</p>
+<h6>Käytä Capslock-näppäintä NVDA-näppäimenä</h6>
+<p>
+Jos tämä valintaruutu on valittuna, Capslockia voidaan käyttää NVDA-näppäimenä.
+</p>
+<h6>Käytä laajennettua Insert-näppäintä NVDA-näppäimenä</h6>
+<p>
+Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä voidaan käyttää NVDA-näppäimenä. Tämä näppäin löytyy yleensä nuolinäppäinten yläpuolelta, läheltä Home- ja End-näppäimiä.
+</p>
+<h6>Käytä laskimen Insert-näppäintä NVDA-näppäimenä</h6>
+<p>
+Jos tämä valintaruutu on valittuna, laskinnäppäimistön Insert-näppäintä voidaan käyttää NVDA-näppäimenä.
+</p>
+<h6>Lue kirjoitetut merkit</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoittamasi merkit. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+2.
+</p>
+<h6>Lue kirjoitetut sanat</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoittamasi sanat. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+3.
+</p>
+<h6>Lue komentonäppäimet</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painamasi näppäimet, jotka eivät ole merkkejä. Tähän sisältyvät sellaiset näppäinyhdistelmät, kuten Control+jokin muu kirjain. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+4.
+</p>
+<h5 id="6.2.1.6">6.2.1.6. Hiiriasetukset</h5>
+<p>
+Hiiriasetukset-valintaikkuna löytyy Asetukset-valikosta, "Hiiri..."-kohdasta. Vaihtoehtoisesti siihen pääsee painamalla NVDA+Control+M. Se sisältää seuraavat asetukset:
+</p>
+<h6>Ilmoita hiirikohdistimen muutokset</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA ilmoittaa joka kerta, kun hiiriosoittimen muoto muuttuu. Windowsissa hiiriosoitin muuttaa muotoaan ilmaistakseen tiettyjä asioita, kuten että jokin on muokattava tai että jokin latautuu jne.
+</p>
+<h6>Lue hiiren alla oleva teksti</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee hiiriosoittimen alla olevan tekstin. Tällä tavoin voit löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että yrittäisit käyttää objektinavigointia.
+</p>
+<h6>Ilmoita hiiren alla olevan objektin rooli</h6>
+<p>
+Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
+</p>
+<h6>Ilmoita hiiren koordinaatit äänimerkeillä</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA antaa äänimerkkejä hiiren liikkuessa, jotta käyttäjä voi selvittää, missä hiiri on suhteessa ruudun kokoon.
+</p>
+<h6>Äänikoordinaatttien voimakkuutta säädetään kirkkauden mukaan</h6>
+<p>
+Jos 'Ilmoita hiiren koordinaatit äänimerkeillä' -asetus on käytössä, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiiren alla. Tämä voi aiheuttaa suorituskykyongelmia Windows Vistassa, joten oletuksena sitä ei ole valittu.
+</p>
+<h5 id="6.2.1.7">6.2.1.7. Objektien lukuasetukset</h5>
+<p>
+Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen..." tai painamalla NVDA+Control+O, ja sisältää seuraavat asetukset:
+</p>
+<h6>Lue työkaluvihjeet</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden ilmestyessä. Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun siirrät hiiren niiden päälle tai joskus silloin, kun siirrät kohdistuksen niihin.
+</p>
+<h6>Lue kuplailmoitukset</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA lukee kuplailmoitukset niiden ilmestyessä. Kuplailmoitukset ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.</p>
+<h6>Lue objektien pikanäppäimet</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA kertoo objektin tai säätimen lisäksi siihen liittyvän pikanäppäimen. Valikkorivin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
+</p>
+<h6>Lue objektien kuvaukset</h6>
+<p>
+Älä valitse tätä valintaruutua, jos et halua kuulla objektien kuvauksia.
+</p>
+<h6>Lue ensin objektin tila</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA kertoo objektin tilan ennen kaikkia muita tietoja. Esimerkiksi "play"-painike, jonka tila on "painettu", luetaan "painettu play painike" sen sijaan, että se luettaisiin "play painike painettu". Tämä on hyödyllistä, jos liikut sarkaimella useiden samantyyppisten objektien välillä, mutta olet todella kiinnostunut vain siitä, onko niiden tila "painettu" tai "valittu" jne.
+</p>
+<h6>Ilmoita edistymispalkin päivitykset äänimerkeillä</h6>
+<p>
+Edistymispalkki on säädin, joka näyttää hieman viivoittimelta. Suurempi osa palkkia muuttuu korostuneeksi tehtävän hiljalleen edistyessä. Se näyttää myös prosenttiarvon kertoakseen numeerisesti, miten pitkällä edistymispalkki on. Edistymispalkkeja näytetään sellaisten tehtävien aikana kuten web-sivun lataus, sähköpostin tarkistus tai äänitiedoston käsittely. Jos tämä valintaruutu on valittuna, NVDA ilmoittaa edistymispalkin liikkumisesta äänimerkeillä. Tämä on joskus paljon miellyttävämpää, kuin kuunnella suurta määrää numeroita.
+</p>
+<h5 id="6.2.1.8">6.2.1.8. Näennäispuskurin asetukset</h5>
+<p>
+Näennäispuskurin asetukset -valintaikkuna löytyy Asetukset-valikosta, kohdasta "Näennäispuskurit..." tai painamalla NVDA+Control+B. Huomaa: Koska näennäispuskuritukea kirjoitetaan uudelleen sellaisille sovelluksille kuten Internet Explorer, Outlook ja Adobe Reader, jotkin tämän valintaikkunan asetuksista koskevat vain jo valmistuneita näennäispuskureita kuten niitä, joita käytetään Firefox 3.0:ssa, Thunderbird 3.0:ssa ja Seamonkey 2.0:ssa.
+</p>
+<p>
+Valintaikkuna sisältää seuraavat asetukset:
+</p>
+<h6>merkkien enimmäismäärä rivillä</h6>
+<p>
+Tämä asettaa näennäispuskurin rivin enimmäispituuden merkkeinä. Ei ole taattua, että kaikki rivit olisivat juuri tämän pituisia tai lyhyempiä, mutta useimpien pitäisi kuitenkin olla.
+</p> 
+<h6>Rivien enimmäismäärä sivulla</h6>
+<p>
+Vaikka näennäispuskureilla ei varsinaisesti ole sivuja, tämä asettaa rivimäärän, jonka siirryt näennäispuskurissa painaessasi Page up tai Page down.
+</p>
+<h6>Ilmoita kohdistuksen muuttuessa</h6>
+<p>
+Kun tämä valintaruutu on valittuna, NVDA kertoo näennäispuskurin säätimen tekstin ja esitystiedot, kun kohdistus on sen kohdallasen sijaan, että kysyttäisiin Windowsilta säätimen tietoja. Esimerkiksi siirryttäessä sarkaimella "kissat"-linkin kohdalle, NVDA sanoo "linkki kissat" sen sijaan, että se sanoisi "kissat linkki", koska nuolinäppäimillä näennäispuskureissa liikuttaessa tyyppi sanotaan aina ennen tekstiä. Tietyissä tapauksissa voi olla suotavaa, ettei tämä asetus ole valittuna, koska tämä tarkoittaa, että säädin luetaan hiukan paremmassa järjestyksessä. Joillakin web-selaimilla saatat kuitenkin saada tarkempia tietoja, jos tämä on käytössä.
+</p>
+<h6>Kenttien, kuten linkkien ja otsikoiden lukemisen määrittäminen</h6>
+<p>Aiemmissa NVDA:n versioissa Näennäispuskureiden asetusvalintaikkunassa oli mahdollista määrittää, ilmoittiko NVDA kohdalla olevan kentän tyypin web-sisältöä lukiessasi. Kenttien tyyppejä ovat esimerkiksi linkit, otsikot, taulukot ja luettelot. Määritä nämä <a href="#6.2.1.9">Asiakirjojen muotoiluasetukset -valintaikkunasta</a> löytyvillä uusilla asetuksilla. Nämä asetukset eivät nyt vaikuta pelkästään näennäispuskureihin, vaan myös kaikkiin näitä kenttiä sisältäviin asiakirjoihin.
+</p>  
+<h6>Automaattinen kohdistustila kohdistusmuutoksille</h6>
+<p>
+Kun tämä valintaruutu on valittuna, kohdistustila otetaan käyttöön, jos kohdistus muuttuu. Esim. kun web-sivulla siirryt sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, kohdistustila otetaan käyttöön automaattisesti.
+</p>
+<h6>Automaattinen kohdistustila kohdistimen liikuttamiseen</h6>
+<p>
+Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti kohdistustilaan ja pois nuolinäppäimillä liikuttaessa. Jos esim. web-sivua nuolinäppäimillä selatessasi tulet muokkauskentän kohdalle, NVDA ottaa kohdistustilan käyttöön automaattisesti. Jos siirryt nuolilla pois muokkauskentästä, NVDA siirtyy takaisin selaustilaan.
+</p>
+<h5 id="6.2.1.9">6.2.1.9. Asiakirjojen muotoiluasetukset</h5>
+<p>
+Tämä valintaikkuna löytyy Asetukset-valikosta, kohdasta "Asiakirjojen muotoilu..." tai painamalla NVDA+Control+D. valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat kuulla automaattisesti liikuttaessasi kohdistinta Word- ja WordPad-asiakirjoissa. Jos esimerkiksi valitset "Ilmoita fontti"-valintaruudun, joka kerta, kun liikut nuolinäppäimillä tekstin kohdalle, jonka fontti eroaa aikaisemman tekstin fontista, NVDA kertoo fontin nimen.
+</p>
+<p>
+Voit määrittää fontin, fonttikoon ja -määritteiden, tyylin, tekstin tasauksen, tekstityylin, taulukoiden, sivu- ja rivinumeroiden, kirjoitusvirheiden, linkkien, otsikoiden, luetteloiden ja sisennyksellisten kappaleenvaihtojen lukuasetuksia.
+</p>
+<h3 id="6.2.2.">6.2.2. Asetusten tallentaminen ja palauttaminen</h3>
+<p>
+NVDA tallentaa asetuksensa hakemistossaan olevaan nvda.ini-tiedostoon. Sinun ei luultavasti koskaan tarvitse koskea siihen, mutta kokeneet käyttäjät voivat muuttaa tästä tiedostosta joitakin lisäasetuksia, joilla ei vielä ole omia asetusvalintaikkunoitaan.
+</p>
+<p>
+NVDA ei automaattisesti tallenna asetuksiasi, joten jos lopetat NVDA:n ja käynnistät sen uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa. Huomaa kuitenkin, että voit muuttaa tämän oletusasetuksen Yleiset asetukset -valintaikkunassa, joka löytyy Asetukset-valikosta. Voit tallentaa asetukset joko valitsemalla NVDA-valikosta Tallenna asetukset -kohdan tai painamalla missä tahansa NVDA+Control+C.
 </p>
 <p>
 Jos NVDA:ta käytetään vain luku -tiedostojärjestelmästä, kuten CD:ltä, asetuksiasi ei voida tallentaa, jonka NVDA myös ilmoittaa.
 </p>
 <p>
-Jos sinulle joskus sattuu virhe asetuksiesi kanssa ja sinun tarvitsee palata tallennettuihin asetuksiin, voit joko valita NVDA-valikosta "Palauta tallennetut asetukset" -kohdan tai painaa missä tahansa NVDA+Control+r.
-</p>
-<h3 id="6.3">6.3. Asetukset-valikko</h3>
-<p>
-NVDA-valikon Asetukset-valikossa on useita valikkovaihtoehtoja, jotka avaavat valintaikkunoita, joissa voit säätää NVDA:n eri asetuksia.
-</p>
-<p>
-Voit säätää yleisiä asetuksia, käytettävää puhesyntetisaattoria, ääni- ja näppäimistöasetuksia, hiiriasetuksia, objektien lukuasetuksia sekä näennäispuskurin asiakirjojen muotoiluasetuksia .
+Jos teet joskus virheen asetuksia säätäessäsi ja sinun tarvitsee palata tallennettuihin asetuksiin, voit joko valita NVDA-valikosta "Palauta tallennetut asetukset" tai painaa missä tahansa NVDA+Control+R.
 </p>
 <h2 id="7">7. NVDA:lla navigoiminen</h2>
 <h3 id="7.1">7.1. Kohdistuksella navigoiminen</h3>
 <p>
-Yleisin tapa navigoida NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten sarkain ja Shift+sarkain eteen- ja taaksepäin säätimien välillä liikkumiseen, painamalla Alt päästäksesi valikkoriville ja käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+sarkain avointen sovellusten välillä liikkumiseen. Näin tehdessäsi NVDA kertoo, missä kohdistus on.
+Yleisin tapa navigoida NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten sarkain ja Shift+sarkain eteen- ja taaksepäin säätimien välillä liikkumiseen, painamalla Alt siirtyäksesi valikkoriville ja käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+sarkain avointen sovellusten välillä siirtymiseen. Näin tehdessäsi NVDA kertoo, missä kohdistus on.
 </p>
 <p>
-Kun NVDA kertoo objektin (esim. kun objektissa on kohdistus), se sanoo tavallisesti objektin nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin. Tämä muistuttaa muita ruudunlukuohjelmia; objektien tyypit voivat kuitenkin olla hieman erilaisia.
+Kun NVDA kertoo objektin (esim. kun objektissa on kohdistus), se sanoo yleensä objektin nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin, aivan kuten muissakin ruudunlukuohjelmissa. Objektien tyypit voivat kuitenkin olla hieman erilaisia.
 </p>
 <p>
-Joitakin hyödyllisiä näppäinkomentoja kohdistuksen mukaan liikuttaessa ovat:
+Joitakin hyödyllisiä näppäinkomentoja kohdistuksella liikuttaessa:
 </p>
 <ul>
 <li>NVDA+sarkain - ilmoittaa nykyisen kohdistuksen</li>
-<li>NVDA+b - lukee koko ikkunan (hyödyllinen valintaikkunan lukemiseen)</li>
-<li>NVDA+t - Kertoo ikkunan nimen</li>
+<li>NVDA+b - lukee koko ikkunan (hyödyllinen valintaikkunoiden lukemiseen)</li>
+<li>NVDA+t - Kertoo nykyisen ikkunan nimen</li>
 </ul>
-<h3 id="7.2">7.2. Objektinavigointi</h3>
+<h3 id="7.2">7.2. Järjestelmäkohdistimella navigoiminen</h3>
 <p>
-Jos haluat tutkia käyttöjärjestelmää liikuttamatta kohdistusta, voit käyttää NVDA:n objektinavigointia. Objektinavigointia käyttäen voit liikkua objektista objektiin puumaisessa rakenteessa.
-</p>
-<p>
-Objektien puurakenne alkaa työpöydältä, puun juuresta. Puun ensimmäiset oksat ovat tällä hetkellä käynnissä olevia sovelluksia, ja näillä sovelluksilla on tietysti omat oksansa (objektinsa), jotka kuvaavat sovelluksen eri osia.
-</p>
-<p>
-Puurakenne voi kasvaa melko suureksi, mutta se antaa sinun navigoida loogisessa järjestyksessä, jotta löydät nopeasti tarvitsemasi tiedon.
-</p>
-<p>
-Tällä rakenteella ei ole mitään tekemistä sen kanssa, miten objektit ovat sijoittuneet ruudulla, vaan sen, miten ne liittyvät toisiinsa loogisesti. Tähän tottuminen saattaa viedä hieman aikaa, mutta kunhan käsität tämän, sinun pitäisi kyetä liikkumaan NVDA:lla melko helposti.
-</p>
-<p>
-NVDA ei tällä hetkellä voi navigoida objekteissa sellaisina, kuin ne näkyvät ruudulla, koska siinä ei ole videokaappausajuria tai näyttöhakoja. NVDA ei ole vuorovaikutuksessa näytön sisällön kanssa enimmäkseen siksi, että se antaa kaiken kaikkiaan paljon selvemmän ja loogisemman käsityksen sovelluksesta ja käyttöjärjestelmästä sen sijaan, että yritetään kuvata laajaa näyttöasettelua.
-</p>
-<p>
-Kaikilla sovelluksilla ei ole täydellistä puurakennetta, joka johtuu näiden sovellusten kehittäjistä. Suurin osa on kuitenkin OK; suurin osa valintaikkunoista ja erittäin rakenteellisista sovelluksista toimivat oikein.
-</p>
-<p>
-Käytä seuraavia näppäimiä navigoidaksesi objekteittain:
-</p>
-<ul>
-<li>NVDA+laskinnäppäimistön 5: Lue nykyinen objekti</li>
-<li>NVDA+laskinnäppäimistön 8: Siirry ylemmän tason objektiin (siirtymällä kohti puun juurta)</li>
-<li>NVDA+laskinnäppäimistön 4: Siirry edelliseen objektiin (suoraan nykyistä objektia ennen oleva saman tason objekti)</li>
-<li>NVDA+laskinnäppäimistön 6: Siirry seuraavaan objektiin (suoraan nykyisen objektin jälkeen oleva saman tason objekti)</li>
-<li>NVDA+laskinnäppäimistön 2: Siirry ensimmäiseen alemman tason objektiin (Ensimmäinen nykyisestä objektista lähtevä oksa)</li>
-<li>NVDA+Shift+laskinnäppäimistön 4: Siirry edelliseen objektipuun objektiin</li> 
-<li>NVDA+Shift+laskinnäppäimistön 6: Siirry seuraavaan objektipuun objektiin</li> 
-<li>NVDA+laskinnäppäimistön miinus: Siirry kohdistukseen</li>
-<li>NVDA+laskinnäppäimistön Enter: Aktivoi nykyinen objekti (esim. paina Enteriä / napsauta / kaksoisnapsauta)</li>
-<li>NVDA+laskinnäppäimistön /: Siirrä hiiri nykyiseen objektiin</li>
-<li>NVDA+laskinnäppäimistön *: Siirry hiiren kohdalle</li>
-<li>NVDA+shift+laskinnäppäimistön 5: Kerro nykyisen objektin mitat ruudun suhteen</li>
-<li>NVDA+laskinnäppäimistön plus:  lue kaikki objektit - alkaa lukemaan nykyisestä objektista siirtyen seuraavaan puumaisessa järjestyksessä</li>
-</ul>
-<p>
-Huomautus: Numlockin on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimisivat oikein.
-</p>
-<p>
-Kun navigoit kohdistuksella, nykyinen navigointiobjekti muuttuu sen mukana. Jos kuitenkin haluat lukita objektinavigoinnin johonkin tiettyyn objektiin, jotta se ei muuttuisi kohdistuksen mukana, voit poistaa käytöstä "Kohdistus siirtää navigointiobjektia" -toiminnon NVDA+7:llä.
-</p>
-<h3 id="7.3">7.3. Tekstin tarkasteleminen nykyisessä objektissa</h3>
-<p>
-Saatat joskus haluta tietää, miten jokin tavataan, tai sinun on ehkä luettava jotakin sana kerrallaan. Voit tarkastella nykyisessä objektissa olevaa tekstiä laskinnäppäimistön näppäimillä:
-</p>
-<ul>
-<li>Shift+laskinnäppäimistön 7: Ylin rivi</li>
-<li>Laskinnäppäimistön 7: Edellinen rivi</li>
-<li>Laskinnäppäimistön 8: Nykyinen rivi</li>
-<li>Laskinnäppäimistön 9: Seuraava rivi</li>
-<li>Shift+laskinnäppäimistön 9: Alin rivi</li>
-<li>Laskinnäppäimistön 4: Edellinen sana</li>
-<li>Laskinnäppäimistön 5: Nykyinen sana</li>
-<li>Laskinnäppäimistön 6: Seuraava sana</li>
-<li>Shift+laskinnäppäimistön 1: Rivin alku</li>
-<li>Laskinnäppäimistön 1: Edellinen merkki</li>
-<li>Laskinnäppäimistön 2: Nykyinen merkki</li>
-<li>Laskinnäppäimistön 3: Seuraava merkki</li>
-<li>Shift+laskinnäppäimistön 3: Rivin loppu</li>
-<li>Laskinnäppäimistön plus: Lue kaikki</li>
-</ul>
-<p>
-Huomautus: Numlockin on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimisivat oikein.
-</p>
-<p>
-Suurimmalla osalla objekteista niiden sisällä oleva teksti muodostuu objektin nimestä, arvosta ja kuvauksesta. Sellaisten objektien, joissa todella on tekstiä tai muokattavaa sisältöä, teksti on silloin objektin varsinainen teksti.
-</p>
-<p>
-Esimerkki: Luettelon osalla luettelossa on tekstiä, joka sisältää sen nimen, arvon ja kuvauksen, kun taas muokkauskentän tai DOS-konsoli-ikkunan teksti on kentässä tai ikkunassa oleva varsinainen teksti.
-</p>
-<p>
-Kun objekti sisältää muokkauskohdistimen (järjestelmäkohdistimen) ja kun se liikkuu, myös tarkastelukohdistimen paikka päivittyy. Jos haluat tarkastelukohdistimen pysyvän siellä, missä se on, etkä halua siirtää sitä järjestelmäkohdistimen mukana, voit poistaa käytöstä "Järjestelmäkohdistin siirtää tarkastelukohdistinta" -toiminnon painamalla NVDA+6.
-</p>
-<h3 id="7.4">7.4. Järjestelmäkohdistimella navigoiminen</h3>
-<p>
-Kun kohdistus on objektissa, jossa on muokkauskohdistin (järjestelmäkohdistin), voit liikkua siinä nuolinäppäimillä ja muokata tekstiä kuten normaalisti. NVDA ilmoittaa liikkuessasi merkki, sana tai rivi kerrallaan ja ilmoittaa myös, kun tekstiä on tai ei ole valittu.
+Kun kohdistus on objektissa, jossa on muokkauskohdistin (järjestelmäkohdistin), voit liikkua siinä nuolinäppäimillä ja muokata tekstiä normaalisti. NVDA ilmoittaa liikkuessasi merkki, sana tai rivi kerrallaan ja ilmoittaa myös, kun tekstiä on tai ei ole valittu.
 </p>
 <p>
 Järjestelmäkohdistimella liikkuessasi myös tarkastelukohdistimen paikka päivittyy, jotta se täsmäisi järjestelmäkohdistimen kanssa.
 </p>
 <p>
-Voit myös lukea koko tekstin (lue kaikki) NVDA+alanuoli-näppäimillä. Huomaa, että tämä ei ole sama kuin numeroryhmän plus, joka siirtää pelkästään tarkastelukohdistinta. Tämä toiminto siirtää järjestelmäkohdistinta sen liikkuessa.
+Voit myös lukea koko tekstin (lue kaikki) NVDA+alanuoli-näppäimillä. Huomaa, että tämä ei ole sama kuin numeroryhmän plus, joka siirtää pelkästään tarkastelukohdistinta. Tämä toiminto siirtää järjestelmäkohdistinta niin kuin se liikkuu.
 </p>
+<h3 id="7.3">7.3. Objektinavigointi</h3>
+<p>
+Jos haluat navigoida sovelluksessa tai käyttöjärjestelmässä liikuttamatta kohdistusta, voit käyttää NVDA:n objektinavigointia. Objektinavigointia käyttäen voit liikkua objektista objektiin puumaisessa rakenteessa.
+</p>
+<p>
+Objektien puurakenne alkaa työpöydältä, puun juuresta. Puun ensimmäiset oksat ovat tällä hetkellä käynnissä olevia sovelluksia, joilla on omat oksansa (objektinsa), jotka edustavat sovelluksen eri osia.
+</p>
+<p>
+Puurakenne voi kasvaa melko suureksi, mutta voit navigoida sen avulla loogisesti, jotta löydät nopeasti tarvitsemasi tiedon.
+</p>
+<p>
+Tällä rakenteella ei ole mitään tekemistä sen kanssa, miten objektit ovat sijoittuneet ruudulla, vaan sen, miten ne liittyvät toisiinsa loogisesti. Tähän tottuminen saattaa viedä hieman aikaa, mutta kunhan käsität tämän, sinun pitäisi kyetä liikkumaan NVDA:lla melko helposti.
+</p>
+<p>
+NVDA ei tällä hetkellä voi navigoida objekteissa sellaisina, kuin ne näkyvät ruudulla, koska siinä ei ole videokaappausajuria tai näyttöhakoja. NVDA ei ole vuorovaikutuksessa ruudun sisällön kanssa, koska se antaa kaiken kaikkiaan paljon selvemmän ja loogisemman käsityksen sovelluksesta ja käyttöjärjestelmästä sen sijaan, että yritetään kuvata laajaa ruutuasettelua.
+</p>
+<p>
+Kaikilla sovelluksilla ei ole täydellistä puurakennetta, joka johtuu näiden sovellusten kehittäjistä. Useimmat valintaikkunat ja erittäin rakenteelliset sovellukset toimivat kuitenkin oikein.
+</p>
+<p>
+Käytä seuraavia näppäimiä navigoidaksesi objekteittain:
+</p>
+<ul>
+<li>NVDA+laskimen 5: Lue nykyinen objekti</li>
+<li>NVDA+laskimen 8: Siirry ylemmän tason objektiin (siirtymällä kohti puun juurta)</li>
+<li>NVDA+laskimen 4: Siirry edelliseen objektiin (suoraan nykyistä objektia ennen oleva saman tason objekti)</li>
+<li>NVDA+laskimen 6: Siirry seuraavaan objektiin (suoraan nykyisen objektin jälkeen oleva saman tason objekti)</li>
+<li>NVDA+laskimen 2: Siirry ensimmäiseen alemman tason objektiin (Ensimmäinen nykyisestä objektista lähtevä oksa)</li>
+<li>NVDA+shift+laskimen 4: Siirry edelliseen objektipuun objektiin</li> 
+<li>NVDA+shift+laskimen 6: Siirry seuraavaan objektipuun objektiin</li> 
+<li>NVDA+laskimen miinus: Siirry kohdistukseen</li>
+<li>NVDA+laskimen Enter: Aktivoi nykyinen objekti (esim. paina Enteriä / napsauta / kaksoisnapsauta)</li>
+<li>NVDA+laskimen /: Siirrä hiiri nykyiseen objektiin</li>
+<li>NVDA+laskimen *: Siirry hiiren kohdalle</li>
+<li>NVDA+shift+laskimen 5: Kerro nykyisen objektin mitat</li>
+<li>NVDA+laskimen plus:  lue kaikki objektit - alkaa lukemaan nykyisestä objektista siirtyen seuraavaan puumaisessa järjestyksessä</li>
+</ul>
+<p>
+Huomautus: Numlockin on oltava pois päältä, jotta laskinnäppäimistön näppäimet toimisivat oikein.
+</p>
+<p>
+Kun navigoit kohdistuksella, nykyinen navigointiobjekti muuttuu sen mukana. Jos kuitenkin haluat lukita objektinavigoinnin johonkin tiettyyn objektiin, jotta se ei muutu kohdistuksen mukana, voit poistaa käytöstä "Kohdistus siirtää navigointiobjektia" -toiminnon NVDA+7:llä.
+</p>
+<h3 id="7.4">7.4. Tekstin tarkasteleminen nykyisessä objektissa</h3>
+<p>
+Voit lukea NVDA:lla nykyisen navigointiobjektin sisällön merkeittäin, sanoittain ja riveittäin. Tämä on hyödyllistä lähinnä DOS-konsoli-ikkunoissa ja muissa paikoissa, joissa on rajoitettu järjestelmäkohdistin tai sitä ei ole lainkaan.
+</p> 
+<ul>
+<li>Shift+laskimen 7: Ylin rivi</li>
+<li>Laskimen 7: Edellinen rivi</li>
+<li>Laskimen 8: Nykyinen rivi</li>
+<li>Laskimen 9: Seuraava rivi</li>
+<li>shift+laskimen 9: Alin rivi</li>
+<li>Laskimen 4: Edellinen sana</li>
+<li>Laskimen 5: Nykyinen sana</li>
+<li>Laskimen 6: Seuraava sana</li>
+<li>shift+laskimen 1: Rivin alku</li>
+<li>Laskimen 1: Edellinen merkki</li>
+<li>Laskimen 2: Nykyinen merkki</li>
+<li>Laskimen 3: Seuraava merkki</li>
+<li>shift+laskimen 3: Rivin loppu</li>
+<li>Laskimen plus: Lue kaikki</li>
+</ul>
+<p>
+Huomautus: Numlockin on oltava pois päältä, jotta laskinnäppäimistön näppäimet toimisivat oikein.
+</p>
+<p>
+Kun objekti sisältää muokkauskohdistimen (järjestelmäkohdistimen) ja kun se liikkuu, tarkastelukohdistin siirtyy sen mukana. Jos haluat tarkastelukohdistimen pysyvän sen nykyisessä paikassa etkä halua sen siirtyvän järjestelmäkohdistimen mukana, voit poistaa käytöstä  "järjestelmäkohdistin siirtää tarkastelukohdistinta" -toiminnon painamalla NVDA+6.
+ </p>
+<p>
+On mahdollista kopioida osia tarkastelemastasi tekstistä. Voit esimerkiksi kopioida Internet-osoitteen, jonka joku on lähettänyt tekstipohjaisessa chattiohjelmassa. Aloita tekstin kopiointi siirtämällä tarkastelukohdistin kopioitavan tekstin ensimmäisen merkin kohdalle ja paina NVDA+f9. Siirry sitten kopioitavan tekstin loppuun ja paina NVDA+f10. Teksti kopioidaan nyt leikepöydälle, jotta voit liittää sen jonnekin muualle. Huomaa, että jos käyttämässäsi ohjelmassa voi liikkua tekstissä järjestelmäkohdistimen avulla ja kopioida normaalilla Control+c-komennolla, sinun kannattaa aina käyttää mieluummin sitä tapaa.
+</p> 
 <h3 id="7.5">7.5. Hiirellä navigoiminen</h3>
 <p>
-Kun liikutat hiirtä, NVDA lukee oletuksena suoraan hiiriosoittimen alla olevan tekstin. Jos toimintoa tuetaan, NVDA lukee myös kappaleen tekstin. Jotkin säätimet tosin lukevat vain rivi kerrallaan.
+Kun liikutat hiirtä, NVDA lukee oletuksena suoraan hiiriosoittimen alla olevan tekstin. Jos toimintoa tuetaan, NVDA lukee myös kappaleen tekstin. Joissakin säätimissä lukeminen on mahdollista vain rivi kerrallaan.
 </p>
 <p>
-NVDA voidaan myös määrittää kertomaan säätimen tai objektin tyyppi, jonka päällä hiiri on (esim. luettelo, painike jne), mistä voi olla hyötyä täysin sokeille käyttäjille, koska joskus pelkän tekstin lukeminen ei riitä.
+NVDA voidaan myös määrittää kertomaan säätimen tai objektin tyypin, jonka päällä hiiri on (esim. luettelo, painike jne), mistä voi olla hyötyä täysin sokeille käyttäjille, koska joskus pelkän tekstin lukeminen ei riitä.
 </p>
 <p>
-NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on näytön mittojen suhteen soittamalla hiiren nykyiset koordinaatit äänimerkkeinä. Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat. Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni vaikuttaa tulevan (olettaen, että käyttäjällä on stereokaiuttimet).
+NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on ruudun mittojen suhteen soittamalla hiiren nykyiset koordinaatit äänimerkkeinä. Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat. Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet).
 </p>
 <p>
-Nämä lisäominaisuudet eivät ole oletuksena käytössä, mutta jos haluat, voit ottaa ne käyttöön NVDA-valikon Asetukset-valikosta löytvästä Hiiriasetukset-valintaikkunasta.
+Nämä lisäominaisuudet eivät ole oletuksena käytössä, mutta jos haluat, voit ottaa ne käyttöön Asetukset-valikosta löytvästä Hiiriasetukset-valintaikkunasta.
 </p>
 <h2 id="8">8. Näennäispuskurit</h2>
 <p>
 Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, esitetään NVDA:ssa näennäispuskurissa.
 </p>
 <p>
-Näennäispuskuri on laaja tekstiesitys dokumentin sisällöstä, joka antaa käyttäjän liikkua nuolinäppäimillä lukeakseen dokumentin tekstin ja kentät. Nuolinäppäimillä liikkumisen lisäksi voit myös painaa Enteriä tai välilyöntiä linkkien ja painikkeiden kohdalla aktivoidaksesi niitä, painaa Enteriä tai välilyöntiä muokkauskenttien kohdalla muokataksesi niiden sisältöä, painaa Enteriä tai välilyöntiä valintaruutujen tai valintapainikkeiden kohdalla valitaksesi niitä ja painaa Enteriä tai välilyöntiä yhdistelmäruutujen kohdalla muuttaaksesi niiden valintaa.
+Näennäispuskuri on tasainen esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä. Liikkuessasi tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 </p>
 <p>
-Siirtyessäsi nuolinäppäimillä kentän kohdalle, kentän tyyppi (kuten linkki, otsikko, luettelo jne.) luetaan, Nämä tiedot eivät kuitenkaan ole puskurissa fyysisesti, mikä tarkoittaa, että voit liikkua tekstissä normaalisti.
+Näennäispuskurissa on kaksi toimintatilaa. Selaustilassa voit liikkua tekstissä näennäiskohdistinta käyttäen. Kohdistustilassa voit olla suoraan vuorovaikutuksessa säädinten(muokkauskenttä, yhdistelmäruutu, valintapainike) kanssa millä tahansa normaalisti käyttämilläsi näppäimillä. Kun olet selaustilassa, NVDA vaihtaa automaattisesti kohdistustilaan siirtyessäsi sarkaimella tai napsauttaessasi hiirellä sellaisen säätimen kohdalle, joka edellyttää sitä. Voit vaihtaa kohdistustilaan myös manuaalisesti painamalla NVDA+välilyönti. Jos NVDA vaihtaa automaattisesti kohdistustilaan, selaustilaan palataan automaattisesti kun siirryt sarkaimella tai napsautat hiirellä johonkin, joka ei edellytä kohdistustilaa. Jos kuitenkin vaihdoit kohdistustilaan NVDA+välilyönnillä, kohdistustila on käytössä kunnes siirryt manuaalisesti takaisin selaustilaan. Voit milloin tahansa kohdistustilassa ollessasi vaihtaa takaisin selaustilaan painamalla Esc tai NVDA+välilyönti. Voit poistaa käytöstä automaattisen selaus- ja kohdistustilan Näennäispuskurin asetukset -valintaikkunasta, joka löytyy Asetukset-valikosta.
+</p> 
+<p>
+NVDA käyttää tällä hetkellä näennäispuskureita dokumenttien lukemiseen Firefoxissa, Internet Explorerissa ja Adobe Readerissa.
 </p>
 <p>
-NVDA käyttää tällä hetkellä näennäispuskureita dokumenttien lukemiseen Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Adobe Readerissa.
-</p>
-<p>
-Huomaa, että  Internet Explorerille ja Adobe Readerille tarkoitetut näennäispuskurit ovat paljon alkeellisempia ja niiden latautuminen kestää paljon kauemmin. Nämä vanhemmat näennäispuskurit eivät myöskään pysty kovin hyvin käsittelemään dynaamista sisältöä, eivätkä ne tue linkkilistaa tai joitakin näennäispuskurin pikanäppäimistä. Kokeile internetin selaamiseen <a href="http://www.getfirefox.com/">Mozilla Firefoxia</a> parhaan suorituskyvyn ja helppokäyttöisyyden takaamiseksi.
-</p>
+Huomaa, että Internet Explorerille ja Adobe Readerille tarkoitetut näennäispuskurit ovat paljon alkeellisempia ja niiden latautuminen kestää paljon kauemmin. Ne eivät myöskään pysty kovin hyvin käsittelemään dynaamista sisältöä, eivätkä ne tue linkkilistaa tai joitakin näennäispuskurin pikanäppäimiä. Kokeile internetin selaamiseen <a href="http://www.getfirefox.com/">Mozilla Firefoxia.</a>
+</p> 
 <h3 id="8.1">8.1. Yksikirjaiminen navigointi</h3>
 <p>
-NVDA:ssa on liikkumisen nopeuttamiseksi myös yksikirjaimisia komentoja, joilla voi hypätä tiettyyn kohtaan näennäispuskurissa.
+NVDA:ssa on selaustilaa käytettäessä navigoinnin nopeuttamiseksi myös yksikirjaimisia komentoja, joilla voi siirtyä tiettyihin kenttiin näennäispuskurissa.
 </p>
 <p>
 Yksinään nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa painettuna edellisen kentän kohdalle.
 </p>
 <p>
-Sekä vanhojen että uusien näennäispuskureiden tukemat näppäinkomennot:
+Sekä vanhan että uuden näennäispuskurin tukemat komennot:
 </p>
 <ul>
 <li>h: otsikko</li>
@@ -349,11 +608,11 @@ Sekä vanhojen että uusien näennäispuskureiden tukemat näppäinkomennot:
 <li>i: luettelon osa</li>
 <li>t: taulukko</li>
 <li>k: linkki</li>
-<li>p: kappale</li>
+<li>p: kappale (käytetään vain vanhassa näennäispuskurissa, käytä uudessa Control+ylä/alanuoli-näppäimiä)</li>
 <li>f: lomakekenttä</li>
 </ul>
 <p>
-Näppäinkomennot, joita vanhat näennäispuskurit eivät tue:
+Komennot, joita vanha näennäispuskuri ei tue:
 </p>
 <ul>
 <li>u: avaamaton linkki</li>
@@ -363,234 +622,25 @@ Näppäinkomennot, joita vanhat näennäispuskurit eivät tue:
 <li>x: valintaruutu</li>
 <li>c: yhdistelmäruutu</li>
 <li>r: valintapainike</li>
-<li>q: kappaleenvaihdollinen sisennys</li>
+<li>q: sisennyksellinen kappaleenvaihto</li>
 <li>s: erotin</li>
 <li>m: kehys</li>
 <li>g: kuva</li>
 <li>numerot 1 - 6: otsikot 1 - 6</li> 
 </ul>
-<h3 id="8.2">8.2. Lomakkeet ja näennäispuskurin läpivientitila</h3>
+<h3 id="8.2">8.2. Lomakkeet ja kohdistus/selaustila</h3>
 <p>
-Saatat joskus haluta tutkia lomakekenttiä ilman, että näennäispuskurin näppäinkomennot ovat tiellä. Näennäispuskurin läpivientitila on juuri tätä tarkoitusta varten. Se otetaan käyttöön ja poistetaan käytöstä painamalla NVDA+välilyönti.
-</p>
-<p>
-Yleensä lomakekentässä painettaessa läpivientitila otetaan käyttöön ja uutta sivua ladattaessa se poistetaan käytöstä.
+Saatat joskus haluta tutkia lomakekenttiä ilman, että näennäispuskurin näppäinkomennot ovat tiellä. Kohdistustila on juuri tätä tarkoitusta varten. Se otetaan käyttöön ja poistetaan käytöstä painamalla NVDA+välilyönti.
 </p>
 <h3 id="8.3">8.3. Linkkilista</h3>
 <p>
 Saadaksesi listan nykyisen näennäispuskurin linkeistä, paina NVDA+f7. Esiin tulevasta valintaikkunasta voit valita haluamasi linkin ja sitten joko siirtyä sen kohdalle tai avata sen käyttämällä tarjottuja painikkeita.
 </p>
-<h2 id="9">9. NVDA:n asetusten määrittäminen</h2>
-<h3 id="9.1">9.1. Yleiset asetukset</h3>
+<h3 id="9">9. NVDA:n vianmääritys</h3>
 <p>
-Yleiset asetukset -valintaikkuna löytyy Asetukset-valikosta. Se sisältää seuraavat asetukset:
-</p>
-<h4>Kieli</h4>
-<p>
-Yhdistelmäruutu, josta voit valita kielen, jolla NVDA:n käyttöliittymä ja ilmoitukset näytetään. Kieliä on useita. Luettelon viimeisenä vaihtoehtona on "Windows". Tämä valinta käskee NVDA:n käyttää kieltä, jota Windows on asetettu käyttämään (Aluekohtaiset ja kieliasetukset Ohjauspaneelissa).
-Huomaa, että NVDA on käynnistettävä uudelleen kieltä vaihdettaessa. Jos vaihdat kieltä ja painat OK, NVDA kysyy, haluatko käynnistää sen uudelleen.
-</p>
-<h4>Tallenna asetukset lopetettaessa</h4>
-<p>
-Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun lopetat NVDA:n.
-</p>
-<h4>Vahvista NVDA:n lopettaminen</h4>
-<p>
-Valintaruutu, jolla voit määrittää, haluatko NVDA:n kysyvän vahvistuksen sitä lopetettaessa.
-</p>
-<h4>Lokitaso</h4>
-<p>
-Yhdistelmäruutu, josta voit valita, kuinka paljon NVDA kirjaa tietoja lokiin käynnissä ollessaan. Käyttäjien ei tulisi tavallisesti koskea tähän. Jos kuitenkin haluat antaa tietoja vikailmoituksessa jne, voisi olla hyvä ajatus asettaa lokitaso korkeammaksi.
-</p>  
-<h3 id="9.2">9.2. Puhesyntetisaattorin valinta</h3>
-<p>
-Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voit valita, mitä puhesyntetisaattoria NVDA käyttää.
-</p>
-<p>
-Tämä valintaikkuna sisältää yhdistelmäruudun, joka luettelee kaikki käytettävissä olevat puhesyntetisaattorit. Valitse haluamasi syntetisaattori nuolinäppäimillä ja paina sitten OK. Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään ja vanha syntetisaattori pidetään ladattuna.
-</p>
-<p>
-Tämänhetkinen lista NVDA:n tukemista puhesyntetisaattoreista:
-eSpeak, SAPI4, SAPI5, Audiologic, Display, ja Silence.
-</p>
-<p>
-eSpeak-puhesyntetisaattori on sisäänrakennettu NVDA:han, joten se ei ole riippuvainen mistään erikoisajureista tai ajonaikaisista SAPI-komponenteista. NVDA käyttää eSpeak:ia oletuksena. Tämän syntetisaattorin pitäisi toimia kaikissa järjestelmissä, joissa NVDA:kin toimii, joten se toimii varmasti käytettäessä NVDA:ta USB-muistitikulta tai CD:ltä.
-</p>
-<p>
-NVDA:ssa on tällä hetkellä kaksi SAPI4-ajuria. Näiden on ilmoitettu toimivan eri tavalla eri järjestelmissä, joten kokeile molempia ja käytä sitä, joka toimii sinulla parhaiten.
-</p>
-<p>
-Display-syntetisaattori on käyttökelpoinen sovelluksiaan NVDA:n kanssa testaaville näkeville kehittäjille, jotka haluavat lukea, mitä NVDA puhuu.
-</p>
-<p>
-Silence-syntetisaattoriajuri ei ole kovin hyödyllinen, ellet halua käyttää puhetta lainkaan.
-</p>
-<p>
-Huomaa, että riippumatta siitä, kuinka monta SAPI4 tai SAPI5-puheääntä (tai syntetisaattoria) järjestelmässäsi on asennettuna, ainoastaan varsinaiset SAPI4- tai SAPI5-syntetisaattorit näkyvät Syntetisaattori-valintaikkunassa. Valitaksesi jonkin puheäänen, valitse joko SAPI4 tai SAPI5, jonka jälkeen voit Puheasetukset-valintaikkunasta valita haluamasi puheäänen.
-</p>
-<h3 id="9.3">9.3. Ääniasetukset</h3>
-<p>
-Asetukset-valikosta löytyvä Ääniasetukset-valintaikkuna sisältää asetuksia, joilla voit vaihtaa puheääntä. Voit myös määrittää monia näistä asetuksista mistä tahansa painamallaNVDA+Control+jotakin nuolinäppäintä. Vasen ja oikea nuolinäppäin siirtää eri asetusten välillä, ylä- ja alanuolet vastaavasti suurentavat tai pienentävät asetusta.
-</p>
-<p>
-Tämä valintaikkuna sisältää seuraavat asetukset:
-</p>
-<h4>Puheääni</h4>
-<p>
-Yhdistelmäruutu, joka luettelee kaikki nykyisen syntetisaattorin puheäänet. Voit selata vaihtoehtoja nuolinäppäimillä.
-</p>
-<h4>Muunnelma</h4>
-<p>
-Yhdistelmäruutu, josta voit valita puheäänen muunnelman, jolla syntetisaattorin tulisi puhua. Tällä hetkellä vain eSpeak tukee tätä asetusta. ESpeakin muunnelmat ovat ikään kuin puheääniä, sillä ne antavat puheäänille hieman eri määreitä.
-</p>
-<h4>Nopeus</h4>
-<p>
-Liukusäädin, jossa on arvot 0 - 100 (0=hitain ja 100=nopein).
-</p>
-<h4>Korkeus</h4>
-<p>
-Liukusäädin, jossa on arvot 0 - 100 (0=matalin ja 100=korkein).
-</p>
-<h4>Voimakkuus</h4>
-<p>
-Liukusäädin, jossa on arvot 0 - 100 (0=hiljaisin ja 100=voimakkain).
-</p>
-<h4>Sävy</h4>
-<p>
-Liukusäädin, jolla voit valita, kuinka paljon sävyä (äänenkorkeuden nousuja ja laskuja) syntetisaattorin tulisi käyttää.
-</p>
-<h4>Lue kaikki välimerkit</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee kaikki välimerkkisymbolit sanoina (hyödyllinen oikolukemiseen). Kun valintaruutu ei ole valittuna, NVDA jättää välimerkit entiselleen, joten syntetisaattori lukee silti lauseet oikealla äänensävyllä. Välimerkkejä ei kuitenkaan lueta.
-</p>
-<h4>Sano "Iso" isojen kirjainten kohdalla</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA sanoo "iso" ennen jokaista isoa kirjainta siirryttäessä nuolinäppäimillä sen kohdalle tai luettaessa se kirjoitettaessa. Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin syntetisaattorit eivät ehkä tue tätä kunnolla, joten tälle asetukselle saattaa olla käyttöä.
-</p>
-<h4>Anna äänimerkki isojen kirjainten kohdalla</h4>
-<p>
-Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun yksittäinen iso kirjain luetaan. Kuten 'sano iso isojen kirjainten kohdalla' -valintaruutu, tämäkin on käyttökelpoinen syntetisaattoreille, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
-</p>
-<h3 id="9.4">9.4. Näppäimistöasetukset</h3>
-<p>
-Tämä valintaikkuna löytyy Asetukset-valikosta, "Näppäimistö..." -kohdasta. Se sisältää seuraavat asetukset:
-</p>
-<h4>Näppäimistöasettelu</h4>
-<p>
-Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA:n tulisi käyttää. NVDA:n mukana tulee tällä hetkellä kaksi näppäimistöasettelua, jotka ovat Desktop ja Laptop.
-</p>
-<h4>Käytä Capslock-näppäintä NVDA-näppäimenä</h4>
-<p>
-Jos tämä valintaruutu on valittuna, Capslockia voidaan käyttää NVDA-näppäimenä.
-</p>
-<h4>Käytä laajennettua Insert-näppäintä NVDA-näppäimenä</h4>
-<p>
-Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä voidaan käyttää NVDA-näppäimenä. Tämä näppäin löytyy tavallisesti nuolinäppäinten yläpuolelta, läheltä Home- ja End-näppäimiä.
-</p>
-<h4>Käytä laskinnäppäimistön Insert-näppäintä NVDA-näppäimenä</h4>
-<p>
-Jos tämä valintaruutu on valittuna, laskinnäppäimistön Insert-näppäintä voidaan käyttää NVDA-näppäimenä.
-</p>
-<h4>Lue kirjoitetut merkit</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoittamasi merkit. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+2.
-</p>
-<h4>Lue kirjoitetut sanat</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoittamasi sanat. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+3.
-</p>
-<h4>Lue komentonäppäimet</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painamasi näppäimet, jotka eivät ole varsinaisia merkkejä. Tähän sisältyvät sellaiset näppäinyhdistelmät, kuten Control+jokin muu kirjain. Voit myös määrittää tämän asetuksen mistä tahansa painamalla NVDA+2.
-</p>
-<h3 id="9.5">9.5. Hiiriasetukset</h3>
-<p>
-Hiiriasetukset-valintaikkuna löytyy Asetukset-valikosta, "Hiiri..."-kohdasta. Se sisältää seuraavat asetukset:
-</p>
-<h4>Ilmoita hiirikohdistimen muutokset</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA ilmoittaa joka kerta, kun hiiriosoittimen muoto muuttuu. Windowsissa hiiriosoitin muuttaa muotoaan ilmaistakseen tiettyjä asioita, kuten että jokin on muokattava tai että jokin latautuu jne.
-</p>
-<h4>Lue hiiren alla oleva teksti</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee hiiriosoittimen alla olevan tekstin. Tällä tavoin voit löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että yrittäisit käyttää objektinavigointia.
-</p>
-<h4>Ilmoita hiiren alla olevan objektin rooli</h4>
-<p>
-Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä objektin kohdalle.
-</p>
-<h4>Ilmoita hiiren koordinaatit äänimerkeillä</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA antaa äänimerkkejä hiiren liikkuessa, jotta käyttäjä voi selvittää, missä hiiri on ruudun koon suhteen.
-</p>
-<h4>Äänikoordinaatttien voimakkuutta säädetään kirkkauden mukaan</h4>
-<p>
-Jos 'Ilmoita hiiren koordinaatit äänimerkeillä' -valintaruutu on valittuna, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiiren alla. Tämä saattaa aiheuttaa suorituskykyongelmia Windows Vistassa, joten sitä ei ole valittu oletuksena.
-</p>
-<h3 id="9.6">9.6. Objektien lukuasetukset</h3>
-<p>
-Löytyy Asetukset-valikosta, kohdasta "Objektien lukeminen...". Tämä valintaikkuna sisältää seuraavat asetukset:
-</p>
-<h4>Lue työkaluvihjeet</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin. Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun siirrät hiiren niiden päälle tai joskus silloin, kun siirrät kohdistuksen niihin.
-</p>
-<h4>Lue kuplailmoitukset</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA lukee kuplailmoitukset niiden ilmestyessä. Kuplailmoitukset ovat työkaluvihjeiden kaltaisia, mutta ovat tavallisesti suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
-</p>
-<h4>Lue objektien pikanäppäimet</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA kertoo objektin tai säätimen lisäksi siihen liittyvän pikanäppäimen. Valikkorivin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
-</p>
-<h4>Lue objektien kuvaukset</h4>
-<p>
-Älä valitse tätä valintaruutua, jos et halua kuulla objektien kuvauksia.
-</p>
-<h4>Lue ensin objektin tila</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA kertoo objektin tilan ennen kaikkia muita tietoja. Esimerkiksi "play"-painike, jonka tila on "painettu", luetaan "painettu play painike" sen sijaan, että se luettaisiin "play painike painettu". Tämä on hyödyllistä, jos liikut sarkaimella useiden samantyyppisten objektien välillä, mutta olet todella kiinnostunut vain siitä, onko niiden tila "painettu" tai "valittu" jne.
-</p>
-<h4>Anna äänimerkki edistymispalkin päivittyessä</h4>
-<p>
-Edistymispalkki on säädin, joka näyttää hieman viivoittimelta. Suurempi osa palkista muuttuu korostetuksi tehtävän edistyessä hitaasti. Se näyttää myös prosenttiarvon kertoakseen numeerisesti, miten pitkällä edistymispalkki on. Edistymispalkkeja näytetään sellaisten tehtävien aikana kuten web-sivun lataus, sähköpostin tarkistus tai äänitiedoston käsittely. Jos tämä valintaruutu on valittuna, NVDA ilmoittaa edistymispalkin liikkumisesta äänimerkeillä. Tämä on joskus paljon miellyttävämpää, kuin kuunnella suurta määrää numeroita.
-</p>
-<h3 id="9.7">9.7. Näennäispuskurin asetukset</h3>
-<p>
-Näennäispuskurin asetukset -valintaikkuna löytyy Asetukset-valikosta, kohdasta "Näennäispuskurit...". Huomaa, että monet näistä asetuksista vaikuttavat vain vanhoihin, Internet Explorerille ja Adobe Readerille tarkoitettuihin näennäispuskureihin. Tämä tullaan ratkaisemaan NVDA:n tulevissa versioissa.
-</p>
-<p>
-Tämä valintaikkuna sisältää seuraavat asetukset:
-</p>
-<h4>Merkkien maksimimäärä rivillä</h4>
-<p>
-Tämä asettaa näennäispuskurin rivin maksimipituuden merkkeinä. Ei ole taattua, että kaikki rivit olisivat juuri tämän pituisia tai lyhyempiä, mutta suurimman osan pitäisi kuitenkin olla.
-</p> 
-<h4>Rivien maksimimäärä sivulla</h4>
-<p>
-Vaikka näennäispuskureilla ei varsinaisesti ole sivuja, tämä asettaa rivimäärän, jonka siirryt näennäispuskurissa painaessasi Page up tai Page down.
-</p>
-<h4>Ilmoita kohdistuksen muuttuessa</h4>
-<p>
-Kun tämä valintaruutu on valittuna, NVDA kertoo näennäispuskurin säätimen tekstin ja esitystiedot, kun kohdistus on sen kohdallasen sijaan, että kysyttäisiin Windowsilta säätimen tietoja. Esimerkiksi siirryttäessä sarkaimella "kissat"-linkin kohdalle, NVDA sanoo "linkki kissat" sen sijaan, että se sanoisi "kissat linkki", koska nuolinäppäimillä näennäispuskureissa liikuttaessa tyyppi sanotaan aina ennen tekstiä. Joissakin tapauksissa voi olla suotavaa, ettei tämä asetus ole valittuna, koska tämä tarkoittaa, että säädin luetaan hiukan paremmassa järjestyksessä. Joillakin web-selaimilla saatat kuitenkin saada tarkempia tietoja, jos tämä on käytössä.
-</p>
-<h4>Päivitä sisältöä dynaamisesti</h4>
-<p>
-Kun tämä valintaruutu on valittuna, näennäispuskurit voivat päivittyä sivun muuttuessa esim. JavaScriptin takia. Tällä hetkellä NVDA tukee dynaamista päivitystä vain Mozilla Firefoxissa, mutta tätä ominaisuutta tuetaan toivottavasti myös Internet Explorerissa NVDA:n tulevissa versioissa.
-</p>
-<h4>Tiettyjen kenttien lukuasetukset</h4>
-<p>
-Muilla tämän valintaikkunan valintaruudulla voit määrittää, minkä tyyppistä tietoa näennäispuskurissa luetaan nuolinäppäimillä liikuttaessa. Kun esimerkiksi "Ilmoita linkit" on valittuna, NVDA sanoo "linkki" ennen kaikkia linkkejä.
-</p>
-<p>
-Voit määrittää linkkien, otsikoiden, kuvien, luetteloiden, luettelon osien, taulukoiden, lomakkeiden, lomakekenttien, kappaleenvaihdollisten sisennysten, kehysten ja kappaleiden lukuasetuksia.
-</p>
-<h3 id="9.8">9.8. Asiakirjojen muotoiluasetukset</h3>
-<p>
-Tämä valintaikkuna löytyy Asetukset-valikosta, kohdasta "Asiakirjojen muotoilu...". Tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat kuulla automaattisesti liikuttaessasi kohdistinta esim. WordPad- tai Microsoft Word -asiakirjoissa. Jos esimerkiksi valitset "Ilmoita fontti"-valintaruudun, joka kerta, kun liikut nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemman tekstin fontista, NVDA kertoo fontin nimen.
-</p>
-<p>
-Voit määrittää fontin, fonttikoon, fonttimääritteiden, tekstin tasauksen ja tyylin, taulukoiden sekä sivu- ja rivinumeroiden lukuasetuksia.
+Koska NVDA:ta päivitetään jatkuvasti, ei ole takeita, että kaikki tässä käyttöohjeessa mainitut komennot ovat käytössä. Jos sinulla on ongelmia komentojen kanssa, käy osoitteessa:
+<a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
+saadaksesi lisää apua.
 </p>
 </body>
 </html>

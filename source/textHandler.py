@@ -149,9 +149,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
 """
-		self.obj=obj
+		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
 		self.basePosition=position
 
+	def _get_obj(self):
+		return self._obj()
 
 	def _get_text(self):
 		raise NotImplementedError

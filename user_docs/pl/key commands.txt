@@ -1,0 +1,314 @@
+
+
+---------------------------------------------------------------------------
+Wykaz skrótów klawiszowych NVDA
+---------------------------------------------------------------------------
+
+   Większość poleceń programu NVDA składa się z kombinacji specjalnego klawisza NVDA oraz jednego lub dwóch innych klawiszy. Domyślnie zarówno klawisz Insert znajdujący się na klawiaturze numerycznej, jak i klawisz Insert znajdujący się w pobliżu klawiszy strzałek, mogą zostać użyte jako specjalny klawisz NVDA.
+
+   Możliwe jest również używanie CapsLock jako klawisza NVDA. W tym przypadku pojedyncze naciśnięcie CapsLock spowoduje, iż będzie on zachowywał się jak klawisz NVDA, natomiast szybkie podwójne naciśnięcie spowoduje, że będzie się on zachowywał jak zwyczajny klawisz CapsLock (będzie przełączał wielkie i małe litery). Aby włączyć użycie CapsLock jako klawisza NVDA wejdź do menu Ustawienia, wybierz okno dialogowe Ustawienia klawiatury i zaznacz odpowiednią opcję.
+
+   W poniższym wykazie kombinacje specjalnego klawisza NVDA z innym klawiszem będą zapisywane skrótowo jako NVDA+klawisz. W zależności od tego, które klawisze ustawisz jako specjalne klawisze NVDA (domyślnie jest to Insert), taka kombinacja może oznaczać zarówno Insert+klawisz jak i CapsLock+klawisz.
+
+   Uwaga: w opisach skrótów klawiszowych nie ma znaczenia wielkość liter. Jeżeli do wywołania polecenia jest potrzebny wciśnięty klawisz Shift, to jest on wymieniony w skrócie. W przeciwnym razie klawisza tego nie należy naciskać przy wywoływaniu skrótu.
+
+   Aby wykonać polecenie NVDA+klawisz, należy najpierw wcisnąć klawisz NVDA a następnie, wciąż przytrzymując go wciśniętego, nacisnąć drugi klawisz. Przypomina to dokładnie sposób, w jaki posługujesz się klawiszem Shift. (Znak + służy jedynie do zapisania skrótu klawiatury, nie naciskaj go podczas wydawania polecenia.)
+
+   Podczas pracy z programem możesz w każdej chwili sprawdzić, jaką funkcję pełni dowolna kombinacja klawiszy, korzystając z pomocy klawiatury. Aby włączyć pomoc klawiatury, naciśnij NVDA+1. Naciśnięcie tej samej kombinacji klawiszy po raz drugi wyłącza pomoc klawiatury. W trybie pomocy klawiatury naciśnięcie danego klawisza spowoduje tylko odczytanie jego funkcji (jeśli jakąś posiada) nie wywołując żadnej akcji. W tym trybie możesz więc eksperymentować bezpiecznie. Zwróć też uwagę, że przy wypowiadaniu nazw klawiszy program będzie mówić "NVDA" zamiast "Insert" lub zamiast "CapsLock" w zależności od ustawienia.
+
+
+---------------------------------------------------------------------------
+Polecenia ogólne
+---------------------------------------------------------------------------
+
+Control: Wstrzymuje czytanie
+Shift: Wznawia czytanie
+
+NVDA+1: Pomoc klawiatury
+   Włącza i wyłącza pomoc klawiatury. Gdy pomoc jest włączona, naciśnij dowolny klawisz lub ich kombinację, aby dowiedzieć się, czy pełni jakąś funkcję.
+
+NVDA+T: Tytuł okna
+   Czyta tytuł bieżącej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka.
+
+NVDA+B: Okno na wierzchu
+   Czyta zawartość obiektu na pierwszym planie (bieżącego aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone.
+
+NVDA+N: Menu NVDA
+   Otwiera menu NVDA. Znajdują się w nim ustawienia NVDA oraz dostęp do pomocy.
+
+NVDA+Q: Zakończ
+   Zamyka NVDA. Jeśli w opcjach programu w oknie dialogowym Główne ustawienia zaznaczono opcję Ostrzegaj przed zamknięciem NVDA, program dodatkowo upewni się, czy chcesz go zakończyć.
+
+NVDA+S: Tryb komunikacji
+   Przełącza tryby komunikacji: mowa, dźwięki lub wyłączone. W trybie mowy NVDA czyta normalnie. W trybie dźwięków NVDA wydaje prosty dźwięk zamiast mowy. W trybie wyłączonym NVDA nie mówi nic.
+
+NVDA+F12: Bieżący czas
+   Podaje bieżący czas. Szybkie dwukrotne naciśnięcie podaje bieżącą datę.
+
+NVDA+End: Pasek statusu
+   Czyta pasek statusu bieżącej aplikacji i przechodzi do niego w hierarchii nawigacji obiektów.
+
+NVDA+F: Formatowanie tekstu
+   Podaje informacje o formatowaniu tekstu w bieżącej pozycji kursora w dokumencie tekstowym.
+
+Control+NVDA+F1: Nazwa aplikacji
+   Podaje nazwę pliku bieżącej aplikacji oraz ewentualną nazwę załadowanego modułu NVDA do jej obsługi.
+
+Shift+NVDA+B: Stan baterii
+   Podaje stan zasilania i pozostały czas przy zasilaniu z baterii (lub brak baterii w przypadku komputera stacjonarnego).
+
+NVDA+5: Dynamiczne zmiany treści
+   Włącza i wyłącza informowanie o dynamicznie zmieniającej się treści, na przykład nowym tekście w oknie konsoli.
+
+NVDA+6: Kursor przesuwa punkt przeglądu
+   Włącza i wyłącza przesuwanie punktu przeglądu podczas ruchów kursora klawiatury.
+
+NVDA+7: Fokus zmienia bieżący obiekt
+   Włącza i wyłącza zmianę bieżącego obiektu w hierarchii nawigacji przy przenoszeniu fokusu.
+
+NVDA+Tab: Bieżący fokus
+   Podaje obiekt posiadający aktualnie fokus.
+
+NVDA+F2: Przepuść następny klawisz
+   Jednorazowo przepuszcza następny naciśnięty klawisz wprost do systemu bez przetwarzania go w NVDA. Nawet jeżeli przepuszczony klawisz posiada w NVDA swoją funkcję, nie zostanie ona wykonana.
+
+Shift+NVDA+Strzałka w górę: Bieżące zaznaczenie
+   Czyta bieżące zaznaczenie tekstu w polu edycyjnym lub dokumencie.
+
+NVDA+Strzałka w górę: Bieżący wiersz
+   Czyta bieżący wiersz w miejscu kursora. Dwukrotne naciśnięcie literuje bieżący wiersz.
+
+NVDA+Strzałka w dół: Czytaj do końca
+   Czyta od kursora klawiatury do końca tekstu, przenosząc kursor w miarę czytania.
+
+NVDA+F1: Bieżący obiekt
+   Podaje informacje programistyczne o bieżącym obiekcie w hierarchii nawigacji, na przykład nazwę klasy oraz identyfikator. Dwukrotne naciśnięcie kopiuje te informacje do schowka. Funkcja przydatna głównie dla programistów.
+
+Control+NVDA+C: Zapisz ustawienia
+   Zapisuje bieżące ustawienia na dysk (do pliku nvda.ini).
+
+Control+NVDA+R: Przywróć ustawienia
+   Wczytuje z dysku zapisane ustawienia NVDA porzucając i zastępując bieżące.
+
+
+---------------------------------------------------------------------------
+Polecenia zmiany ustawień (dostępne także z menu NVDA)
+---------------------------------------------------------------------------
+
+NVDA+2: Czytaj pisane znaki
+   Włącza i wyłącza czytanie znaków podczas pisania.
+
+NVDA+3: Czytaj pisane wyrazy
+   Włącza i wyłącza czytanie wyrazów podczas pisania.
+
+NVDA+4: Czytaj klawisze poleceń
+   Włącza i wyłącza czytanie naciskanych klawiszy poleceń, którym nie odpowiadają znaki pisarskie.
+
+NVDA+P: Czytaj interpunkcję
+   Włącza i wyłącza czytanie interpunkcji. Jeśli ta funkcja jest włączona, NVDA czyta wprost nazwy znaków przestankowych. Jeśli ta funkcja jest wyłączona, wymowa znaków przestankowych zależy od syntezatora.
+
+NVDA+M: Śledzenie myszy
+   Włącza i wyłącza podawanie informacji o wskazywanych obiektach przy ruchach myszy.
+
+NVDA+U: Paski postępu
+   Przełącza sposób sygnalizowania zmian na paskach postępu. NVDA może czytać postęp co 10 procent, sygnalizować dźwiękiem wszystkie paski, sygnalizować dźwiękiem tylko widoczny pasek lub w ogóle nie sygnalizować pasków postępu.
+
+Control+NVDA+Strzałka w lewo: Poprzedni parametr głosu
+   Przechodzi do poprzedniego parametru w cyklu ustawień syntezatora.
+
+Control+NVDA+Strzałka w prawo: Następny parametr głosu
+   Przechodzi do następnego parametru w cyklu ustawień syntezatora.
+
+Control+NVDA+Strzałka w górę: Zwiększ parametr głosu
+   Zwiększa aktualnie wybrany parametr w cyklu ustawień syntezatora.
+
+Control+NVDA+Strzałka w dół: Zmniejsz parametr głosu
+   Zmniejsza aktualnie wybrany parametr w cyklu ustawień syntezatora.
+
+
+---------------------------------------------------------------------------
+Okna dialogowe ustawień (dostępne także z menu NVDA)
+---------------------------------------------------------------------------
+
+Control+NVDA+G: Główne ustawienia
+   Otwiera okno dialogowe głównych ustawień programu.
+
+Control+NVDA+S: Syntezator
+   Otwiera okno dialogowe wyboru syntezatora.
+
+Control+NVDA+V: Ustawienia głosu
+   Otwiera okno dialogowe ustawień bieżącego głosu.
+
+Control+NVDA+K: Ustawienia klawiatury
+   Otwiera okno dialogowe ustawień klawiatury.
+
+Control+NVDA+M: Ustawienia myszy
+   Otwiera okno dialogowe ustawień myszy.
+
+Control+NVDA+O: Prezentacja obiektów
+   Otwiera okno dialogowe opcji informowania o obiektach na ekranie.
+
+Control+NVDA+B: Wirtualne bufory
+   Otwiera okno dialogowe ustawień pracy z wirtualnymi buforami.
+
+Control+NVDA+D: Formatowanie dokumentów
+   Otwiera okno dialogowe opcji informowania o formatowaniu tekstu.
+
+Control+NVDA+Z: Konsola Pythona
+   Otwiera okno konsoli języka Python.
+
+
+---------------------------------------------------------------------------
+Nawigacja w hierarchii obiektów
+---------------------------------------------------------------------------
+
+   Uwaga: aby skróty na klawiaturze numerycznej (numpad) działały poprawnie, należy wyłączyć klawisz Num Lock.
+
+NVDA+Numpad 5: Bieżący obiekt
+   Podaje bieżący obiekt w hierarchii nawigacji. Dwukrotne naciśnięcie literuje. Trzykrotne naciśnięcie kopiuje nazwę i zawartość obiektu do schowka.
+
+Shift+NVDA+Numpad 5: Położenie obiektu
+   Podaje położenie na ekranie bieżącego obiektu w hierarchii nawigacji.
+
+Control+Shift+NVDA+Numpad 5: Przodkowie obiektu
+   Podaje położenie bieżącego obiektu w hierarchii nawigacji czytając kolejno jego przodków.
+
+NVDA+Numpad w górę (klawisz 8): Rodzic
+   Przechodzi do rodzica (w kierunku korzenia drzewa).
+
+NVDA+Numpad w dół (klawisz 2): Potomek
+   Przechodzi do pierwszego potomka (pierwsza gałąź odchodząca od danego elementu).
+
+NVDA+Numpad w lewo (klawisz 4): Poprzedni obiekt
+   Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie.
+
+Shift+NVDA+Numpad w lewo (klawisz 4): Poprzedni w układzie
+   Przechodzi do poprzedniego obiektu w kolejności układu (niekoniecznie zgodnie z hierarchą nawigacji).
+
+NVDA+Numpad w prawo (klawisz 6): Następny obiekt
+   Przechodzi do następnego obiektu znajdującego się na tym samym poziomie.
+
+Shift+NVDA+Numpad w prawo (klawisz 6): Następny w układzie
+   Przechodzi do następnego obiektu w kolejności układu (niekoniecznie zgodnie z hierarchą nawigacji).
+
+NVDA+Numpad Enter: Aktywuj
+   Wykonuje domyślną akcję na bieżącym obiekcie (odpowiednik naciśnięcia Enter czy kliknięcia na obiekcie).
+
+NVDA+Numpad slash: Mysz do obiektu
+   Przesuwa wskaźnik myszy do bieżącego obiektu.
+
+NVDA+Numpad gwiazdka: Idź do myszy
+   Przechodzi do obiektu leżącego pod wskaźnikiem myszy.
+
+NVDA+Numpad minus: Idź do fokusu
+   Przechodzi do obiektu posiadającego fokus.
+
+NVDA+Numpad plus: Czytaj resztę obiektów
+   Wymienia wszystkie obiekty od bieżącego obiektu do końca w kolejności układu.
+
+
+---------------------------------------------------------------------------
+Przegląd tekstu w obiekcie
+---------------------------------------------------------------------------
+
+   Uwaga: aby skróty na klawiaturze numerycznej (numpad) działały poprawnie, należy wyłączyć klawisz Num Lock.
+
+Numpad minus: Idź do kursora
+   Przenosi punkt przeglądu do kursora klawiatury.
+
+Control+Numpad minus: Przenieś kursor
+   Przenosi kursor klawiatury do punktu przeglądu.
+
+Numpad slash: Lewe kliknięcie
+   Klika lewym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy.
+
+Numpad gwiazdka: Prawe kliknięcie
+   Klika prawym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy.
+
+Numpad plus: Czytaj resztę tekstu
+   Czyta od punktu przeglądu do końca tekstu.
+
+Numpad End (klawisz 1): Poprzedni znak
+   Przenosi punkt przeglądu do poprzedniego znaku.
+
+Shift+Numpad End (klawisz 1): Początek wiersza
+   Przenosi punkt przeglądu na początek wiersza.
+
+Numpad w dół (klawisz 2): Bieżący znak
+   Czyta znak w punkcie przeglądu. Dwukrotne naciśnięcie podaje wartość kodu ASCII dziesiętnie i szesnastkowo.
+
+Numpad PageDown (klawisz 3): Następny znak
+   Przenosi punkt przeglądu do następnego znaku.
+
+Shift+Numpad PageDown (klawisz 3): Koniec wiersza
+   Przenosi punkt przeglądu na koniec wiersza.
+
+Numpad w lewo (klawisz 4): Poprzedni wyraz
+   Przenosi punkt przeglądu do poprzedniego wyrazu.
+
+Numpad 5: Bieżący wyraz
+   Czyta wyraz w punkcie przeglądu. Dwukrotne naciśnięcie literuje wyraz.
+
+Numpad w prawo (klawisz 6): Następny wyraz
+   Przenosi punkt przeglądu do następnego wyrazu.
+
+Numpad Home (klawisz 7): Poprzedni wiersz
+   Przenosi punkt przeglądu do poprzedniego wiersza.
+
+Shift+Numpad Home (klawisz 7): Pierwszy wiersz
+   Przenosi punkt przeglądu do pierwszego wiersza w bieżącym obiekcie.
+
+Numpad w górę (klawisz 8): Bieżący wiersz
+   Czyta wiersz, w którym jest obecnie punkt przeglądu. Dwukrotne naciśnięcie literuje wiersz.
+
+Numpad PageUp (klawisz 9): Następny wiersz
+   Przenosi punkt przeglądu do następnego wiersza.
+
+Shift+Numpad PageUp (klawisz 9): Ostatni wiersz
+   Przenosi punkt przeglądu do ostatniego wiersza w bieżącym obiekcie.
+
+
+---------------------------------------------------------------------------
+Wirtualne bufory
+---------------------------------------------------------------------------
+
+   Wymienione niżej polecenia są wszystkie obsługiwane poprawnie przez przeglądarkę Firefox 3. Część z nich działa poprawnie także w starszych wersjach Firefox oraz w przeglądarce Internet Explorer.
+
+NVDA+Spacja: Tryb formularza
+   Przełącza między trybem formularza i trybem przeglądania. W trybie formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając na przykład na wpisywanie tekstu w polu edycyjnym. Natomiast w trybie przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając na przykład na szybką nawigację po nagłówkach i innych elementach.
+
+Control+Strzałka w górę, Control+Strzałka w dół:
+   Przechodzi w wirtualnym buforze do następnego lub poprzedniego bloku tekstu. Te polecenia działają tylko w nowych wirtualnych buforach (Firefox 3) i pozwalają wygodnie przemieszczać się porcjami w dół lub w górę dokumentu nie pomijając żadnego tekstu. Elementami uznawanymi za blok są między innymi nagłówki, akapity czy elementy listy.
+
+Litery szybkiej nawigacji
+   Podczas przeglądania tekstu strony w wirtualnym buforze można używać pojedynczych liter do przechodzenia pomiędzy kolejnymi elementami określonego typu. Naciśnięcie litery przechodzi do następnego elementu odpowiedniego typu, natomiast naciśnięcie litery z klawiszem Shift przechodzi do elementu poprzedniego.
+
+Litery rozpoznawane w nowych wirtualnych buforach (Firefox 3):
+H: nagłówek
+L: lista
+I: element listy
+T: tabela
+K: link
+F: pole formularza
+U: nieodwiedzony link
+V: odwiedzony link
+E: pole tekstowe
+B: przycisk
+X: pole wyboru
+C: pole rozwijalne
+R: przycisk radiowy
+Q: cytat
+S: separator
+M: ramka
+G: grafika
+Cyfry 1 do 6: nagłówki poziomu 1 do 6
+
+Litery rozpoznawane w starszych wersjach wirtualnych buforów:
+H: nagłówek
+P: akapit
+L: lista
+I: element listy
+T: tabela
+K: link
+F: pole formularza
+

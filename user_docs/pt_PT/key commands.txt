@@ -1,0 +1,281 @@
+Guia Rápido de Teclas de Atalho do NVDA
+
+Muitos destes comandos utilizam a tecla NVDA. Esta tecla é o insert que se encontra no teclado numérico ou perto das teclas delete, home, end, page up e page down do seu teclado. Este leitor de ecrã também pode ser configurado para que possa usar o capslock como a tecla do NVDA.
+
+Notas de tradução:
+1. O termo "numpad" refere-se ao teclado numérico;
+2. No final deste documento encontram-se mais algumas informações adicionais que não constam do original em inglês. O item em questão denomina-se "Outras Teclas de Atalho".
+
+Comandos globais
+
+Control: Pausa a voz
+Shift: Continua a voz
+
+NVDA+1: ajudaDoTeclado
+Alterna para activar o modo de ajuda do teclado para que possa premir qualquer combinação de teclas e o NVDA informará o nome respectivo e o que é que o comando executa. Para alternar para desactivar a ajuda do teclado, pressione novamente NVDA+1.
+
+NVDA+t: título
+Anuncia o título da aplicação actual em execução. Soletra-o quando for pressionado duas vezes e copia-o para a área de transferência quando primido três vezes.
+
+NVDA+b: AnunciarJanelaEmPrimeiroPlano
+Fala o conteúdo da aplicação actual em execução. Muito útil para ler a informação presente numa caixa de diálogo que não prestou atenção quando a mesma foi anunciada pela primeira vez.
+
+NVDA+n: mostrarGui
+Pressione esta combinação de teclas para activar o menu do NVDA onde pode aceder às definições deste leitor de ecrã.
+
+NVDA+q: sair
+Questiona se pretende sair do NVDA. Ao premir sim, sairá. Caso pressione não, não sairá.
+
+NVDA+s: modoDeVoz
+Alterna entre os três modos de voz (falar, beeps e desligado).
+
+NVDA+F12: dataEHora
+Anuncia a hora actual, ao pressionar duas vezes rapidamente anuncia a data actual.
+
+NVDA+End: lerBarraDeEstado
+Anuncia a barra de estado da aplicação actual caso consiga encontrar alguma.
+
+NVDA+f: anunciarFormatação
+Anuncia informação de formatação na posição actual de um documento.
+
+Control+NVDA+f1: falarNomeDaAplicação
+Anuncia o nome da aplicação actual em execução. O NVDA também anuncia o app module carregado actualmente.
+
+NVDA+Shift+b: anunciarEstadoDeBateria
+Anuncia o nível actual de bateria e se está conectado à fonte de alimentação.
+
+NVDA+5: alternaEntreInformarAlteraçõesEmConteúdoDinâmico
+Alterna entre activar e desactivar o anúncio automático  das alterações de conteúdo (tal como quando aparece novo texto na janela de consola do dos).
+
+NVDA+6: alternaEntreOCursorDoSistemaMoverCursorDeRevisão
+Alterna entre activar e desactivar o movimento automático do cursor de revisão devido ao movimento do cursor do sistema.
+
+NVDA+7: alternaEntreFocoMoverObjectoDeNavegação
+Alterna entre activar e desactivar o ajuste do objecto de navegação ao objecto com o foco quando modificado.
+
+NVDA+Tab: informaFocoActual
+Anuncia o objecto em foco actualmente.
+
+NVDA+f2: passarPróximaTeclaAtravés
+Ao pressionar esta tecla permite-lhe premir qualquer outra combinação no teclado e o NVDA deixará que a mesma seja interpretada pelo sistema operativo mesmo que seja um comando específicodeste leitor de ecrã.
+
+Shift+NVDA+setaAcima: anunciarSelecçãoActual
+Anuncia a selecção actual em controlos de edição e documentos. Se não existir selecção, o NVDA não informa.
+
+NVDA+setaAcima: anunciarLinhaActual
+Anuncia a linha actual em controlos de edição e documentos.
+
+NVDA+setaAbaixo: leituraContínua
+Inicia a leitura a partir da posição actual no documento ou controlo de edição.
+
+NVDA+f1: teste_navegaçãoJanelaDeInformação
+Lê informação sobre o objecto de navegação actual (muito útil para programadores).
+
+Control+NVDA+c: guardarConfiguração
+Guarda a configuração.
+
+Control+NVDA+r: restaurarParaAConfiguraçãoGuardada
+Restaura a configuração.
+
+Alterar Definições (encontra-se nos diálogos de definições)
+
+NVDA+2: alternaEntreFalarCaracteresIntroduzidos
+Alterna entre activar ou desactivar o anúncio dos caracteres quando escreve.
+
+NVDA+3: alternaEntreFalarPalavrasIntroduzidas
+Alterna entre activar ou desactivar o o anúncio das palavras que escreve.
+
+NVDA+4: alternaEntreFalarTeclasDeComando
+Alterna entre activar ou desactivar o anúncio de algumas teclas que prime.
+
+NVDA+p: alternaEntreFalarPontoação
+Alterna entre activar ou desactivar o anúncio dos símbolos de pontuação como o NVDA fala a informação.
+
+NVDA+m: alternaEmtreAcompanhamentoDoRato
+Alterna entre activar ou desactivar o anúncio do objecto ou palavra na posição actual do ponteiro do rato, quando este se move.
+
+NVDA+u: alternaEntreBeepsEmActualizaçõesDeBarrasDeProgresso
+Controla como é que o NVDA anuncia actualizações em barras de progresso. Pode também dar beeps para todas as barras de progresso dentro da janela activa (por defeito), dá beeps para todas as barras actualmente em progresso dentro de todo o sistema, ou pode anunciar a cada 10 porcento através da voz.
+
+Control+NVDA+setaEsquerda: definiçãoAnterior
+Anuncia a definição de voz anterior e move-se para ela.
+ 
+Control+NVDA+setaDireita: definiçãoSeguinte
+Anuncia a definição de voz seguinte e move-se para ela.
+
+Control+NVDA+setaAcima: aumentarDefinição
+Aumenta a definição actual de voz.
+
+Control+NVDA+setaAbaixo: diminuirDefinição
+Diminui a definição actual de voz.
+
+Apresentar diálogos
+
+Control+NVDA+g: activaODiálogoDasDefiniçõesGerais
+Apresenta o diálogo das definições gerais.
+
+Control+NVDA+s: activaODiálogoDeSelecçãoDeSintetizador
+Apresenta o diálogo da selecção de sintetizador.
+
+Control+NVDA+v: activaODiálogoDeVozDoNVDA
+Apresenta o diálogo das definições de voz.
+
+Control+NVDA+k: activaODiálogoDeDefiniçõesDoTeclado
+Apresenta o diálogo das definições do teclado.
+
+Control+NVDA+m: activaODiálogoDasDefiniçõesDoRato
+Apresenta o diálogo das definições do rato.
+
+Control+NVDA+o: activaODiálogoDeApresentaçãoDeObjecto
+Apresenta o diálogo das definições de apresentação de objecto.
+
+Control+NVDA+b: activaODiálogoDosBuffersVirtuais
+Apresenta o diálogo das  definições do buffer virtual.
+
+Control+NVDA+d: activaODiálogoDeFormatação
+Apresenta o diálogo das definições de formatação de documentos.
+
+Control+NVDA+z: activaAConsolaDePython
+Apresenta a consola de Python.
+
+Navegação em Objectos de Navegação
+
+NVDA+numPad5: objectoDeNavegação_actual
+Anuncia o objecto actual de navegação. Se pressionar duas vezes rapidamente soletra-o e se premir três vezes copia o nome e respectivo valor para a área de transferência.
+
+Shift+NVDA+numPad5: objectoDeNavegação_dimensõesActuais
+Anuncia o tamanho e localização do objecto actual de navegação.
+ 
+Control+Shift+NVDA+numPad5: objectoDeNavegação_onde
+Anuncia os ascendentes do objecto actual de navegação.
+
+NVDA+numPad8: objectoDeNavegação_ascendente
+Define o objecto de navegação como o ascendente actual (ou seja, o objecto que o contém).
+
+NVDA+numPad2: objectoDeNavegação_primeiroDescendente
+Define o objecto de navegação como o primeiro descendente (ou seja, o primeiro objecto dentro do mesmo)
+
+NVDA+numPad4: objectoDeNavegação_anterior
+Define o objecto actual de navegação como o objecto anterior (ou seja, o objecto antes deste, no mesmo nível).
+
+Shift+NVDA+numPad4: objectoDeNavegação_anteriorEmFluxo
+Define o objecto actual de navegação como o objecto anterior em fluxo (ou seja, o objecto anterior a este, não necessariamente no mesmo nível).
+
+NVDA+numPad6: objectoDeNavegação_seguinte
+Define o objecto actual de navegação como o objecto seguinte (ou seja, o objecto depois deste, no mesmo nível).
+
+Shift+NVDA+numPad6: objectoDeNavegação_seguinteEmFluxo
+Define o objecto actual de navegação como o objecto seguinte em fluxo (ou seja, o objecto depois deste, não necessariamente no mesmo nível).
+
+NVDA+numpadEnter: objectoDeNavegação_efectuaAAcçãoPredefinida
+Efectua a acção predefinida no objecto de navegação actual (por exemplo: pressiona um botão, activa um item de lista).
+
+NVDA+numPadBarra: moveORatoParaOObjectoDeNavegação
+Move o ponteiro do rato para o objecto actual de navegação.
+ 
+NVDA+numPadAsterisco: moveOObjectoDeNavegaçãoParaORato
+Define o objecto actual de navegação como o objecto actual que está por baixo do ponteiro do rato.
+
+numpadMenos: revisor_moveParaOCursorDoSistema
+Move o cursor de revisão para a localização do cursor do sistema.
+
+Control+numpadMenos: revisor_moveOCursorDoSistemaParaAqui
+Move o cursor do sistema para a localização do cursor de revisão.
+
+NVDA+numPadMenos: objectoDeNavegação_paraOFoco
+Define o objecto de navegação como o actual com o foco.
+
+numPadBarra: cliqueEsquerdoDoRato
+Clica uma vez com o botão esquerdo na posição actual do rato.
+
+numPadAsterisco: cliqueDireitoDoRato
+Clica uma vez com o botão direito na posição actual do rato.
+
+numpadMais: revisor_leituraContínua
+Utilize o cursor de revisão para ler a partir da posição do mesmo para o final do texto actual em revisão.
+
+NVDA+numPadMais: objectoDeNavegação_leituraContínua
+Inicia a leitura de todos os objectos depois do objecto de navegação, em ordem de fluxo.
+
+Ler objectos
+
+numpad1: revisor_caracterAnterior
+Move o cursor de revisão para o caracter anterior.
+
+Shift+numpad1: revisor_inícioDaLinha
+Move o cursor de revisão para o início da linha.
+
+numpad2: revisor_caracterActual
+Fala o caracter com o cursor de revisão.
+
+numpad3: revisor_caracterSeguinte
+Move o cursor de revisão para o caracter seguinte.
+
+Shift+numpad3: revisor_fimDaLinha
+Move o cursor de revisão para o final da linha.
+
+numpad4: revisor_PalavraAnterior
+Move o cursor de revisão para a palavra anterior.
+
+numpad5: revisor_palavraActual
+Fala a palavra com o cursor de revisão.
+
+numpad6: revisor_palavraSeguinte
+Move o cursor de revisão para a palavra seguinte.
+
+numpad7: revisor_linhaAnterior
+Move o cursor de revisão para a linha anterior.
+
+Shift+numpad7: revisor_topo
+Move o cursor de revisão para a primeira linha.
+ 
+numpad8: revisor_linhaActual
+Fala a linha com o cursor de revisão.
+
+numpad9: revisor_linhaSeguinte
+Move o cursor de revisão para a linha seguinte.
+
+Shift+numpad9: revisor_fundo
+Move o cursor de revisão para a última linha.
+
+Comandos do VirtualBuffer para o  Firefox3 (alguns destes comandos podem funcionar no Internet Explorer ou no Firefox 2):
+
+NVDA+espaço: alternaEntrePassarAtravésDoBufferVirtual
+Alterna entre activar ou desactivar o modo de passar através do buffer virtual.
+
+control+NVDA+f: localizar (control+f no firefox2 / internet explorer)
+NVDA+f3: localizar seguinte
+NVDA+f7: lista de links (inexistente no firefox2 ou no internet explorer)
+NVDA+f5: actualizar o buffer (inexistente no Firefox2 ou no Internet Explorer)
+
+As Teclas Rápidas de navegação do Buffer Virtual que lhe permitem mover para um dos elementos seguintes listados abaixo (também permitem-lhe utilizar a tecla shift com a respectiva tecla para mover para o elemento anterior):
+
+Teclas suportadas pelos buffers virtuais antigos e novos: 
+h: título
+l: lista
+i: item de lista
+t: tabela
+k: link
+p: parágrafo somente usado no buffer virtual antigo, utilize Control+SetaAcima/Abaixo no novo buffer virtual)
+f: campo de formulário
+Teclas não suportadas pelo buffer virtual antigo: 
+u: link não visitado
+v: link visitado
+e: campo de edição
+b: botão
+x: caixa de verificação
+c: caixa de combinação
+r: botão de opção
+q: bloco de citação
+s: separador
+m: frame
+g: gráfico
+1 até 6: títulos 1 até 6 respectivamente
+
+Outras Teclas de Atalho
+
+NVDA+C: informaAÁreaDeTransferência
+Lê o conteúdo da área de transferência. Caso o número de caracteres seja maior ou igual a 512, o NVDA informa somente o número dos mesmos.
+
+Control+NVDA+T: alternaEntreBrailleAcompanharCursoresDeRevisãoOuSistema
+Alterna entre o Braille acompanhar o cursor do sistema ou  o cursor de navegação.

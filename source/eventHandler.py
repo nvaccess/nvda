@@ -6,21 +6,28 @@ import appModuleHandler
 import virtualBufferHandler
 import globalVars
 import controlTypes
+from logHandler import log
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
 _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 
+#: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
+lastQueuedFocusObject=None
+
 def queueEvent(eventName,obj):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
+	global lastQueuedFocusObject
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
+	if eventName=="gainFocus":
+		lastQueuedFocusObject=obj
 	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
 
 def _queueEventCallback(eventName,obj):
 	curCount=_pendingEventCountsByName.get(eventName,0)
@@ -38,7 +45,7 @@ def _queueEventCallback(eventName,obj):
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
 	elif curCount==1:
 		del _pendingEventCountsByNameAndObj[(eventName,obj)]
-	executeEvent(eventName,obj)
+		executeEvent(eventName,obj)
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?
@@ -66,28 +73,32 @@ def executeEvent(eventName,obj,**kwargs):
 	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
-	if eventName=="gainFocus":
-		doPreGainFocus(obj)
-	elif eventName=="foreground":
-		doPreForeground(obj)
-	elif eventName=="documentLoadComplete":
-		doPreDocumentLoadComplete(obj)
-	executeEvent_appModuleLevel(eventName,obj,**kwargs)
+	try:
+		if eventName=="gainFocus" and not doPreGainFocus(obj):
+			return
+		elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+			return
+		executeEvent_appModuleLevel(eventName,obj,**kwargs)
+	except:
+		log.error("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs),exc_info=True)
+
 
 def doPreGainFocus(obj):
+	oldForeground=api.getForegroundObject()
 	api.setFocusObject(obj)
+	if globalVars.focusDifferenceLevel<=1:
+		newForeground=api.getDesktopObject().objectInForeground()
+		if not newForeground:
+			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
+			ancestors=api.getFocusAncestors()
+			if len(ancestors)>1:
+				newForeground=ancestors[1]
+			else:
+				newForeground=obj
+		api.setForegroundObject(newForeground)
+		executeEvent('foreground',newForeground)
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
-		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PANE,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT):
-			continue
-		name=parent.name
-		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION) and not name and not description:
-			continue
-		states=parent.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
-			continue
 		executeEvent("focusEntered",parent)
 	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
 (globalVars.focusAncestors[1].windowClassName=="TformMain" and 
@@ -98,11 +109,8 @@ globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"):
 	elif CoCallCancellationHandler.isRunning:
 		import wx
 		wx.CallAfter(CoCallCancellationHandler.stop)
-
-def doPreForeground(obj):
-	api.setFocusObject(obj)
-	speech.cancelSpeech()
-
+	return True
+ 
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):
@@ -116,7 +124,7 @@ def doPreDocumentLoadComplete(obj):
 					v.event_virtualBuffer_firstGainFocus()
 				if hasattr(v,"event_virtualBuffer_gainFocus"):
 					v.event_virtualBuffer_gainFocus()
-
+	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule
