@@ -74,7 +74,7 @@ class TreeViewItem(IAccessible):
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,parentItem,0)
 		if newID<=0:
 			return super(TreeViewItem,self)._get_parent()
-		return self.factoryClass(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_firstChild(self):
 		if self.IAccessibleChildID==0:
@@ -88,7 +88,7 @@ class TreeViewItem(IAccessible):
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,childItem,0)
 		if newID<=0:
 			return super(TreeViewItem,self)._get_firstChild()
-		return self.factoryClass(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_next(self):
 		if self.IAccessibleChildID==0:
@@ -102,7 +102,7 @@ class TreeViewItem(IAccessible):
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,nextItem,0)
 		if newID<=0:
 			return None
-		return self.factoryClass(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_previous(self):
 		if self.IAccessibleChildID==0:
@@ -116,7 +116,7 @@ class TreeViewItem(IAccessible):
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,prevItem,0)
 		if newID<=0:
 			return None
-		return self.factoryClass(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_children(self):
 		children=[]

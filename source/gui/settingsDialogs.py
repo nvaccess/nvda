@@ -283,7 +283,17 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		self.voiceList.SetFocus()
+		if hasattr(self,'voiceList'):
+			self.voiceList.SetFocus()
+			return
+		if hasattr(self,'variantList'):
+			self.variantList.SetFocus()
+			return
+		for s in (self.rateSlider,self.pitchSlider,self.inflectionSlider,self.volumeSlider):
+			if s.IsEnabled():
+				s.SetFocus()
+				return
+		self.punctuationCheckBox.SetFocus()
 
 	def _setVoiceParameters(self):
 		if getSynth().hasRate:
@@ -331,6 +341,11 @@ class VoiceSettingsDialog(SettingsDialog):
 		getSynth().volume=val
 
 	def onCancel(self,evt):
+		#unbind voice and variant change events as wx closes combo boxes on cancel
+		if getSynth().hasVoice:
+			self.voiceList.Unbind(wx.EVT_CHOICE)
+		if getSynth().hasVariant:
+			self.variantList.Unbind(wx.EVT_CHOICE)
 		if getSynth().hasVoice:
 			changeVoice(getSynth(),config.conf["speech"][getSynth().name]["voice"])
 		if getSynth().hasVariant:
@@ -533,6 +548,9 @@ class VirtualBuffersDialog(SettingsDialog):
 		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
+		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
+		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.maxLengthEdit.SetFocus()
@@ -554,6 +572,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=self.presentationfocusCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		super(VirtualBuffersDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):

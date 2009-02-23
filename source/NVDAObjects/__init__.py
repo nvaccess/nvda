@@ -417,6 +417,14 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	@classmethod
+	def objectInForeground(cls):
+		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		@return: the foreground object
+		@rtype: L{NVDAObject}
+		"""
+		raise NotImplementedError
+
 	def __init__(self):
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
@@ -745,6 +753,20 @@ Tries to force this object to take the focus.
 		"""
 		return False
 
+	def _get_isPresentableFocusAncestor(self):
+		"""Determine if this object should be presented to the user in the focus ancestry.
+		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
+		@rtype: bool
+		"""
+		role = self.role
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+			return False
+		name = self.name
+		description = self.description
+		if role in (controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
+			return False
+		return True
+
 	def _get_statusBar(self):
 		"""Finds the closest status bar in relation to this object.
 		@return: the found status bar else None
@@ -807,7 +829,8 @@ Tries to force this object to take the focus.
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
 			speech.cancelSpeech()
 			return
-		speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
+		if self.isPresentableFocusAncestor:
+			speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
 
 	def event_gainFocus(self):
 		"""
@@ -817,12 +840,11 @@ This code is executed if a gain focus event is received by this object.
 		braille.handler.handleGainFocus(self)
 
 	def event_foreground(self):
+		"""Called when the foreground window changes.
+		This method should only perform tasks specific to the foreground window changing.
+		L{event_focusEntered} or L{event_gainFocus} will be called for this object, so this method should not speak/braille the object, etc.
 		"""
-This method will speak the object if L{speakOnForeground} is true and this object has just become the current foreground object.
-"""
 		speech.cancelSpeech()
-		speech.speakObjectProperties(self,name=True,role=True,description=True,reason=speech.REASON_FOCUS)
-		braille.handler.handleGainFocus(self)
 
 	def event_becomeNavigatorObject(self):
 		"""Called when this object becomes the navigator object.

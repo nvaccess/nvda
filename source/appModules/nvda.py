@@ -15,5 +15,5 @@ class AppModule(_default.AppModule):
 			return
 		nextHandler()
 
-	# Silence invisible panes for gainFocus and stateChange as well.
-	event_foreground = event_stateChange = event_gainFocus
+	# Silence invisible panes for stateChange as well.
+	event_stateChange = event_gainFocus

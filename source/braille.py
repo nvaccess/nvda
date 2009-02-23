@@ -41,9 +41,9 @@ TABLES = (
 	("Es-Es-g1.utb", _("Spanish grade 1")),
 	("fr-ca-g1.utb", _("French (Canada) grade 1")),
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
-	("fr-fr-g1.utb", _("French (France) grade 1")),
-	("Fr-Fr-g2.ctb", _("French (France) grade 2")),
-	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
+	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
+	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
 	("it-it-g1.utb2", _("Italian grade 1")),
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
@@ -548,7 +548,20 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			if not ignoreErrors:
 				raise
 
+_cachedFocusAncestorsEnd = 0
+def invalidateCachedFocusAncestors(index):
+	"""Invalidate cached focus ancestors from a given index.
+	This will cause regions to be generated for the focus ancestors >= index next time L{getFocusContextRegions} is called,
+	rather than using cached regions for those ancestors.
+	@param index: The index from which cached focus ancestors should be invalidated.
+	@type index: int
+	"""
+	global _cachedFocusAncestorsEnd
+	# There could be multiple calls to this function before getFocusContextRegions() is called.
+	_cachedFocusAncestorsEnd = min(_cachedFocusAncestorsEnd, index)
+
 def getFocusContextRegions(obj, oldFocusRegions=None):
+	global _cachedFocusAncestorsEnd
 	# Late import to avoid circular import.
 	from virtualBuffers import VirtualBuffer
 	ancestors = api.getFocusAncestors()
@@ -565,11 +578,11 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 					break
 
 	if oldFocusRegions:
-		# We have the regions from the previous focus, so use the focus difference level to avoid rebuilding regions which are the same.
-		# The focus difference level is generally where the new ancestors begin.
+		# We have the regions from the previous focus, so use them as a cache to avoid rebuilding regions which are the same.
+		# We need to generate new regions from _cachedFocusAncestorsEnd onwards.
 		# However, we must ensure that it is not beyond the last ancestor we wish to consider.
 		# Also, we don't ever want to fetch ancestor 0 (the desktop).
-		newAncestorsStart = max(min(api.getFocusDifferenceLevel(), ancestorsEnd), 1)
+		newAncestorsStart = max(min(_cachedFocusAncestorsEnd, ancestorsEnd), 1)
 		# Search backwards through the old regions to find the last common region.
 		for index, region in itertools.izip(xrange(len(oldFocusRegions) - 1, -1, -1), reversed(oldFocusRegions)):
 			ancestorIndex = getattr(region, "_focusAncestorIndex", None)
@@ -593,20 +606,14 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		newAncestorsStart = 1
 
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
-		role=parent.role
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_WINDOW,controlTypes.ROLE_SECTION,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_MENUITEM):
-			continue
-		name=parent.name
-		description=parent.description
-		if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_SECTION) and not name and not description:
-			continue
-		states=parent.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=" ")
 		region._focusAncestorIndex = index
 		region.update()
 		yield region
+
+	_cachedFocusAncestorsEnd = ancestorsEnd
 
 def getFocusRegions(obj, review=False):
 	# Late import to avoid circular import.

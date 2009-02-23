@@ -21,7 +21,7 @@ class Mozilla(IAccessible):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
 		if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-			newObj=self.factoryClass(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 			if newObj:
 				return newObj
 		return super(Mozilla,self).parent

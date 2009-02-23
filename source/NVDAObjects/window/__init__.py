@@ -9,6 +9,7 @@ import ctypes
 import ctypes.wintypes
 import winKernel
 import winUser
+from logHandler import log
 import controlTypes
 from NVDAObjects import NVDAObject
 
@@ -107,10 +108,10 @@ An NVDAObject for a window
 		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
 		if not windowHandle:
 			return
-		newCls=Window.findBestAPIClass(windowHandle=windowHandle)
-		if newCls!=Window:
-			return newCls.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
-		newNVDAObject=Window(windowHandle=windowHandle)
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectFromPoint.im_func!=Window.objectFromPoint.im_func:
+			return APIClass.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
+		newNVDAObject=APIClass(windowHandle=windowHandle)
 		if oldNVDAObject==newNVDAObject:
 			return oldNVDAObject
 		return newNVDAObject
@@ -124,9 +125,20 @@ An NVDAObject for a window
 		if not windowHandle:
 			windowHandle=fg
 		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-		if APIClass!=Window:
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectWithFocus.im_func!=Window.objectWithFocus.im_func:
 			return APIClass.objectWithFocus(windowHandle=windowHandle)
-		return Window(windowHandle=windowHandle)
+		return APIClass(windowHandle=windowHandle)
+
+	@classmethod
+	def objectInForeground(cls):
+		windowHandle=winUser.getForegroundWindow()
+		if not windowHandle:
+			log.debugWarning("no foreground window")
+			return None
+		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
+		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectInForeground.im_func!=Window.objectInForeground.im_func:
+			return APIClass.objectInForeground(windowHandle=windowHandle)
+		return APIClass(windowHandle=windowHandle)
 
 	def __init__(self,windowHandle=None,windowClassName=None):
 		if not windowHandle:
@@ -258,20 +270,22 @@ An NVDAObject for a window
 	normalizedWindowClassNameCache={}
 
 class TaskList(Window):
-
-	def event_foreground(self):
-		pass
+	isPresentableFocusAncestor = False
 
 class Desktop(Window):
+
+	isPresentableFocusAncestor = False
 
 	def _get_name(self):
 		return _("Desktop")
 
 windowClassMap={
+	"EDIT":"Edit",
 	"TTntEdit.UnicodeClass":"Edit",
 	"TMaskEdit":"Edit",
 	"TTntMemo.UnicodeClass":"Edit",
 	"TRichEdit":"Edit",
+	"TRichViewEdit":"Edit",
 	"TInEdit.UnicodeClass":"Edit",
 	"TEdit":"Edit",
 	"TFilenameEdit":"Edit",
@@ -288,11 +302,9 @@ windowClassMap={
 	"EditControl":"Edit",
 	"TNavigableTntMemo.UnicodeClass":"Edit",
 	"TNavigableTntEdit.UnicodeClass":"Edit",
-	"WindowsForms10.EDIT.app.0.11c7a8c":"Edit",
 	"TRichEditViewer":"RichEdit",
 	"RichEdit20A":"RichEdit20",
 	"RichEdit20W":"RichEdit20",
 	"TskRichEdit.UnicodeClass":"RichEdit20",
 	"RichEdit20WPT":"RichEdit20",
-	"WindowsForms10.RichEdit20W.app.0.378734a":"RichEdit20",
 }

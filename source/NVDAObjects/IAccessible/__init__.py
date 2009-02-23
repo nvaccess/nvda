@@ -288,7 +288,10 @@ the NVDAObject for IAccessible
 			clsList.append(JavaVMRoot)
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			role=IAccessibleObject.role()
+			try:
+				role=IAccessibleObject.role()
+			except COMError:
+				role=0
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
@@ -327,13 +330,20 @@ the NVDAObject for IAccessible
 
 	@classmethod
 	def objectWithFocus(cls,windowHandle=None):
-		res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+		if not windowHandle:
+			return None
+		obj=getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 		prevObj=None
 		while obj and obj!=prevObj:
 			prevObj=obj
 			obj=obj.activeChild
 		return prevObj
+
+	@classmethod
+	def objectInForeground(cls,windowHandle=None):
+		if not windowHandle:
+			return None
+		return getNVDAObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -781,23 +791,24 @@ the NVDAObject for IAccessible
 
 	def _get_positionInfo(self):
 		info={}
+		level=similarItemsInGroup=indexInGroup=0
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				level,similarItemsInGroup,indexInGroup=self.IAccessibleObject.groupPosition
+				gotVars=True
 			except COMError:
-				return {}
-			if level>0:
-				info['level']=level
-			if indexInGroup<=similarItemsInGroup and indexInGroup>0:
-				info['similarItemsInGroup']=similarItemsInGroup
-				info['indexInGroup']=indexInGroup
-			return info
-		indexInGroup=self.IAccessibleChildID
-		if indexInGroup>0:
+				pass
+		if indexInGroup==0:
+			indexInGroup=self.IAccessibleChildID
+		if indexInGroup>0 and similarItemsInGroup<indexInGroup:
 			parent=self.parent=self.parent
 			similarItemsInGroup=parent.childCount
-			if indexInGroup<=similarItemsInGroup:
-				return dict(similarItemsInGroup=similarItemsInGroup,indexInGroup=indexInGroup)
+		if level>0:
+			info['level']=level
+		if indexInGroup<=similarItemsInGroup and indexInGroup>0:
+			info['similarItemsInGroup']=similarItemsInGroup
+			info['indexInGroup']=indexInGroup
+		return info
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
@@ -908,6 +919,14 @@ the NVDAObject for IAccessible
 
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
+
+	def _get_isPresentableFocusAncestor(self):
+		IARole = self.IAccessibleRole
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
+			return True
+		if IARole == IAccessibleHandler.ROLE_SYSTEM_WINDOW:
+			return False
+		return super(IAccessible, self).isPresentableFocusAncestor
 
 class JavaVMRoot(IAccessible):
 
@@ -1122,12 +1141,6 @@ class ToolbarWindow32(IAccessible):
 			speech.cancelSpeech()
 
 		return not eventHandler.isPendingEvents("gainFocus")
-class MenuBar(IAccessible):
-
-	"""Silence speaking the foreground on menu bars."""
-
-	def event_foreground(self):
-		pass
 
 class MenuItem(IAccessible):
 
@@ -1187,7 +1200,6 @@ _staticMap={
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("MsiDialogCloseClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
-	(None,IAccessibleHandler.ROLE_SYSTEM_MENUBAR):"MenuBar",
 	("#32768",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
