@@ -474,19 +474,47 @@ the NVDAObject for IAccessible
 			res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
-	def _get_actionStrings(self):
-		try:
-			action=self.IAccessibleObject.accDefaultAction(self.IAccessibleChildID)
-		except:
-			action=None
-		if action:
-			return [action]
-		else:
-			return super(IAccessible,self)._get_actionStrings()
+	def _get_actionCount(self):
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				return self.IAccessibleActionObject.nActions()
+			except COMError:
+				return 0
+		return 1
 
-	def doAction(self,index):
-		if index==0:
-			self.IAccessibleObject.accDoDefaultAction()
+	def getActionName(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				return self.IAccessibleActionObject.name(index)
+			except COMError:
+				raise NotImplementedError
+		elif index==0:
+			try:
+				action=self.IAccessibleObject.accDefaultAction(self.IAccessibleChildID)
+			except COMError:
+				action=None
+			if action:
+				return action
+		raise NotImplementedError
+
+	def doAction(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				self.IAccessibleActionObject.doAction(index)
+				return
+			except COMError:
+				raise NotImplementedError
+		elif index==0:
+			try:
+				self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)
+				return
+			except COMError:
+				raise NotImplementedError
+		raise NotImplementedError
 
 	def _get_IAccessibleIdentity(self):
 		if not hasattr(self,'_IAccessibleIdentity'):
@@ -758,9 +786,6 @@ the NVDAObject for IAccessible
 			return None
 		self._table=obj
 		return obj
-
-	def doDefaultAction(self):
-		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)
 
 	def _get_activeChild(self):
 		if self.IAccessibleChildID==0:

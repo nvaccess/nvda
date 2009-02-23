@@ -521,17 +521,29 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return ""
 
-	def _get_actionStrings(self):
-		"""retreaves a list of actions that can be performed on this object (example: press, activate).
-		@rtype: list of baseString
-		"""
-		return []
+	def _get_actionCount(self):
+		"""Retreaves the number of actions supported by this object."""
+		return 0
 
-	def doAction(self,index):
-		"""Performs the action identified by the given index on this object.
-		The index relates to the list of actions retreaved by the actionStrings property.
+	def getActionName(self,index=None):
+		"""Retreaves the name of an action supported by this object.
+		If index is not given then the default action will be used if it exists.
+		@param index: the optional 0-based index of the wanted action.
+		@type index: int
+		@return: the action's name
+		@rtype: basestring
 		"""
-		pass
+		raise NotImplementedError
+ 
+	def doAction(self,index=None):
+		"""Performs an action supported by this object.
+		If index is not given then the default action will be used if it exists.
+		"""
+		raise NotImplementedError
+
+	def _get_defaultActionIndex(self):
+		"""Retreaves the index of the action that is the default."""
+		return 0
 
 	def _get_keyboardShortcut(self):
 		"""The shortcut key that activates this object(example: alt+t).
@@ -695,12 +707,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: int
 		"""
 		return len(self.children)
-
-	def doDefaultAction(self):
-		"""
-Performs the default action on this object. (e.g. clicks a button)
-"""
-		pass
 
 	def _get_activeChild(self):
 		"""Retreaves the child of this object that currently has, or contains, the focus.
