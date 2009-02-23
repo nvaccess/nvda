@@ -208,8 +208,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
-			return super(UIA,self).role
+		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
+			superRole=super(UIA,self).role
+			if superRole!=controlTypes.ROLE_WINDOW:
+				return superRole
 		return role
 
 
