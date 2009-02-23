@@ -288,7 +288,10 @@ the NVDAObject for IAccessible
 			clsList.append(JavaVMRoot)
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			role=IAccessibleObject.role()
+			try:
+				role=IAccessibleObject.role()
+			except COMError:
+				role=0
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
