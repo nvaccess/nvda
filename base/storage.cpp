@@ -840,7 +840,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 		//Move on to the next node.
 		node = node->nextNodeByDepthFirst(false,limitNode,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
-		if(!useScreenLayout&&node&&node->firstChild) {
+		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
 			node=NULL;
 		}
 		if(node) {
@@ -849,7 +849,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			relative = 0;
 			lineEnd = bufferEnd;
 		}
-	} while (node && !node->isBlock);
+	} while (node);
 	//Search backward for the previous line ending.
 	node = initNode;
 	relative = offset - initBufferStart;
@@ -883,7 +883,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 		//Move on to the previous node.
 		node = node->nextNodeByDepthFirst(true,limitNode,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
-		if(!useScreenLayout&&node&&node->firstChild) {
+		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
 			node=NULL;
 		}
 		if(node) {
@@ -892,7 +892,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			relative = node->length;
 			lineStart = bufferStart;
 		}
-	} while (node && !node->isBlock);
+	} while (node);
 	DEBUG_MSG(L"line offsets after searching back and forth for line feeds and block edges is "<<lineStart<<L" and "<<lineEnd);
 	//Finally take maxLineLength in to account
 	if(maxLineLength>0) {
