@@ -264,7 +264,14 @@ class VBufStorage_fieldNode_t {
  */
 	virtual std::wstring getDebugInfo() const;
 
-	};
+/**
+ * Set whether this field is a block element.
+ * If this is true, this field should cause a line break at its start and end when a buffer is calculating lines.
+ * @param isBlock true if this field is a block element, false otherwise.
+ */
+	void setIsBlock(bool isBlock);
+
+};
 
 /**
  * a a field node that represents a control in a buffer.

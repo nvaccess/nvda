@@ -288,6 +288,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			isBlockElement=FALSE;
 		}
 	}
+	parentNode->setIsBlock(isBlockElement);
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
 	//get IAccessibleText interface

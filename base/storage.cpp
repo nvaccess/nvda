@@ -298,6 +298,10 @@ std::wstring VBufStorage_fieldNode_t::getDebugInfo() const {
 	return s.str();
 }
 
+void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
+	this->isBlock=isBlock;
+}
+
 //controlFieldNode implementation
 
 void VBufStorage_controlFieldNode_t::generateMarkupTagName(std::wstring& text) {
