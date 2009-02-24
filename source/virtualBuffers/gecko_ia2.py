@@ -14,8 +14,6 @@ from logHandler import log
 import api
 import textHandler
 
-GECKO_SCROLL_TYPE_ANYWHERE=0x06
-
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
