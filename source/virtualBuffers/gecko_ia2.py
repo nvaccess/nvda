@@ -14,8 +14,6 @@ from logHandler import log
 import api
 import textHandler
 
-GECKO_SCROLL_TYPE_ANYWHERE=0x06
-
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
@@ -118,7 +116,7 @@ class Gecko_ia2(VirtualBuffer):
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
-			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+			oldDocHandle,oldID=oldInfo.fieldIdentifierAtStart
 		except:
 			oldDocHandle=oldID=0
 		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
@@ -255,7 +253,7 @@ class Gecko_ia2(VirtualBuffer):
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
-			oldDocHandle,oldID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,oldInfo._startOffset)
+			oldDocHandle,oldID=oldInfo.fieldIdentifierAtStart
 		except:
 			oldDocHandle=oldID=0
 		docHandle=obj.IAccessibleObject.windowHandle

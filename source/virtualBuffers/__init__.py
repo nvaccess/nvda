@@ -33,14 +33,16 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
 
+	def _getFieldIdentifierFromOffset(self, offset):
+		startOffset = ctypes.c_int()
+		endOffset = ctypes.c_int()
+		docHandle = ctypes.c_int()
+		ID = ctypes.c_int()
+		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		return docHandle.value, ID.value
+
 	def _getNVDAObjectFromOffset(self,offset):
-		startOffset=ctypes.c_int()
-		endOffset=ctypes.c_int()
-		docHandle=ctypes.c_int()
-		ID=ctypes.c_int()
-		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
-		docHandle=docHandle.value
-		ID=ID.value
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObject(self,obj):
@@ -115,12 +117,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return None
 
 	def _get_fieldIdentifierAtStart(self):
-		startOffset=ctypes.c_int()
-		endOffset=ctypes.c_int()
-		docHandle=ctypes.c_int()
-		ID=ctypes.c_int()
-		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
-		return docHandle.value,ID.value
+		return self._getFieldIdentifierFromOffset( self._startOffset)
 
 	def _getUnitOffsets(self, unit, offset):
 		if unit == self.UNIT_CONTROLFIELD:
@@ -477,7 +474,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# We only want to override the tab order if the caret is not within the focused node.
 		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
-			caretDocHandle,caretID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,caretInfo._startOffset)
+			caretDocHandle,caretID=caretInfo.fieldIdentifierAtStart
 		except:
 			return False
 		focus = api.getFocusObject()
