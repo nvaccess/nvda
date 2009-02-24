@@ -18,7 +18,7 @@ extern VBUFLIBENTRY std::wostream* _debugFile;
 VBUFLIBENTRY void debug_start(std::wostream* s);
 VBUFLIBENTRY void debug_end();
 
-#ifdef DEBUG
+#ifdef fffDEBUG
 
 #ifndef __GNUC__
 #define __PRETTY_FUNCTION__ __FUNCTION__
@@ -31,9 +31,10 @@ VBUFLIBENTRY void debug_end();
 
 #define DEBUG_MSG(messageArg) {\
 	if(_debugFile!=NULL) {\
-		wchar_t __WFUNCTION__[1024];\
+		wchar_t* __WFUNCTION__=(wchar_t*)malloc(sizeof(wchar_t)*1024);\
 		mbstowcs(__WFUNCTION__,__PRETTY_FUNCTION__,1023);\
-		(*_debugFile)<<L"debug "<<__WFUNCTION__<<L", line "<<__LINE__<<L" of file "<<_STR2WSTR(__FILE__)<<L":\n"<<messageArg<<std::endl;\
+		(*_debugFile)<<L"debug "<<__WFUNCTION__<<L", line "<<__LINE__<<L" of file "<<_STR2WSTR(__FILE__)<<L":\n"<<messageArg<<std::endl<<std::flush;\
+		free(__WFUNCTION__);\
 	}\
 }
 
