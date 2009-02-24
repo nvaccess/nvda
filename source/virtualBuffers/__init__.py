@@ -41,10 +41,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
 		docHandle=docHandle.value
 		ID=ID.value
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
-		if not obj:
-			obj=self.obj.rootNVDAObject
-		return obj
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObject(self,obj):
 		while obj and obj!=self.obj:
@@ -145,7 +142,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	TextInfo=VirtualBufferTextInfo
 
 	def __init__(self,rootNVDAObject,backendLibPath=None):
-		self.backendLibPath=os.path.join(os.getcwdu(),backendLibPath)
+		self.backendLibPath=os.path.join(os.getcwd(),backendLibPath)
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
@@ -166,10 +163,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.windowProcessID)
+		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
 		if not self.bindingHandle:
 			raise RuntimeError("Could not inject VBuf lib")
-		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootWindowHandle,self.rootID,self.backendLibPath)
+		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
 		if not self.VBufHandle:
 			raise RuntimeError("Could not remotely create virtualBuffer")
 

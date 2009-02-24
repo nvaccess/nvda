@@ -9,15 +9,6 @@ class Example(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Example,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_example.dll")
-		rootWindowHandle=getattr(self.rootNVDAObject,'event_windowHandle',0)
-		if not rootWindowHandle:
-			rootWindowHandle=self.rootNVDAObject.windowHandle
-		self.rootWindowHandle=rootWindowHandle
-		try:
-			self.rootID=self.rootNVDAObject.IAccessibleObject.uniqueID
-		except:
-			self.rootID=0
-		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -55,3 +46,9 @@ class Example(VirtualBuffer):
 		import winsound
 		winsound.Beep(440,30)
 		return True
+
+	def getIdentifierFromNVDAObject(self,obj):
+		return self.rootNVDAObject.windowHandle, self.rootNVDAObject.IAccessibleObject.uniqueID
+
+	def getNVDAObjectFromIdentifier(self, docHandle, ID):
+		return self.rootNVDAObject
