@@ -1,6 +1,5 @@
 import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
-from virtualBuffer_lib import *
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible
@@ -44,7 +43,7 @@ class Gecko_ia2(VirtualBuffer):
 	TextInfo=Gecko_ia2_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=ur"lib\VBufBackend_gecko_ia2.dll")
+		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_gecko_ia2.dll")
 		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):

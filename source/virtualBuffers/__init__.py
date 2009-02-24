@@ -2,7 +2,6 @@ import ctypes
 import weakref
 import time
 import os
-import winsound
 import XMLFormatting
 import baseObject
 from keyUtils import sendKey
@@ -26,6 +25,22 @@ import braille
 import queueHandler
 from logHandler import log
 import keyUtils
+
+VBufStorage_findDirection_forward=0
+VBufStorage_findDirection_back=1
+VBufStorage_findDirection_up=2
+
+def dictToMultiValueAttribsString(d):
+	mainList=[]
+	for k,v in d.iteritems():
+		k=unicode(k).replace(':','\\:').replace(';','\\;').replace(',','\\,')
+		valList=[]
+		for i in v:
+			i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
+			valList.append(i)
+		attrib="%s:%s"%(k,",".join(valList))
+		mainList.append(attrib)
+	return "%s;"%";".join(mainList)
 
 VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
 
@@ -169,11 +184,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
-			import winsound
-			winsound.Beep(880,60)
 			VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
 			VBufClient.VBufClient_disconnect(self.bindingHandle)
-			winsound.Beep(3000,60)
 			self.VBufHandle=None
 
 	def makeTextInfo(self,position):
@@ -300,28 +312,37 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
 
-	def _iterNodesByType(self,nodeType,direction="next",startOffset=-1):
+	def _iterNodesByType(self,nodeType,direction="next",offset=-1):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
 			return
-
+		attribs=dictToMultiValueAttribsString(attribs)
+		startOffset=ctypes.c_int()
+		endOffset=ctypes.c_int()
+		if direction=="next":
+			direction=VBufStorage_findDirection_forward
+		elif direction=="previous":
+			direction=VBufStorage_findDirection_back
+		else:
+			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				docHandle,ID=VBufClient_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
+				node=VBufClient.VBufRemote_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
 			except:
 				return
-			if not ID:
-				continue
-
-			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
-			yield docHandle, ID, startOffset, endOffset
+			if not node:
+				return
+			yield node, startOffset.value, endOffset.value
+			offset=startOffset
 
 	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		startOffset=info._startOffset
+		endOffset=info._endOffset
 		try:
-			docHandle, ID, startOffset, endOffset = next(self._iterNodesByType(nodeType, direction, startOffset))
+			node, startOffset, endOffset = next(self._iterNodesByType(nodeType, direction, startOffset))
 		except StopIteration:
 			speech.speakMessage(errorMessage)
 			return
@@ -360,9 +381,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 
 		nodes = []
-		caretOffset, _ignored = VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		caretOffset=info._startOffset
 		defaultIndex = None
-		for docHandle, ID, startOffset, endOffset in self._iterNodesByType("link"):
+		for node, startOffset, endOffset in self._iterNodesByType("link"):
 			if defaultIndex is None:
 				if startOffset <= caretOffset and caretOffset < endOffset:
 					# The caret is inside this link, so make it the default selection.
