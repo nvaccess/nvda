@@ -36,7 +36,10 @@ def dictToMultiValueAttribsString(d):
 		k=unicode(k).replace(':','\\:').replace(';','\\;').replace(',','\\,')
 		valList=[]
 		for i in v:
-			i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
+			if i is None:
+				i=""
+			else:
+				i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
 			valList.append(i)
 		attrib="%s:%s"%(k,",".join(valList))
 		mainList.append(attrib)
