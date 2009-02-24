@@ -11,6 +11,8 @@ TOPDIR=..
 
 all:
 	cd example && $(MAKE) /nologo DEBUG=$(DEBUG)
+	cd gecko_ia2 && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
 	cd example && $(MAKE) /nologo clean
+	cd gecko_ia2 && $(MAKE) /nologo clean
