@@ -25,7 +25,7 @@
  * @param url: The URL.
  * @return: The user friendly name for the URL.
  */
-VBUFLIBENTRY std::wstring getNameForURL(const std::wstring &url);
+std::wstring getNameForURL(const std::wstring &url);
 
 /**
  * Determine whether a string of text is whitespace.
@@ -33,7 +33,7 @@ VBUFLIBENTRY std::wstring getNameForURL(const std::wstring &url);
  * @precondition: @c str is not @c NULL.
  * @return: @c true if @c str is whitespace, @c false otherwise.
  */
-VBUFLIBENTRY bool isWhitespace(const wchar_t *str);
+bool isWhitespace(const wchar_t *str);
 
 typedef std::multimap<std::wstring, std::wstring> multiValueAttribsMap;
 
@@ -45,6 +45,6 @@ typedef std::multimap<std::wstring, std::wstring> multiValueAttribsMap;
  * @param attribsString: The attributes string to convert.
  * @param attribsMap: The multiValueAttribsMap into which the attributes should be placed, with keys and values as strings.
  */
-VBUFLIBENTRY void multiValueAttribsStringToMap(const std::wstring &attribsString, multiValueAttribsMap &attribsMap);
+void multiValueAttribsStringToMap(const std::wstring &attribsString, multiValueAttribsMap &attribsMap);
 
 #endif
