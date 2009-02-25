@@ -497,8 +497,11 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	assert(node); //node can't be null
 	assert(isNodeInBuffer(node)); //Node must be in this buffer
 	DEBUG_MSG(L"deleting subtree starting at "<<node->getDebugInfo());
-	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;child=child->next) {
+	//Save off next before deleting the subtree 
+	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;) {
+		VBufStorage_fieldNode_t* next=child->next;
 		deleteSubtree(child);
+		child=next;
 	}
 	node->disassociateFromBuffer();
 	DEBUG_MSG(L"deleting node at "<<node);
