@@ -187,8 +187,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
-			VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
-			VBufClient.VBufClient_disconnect(self.bindingHandle)
+			try:
+				VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
+			except WindowsError:
+				pass
+			try:
+				VBufClient.VBufClient_disconnect(self.bindingHandle)
+			except WindowsError:
+				pass
 			self.VBufHandle=None
 
 	def makeTextInfo(self,position):
