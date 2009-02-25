@@ -257,7 +257,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.passThrough:
 			nextHandler()
 
-	def _activateField(self,docHandle,ID):
+	def _activateField(self, info):
 		pass
 
 	def _activateContextMenuForField(self,docHandle,ID):
@@ -297,8 +297,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		docHandle,ID=info.fieldIdentifierAtStart
-		self._activateField(docHandle,ID)
+		self._activateField(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
@@ -402,17 +401,17 @@ class VirtualBuffer(cursorManager.CursorManager):
 					# The caret wasn't inside a link, so set the default selection to be the next link.
 					defaultIndex = len(nodes)
 			text = self.makeTextInfo(textHandler.Offsets(startOffset,endOffset)).text
-			nodes.append((text, docHandle, ID, startOffset, endOffset))
+			nodes.append((text, startOffset, endOffset))
 
 		def action(args):
 			if args is None:
 				return
 			activate, index, text = args
-			text, docHandle, ID, startOffset, endOffset = nodes[index]
+			text, startOffset, endOffset = nodes[index]
+			info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 			if activate:
-				self._activateField(docHandle, ID)
+				self._activateField(info)
 			else:
-				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
 				info.collapse()

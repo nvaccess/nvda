@@ -163,9 +163,9 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldSetFocusToObj(self, obj):
 		return controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
-	def _activateField(self,docHandle,ID):
+	def _activateField(self,info):
 		try:
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle,IAccessibleHandler.OBJID_CLIENT,ID)
+			obj=info.NVDAObjectAtStart
 			if self.shouldPassThrough(obj):
 				obj.setFocus()
 				self.passThrough=True
