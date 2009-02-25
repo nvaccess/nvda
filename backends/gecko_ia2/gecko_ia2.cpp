@@ -713,7 +713,6 @@ void mainThreadSetup(VBufBackend_t* backend) {
 	DEBUG_MSG(L"process ID "<<processID<<L", thread ID "<<threadID);
 	ThreadWinEventRecordMap::iterator i=threadWinEventRecords.find(threadID);
 	if(i!=threadWinEventRecords.end()) {
-		assert(i->second->backends.count(backend)); //The same backend can not be added more than once
 		i->second->backends.insert(backend);
 		DEBUG_MSG(L"Number of backends in WinEventRecord: "<<i->second->backends.size());
 	} else {
