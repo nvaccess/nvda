@@ -733,6 +733,7 @@ void mainThreadSetup(VBufBackend_t* backend) {
 	fillVBuf(pacc,storageBuffer,NULL,NULL);
 	pacc->Release();
 	storageBuffer->lock.release();
+	Beep(220,70);
 }
 
 void mainThreadTerminate(VBufBackend_t* backend) {
@@ -751,6 +752,7 @@ void mainThreadTerminate(VBufBackend_t* backend) {
 		DEBUG_MSG(L"Other backends present in record, only removing backend from winEventRecord");
 		i->second->backends.erase(j);
 	}
+	Beep(880,70);
 }
 
 LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
@@ -771,6 +773,8 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer
 	DEBUG_MSG(L"wmMainThreadSetup message: "<<wmMainThreadSetup<<L", wmMainThreadTerminate message: "<<wmMainThreadTerminate);
 	DEBUG_MSG(L"Setting hook");
 	HWND rootWindow=(HWND)rootDocHandle;
+	//We need the main application window for cleaning up if the root window is destroied but the app is not closed.
+	appWindow=GetAncestor(rootWindow,GA_ROOTOWNER);
 	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,GetWindowThreadProcessId(rootWindow,NULL));
 	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
@@ -787,12 +791,11 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	int res;
 	DEBUG_MSG(L"Gecko backend being destroied");
 	DEBUG_MSG(L"Setting hook");
-	HWND rootWindow=(HWND)rootDocHandle;
-	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,GetWindowThreadProcessId(rootWindow,NULL));
+	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,GetWindowThreadProcessId(appWindow,NULL));
 	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
-	DEBUG_MSG(L"Sending wmMainThreadTerminate to window, docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	SendMessage(rootWindow,wmMainThreadTerminate,0,(LPARAM)this);
+	DEBUG_MSG(L"Sending wmMainThreadTerminate to app window "<<appWindow<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
+	SendMessage(appWindow,wmMainThreadTerminate,0,(LPARAM)this);
 	DEBUG_MSG(L"Message sent");
 	DEBUG_MSG(L"Removing hook");
 	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);

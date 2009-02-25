@@ -9,9 +9,13 @@
 #ifndef VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
+#include <windows.h>
 #include <base/backend.h>
 
 class GeckoVBufBackend_t: public VBufBackend_t {
+	private:
+	HWND appWindow;
+
 	public:
 
 	GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
