@@ -10,11 +10,13 @@ TOPDIR=.
 !include $(TOPDIR)\make.opts
 
 all: 
+	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd backends && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
 
-tests:
+test:
+	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	cd tests && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
