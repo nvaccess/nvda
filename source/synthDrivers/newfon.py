@@ -6,7 +6,20 @@
 from synthDriverHandler import SynthDriver,VoiceInfo
 from ctypes import *
 import os
+import config
+import nvwave
 import re
+
+isSpeaking = False
+player = None
+ProcessAudioCallback = WINFUNCTYPE(c_int, POINTER(c_char),POINTER(c_char),c_int)
+
+@ProcessAudioCallback
+def processAudio(udata, buffer,length):
+	global isSpeaking,player
+	if not isSpeaking: return 1
+	player.feed(string_at(buffer, length))
+	return 0
 
 re_englishLetter = re.compile(r"([a-z])", re.I)
 re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
@@ -99,7 +112,6 @@ class SynthDriver(SynthDriver):
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
 	hasVoice=True
 	hasRate=True
-	hasVolume = True
 	hasVariant=True
 	_variant="rus"
 	hasPitch = True
@@ -115,6 +127,8 @@ class SynthDriver(SynthDriver):
 		return os.path.isfile('synthDrivers/newfon_nvda.dll')
 
 	def __init__(self):
+		global player
+		player = nvwave.WavePlayer(channels=1, samplesPerSec=10000, bitsPerSample=8, outputDevice=config.conf["speech"]["outputDevice"])
 		self.hasDictLib = os.path.isfile('synthDrivers/dict.dll')
 		if self.hasDictLib:
 			self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")
@@ -122,8 +136,13 @@ class SynthDriver(SynthDriver):
 		self.newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
 		self.newfon_lib.speakText.argtypes = [c_char_p, c_int]
 		if not self.newfon_lib.initialize(): raise Exception
+		self.newfon_lib.set_callback(processAudio)
 
 	def terminate(self):
+		self.cancel()
+		global player
+		player.close()
+		player=None
 		self.newfon_lib.terminate()
 		del self.newfon_lib
 		if self.hasDictLib:
@@ -131,6 +150,8 @@ class SynthDriver(SynthDriver):
 			del self.sdrvxpdb_lib
 
 	def speakText(self, text, index=None):
+		global isSpeaking
+		isSpeaking = True
 		text = text.lower()
 		text = re_omittedCharacters.sub(" ", text)
 		text = re_afterNumber.sub(r"\1-\2", text)
@@ -147,6 +168,9 @@ class SynthDriver(SynthDriver):
 
 	def cancel(self):
 		self.newfon_lib.cancel()
+		global isSpeaking,player
+		isSpeaking = False
+		player.stop()
 
 	def _get_voice(self):
 		return str(self.newfon_lib.get_voice())
@@ -160,12 +184,6 @@ class SynthDriver(SynthDriver):
 	def _set_rate(self, value):
 		self.newfon_lib.set_rate(value)
 
-	def _get_volume(self):
-		return self.newfon_lib.get_volume()
-
-	def _set_volume(self, value):
-		self.newfon_lib.set_volume(value)
-
 	def _set_pitch(self, value):
 		if value <= 50: value = 50
 		self.newfon_lib.set_accel(value/5 -10 )
@@ -175,7 +193,8 @@ class SynthDriver(SynthDriver):
 		return self._pitch
 
 	def pause(self, switch):
-		if switch: self.cancel()
+		global player
+		player.pause(switch)
 
 	def _get_variant(self):
 		return self._variant
