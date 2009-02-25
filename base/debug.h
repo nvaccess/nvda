@@ -18,7 +18,7 @@ extern VBUFLIBENTRY std::wostream* _debugFile;
 VBUFLIBENTRY void debug_start(std::wostream* s);
 VBUFLIBENTRY void debug_end();
 
-#ifdef fffDEBUG
+#ifdef DEBUG
 
 #ifndef __GNUC__
 #define __PRETTY_FUNCTION__ __FUNCTION__
