@@ -507,7 +507,7 @@ class VBufStorage_buffer_t {
 
 /**
  * Finds a field node that contains particular attributes.
- * @param offset offset in the buffer to start searching from
+ * @param offset offset in the buffer to start searching from, if -1 then starts at the root of the buffer.
  * @param direction which direction to search
  * @param attribsString the attributes the node should contain
  * @param startOffset memory where the start offset of the found node can be placed

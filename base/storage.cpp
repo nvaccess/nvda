@@ -738,7 +738,17 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 	}
 	DEBUG_MSG(L"find node starting at offset "<<offset<<L", with attributes: "<<attribsString);
 	int bufferStart, bufferEnd, tempRelativeStart=0;
-	VBufStorage_fieldNode_t* node=this->locateTextFieldNodeAtOffset(offset,&bufferStart,&bufferEnd);
+	VBufStorage_fieldNode_t* node=NULL;
+	if(offset==-1) {
+		node=this->rootNode;
+		bufferStart=0;
+		bufferEnd=node->length;
+	} else if(offset>=0) {
+		node=this->locateTextFieldNodeAtOffset(offset,&bufferStart,&bufferEnd);
+	} else {
+		DEBUG_MSG(L"Invalid offset: "<<offset);
+		return NULL;
+	}
 	if(node==NULL) {
 		DEBUG_MSG(L"Could not find node at offset "<<offset<<L", returning NULL");
 		return NULL;
