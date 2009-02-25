@@ -10,9 +10,11 @@ TOPDIR=..
 !include $(TOPDIR)\make.opts
 
 all:
-	cd test_printExampleBackendXML && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd test_utils && $(MAKE) /nologo DEBUG=$(DEBUG)
+	cd storage && $(MAKE) /nologo DEBUG=$(DEBUG)
+	cd test_printExampleBackendXML && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
-	cd test_printExampleBackendXML && $(MAKE) /nologo clean
 	cd test_utils && $(MAKE) /nologo clean
+	cd storage && $(MAKE) /nologo clean
+	cd test_printExampleBackendXML && $(MAKE) /nologo clean
