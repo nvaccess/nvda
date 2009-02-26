@@ -958,7 +958,10 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
+	focus = api.getDesktopObject().objectWithFocus()
+	if not focus:
+		return
+	processFocusNVDAEvent(focus)
 
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
