@@ -453,14 +453,16 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 			initialFields.append(field.field)
 		else:
 			break
-	del textWithFields[0:len(initialFields)]
+	if len(initialFields)>0:
+		del textWithFields[0:len(initialFields)]
 	endFieldCount=0
 	for field in reversed(textWithFields):
 		if isinstance(field,textHandler.FieldCommand) and field.command=="controlEnd":
 			endFieldCount+=1
 		else:
 			break
-	del textWithFields[0-endFieldCount:]
+	if endFieldCount>0:
+		del textWithFields[0-endFieldCount:]
 	if len(textWithFields)>0:
 		firstField=textWithFields[0]
 		if isinstance(firstField,textHandler.FieldCommand) and firstField.command=="formatChange":
