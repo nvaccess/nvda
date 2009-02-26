@@ -108,6 +108,19 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
 		return text.value
 
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return ""
+		text=ctypes.c_wchar_p()
+		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		for index in xrange(len(commandList)):
+			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
+				commandList[index].field=self._normalizeControlField(commandList[index].field)
+		return commandList
+
 	def _getWordOffsets(self,offset):
 		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
 		lineStart=ctypes.c_int()

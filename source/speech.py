@@ -446,7 +446,27 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 	#Make a new controlFieldStack and formatField from the textInfo's initialFields
 	newControlFieldStack=[]
 	newFormatField=textHandler.FormatField()
-	for field in info.getInitialFields(formatConfig):
+	textWithFields=info.getTextWithFields(formatConfig)
+	initialFields=[]
+	for field in textWithFields:
+		if isinstance(field,textHandler.FieldCommand) and field.command=="controlStart":
+			initialFields.append(field.field)
+		else:
+			break
+	del textWithFields[0:len(initialFields)]
+	endFieldCount=0
+	for field in reversed(textWithFields):
+		if isinstance(field,textHandler.FieldCommand) and field.command=="controlEnd":
+			endFieldCount+=1
+		else:
+			break
+	del textWithFields[0-endFieldCount:]
+	if len(textWithFields)>0:
+		firstField=textWithFields[0]
+		if isinstance(firstField,textHandler.FieldCommand) and firstField.command=="formatChange":
+			initialFields.append(firstField.field)
+			del textWithFields[0]
+	for field in initialFields:
 		if isinstance(field,textHandler.ControlField):
 			newControlFieldStack.append(field)
 		elif isinstance(field,textHandler.FormatField):
@@ -505,7 +525,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		return
 
 	#Fetch a command list for the text and fields for this textInfo
-	commandList=info.getTextWithFields(formatConfig)
+	commandList=textWithFields
 	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
