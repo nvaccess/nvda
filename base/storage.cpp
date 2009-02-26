@@ -829,10 +829,11 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	relative = offset - initBufferStart;
 	bufferStart = initBufferStart;
 	bufferEnd = initBufferEnd;
-	int lineEnd = bufferEnd;
+	int lineEnd;
 	do {
 		if(node->length>0&&node->firstChild==NULL) {
 			std::wstring text;
+			lineEnd = bufferEnd;
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative; i < node->length; i++) {
@@ -864,7 +865,6 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			relative = 0;
-			lineEnd = bufferEnd;
 		}
 	} while (node);
 	//Search backward for the previous line ending.
@@ -872,10 +872,11 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	relative = offset - initBufferStart;
 	bufferStart = initBufferStart;
 	bufferEnd = initBufferEnd;
-	int lineStart = bufferStart;
+	int lineStart;
 	do {
 		if(node->length>0&&node->firstChild==NULL) {
 			std::wstring text;
+			lineStart = bufferStart;
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative - 1; i >= 0; i--) {
@@ -907,7 +908,6 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			relative = node->length;
-			lineStart = bufferStart;
 		}
 	} while (node);
 	DEBUG_MSG(L"line offsets after searching back and forth for line feeds and block edges is "<<lineStart<<L" and "<<lineEnd);
