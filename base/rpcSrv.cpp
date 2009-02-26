@@ -1,8 +1,10 @@
 #define UNICODE
 #include <cstdio>
+#include <fstream>
 #include <sstream>
 #include <windows.h>
 #include <remoteApi/remoteApi.h>
+#include "debug.h"
 
 //Special cleanup method for VBufRemote when client is lost
 void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
@@ -45,14 +47,27 @@ void stopServer() {
 	printf("Done\n");
 }
 
+#ifdef DEBUG
+std::wofstream* debugFile=NULL;
+#endif
+
 //dll initialization and termination
 //Starts and stops the server
 #pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		#ifdef DEBUG
+		debugFile=new std::wofstream("c:\\users\\mick\\VBuf.log");
+		debug_start(debugFile);
+		#endif
 		startServer();
 	} else if(reason==DLL_PROCESS_DETACH) {
 		stopServer();
+		#ifdef DEBUG
+		debug_end();
+		delete debugFile;
+		debugFile=NULL;
+		#endif
 	}
 	return TRUE;
 }

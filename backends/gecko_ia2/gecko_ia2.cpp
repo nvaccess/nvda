@@ -11,7 +11,6 @@
 #include <windows.h>
 #include <set>
 #include <string>
-#include <fstream>
 #include <sstream>
 #include <ia2/ia2.h>
 #include <ia2/ia2utils.h>
@@ -35,24 +34,11 @@ typedef struct {
 typedef std::map<int,WinEventRecord*> ThreadWinEventRecordMap;
 
 HINSTANCE backendLibHandle=NULL;
-#ifdef DEBUG
-wofstream* debugFile=NULL;
-#endif
 
 #pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
-		#ifdef DEBUG
-		debugFile=new wofstream("c:\\users\\mick\\VBufBackend_gecko_ia2.log");
-		debug_start(debugFile);
-		#endif
 		backendLibHandle=hModule;
-	} else if(reason==DLL_PROCESS_DETACH) {
-		#ifdef DEBUG
-		debug_end();
-		delete debugFile;
-		debugFile=NULL;
-		#endif
 	}
 	return TRUE;
 }
