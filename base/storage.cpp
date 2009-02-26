@@ -156,8 +156,23 @@ VBufStorage_textFieldNode_t* VBufStorage_fieldNode_t::locateTextFieldNodeAtOffse
 }
 
 void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text) {
+	wostringstream s;
+	int childCount=0;
+	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
+		childCount++;
+	}
+	int parentChildCount=1;
+	int indexInParent=0;
+	for(VBufStorage_fieldNode_t* prev=this->previous;prev!=NULL;prev=prev->previous) {
+		indexInParent++;
+		parentChildCount++;
+	}
+	for(VBufStorage_fieldNode_t* next=this->next;next!=NULL;next=next->next) {
+		parentChildCount++;
+	}
+	s<<L"_childcount=\""<<childCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
+	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();i++) {
-		text+=L" ";
 		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();j++) {
@@ -178,13 +193,14 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 				text+=*j;
 			}
 		}
-		text+=L"\"";
+		text+=L"\" ";
 	}
 }
 
 void VBufStorage_fieldNode_t::generateMarkupOpeningTag(std::wstring& text) {
 	text+=L"<";
 	this->generateMarkupTagName(text);
+	text+=L" ";
 	this->generateAttributesForMarkupOpeningTag(text);
 	text+=L">";
 }
@@ -310,7 +326,7 @@ void VBufStorage_controlFieldNode_t::generateMarkupTagName(std::wstring& text) {
 
 void VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text) {
 	std::wostringstream s;
-	s<<L" controlIdentifier_docHandle=\""<<identifier.docHandle<<L"\" controlIdentifier_ID=\""<<identifier.ID<<L"\"";
+	s<<L"controlIdentifier_docHandle=\""<<identifier.docHandle<<L"\" controlIdentifier_ID=\""<<identifier.ID<<L"\" ";
 	text+=s.str();
 	this->VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(text);
 }
