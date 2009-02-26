@@ -691,7 +691,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	DEBUG_MSG(L"Merged new buffer in to the active buffer");
 }
 
-void mainThreadSetup(VBufBackend_t* backend) {
+void mainThreadSetup(VBufBackend_t* backend, HANDLE* e) {
 	DEBUG_MSG(L"Acquiring storageBuffer lock");
 	DEBUG_MSG(L"Got lock");
 	int processID=GetCurrentProcessId();
@@ -719,9 +719,10 @@ void mainThreadSetup(VBufBackend_t* backend) {
 	pacc->Release();
 	storageBuffer->lock.release();
 	Beep(220,70);
+	SetEvent(*e);
 }
 
-void mainThreadTerminate(VBufBackend_t* backend) {
+void mainThreadTerminate(VBufBackend_t* backend, HANDLE* e) {
 	int threadID=GetCurrentThreadId();
 	DEBUG_MSG(L"thread ID "<<threadID);
 	ThreadWinEventRecordMap::iterator i=threadWinEventRecords.find(threadID);
@@ -738,14 +739,15 @@ void mainThreadTerminate(VBufBackend_t* backend) {
 		i->second->backends.erase(j);
 	}
 	Beep(880,70);
+	SetEvent(*e);
 }
 
 LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if((code==HC_ACTION)&&(pcwp->message==wmMainThreadSetup)) {
-		mainThreadSetup((VBufBackend_t*)(pcwp->lParam));
-	} else if((code==HC_ACTION)&&(pcwp->message==wmMainThreadTerminate)) {
-		mainThreadTerminate((VBufBackend_t*)(pcwp->lParam));
+	MSG* pmsg=(MSG*)lParam;
+	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadSetup)) {
+		mainThreadSetup((VBufBackend_t*)(pmsg->wParam),(HANDLE*)(pmsg->lParam));
+	} else if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
+		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam),(HANDLE*)(pmsg->lParam));
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -758,14 +760,16 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer
 	DEBUG_MSG(L"wmMainThreadSetup message: "<<wmMainThreadSetup<<L", wmMainThreadTerminate message: "<<wmMainThreadTerminate);
 	DEBUG_MSG(L"Setting hook");
 	HWND rootWindow=(HWND)rootDocHandle;
-	//We need the main application window for cleaning up if the root window is destroied but the app is not closed.
-	appWindow=GetAncestor(rootWindow,GA_ROOTOWNER);
-	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,GetWindowThreadProcessId(rootWindow,NULL));
+	rootThreadID=GetWindowThreadProcessId(rootWindow,NULL);
+	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,rootThreadID);
 	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
 	DEBUG_MSG(L"Sending wmMainThreadSetup to window, docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	SendMessage(rootWindow,wmMainThreadSetup,0,(LPARAM)this);
+	HANDLE e=CreateEvent(NULL,true,false,NULL);
+	PostThreadMessage(rootThreadID,wmMainThreadSetup,(WPARAM)this,(LPARAM)(&e));
 	DEBUG_MSG(L"Message sent");
+	res=WaitForSingleObject(e,1000);
+	assert(res==0); //Waiting for setup event timed out
 	DEBUG_MSG(L"Removing hook");
 	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);
 	assert(res!=0); //unHookWindowsHookEx must return non-0
@@ -776,12 +780,15 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	int res;
 	DEBUG_MSG(L"Gecko backend being destroied");
 	DEBUG_MSG(L"Setting hook");
-	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,GetWindowThreadProcessId(appWindow,NULL));
+	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,rootThreadID);
 	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
 	DEBUG_MSG(L"Sending wmMainThreadTerminate to app window "<<appWindow<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	SendMessage(appWindow,wmMainThreadTerminate,0,(LPARAM)this);
+	HANDLE e=CreateEvent(NULL,true,false,NULL);
+	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)(&e));
 	DEBUG_MSG(L"Message sent");
+	res=WaitForSingleObject(e,1000);
+	assert(res==0); //waiting for termination timed out
 	DEBUG_MSG(L"Removing hook");
 	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);
 	assert(res!=0); //unHookWindowsHookEx must return non-0

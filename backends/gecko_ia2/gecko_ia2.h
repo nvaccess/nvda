@@ -14,7 +14,7 @@
 
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
-	HWND appWindow;
+	int rootThreadID;
 
 	public:
 
