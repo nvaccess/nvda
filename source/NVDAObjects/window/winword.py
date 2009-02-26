@@ -164,30 +164,22 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getInitialFields(self,formatConfig=None):
+	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		range=self._rangeObj.duplicate
 		range.Collapse()
-		range.Expand(wdCharacter)
-		return [self._getFormatFieldAtRange(range,formatConfig)]
-
-	def getTextWithFields(self,formatConfig=None):
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
 		if not formatConfig["detectFormatAfterCursor"]:
-			return [self.text]
+			range.expand(wdCharacter)
+			field=textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig))
+			return [field,self.text]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		range=self._rangeObj.duplicate
 		range.Collapse()
-		hasLoopedOnce=False
 		while range.end<endLimit:
 			self._expandFormatRange(range)
-			if hasLoopedOnce:
-				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			else:
-				hasLoopedOnce=True
+			commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			commandList.append(range.text)
 			end=range.end
 			range.start=end
