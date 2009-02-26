@@ -523,7 +523,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	DEBUG_MSG(L"deleting node at "<<node);
 	delete node;
 	DEBUG_MSG(L"Deleted subtree");
-	}
+}
 
 VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionEnd(0), lock() {
 	DEBUG_MSG(L"buffer initializing");
