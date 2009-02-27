@@ -360,7 +360,7 @@ class AppModule(appModuleHandler.AppModule):
 		except NotImplementedError:
 			ui.message(_("default action failed"))
 			return
-		ui.message(_("%s"%action))
+		ui.message("%s"%action)
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_navigatorObject_where(self,keyPress):
