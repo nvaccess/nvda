@@ -171,7 +171,10 @@ def _speakSpellingGen(text):
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		getSynth().speakText(char,index=index)
+		if len(char) == 1:
+			getSynth().speakCharacter(char,index=index)
+		else:
+			getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
