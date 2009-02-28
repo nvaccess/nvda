@@ -90,11 +90,11 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	int ID = getAccID(pacc);
 
 	//Make sure that we don't already know about this object -- protect from loops
-	/*if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
+	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		DEBUG_MSG(L"A node with this docHandle and ID already exists, returning NULL");
 		pacc->Release();
 		return NULL;
-	}*/
+	}
 
 	//Add this node to the buffer
 	DEBUG_MSG(L"Adding Node to buffer");
