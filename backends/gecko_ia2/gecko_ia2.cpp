@@ -729,7 +729,7 @@ LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam
 	return CallNextHookEx(0,code,wParam,lParam);
 }
 
-void mainThreadTerminate(VBufBackend_t* backend, HANDLE* e) {
+void mainThreadTerminate(VBufBackend_t* backend) {
 	int threadID=GetCurrentThreadId();
 	DEBUG_MSG(L"thread ID "<<threadID);
 	ThreadWinEventRecordMap::iterator i=threadWinEventRecords.find(threadID);
@@ -746,13 +746,15 @@ void mainThreadTerminate(VBufBackend_t* backend, HANDLE* e) {
 		i->second->backends.erase(j);
 	}
 	Beep(880,70);
-	SetEvent(*e);
 }
 
 LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
 	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
-		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam),(HANDLE*)(pmsg->lParam));
+		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam));
+		DEBUG_MSG(L"Removing hook");
+		int res=UnhookWindowsHookEx((HHOOK)(pmsg->lParam));
+		assert(res!=0); //unHookWindowsHookEx must return non-0
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -770,7 +772,6 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer
 	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
 	DEBUG_MSG(L"Sending wmMainThreadSetup to window, docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	HANDLE e=CreateEvent(NULL,true,false,NULL);
 	SendMessage(rootWindow,wmMainThreadSetup,(WPARAM)this,0);
 	DEBUG_MSG(L"Message sent");
 	DEBUG_MSG(L"Removing hook");
@@ -787,13 +788,8 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadGetMessageHookID);
 	DEBUG_MSG(L"Sending wmMainThreadTerminate to thread "<<rootThreadID<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	HANDLE e=CreateEvent(NULL,true,false,NULL);
-	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)(&e));
+	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)mainThreadGetMessageHookID);
 	DEBUG_MSG(L"Message sent");
-	res=WaitForSingleObject(e,1000);
-	DEBUG_MSG(L"Removing hook");
-	res=UnhookWindowsHookEx(mainThreadGetMessageHookID);
-	assert(res!=0); //unHookWindowsHookEx must return non-0
 	DEBUG_MSG(L"Gecko backend terminated");
 }
 
