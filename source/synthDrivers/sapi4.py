@@ -64,13 +64,22 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
 		self.voice=str(self._enginesList[0].gModeID)
+	def performSpeak(self,text,index=None,isCharacter=False):
+		flags=0
+		if index is not None or isCharacter:
+			text = text.replace('\\','\\\\')
+			flags+=TTSDATAFLAG_TAGGED
+		if index is not None:
+			text="\mrk=%d\\%s"%(index,text)
+		if isCharacter:
+			text = "\\RmS=1\\%s\\RmS=0\\"%text
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
 
 	def speakText(self,text,index=None):
-		flags=0
-		if index is not None:
-			text="\mrk=%d\\%s"%(index,text.replace('\\','\\\\'))
-			flags+=TTSDATAFLAG_TAGGED
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
+		self.performSpeak(text,index)
+
+	def speakCharacter(self,text,index=None):
+		self.performSpeak(text,index,True)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
