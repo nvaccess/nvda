@@ -586,9 +586,10 @@ bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, V
 	assert(buffer); //Buffer can't be NULL
 	assert(buffer!=this); //cannot merge a buffer into itself
 	assert(buffer->rootNode); //buffer must contain nodes
+	DEBUG_MSG(L"Merging buffer at "<<buffer<<L" in to this buffer with parent at "<<parent<<L" and previous at "<<previous);
 	insertSubtree(parent,previous,buffer->rootNode);
 	buffer->rootNode=NULL;
-	delete buffer;
+	DEBUG_MSG(L"mergeBuffer complete");
 	return true;
 }
 

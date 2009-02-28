@@ -445,7 +445,7 @@ class VBufStorage_buffer_t {
 	bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
 
 /**
- * inserts the content of a   buffer in to this buffer at a particular position and then deletes that buffer.
+ * inserts the content of a   buffer in to this buffer at a particular position and sets that buffer's root node to NULL as all the nodes are now in the other buffer.
  * @param parent the control field which should be the new field's parent, note that if also specifying previous parent can be NULL.
  * @param previous the field which the new field  should come directly after, note that previous's parent  will be used over the parent argument, and previous can also not be the buffer's root node (first field added).
  * @param buffer the buffer whos content should be inserted into this buffer.

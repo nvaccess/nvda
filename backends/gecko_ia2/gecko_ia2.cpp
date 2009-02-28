@@ -569,7 +569,6 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 }
 
 void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
-	if(1) return;
 	int res;
 	switch(eventID) {
 		case IA2_EVENT_TEXT_INSERTED:
@@ -685,9 +684,14 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	VBufStorage_controlFieldNode_t* parentNode=oldNode->getParent();
 	VBufStorage_fieldNode_t* previousNode=oldNode->getPrevious();
 	storageBuffer->lock.acquire();
+	DEBUG_MSG(L"Clearing old buffer");
 	storageBuffer->removeFieldNode(oldNode);
+	DEBUG_MSG(L"Merging new content");
 	storageBuffer->mergeBuffer(parentNode,previousNode,newBuf);
+	DEBUG_MSG(L"Done merging");
 	storageBuffer->lock.release();
+	DEBUG_MSG(L"deleting temporary buffer");
+	delete newBuf;
 	DEBUG_MSG(L"Merged new buffer in to the active buffer");
 }
 
