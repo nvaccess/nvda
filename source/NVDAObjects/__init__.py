@@ -25,6 +25,7 @@ import virtualBufferHandler
 import braille
 
 class NVDAObjectTextInfo(textHandler.TextInfo):
+	_expandedTo = None
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -182,6 +183,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 
 	def expand(self,unit):
 		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
+		self._expandedTo = unit
 
 	def copy(self):
 		o=self.__class__(self.obj,self.bookmark)

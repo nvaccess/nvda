@@ -499,7 +499,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		if text:
 			speakText(text,index=index)
 		text=info.text
-		if len(text)==1:
+		if info._expandedTo == textHandler.UNIT_CHARACTER:
 			speakSpelling(text)
 		else:
 			speakText(text,index=index)
