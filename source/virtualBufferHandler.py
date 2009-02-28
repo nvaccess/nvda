@@ -44,7 +44,7 @@ def update(obj):
 		classString="virtualBuffers_old.gecko.Gecko"
 	#Adobe documents with IAccessible
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
-		classString="virtualBuffers_old.adobe.Adobe"
+		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in states: 
 		info=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(obj.windowHandle)[1])
