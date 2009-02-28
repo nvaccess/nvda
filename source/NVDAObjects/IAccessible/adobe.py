@@ -2,7 +2,7 @@ import eventHandler
 import winUser
 from . import IAccessible, getNVDAObjectFromEvent
 
-class Page(IAccessible):
+class AdobeAcrobatDocumentNode(IAccessible):
 
 	def event_valueChange(self):
 		if self.IAccessibleChildID==0 and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
@@ -11,9 +11,3 @@ class Page(IAccessible):
 			if not obj:
 				return
 			eventHandler.queueEvent("gainFocus",obj)
-
-class Document(IAccessible):
-
-	def event_valueChange(self):
-		if self.IAccessibleChildID==0 and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			eventHandler.queueEvent("gainFocus",self)

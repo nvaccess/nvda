@@ -1229,7 +1229,6 @@ _staticMap={
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView","Page"):"adobe.Page",
-	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
+	("AVL_AVView",None):"adobe.AdobeAcrobatDocumentNode",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 }
