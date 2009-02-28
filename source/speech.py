@@ -171,7 +171,7 @@ def _speakSpellingGen(text):
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		if len(char) == 1:
+		if len(char) == 1 and config.conf["speech"][getSynth().name]["useSpellingFunctionality"]:
 			getSynth().speakCharacter(char,index=index)
 		else:
 			getSynth().speakText(char,index=index)

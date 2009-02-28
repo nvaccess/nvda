@@ -47,6 +47,7 @@ outputDevice = string(default=default)
 		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
+		useSpellingFunctionality = boolean(default=true)
 
 # Braille settings
 [braille]
