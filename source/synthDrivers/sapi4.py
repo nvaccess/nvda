@@ -78,8 +78,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def speakText(self,text,index=None):
 		self.performSpeak(text,index)
 
-	def speakCharacter(self,text,index=None):
-		self.performSpeak(text,index,True)
+	def speakCharacter(self,character,index=None):
+		self.performSpeak(character,index,isCharacter=True)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
