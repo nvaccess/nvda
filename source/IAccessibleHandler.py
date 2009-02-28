@@ -860,7 +860,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	@rtype: boolean
 	"""
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
-	if needsFocusedState and obj.windowClassName=="AVL_AVView" and obj.virtualBuffer:
+	if needsFocusedState and obj.windowClassName=="AVL_AVView":
 		#Adobe acrobat document nodes don't have the focused state
 		needsFocusedState=False
 	elif needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (ROLE_SYSTEM_COMBOBOX, ROLE_SYSTEM_DOCUMENT, ROLE_SYSTEM_LIST):
@@ -958,7 +958,10 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	processFocusNVDAEvent(api.getDesktopObject().objectWithFocus())
+	focus = api.getDesktopObject().objectWithFocus()
+	if not focus:
+		return
+	processFocusNVDAEvent(focus)
 
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
