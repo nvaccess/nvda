@@ -1,5 +1,6 @@
 #define UNICODE
  #include <set>
+ #include <sstream>
  #include <cassert>
 #include <windows.h>
 #include <base/base.h>
@@ -235,13 +236,44 @@ void mainThreadSetup(VBufBackend_t* backend) {
 	fillVBuf(backend->getRootDocHandle(),pacc,storageBuffer,NULL,NULL);
 	pacc->Release();
 	storageBuffer->lock.release();
+	#ifdef DEBUG
 	Beep(220,70);
+	#endif
 }
 
 LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((code==HC_ACTION)&&(pcwp->message==wmMainThreadSetup)) {
 		mainThreadSetup((VBufBackend_t*)(pcwp->wParam));
+	}
+	return CallNextHookEx(0,code,wParam,lParam);
+}
+
+void mainThreadTerminate(VBufBackend_t* backend) {
+	int threadID=GetCurrentThreadId();
+	DEBUG_MSG(L"thread ID "<<threadID);
+	if(backends.size()==1) {
+		DEBUG_MSG(L"Last backend, unhooking winEvent");
+		UnhookWinEvent(winEventHookID);
+		backends.clear();
+	} else {
+		DEBUG_MSG(L"Other backends present, only removing backend");
+		VBufBackendSet_t::iterator it = backends.find(backend);
+		assert(it != backends.end()); // Backend must exist in the set
+		backends.erase(it);
+	}
+	#ifdef DEBUG
+	Beep(880,70);
+	#endif
+}
+
+LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
+	MSG* pmsg=(MSG*)lParam;
+	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
+		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam));
+		DEBUG_MSG(L"Removing hook");
+		int res=UnhookWindowsHookEx((HHOOK)(pmsg->lParam));
+		assert(res!=0); //unHookWindowsHookEx must return non-0
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -264,10 +296,20 @@ AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBuf
 	DEBUG_MSG(L"Removing hook");
 	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);
 	assert(res!=0); //unHookWindowsHookEx must return non-0
-	DEBUG_MSG(L"Gecko backend initialized");
+	DEBUG_MSG(L"Adobe Acrobat backend initialized");
 }
 
 AdobeAcrobatVBufBackend_t::~AdobeAcrobatVBufBackend_t() {
+	int res;
+	DEBUG_MSG(L"adobeAcrobat backend being destroied");
+	DEBUG_MSG(L"Setting hook");
+	HHOOK mainThreadGetMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadGetMessageHook,backendLibHandle,rootThreadID);
+	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
+	DEBUG_MSG(L"Hook set with ID "<<mainThreadGetMessageHookID);
+	DEBUG_MSG(L"Sending wmMainThreadTerminate to thread "<<rootThreadID<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
+	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)mainThreadGetMessageHookID);
+	DEBUG_MSG(L"Message sent");
+	DEBUG_MSG(L"Adobe Acrobat backend terminated");
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer) {
