@@ -26,26 +26,46 @@ using namespace std;
 
 typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 
-typedef struct {
-	HWINEVENTHOOK winEventHookID;
-	VBufBackendSet_t backends;
-} WinEventRecord;
-
-typedef std::map<int,WinEventRecord*> ThreadWinEventRecordMap;
-
 HINSTANCE backendLibHandle=NULL;
+UINT wmMainThreadSetup=0;
+UINT wmMainThreadTerminate=0;
+VBufBackendSet_t runningBackends;
+HWINEVENTHOOK mainThreadWinEventHookID=0;
+UINT_PTR mainThreadTimerID=0;
 
 #pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
 		backendLibHandle=hModule;
+		wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadSetup");
+		wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadTerminate");
 	}
 	return TRUE;
 }
 
-UINT wmMainThreadSetup=0;
-UINT wmMainThreadTerminate=0;
-ThreadWinEventRecordMap threadWinEventRecords;
+HWND findRealMozillaWindow(HWND hwnd) {
+	DEBUG_MSG(L"Finding real window for window "<<hwnd);
+	if(hwnd==0||!IsWindow(hwnd)) {
+		DEBUG_MSG(L"Invalid window");
+		return (HWND)0;
+	}
+	wchar_t className[256];
+	bool foundWindow=false;
+	do {
+		if(GetClassName(hwnd,className,256)==0) {
+			DEBUG_MSG(L"Could not get class name for window "<<hwnd);
+			return hwnd;
+		}
+		DEBUG_MSG(L"class name for window "<<hwnd<<L" is "<<className);
+		if(wcscmp(L"MozillaWindowClass",className)!=0) {
+			foundWindow=true;
+		} else {
+			hwnd=GetAncestor(hwnd,GA_PARENT);
+		}
+	} while(hwnd&&!foundWindow);
+	DEBUG_MSG(L"Found window "<<hwnd);
+	return hwnd;
+}
 
 IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	int res;
@@ -101,6 +121,12 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	if((res=pacc->get_windowHandle((HWND*)(&docHandle)))!=S_OK) {
 		DEBUG_MSG(L"pacc->get_windowHandle returned "<<res);
 		docHandle=0;
+		return NULL;
+	}
+	docHandle=(int)findRealMozillaWindow((HWND)docHandle);
+	if(docHandle==0) {
+		DEBUG_MSG(L"bad docHandle");
+		return NULL;
 	}
 	DEBUG_MSG(L"docHandle is "<<docHandle);
 	//Get ID -- IAccessible2 uniqueID
@@ -109,12 +135,12 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	if((res=pacc->get_uniqueID((long*)(&ID)))!=S_OK) {
 		DEBUG_MSG(L"pacc->get_uniqueID returned "<<res);
 		ID=0;
+		return NULL;
 	}
 	DEBUG_MSG(L"ID is "<<ID);
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		DEBUG_MSG(L"a node with this docHandle and ID already exists, returning NULL");
-		pacc->Release();
 		return NULL;
 	}
 	//Add this node to the buffer
@@ -568,6 +594,17 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	return parentNode;
 }
 
+void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
+	KillTimer(0,mainThreadTimerID);
+	mainThreadTimerID=0;
+	DEBUG_MSG(L"Updating "<<runningBackends.size()<<L" backends");
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+		DEBUG_MSG(L"Updating backend at "<<(*i));
+		(*i)->update();
+	}
+	DEBUG_MSG(L"All updated");
+}
+
 void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	int res;
 	switch(eventID) {
@@ -578,7 +615,6 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_DESCRIPTIONCHANGE:
 		case EVENT_OBJECT_STATECHANGE:
-		//case IA2_EVENT_DOCUMENT_LOAD_COMPLETE:
 		break;
 		default:
 		return;
@@ -586,142 +622,60 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	if(childID>=0||objectID!=OBJID_CLIENT) {
 		return;
 	}
-	assert(threadWinEventRecords.count(threadID)>0); //the thread for this callback must have had winEvents registered
-	VBufStorage_buffer_t* storageBuffer=NULL;
-	WinEventRecord* w=threadWinEventRecords[threadID];
-	for(VBufBackendSet_t::iterator i=w->backends.begin();i!=w->backends.end();i++) {
+	DEBUG_MSG(L"winEvent for window "<<hwnd);
+	hwnd=findRealMozillaWindow(hwnd);
+	if(hwnd==0) {
+		DEBUG_MSG(L"Invalid window");
+		return;
+	}
+	int docHandle=(int)hwnd;
+	int ID=childID;
+	VBufBackend_t* backend=NULL;
+	DEBUG_MSG(L"Searching for backend in collection of "<<runningBackends.size()<<L" running backends");
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
 		HWND rootWindow=(HWND)((*i)->getRootDocHandle());
+		DEBUG_MSG(L"Comparing backends root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd)) {
-			storageBuffer=(*i)->getStorageBuffer();
+			backend=(*i);
 		}
 	}
-	if(storageBuffer==NULL) {
+	if(backend==NULL) {
 		return;
 	}
-	DEBUG_MSG(L"found active backend for this window with storage buffer at "<<storageBuffer);
-	IAccessible2* pacc=IAccessible2FromIdentifier((int)hwnd,childID);
-	if(pacc==NULL) {
-		DEBUG_MSG(L"could not get IAccessible2 object from event params");
+	DEBUG_MSG(L"found active backend for this window at "<<backend);
+	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
+	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
+	if(node==NULL) {
+		int rootDocHandle=backend->getRootDocHandle();
+		int rootID=backend->getRootID();
+		if(docHandle!=rootDocHandle) {
+			Beep(2000,50);
+			DEBUG_MSG(L"an unknown node in a subframe, mark entire buffer for invalidation");
+			node=buffer->getControlFieldNodeWithIdentifier(rootDocHandle,rootID);
+		}
+	}
+	if(node==NULL) {
+		DEBUG_MSG(L"No nodes to use, returning");
 		return;
 	}
-	DEBUG_MSG(L"got IAccessible2 object at "<<pacc);
-	int docHandle=0;
-	if((res=pacc->get_windowHandle((HWND*)&docHandle))!=S_OK) {
-		DEBUG_MSG(L"could not get windowHandle from IAccessible2 object");
-		pacc->Release();
-	return;
+	DEBUG_MSG(L"Invalidating subtree with node at "<<node);
+	backend->invalidateSubtree(node);
+	if(mainThreadTimerID==0) {
+		mainThreadTimerID=SetTimer(0,0,100,mainThreadTimerProc);
+		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
 	}
-	DEBUG_MSG(L"got windowHandle "<<docHandle<<L" from IAccessible2 object"); 
-	int ID=0;
-	if((res=pacc->get_uniqueID((long*)&ID))!=S_OK) {
-		DEBUG_MSG(L"could not get uniqueID from IAccessible2 object");
-		pacc->Release();
-		return;
-	}
-	DEBUG_MSG(L"got uniqueID "<<ID<<L" from IAccessible2 object");
-	VBufStorage_fieldNode_t* oldNode=storageBuffer->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(oldNode==NULL) {
-		DEBUG_MSG(L"no existing node for docHandle and ID in the buffer");
-		//the node doesn't exist yet, but it might be a child of a node that does, rerender that one instead
-		//this code needs to be here so frames reload
-		IAccessible2* parentPacc=NULL;
-		VARIANT varChild;
-		varChild.vt=VT_I4;
-		varChild.lVal=ID;
-		VARIANT varDisp;
-		if((res=pacc->accNavigate(NAVRELATION_NODE_CHILD_OF,varChild,&varDisp))!=S_OK) {
-			DEBUG_MSG(L"failed to get object from node_child_of relation");
-			pacc->Release();
-			return;
-		}
-		if(varDisp.vt!=VT_DISPATCH) {
-			DEBUG_MSG(L"variant from node_child_of relation does not hold an IDispatch");
-			VariantClear(&varDisp);
-			pacc->Release();
-			return;
-		}
-		DEBUG_MSG(L"got IDispatch object at "<<varDisp.pdispVal<<L" for node_child_of relation");
-		if((res=varDisp.pdispVal->QueryInterface(IID_IAccessible2,(void**)&parentPacc))!=S_OK) {
-			DEBUG_MSG(L"Could not queryInterface to IAccessible2 from IDispatch for node_child_of relation");
-			VariantClear(&varDisp);
-			pacc->Release();
-			return;
-		}
-		DEBUG_MSG(L"got IAccessible2 object at "<<parentPacc<<L" from node_child_of relation");
-		VariantClear(&varDisp);
-		if(parentPacc==pacc) {
-			DEBUG_MSG(L"parentPacc and pacc are equal, bad relation");
-			parentPacc->Release();
-			pacc->Release();
-			return;
-		}
-		if(((res=parentPacc->get_uniqueID((long*)&ID))!=S_OK)||ID>=0) {
-			DEBUG_MSG(L"could not get valid uniqueID from parentPacc");
-			parentPacc->Release();
-			pacc->Release();
-			return;
-		}
-		DEBUG_MSG(L"got uniqueID "<<ID<<L" from parentPacc");
-		if((res=parentPacc->get_windowHandle((HWND*)&docHandle))!=S_OK) {
-			DEBUG_MSG(L"Could not get valid window handle from parentPacc");
-			parentPacc->Release();
-			pacc->Release();
-			return;
-		}
-		DEBUG_MSG(L"got windowhandle "<<docHandle<<L" from parentPacc");
-		parentPacc->Release();
-		pacc->Release();
-		DEBUG_MSG(L"recursing for parent");
-		mainThreadWinEventCallback(hookID,eventID,(HWND)docHandle,OBJID_CLIENT,(long)ID,threadID,time);
-		return;
-	}
-	DEBUG_MSG(L"Found node in buffer at "<<oldNode<<L" for docHandle and ID");
-	VBufStorage_buffer_t* newBuf=new VBufStorage_buffer_t();
-	DEBUG_MSG(L"Created new buffer for temporary rendering at "<<newBuf);
-	fillVBuf(pacc,newBuf,NULL,NULL);
-	DEBUG_MSG(L"Filled new buffer");
-	pacc->Release();
-	VBufStorage_controlFieldNode_t* parentNode=oldNode->getParent();
-	VBufStorage_fieldNode_t* previousNode=oldNode->getPrevious();
-	storageBuffer->lock.acquire();
-	DEBUG_MSG(L"Clearing old buffer");
-	storageBuffer->removeFieldNode(oldNode);
-	DEBUG_MSG(L"Merging new content");
-	storageBuffer->mergeBuffer(parentNode,previousNode,newBuf);
-	DEBUG_MSG(L"Done merging");
-	storageBuffer->lock.release();
-	DEBUG_MSG(L"deleting temporary buffer");
-	delete newBuf;
-	DEBUG_MSG(L"Merged new buffer in to the active buffer");
 }
 
 void mainThreadSetup(VBufBackend_t* backend) {
-	DEBUG_MSG(L"Acquiring storageBuffer lock");
-	DEBUG_MSG(L"Got lock");
-	int processID=GetCurrentProcessId();
-	int threadID=GetCurrentThreadId();
-	DEBUG_MSG(L"process ID "<<processID<<L", thread ID "<<threadID);
-	ThreadWinEventRecordMap::iterator i=threadWinEventRecords.find(threadID);
-	if(i!=threadWinEventRecords.end()) {
-		i->second->backends.insert(backend);
-		DEBUG_MSG(L"Number of backends in WinEventRecord: "<<i->second->backends.size());
-	} else {
+	if(mainThreadWinEventHookID==0&&runningBackends.size()>0) {
+		int threadID=GetCurrentThreadId();
+		int processID=GetCurrentProcessId();
 		DEBUG_MSG(L"Registering win event callback");
-		WinEventRecord* w = new WinEventRecord;
-		w->backends.insert(backend);
-		w->winEventHookID=SetWinEventHook(EVENT_MIN,0xffffffff,backendLibHandle,(WINEVENTPROC)mainThreadWinEventCallback,processID,threadID,WINEVENT_INCONTEXT);
-		assert(w->winEventHookID!=0); //winEventHookID must be non-0
-		threadWinEventRecords[threadID]=w;
-		DEBUG_MSG(L"Registered win event callback, with ID "<<w->winEventHookID);
+		mainThreadWinEventHookID=SetWinEventHook(EVENT_MIN,0xffffffff,backendLibHandle,(WINEVENTPROC)mainThreadWinEventCallback,processID,threadID,WINEVENT_INCONTEXT);
+		assert(mainThreadWinEventHookID!=0); //winEventHookID must be non-0
+		DEBUG_MSG(L"Registered win event callback, with ID "<<mainThreadWinEventHookID);
 	}
-	VBufStorage_buffer_t* storageBuffer=backend->getStorageBuffer();
-	storageBuffer->lock.acquire();
-	//Render buffer
-	IAccessible2* pacc=IAccessible2FromIdentifier(backend->getRootDocHandle(),backend->getRootID());
-	assert(pacc); //must get a valid IAccessible2 object
-	fillVBuf(pacc,storageBuffer,NULL,NULL);
-	pacc->Release();
-	storageBuffer->lock.release();
+	backend->update();
 	Beep(220,70);
 }
 
@@ -734,20 +688,13 @@ LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam
 }
 
 void mainThreadTerminate(VBufBackend_t* backend) {
-	int threadID=GetCurrentThreadId();
-	DEBUG_MSG(L"thread ID "<<threadID);
-	ThreadWinEventRecordMap::iterator i=threadWinEventRecords.find(threadID);
-	assert(i!=threadWinEventRecords.end()); //This thread has to have a winEventRecord
-	VBufBackendSet_t::iterator j=i->second->backends.find(backend);
-	assert(j!=i->second->backends.end()); //This backend must exist in the winEventRecord
-	if(i->second->backends.size()==1) {
-		DEBUG_MSG(L"Last backend, unhooking winEvent");
-		UnhookWinEvent(i->second->winEventHookID);
-		delete i->second;
-		threadWinEventRecords.erase(i);
-	} else {
-		DEBUG_MSG(L"Other backends present in record, only removing backend from winEventRecord");
-		i->second->backends.erase(j);
+	if(mainThreadWinEventHookID!=0&&runningBackends.size()==0) {
+		DEBUG_MSG(L"No backends, unhooking winEvent");
+		UnhookWinEvent(mainThreadWinEventHookID);
+		mainThreadWinEventHookID=0;
+	}
+	if(mainThreadTimerID!=0) {
+		KillTimer(0,mainThreadTimerID);
 	}
 	Beep(880,70);
 }
@@ -763,12 +710,23 @@ LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam)
 	return CallNextHookEx(0,code,wParam,lParam);
 }
 
+void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID) {
+	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
+	IAccessible2* pacc=IAccessible2FromIdentifier(docHandle,ID);
+	if(pacc==NULL) {
+		DEBUG_MSG(L"Could not get IAccessible2, returning");
+		return;
+	}
+	DEBUG_MSG(L"Calling fillVBuf");
+	fillVBuf(pacc, buffer, NULL, NULL);
+	pacc->Release();
+	DEBUG_MSG(L"Rendering done");
+}
+
 GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
 	int res;
 	DEBUG_MSG(L"Initializing Gecko backend");
-	if(!wmMainThreadSetup) wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadSetup");
-	if(!wmMainThreadTerminate) wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadTerminate");
-	DEBUG_MSG(L"wmMainThreadSetup message: "<<wmMainThreadSetup<<L", wmMainThreadTerminate message: "<<wmMainThreadTerminate);
+	runningBackends.insert(this);
 	DEBUG_MSG(L"Setting hook");
 	HWND rootWindow=(HWND)rootDocHandle;
 	rootThreadID=GetWindowThreadProcessId(rootWindow,NULL);
@@ -787,6 +745,7 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	int res;
 	DEBUG_MSG(L"Gecko backend being destroied");
+	runningBackends.erase(this);
 	DEBUG_MSG(L"Setting hook");
 	HHOOK mainThreadGetMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadGetMessageHook,backendLibHandle,rootThreadID);
 	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
