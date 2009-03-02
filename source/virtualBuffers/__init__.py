@@ -517,44 +517,31 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.VBufHandle is None:
 			return False
 
-		# We only want to override the tab order if the caret is not within the focused node.
-		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		try:
-			caretDocHandle,caretID=caretInfo.fieldIdentifierAtStart
-		except:
-			return False
 		focus = api.getFocusObject()
 		try:
-			focusDocHandle,focusID=self.getIdentifierFromNVDAObject(focus)
-		except:
-			log.debugWarning("error getting focus identifier", exc_info=True)
-			return False
-		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
-			return False
-		try:
-			start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,focusDocHandle,focusID)
+			focusInfo = self.makeTextInfo(focus)
 		except:
 			return False
-		focusInfo=self.makeTextInfo(textHandler.Offsets(start,end))
-		startToStart=focusInfo.compareEndPoints(caretInfo,"startToStart")
-		startToEnd=focusInfo.compareEndPoints(caretInfo,"startToEnd")
-		endToStart=focusInfo.compareEndPoints(caretInfo,"endToStart")
-		endToEnd=focusInfo.compareEndPoints(caretInfo,"endToEnd")
-		if not ((startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0):
+		# We only want to override the tab order if the caret is not within the focused node.
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if focusInfo.isOverlapping(caretInfo):
 			return False
 
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
-			newDocHandle, newID, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
+			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
 		except StopIteration:
 			return False
 
 		# Finally, focus the node.
-		obj = self.getNVDAObjectFromIdentifier(newDocHandle, newID)
+		# TODO: Better way to get a field identifier from a node.
+		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+		obj = newInfo.NVDAObjectAtStart
 		if obj == api.getFocusObject():
 			# This node is already focused, so we need to move to and speak this node here.
-			newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
 			newCaret = newInfo.copy()
 			newCaret.collapse()
 			self._set_selection(newCaret,reason=speech.REASON_FOCUS)
