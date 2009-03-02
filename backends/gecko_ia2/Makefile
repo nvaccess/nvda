@@ -12,8 +12,8 @@ CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\VBufBackend_gecko_ia2.dll
 
-$(TOPDIR)\ia2\ia2_i.c:
-	cd $(TOPDIR)\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
+$(TOPDIR)\deps\ia2\ia2_i.c:
+	cd $(TOPDIR)\deps\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
 $(OUTDIR)\VBufBase.lib:
 	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
