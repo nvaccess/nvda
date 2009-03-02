@@ -84,7 +84,7 @@ class Gecko_ia2(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, IAccessibleHandler.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		docHandle=obj.IAccessibleObject.windowHandle
+		docHandle=obj.windowHandle
 		ID=obj.IAccessibleObject.uniqueID
 		return docHandle,ID
 
@@ -94,8 +94,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def event_gainFocus(self,obj,nextHandler):
 		try:
-			docHandle=obj.IAccessibleObject.windowHandle
-			ID=obj.IAccessibleObject.uniqueID
+			docHandle,ID=self.getIdentifierFromNVDAObject(obj)
 		except:
 			return nextHandler()
 		if not self.passThrough and self._lastFocusIdentifier==(docHandle,ID):
@@ -255,8 +254,7 @@ class Gecko_ia2(VirtualBuffer):
 			oldDocHandle,oldID=oldInfo.fieldIdentifierAtStart
 		except:
 			oldDocHandle=oldID=0
-		docHandle=obj.IAccessibleObject.windowHandle
-		ID=obj.IAccessibleObject.uniqueID
+		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
 		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
 			try:
 				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
