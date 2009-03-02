@@ -11,6 +11,7 @@
 
 #include <string>
 #include <map>
+#include <set>
 #include "libEntry.h"
 #include "lock.h"
 
@@ -28,6 +29,11 @@ class VBUFLIBENTRY VBufStorage_fieldNode_t;
 class VBUFLIBENTRY VBufStorage_controlFieldNode_t;
 class VBUFLIBENTRY VBufStorage_textFieldNode_t;
 class VBUFLIBENTRY VBufStorage_controlFieldNodeIdentifier_t;
+
+/**
+ * a set of control field nodes.
+ */
+typedef std::set<VBufStorage_controlFieldNode_t*> VBufStorage_controlFieldNodeSet_t;
 
 /** 
  * Holds values that can together uniquely identify a control field in a buffer. 
@@ -305,6 +311,13 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	public:
 
+/**
+ * retreaves the node's doc handle and ID.
+  * @param docHandle a memory location in which the doc handle will be placed.
+ * @param ID the memory location in which the ID will be placed.
+ */
+	bool getIdentifier(int* docHandle, int* ID);
+
 	virtual std::wstring getDebugInfo() const;
 
 };
@@ -558,6 +571,20 @@ class VBufStorage_buffer_t {
   * @return true if successfull, false otherwize.
  */ 
 	bool getLineOffsets(int offset, int maxLineLength, bool useScreenLayout, int *startOffset, int *endOffset);
+
+/**
+ * Does this buffer have content?
+ * true if there is content, false otherwise.
+ */
+	bool hasContent();
+
+/**
+ * Is one node a descendant of another.
+ * @param parent the parent node.
+ * @param descendant the descendant node.
+ * @returns True if descendant is a descendant of parent, false otherwise.
+ */
+	bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
 
 	std::wstring getDebugInfo() const;
 

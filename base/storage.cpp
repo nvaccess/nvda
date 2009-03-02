@@ -349,6 +349,12 @@ VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, in
 	DEBUG_MSG(L"controlFieldNode initialization at "<<this<<L", with docHandle of "<<identifier.docHandle<<L" and ID of "<<identifier.ID); 
 }
 
+bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
+	*docHandle=this->identifier.docHandle;
+	*ID=this->identifier.ID;
+	return true;
+}
+
 std::wstring VBufStorage_controlFieldNode_t::getDebugInfo() const {
 	std::wostringstream s;
 	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID;  
@@ -550,6 +556,10 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
 	}
+	if(parent==NULL&&previous!=NULL) {
+		DEBUG_MSG(L"Can not add more than one node at root level");
+		return NULL;
+	}
 	VBufStorage_controlFieldNode_t* controlFieldNode=new VBufStorage_controlFieldNode_t(docHandle,ID,isBlock);
 	assert(controlFieldNode); //controlFieldNode must have been allocated
 	DEBUG_MSG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
@@ -573,6 +583,10 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
 	}
+	if(parent==NULL) {
+		DEBUG_MSG(L"Can not add a text field node at the root of the buffer");
+		return NULL;
+	}
 	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(text);
 	assert(textFieldNode); //controlFieldNode must have been allocated
 	DEBUG_MSG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
@@ -585,10 +599,15 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer) {
 	assert(buffer); //Buffer can't be NULL
 	assert(buffer!=this); //cannot merge a buffer into itself
-	assert(buffer->rootNode); //buffer must contain nodes
 	DEBUG_MSG(L"Merging buffer at "<<buffer<<L" in to this buffer with parent at "<<parent<<L" and previous at "<<previous);
-	insertSubtree(parent,previous,buffer->rootNode);
-	buffer->rootNode=NULL;
+	if(buffer->rootNode) {
+		DEBUG_MSG(L"Inserting nodes from buffer");
+		insertSubtree(parent,previous,buffer->rootNode);
+		buffer->rootNode=NULL;
+	} else {
+		DEBUG_MSG(L"Buffer empty");
+	}
+	buffer->controlFieldNodesByIdentifier.clear();
 	DEBUG_MSG(L"mergeBuffer complete");
 	return true;
 }
@@ -956,6 +975,24 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	return true;
 }
 
+bool VBufStorage_buffer_t::hasContent() {
+	return (this->rootNode)?true:false;
+}
+
+bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant) {
+	assert(parent);
+	assert(descendant);
+	DEBUG_MSG(L"is node at "<<descendant<<L" a descendant of node at "<<parent);
+	for(VBufStorage_fieldNode_t* tempNode=descendant->parent;tempNode!=NULL;tempNode=tempNode->parent) {
+		if(tempNode==parent) {
+			DEBUG_MSG(L"Node is a descendant");
+			return true;
+		}
+	}
+	DEBUG_MSG(L"Not a descendant");
+	return false;
+}
+ 
 std::wstring VBufStorage_buffer_t::getDebugInfo() const {
 	std::wostringstream s;
 	s<<L"buffer at "<<this<<L", selectionStart is "<<selectionStart<<L", selectionEnd is "<<selectionEnd;
