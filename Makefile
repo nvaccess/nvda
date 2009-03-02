@@ -12,7 +12,6 @@ TOPDIR=.
 all: 
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
-	cd backends && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 test:
@@ -20,7 +19,6 @@ test:
 	cd tests && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
-	cd backends && $(MAKE) /nologo clean
 	cd base && $(MAKE) /nologo clean
 	cd client && $(MAKE) /nologo clean
 	cd remoteApi && $(MAKE) /nologo clean

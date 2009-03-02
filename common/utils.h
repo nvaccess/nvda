@@ -12,7 +12,7 @@
 #include <string>
 #include <wchar.h>
 #include <map>
-#include "libEntry.h"
+#include <base/libEntry.h>
 
 /**
  * Obtain a user friendly name for a URL if possible.

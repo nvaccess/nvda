@@ -13,7 +13,7 @@
 #include <string>
 #include <sstream>
 #include <ia2/ia2.h>
-#include <ia2/ia2utils.h>
+#include <common/ia2utils.h>
 #include <base/base.h>
 #include "gecko_ia2.h"
 

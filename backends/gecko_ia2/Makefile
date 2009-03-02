@@ -18,7 +18,7 @@ $(TOPDIR)\ia2\ia2_i.c:
 $(OUTDIR)\VBufBase.lib:
 	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBackend_gecko_ia2.dll: gecko_ia2.cpp $(TOPDIR)\base\utils.cpp $(TOPDIR)\ia2\ia2utils.cpp $(TOPDIR)\ia2\ia2_i.c $(OUTDIR)\VBufBase.lib
+$(OUTDIR)\VBufBackend_gecko_ia2.dll: gecko_ia2.cpp $(TOPDIR)\common\utils.cpp $(TOPDIR)\common\ia2utils.cpp $(TOPDIR)\deps\ia2\ia2_i.c $(OUTDIR)\VBufBase.lib
 	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
 
 clean:

@@ -15,7 +15,7 @@ all: $(OUTDIR)\VBufBackend_adobeAcrobat.dll
 $(OUTDIR)\VBufBase.lib:
 	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBackend_adobeAcrobat.dll: adobeAcrobat.obj $(TOPDIR)\AcrobatAccess\AcrobatAccess_i.c $(OUTDIR)\VBufBase.lib
+$(OUTDIR)\VBufBackend_adobeAcrobat.dll: adobeAcrobat.obj $(TOPDIR)\deps\AcrobatAccess\AcrobatAccess_i.c $(OUTDIR)\VBufBase.lib
 	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
 
 clean:

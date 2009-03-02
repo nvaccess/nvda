@@ -17,7 +17,7 @@ all: $(OUTDIR)\VBufBase.dll
 $(TOPDIR)\remoteApi\remoteApi_s.c: $(TOPDIR)\remoteApi\remoteApi.idl $(TOPDIR)\remoteApi\remoteApi.acf
 	cd $(TOPDIR)\remoteApi && $(MAKE) DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBase.dll: storage.cpp utils.cpp lock.cpp backend.cpp container.cpp remoteApi.cpp rpcSrv.cpp $(TOPDIR)\remoteApi\remoteApi_s.c debug.cpp
+$(OUTDIR)\VBufBase.dll: storage.cpp $(TOPDIR)\common\utils.cpp lock.cpp backend.cpp container.cpp remoteApi.cpp rpcSrv.cpp $(TOPDIR)\remoteApi\remoteApi_s.c debug.cpp
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	cl $(CPPFLAGS)  $** /link rpcrt4.lib kernel32.lib /dll /out:$@ /version:$(VERSION)
 
