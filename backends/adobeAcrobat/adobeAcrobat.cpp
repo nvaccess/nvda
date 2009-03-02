@@ -236,14 +236,7 @@ void mainThreadSetup(VBufBackend_t* backend) {
 		assert(winEventHookID!=0); //winEventHookID must be non-0
 		DEBUG_MSG(L"Registered win event callback, with ID "<<winEventHookID);
 	}
-	VBufStorage_buffer_t* storageBuffer=backend->getStorageBuffer();
-	storageBuffer->lock.acquire();
-	//Render buffer
-	IAccessible* pacc=IAccessibleFromIdentifier(backend->getRootDocHandle(),backend->getRootID());
-	assert(pacc); //must get a valid IAccessible object
-	fillVBuf(backend->getRootDocHandle(),pacc,storageBuffer,NULL,NULL);
-	pacc->Release();
-	storageBuffer->lock.release();
+	backend->update();
 	#ifdef DEBUG
 	Beep(220,70);
 	#endif
@@ -284,6 +277,15 @@ LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam)
 		assert(res!=0); //unHookWindowsHookEx must return non-0
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
+}
+
+void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID) {
+	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
+	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
+	assert(pacc); //must get a valid IAccessible object
+	fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	pacc->Release();
+	DEBUG_MSG(L"Rendering done");
 }
 
 AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
