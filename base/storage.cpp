@@ -860,6 +860,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	//Some needed variables for searching back and forward
 	VBufStorage_fieldNode_t* node=NULL;
 	int relative, bufferStart, bufferEnd, tempRelativeStart;
+	bool foundHardBreak=false;
 	//Search forward for the next line ending.
 	node = initNode;
 	relative = offset - initBufferStart;
@@ -873,8 +874,9 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative; i < node->length; i++) {
-				if (text[i] == '\n') {
+				if (text[i] == L'\n') {
 					lineEnd = bufferStart + i + 1;
+					foundHardBreak=true;
 					break;
 				}
 				if(iswspace(text[i])) {
@@ -886,7 +888,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 					lastWasSpace = false;
 				}
 			}
-			if (lineEnd != bufferEnd) {
+			if (foundHardBreak) {
 				//A hard line break was found.
 				break;
 			}
@@ -909,6 +911,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	bufferStart = initBufferStart;
 	bufferEnd = initBufferEnd;
 	int lineStart;
+	foundHardBreak=false;
 	do {
 		if(node->length>0&&node->firstChild==NULL) {
 			std::wstring text;
@@ -916,8 +919,9 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative - 1; i >= 0; i--) {
-				if (text[i] == '\n') {
+				if (text[i] == L'\n') {
 					lineStart = bufferStart + i + 1;
+					foundHardBreak=true;
 					break;
 				}
 				if (iswspace(text[i])) {
@@ -929,7 +933,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 					lastWasSpace = false;
 				}
 			}
-			if (lineStart != bufferStart) {
+			if (foundHardBreak) {
 				//A hard line break was found.
 				break;
 			}
