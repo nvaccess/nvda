@@ -1,3 +1,4 @@
+import time
 import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 import virtualBufferHandler
@@ -34,6 +35,7 @@ class AdobeAcrobat(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_adobeAcrobat.dll")
+		self._lastFocusTime = 0
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
@@ -54,7 +56,7 @@ class AdobeAcrobat(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=0
+		ID=obj.event_childID
 		return docHandle,ID
 
 	def event_focusEntered(self,obj,nextHandler):
@@ -81,3 +83,17 @@ class AdobeAcrobat(VirtualBuffer):
 			virtualBufferHandler.reportPassThrough(self)
 		else:
 			obj.doAction(0)
+
+	def _postGainFocus(self, obj):
+		super(AdobeAcrobat, self)._postGainFocus(obj)
+		self._lastFocusTime = time.time()
+
+	def event_valueChange(self, obj, nextHandler):
+		if obj.event_childID == 0:
+			return nextHandler()
+		if time.time() - self._lastFocusTime < 0.05:
+			# A focus change will often cause the document to scroll, which will steal the caret from the focus.
+			# Therefore, ignore scrolling if it is within a short time of the last focus change.
+			return nextHandler()
+		if not self._handleScrollTo(obj):
+			return nextHandler()

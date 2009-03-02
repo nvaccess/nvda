@@ -180,6 +180,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self._passThrough=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
+		self._lastFocusObj = None
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -561,6 +562,112 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def script_shiftTab(self, keyPress):
 		if not self._tabOverride("previous"):
 			keyUtils.sendKey(keyPress)
+
+	def event_focusEntered(self,obj,nextHandler):
+		if self.passThrough:
+			 nextHandler()
+
+	def _shouldIgnoreFocus(self, obj):
+		"""Determines whether focus on a given object should be ignored.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if focus on L{obj} should be ignored, C{False} otherwise.
+		@rtype: bool
+		"""
+		return False
+
+	def _postGainFocus(self, obj):
+		"""Executed after a gainFocus within the virtual buffer.
+		This will not be executed if L{event_gainFocus} determined that it should abort and call nextHandler.
+		@param obj: The object that gained focus.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+
+	def event_gainFocus(self, obj, nextHandler):
+		if not self.passThrough and self._lastFocusObj==obj:
+			# This was the last non-document node with focus, so don't handle this focus event.
+			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
+			# This is not ideal if the user was positioned over a node which cannot receive focus.
+			return
+		if self.VBufHandle is None:
+			return nextHandler()
+		if obj==self.rootNVDAObject:
+			if self.passThrough:
+				return nextHandler()
+			return 
+		if not self.passThrough and self._shouldIgnoreFocus(obj):
+			return
+		self._lastFocusObj=obj
+
+		try:
+			focusInfo = self.makeTextInfo(obj)
+		except:
+			# This object is not in the virtual buffer, even though it resides beneath the document.
+			# Automatic pass through should be enabled in certain circumstances where this occurs.
+			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
+				self.passThrough=True
+				virtualBufferHandler.reportPassThrough(self)
+			return nextHandler()
+
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if not focusInfo.isOverlapping(caretInfo):
+			if not self.passThrough:
+				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
+				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
+				speech.cancelSpeech()
+			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
+			if not self.passThrough:
+				# We read the info from the buffer instead of the control itself.
+				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
+				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			else:
+				nextHandler()
+			focusInfo.collapse()
+			self._set_selection(focusInfo,reason=speech.REASON_FOCUS)
+		else:
+			# The virtual buffer caret was already at the focused node.
+			if not self.passThrough:
+				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
+				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			else:
+				return nextHandler()
+
+		self._postGainFocus(obj)
+
+	def _handleScrollTo(self, obj):
+		"""Handle scrolling the buffer to a given object in response to an event.
+		Subclasses should call this from an event which indicates that the buffer has scrolled.
+		@postcondition: The buffer caret is moved to L{obj} and the buffer content for L{obj} is reported.
+		@param obj: The object to which the buffer should scroll.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if the buffer was scrolled, C{False} if not.
+		@rtype: bool
+		@note: If C{False} is returned, calling events should probably call their nextHandler.
+		"""
+		if not self.VBufHandle:
+			return False
+
+		try:
+			scrollInfo = self.makeTextInfo(obj)
+		except:
+			return False
+
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if not scrollInfo.isOverlapping(caretInfo):
+			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
+			scrollInfo.collapse()
+			self.selection = scrollInfo
+			return True
+
+		return False
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),

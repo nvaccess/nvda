@@ -44,7 +44,6 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_gecko_ia2.dll")
-		self._lastFocusIdentifier=(0,0)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -88,76 +87,16 @@ class Gecko_ia2(VirtualBuffer):
 		ID=obj.IAccessibleObject.uniqueID
 		return docHandle,ID
 
-	def event_focusEntered(self,obj,nextHandler):
-		if self.passThrough:
-			 nextHandler()
+	def _shouldIgnoreFocus(self, obj):
+		if obj.role == controlTypes.ROLE_DOCUMENT:
+			return True
+		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
-	def event_gainFocus(self,obj,nextHandler):
-		try:
-			docHandle,ID=self.getIdentifierFromNVDAObject(obj)
-		except:
-			return nextHandler()
-		if not self.passThrough and self._lastFocusIdentifier==(docHandle,ID):
-			# This was the last non-document node with focus, so don't handle this focus event.
-			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
-			# This is not ideal if the user was positioned over a node which cannot receive focus.
-			return
-		if self.VBufHandle is None:
-			return nextHandler()
-		if obj==self.rootNVDAObject:
-			if self.passThrough:
-				return nextHandler()
-			return 
-		if obj.role==controlTypes.ROLE_DOCUMENT and not self.passThrough:
-			return
-		self._lastFocusIdentifier=(docHandle,ID)
-		#We only want to update the caret and speak the field if we're not in the same one as before
-		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		try:
-			oldDocHandle,oldID=oldInfo.fieldIdentifierAtStart
-		except:
-			oldDocHandle=oldID=0
-		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
-			try:
-				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
-			except:
-				# This object is not in the virtual buffer, even though it resides beneath the document.
-				# Automatic pass through should be enabled in certain circumstances where this occurs.
-				if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
-					self.passThrough=True
-					virtualBufferHandler.reportPassThrough(self)
-				return nextHandler()
-			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
-			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
-			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
-			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
-			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
-			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
-				if not self.passThrough:
-					# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
-					# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
-					speech.cancelSpeech()
-				self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
-				if not self.passThrough:
-					# We read the info from the buffer instead of the control itself.
-					speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
-					# However, we still want to update the speech property cache so that property changes will be spoken properly.
-					speech.speakObject(obj,speech.REASON_ONLYCACHE)
-				else:
-					nextHandler()
-				newInfo.collapse()
-				self._set_selection(newInfo,reason=speech.REASON_FOCUS)
-		else:
-			# The virtual buffer caret was already at the focused node.
-			if not self.passThrough:
-				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
-				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,speech.REASON_ONLYCACHE)
-			else:
-				return nextHandler()
+	def _postGainFocus(self, obj):
 		if hasattr(obj,'IAccessibleTextObject'):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
+		super(Gecko_ia2, self)._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
 		return controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
@@ -245,28 +184,6 @@ class Gecko_ia2(VirtualBuffer):
 			return virtualBufferHandler.killVirtualBuffer(self)
 		return nextHandler()
 
-	def event_scrollingStart(self,obj,nextHandler):
-		if self.VBufHandle is None:
+	def event_scrollingStart(self, obj, nextHandler):
+		if not self._handleScrollTo(obj):
 			return nextHandler()
-		#We only want to update the caret and speak the field if we're not in the same one as before
-		oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		try:
-			oldDocHandle,oldID=oldInfo.fieldIdentifierAtStart
-		except:
-			oldDocHandle=oldID=0
-		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
-		if (docHandle!=oldDocHandle or ID!=oldID) and ID!=0:
-			try:
-				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
-			except:
-				#log.error("VBufClient_getBufferOffsetsFromFieldIdentifier",exc_info=True)
-				return nextHandler()
-			newInfo=self.makeTextInfo(textHandler.Offsets(start,end))
-			startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
-			startToEnd=newInfo.compareEndPoints(oldInfo,"startToEnd")
-			endToStart=newInfo.compareEndPoints(oldInfo,"endToStart")
-			endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
-			if (startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0:
-				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
-				newInfo.collapse()
-				self.selection=newInfo
