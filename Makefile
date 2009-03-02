@@ -9,8 +9,13 @@
 TOPDIR=.
 !include $(TOPDIR)\make.opts
 
+!if !defined(BACKEND)
+BACKEND=""
+!endif
+
 all: 
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
+	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo DEBUG=$(DEBUG) 
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
 
@@ -19,6 +24,7 @@ test:
 	cd tests && $(MAKE) /nologo DEBUG=$(DEBUG)
 
 clean:
+	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo clean
 	cd base && $(MAKE) /nologo clean
 	cd client && $(MAKE) /nologo clean
 	cd remoteApi && $(MAKE) /nologo clean
