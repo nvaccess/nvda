@@ -193,7 +193,8 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 				} else {
 					DEBUG_MSG(L"Error in calling fillVBuf");
 				}
-				DEBUG_MSG(L"releasing child IDispatch object");
+				DEBUG_MSG(L"releasing child IAccessible object");
+				childPacc->Release();
 			}
 			VariantClear(&(varChildren[i]));
 		}
