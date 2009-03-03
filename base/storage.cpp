@@ -868,6 +868,8 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	bufferEnd = initBufferEnd;
 	int lineEnd;
 	do {
+	possibleBreaks.insert(bufferStart);
+	possibleBreaks.insert(bufferEnd);
 		if(node->length>0&&node->firstChild==NULL) {
 			std::wstring text;
 			lineEnd = bufferEnd;
@@ -913,6 +915,8 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	int lineStart;
 	foundHardBreak=false;
 	do {
+		possibleBreaks.insert(bufferStart);
+		possibleBreaks.insert(bufferEnd);
 		if(node->length>0&&node->firstChild==NULL) {
 			std::wstring text;
 			lineStart = bufferStart;
