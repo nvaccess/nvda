@@ -1,16 +1,10 @@
-import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
-import sayAllHandler
-import speech
-import eventHandler
 import IAccessibleHandler
-import globalVars
 from logHandler import log
-import api
 import textHandler
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
