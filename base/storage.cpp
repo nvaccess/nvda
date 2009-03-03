@@ -103,15 +103,15 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::wstring& attribsString)
 		VBufStorage_attributeMap_t::iterator foundIterator=attributes.find(i->first);
 		const std::wstring& foundValue=(foundIterator!=attributes.end())?foundIterator->second:L"";
 		DEBUG_MSG(L"node's value for this attribute is "<<foundValue);
-		multiValueAttribsMap::iterator j;
+		multiValueAttribsMap::iterator upperBound=attribsMap.upper_bound(i->first);
 		bool innerMatch=false;
-		for(j=i;j!=attribsMap.end()&&j->first==i->first;j++) {
+		for(multiValueAttribsMap::iterator j=i;j!=upperBound;j++) { 
 			DEBUG_MSG(L"Checking value "<<j->second);
-			if(j->second==foundValue) {
+			if(!innerMatch&&(j->second==foundValue)) {
 				DEBUG_MSG(L"values match");
 				innerMatch=true;
-				break;
 			}
+			i=j;
 		}
 		outerMatch=innerMatch;
 		if(!outerMatch) { 
