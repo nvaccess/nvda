@@ -68,6 +68,8 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 			try:
 				docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
 				node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+				if not node:
+					raise Exception
 				start = ctypes.c_int()
 				end = ctypes.c_int()
 				VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
@@ -437,13 +439,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 			activate, index, text = args
 			text, startOffset, endOffset = nodes[index]
 			info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
+			newCaret = info.copy()
+			newCaret.collapse()
+			self.selection = newCaret
 			if activate:
 				self._activatePosition(info)
 			else:
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-				info.collapse()
-				self.selection = info
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")
