@@ -274,11 +274,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.passThrough:
 			nextHandler()
 
-	def _activateField(self, info):
-		pass
+	def _activateNVDAObject(self, obj):
+		"""Activate an object in response to a user request.
+		This should generally perform the default action or click on the object.
+		@param obj: The object to activate.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		obj.doAction()
 
-	def _activateContextMenuForField(self,docHandle,ID):
-		pass
+	def _activatePosition(self, info):
+		obj = info.NVDAObjectAtStart
+		if self.shouldPassThrough(obj):
+			obj.setFocus()
+			self.passThrough = True
+			virtualBufferHandler.reportPassThrough(self)
+		else:
+			self._activateNVDAObject(obj)
 
 	def _set_selection(self, info, reason=speech.REASON_CARET):
 		super(VirtualBuffer, self)._set_selection(info)
@@ -314,7 +325,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		self._activateField(info)
+		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
@@ -427,7 +438,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			text, startOffset, endOffset = nodes[index]
 			info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 			if activate:
-				self._activateField(info)
+				self._activatePosition(info)
 			else:
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)

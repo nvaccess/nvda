@@ -75,15 +75,6 @@ class AdobeAcrobat(VirtualBuffer):
 	def _shouldSetFocusToObj(self, obj):
 		return controlTypes.STATE_FOCUSABLE in obj.states
 
-	def _activateField(self, info):
-		obj = info.NVDAObjectAtStart
-		if self.shouldPassThrough(obj):
-			obj.setFocus()
-			self.passThrough = True
-			virtualBufferHandler.reportPassThrough(self)
-		else:
-			obj.doAction(0)
-
 	def _postGainFocus(self, obj):
 		super(AdobeAcrobat, self)._postGainFocus(obj)
 		self._lastFocusTime = time.time()
