@@ -524,7 +524,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(childDefaction) SysFreeString(childDefaction);
 					#endif
 					DEBUG_MSG(L"calling fillVBuf with childPacc ");
-					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable))!=NULL) {
+					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in fillVBuf");
@@ -577,7 +577,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 							continue;
 						}
 						DEBUG_MSG(L"calling _filVBufHelper with child object ");
-						if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable))!=NULL) {
+						if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
 							previousNode=tempNode;
 						} else {
 							DEBUG_MSG(L"Error in calling fillVBuf");
