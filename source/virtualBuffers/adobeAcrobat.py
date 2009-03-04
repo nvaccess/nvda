@@ -14,6 +14,9 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			accRole=int(accRole)
 		else:
 			accRole = accRole.lower()
+		if accRole == IAccessibleHandler.ROLE_SYSTEM_COLUMNHEADER:
+			# Treat column headers just like any other cell.
+			accRole = IAccessibleHandler.ROLE_SYSTEM_CELL
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		newAttrs=textHandler.ControlField()
@@ -57,6 +60,8 @@ class AdobeAcrobat(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="link":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
+		elif nodeType=="table":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
