@@ -57,6 +57,8 @@ class AdobeAcrobat(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="link":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
+		elif nodeType=="table":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
