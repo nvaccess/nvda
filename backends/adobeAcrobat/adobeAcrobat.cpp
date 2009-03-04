@@ -82,7 +82,10 @@ long getAccID(IAccessible* pacc) {
 	return ID;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode) {
+VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	int indexInParent=0, long tableID=0, int rowNumber=0
+) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -113,6 +116,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	DEBUG_MSG(L"Added  node at "<<parentNode);
 
 	// Get role with accRole
+	long role = 0;
 	DEBUG_MSG(L"Get role with accRole");
 	{
 		wostringstream s;
@@ -127,6 +131,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		} else if(varRole.vt==VT_I4) {
 			DEBUG_MSG(L"Got role of " << varRole.lVal);
 			s << varRole.lVal;
+			role = varRole.lVal;
 		}
 		parentNode->addAttribute(L"IAccessible::role",s.str().c_str());
 		VariantClear(&varRole);
@@ -164,6 +169,29 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	}
 	DEBUG_MSG(L"childCount is "<<childCount);
 
+	// Handle table information.
+	if (role == ROLE_SYSTEM_TABLE) {
+		DEBUG_MSG(L"This is a table, adding table-id attribute");
+		wostringstream s;
+		s << ID;
+		parentNode->addAttribute(L"table-id", s.str());
+	} else if (role == ROLE_SYSTEM_ROW) {
+		DEBUG_MSG(l"This is a table row, setting rowNumber");
+		rowNumber = indexInParent + 1;
+	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) {
+		DEBUG_MSG(L"This is a table cell, adding attributes");
+		wostringstream s;
+		s << tableID;
+		parentNode->addAttribute(L"table-id", s.str());
+		s.str(L"");
+		s << ((role == ROLE_SYSTEM_COLUMNHEADER) ? 0 : rowNumber);
+		parentNode->addAttribute(L"table-rownumber", s.str());
+		s.str(L"");
+		// The parent is a row, so indexInParent is the column number.
+		s << indexInParent + 1;
+		parentNode->addAttribute(L"table-columnnumber", s.str());
+	}
+
 	// Iterate through the children.
 	if (childCount > 0) {
 		DEBUG_MSG(L"Allocate memory to hold children");
@@ -188,7 +216,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 					continue;
 				}
 				DEBUG_MSG(L"calling filVBuf with child object ");
-				if((tempNode=fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode))!=NULL) {
+				if((tempNode=fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
 					previousNode=tempNode;
 				} else {
 					DEBUG_MSG(L"Error in calling fillVBuf");
