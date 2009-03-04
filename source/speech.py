@@ -688,8 +688,12 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and "table-id" in attrs:
+		return _("table with %s columns and %s rows") % (attrs.get("table-columncount"), attrs.get("table-rowcount"))
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and "table-id" in attrs)):
 		return _("out of %s")%roleText
+	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLECELL and "table-id" in attrs:
+		return _("row %s column %s") % (attrs.get("table-rownumber"), attrs.get("table-columnnumber"))
 	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
