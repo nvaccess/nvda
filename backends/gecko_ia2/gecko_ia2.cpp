@@ -99,7 +99,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode) {
+VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, long tableID=0) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -301,6 +301,68 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		}
 	}
 	parentNode->setIsBlock(isBlockElement);
+	// Handle table cell information.
+	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
+	// If paccTable is not NULL, it is the table interface for the table above this object.
+	if (paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) {
+		DEBUG_MSG(L"table-cell-index object attribute is " << IA2AttribsMapIt->second << ", getting table cell information");
+		wostringstream s;
+		// tableID is the IAccessible2::uniqueID for paccTable.
+		s << tableID;
+		parentNode->addAttribute(L"table-id", s.str());
+		s.str(L"");
+		long cellIndex = _wtoi(IA2AttribsMapIt->second.c_str());
+		long row, column, rowExtents, columnExtents;
+		boolean isSelected;
+		if ((res = paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+			DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex succeeded, adding attributes");
+			s << row + 1;
+			parentNode->addAttribute(L"table-rownumber", s.str());
+			s.str(L"");
+			s << column + 1;
+			parentNode->addAttribute(L"table-columnnumber", s.str());
+		}
+		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
+		paccTable = NULL;
+		tableID = 0;
+	}
+	// Handle table information.
+	// Don't release the table unless it was created in this call.
+	bool releaseTable = false;
+	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
+	if (!paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) == IA2AttribsMap.end()) {
+		// Try to get table information.
+		DEBUG_MSG(L"paccTable is NULL and this is not a layout table, trying to get table information");
+		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable");
+		if((res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
+			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable, returned "<<res);
+			paccTable=NULL;
+		}
+		DEBUG_MSG(L"paccTable is "<<paccTable);
+		if (paccTable) {
+			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
+			releaseTable = true;
+			// This is a table, so add its information as attributes.
+			wostringstream s;
+			tableID = ID;
+			s << ID;
+			parentNode->addAttribute(L"table-id", s.str());
+			s.str(L"");
+			long count = 0;
+			DEBUG_MSG(L"Getting row count");
+			if ((res = paccTable->get_nRows(&count)) == S_OK) {
+				DEBUG_MSG(L"row count is " << count);
+				s << count;
+				parentNode->addAttribute(L"table-rowcount", s.str());
+				s.str(L"");
+			}
+			if ((res = paccTable->get_nColumns(&count)) == S_OK) {
+				DEBUG_MSG(L"column count is " << count);
+				s << count;
+				parentNode->addAttribute(L"table-columncount", s.str());
+			}
+		}
+	}
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
 	//get IAccessibleText interface
@@ -462,7 +524,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(childDefaction) SysFreeString(childDefaction);
 					#endif
 					DEBUG_MSG(L"calling fillVBuf with childPacc ");
-					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode))!=NULL) {
+					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in fillVBuf");
@@ -515,7 +577,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 							continue;
 						}
 						DEBUG_MSG(L"calling _filVBufHelper with child object ");
-						if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode))!=NULL) {
+						if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable))!=NULL) {
 							previousNode=tempNode;
 						} else {
 							DEBUG_MSG(L"Error in calling fillVBuf");
@@ -590,6 +652,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	if(paccHypertext!=NULL) {
 		DEBUG_MSG(L"Release paccHypertext");
 		paccHypertext->Release();
+	}
+	if (releaseTable) {
+		DEBUG_MSG(L"Release paccTable");
+		paccTable->Release();
 	}
 	DEBUG_MSG(L"Returning node at "<<parentNode);
 	return parentNode;
