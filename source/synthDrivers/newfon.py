@@ -111,11 +111,14 @@ class SynthDriver(SynthDriver):
 	name="newfon"
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
 	hasVoice=True
+	hasVolume = True
 	hasRate=True
 	hasVariant=True
+	_volume = 100
 	_variant="rus"
 	hasPitch = True
 	_pitch = 50
+	_rate=70
 	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
 	availableVariants = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
 	newfon_lib = None
@@ -178,11 +181,19 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, value):
 		self.newfon_lib.set_voice(int(value))
 
+	def _get_volume(self):
+		return self._volume
+
+	def _set_volume(self,value):
+		self.newfon_lib.set_volume(value)
+		self._volume = value
+
 	def _get_rate(self):
-		return self.newfon_lib.get_rate()
+		return self._rate
 
 	def _set_rate(self, value):
 		self.newfon_lib.set_rate(value)
+		self._rate = value
 
 	def _set_pitch(self, value):
 		if value <= 50: value = 50
@@ -201,3 +212,6 @@ class SynthDriver(SynthDriver):
 
 	def _set_variant(self, variant):
 		self._variant = variant
+		if not self.hasDictLib: return
+		if variant == "rus": self.newfon_lib.set_dictionary(1)
+		else: self.newfon_lib.set_dictionary(0)
