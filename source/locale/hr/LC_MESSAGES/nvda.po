@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-01-08 13:10+Croatian Standard Time\n"
-"PO-Revision-Date: 2009-01-08 13:10+Zagreb\n"
+"POT-Creation-Date: 2009-05-03 12:00+Croatian Standard Time\n"
+"PO-Revision-Date: 2009-05-03 12:00+Zagreb\n"
 "Last-Translator: Mario Percinic <mario.percinic@gmail.com> and Hrvoje "
 "Katic<Hrvojekatic@gmail.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
@@ -16,94 +16,96 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:1004 appModules\_default.py:758
+#: NVDAObjects\IAccessible\__init__.py:1113 appModules\_default.py:774
 msgid "%d percent"
 msgstr "%d posto"
-
-#: NVDAObjects\IAccessible\edit.py:529
-msgid "unknown"
-msgstr "nepoznato"
-
-#: NVDAObjects\IAccessible\edit.py:531
-msgid "%s embedded object"
-msgstr "%s ugrađeni  objekt"
-
-#: NVDAObjects\IAccessible\edit.py:533 controlTypes.py:235
-msgid "embedded object"
-msgstr "ugrađeni  objekt"
-
-#: NVDAObjects\IAccessible\excel.py:48
-msgid "NVDA Excel Cell Editor"
-msgstr "NVDA uređivač Excel ćelije"
-
-#: NVDAObjects\IAccessible\excel.py:50
-msgid "Enter cell contents"
-msgstr "Unesi sadržaj ćelije"
-
-#: NVDAObjects\IAccessible\excel.py:102 NVDAObjects\IAccessible\excel.py:208
-#: controlTypes.py:313
-msgid "selected"
-msgstr "odabrano"
-
-#: NVDAObjects\IAccessible\excel.py:102 NVDAObjects\IAccessible\excel.py:220
-msgid "through"
-msgstr "kroz"
-
-#: NVDAObjects\IAccessible\excel.py:106 NVDAObjects\IAccessible\excel.py:224
-msgid "has formula"
-msgstr "ima formulu"
-
-#: NVDAObjects\IAccessible\excel.py:135
-msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "Premješta na ćeliju i izgovara njezine koordinate i sadržaj"
-
-#: NVDAObjects\IAccessible\excel.py:140
-msgid "font"
-msgstr "font"
-
-#: NVDAObjects\IAccessible\excel.py:141
-msgid "point"
-msgstr "cijelih"
-
-#: NVDAObjects\IAccessible\excel.py:143 controlTypes.py:297 speech.py:717
-#: textBuffer.py:266 textBuffer.py:318
-msgid "bold"
-msgstr "podebljavanje"
-
-#: NVDAObjects\IAccessible\excel.py:145 speech.py:722 textBuffer.py:273
-#: textBuffer.py:320
-msgid "italic"
-msgstr "kurziv"
-
-#: NVDAObjects\IAccessible\excel.py:147 characterSymbols.py:50
-#: controlTypes.py:299 textBuffer.py:280 textBuffer.py:322
-msgid "underline"
-msgstr "potcrtavanje"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:162
 msgid "%s items"
 msgstr "%s elemenata"
 
-#: NVDAObjects\IAccessible\winword.py:317
-#: NVDAObjects\IAccessible\winword.py:333
-#: NVDAObjects\IAccessible\winword.py:349
-#: NVDAObjects\IAccessible\winword.py:365
+#: NVDAObjects\window\__init__.py:276
+msgid "Desktop"
+msgstr "Radna površina"
+
+#: NVDAObjects\window\edit.py:531
+msgid "unknown"
+msgstr "nepoznato"
+
+#: NVDAObjects\window\edit.py:533
+msgid "%s embedded object"
+msgstr "%s ugrađeni  objekt"
+
+#: NVDAObjects\window\edit.py:535 controlTypes.py:235
+msgid "embedded object"
+msgstr "ugrađeni  objekt"
+
+#: NVDAObjects\window\excel.py:45
+msgid "NVDA Excel Cell Editor"
+msgstr "NVDA uređivač Excel ćelije"
+
+#: NVDAObjects\window\excel.py:47
+msgid "Enter cell contents"
+msgstr "Unesi sadržaj ćelije"
+
+#: NVDAObjects\window\excel.py:94 NVDAObjects\window\excel.py:205
+#: controlTypes.py:313
+msgid "selected"
+msgstr "odabrano"
+
+#: NVDAObjects\window\excel.py:94 NVDAObjects\window\excel.py:217
+msgid "through"
+msgstr "kroz"
+
+#: NVDAObjects\window\excel.py:98 NVDAObjects\window\excel.py:221
+msgid "has formula"
+msgstr "ima formulu"
+
+#: NVDAObjects\window\excel.py:127
+msgid "Moves to a cell and speaks its coordinates and content"
+msgstr "Premješta na ćeliju i izgovara njezine koordinate i sadržaj"
+
+#: NVDAObjects\window\excel.py:132
+msgid "font"
+msgstr "font"
+
+#: NVDAObjects\window\excel.py:133
+msgid "point"
+msgstr "cijelih"
+
+#: NVDAObjects\window\excel.py:135 controlTypes.py:297 speech.py:729
+#: textBuffer.py:266 textBuffer.py:318
+msgid "bold"
+msgstr "podebljavanje"
+
+#: NVDAObjects\window\excel.py:137 speech.py:734 textBuffer.py:273
+#: textBuffer.py:320
+msgid "italic"
+msgstr "kurziv"
+
+#: NVDAObjects\window\excel.py:139 characterSymbols.py:50 controlTypes.py:299
+#: textBuffer.py:280 textBuffer.py:322
+msgid "underline"
+msgstr "potcrtavanje"
+
+#: NVDAObjects\window\winword.py:312 NVDAObjects\window\winword.py:328
+#: NVDAObjects\window\winword.py:344 NVDAObjects\window\winword.py:360
 msgid "not in table"
 msgstr "nije u tablici"
 
-#: NVDAObjects\IAccessible\winword.py:326
+#: NVDAObjects\window\winword.py:321
 msgid "bottom of column"
 msgstr "dno stupca"
 
-#: NVDAObjects\IAccessible\winword.py:342
+#: NVDAObjects\window\winword.py:337
 msgid "top of column"
 msgstr "vrh stupca"
 
-#: NVDAObjects\IAccessible\winword.py:358
+#: NVDAObjects\window\winword.py:353
 msgid "end of row"
 msgstr "kraj reda"
 
-#: NVDAObjects\IAccessible\winword.py:374
+#: NVDAObjects\window\winword.py:369
 msgid "beginning of row"
 msgstr "Početak reda"
 
@@ -111,32 +113,32 @@ msgstr "Početak reda"
 msgid "Error in appModule %s"
 msgstr "Greška u aplikacijskom modulu %s"
 
-#: appModules\_default.py:55 appModules\_default.py:132
-#: appModules\_default.py:142 appModules\_default.py:152
-#: appModules\_default.py:162 appModules\_default.py:645
-#: appModules\_default.py:721 appModules\_default.py:731
-#: appModules\_default.py:741 appModules\winamp.py:75 appModules\winamp.py:85
+#: appModules\_default.py:42 appModules\_default.py:139
+#: appModules\_default.py:149 appModules\_default.py:159
+#: appModules\_default.py:169 appModules\_default.py:661
+#: appModules\_default.py:737 appModules\_default.py:747
+#: appModules\_default.py:757 appModules\winamp.py:75 appModules\winamp.py:85
 #: keyboardHandler.py:51 keyboardHandler.py:53 keyboardHandler.py:55
-#: virtualBuffers\__init__.py:265
+#: virtualBuffers\__init__.py:286
 msgid "on"
 msgstr "uključeno"
 
-#: appModules\_default.py:58 appModules\_default.py:129
-#: appModules\_default.py:139 appModules\_default.py:149
-#: appModules\_default.py:159 appModules\_default.py:540
-#: appModules\_default.py:642 appModules\_default.py:701
-#: appModules\_default.py:718 appModules\_default.py:728
-#: appModules\_default.py:738 appModules\winamp.py:77 appModules\winamp.py:87
-#: gui\settingsDialogs.py:457 keyboardHandler.py:51 keyboardHandler.py:53
-#: keyboardHandler.py:55 virtualBuffers\__init__.py:265
+#: appModules\_default.py:45 appModules\_default.py:136
+#: appModules\_default.py:146 appModules\_default.py:156
+#: appModules\_default.py:166 appModules\_default.py:556
+#: appModules\_default.py:658 appModules\_default.py:717
+#: appModules\_default.py:734 appModules\_default.py:744
+#: appModules\_default.py:754 appModules\winamp.py:77 appModules\winamp.py:87
+#: gui\settingsDialogs.py:472 keyboardHandler.py:51 keyboardHandler.py:53
+#: keyboardHandler.py:55 virtualBuffers\__init__.py:286
 msgid "off"
 msgstr "isključeno"
 
-#: appModules\_default.py:60
+#: appModules\_default.py:47
 msgid "keyboard help %s"
 msgstr "tipkovni pomoćnik %s"
 
-#: appModules\_default.py:61
+#: appModules\_default.py:48
 msgid ""
 "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
 "tell you what script is associated with it, if any."
@@ -145,7 +147,7 @@ msgstr ""
 "neku od tipaka na tipkovnici, dobija se odgovor koja tipka je odgovorna za "
 "koju skriptu (ako skripta postoji)"
 
-#: appModules\_default.py:77
+#: appModules\_default.py:64
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
@@ -153,32 +155,32 @@ msgstr ""
 "Izvještava o tekućem redku ispod aplikacijskog kursora. Ukoliko se ova "
 "tipka pritisne dvaput, tekući redak se slovka."
 
-#: appModules\_default.py:80
+#: appModules\_default.py:67
 msgid "left click"
 msgstr "lijevi klik"
 
-#: appModules\_default.py:83
+#: appModules\_default.py:70
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Izvršava jednokratni lijevi klik miša na trenutnom položaju miša"
 
-#: appModules\_default.py:86
+#: appModules\_default.py:73
 msgid "right click"
 msgstr "desni klik"
 
-#: appModules\_default.py:89
+#: appModules\_default.py:76
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Izvršava jednokratni desni klik miša na trenutnom položaju miša"
 
-#: appModules\_default.py:98 cursorManager.py:220
+#: appModules\_default.py:85 cursorManager.py:220
 msgid "no selection"
 msgstr "nema odabira"
 
-#: appModules\_default.py:100 speech.py:256 speech.py:347 speech.py:360
+#: appModules\_default.py:87 speech.py:260 speech.py:351 speech.py:364
 #: textBuffer.py:537 textBuffer.py:541 textBuffer.py:543 textBuffer.py:549
 msgid "selected %s"
 msgstr "odabrano %s"
 
-#: appModules\_default.py:101
+#: appModules\_default.py:88
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
@@ -186,7 +188,7 @@ msgstr ""
 "Izgovara trenutni odabir unutar kontrola za uređivanje i unutar dokumenata."
 "Ukoliko nema odabira, tako će i biti izgovoreno."
 
-#: appModules\_default.py:109
+#: appModules\_default.py:96
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
@@ -194,60 +196,65 @@ msgstr ""
 "Ukoliko se pritisne jednom, izvještava o tekućem vremenu. Ukoliko se "
 "pritisne dvaput, izvještava o tekućem datumu."
 
-#: appModules\_default.py:113
+#: appModules\_default.py:101 appModules\_default.py:110
+#: appModules\_default.py:119 appModules\_default.py:128
+msgid "No settings"
+msgstr "Nema postavki"
+
+#: appModules\_default.py:105
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr ""
 "Povećava trenutno aktivnu postavku u lancu postavki za govornu jedinicu"
 
-#: appModules\_default.py:117
+#: appModules\_default.py:114
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr ""
 "Smanjuje trenutno aktivnu postavku u lancu postavki za govornu jedinicu"
 
-#: appModules\_default.py:121
+#: appModules\_default.py:123
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
 "Premiješta se na sljedeću moguću postavku u lancu postavki za govornu "
 "jedinicu"
 
-#: appModules\_default.py:125
+#: appModules\_default.py:132
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
 "Premiješta se na prethodnu moguću postavku u lancu postavki za govornu "
 "jedinicu"
 
-#: appModules\_default.py:134
+#: appModules\_default.py:141
 msgid "speak typed characters"
 msgstr "izgovor upisanih znakova"
 
-#: appModules\_default.py:135
+#: appModules\_default.py:142
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Uključuje i isključuje izgovor upisanih znakova"
 
-#: appModules\_default.py:144
+#: appModules\_default.py:151
 msgid "speak typed words"
 msgstr "izgovor upisanih riječi"
 
-#: appModules\_default.py:145
+#: appModules\_default.py:152
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Uključuje i isključuje izgovor upisanih riječi"
 
-#: appModules\_default.py:154
+#: appModules\_default.py:161
 msgid "speak command keys"
 msgstr "izgovor naredbenih tipaka"  
 
-#: appModules\_default.py:155
+#: appModules\_default.py:162
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
 "uključuje i isključuje izgovor utipkanih tipaka koje nisu određeni znakovi"
 
-#: appModules\_default.py:164
+#: appModules\_default.py:171
 msgid "speak punctuation"
 msgstr "izgovor interpunkcije"
 
-#: appModules\_default.py:165
+#: appModules\_default.py:172
 msgid ""
 "Toggles on and off the speaking of punctuation. When on NVDA will say the "
 "names of punctuation symbols, when off it will be up to the synthesizer as "
@@ -257,43 +264,43 @@ msgstr ""
 "izgovarati imena interpunkcijskih simbola, a kada je isključeno tada ovisi "
 "o postavkama govorne jedinicekako će interpunkcija biti izgovorena"
 
-#: appModules\_default.py:168
+#: appModules\_default.py:175
 msgid "Move mouse to navigator"
 msgstr "Premješta miš na navigator"
 
-#: appModules\_default.py:180
+#: appModules\_default.py:187
 msgid "object has no location"
 msgstr "objekt nema lokaciju"
 
-#: appModules\_default.py:183
+#: appModules\_default.py:190
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Premiješta pokazivač miša na trenutni objekt navigatora"
 
-#: appModules\_default.py:186
+#: appModules\_default.py:193
 msgid "Move navigator object to mouse"
 msgstr "Premješta objekt navigatora na miš"
 
-#: appModules\_default.py:190
+#: appModules\_default.py:197
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
 "Postavlja objekt navigatora na trenutni objekt ispod miša te ga izgovara."
 
-#: appModules\_default.py:195 appModules\_default.py:226
-#: appModules\_default.py:247 appModules\_default.py:260
-#: appModules\_default.py:273 appModules\_default.py:286
-#: appModules\_default.py:299 appModules\_default.py:322
-#: appModules\_default.py:345 appModules\_default.py:354
-#: appModules\_default.py:683
+#: appModules\_default.py:202 appModules\_default.py:232
+#: appModules\_default.py:253 appModules\_default.py:266
+#: appModules\_default.py:279 appModules\_default.py:292
+#: appModules\_default.py:305 appModules\_default.py:328
+#: appModules\_default.py:351 appModules\_default.py:370
+#: appModules\_default.py:699
 msgid "no navigator object"
 msgstr "nema objekta navigatora"
 
-#: appModules\_default.py:217 appModules\_default.py:664
+#: appModules\_default.py:224 appModules\_default.py:680
 msgid "%s copied to clipboard"
 msgstr "%s kopirano u međuspremnik"
 
-#: appModules\_default.py:221
+#: appModules\_default.py:227
 msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
@@ -301,11 +308,11 @@ msgstr ""
 "Izvještava o trenutnom objektu navigatora  ili ako je pritisnut tri puta "
 "kopira sadržaj i vrijednost navigacijskog objekta u međuspremnik"
 
-#: appModules\_default.py:229
+#: appModules\_default.py:235
 msgid "No location information for navigator object"
 msgstr "Nema informacije olokaciji za navigator objekta"
 
-#: appModules\_default.py:232
+#: appModules\_default.py:238
 msgid ""
 "Object edges positioned %.1f per cent right from left of screen, %.1f per "
 "cent down from top of screen, %.1f per cent left from right of screen, %.1f "
@@ -315,27 +322,27 @@ msgstr ""
 "%.1f po stotinki dolje od vrha ekrana, %.1f po stotinki lijevo od desne "
 "strane ekrana, %.1f gore od dna ekrana"
 
-#: appModules\_default.py:233
+#: appModules\_default.py:239
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Izvještava o visini, širini i položaju trenutnog objekta navigatora"
 
-#: appModules\_default.py:238 appModules\_default.py:623
+#: appModules\_default.py:244 appModules\_default.py:639
 msgid "no focus"
 msgstr "nema fokusa"
 
-#: appModules\_default.py:240
+#: appModules\_default.py:246
 msgid "move to focus"
 msgstr "pomakni se na fokus"
 
-#: appModules\_default.py:242
+#: appModules\_default.py:248
 msgid "Sets the navigator object to the current focus"
 msgstr "Postavlja objekt navigacije na trenutni fokus"
 
-#: appModules\_default.py:254
+#: appModules\_default.py:260
 msgid "No parents"
 msgstr "nema roditelja"
 
-#: appModules\_default.py:255
+#: appModules\_default.py:261
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on and "
 "speaks it"
@@ -343,11 +350,11 @@ msgstr ""
 "Postavlja objekt navigatora na roditelj objekta na kojem se trenutno nalazi "
 "te ga izgovara."
 
-#: appModules\_default.py:267
+#: appModules\_default.py:273
 msgid "No next"
 msgstr "Nema sljedećeg"
 
-#: appModules\_default.py:268
+#: appModules\_default.py:274
 msgid ""
 "Sets the navigator object to the object next to the one it is currently on "
 "and speaks it"
@@ -355,11 +362,11 @@ msgstr ""
 "Postavlja objekt navigatora na sljedeći objekt do onog na kojemu se "
 "trenutno nalazi te ga izgovara"
 
-#: appModules\_default.py:280
+#: appModules\_default.py:286
 msgid "No previous"
 msgstr "Nema prethodnog"
 
-#: appModules\_default.py:281
+#: appModules\_default.py:287
 msgid ""
 "Sets the navigator object to the object previous to the one it is currently "
 "on and speaks it"
@@ -367,11 +374,11 @@ msgstr ""
 "Postavlja objekt navigatora na prethodni objekt do onog na kojem se trenutno "
 "nalazi te ga izgovara."
 
-#: appModules\_default.py:293
+#: appModules\_default.py:299
 msgid "No children"
 msgstr "Nema djece"
 
-#: appModules\_default.py:294
+#: appModules\_default.py:300
 msgid ""
 "Sets the navigator object to the first child object of the one it is "
 "currently on and speaks it"
@@ -379,29 +386,37 @@ msgstr ""
 "Postavlja objekt navigatora na prvi dijete objekt do onog na kojem se "
 "trenutno nalazi te ga izgovara"
 
-#: appModules\_default.py:316
+#: appModules\_default.py:322
 msgid "end of flow"
 msgstr "kraj protoka"
 
-#: appModules\_default.py:317
+#: appModules\_default.py:323
 msgid ""
 "Sets the navigator object to the object this object flows to and speaks it"
 msgstr ""
 "Postavlja objekt navigatora u pravcu objekta do kojeg taj objekt protiče te "
 "ga izgovara"
 
-#: appModules\_default.py:339
+#: appModules\_default.py:345
 msgid "Beginning of flow"
 msgstr "Početak protoka"
 
-#: appModules\_default.py:340
+#: appModules\_default.py:346
 msgid ""
 "Sets the navigator object to the object this object flows from and speaks it"
 msgstr ""
 "Postavlja objekt navigatora u pravcu objekta od kojeg taj objekt protiče te "
 "ga izgovara"
 
-#: appModules\_default.py:348
+#: appModules\_default.py:356
+msgid "No default action"
+msgstr "Nema početne akcije"
+
+#: appModules\_default.py:361
+msgid "default action failed"
+msgstr "Početna akcija nije uspjela"
+
+#: appModules\_default.py:364
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -409,11 +424,11 @@ msgstr ""
 "Izvršava glavnu akciju na trenutnom objektu navigatora (primjerice: izvrš"
 "ava njegovu aktivaciju tj. pritišće ga ako se radi o gumbu)."
 
-#: appModules\_default.py:359
+#: appModules\_default.py:375
 msgid "inside"
 msgstr "uvučeno"
 
-#: appModules\_default.py:362
+#: appModules\_default.py:378
 msgid ""
 "Reports where the current navigator object is by reporting each of its "
 "ancestors"
@@ -421,13 +436,13 @@ msgstr ""
 "Izvještava gdje se nalazi trenutni objekt navigatora na taj način da "
 "izvještava o svakom od njegovih predaka"
 
-#: appModules\_default.py:368 appModules\_default.py:380
-#: appModules\_default.py:421 textBuffer.py:364 textBuffer.py:391
+#: appModules\_default.py:384 appModules\_default.py:396
+#: appModules\_default.py:437 textBuffer.py:364 textBuffer.py:391
 #: textBuffer.py:412 textBuffer.py:433 virtualBuffers_old\__init__.py:274
 msgid "top"
 msgstr "Vrh"
 
-#: appModules\_default.py:370
+#: appModules\_default.py:386
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
@@ -435,7 +450,7 @@ msgstr ""
 "Premiješta kursor za pregled na gornji redak trenutnog objekta navigatora "
 "te ga izgovara"
 
-#: appModules\_default.py:382
+#: appModules\_default.py:398
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
@@ -443,7 +458,7 @@ msgstr ""
 "Premiješta kursor za pregled na prethodni redak trenutnog objekta "
 "navigatora te ga izgovara"
 
-#: appModules\_default.py:391
+#: appModules\_default.py:407
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled"
@@ -451,13 +466,13 @@ msgstr ""
 "Izvještava o retku trenutnog objekta navigatora gdje je smješten kursor za "
 "pregled. Ukoliko se ova tipka pritisne dvaput, redak se slovka."
 
-#: appModules\_default.py:401 appModules\_default.py:409
-#: appModules\_default.py:442 textBuffer.py:369 textBuffer.py:382
+#: appModules\_default.py:417 appModules\_default.py:425
+#: appModules\_default.py:458 textBuffer.py:369 textBuffer.py:382
 #: textBuffer.py:403 textBuffer.py:424 virtualBuffers_old\__init__.py:289
 msgid "bottom"
 msgstr "dno"
 
-#: appModules\_default.py:403
+#: appModules\_default.py:419
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -465,7 +480,7 @@ msgstr ""
 "Premiješta kursor za pregled na sljedeći redak trenutnog objekta "
 "navigatora te ga izgovara"
 
-#: appModules\_default.py:411
+#: appModules\_default.py:427
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
@@ -473,7 +488,7 @@ msgstr ""
 "Premiješta pregledni kursor na donji redak trenutnog objekta navigatora te "
 "ga izgovara"
 
-#: appModules\_default.py:423
+#: appModules\_default.py:439
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -481,7 +496,7 @@ msgstr ""
 "Premiješta pregledni kursor na prethodnu riječ trenutnog objekta "
 "navigatora te je izgovara"
 
-#: appModules\_default.py:432
+#: appModules\_default.py:448
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the word will be spelled"
@@ -489,7 +504,7 @@ msgstr ""
 "Izgovara riječ trenutnog objekta navigatora gdje je smješten pregledni "
 "kursor. Ukoliko se ova tipka pritisne dvaput, riječ se slovka."
 
-#: appModules\_default.py:444
+#: appModules\_default.py:460
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -497,12 +512,12 @@ msgstr ""
 "Premiješta pregledni kursor na sljedeću riječ trenutnog objekta "
 "navigatora te je izgovara"
 
-#: appModules\_default.py:452 appModules\_default.py:464
+#: appModules\_default.py:468 appModules\_default.py:480
 #: appModules\totalcmd.py:35
 msgid "left"
 msgstr "lijevo"
 
-#: appModules\_default.py:454
+#: appModules\_default.py:470
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -510,7 +525,7 @@ msgstr ""
 "Premiješta pregledni kursor na početak redka gdje je isti smješten u "
 "trenutnom objektu navigatora te ga izgovara"
 
-#: appModules\_default.py:472
+#: appModules\_default.py:488
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -518,7 +533,7 @@ msgstr ""
 "Premiješta pregledni kursor na prethodni znak trenutnog objekta navigatora "
 "te ga izgovara"
 
-#: appModules\_default.py:486
+#: appModules\_default.py:502
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. If this key is pressed twice, ascii and hexadecimal "
@@ -528,12 +543,12 @@ msgstr ""
 "smješten. Ukoliko se ova tipka pritisne dvaput, bit će izgovorene ascii i "
 "heksadecimalne vrijednosti znaka."
 
-#: appModules\_default.py:496 appModules\_default.py:513
+#: appModules\_default.py:512 appModules\_default.py:529
 #: appModules\totalcmd.py:37
 msgid "right"
 msgstr "desno"
 
-#: appModules\_default.py:504
+#: appModules\_default.py:520
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -541,7 +556,7 @@ msgstr ""
 "Premiješta pregledni kursor na sljedeći znak trenutnog objekta navigatora "
 "te ga izgovara"
 
-#: appModules\_default.py:515
+#: appModules\_default.py:531
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -549,11 +564,11 @@ msgstr ""
 "Premiješta pregledni kursor na zadnji znak u redku gdje je isti smješten u "
 "trenutnom objektu navigatora te ga izgovara"
 
-#: appModules\_default.py:521
+#: appModules\_default.py:537
 msgid "No caret"
 msgstr "nema kursora"
 
-#: appModules\_default.py:526
+#: appModules\_default.py:542
 msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
@@ -561,7 +576,7 @@ msgstr ""
 "Premiješta pregledni kursor na položaj sustavnog kursora u trenutnom "
 "objektu navigatora"
 
-#: appModules\_default.py:533
+#: appModules\_default.py:549
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -569,19 +584,19 @@ msgstr ""
 "Premiješta sustavni kursor na položaj kursora za pregled, u trenutnom "
 "objektu navigatora"
 
-#: appModules\_default.py:542
+#: appModules\_default.py:558
 msgid "beeps"
 msgstr "zvučni signali"
 
-#: appModules\_default.py:544
+#: appModules\_default.py:560
 msgid "talk"
 msgstr "izgovor"
 
-#: appModules\_default.py:546
+#: appModules\_default.py:562
 msgid "speech mode %s"
 msgstr "način izgovora %s"
 
-#: appModules\_default.py:548
+#: appModules\_default.py:564
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -594,7 +609,7 @@ msgstr ""
 "nešto izgovoriti. Ako je namješteno na izgovor, NVDA će govoriti "
 "standardnim izgovorom."
 
-#: appModules\_default.py:559
+#: appModules\_default.py:575
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -607,15 +622,15 @@ msgstr ""
 "ena je navigacija kroz dokument pomoću kursora, tipki za brzu navigaciju i "
 "slično."
 
-#: appModules\_default.py:563
+#: appModules\_default.py:579
 msgid "Quits NVDA!"
 msgstr "Izlazi iz  NVDA!"
 
-#: appModules\_default.py:567
+#: appModules\_default.py:583
 msgid "Shows the NVDA menu"
 msgstr "Prikazuje NVDA izbornik"
 
-#: appModules\_default.py:572
+#: appModules\_default.py:588
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -623,11 +638,11 @@ msgstr ""
 "čita od preglednog kursora sve do kraja trenutnog teksta, premiještajući "
 "pregledni kursor u skladu s kretanjem"
 
-#: appModules\_default.py:577
+#: appModules\_default.py:593
 msgid "reads from the navigator object "
 msgstr "čita od objekta navigatora"
 
-#: appModules\_default.py:592
+#: appModules\_default.py:608
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
@@ -635,33 +650,33 @@ msgstr ""
 "čita od sustavnog kursora sve do kraja teksta, premiještajući kursor u "
 "skladu s kretanjem"
 
-#: appModules\_default.py:624
+#: appModules\_default.py:640
 msgid "reports the object with focus"
 msgstr "izvještava o objektu s fokusom"
 
-#: appModules\_default.py:629
+#: appModules\_default.py:645
 msgid "no status bar found"
 msgstr "traka stanja nije pronađena"
 
-#: appModules\_default.py:638
+#: appModules\_default.py:654
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "čita trenutnu traku stanja aplikacije i premiješta kursor za navigaciju na "
 "istu"
 
-#: appModules\_default.py:647
+#: appModules\_default.py:663
 msgid "Mouse tracking"
 msgstr "Praćenje miša"
 
-#: appModules\_default.py:648
+#: appModules\_default.py:664
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Uključuje i isključuje izgovor informacija prilikom pomicanja miša"
 
-#: appModules\_default.py:656
+#: appModules\_default.py:672
 msgid "no title"
 msgstr "nema naslova"
 
-#: appModules\_default.py:665
+#: appModules\_default.py:681
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
@@ -671,31 +686,31 @@ msgstr ""
 "se pritisne dvaput, naslov se slovka. Ukoliko se pritisne triput, naslov se "
 "kopira u međuspremnik"
 
-#: appModules\_default.py:672
+#: appModules\_default.py:688
 msgid "speaks the current foreground object"
 msgstr "čita trenutni objekt ispred teksta"
 
-#: appModules\_default.py:687 cursorManager.py:223
+#: appModules\_default.py:703 cursorManager.py:223
 msgid "copied to clipboard"
 msgstr "kopirano u međuspremnik"
 
-#: appModules\_default.py:691
+#: appModules\_default.py:707
 msgid "Control ID: %s"
 msgstr "ID kontrole: %s"
 
-#: appModules\_default.py:692
+#: appModules\_default.py:708
 msgid "Class: %s"
 msgstr "Klasa: %s"
 
-#: appModules\_default.py:694
+#: appModules\_default.py:710
 msgid "internal text: %s"
 msgstr "interni tekst: %s"
 
-#: appModules\_default.py:695
+#: appModules\_default.py:711
 msgid "text: %s"
 msgstr "tekst: %s"
 
-#: appModules\_default.py:697
+#: appModules\_default.py:713
 msgid ""
 "reports some information about the current navigator object, mainly useful "
 "for developers. When pressed 2 times it copies control id, class and "
@@ -704,19 +719,19 @@ msgstr ""
 "izvještava o nekim informacijama o trenutnom objektu navigatora, "
 "prvenstveno korisno za programere: id kontrole, klasa i interni tekst"
 
-#: appModules\_default.py:702 gui\settingsDialogs.py:458
+#: appModules\_default.py:718 gui\settingsDialogs.py:473
 msgid "Beep for visible"
 msgstr "Zvučni signal za vidljivo"
 
-#: appModules\_default.py:703 gui\settingsDialogs.py:459
+#: appModules\_default.py:719 gui\settingsDialogs.py:474
 msgid "Beep for all"
 msgstr "Zvučni signal za sve"
 
-#: appModules\_default.py:704 gui\settingsDialogs.py:460
+#: appModules\_default.py:720 gui\settingsDialogs.py:475
 msgid "Speak each 10 percent"
 msgstr "Izgovor za svakih 10 posto"
 
-#: appModules\_default.py:714
+#: appModules\_default.py:730
 msgid ""
 "Toggles how NVDA reports progress bar updates. It can beep for all the "
 "progress bars or just for the progressbars in the foreground. Additionally "
@@ -729,11 +744,11 @@ msgstr ""
 "tekuća vrijednost izgovara svakih 10 posto ili je pak moguće u potpunosti "
 "onemogućiti ovaj izvještaj."
 
-#: appModules\_default.py:723
+#: appModules\_default.py:739
 msgid "report dynamic content changes"
 msgstr "izvijesti o promjenama dinamičkog sadržaja"
 
-#: appModules\_default.py:724
+#: appModules\_default.py:740
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -741,51 +756,51 @@ msgstr ""
 "Uključuje i isključuje izviješće o promjenama dinamičkog sadržaja, kao "
 "što je novi tekst u prozorima dos konzole"
 
-#: appModules\_default.py:733
+#: appModules\_default.py:749
 msgid "caret moves review cursor"
 msgstr "sustavni kursor pomiče pregledni kursor"
 
-#: appModules\_default.py:734
+#: appModules\_default.py:750
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Uključuje i isključuje pomicanje preglednog kursora s obzirom na pomicanje "
 "strelice."
 
-#: appModules\_default.py:743
+#: appModules\_default.py:759
 msgid "focus moves navigator object"
 msgstr "fokus pomiče objekt navigatora"
 
-#: appModules\_default.py:744
+#: appModules\_default.py:760
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Uključuje i isključuje pomicanje objekta navigatora s obzirom na promjene "
 "fokusa"
 
-#: appModules\_default.py:756
+#: appModules\_default.py:772
 msgid "no system battery"
 msgstr "nema baterije"
 
-#: appModules\_default.py:759
+#: appModules\_default.py:775
 msgid "AC power on"
 msgstr "Električno napajanje priključeno"
 
-#: appModules\_default.py:761
+#: appModules\_default.py:777
 msgid "%d hours and %d minutes remaining"
 msgstr "preostalo je %d sati i %d minuta"
 
-#: appModules\_default.py:763
+#: appModules\_default.py:779
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "izvještava o stanju baterije i preostalom vremenu ako električno napajanje "
 "nije priključeno"
 
-#: appModules\_default.py:767
+#: appModules\_default.py:783
 msgid "Pass next key through"
 msgstr "Zaobiđi sljedeću tipku"
 
-#: appModules\_default.py:768
+#: appModules\_default.py:784
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -793,102 +808,102 @@ msgstr ""
 "Sljedeća tipka koja se pritisne neće biti manipulirana od strane programa "
 "NVDA, već ćedirektno biti proslijeđena u operativni sustav MS Windows."
 
-#: appModules\_default.py:773
+#: appModules\_default.py:789
 msgid "Currently running application is %s"
 msgstr "Trenutna aktivna aplikacija je %s"
 
-#: appModules\_default.py:776
+#: appModules\_default.py:792
 msgid " and currently loaded module is %s"
 msgstr "i trenutno učitan modul je%s"
 
-#: appModules\_default.py:778
+#: appModules\_default.py:794
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"Izgovara trenutan naziv datoteke  aktivne aplikacije te naziv trenutno "
-"učitanog aplikacijskog modula"
+"Izgovara trenutan naziv datoteke  aktivne aplikacije te naziv trenutno uč"
+"itanog aplikacijskog modula"
 
-#: appModules\_default.py:782
+#: appModules\_default.py:798
 msgid "Shows the NVDA general settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za općenite postavke"
 
-#: appModules\_default.py:786
+#: appModules\_default.py:802
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za govornu jedinicu"
 
-#: appModules\_default.py:790
+#: appModules\_default.py:806
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za glasovne postavke"
 
-#: appModules\_default.py:794
+#: appModules\_default.py:810
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke tipkovnice"
 
-#: appModules\_default.py:798
+#: appModules\_default.py:814
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke miša"
 
-#: appModules\_default.py:802
+#: appModules\_default.py:818
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke prezentacije objekta"
 
-#: appModules\_default.py:806
+#: appModules\_default.py:822
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke virtualnih spremnika"
 
-#: appModules\_default.py:810
+#: appModules\_default.py:826
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke oblikovanja dokumenta"
 
-#: appModules\_default.py:814
+#: appModules\_default.py:830
 msgid "Saves the current NVDA configuration"
 msgstr "Sprema trenutnu NVDA konfiguraciju"
 
-#: appModules\_default.py:818
+#: appModules\_default.py:834
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "Učitava spremljenu NVDA konfiguraciju prepravljajući trenutne promjene"
 
-#: appModules\_default.py:826
+#: appModules\_default.py:842
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivira NVDA Python konzolu, prvenstveno korisnu za programiranje"
 
-#: appModules\_default.py:831
+#: appModules\_default.py:847
 msgid "review"
 msgstr "pregled"
 
-#: appModules\_default.py:834
+#: appModules\_default.py:850
 msgid "focus"
 msgstr "fokus"
 
-#: appModules\_default.py:835
+#: appModules\_default.py:851
 msgid "Braille tethered to %s"
 msgstr "Brajica povezana na %s"
 
-#: appModules\_default.py:836
+#: appModules\_default.py:852
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Naizmjence uključi povezivanje brajice između položaja fokusa i pregleda"
 
-#: appModules\_default.py:844
+#: appModules\_default.py:860
 msgid "There is no text on the clipboard"
 msgstr "nema teksta u međuspremniku"
 
-#: appModules\_default.py:849
+#: appModules\_default.py:865
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Međuspremnik sadrži velik dio teksta. Duljina je %s znakova"
 
-#: appModules\_default.py:850
+#: appModules\_default.py:866
 msgid "Reports the text on the Windows clipboard"
 msgstr "Izvještava tekst u međuspremniku Windows sustava"
 
-#: appModules\_default.py:854
+#: appModules\_default.py:870
 msgid "Start marked"
 msgstr "Početak označen"
 
-#: appModules\_default.py:855
+#: appModules\_default.py:871
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
@@ -896,29 +911,29 @@ msgstr ""
 "Označava trenutni položaj preglednog kursora kao početak teksta koji će "
 "se kopirati."
 
-#: appModules\_default.py:859
+#: appModules\_default.py:875
 msgid "No start marker set"
 msgstr "Početna oznaka nije postavljena"
 
-#: appModules\_default.py:863
+#: appModules\_default.py:879
 msgid "The start marker must reside within the same object"
 msgstr "Početna oznaka mora biti smještena unutar istog objekta"
 
-#: appModules\_default.py:868
+#: appModules\_default.py:884
 msgid "Review selection copied to clipboard"
 msgstr "Odabir pregleda kopiran u međuspremnik"
 
-#: appModules\_default.py:870
+#: appModules\_default.py:886
 msgid "No text to copy"
 msgstr "Nema teksta za kopiranje"
 
-#: appModules\_default.py:873
+#: appModules\_default.py:889
 msgid ""
 "Retrieves the text from the previously set start marker to the current "
 "position of the review cursor and copies it to the clipboard"
 msgstr ""
-"Preuzima tekst iz prethodno postavljene početne oznake u tekući "
-"položaj preglednog kursora te ga kopira u međuspremnik"
+"Preuzima tekst iz prethodno postavljene početne oznake u tekući položaj "
+"preglednog kursora te ga kopira u međuspremnik"
 
 #: appModules\explorer.py:16
 msgid "Start"
@@ -1067,12 +1082,16 @@ msgid "French (Canada) grade 2"
 msgstr "Francuski (Kanada) stupanj 2"
 
 #: braille.py:44
-msgid "French (France) grade 1"
-msgstr "Francuski (Francuska) stupanj 1"
+msgid "French (unified) 6 dot computer braille"
+msgstr "Francuski (jedinstven) 6-točkasta kompjutorska brajica"
 
 #: braille.py:45
-msgid "French (France) grade 2"
-msgstr "Francuski (Francuska) stupanj 2"
+msgid "French (unified) 8 dot computer braille"
+msgstr "Francuski (jedinstven) 8-točkasta kompjutorska brajica"
+
+#: braille.py:46
+msgid "French (unified) Grade 2"
+msgstr "Francuski (jedinstven) stupanj 2"
 
 #: braille.py:46
 msgid "Greek (Greece) grade 1"
@@ -1190,11 +1209,18 @@ msgstr ""
 msgid "( )"
 msgstr ""
 
-#: braille.py:224 speech.py:596
+#: braille.py:212 speech.py:594 virtualBuffers_old\MSHTML.py:126
+#: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
+#: virtualBuffers_old\adobe.py:303 virtualBuffers_old\adobe.py:307
+#: virtualBuffers_old\gecko.py:295 virtualBuffers_old\gecko.py:299
+msgid "not %s"
+msgstr "nije %s"
+
+#: braille.py:224 speech.py:600
 msgid "%s of %s"
 msgstr "%s od %s"
 
-#: braille.py:226 speech.py:601 speech.py:604
+#: braille.py:226 speech.py:605 speech.py:608
 msgid "level %s"
 msgstr "razina %s"
 
@@ -1206,7 +1232,7 @@ msgstr "Handy Tech brajični redci"
 msgid "No braille"
 msgstr "Bez brajice"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:552
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:76 speech.py:556
 msgid "blank"
 msgstr "prazno"
 
@@ -1441,7 +1467,7 @@ msgstr "pomoćni balončić"
 msgid "tool tip"
 msgstr "alatni savjetnik"
 
-#: controlTypes.py:190 speech.py:765
+#: controlTypes.py:190 speech.py:777
 msgid "link"
 msgstr "link"
 
@@ -1866,12 +1892,12 @@ msgstr "boja prednjeg dijela"
 msgid "background color"
 msgstr "boja podloge"
 
-#: controlTypes.py:302 speech.py:739 textBuffer.py:287 textBuffer.py:294
+#: controlTypes.py:302 speech.py:751 textBuffer.py:287 textBuffer.py:294
 #: textBuffer.py:324
 msgid "superscript"
 msgstr "nadpis"
 
-#: controlTypes.py:303 speech.py:741 textBuffer.py:326
+#: controlTypes.py:303 speech.py:753 textBuffer.py:326
 msgid "subscript"
 msgstr "podpis"
 
@@ -1995,11 +2021,11 @@ msgstr "uređivajuće"
 msgid "checkable"
 msgstr "odabirno"
 
-#: core.py:83
+#: core.py:87
 msgid "Loading subsystems, please wait..."
 msgstr "Učitavanje podsustava, molim pričekajte..."
 
-#: core.py:144
+#: core.py:154
 msgid "NVDA started"
 msgstr "NVDA pokrenut"
 
@@ -2073,7 +2099,7 @@ msgstr "Trenutan riječnik"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Jeste li sigurni da želite izaći iz programa NvDA?"
 
-#: gui\__init__.py:178 gui\__init__.py:306
+#: gui\__init__.py:178 gui\__init__.py:308
 msgid "Exit NVDA"
 msgstr "Izaći iz programa NVDA"
 
@@ -2089,7 +2115,7 @@ msgstr "internet adresa"
 msgid "version"
 msgstr "verzija"
 
-#: gui\__init__.py:222 gui\__init__.py:297
+#: gui\__init__.py:222 gui\__init__.py:299
 msgid "About NVDA"
 msgstr "O programu NVDA"
 
@@ -2138,9 +2164,8 @@ msgid "&Mouse settings..."
 msgstr "&Postavke miša..."
 
 #: gui\__init__.py:256
-msgid "Change reporting of mouse sape, object under mouse"
-msgstr ""
-"Promjena izvještavanja o obliku kursora miša, objekta koji je ispod miša"
+msgid "Change reporting of mouse shape and object under mouse"
+msgstr "Promjena izvješća o obliku miša i objekta ispod miša"
 
 #: gui\__init__.py:258
 msgid "&Object presentation..."
@@ -2239,46 +2264,50 @@ msgid "Web site"
 msgstr "Web Stranica"
 
 #: gui\__init__.py:290
+msgid "Readme"
+msgstr "Readme (Pročitaj Me datoteka)"
+
+#: gui\__init__.py:292
 msgid "License"
 msgstr "Licenca"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:294
 msgid "Contributors"
 msgstr "Doprinositelji:"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:296
 msgid "We&lcome dialog"
 msgstr "Dijaloški okvir &dobrodošlice"
 
-#: gui\__init__.py:297
+#: gui\__init__.py:299
 msgid "About..."
 msgstr "O programu..."
 
-#: gui\__init__.py:299
+#: gui\__init__.py:301
 msgid "&Help"
 msgstr "&Pomoć"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:303
 msgid "&Revert to saved configuration"
 msgstr "&Vrati na spremljenu konfiguraciju"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:303
 msgid "Reset all settings to saved state"
 msgstr "Poništi sve postavke na prethodnu vrijednost"
 
-#: gui\__init__.py:303
+#: gui\__init__.py:305
 msgid "&Save configuration"
 msgstr "&Spremi konfiguraciju"
 
-#: gui\__init__.py:303
+#: gui\__init__.py:305
 msgid "Write the current configuration to nvda.ini"
 msgstr "Upišite trenutnu konfiguraciju u datoteku nvda.ini"
 
-#: gui\__init__.py:306 gui\logViewer.py:33
+#: gui\__init__.py:308 gui\logViewer.py:33
 msgid "E&xit"
 msgstr "I&zlaz"
 
-#: gui\__init__.py:362
+#: gui\__init__.py:364
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -2302,19 +2331,19 @@ msgstr ""
 "U tom izborniku moći ćete konfigurirati NVDA, zatražiti pomoć te "
 "pristupiti ostalim NVDA funkcijama.\n"
 
-#: gui\__init__.py:372
+#: gui\__init__.py:374
 msgid "Welcome to NVDA"
 msgstr "Dobrodošli u NVDA"
 
-#: gui\__init__.py:376
+#: gui\__init__.py:378
 msgid "Options"
 msgstr "Izbor"
 
-#: gui\__init__.py:377 gui\settingsDialogs.py:385
+#: gui\__init__.py:379 gui\settingsDialogs.py:400
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Koristi Caps Lock kao NVDA modifikacijsku tipku"
 
-#: gui\__init__.py:380
+#: gui\__init__.py:382
 msgid "Show this dialog when NVDA starts"
 msgstr "Pokaži ovaj dijaloški okvir prilikom uključenja NVDA programa"
 
@@ -2481,277 +2510,281 @@ msgstr "Izgovori &veliko prije velikih slova"
 msgid "&Beep for capitals"
 msgstr "&Zvučni signal za velika slova"
 
-#: gui\settingsDialogs.py:368
+#: gui\settingsDialogs.py:383
 msgid "Keyboard Settings"
 msgstr "Postavke Tipkovnice"
 
-#: gui\settingsDialogs.py:372
+#: gui\settingsDialogs.py:387
 msgid "&Keyboard layout"
 msgstr "&Profil tipkovnice"
 
-#: gui\settingsDialogs.py:377
+#: gui\settingsDialogs.py:392
 msgid "Keyboard layout"
 msgstr "Profil tipkovnice"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:403
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Koristi Numerički Insert kao NVDA modifikacijsku tipku"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:406
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Koristi prošireni Insert kao NVDA modifikacijsku tipku"
 
-#: gui\settingsDialogs.py:394
+#: gui\settingsDialogs.py:409
 msgid "Speak typed &characters"
 msgstr "Izgovori utipkane &znakove"
 
-#: gui\settingsDialogs.py:397
+#: gui\settingsDialogs.py:412
 msgid "Speak typed &words"
 msgstr "Izgovori utipkane &riječi"
 
-#: gui\settingsDialogs.py:400
+#: gui\settingsDialogs.py:415
 msgid "Speak command &keys"
 msgstr "Izgovori naredbene &tipke"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:438
 msgid "Mouse settings"
 msgstr "Postavke miša"
 
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:441
 msgid "Report mouse &shape changes"
 msgstr "Izvijesti o promjenama &oblika miša"
 
-#: gui\settingsDialogs.py:429
+#: gui\settingsDialogs.py:444
 msgid "Report &text under the mouse"
 msgstr "Izgovori &tekst ispod miša"
 
-#: gui\settingsDialogs.py:432
+#: gui\settingsDialogs.py:447
 msgid "Report &role when mouse enters object"
 msgstr "Izgovor &svojstva prilikom unošenja objekta mišem"
 
-#: gui\settingsDialogs.py:435
+#: gui\settingsDialogs.py:450
 msgid "play audio coordinates when mouse moves"
 msgstr "reprodukcija zvučnih koordinata prilikom pomicanja miša"
 
-#: gui\settingsDialogs.py:438
+#: gui\settingsDialogs.py:453
 msgid "brightness controls audio coordinates volume"
 msgstr "Kontrola glasnoće zvučnih koordinata ovisno o jačini svjetlosti"
 
-#: gui\settingsDialogs.py:455
+#: gui\settingsDialogs.py:470
 msgid "Object presentation"
 msgstr "Prezentacija objekta"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:479
 msgid "Report &tooltips"
 msgstr "Izvijesti o &alatnim savjetnicima"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:482
 msgid "Report &help balloons"
 msgstr "Izvijesti o &pomočnim balončićima"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:485
 msgid "Report object shortcut &keys"
 msgstr "Izvijesti o &tipkovnim prečacima objekata"
 
-#: gui\settingsDialogs.py:473
+#: gui\settingsDialogs.py:488
 msgid "Report object &position information"
 msgstr "Izvijesti informaciju o &položaju objekta"
 
-#: gui\settingsDialogs.py:476
+#: gui\settingsDialogs.py:491
 msgid "Report object &descriptions"
-msgstr "Izvjesti o objašnjenju&objekta"
+msgstr "Izvijesti o objašnjenju&objekta"
 
-#: gui\settingsDialogs.py:479
+#: gui\settingsDialogs.py:494
 msgid "Say object &state first"
 msgstr "Prvo izgovori &stanje objekta"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:498
 msgid "Report progress &bar updates"
 msgstr "Izvijesti o ažuriranjima trake &napretka"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:501
 msgid "Report progress bar updates"
 msgstr "Izvijesti o ažuriranjima trake napretka"
 
-#: gui\settingsDialogs.py:510
+#: gui\settingsDialogs.py:525
 msgid "virtual buffers"
 msgstr "virtualni spremnici"
 
-#: gui\settingsDialogs.py:513
+#: gui\settingsDialogs.py:528
 msgid "&Maximum number of characters on one line"
 msgstr "&Maksimalan broj znakova na jednom redku"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:533
 msgid "&Number of lines per page"
 msgstr "&Broj redaka po stranici"
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:538
 msgid "Use &screen layout (when supported)"
 msgstr "Korištenje izgleda &ekrana (onda kad je podržano)"
 
-#: gui\settingsDialogs.py:527
+#: gui\settingsDialogs.py:542
 msgid "Report &virtual presentation on focus changes"
 msgstr "Izvijesti o &Virtualnom predstavljanju prilikom promjene fokusa"
 
-#: gui\settingsDialogs.py:530
+#: gui\settingsDialogs.py:545
 msgid "Automatic focus mode for focus changes"
 msgstr "Mod automatskog fokusa za promjene fokusa"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:548
 msgid "Automatic focus mode for caret movement"
 msgstr "Mod automatskog fokusa za pomicanje kursora"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:551
+msgid "Audio indication of focus and browse modes"
+msgstr "Audio oznaka za mod fokusa i pretraživanja"
+
+#: gui\settingsDialogs.py:579
 msgid "Document formatting"
 msgstr "Oblikovanje dokumenta"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:582
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Izvijesti o promjenama oblikovanja nakon kursora (može prouzročiti usporen "
 "rad)"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:585
 msgid "Report font &name"
 msgstr "Izvijesti o na&zivu fonta"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:588
 msgid "Report font &size"
 msgstr "Izvijesti o veličini fon&ta"
 
-#: gui\settingsDialogs.py:572
+#: gui\settingsDialogs.py:591
 msgid "Report font attri&butes"
 msgstr "Izvijesti o ka&rakteristikama fonta"
 
-#: gui\settingsDialogs.py:575
+#: gui\settingsDialogs.py:594
 msgid "Report &alignment"
 msgstr "Izvijesti o poravnan&ju"
 
-#: gui\settingsDialogs.py:578
+#: gui\settingsDialogs.py:597
 msgid "Report st&yle"
 msgstr "Izvijesti o stil&u"
 
-#: gui\settingsDialogs.py:581
+#: gui\settingsDialogs.py:600
 msgid "Report spelling errors"
 msgstr "Izvijesti o &pravopisnim pogreškama"
 
-#: gui\settingsDialogs.py:584
+#: gui\settingsDialogs.py:603
 msgid "Report &pages"
 msgstr "Izvijesti o &stranicama"
 
-#: gui\settingsDialogs.py:587
+#: gui\settingsDialogs.py:606
 msgid "Report &line numbers"
 msgstr "Izvijesti o broju  r&etka"
 
-#: gui\settingsDialogs.py:590
+#: gui\settingsDialogs.py:609
 msgid "Report &tables"
 msgstr "Izvijesti o &tablicama"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:612
 msgid "Report &links"
 msgstr "Izvijesti o lin&kovima"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:615
 msgid "Report &headings"
 msgstr "Izvijesti o &naslovima"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:618
 msgid "Report l&ists"
 msgstr "Izvijesti o &popisima"
 
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:621
 msgid "Report block &quotes"
 msgstr "Izvijesti o &citatima"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:648
 msgid "Edit dictionary entry"
 msgstr "Uredite unos u riječnik"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:651
 msgid "&Pattern"
 msgstr "&Uzorak"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:654
 msgid "&Replacement"
 msgstr "&Zamjena"
 
-#: gui\settingsDialogs.py:638
+#: gui\settingsDialogs.py:657
 msgid "&Comment"
 msgstr "&Komentar"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:660
 msgid "Case &sensitive"
 msgstr "Ovisi o &velikim slovima"
 
-#: gui\settingsDialogs.py:643
+#: gui\settingsDialogs.py:662
 msgid "Regular &expression"
 msgstr "Pravilni &izraz"
 
-#: gui\settingsDialogs.py:665
+#: gui\settingsDialogs.py:684
 msgid "&Dictionary entries"
 msgstr "&Unosi u riječniku"
 
-#: gui\settingsDialogs.py:668
+#: gui\settingsDialogs.py:687
 msgid "Comment"
 msgstr "Komentar"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:688
 msgid "Pattern"
 msgstr "Uzorak"
 
-#: gui\settingsDialogs.py:670
+#: gui\settingsDialogs.py:689
 msgid "Replacement"
 msgstr "Zamjena"
 
-#: gui\settingsDialogs.py:671
+#: gui\settingsDialogs.py:690
 msgid "case sensitive"
 msgstr "ovisi o velikim slovima"
 
-#: gui\settingsDialogs.py:672
+#: gui\settingsDialogs.py:691
 msgid "Regular expression"
 msgstr "pravilni izraz"
 
-#: gui\settingsDialogs.py:679
+#: gui\settingsDialogs.py:698
 msgid "&Add"
 msgstr "&Dodavanje"
 
-#: gui\settingsDialogs.py:682
+#: gui\settingsDialogs.py:701
 msgid "&edit"
 msgstr "&uređivanje"
 
-#: gui\settingsDialogs.py:685
+#: gui\settingsDialogs.py:704
 msgid "&Remove"
 msgstr "&Brisanje"
 
-#: gui\settingsDialogs.py:752
+#: gui\settingsDialogs.py:771
 msgid "Braille Settings"
 msgstr "Brajične postavke"
 
-#: gui\settingsDialogs.py:756
+#: gui\settingsDialogs.py:775
 msgid "Braille &display"
 msgstr "Brajični &redak"
 
-#: gui\settingsDialogs.py:770
+#: gui\settingsDialogs.py:789
 msgid "Translation &table"
 msgstr "&Tablica za prevođenje"
 
-#: gui\settingsDialogs.py:782
+#: gui\settingsDialogs.py:801
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Pr&oširi na kompjutorsku brajicu za riječ na položaju kursora"
 
-#: gui\settingsDialogs.py:787
+#: gui\settingsDialogs.py:806
 msgid "Cursor blink rate (ms)"
 msgstr "Brzina titraja kursora (u milisekundama)"
 
-#: gui\settingsDialogs.py:795
+#: gui\settingsDialogs.py:814
 msgid "Message timeout (sec)"
 msgstr "Stanka za poruku (u sekundama)"
 
-#: gui\settingsDialogs.py:808
+#: gui\settingsDialogs.py:827
 msgid "Braille Display Error"
 msgstr "Greška brajičnog redka"
 
-#: gui\settingsDialogs.py:808
+#: gui\settingsDialogs.py:827
 msgid "Could not load the %s display."
 msgstr "Ne mogu učitati redak %s."
 
@@ -2840,7 +2873,7 @@ msgid "snapshot"
 msgstr "snimak"
 
 #: keyUtils.py:133
-msgid "scrol lock"
+msgid "scroll lock"
 msgstr "klizni blok"
 
 #: keyUtils.py:134
@@ -2939,27 +2972,27 @@ msgstr "klizni blok %s"
 msgid "%s keyboard layout"
 msgstr "%s Profil tipkovnice"
 
-#: keyboardHandler.py:168
+#: keyboardHandler.py:176
 msgid "Description: %s"
 msgstr "Opis: %s"
 
-#: keyboardHandler.py:171
+#: keyboardHandler.py:179
 msgid "Location: %s"
 msgstr "Lokacija: %s"
 
-#: keyboardHandler.py:186
+#: keyboardHandler.py:194
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Greška u TipkovničnomRukovoditelju.InterniDonjiDogađaj"
 
-#: keyboardHandler.py:218
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Greška u TipkovničnomRukovoditelju.InterniGornjiDogađaj"
 
-#: mouseHandler.py:153
+#: mouseHandler.py:133
 msgid "%s cursor"
 msgstr "%s kursor"
 
-#: pythonConsole.py:63
+#: pythonConsole.py:64
 msgid "NVDA Python Console"
 msgstr "NVDA Python Konzola"
 
@@ -2971,140 +3004,157 @@ msgstr "kraj teksta"
 msgid "cap %s"
 msgstr "veliko %s"
 
-#: speech.py:291
+#: speech.py:295
 msgid "%d characters"
 msgstr "%d znakova"
 
-#: speech.py:342
+#: speech.py:346
 msgid "selecting %s"
 msgstr "odabir %s"
 
-#: speech.py:353
+#: speech.py:357
 msgid "unselecting %s"
 msgstr "nema odabira %s"
 
-#: speech.py:355
+#: speech.py:359
 msgid "selection removed"
 msgstr "odabir uklonjen"
 
-#: speech.py:590 virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:314 virtualBuffers_old\MSHTML.py:318
-#: virtualBuffers_old\adobe.py:303 virtualBuffers_old\adobe.py:307
-#: virtualBuffers_old\gecko.py:295 virtualBuffers_old\gecko.py:299
-msgid "not %s"
-msgstr "nije %s"
+#: speech.py:610 speech.py:818
+msgid "row %s"
+msgstr "red %s"
 
-#: speech.py:644 speech.py:648 speech.py:652 speech.py:658 speech.py:664
-#: speech.py:765 virtualBuffers_old\__init__.py:195
+#: speech.py:612 speech.py:814
+msgid "column %s"
+msgstr "stupac %s"
+
+#: speech.py:616
+msgid "with %s rows and %s columns"
+msgstr ""
+
+#: speech.py:656 speech.py:660 speech.py:664 speech.py:670 speech.py:676
+#: speech.py:777 virtualBuffers_old\__init__.py:195
 msgid "out of %s"
 msgstr "izvan %s"
 
-#: speech.py:646 virtualBuffers_old\MSHTML.py:258
+#: speech.py:658 virtualBuffers_old\MSHTML.py:258
 #: virtualBuffers_old\MSHTML.py:261 virtualBuffers_old\MSHTML.py:268
 #: virtualBuffers_old\adobe.py:260 virtualBuffers_old\adobe.py:271
 #: virtualBuffers_old\gecko.py:252 virtualBuffers_old\gecko.py:263
 msgid "with %s items"
 msgstr "s %s elementima"
 
-#: speech.py:662
+#: speech.py:674
 msgid "in %s"
 msgstr "u %s"
 
-#: speech.py:682
+#: speech.py:694
 msgid "page %s"
 msgstr "stranica %s"
 
-#: speech.py:689 textBuffer.py:242 textBuffer.py:310
+#: speech.py:701 textBuffer.py:242 textBuffer.py:310
 msgid "style %s"
 msgstr "stil %s"
 
-#: speech.py:691
+#: speech.py:703
 msgid "default style"
 msgstr "početni stil"
 
-#: speech.py:711
+#: speech.py:723
 msgid "line %s"
 msgstr "redak %s"
 
-#: speech.py:717
+#: speech.py:729
 msgid "no bold"
 msgstr "nije podebljano"
 
-#: speech.py:722
+#: speech.py:734
 msgid "no italic"
 msgstr "nije kurziv"
 
-#: speech.py:727
+#: speech.py:739
 msgid "no strikethrough"
 msgstr "nema dvostrukog podcrtavanja"
 
-#: speech.py:727
+#: speech.py:739
 msgid "strikethrough"
 msgstr "dvostruko podcrtavanje"
 
-#: speech.py:732
+#: speech.py:744
 msgid "not underlined"
 msgstr "nije podcrtano"
 
-#: speech.py:732
+#: speech.py:744
 msgid "underlined"
 msgstr "potcrtano"
 
-#: speech.py:743
+#: speech.py:755
 msgid "baseline"
 msgstr "bazna linija"
 
-#: speech.py:751
+#: speech.py:763
 msgid "align left"
 msgstr "lijevo poravnanje"
 
-#: speech.py:753
+#: speech.py:765
 msgid "align center"
 msgstr "centrirano poravnanje"
 
-#: speech.py:755
+#: speech.py:767
 msgid "align right"
 msgstr "desno poravnanje"
 
-#: speech.py:757
+#: speech.py:769
 msgid "align justify"
 msgstr "omogućeno poravnanje"
 
-#: speech.py:759
+#: speech.py:771
 msgid "align default"
 msgstr "početno poravnanje"
 
-#: speech.py:772
+#: speech.py:784
 msgid "spelling error"
 msgstr "pravopisna pogreška"
 
-#: speech.py:774
+#: speech.py:786
 msgid "out of spelling error"
 msgstr "izvan pravopisne pogreške"
 
-#: speech.py:788 textBuffer.py:219
+#: speech.py:800 textBuffer.py:219
 msgid "out of table"
 msgstr "izvan tablice"
 
-#: speech.py:797
+#: speech.py:809
 msgid "table with %s columns and %s rows"
 msgstr "tablica od %d stupaca i %d redaka"
 
-#: speech.py:802
-msgid "column %s"
-msgstr "stupac %s"
-
-#: speech.py:806
-msgid "row %s"
-msgstr "red %s"
-
-#: synthDrivers\_espeak.py:294
+#: synthDrivers\_espeak.py:305
 msgid "none"
 msgstr "ništa"
 
 #: synthDrivers\display.py:31
 msgid "A virtual synth which displays text in a window"
 msgstr "Virtualni sintetizator koji prikazuje tekst u prozoru"
+
+#: synthDrivers\newfon.py:99
+msgid "russian newfon synthesizer by Sergey Shishmintzev"
+msgstr ""
+
+#: synthDrivers\newfon.py:107
+msgid "female 1"
+msgstr "ženski 1"
+
+#: synthDrivers\newfon.py:107
+msgid "female 2"
+msgstr "ženski 2"
+
+#: synthDrivers\newfon.py:107
+msgid "male 1"
+msgstr "muški 1"
+
+#: synthDrivers\newfon.py:107
+msgid "male 2"
+msgstr "muški 2"
 
 #: synthDrivers\silence.py:13
 msgid "No speech"
@@ -3240,7 +3290,12 @@ msgstr "Besplatan open-source čitač ekrana za sustav MS Windows "
 
 #: versionInfo.py:44
 msgid ""
-"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
+"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+msgstr ""
+
+#: versionInfo.py:45
+msgid ""
+"%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are "
 "free to share or change this software in any way you like as long as you "
 "distribute the licence along with the software, and make all source code "
@@ -3251,408 +3306,396 @@ msgid ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Autorska prava (C) 2006-2008 od strane NVDA Doprinositelja <http://www.nvda-"
-"project.org/>\n"
-"%(name)s  pokriveno pod GNU General Public Licencom. Svatko ima pravo na "
-"slobodnu razmjenu ili promjenu ovog softvera na bilo koji način kako god "
-"poželi ukoliko distribuira licencu zajedno uz softver, i daje pristup "
-"izvornom kodu bilo kome tko to želi. Ovo se odnosi i na originalne i na "
-"izmjenjene kopije softvera, plus neki softver koji koristi kod preuzet iz "
-"ovog softverskog paketa.\n"
-"Za daljnje detaljne informacije, licencu možete pogledati online na "
-"adresi:\n"
-"http://www.gnu.org/licenses/gpl.html\n"
-"Ili pogledajte datoteku Copying.txt koja se isporučuje uz ovaj softver."
 
-#: virtualBufferHandler.py:93
+#: virtualBufferHandler.py:99
 msgid "browse mode"
 msgstr "mod pretraživanja"
 
-#: virtualBufferHandler.py:93
+#: virtualBufferHandler.py:99
 msgid "focus mode"
 msgstr "mod fokusa"
 
-#: virtualBuffers\__init__.py:249 virtualBuffers_old\__init__.py:295
+#: virtualBuffers\__init__.py:270 virtualBuffers_old\__init__.py:295
 msgid "activates the current object in the virtual buffer"
 msgstr "aktivira trenutni objekt u virtualnom spremniku"
 
-#: virtualBuffers\__init__.py:261
+#: virtualBuffers\__init__.py:282
 msgid "Refreshed"
 msgstr "osvježeno"
 
-#: virtualBuffers\__init__.py:266
+#: virtualBuffers\__init__.py:287
 msgid "use screen layout %s"
 msgstr "korištenje izgleda ekrana %s"
 
-#: virtualBuffers\__init__.py:359
+#: virtualBuffers\__init__.py:380
 msgid "displays a list of links"
 msgstr "prikaži listu linkova"
 
-#: virtualBuffers\__init__.py:441
+#: virtualBuffers\__init__.py:536
 msgid "no next heading"
 msgstr "nema sljedećeg naslova"
 
-#: virtualBuffers\__init__.py:441 virtualBuffers_old\__init__.py:318
+#: virtualBuffers\__init__.py:536 virtualBuffers_old\__init__.py:318
 msgid "moves to the next heading"
 msgstr "premiješta na sljedeći naslov"
 
-#: virtualBuffers\__init__.py:442
+#: virtualBuffers\__init__.py:537
 msgid "no previous heading"
 msgstr "nema prethodnog naslova"
 
-#: virtualBuffers\__init__.py:442 virtualBuffers_old\__init__.py:329
+#: virtualBuffers\__init__.py:537 virtualBuffers_old\__init__.py:329
 msgid "moves to the previous heading"
 msgstr "premiješta na prethodni naslov"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:538
 msgid "moves to the next heading at level 1"
 msgstr "premiješta na sljedeći naslov na prvoj razini"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:538
 msgid "no next heading at level 1"
 msgstr "nema sljedećeg naslova na prvoj razini"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:539
 msgid "moves to the previous heading at level 1"
 msgstr "premiješta na prethodni naslov na prvoj razini"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:539
 msgid "no previous heading at level 1"
 msgstr "nema prethodnog naslova na prvoj razini"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:540
 msgid "moves to the next heading at level 2"
 msgstr "premiješta na sljedeći naslov na drugoj razini"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:540
 msgid "no next heading at level 2"
 msgstr "nema sljedećeg naslova na drugoj razini"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:541
 msgid "moves to the previous heading at level 2"
 msgstr "premiješta na prethodni naslov na drugoj razini"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:541
 msgid "no previous heading at level 2"
 msgstr "nema prethodnog naslova na drugoj razini"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:542
 msgid "moves to the next heading at level 3"
 msgstr "premiješta na sljedeći naslov na trećoj razini"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:542
 msgid "no next heading at level 3"
 msgstr "nema sljedećeg naslova na trećoj razini"
 
-#: virtualBuffers\__init__.py:448
+#: virtualBuffers\__init__.py:543
 msgid "moves to the previous heading at level 3"
 msgstr "premiješta na prethodni naslov na trećoj razini"
 
-#: virtualBuffers\__init__.py:448
+#: virtualBuffers\__init__.py:543
 msgid "no previous heading at level 3"
 msgstr "nema prethodnog naslova na trećoj razini"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers\__init__.py:544
 msgid "moves to the next heading at level 4"
 msgstr "premiješta na sljedeći naslov na četvrtoj razini"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers\__init__.py:544
 msgid "no next heading at level 4"
 msgstr "nema sljedećeg naslova na četvrtoj razini"
 
-#: virtualBuffers\__init__.py:450
+#: virtualBuffers\__init__.py:545
 msgid "moves to the previous heading at level 4"
 msgstr "premiješta na prethodni naslov na četvrtoj razini"
 
-#: virtualBuffers\__init__.py:450
+#: virtualBuffers\__init__.py:545
 msgid "no previous heading at level 4"
 msgstr "nema prethodnog naslova na četvrtoj razini"
 
-#: virtualBuffers\__init__.py:451
+#: virtualBuffers\__init__.py:546
 msgid "moves to the next heading at level 5"
 msgstr "premiješta na sljedeći naslov na petoj razini"
 
-#: virtualBuffers\__init__.py:451
+#: virtualBuffers\__init__.py:546
 msgid "no next heading at level 5"
 msgstr "nema sljedećeg naslova na petoj razini"
 
-#: virtualBuffers\__init__.py:452
+#: virtualBuffers\__init__.py:547
 msgid "moves to the previous heading at level 5"
 msgstr "premiješta na prethodni naslov na petoj razini"
 
-#: virtualBuffers\__init__.py:452
+#: virtualBuffers\__init__.py:547
 msgid "no previous heading at level 5"
 msgstr "nema prethodnog naslova na petoj razini"
 
-#: virtualBuffers\__init__.py:453
+#: virtualBuffers\__init__.py:548
 msgid "moves to the next heading at level 6"
 msgstr "premiješta na sljedeći naslov na šestoj razini"
 
-#: virtualBuffers\__init__.py:453
+#: virtualBuffers\__init__.py:548
 msgid "no next heading at level 6"
 msgstr "nema sljedećeg naslova na šestoj razini"
 
-#: virtualBuffers\__init__.py:454
+#: virtualBuffers\__init__.py:549
 msgid "moves to the previous heading at level 6"
 msgstr "premiješta na prethodni naslov na šestoj razini"
 
-#: virtualBuffers\__init__.py:454
+#: virtualBuffers\__init__.py:549
 msgid "no previous heading at level 6"
 msgstr "nema prethodnog naslova na šestoj razini"
 
-#: virtualBuffers\__init__.py:455
+#: virtualBuffers\__init__.py:550
 msgid "no next table"
 msgstr "nema sljedeće tablice"
 
-#: virtualBuffers\__init__.py:455 virtualBuffers_old\__init__.py:362
+#: virtualBuffers\__init__.py:550 virtualBuffers_old\__init__.py:362
 msgid "moves to the next table"
 msgstr "premiješta na sljedeću tablicu"
 
-#: virtualBuffers\__init__.py:456
+#: virtualBuffers\__init__.py:551
 msgid "no previous table"
 msgstr "Nema prethodne tablice"
 
-#: virtualBuffers\__init__.py:456 virtualBuffers_old\__init__.py:373
+#: virtualBuffers\__init__.py:551 virtualBuffers_old\__init__.py:373
 msgid "moves to the previous table"
 msgstr "premiješta na prethodnu tablicu"
 
-#: virtualBuffers\__init__.py:457
+#: virtualBuffers\__init__.py:552
 msgid "no next link"
 msgstr "nema sljedećeg linka"
 
-#: virtualBuffers\__init__.py:457 virtualBuffers_old\__init__.py:384
+#: virtualBuffers\__init__.py:552 virtualBuffers_old\__init__.py:384
 msgid "moves to the next link"
 msgstr "premiješta na sljedeći link"
 
-#: virtualBuffers\__init__.py:458
+#: virtualBuffers\__init__.py:553
 msgid "no previous link"
 msgstr "Nema prethodnog linka"
 
-#: virtualBuffers\__init__.py:458 virtualBuffers_old\__init__.py:395
+#: virtualBuffers\__init__.py:553 virtualBuffers_old\__init__.py:395
 msgid "moves to the previous link"
 msgstr "premiješta na prethodni link"
 
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers\__init__.py:554
 msgid "moves to the next visited link"
 msgstr "premiješta na sljedeći posjećeni link"
 
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers\__init__.py:554
 msgid "no next visited link"
 msgstr "nema sljedećeg posjećenog linka"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:555
 msgid "moves to the previous visited link"
 msgstr "premiješta na prethodno posjećeni  link"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:555
 msgid "no previous visited link"
 msgstr "nema prethodnog posjećenog linka"
 
-#: virtualBuffers\__init__.py:461
+#: virtualBuffers\__init__.py:556
 msgid "moves to the next unvisited link"
 msgstr "premiješta na sljedeći neposjećeni link"
 
-#: virtualBuffers\__init__.py:461
+#: virtualBuffers\__init__.py:556
 msgid "no next unvisited link"
 msgstr "nema sljedećeg neposjećenog linka"
 
-#: virtualBuffers\__init__.py:462
+#: virtualBuffers\__init__.py:557
 msgid "moves to the previous unvisited link"
 msgstr "Premješta se na prethodno neposjećeni link"
 
-#: virtualBuffers\__init__.py:462
+#: virtualBuffers\__init__.py:557
 msgid "no previous unvisited link"
 msgstr "nema prethodnog neposjećenog linka"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:558
 msgid "moves to the next form field"
 msgstr "premiješta na sljedeće polje obrasca"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:558
 msgid "no next form field"
 msgstr "Nema sljedećeg polja obrasca"
 
-#: virtualBuffers\__init__.py:464
+#: virtualBuffers\__init__.py:559
 msgid "no previous form field"
 msgstr "Nema prethodnog  polja obrasca"
 
-#: virtualBuffers\__init__.py:464 virtualBuffers_old\__init__.py:461
+#: virtualBuffers\__init__.py:559 virtualBuffers_old\__init__.py:461
 msgid "moves to the previous form field"
 msgstr "premiješta na prethodno polje obrasca"
 
-#: virtualBuffers\__init__.py:465
+#: virtualBuffers\__init__.py:560
 msgid "no next list"
 msgstr "nema sljedećeg popisa"
 
-#: virtualBuffers\__init__.py:465 virtualBuffers_old\__init__.py:406
+#: virtualBuffers\__init__.py:560 virtualBuffers_old\__init__.py:406
 msgid "moves to the next list"
 msgstr "premiješta na sljedeći popis"
 
-#: virtualBuffers\__init__.py:466
+#: virtualBuffers\__init__.py:561
 msgid "no previous list"
 msgstr "Nema prethodnog popisa"
 
-#: virtualBuffers\__init__.py:466 virtualBuffers_old\__init__.py:417
+#: virtualBuffers\__init__.py:561 virtualBuffers_old\__init__.py:417
 msgid "moves to the previous list"
 msgstr "premiješta na prethodni popis"
 
-#: virtualBuffers\__init__.py:467
+#: virtualBuffers\__init__.py:562
 msgid "no next list item"
 msgstr "Nema sljedećeg elementa na popisu"
 
-#: virtualBuffers\__init__.py:467 virtualBuffers_old\__init__.py:428
+#: virtualBuffers\__init__.py:562 virtualBuffers_old\__init__.py:428
 msgid "moves to the next list item"
 msgstr "premiješta na sljedeći element iz popisa"
 
-#: virtualBuffers\__init__.py:468
+#: virtualBuffers\__init__.py:563
 msgid "no previous list item"
 msgstr "Nema prethodnog elementa na popisu"
 
-#: virtualBuffers\__init__.py:468 virtualBuffers_old\__init__.py:439
+#: virtualBuffers\__init__.py:563 virtualBuffers_old\__init__.py:439
 msgid "moves to the previous list item"
 msgstr "premiješta na prethodni element iz popisa"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:564
 msgid "moves to the next button"
 msgstr "premiješta na sljedeći gumb"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:564
 msgid "no next button"
 msgstr "nema sljedećeg gumba"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:565
 msgid "moves to the previous button"
 msgstr "premiješta na prethodni gumb"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:565
 msgid "no previous button"
 msgstr "Nema prethodnog gumba"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:566
 msgid "moves to the next edit field"
 msgstr "premiješta na sljedeće polje za uređivanje"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:566
 msgid "no next edit field"
 msgstr "Nema sljedećeg polja za uređivanje"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:567
 msgid "moves to the previous edit field"
 msgstr "premiješta na prethodno polje za uređivanje"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:567
 msgid "no previous edit field"
 msgstr "Nema prethodnog  polja za uređivanje"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:568
 msgid "moves to the next frame"
 msgstr "premiješta na sljedeći okvir"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:568
 msgid "no next frame"
 msgstr "nema sljedećeg okvira"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:569
 msgid "moves to the previous frame"
 msgstr "premiješta na prethodni okvir"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:569
 msgid "no previous frame"
 msgstr "Nema prethodnog okvira"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:570
 msgid "moves to the next separator"
 msgstr "premiješta na sljedeći odvajatelj"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:570
 msgid "no next separator"
 msgstr "nema sljedećeg odvajatelja"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:571
 msgid "moves to the previous separator"
 msgstr "premiješta na prethodni odvajatelj"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:571
 msgid "no previous separator"
 msgstr "Nema prethodnog odvajatelja"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:572
 msgid "moves to the next radio button"
 msgstr "premiješta na sljedeći radio gumb"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:572
 msgid "no next radio button"
 msgstr "nema sljedećeg radio gumba"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:573
 msgid "moves to the previous radio button"
 msgstr "premiješta na prethodni radio gumb"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:573
 msgid "no previous radio button"
 msgstr "Nema prethodnog radio gumba"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:574
 msgid "moves to the next combo box"
 msgstr "premiješta na sljedeći odabirni okvir"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:574
 msgid "no next combo box"
 msgstr "nema sljedećeg odabirnog okvira"
 
-#: virtualBuffers\__init__.py:480
+#: virtualBuffers\__init__.py:575
 msgid "moves to the previous combo box"
 msgstr "premiješta na prethodni odabirni okvir"
 
-#: virtualBuffers\__init__.py:480
+#: virtualBuffers\__init__.py:575
 msgid "no previous combo box"
 msgstr "Nema prethodnog odabirnog okvira"
 
-#: virtualBuffers\__init__.py:481
+#: virtualBuffers\__init__.py:576
 msgid "moves to the next check box"
 msgstr "premiješta na sljedeći potvrdni okvir"
 
-#: virtualBuffers\__init__.py:481
+#: virtualBuffers\__init__.py:576
 msgid "no next check box"
 msgstr "nema sljedećeg potvrdnog okvira"
 
-#: virtualBuffers\__init__.py:482
+#: virtualBuffers\__init__.py:577
 msgid "moves to the previous check box"
 msgstr "premiješta na prethodni potvrdni okvir"
 
-#: virtualBuffers\__init__.py:482
+#: virtualBuffers\__init__.py:577
 msgid "no previous check box"
 msgstr "Nema prethodnog potvrdnog okvira"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers\__init__.py:578
 msgid "moves to the next graphic"
 msgstr "premiješta na sljedeću grafiku"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers\__init__.py:578
 msgid "no next graphic"
 msgstr "nema sljedeće grafike"
 
-#: virtualBuffers\__init__.py:484
+#: virtualBuffers\__init__.py:579
 msgid "moves to the previous graphic"
 msgstr "premiješta na prethodnu grafiku"
 
-#: virtualBuffers\__init__.py:484
+#: virtualBuffers\__init__.py:579
 msgid "no previous graphic"
 msgstr "Nema prethodne grafike"
 
-#: virtualBuffers\__init__.py:485
+#: virtualBuffers\__init__.py:580
 msgid "moves to the next block quote"
 msgstr "premiješta na sljedeći citat"
 
-#: virtualBuffers\__init__.py:485
+#: virtualBuffers\__init__.py:580
 msgid "no next block quote"
 msgstr "nema sljedećeg citata"
 
-#: virtualBuffers\__init__.py:486
+#: virtualBuffers\__init__.py:581
 msgid "moves to the previous block quote"
 msgstr "premiješta na prethodni citat"
 
-#: virtualBuffers\__init__.py:486
+#: virtualBuffers\__init__.py:581
 msgid "no previous block quote"
 msgstr "Nema prethodnog citata"
 
@@ -3771,30 +3814,3 @@ msgstr "i=BrzaTipka Popisnih Elemenata"
 #: virtualBuffers_old\adobe.py:315
 msgid "protected %s"
 msgstr "zaštićeno %s"
-
-#~ msgid "Update the content &dynamically"
-#~ msgstr "Ažurirati dinamički &sadržaj"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Izvijesti o lin&kovima"
-
-#~ msgid "Report &lists"
-#~ msgstr "Izvijesti o &popisima"
-
-#~ msgid "Report list &items"
-#~ msgstr "Izvijesti o popisnim &elementima"
-
-#~ msgid "Report &graphics"
-#~ msgstr "Izvijesti o &grafikama"
-
-#~ msgid "Report f&orms"
-#~ msgstr "Izvijesti o obr&ascima"
-
-#~ msgid "Report form &fields"
-#~ msgstr "Izvijesti o &poljima obrasca"
-
-#~ msgid "Report &paragraphs"
-#~ msgstr "Izvijesti o od&lomcima"
-
-#~ msgid "Report f&rames"
-#~ msgstr "Izvijesti o okviri&ma"
