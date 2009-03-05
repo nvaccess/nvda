@@ -49,26 +49,17 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	return pacc;
 }
 
-long getAccID(IAccessible* pacc) {
+long getAccID(IServiceProvider* servprov) {
 	int res;
-	IServiceProvider* pserv=NULL;
 	IAccID* paccID = NULL;
 	long ID;
 
-	DEBUG_MSG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
-	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv)))!=S_OK) {
-		DEBUG_MSG(L"IAccessible::QueryInterface returned "<<res);
-		return 0;
-	}  
-	DEBUG_MSG(L"IServiceProvider at "<<pserv);
 	DEBUG_MSG(L"calling IServiceProvider::QueryService for IAccID");
-	if((res=pserv->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
+	if((res=servprov->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
 		DEBUG_MSG(L"IServiceProvider::QueryService returned "<<res);
 		return 0;
 	} 
 	DEBUG_MSG(L"IAccID at "<<paccID);
-	DEBUG_MSG(L"releasingIServiceProvider");
-	pserv->Release();
 
 	DEBUG_MSG(L"Calling get_accID");
 	if((res=paccID->get_accID((long*)(&ID)))!=S_OK) {
@@ -80,6 +71,30 @@ long getAccID(IAccessible* pacc) {
 	paccID->Release();
 
 	return ID;
+}
+
+IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
+	int res;
+	IGetPDDomNode* pget = NULL;
+	IPDDomNode* domNode = NULL;
+
+	DEBUG_MSG(L"calling IServiceProvider::QueryService for IGetPDDomNode");
+	if((res=servprov->QueryService(SID_GetPDDomNode,IID_IGetPDDomNode,(void**)(&pget)))!=S_OK) {
+		DEBUG_MSG(L"IServiceProvider::QueryService returned "<<res);
+		return NULL;
+	} 
+	DEBUG_MSG(L"IGetPDDomNode at "<<pget);
+
+	DEBUG_MSG(L"Calling get_PDDomNode");
+	if((res=pget->get_PDDomNode(varChild, &domNode))!=S_OK) {
+		DEBUG_MSG(L"pget->get_PDDomNode returned "<<res);
+		domNode = NULL;
+	}
+
+	DEBUG_MSG("Releasing IGetPDDomNode");
+	pget->Release();
+
+	return domNode;
 }
 
 VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
@@ -98,12 +113,22 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 
+	IServiceProvider* servprov = NULL;
+	DEBUG_MSG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
+	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&servprov)))!=S_OK) {
+		DEBUG_MSG(L"IAccessible::QueryInterface returned "<<res);
+		pacc->Release();
+		return NULL;
+	}  
+	DEBUG_MSG(L"IServiceProvider at "<<pserv);
+
 	// GET ID
-	int ID = getAccID(pacc);
+	int ID = getAccID(servprov);
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		DEBUG_MSG(L"A node with this docHandle and ID already exists, returning NULL");
+		servprov->Release();
 		pacc->Release();
 		return NULL;
 	}
@@ -157,6 +182,32 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			wostringstream nameStream;
 			nameStream<<L"IAccessible::state_"<<state;
 			parentNode->addAttribute(nameStream.str().c_str(),L"1");
+		}
+	}
+
+	IPDDomNode* domNode = NULL;
+	if (role == ROLE_SYSTEM_CLIENT)
+		// Getting IPDDomNode is slow, so only bother for generic MSAA roles.
+		domNode = getPDDomNode(varChild, servprov);
+
+	IPDDomElement* domElement = NULL;
+	DEBUG_MSG(L"Trying to get IPDDomElement");
+	if (domNode && (res = domNode->QueryInterface(IID_IPDDomElement, (void**)(&domElement))) != S_OK) {
+		DEBUG_MSG(L"QueryInterface to IPDDomElement returned " << res);
+		domElement = NULL;
+	}
+
+	// Get stdName.
+	if (domElement) {
+		BSTR stdName;
+		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
+			DEBUG_MSG(L"IPDDomElement::GetStdName returned " << res);
+			stdName = NULL;
+		}
+		if (stdName) {
+			parentNode->addAttribute(L"acrobat::stdname", stdName);
+			SysFreeString(stdName);
+			stdName = NULL;
 		}
 	}
 
@@ -246,6 +297,17 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			}
 		}
 	}
+
+	if (domElement) {
+		DEBUG_MSG(L"Releasing IPDDomElement");
+		domElement->Release();
+	}
+	if (domNode) {
+		DEBUG_MSG(L"Releasing IPDDomNode");
+		domNode->Release();
+	}
+	DEBUG_MSG(L"Releasing IServiceProvider");
+	servprov->Release();
 
 	DEBUG_MSG(L"Returning node at "<<parentNode);
 	return parentNode;
