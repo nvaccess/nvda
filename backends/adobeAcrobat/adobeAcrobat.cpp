@@ -124,6 +124,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 
 	// GET ID
 	int ID = getAccID(servprov);
+	assert(ID);
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
@@ -295,6 +296,8 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,value))!=NULL) {
 				previousNode=tempNode;
 			}
+			SysFreeString(value);
+			value = NULL;
 		}
 	}
 
