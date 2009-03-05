@@ -186,10 +186,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		}
 	}
 
-	IPDDomNode* domNode = NULL;
-	if (role == ROLE_SYSTEM_CLIENT)
-		// Getting IPDDomNode is slow, so only bother for generic MSAA roles.
-		domNode = getPDDomNode(varChild, servprov);
+	IPDDomNode* domNode = getPDDomNode(varChild, servprov);
 
 	IPDDomElement* domElement = NULL;
 	DEBUG_MSG(L"Trying to get IPDDomElement");
