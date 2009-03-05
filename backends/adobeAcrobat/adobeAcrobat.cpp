@@ -120,7 +120,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		pacc->Release();
 		return NULL;
 	}  
-	DEBUG_MSG(L"IServiceProvider at "<<pserv);
+	DEBUG_MSG(L"IServiceProvider at "<<servprov);
 
 	// GET ID
 	int ID = getAccID(servprov);
@@ -225,7 +225,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
 	} else if (role == ROLE_SYSTEM_ROW) {
-		DEBUG_MSG(l"This is a table row, setting rowNumber");
+		DEBUG_MSG(L"This is a table row, setting rowNumber");
 		rowNumber = indexInParent + 1;
 	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) {
 		DEBUG_MSG(L"This is a table cell, adding attributes");
