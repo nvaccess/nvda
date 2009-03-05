@@ -19,10 +19,18 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			accRole = IAccessibleHandler.ROLE_SYSTEM_CELL
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		stdName = attrs.get("acrobat::stdname", "").lower()
+		if "h1" <= stdName <= "h6":
+			role = controlTypes.ROLE_HEADING
+			level = stdName[1]
+		else:
+			level = None
 		newAttrs=textHandler.ControlField()
 		newAttrs.update(attrs)
 		newAttrs['role']=role
 		newAttrs['states']=states
+		if level:
+			newAttrs["level"] = level
 		return newAttrs
 
 class AdobeAcrobat(VirtualBuffer):
