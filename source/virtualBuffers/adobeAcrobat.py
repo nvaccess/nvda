@@ -70,6 +70,10 @@ class AdobeAcrobat(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
 		elif nodeType=="table":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
+		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
+			attrs = {"acrobat::stdname": ["H%s" % nodeType[7:]]}
+		elif nodeType == "heading":
+			attrs = {"acrobat::stdname": ["H1", "H2", "H3", "H4", "H5", "H6"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
