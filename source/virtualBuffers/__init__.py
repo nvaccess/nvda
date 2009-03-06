@@ -354,6 +354,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
 			return
+		return self._iterNodesByAttribs(attribs, direction, -1)
+
+	def _iterNodesByAttribs(self, attribs, direction="next", offset=-1):
 		attribs=dictToMultiValueAttribsString(attribs)
 		startOffset=ctypes.c_int()
 		endOffset=ctypes.c_int()
@@ -361,6 +364,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			direction=VBufStorage_findDirection_forward
 		elif direction=="previous":
 			direction=VBufStorage_findDirection_back
+		elif direction=="up":
+			direction=VBufStorage_findDirection_up
 		else:
 			raise ValueError("unknown direction: %s"%direction)
 		while True:
