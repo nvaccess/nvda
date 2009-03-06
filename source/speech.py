@@ -385,6 +385,7 @@ def speakTypedCharacters(ch):
 		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
+	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
 	controlTypes.ROLE_TREEVIEWITEM,
