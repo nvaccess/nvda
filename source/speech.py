@@ -664,8 +664,8 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		name=attrs.get('name',"")
 	else:
 		name=""
-	role=attrs['role']
-	states=attrs['states']
+	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
+	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardshortcut', "")
 	level=attrs.get('level',None)
 	tableID=attrs.get('table-id')
