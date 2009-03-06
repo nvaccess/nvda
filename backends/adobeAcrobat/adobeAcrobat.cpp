@@ -224,6 +224,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
+		tableID = ID;
 	} else if (role == ROLE_SYSTEM_ROW) {
 		DEBUG_MSG(L"This is a table row, setting rowNumber");
 		rowNumber = indexInParent + 1;
