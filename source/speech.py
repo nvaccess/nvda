@@ -244,7 +244,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -648,8 +648,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldColumnNumber = columnNumber
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
-	if rowCount or columnCount:
+	if rowCount and columnCount:
 		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
+	elif columnCount and not rowCount:
+		textList.append(_("with %s columns")%columnCount)
+	elif rowCount and not columnCount:
+		textList.append(_("with %s rows")%rowCount)
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	return " ".join([x for x in textList if x])
