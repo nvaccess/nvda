@@ -726,6 +726,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		try:
 			info = self._getCell(tableID, row, column)
 		except LookupError:
+			speech.speakMessage("edge of table")
 			info = self._getCell(tableID, oldRow, oldColumn)
 
 		speech.speakTextInfo(info)
