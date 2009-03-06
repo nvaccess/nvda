@@ -117,7 +117,6 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	DEBUG_MSG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
 	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&servprov)))!=S_OK) {
 		DEBUG_MSG(L"IAccessible::QueryInterface returned "<<res);
-		pacc->Release();
 		return NULL;
 	}  
 	DEBUG_MSG(L"IServiceProvider at "<<servprov);
@@ -130,7 +129,6 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		DEBUG_MSG(L"A node with this docHandle and ID already exists, returning NULL");
 		servprov->Release();
-		pacc->Release();
 		return NULL;
 	}
 
@@ -260,19 +258,21 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			DEBUG_MSG(L"child "<<i);
 			if(varChildren[i].vt==VT_DISPATCH) {
 				DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible");
-				IAccessible* childPacc;
+				IAccessible* childPacc=NULL;
 				if((res=varChildren[i].pdispVal->QueryInterface(IID_IAccessible,(void**)(&childPacc)))!=S_OK) {
 					DEBUG_MSG(L"varChildren["<<i<<L"].pdispVal->QueryInterface to IID_iAccessible returned "<<res);
-					continue;
+					childPacc=NULL;
 				}
-				DEBUG_MSG(L"calling filVBuf with child object ");
-				if((tempNode=fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
-					previousNode=tempNode;
-				} else {
-					DEBUG_MSG(L"Error in calling fillVBuf");
+				if(childPacc) {
+					DEBUG_MSG(L"calling filVBuf with child object ");
+					if((tempNode=fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
+						previousNode=tempNode;
+					} else {
+						DEBUG_MSG(L"Error in calling fillVBuf");
+					}
+					DEBUG_MSG(L"releasing child IAccessible object");
+					childPacc->Release();
 				}
-				DEBUG_MSG(L"releasing child IAccessible object");
-				childPacc->Release();
 			}
 			VariantClear(&(varChildren[i]));
 		}
