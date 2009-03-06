@@ -313,9 +313,14 @@ class MSHTML(IAccessible):
 			child=child.previous
 		return child
 
+	def _get_value(self):
+		if self.IHTMLElement and self.IHTMLElement.tabIndex>=0:
+			return self.IHTMLElement.innerText
+
 	def _get_basicText(self):
 		if self.IHTMLElement:
 			return self.IHTMLElement.innerText
+		return super(MSHTML,self).basicText
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
