@@ -25,6 +25,7 @@ import braille
 import queueHandler
 from logHandler import log
 import keyUtils
+import ui
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -688,6 +689,61 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		return False
 
+	def _getCurrentCellCoords(self):
+		caret = self.makeTextInfo(textHandler.POSITION_CARET)
+		caret.expand(textHandler.UNIT_CHARACTER)
+		for field in reversed(caret.getTextWithFields()):
+			if not (isinstance(field, textHandler.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			attrs = field.field
+			if "table-id" in attrs and "table-rownumber" in attrs:
+				break
+		else:
+			raise LookupError("Not in a table cell")
+		return int(attrs["table-id"]), int(attrs["table-rownumber"]), int(attrs["table-columnnumber"])
+
+	def _getCell(self, tableID, row, column):
+		try:
+			node, start, end = next(self._iterNodesByAttribs({"table-id": [str(tableID)], "table-rownumber": [str(row)], "table-columnnumber": [str(column)]}))
+			info = self.makeTextInfo(textHandler.Offsets(start, end))
+		except StopIteration:
+			raise LookupError("No such table cell")
+		if info.isCollapsed:
+			raise LookupError("Cell present but occupies no space")
+		return info
+
+	def _tableMovementScriptHelper(self, row, column, relative=False):
+		try:
+			tableID, oldRow, oldColumn = self._getCurrentCellCoords()
+		except LookupError:
+			ui.message(_("Not in a table cell"))
+			return
+		if relative:
+			row = oldRow + row
+			column = oldColumn + column
+
+		try:
+			info = self._getCell(tableID, row, column)
+		except LookupError:
+			info = self._getCell(tableID, oldRow, oldColumn)
+
+		speech.speakTextInfo(info)
+		info.collapse()
+		self.selection = info
+
+	def script_nextRow(self, keyPress):
+		self._tableMovementScriptHelper(1, 0, True)
+
+	def script_previousRow(self, keyPress):
+		self._tableMovementScriptHelper(-1, 0, True)
+
+	def script_nextColumn(self, keyPress):
+		self._tableMovementScriptHelper(0, 1, True)
+
+	def script_previousColumn(self, keyPress):
+		self._tableMovementScriptHelper(0, -1, True)
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -699,6 +755,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("alt+extendedDown","collapseOrExpandControl"),
 	("tab", "tab"),
 	("shift+tab", "shiftTab"),
+	("control+alt+extendedDown", "nextRow"),
+	("control+alt+extendedUp", "previousRow"),
+	("control+alt+extendedRight", "nextColumn"),
+	("control+alt+extendedLeft", "previousColumn"),
 )]
 
 # Add quick navigation scripts.
