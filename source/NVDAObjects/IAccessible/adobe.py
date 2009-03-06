@@ -17,7 +17,7 @@ class AcrobatNode(IAccessible):
 class AcrobatTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryText(self):
-		return self.obj.value
+		return self.obj.value or ""
 
 	def _getCaretOffset(self):
 		caret = getNVDAObjectFromEvent(self.obj.windowHandle, IAccessibleHandler.OBJID_CARET, 0)
