@@ -28,7 +28,6 @@ lastMSHTMLEditGainFocusTimeStamp=0
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
 def nextIAccessibleInDom(IHTMLElement,back=False):
-	import winsound
 	notFound=False
 	firstLoop=True
 	while IHTMLElement: 
@@ -205,12 +204,11 @@ class MSHTML(IAccessible):
 
 	def __init__(self,*args,**kwargs):
 		super(MSHTML,self).__init__(*args,**kwargs)
-		if self.IAccessibleChildID==0:
-			try:
-				self.IHTMLElement.createTextRange()
-				self.TextInfo=MSHTMLTextInfo
-			except:
-				pass
+		try:
+			self.IHTMLElement.createTextRange()
+			self.TextInfo=MSHTMLTextInfo
+		except:
+			pass
 		if self.TextInfo==MSHTMLTextInfo:
 			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 				("ExtendedUp","moveByLine"),
@@ -238,6 +236,8 @@ class MSHTML(IAccessible):
 			]]
 
 	def _get_IHTMLElement(self):
+		if self.IAccessibleChildID>0:
+			return
 		if not hasattr(self,'_IHTMLElement'):
 			try:
 				IHTMLElement=IHTMLElementFromIAccessible(self.IAccessibleObject)
@@ -253,7 +253,7 @@ class MSHTML(IAccessible):
 			return super(MSHTML,self).value
 
 	def _get_role(self):
-		if self.IAccessibleChildID==0 and self.IHTMLElement and self.IHTMLElement.nodeName.lower()=="body":
+		if self.IHTMLElement and self.IHTMLElement.nodeName.lower()=="body":
 			return controlTypes.ROLE_DOCUMENT
 		return super(MSHTML,self).role
 
@@ -263,7 +263,7 @@ class MSHTML(IAccessible):
 		if e:
 			if e.isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
-			if e.isMultiline:
+			if self.TextInfo==MSHTMLTextInfo and e.isMultiline:
 				states.add(controlTypes.STATE_MULTILINE)
 		return states
 
@@ -290,7 +290,6 @@ class MSHTML(IAccessible):
 	def _get_next(self):
 		if self.IAccessibleChildID>0:
 			if self.IAccessibleChildID<self.childCount:
-				import winsound
 				newChildID=self.IAccessibleChildID+1
 				try:
 					pacc=self.IAccessibleObject.accChild(newChildID)
@@ -315,5 +314,34 @@ class MSHTML(IAccessible):
 		return child
 
 	def _get_basicText(self):
-		if self.IAccessibleChildID==0 and self.IHTMLElement:
+		if self.IHTMLElement:
 			return self.IHTMLElement.innerText
+
+	def _get_columnNumber(self):
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+			raise NotImplementedError
+		try:
+			return self.IHTMLElement.cellIndex+1
+		except:
+			raise NotImplementedError
+
+	def _get_rowNumber(self):
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+			raise NotImplementedError
+		IHTMLElement=self.IHTMLElement
+		while IHTMLElement:
+			try:
+				return IHTMLElement.rowIndex+1
+			except:
+				pass
+			IHTMLElement=IHTMLElement.parentNode
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		if self.role!=controlTypes.ROLE_TABLE or not self.IHTMLElement:
+			raise NotImplementedError
+		try:
+			return len([x for x in self.IHTMLElement.rows])
+		except:
+			raise NotImplementedError
+
