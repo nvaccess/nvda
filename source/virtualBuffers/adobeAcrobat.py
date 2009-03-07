@@ -7,24 +7,51 @@ from logHandler import log
 import textHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
+	stdNamesToRoles = {
+		# part? art?
+		"sect": controlTypes.ROLE_SECTION,
+		"div": controlTypes.ROLE_SECTION,
+		"blockquote": controlTypes.ROLE_BLOCKQUOTE,
+		"caption": controlTypes.ROLE_CAPTION,
+		# toc? toci? index? nonstruct? private? 
+		"l": controlTypes.ROLE_LIST,
+		"li": controlTypes.ROLE_LISTITEM,
+		"lbl": controlTypes.ROLE_LABEL,
+		# lbody
+		"p": controlTypes.ROLE_PARAGRAPH,
+		"h": controlTypes.ROLE_HEADING,
+		# h1 to h6 handled separately
+		# span, quote, note, reference, bibentry, code, figure, formula
+		"form": controlTypes.ROLE_FORM,
+	}
 
 	def _normalizeControlField(self,attrs):
-		accRole=attrs['iaccessible::role']
-		if accRole.isdigit():
-			accRole=int(accRole)
-		else:
-			accRole = accRole.lower()
-		if accRole == IAccessibleHandler.ROLE_SYSTEM_COLUMNHEADER:
-			# Treat column headers just like any other cell.
-			accRole = IAccessibleHandler.ROLE_SYSTEM_CELL
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		role = None
+		level = None
+
 		stdName = attrs.get("acrobat::stdname", "").lower()
 		if "h1" <= stdName <= "h6":
 			role = controlTypes.ROLE_HEADING
 			level = stdName[1]
-		else:
-			level = None
+		if not role:
+			try:
+				role = self.stdNamesToRoles[stdName]
+			except KeyError:
+				pass
+	
+		if not role:
+			accRole=attrs['iaccessible::role']
+			if accRole.isdigit():
+				accRole=int(accRole)
+			else:
+				accRole = accRole.lower()
+			if accRole == IAccessibleHandler.ROLE_SYSTEM_COLUMNHEADER:
+				# Treat column headers just like any other cell.
+				accRole = IAccessibleHandler.ROLE_SYSTEM_CELL
+			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('iaccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+
 		newAttrs=textHandler.ControlField()
 		newAttrs.update(attrs)
 		newAttrs['role']=role
