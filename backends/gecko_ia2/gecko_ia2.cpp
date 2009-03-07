@@ -571,19 +571,21 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					DEBUG_MSG(L"child "<<i);
 					if(varChildren[i].vt==VT_DISPATCH) {
 						DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible2");
-						IAccessible2* childPacc;
+						IAccessible2* childPacc=NULL;
 						if((res=varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)(&childPacc)))!=S_OK) {
 							DEBUG_MSG(L"varChildren["<<i<<L"].pdispVal->QueryInterface to IID_iAccessible2 returned "<<res);
-							continue;
+							childPacc=NULL;
 						}
-						DEBUG_MSG(L"calling _filVBufHelper with child object ");
-						if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
-							previousNode=tempNode;
-						} else {
-							DEBUG_MSG(L"Error in calling fillVBuf");
+						if(childPacc) {
+							DEBUG_MSG(L"calling _filVBufHelper with child object ");
+							if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
+								previousNode=tempNode;
+							} else {
+								DEBUG_MSG(L"Error in calling fillVBuf");
+							}
+							DEBUG_MSG(L"releasing child IAccessible2 object");
+							childPacc->Release();
 						}
-						DEBUG_MSG(L"releasing child IAccessible2 object");
-						childPacc->Release();
 					}
 					VariantClear(&(varChildren[i]));
 				}
