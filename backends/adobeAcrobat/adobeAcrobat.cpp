@@ -290,12 +290,29 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			SysFreeString(value);
 			value=NULL;
 		}
+
+		// Where accValue isn't useful, use the name instead.
+		if(!value && (res=pacc->get_accName(varChild,&value))!=S_OK) {
+			DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
+			value=NULL;
+		}
+		if(value!=NULL&&SysStringLen(value)==0) {
+			SysFreeString(value);
+			value=NULL;
+		}
+
 		if (value != NULL) {
 			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,value))!=NULL) {
 				previousNode=tempNode;
 			}
 			SysFreeString(value);
 			value = NULL;
+		} else if (STATE_SYSTEM_FOCUSABLE & states) {
+			// This node is focusable, but contains no text.
+			// Therefore, add it with a space so that the user can get to it.
+			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,L" "))!=NULL) {
+				previousNode=tempNode;
+			}
 		}
 	}
 
