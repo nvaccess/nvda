@@ -101,9 +101,9 @@ An NVDAObject for a window
 
 	@classmethod
 	def objectFromPoint(cls,x,y,oldNVDAObject=None):
-		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
+		windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(x,y))
 		if not windowHandle:
-			return
+			windowHandle=ctypes.windll.user32.GetDesktopWindow()
 		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
 		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectFromPoint.im_func!=Window.objectFromPoint.im_func:
 			return APIClass.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)

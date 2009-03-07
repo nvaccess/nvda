@@ -592,20 +592,16 @@ def accFocus(ia):
 	except:
 		return None
 
-def accHitTest(ia,child,x,y):
+def accHitTest(ia,x,y):
 	try:
 		res=ia.accHitTest(x,y)
-		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res)
-			new_child=0
-		elif isinstance(res,int) and res!=child:
-			new_ia=ia
-			new_child=res
-		else:
-			return None
-		return (new_ia,new_child)
-	except:
+	except COMError:
 		return None
+	if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		return accHitTest(normalizeIAccessible(res),x,y),0
+	elif isinstance(res,int):
+		return ia,res
+	return None
 
 def accChild(ia,child):
 	try:
