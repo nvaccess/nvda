@@ -354,7 +354,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _iterNodesByType(self,nodeType,direction="next",offset=-1):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
-			return
+			return iter(())
 		return self._iterNodesByAttribs(attribs, direction, offset)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", offset=-1):
