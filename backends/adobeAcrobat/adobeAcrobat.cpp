@@ -34,6 +34,7 @@ UINT wmMainThreadSetup=0;
 UINT wmMainThreadTerminate=0;
 VBufBackendSet_t backends;
 HWINEVENTHOOK winEventHookID;
+UINT_PTR mainThreadTimerID=0;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	int res;
@@ -290,12 +291,29 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			SysFreeString(value);
 			value=NULL;
 		}
+
+		// Where accValue isn't useful, use the name instead.
+		if(!value && (res=pacc->get_accName(varChild,&value))!=S_OK) {
+			DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
+			value=NULL;
+		}
+		if(value!=NULL&&SysStringLen(value)==0) {
+			SysFreeString(value);
+			value=NULL;
+		}
+
 		if (value != NULL) {
 			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,value))!=NULL) {
 				previousNode=tempNode;
 			}
 			SysFreeString(value);
 			value = NULL;
+		} else if (STATE_SYSTEM_FOCUSABLE & states) {
+			// This node is focusable, but contains no text.
+			// Therefore, add it with a space so that the user can get to it.
+			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,L" "))!=NULL) {
+				previousNode=tempNode;
+			}
 		}
 	}
 
@@ -314,7 +332,58 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	return parentNode;
 }
 
+void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
+	KillTimer(0,mainThreadTimerID);
+	mainThreadTimerID=0;
+	DEBUG_MSG(L"Updating "<<backends.size()<<L" backends");
+	for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();i++) {
+		DEBUG_MSG(L"Updating backend at "<<(*i));
+		(*i)->update();
+	}
+	DEBUG_MSG(L"All updated");
+}
+
 void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if (eventID != EVENT_OBJECT_STATECHANGE && eventID != EVENT_OBJECT_VALUECHANGE)
+		return;
+	if (eventID == EVENT_OBJECT_VALUECHANGE && childID == CHILDID_SELF) {
+		// This indicates that a new document or page replaces this one.
+		// The client will ditch this buffer and create a new one, so there's no point rendering it here.
+		return;
+	}
+
+	DEBUG_MSG(L"winEvent for window "<<hwnd);
+
+	int docHandle=(int)hwnd;
+	int ID=childID;
+	VBufBackend_t* backend=NULL;
+	DEBUG_MSG(L"Searching for backend in collection of "<<backends.size()<<L" running backends");
+	for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();i++) {
+		HWND rootWindow=(HWND)((*i)->getRootDocHandle());
+		DEBUG_MSG(L"Comparing backend's root window "<<rootWindow<<L" with window "<<hwnd);
+		if(rootWindow==hwnd) {
+			backend=(*i);
+		}
+	}
+	if(!backend) {
+		DEBUG_MSG(L"No matching backend found");
+		return;
+	}
+	DEBUG_MSG(L"found active backend for this window at "<<backend);
+
+	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
+	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
+	if(!node) {
+		DEBUG_MSG(L"No nodes to use, returning");
+		return;
+	}
+
+	backend->invalidateSubtree(node);
+
+	if(mainThreadTimerID==0) {
+		mainThreadTimerID=SetTimer(0,0,100,mainThreadTimerProc);
+		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
+	}
 }
 
 void mainThreadSetup(VBufBackend_t* backend) {
