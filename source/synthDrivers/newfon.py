@@ -37,7 +37,7 @@ re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
 re.compile(u"\\b(з)\\s",re.U|re.I): U"з",
 re.compile(u"\\s(ж)\\b",re.U|re.I): U"ж",
 re.compile(u"\\s(б)\\b",re.U|re.I): U"б",
-re.compile(ur"'([яюєї])",re.I|re.U): u"ь\\1"
+re.compile(ur"'([яюєї])",re.I|re.U): u"ьй\\1"
 }
 
 englishLetters = {
@@ -90,7 +90,7 @@ u"и": u"ы",
 u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
-u"є": u"йе",
+u"є": u"е",
 u"ц": u"тс",
 u"ґ": u"г"
 }
@@ -104,7 +104,7 @@ u"и": u"ы",
 u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
-u"є": u"йе"
+u"є": u"е"
 }
 letters = {}
 letters.update(englishLetters)
@@ -145,6 +145,8 @@ def preprocessUkrainianText(text):
 		text = rule.sub(ukrainianRules[rule],text)
 	for s in ukrainianPronunciationOrder:
 		text = text.replace(s, ukrainianPronunciation[s])
+		#stupid python! replace() does not have ignore case, reg exprs also sucks
+		text = text.replace(s.upper(), ukrainianPronunciation[s])
 	return text
 
 def processText(text,variant):
@@ -154,10 +156,10 @@ def processText(text,variant):
 		elif letters.has_key(letter): return letters[letter]
 		else: return letter
 	text = re_omittedCharacters.sub(" ", text)
-	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
 	if variant == "ukr":
 		text = preprocessUkrainianText(text)
 	else: text = re_zeros.sub(subRussianZeros,text)
+	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
 	text = preprocessEnglishText(text)
 	text = re_afterNumber.sub(r"\1-\2", text)
 	return text
