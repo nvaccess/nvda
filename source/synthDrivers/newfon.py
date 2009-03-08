@@ -30,7 +30,7 @@ re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
 re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d\s])")
 re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
-re_zeros = re.compile(r"\b\a?(0+)")
+re_zeros = re.compile(r"\b\a?\.?(0+)")
 
 ukrainianRules = {
 re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
@@ -112,8 +112,8 @@ letters.update(russianLetters)
 
 def subRussianZeros(match):
 	l = len(match.group(1))
-	if l == 1: return u"ноль "
-	text = str(l) + " "
+	if l == 1: return u" ноль "
+	text = " " + str(l) + " "
 	l = l%10
 	if l == 1: text += u"ноль"
 	elif l <5: text+= u"ноля"
