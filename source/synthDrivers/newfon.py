@@ -26,12 +26,19 @@ def processAudio(udata, buffer,length):
 	return 0
 
 re_words = re.compile(r"\b(\w+)\b",re.U)
-re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\b")
+re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
+re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
-re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
 re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
+ukrainianRules = {
+re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
+re.compile(u"\\b(з)\\s",re.U|re.I): U"з",
+re.compile(u"\\s(ж)\\b",re.U|re.I): U"ж",
+re.compile(u"\\s(б)\\b",re.U|re.I): U"б",
+re.compile(ur"'([яюєї])",re.I|re.U): u"ь\\1"
+}
 
-letters = {
+englishLetters = {
 'a': u"эй",
 'b' : u"би",
 'c': u"си",
@@ -57,7 +64,9 @@ letters = {
 'w': u"да+блъю",
 'x': u"экс",
 'y': u"вай",
-'z': u"зи",
+'z': u"зи"
+}
+russianLetters = {
 u"б": u"бэ",
 u"в": u"вэ",
 u"к": u"ка",
@@ -80,34 +89,64 @@ u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
 u"є": u"йе",
-u"ц": u"тс"
+u"ц": u"тс",
+u"ґ": u"г"
 }
-ukrainianPronunciationA = [u"и", u"і",u"ї",u"е",u"є",u"ц"]
+ukrainianPronunciationOrder = [u"и",u"і", u"ї", u"е", u"є", u"ц", u"ґ"]
 
-def processWords(match):
-	l = len(match.group(1))
+ukrainianLetters = {
+u"ц": u"цэ",
+u"й": u"йот",
+u"ґ": u"Твэрдэ+ гэ",
+u"и": u"ы",
+u"і": u"и",
+u"ї": u"ййи",
+u"е": u"э",
+u"є": u"йе"
+}
+letters = {}
+letters.update(englishLetters)
+letters.update(russianLetters)
+
+def expandAbbreviation(match):
 	loweredText = match.group(1).lower()
-	if l == 1:
-		return letters[loweredText] if letters.has_key(loweredText) else loweredText
-	if (match.group(1).isupper() and l <= abbreviationsLength) or re_abbreviations.match(loweredText):
+	if (match.group(1).isupper() and len(match.group(1)) <= abbreviationsLength) or re_abbreviations.match(loweredText):
 		expandedText = ""
 		for letter in loweredText:
 			expandedText += letters[letter] if letters.has_key(letter) else letter
 			if letter.isalpha(): expandedText+=" "
 		return expandedText
-	for s in englishPronunciation:
-		loweredText = loweredText.replace(s, englishPronunciation[s])
 	return loweredText
 
+def subEnglishLetters(match):
+	letter = match.group(1).lower()
+	return englishLetters[letter]
+
 def preprocessEnglishText(text):
-	return re_words.sub(processWords, text)
+	text = re_englishLetters.sub(subEnglishLetters, text)
+	for s in englishPronunciation:
+		text = text.replace(s, englishPronunciation[s])
+	return text
 
 def preprocessUkrainianText(text):
-	if len(text) == 1:
-		return ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
-	text = re_ukrainianApostrophe.sub(u"ь\\1", text)
-	for s in ukrainianPronunciationA:
+	for rule in ukrainianRules:
+		text = rule.sub(ukrainianRules[rule],text)
+	for s in ukrainianPronunciationOrder:
 		text = text.replace(s, ukrainianPronunciation[s])
+	return text
+
+def processText(text,variant):
+	if len(text) == 1:
+		letter = text.lower()
+		if variant == "ukr" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
+		elif letters.has_key(letter): return letters[letter]
+		else: return letter
+	text = re_omittedCharacters.sub(" ", text)
+	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
+	if variant == "ukr":
+		text = preprocessUkrainianText(text)
+	text = preprocessEnglishText(text)
+	text = re_afterNumber.sub(r"\1-\2", text)
 	return text
 
 class SynthDriver(SynthDriver):
@@ -158,11 +197,7 @@ class SynthDriver(SynthDriver):
 	def speakText(self, text, index=None):
 		global isSpeaking
 		isSpeaking = True
-		text = re_omittedCharacters.sub(" ", text)
-		text = re_afterNumber.sub(r"\1-\2", text)
-		if self._variant == "ukr":
-			text = preprocessUkrainianText(text)
-		text = preprocessEnglishText(text)
+		text = processText(text, self._variant)
 		if index is not None: 
 			self.newfon_lib.speakText(text,index)
 		else:
