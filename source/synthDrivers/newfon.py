@@ -28,8 +28,10 @@ def processAudio(udata, buffer,length):
 re_words = re.compile(r"\b(\w+)\b",re.U)
 re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
 re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
-re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
+re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d\s])")
 re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
+re_zeros = re.compile(r"\b\a?(0+)")
+
 ukrainianRules = {
 re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
 re.compile(u"\\b(з)\\s",re.U|re.I): U"з",
@@ -108,6 +110,16 @@ letters = {}
 letters.update(englishLetters)
 letters.update(russianLetters)
 
+def subRussianZeros(match):
+	l = len(match.group(1))
+	if l == 1: return u"ноль "
+	text = str(l) + " "
+	l = l%10
+	if l == 1: text += u"ноль"
+	elif l <5: text+= u"ноля"
+	else: text+=u"нолей"
+	return text+" "
+
 def expandAbbreviation(match):
 	loweredText = match.group(1).lower()
 	if (match.group(1).isupper() and len(match.group(1)) <= abbreviationsLength) or re_abbreviations.match(loweredText):
@@ -145,6 +157,7 @@ def processText(text,variant):
 	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
 	if variant == "ukr":
 		text = preprocessUkrainianText(text)
+	else: text = re_zeros.sub(subRussianZeros,text)
 	text = preprocessEnglishText(text)
 	text = re_afterNumber.sub(r"\1-\2", text)
 	return text
