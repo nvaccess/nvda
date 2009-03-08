@@ -34,10 +34,12 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
 
+	def _getFieldIdentifierFromOffset(self, offset):
+		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
+
 	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
-		obj=self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
-		return obj
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObject(self,obj):
 		while obj and obj!=self.obj:
@@ -117,7 +119,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return None
 
 	def _get_fieldIdentifierAtStart(self):
-		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle, self._startOffset)
+		return self._getFieldIdentifierFromOffset( self._startOffset)
 
 	def _getUnitOffsets(self, unit, offset):
 		if unit == self.UNIT_CONTROLFIELD:
@@ -262,8 +264,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		start,end=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
-		docHandle,ID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,start)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		docHandle,ID=info.fieldIdentifierAtStart
 		self._activateField(docHandle,ID)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
@@ -461,7 +463,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# We only want to override the tab order if the caret is not within the focused node.
 		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
 		try:
-			caretDocHandle,caretID=VBufClient_getFieldIdentifierFromBufferOffset(self.VBufHandle,caretInfo._startOffset)
+			caretDocHandle,caretID=caretInfo.fieldIdentifierAtStart
 		except:
 			return False
 		focus = api.getFocusObject()

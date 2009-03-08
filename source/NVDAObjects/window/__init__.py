@@ -9,6 +9,7 @@ import ctypes
 import ctypes.wintypes
 import winKernel
 import winUser
+from logHandler import log
 import controlTypes
 from NVDAObjects import NVDAObject
 
@@ -100,9 +101,9 @@ An NVDAObject for a window
 
 	@classmethod
 	def objectFromPoint(cls,x,y,oldNVDAObject=None):
-		windowHandle=ctypes.windll.user32.WindowFromPoint(x,y)
+		windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(x,y))
 		if not windowHandle:
-			return
+			windowHandle=ctypes.windll.user32.GetDesktopWindow()
 		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
 		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectFromPoint.im_func!=Window.objectFromPoint.im_func:
 			return APIClass.objectFromPoint(x,y,oldNVDAObject=oldNVDAObject,windowHandle=windowHandle)
@@ -127,6 +128,9 @@ An NVDAObject for a window
 	@classmethod
 	def objectInForeground(cls):
 		windowHandle=winUser.getForegroundWindow()
+		if not windowHandle:
+			log.debugWarning("no foreground window")
+			return None
 		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
 		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectInForeground.im_func!=Window.objectInForeground.im_func:
 			return APIClass.objectInForeground(windowHandle=windowHandle)

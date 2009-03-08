@@ -288,7 +288,10 @@ the NVDAObject for IAccessible
 			clsList.append(JavaVMRoot)
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			role=IAccessibleObject.role()
+			try:
+				role=IAccessibleObject.role()
+			except COMError:
+				role=0
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
@@ -316,9 +319,13 @@ the NVDAObject for IAccessible
 	@classmethod
 	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
 		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
-			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,oldNVDAObject.IAccessibleChildID,x,y)
+			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,x,y)
 		else:
+			res=None
+		if not res:
 			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+		if not res:
+			res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
 		if not res:
 			return
 		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
@@ -471,19 +478,47 @@ the NVDAObject for IAccessible
 			res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
-	def _get_actionStrings(self):
-		try:
-			action=self.IAccessibleObject.accDefaultAction(self.IAccessibleChildID)
-		except:
-			action=None
-		if action:
-			return [action]
-		else:
-			return super(IAccessible,self)._get_actionStrings()
+	def _get_actionCount(self):
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				return self.IAccessibleActionObject.nActions()
+			except COMError:
+				return 0
+		return 1
 
-	def doAction(self,index):
-		if index==0:
-			self.IAccessibleObject.accDoDefaultAction()
+	def getActionName(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				return self.IAccessibleActionObject.name(index)
+			except COMError:
+				raise NotImplementedError
+		elif index==0:
+			try:
+				action=self.IAccessibleObject.accDefaultAction(self.IAccessibleChildID)
+			except COMError:
+				action=None
+			if action:
+				return action
+		raise NotImplementedError
+
+	def doAction(self,index=None):
+		if not index:
+			index=self.defaultActionIndex
+		if hasattr(self,'IAccessibleActionObject'):
+			try:
+				self.IAccessibleActionObject.doAction(index)
+				return
+			except COMError:
+				raise NotImplementedError
+		elif index==0:
+			try:
+				self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)
+				return
+			except COMError:
+				raise NotImplementedError
+		raise NotImplementedError
 
 	def _get_IAccessibleIdentity(self):
 		if not hasattr(self,'_IAccessibleIdentity'):
@@ -755,9 +790,6 @@ the NVDAObject for IAccessible
 			return None
 		self._table=obj
 		return obj
-
-	def doDefaultAction(self):
-		IAccessibleHandler.accDoDefaultAction(self.IAccessibleObject,self.IAccessibleChildID)
 
 	def _get_activeChild(self):
 		if self.IAccessibleChildID==0:

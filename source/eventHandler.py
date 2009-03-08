@@ -88,6 +88,13 @@ def doPreGainFocus(obj):
 	api.setFocusObject(obj)
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
+		if not newForeground:
+			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
+			ancestors=api.getFocusAncestors()
+			if len(ancestors)>1:
+				newForeground=ancestors[1]
+			else:
+				newForeground=obj
 		api.setForegroundObject(newForeground)
 		executeEvent('foreground',newForeground)
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event

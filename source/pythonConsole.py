@@ -180,6 +180,7 @@ class ConsoleUI(wx.Frame):
 			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
+			"review":api.getReviewPosition(),
 			"mouse": api.getMouseObject(),
 			"brlRegions": braille.handler.buffer.regions,
 		}
