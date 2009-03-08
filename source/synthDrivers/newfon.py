@@ -9,6 +9,10 @@ import os
 import config
 import nvwave
 import re
+from logHandler import log
+
+#config
+abbreviationsLength = 4
 
 isSpeaking = False
 player = None
@@ -21,12 +25,11 @@ def processAudio(udata, buffer,length):
 	player.feed(string_at(buffer, length))
 	return 0
 
-re_englishLetter = re.compile(r"([a-z])", re.I)
-re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
-re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
+re_words = re.compile(r"\b(\w+)\b",re.U)
+re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\b")
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
 re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
-re_omittedCharacters = re.compile(r"[\(\)\*]+")
+re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
 
 letters = {
 'a': u"эй",
@@ -81,28 +84,28 @@ u"ц": u"тс"
 }
 ukrainianPronunciationA = [u"и", u"і",u"ї",u"е",u"є",u"ц"]
 
-def replaceEnglishLetter(match):
-	return "%s " % letters[match.group(1)]
-
-def replaceEnglishLetters(match):
-	return re_englishLetter.sub(replaceEnglishLetter, match.group(1))
-
-def replaceUkrainianApostrophe(match):
-	return u"ь%s" % match.group(1)
+def processWords(match):
+	l = len(match.group(1))
+	loweredText = match.group(1).lower()
+	if l == 1:
+		return letters[loweredText] if letters.has_key(loweredText) else loweredText
+	if (match.group(1).isupper() and l <= abbreviationsLength) or re_abbreviations.match(loweredText):
+		expandedText = ""
+		for letter in loweredText:
+			expandedText += letters[letter] if letters.has_key(letter) else letter
+			if letter.isalpha(): expandedText+=" "
+		return expandedText
+	for s in englishPronunciation:
+		loweredText = loweredText.replace(s, englishPronunciation[s])
+	return loweredText
 
 def preprocessEnglishText(text):
-	if len(text) == 1:
-		return letters[text] if letters.has_key(text) else text
-	text = re_abbreviations.sub(replaceEnglishLetters, text)
-	text = re_individualLetters.sub(replaceEnglishLetter, text)
-	for s in englishPronunciation:
-		text = text.replace(s, englishPronunciation[s])
-	return text
+	return re_words.sub(processWords, text)
 
 def preprocessUkrainianText(text):
 	if len(text) == 1:
 		return ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
-	text = re_ukrainianApostrophe.sub(replaceUkrainianApostrophe, text)
+	text = re_ukrainianApostrophe.sub(u"ь\\1", text)
 	for s in ukrainianPronunciationA:
 		text = text.replace(s, ukrainianPronunciation[s])
 	return text
@@ -155,7 +158,6 @@ class SynthDriver(SynthDriver):
 	def speakText(self, text, index=None):
 		global isSpeaking
 		isSpeaking = True
-		text = text.lower()
 		text = re_omittedCharacters.sub(" ", text)
 		text = re_afterNumber.sub(r"\1-\2", text)
 		if self._variant == "ukr":
