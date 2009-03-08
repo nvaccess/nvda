@@ -122,7 +122,8 @@ def subRussianZeros(match):
 
 def expandAbbreviation(match):
 	loweredText = match.group(1).lower()
-	if (match.group(1).isupper() and len(match.group(1)) <= abbreviationsLength) or re_abbreviations.match(loweredText):
+	l = len(match.group(1))
+	if (match.group(1).isupper() and (l <= abbreviationsLength and l > 1)) or re_abbreviations.match(loweredText):
 		expandedText = ""
 		for letter in loweredText:
 			expandedText += letters[letter] if letters.has_key(letter) else letter
