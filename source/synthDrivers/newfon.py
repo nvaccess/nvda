@@ -28,6 +28,7 @@ def processAudio(udata, buffer,length):
 re_words = re.compile(r"\b(\w+)\b",re.U)
 re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
 re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
+re_capAbbreviations = re.compile(ur"([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{3,})",re.U|re.I)
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d\s])")
 re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
 re_zeros = re.compile(r"\b\a?\.?(0+)")
@@ -123,7 +124,7 @@ def subRussianZeros(match):
 def expandAbbreviation(match):
 	loweredText = match.group(1).lower()
 	l = len(match.group(1))
-	if (match.group(1).isupper() and (l <= abbreviationsLength and l > 1)) or re_abbreviations.match(loweredText):
+	if (match.group(1).isupper() and (l <= abbreviationsLength and l > 1) and re_capAbbreviations.match(match.group(1))) or re_abbreviations.match(loweredText):
 		expandedText = ""
 		for letter in loweredText:
 			expandedText += letters[letter] if letters.has_key(letter) else letter
