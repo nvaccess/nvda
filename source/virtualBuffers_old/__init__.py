@@ -465,7 +465,9 @@ class virtualBuffer(textBuffer.TextBufferObject):
 		findDialog.run()
 
 	def doFindTextDialogHelper(self,text):
-	 	res=self._textBuf.find(text,self.text_reviewPosition+1)
+	 	if not text:
+			return
+		res=self._textBuf.find(text,self.text_reviewPosition+1)
 		if res>=0:
 			self.text_reviewPosition=res
 			speech.cancelSpeech()

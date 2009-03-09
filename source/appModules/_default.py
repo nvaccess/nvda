@@ -620,12 +620,15 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			info=o.makeTextInfo(textHandler.POSITION_CARET)
 		except NotImplementedError:
-			return
+			info=o.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_CHARACTER)
 		formatField=textHandler.FormatField()
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textHandler.FieldCommand) and isinstance(field.field,textHandler.FormatField):
 				formatField.update(field.field)
+		if len(formatField)==0:
+			ui.message(_("No formatting information"))
+			return
 		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
 		ui.message(text)
 

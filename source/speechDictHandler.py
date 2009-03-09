@@ -21,7 +21,8 @@ class SpeechDictEntry:
 
 	def __init__(self, pattern, replacement,comment,caseSensitive=True,regexp=False):
 		self.pattern = pattern
-		flags=re.IGNORECASE if not caseSensitive else 0
+		flags = re.U
+		if not caseSensitive: flags|=re.IGNORECASE
 		tempPattern=pattern if regexp else re.escape(pattern)
 		self.compiled = re.compile(tempPattern,flags)
 		self.replacement = replacement

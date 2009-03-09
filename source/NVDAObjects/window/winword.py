@@ -193,6 +193,8 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 			unit=textHandler.UNIT_SENTENCE
 		if unit==textHandler.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
+		elif unit==textHandler.UNIT_CHARACTER:
+			self._rangeObj.moveEnd(wdCharacter,1)
 		elif unit in NVDAUnitsToWordUnits:
 			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
 		else:
@@ -248,7 +250,10 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		return self._rangeObj.text
+		text=self._rangeObj.text
+		if not text:
+			text=""
+		return text
 
 	def move(self,unit,direction,endPoint=None):
 		if unit==textHandler.UNIT_LINE:
