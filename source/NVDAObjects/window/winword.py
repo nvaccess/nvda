@@ -258,7 +258,10 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		return self._rangeObj.text
+		text=self._rangeObj.text
+		if not text:
+			text=""
+		return text
 
 	def move(self,unit,direction,endPoint=None):
 		if unit==textHandler.UNIT_LINE:
