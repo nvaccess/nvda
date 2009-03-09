@@ -718,6 +718,9 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
 	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
+	elif role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in states:
+		# Don't bother speaking control field info for text nodes.
+		return ""
 	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
 		return _("in %s")%roleText
 	elif extraDetail and fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText:
