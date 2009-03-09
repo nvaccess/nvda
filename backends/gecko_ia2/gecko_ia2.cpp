@@ -817,7 +817,9 @@ void mainThreadSetup(VBufBackend_t* backend) {
 		DEBUG_MSG(L"Registered win event callback, with ID "<<mainThreadWinEventHookID);
 	}
 	backend->update();
+	#ifdef DEBUG
 	Beep(220,70);
+	#endif
 }
 
 LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
@@ -837,7 +839,9 @@ void mainThreadTerminate(VBufBackend_t* backend) {
 	if(mainThreadTimerID!=0) {
 		KillTimer(0,mainThreadTimerID);
 	}
+	#ifdef DEBUG
 	Beep(880,70);
+	#endif
 }
 
 LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
