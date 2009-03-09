@@ -674,6 +674,72 @@ void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD t
 	DEBUG_MSG(L"All updated");
 }
 
+bool getNodeChildOf(HWND* hwnd, long* childID) {
+	int res;
+	IAccessible2* pacc=IAccessible2FromIdentifier((int)*hwnd,*childID);
+	if (!pacc) {
+		DEBUG_MSG(L"Could not get IAccessible2 object");
+		return false;
+	}
+	DEBUG_MSG(L"got IAccessible2 object at "<<pacc);
+
+	IAccessible2* parentPacc=NULL;
+	VARIANT varChild;
+	varChild.vt=VT_I4;
+	varChild.lVal=*childID;
+	VARIANT varDisp;
+	if((res=pacc->accNavigate(NAVRELATION_NODE_CHILD_OF,varChild,&varDisp))!=S_OK) {
+		DEBUG_MSG(L"failed to get object from node_child_of relation");
+		pacc->Release();
+		return false;
+	}
+
+	if(varDisp.vt!=VT_DISPATCH) {
+		DEBUG_MSG(L"variant from node_child_of relation does not hold an IDispatch");
+		VariantClear(&varDisp);
+		pacc->Release();
+		return false;
+	}
+	DEBUG_MSG(L"got IDispatch object at "<<varDisp.pdispVal<<L" for node_child_of relation");
+
+	if((res=varDisp.pdispVal->QueryInterface(IID_IAccessible2,(void**)&parentPacc))!=S_OK) {
+		DEBUG_MSG(L"Could not queryInterface to IAccessible2 from IDispatch for node_child_of relation");
+		VariantClear(&varDisp);
+		pacc->Release();
+		return false;
+	}
+	DEBUG_MSG(L"got IAccessible2 object at "<<parentPacc<<L" from node_child_of relation");
+	VariantClear(&varDisp);
+
+	if(parentPacc==pacc) {
+		DEBUG_MSG(L"parentPacc and pacc are equal, bad relation");
+		parentPacc->Release();
+		pacc->Release();
+		return false;
+	}
+
+	if(((res=parentPacc->get_uniqueID((long*)childID))!=S_OK)||*childID>=0) {
+		DEBUG_MSG(L"could not get valid uniqueID from parentPacc");
+		parentPacc->Release();
+		pacc->Release();
+		return false;
+	}
+	DEBUG_MSG(L"got uniqueID "<<*childID<<L" from parentPacc");
+
+	if((res=parentPacc->get_windowHandle(hwnd))!=S_OK) {
+		DEBUG_MSG(L"Could not get valid window handle from parentPacc");
+		parentPacc->Release();
+		pacc->Release();
+		return false;
+	}
+	DEBUG_MSG(L"got windowhandle "<<*hwnd<<L" from parentPacc");
+
+	parentPacc->Release();
+	pacc->Release();
+
+	return true;
+}
+
 void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	int res;
 	switch(eventID) {
@@ -714,14 +780,20 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
 	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
 	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(node==NULL) {
-		int rootDocHandle=backend->getRootDocHandle();
-		int rootID=backend->getRootID();
-		if(docHandle!=rootDocHandle) {
-			Beep(2000,50);
-			DEBUG_MSG(L"an unknown node in a subframe, mark entire buffer for invalidation");
-			node=buffer->getControlFieldNodeWithIdentifier(rootDocHandle,rootID);
+	if(node==NULL&&docHandle!=backend->getRootDocHandle()&&eventID==EVENT_OBJECT_STATECHANGE) {
+		// This event is probably due to a new document loading in a subframe.
+		// Gecko doesn't fire a reorder on the iframe, so we need to use NODE_CHILD_OF in this case so that frames will reload.
+		#ifdef DEBUG
+		Beep(2000,50);
+		#endif
+		DEBUG_MSG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
+		if (getNodeChildOf(&hwnd, &childID)) {
+			DEBUG_MSG(L"Got NODE_CHILD_OF, recursing");
+			mainThreadWinEventCallback(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
+		} else {
+			DEBUG_MSG(L"NODE_CHILD_OF failed, returning");
 		}
+		return;
 	}
 	if(node==NULL) {
 		DEBUG_MSG(L"No nodes to use, returning");
