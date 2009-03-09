@@ -85,6 +85,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if passKeyThroughCount>=0:
 			passKeyThroughCount+=1
 			return True
+		#pass the volume controlling keys
+		if extended and vkCode >= winUser.VK_VOLUME_MUTE and vkCode <= winUser.VK_VOLUME_UP: return True
 		vkName=vkCodes.byCode.get(vkCode,"").lower()
 		vkChar=ctypes.windll.user32.MapVirtualKeyW(vkCode,winUser.MAPVK_VK_TO_CHAR)
 		if vkName.startswith('oem') or not vkName:

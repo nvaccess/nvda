@@ -9,7 +9,9 @@ Changes since 0.6p3:
 *Fix: speaking the title of the current foreground window with nvda+t now works correctly when in menus.
    *Fix: braille no longer shows useless information in its focus context such as unlabeled panes.
    *Fix: stop announcing some useless information when the focus changes such as root panes, layered panes and scroll panes in Java or Lotus applications.
-   
+   *New: NVDA now does not cancel speech when user presses volume control keys on the keyboard, alowing user change volume and listen to actual results immediately.
+   (#287)
+
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 
 * change: If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
