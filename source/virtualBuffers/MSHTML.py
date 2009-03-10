@@ -25,7 +25,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		"tr":controlTypes.ROLE_TABLEROW,
 		"td":controlTypes.ROLE_TABLECELL,
 		"img":controlTypes.ROLE_GRAPHIC,
-	"a":controlTypes.ROLE_LINK,
+		"a":controlTypes.ROLE_LINK,
 		"div":controlTypes.ROLE_SECTION,
 		"span":controlTypes.ROLE_TEXTFRAME,
 		"em":controlTypes.ROLE_TEXTFRAME,
@@ -33,6 +33,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		"font":controlTypes.ROLE_TEXTFRAME,
 		"b":controlTypes.ROLE_TEXTFRAME,
 		"i":controlTypes.ROLE_TEXTFRAME,
+		"label":controlTypes.ROLE_LABEL,
+		"form": controlTypes.ROLE_FORM,
 	}
 
 	def _normalizeControlField(self,attrs):
