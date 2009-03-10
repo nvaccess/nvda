@@ -261,9 +261,17 @@ class MSHTML(IAccessible):
 		states=super(MSHTML,self).states
 		e=self.IHTMLElement
 		if e:
-			if e.isContentEditable:
+			try:
+				isContentEditable=e.isContentEditable
+			except COMError:
+				isContentEditable=False
+			if isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
-			if self.TextInfo==MSHTMLTextInfo and e.isMultiline:
+			try:
+				isMultiline=e.isMultiline
+			except COMError:
+				isMultiline=False
+			if self.TextInfo==MSHTMLTextInfo and isMultiline: 
 				states.add(controlTypes.STATE_MULTILINE)
 		return states
 

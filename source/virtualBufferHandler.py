@@ -12,6 +12,7 @@ import winUser
 import NVDAObjects
 import NVDAObjects.window
 import NVDAObjects.IAccessible
+import NVDAObjects.IAccessible.MSHTML
 import controlTypes
 import NVDAObjects.window
 import speech
@@ -46,10 +47,10 @@ def update(obj):
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
 		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in states: 
+ 	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.IHTMLElement and windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_DOCUMENT: 
 		info=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(obj.windowHandle)[1])
 		if not info.flags&winUser.GUI_CARETBLINKING or info.hwndCaret!=obj.windowHandle:
-			classString="virtualBuffers_old.MSHTML.MSHTML"
+			classString="virtualBuffers.MSHTML.MSHTML"
 		else:
 			return
 	else:
