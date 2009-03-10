@@ -38,7 +38,8 @@ re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
 re.compile(u"\\b(з)\\s",re.U|re.I): U"з",
 re.compile(u"\\s(ж)\\b",re.U|re.I): U"ж",
 re.compile(u"\\s(б)\\b",re.U|re.I): U"б",
-re.compile(ur"'([яюєї])",re.I|re.U): u"ьй\\1"
+re.compile(ur"'([яюєї])",re.I|re.U): u"ьй\\1",
+re.compile(u"ц([ьіяюєї])",re.U|re.I): U"тс\\1"
 }
 
 englishLetters = {
@@ -92,13 +93,11 @@ u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
 u"є": u"е",
-u"ц": u"тс",
 u"ґ": u"г"
 }
-ukrainianPronunciationOrder = [u"и",u"і", u"ї", u"е", u"є", u"ц", u"ґ"]
+ukrainianPronunciationOrder = [u"и",u"і", u"ї", u"е", u"є", u"ґ"]
 
 ukrainianLetters = {
-u"ц": u"цэ",
 u"й": u"йот",
 u"ґ": u"Твэрдэ+ гэ",
 u"и": u"ы",
