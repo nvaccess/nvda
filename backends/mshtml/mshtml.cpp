@@ -175,7 +175,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 	IHTMLElement* pHTMLElement=NULL;
 	wostringstream s;
 	s<<L"ms__id"<<ID;
-	if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK) {
+	if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
 		DEBUG_MSG(L"Failed to find element with ID"<<s.str().c_str());
 		pHTMLDocument3->Release();
 		return;
