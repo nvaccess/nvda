@@ -29,7 +29,7 @@ re_words = re.compile(r"\b(\w+)\b",re.U)
 re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
 re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
 re_capAbbreviations = re.compile(ur"([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{3,})",re.U|re.I)
-re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d\s])")
+re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
 re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
 re_zeros = re.compile(r"\b\a?\.?(0+)")
 
