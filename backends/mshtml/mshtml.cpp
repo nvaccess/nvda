@@ -37,6 +37,51 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
+IHTMLDOMNode* getChildHTMLDOMNodeFromFrame(IHTMLDOMNode* pHTMLDOMNode) {
+int res=0;
+	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
+	IHTMLFrameBase2* pHTMLFrameBase2=NULL;
+	res=pHTMLDOMNode->QueryInterface(IID_IHTMLFrameBase2,(void**)&pHTMLFrameBase2);
+	if(res!=S_OK||!pHTMLFrameBase2) {
+		DEBUG_MSG(L"Could not get IHTMLFrameBase2");
+		return NULL;
+	}
+	DEBUG_MSG(L"PHTMLFrameBase2 at "<<pHTMLFrameBase2);
+	IHTMLWindow2* pHTMLWindow2=NULL;
+	res=pHTMLFrameBase2->get_contentWindow(&pHTMLWindow2);
+	pHTMLFrameBase2->Release();
+	if(res!=S_OK||!pHTMLWindow2) {
+		DEBUG_MSG(L"Could not get IHTMLWindow2");
+		return NULL;
+	}
+	DEBUG_MSG(L"pHTMLWindow2 at "<<pHTMLWindow2);
+	IHTMLDocument2* pHTMLDocument2=NULL;
+	res=pHTMLWindow2->get_document(&pHTMLDocument2);
+	pHTMLWindow2->Release();
+	if(res!=S_OK||!pHTMLDocument2) {
+		DEBUG_MSG(L"Could not get IHTMLDocument2");
+		return NULL;
+	}
+	DEBUG_MSG(L"pHTMLDocument2 at "<<pHTMLDocument2);
+	IHTMLElement* pHTMLElement=NULL;
+	res=pHTMLDocument2->get_body(&pHTMLElement);
+	pHTMLDocument2->Release();
+	if(res!=S_OK||!pHTMLElement) {
+		DEBUG_MSG(L"Could not get IHTMLElement");
+		return NULL;
+	}
+	DEBUG_MSG(L"pHTMLElement at "<<pHTMLElement);
+	IHTMLDOMNode* childPHTMLDOMNode=NULL;
+	res=pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode);
+	pHTMLElement->Release();
+	if(res!=S_OK||!childPHTMLDOMNode) {
+		DEBUG_MSG(L"Could not get IHTMLDOMNode");
+		return NULL;
+	}
+	DEBUG_MSG(L"childPHTMLDOMNode at "<<childPHTMLDOMNode);
+	return childPHTMLDOMNode;
+}
+
 VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode) {
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
@@ -82,7 +127,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	}
 	assert(nodeName); //Should never be NULL;
 	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
-	if(wcscmp(nodeName,L"#comment")==0||wcscmp(nodeName,L"script")==0) {
+	if(wcscmp(nodeName,L"#COMMENT")==0||wcscmp(nodeName,L"SCRIPT")==0) {
 		DEBUG_MSG(L"nodeName not supported");
 		SysFreeString(nodeName);
 		return NULL;
@@ -91,36 +136,43 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
-	IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
-	DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
-	IDispatch* pDispatch=NULL;
-	if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
+	IHTMLDOMNode* childPHTMLDOMNode=NULL;
+	if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getChildHTMLDOMNodeFromFrame(pHTMLDOMNode))!=NULL) {
+		DEBUG_MSG(L"Calling fillVBuf with child node from frame");
+		previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode);
+		childPHTMLDOMNode->Release();
+	} else {
 		IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
-		if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
-			DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
-			DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
-			long length=0;
-			pHTMLDOMChildrenCollection->get_length(&length);
-			DEBUG_MSG(L"length "<<length);
-			for(int i=0;i<length;i++) {
-				DEBUG_MSG(L"Fetching child "<<i);
-				IDispatch* childPDispatch=NULL;
-				if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
-					continue;
-				}
-				IHTMLDOMNode* childPHTMLDOMNode=NULL;
-				if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-					VBufStorage_fieldNode_t* tempNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode);
-					if(tempNode) {
-						previousNode=tempNode;
+		DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
+		IDispatch* pDispatch=NULL;
+		if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
+			IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
+			if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
+				DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
+				DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
+				long length=0;
+				pHTMLDOMChildrenCollection->get_length(&length);
+				DEBUG_MSG(L"length "<<length);
+				for(int i=0;i<length;i++) {
+					DEBUG_MSG(L"Fetching child "<<i);
+					IDispatch* childPDispatch=NULL;
+					if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
+						continue;
 					}
-					childPHTMLDOMNode->Release();
+					IHTMLDOMNode* childPHTMLDOMNode=NULL;
+					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
+						VBufStorage_fieldNode_t* tempNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode);
+						if(tempNode) {
+							previousNode=tempNode;
+						}
+						childPHTMLDOMNode->Release();
+					}
+					childPDispatch->Release();
 				}
-				childPDispatch->Release();
+				pHTMLDOMChildrenCollection->Release();
 			}
-			pHTMLDOMChildrenCollection->Release();
+			pDispatch->Release();
 		}
-		pDispatch->Release();
 	}
 	SysFreeString(nodeName);
 	return parentNode;
