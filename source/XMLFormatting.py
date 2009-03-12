@@ -15,7 +15,7 @@ class XMLTextParser(object):
 		if tagName=='control':
 			newAttrs=textHandler.ControlField()
 			for name,value in attrs.iteritems():
-				newAttrs[name.lower()]=value
+				newAttrs[name]=value
 			self._commandList.append(textHandler.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
 			newAttrs=textHandler.FormatField()

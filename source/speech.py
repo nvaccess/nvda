@@ -663,15 +663,15 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	childCount=int(attrs['_childcount'])
-	indexInParent=int(attrs['_indexinparent'])
-	parentChildCount=int(attrs['_parentchildcount'])
+	indexInParent=int(attrs['_indexInParent'])
+	parentChildCount=int(attrs['_parentChildCount'])
 	if reason==REASON_FOCUS:
 		name=attrs.get('name',"")
 	else:
 		name=""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
-	keyboardShortcut=attrs.get('keyboardshortcut', "")
+	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
 	tableID=attrs.get('table-id')
 	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (

@@ -10,6 +10,8 @@ import textHandler
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	nodeNamesToNVDARoles={
+		"frame":controlTypes.ROLE_FRAME,
+		"frameset":controlTypes.ROLE_DOCUMENT,
 		"body":controlTypes.ROLE_DOCUMENT,
 		"p":controlTypes.ROLE_PARAGRAPH,
 		"ul":controlTypes.ROLE_LIST,
@@ -42,7 +44,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		role=None
 		states=set()
 		level=None
-		nodeName=attrs.get('ihtmldomnode::nodename',"").lower()
+		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
 		role=self.nodeNamesToNVDARoles.get(nodeName,None)
 		if not role:
 			if "h1"<=nodeName<="h6":
