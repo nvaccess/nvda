@@ -1,5 +1,5 @@
 /**
- * backends/ie_mshtml/ie_mshtml.cpp
+ * backends/mshtml/mshtml.cpp
  * Part of the NV  Virtual Buffer Library
  * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
  * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
@@ -10,6 +10,7 @@
  #include <cassert>
 #include <windows.h>
 #include <oleacc.h>
+#include <oleidl.h>
 #include <mshtml.h>
 #include <set>
 #include <string>
@@ -37,14 +38,14 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
-IHTMLDOMNode* getChildHTMLDOMNodeFromFrame(IHTMLDOMNode* pHTMLDOMNode) {
+IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
 int res=0;
 	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
 	IHTMLFrameBase2* pHTMLFrameBase2=NULL;
 	res=pHTMLDOMNode->QueryInterface(IID_IHTMLFrameBase2,(void**)&pHTMLFrameBase2);
 	if(res!=S_OK||!pHTMLFrameBase2) {
 		DEBUG_MSG(L"Could not get IHTMLFrameBase2");
-		return NULL;
+		return false;
 	}
 	DEBUG_MSG(L"PHTMLFrameBase2 at "<<pHTMLFrameBase2);
 	IHTMLWindow2* pHTMLWindow2=NULL;
@@ -52,7 +53,7 @@ int res=0;
 	pHTMLFrameBase2->Release();
 	if(res!=S_OK||!pHTMLWindow2) {
 		DEBUG_MSG(L"Could not get IHTMLWindow2");
-		return NULL;
+		return false;
 	}
 	DEBUG_MSG(L"pHTMLWindow2 at "<<pHTMLWindow2);
 	IHTMLDocument2* pHTMLDocument2=NULL;
@@ -60,7 +61,7 @@ int res=0;
 	pHTMLWindow2->Release();
 	if(res!=S_OK||!pHTMLDocument2) {
 		DEBUG_MSG(L"Could not get IHTMLDocument2");
-		return NULL;
+		return false;
 	}
 	DEBUG_MSG(L"pHTMLDocument2 at "<<pHTMLDocument2);
 	IHTMLElement* pHTMLElement=NULL;
@@ -68,7 +69,7 @@ int res=0;
 	pHTMLDocument2->Release();
 	if(res!=S_OK||!pHTMLElement) {
 		DEBUG_MSG(L"Could not get IHTMLElement");
-		return NULL;
+		return false;
 	}
 	DEBUG_MSG(L"pHTMLElement at "<<pHTMLElement);
 	IHTMLDOMNode* childPHTMLDOMNode=NULL;
@@ -76,13 +77,13 @@ int res=0;
 	pHTMLElement->Release();
 	if(res!=S_OK||!childPHTMLDOMNode) {
 		DEBUG_MSG(L"Could not get IHTMLDOMNode");
-		return NULL;
+		return false;
 	}
 	DEBUG_MSG(L"childPHTMLDOMNode at "<<childPHTMLDOMNode);
 	return childPHTMLDOMNode;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode) {
+VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
 	if(pHTMLDOMNode->QueryInterface(IID_IHTMLDOMTextNode,(void**)&pHTMLDOMTextNode)==S_OK) {
@@ -109,7 +110,6 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		return NULL;
 	}
 	DEBUG_MSG(L"Got IHTMLUniqueName");
-	int docHandle=0;
 	int ID=0;
 	DEBUG_MSG(L"Getting IHTMLUniqueName::uniqueNumber");
 	if(pHTMLUniqueName->get_uniqueNumber((long*)&ID)!=S_OK) {
@@ -137,9 +137,9 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
 	IHTMLDOMNode* childPHTMLDOMNode=NULL;
-	if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getChildHTMLDOMNodeFromFrame(pHTMLDOMNode))!=NULL) {
+	if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode))!=NULL) {
 		DEBUG_MSG(L"Calling fillVBuf with child node from frame");
-		previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode);
+		previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
 		childPHTMLDOMNode->Release();
 	} else {
 		IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
@@ -161,7 +161,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 					}
 					IHTMLDOMNode* childPHTMLDOMNode=NULL;
 					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-						VBufStorage_fieldNode_t* tempNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode);
+						VBufStorage_fieldNode_t* tempNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
 						if(tempNode) {
 							previousNode=tempNode;
 						}
@@ -241,7 +241,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		return;
 	}
 	pHTMLElement->Release();
-	fillVBuf(buffer,NULL,NULL,pHTMLDOMNode);
+	fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle);
 	pHTMLDOMNode->Release();
 }
 
