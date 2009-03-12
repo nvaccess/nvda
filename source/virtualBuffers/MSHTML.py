@@ -106,3 +106,22 @@ class MSHTML(VirtualBuffer):
 				winUser.setCursorPos(oldX,oldY)
 			else:
 				log.debugWarning("no location for field")
+
+	def _searchableAttribsForNodeType(self,nodeType):
+		if nodeType=="table":
+			attrs={"IHTMLDOMNode::nodeName":["TABLE"]}
+		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
+			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
+		elif nodeType == "heading":
+			attrs = {"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+		elif nodeType == "list":
+			attrs = {"IHTMLDOMNode::nodeName": ["UL","OL","DL"]}
+		elif nodeType == "listItem":
+			attrs = {"IHTMLDOMNode::nodeName": ["LI","DD","DT"]}
+		elif nodeType=="button":
+			attrs={"IHTMLDOMNode::nodeName":["BUTTON"]}
+		elif nodeType == "blockQuote":
+			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
+		else:
+			return None
+		return attrs
