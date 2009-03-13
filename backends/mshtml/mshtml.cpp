@@ -173,7 +173,10 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
 	parentNode->addAttribute(L"IHTMLCurrentStyle::display",display);
 	IHTMLDOMNode* childPHTMLDOMNode=NULL;
-	if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode))!=NULL) {
+	if(wcscmp(nodeName,L"BR")==0) {
+		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
+		buffer->addTextFieldNode(parentNode,previousNode,L"\n");
+	} else if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode))!=NULL) {
 		DEBUG_MSG(L"Calling fillVBuf with child node from frame");
 		previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
 		childPHTMLDOMNode->Release();
