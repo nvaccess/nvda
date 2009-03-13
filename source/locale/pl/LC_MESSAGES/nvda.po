@@ -1,39 +1,19 @@
 # NVDA POLISH LOCALIZATION FILE
 # Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 # This file is distributed under the same license as the NVDA package.
-# Translation Contributors: Michał Bałamut, Dorota Czajka, Olga Madejska, Jan Michalik, Dariusz Mikułowski, Paweł Wołoszyn\n"
+# Translation Contributors: Michał Bałamut, Dorota Czajka, Olga Madejska, Łukasz Malicki, Jan Michalik, Dariusz Mikułowski, Paweł Wołoszyn\n"
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-0.6p3-0.1\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: Paweł Wołoszyn <biuro@nbb-online.pl>\n"
 "POT-Creation-Date: 2009-01-30 21:24+0100\n"
-"PO-Revision-Date: 2009-01-30 21:52+0100\n"
+"PO-Revision-Date: 2009-02-04 20:15+0100\n"
 "Last-Translator: Paweł Wołoszyn <biuro@nbb-online.pl>\n"
 "Language-Team: pl NVDA Polska <www.nvda.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: POLAND\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: brailleDisplayDrivers\n"
-"X-Poedit-SearchPath-1: comInterfaces\n"
-"X-Poedit-SearchPath-2: config\n"
-"X-Poedit-SearchPath-3: gui\n"
-"X-Poedit-SearchPath-4: NVDAControler\n"
-"X-Poedit-SearchPath-5: NVDAHelper\n"
-"X-Poedit-SearchPath-6: NVDAObjects\n"
-"X-Poedit-SearchPath-7: NVDAObjects\\IAccessible\n"
-"X-Poedit-SearchPath-8: NVDAObjects\\JAB\n"
-"X-Poedit-SearchPath-9: synthDrivers\n"
-"X-Poedit-SearchPath-10: virtualBuffers\n"
-"X-Poedit-SearchPath-11: virtualBuffers_old\n"
-"X-Poedit-SearchPath-12: .\n"
-"X-Poedit-SearchPath-13: appModules\n"
-"X-Poedit-SearchPath-14: images\n"
-"X-Poedit-SearchPath-15: include\n"
 
 #: brailleDisplayDrivers/handyTech.py:24
 msgid "Handy Tech braille displays"
@@ -238,7 +218,7 @@ msgstr "Użyj CapsLock jako klawisza NVDA"
 
 #: gui/settingsDialogs.py:388
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Użyj Numpad Insert jako klawisza NVDA"
+msgstr "Użyj numerycznego Insert jako klawisza NVDA"
 
 #: gui/settingsDialogs.py:391
 msgid "Use extended Insert as an NVDA modifier key"
@@ -310,7 +290,7 @@ msgstr "Czytaj dymki powiadomień"
 
 #: gui/settingsDialogs.py:470
 msgid "Report object shortcut &keys"
-msgstr "Podaj klawisze skrótów"
+msgstr "Podawaj klawisze skrótów"
 
 #: gui/settingsDialogs.py:473
 msgid "Report object &position information"
@@ -734,9 +714,14 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
 "Witaj w NVDA - programie udźwiękawiającym system Windows.\n"
-"Podczas pracy z tym programem będziesz często korzystać z kombinacji specjalnego klawisza NVDA z innymi klawiszami. Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy strzałek lub na klawiaturze numerycznej (numpad). Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił CapsLock.\n"
+"Podczas pracy z tym programem będziesz często korzystać z kombinacji specjalnego klawisza NVDA z innymi klawiszami.\n"
+"Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy strzałek lub na klawiaturze numerycznej (numpad).\n"
+"Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił CapsLock.\n"
 "Większość poleceń programu możesz wydawać trzymając wciśnięty klawisz NVDA i naciskając inne klawisze (podobnie, jak robisz to z Shiftem).\n"
-"Naciśnij NVDA + n w dowolnym momencie, aby wejść do głównego menu programu. W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do innych funkcji.\n"
+"Naciśnij NVDA + n w dowolnym momencie, aby wejść do głównego menu programu.\n"
+"W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do innych funkcji.\n"
+"\n"
+"Podręcznik obsługi, porady i kontakt z innymi użytkownikami znajdziesz także na polskiej stronie www.nvda.pl\n"
 
 #: gui/__init__.py:372
 msgid "Welcome to NVDA"
@@ -1857,7 +1842,7 @@ msgstr "pasek tytułu"
 
 #: controlTypes.py:174
 msgid "pane"
-msgstr "panel"
+msgstr "okno"
 
 #: controlTypes.py:175
 msgid "dialog"
@@ -2226,7 +2211,7 @@ msgstr "lista rozwijalna"
 
 #: controlTypes.py:270
 msgid "split button"
-msgstr "przycisk podziału"
+msgstr "przycisk dzielony"
 
 #: controlTypes.py:271
 msgid "menu button"
@@ -2250,7 +2235,7 @@ msgstr "pole skrótu klawiszowego"
 
 #: controlTypes.py:276
 msgid "indicator"
-msgstr "wskaźnik"
+msgstr "suwak paska"
 
 #: controlTypes.py:277
 msgid "spin button"
@@ -3003,7 +2988,7 @@ msgid ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>\n"
+"(C) 2006-2009 Współautorzy NVDA <http://www.nvda-project.org/>\n"
 "%(name)s podlega pod GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu.\n"
 "Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
