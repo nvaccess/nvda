@@ -119,6 +119,10 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	}
 	DEBUG_MSG(L"Got uniqueNumber of "<<ID);
 	pHTMLUniqueName->Release();
+	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
+		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
+		return NULL;
+	}
 	BSTR display=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
 	pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
