@@ -119,10 +119,41 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	}
 	DEBUG_MSG(L"Got uniqueNumber of "<<ID);
 	pHTMLUniqueName->Release();
+	BSTR display=NULL;
+	IHTMLElement2* pHTMLElement2=NULL;
+	pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	if(!pHTMLElement2) {
+		DEBUG_MSG(L"Could not get IHTMLElement2");
+		return NULL;
+	}
+	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
+	pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle);
+	pHTMLElement2->Release();
+	if(!pHTMLCurrentStyle) {
+		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
+		return NULL;
+	}
+	pHTMLCurrentStyle->get_display(&display);
+	pHTMLCurrentStyle->Release();
+	if(!display) {
+		DEBUG_MSG(L"Could not get IHTMLCurrentStyle::display");
+		return NULL;
+	}
+	if(wcscmp(display,L"none")==0) {
+		DEBUG_MSG(L"Display is None, not rendering node");
+		SysFreeString(display);
+		return NULL;
+	}
+	bool isBlock=true;
+	if(wcsncmp(display,L"inline",6)==0) {
+		DEBUG_MSG(L"node is inline, setting isBlock to false");
+		isBlock=false;
+	}
 	BSTR nodeName=NULL;
 	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&nodeName)!=S_OK) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
+		SysFreeString(display);
 		return NULL;
 	}
 	assert(nodeName); //Should never be NULL;
@@ -132,10 +163,11 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		SysFreeString(nodeName);
 		return NULL;
 	}
-	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,true);
+	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,isBlock);
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
+	parentNode->addAttribute(L"IHTMLCurrentStyle::display",display);
 	IHTMLDOMNode* childPHTMLDOMNode=NULL;
 	if(wcscmp(nodeName,L"FRAME")==0&&(childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode))!=NULL) {
 		DEBUG_MSG(L"Calling fillVBuf with child node from frame");
@@ -175,6 +207,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		}
 	}
 	SysFreeString(nodeName);
+	if(display) SysFreeString(display);
 	return parentNode;
 }
 
