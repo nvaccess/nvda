@@ -175,7 +175,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	if(wcscmp(nodeName,L"BR")==0) {
 		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
-	} else if(wcscmp(nodeName,L"FRAME")==0) {
+	} else if(wcscmp(nodeName,L"FRAME")==0||wcscmp(nodeName,L"IFRAME")==0) {
 		DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 		IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode);
 		if(childPHTMLDOMNode) {
