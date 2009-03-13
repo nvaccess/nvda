@@ -105,7 +105,9 @@ class MSHTML(VirtualBuffer):
 				log.debugWarning("no location for field")
 
 	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType=="table":
+		if nodeType.lower().endswith('link'):
+			attrs={"IHTMLDOMNode::nodeName":["A"]}
+		elif nodeType=="table":
 			attrs={"IHTMLDOMNode::nodeName":["TABLE"]}
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
