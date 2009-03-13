@@ -48,11 +48,7 @@ def update(obj):
 		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
  	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.IHTMLElement and windowClassName=="Internet Explorer_Server" and obj.IHTMLElement.nodeName.lower() in ("body", "frameset"):
-		info=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(obj.windowHandle)[1])
-		if not info.flags&winUser.GUI_CARETBLINKING or info.hwndCaret!=obj.windowHandle:
-			classString="virtualBuffers.MSHTML.MSHTML"
-		else:
-			return
+		classString="virtualBuffers.MSHTML.MSHTML"
 	else:
 		return
 	modString,classString=os.path.splitext(classString)
