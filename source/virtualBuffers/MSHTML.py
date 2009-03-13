@@ -11,6 +11,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	nodeNamesToNVDARoles={
 		"frame":controlTypes.ROLE_FRAME,
+		"iframe":controlTypes.ROLE_FRAME,
 		"frameset":controlTypes.ROLE_DOCUMENT,
 		"body":controlTypes.ROLE_DOCUMENT,
 		"p":controlTypes.ROLE_PARAGRAPH,
@@ -29,12 +30,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		"img":controlTypes.ROLE_GRAPHIC,
 		"a":controlTypes.ROLE_LINK,
 		"div":controlTypes.ROLE_SECTION,
-		"span":controlTypes.ROLE_TEXTFRAME,
-		"em":controlTypes.ROLE_TEXTFRAME,
-		"strong":controlTypes.ROLE_TEXTFRAME,
-		"font":controlTypes.ROLE_TEXTFRAME,
-		"b":controlTypes.ROLE_TEXTFRAME,
-		"i":controlTypes.ROLE_TEXTFRAME,
 		"label":controlTypes.ROLE_LABEL,
 		"form": controlTypes.ROLE_FORM,
 	}
@@ -52,6 +47,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 				level=nodeName[1:]
 		if nodeName in ("ul","ol","dl"):
 			states.add(controlTypes.STATE_READONLY)
+		if not role:
+			role=controlTypes.ROLE_TEXTFRAME
 		newAttrs=textHandler.ControlField()
 		newAttrs.update(attrs)
 		if role:
