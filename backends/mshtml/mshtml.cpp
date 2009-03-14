@@ -38,7 +38,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
-IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
+inline IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
 int res=0;
 	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
 	IHTMLFrameBase2* pHTMLFrameBase2=NULL;
@@ -83,7 +83,7 @@ int res=0;
 	return childPHTMLDOMNode;
 }
 
-void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode) {
+inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode) {
 IDispatch* pDispatch=NULL;
 		DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
 		if(pHTMLDOMNode->get_attributes(&pDispatch)!=S_OK) {
