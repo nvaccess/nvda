@@ -83,7 +83,7 @@ int res=0;
 	return childPHTMLDOMNode;
 }
 
-inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode) {
+inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode, const BSTR nodeName) {
 IDispatch* pDispatch=NULL;
 		DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
 		if(pHTMLDOMNode->get_attributes(&pDispatch)!=S_OK) {
@@ -124,10 +124,15 @@ pAttr->Release();
 continue;
 }
 DEBUG_MSG(L"Got specified");
+//ie6 does not return specified=true for value attributes of input fields. Microsoft sucks
+bool isInputField=false;
 if (!vbSpecified) {
+if (wcsicmp(nodeName,L"input")==0) isInputField=true;
+else {
 pAttr->Release();
 					childPDispatch->Release();
 continue;
+}
 }
 if (pAttr->get_nodeName(&attrName)!=S_OK) {
 DEBUG_MSG(L"pAttr->get_nodeName failed");
@@ -136,6 +141,12 @@ pAttr->Release();
 continue;
 }
 DEBUG_MSG(L"Got AttrName "<<attrName);
+if (isInputField && wcsicmp(attrName,L"value")!=0) { //this is input field, it isn't specified (fake!) but current fetched attribute isn't 'value', so skip it
+SysFreeString(attrName);
+pAttr->Release();
+					childPDispatch->Release();
+continue;
+}
 if (pAttr->get_nodeValue(&attrValue)!=S_OK) {
 DEBUG_MSG(L"pAttr->get_nodeValue failed");
 SysFreeString(attrName);
@@ -295,7 +306,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			}
 			pDispatch->Release();
 }
-fillAttributes(parentNode, pHTMLDOMNode);
+fillAttributes(parentNode, pHTMLDOMNode,nodeName);
 	}
 	SysFreeString(nodeName);
 	if(display) SysFreeString(display);
