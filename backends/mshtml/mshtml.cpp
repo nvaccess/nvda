@@ -246,7 +246,11 @@ pAttr->Release();
 continue;
 }
 DEBUG_MSG(L"Got specified");
-if (!vbSpecified) continue;
+if (!vbSpecified) {
+pAttr->Release();
+					childPDispatch->Release();
+continue;
+}
 if (pAttr->get_nodeName(&attrName)!=S_OK) {
 DEBUG_MSG(L"pAttr->get_nodeName failed");
 pAttr->Release();
