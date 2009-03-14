@@ -212,6 +212,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 				pHTMLDOMChildrenCollection->Release();
 			}
 			pDispatch->Release();
+}
 		DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
 		if(pHTMLDOMNode->get_attributes(&pDispatch)==S_OK) {
 		IHTMLAttributeCollection* pHTMLAttributeCollection=NULL;
@@ -287,8 +288,6 @@ pAttr->Release();
 			}
 			pDispatch->Release();
 }
-
-		}
 	}
 	SysFreeString(nodeName);
 	if(display) SysFreeString(display);
