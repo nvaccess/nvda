@@ -162,7 +162,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	}
 	assert(nodeName); //Should never be NULL;
 	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
-	if(wcscmp(nodeName,L"#COMMENT")==0||wcscmp(nodeName,L"SCRIPT")==0) {
+	if(wcsicmp(nodeName,L"#comment")==0||wcsicmp(nodeName,L"script")==0) {
 		DEBUG_MSG(L"nodeName not supported");
 		SysFreeString(nodeName);
 		return NULL;
@@ -269,10 +269,8 @@ wostringstream valueStream;
 if (attrValue.vt ==VT_I4) {
 DEBUG_MSG(L"attrValue.vt ==VT_I4");
 valueStream << attrValue.lVal;
-} else if(attrValue.vt==VT_BSTR) {
+} else if(attrValue.vt==VT_BSTR && attrValue.bstrVal) {
 DEBUG_MSG(L"attrValue.vt==VT_BSTR");
-DEBUG_MSG(L"bstr at " << (unsigned)attrValue.bstrVal);
-assert(attrValue.bstrVal!=NULL);
 valueStream << attrValue.bstrVal;
 }
 parentNode->addAttribute(nameStream.str().c_str(),valueStream.str().c_str());
