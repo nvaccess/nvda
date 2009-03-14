@@ -183,7 +183,8 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			childPHTMLDOMNode->Release();
 		}
 	} else {
-		IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
+				long length=0;
+					IDispatch* childPDispatch=NULL;
 		DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
 		IDispatch* pDispatch=NULL;
 		if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
@@ -191,12 +192,10 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
 				DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
 				DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
-				long length=0;
 				pHTMLDOMChildrenCollection->get_length(&length);
 				DEBUG_MSG(L"length "<<length);
 				for(int i=0;i<length;i++) {
 					DEBUG_MSG(L"Fetching child "<<i);
-					IDispatch* childPDispatch=NULL;
 					if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
 						continue;
 					}
@@ -213,6 +212,80 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 				pHTMLDOMChildrenCollection->Release();
 			}
 			pDispatch->Release();
+		DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
+		if(pHTMLDOMNode->get_attributes(&pDispatch)==S_OK) {
+		IHTMLAttributeCollection* pHTMLAttributeCollection=NULL;
+			if(pDispatch->QueryInterface(IID_IHTMLAttributeCollection,(void**)&pHTMLAttributeCollection)==S_OK) {
+				DEBUG_MSG(L"Got IHTMLDOMNode::attributes");
+				DEBUG_MSG(L"Getting IHTMLAttributeCollection::length");
+				if (pHTMLAttributeCollection->get_length(&length)== S_OK) {
+				DEBUG_MSG(L"length "<<length);
+IHTMLDOMAttribute* pAttr=0;
+VARIANT vACIndex;
+vACIndex.vt = VT_I4;
+				for(int i=0;i<length;i++) {
+					DEBUG_MSG(L"Fetching attribute "<<i);
+    vACIndex.lVal = i;
+					if(pHTMLAttributeCollection->item(&vACIndex,&childPDispatch)!=S_OK) {
+DEBUG_MSG(L"pHTMLAttributeCollection->item failed");
+continue;
+}
+if (childPDispatch->QueryInterface(IID_IHTMLDOMAttribute, (void**)&pAttr)!=S_OK) {
+DEBUG_MSG("childPDispatch->QueryInterface of IID_IHTMLDOMAttribute failed");
+childPDispatch->Release();
+						continue;
+					}
+DEBUG_MSG(L"Got IHTMLAttribute");
+BSTR attrName=NULL;
+VARIANT attrValue ;
+VARIANT_BOOL vbSpecified;
+if (pAttr->get_specified(&vbSpecified)!=S_OK) {
+DEBUG_MSG(L"pAttr->get_specified failed");
+pAttr->Release();
+					childPDispatch->Release();
+continue;
+}
+DEBUG_MSG(L"Got specified");
+if (!vbSpecified) continue;
+if (pAttr->get_nodeName(&attrName)!=S_OK) {
+DEBUG_MSG(L"pAttr->get_nodeName failed");
+pAttr->Release();
+					childPDispatch->Release();
+continue;
+}
+DEBUG_MSG(L"Got AttrName "<<attrName);
+if (pAttr->get_nodeValue(&attrValue)!=S_OK) {
+DEBUG_MSG(L"pAttr->get_nodeValue failed");
+SysFreeString(attrName);
+pAttr->Release();
+					childPDispatch->Release();
+continue;
+}
+DEBUG_MSG(L"Got AttrValue");
+			wostringstream nameStream;
+nameStream << L"IHTMLAttribute::" << attrName;
+SysFreeString(attrName);
+wostringstream valueStream;
+if (attrValue.vt ==VT_I4) {
+DEBUG_MSG(L"attrValue.vt ==VT_I4");
+valueStream << attrValue.lVal;
+} else if(attrValue.vt==VT_BSTR) {
+DEBUG_MSG(L"attrValue.vt==VT_BSTR");
+DEBUG_MSG(L"bstr at " << (unsigned)attrValue.bstrVal);
+assert(attrValue.bstrVal!=NULL);
+valueStream << attrValue.bstrVal;
+}
+parentNode->addAttribute(nameStream.str().c_str(),valueStream.str().c_str());
+VariantClear(&attrValue);
+pAttr->Release();
+					childPDispatch->Release();
+}
+}
+				pHTMLAttributeCollection->Release();
+			}
+			pDispatch->Release();
+}
+
 		}
 	}
 	SysFreeString(nodeName);
