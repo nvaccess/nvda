@@ -214,7 +214,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self._UIATextPattern
 
 	def _get_name(self):
-		return self.UIAElement.currentName
+		try:
+			return self.UIAElement.currentName
+		except COMError:
+			return ""
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
@@ -224,10 +227,15 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				return superRole
 		return role
 
-
 	def _get_description(self):
-		itemStatus=self.UIAElement.currentItemStatus
-		helpText=self.UIAElement.currentHelpText
+		try:
+			itemStatus=self.UIAElement.currentItemStatus
+		except COMError:
+			itemStatus=""
+		try:
+			helpText=self.UIAElement.currentHelpText
+		except COMError:
+			helpText=""
 		return " ".join([x for x in itemStatus,helpText if x])
 
 	def _get_keyboardShortcut(self):
