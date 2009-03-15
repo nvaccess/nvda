@@ -54,16 +54,12 @@ UIAControlTypesToNVDARoles={
 
 UIAPropertyIdsToNVDAEventNames={
 	UIA_NamePropertyId:"nameChange",
+	UIA_HelpTextPropertyId:"descriptionChange",
 	UIA_ExpandCollapseExpandCollapseStatePropertyId:"stateChange",
 	UIA_ToggleToggleStatePropertyId:"stateChange",
-	UIA_HasKeyboardFocusPropertyId:"stateChange",
-	UIA_IsKeyboardFocusablePropertyId:"stateChange",
 	UIA_IsEnabledPropertyId:"stateChange",
-	UIA_IsPasswordPropertyId:"stateChange",
-	UIA_IsOffscreenPropertyId:"stateChange",
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
-	UIA_SelectionItemIsSelectedPropertyId:"stateChange",
 }
 
 UIAEventIdsToNVDAEventNames={
