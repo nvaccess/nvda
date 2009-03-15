@@ -6,6 +6,7 @@ import controlTypes
 import speech
 import api
 import textHandler
+from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
 
