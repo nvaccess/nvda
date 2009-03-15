@@ -38,7 +38,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
-IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
+inline IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
 int res=0;
 	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
 	IHTMLFrameBase2* pHTMLFrameBase2=NULL;
@@ -81,6 +81,101 @@ int res=0;
 	}
 	DEBUG_MSG(L"childPHTMLDOMNode at "<<childPHTMLDOMNode);
 	return childPHTMLDOMNode;
+}
+
+inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode, const BSTR nodeName) {
+	int res=0;
+	IDispatch* pDispatch=NULL;
+	DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
+	if(pHTMLDOMNode->get_attributes(&pDispatch)!=S_OK||!pDispatch) {
+		DEBUG_MSG(L"pHTMLDOMNode->get_attributes failed");
+		return;
+	}
+	IHTMLAttributeCollection* pHTMLAttributeCollection=NULL;
+	res=pDispatch->QueryInterface(IID_IHTMLAttributeCollection,(void**)&pHTMLAttributeCollection);
+	pDispatch->Release();
+	if(res!=S_OK) {
+		DEBUG_MSG(L"Could not get IHTMLAttributesCollection");
+		return;
+	}
+	DEBUG_MSG(L"Got IHTMLDOMNode::attributes");
+	LONG length=0;
+	DEBUG_MSG(L"Getting IHTMLAttributeCollection::length");
+	if(pHTMLAttributeCollection->get_length(&length)!= S_OK) {
+		DEBUG_MSG(L"length failed");
+		length=0;
+	}
+	for(int i=0;i<length;i++) {
+		IHTMLDOMAttribute* pAttr=0;
+		VARIANT vACIndex;
+		vACIndex.vt = VT_I4;
+		DEBUG_MSG(L"Fetching attribute "<<i);
+		    vACIndex.lVal = i;
+		IDispatch* childPDispatch=NULL;
+		if(pHTMLAttributeCollection->item(&vACIndex,&childPDispatch)!=S_OK) {
+			DEBUG_MSG(L"pHTMLAttributeCollection->item failed");
+			continue;
+		}
+		res = childPDispatch->QueryInterface(IID_IHTMLDOMAttribute, (void**)&pAttr);
+		childPDispatch->Release();
+		if(res!=S_OK) {
+			DEBUG_MSG("childPDispatch->QueryInterface of IID_IHTMLDOMAttribute failed");
+			continue;
+		}
+		DEBUG_MSG(L"Got IHTMLAttribute");
+		BSTR attrName=NULL;
+		VARIANT attrValue ;
+		VARIANT_BOOL vbSpecified;
+		if (pAttr->get_specified(&vbSpecified)!=S_OK) {
+			DEBUG_MSG(L"pAttr->get_specified failed");
+			pAttr->Release();
+			continue;
+		}
+		DEBUG_MSG(L"Got specified");
+		//ie6 does not return specified=true for value attributes of input fields. Microsoft sucks
+		bool isInputField=false;
+		if (!vbSpecified) {
+			if (wcsicmp(nodeName,L"input")==0)  {
+				isInputField=true;
+			} else {
+				pAttr->Release();
+				continue;
+			}
+		}
+		if (pAttr->get_nodeName(&attrName)!=S_OK) {
+			DEBUG_MSG(L"pAttr->get_nodeName failed");
+			pAttr->Release();
+			continue;
+		}
+		DEBUG_MSG(L"Got AttrName "<<attrName);
+		if (isInputField && wcsicmp(attrName,L"value")!=0) { //this is input field, it isn't specified (fake!) but current fetched attribute isn't 'value', so skip it
+			SysFreeString(attrName);
+			pAttr->Release();
+			continue;
+		}
+		if (pAttr->get_nodeValue(&attrValue)!=S_OK) {
+			DEBUG_MSG(L"pAttr->get_nodeValue failed");
+			SysFreeString(attrName);
+			pAttr->Release();
+			continue;
+		}
+		DEBUG_MSG(L"Got AttrValue");
+		wostringstream nameStream;
+		nameStream << L"IHTMLAttribute::" << attrName;
+		SysFreeString(attrName);
+		wostringstream valueStream;
+		if (attrValue.vt ==VT_I4) {
+			DEBUG_MSG(L"attrValue.vt ==VT_I4");
+			valueStream << attrValue.lVal;
+		} else if(attrValue.vt==VT_BSTR && attrValue.bstrVal) {
+			DEBUG_MSG(L"attrValue.vt==VT_BSTR");
+			valueStream << attrValue.bstrVal;
+		}
+		parentNode->addAttribute(nameStream.str().c_str(),valueStream.str().c_str());
+		VariantClear(&attrValue);
+		pAttr->Release();
+	}
+	pHTMLAttributeCollection->Release();
 }
 
 VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
@@ -172,6 +267,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
 	parentNode->addAttribute(L"IHTMLCurrentStyle::display",display);
+	fillAttributes(parentNode, pHTMLDOMNode,nodeName);
 	if(wcscmp(nodeName,L"BR")==0) {
 		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
