@@ -234,7 +234,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_states(self):
 		states=set()
-		if self.UIAElement.currentHasKeyboardFocus:
+		try:
+			hasKeyboardFocus=self.UIAElement.currentHasKeyboardFocus
+		except COMError:
+			hasKeyboardFocus=False
+		if hasKeyboardFocus:
 			states.add(controlTypes.STATE_FOCUSED)
 		if self.UIAElement.cachedIsKeyboardFocusable:
 			states.add(controlTypes.STATE_FOCUSABLE)
