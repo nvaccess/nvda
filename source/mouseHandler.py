@@ -87,16 +87,13 @@ def internal_mouseEvent(msg,x,y,injected):
 
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
+	deskLeft,deskTop,deskWidth,deskHeight=api.getDesktopObject().location
+	x=min(max(deskLeft,x),(deskLeft+deskWidth)-1)
+	y=min(max(deskTop,y),(deskTop+deskHeight)-1)
 	oldMouseObject=api.getMouseObject()
 	desktopObject=api.getDesktopObject()
 	mouseObject=desktopObject.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
 	if not mouseObject:
-		return
-	try:
-		(left,top,width,height)=mouseObject.location
-	except:
-		left=top=width=height=0
-	if x<left or x>(left+width) or y<top or y>(top+height):
 		return
 	api.setMouseObject(mouseObject)
 	try:

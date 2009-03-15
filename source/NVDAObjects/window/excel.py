@@ -9,6 +9,7 @@ import re
 import ctypes
 import comtypes.automation
 import wx
+import textHandler
 import eventHandler
 import gui
 import gui.scriptUI
@@ -17,6 +18,7 @@ import controlTypes
 import speech
 from keyUtils import sendKey, key
 from . import Window
+from .. import NVDAObjectTextInfo
 import appModuleHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
@@ -85,37 +87,6 @@ class ExcelGrid(Window):
 	def cellHasFormula(self,cell):
 		return cell.HasFormula
 
-	def speakSelection(self):
-		try:
-			cells=self.getSelectedRange()
-			if cells.Count>1:
-				first=cells.Item(1)
-				last=cells.Item(cells.Count)
-				speech.speakMessage((_("selected")+" %s %s "+_("through")+" %s %s")%(self.getCellAddress(first),self.getCellText(first),self.getCellAddress(last),self.getCellText(last)))
-			else:
-				text=self.getCellAddress(self.getActiveCell())
-				if self.cellHasFormula(self.getActiveCell()):
-					text+=" "+_("has formula")
-				text+=" %s"%self.getCellText(self.getActiveCell())
-				speech.speakMessage(text)
-		except:
-			pass
-
-	def getFontName(self,cell):
-		return cell.Font.Name
-
-	def getFontSize(self,cell):
-		return int(cell.Font.Size)
-
-	def isBold(self,cell):
-		return cell.Font.Bold
-
-	def isItalic(self,cell):
-		return cell.Font.Italic
-
-	def isUnderline(self,cell):
-		return cell.Font.Underline
-
 	def event_gainFocus(self):
 		eventHandler.executeEvent("gainFocus",ExcelCell(self,self.getSelectedRange()))
 
@@ -126,17 +97,6 @@ class ExcelGrid(Window):
 		eventHandler.executeEvent('gainFocus',obj)
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 	script_moveByCell.canPropagate=True
-
-	def text_reportPresentation(self,offset):
-		"""Reports the current font name, font size, font attributes of the active cell"""
-		speech.speakMessage(_("font")+": %s"%self.getFontName(self.getActiveCell()))
-		speech.speakMessage("%s %s"%(self.getFontSize(self.getActiveCell()),_("point")))
-		if self.isBold(self.getActiveCell()):
-			speech.speakMessage(_("bold"))
-		if self.isItalic(self.getActiveCell()):
-			speech.speakMessage(_("italic"))
-		if self.isUnderline(self.getActiveCell()):
-			speech.speakMessage(_("underline"))
 
 [ExcelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Tab","moveByCell"),
@@ -167,7 +127,28 @@ class ExcelGrid(Window):
 	("Shift+Control+ExtendedEnd","moveByCell"),
 ]]
 
+class ExcelCellTextInfo(NVDAObjectTextInfo):
+
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		formatField=textHandler.FormatField()
+		fontObj=self.obj.firstCell.font
+		if formatConfig['reportFontName']:
+			formatField['font-name']=fontObj.name
+		if formatConfig['reportFontSize']:
+			formatField['font-size']=str(fontObj.size)
+		if formatConfig['reportFontAttributes']:
+			formatField['bold']=fontObj.bold
+			formatField['italic']=fontObj.italic
+			formatField['underline']=fontObj.underline
+		return formatField,(self._startOffset,self._endOffset)
+
+	def _getTextRange(self,start,end):
+		text=self.obj.parent.getCellText(self.obj.firstCell)
+		return text[start:end]
+
 class ExcelCell(Window):
+
+	TextInfo=ExcelCellTextInfo
 
 	@classmethod
 	def findBestClass(cls, clsList, kwargs):

@@ -360,7 +360,7 @@ class AppModule(appModuleHandler.AppModule):
 		except NotImplementedError:
 			ui.message(_("default action failed"))
 			return
-		ui.message(_("%s"%action))
+		ui.message("%s"%action)
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_navigatorObject_where(self,keyPress):
@@ -619,12 +619,15 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			info=o.makeTextInfo(textHandler.POSITION_CARET)
 		except NotImplementedError:
-			return
+			info=o.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_CHARACTER)
 		formatField=textHandler.FormatField()
 		for field in info.getInitialFields(formatConfig):
 			if isinstance(field,textHandler.FormatField):
 				formatField.update(field)
+		if len(formatField)==0:
+			ui.message(_("No formatting information"))
+			return
 		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
 		ui.message(text)
 
