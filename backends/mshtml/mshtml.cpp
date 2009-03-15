@@ -105,10 +105,10 @@ inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pH
 		DEBUG_MSG(L"length failed");
 		length=0;
 	}
+	VARIANT vACIndex;
+	vACIndex.vt = VT_I4;
 	for(int i=0;i<length;i++) {
 		IHTMLDOMAttribute* pAttr=0;
-		VARIANT vACIndex;
-		vACIndex.vt = VT_I4;
 		DEBUG_MSG(L"Fetching attribute "<<i);
 		    vACIndex.lVal = i;
 		IDispatch* childPDispatch=NULL;
