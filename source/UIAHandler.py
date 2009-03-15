@@ -108,14 +108,13 @@ class UIAEventListener(COMObject):
 			return
 		obj.UIAElement=sender
 		eventHandler.queueEvent(NVDAEventName,obj)
-		queueHandler.pumpAll()
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		try:
-			sender.currentNativeWindowHandle
+			hasFocus=sender.currentHasKeyboardFocus
 		except COMError:
 			return
-		if not sender.currentHasKeyboardFocus:
+		if not hasFocus: 
 			return
 		if self.UIAHandlerRef().clientObject.CompareElements(sender,self.UIAHandlerRef().focusedElement):
 			return
@@ -123,7 +122,6 @@ class UIAEventListener(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		obj.UIAElement=sender
 		eventHandler.queueEvent("gainFocus",obj)
-		queueHandler.pumpAll()
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
@@ -135,7 +133,6 @@ class UIAEventListener(COMObject):
 			return
 		obj.UIAElement=sender
 		eventHandler.queueEvent(NVDAEventName,obj)
-		queueHandler.pumpAll()
 
 	def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
 		pass
