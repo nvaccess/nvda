@@ -5,12 +5,11 @@ Changes since 0.6p3:
 * new: Added a synthesizer driver for the Newfon synthesizer. Note that this requires a special version of Newfon. (#206)
 * change: The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 * new: In virtual buffers, focus mode and browse mode can now be reported using sounds instead of speech. This is enabled by default. It can be configured from the Virtual buffers dialog. (#244)
-*Fix: When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
-*Fix: speaking the title of the current foreground window with nvda+t now works correctly when in menus.
-   *Fix: braille no longer shows useless information in its focus context such as unlabeled panes.
-   *Fix: stop announcing some useless information when the focus changes such as root panes, layered panes and scroll panes in Java or Lotus applications.
-   *New: NVDA now does not cancel speech when user presses volume control keys on the keyboard, alowing user change volume and listen to actual results immediately.
-   (#287)
+* fix: When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
+* fix: speaking the title of the current foreground window with nvda+t now works correctly when in menus.
+* fix: braille no longer shows useless information in its focus context such as unlabeled panes.
+* fix: stop announcing some useless information when the focus changes such as root panes, layered panes and scroll panes in Java or Lotus applications.
+* new: NVDA no longer cancels speech when volume control keys are pressed on the keyboard, allowing the user to change the volume and listen to actual results immediately. (#287)
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 

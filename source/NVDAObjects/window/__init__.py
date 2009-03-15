@@ -11,6 +11,7 @@ import winKernel
 import winUser
 from logHandler import log
 import controlTypes
+import api
 from NVDAObjects import NVDAObject
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
@@ -115,6 +116,8 @@ An NVDAObject for a window
 	@classmethod
 	def objectWithFocus(cls):
 		fg=winUser.getForegroundWindow()
+		if not fg:
+			return api.getDesktopObject()
 		threadID=winUser.getWindowThreadProcessID(fg)[1]
 		threadInfo=winUser.getGUIThreadInfo(threadID)
 		windowHandle=threadInfo.hwndFocus
