@@ -239,7 +239,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return " ".join([x for x in itemStatus,helpText if x])
 
 	def _get_keyboardShortcut(self):
-		return self.UIAElement.currentAccessKey
+		try:
+			return self.UIAElement.currentAccessKey
+		except COMError:
+			return None
 
 	def _get_states(self):
 		states=set()
@@ -343,7 +346,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self.UIAElement.cachedProcessId
 
 	def _get_location(self):
-		r=self.UIAElement.currentBoundingRectangle
+		try:
+			r=self.UIAElement.currentBoundingRectangle
+		except COMError:
+			return None
 		left=r.left
 		top=r.top
 		width=r.right-left
