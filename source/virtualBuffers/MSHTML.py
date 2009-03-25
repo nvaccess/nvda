@@ -81,11 +81,16 @@ class MSHTML(VirtualBuffer):
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		IHTMLElement=self.rootNVDAObject.IHTMLElement.document.GetElementById('ms__id%d'%ID)
-		try:
-			pacc=NVDAObjects.IAccessible.MSHTML.IAccessibleFromIHTMLElement(IHTMLElement)
-		except NotImplementedError:
+		if not IHTMLElement:
 			return self.rootNVDAObject
-		return NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+		while IHTMLElement:
+			try:
+				pacc=NVDAObjects.IAccessible.MSHTML.IAccessibleFromIHTMLElement(IHTMLElement)
+			except NotImplementedError:
+				pacc=None
+			if pacc:
+				return NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+			IHTMLElement=IHTMLElement.parentElement
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
