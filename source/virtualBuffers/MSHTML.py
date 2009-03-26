@@ -36,18 +36,21 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		print attrs
-		role=None
-		states=set()
 		level=None
+		accRole=attrs['IAccessible::role']
+		accRole=int(accRole) if accRole.isdigit() else accRole
+		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
-		role=self.nodeNamesToNVDARoles.get(nodeName,None)
-		if not role:
+		if role==controlTypes.ROLE_UNKNOWN:
+			role=self.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
+		if role==controlTypes.ROLE_UNKNOWN:
 			if "h1"<=nodeName<="h6":
 				role=controlTypes.ROLE_HEADING
 				level=nodeName[1:]
 		if nodeName in ("ul","ol","dl"):
 			states.add(controlTypes.STATE_READONLY)
-		if not role:
+		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
 		newAttrs=textHandler.ControlField()
 		newAttrs.update(attrs)
