@@ -26,3 +26,8 @@ class AppModule(_default.AppModule):
 		sendKey(([],"extendedinsert"))
 		sendKey((["extendedinsert"],"extendeddown"))
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
+
+	def script_reportCurrentLine(self,keyPress):
+		sendKey(([],"extendedinsert"))
+		sendKey((["extendedinsert"],"extendedup"))
+	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")

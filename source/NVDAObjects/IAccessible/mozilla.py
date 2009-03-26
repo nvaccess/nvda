@@ -6,6 +6,7 @@
 
 import IAccessibleHandler
 from . import IAccessible
+import textHandler
 
 class Mozilla(IAccessible):
 
@@ -56,3 +57,10 @@ class ListItem(Mozilla):
 			del children[0]
 		return children
 
+class Label(Mozilla):
+
+	def _get_name(self):
+		name=super(Label,self)._get_name()
+		if not name or name=="":
+			name=self.makeTextInfo(textHandler.POSITION_ALL).text
+		return name

@@ -961,7 +961,7 @@ def _fakeFocus(oldFocus):
 	processFocusNVDAEvent(focus)
 
 #Register internal object event with IAccessible
-cWinEventCallback=WINFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
+cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
 	focusObject=api.getDesktopObject().objectWithFocus()

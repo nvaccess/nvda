@@ -267,7 +267,7 @@ class AccessibleTextAttributesInfo(Structure):
 	]
 
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int)
+@CFUNCTYPE(None,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
 	internalQueueFunction(event_gainFocus,vmID,source)
 	bridgeDll.releaseJavaObject(vmID,event)
@@ -299,13 +299,13 @@ def event_gainFocus(vmID,accContext):
 		return
 	eventHandler.queueEvent("gainFocus",obj)
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
+@CFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int)
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
 	internalQueueFunction(event_gainFocus,vmID,newDescendant)
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_wchar_p,c_wchar_p)
+@CFUNCTYPE(None,c_int,c_int,c_int,c_wchar_p,c_wchar_p)
 def internal_event_stateChange(vmID,event,source,oldState,newState):
 	internalQueueFunction(event_stateChange,vmID,source,oldState,newState)
 	bridgeDll.releaseJavaObject(vmID,event)
@@ -326,7 +326,7 @@ def event_stateChange(vmID,accContext,oldState,newState):
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 	eventHandler.queueEvent("stateChange",obj)
 
-@CFUNCTYPE(c_voidp,c_int,c_int,c_int,c_int,c_int)
+@CFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int)
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	if oldPos<0 and newPos>=0:
 		internalQueueFunction(event_gainFocus,vmID,source)

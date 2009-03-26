@@ -1208,6 +1208,7 @@ _staticMap={
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaUIWindowClass",IAccessibleHandler.IA2_ROLE_LABEL):"mozilla.Label",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
