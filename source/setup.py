@@ -109,7 +109,7 @@ setup(
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["comInterfaces"],
-		"packages": ["NVDAObjects","virtualBuffers_old","virtualBuffers"],
+		"packages": ["NVDAObjects","virtualBuffers"],
 		"includes": getOptionalIncludes(),
 	}},
 	zipfile = None,
