@@ -178,73 +178,117 @@ inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pH
 	pHTMLAttributeCollection->Release();
 }
 
-VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
-	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
-	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
-	if(pHTMLDOMNode->QueryInterface(IID_IHTMLDOMTextNode,(void**)&pHTMLDOMTextNode)==S_OK) {
-		VBufStorage_textFieldNode_t* textNode=NULL;
-		DEBUG_MSG(L"Fetch data of DOMTextNode");
-		BSTR data=NULL;
-		if(pHTMLDOMTextNode->get_data(&data)!=S_OK) {
-			DEBUG_MSG(L"Could not get IHTMLDOMTextNode::data");
-			pHTMLDOMTextNode->Release();
-			return NULL;
-		}
-		DEBUG_MSG(L"Got data from IHTMLDOMTextNode");
-		if(data) {
-			textNode=buffer->addTextFieldNode(parentNode,previousNode,data);
-			SysFreeString(data);
-		}
-		pHTMLDOMTextNode->Release();
-		return textNode;
-	}
+inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
+	int res;
 	IHTMLUniqueName* pHTMLUniqueName=NULL;
 	DEBUG_MSG(L"Try to get IHTMLUniqueName");
 	if(pHTMLDOMNode->QueryInterface(IID_IHTMLUniqueName,(void**)&pHTMLUniqueName)!=S_OK) {
 		DEBUG_MSG(L"Failed to get IHTMLUniqueName");
-		return NULL;
+		return 0;
 	}
 	DEBUG_MSG(L"Got IHTMLUniqueName");
 	int ID=0;
 	DEBUG_MSG(L"Getting IHTMLUniqueName::uniqueNumber");
-	if(pHTMLUniqueName->get_uniqueNumber((long*)&ID)!=S_OK) {
-		DEBUG_MSG(L"IHTMLUniqueName::get_uniqueNumber failed");
-		pHTMLUniqueName->Release();
-		return NULL;
+	res=pHTMLUniqueName->get_uniqueNumber((long*)&ID);
+	pHTMLUniqueName->Release();
+	if(res!=S_OK||!ID) {
+		DEBUG_MSG(L"Failed to get IHTMLUniqueName::uniqueNumber");
+		return 0;
 	}
 	DEBUG_MSG(L"Got uniqueNumber of "<<ID);
-	pHTMLUniqueName->Release();
+	return ID;
+}
+
+inline BSTR getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
+	int res=0;
+	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
+	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
+	if(pHTMLDOMNode->QueryInterface(IID_IHTMLDOMTextNode,(void**)&pHTMLDOMTextNode)!=S_OK) {
+		DEBUG_MSG(L"Not a text node");
+		return NULL;
+	}
+	VBufStorage_textFieldNode_t* textNode=NULL;
+	DEBUG_MSG(L"Fetch data of DOMTextNode");
+	BSTR data=NULL;
+	res=pHTMLDOMTextNode->get_data(&data);
+	pHTMLDOMTextNode->Release();
+	if(res!=S_OK||!data) {
+		DEBUG_MSG(L"Failed to get IHTMLDOMTextNode::data");
+		return NULL;
+	}
+	DEBUG_MSG(L"Got data from IHTMLDOMTextNode");
+	return data;
+}
+
+#define macro_addHTMLCurrentStyleToMap(styleNameArg,currentStyleObjArg,styleMapArg,tempBSTRArg) {\
+	currentStyleObjArg->get_##styleNameArg(&tempBSTRArg);\
+	if(tempBSTRArg) {\
+		DEBUG_MSG(L"Got "<<L#styleNameArg);\
+		styleInfo[L#styleNameArg]=tempBSTRArg;\
+		SysFreeString(tempBSTRArg);\
+		tempBSTRArg=NULL;\
+	} else {\
+		DEBUG_MSG(L"Failed to get "<<styleNameArg);\
+	}\
+}
+
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, map<wstring,wstring>& styleInfo) {
+	int res=0;
+	BSTR tempBSTR=NULL;
+	IHTMLElement2* pHTMLElement2=NULL;
+	res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	if(res!=S_OK||!pHTMLElement2) {
+		DEBUG_MSG(L"Could not get IHTMLElement2");
+		return;
+	}
+	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
+	res=pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle);
+	pHTMLElement2->Release();
+	if(res!=S_OK||!pHTMLCurrentStyle) {
+		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
+		return;
+	}
+	macro_addHTMLCurrentStyleToMap(display,pHTMLCurrentStyle,styleInfo,tempBSTR);
+	macro_addHTMLCurrentStyleToMap(visibility,pHTMLCurrentStyle,styleInfo,tempBSTR);
+	pHTMLCurrentStyle->Release();
+}
+
+VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
+	//Handle text nodes
+	{ 
+		BSTR text=getTextFromHTMLDOMNode(pHTMLDOMNode);
+		if(text!=NULL) {
+			DEBUG_MSG(L"Got text from node");
+			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,text);
+			SysFreeString(text);
+			return textNode;
+		}
+	}
+	//Get node's ID
+	int ID=getIDFromHTMLDOMNode(pHTMLDOMNode);
+	if(ID==0) {
+		DEBUG_MSG(L"Could not get ID");
+		return NULL;
+	}
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
 		return NULL;
 	}
-	BSTR display=NULL;
-	IHTMLElement2* pHTMLElement2=NULL;
-	pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
-	if(!pHTMLElement2) {
-		DEBUG_MSG(L"Could not get IHTMLElement2");
+	map<wstring,wstring> styleInfoMap;
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode,styleInfoMap);
+	map<wstring,wstring>::iterator tempIter;
+	tempIter=styleInfoMap.find(L"visibility");
+	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,6,L"hidden")==0) {
+		DEBUG_MSG(L"visibility is hidden, not rendering node");
 		return NULL;
 	}
-	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
-	pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle);
-	pHTMLElement2->Release();
-	if(!pHTMLCurrentStyle) {
-		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
-		return NULL;
-	}
-	pHTMLCurrentStyle->get_display(&display);
-	pHTMLCurrentStyle->Release();
-	if(!display) {
-		DEBUG_MSG(L"Could not get IHTMLCurrentStyle::display");
-		return NULL;
-	}
-	if(wcscmp(display,L"none")==0) {
+	tempIter=styleInfoMap.find(L"display");
+	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
 		DEBUG_MSG(L"Display is None, not rendering node");
-		SysFreeString(display);
 		return NULL;
 	}
 	bool isBlock=true;
-	if(wcsncmp(display,L"inline",6)==0) {
+	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,6,L"inline")==0) {
 		DEBUG_MSG(L"node is inline, setting isBlock to false");
 		isBlock=false;
 	}
@@ -252,7 +296,6 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&nodeName)!=S_OK) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
-		SysFreeString(display);
 		return NULL;
 	}
 	assert(nodeName); //Should never be NULL;
@@ -266,7 +309,6 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
-	parentNode->addAttribute(L"IHTMLCurrentStyle::display",display);
 	fillAttributes(parentNode, pHTMLDOMNode,nodeName);
 	if(wcscmp(nodeName,L"BR")==0) {
 		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
@@ -312,7 +354,6 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		}
 	}
 	SysFreeString(nodeName);
-	if(display) SysFreeString(display);
 	return parentNode;
 }
 
