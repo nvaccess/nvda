@@ -40,9 +40,6 @@ def update(obj):
 			classString="virtualBuffers.gecko_ia2.Gecko_ia2"
 		else:
 			return
-	#Gecko only with IAccessible support
-	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
-		classString="virtualBuffers_old.gecko.Gecko"
 	#Adobe documents with IAccessible
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
 		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
