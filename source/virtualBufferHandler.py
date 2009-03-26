@@ -12,6 +12,7 @@ import winUser
 import NVDAObjects
 import NVDAObjects.window
 import NVDAObjects.IAccessible
+import NVDAObjects.IAccessible.MSHTML
 import controlTypes
 import NVDAObjects.window
 import speech
@@ -39,19 +40,12 @@ def update(obj):
 			classString="virtualBuffers.gecko_ia2.Gecko_ia2"
 		else:
 			return
-	#Gecko only with IAccessible support
-	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in states:
-		classString="virtualBuffers_old.gecko.Gecko"
 	#Adobe documents with IAccessible
  	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
-		classString="virtualBuffers_old.adobe.Adobe"
+		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="Internet Explorer_Server" and controlTypes.STATE_FOCUSED in states: 
-		info=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(obj.windowHandle)[1])
-		if not info.flags&winUser.GUI_CARETBLINKING or info.hwndCaret!=obj.windowHandle:
-			classString="virtualBuffers_old.MSHTML.MSHTML"
-		else:
-			return
+ 	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.IHTMLElement and windowClassName=="Internet Explorer_Server" and obj.IHTMLElement.nodeName.lower() in ("body", "frameset") and not obj.isContentEditable:
+		classString="virtualBuffers.MSHTML.MSHTML"
 	else:
 		return
 	modString,classString=os.path.splitext(classString)

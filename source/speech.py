@@ -40,8 +40,11 @@ REASON_SAYALL=6
 REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
-oldTreeviewLevel=None
 
+oldTreeviewLevel=None
+oldTableID=None
+oldRowNumber=None
+oldColumnNumber=None
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -241,7 +244,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -382,6 +385,7 @@ def speakTypedCharacters(ch):
 		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
+	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
 	controlTypes.ROLE_TREEVIEWITEM,
@@ -446,7 +450,29 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 	#Make a new controlFieldStack and formatField from the textInfo's initialFields
 	newControlFieldStack=[]
 	newFormatField=textHandler.FormatField()
-	for field in info.getInitialFields(formatConfig):
+	textWithFields=info.getTextWithFields(formatConfig)
+	initialFields=[]
+	for field in textWithFields:
+		if isinstance(field,textHandler.FieldCommand) and field.command=="controlStart":
+			initialFields.append(field.field)
+		else:
+			break
+	if len(initialFields)>0:
+		del textWithFields[0:len(initialFields)]
+	endFieldCount=0
+	for field in reversed(textWithFields):
+		if isinstance(field,textHandler.FieldCommand) and field.command=="controlEnd":
+			endFieldCount+=1
+		else:
+			break
+	if endFieldCount>0:
+		del textWithFields[0-endFieldCount:]
+	if len(textWithFields)>0:
+		firstField=textWithFields[0]
+		if isinstance(firstField,textHandler.FieldCommand) and firstField.command=="formatChange":
+			initialFields.append(firstField.field)
+			del textWithFields[0]
+	for field in initialFields:
 		if isinstance(field,textHandler.ControlField):
 			newControlFieldStack.append(field)
 		elif isinstance(field,textHandler.FormatField):
@@ -505,7 +531,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		return
 
 	#Fetch a command list for the text and fields for this textInfo
-	commandList=info.getTextWithFields(formatConfig)
+	commandList=textWithFields
 	#Move through the command list, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
@@ -565,7 +591,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		speakText(text,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
-	global oldTreeviewLevel
+	global oldTreeviewLevel, oldTableID, oldRowNumber, oldColumnNumber
 	textList=[]
 	if 'name' in propertyValues:
 		textList.append(propertyValues['name'])
@@ -606,30 +632,48 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeviewLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
-	if 'rowNumber' in propertyValues:
-		textList.append(_("row %s")%propertyValues['rowNumber'])
-	if 'columnNumber' in propertyValues:
-		textList.append(_("column %s")%propertyValues['columnNumber'])
+	rowNumber = propertyValues.get("rowNumber")
+	columnNumber = propertyValues.get("columnNumber")
+	if rowNumber or columnNumber:
+		tableID = propertyValues.get("_tableID")
+		# Always treat the table as different if there is no tableID.
+		sameTable = (tableID and tableID == oldTableID)
+		# Don't update the oldTableID if no tableID was given.
+		if tableID and not sameTable:
+			oldTableID = tableID
+		if rowNumber and (not sameTable or rowNumber != oldRowNumber):
+			textList.append(_("row %s")%rowNumber)
+			oldRowNumber = rowNumber
+		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
+			textList.append(_("column %s")%columnNumber)
+			oldColumnNumber = columnNumber
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
-	if rowCount or columnCount:
+	if rowCount and columnCount:
 		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
+	elif columnCount and not rowCount:
+		textList.append(_("with %s columns")%columnCount)
+	elif rowCount and not columnCount:
+		textList.append(_("with %s rows")%rowCount)
+		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
+		oldTableID = None
 	return " ".join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	childCount=int(attrs['_childcount'])
-	indexInParent=int(attrs['_indexinparent'])
-	parentChildCount=int(attrs['_parentchildcount'])
+	indexInParent=int(attrs['_indexInParent'])
+	parentChildCount=int(attrs['_parentChildCount'])
 	if reason==REASON_FOCUS:
 		name=attrs.get('name',"")
 	else:
 		name=""
-	role=attrs['role']
-	states=attrs['states']
-	keyboardShortcut=attrs['keyboardshortcut']
+	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
+	states=attrs.get('states',set())
+	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
+	tableID=attrs.get('table-id')
 	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
@@ -666,10 +710,17 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
+	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
+		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and "table-id" in attrs)):
 		return _("out of %s")%roleText
+	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER) and tableID:
+		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
 	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
+	elif role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in states:
+		# Don't bother speaking control field info for text nodes.
+		return ""
 	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
 		return _("in %s")%roleText
 	elif extraDetail and fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText:

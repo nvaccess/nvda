@@ -219,16 +219,13 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		else:
 			raise ValueError("bad argument - which: %s"%which)
 
-	def getInitialFields(self,formatConfig=None):
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		return [self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)[0]]
-
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig["detectFormatAfterCursor"]:
-			return [self.text]
+		if not formatConfig['detectFormatAfterCursor']:
+			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
+			text=self.text
+			return [textHandler.FieldCommand('formatChange',field),text]
 		commandList=[]
 		offset=self._startOffset
 		while offset<self._endOffset:
@@ -237,9 +234,8 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 				boundEnd=boundStart+1
 			if boundEnd<=offset:
 				boundEnd=offset+1
-			if offset>self._startOffset:
-				command=textHandler.FieldCommand("formatChange",field)
-				commandList.append(command)
+			command=textHandler.FieldCommand("formatChange",field)
+			commandList.append(command)
 			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
 			commandList.append(text)
 			offset=boundEnd
@@ -768,7 +764,7 @@ Tries to force this object to take the focus.
 			return False
 		name = self.name
 		description = self.description
-		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
+		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING) and not name and not description:
 			return False
 		return True
 

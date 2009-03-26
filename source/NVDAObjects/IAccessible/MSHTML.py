@@ -6,6 +6,7 @@
 
 import time
 import ctypes
+from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comInterfaces.servprov import IServiceProvider
@@ -24,8 +25,64 @@ import virtualBufferHandler
 
 lastMSHTMLEditGainFocusTimeStamp=0
 
-
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
+
+def nextIAccessibleInDom(IHTMLElement,back=False):
+	notFound=False
+	firstLoop=True
+	while IHTMLElement: 
+		if not firstLoop:
+			child=IHTMLElement.firstChild if not back else IHTMLElement.lastChild
+		else:
+			child=None
+			firstLoop=False
+		if child:
+			IHTMLElement=child
+		else:
+			sibling=IHTMLElement.nextSibling if not back else IHTMLElement.previousSibling
+			if not sibling:
+				try:
+					parent=IHTMLElement.parentNode
+				except COMError:
+					parent=None
+				while parent and not IHTMLElementHasIAccessible(parent):
+					sibling=parent.nextSibling if not back else parent.previousSibling
+					if sibling:
+						break
+					try:
+						parent=parent.parentElement
+					except COMError:
+						parent=None
+			IHTMLElement=sibling
+		if IHTMLElement:
+			try:
+				return IAccessibleFromIHTMLElement(IHTMLElement)
+			except NotImplementedError:
+				pass
+
+def IAccessibleFromIHTMLElement(IHTMLElement):
+	try:
+		s=IHTMLElement.QueryInterface(IServiceProvider)
+		interfaceAddress=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IAccessibleHandler.IAccessible._iid_))
+	except COMError:
+		raise NotImplementedError
+	ptr=ctypes.POINTER(IAccessibleHandler.IAccessible)(interfaceAddress)
+	return ptr
+
+def IHTMLElementHasIAccessible(IHTMLElement):
+	try:
+		return bool(IAccessibleFromIHTMLElement(IHTMLElement))
+	except NotImplementedError:
+		return False
+
+def IHTMLElementFromIAccessible(IAccessibleObject):
+	try:
+		s=IAccessibleObject.QueryInterface(IServiceProvider)
+		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
+	except COMError:
+		raise NotImplementedError
+	ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
+	return comtypes.client.dynamic.Dispatch(ptr)
 
 class MSHTMLTextInfo(textHandler.TextInfo):
 
@@ -79,7 +136,7 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
-		if unit==textHandler.UNIT_LINE and self.basePosition not in [textHandler.POSITION_SELECTION,textHandler.POSITION_CARET]:
+		if False: #unit==textHandler.UNIT_LINE and self.basePosition not in [textHandler.POSITION_SELECTION,textHandler.POSITION_CARET]:
 			unit=textHandler.UNIT_SENTENCE
 		if unit==textHandler.UNIT_READINGCHUNK:
 			unit=textHandler.UNIT_SENTENCE
@@ -102,7 +159,6 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		else:
 			return False
 
-
 	def collapse(self,end=False):
 		self._rangeObj.collapse(not end)
 
@@ -120,7 +176,6 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		if not text:
 			text=""
 		return text
-
 
 	def move(self,unit,direction, endPoint=None):
 		if unit in [textHandler.UNIT_READINGCHUNK,textHandler.UNIT_LINE]:
@@ -181,11 +236,14 @@ class MSHTML(IAccessible):
 			]]
 
 	def _get_IHTMLElement(self):
+		if self.IAccessibleChildID>0:
+			return
 		if not hasattr(self,'_IHTMLElement'):
-			s=self.IAccessibleObject.QueryInterface(IServiceProvider)
-			interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
-			ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
-			self._IHTMLElement=comtypes.client.dynamic.Dispatch(ptr)
+			try:
+				IHTMLElement=IHTMLElementFromIAccessible(self.IAccessibleObject)
+			except NotImplementedError:
+				IHTMLElement=None
+			self._IHTMLElement=IHTMLElement
 		return self._IHTMLElement
 
 	def _get_value(self):
@@ -195,20 +253,30 @@ class MSHTML(IAccessible):
 			return super(MSHTML,self).value
 
 	def _get_role(self):
-		if self.IHTMLElement.tagName.lower()=="body":
+		if self.IHTMLElement and self.IHTMLElement.nodeName.lower()=="body":
 			return controlTypes.ROLE_DOCUMENT
 		return super(MSHTML,self).role
 
 	def _get_states(self):
 		states=super(MSHTML,self).states
-		if self.IHTMLElement.isContentEditable:
-			states.add(controlTypes.STATE_EDITABLE)
-		if self.IHTMLElement.isMultiline:
-			states.add(controlTypes.STATE_MULTILINE)
+		e=self.IHTMLElement
+		if e:
+			try:
+				isContentEditable=e.isContentEditable
+			except COMError:
+				isContentEditable=False
+			if isContentEditable:
+				states.add(controlTypes.STATE_EDITABLE)
+			try:
+				isMultiline=e.isMultiline
+			except COMError:
+				isMultiline=False
+			if self.TextInfo==MSHTMLTextInfo and isMultiline: 
+				states.add(controlTypes.STATE_MULTILINE)
 		return states
 
 	def _get_isContentEditable(self):
-		if hasattr(self,'IHTMLElement'): 
+		if self.IHTMLElement:
 			try:
 				return bool(self.IHTMLElement.isContentEditable)
 			except:
@@ -216,17 +284,93 @@ class MSHTML(IAccessible):
 		else:
 			return False
 
-	def event_gainFocus(self):
-		if not self.isContentEditable:
-			vbuf=self.virtualBuffer
-			if vbuf and vbuf.passThrough:
-				vbuf.passThrough=True
-				virtualBufferHandler.reportPassThrough(vbuf)
-		super(MSHTML,self).event_gainFocus()
+	def _get_previous(self):
+		if self.IAccessibleChildID>1:
+			newChildID=self.IAccessibleChildID-1
+			try:
+				return IAccessible(IAccessibleObject=self.IAccessibleObject.accChild(newChildID),IAccessibleChildID=0)
+			except COMError:
+				return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
+		pacc=nextIAccessibleInDom(self.IHTMLElement,back=True)
+		if pacc:
+			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
 
-	def reportFocus(self):
-		global lastMSHTMLEditGainFocusTimeStamp
-		timeStamp=time.time()
-		if self.isContentEditable and (timeStamp-lastMSHTMLEditGainFocusTimeStamp)>0.5:
-			super(MSHTML,self).reportFocus()
-		lastMSHTMLEditGainFocusTimeStamp=timeStamp
+	def _get_next(self):
+		if self.IAccessibleChildID>0:
+			if self.IAccessibleChildID<self.childCount:
+				newChildID=self.IAccessibleChildID+1
+				try:
+					pacc=self.IAccessibleObject.accChild(newChildID)
+					return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+				except COMError:
+					return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
+			return None
+		pacc=nextIAccessibleInDom(self.IHTMLElement)
+		if pacc:
+			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+
+	def _get_firstChild(self):
+		child=super(MSHTML,self).firstChild
+		while isinstance(child,IAccessible) and child.IAccessibleChildID>0:
+			child=child.next
+		return child
+
+	def _get_lastChild(self):
+		child=super(MSHTML,self).lastChild
+		while isinstance(child,IAccessible) and child.IAccessibleChildID>0:
+			child=child.previous
+		return child
+
+	def _get_value(self):
+		if self.IHTMLElement and self.IHTMLElement.tabIndex>=0:
+			return self.IHTMLElement.innerText
+
+	def _get_basicText(self):
+		if self.IHTMLElement:
+			return self.IHTMLElement.innerText
+		return super(MSHTML,self).basicText
+
+	def _get_columnNumber(self):
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+			raise NotImplementedError
+		try:
+			return self.IHTMLElement.cellIndex+1
+		except:
+			raise NotImplementedError
+
+	def _get_rowNumber(self):
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+			raise NotImplementedError
+		IHTMLElement=self.IHTMLElement
+		while IHTMLElement:
+			try:
+				return IHTMLElement.rowIndex+1
+			except:
+				pass
+			IHTMLElement=IHTMLElement.parentNode
+		raise NotImplementedError
+
+	def _get_rowCount(self):
+		if self.role!=controlTypes.ROLE_TABLE or not self.IHTMLElement:
+			raise NotImplementedError
+		try:
+			return len([x for x in self.IHTMLElement.rows])
+		except:
+			raise NotImplementedError
+
+	def doAction(self, index=None):
+		states = self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
+			raise NotImplementedError
+		l = self.location
+		if not l:
+			raise NotImplementedError
+		x = l[0] + (l[2] / 2)
+		y = l[1] + (l[3] / 2)
+		if x < 0 or y < 0:
+			return
+		oldX, oldY = winUser.getCursorPos()
+		winUser.setCursorPos(x, y)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+		winUser.setCursorPos(oldX, oldY)

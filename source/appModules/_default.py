@@ -609,6 +609,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportFormatting(self,keyPress):
 		formatConfig={
+			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportTables":False,
@@ -622,9 +623,9 @@ class AppModule(appModuleHandler.AppModule):
 			info=o.makeTextInfo(textHandler.POSITION_FIRST)
 		info.expand(textHandler.UNIT_CHARACTER)
 		formatField=textHandler.FormatField()
-		for field in info.getInitialFields(formatConfig):
-			if isinstance(field,textHandler.FormatField):
-				formatField.update(field)
+		for field in info.getTextWithFields(formatConfig):
+			if isinstance(field,textHandler.FieldCommand) and isinstance(field.field,textHandler.FormatField):
+				formatField.update(field.field)
 		if len(formatField)==0:
 			ui.message(_("No formatting information"))
 			return

@@ -10,6 +10,7 @@ Changes since 0.6p3:
 * fix: braille no longer shows useless information in its focus context such as unlabeled panes.
 * fix: stop announcing some useless information when the focus changes such as root panes, layered panes and scroll panes in Java or Lotus applications.
 * new: NVDA no longer cancels speech when volume control keys are pressed on the keyboard, allowing the user to change the volume and listen to actual results immediately. (#287)
+* new: Completely rewritten support for Microsoft Internet Explorer and Adobe Acrobat documents. This support has been unified with the core support used for Mozilla Gecko, so features such as fast page rendering, extensive quick navigation, links list, text selection, auto focus mode and braille support are now available with these documents.
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 

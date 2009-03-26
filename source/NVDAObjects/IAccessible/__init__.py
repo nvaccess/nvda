@@ -307,7 +307,10 @@ the NVDAObject for IAccessible
 				newCls=globals()[classString]
 			if newCls:
 				clsList.append(newCls)
-		if windowClassName.startswith('Mozilla'):
+		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==IAccessibleHandler.OBJID_CLIENT or event_objectID>0):
+			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
+			clsList.append(MSHTML)
+		elif windowClassName.startswith('Mozilla'):
 			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
 			clsList.append( mozCls)
 		clsList.append(IAccessible)
@@ -1211,9 +1214,6 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",
 	(None,IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
 	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
@@ -1234,7 +1234,7 @@ _staticMap={
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView","Page"):"adobe.Page",
-	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
+	("AVL_AVView",None):"adobe.AcrobatNode",
+	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 }

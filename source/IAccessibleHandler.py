@@ -743,16 +743,16 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			window=winUser.getDesktopWindow()
 		elif not isWindow:
 			return
+
+		while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
+			window=winUser.getAncestor(window,winUser.GA_PARENT)
 		windowClassName=winUser.getClassName(window)
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
 		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
 			#Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window
 			#Move up the ancestry to find the real mozilla Window and use that
-			realWindow=window
-			while realWindow and winUser.getClassName(realWindow)=="MozillaWindowClass":
-				realWindow=winUser.getAncestor(realWindow,winUser.GA_PARENT)
-			if winUser.getClassName(realWindow)=='MozillaDropShadowWindowClass':
+			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
 				return
 		winEventLimiter.addEvent(eventID,window,objectID,childID)
 	except:
