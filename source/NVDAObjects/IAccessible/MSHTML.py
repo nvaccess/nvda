@@ -358,6 +358,14 @@ class MSHTML(IAccessible):
 		except:
 			raise NotImplementedError
 
+	def scrollIntoView(self):
+		if not self.IHTMLElement:
+			return
+		try:
+			self.IHTMLElement.scrollInToView()
+		except COMError:
+			pass
+
 	def doAction(self, index=None):
 		states = self.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
