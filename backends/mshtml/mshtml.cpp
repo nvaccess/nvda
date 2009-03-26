@@ -363,7 +363,12 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			}
 		}
 		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+			if(isURL) {
+				wstring src=getNameForURL(tempIter->second);
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,src);
+			} else {
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+			}
 		}
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=HTMLAttribsMap.find(L"type");
