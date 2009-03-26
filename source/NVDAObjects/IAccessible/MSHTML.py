@@ -358,3 +358,19 @@ class MSHTML(IAccessible):
 		except:
 			raise NotImplementedError
 
+	def doAction(self, index=None):
+		states = self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
+			raise NotImplementedError
+		l = self.location
+		if not l:
+			raise NotImplementedError
+		x = l[0] + (l[2] / 2)
+		y = l[1] + (l[3] / 2)
+		if x < 0 or y < 0:
+			return
+		oldX, oldY = winUser.getCursorPos()
+		winUser.setCursorPos(x, y)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+		winUser.setCursorPos(oldX, oldY)

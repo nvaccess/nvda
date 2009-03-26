@@ -97,23 +97,6 @@ class MSHTML(VirtualBuffer):
 		ID=obj.IHTMLElement.uniqueNumber
 		return docHandle,ID
 
-	def _activateNVDAObject(self, obj):
-		try:
-			obj.doAction()
-		except:
-			log.debugWarning("could not programmatically activate field, trying mouse")
-			l=obj.location
-			if l:
-				x=(l[0]+l[2]/2)
-				y=l[1]+(l[3]/2) 
-				oldX,oldY=winUser.getCursorPos()
-				winUser.setCursorPos(x,y)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-				winUser.setCursorPos(oldX,oldY)
-			else:
-				log.debugWarning("no location for field")
-
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.lower().endswith('link'):
 			attrs={"IHTMLDOMNode::nodeName":["A"]}
