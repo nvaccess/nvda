@@ -253,6 +253,46 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, map<w
 	pHTMLCurrentStyle->Release();
 }
 
+#define macro_addHTMLAttributeToMap(attribName,attribsObj,attribsMap,tempVar,tempAttrObj) {\
+	attribsObj->getNamedItem(attribName,&tempAttrObj);\
+	if(tempAttribNode) {\
+		VariantInit(&tempVar);\
+	tempAttribNode->get_nodeValue(&tempVar);\
+		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal) {\
+			attribsMap[attribName]=tempVar.bstrVal;\
+		}\
+		VariantClear(&tempVar);\
+		tempAttribNode->Release();\
+		tempAttribNode=NULL;\
+	}\
+}
+
+inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nodeName, map<wstring,wstring>& attribsMap) {
+	int res=0;
+	IDispatch* pDispatch=NULL;
+	DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
+	if(pHTMLDOMNode->get_attributes(&pDispatch)!=S_OK||!pDispatch) {
+		DEBUG_MSG(L"pHTMLDOMNode->get_attributes failed");
+		return;
+	}
+	IHTMLAttributeCollection2* pHTMLAttributeCollection2=NULL;
+	res=pDispatch->QueryInterface(IID_IHTMLAttributeCollection2,(void**)&pHTMLAttributeCollection2);
+	pDispatch->Release();
+	if(res!=S_OK) {
+		DEBUG_MSG(L"Could not get IHTMLAttributesCollection2");
+		return;
+	}
+	IHTMLDOMAttribute* tempAttribNode=NULL;
+	VARIANT tempVar;
+	if(nodeName.compare(L"INPUT")==0) {
+		macro_addHTMLAttributeToMap(L"type",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"value",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	}
+	macro_addHTMLAttributeToMap(L"alt",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"title",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"src",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	pHTMLAttributeCollection2->Release();
+}
 VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
 	//Handle text nodes
 	{ 
@@ -292,28 +332,57 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		DEBUG_MSG(L"node is inline, setting isBlock to false");
 		isBlock=false;
 	}
-	BSTR nodeName=NULL;
+	map<wstring,wstring> HTMLAttribsMap;
+	BSTR tempBSTR=NULL;
 	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
-	if(pHTMLDOMNode->get_nodeName(&nodeName)!=S_OK) {
+	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
 		return NULL;
 	}
-	assert(nodeName); //Should never be NULL;
+	wstring nodeName=tempBSTR;
+	SysFreeString(tempBSTR);
 	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
-	if(wcscmp(nodeName,L"#COMMENT")==0||wcscmp(nodeName,L"SCRIPT")==0) {
+	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,HTMLAttribsMap);
+	if(nodeName.compare(L"#COMMENT")==0||nodeName.compare(L"SCRIPT")==0) {
 		DEBUG_MSG(L"nodeName not supported");
-		SysFreeString(nodeName);
 		return NULL;
 	}
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,isBlock);
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
-	fillAttributes(parentNode, pHTMLDOMNode,nodeName);
-	if(wcscmp(nodeName,L"BR")==0) {
+	//fillAttributes(parentNode, pHTMLDOMNode,nodeName);
+	if(nodeName.compare(L"IMG")==0) {
+		bool isURL=False;
+		tempIter=HTMLAttribsMap.find(L"alt");
+		if(tempIter==HTMLAttribsMap.end()||tempIter->second.empty()) {
+			tempIter=HTMLAttribsMap.find(L"title");
+			if(tempIter==HTMLAttribsMap.end()||tempIter->second.empty()) {
+				tempIter=HTMLAttribsMap.find(L"src");
+				isURL=True;
+			}
+		}
+		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+		}
+	} else if(nodeName.compare(L"INPUT")==0) {
+		tempIter=HTMLAttribsMap.find(L"type");
+		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
+			DEBUG_MSG(L"Node is input of type hidden, ignoring");
+			return parentNode;
+		}
+		tempIter=HTMLAttribsMap.find(L"value");
+		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+		} else {
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		}
+	} else if(nodeName.compare(L"SELECT")==0) {
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+	} else if(nodeName.compare(L"BR")==0) {
 		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
-	} else if(wcscmp(nodeName,L"FRAME")==0||wcscmp(nodeName,L"IFRAME")==0) {
+	} else if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 		DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 		IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode);
 		if(childPHTMLDOMNode) {
@@ -353,7 +422,6 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			pDispatch->Release();
 		}
 	}
-	SysFreeString(nodeName);
 	return parentNode;
 }
 
