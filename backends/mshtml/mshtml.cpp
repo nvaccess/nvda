@@ -38,6 +38,47 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
+inline void getIAccessibleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, int* role, int* states) {
+	*role=0;
+	*states=0;
+	int res=0;
+	IServiceProvider* pServProv=NULL;
+	res=pHTMLDOMNode->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
+	if(res!=S_OK||!pServProv) {
+		DEBUG_MSG(L"Could not queryInterface to IServiceProvider");
+		return;
+	}
+	IAccessible* pacc=NULL;
+	res=pServProv->QueryService(IID_IAccessible,IID_IAccessible,(void**)&pacc);
+	pServProv->Release();
+	if(res!=S_OK||!pacc) {
+		DEBUG_MSG(L"Could not get IAccessible interface");
+		return;
+	}
+	VARIANT varChild;
+	varChild.vt=VT_I4;
+	varChild.lVal=0;
+	VARIANT varRole;
+	VariantInit(&varRole);
+	res=pacc->get_accRole(varChild,&varRole);
+	if(res==S_OK&&varRole.vt==VT_I4) {
+		*role=varRole.lVal;
+	} else {
+		DEBUG_MSG(L"Failed to get role");
+	}
+	VariantClear(&varRole);
+	VARIANT varState;
+	VariantInit(&varState);
+	res=pacc->get_accState(varChild,&varState);
+	if(res==S_OK&&varState.vt==VT_I4) {
+		*states=varState.lVal;
+	} else {
+		DEBUG_MSG(L"Failed to get states");
+	}
+	VariantClear(&varState);
+	pacc->Release();
+}
+
 inline IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
 int res=0;
 	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
@@ -314,21 +355,21 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
 		return NULL;
 	}
-	map<wstring,wstring> styleInfoMap;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode,styleInfoMap);
+	map<wstring,wstring> currentStyleMap;
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode,currentStyleMap);
 	map<wstring,wstring>::iterator tempIter;
-	tempIter=styleInfoMap.find(L"visibility");
-	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,6,L"hidden")==0) {
+	tempIter=currentStyleMap.find(L"visibility");
+	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"hidden")==0) {
 		DEBUG_MSG(L"visibility is hidden, not rendering node");
 		return NULL;
 	}
-	tempIter=styleInfoMap.find(L"display");
-	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
+	tempIter=currentStyleMap.find(L"display");
+	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
 		DEBUG_MSG(L"Display is None, not rendering node");
 		return NULL;
 	}
 	bool isBlock=true;
-	if(tempIter!=styleInfoMap.end()&&(tempIter->second).compare(0,6,L"inline")==0) {
+	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"inline")==0) {
 		DEBUG_MSG(L"node is inline, setting isBlock to false");
 		isBlock=false;
 	}
@@ -347,10 +388,35 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		DEBUG_MSG(L"nodeName not supported");
 		return NULL;
 	}
+	int IARole=0;
+	int IAStates=0;
+	getIAccessibleInfoFromHTMLDOMNode(pHTMLDOMNode,&IARole,&IAStates);
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,isBlock);
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
+	wostringstream tempStringStream;
+	tempStringStream.str(L"");
+	tempStringStream<<IARole;
+	parentNode->addAttribute(L"IAccessible::role",tempStringStream.str());
+	for(int i=0;i<32;i++) {
+		int state=1<<i;
+		if(state&IAStates) {
+			tempStringStream.str(L"");
+			tempStringStream<<L"IAccessible::state_"<<state;
+			parentNode->addAttribute(tempStringStream.str(),L"1");
+		}
+	}
+	for(tempIter=HTMLAttribsMap.begin();tempIter!=HTMLAttribsMap.end();tempIter++) {
+		tempStringStream.str(L"");
+		tempStringStream<<L"HTMLAttrib::"<<tempIter->first;
+		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
+	}
+	for(tempIter=currentStyleMap.begin();tempIter!=currentStyleMap.end();tempIter++) {
+		tempStringStream.str(L"");
+		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
+		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
+	}
 	//fillAttributes(parentNode, pHTMLDOMNode,nodeName);
 	if(nodeName.compare(L"IMG")==0) {
 		bool isURL=False;
