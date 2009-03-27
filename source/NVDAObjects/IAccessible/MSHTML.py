@@ -246,6 +246,13 @@ class MSHTML(IAccessible):
 			self._IHTMLElement=IHTMLElement
 		return self._IHTMLElement
 
+	def _isEqual(self, other):
+		try:
+			return self.windowHandle == other.windowHandle and self.IHTMLElement.uniqueNumber == other.IHTMLElement.uniqueNumber
+		except (COMError, AttributeError):
+			pass
+		return super(MSHTML, self)._isEqual(other)
+
 	def _get_value(self):
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
 			return ""
