@@ -269,7 +269,7 @@ inline BSTR getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 		SysFreeString(tempBSTRArg);\
 		tempBSTRArg=NULL;\
 	} else {\
-		DEBUG_MSG(L"Failed to get "<<styleNameArg);\
+		DEBUG_MSG(L"Failed to get "<<L#styleNameArg);\
 	}\
 }
 
