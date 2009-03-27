@@ -322,7 +322,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return False
+		return controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:

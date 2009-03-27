@@ -93,7 +93,7 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2, self)._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
-		return controlTypes.STATE_FOCUSABLE in obj.states and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
+		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj) and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
 	def _activateNVDAObject(self, obj):
 		try:

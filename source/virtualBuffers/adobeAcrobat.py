@@ -120,9 +120,6 @@ class AdobeAcrobat(VirtualBuffer):
 			return None
 		return attrs
 
-	def _shouldSetFocusToObj(self, obj):
-		return controlTypes.STATE_FOCUSABLE in obj.states
-
 	def event_valueChange(self, obj, nextHandler):
 		if obj.event_childID == 0:
 			return nextHandler()
