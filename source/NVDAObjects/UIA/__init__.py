@@ -389,8 +389,19 @@ class TreeviewItem(UIA):
 	def _get_value(self):
 		return ""
 
+	def _get__level(self):
+		level=0
+		obj=self
+		while obj: 
+			level+=1
+			parent=obj.parent=obj.parent
+			if not parent or parent==obj or parent.role!=controlTypes.ROLE_TREEVIEWITEM:
+				return level
+			obj=parent
+		return level
+
 	def _get_positionInfo(self):
-		return {'level':super(TreeviewItem,self).value}
+		return {'level':self._level}
 
 class UIItem(UIA):
 	"""UIA list items in an Items View repeate the name as the value"""
