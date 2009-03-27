@@ -38,7 +38,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		print attrs
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if accRole.isdigit() else accRole
+		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
