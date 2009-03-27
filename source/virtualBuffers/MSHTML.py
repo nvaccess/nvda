@@ -101,8 +101,24 @@ class MSHTML(VirtualBuffer):
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType.lower().endswith('link'):
-			attrs={"IHTMLDOMNode::nodeName":["A"]}
+		if nodeType=="link":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1]}
+		elif nodeType=="visitedLink":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[1]}
+		elif nodeType=="unvisitedLink":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_TRAVERSED:[None]}
+		elif nodeType=="formField":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON,IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON,IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX,IAccessibleHandler.ROLE_SYSTEM_LIST,IAccessibleHandler.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="button":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="edit":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="radioButton":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="checkBox":
+			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="table":
 			attrs={"IHTMLDOMNode::nodeName":["TABLE"]}
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
@@ -113,10 +129,14 @@ class MSHTML(VirtualBuffer):
 			attrs = {"IHTMLDOMNode::nodeName": ["UL","OL","DL"]}
 		elif nodeType == "listItem":
 			attrs = {"IHTMLDOMNode::nodeName": ["LI","DD","DT"]}
-		elif nodeType=="button":
-			attrs={"IHTMLDOMNode::nodeName":["BUTTON"]}
 		elif nodeType == "blockQuote":
 			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
+		elif nodeType == "graphic":
+			attrs = {"IHTMLDOMNode::nodeName": ["IMG"]}
+		elif nodeType == "frame":
+			attrs = {"IHTMLDOMNode::nodeName": ["FRAME","IFRAME"]}
+		elif nodeType=="focusable":
+			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
 			return None
 		return attrs
