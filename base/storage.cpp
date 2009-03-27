@@ -212,6 +212,10 @@ void VBufStorage_fieldNode_t::generateMarkupClosingTag(std::wstring& text) {
 }
 
 void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup) {
+	if(this->length==0) {
+		DEBUG_MSG(L"node has 0 length, not collecting text");
+		return;
+	}
 	DEBUG_MSG(L"getting text between offsets "<<startOffset<<L" and "<<endOffset);
 	assert(startOffset>=0); //startOffset can't be negative
 	assert(startOffset<endOffset); //startOffset must be before endOffset
@@ -801,7 +805,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferEnd=bufferStart+node->length;
 			DEBUG_MSG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
 			DEBUG_MSG(L"Checking node "<<node->getDebugInfo());
-			if(node->matchAttributes(attribsString)) {
+			if(node->length>0&&node->matchAttributes(attribsString)) {
 				DEBUG_MSG(L"found a match");
 				break;
 			}
@@ -812,7 +816,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			DEBUG_MSG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
-			if(node->matchAttributes(attribsString)) {
+			if(node->length>0&&node->matchAttributes(attribsString)) {
 				DEBUG_MSG(L"found match");
 				break;
 			}
