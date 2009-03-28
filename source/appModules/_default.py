@@ -631,6 +631,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
 		ui.message(text)
+	script_reportFormatting.__doc__ = _("Reports formatting info for the current cursor position within a document")
 
 	def script_reportCurrentFocus(self,keyPress):
 		focusObject=api.getFocusObject()

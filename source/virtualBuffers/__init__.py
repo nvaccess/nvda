@@ -342,11 +342,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.unloadBuffer()
 		self.loadBuffer()
 		speech.speakMessage(_("Refreshed"))
+	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
 	def script_toggleScreenLayout(self,keyPress):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
+	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the virtual buffer content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
@@ -726,7 +728,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		try:
 			info = self._getCell(tableID, row, column)
 		except LookupError:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 			info = self._getCell(tableID, oldRow, oldColumn)
 
 		speech.speakTextInfo(info)
@@ -735,15 +737,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_nextRow(self, keyPress):
 		self._tableMovementScriptHelper(1, 0, True)
+	script_nextRow.__doc__ = _("moves to the next table row")
 
 	def script_previousRow(self, keyPress):
 		self._tableMovementScriptHelper(-1, 0, True)
+	script_previousRow.__doc__ = _("moves to the previous table row")
 
 	def script_nextColumn(self, keyPress):
 		self._tableMovementScriptHelper(0, 1, True)
+	script_nextColumn.__doc__ = _("moves to the next table column")
 
 	def script_previousColumn(self, keyPress):
 		self._tableMovementScriptHelper(0, -1, True)
+	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
