@@ -940,7 +940,7 @@ the NVDAObject for IAccessible
 			attribs=self.IAccessibleObject.attributes
 		except:
 			return
-		if attribs and 'live:' in attribs and 'live:off' not in attribs:
+		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
 			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
 			if text and not text.isspace():
 				if 'live:rude' in attribs:
