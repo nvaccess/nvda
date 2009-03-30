@@ -750,7 +750,10 @@ the NVDAObject for IAccessible
 			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
 			index=int(index)
-			return table.IAccessibleTableObject.rowIndex(index)+1
+			try:
+				return table.IAccessibleTableObject.rowIndex(index)+1
+			except COMError:
+				log.debugWarning("IAccessibleTable::rowIndex failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_columnNumber(self):
@@ -759,17 +762,26 @@ the NVDAObject for IAccessible
 			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
 			index=int(index)
-			return table.IAccessibleTableObject.columnIndex(index)+1
+			try:
+				return table.IAccessibleTableObject.columnIndex(index)+1
+			except COMError:
+				log.debugWarning("IAccessibleTable::columnIndex failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_rowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
-			return self.IAccessibleTableObject.nRows
+			try:
+				return self.IAccessibleTableObject.nRows
+			except COMError:
+				log.debugWarning("IAccessibleTable::nRows failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_columnCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
-			return self.IAccessibleTableObject.nColumns
+			try:
+				return self.IAccessibleTableObject.nColumns
+			except COMError:
+				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_table(self):
