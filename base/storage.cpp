@@ -404,7 +404,15 @@ void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset,
 				text+=L"&amp;";
 				break;
 				default:
-				text+=c;
+				if (c == 0x9 || c == 0xA || c == 0xD
+					|| (c >= 0x20 && c <= 0xD7FF) || (c >= 0xE000 && c <= 0xFFFD)
+				) {
+					// Valid XML character.
+					text+=c;
+				} else {
+					// Invalid XML character.
+					text += 0xfffd; // Unicode replacement character
+				}
 			}
 		}
 	} else {
