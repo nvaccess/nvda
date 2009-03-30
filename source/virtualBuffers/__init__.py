@@ -716,6 +716,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return info
 
 	def _tableMovementScriptHelper(self, row, column, relative=False):
+		formatConfig=config.conf["documentFormatting"].copy()
+		formatConfig["reportTables"]=True
 		try:
 			tableID, oldRow, oldColumn = self._getCurrentCellCoords()
 		except LookupError:
@@ -731,7 +733,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			speech.speakMessage(_("edge of table"))
 			info = self._getCell(tableID, oldRow, oldColumn)
 
-		speech.speakTextInfo(info)
+
+		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
 		info.collapse()
 		self.selection = info
 
