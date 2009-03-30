@@ -38,23 +38,28 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	return TRUE;
 }
 
-inline void getIAccessibleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, int* role, int* states) {
-	*role=0;
-	*states=0;
+inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	int res=0;
 	IServiceProvider* pServProv=NULL;
 	res=pHTMLDOMNode->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	if(res!=S_OK||!pServProv) {
 		DEBUG_MSG(L"Could not queryInterface to IServiceProvider");
-		return;
+		return NULL;
 	}
 	IAccessible* pacc=NULL;
 	res=pServProv->QueryService(IID_IAccessible,IID_IAccessible,(void**)&pacc);
 	pServProv->Release();
 	if(res!=S_OK||!pacc) {
 		DEBUG_MSG(L"Could not get IAccessible interface");
-		return;
+		return NULL;
 	}
+	return pacc;
+}
+
+inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states) {
+	*role=0;
+	*states=0;
+	int res=0;
 	VARIANT varChild;
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
@@ -76,52 +81,33 @@ inline void getIAccessibleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, int* r
 		DEBUG_MSG(L"Failed to get states");
 	}
 	VariantClear(&varState);
-	pacc->Release();
 }
 
-inline IHTMLDOMNode* getRootDOMNodeOfHTMLFrame(IHTMLDOMNode* pHTMLDOMNode) {
+inline IHTMLDOMNode* getRootDOMNodeFromIAccessibleFrame(IAccessible* pacc) {
 int res=0;
-	DEBUG_MSG(L"pHTMLDOMNode at "<<pHTMLDOMNode);
-	IHTMLFrameBase2* pHTMLFrameBase2=NULL;
-	res=pHTMLDOMNode->QueryInterface(IID_IHTMLFrameBase2,(void**)&pHTMLFrameBase2);
-	if(res!=S_OK||!pHTMLFrameBase2) {
-		DEBUG_MSG(L"Could not get IHTMLFrameBase2");
-		return false;
+	VARIANT varChild;
+	varChild.vt=VT_I4;
+	varChild.lVal=1;
+	IDispatch* pDispatch=NULL;
+	if((res=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
+		DEBUG_MSG(L"IAccessible::accChild failed with return code "<<res);
+		return NULL;
 	}
-	DEBUG_MSG(L"PHTMLFrameBase2 at "<<pHTMLFrameBase2);
-	IHTMLWindow2* pHTMLWindow2=NULL;
-	res=pHTMLFrameBase2->get_contentWindow(&pHTMLWindow2);
-	pHTMLFrameBase2->Release();
-	if(res!=S_OK||!pHTMLWindow2) {
-		DEBUG_MSG(L"Could not get IHTMLWindow2");
-		return false;
+	IServiceProvider* pServProv=NULL;
+	res=pDispatch->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
+	pDispatch->Release();
+	if(res!=S_OK) {
+		DEBUG_MSG(L"QueryInterface to IServiceProvider failed");
+		return NULL;
 	}
-	DEBUG_MSG(L"pHTMLWindow2 at "<<pHTMLWindow2);
-	IHTMLDocument2* pHTMLDocument2=NULL;
-	res=pHTMLWindow2->get_document(&pHTMLDocument2);
-	pHTMLWindow2->Release();
-	if(res!=S_OK||!pHTMLDocument2) {
-		DEBUG_MSG(L"Could not get IHTMLDocument2");
-		return false;
+	IHTMLDOMNode* pHTMLDOMNode=NULL;
+	res=pServProv->QueryService(IID_IHTMLElement,IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
+	pServProv->Release();
+	if(res!=S_OK) {
+		DEBUG_MSG(L"QueryService to IHTMLDOMNode failed");
+		return NULL;
 	}
-	DEBUG_MSG(L"pHTMLDocument2 at "<<pHTMLDocument2);
-	IHTMLElement* pHTMLElement=NULL;
-	res=pHTMLDocument2->get_body(&pHTMLElement);
-	pHTMLDocument2->Release();
-	if(res!=S_OK||!pHTMLElement) {
-		DEBUG_MSG(L"Could not get IHTMLElement");
-		return false;
-	}
-	DEBUG_MSG(L"pHTMLElement at "<<pHTMLElement);
-	IHTMLDOMNode* childPHTMLDOMNode=NULL;
-	res=pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode);
-	pHTMLElement->Release();
-	if(res!=S_OK||!childPHTMLDOMNode) {
-		DEBUG_MSG(L"Could not get IHTMLDOMNode");
-		return false;
-	}
-	DEBUG_MSG(L"childPHTMLDOMNode at "<<childPHTMLDOMNode);
-	return childPHTMLDOMNode;
+	return pHTMLDOMNode;
 }
 
 inline void fillAttributes(VBufStorage_fieldNode_t* parentNode, IHTMLDOMNode* pHTMLDOMNode, const BSTR nodeName) {
@@ -390,7 +376,10 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	}
 	int IARole=0;
 	int IAStates=0;
-	getIAccessibleInfoFromHTMLDOMNode(pHTMLDOMNode,&IARole,&IAStates);
+	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
+	if(pacc) {
+		getIAccessibleInfo(pacc,&IARole,&IAStates);
+	}
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,isBlock);
 	assert(parentNode);
 	previousNode=NULL;
@@ -455,10 +444,12 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
 	} else if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 		DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
-		IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeOfHTMLFrame(pHTMLDOMNode);
-		if(childPHTMLDOMNode) {
-			previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
-			childPHTMLDOMNode->Release();
+		if(pacc) {
+			IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
+			if(childPHTMLDOMNode) {
+				previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
+				childPHTMLDOMNode->Release();
+			}
 		}
 	} else {
 		IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
@@ -493,6 +484,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 			pDispatch->Release();
 		}
 	}
+	if(pacc) pacc->Release();
 	return parentNode;
 }
 
