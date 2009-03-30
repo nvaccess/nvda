@@ -41,7 +41,7 @@ REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
 
-oldTreeviewLevel=None
+oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
 oldColumnNumber=None
@@ -592,7 +592,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		speakText(text,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
-	global oldTreeviewLevel, oldTableID, oldRowNumber, oldColumnNumber
+	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
 	textList=[]
 	if 'name' in propertyValues:
 		textList.append(propertyValues['name'])
@@ -628,9 +628,9 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)
-		if level is not None and role==controlTypes.ROLE_TREEVIEWITEM and level!=oldTreeviewLevel:
+		if level is not None and role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
 			textList.insert(0,_("level %s")%level)
-			oldTreeviewLevel=level
+			oldTreeLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	rowNumber = propertyValues.get("rowNumber")
