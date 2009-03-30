@@ -151,7 +151,7 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 		if position==textHandler.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textHandler.POSITION_LAST:
-			self._startOffset=self._endOffset=self._getStoryLength()-1
+			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
 		elif position==textHandler.POSITION_CARET:
 			self._startOffset=self._endOffset=self._getCaretOffset()
 		elif position==textHandler.POSITION_SELECTION:
