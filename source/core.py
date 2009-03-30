@@ -140,6 +140,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
 	IAccessibleHandler.initialize()
+	import UIAHandler
+	log.debug("Initializing UIA support")
+	UIAHandler.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -203,6 +206,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		IAccessibleHandler.terminate()
 	except:
 		log.error("Error terminating IAccessible support",exc_info=True)
+	log.debug("Terminating UIA support")
+	try:
+		UIAHandler.terminate()
+	except:
+		log.error("Error terminating UIA support",exc_info=True)
 	log.debug("Terminating Java Access Bridge support")
 	try:
 		JABHandler.terminate()

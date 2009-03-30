@@ -156,9 +156,15 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-	handler.registerEvents()
+
+def isUIAWindow(hwnd):
+		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+
+def handleIAccessibleFocusEvent():
+		UIAElement=handler.clientObject.GetFocusedElementBuildCache(handler.baseCacheRequest)
+		handler.eventListener.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(UIAElement)
+		return True
 
 def terminate():
 	global handler
-	handler.unregisterEvents()
 	handler=None

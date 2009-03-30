@@ -145,6 +145,7 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+import UIAHandler
 import heapq
 import itertools
 import time
@@ -774,6 +775,8 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	#Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
+	if UIAHandler.handler and UIAHandler.isUIAWindow(window):
+		return
 	focus=eventHandler.lastQueuedFocusObject
 	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
 		NVDAEvent=("caret",focus)
@@ -826,6 +829,9 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
+		return True
+	if UIAHandler.handler and UIAHandler.isUIAWindow(window):
+		UIAHandler.handleIAccessibleFocusEvent()
 		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,useCache=False)
@@ -905,6 +911,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
+		return True
+	if UIAHandler.handler and UIAHandler.isUIAWindow(window):
+		UIAHandler.handleIAccessibleFocusEvent()
 		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,useCache=False)
