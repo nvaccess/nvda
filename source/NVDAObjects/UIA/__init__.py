@@ -90,7 +90,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		kwargs['UIAElement']=UIAElement
 		UIAControlType=UIAElement.cachedControlType
 		UIAClassName=UIAElement.cachedClassName
-		if UIAClassName=="UIItem":
+		if UIAClassName=="UIColumnHeader":
+			clsList.append(UIColumnHeader)
+		elif UIAClassName=="UIItem":
 			clsList.append(UIItem)
 		elif UIAClassName=="SensitiveSlider":
 			clsList.append(SensitiveSlider) 
@@ -229,14 +231,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_description(self):
 		try:
-			itemStatus=self.UIAElement.currentItemStatus
+			return self.UIAElement.currentHelpText
 		except COMError:
-			itemStatus=""
-		try:
-			helpText=self.UIAElement.currentHelpText
-		except COMError:
-			helpText=""
-		return " ".join([x for x in itemStatus,helpText if x])
+			return ""
 
 	def _get_keyboardShortcut(self):
 		try:
@@ -402,6 +399,16 @@ class TreeviewItem(UIA):
 
 	def _get_positionInfo(self):
 		return {'level':self._level}
+
+class UIColumnHeader(UIA):
+
+	def _get_description(self):
+		description=super(UIColumnHeader,self).description
+		try:
+			itemStatus=self.UIAElement.currentItemStatus
+		except COMError:
+			itemStatus=""
+		return " ".join([x for x in (description,itemStatus) if x and not x.isspace()])
 
 class UIItem(UIA):
 	"""UIA list items in an Items View repeate the name as the value"""
