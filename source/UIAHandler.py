@@ -65,13 +65,13 @@ UIAPropertyIdsToNVDAEventNames={
 UIAEventIdsToNVDAEventNames={
 	UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"stateChange",
-	UIA_MenuOpenedEventId:"gainFocus",
+	#UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
-	UIA_MenuModeEndEventId:"menuModeEnd",
+	#UIA_MenuModeEndEventId:"menuModeEnd",
 	UIA_Text_TextSelectionChangedEventId:"caret",
-	UIA_ToolTipOpenedEventId:"show",
-	UIA_AsyncContentLoadedEventId:"documentLoadComplete",
-	UIA_ToolTipClosedEventId:"hide",
+	#UIA_ToolTipOpenedEventId:"show",
+	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
+	#UIA_ToolTipClosedEventId:"hide",
 }
 
 
@@ -85,10 +85,6 @@ class UIAEventListener(COMObject):
 		super(UIAEventListener,self).__init__()
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
-		if eventID==UIA_MenuModeEndEventId:
-			focus=self.UIAHandlerRef().clientObject.GetFocusedElementBuildCache(self.UIAHandlerRef().baseCacheRequest)
-			self.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(focus)
-			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
@@ -96,7 +92,11 @@ class UIAEventListener(COMObject):
 			sender.currentNativeWindowHandle
 		except COMError:
 			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		try:
+			runtimeId=sender.getRuntimeId()
+		except COMError:
+			return
+		obj=NVDAObjects.UIA.UIA.liveNVDAObjectTable.get(runtimeId,None)
 		if not obj:
 			return
 		obj.UIAElement=sender
@@ -139,11 +139,9 @@ class UIAHandler(object):
 			r.addProperty(propertyId)
 		self.baseCacheRequest=r
 		self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
-		self.rootElement=self.clientObject.GetRootElementBuildCache(self.baseCacheRequest)
-		self.focusedElement=self.clientObject.GetFocusedElementBuildCache(self.baseCacheRequest)
 		self.eventListener=UIAEventListener(self)
 
-	def registerEvents(self):
+	def oldregisterEvents(self):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self.eventListener)
 		self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
 		for x in UIAEventIdsToNVDAEventNames.iterkeys():  

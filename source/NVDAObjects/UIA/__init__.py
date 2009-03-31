@@ -132,7 +132,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if getattr(self,'_doneInit',False):
 			return
 		self._doneInit=True
-		self.UIAElement=UIAElement
+		self.UIAElement=self._origUIAElement=UIAElement
+		#self._UIAEventListener=UIAHandler.handler.eventListener
+		self._UIAEventListener=UIAHandler.UIAEventListener(UIAHandler.handler)
+		UIAHandler.handler.clientObject.AddPropertyChangedEventHandler(self._origUIAElement,UIAHandler.TreeScope_Element,UIAHandler.handler.baseCacheRequest,self._UIAEventListener,UIAHandler.UIAPropertyIdsToNVDAEventNames.keys())
+		for x in UIAHandler.UIAEventIdsToNVDAEventNames.iterkeys():  
+			UIAHandler.handler.clientObject.addAutomationEventHandler(x,self._origUIAElement,UIAHandler.TreeScope_Element,UIAHandler.handler.baseCacheRequest,self._UIAEventListener)
 		super(UIA,self).__init__(windowHandle)
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
@@ -152,6 +157,14 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				("ExtendedDelete","delete"),
 				("Back","backspace"),
 			]]
+
+	def __del__(self):
+		if UIAHandler.handler:
+			UIAHandler.handler.clientObject.removePropertyChangedEventHandler(self._origUIAElement,self._UIAEventListener)
+			for x in UIAHandler.UIAEventIdsToNVDAEventNames.iterkeys():  
+				UIAHandler.handler.clientObject.removeAutomationEventHandler(x,self._origUIAElement,self._UIAEventListener)
+
+
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
