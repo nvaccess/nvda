@@ -7,6 +7,7 @@
 import threading
 import time
 import ctypes
+import sys
 import difflib
 import pythoncom
 import api
@@ -117,7 +118,8 @@ class WinConsole(Window):
 		info=winKernel.getConsoleScreenBufferInfo(self.consoleHandle)
 		#Notify the monitor thread that an event has occurred
 		self.lastConsoleEvent=eventID
-		if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
+		winVer=sys.getwindowsversion()
+		if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE and (winVer[0]<6 or (winVer[0]==6 and winVer[1]<1)): 
 			x=winUser.LOWORD(objectID)
 			y=winUser.HIWORD(objectID)
 			if x<info.cursorPosition.x and (y==info.cursorPosition.y or y==info.cursorPosition.y+1):  
