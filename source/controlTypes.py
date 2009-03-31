@@ -136,6 +136,7 @@ ROLE_STYLE=135
 ROLE_INDENT=136
 ROLE_ALIGNMENT=137
 ROLE_ALERT=138
+ROLE_CALENDAR=139
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -305,6 +306,7 @@ speechRoleLabels={
 	ROLE_INDENT:_("indent"),
 	ROLE_ALIGNMENT:_("alignment"),
 	ROLE_ALERT:_("alert"),
+	ROLE_CALENDAR:_("calendar"),
 }
 
 speechStateLabels={
