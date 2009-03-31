@@ -307,7 +307,10 @@ the NVDAObject for IAccessible
 				newCls=globals()[classString]
 			if newCls:
 				clsList.append(newCls)
-		if windowClassName.startswith('Mozilla'):
+		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==IAccessibleHandler.OBJID_CLIENT or event_objectID>0):
+			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
+			clsList.append(MSHTML)
+		elif windowClassName.startswith('Mozilla'):
 			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
 			clsList.append( mozCls)
 		clsList.append(IAccessible)
@@ -747,7 +750,10 @@ the NVDAObject for IAccessible
 			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
 			index=int(index)
-			return table.IAccessibleTableObject.rowIndex(index)+1
+			try:
+				return table.IAccessibleTableObject.rowIndex(index)+1
+			except COMError:
+				log.debugWarning("IAccessibleTable::rowIndex failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_columnNumber(self):
@@ -756,17 +762,26 @@ the NVDAObject for IAccessible
 			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
 			index=int(index)
-			return table.IAccessibleTableObject.columnIndex(index)+1
+			try:
+				return table.IAccessibleTableObject.columnIndex(index)+1
+			except COMError:
+				log.debugWarning("IAccessibleTable::columnIndex failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_rowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
-			return self.IAccessibleTableObject.nRows
+			try:
+				return self.IAccessibleTableObject.nRows
+			except COMError:
+				log.debugWarning("IAccessibleTable::nRows failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_columnCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
-			return self.IAccessibleTableObject.nColumns
+			try:
+				return self.IAccessibleTableObject.nColumns
+			except COMError:
+				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
 
 	def _get_table(self):
@@ -925,7 +940,7 @@ the NVDAObject for IAccessible
 			attribs=self.IAccessibleObject.attributes
 		except:
 			return
-		if attribs and 'live:' in attribs and 'live:off' not in attribs:
+		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
 			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
 			if text and not text.isspace():
 				if 'live:rude' in attribs:
@@ -1111,10 +1126,11 @@ class ProgressBar(IAccessible):
 			val=val.rstrip('%\x00')
 		if not val or val==globalVars.lastProgressValue:
 			return
+		percentage = min(max(0.0, float(val)), 100.0)
 		if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
-			tones.beep(self.BASE_BEEP_FREQ*2**(float(val)/25.0),40)
+			tones.beep(self.BASE_BEEP_FREQ*2**(percentage/25.0),40)
 		elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%int(val))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
 		globalVars.lastProgressValue=val
 
 class InternetExplorerClient(IAccessible):
@@ -1205,14 +1221,12 @@ _staticMap={
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaUIWindowClass",IAccessibleHandler.IA2_ROLE_LABEL):"mozilla.Label",
 	("ConsoleWindowClass",IAccessibleHandler.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,IAccessibleHandler.ROLE_SYSTEM_LIST):"List",
 	(None,IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINE):"Outline",
 	(None,IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_TEXT):"MSHTML.MSHTML",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_PANE):"MSHTML.MSHTML",
-	("Internet Explorer_Server",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"InternetExplorerClient",
 	("TRichView",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"List",
@@ -1233,7 +1247,7 @@ _staticMap={
 	("ToolbarWindow32",IAccessibleHandler.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView","Page"):"adobe.Page",
-	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"adobe.Document",
+	("AVL_AVView",None):"adobe.AcrobatNode",
+	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 }

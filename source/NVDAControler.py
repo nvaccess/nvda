@@ -15,7 +15,7 @@ def _setDllFuncPointer(dll,name,cfunc):
 
 #Implementation of methods
 
-@CFUNCTYPE(c_voidp,POINTER(c_char_p))
+@CFUNCTYPE(None,POINTER(c_char_p))
 def getNVDAVersionString(version):
 	import versionInfo
 	version.contents.value=versionInfo.version
@@ -28,7 +28,7 @@ def registerInprocWorker(processID,address):
 	return inprocWorkerHandle
 _setDllFuncPointer(serverLib,"fp_registerInprocWorker",registerInprocWorker)
 
-@CFUNCTYPE(c_voidp,inprocWorkerHandle_t)
+@CFUNCTYPE(None,inprocWorkerHandle_t)
 def unregisterInprocWorker(inprocWorkerHandle):
 	del inprocWorkers[inprocWorkerHandle.value]
 _setDllFuncPointer(serverLib,"fp_unregisterInprocWorker",unregisterInprocWorker)

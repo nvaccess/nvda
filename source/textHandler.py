@@ -205,6 +205,18 @@ class TextInfo(baseObject.AutoPropertyObject):
 """
 		raise NotImplementedError
 
+	def isOverlapping(self, other):
+		"""Determines whether this object overlaps another object in any way.
+		Note that collapsed objects can cause some confusion.
+		For example, in terms of offsets, (4, 4) and (4, 5) are not considered as overlapping.
+		Therefore, collapsed objects should probably be expanded to at least 1 character when using this method.
+		@param other: The TextInfo object being compared.
+		@type other: L{TextInfo}
+		@return: C{True} if the objects overlap, C{False} if not.
+		@rtype: bool
+		"""
+		return self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0
+
 	def setEndPoint(self,other,which):
 		"""Sets one end of this object to one end of the other object
 @param other: the text info object to get the end from 

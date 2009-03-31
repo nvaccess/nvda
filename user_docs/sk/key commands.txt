@@ -194,10 +194,10 @@ Shift+numpad9: spodok
 Premiestni prehliadací kurzor na spodný riadok aktuálneho navigačného objektu a prečíta ho.
 
 
-Príkazy špecifické pre virtuálny buffer - niektoré z nich fungujú len v gecko 1.9 aplikáciách ako je napr. Firefox 3.0
+Príkazy špecifické pre virtuálny prehliadač
 
-NVDA+medzera: režim prepúšťania cez virtuálny buffer
-Zapína a vypína režim prepustenia klávesových príkazov cez virtuálny buffer. Keď je to zapnuté, klávesy budú prepustené čo umožní interaktívne pracovať s aktuálnym formulárovým prvkom bez vikonávania príkazov NVDA.
+NVDA+medzera: režim fokusu a prehliadací režim
+Prepína režim fokusu a prehliadací režim. V režime fokusu budú klávesy prepustené čo umožní interaktívne pracovať s aktuálnym formulárovým prvkom bez vikonávania príkazov NVDA.
 
 control+NVDA+f: hľadať (control+f v prehliadačoch firefox 2 / internet explorer)
 Vyhľadávanie zadaného textu od aktuálnej pozície kurzora
@@ -212,7 +212,7 @@ NVDA+f5: Obnoviť (nefunguje vo Firefox 2 a Internet Explorery)
 Pokúsi sa znovu načítať aktuálnu stránku z prehliadača.
 
 
-Príkazy rýchlej navigácie pre virtuálny buffer
+Príkazy rýchlej navigácie pre virtuálny prehliadač
 Na navigáciu v opačnom smere použite navigačný kláves kombinovaný s klávesom shift.
 
 h: nadpis
@@ -220,6 +220,8 @@ h: nadpis
 l: zoznam
 i: položka zoznamu
 k: odkaz
+v: navštívený odkaz
+u: nenavštívený odkaz
 t: tabuľka
 f: prvok formulára
 e: editačné pole

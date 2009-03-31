@@ -185,8 +185,11 @@ CreateDirectory "$INSTDIR\lib"
 !undef LIBRARY_COM
 ; Install libraries
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\NVDAHelper.dll" "$INSTDIR\lib\NVDAHelper.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\virtualBuffer.dll" "$INSTDIR\lib\virtualBuffer.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBase.dll" "$INSTDIR\lib\VBufBase.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufClient.dll" "$INSTDIR\lib\VBufClient.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_adobeAcrobat.dll" "$INSTDIR\lib\VBufBackend_adobeAcrobat.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
+!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_mshtml.dll" "$INSTDIR\lib\VBufBackend_mshtml.dll" "$INSTDIR\lib"
 !insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
 ;Shortcuts
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
@@ -217,8 +220,11 @@ SetShellVarContext all
 
 ; Uninstall libraries
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\virtualBuffer.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBase.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufClient.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_adobeAcrobat.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_gecko_ia2.dll"
+!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_mshtml.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\IAccessible2Proxy.dll"
 
 ;Uninstall all files logged as being installed

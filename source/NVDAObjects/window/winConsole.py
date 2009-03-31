@@ -55,7 +55,7 @@ class WinConsole(Window):
 		if not res:
 			raise OSError("consoleWindowClassClient: could not get console std handle") 
 		self.consoleHandle=res
-		self.cConsoleEventHook=ctypes.WINFUNCTYPE(ctypes.c_voidp,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
+		self.cConsoleEventHook=ctypes.WINFUNCTYPE(None,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)(self.consoleEventHook)
 		#Register this callback with all the win events we need, storing the given handles for removal later
 		for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 			handle=winUser.setWinEventHook(eventID,eventID,0,self.cConsoleEventHook,0,0,0)

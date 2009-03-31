@@ -2,7 +2,6 @@ import ctypes
 import weakref
 import time
 import os
-import winsound
 import XMLFormatting
 import baseObject
 from keyUtils import sendKey
@@ -15,9 +14,6 @@ import api
 import sayAllHandler
 import controlTypes
 import textHandler
-#Before importing virtualBuffer_lib, force ctypes to use virtualBuffer.dll from the lib dir, not the current dir
-ctypes.cdll.virtualBuffer=ctypes.cdll.LoadLibrary('lib\\virtualBuffer.dll')
-from virtualBuffer_lib import *
 import globalVars
 import config
 import api
@@ -29,13 +25,40 @@ import braille
 import queueHandler
 from logHandler import log
 import keyUtils
+import ui
+
+VBufStorage_findDirection_forward=0
+VBufStorage_findDirection_back=1
+VBufStorage_findDirection_up=2
+
+def dictToMultiValueAttribsString(d):
+	mainList=[]
+	for k,v in d.iteritems():
+		k=unicode(k).replace(':','\\:').replace(';','\\;').replace(',','\\,')
+		valList=[]
+		for i in v:
+			if i is None:
+				i=""
+			else:
+				i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
+			valList.append(i)
+		attrib="%s:%s"%(k,",".join(valList))
+		mainList.append(attrib)
+	return "%s;"%";".join(mainList)
+
+VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
 
 class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
 
 	def _getFieldIdentifierFromOffset(self, offset):
-		return VBufClient_getFieldIdentifierFromBufferOffset(self.obj.VBufHandle,offset)
+		startOffset = ctypes.c_int()
+		endOffset = ctypes.c_int()
+		docHandle = ctypes.c_int()
+		ID = ctypes.c_int()
+		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		return docHandle.value, ID.value
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
@@ -45,8 +68,13 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		while obj and obj!=self.obj:
 			try:
 				docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
-				start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle,docHandle,ID)
-				return start,end
+				node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+				if not node:
+					raise Exception
+				start = ctypes.c_int()
+				end = ctypes.c_int()
+				VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
+				return start.value, end.value
 			except:
 				log.debugWarning("",exc_info=True)
 				obj=obj.parent
@@ -62,11 +90,13 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getSelectionOffsets(self):
-		start,end=VBufClient_getBufferSelectionOffsets(self.obj.VBufHandle)
-		return (start,end)
+		start=ctypes.c_int()
+		end=ctypes.c_int()
+		VBufClient.VBufRemote_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
+		return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
-		VBufClient_setBufferSelectionOffsets(self.obj.VBufHandle,start,end)
+		VBufClient.VBufRemote_setSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -75,45 +105,50 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufClient_getBufferTextLength(self.obj.VBufHandle)
+		return VBufClient.VBufRemote_getTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
-		text=VBufClient_getBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		return text
-
-	def _getWordOffsets(self,offset):
-		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
-		line_startOffset,line_endOffset=VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,False)
-		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
-		return (max(line_startOffset,word_startOffset),min(line_endOffset,word_endOffset))
-
-	def _getLineOffsets(self,offset):
-		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"])
-
-	def _getParagraphOffsets(self,offset):
-		return VBufClient_getBufferLineOffsets(self.obj.VBufHandle,offset,0,True)
-
-	def _normalizeControlField(self,attrs):
-		return attrs
-
-	def getInitialFields(self,formatConfig=None):
-		XMLContext=VBufClient_getXMLContextAtBufferOffset(self.obj.VBufHandle,self._startOffset)
-		ancestry=XMLFormatting.XMLContextParser().parse(XMLContext)
-		for index in xrange(len(ancestry)):
-			ancestry[index]=self._normalizeControlField(ancestry[index])
-		return ancestry
+		text=ctypes.c_wchar_p()
+		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
+		return text.value
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
-		XMLText=VBufClient_getXMLBufferTextByOffsets(self.obj.VBufHandle,start,end)
-		commandList=XMLFormatting.RelativeXMLParser().parse(XMLText)
+		if start==end:
+			return ""
+		text=ctypes.c_wchar_p()
+		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
 				commandList[index].field=self._normalizeControlField(commandList[index].field)
 		return commandList
+
+	def _getWordOffsets(self,offset):
+		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
+		return (max(lineStart.value,word_startOffset),min(lineEnd.value,word_endOffset))
+
+	def _getLineOffsets(self,offset):
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		return lineStart.value,lineEnd.value
+ 
+	def _getParagraphOffsets(self,offset):
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		return lineStart.value,lineEnd.value
+
+	def _normalizeControlField(self,attrs):
+		return attrs
 
 	def _getLineNumFromOffset(self, offset):
 		return None
@@ -123,8 +158,12 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 
 	def _getUnitOffsets(self, unit, offset):
 		if unit == self.UNIT_CONTROLFIELD:
-			docHandle, ID = self.fieldIdentifierAtStart
-			return VBufClient_getBufferOffsetsFromFieldIdentifier(self.obj.VBufHandle, docHandle, ID)
+			startOffset=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			docHandle=ctypes.c_int()
+			ID=ctypes.c_int()
+			VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
@@ -137,13 +176,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 	TextInfo=VirtualBufferTextInfo
 
 	def __init__(self,rootNVDAObject,backendLibPath=None):
-		self.backendLibPath=os.path.join(os.getcwdu(),backendLibPath)
+		self.backendLibPath=os.path.join(os.getcwd(),backendLibPath)
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
 		self._passThrough=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
+		self._lastFocusObj = None
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -158,11 +198,23 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.VBufHandle=VBufClient_createBuffer(self.rootDocHandle,self.rootID,self.backendLibPath)
+		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
+		if not self.bindingHandle:
+			raise RuntimeError("Could not inject VBuf lib")
+		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
+		if not self.VBufHandle:
+			raise RuntimeError("Could not remotely create virtualBuffer")
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
-			VBufClient_destroyBuffer(self.VBufHandle)
+			try:
+				VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
+			except WindowsError:
+				pass
+			try:
+				VBufClient.VBufClient_disconnect(self.bindingHandle)
+			except WindowsError:
+				pass
 			self.VBufHandle=None
 
 	def makeTextInfo(self,position):
@@ -225,11 +277,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.passThrough:
 			nextHandler()
 
-	def _activateField(self,docHandle,ID):
-		pass
+	def _activateNVDAObject(self, obj):
+		"""Activate an object in response to a user request.
+		This should generally perform the default action or click on the object.
+		@param obj: The object to activate.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		obj.doAction()
 
-	def _activateContextMenuForField(self,docHandle,ID):
-		pass
+	def _activatePosition(self, info):
+		obj = info.NVDAObjectAtStart
+		if self.shouldPassThrough(obj):
+			obj.setFocus()
+			self.passThrough = True
+			virtualBufferHandler.reportPassThrough(self)
+		else:
+			self._activateNVDAObject(obj)
 
 	def _set_selection(self, info, reason=speech.REASON_CARET):
 		super(VirtualBuffer, self)._set_selection(info)
@@ -259,14 +322,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return False
+		return controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
 		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		docHandle,ID=info.fieldIdentifierAtStart
-		self._activateField(docHandle,ID)
+		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
 	def _caretMovementScriptHelper(self, *args, **kwargs):
@@ -280,37 +342,53 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.unloadBuffer()
 		self.loadBuffer()
 		speech.speakMessage(_("Refreshed"))
+	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
 	def script_toggleScreenLayout(self,keyPress):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
+	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the virtual buffer content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
 
-	def _iterNodesByType(self,nodeType,direction="next",startOffset=-1):
+	def _iterNodesByType(self,nodeType,direction="next",offset=-1):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
-			return
+			return iter(())
+		return self._iterNodesByAttribs(attribs, direction, offset)
 
+	def _iterNodesByAttribs(self, attribs, direction="next", offset=-1):
+		attribs=dictToMultiValueAttribsString(attribs)
+		startOffset=ctypes.c_int()
+		endOffset=ctypes.c_int()
+		if direction=="next":
+			direction=VBufStorage_findDirection_forward
+		elif direction=="previous":
+			direction=VBufStorage_findDirection_back
+		elif direction=="up":
+			direction=VBufStorage_findDirection_up
+		else:
+			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				docHandle,ID=VBufClient_findBufferFieldIdentifierByProperties(self.VBufHandle,direction,startOffset,attribs)
+				node=VBufClient.VBufRemote_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
 			except:
 				return
-			if not ID:
-				continue
-
-			startOffset,endOffset=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,docHandle,ID)
-			yield docHandle, ID, startOffset, endOffset
+			if not node:
+				return
+			yield node, startOffset.value, endOffset.value
+			offset=startOffset
 
 	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		startOffset, endOffset=VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		startOffset=info._startOffset
+		endOffset=info._endOffset
 		try:
-			docHandle, ID, startOffset, endOffset = next(self._iterNodesByType(nodeType, direction, startOffset))
+			node, startOffset, endOffset = next(self._iterNodesByType(nodeType, direction, startOffset))
 		except StopIteration:
 			speech.speakMessage(errorMessage)
 			return
@@ -349,9 +427,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 
 		nodes = []
-		caretOffset, _ignored = VBufClient_getBufferSelectionOffsets(self.VBufHandle)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		caretOffset=info._startOffset
 		defaultIndex = None
-		for docHandle, ID, startOffset, endOffset in self._iterNodesByType("link"):
+		for node, startOffset, endOffset in self._iterNodesByType("link"):
 			if defaultIndex is None:
 				if startOffset <= caretOffset and caretOffset < endOffset:
 					# The caret is inside this link, so make it the default selection.
@@ -360,21 +439,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 					# The caret wasn't inside a link, so set the default selection to be the next link.
 					defaultIndex = len(nodes)
 			text = self.makeTextInfo(textHandler.Offsets(startOffset,endOffset)).text
-			nodes.append((text, docHandle, ID, startOffset, endOffset))
+			nodes.append((text, startOffset, endOffset))
 
 		def action(args):
 			if args is None:
 				return
 			activate, index, text = args
-			text, docHandle, ID, startOffset, endOffset = nodes[index]
+			text, startOffset, endOffset = nodes[index]
+			info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
+			newCaret = info.copy()
+			newCaret.collapse()
+			self.selection = newCaret
 			if activate:
-				self._activateField(docHandle, ID)
+				self._activatePosition(info)
 			else:
-				info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
 				speech.cancelSpeech()
 				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-				info.collapse()
-				self.selection = info
 
 		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
 	script_linksList.__doc__ = _("displays a list of links")
@@ -460,44 +540,31 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.VBufHandle is None:
 			return False
 
-		# We only want to override the tab order if the caret is not within the focused node.
-		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
-		try:
-			caretDocHandle,caretID=caretInfo.fieldIdentifierAtStart
-		except:
-			return False
 		focus = api.getFocusObject()
 		try:
-			focusDocHandle,focusID=self.getIdentifierFromNVDAObject(focus)
-		except:
-			log.debugWarning("error getting focus identifier", exc_info=True)
-			return False
-		if (caretDocHandle == focusDocHandle and caretID == focusID) or focusID == 0:
-			return False
-		try:
-			start,end=VBufClient_getBufferOffsetsFromFieldIdentifier(self.VBufHandle,focusDocHandle,focusID)
+			focusInfo = self.makeTextInfo(focus)
 		except:
 			return False
-		focusInfo=self.makeTextInfo(textHandler.Offsets(start,end))
-		startToStart=focusInfo.compareEndPoints(caretInfo,"startToStart")
-		startToEnd=focusInfo.compareEndPoints(caretInfo,"startToEnd")
-		endToStart=focusInfo.compareEndPoints(caretInfo,"endToStart")
-		endToEnd=focusInfo.compareEndPoints(caretInfo,"endToEnd")
-		if not ((startToStart<0 and endToEnd>0) or (startToStart>0 and endToEnd<0) or endToStart<=0 or startToEnd>0):
+		# We only want to override the tab order if the caret is not within the focused node.
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if focusInfo.isOverlapping(caretInfo):
 			return False
 
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
-			newDocHandle, newID, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
+			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
 		except StopIteration:
 			return False
 
 		# Finally, focus the node.
-		obj = self.getNVDAObjectFromIdentifier(newDocHandle, newID)
+		# TODO: Better way to get a field identifier from a node.
+		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+		obj = newInfo.NVDAObjectAtStart
 		if obj == api.getFocusObject():
 			# This node is already focused, so we need to move to and speak this node here.
-			newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
 			newCaret = newInfo.copy()
 			newCaret.collapse()
 			self._set_selection(newCaret,reason=speech.REASON_FOCUS)
@@ -518,6 +585,175 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self._tabOverride("previous"):
 			keyUtils.sendKey(keyPress)
 
+	def event_focusEntered(self,obj,nextHandler):
+		if self.passThrough:
+			 nextHandler()
+
+	def _shouldIgnoreFocus(self, obj):
+		"""Determines whether focus on a given object should be ignored.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if focus on L{obj} should be ignored, C{False} otherwise.
+		@rtype: bool
+		"""
+		return False
+
+	def _postGainFocus(self, obj):
+		"""Executed after a gainFocus within the virtual buffer.
+		This will not be executed if L{event_gainFocus} determined that it should abort and call nextHandler.
+		@param obj: The object that gained focus.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+
+	def event_gainFocus(self, obj, nextHandler):
+		if not self.passThrough and self._lastFocusObj==obj:
+			# This was the last non-document node with focus, so don't handle this focus event.
+			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
+			# This is not ideal if the user was positioned over a node which cannot receive focus.
+			return
+		if self.VBufHandle is None:
+			return nextHandler()
+		if obj==self.rootNVDAObject:
+			if self.passThrough:
+				return nextHandler()
+			return 
+		if not self.passThrough and self._shouldIgnoreFocus(obj):
+			return
+		self._lastFocusObj=obj
+
+		try:
+			focusInfo = self.makeTextInfo(obj)
+		except:
+			# This object is not in the virtual buffer, even though it resides beneath the document.
+			# Automatic pass through should be enabled in certain circumstances where this occurs.
+			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
+				self.passThrough=True
+				virtualBufferHandler.reportPassThrough(self)
+			return nextHandler()
+
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if not focusInfo.isOverlapping(caretInfo):
+			if not self.passThrough:
+				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
+				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
+				speech.cancelSpeech()
+			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
+			if not self.passThrough:
+				# We read the info from the buffer instead of the control itself.
+				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
+				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			else:
+				nextHandler()
+			focusInfo.collapse()
+			self._set_selection(focusInfo,reason=speech.REASON_FOCUS)
+		else:
+			# The virtual buffer caret was already at the focused node.
+			if not self.passThrough:
+				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
+				# However, we still want to update the speech property cache so that property changes will be spoken properly.
+				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+			else:
+				return nextHandler()
+
+		self._postGainFocus(obj)
+
+	def _handleScrollTo(self, obj):
+		"""Handle scrolling the buffer to a given object in response to an event.
+		Subclasses should call this from an event which indicates that the buffer has scrolled.
+		@postcondition: The buffer caret is moved to L{obj} and the buffer content for L{obj} is reported.
+		@param obj: The object to which the buffer should scroll.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if the buffer was scrolled, C{False} if not.
+		@rtype: bool
+		@note: If C{False} is returned, calling events should probably call their nextHandler.
+		"""
+		if not self.VBufHandle:
+			return False
+
+		try:
+			scrollInfo = self.makeTextInfo(obj)
+		except:
+			return False
+
+		#We only want to update the caret and speak the field if we're not in the same one as before
+		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		if not scrollInfo.isOverlapping(caretInfo):
+			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
+			scrollInfo.collapse()
+			self.selection = scrollInfo
+			return True
+
+		return False
+
+	def _getCurrentCellCoords(self):
+		caret = self.makeTextInfo(textHandler.POSITION_CARET)
+		caret.expand(textHandler.UNIT_CHARACTER)
+		for field in reversed(caret.getTextWithFields()):
+			if not (isinstance(field, textHandler.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			attrs = field.field
+			if "table-id" in attrs and "table-rownumber" in attrs:
+				break
+		else:
+			raise LookupError("Not in a table cell")
+		return int(attrs["table-id"]), int(attrs["table-rownumber"]), int(attrs["table-columnnumber"])
+
+	def _getCell(self, tableID, row, column):
+		try:
+			node, start, end = next(self._iterNodesByAttribs({"table-id": [str(tableID)], "table-rownumber": [str(row)], "table-columnnumber": [str(column)]}))
+			info = self.makeTextInfo(textHandler.Offsets(start, end))
+		except StopIteration:
+			raise LookupError("No such table cell")
+		if info.isCollapsed:
+			raise LookupError("Cell present but occupies no space")
+		return info
+
+	def _tableMovementScriptHelper(self, row, column, relative=False):
+		formatConfig=config.conf["documentFormatting"].copy()
+		formatConfig["reportTables"]=True
+		try:
+			tableID, oldRow, oldColumn = self._getCurrentCellCoords()
+		except LookupError:
+			ui.message(_("Not in a table cell"))
+			return
+		if relative:
+			row = oldRow + row
+			column = oldColumn + column
+
+		try:
+			info = self._getCell(tableID, row, column)
+		except LookupError:
+			speech.speakMessage(_("edge of table"))
+			info = self._getCell(tableID, oldRow, oldColumn)
+
+
+		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
+		info.collapse()
+		self.selection = info
+
+	def script_nextRow(self, keyPress):
+		self._tableMovementScriptHelper(1, 0, True)
+	script_nextRow.__doc__ = _("moves to the next table row")
+
+	def script_previousRow(self, keyPress):
+		self._tableMovementScriptHelper(-1, 0, True)
+	script_previousRow.__doc__ = _("moves to the previous table row")
+
+	def script_nextColumn(self, keyPress):
+		self._tableMovementScriptHelper(0, 1, True)
+	script_nextColumn.__doc__ = _("moves to the next table column")
+
+	def script_previousColumn(self, keyPress):
+		self._tableMovementScriptHelper(0, -1, True)
+	script_previousColumn.__doc__ = _("moves to the previous table column")
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -529,6 +765,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("alt+extendedDown","collapseOrExpandControl"),
 	("tab", "tab"),
 	("shift+tab", "shiftTab"),
+	("control+alt+extendedDown", "nextRow"),
+	("control+alt+extendedUp", "previousRow"),
+	("control+alt+extendedRight", "nextColumn"),
+	("control+alt+extendedLeft", "previousColumn"),
 )]
 
 # Add quick navigation scripts.
