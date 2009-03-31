@@ -158,7 +158,10 @@ def isUIAWindow(hwnd):
 		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 
 def handleIAccessibleFocusEvent():
-		UIAElement=handler.clientObject.GetFocusedElementBuildCache(handler.baseCacheRequest)
+		try:
+			UIAElement=handler.clientObject.GetFocusedElementBuildCache(handler.baseCacheRequest)
+		except COMError:
+			return False
 		handler.eventListener.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(UIAElement)
 		return True
 

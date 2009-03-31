@@ -830,8 +830,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
-	if UIAHandler.handler and UIAHandler.isUIAWindow(window):
-		UIAHandler.handleIAccessibleFocusEvent()
+	if UIAHandler.handler and UIAHandler.isUIAWindow(window) and UIAHandler.handleIAccessibleFocusEvent():
 		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,useCache=False)
@@ -912,8 +911,7 @@ def processForegroundWinEvent(window,objectID,childID):
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
-	if UIAHandler.handler and UIAHandler.isUIAWindow(window):
-		UIAHandler.handleIAccessibleFocusEvent()
+	if UIAHandler.handler and UIAHandler.isUIAWindow(window) and UIAHandler.handleIAccessibleFocusEvent():
 		return True
 	#Convert the win event to an NVDA event
 	NVDAEvent=winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,useCache=False)
