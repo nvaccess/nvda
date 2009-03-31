@@ -2,6 +2,8 @@ from ctypes.wintypes import POINT
 from comtypes import COMError
 import weakref
 import UIAHandler
+import globalVars
+import eventHandler
 import controlTypes
 import speech
 import api
@@ -72,6 +74,17 @@ class UIATextInfo(textHandler.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
+	def setEndPoint(self,other,which):
+		if which.startswith('start'):
+			src=UIAHandler.TextPatternRangeEndpoint_Start
+		else:
+			src=UIAHandler.TextPatternRangeEndpoint_End
+		if which.endswith('Start'):
+			target=UIAHandler.TextPatternRangeEndpoint_Start
+		else:
+			target=UIAHandler.TextPatternRangeEndpoint_End
+		self._rangeObj.MoveEndpointByRange(src,other._rangeObj,target)
+
 class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
@@ -141,6 +154,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		super(UIA,self).__init__(windowHandle)
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
+			self.initAutoSelectDetection()
 			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 				("ExtendedUp","moveByLine"),
 				("ExtendedDown","moveByLine"),
@@ -393,6 +407,16 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.UIAInvokePattern.Invoke()
 			return
 		raise NotImplementedError
+
+	def event_caret(self):
+		super(UIA, self).event_caret()
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
+			if globalVars.caretMovesReviewCursor:
+				try:
+					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				except (NotImplementedError, RuntimeError):
+					pass
+			self.detectPossibleSelectionChange()
 
 class TreeviewItem(UIA):
 
