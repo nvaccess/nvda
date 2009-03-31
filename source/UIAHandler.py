@@ -109,9 +109,8 @@ class UIAEventListener(COMObject):
 			return
 		if not hasFocus: 
 			return
-		if self.UIAHandlerRef().clientObject.CompareElements(sender,self.UIAHandlerRef().focusedElement):
+		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA) and self.UIAHandlerRef().clientObject.compareElements(sender,eventHandler.lastQueuedFocusObject.UIAElement):
 			return
-		self.UIAHandlerRef().focusedElement=sender
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		obj.UIAElement=sender
 		eventHandler.queueEvent("gainFocus",obj)
