@@ -227,7 +227,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def _get_isCollapsed(self):
-		raise NotImplementedError
+		return self.compareEndPoints(self,"startToEnd")==0
 
 	def expand(self,unit):
 		"""Expands the start and end of this text info object to a given unit
