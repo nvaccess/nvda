@@ -153,9 +153,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			import ui
 			braille.handler.message(_("NVDA started"))
 	if api.getFocusObject()==api.getDesktopObject():
-		focusObject=api.getDesktopObject().objectWithFocus()
 		import eventHandler
-		eventHandler.queueEvent('gainFocus',focusObject)
+		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())
 	import queueHandler
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
