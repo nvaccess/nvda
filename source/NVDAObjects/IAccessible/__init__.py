@@ -800,7 +800,8 @@ the NVDAObject for IAccessible
 			checkAncestors=False
 		obj=self.parent
 		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
-			obj=obj.parent=obj.parent
+			parent=obj.parent=obj.parent
+			obj=parent
 		if not obj or not hasattr(obj,'IAccessibleTableObject'):
 			return None
 		self._table=obj
