@@ -250,7 +250,7 @@ class NVDAObjectRegion(Region):
 		super(NVDAObjectRegion, self).update()
 
 	def routeTo(self, braillePos):
-		self.obj.doDefaultAction()
+		self.obj.doAction()
 
 class ReviewNVDAObjectRegion(NVDAObjectRegion):
 
