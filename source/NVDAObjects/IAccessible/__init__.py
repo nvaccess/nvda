@@ -1253,4 +1253,5 @@ _staticMap={
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
+	("hh_kwd_vlist",IAccessibleHandler.ROLE_SYSTEM_LIST):"hh.KeywordList",
 }
