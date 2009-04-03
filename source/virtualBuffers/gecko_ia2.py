@@ -55,9 +55,8 @@ class Gecko_ia2(VirtualBuffer):
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 			except:
 				return False
-			return True
-		else:
-			return True
+
+		return self._isNVDAObjectInApplication(obj)
 
 	def isAlive(self):
 		root=self.rootNVDAObject

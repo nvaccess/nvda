@@ -466,7 +466,8 @@ the NVDAObject for IAccessible
 		if self.role==controlTypes.ROLE_EDITABLETEXT:
 			#Make sure to cache the parent
 			parent=self.parent=self.parent
-			if parent and parent.role==controlTypes.ROLE_COMBOBOX:
+			# Only scrap the label on the edit field if the parent combo box has a label.
+			if parent and parent.role==controlTypes.ROLE_COMBOBOX and parent.name:
 				return ""
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
@@ -1252,4 +1253,5 @@ _staticMap={
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
+	("hh_kwd_vlist",IAccessibleHandler.ROLE_SYSTEM_LIST):"hh.KeywordList",
 }

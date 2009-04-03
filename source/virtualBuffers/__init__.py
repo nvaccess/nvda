@@ -754,6 +754,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self._tableMovementScriptHelper(0, -1, True)
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
+	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
+	def _isNVDAObjectInApplication(self, obj):
+		"""Determine whether a given object is within an application.
+		The object is considered to be within an application if it or one of its ancestors has an application role.
+		This should only be called on objects beneath the buffer's root NVDAObject.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if L{obj} is within an application, C{False} otherwise.
+		@rtype: bool
+		"""
+		while obj and obj != self.rootNVDAObject:
+			if obj.role in self.APPLICATION_ROLES:
+				return False
+			obj = obj.parent
+		return True
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),

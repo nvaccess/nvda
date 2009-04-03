@@ -27,6 +27,7 @@ import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
+import unicodedata
 
 #This is here so that the appModules are able to import modules from the appModules dir themselves
 __path__=['.\\appModules']
@@ -39,18 +40,18 @@ NVDAProcessID=None
 #regexp to collect the key and script from a line in a keyMap file 
 re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
 
-class TProcessEntry32(ctypes.Structure):
+class processEntry32W(ctypes.Structure):
 	_fields_ = [
-		("dwSize",ctypes.c_ulong),
-		("cntUsage", ctypes.c_ulong),
-		("th32ProcessID", ctypes.c_ulong),
-		("th32DefaultHeapID", ctypes.c_ulong),
-		("th32ModuleID",ctypes.c_ulong),
-		("cntThreads",ctypes.c_ulong),
-		("th32ParentProcessID",ctypes.c_ulong),
+		("dwSize",ctypes.wintypes.DWORD),
+		("cntUsage", ctypes.wintypes.DWORD),
+		("th32ProcessID", ctypes.wintypes.DWORD),
+		("th32DefaultHeapID", ctypes.wintypes.DWORD),
+		("th32ModuleID",ctypes.wintypes.DWORD),
+		("cntThreads",ctypes.wintypes.DWORD),
+		("th32ParentProcessID",ctypes.wintypes.DWORD),
 		("pcPriClassBase",ctypes.c_long),
-		("dwFlags",ctypes.c_ulong),
-		("szExeFile", ctypes.c_char * 259)
+		("dwFlags",ctypes.wintypes.DWORD),
+		("szExeFile", ctypes.c_wchar * 260)
 	]
 
 def getAppNameFromProcessID(processID,includeExt=False):
@@ -60,20 +61,20 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	@param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
 	@type window: bool
 	@returns: application name
-	@rtype: str
+	@rtype: unicode or str
 	"""
 	if processID==NVDAProcessID:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
-	FProcessEntry32 = TProcessEntry32()
-	FProcessEntry32.dwSize = ctypes.sizeof(TProcessEntry32)
-	ContinueLoop = winKernel.kernel32.Process32First(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = str()
+	FProcessEntry32 = processEntry32W()
+	FProcessEntry32.dwSize = ctypes.sizeof(processEntry32W)
+	ContinueLoop = winKernel.kernel32.Process32FirstW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
+	appName = unicode()
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile
 			break
-		ContinueLoop = winKernel.kernel32.Process32Next(FSnapshotHandle, ctypes.byref(FProcessEntry32))
+		ContinueLoop = winKernel.kernel32.Process32NextW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
 	winKernel.kernel32.CloseHandle(FSnapshotHandle)
 	if not includeExt:
 		appName=os.path.splitext(appName)[0].lower()
@@ -138,7 +139,7 @@ def fetchAppModule(processID,appName,useDefault=False):
 	@param processID: process ID for it to be associated with
 	@type processID: integer
 	@param appName: the application name for which an appModule should be found.
-	@type appName: str
+	@type appName: unicode or str
 	@returns: the appModule, or None if not found
 	@rtype: AppModule
 	"""  
@@ -147,7 +148,11 @@ def fetchAppModule(processID,appName,useDefault=False):
 	if useDefault:
 		appName='_default'
 	try:
-		found=imp.find_module(appName,__path__)
+		try:
+			found=imp.find_module(appName,__path__)
+		except UnicodeEncodeError:
+			# since python can't handle unicode characters in the module names we do need to decompose unicode string and strip out accents
+			found=imp.find_module(unicodedata.normalize("NFD", appName).encode("ASCII", "ignore"),__path__)
 		try:
 			#best to use imp.load_module but then imports of other appModules in this module fail
 			mod=__import__(appName,globals(),locals(),[]).AppModule(processID,friendlyAppName)
