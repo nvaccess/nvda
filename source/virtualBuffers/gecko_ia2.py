@@ -17,7 +17,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		defaultAction=attrs.get('defaultaction','')
+		defaultAction=attrs.get('defaultAction','')
 		if defaultAction=="click":
 			states.add(controlTypes.STATE_CLICKABLE)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
