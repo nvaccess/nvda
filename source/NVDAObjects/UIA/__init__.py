@@ -155,6 +155,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.initAutoSelectDetection()
+			self.value=""
 			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
 				("ExtendedUp","moveByLine"),
 				("ExtendedDown","moveByLine"),
