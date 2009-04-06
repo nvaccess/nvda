@@ -43,12 +43,20 @@ class TVItemStruct(Structure):
 
 class TreeViewItem(IAccessible):
 
-	def _get_treeLevel(self):
+	def _get_role(self):
+		return controlTypes.ROLE_TREEVIEWITEM
+
+	def _get_treeview_hItem(self):
+		if not hasattr(self,'_treeview_hItem'):
+			self._treeview_hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		return self._treeview_hItem
+
+	def _get_treeview_level(self):
 		return int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 
 	def _get_states(self):
 		states=super(TreeViewItem,self)._get_states()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		hItem=self.treeview_hItem
 		itemStates=winUser.sendMessage(self.windowHandle,TVM_GETITEMSTATE,hItem,TVIS_STATEIMAGEMASK)
 		ch=(itemStates>>12)&3
 		if ch>0:
@@ -65,7 +73,7 @@ class TreeViewItem(IAccessible):
 	def _get_parent(self):
 		if self.IAccessibleChildID==0:
 			return super(TreeViewItem,self)._get_parent()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		hItem=self.treeview_hItem
 		if not hItem:
 			return super(TreeViewItem,self)._get_parent()
 		parentItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PARENT,hItem)
@@ -79,7 +87,7 @@ class TreeViewItem(IAccessible):
 	def _get_firstChild(self):
 		if self.IAccessibleChildID==0:
 			return super(TreeViewItem,self)._get_firstChild()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		hItem=self.treeview_hItem
 		if not hItem:
 			return super(TreeViewItem,self)._get_firstChild()
 		childItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_CHILD,hItem)
@@ -93,7 +101,7 @@ class TreeViewItem(IAccessible):
 	def _get_next(self):
 		if self.IAccessibleChildID==0:
 			return super(TreeViewItem,self)._get_next()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		hItem=self.treeview_hItem
 		if not hItem:
 			return None
 		nextItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,hItem)
@@ -107,7 +115,7 @@ class TreeViewItem(IAccessible):
 	def _get_previous(self):
 		if self.IAccessibleChildID==0:
 			return super(TreeViewItem,self)._get_previous()
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		hItem=self.treeview_hItem
 		if not hItem:
 			return None
 		prevItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,hItem)
@@ -133,8 +141,8 @@ class TreeViewItem(IAccessible):
 		if self.IAccessibleChildID==0:
 			return super(TreeViewItem,self)._get_positionInfo()
 		info={}
-		info['level']=self.treeLevel
-		hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		info['level']=self.treeview_level
+		hItem=self.treeview_hItem
 		if not hItem:
 			return info
 		newItem=hItem
@@ -151,7 +159,6 @@ class TreeViewItem(IAccessible):
 		info['similarItemsInGroup']=numItems
 		return info
 
-
 	def event_stateChange(self):
 		if self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
 			announceContains=True
@@ -160,3 +167,4 @@ class TreeViewItem(IAccessible):
 		super(TreeViewItem,self).event_stateChange()
 		if announceContains:
 			speech.speakMessage(_("%s items")%self.childCount)
+
