@@ -128,6 +128,13 @@ UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
 
+unitLabels={
+	UNIT_CHARACTER:_("character"),
+	UNIT_WORD:_("word"),
+	UNIT_LINE:_("line"),
+	UNIT_PARAGRAPH:_("paragraph"),
+}
+
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Contains information about the text at the given position or unit
 @ivar position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
