@@ -595,16 +595,13 @@ class AppModule(appModuleHandler.AppModule):
 	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
-		if v and not hasattr(v,'TextInfo') and not v.passThrough:
-			sayAllHandler.sayAll(v.text_reviewPosition,v.text_characterCount,v.text_getNextLineOffsets,v.text_getText,v.text_reportNewPresentation,v._set_text_reviewPosition)
-		else:
-			if hasattr(v,'TextInfo') and not v.passThrough:
-				o=v
-			try:
-				info=o.makeTextInfo(textHandler.POSITION_CARET)
-			except NotImplementedError:
-				info=o.makeTextInfo(textHandler.POSITION_FIRST)
-			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+		if v and not v.passThrough:
+			o=v
+		try:
+			info=o.makeTextInfo(textHandler.POSITION_CARET)
+		except NotImplementedError:
+			info=o.makeTextInfo(textHandler.POSITION_FIRST)
+		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
 	def script_reportFormatting(self,keyPress):
