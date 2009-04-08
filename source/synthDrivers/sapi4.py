@@ -77,7 +77,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def pause(self,switch):
 		if switch:
-			try
+			try:
 				self._ttsCentral.AudioPause()
 			except COMError:
 				pass
