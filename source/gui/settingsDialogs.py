@@ -444,6 +444,19 @@ class MouseSettingsDialog(SettingsDialog):
 		self.reportTextCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &text under the mouse"))
 		self.reportTextCheckBox.SetValue(config.conf["mouse"]["reportTextUnderMouse"])
 		settingsSizer.Add(self.reportTextCheckBox,border=10,flag=wx.BOTTOM)
+		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
+		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution"))
+		textUnitSizer.Add(textUnitLabel)
+		import textHandler
+		self.textUnits=[textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_LINE,textHandler.UNIT_PARAGRAPH]
+		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textHandler.unitLabels[x] for x in self.textUnits])
+		try:
+			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
+		except:
+			index=0
+		self.textUnitComboBox.SetSelection(index)
+		textUnitSizer.Add(self.textUnitComboBox)
+		settingsSizer.Add(textUnitSizer,border=10,flag=wx.BOTTOM)
 		self.reportObjectRoleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &role when mouse enters object"))
 		self.reportObjectRoleCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
 		settingsSizer.Add(self.reportObjectRoleCheckBox,border=10,flag=wx.BOTTOM)
@@ -460,6 +473,7 @@ class MouseSettingsDialog(SettingsDialog):
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["reportTextUnderMouse"]=self.reportTextCheckBox.IsChecked()
+		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
