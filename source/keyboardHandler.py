@@ -79,6 +79,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 """
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		focusObject=api.getFocusObject()
+		focusAppModule=focusObject.appModule
+		if focusAppModule and focusAppModule.selfVoicing:
+			return True
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -200,6 +204,10 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		focusObject=api.getFocusObject()
+		focusAppModule=focusObject.appModule
+		if focusAppModule and focusAppModule.selfVoicing:
+			return True
 		lastPressedKeyTime=time.time()
 		if injected:
 			return True
