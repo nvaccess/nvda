@@ -16,20 +16,20 @@ _pendingEventCountsByNameAndObj={}
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
 
-def queueEvent(eventName,obj):
+def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
 	global lastQueuedFocusObject
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj)
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
 	if eventName=="gainFocus":
 		lastQueuedFocusObject=obj
 	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
 
-def _queueEventCallback(eventName,obj):
+def _queueEventCallback(eventName,obj,kwargs):
 	curCount=_pendingEventCountsByName.get(eventName,0)
 	if curCount>1:
 		_pendingEventCountsByName[eventName]=(curCount-1)
@@ -45,7 +45,7 @@ def _queueEventCallback(eventName,obj):
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
 	elif curCount==1:
 		del _pendingEventCountsByNameAndObj[(eventName,obj)]
-		executeEvent(eventName,obj)
+		executeEvent(eventName,obj,**kwargs)
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?
@@ -128,6 +128,8 @@ def doPreDocumentLoadComplete(obj):
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule
+	if appModule and appModule.selfVoicing:
+		return
 	if hasattr(appModule,"event_%s"%name):
 		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs)
 	else:

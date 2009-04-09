@@ -12,6 +12,7 @@ import queueHandler
 import api
 import speech
 import globalVars
+import eventHandler
 from logHandler import log
 import config
 import mouseHook
@@ -97,7 +98,7 @@ def executeMouseMoveEvent(x,y):
 		return
 	api.setMouseObject(mouseObject)
 	try:
-		mouseObject.event_mouseMove(x,y)
+		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
 	except:
 		log.error("api.notifyMouseMoved", exc_info=True)

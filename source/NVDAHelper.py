@@ -4,6 +4,7 @@ import ctypes
 import keyboardHandler
 import winUser
 import speech
+import eventHandler
 import queueHandler
 import api
 import globalVars
@@ -17,7 +18,8 @@ helperLib=None
 winEventHookID=None
 
 def handleTypedCharacter(window,wParam,lParam):
-	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(wParam))
+	focus=api.getFocusObject()
+	eventHandler.queueEvent("typedCharacter",focus,ch=unichr(wParam))
 
 @ctypes.WINFUNCTYPE(None,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):

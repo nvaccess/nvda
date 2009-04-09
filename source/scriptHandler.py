@@ -27,6 +27,8 @@ def findScript_appModuleLevel(keyPress):
 	if not focusObject:
 		return None
 	appModule=focusObject.appModule
+	if appModule and appModule.selfVoicing:
+		return
 	func=appModule.getScript(keyPress) if appModule else None
 	if func:
 		return func
