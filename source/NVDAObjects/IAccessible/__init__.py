@@ -313,6 +313,12 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('Mozilla'):
 			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
 			clsList.append( mozCls)
+		elif windowClassName.startswith('bosa_sdm'):
+			sdmCls=__import__("sdm",globals(),locals(),[]).SDM
+			clsList.append(sdmCls)
+		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
+			sdmCls=__import__("sdm",globals(),locals(),[]).RichEditSDMChild
+			clsList.append(sdmCls)
 		clsList.append(IAccessible)
 		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
