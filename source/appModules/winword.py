@@ -39,10 +39,13 @@ class SpellCheckErrorField(WordDocument):
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
-		info=self.makeTextInfo(textHandler.POSITION_ALL)
+		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info.move(textHandler.UNIT_WORD,-1,endPoint="start")
 		try:
-			error=info._rangeObj.spellingErrors[0].text
+			error=info._rangeObj.spellingErrors[1].text
 		except:
-			speech.speakTextInfo(info,speech.REASON_FOCUS)
+			info.expand(textHandler.UNIT_STORY)
+			speech.speakText(info.text)
+			return
 		speech.speakText(error)
 		speech.speakSpelling(error)
