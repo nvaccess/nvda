@@ -869,6 +869,9 @@ the NVDAObject for IAccessible
 		return super(IAccessible,self).event_valueChange()
 
 	def event_alert(self):
+		if self.role != controlTypes.ROLE_ALERT:
+			# Ignore alert events on objects that aren't alerts.
+			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):
 			# The alert event might be fired before the focus.
