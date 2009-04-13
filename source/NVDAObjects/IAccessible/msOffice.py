@@ -34,3 +34,8 @@ class RichEditSDMChild(IAccessible):
 		if obj:
 			return obj.name
 
+class MSOUNISTAT(IAccessible):
+
+	def _get_role(self):
+		return controlTypes.ROLE_STATICTEXT
+ 

@@ -314,10 +314,10 @@ the NVDAObject for IAccessible
 			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
 			clsList.append( mozCls)
 		elif windowClassName.startswith('bosa_sdm'):
-			sdmCls=__import__("sdm",globals(),locals(),[]).SDM
+			sdmCls=__import__("msOffice",globals(),locals(),[]).SDM
 			clsList.append(sdmCls)
 		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			sdmCls=__import__("sdm",globals(),locals(),[]).RichEditSDMChild
+			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
 			clsList.append(sdmCls)
 		clsList.append(IAccessible)
 		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
@@ -1263,4 +1263,5 @@ _staticMap={
 	("SysMonthCal32",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",IAccessibleHandler.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
+	("MSOUNISTAT",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
 }
