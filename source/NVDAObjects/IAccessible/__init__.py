@@ -4,24 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import weakref
-import re
 from comtypes import COMError
-import struct
 import os
 import tones
 import textHandler
 import time
-import difflib
-import ctypes
-import comtypes.automation
-import comtypes.client
-import appModuleHandler
-from keyUtils import sendKey, key 
 import IAccessibleHandler
 import JABHandler
 import winUser
-import winKernel
 import globalVars
 from logHandler import log
 import speech
@@ -34,10 +24,6 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-
-re_gecko_level=re.compile('.*?L([0-9]+).*')
-re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
-re_gecko_contains=re.compile('.*?with ([0-9]+).*')
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
