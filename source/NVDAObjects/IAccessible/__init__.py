@@ -24,6 +24,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
+from NVDAObjects.progressBar import ProgressBar
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -559,13 +560,13 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,int) else 0
 
 	def _get_states(self):
+		states=set()
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
-			states=set()
 		else:
-			states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 		if not hasattr(self.IAccessibleObject,'states'):
 			return states
 		try:
@@ -1111,24 +1112,6 @@ class Outline(IAccessible):
 		child=self.activeChild
 		if child:
 			speech.speakObject(child,reason=speech.REASON_FOCUS)
-
-class ProgressBar(IAccessible):
-	BASE_BEEP_FREQ=110
-
-	def event_valueChange(self):
-		if config.conf["presentation"]["reportProgressBarUpdates"]=="off":
-			return super(ProgressBar,self).event_valueChange()
-		val=self.value
-		if val:
-			val=val.rstrip('%\x00')
-		if not val or val==globalVars.lastProgressValue:
-			return
-		percentage = min(max(0.0, float(val)), 100.0)
-		if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
-			tones.beep(self.BASE_BEEP_FREQ*2**(percentage/25.0),40)
-		elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
-		globalVars.lastProgressValue=val
 
 class InternetExplorerClient(IAccessible):
 

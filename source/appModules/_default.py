@@ -714,22 +714,22 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
 	script_test_navigatorWindowInfo.__doc__ = _("reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")
 
-	def script_toggleBeepOnProgressBarUpdates(self,keyPress):
-		progressLabels = (
-			("off", _("off")),
-			("visible", _("Beep for visible")),
-			("all", _("Beep for all")),
-			("speak", _("Speak each 10 percent"))
-		)
-
-		for index, (setting, name) in enumerate(progressLabels):
-			if setting == config.conf["presentation"]["reportProgressBarUpdates"]:
-				new=(index+1)%4
-				break
-		config.conf["presentation"]["reportProgressBarUpdates"]=progressLabels[new][0]
-		speech.cancelSpeech()
-		ui.message(progressLabels[new][1])
-	script_toggleBeepOnProgressBarUpdates.__doc__=_("Toggles how NVDA reports progress bar updates. It can beep for all the progress bars or just for the progressbars in the foreground. Additionally it is possible to have current value spoken each 10 percent or it is possible to completely disable this reporting.")
+	def script_toggleProgressBarOutput(self,keyPress):
+		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
+		if outputMode=="both":
+			outputMode="off"
+			ui.message(_("no progress bar updates"))
+		elif outputMode=="off":
+			outputMode="speak"
+			ui.message(_("speak progress bar updates"))
+		elif outputMode=="speak":
+			outputMode="beep"
+			ui.message(_("beep for progress bar updates"))
+		else:
+			outputMode="both"
+			ui.message(_("beep and speak progress bar updates"))
+		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
+	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
 
 	def script_toggleReportDynamicContentChanges(self,keyPress):
 		if globalVars.reportDynamicContentChanges:

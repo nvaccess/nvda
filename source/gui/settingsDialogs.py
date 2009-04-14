@@ -484,9 +484,9 @@ class ObjectPresentationDialog(SettingsDialog):
 	title = _("Object presentation")
 	progressLabels = (
 		("off", _("off")),
-		("visible", _("Beep for visible")),
-		("all", _("Beep for all")),
-		("speak", _("Speak each 10 percent"))
+		("speak", _("Speak")),
+		("beep", _("Beep")),
+		("both", _("Speak and beep")),
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -509,18 +509,21 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.stateFirstCheckBox.SetValue(config.conf["presentation"]["sayStateFirst"])
 		settingsSizer.Add(self.stateFirstCheckBox,border=10,flag=wx.BOTTOM)
 		progressSizer=wx.BoxSizer(wx.HORIZONTAL)
-		progressLabel=wx.StaticText(self,-1,label=_("Report progress &bar updates"))
+		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output"))
 		progressSizer.Add(progressLabel)
 		progressListID=wx.NewId()
-		self.progressList=wx.Choice(self,progressListID,name=_("Report progress bar updates"),choices=[name for setting, name in self.progressLabels])
+		self.progressList=wx.Choice(self,progressListID,name=_("Progress bar output"),choices=[name for setting, name in self.progressLabels])
 		for index, (setting, name) in enumerate(self.progressLabels):
-			if setting == config.conf["presentation"]["reportProgressBarUpdates"]:
+			if setting == config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]:
 				self.progressList.SetSelection(index)
 				break
 		else:
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
 		progressSizer.Add(self.progressList)
 		settingsSizer.Add(progressSizer,border=10,flag=wx.BOTTOM)
+		self.reportBackgroundProgressBarsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report background progress bars"))
+		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
+		settingsSizer.Add(self.reportBackgroundProgressBarsCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
@@ -532,7 +535,8 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["sayStateFirst"]=self.stateFirstCheckBox.IsChecked()
-		config.conf["presentation"]["reportProgressBarUpdates"]=self.progressLabels[self.progressList.GetSelection()][0]
+		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
+		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class VirtualBuffersDialog(SettingsDialog):
