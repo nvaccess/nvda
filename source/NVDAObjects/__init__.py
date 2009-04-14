@@ -794,6 +794,10 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=speech.REASON_FOCUS)
 
+	def event_typedCharacter(self,ch):
+		speech.speakTypedCharacters(ch)
+
+
 	def event_mouseMove(self,x,y):
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()

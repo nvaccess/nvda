@@ -19,6 +19,7 @@ from . import Window
 #Word constants
 
 #Indexing
+wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
 wdNumberOfPagesInDocument=4
 wdFirstCharacterLineNumber=10
@@ -70,6 +71,30 @@ NVDAUnitsToWordUnits={
 
 class WordDocumentTextInfo(textHandler.TextInfo):
 
+	def _moveInTable(self,c=0,r=0):
+		try:
+			cell=self._rangeObj.cells[1]
+		except:
+			return False
+		try:
+			columnIndex=cell.columnIndex
+			rowIndex=cell.rowIndex
+		except:
+			return False
+		if columnIndex==1 and c<0:
+			return False
+		if rowIndex==1 and r<0:
+			return False
+		try:
+			self._rangeObj=self._rangeObj.tables[1].columns[columnIndex+c].cells[rowIndex+r].range
+		except:
+			return False
+		return True
+
+
+
+
+
 	def _expandToLine(self,rangeObj):
 		sel=self.obj.WinwordSelectionObject
 		oldSel=sel.range
@@ -82,10 +107,12 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		formatField=textHandler.FormatField()
 		fontObj=None
 		paraFormatObj=None
+		if formatConfig["reportSpellingErrors"] and range.spellingErrors.count>0: 
+			formatField["invalid-spelling"]=True
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
 		if formatConfig["reportPage"]:
-			formatField["page-number"]=range.Information(wdActiveEndPageNumber)
+			formatField["page-number"]=range.Information(wdActiveEndAdjustedPageNumber)
 		if formatConfig["reportStyle"]:
 			formatField["style"]=range.style.nameLocal
 		if formatConfig["reportTables"] and range.Information(wdWithInTable):
@@ -304,68 +331,48 @@ class WordDocument(Window):
 		return self._WinwordSelectionObject
 
 	def script_nextRow(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
-		if rowIndex<lastRowIndex:
-			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex+1].range
-			info.collapse()
+		if info._moveInTable(0,1):
 			info.updateCaret()
+			info.expand(textHandler.UNIT_CELL)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage(_("bottom of column"))
-		info.expand(textHandler.UNIT_CELL)
-		speech.speakTextInfo(info)
+			speech.speakMessage("edge of table")
 
 	def script_previousRow(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastRowIndex=info._rangeObj.Information(wdMaximumNumberOfRows)
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
-		if rowIndex>0:
-			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex].cells[rowIndex-1].range
-			info.collapse()
+		if info._moveInTable(0,-1):
 			info.updateCaret()
+			info.expand(textHandler.UNIT_CELL)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage(_("top of column"))
-		info.expand(textHandler.UNIT_CELL)
-		speech.speakTextInfo(info)
+			speech.speakMessage("edge of table")
 
 	def script_nextColumn(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
-		if columnIndex<lastColumnIndex:
-			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex+1].cells[rowIndex].range
-			info.collapse()
+		if info._moveInTable(1,0):
 			info.updateCaret()
+			info.expand(textHandler.UNIT_CELL)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage(_("end of row"))
-		info.expand(textHandler.UNIT_CELL)
-		speech.speakTextInfo(info)
+			speech.speakMessage("edge of table")
 
 	def script_previousColumn(self,keyPress):
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
-		lastColumnIndex=info._rangeObj.Information(wdMaximumNumberOfColumns)
-		rowIndex=info._rangeObj.Information(wdStartOfRangeRowNumber)
-		columnIndex=info._rangeObj.Information(wdStartOfRangeColumnNumber)
-		if columnIndex>0:
-			info._rangeObj=info._rangeObj.tables[0].columns[columnIndex-1].cells[rowIndex].range
-			info.collapse()
+		if info._moveInTable(-1,0):
 			info.updateCaret()
+			info.expand(textHandler.UNIT_CELL)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage(_("beginning of row"))
-		info.expand(textHandler.UNIT_CELL)
-		speech.speakTextInfo(info)
+			speech.speakMessage("edge of table")
 
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

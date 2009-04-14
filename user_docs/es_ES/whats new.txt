@@ -10,6 +10,8 @@ Cambios desde 0.6 P3:
 * Corrección: La verbalización del título de la ventana actual en primer plano con nvda+t funciona ahora correctamente cuando se está en los menús.
 * Corrección: el braille ya no muestra información innecesaria en su contexto de foco tal como paneles no etiquetados.
 * Corrección: se detiene el anunciado de alguna información innecesaria cuando el foco cambia tal como paneles raíz, paneles solapados y paneles deslizables en aplicaciones Java o Lotus.
+* nuevo: NVDA ya no cancela la voz cuando las teclas de control del volumen son presionadas en el teclado, permitiendo al usuario cambiar el volumen y escuchar los resultados actuales inmediatamente. (#287)
+* nuevo: Reescrito Completamente el soporte para documentos de Microsoft Internet Explorer y Adobe Acrobat. Este soporte ha sido unificado con el soporte interno utilizado por Mozilla Gecko, así características tales como la interpretación más rápida de página, navegación extensa y rápida, lista de enlaces, selección de texto, modo foco automático y soporte de braille están ahora disponibles con estos documentos.
    
 
 Cambios desde 0.6 P2:

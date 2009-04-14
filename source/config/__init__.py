@@ -65,7 +65,13 @@ outputDevice = string(default=default)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
 		sayStateFirst = boolean(default=False)
-		reportProgressBarUpdates = string(default=visible)
+	[[progressBarUpdates]]
+		reportBackgroundProgressBars = boolean(default=false)
+		#output modes are beep, speak, both, or off
+		progressBarOutputMode = string(default="beep")
+		speechPercentageInterval = integer(default=10)
+		beepPercentageInterval = integer(default=1)
+		beepMinHZ = integer(default=110)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work

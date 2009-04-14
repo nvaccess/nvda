@@ -28,7 +28,7 @@ TABLES = (
 	("cy-cy-g1.utb", _("Welsh grade 1")),
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
 	("cz-cz-g1.utb", _("Czech grade 1")),
-	("dansk.utb", _("Danish grade 1")),
+	("da-dk-g1.utb", _("Danish grade 1")),
 	("de-de-g0.utb", _("German grade 0")),
 	("de-de-g1.ctb", _("German grade 1")),
 	("de-de-g2.ctb", _("German grade 2")),

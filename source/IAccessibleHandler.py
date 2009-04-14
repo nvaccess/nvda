@@ -817,6 +817,13 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
 		# This is a focus event from a background window, so ignore it.
 		return False
+	#Some SDM controls in MS Word and such have a real non-sdm window with the focus which should be used instead.
+	if windowClassName.startswith('bosa_sdm'):
+		hwndFocus=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(window)[1]).hwndFocus
+		if hwndFocus and hwndFocus!=window and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
+			window=hwndFocus
+			objectID=OBJID_CLIENT
+			childID=0
 	oldFocus=eventHandler.lastQueuedFocusObject
 	#If the existing focus has the same win event params as these, then ignore this event
 	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem

@@ -4,24 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import weakref
-import re
 from comtypes import COMError
-import struct
 import os
 import tones
 import textHandler
 import time
-import difflib
-import ctypes
-import comtypes.automation
-import comtypes.client
-import appModuleHandler
-from keyUtils import sendKey, key 
 import IAccessibleHandler
 import JABHandler
 import winUser
-import winKernel
 import globalVars
 from logHandler import log
 import speech
@@ -34,10 +24,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-
-re_gecko_level=re.compile('.*?L([0-9]+).*')
-re_gecko_position=re.compile('.*?([0-9]+) of ([0-9]+).*')
-re_gecko_contains=re.compile('.*?with ([0-9]+).*')
+from NVDAObjects.progressBar import ProgressBar
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -313,6 +300,12 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('Mozilla'):
 			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
 			clsList.append( mozCls)
+		elif windowClassName.startswith('bosa_sdm'):
+			sdmCls=__import__("msOffice",globals(),locals(),[]).SDM
+			clsList.append(sdmCls)
+		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
+			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
+			clsList.append(sdmCls)
 		clsList.append(IAccessible)
 		if event_objectID==IAccessibleHandler.OBJID_CLIENT and event_childID==0:
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
@@ -567,13 +560,13 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,int) else 0
 
 	def _get_states(self):
+		states=set()
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
-			states=set()
 		else:
-			states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 		if not hasattr(self.IAccessibleObject,'states'):
 			return states
 		try:
@@ -863,6 +856,9 @@ the NVDAObject for IAccessible
 		return super(IAccessible,self).event_valueChange()
 
 	def event_alert(self):
+		if self.role != controlTypes.ROLE_ALERT:
+			# Ignore alert events on objects that aren't alerts.
+			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):
 			# The alert event might be fired before the focus.
@@ -1117,24 +1113,6 @@ class Outline(IAccessible):
 		if child:
 			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
-class ProgressBar(IAccessible):
-	BASE_BEEP_FREQ=110
-
-	def event_valueChange(self):
-		if config.conf["presentation"]["reportProgressBarUpdates"]=="off":
-			return super(ProgressBar,self).event_valueChange()
-		val=self.value
-		if val:
-			val=val.rstrip('%\x00')
-		if not val or val==globalVars.lastProgressValue:
-			return
-		percentage = min(max(0.0, float(val)), 100.0)
-		if config.conf["presentation"]["reportProgressBarUpdates"] =="all" or (config.conf["presentation"]["reportProgressBarUpdates"] =="visible" and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)):
-			tones.beep(self.BASE_BEEP_FREQ*2**(percentage/25.0),40)
-		elif config.conf["presentation"]["reportProgressBarUpdates"] =="speak" and (int(val)%10)==0 and controlTypes.STATE_INVISIBLE not in self.states and winUser.isWindowVisible(self.windowHandle) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
-		globalVars.lastProgressValue=val
-
 class InternetExplorerClient(IAccessible):
 
 	def _get_description(self):
@@ -1257,4 +1235,5 @@ _staticMap={
 	("SysMonthCal32",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",IAccessibleHandler.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
+	("MSOUNISTAT",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
 }
