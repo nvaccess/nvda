@@ -2,6 +2,7 @@ from ctypes import *
 import comtypes.client
 from comtypes import *
 import weakref
+import time
 from comInterfaces.UIAutomationClient import *
 import api
 import queueHandler
@@ -88,21 +89,16 @@ class UIAEventListener(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		try:
-			sender.currentNativeWindowHandle
-		except COMError:
+		if not self.UIAHandlerRef().isNativeUIAElement(sender):
 			return
-		try:
-			runtimeId=sender.getRuntimeId()
-		except COMError:
-			return
-		obj=NVDAObjects.UIA.UIA.liveNVDAObjectTable.get(runtimeId,None)
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		obj.UIAElement=sender
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+		if not self.UIAHandlerRef().isNativeUIAElement(sender):
+			return
 		try:
 			hasFocus=sender.currentHasKeyboardFocus
 		except COMError:
@@ -112,18 +108,17 @@ class UIAEventListener(COMObject):
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA) and self.UIAHandlerRef().clientObject.compareElements(sender,eventHandler.lastQueuedFocusObject.UIAElement):
 			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		obj.UIAElement=sender
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			return
-		runtimeId=sender.getRuntimeId()
-		obj=NVDAObjects.UIA.UIA.liveNVDAObjectTable.get(runtimeId,None)
+		if not self.UIAHandlerRef().isNativeUIAElement(sender):
+			return
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		obj.UIAElement=sender
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
@@ -133,15 +128,44 @@ class UIAHandler(object):
 
 	def __init__(self):
 		self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
-		self.treeWalker=self.clientObject.RawViewWalker
-		r=self.clientObject.CreateCacheRequest()
+		self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
+		self.windowCacheRequest=self.clientObject.CreateCacheRequest()
+		self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
+		self.UIAWindowHandleCache={}
+		self.baseTreeWalker=self.clientObject.RawViewWalker
+		self.baseCacheRequest=self.windowCacheRequest.Clone()
 		for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_NativeWindowHandlePropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
-			r.addProperty(propertyId)
-		self.baseCacheRequest=r
+			self.baseCacheRequest.addProperty(propertyId)
+		self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 		self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 		self.eventListener=UIAEventListener(self)
+		self.registerEvents()
 
-	def oldregisterEvents(self):
+	def __del__(self):
+		self.unregisterEvents()
+
+	def isUIAWindow(self,hwnd):
+		now=time.time()
+		v=self.UIAWindowHandleCache.get(hwnd,None)
+		if not v or (now-v[1])>0.5:
+			isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+			self.UIAWindowHandleCache[hwnd]=(isUIA,now)
+			return isUIA
+		return v[0]
+
+			
+	def isNativeUIAElement(self,UIAElement):
+		try:
+			UIAElement=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+		except COMError:
+			return False
+		try:
+			windowHandle=UIAElement.cachedNativeWindowHandle
+		except COMError:
+			return False
+		return self.isUIAWindow(windowHandle)
+
+	def registerEvents(self):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self.eventListener)
 		self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self.eventListener,UIAPropertyIdsToNVDAEventNames.keys())
 		for x in UIAEventIdsToNVDAEventNames.iterkeys():  
@@ -153,17 +177,6 @@ class UIAHandler(object):
 def initialize():
 	global handler
 	handler=UIAHandler()
-
-def isUIAWindow(hwnd):
-		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
-
-def handleIAccessibleFocusEvent():
-		try:
-			UIAElement=handler.clientObject.GetFocusedElementBuildCache(handler.baseCacheRequest)
-		except COMError:
-			return False
-		handler.eventListener.IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(UIAElement)
-		return True
 
 def terminate():
 	global handler

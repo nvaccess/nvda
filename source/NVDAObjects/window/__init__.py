@@ -64,7 +64,7 @@ An NVDAObject for a window
 			import NVDAObjects.JAB
 			return NVDAObjects.JAB.JAB
 		import UIAHandler
-		if UIAHandler.handler and UIAHandler.isUIAWindow(windowHandle):
+		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(windowHandle):
 			import NVDAObjects.UIA
 			return NVDAObjects.UIA.UIA
 		import NVDAObjects.IAccessible

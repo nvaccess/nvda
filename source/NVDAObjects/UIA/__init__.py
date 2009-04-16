@@ -11,6 +11,7 @@ import textHandler
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
+from NVDAObjects.progressBar import ProgressBar
 
 class UIATextInfo(textHandler.TextInfo):
 
@@ -103,6 +104,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		kwargs['UIAElement']=UIAElement
 		UIAControlType=UIAElement.cachedControlType
 		UIAClassName=UIAElement.cachedClassName
+		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
+			clsList.append(ProgressBar)
 		if UIAClassName=="UIColumnHeader":
 			clsList.append(UIColumnHeader)
 		elif UIAClassName=="UIItem":
@@ -139,18 +142,15 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			if not obj:
 				return None
 			cls.liveNVDAObjectTable[runtimeId]=obj
+		else:
+			obj.UIAElement=UIAElement
 		return obj
 
 	def __init__(self,windowHandle=None,UIAElement=None):
 		if getattr(self,'_doneInit',False):
 			return
 		self._doneInit=True
-		self.UIAElement=self._origUIAElement=UIAElement
-		#self._UIAEventListener=UIAHandler.handler.eventListener
-		self._UIAEventListener=UIAHandler.UIAEventListener(UIAHandler.handler)
-		UIAHandler.handler.clientObject.AddPropertyChangedEventHandler(self._origUIAElement,UIAHandler.TreeScope_Element,UIAHandler.handler.baseCacheRequest,self._UIAEventListener,UIAHandler.UIAPropertyIdsToNVDAEventNames.keys())
-		for x in UIAHandler.UIAEventIdsToNVDAEventNames.iterkeys():  
-			UIAHandler.handler.clientObject.addAutomationEventHandler(x,self._origUIAElement,UIAHandler.TreeScope_Element,UIAHandler.handler.baseCacheRequest,self._UIAEventListener)
+		self.UIAElement=UIAElement
 		super(UIA,self).__init__(windowHandle)
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
@@ -172,14 +172,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				("ExtendedDelete","delete"),
 				("Back","backspace"),
 			]]
-
-	def __del__(self):
-		if UIAHandler.handler:
-			UIAHandler.handler.clientObject.removePropertyChangedEventHandler(self._origUIAElement,self._UIAEventListener)
-			for x in UIAHandler.UIAEventIdsToNVDAEventNames.iterkeys():  
-				UIAHandler.handler.clientObject.removeAutomationEventHandler(x,self._origUIAElement,self._UIAEventListener)
-
-
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
@@ -312,7 +304,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	def _get_parent(self):
 		try:
-			parentElement=UIAHandler.handler.treeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+			parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		except COMError:
 			parentElement=None
 		if not parentElement:
@@ -320,25 +312,25 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self._correctRelationForWindow(UIA(UIAElement=parentElement))
 
 	def _get_previous(self):
-		previousElement=UIAHandler.handler.treeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		previousElement=UIAHandler.handler.baseTreeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not previousElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=previousElement))
 
 	def _get_next(self):
-		nextElement=UIAHandler.handler.treeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		nextElement=UIAHandler.handler.baseTreeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not nextElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=nextElement))
 
 	def _get_firstChild(self):
-		firstChildElement=UIAHandler.handler.treeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		firstChildElement=UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not firstChildElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=firstChildElement))
 
 	def _get_lastChild(self):
-		lastChildElement=UIAHandler.handler.treeWalker.GetLastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		lastChildElement=UIAHandler.handler.baseTreeWalker.GetLastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		if not lastChildElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=lastChildElement))
@@ -384,6 +376,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	def _get_value(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			minVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
+			maxVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
+			val=((val-minVal)/maxVal)*100.0
 			return "%g"%val
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
