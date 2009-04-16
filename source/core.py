@@ -156,6 +156,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import eventHandler
 		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())
 	import queueHandler
+	import watchdog
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def __init__(self,*args,**kwargs):
@@ -169,15 +170,20 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				mouseHandler.pumpAll()
 			except:
 				log.error("errors in this core pump cycle",exc_info=True)
+			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()
 	pump.Start(1)
+	log.debug("Initializing watchdog")
+	watchdog.initialize()
 	log.info("NVDA initialized")
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
+	log.debug("Terminating watchdog")
+	watchdog.terminate()
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()
