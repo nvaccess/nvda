@@ -181,42 +181,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		except:
 			return False
 
-	def _get_UIAExpandCollapsePattern(self):
-		if not hasattr(self,'_UIAExpandCollapsePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_ExpandCollapsePatternId)
-			if punk:
-				self._UIAExpandCollapsePattern=punk.QueryInterface(UIAHandler.IUIAutomationExpandCollapsePattern)
-			else:
-				self._UIAExpandCollapsePattern=None
-		return self._UIAExpandCollapsePattern
-
-	def _get_UIATogglePattern(self):
-		if not hasattr(self,'_UIATogglePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TogglePatternId)
-			if punk:
-				self._UIATogglePattern=punk.QueryInterface(UIAHandler.IUIAutomationTogglePattern)
-			else:
-				self._UIATogglePattern=None
-		return self._UIATogglePattern
-
-	def _get_UIARangeValuePattern(self):
-		if not hasattr(self,'_UIARangeValuePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_RangeValuePatternId)
-			if punk:
-				self._UIARangeValuePattern=punk.QueryInterface(UIAHandler.IUIAutomationRangeValuePattern)
-			else:
-				self._UIARangeValuePattern=None
-		return self._UIARangeValuePattern
-
-	def _get_UIAValuePattern(self):
-		if not hasattr(self,'_UIAValuePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_ValuePatternId)
-			if punk:
-				self._UIAValuePattern=punk.QueryInterface(UIAHandler.IUIAutomationValuePattern)
-			else:
-				self._UIAValuePattern=None
-		return self._UIAValuePattern
-
 	def _get_UIAInvokePattern(self):
 		if not hasattr(self,'_UIAInvokePattern'):
 			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_InvokePatternId)
@@ -277,13 +241,19 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			states.add(controlTypes.STATE_SELECTABLE)
 			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_SELECTED)
-		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
+		try:
+			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
+		except COMError:
+			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if s==UIAHandler.ExpandCollapseState_Collapsed:
 				states.add(controlTypes.STATE_COLLAPSED)
 			elif s==UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.STATE_EXPANDED)
-		s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+		try:
+			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+		except COMError:
+			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			r=self.role
 			if r in (controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX) and s==UIAHandler.ToggleState_On:
