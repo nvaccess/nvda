@@ -461,12 +461,14 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	node->parent=parent;
 	node->previous=previous;
 	node->next=next;
-	DEBUG_MSG(L"Widening ancestors by "<<node->length);
-	for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
-		DEBUG_MSG(L"Ancestor: "<<ancestor->getDebugInfo());
-		ancestor->length+=node->length;
-		assert(ancestor->length>=0); //length must never be negative
-		DEBUG_MSG(L"Ancestor length now"<<ancestor->length);
+	if(node->length>0) {
+		DEBUG_MSG(L"Widening ancestors by "<<node->length);
+		for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
+			DEBUG_MSG(L"Ancestor: "<<ancestor->getDebugInfo());
+			ancestor->length+=node->length;
+			assert(ancestor->length>=0); //length must never be negative
+			DEBUG_MSG(L"Ancestor length now"<<ancestor->length);
+		}
 	}
 	DEBUG_MSG(L"Inserted subtree");
 }
