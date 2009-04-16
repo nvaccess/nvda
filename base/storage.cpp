@@ -245,29 +245,17 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 	DEBUG_MSG(L"Generated, text string is now "<<text.length());
 }
 
-void VBufStorage_fieldNode_t::associateWithBuffer(VBufStorage_buffer_t* buffer) {
+void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffer) {
 	assert(buffer); //Buffer can't be NULL
-	DEBUG_MSG(L"Associating fieldNode with buffer at "<<buffer);
-	this->buffer=buffer;
-}
-
-void VBufStorage_fieldNode_t::disassociateFromBuffer() {
-	assert(this->buffer); //Buffer can't be NULL
 	DEBUG_MSG(L"Disassociating fieldNode from buffer");
-	this->buffer=NULL;
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): buffer(NULL), parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), attributes() {
 	DEBUG_MSG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
 VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 	DEBUG_MSG(L"fieldNode being destroied");
-}
-
-VBufStorage_buffer_t* VBufStorage_fieldNode_t::getBuffer() const {
-	DEBUG_MSG(L"Buffer at "<<buffer);
-	return buffer;
 }
 
 VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getParent() {
@@ -314,7 +302,7 @@ std::wstring VBufStorage_fieldNode_t::getAttributesString() const {
 
 std::wstring VBufStorage_fieldNode_t::getDebugInfo() const {
 	std::wostringstream s;
-	s<<L"field node at "<<this<<L", parent at "<<parent<<L", previous at "<<previous<<L", next at "<<next<<L", firstChild at "<<firstChild<<L", lastChild at "<<lastChild<<L", length is "<<length<<L", buffer at "<<buffer<<L", attributes are "<<getAttributesString();
+	s<<L"field node at "<<this<<L", parent at "<<parent<<L", previous at "<<previous<<L", next at "<<next<<L", firstChild at "<<firstChild<<L", lastChild at "<<lastChild<<L", length is "<<length<<L", attributes are "<<getAttributesString();
 	return s.str();
 }
 
@@ -335,18 +323,11 @@ void VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(std::
 	this->VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(text);
 }
 
-void VBufStorage_controlFieldNode_t::associateWithBuffer(VBufStorage_buffer_t* buffer) {
-	assert(buffer); //Buffer can't be NULL
-	DEBUG_MSG(L"Associating controlFieldNode with buffer at "<<buffer);
-	buffer->rememberControlFieldNode(this);
-	this->VBufStorage_fieldNode_t::associateWithBuffer(buffer);
-}
-
-void VBufStorage_controlFieldNode_t::disassociateFromBuffer() {
-	assert(this->buffer); //Must be associated with a buffer
+void VBufStorage_controlFieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffer) {
+	assert(buffer); //Must be associated with a buffer
 	DEBUG_MSG(L"Disassociating controlFieldNode from buffer");
-	this->buffer->forgetControlFieldNode(this);
-	this->VBufStorage_fieldNode_t::disassociateFromBuffer();
+	buffer->forgetControlFieldNode(this);
+	this->VBufStorage_fieldNode_t::disassociateFromBuffer(buffer);
 }
 
 VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlockArg): VBufStorage_fieldNode_t(0,isBlockArg), identifier(docHandle,ID) {  
@@ -436,22 +417,6 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 
 //buffer implementation
 
-void VBufStorage_buffer_t::associateSubtree(VBufStorage_fieldNode_t* node) {
-	assert(node); //node can't be null
-	node->associateWithBuffer(this);
-	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;child=child->next) {
-		associateSubtree(child);
-	}
-	DEBUG_MSG(L"Done processing subtree");
-}
-
-void VBufStorage_buffer_t::rememberControlFieldNode(VBufStorage_controlFieldNode_t* node) {
-	assert(node); //Node can't be NULL
-	assert(this->controlFieldNodesByIdentifier.count(node->identifier)==0); //node can't be previously remembered
-	this->controlFieldNodesByIdentifier[node->identifier]=node;
-	DEBUG_MSG(L"Remembered controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
-}
-
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	assert(node); //Node can't be NULL
 	assert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
@@ -460,31 +425,10 @@ void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t
 	DEBUG_MSG(L"Forgot controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
 }
 
-bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
-	if(node==NULL) {
-		DEBUG_MSG(L"Node is NULL, returning false");
-		return false;
-	}
-	if(node->buffer!=this) {
-		DEBUG_MSG(L"node is not in this buffer, returning false");
-		return false;
-	}
-	if(this->rootNode==NULL) {
-		DEBUG_MSG(L"Buffer has no nodes, returning false");
-		return false;
-	}
-	return true;
-}
-
-void VBufStorage_buffer_t::insertSubtree(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
+void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
 	VBufStorage_fieldNode_t* next=NULL;
 	assert(node); //node can't be NULL
-	assert(!isNodeInBuffer(node)); //Node must not be in this buffer
-	assert(previous==NULL||isNodeInBuffer(previous)); //Previous must be in this buffer
 	assert(previous==NULL||previous!=this->rootNode); //a root node can not have nodes after it on the same level
-	assert(parent==NULL||isNodeInBuffer(parent)); //Parent must be in this buffer
-	DEBUG_MSG(L"Inserting subtree starting at "<<node->getDebugInfo());
-	associateSubtree(node);
 	//make sure we have a good parent, previous and next
 	if(previous!=NULL) parent=previous->parent;
 	next=(previous?previous->next:(parent?parent->firstChild:NULL));
@@ -529,7 +473,6 @@ void VBufStorage_buffer_t::insertSubtree(VBufStorage_controlFieldNode_t* parent,
 
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	assert(node); //node can't be null
-	assert(isNodeInBuffer(node)); //Node must be in this buffer
 	DEBUG_MSG(L"deleting subtree starting at "<<node->getDebugInfo());
 	//Save off next before deleting the subtree 
 	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;) {
@@ -537,7 +480,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 		deleteSubtree(child);
 		child=next;
 	}
-	node->disassociateFromBuffer();
+	node->disassociateFromBuffer(this);
 	DEBUG_MSG(L"deleting node at "<<node);
 	delete node;
 	DEBUG_MSG(L"Deleted subtree");
@@ -556,14 +499,6 @@ VBufStorage_buffer_t::~VBufStorage_buffer_t() {
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock) {
 	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", docHandle of "<<docHandle<<L", ID of "<<ID);
-	if(parent!=NULL&&!isNodeInBuffer(parent)) {
-		DEBUG_MSG(L"Parent is not in this buffer, returning NULL");
-		return NULL;
-	}
-	if(previous!=NULL&&!isNodeInBuffer(previous)) {
-		DEBUG_MSG(L"Previous is not in this buffer, returning NULL");
-		return NULL;
-	}
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
@@ -576,21 +511,16 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	assert(controlFieldNode); //controlFieldNode must have been allocated
 	DEBUG_MSG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
 	DEBUG_MSG(L"Inserting controlFieldNode in to buffer");
-	insertSubtree(parent, previous, controlFieldNode);
+	insertNode(parent, previous, controlFieldNode);
+	assert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
+	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
 	DEBUG_MSG(L"Added new controlFieldNode, returning node");
+	assert(false);
 	return controlFieldNode;
 }
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text) {
 	DEBUG_MSG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous);
-	if(parent!=NULL&&!isNodeInBuffer(parent)) {
-		DEBUG_MSG(L"Parent is not in this buffer, returning NULL");
-		return NULL;
-	}
-	if(previous!=NULL&&!isNodeInBuffer(previous)) {
-		DEBUG_MSG(L"Previous is not in this buffer, returning NULL");
-		return NULL;
-	}
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
@@ -603,7 +533,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	assert(textFieldNode); //controlFieldNode must have been allocated
 	DEBUG_MSG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
 	DEBUG_MSG(L"Inserting textFieldNode in to buffer");
-	insertSubtree(parent, previous, textFieldNode);
+	insertNode(parent, previous, textFieldNode);
 	DEBUG_MSG(L"Added new textFieldNode, returning node");
 	return textFieldNode;
 }
@@ -614,21 +544,18 @@ bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, V
 	DEBUG_MSG(L"Merging buffer at "<<buffer<<L" in to this buffer with parent at "<<parent<<L" and previous at "<<previous);
 	if(buffer->rootNode) {
 		DEBUG_MSG(L"Inserting nodes from buffer");
-		insertSubtree(parent,previous,buffer->rootNode);
+		insertNode(parent,previous,buffer->rootNode);
+		controlFieldNodesByIdentifier.insert(buffer->controlFieldNodesByIdentifier.begin(),buffer->controlFieldNodesByIdentifier.end());
+		buffer->controlFieldNodesByIdentifier.clear();
 		buffer->rootNode=NULL;
 	} else {
 		DEBUG_MSG(L"Buffer empty");
 	}
-	buffer->controlFieldNodesByIdentifier.clear();
 	DEBUG_MSG(L"mergeBuffer complete");
 	return true;
 }
 
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
-	if(!isNodeInBuffer(node)) {
-		DEBUG_MSG(L"Node is not in this buffer, returning false");
-		return false;
-	}
 	DEBUG_MSG(L"Removing subtree starting at "<<node->getDebugInfo());
 	DEBUG_MSG(L"collapsing length of ancestors by "<<node->length);
 	for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
@@ -659,10 +586,6 @@ bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 }
 
 bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset) {
-	if(!isNodeInBuffer(node)) {
-		DEBUG_MSG(L"Node not in buffer, returning false");
-		return false;
-	}
 	*startOffset=node->calculateOffsetInTree();
 	*endOffset=(*startOffset)+node->length;
 	DEBUG_MSG(L"node has offsets "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
@@ -727,11 +650,12 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::locateControlFieldNodeAtOf
 
 VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIdentifier(int docHandle, int ID) {
 	VBufStorage_controlFieldNodeIdentifier_t identifier(docHandle, ID);
-	if(this->controlFieldNodesByIdentifier.count(identifier)==0) {
+	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=this->controlFieldNodesByIdentifier.find(identifier);
+	if(i==this->controlFieldNodesByIdentifier.end()) {
 		DEBUG_MSG(L"No controlFieldNode with identifier, returning NULL");
 		return false;
 	}
-	VBufStorage_controlFieldNode_t* node=this->controlFieldNodesByIdentifier[identifier];
+	VBufStorage_controlFieldNode_t* node=i->second;
 	assert(node); //Node can not be NULL
 	DEBUG_MSG(L"returning node at "<<node);
 	return node;

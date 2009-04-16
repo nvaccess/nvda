@@ -78,12 +78,6 @@ class VBufStorage_fieldNode_t {
 	protected:
 
 /**
- * points to the buffer this node is associated with.
- * It is garenteed that this node can be reached from the buffer by following a line of descendents from the buffer's root node. 
- */ 
-	VBufStorage_buffer_t* buffer;
-
-/**
  * points to this node's parent control field node.
  * it is garenteed that this node will be one of the parent's children (firstChild [next next...] or lastChild [previous previous...]).
  */
@@ -192,16 +186,10 @@ class VBufStorage_fieldNode_t {
 	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
 
 /**
- * Associates this node with the given buffer.
- * @param buffer the buffer to associate with.
- * @return true if successfull, false otherwise.
- */
-	virtual void associateWithBuffer(VBufStorage_buffer_t* buffer);
-
-/**
  * Disassociates this node from its buffer.
+ * @param buffer the buffer to disassociate from
  */
-	virtual void disassociateFromBuffer();
+	virtual void disassociateFromBuffer(VBufStorage_buffer_t* buffer);
 
 /**
  * constructor.
@@ -218,11 +206,6 @@ class VBufStorage_fieldNode_t {
 	friend class VBufStorage_buffer_t;
 
 	public:
-
-/**
- * @return a pointer to the buffer this node is associated with.
- */
-	VBufStorage_buffer_t* getBuffer() const;
 
 /**
  * points to this node's parent control field node.
@@ -295,9 +278,7 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text);
 
-	virtual void associateWithBuffer(VBufStorage_buffer_t* buffer);
-
-	virtual void disassociateFromBuffer();
+	virtual void disassociateFromBuffer(VBufStorage_buffer_t* buffer);
 
 /**
  * constructor.
@@ -382,31 +363,17 @@ class VBufStorage_buffer_t {
 	int selectionEnd;
 
 /**
- * Associates the given fieldNode and its descendants with this buffer.
- * sets this buffer as the given field node's buffer, adds the field to the buffer's known control fieldNodesByIdentifier set, and then calls itself on each of the fieldNode's children.
- * @param node the fieldNode you wish to associate with the buffer.
- */
-	void associateSubtree(VBufStorage_fieldNode_t* node);
-
-/**
- * records a controlFieldNode by its identifier in the buffer's controlFieldNodesByIdentifier set.
- * @param node the node you wish to record.
- */
-	void rememberControlFieldNode(VBufStorage_controlFieldNode_t* node);
-
-/**
  * removes the controlFieldNode from the buffer's controlFieldNodesByIdentifier set.
  */
 	void forgetControlFieldNode(VBufStorage_controlFieldNode_t* node);
 
 /**
- * Inserts the given fieldNode in to the buffer's tree of nodes.
- * Associates the node with this buffer and makes all needed connections with other nodes in the buffer's node tree.
+ * Inserts the given fieldNode in to the buffer's tree of nodes. Makes all needed connections with other nodes in the buffer's node tree.
  * @param parent a control field already in the buffer that should be the inserted node's parent, note if also specifying previous then parent can be NULL.
  * @param previous the field already in the buffer that the inserted node will come directly after, note previous's parent will always be used over the parent argument.
  * @param node the node being inserted.
  */ 
-	void insertSubtree(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
+	void insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
 
 /**
  * disassociates the given node and its descendants from this buffer and deletes the node and its descendants.
