@@ -6,9 +6,9 @@ from ctypes import *
 #: How often to check whether the core is alive
 CHECK_INTERVAL=0.1
 #: How long to wait for the core to be alive
-CORE_ALIVE_TIMEOUT=0.4
+CORE_ALIVE_TIMEOUT=0.8
 #: How long to wait between recovery attempts
-RECOVER_ATTEMPT_INTERVAL = 0.01
+RECOVER_ATTEMPT_INTERVAL = 0.05
 
 isRunning=False
 
