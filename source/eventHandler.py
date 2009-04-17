@@ -109,9 +109,6 @@ def doPreDocumentLoadComplete(obj):
 			obj.virtualBuffer=v
 			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
 			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
-			if focusObject.virtualBuffer==v:
-				if not v.isLoading and hasattr(v,"event_virtualBuffer_gainFocus"):
-					v.event_virtualBuffer_gainFocus()
 	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
