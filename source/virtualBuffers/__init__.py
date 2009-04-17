@@ -1,3 +1,4 @@
+import threading
 import ctypes
 import weakref
 import time
@@ -198,12 +199,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
+		self.isLoading = True
+		threading.Thread(target=self._loadBuffer).start()
+
+	def _loadBuffer(self):
 		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
 		if not self.bindingHandle:
 			raise RuntimeError("Could not inject VBuf lib")
 		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
 		if not self.VBufHandle:
 			raise RuntimeError("Could not remotely create virtualBuffer")
+		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
+
+	def _loadBufferDone(self):
+		self.isLoading = False
+		self.event_virtualBuffer_firstGainFocus()
+		self.event_virtualBuffer_gainFocus()
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
