@@ -307,4 +307,6 @@ windowClassMap={
 	"TskRichEdit.UnicodeClass":"RichEdit20",
 	"RichEdit20WPT":"RichEdit20",
 	"RICHEDIT60W":"RICHEDIT50W",
+	"TAltEdit.UnicodeClass":"Edit",
+	"TChatRichEdit.UnicodeClass":"RichEdit20",
 }
