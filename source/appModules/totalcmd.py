@@ -14,7 +14,7 @@ oldActivePannel=0
 class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="TMyListBox":
+		if obj.windowClassName=="TMyListBox" or obj.windowClassName=="TMyListBox.UnicodeClass":
 			obj.__class__=TCList
 
 class TCList(IAccessible):
