@@ -664,6 +664,7 @@ def accLocation(ia,child):
 		return None
 
 winEventIDsToNVDAEventNames={
+winUser.EVENT_SYSTEM_DESKTOPSWITCH:"desktopSwitch",
 winUser.EVENT_SYSTEM_FOREGROUND:"gainFocus",
 winUser.EVENT_SYSTEM_ALERT:"alert",
 winUser.EVENT_SYSTEM_MENUSTART:"menuStart",
@@ -885,6 +886,38 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
+class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
+
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(cls)
+		return (clsList,kwargs)
+
+	def _get_name(self):
+		return _("Secure Desktop")
+
+	def _get_role(self):
+		return controlTypes.ROLE_PANE
+
+	def _get_description(self):
+		return _("Inaccessible to NVDA")
+
+def processDesktopSwitchWinEvent(window,objectID,childID):
+	hDesk=ctypes.windll.user32.OpenInputDesktop(0, False, 0)
+	#name = ctypes.create_string_buffer(256)
+	#res=ctypes.windll.user32.GetUserObjectInformationA(desktop, 2, ctypes.byref(name), ctypes.sizeof(name), None)
+	#speech.speakMessage(name.value)
+	if hDesk!=0:
+		ctypes.windll.user32.CloseDesktop(hDesk)
+		import wx
+		wx.CallLater(200, _correctFocus)
+	else:
+		obj=SecureDesktopNVDAObject(windowHandle=window)
+		eventHandler.executeEvent("gainFocus",obj)
+
+def _correctFocus():
+	eventHandler.executeEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
 def processForegroundWinEvent(window,objectID,childID):
 	"""checks to see if the foreground win event is not the same as the existing focus or any of its parents, 
 	then converts the win event to an NVDA event (instanciating an NVDA Object) and then checks the NVDAObject against the existing focus object. 
@@ -1000,6 +1033,8 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
 				processForegroundWinEvent(*(winEvent[1:]))
+			elif winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
+				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
