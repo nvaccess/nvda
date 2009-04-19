@@ -4,23 +4,23 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2845\n"
-"POT-Creation-Date: 2009-04-08 14:24+???? (?W???)\n"
-"PO-Revision-Date: 2009-04-08 14:34+0900\n"
+"Project-Id-Version: 2869\n"
+"POT-Creation-Date: 2009-04-15 11:16+???? (?W???)\n"
+"PO-Revision-Date: 2009-04-15 16:38+0900\n"
 "Last-Translator: Katsutoshi Tsuji <tsuji-katsutoshi@mitsue.co.jp>\n"
-"Language-Team: JA <nvdajp-dev@comm.twcu.ac.jp>\n"
+"Language-Team: JA <nvdajp-dev@lists.sourceforge.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: NVDAObjects\IAccessible\__init__.py:1135
-#: appModules\_default.py:776
-msgid "%d percent"
-msgstr "%dパーセント"
-
 #: NVDAObjects\IAccessible\sysTreeView32.py:169
 msgid "%s items"
 msgstr "%s項目"
+
+#: NVDAObjects\progressBar.py:42
+#: appModules\_default.py:776
+msgid "%d percent"
+msgstr "%dパーセント"
 
 #: NVDAObjects\window\__init__.py:279
 msgid "Desktop"
@@ -64,28 +64,12 @@ msgstr "から"
 msgid "has formula"
 msgstr "数式があります"
 
-#: NVDAObjects\window\winword.py:309
-#: NVDAObjects\window\winword.py:325
-#: NVDAObjects\window\winword.py:341
-#: NVDAObjects\window\winword.py:357
+#: NVDAObjects\window\winword.py:336
+#: NVDAObjects\window\winword.py:347
+#: NVDAObjects\window\winword.py:358
+#: NVDAObjects\window\winword.py:369
 msgid "not in table"
 msgstr "テーブルの外"
-
-#: NVDAObjects\window\winword.py:318
-msgid "bottom of column"
-msgstr "列の最後"
-
-#: NVDAObjects\window\winword.py:334
-msgid "top of column"
-msgstr "列の最初"
-
-#: NVDAObjects\window\winword.py:350
-msgid "end of row"
-msgstr "行の最後"
-
-#: NVDAObjects\window\winword.py:366
-msgid "beginning of row"
-msgstr "行の最初"
 
 #: appModuleHandler.py:161
 msgid "Error in appModule %s"
@@ -116,7 +100,6 @@ msgstr "オン"
 #: appModules\_default.py:166
 #: appModules\_default.py:556
 #: appModules\_default.py:660
-#: appModules\_default.py:719
 #: appModules\_default.py:736
 #: appModules\_default.py:746
 #: appModules\_default.py:756
@@ -139,7 +122,6 @@ msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard w
 msgstr "キーボードヘルプのオンとオフ。オンの状態で任意のキーを押すと対応する機能があれば、それを説明します。"
 
 #: appModules\_default.py:64
-#: appModules\klangoplayer.py:33
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
 msgstr "アプリケーションカーソルのある現在行の通知。このキーを続けて2度押すと、現在行のスペルを通知します"
 
@@ -495,7 +477,6 @@ msgid "reads from the navigator object "
 msgstr "ナビゲーターオブジェクトから読み上げ"
 
 #: appModules\_default.py:605
-#: appModules\klangoplayer.py:28
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "システムカーソル位置を移動しながら、テキストを最後まで読み上げ"
 
@@ -564,24 +545,25 @@ msgstr "テキスト: %s"
 msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
 msgstr "主に開発者向けに、現在のナビゲーターオブジェクトに関する情報の通知。2回続けて押すと、コントロールIDとクラスおよびインターナルテキストをクリップボードにコピー"
 
-#: appModules\_default.py:720
-#: gui\settingsDialogs.py:491
-msgid "Beep for visible"
-msgstr "フォーカスがある場合にビープ音で通知"
-
 #: appModules\_default.py:721
-#: gui\settingsDialogs.py:492
-msgid "Beep for all"
-msgstr "すべてをビープ音で通知"
+msgid "no progress bar updates"
+msgstr "プログレスバーの更新通知オフ"
 
-#: appModules\_default.py:722
-#: gui\settingsDialogs.py:493
-msgid "Speak each 10 percent"
-msgstr "10パーセントごとに読み上げ"
+#: appModules\_default.py:724
+msgid "speak progress bar updates"
+msgstr "プログレスバー更新を読み上げ"
+
+#: appModules\_default.py:727
+msgid "beep for progress bar updates"
+msgstr "プログレスバー更新をビープ音で通知"
+
+#: appModules\_default.py:730
+msgid "beep and speak progress bar updates"
+msgstr "プログレスバーの更新をビープ音と読み上げで通知"
 
 #: appModules\_default.py:732
-msgid "Toggles how NVDA reports progress bar updates. It can beep for all the progress bars or just for the progressbars in the foreground. Additionally it is possible to have current value spoken each 10 percent or it is possible to completely disable this reporting."
-msgstr "プログレスバーの更新を、NVDAでどのように通知するかを切り替えます。すべての進行状況をビープ音で通知するか、プログレスバーが前面にあるときだけに通知するかを選択できます。さらに、10パーセントごとに現在の状況を読み上げるか、完全にこの通知を無効にすることもできます。"
+msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+msgstr "プログレスバーの更新通知方法を、ビープ音、読み上げ、ビープ音と読み上げ、オフの間で切り替えます"
 
 #: appModules\_default.py:741
 msgid "report dynamic content changes"
@@ -1312,7 +1294,7 @@ msgstr "スライダー"
 
 #: controlTypes.py:197
 msgid "progress bar"
-msgstr "進行状況バー"
+msgstr "プログレスバー"
 
 #: controlTypes.py:198
 msgid "scroll bar"
@@ -2386,6 +2368,18 @@ msgstr "マウス位置の明るさをビープ音の音量の変化で通知"
 msgid "Object presentation"
 msgstr "オブジェクト表示"
 
+#: gui\settingsDialogs.py:491
+msgid "Speak"
+msgstr "読み上げ"
+
+#: gui\settingsDialogs.py:492
+msgid "Beep"
+msgstr "ビープ"
+
+#: gui\settingsDialogs.py:493
+msgid "Speak and beep"
+msgstr "ビープ音と読み上げ"
+
 #: gui\settingsDialogs.py:497
 msgid "Report &tooltips"
 msgstr "ツールチップ情報の通知(&T)"
@@ -2411,194 +2405,198 @@ msgid "Say object &state first"
 msgstr "最初にオブジェクトの状態を読み上げ(&S)"
 
 #: gui\settingsDialogs.py:516
-msgid "Report progress &bar updates"
-msgstr "プログレスバーの更新を通知(&B)"
+msgid "Progress &bar output"
+msgstr "プログレスバーアウトプット(&B)"
 
 #: gui\settingsDialogs.py:519
-msgid "Report progress bar updates"
-msgstr "プログレスバーの更新を通知"
+msgid "Progress bar output"
+msgstr "プログレスバーアウトプット"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:528
+msgid "Report background progress bars"
+msgstr "バックグラウンドのプログレスバーの更新を通知"
+
+#: gui\settingsDialogs.py:547
 msgid "virtual buffers"
 msgstr "仮想バッファー"
 
-#: gui\settingsDialogs.py:546
+#: gui\settingsDialogs.py:550
 msgid "&Maximum number of characters on one line"
 msgstr "1行の最大文字数(&M)"
 
-#: gui\settingsDialogs.py:551
+#: gui\settingsDialogs.py:555
 msgid "&Number of lines per page"
 msgstr "1ページの行数(&N)"
 
-#: gui\settingsDialogs.py:556
+#: gui\settingsDialogs.py:560
 msgid "Use &screen layout (when supported)"
 msgstr "（サポートされている場合）画面レイアウトを使用(&S)"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:564
 msgid "Report &virtual presentation on focus changes"
 msgstr "フォーカスの変化に伴う仮想表現の通知(&V)"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:567
 msgid "Automatic focus mode for focus changes"
 msgstr "フォーカスの変化を追跡する自動フォーカスモード"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:570
 msgid "Automatic focus mode for caret movement"
 msgstr "キャレットの移動を追跡する自動フォーカスモード"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:573
 msgid "Audio indication of focus and browse modes"
 msgstr "音によるフォーカスモードとブラウズモード切替の通知"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:601
 msgid "Document formatting"
 msgstr "書式情報"
 
-#: gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:604
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "カーソル移動後に書式の変化を通知（読み上げ遅延の可能性があります）"
 
-#: gui\settingsDialogs.py:603
+#: gui\settingsDialogs.py:607
 msgid "Report font &name"
 msgstr "フォント名の通知(&N)"
 
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:610
 msgid "Report font &size"
 msgstr "フォントサイズの通知(&S)"
 
-#: gui\settingsDialogs.py:609
+#: gui\settingsDialogs.py:613
 msgid "Report font attri&butes"
 msgstr "フォント属性の通知(&B)"
 
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:616
 msgid "Report &alignment"
 msgstr "配置の通知(&A)"
 
-#: gui\settingsDialogs.py:615
+#: gui\settingsDialogs.py:619
 msgid "Report st&yle"
 msgstr "書式の通知(&Y)"
 
-#: gui\settingsDialogs.py:618
+#: gui\settingsDialogs.py:622
 msgid "Report spelling errors"
 msgstr "スペルエラーを通知"
 
-#: gui\settingsDialogs.py:621
+#: gui\settingsDialogs.py:625
 msgid "Report &pages"
 msgstr "ページ番号の通知(&P)"
 
-#: gui\settingsDialogs.py:624
+#: gui\settingsDialogs.py:628
 msgid "Report &line numbers"
 msgstr "行番号の通知(&L)"
 
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:631
 msgid "Report &tables"
 msgstr "テーブルの通知(&T)"
 
-#: gui\settingsDialogs.py:630
+#: gui\settingsDialogs.py:634
 msgid "Report &links"
 msgstr "リンクの通知(&L)"
 
-#: gui\settingsDialogs.py:633
+#: gui\settingsDialogs.py:637
 msgid "Report &headings"
 msgstr "見出しの通知(&H)"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:640
 msgid "Report l&ists"
 msgstr "リストの通知(&I)"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:643
 msgid "Report block &quotes"
 msgstr "引用の通知(&Q)"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:670
 msgid "Edit dictionary entry"
 msgstr "辞書項目の編集"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:673
 msgid "&Pattern"
 msgstr "パターン(&P)"
 
-#: gui\settingsDialogs.py:672
+#: gui\settingsDialogs.py:676
 msgid "&Replacement"
 msgstr "置換(&R)"
 
-#: gui\settingsDialogs.py:675
+#: gui\settingsDialogs.py:679
 msgid "&Comment"
 msgstr "コメント(&C)"
 
-#: gui\settingsDialogs.py:678
+#: gui\settingsDialogs.py:682
 msgid "Case &sensitive"
 msgstr "大文字小文字を区別(&S)"
 
-#: gui\settingsDialogs.py:680
+#: gui\settingsDialogs.py:684
 msgid "Regular &expression"
 msgstr "正規表現(&E)"
 
-#: gui\settingsDialogs.py:702
+#: gui\settingsDialogs.py:706
 msgid "&Dictionary entries"
 msgstr "辞書項目(&D)"
 
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:709
 msgid "Comment"
 msgstr "コメント"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:710
 msgid "Pattern"
 msgstr "パターン"
 
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:711
 msgid "Replacement"
 msgstr "置換"
 
-#: gui\settingsDialogs.py:708
+#: gui\settingsDialogs.py:712
 msgid "case sensitive"
 msgstr "大文字小文字を区別"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:713
 msgid "Regular expression"
 msgstr "正規表現"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:720
 msgid "&Add"
 msgstr "追加(&A)"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:723
 msgid "&edit"
 msgstr "編集(&E)"
 
-#: gui\settingsDialogs.py:722
+#: gui\settingsDialogs.py:726
 msgid "&Remove"
 msgstr "削除(&R)"
 
-#: gui\settingsDialogs.py:789
+#: gui\settingsDialogs.py:793
 msgid "Braille Settings"
 msgstr "点字設定"
 
-#: gui\settingsDialogs.py:793
+#: gui\settingsDialogs.py:797
 msgid "Braille &display"
 msgstr "点字ディスプレイ(&D)"
 
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 msgid "Translation &table"
 msgstr "変換テーブル(&T)"
 
-#: gui\settingsDialogs.py:819
+#: gui\settingsDialogs.py:823
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "カーソル位置の単語をコンピューター点字に展開(&E)"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:828
 msgid "Cursor blink rate (ms)"
 msgstr "カーソル点滅速度(ミリ秒)"
 
-#: gui\settingsDialogs.py:832
+#: gui\settingsDialogs.py:836
 msgid "Message timeout (sec)"
 msgstr "メッセージの表示終了待ち時間(秒)"
 
-#: gui\settingsDialogs.py:845
+#: gui\settingsDialogs.py:849
 msgid "Braille Display Error"
 msgstr "点字ディスプレイエラー"
 
-#: gui\settingsDialogs.py:845
+#: gui\settingsDialogs.py:849
 msgid "Could not load the %s display."
 msgstr "%s点字ディスプレイを読み込めません。"
 
@@ -2786,23 +2784,23 @@ msgstr "スクロールロック%s"
 msgid "%s keyboard layout"
 msgstr "%sキーボードレイアウト"
 
-#: keyboardHandler.py:180
+#: keyboardHandler.py:184
 msgid "Description: %s"
 msgstr "説明: %s"
 
-#: keyboardHandler.py:183
+#: keyboardHandler.py:187
 msgid "Location: %s"
 msgstr "ロケーション: %s"
 
-#: keyboardHandler.py:198
+#: keyboardHandler.py:202
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "keyboardHandler.internal_keyDownEventのエラー"
 
-#: keyboardHandler.py:230
+#: keyboardHandler.py:238
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "keyboardHandler.internal_keyUpEventのエラー"
 
-#: mouseHandler.py:130
+#: mouseHandler.py:131
 msgid "%s cursor"
 msgstr "%sカーソル"
 
@@ -3373,7 +3371,7 @@ msgstr "次の区切り線へ移動"
 
 #: virtualBuffers\__init__.py:826
 msgid "no next separator"
-msgstr "これ以上区切り線がありません"
+msgstr "次の区切り線がありません"
 
 #: virtualBuffers\__init__.py:827
 msgid "moves to the previous separator"
@@ -3381,7 +3379,7 @@ msgstr "前の区切り線へ移動"
 
 #: virtualBuffers\__init__.py:827
 msgid "no previous separator"
-msgstr "これより前に区切り線がありません"
+msgstr "前の区切り線がありません"
 
 #: virtualBuffers\__init__.py:828
 msgid "moves to the next radio button"
@@ -3454,11 +3452,3 @@ msgstr "次の引用文へ移動"
 #: virtualBuffers\__init__.py:836
 msgid "no next block quote"
 msgstr "次の引用文がありません"
-
-#: virtualBuffers\__init__.py:837
-msgid "moves to the previous block quote"
-msgstr "前の引用文へ移動"
-
-#: virtualBuffers\__init__.py:837
-msgid "no previous block quote"
-msgstr "前の引用文がありません"
