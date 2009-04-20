@@ -11,6 +11,7 @@ import time
 import tones
 from keyUtils import key
 import keyboardHandler
+import mouseHandler
 import IAccessibleHandler
 import controlTypes
 import api
@@ -172,21 +173,24 @@ class AppModule(appModuleHandler.AppModule):
 	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
 
 	def script_moveMouseToNavigatorObject(self,keyPress):
-		ui.message(_("Move mouse to navigator"))
 		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
 		except NotImplementedError:
 			p=None
 		if p:
-			winUser.setCursorPos(p.x,p.y)
+			x=p.x
+			y=p.y
 		else:
 			try:
 				(left,top,width,height)=obj.location
 			except:
-				speech.speakMessage(_("object has no location"))
+				ui.message(_("object has no location"))
 				return
-			winUser.setCursorPos(left+(width/2),top+(height/2))
+			x=left+(width/2)
+			y=top+(height/2)
+		winUser.setCursorPos(x,y)
+		mouseHandler.executeMouseMoveEvent(x,y)
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object")
 
 	def script_moveNavigatorObjectToMouse(self,keyPress):
