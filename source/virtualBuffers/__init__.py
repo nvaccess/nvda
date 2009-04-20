@@ -275,11 +275,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
-			speech.cancelSpeech()
-			virtualBufferHandler.reportPassThrough(self)
-			speech.speakObjectProperties(self.rootNVDAObject,name=True)
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
-			sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+			if not self.passThrough:
+				speech.cancelSpeech()
+				virtualBufferHandler.reportPassThrough(self)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				info=self.makeTextInfo(textHandler.POSITION_CARET)
+				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
 
 		virtualBufferHandler.reportPassThrough(self)
