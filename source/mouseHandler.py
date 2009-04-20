@@ -29,6 +29,9 @@ curMousePos=(0,0)
 mouseMoved=False
 curMouseShape=""
 mouseShapeChanged=0
+#: The time (in seconds) at which the last mouse event occurred.
+#: @type: float
+lastMouseEventTime=0
 
 def updateMouseShape(name):
 	global curMouseShape, mouseShapeChanged
@@ -63,7 +66,8 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,
 #Internal mouse event
 
 def internal_mouseEvent(msg,x,y,injected):
-	global mouseMoved, curMousePos
+	global mouseMoved, curMousePos, lastMouseEventTime
+	lastMouseEventTime=time.time()
 	if injected:
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
