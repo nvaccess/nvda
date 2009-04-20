@@ -102,15 +102,14 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
-	global curMousePos, screenDC, screenWidth, screenHeight
+	global curMousePos
 	(x,y)=winUser.getCursorPos()
-	import NVDAObjects.window
-	mouseObj=NVDAObjects.window.Window.objectFromPoint(x,y)
-	if not mouseObj:
-		mouseObj=api.getDesktopObject()
-	api.setMouseObject(mouseObj)
+	desktopObject=api.getDesktopObject()
+	mouseObject=desktopObject.objectFromPoint(x,y)
+	if not mouseObject:
+		mouseObject=api.getDesktopObject()
+	api.setMouseObject(mouseObject)
 	curMousePos=(x,y)
-	screenWidth,screenHeight=api.getDesktopObject().location[2:]
 	mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
