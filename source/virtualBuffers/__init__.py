@@ -67,19 +67,14 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObject(self,obj):
-		while obj and obj!=self.obj:
-			try:
-				docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
-				node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
-				if not node:
-					raise Exception
-				start = ctypes.c_int()
-				end = ctypes.c_int()
-				VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
-				return start.value, end.value
-			except:
-				log.debugWarning("",exc_info=True)
-				obj=obj.parent
+		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+		node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+		if not node:
+			raise LookupError
+		start = ctypes.c_int()
+		end = ctypes.c_int()
+		VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
+		return start.value, end.value
 
 	def __init__(self,obj,position):
 		self.obj=obj
