@@ -391,6 +391,11 @@ class NVDAObject(baseObject.ScriptableObject):
 		clsList.append(NVDAObject)
 		return clsList,kwargs
 
+	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
+
+
+
+
 	@classmethod
 	def objectFromPoint(x,y,oldNVDAObject=None):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
