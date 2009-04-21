@@ -96,7 +96,10 @@ def executeMouseMoveEvent(x,y):
 		mouseObject=mouseObject.parent
 	if not mouseObject:
 		return
-	api.setMouseObject(mouseObject)
+	if oldMouseObject==mouseObject:
+		mouseObject=oldMouseObject
+	else:
+		api.setMouseObject(mouseObject)
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
