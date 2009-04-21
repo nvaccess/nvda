@@ -5,10 +5,16 @@
 #See the file COPYING for more details.
 
 import IAccessibleHandler
+import controlTypes
 from . import IAccessible
 import textHandler
 
 class Mozilla(IAccessible):
+
+	def _get_beTransparentToMouse(self):
+		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
+			return True
+		return super(Mozilla,self).beTransparentToMouse
 
 	def _get_description(self):
 		rawDescription=super(Mozilla,self).description
