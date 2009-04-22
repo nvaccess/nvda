@@ -79,6 +79,7 @@ GW_OWNER=4
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
 WM_PAINT=0x000F
+WM_GETOBJECT=0x003D
 #Clipboard formats
 CF_TEXT=1
 #mapVirtualKey constants

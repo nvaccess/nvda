@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 from __future__ import with_statement
+import oleacc
 
 MAX_WINEVENTS=500
 
@@ -451,131 +452,34 @@ def normalizeIAccessible(pacc):
 			pass
 	return pacc
 
-def accessibleObjectFromWindow(window,objectID):
-	if not winUser.isWindow(window):
-		return None
-	ptr=POINTER(IAccessible)()
-	res=windll.oleacc.AccessibleObjectFromWindow(window,objectID,byref(IAccessible._iid_),byref(ptr))
-	if res==0:
-		return normalizeIAccessible(ptr)
-	else:
-		return None
-
 def accessibleObjectFromEvent(window,objectID,childID):
-	if not winUser.isWindow(window):
+	try:
+		pacc,childID=oleacc.AccessibleObjectFromEvent_safe(window,objectID,childID)
+	except:
 		return None
-	pacc=POINTER(IAccessible)()
-	varChild=VARIANT()
-	res=windll.oleacc.AccessibleObjectFromEvent(window,objectID,childID,byref(pacc),byref(varChild))
-	if res==0:
-		child=varChild.value
-		return (normalizeIAccessible(pacc),child)
-	else:
-		return None
+	return (normalizeIAccessible(pacc),childID)
 
 def accessibleObjectFromPoint(x,y):
-	point=POINT(x,y)
-	pacc=POINTER(IAccessible)()
-	varChild=VARIANT()
-	res=windll.oleacc.AccessibleObjectFromPoint(point,byref(pacc),byref(varChild))
-	if res==0:
-		if not isinstance(varChild.value,int):
-			child=0
-		else:
-			child=varChild.value
-		return (normalizeIAccessible(pacc),child)
+	try:
+		pacc, child = oleacc.AccessibleObjectFromPoint(x, y)
+	except:
+		return None
+	return (normalizeIAccessible(pacc),child)
 
 def windowFromAccessibleObject(ia):
-	hwnd=c_int()
 	try:
-		res=windll.oleacc.WindowFromAccessibleObject(ia,byref(hwnd))
+		return oleacc.WindowFromAccessibleObject(ia)
 	except:
-		res=0
-	if res==0:
-		return hwnd.value
-	else:
 		return 0
 
 def accessibleChildren(ia,startIndex,numChildren):
-	children=(VARIANT*numChildren)()
-	realCount=c_int()
-	windll.oleacc.AccessibleChildren(ia,startIndex,numChildren,children,byref(realCount))
-	children=[x.value for x in children[0:realCount.value]]
+	children=oleacc.AccessibleChildren(ia,startIndex,numChildren)
 	for childNum in xrange(len(children)):
 		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
 			children[childNum]=(normalizeIAccessible(children[childNum]),0)
 		elif isinstance(children[childNum],int):
 			children[childNum]=(ia,children[childNum])
 	return children
-
-def getRoleText(role):
-	textLen=windll.oleacc.GetRoleTextW(role,0,0)
-	if textLen:
-		buf=create_unicode_buffer(textLen+2)
-		windll.oleacc.GetRoleTextW(role,buf,textLen+1)
-		return buf.value
-	else:
-		return None
-
-def getStateText(state):
-	textLen=windll.oleacc.GetStateTextW(state,0,0)
-	if textLen:
-		buf=create_unicode_buffer(textLen+2)
-		windll.oleacc.GetStateTextW(state,buf,textLen+1)
-		return buf.value
-	else:
-		return None
-
-def accName(ia,child):
-	try:
-		return ia.accName(child)
-	except:
-		return ""
-
-def accValue(ia,child):
-	try:
-		return ia.accValue(child)
-	except:
-		return ""
-
-def accRole(ia,child):
-	try:
-		return ia.accRole(child)
-	except:
-		return 0
-
-def accState(ia,child):
-	try:
-		return ia.accState(child)
-	except:
-		return 0
-
-def accDescription(ia,child):
-	try:
-		return ia.accDescription(child)
-	except:
-		return ""
-
-def accHelp(ia,child):
-	try:
-		return ia.accHelp(child)
-	except:
-		return ""
-
-def accKeyboardShortcut(ia,child):
-	try:
-		return ia.accKeyboardShortcut(child)
-	except:
-		return ""
-
-def accDoDefaultAction(ia,child):
-	try:
-		ia.accDoDefaultAction(child)
-	except:
-		pass
-
-def accSelect(ia,child,flags):
-		ia.accSelect(flags,child)
 
 def accFocus(ia):
 	try:
@@ -616,13 +520,6 @@ def accChild(ia,child):
 	except:
 		return None
 
-def accChildCount(ia):
-	try:
-		count=ia.accChildCount
-	except:
-		count=0
-	return count
-
 def accParent(ia,child):
 	try:
 		if not child:
@@ -655,12 +552,6 @@ def accNavigate(ia,child,direction):
 	except:
 		pass
 
-
-def accLocation(ia,child):
-	try:
-		return ia.accLocation(child)
-	except:
-		return None
 
 winEventIDsToNVDAEventNames={
 winUser.EVENT_SYSTEM_DESKTOPSWITCH:"desktopSwitch",
@@ -1200,17 +1091,3 @@ def splitIA2Attribs(attribsString):
 		# Add this key/value pair to the dict.
 		attribsDict[key] = tmp
 	return attribsDict
-
-def getProcessHandleFromHwnd(windowHandle):
-	"""Retreaves a process handle of the process who owns the window.
-	If Windows Vista, uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process who is elevated.
-	if older than Windows Vista, just uses OpenProcess from user32.dll instead.
-	@param windowHandle: a window of a process you wish to retreave a process handle for
-	@type windowHandle: integer
-	@returns: a process handle with read, write and operation access
-	@rtype: integer
-	"""
-	try:
-		return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
-	except:
-		return winKernel.openProcess(winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE|winKernel.PROCESS_VM_OPERATION,False,winUser.getWindowThreadProcessID(windowHandle)[0])

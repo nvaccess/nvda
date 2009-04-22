@@ -596,12 +596,16 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_childCount(self):
-		count=IAccessibleHandler.accChildCount(self.IAccessibleObject)
-		return count
+		try:
+			return self.IAccessibleObject.accChildCount
+		except COMError:
+			return 0
 
 	def _get_location(self):
-		location=IAccessibleHandler.accLocation(self.IAccessibleObject,self.IAccessibleChildID)
-		return location
+		try:
+			return self.IAccessibleObject.accLocation(self.IAccessibleChildID)
+		except COMError:
+			return None
 
 	def isPointInObject(self,x,y):
 		if self.windowHandle and not super(IAccessible,self).isPointInObject(x,y):
