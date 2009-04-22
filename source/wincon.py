@@ -11,11 +11,11 @@ class COORD(Structure):
 
 class CONSOLE_SCREEN_BUFFER_INFO(Structure):
 	_fields_=[
-		('consoleSize',COORD),
-		('cursorPosition',COORD),
-		('attributes',WORD),
-		('windowRect',SMALL_RECT),
-		('maxWindowSize',COORD),
+		('dwSize',COORD),
+		('dwCursorPosition',COORD),
+		('wAttributes',WORD),
+		('srWindow',SMALL_RECT),
+		('dwMaximumWindowSize',COORD),
 	]
 
 def ReadConsoleOutputCharacter(handle,length,x,y):
