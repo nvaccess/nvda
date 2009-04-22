@@ -22,6 +22,7 @@ consoleWindow=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
 keepAliveMonitorThread=False #:While true, the monitor thread should continue to run
 monitorThread=None
+consoleOutputHandle=None
 consoleScreenBufferInfo=None #:The current screen buffer info (size, cursor position etc)
 lastConsoleWinEvent=None
 lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
@@ -33,11 +34,12 @@ def updateFocusWindow(window):
 		connectConsole(window)
 
 def connectConsole(window):
-	global consoleWindow, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo
+	global consoleWindow, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(window)
 	#Attach NVDA to this console so we can access its text etc
 	wincon.AttachConsole(processID)
+	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
 	#Register this callback with all the win events we need, storing the given handles for removal later
 	for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 		handle=winUser.setWinEventHook(eventID,eventID,0,consoleWinEventHook,0,0,0)
@@ -49,12 +51,12 @@ def connectConsole(window):
 	keepAliveMonitorThread=True
 	lastConsoleWinEvent=None
 	consoleWindow=window
-	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(wincon.CONSOLE_REAL_OUTPUT_HANDLE)
+	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	monitorThread=threading.Thread(target=monitorThreadFunc)
 	monitorThread.start()
 
 def disconnectConsole():
-	global consoleWindow, consoleWinEventHookHandles, keepAliveMonitorThread
+	global consoleWindow, consoleOutputHandle, consoleWinEventHookHandles, keepAliveMonitorThread
 	#Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
@@ -62,6 +64,8 @@ def disconnectConsole():
 	#Get ready to stop monitoring - give it a little time to finish
 	keepAliveMonitorThread=False
 	monitorThread.join()
+	winKernel.closeHandle(consoleOutputHandle)
+	consoleOutputHandle=None
 	consoleWindow=None
 	#Try freeing NVDA from this console
 	try:
@@ -87,7 +91,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		return
 	if eventID==winUser.EVENT_CONSOLE_CARET:
 		eventHandler.queueEvent("caret",api.getFocusObject())
-	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(wincon.CONSOLE_REAL_OUTPUT_HANDLE)
+	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	#Notify the monitor thread that an event has occurred
 	lastConsoleWinEvent=eventID
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
@@ -118,7 +122,7 @@ def monitorThreadFunc():
 					topLine=consoleScreenBufferInfo.srWindow.Top
 					lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 					lineLength=consoleScreenBufferInfo.dwSize.x
-					text=wincon.ReadConsoleOutputCharacter(wincon.CONSOLE_REAL_OUTPUT_HANDLE,lineCount*lineLength,0,topLine)
+					text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
 					newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
 					outLines=calculateNewText(newLines,lastConsoleVisibleLines)
 					if not (len(outLines) == 1 and len(outLines[0]) <= 1):
@@ -198,7 +202,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 
 	def _getTextRange(self,start,end):
 		startX,startY=self._consoleCoordFromOffset(start)
-		return wincon.ReadConsoleOutputCharacter(wincon.CONSOLE_REAL_OUTPUT_HANDLE,end-start,startX,startY)
+		return wincon.ReadConsoleOutputCharacter(consoleOutputHandle,end-start,startX,startY)
 
 	def _getLineOffsets(self,offset):
 		x,y=self._consoleCoordFromOffset(offset)
