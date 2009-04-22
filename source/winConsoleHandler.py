@@ -34,12 +34,14 @@ def updateFocusWindow(window):
 		connectConsole(window)
 
 def connectConsole(window):
-	global consoleWindow, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo
+	global consoleWindow, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(window)
 	#Attach NVDA to this console so we can access its text etc
 	wincon.AttachConsole(processID)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
+	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+	lastConsoleVisibleLines=getConsoleVisibleLines()
 	#Register this callback with all the win events we need, storing the given handles for removal later
 	for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
 		handle=winUser.setWinEventHook(eventID,eventID,0,consoleWinEventHook,0,0,0)
@@ -51,7 +53,6 @@ def connectConsole(window):
 	keepAliveMonitorThread=True
 	lastConsoleWinEvent=None
 	consoleWindow=window
-	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	monitorThread=threading.Thread(target=monitorThreadFunc)
 	monitorThread.start()
 
@@ -82,6 +83,14 @@ def isConsoleDead():
 		return True
 	else:
 		return False
+
+def getConsoleVisibleLines():
+	topLine=consoleScreenBufferInfo.srWindow.Top
+	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
+	lineLength=consoleScreenBufferInfo.dwSize.x
+	text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
+	newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+	return newLines
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
@@ -119,11 +128,7 @@ def monitorThreadFunc():
 				# There is a new event and there has been enough time since the last one was handled, so handle this.
 				timeSinceLast=0
 				if globalVars.reportDynamicContentChanges:
-					topLine=consoleScreenBufferInfo.srWindow.Top
-					lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
-					lineLength=consoleScreenBufferInfo.dwSize.x
-					text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
-					newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+					newLines=getConsoleVisibleLines()
 					outLines=calculateNewText(newLines,lastConsoleVisibleLines)
 					if not (len(outLines) == 1 and len(outLines[0]) <= 1):
 						for line in outLines:
