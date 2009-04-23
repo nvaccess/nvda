@@ -12,7 +12,7 @@ import controlTypes
 class WinConsole(Window):
 
 	def _get_TextInfo(self):
-		if self is winConsoleHandler.consoleObject:
+		if self.windowHandle == winConsoleHandler.consoleObject.windowHandle:
 			return winConsoleHandler.WinConsoleTextInfo
 		return super(WinConsole,self).TextInfo
 
