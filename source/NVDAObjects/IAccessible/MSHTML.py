@@ -13,6 +13,7 @@ from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
 import IAccessibleHandler
+import oleacc
 from keyUtils import key, sendKey
 import api
 import textHandler
@@ -254,7 +255,7 @@ class MSHTML(IAccessible):
 		return super(MSHTML, self)._isEqual(other)
 
 	def _get_value(self):
-		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
+		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_PANE:
 			return ""
 		else:
 			return super(MSHTML,self).value

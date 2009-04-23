@@ -3,6 +3,7 @@ import controlTypes
 import NVDAObjects.IAccessible
 import winUser
 import IAccessibleHandler
+import oleacc
 from logHandler import log
 import textHandler
 
@@ -78,7 +79,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, IAccessibleHandler.OBJID_CLIENT, ID)
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
@@ -91,31 +92,31 @@ class AdobeAcrobat(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK]}
 		elif nodeType=="table":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"acrobat::stdname": ["H%s" % nodeType[7:]]}
 		elif nodeType == "heading":
 			attrs = {"acrobat::stdname": ["H1", "H2", "H3", "H4", "H5", "H6"]}
 		elif nodeType == "formField":
-			attrs = {"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY: [None]}
+			attrs = {"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY: [None]}
 		elif nodeType == "list":
 			attrs = {"acrobat::stdname": ["L"]},
 		elif nodeType == "listItem":
 			attrs = {"acrobat::stdname": ["LI"]},
 		elif nodeType=="button":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY:[None]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
 		elif nodeType=="radioButton":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_RADIOBUTTON]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON]}
 		elif nodeType=="checkBox":
-			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON]}
 		elif nodeType == "blockQuote":
 			attrs = {"acrobat::stdname": ["BlockQuote"]}
 		elif nodeType=="focusable":
-			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		else:
 			return None
 		return attrs

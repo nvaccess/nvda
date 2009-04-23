@@ -1,5 +1,5 @@
 #IAccessiblehandler.py
-	#A part of NonVisual Desktop Access (NVDA)
+#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -19,127 +19,6 @@ REGCLS_SURROGATE      = 8  # must be used when a surrogate process
 
 CLSCTX_INPROC_SERVER=1
 CLSCTX_LOCAL_SERVER=4
-#IAccessible Object IDs
-OBJID_WINDOW=0
-OBJID_SYSMENU=-1
-OBJID_TITLEBAR=-2
-OBJID_MENU=-3
-OBJID_CLIENT=-4
-OBJID_VSCROLL=-5
-OBJID_HSCROLL=-6
-OBJID_SIZEGRIP=-7
-OBJID_CARET=-8
-OBJID_CURSOR=-9
-OBJID_ALERT=-10
-OBJID_SOUND=-11
-OBJID_NATIVEOM=-16
-#IAccessible navigation
-NAVDIR_DOWN=2
-NAVDIR_FIRSTCHILD=7
-NAVDIR_LASTCHILD=8
-NAVDIR_LEFT=3
-NAVDIR_NEXT=5
-NAVDIR_PREVIOUS=6
-NAVDIR_RIGHT=4
-NAVDIR_UP=1
-#IAccessible roles
-ROLE_SYSTEM_TITLEBAR=1
-ROLE_SYSTEM_MENUBAR=2
-ROLE_SYSTEM_SCROLLBAR=3
-ROLE_SYSTEM_GRIP=4
-ROLE_SYSTEM_SOUND=5
-ROLE_SYSTEM_CURSOR=6
-ROLE_SYSTEM_CARET=7
-ROLE_SYSTEM_ALERT=8
-ROLE_SYSTEM_WINDOW=9
-ROLE_SYSTEM_CLIENT=10
-ROLE_SYSTEM_MENUPOPUP=11
-ROLE_SYSTEM_MENUITEM=12
-ROLE_SYSTEM_TOOLTIP=13
-ROLE_SYSTEM_APPLICATION=14
-ROLE_SYSTEM_DOCUMENT=15
-ROLE_SYSTEM_PANE=16
-ROLE_SYSTEM_CHART=17
-ROLE_SYSTEM_DIALOG=18
-ROLE_SYSTEM_BORDER=19
-ROLE_SYSTEM_GROUPING=20
-ROLE_SYSTEM_SEPARATOR=21
-ROLE_SYSTEM_TOOLBAR=22
-ROLE_SYSTEM_STATUSBAR=23
-ROLE_SYSTEM_TABLE=24
-ROLE_SYSTEM_COLUMNHEADER=25
-ROLE_SYSTEM_ROWHEADER=26
-ROLE_SYSTEM_COLUMN=27
-ROLE_SYSTEM_ROW=28
-ROLE_SYSTEM_CELL=29
-ROLE_SYSTEM_LINK=30
-ROLE_SYSTEM_HELPBALLOON=31
-ROLE_SYSTEM_CHARACTER=32
-ROLE_SYSTEM_LIST=33
-ROLE_SYSTEM_LISTITEM=34
-ROLE_SYSTEM_OUTLINE=35
-ROLE_SYSTEM_OUTLINEITEM=36
-ROLE_SYSTEM_PAGETAB=37
-ROLE_SYSTEM_PROPERTYPAGE=38
-ROLE_SYSTEM_INDICATOR=39
-ROLE_SYSTEM_GRAPHIC=40
-ROLE_SYSTEM_STATICTEXT=41
-ROLE_SYSTEM_TEXT=42
-ROLE_SYSTEM_PUSHBUTTON=43
-ROLE_SYSTEM_CHECKBUTTON=44
-ROLE_SYSTEM_RADIOBUTTON=45
-ROLE_SYSTEM_COMBOBOX=46
-ROLE_SYSTEM_DROPLIST=47
-ROLE_SYSTEM_PROGRESSBAR=48
-ROLE_SYSTEM_DIAL=49
-ROLE_SYSTEM_HOTKEYFIELD=50
-ROLE_SYSTEM_SLIDER=51
-ROLE_SYSTEM_SPINBUTTON=52
-ROLE_SYSTEM_DIAGRAM=53
-ROLE_SYSTEM_ANIMATION=54
-ROLE_SYSTEM_EQUATION=55
-ROLE_SYSTEM_BUTTONDROPDOWN=56
-ROLE_SYSTEM_BUTTONMENU=57
-ROLE_SYSTEM_BUTTONDROPDOWNGRID=58
-ROLE_SYSTEM_WHITESPACE=59
-ROLE_SYSTEM_PAGETABLIST=60
-ROLE_SYSTEM_CLOCK=61
-ROLE_SYSTEM_SPLITBUTTON=62
-ROLE_SYSTEM_IPADDRESS=63
-ROLE_SYSTEM_OUTLINEBUTTON=64
-#IAccessible states
-STATE_SYSTEM_UNAVAILABLE=0x1
-STATE_SYSTEM_SELECTED=0x2
-STATE_SYSTEM_FOCUSED=0x4
-STATE_SYSTEM_PRESSED=0x8
-STATE_SYSTEM_CHECKED=0x10
-STATE_SYSTEM_MIXED=0x20
-STATE_SYSTEM_READONLY=0x40
-STATE_SYSTEM_HOTTRACKED=0x80
-STATE_SYSTEM_DEFAULT=0x100
-STATE_SYSTEM_EXPANDED=0x200
-STATE_SYSTEM_COLLAPSED=0x400
-STATE_SYSTEM_BUSY=0x800
-STATE_SYSTEM_FLOATING=0x1000
-STATE_SYSTEM_MARQUEED=0x2000
-STATE_SYSTEM_ANIMATED=0x4000
-STATE_SYSTEM_INVISIBLE=0x8000
-STATE_SYSTEM_OFFSCREEN=0x10000
-STATE_SYSTEM_SIZEABLE=0x20000
-STATE_SYSTEM_MOVEABLE=0x40000
-STATE_SYSTEM_SELFVOICING=0x80000
-STATE_SYSTEM_FOCUSABLE=0x100000
-STATE_SYSTEM_SELECTABLE=0x200000
-STATE_SYSTEM_LINKED=0x400000
-STATE_SYSTEM_TRAVERSED=0x800000
-STATE_SYSTEM_MULTISELECTABLE=0x1000000
-STATE_SYSTEM_EXTSELECTABLE=0x2000000
-STATE_SYSTEM_ALERT_LOW=0x4000000
-STATE_SYSTEM_ALERT_MEDIUM=0x8000000
-STATE_SYSTEM_ALERT_HIGH=0x10000000
-STATE_SYSTEM_PROTECTED=0x20000000
-STATE_SYSTEM_HASPOPUP=0x40000000
-STATE_SYSTEM_VALID=0x1fffffff
 
 #Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABELLED_BY=0x1002
@@ -213,7 +92,7 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			if objectID in (OBJID_SYSMENU,OBJID_MENU) and childID==0:
+			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
 				return
 			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
@@ -266,71 +145,71 @@ winEventLimiter=OrderedWinEventLimiter()
 liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 IAccessibleRolesToNVDARoles={
-	ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
-	ROLE_SYSTEM_CLIENT:controlTypes.ROLE_PANE,
-	ROLE_SYSTEM_TITLEBAR:controlTypes.ROLE_TITLEBAR,
-	ROLE_SYSTEM_DIALOG:controlTypes.ROLE_DIALOG,
-	ROLE_SYSTEM_PANE:controlTypes.ROLE_PANE,
-	ROLE_SYSTEM_CHECKBUTTON:controlTypes.ROLE_CHECKBOX,
-	ROLE_SYSTEM_RADIOBUTTON:controlTypes.ROLE_RADIOBUTTON,
-	ROLE_SYSTEM_STATICTEXT:controlTypes.ROLE_STATICTEXT,
-	ROLE_SYSTEM_TEXT:controlTypes.ROLE_EDITABLETEXT,
-	ROLE_SYSTEM_PUSHBUTTON:controlTypes.ROLE_BUTTON,
-	ROLE_SYSTEM_MENUBAR:controlTypes.ROLE_MENUBAR,
-	ROLE_SYSTEM_MENUITEM:controlTypes.ROLE_MENUITEM,
-	ROLE_SYSTEM_MENUPOPUP:controlTypes.ROLE_POPUPMENU,
-	ROLE_SYSTEM_COMBOBOX:controlTypes.ROLE_COMBOBOX,
-	ROLE_SYSTEM_LIST:controlTypes.ROLE_LIST,
-	ROLE_SYSTEM_LISTITEM:controlTypes.ROLE_LISTITEM,
-	ROLE_SYSTEM_GRAPHIC:controlTypes.ROLE_GRAPHIC,
-	ROLE_SYSTEM_HELPBALLOON:controlTypes.ROLE_HELPBALLOON,
-	ROLE_SYSTEM_TOOLTIP:controlTypes.ROLE_TOOLTIP,
-	ROLE_SYSTEM_LINK:controlTypes.ROLE_LINK,
-	ROLE_SYSTEM_OUTLINE:controlTypes.ROLE_TREEVIEW,
-	ROLE_SYSTEM_OUTLINEITEM:controlTypes.ROLE_TREEVIEWITEM,
-	ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWITEM,
-	ROLE_SYSTEM_PAGETAB:controlTypes.ROLE_TAB,
-	ROLE_SYSTEM_PAGETABLIST:controlTypes.ROLE_TABCONTROL,
-	ROLE_SYSTEM_SLIDER:controlTypes.ROLE_SLIDER,
-	ROLE_SYSTEM_PROGRESSBAR:controlTypes.ROLE_PROGRESSBAR,
-	ROLE_SYSTEM_SCROLLBAR:controlTypes.ROLE_SCROLLBAR,
-	ROLE_SYSTEM_STATUSBAR:controlTypes.ROLE_STATUSBAR,
-	ROLE_SYSTEM_TABLE:controlTypes.ROLE_TABLE,
-	ROLE_SYSTEM_CELL:controlTypes.ROLE_TABLECELL,
-	ROLE_SYSTEM_COLUMN:controlTypes.ROLE_TABLECOLUMN,
-	ROLE_SYSTEM_ROW:controlTypes.ROLE_TABLEROW,
-	ROLE_SYSTEM_TOOLBAR:controlTypes.ROLE_TOOLBAR,
-	ROLE_SYSTEM_COLUMNHEADER:controlTypes.ROLE_TABLECOLUMNHEADER,
-	ROLE_SYSTEM_ROWHEADER:controlTypes.ROLE_TABLEROWHEADER,
-	ROLE_SYSTEM_SPLITBUTTON:controlTypes.ROLE_SPLITBUTTON,
-	ROLE_SYSTEM_BUTTONDROPDOWN:controlTypes.ROLE_DROPDOWNBUTTON,
-	ROLE_SYSTEM_SEPARATOR:controlTypes.ROLE_SEPARATOR,
-	ROLE_SYSTEM_DOCUMENT:controlTypes.ROLE_DOCUMENT,
-	ROLE_SYSTEM_ANIMATION:controlTypes.ROLE_ANIMATION,
-	ROLE_SYSTEM_APPLICATION:controlTypes.ROLE_APPLICATION,
-	ROLE_SYSTEM_GROUPING:controlTypes.ROLE_GROUPING,
-	ROLE_SYSTEM_PROPERTYPAGE:controlTypes.ROLE_PROPERTYPAGE,
-	ROLE_SYSTEM_ALERT:controlTypes.ROLE_ALERT,
-	ROLE_SYSTEM_BORDER:controlTypes.ROLE_BORDER,
-	ROLE_SYSTEM_BUTTONDROPDOWNGRID:controlTypes.ROLE_DROPDOWNBUTTONGRID,
-	ROLE_SYSTEM_CARET:controlTypes.ROLE_CARET,
-	ROLE_SYSTEM_CHARACTER:controlTypes.ROLE_CHARACTER,
-	ROLE_SYSTEM_CHART:controlTypes.ROLE_CHART,
-	ROLE_SYSTEM_CURSOR:controlTypes.ROLE_CURSOR,
-	ROLE_SYSTEM_DIAGRAM:controlTypes.ROLE_DIAGRAM,
-	ROLE_SYSTEM_DIAL:controlTypes.ROLE_DIAL,
-	ROLE_SYSTEM_DROPLIST:controlTypes.ROLE_DROPLIST,
-	ROLE_SYSTEM_BUTTONMENU:controlTypes.ROLE_MENUBUTTON,
-	ROLE_SYSTEM_EQUATION:controlTypes.ROLE_EQUATION,
-	ROLE_SYSTEM_GRIP:controlTypes.ROLE_GRIP,
-	ROLE_SYSTEM_HOTKEYFIELD:controlTypes.ROLE_HOTKEYFIELD,
-	ROLE_SYSTEM_INDICATOR:controlTypes.ROLE_INDICATOR,
-	ROLE_SYSTEM_SPINBUTTON:controlTypes.ROLE_SPINBUTTON,
-	ROLE_SYSTEM_SOUND:controlTypes.ROLE_SOUND,
-	ROLE_SYSTEM_WHITESPACE:controlTypes.ROLE_WHITESPACE,
-	ROLE_SYSTEM_IPADDRESS:controlTypes.ROLE_IPADDRESS,
-	ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
-	ROLE_SYSTEM_CLOCK:controlTypes.ROLE_CLOCK,
+	oleacc.ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
+	oleacc.ROLE_SYSTEM_CLIENT:controlTypes.ROLE_PANE,
+	oleacc.ROLE_SYSTEM_TITLEBAR:controlTypes.ROLE_TITLEBAR,
+	oleacc.ROLE_SYSTEM_DIALOG:controlTypes.ROLE_DIALOG,
+	oleacc.ROLE_SYSTEM_PANE:controlTypes.ROLE_PANE,
+	oleacc.ROLE_SYSTEM_CHECKBUTTON:controlTypes.ROLE_CHECKBOX,
+	oleacc.ROLE_SYSTEM_RADIOBUTTON:controlTypes.ROLE_RADIOBUTTON,
+	oleacc.ROLE_SYSTEM_STATICTEXT:controlTypes.ROLE_STATICTEXT,
+	oleacc.ROLE_SYSTEM_TEXT:controlTypes.ROLE_EDITABLETEXT,
+	oleacc.ROLE_SYSTEM_PUSHBUTTON:controlTypes.ROLE_BUTTON,
+	oleacc.ROLE_SYSTEM_MENUBAR:controlTypes.ROLE_MENUBAR,
+	oleacc.ROLE_SYSTEM_MENUITEM:controlTypes.ROLE_MENUITEM,
+	oleacc.ROLE_SYSTEM_MENUPOPUP:controlTypes.ROLE_POPUPMENU,
+	oleacc.ROLE_SYSTEM_COMBOBOX:controlTypes.ROLE_COMBOBOX,
+	oleacc.ROLE_SYSTEM_LIST:controlTypes.ROLE_LIST,
+	oleacc.ROLE_SYSTEM_LISTITEM:controlTypes.ROLE_LISTITEM,
+	oleacc.ROLE_SYSTEM_GRAPHIC:controlTypes.ROLE_GRAPHIC,
+	oleacc.ROLE_SYSTEM_HELPBALLOON:controlTypes.ROLE_HELPBALLOON,
+	oleacc.ROLE_SYSTEM_TOOLTIP:controlTypes.ROLE_TOOLTIP,
+	oleacc.ROLE_SYSTEM_LINK:controlTypes.ROLE_LINK,
+	oleacc.ROLE_SYSTEM_OUTLINE:controlTypes.ROLE_TREEVIEW,
+	oleacc.ROLE_SYSTEM_OUTLINEITEM:controlTypes.ROLE_TREEVIEWITEM,
+	oleacc.ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWITEM,
+	oleacc.ROLE_SYSTEM_PAGETAB:controlTypes.ROLE_TAB,
+	oleacc.ROLE_SYSTEM_PAGETABLIST:controlTypes.ROLE_TABCONTROL,
+	oleacc.ROLE_SYSTEM_SLIDER:controlTypes.ROLE_SLIDER,
+	oleacc.ROLE_SYSTEM_PROGRESSBAR:controlTypes.ROLE_PROGRESSBAR,
+	oleacc.ROLE_SYSTEM_SCROLLBAR:controlTypes.ROLE_SCROLLBAR,
+	oleacc.ROLE_SYSTEM_STATUSBAR:controlTypes.ROLE_STATUSBAR,
+	oleacc.ROLE_SYSTEM_TABLE:controlTypes.ROLE_TABLE,
+	oleacc.ROLE_SYSTEM_CELL:controlTypes.ROLE_TABLECELL,
+	oleacc.ROLE_SYSTEM_COLUMN:controlTypes.ROLE_TABLECOLUMN,
+	oleacc.ROLE_SYSTEM_ROW:controlTypes.ROLE_TABLEROW,
+	oleacc.ROLE_SYSTEM_TOOLBAR:controlTypes.ROLE_TOOLBAR,
+	oleacc.ROLE_SYSTEM_COLUMNHEADER:controlTypes.ROLE_TABLECOLUMNHEADER,
+	oleacc.ROLE_SYSTEM_ROWHEADER:controlTypes.ROLE_TABLEROWHEADER,
+	oleacc.ROLE_SYSTEM_SPLITBUTTON:controlTypes.ROLE_SPLITBUTTON,
+	oleacc.ROLE_SYSTEM_BUTTONDROPDOWN:controlTypes.ROLE_DROPDOWNBUTTON,
+	oleacc.ROLE_SYSTEM_SEPARATOR:controlTypes.ROLE_SEPARATOR,
+	oleacc.ROLE_SYSTEM_DOCUMENT:controlTypes.ROLE_DOCUMENT,
+	oleacc.ROLE_SYSTEM_ANIMATION:controlTypes.ROLE_ANIMATION,
+	oleacc.ROLE_SYSTEM_APPLICATION:controlTypes.ROLE_APPLICATION,
+	oleacc.ROLE_SYSTEM_GROUPING:controlTypes.ROLE_GROUPING,
+	oleacc.ROLE_SYSTEM_PROPERTYPAGE:controlTypes.ROLE_PROPERTYPAGE,
+	oleacc.ROLE_SYSTEM_ALERT:controlTypes.ROLE_ALERT,
+	oleacc.ROLE_SYSTEM_BORDER:controlTypes.ROLE_BORDER,
+	oleacc.ROLE_SYSTEM_BUTTONDROPDOWNGRID:controlTypes.ROLE_DROPDOWNBUTTONGRID,
+	oleacc.ROLE_SYSTEM_CARET:controlTypes.ROLE_CARET,
+	oleacc.ROLE_SYSTEM_CHARACTER:controlTypes.ROLE_CHARACTER,
+	oleacc.ROLE_SYSTEM_CHART:controlTypes.ROLE_CHART,
+	oleacc.ROLE_SYSTEM_CURSOR:controlTypes.ROLE_CURSOR,
+	oleacc.ROLE_SYSTEM_DIAGRAM:controlTypes.ROLE_DIAGRAM,
+	oleacc.ROLE_SYSTEM_DIAL:controlTypes.ROLE_DIAL,
+	oleacc.ROLE_SYSTEM_DROPLIST:controlTypes.ROLE_DROPLIST,
+	oleacc.ROLE_SYSTEM_BUTTONMENU:controlTypes.ROLE_MENUBUTTON,
+	oleacc.ROLE_SYSTEM_EQUATION:controlTypes.ROLE_EQUATION,
+	oleacc.ROLE_SYSTEM_GRIP:controlTypes.ROLE_GRIP,
+	oleacc.ROLE_SYSTEM_HOTKEYFIELD:controlTypes.ROLE_HOTKEYFIELD,
+	oleacc.ROLE_SYSTEM_INDICATOR:controlTypes.ROLE_INDICATOR,
+	oleacc.ROLE_SYSTEM_SPINBUTTON:controlTypes.ROLE_SPINBUTTON,
+	oleacc.ROLE_SYSTEM_SOUND:controlTypes.ROLE_SOUND,
+	oleacc.ROLE_SYSTEM_WHITESPACE:controlTypes.ROLE_WHITESPACE,
+	oleacc.ROLE_SYSTEM_IPADDRESS:controlTypes.ROLE_IPADDRESS,
+	oleacc.ROLE_SYSTEM_OUTLINEBUTTON:controlTypes.ROLE_TREEVIEWBUTTON,
+	oleacc.ROLE_SYSTEM_CLOCK:controlTypes.ROLE_CLOCK,
 	#IAccessible2 roles
 	IA2_ROLE_UNKNOWN:controlTypes.ROLE_UNKNOWN,
 	IA2_ROLE_CANVAS:controlTypes.ROLE_CANVAS,
@@ -399,25 +278,25 @@ IAccessibleRolesToNVDARoles={
 }
 
 IAccessibleStatesToNVDAStates={
-	STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
-	STATE_SYSTEM_UNAVAILABLE:controlTypes.STATE_UNAVAILABLE,
-	STATE_SYSTEM_FOCUSED:controlTypes.STATE_FOCUSED,
-	STATE_SYSTEM_SELECTED:controlTypes.STATE_SELECTED,
-	STATE_SYSTEM_BUSY:controlTypes.STATE_BUSY,
-	STATE_SYSTEM_PRESSED:controlTypes.STATE_PRESSED,
-	STATE_SYSTEM_CHECKED:controlTypes.STATE_CHECKED,
-	STATE_SYSTEM_MIXED:controlTypes.STATE_HALFCHECKED,
-	STATE_SYSTEM_READONLY:controlTypes.STATE_READONLY,
-	STATE_SYSTEM_EXPANDED:controlTypes.STATE_EXPANDED,
-	STATE_SYSTEM_COLLAPSED:controlTypes.STATE_COLLAPSED,
-	STATE_SYSTEM_OFFSCREEN:controlTypes.STATE_OFFSCREEN,
-	STATE_SYSTEM_INVISIBLE:controlTypes.STATE_INVISIBLE,
-	STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
-	STATE_SYSTEM_LINKED:controlTypes.STATE_LINKED,
-	STATE_SYSTEM_HASPOPUP:controlTypes.STATE_HASPOPUP,
-	STATE_SYSTEM_PROTECTED:controlTypes.STATE_PROTECTED,
-	STATE_SYSTEM_SELECTABLE:controlTypes.STATE_SELECTABLE,
-	STATE_SYSTEM_FOCUSABLE:controlTypes.STATE_FOCUSABLE,
+	oleacc.STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
+	oleacc.STATE_SYSTEM_UNAVAILABLE:controlTypes.STATE_UNAVAILABLE,
+	oleacc.STATE_SYSTEM_FOCUSED:controlTypes.STATE_FOCUSED,
+	oleacc.STATE_SYSTEM_SELECTED:controlTypes.STATE_SELECTED,
+	oleacc.STATE_SYSTEM_BUSY:controlTypes.STATE_BUSY,
+	oleacc.STATE_SYSTEM_PRESSED:controlTypes.STATE_PRESSED,
+	oleacc.STATE_SYSTEM_CHECKED:controlTypes.STATE_CHECKED,
+	oleacc.STATE_SYSTEM_MIXED:controlTypes.STATE_HALFCHECKED,
+	oleacc.STATE_SYSTEM_READONLY:controlTypes.STATE_READONLY,
+	oleacc.STATE_SYSTEM_EXPANDED:controlTypes.STATE_EXPANDED,
+	oleacc.STATE_SYSTEM_COLLAPSED:controlTypes.STATE_COLLAPSED,
+	oleacc.STATE_SYSTEM_OFFSCREEN:controlTypes.STATE_OFFSCREEN,
+	oleacc.STATE_SYSTEM_INVISIBLE:controlTypes.STATE_INVISIBLE,
+	oleacc.STATE_SYSTEM_TRAVERSED:controlTypes.STATE_VISITED,
+	oleacc.STATE_SYSTEM_LINKED:controlTypes.STATE_LINKED,
+	oleacc.STATE_SYSTEM_HASPOPUP:controlTypes.STATE_HASPOPUP,
+	oleacc.STATE_SYSTEM_PROTECTED:controlTypes.STATE_PROTECTED,
+	oleacc.STATE_SYSTEM_SELECTABLE:controlTypes.STATE_SELECTABLE,
+	oleacc.STATE_SYSTEM_FOCUSABLE:controlTypes.STATE_FOCUSABLE,
 }
 
 IAccessible2StatesToNVDAStates={
@@ -622,13 +501,13 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		#ignore  particular objectIDs as we do not support them in winEvents
-		if objectID in (OBJID_SOUND,OBJID_ALERT,OBJID_NATIVEOM):
+		if objectID in (winUser.OBJID_SOUND,winUser.OBJID_ALERT,winUser.OBJID_NATIVEOM):
 			return
 
 
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
-			objectID=OBJID_CLIENT
+			objectID=winUser.OBJID_CLIENT
 		#Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window==0 or (not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
@@ -669,13 +548,13 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=eventHandler.lastQueuedFocusObject
-	if focus and objectID==OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
+	if focus and objectID==winUser.OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
 		NVDAEvent=("caret",focus)
 	else:
 		NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
 		if not NVDAEvent:
 			return False
-	if NVDAEvent[0]=="nameChange" and objectID==OBJID_CURSOR:
+	if NVDAEvent[0]=="nameChange" and objectID==winUser.OBJID_CURSOR:
 		mouseHandler.updateMouseShape(NVDAEvent[1].name)
 		return
 	if NVDAEvent[1]==focus:
@@ -713,12 +592,12 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 		hwndFocus=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(window)[1]).hwndFocus
 		if hwndFocus and hwndFocus!=window and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 			window=hwndFocus
-			objectID=OBJID_CLIENT
+			objectID=winUser.OBJID_CLIENT
 			childID=0
 	oldFocus=eventHandler.lastQueuedFocusObject
 	#If the existing focus has the same win event params as these, then ignore this event
 	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
-	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible)  and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=OBJID_CLIENT) :
+	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible)  and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=winUser.OBJID_CLIENT) :
 		# Don't actually process the event, as it is the same as the current focus.
 		# However, it is still a valid event, so return True.
 		return True
@@ -733,7 +612,7 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	if not NVDAEvent:
 		return False
 	eventName,obj=NVDAEvent
-	if (childID==0 and obj.IAccessibleRole==ROLE_SYSTEM_LIST) or (objectID==OBJID_CLIENT and "SysListView32" in obj.windowClassName):
+	if (childID==0 and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_LIST) or (objectID==winUser.OBJID_CLIENT and "SysListView32" in obj.windowClassName):
 		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
 		try:
 			realChildID=obj.IAccessibleObject.accFocus
@@ -759,7 +638,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	if needsFocusedState and obj.windowClassName=="AVL_AVView":
 		#Adobe acrobat document nodes don't have the focused state
 		needsFocusedState=False
-	elif needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (ROLE_SYSTEM_COMBOBOX, ROLE_SYSTEM_DOCUMENT, ROLE_SYSTEM_LIST):
+	elif needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (oleacc.ROLE_SYSTEM_COMBOBOX, oleacc.ROLE_SYSTEM_DOCUMENT, oleacc.ROLE_SYSTEM_LIST):
 		# The focused state is not set on certain Mozilla controls.
 		needsFocusedState=False
 	if needsFocusedState:
@@ -861,14 +740,14 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""
 	if validFocus:
 		lastFocus=eventHandler.lastQueuedFocusObject
-		if isinstance(lastFocus,NVDAObjects.IAccessible.IAccessible) and lastFocus.IAccessibleRole in (ROLE_SYSTEM_MENUPOPUP, ROLE_SYSTEM_MENUITEM):
+		if isinstance(lastFocus,NVDAObjects.IAccessible.IAccessible) and lastFocus.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUPOPUP, oleacc.ROLE_SYSTEM_MENUITEM):
 			# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
 			return
 	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 	if not NVDAEvent:
 		return
 	eventName, obj = NVDAEvent
-	if obj.IAccessibleRole != ROLE_SYSTEM_MENUPOPUP:
+	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
 	processFocusNVDAEvent(obj, needsFocusedState=False)
@@ -967,13 +846,13 @@ def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
 	while prevWindow:
 		if winUser.getClassName(prevWindow)=="Button" and winUser.getWindowStyle(prevWindow)&winUser.BS_GROUPBOX:
-			groupObj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(prevWindow,OBJID_CLIENT,0)
+			groupObj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(prevWindow,winUser.OBJID_CLIENT,0)
 			try:
 				(left,top,width,height)=obj.location
 				(groupLeft,groupTop,groupWidth,groupHeight)=groupObj.location
 			except:
 				return
-			if groupObj.IAccessibleRole==ROLE_SYSTEM_GROUPING and left>=groupLeft and (left+width)<=(groupLeft+groupWidth) and top>=groupTop and (top+height)<=(groupTop+groupHeight):
+			if groupObj.IAccessibleRole==oleacc.ROLE_SYSTEM_GROUPING and left>=groupLeft and (left+width)<=(groupLeft+groupWidth) and top>=groupTop and (top+height)<=(groupTop+groupHeight):
 				return groupObj
 		prevWindow=winUser.getPreviousWindow(prevWindow)
 

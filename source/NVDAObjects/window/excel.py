@@ -13,7 +13,7 @@ import textHandler
 import eventHandler
 import gui
 import gui.scriptUI
-import IAccessibleHandler
+import winUser
 import controlTypes
 import speech
 from keyUtils import sendKey, key
@@ -62,7 +62,7 @@ class ExcelGrid(Window):
 	def __init__(self,*args,**vars):
 		super(ExcelGrid,self).__init__(*args,**vars)
 		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
+		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 			raise OSError("No native object model")
 		self.excelObject=comtypes.client.dynamic.Dispatch(ptr)
 
