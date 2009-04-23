@@ -66,11 +66,14 @@ def disconnectConsole():
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
 	consoleObject=None
-	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,False)
+	try:
+		wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,False)
+	except WindowsError:
+		pass
 	#Try freeing NVDA from this console
 	try:
 		wincon.FreeConsole()
-	except:
+	except WindowsError:
 		pass
 
 def isConsoleDead():
