@@ -815,12 +815,12 @@ Tries to force this object to take the focus.
 			return
 		try:
 			info=self.makeTextInfo(textHandler.Point(x,y))
-			info.expand(config.conf["mouse"]["mouseTextUnit"])
+			info.expand(info.unit_mouseChunk)
 		except:
-			info=self.makeTextInfo(textHandler.POSITION_ALL)
+			info=NVDAObjectTextInfo(self,textHandler.POSITION_ALL)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
-		if not oldInfo or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
+		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
 			text=info.text
 			notBlank=False
 			if text:

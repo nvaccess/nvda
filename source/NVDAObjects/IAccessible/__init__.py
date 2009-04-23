@@ -45,7 +45,10 @@ def getNVDAObjectFromPoint(x,y):
 class IA2TextTextInfo(NVDAObjectTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		if self.obj.IAccessibleTextObject.nCharacters>0:
+			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		else:
+			raise NotImplementedError
 
 	def _getPointFromOffset(self,offset):
 		try:
@@ -54,6 +57,29 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			raise NotImplementedError
 		point=textHandler.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
 		return point
+
+	def _get_unit_mouseChunk(self):
+		return "mouseChunk"
+
+	def expand(self,unit):
+		if unit==self.unit_mouseChunk:
+			isMouseChunkUnit=True
+			oldStart=self._startOffset
+			oldEnd=self._endOffset
+			unit=super(IA2TextTextInfo,self).unit_mouseChunk
+		else:
+			isMouseChunkUnit=False
+		super(IA2TextTextInfo,self).expand(unit)
+		if isMouseChunkUnit:
+			text=self._getTextRange(self._startOffset,self._endOffset)
+			try:
+				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
+			except ValueError:
+				pass
+			try:
+				self._endOffset=text.index(u'\ufffc',oldEnd-self._startOffset)
+			except ValueError:
+				pass
 
 	def _getCaretOffset(self):
 		try:
@@ -206,7 +232,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 				raise RuntimeError("did not expand to paragraph correctly")
 			return start,end
 		except:
-			super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
+			return super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
@@ -1231,6 +1257,7 @@ _staticMap={
 	("TProgressBar",IAccessibleHandler.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("AVL_AVView",None):"adobe.AcrobatNode",
 	("AVL_AVView",IAccessibleHandler.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
+	("AcrobatSDIWindow",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"adobe.AcrobatSDIWindowClient",
 	("mscandui21.candidate",IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",IAccessibleHandler.ROLE_SYSTEM_LIST):"hh.KeywordList",
