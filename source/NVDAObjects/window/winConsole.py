@@ -12,12 +12,16 @@ import controlTypes
 class WinConsole(Window):
 
 	def _get_TextInfo(self):
-		if self.windowHandle and self.windowHandle==winConsoleHandler.consoleWindow:
+		if self is winConsoleHandler.consoleObject:
 			return winConsoleHandler.WinConsoleTextInfo
 		return super(WinConsole,self).TextInfo
 
 	def _get_role(self):
 		return controlTypes.ROLE_TERMINAL
+
+	def event_gainFocus(self):
+		winConsoleHandler.updateFocus(self)
+		super(WinConsole, self).event_gainFocus()
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

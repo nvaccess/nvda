@@ -9,7 +9,6 @@ import threading
 import difflib
 import winUser
 import winKernel
-import api
 import wincon
 import eventHandler
 from logHandler import log
@@ -18,7 +17,7 @@ import speech
 import queueHandler
 from NVDAObjects import NVDAObjectTextInfo
 
-consoleWindow=None #:The console window that is currently in the foreground.
+consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
 keepAliveMonitorThread=False #:While true, the monitor thread should continue to run
 monitorThread=None
@@ -27,16 +26,16 @@ consoleScreenBufferInfo=None #:The current screen buffer info (size, cursor posi
 lastConsoleWinEvent=None
 lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
 
-def updateFocusWindow(window):
-	if consoleWindow:
+def updateFocus(obj):
+	if consoleObject:
 		disconnectConsole()
-	if winUser.getClassName(window)=="ConsoleWindowClass":
-		connectConsole(window)
+	if obj.windowClassName=="ConsoleWindowClass":
+		connectConsole(obj)
 
-def connectConsole(window):
-	global consoleWindow, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
+def connectConsole(obj):
+	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
 	#Get the process ID of the console this NVDAObject is fore
-	processID,threadID=winUser.getWindowThreadProcessID(window)
+	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
 	wincon.AttachConsole(processID)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
@@ -52,12 +51,12 @@ def connectConsole(window):
 	#Each event doesn't individually speak its own text since speaking text is quite intensive due to the diff algorithms  
 	keepAliveMonitorThread=True
 	lastConsoleWinEvent=None
-	consoleWindow=window
+	consoleObject=obj
 	monitorThread=threading.Thread(target=monitorThreadFunc)
 	monitorThread.start()
 
 def disconnectConsole():
-	global consoleWindow, consoleOutputHandle, consoleWinEventHookHandles, keepAliveMonitorThread
+	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles, keepAliveMonitorThread
 	#Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
@@ -67,7 +66,7 @@ def disconnectConsole():
 	monitorThread.join()
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
-	consoleWindow=None
+	consoleObject=None
 	#Try freeing NVDA from this console
 	try:
 		wincon.FreeConsole()
@@ -96,10 +95,10 @@ def getConsoleVisibleLines():
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
 	global consoleScreenBufferInfo, lastConsoleWinEvent
 	#We don't want to do anything with the event if the event is not for the window this console is in
-	if window!=consoleWindow:
+	if window!=consoleObject.windowHandle:
 		return
 	if eventID==winUser.EVENT_CONSOLE_CARET:
-		eventHandler.queueEvent("caret",api.getFocusObject())
+		eventHandler.queueEvent("caret",consoleObject)
 	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	#Notify the monitor thread that an event has occurred
 	lastConsoleWinEvent=eventID
@@ -151,7 +150,7 @@ def initialize():
 	pass
 
 def terminate():
-	if consoleWindow:
+	if consoleObject:
 		disconnectConsole()
 
 def calculateNewText(newLines,oldLines):

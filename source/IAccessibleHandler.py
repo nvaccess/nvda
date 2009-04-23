@@ -162,7 +162,6 @@ from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
 from comInterfaces.servprov import *
 import tones
-import winConsoleHandler
 import globalVars
 from logHandler import log
 import JABHandler
@@ -809,7 +808,6 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	#Ignore focus events on invisible windows
 	if not winUser.isWindowVisible(window):
 		return False
-	winConsoleHandler.updateFocusWindow(window)
 	#Ignore focus  events on the parent of the desktop and taskbar
 	windowClassName=winUser.getClassName(window)
 	if windowClassName in ("Progman","Shell_TrayWnd"):
@@ -934,7 +932,6 @@ def processForegroundWinEvent(window,objectID,childID):
 	#Ignore foreground events on windows that aren't the current foreground window
 	if window!=winUser.getForegroundWindow():
 		return False
-	winConsoleHandler.updateFocusWindow(window)
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False
