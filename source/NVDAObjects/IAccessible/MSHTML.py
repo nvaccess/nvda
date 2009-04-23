@@ -12,7 +12,6 @@ import comtypes.automation
 from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
-import IAccessibleHandler
 import oleacc
 from keyUtils import key, sendKey
 import api
@@ -64,10 +63,10 @@ def nextIAccessibleInDom(IHTMLElement,back=False):
 def IAccessibleFromIHTMLElement(IHTMLElement):
 	try:
 		s=IHTMLElement.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IAccessibleHandler.IAccessible._iid_))
+		interfaceAddress=s.QueryService(ctypes.byref(oleacc.IAccessible._iid_),ctypes.byref(oleacc.IAccessible._iid_))
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(IAccessibleHandler.IAccessible)(interfaceAddress)
+	ptr=ctypes.POINTER(oleacc.IAccessible)(interfaceAddress)
 	return ptr
 
 def IHTMLElementHasIAccessible(IHTMLElement):
