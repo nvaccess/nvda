@@ -18,6 +18,25 @@ class CONSOLE_SCREEN_BUFFER_INFO(Structure):
 		('dwMaximumWindowSize',COORD),
 	]
 
+class CONSOLE_SELECTION_INFO(Structure):
+	_fields_=[
+		('dwFlags',DWORD),
+		('dwSelectionAnchor',COORD),
+		('srSelection',SMALL_RECT),
+	]
+
+CONSOLE_NO_SELECTION=0X0
+CONSOLE_SELECTION_IN_PROGRESS=0X1
+CONSOLE_SELECTION_NOT_EMPTY=0x2
+CONSOLE_MOUSE_SELECTION=0X4
+CONSOLE_MOUSE_DOWN=0x8
+
+def GetConsoleSelectionInfo():
+	info=CONSOLE_SELECTION_INFO()
+	if windll.kernel32.GetConsoleSelectionInfo(byref(info))==0:
+		raise WinError()
+	return info
+
 def ReadConsoleOutputCharacter(handle,length,x,y):
 	buf=create_unicode_buffer(length)
 	numCharsRead=c_int()

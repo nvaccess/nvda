@@ -195,8 +195,14 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return self._offsetFromConsoleCoord(consoleScreenBufferInfo.dwCursorPosition.x,consoleScreenBufferInfo.dwCursorPosition.y)
 
 	def _getSelectionOffsets(self):
-		offset=self._getCaretOffset()
-		return offset,offset
+		selInfo=wincon.GetConsoleSelectionInfo()
+		if selInfo.dwFlags&wincon.CONSOLE_SELECTION_NOT_EMPTY:
+			start=self._offsetFromConsoleCoord(selInfo.srSelection.Left,selInfo.srSelection.Top)
+			end=self._offsetFromConsoleCoord(selInfo.srSelection.Right,selInfo.srSelection.Bottom)
+		else:
+			start=end=self._getCaretOffset()
+		return start,end
+
 
 	def _getTextRange(self,start,end):
 		startX,startY=self._consoleCoordFromOffset(start)
