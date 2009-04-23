@@ -20,11 +20,11 @@ class WinConsole(Window):
 		return controlTypes.ROLE_TERMINAL
 
 	def event_gainFocus(self):
-		winConsoleHandler.updateFocus(self)
+		winConsoleHandler.connectConsole(self)
 		super(WinConsole, self).event_gainFocus()
 
 	def event_loseFocus(self):
-		winConsoleHandler.updateFocus(None)
+		winConsoleHandler.disconnectConsole()
 
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),

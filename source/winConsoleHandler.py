@@ -26,12 +26,6 @@ consoleScreenBufferInfo=None #:The current screen buffer info (size, cursor posi
 lastConsoleWinEvent=None
 lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
 
-def updateFocus(obj):
-	if consoleObject:
-		disconnectConsole()
-	if obj and obj.windowClassName=="ConsoleWindowClass":
-		connectConsole(obj)
-
 def connectConsole(obj):
 	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
 	#Get the process ID of the console this NVDAObject is fore
