@@ -1,0 +1,22 @@
+Build Instructions
+
+Prerequisites:
+The library should be built with the Microsoft Windows SDK, version 6.1 or later. You can find it here:
+http://msdn.microsoft.com/en-us/windows/bb980924.aspx
+
+The gecko_ia2 backend requires the IAccessible2 IDL file. You can obtain it here:
+http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+Download the merged IDL and copy it to deps\ia2\ia2.idl. Then, build it with midl; e.g.:
+cd deps\ia2
+midl ia2.idl
+
+The adobeAcrobat backend requires the Adobe Acrobat accessibility IDL and header files. This is rather difficult to find, so here is a direct link:
+http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+Extract the files into deps\AcrobatAccess. Then, build the IDL with midl; e.g.:
+cd deps\AcrobatAccess
+midl AcrobatAccess.idl
+
+Building the library:
+To build the core library, run nmake in the top level directory.
+To build the backends, you can change to each backend directory and run nmake. Alternatively, you can specify the backend to build by passing the BACKEND variable to nmake in the top level directory; e.g.:
+nmake BACKEND=gecko_ia2
