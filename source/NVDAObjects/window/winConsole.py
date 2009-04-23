@@ -26,6 +26,9 @@ class WinConsole(Window):
 	def event_loseFocus(self):
 		winConsoleHandler.disconnectConsole()
 
+	def event_nameChange(self):
+		pass
+
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),
