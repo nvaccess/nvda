@@ -26,12 +26,17 @@ consoleScreenBufferInfo=None #:The current screen buffer info (size, cursor posi
 lastConsoleWinEvent=None
 lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
 
+@wincon.PHANDLER_ROUTINE
+def _consoleCtrlHandler(event):
+	return True
+
 def connectConsole(obj):
 	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
 	wincon.AttachConsole(processID)
+	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
 	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	lastConsoleVisibleLines=getConsoleVisibleLines()
@@ -61,6 +66,7 @@ def disconnectConsole():
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
 	consoleObject=None
+	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,False)
 	#Try freeing NVDA from this console
 	try:
 		wincon.FreeConsole()

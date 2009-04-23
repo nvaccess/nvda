@@ -25,6 +25,12 @@ class CONSOLE_SELECTION_INFO(Structure):
 		('srSelection',SMALL_RECT),
 	]
 
+PHANDLER_ROUTINE=WINFUNCTYPE(BOOL,DWORD)
+
+CTRL_C_EVENT=0
+CTRL_BREAK_EVENT=1
+CTRL_CLOSE_EVENT=2
+
 CONSOLE_NO_SELECTION=0X0
 CONSOLE_SELECTION_IN_PROGRESS=0X1
 CONSOLE_SELECTION_NOT_EMPTY=0x2
@@ -66,5 +72,6 @@ def GetConsoleProcessList(maxProcessCount):
 	num=windll.kernel32.GetConsoleProcessList(processList,maxProcessCount)
 	return processList[0:num]
 
- 
-
+def SetConsoleCtrlHandler(handler,add):
+	if windll.kernel32.SetConsoleCtrlHandler(handler,add)==0:
+		raise WinError()
