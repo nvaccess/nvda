@@ -23,6 +23,9 @@ class WinConsole(Window):
 		winConsoleHandler.updateFocus(self)
 		super(WinConsole, self).event_gainFocus()
 
+	def event_loseFocus(self):
+		winConsoleHandler.updateFocus(None)
+
 [WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("ExtendedUp","moveByLine"),
 	("ExtendedDown","moveByLine"),

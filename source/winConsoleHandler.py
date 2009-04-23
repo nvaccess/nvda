@@ -29,7 +29,7 @@ lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a
 def updateFocus(obj):
 	if consoleObject:
 		disconnectConsole()
-	if obj.windowClassName=="ConsoleWindowClass":
+	if obj and obj.windowClassName=="ConsoleWindowClass":
 		connectConsole(obj)
 
 def connectConsole(obj):
