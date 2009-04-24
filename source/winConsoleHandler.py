@@ -28,7 +28,9 @@ lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a
 
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
-	return True
+	if event in (wincon.CTRL_C_EVENT,wincon.CTRL_BREAK_EVENT):
+		return True
+	return False
 
 def connectConsole(obj):
 	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
