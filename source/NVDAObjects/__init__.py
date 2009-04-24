@@ -397,13 +397,12 @@ class NVDAObject(baseObject.ScriptableObject):
 
 
 	@classmethod
-	def objectFromPoint(x,y,oldNVDAObject=None):
+	def objectFromPoint(x,y):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
 		@type x: int
 		@param y: the y coordinate.
 		@param y: int
-		@param oldNVDAObject: an optional NVDAObject instance which will be possibly made use of for speed (for instance if the control at the given coordinates is the same as the old NVDAObject then the old NVDAObject will be returned).
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""

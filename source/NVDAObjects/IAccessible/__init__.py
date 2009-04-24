@@ -339,19 +339,10 @@ the NVDAObject for IAccessible
 			return clsList,kwargs
 
 	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
-		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
-			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,x,y)
-		else:
-			res=None
+	def objectFromPoint(cls,x,y,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
 		if not res:
-			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-		if not res:
-			res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return
-		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
-			return oldNVDAObject
+			return None
 		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	@classmethod
