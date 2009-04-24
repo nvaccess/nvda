@@ -881,6 +881,11 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
+			if globalVars.caretMovesReviewCursor:
+				try:
+					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				except (NotImplementedError, RuntimeError):
+					pass
 
 	def _get_basicText(self):
 		newTime=time.time()

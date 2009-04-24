@@ -314,6 +314,10 @@ def getControlID(hwnd):
 def getClientRect(hwnd):
 	return user32.GetClientRect(hwnd)
 
+HWINEVENTHOOK=HANDLE
+
+WINEVENTPROC=WINFUNCTYPE(None,HWINEVENTHOOK,DWORD,HWND,c_long,c_long,DWORD,DWORD)
+
 def setWinEventHook(*args):
 		return user32.SetWinEventHook(*args)
 
