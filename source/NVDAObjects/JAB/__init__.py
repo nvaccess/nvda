@@ -159,15 +159,13 @@ class JAB(Window):
 		return clsList,kwargs
 
 	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
+	def objectFromPoint(cls,x,y,windowHandle=None):
 		jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		if not jabContext:
 			return
 		newJabContext=jabContext.getAccessibleContextAt(x,y)
 		if not newJabContext:
 			return
-		if isinstance(oldNVDAObject,JAB) and newJabContext==oldNVDAObject.jabContext:
-			return oldNVDAObject
 		return JAB(jabContext=newJabContext)
 
 	@classmethod

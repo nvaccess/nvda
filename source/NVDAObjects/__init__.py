@@ -391,14 +391,18 @@ class NVDAObject(baseObject.ScriptableObject):
 		clsList.append(NVDAObject)
 		return clsList,kwargs
 
+	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
+
+
+
+
 	@classmethod
-	def objectFromPoint(x,y,oldNVDAObject=None):
+	def objectFromPoint(x,y):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
 		@type x: int
 		@param y: the y coordinate.
 		@param y: int
-		@param oldNVDAObject: an optional NVDAObject instance which will be possibly made use of for speed (for instance if the control at the given coordinates is the same as the old NVDAObject then the old NVDAObject will be returned).
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
@@ -810,12 +814,12 @@ Tries to force this object to take the focus.
 			return
 		try:
 			info=self.makeTextInfo(textHandler.Point(x,y))
-			info.expand(config.conf["mouse"]["mouseTextUnit"])
+			info.expand(info.unit_mouseChunk)
 		except:
-			info=self.makeTextInfo(textHandler.POSITION_ALL)
+			info=NVDAObjectTextInfo(self,textHandler.POSITION_ALL)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
-		if not oldInfo or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
+		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
 			text=info.text
 			notBlank=False
 			if text:
@@ -876,6 +880,11 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
+			if globalVars.caretMovesReviewCursor:
+				try:
+					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+				except (NotImplementedError, RuntimeError):
+					pass
 
 	def _get_basicText(self):
 		newTime=time.time()

@@ -11,8 +11,21 @@ Changes since 0.6p3:
 * fix: stop announcing some useless information when the focus changes such as root panes, layered panes and scroll panes in Java or Lotus applications.
 * new: NVDA no longer cancels speech when volume control keys are pressed on the keyboard, allowing the user to change the volume and listen to actual results immediately. (#287)
 * new: Completely rewritten support for Microsoft Internet Explorer and Adobe Acrobat documents. This support has been unified with the core support used for Mozilla Gecko, so features such as fast page rendering, extensive quick navigation, links list, text selection, auto focus mode and braille support are now available with these documents.
+*New: Improved support for the date selection control found in the Windows Vista Date / Time properties dialog.
+*Fix: Make the  keyword search field in Windows Help (CHM) viewer much more usable. Due to buggyness in that control, the current keyword could not be read as it would be continually changing.
+*New: improved support for the Modern XP/Vista start menu (specifically the all programs, and places menus). Appropriate level information is now announced.
+*New: The amount of text that is announced when moving the mouse is now configurable from the Mouse settings dialog. A choice of paragraph, line, word or character can be made.
+*Fix: report correct page numbers in Microsoft Word if the page numbering has been specifically offset in the document.
+*New: announce spelling errors under the cursor in Microsoft Word.
+*New: support for the Microsoft Word 2007 spell checker. Partial support may be available for prior Microsoft Word versions.
+*Fix: Better support for edit fields found in Microsoft Word dialogs (e.g. the Font dialog). It is now possible  to navigate these controls with the arrow keys.
+*New: support for Windows Live Mail (specifically now plane text messages can be read).
+*Change: Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
+*New: In Windows Vista, if the user moves to the secure desktop (either because a UAC control dialog appeared, or because control+alt+delete was pressed), NVDA will announce the fact that the user is now on the secure desktop. This desktop is still not accessible to NVDA, though the user at least is notified as to what happened.
+*Fix: better support for Dos consoles. specifically: NVDA can now read the content of particular consoles it always used to think were blank. Pressing control+break no longer terminates NVDA.
+ *New: NVDA can announce text under the mouse within dos console windows.
 
-Changes since 0.6 P2:
+ Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 
 * change: If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
 * fix: The last chunk of audio is no longer cut off when using NVDA with eSpeak on a remote desktop server.

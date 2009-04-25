@@ -6,6 +6,7 @@
 
 import weakref
 import baseObject
+import config
 
 class Field(dict):
 	"""The base type for fields in textInfo objects"""
@@ -161,6 +162,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_obj(self):
 		return self._obj()
+
+	def _get_unit_mouseChunk(self):
+		return config.conf["mouse"]["mouseTextUnit"]
 
 	def _get_text(self):
 		raise NotImplementedError
