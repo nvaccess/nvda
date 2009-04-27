@@ -6,16 +6,43 @@
 from synthDriverHandler import SynthDriver,VoiceInfo
 from ctypes import *
 import os
+import config
+import nvwave
 import re
+from logHandler import log
 
-re_englishLetter = re.compile(r"([a-z])", re.I)
-re_individualLetters = re.compile(r"\b([a-z])\b", re.I)
-re_abbreviations = re.compile(r"\b([bcdfghjklmnpqrstvwxz]+)\d*\b", re.I)
+#config
+abbreviationsLength = 4
+
+isSpeaking = False
+player = None
+ProcessAudioCallback = WINFUNCTYPE(c_int, POINTER(c_char),POINTER(c_char),c_int)
+
+@ProcessAudioCallback
+def processAudio(udata, buffer,length):
+	global isSpeaking,player
+	if not isSpeaking: return 1
+	player.feed(string_at(buffer, length))
+	return 0
+
+re_words = re.compile(r"\b(\w+)\b",re.U)
+re_englishLetters = re.compile(r"\b([a-zA-Z])\b")
+re_abbreviations = re.compile(ur"\b([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{2,})\b",re.U)
+re_capAbbreviations = re.compile(ur"([bcdfghjklmnpqrstvwxzбвгджзклмнпрстфхцчшщ]{3,})",re.U|re.I)
 re_afterNumber = re.compile(r"(\d+)([^\.\:\-\/\!\?\d])")
-re_ukrainianApostrophe=re.compile(ur"'([яюєї])",re.I)
-re_omittedCharacters = re.compile(r"[\(\)\*]+")
+re_omittedCharacters = re.compile(r"[\(\)\*_\"]+")
+re_zeros = re.compile(r"\b\a?\.?(0+)")
 
-letters = {
+ukrainianRules = {
+re.compile(u"\\b(й)\\s",re.U|re.I): U"й",
+re.compile(u"\\b(з)\\s",re.U|re.I): U"з",
+re.compile(u"\\s(ж)\\b",re.U|re.I): U"ж",
+re.compile(u"\\s(б)\\b",re.U|re.I): U"б",
+re.compile(ur"'([яюєї])",re.I|re.U): u"ьй\\1",
+re.compile(u"ц([ьіяюєї])",re.U|re.I): U"тс\\1"
+}
+
+englishLetters = {
 'a': u"эй",
 'b' : u"би",
 'c': u"си",
@@ -41,7 +68,9 @@ letters = {
 'w': u"да+блъю",
 'x': u"экс",
 'y': u"вай",
-'z': u"зи",
+'z': u"зи"
+}
+russianLetters = {
 u"б": u"бэ",
 u"в": u"вэ",
 u"к": u"ка",
@@ -63,47 +92,91 @@ u"и": u"ы",
 u"і": u"и",
 u"ї": u"ййи",
 u"е": u"э",
-u"є": u"йе",
-u"ц": u"тс"
+u"є": u"е",
+u"ґ": u"г"
 }
-ukrainianPronunciationA = [u"и", u"і",u"ї",u"е",u"є",u"ц"]
+ukrainianPronunciationOrder = [u"и",u"і", u"ї", u"е", u"є", u"ґ"]
 
-def replaceEnglishLetter(match):
-	return "%s " % letters[match.group(1)]
+ukrainianLetters = {
+u"й": u"йот",
+u"ґ": u"Твэрдэ+ гэ",
+u"и": u"ы",
+u"і": u"и",
+u"ї": u"ййи",
+u"е": u"э",
+u"є": u"е"
+}
+letters = {}
+letters.update(englishLetters)
+letters.update(russianLetters)
 
-def replaceEnglishLetters(match):
-	return re_englishLetter.sub(replaceEnglishLetter, match.group(1))
+def subRussianZeros(match):
+	l = len(match.group(1))
+	if l == 1: return u" ноль "
+	text = " " + str(l) + " "
+	l = l%10
+	if l == 1: text += u"ноль"
+	elif l <5: text+= u"ноля"
+	else: text+=u"нолей"
+	return text+" "
 
-def replaceUkrainianApostrophe(match):
-	return u"ь%s" % match.group(1)
+def expandAbbreviation(match):
+	loweredText = match.group(1).lower()
+	l = len(match.group(1))
+	if (match.group(1).isupper() and (l <= abbreviationsLength and l > 1) and re_capAbbreviations.match(match.group(1))) or re_abbreviations.match(loweredText):
+		expandedText = ""
+		for letter in loweredText:
+			expandedText += letters[letter] if letters.has_key(letter) else letter
+			if letter.isalpha(): expandedText+=" "
+		return expandedText
+	return loweredText
+
+def subEnglishLetters(match):
+	letter = match.group(1).lower()
+	return englishLetters[letter]
 
 def preprocessEnglishText(text):
-	if len(text) == 1:
-		return letters[text] if letters.has_key(text) else text
-	text = re_abbreviations.sub(replaceEnglishLetters, text)
-	text = re_individualLetters.sub(replaceEnglishLetter, text)
+	text = re_englishLetters.sub(subEnglishLetters, text)
 	for s in englishPronunciation:
 		text = text.replace(s, englishPronunciation[s])
 	return text
 
 def preprocessUkrainianText(text):
-	if len(text) == 1:
-		return ukrainianPronunciation[text] if ukrainianPronunciation.has_key(text) else text
-	text = re_ukrainianApostrophe.sub(replaceUkrainianApostrophe, text)
-	for s in ukrainianPronunciationA:
+	for rule in ukrainianRules:
+		text = rule.sub(ukrainianRules[rule],text)
+	for s in ukrainianPronunciationOrder:
 		text = text.replace(s, ukrainianPronunciation[s])
+		#stupid python! replace() does not have ignore case, reg exprs also sucks
+		text = text.replace(s.upper(), ukrainianPronunciation[s])
+	return text
+
+def processText(text,variant):
+	if len(text) == 1:
+		letter = text.lower()
+		if variant == "ukr" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
+		elif letters.has_key(letter): return letters[letter]
+		else: return letter
+	text = re_omittedCharacters.sub(" ", text)
+	if variant == "ukr":
+		text = preprocessUkrainianText(text)
+	else: text = re_zeros.sub(subRussianZeros,text)
+	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
+	text = preprocessEnglishText(text)
+	text = re_afterNumber.sub(r"\1-\2", text)
 	return text
 
 class SynthDriver(SynthDriver):
 	name="newfon"
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
 	hasVoice=True
-	hasRate=True
 	hasVolume = True
+	hasRate=True
 	hasVariant=True
+	_volume = 100
 	_variant="rus"
 	hasPitch = True
 	_pitch = 50
+	_rate=70
 	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
 	availableVariants = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
 	newfon_lib = None
@@ -115,6 +188,8 @@ class SynthDriver(SynthDriver):
 		return os.path.isfile('synthDrivers/newfon_nvda.dll')
 
 	def __init__(self):
+		global player
+		player = nvwave.WavePlayer(channels=1, samplesPerSec=10000, bitsPerSample=8, outputDevice=config.conf["speech"]["outputDevice"])
 		self.hasDictLib = os.path.isfile('synthDrivers/dict.dll')
 		if self.hasDictLib:
 			self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")
@@ -122,8 +197,13 @@ class SynthDriver(SynthDriver):
 		self.newfon_lib = windll.LoadLibrary(r"synthDrivers\newfon_nvda.dll")
 		self.newfon_lib.speakText.argtypes = [c_char_p, c_int]
 		if not self.newfon_lib.initialize(): raise Exception
+		self.newfon_lib.set_callback(processAudio)
 
 	def terminate(self):
+		self.cancel()
+		global player
+		player.close()
+		player=None
 		self.newfon_lib.terminate()
 		del self.newfon_lib
 		if self.hasDictLib:
@@ -131,12 +211,9 @@ class SynthDriver(SynthDriver):
 			del self.sdrvxpdb_lib
 
 	def speakText(self, text, index=None):
-		text = text.lower()
-		text = re_omittedCharacters.sub(" ", text)
-		text = re_afterNumber.sub(r"\1-\2", text)
-		if self._variant == "ukr":
-			text = preprocessUkrainianText(text)
-		text = preprocessEnglishText(text)
+		global isSpeaking
+		isSpeaking = True
+		text = processText(text, self._variant)
 		if index is not None: 
 			self.newfon_lib.speakText(text,index)
 		else:
@@ -147,6 +224,9 @@ class SynthDriver(SynthDriver):
 
 	def cancel(self):
 		self.newfon_lib.cancel()
+		global isSpeaking,player
+		isSpeaking = False
+		player.stop()
 
 	def _get_voice(self):
 		return str(self.newfon_lib.get_voice())
@@ -154,17 +234,19 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, value):
 		self.newfon_lib.set_voice(int(value))
 
+	def _get_volume(self):
+		return self._volume
+
+	def _set_volume(self,value):
+		self.newfon_lib.set_volume(value)
+		self._volume = value
+
 	def _get_rate(self):
-		return self.newfon_lib.get_rate()
+		return self._rate
 
 	def _set_rate(self, value):
 		self.newfon_lib.set_rate(value)
-
-	def _get_volume(self):
-		return self.newfon_lib.get_volume()
-
-	def _set_volume(self, value):
-		self.newfon_lib.set_volume(value)
+		self._rate = value
 
 	def _set_pitch(self, value):
 		if value <= 50: value = 50
@@ -175,10 +257,14 @@ class SynthDriver(SynthDriver):
 		return self._pitch
 
 	def pause(self, switch):
-		if switch: self.cancel()
+		global player
+		player.pause(switch)
 
 	def _get_variant(self):
 		return self._variant
 
 	def _set_variant(self, variant):
 		self._variant = variant
+		if not self.hasDictLib: return
+		if variant == "rus": self.newfon_lib.set_dictionary(1)
+		else: self.newfon_lib.set_dictionary(0)
