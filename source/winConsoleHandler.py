@@ -23,7 +23,6 @@ consoleWinEventHookHandles=[] #:a list of currently registered console win event
 keepAliveMonitorThread=False #:While true, the monitor thread should continue to run
 monitorThread=None
 consoleOutputHandle=None
-consoleScreenBufferInfo=None #:The current screen buffer info (size, cursor position etc)
 lastConsoleWinEvent=None
 lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
 
@@ -34,14 +33,13 @@ def _consoleCtrlHandler(event):
 	return False
 
 def connectConsole(obj):
-	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, consoleScreenBufferInfo, lastConsoleVisibleLines
+	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, lastConsoleVisibleLines
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
 	wincon.AttachConsole(processID)
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
-	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	lastConsoleVisibleLines=getConsoleVisibleLines()
 	#Register this callback with all the win events we need, storing the given handles for removal later
 	for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
@@ -90,6 +88,7 @@ def isConsoleDead():
 		return False
 
 def getConsoleVisibleLines():
+	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	topLine=consoleScreenBufferInfo.srWindow.Top
 	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 	lineLength=consoleScreenBufferInfo.dwSize.x
@@ -99,7 +98,7 @@ def getConsoleVisibleLines():
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
-	global consoleScreenBufferInfo, lastConsoleWinEvent
+	global lastConsoleWinEvent
 	#We don't want to do anything with the event if the event is not for the window this console is in
 	if window!=consoleObject.windowHandle:
 		return
@@ -185,18 +184,17 @@ def calculateNewText(newLines,oldLines):
 				outLines.append(text)
 	return outLines
 
-def getConsoleLineLength():
-	return max(consoleScreenBufferInfo.dwSize.x,80)
-
 class WinConsoleTextInfo(NVDAObjectTextInfo):
 
 	def _offsetFromConsoleCoord(self,x,y):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		val=y-consoleScreenBufferInfo.srWindow.Top
 		val*=consoleScreenBufferInfo.dwSize.x
 		val+=x
 		return val
 
 	def _consoleCoordFromOffset(self,offset):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		x=offset%consoleScreenBufferInfo.dwSize.x
 		y=offset-x
 		y/=consoleScreenBufferInfo.dwSize.x
@@ -204,6 +202,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return x,y
 
 	def _getOffsetFromPoint(self,x,y):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		relativeX=x-screenLeft
 		relativeY=y-screenTop
@@ -217,6 +216,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return offset
 
 	def _getPointFromOffset(self,offset):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		characterX,characterY=self._consoleCoordFromOffset(offset)
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
@@ -230,6 +230,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return textHandler.Point(x,y)
 
 	def _getCaretOffset(self):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		return self._offsetFromConsoleCoord(consoleScreenBufferInfo.dwCursorPosition.x,consoleScreenBufferInfo.dwCursorPosition.y)
 
 	def _getSelectionOffsets(self):
@@ -247,6 +248,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return wincon.ReadConsoleOutputCharacter(consoleOutputHandle,end-start,startX,startY)
 
 	def _getLineOffsets(self,offset):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		x,y=self._consoleCoordFromOffset(offset)
 		x=0
 		start=self._offsetFromConsoleCoord(x,y)
@@ -254,8 +256,10 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		return start,end
 
 	def _getLineNumFromOffset(self,offset):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		x,y=self._consoleCoordFromOffset(offset)
 		return y-consoleScreenBufferInfo.srWindow.top
 
 	def _getStoryLength(self):
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		return consoleScreenBufferInfo.dwSize.x*((consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top)
