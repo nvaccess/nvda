@@ -98,14 +98,17 @@ setup(
 'Operating System :: Microsoft :: Windows',
 ],
 	cmdclass={"py2exe": py2exe},
-	windows = [{
-		"script":"nvda.pyw",
-		"uac_info": ("asInvoker", False),
-		"icon_resources":[(1,"images/nvda.ico")],
-		"version":"0.0.0.0",
-		"product_version":version,
-		"copyright":copyright,
-	}],
+	windows=[
+		{
+			"script":"nvda.pyw",
+			"uac_info": ("asInvoker", False),
+			"icon_resources":[(1,"images/nvda.ico")],
+			"version":"0.0.0.0",
+			"product_version":version,
+			"copyright":copyright,
+		},
+		"nvda_service_sessionSupervisor.py"
+	],
 	service=[{
 		"modules": ["nvda_service"],
 		"icon_resources": [(1, "images/nvda.ico")],
