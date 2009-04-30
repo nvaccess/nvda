@@ -22,6 +22,24 @@ class UIATextInfo(textHandler.TextInfo):
 		"paragraph":UIAHandler.TextUnit_Paragraph,
 	}
 
+	def _getFormatFieldAtRange(self,range,formatConfig):
+		formatField=textHandler.FormatField()
+		if formatConfig["reportFontName"]:
+			try:
+				fontNameValue=range.GetAttributeValue(UIAHandler.UIA_FontNameAttributeId)
+			except COMError:
+				fontNameValue=UIAHandler.handler.reservedNotSupportedValue
+			if fontNameValue!=UIAHandler.handler.reservedNotSupportedValue:
+				formatField["font-name"]=fontNameValue
+		if formatConfig["reportFontSize"]:
+			try:
+				fontSizeValue=range.GetAttributeValue(UIAHandler.UIA_FontSizeAttributeId)
+			except COMError:
+				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
+			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
+				formatField['font-size']="%g pt"%float(fontSizeValue)
+		return formatField
+
 	def __init__(self,obj,position):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
@@ -37,6 +55,16 @@ class UIATextInfo(textHandler.TextInfo):
 
 	def _get_bookmark(self):
 		return self.copy()
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		rangeObj=self._rangeObj.Clone()
+		rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+		rangeObj.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+		formatField=self._getFormatFieldAtRange(rangeObj,formatConfig)
+		field=textHandler.FieldCommand("formatChange",formatField)
+		return [field,self.text]
 
 	def _get_text(self):
 		return self._rangeObj.GetText(-1)
