@@ -25,7 +25,6 @@ from glob import glob
 import compileall
 
 COM_INTERFACES = (
-	("MS HTML", comtypes.client.GetModule, "mshtml.tlb"),
 	("UI Automation", comtypes.client.GetModule, "typelibs/uiAutomationClient.tlb"),
 	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2.tlb"),
 	("IService Provider library", comtypes.client.GetModule, "typelibs/servprov.tlb"),
