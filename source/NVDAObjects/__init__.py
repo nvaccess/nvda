@@ -983,7 +983,7 @@ This code is executed if a gain focus event is received by this object.
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(info,handleSymbols=True,extraDetail=True)
+			speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER)
 
 	def script_moveByWord(self,keyPress):
 		try:
@@ -1004,7 +1004,7 @@ This code is executed if a gain focus event is received by this object.
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_WORD)
-			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True)
+			speech.speakTextInfo(info,unit=textHandler.UNIT_WORD)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
@@ -1071,7 +1071,7 @@ This code is executed if a gain focus event is received by this object.
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
 			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(info,handleSymbols=True)
+			speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER)
 
 	def script_changeSelection(self,keyPress):
 		try:

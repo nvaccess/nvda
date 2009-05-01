@@ -99,7 +99,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._initTts()
 		self.tts.voice=v
 
-	def speakText(self,text,index=None):
+	def performSpeak(self,text,index=None,isCharacter=False):
 		flags=constants.SVSFIsXML
 		text=text.replace("<","&lt;")
 		pitch=(self._pitch/2)-25
@@ -108,7 +108,14 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		else:
 			bookmarkXML=""
 		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
+		if isCharacter: text = "<spell>%s</spell>"%text
 		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
+
+	def speakText(self,text,index=None):
+		self.performSpeak(text,index)
+
+	def speakCharacter(self,text,index=None):
+		self.performSpeak(text,index,True)
 
 	def cancel(self):
 		#if self.tts.Status.RunningState == 2:

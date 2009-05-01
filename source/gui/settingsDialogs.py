@@ -281,6 +281,9 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.beepForCapsCheckBox = wx.CheckBox(self, wx.NewId(), label = _("&Beep for capitals"))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		self.useSpellingFunctionalityCheckBox = wx.CheckBox(self, wx.NewId(), label = _("Use &spelling functionality if supported"))
+		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][getSynth().name]["useSpellingFunctionality"])
+		settingsSizer.Add(self.useSpellingFunctionalityCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		if hasattr(self,'voiceList'):
@@ -377,6 +380,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
 
 class KeyboardSettingsDialog(SettingsDialog):

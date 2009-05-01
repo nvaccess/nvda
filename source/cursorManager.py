@@ -65,7 +65,7 @@ class CursorManager(baseObject.ScriptableObject):
 			info.move(unit,direction)
 		self.selection=info
 		info.expand(unit)
-		speech.speakTextInfo(info,extraDetail=extraDetail,handleSymbols=handleSymbols,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=unit,reason=speech.REASON_CARET)
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)

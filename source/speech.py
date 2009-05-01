@@ -174,7 +174,10 @@ def _speakSpellingGen(text):
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		getSynth().speakText(char,index=index)
+		if len(char) == 1 and config.conf["speech"][getSynth().name]["useSpellingFunctionality"]:
+			getSynth().speakCharacter(char,index=index)
+		else:
+			getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
@@ -442,7 +445,9 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=False,reason=REASON_QUERY,index=None):
+	if unit in (textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD):
+		extraDetail=True
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -519,13 +524,17 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 			textListBlankLen+=1
 		textList.append(text)
 
-	if handleSymbols:
+	if unit in (textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD):
 		text=" ".join(textList)
 		if text:
 			speakText(text,index=index)
 		text=info.text
 		if len(text)==1:
-			speakSpelling(text)
+			if unit==textHandler.UNIT_CHARACTER:
+				speakSpelling(text)
+			else:
+				text=processSymbol(text)
+				speakText(text)
 		else:
 			speakText(text,index=index)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)

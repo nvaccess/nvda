@@ -124,7 +124,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	For example, if L{pitchMinStep} is set to 10, L{pitch} can only be multiples of 10; 10, 20, 30, etc.
 	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
 	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
-	The methods L{speakText}, L{cancel} and L{pause} should be overridden as appropriate.
+	The methods L{speakText}, L{speakCharacter}, L{cancel} and L{pause} should be overridden as appropriate. If L{speakCharacter} is not redefined in the synthDriver, speakText method will be called within a proxy function from base SynthDriver by default.
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
@@ -194,6 +194,17 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type index: int
 		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
 		"""
+
+	def speakCharacter(self, character, index=None):
+		"""Speak some character.
+		@param character: The character to speak.
+		@type character: str
+		@param index: An index (bookmark) to associate with this chunk of speech, C{None} if no index.
+		@type index: int
+		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
+		"""
+		character="char %s"%character
+		self.speakText(character,index)
 
 	def _get_lastIndex(self):
 		"""Obtain the index of the chunk of text which was last spoken.

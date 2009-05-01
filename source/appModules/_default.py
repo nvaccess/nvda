@@ -439,14 +439,14 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,extraDetail=True,handleSymbols=True)
+		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textHandler.UNIT_WORD)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 
 	def script_review_currentWord(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textHandler.UNIT_WORD)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET,extraDetail=True,handleSymbols=True)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textHandler.UNIT_WORD)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled")
@@ -460,7 +460,7 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textHandler.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,extraDetail=True,handleSymbols=True)
+		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textHandler.UNIT_WORD)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 
 	def script_review_startOfLine(self,keyPress):
@@ -470,7 +470,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakTextInfo(info,handleSymbols=True,extraDetail=True,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_previousCharacter(self,keyPress):
@@ -484,25 +484,25 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("left"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSpelling(reviewInfo.text)
+			speech.speakTextInfo(reviewInfo,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,handleSymbols=True,extraDetail=True,reason=speech.REASON_CARET)
+			speech.speakTextInfo(charInfo,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
 
 	def script_review_currentCharacter(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textHandler.UNIT_CHARACTER)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,extraDetail=True,handleSymbols=True,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			try:
 				c = ord(info._get_text())
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
 			except:
-				speech.speakTextInfo(info,extraDetail=True,handleSymbols=True,reason=speech.REASON_CARET)
+				speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character")
 
 	def script_review_nextCharacter(self,keyPress):
@@ -516,11 +516,11 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("right"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakSpelling(reviewInfo.text)
+			speech.speakTextInfo(reviewInfo,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
 			charInfo.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,handleSymbols=True,extraDetail=True,reason=speech.REASON_CARET)
+			speech.speakTextInfo(charInfo,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
 
 	def script_review_endOfLine(self,keyPress):
@@ -531,7 +531,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textHandler.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakTextInfo(info,handleSymbols=True,extraDetail=True,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_moveToCaret(self,keyPress):
