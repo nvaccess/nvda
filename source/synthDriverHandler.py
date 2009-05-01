@@ -203,7 +203,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type index: int
 		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
 		"""
-		character="char %s"%character
 		self.speakText(character,index)
 
 	def _get_lastIndex(self):
