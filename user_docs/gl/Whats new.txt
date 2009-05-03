@@ -12,9 +12,22 @@ Cambios dende 0.6 P3:
 * Correción: Detense o anunciamento de algunha información innecesaria cando o foco cambia tal como paneis raíz, paneis solapados e paneis desprazables en aplicacións Java ou Lotus.
 * novo: NVDA xa non cancela a voz cando as teclas de control do volume son premedas no teclado, permitindo ó usuario cambiar o volume e escoitar os resultados actuais imediatamente. (#287)
 * novo: Reescribido completamente o soporte para documentos de Microsoft Internet Explorer e Adobe Acrobat. Este soporte foi unificado co soporte interno utilizado por Mozilla Gecko, así características coma so mellor interpretación de páxina, navegación extensa e rápida, lista de ligas, seleción do texto, modo de foco automático e soporte do braille están agora dispoñibles con estos documentos.
-   
-   
+* Novo: Mellorado o soporte para o control da selección da data atopado no diálogo  de propiedades de Data / Hora en Windows Vista.
+* Correxido: faise que o campo de busca de palabras chave no visualizador da Axuda de Windows (CHM) sexa moito máis usable. Debido á cantidade de erros nese control, a palabra chave actual non podería ser lída xa que estaría continuamente cambiando.
+* Novo: mellorado o soporte para o menú de inicio Moderno XP/Vista (específicamente os menús Todos os programas e lugares). a información de nivel apropriada é agora anunciada.
+* Novo: a cantidade de texto que é anunciada co movemento do rato, é agora configurable dende o diálogo Opcións do Rato. Unha elección de parágrafo, liña, palabra ou caracter pode ser feita.
+* Correxido: anúncianse os números correctos de páxina en Microsoft Word se a numeración de páxina foi específicamente configurada no documento.
+* Novo: anúncianse erros de ortografía baixo o cursor en Microsoft Word.
+* Novo: soporte para a corrección ortográfica en Microsoft Word 2007. Soporte Parcial podería estar dispoñible para versións anteriores de Microsoft Word.
+* Correxido: mellor soporte para campos de edición atopados en diálogos de Microsoft Word (ex.: o diálogo Fontes). Agora é posible navegar estos controis cas flechas.
+* Novo: soporte para Windows Live Mail (específicamente agora as mensaxes de texto chan poden ser lídos).
+* Cambio: o anunciado das barras de progreso foi mellorado. O máis notable é que agora podes configurar ó NVDA para anuncialas a través de voz e pitidos ó mesmo tempo.
+* Novo: en Windows Vista, se o usuario se move ó escritorio seguro (ou porque un diálogo de control de UAC apareza, ou porque fóra premedo control+alt+suprimir), NVDA anunciará o feito de que o usuario está agora no escritorio seguro. Este escritorio aínda non é accesible para NVDA, sen embargo o usuario ó menos é notificado sobre o que ocorríu.
+* Correxido: mellor soporte para consolas do Dos. específicamente: NVDA agora pode ler o contido de consolas particulares que sempre se pensou que estaban en branco. Premendo control+break xa non pechan ó NVDA.
+ * Novo: NVDA pode anunciar texto baixo o rato dentro de ventás da consola do dos.
 
+   
+   
 Cambios dende 0.6 P2:
 
 * novo: Como a barra de fórmulas de Microsoft Excel é inaccesible para NVDA, proporciónase un cadro de diálogo específico de NVDA para editar cando o usuario prema f2 sobre unha celda. 
