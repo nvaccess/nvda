@@ -35,10 +35,16 @@ def getSynthList():
 		names.add(name)
 		try:
 			synth=__import__(name,globals(),locals(),[]).SynthDriver
+		except:
+			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
+			continue
+		try:
 			if synth.check():
 				synthList.append((synth.name,synth.description))
+			else:
+				log.debugWarning("Synthesizer %s doesn't pass the check, excluding from list"%name)
 		except:
-			pass
+			log.error("",exc_info=True)
 	return synthList
 
 def getSynth():
