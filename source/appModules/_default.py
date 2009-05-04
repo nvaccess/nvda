@@ -15,7 +15,7 @@ import mouseHandler
 import IAccessibleHandler
 import controlTypes
 import api
-import TextInfos
+import textInfos
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -54,10 +54,10 @@ class AppModule(appModuleHandler.AppModule):
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
 		try:
-			info=obj.makeTextInfo(TextInfos.POSITION_CARET)
+			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
-			info=obj.makeTextInfo(TextInfos.POSITION_FIRST)
-		info.expand(TextInfos.UNIT_LINE)
+			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
@@ -81,7 +81,7 @@ class AppModule(appModuleHandler.AppModule):
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
-		info=obj.makeTextInfo(TextInfos.POSITION_SELECTION)
+		info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			speech.speakMessage(_("no selection"))
 		else:
@@ -209,11 +209,11 @@ class AppModule(appModuleHandler.AppModule):
 			textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				try:
-					info=curObject.makeTextInfo(TextInfos.POSITION_SELECTION)
+					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
 						textList.append(info.text)
 					else:
-						info.expand(TextInfos.UNIT_READINGCHUNK)
+						info.expand(textInfos.UNIT_READINGCHUNK)
 						if not info.isCollapsed:
 							textList.append(info.text)
 				except (RuntimeError, NotImplementedError):
@@ -382,20 +382,20 @@ class AppModule(appModuleHandler.AppModule):
 	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
 
 	def script_review_top(self,keyPress):
-		info=api.getReviewPosition().obj.makeTextInfo(TextInfos.POSITION_FIRST)
+		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 
 	def script_review_previousLine(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
-		res=info.move(TextInfos.UNIT_LINE,-1)
+		res=info.move(textInfos.UNIT_LINE,-1)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
@@ -403,7 +403,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_review_currentLine(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
@@ -412,143 +412,143 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_review_nextLine(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
-		res=info.move(TextInfos.UNIT_LINE,1)
+		res=info.move(textInfos.UNIT_LINE,1)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,keyPress):
-		info=api.getReviewPosition().obj.makeTextInfo(TextInfos.POSITION_LAST)
+		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 
 	def script_review_previousWord(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_WORD)
+		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
-		res=info.move(TextInfos.UNIT_WORD,-1)
+		res=info.move(textInfos.UNIT_WORD,-1)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_WORD)
+		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=TextInfos.UNIT_WORD)
+		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 
 	def script_review_currentWord(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_WORD)
+		info.expand(textInfos.UNIT_WORD)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=TextInfos.UNIT_WORD)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled")
 
 	def script_review_nextWord(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_WORD)
+		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
-		res=info.move(TextInfos.UNIT_WORD,1)
+		res=info.move(textInfos.UNIT_WORD,1)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_WORD)
+		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=TextInfos.UNIT_WORD)
+		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 
 	def script_review_startOfLine(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_CHARACTER)
+		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_previousCharacter(self,keyPress):
 		lineInfo=api.getReviewPosition().copy()
-		lineInfo.expand(TextInfos.UNIT_LINE)
+		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(TextInfos.UNIT_CHARACTER)
+		charInfo.expand(textInfos.UNIT_CHARACTER)
 		charInfo.collapse()
-		res=charInfo.move(TextInfos.UNIT_CHARACTER,-1)
+		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			speech.speakMessage(_("left"))
 			reviewInfo=api.getReviewPosition().copy()
-			reviewInfo.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			reviewInfo.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
-			charInfo.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
 
 	def script_review_currentCharacter(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_CHARACTER)
+		info.expand(textInfos.UNIT_CHARACTER)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			try:
 				c = ord(info._get_text())
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
 			except:
-				speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character")
 
 	def script_review_nextCharacter(self,keyPress):
 		lineInfo=api.getReviewPosition().copy()
-		lineInfo.expand(TextInfos.UNIT_LINE)
+		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(TextInfos.UNIT_CHARACTER)
+		charInfo.expand(textInfos.UNIT_CHARACTER)
 		charInfo.collapse()
-		res=charInfo.move(TextInfos.UNIT_CHARACTER,1)
+		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			speech.speakMessage(_("right"))
 			reviewInfo=api.getReviewPosition().copy()
-			reviewInfo.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			reviewInfo.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
-			charInfo.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
 
 	def script_review_endOfLine(self,keyPress):
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		info.collapse(end=True)
-		info.move(TextInfos.UNIT_CHARACTER,-1)
+		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_CHARACTER)
+		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_moveToCaret(self,keyPress):
 		try:
-			info=api.getReviewPosition().obj.makeTextInfo(TextInfos.POSITION_CARET)
+			info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
 				ui.message(_("No caret"))
 				return
 		api.setReviewPosition(info.copy())
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
 		api.getReviewPosition().updateCaret()
 		info=api.getReviewPosition().copy()
-		info.expand(TextInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
 
@@ -602,9 +602,9 @@ class AppModule(appModuleHandler.AppModule):
 		if v and not v.passThrough:
 			o=v
 		try:
-			info=o.makeTextInfo(TextInfos.POSITION_CARET)
+			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
-			info=o.makeTextInfo(TextInfos.POSITION_FIRST)
+			info=o.makeTextInfo(textInfos.POSITION_FIRST)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
@@ -619,13 +619,13 @@ class AppModule(appModuleHandler.AppModule):
 		}
 		o=api.getFocusObject()
 		try:
-			info=o.makeTextInfo(TextInfos.POSITION_CARET)
+			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
-			info=o.makeTextInfo(TextInfos.POSITION_FIRST)
-		info.expand(TextInfos.UNIT_CHARACTER)
-		formatField=TextInfos.FormatField()
+			info=o.makeTextInfo(textInfos.POSITION_FIRST)
+		info.expand(textInfos.UNIT_CHARACTER)
+		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
-			if isinstance(field,TextInfos.FieldCommand) and isinstance(field.field,TextInfos.FormatField):
+			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		if len(formatField)==0:
 			ui.message(_("No formatting information"))
@@ -697,7 +697,7 @@ class AppModule(appModuleHandler.AppModule):
 		import winConsoleHandler
 		speech.speakMessage("width %s, height %s"%(winConsoleHandler.consoleScreenBufferInfo.dwMaximumWindowSize.x,winConsoleHandler.consoleScreenBufferInfo.dwMaximumWindowSize.y))
 		focus=api.getFocusObject()
-		info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+		info=focus.makeTextInfo(textInfos.POSITION_CARET)
 		speech.speakMessage("x %s, y %s"%info._consoleCoordFromOffset(0))
 		obj=api.getNavigatorObject()
 		import ctypes

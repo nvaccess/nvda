@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import TextInfos
+import textInfos
 
 class Offsets(object):
 	"""Represents two offsets."""
@@ -122,7 +122,7 @@ def findEndOfWord(text,offset,lineLength=None):
 		offset+=1
 	return offset
 
-class OffsetsTextInfo(TextInfos.TextInfo):
+class OffsetsTextInfo(textInfos.TextInfo):
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -149,7 +149,7 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		formatField=TextInfos.FormatField()
+		formatField=textInfos.FormatField()
 		startOffset,endOffset=self._startOffset,self._endOffset
 		if formatConfig["reportLineNumber"]:
 			if calculateOffsets:
@@ -189,18 +189,18 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 
 	def __init__(self,obj,position):
 		super(OffsetsTextInfo,self).__init__(obj,position)
-		if isinstance(position,TextInfos.Point):
+		if isinstance(position,textInfos.Point):
 			offset=self._getOffsetFromPoint(position.x,position.y)
 			position=Offsets(offset,offset)
-		if position==TextInfos.POSITION_FIRST:
+		if position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
-		elif position==TextInfos.POSITION_LAST:
+		elif position==textInfos.POSITION_LAST:
 			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
-		elif position==TextInfos.POSITION_CARET:
+		elif position==textInfos.POSITION_CARET:
 			self._startOffset=self._endOffset=self._getCaretOffset()
-		elif position==TextInfos.POSITION_SELECTION:
+		elif position==textInfos.POSITION_SELECTION:
 			(self._startOffset,self._endOffset)=self._getSelectionOffsets()
-		elif position==TextInfos.POSITION_ALL:
+		elif position==textInfos.POSITION_ALL:
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
 		elif isinstance(position,Offsets):
@@ -210,15 +210,15 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 			raise NotImplementedError("position: %s not supported"%position)
 
 	def _getUnitOffsets(self,unit,offset):
-		if unit==TextInfos.UNIT_CHARACTER:
+		if unit==textInfos.UNIT_CHARACTER:
 			offsetsFunc=self._getCharacterOffsets
-		elif unit==TextInfos.UNIT_WORD:
+		elif unit==textInfos.UNIT_WORD:
 			offsetsFunc=self._getWordOffsets
-		elif unit==TextInfos.UNIT_LINE:
+		elif unit==textInfos.UNIT_LINE:
 			offsetsFunc=self._getLineOffsets
-		elif unit==TextInfos.UNIT_PARAGRAPH:
+		elif unit==textInfos.UNIT_PARAGRAPH:
 			offsetsFunc=self._getParagraphOffsets
-		elif unit==TextInfos.UNIT_READINGCHUNK:
+		elif unit==textInfos.UNIT_READINGCHUNK:
 			offsetsFunc=self._getReadingChunkOffsets
 		else:
 			raise ValueError("unknown unit: %s"%unit)
@@ -284,7 +284,7 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 		if not formatConfig['detectFormatAfterCursor']:
 			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
 			text=self.text
-			return [TextInfos.FieldCommand('formatChange',field),text]
+			return [textInfos.FieldCommand('formatChange',field),text]
 		commandList=[]
 		offset=self._startOffset
 		while offset<self._endOffset:
@@ -293,7 +293,7 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 				boundEnd=boundStart+1
 			if boundEnd<=offset:
 				boundEnd=offset+1
-			command=TextInfos.FieldCommand("formatChange",field)
+			command=textInfos.FieldCommand("formatChange",field)
 			commandList.append(command)
 			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
 			commandList.append(text)
@@ -304,13 +304,13 @@ class OffsetsTextInfo(TextInfos.TextInfo):
 		return self._getTextRange(self._startOffset,self._endOffset)
 
 	def unitIndex(self,unit):
-		if unit==TextInfos.UNIT_LINE:  
+		if unit==textInfos.UNIT_LINE:  
 			return self._lineNumFromOffset(self._startOffset)
 		else:
 			raise NotImplementedError
 
 	def unitCount(self,unit):
-		if unit==TextInfos.UNIT_LINE:
+		if unit==textInfos.UNIT_LINE:
 			return self._getLineCount()
 		else:
 			raise NotImplementedError

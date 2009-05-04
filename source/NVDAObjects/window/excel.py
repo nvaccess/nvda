@@ -9,7 +9,7 @@ import re
 import ctypes
 import comtypes.automation
 import wx
-import TextInfos.offsets
+import textInfos.offsets
 import eventHandler
 import gui
 import gui.scriptUI
@@ -127,10 +127,10 @@ class ExcelGrid(Window):
 	("Shift+Control+ExtendedEnd","moveByCell"),
 ]]
 
-class ExcelCellTextInfo(TextInfos.offsets.OffsetsTextInfo):
+class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		formatField=TextInfos.FormatField()
+		formatField=textInfos.FormatField()
 		fontObj=self.obj.firstCell.font
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name

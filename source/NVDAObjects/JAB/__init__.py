@@ -7,7 +7,7 @@ import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
-import TextInfos.offsets
+import textInfos.offsets
 from .. import NVDAObjectTextInfo
 import NVDAObjects.IAccessible
 import globalVars
@@ -92,7 +92,7 @@ JABStatesToNVDAStates={
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
-class JABTextInfo(TextInfos.offsets.OffsetsTextInfo):
+class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		info=self.obj.jabContext.getAccessibleTextInfo(x,y)

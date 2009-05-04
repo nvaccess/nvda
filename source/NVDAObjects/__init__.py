@@ -17,14 +17,14 @@ from keyUtils import key, sendKey
 from scriptHandler import isScriptWaiting
 import globalVars
 import api
-import TextInfos.offsets
+import textInfos.offsets
 import config
 import controlTypes
 import appModuleHandler
 import virtualBufferHandler
 import braille
 
-class NVDAObjectTextInfo(TextInfos.offsets.OffsetsTextInfo):
+class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		return self.obj.basicText
@@ -38,8 +38,8 @@ class NVDAObjectTextInfo(TextInfos.offsets.OffsetsTextInfo):
 
 	def _getLineOffsets(self,offset):
 		storyText=self._getStoryText()
-		start=TextInfos.offsets.findStartOfLine(storyText,offset)
-		end=TextInfos.offsets.findEndOfLine(storyText,offset)
+		start=textInfos.offsets.findStartOfLine(storyText,offset)
+		end=textInfos.offsets.findEndOfLine(storyText,offset)
 		return [start,end]
 
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
@@ -529,10 +529,10 @@ Tries to force this object to take the focus.
 		if not config.conf['mouse']['reportTextUnderMouse']:
 			return
 		try:
-			info=self.makeTextInfo(TextInfos.Point(x,y))
+			info=self.makeTextInfo(textInfos.Point(x,y))
 			info.expand(info.unit_mouseChunk)
 		except:
-			info=NVDAObjectTextInfo(self,TextInfos.POSITION_ALL)
+			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -598,7 +598,7 @@ This code is executed if a gain focus event is received by this object.
 			braille.handler.handleCaretMove(self)
 			if globalVars.caretMovesReviewCursor:
 				try:
-					api.setReviewPosition(self.makeTextInfo(TextInfos.POSITION_CARET))
+					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
 					pass
 
@@ -632,7 +632,7 @@ This code is executed if a gain focus event is received by this object.
 				return True
 			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
-				newBookmark = self.makeTextInfo(TextInfos.POSITION_CARET).bookmark
+				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 				if newBookmark!=bookmark:
 					return True
 			except:
@@ -643,7 +643,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def script_moveByLine(self,keyPress):
 		try:
-			info=self.makeTextInfo(TextInfos.POSITION_CARET)
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -654,17 +654,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(TextInfos.UNIT_LINE)
+			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info)
 
 	def script_moveByCharacter(self,keyPress):
 		try:
-			info=self.makeTextInfo(TextInfos.POSITION_CARET)
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -675,17 +675,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER)
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
 
 	def script_moveByWord(self,keyPress):
 		try:
-			info=self.makeTextInfo(TextInfos.POSITION_CARET)
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -696,17 +696,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(TextInfos.UNIT_WORD)
-			speech.speakTextInfo(info,unit=TextInfos.UNIT_WORD)
+			info.expand(textInfos.UNIT_WORD)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
-			info=self.makeTextInfo(TextInfos.POSITION_CARET)
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -717,25 +717,25 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(TextInfos.UNIT_PARAGRAPH)
+			info.expand(textInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
 	def script_backspace(self,keyPress):
 		try:
-			oldInfo=self.makeTextInfo(TextInfos.POSITION_CARET)
+			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
-		res=testInfo.move(TextInfos.UNIT_CHARACTER,-1)
+		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res<0:
-			testInfo.expand(TextInfos.UNIT_CHARACTER)
+			testInfo.expand(textInfos.UNIT_CHARACTER)
 			delChar=testInfo.text
 		else:
 			delChar=""
@@ -744,7 +744,7 @@ This code is executed if a gain focus event is received by this object.
 			speech.speakSpelling(delChar)
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
@@ -752,7 +752,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def script_delete(self,keyPress):
 		try:
-			info=self.makeTextInfo(TextInfos.POSITION_CARET)
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -763,17 +763,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
+				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(TextInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER)
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
 
 	def script_changeSelection(self,keyPress):
 		try:
-			oldInfo=self.makeTextInfo(TextInfos.POSITION_SELECTION)
+			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			sendKey(keyPress)
 			return
@@ -782,7 +782,7 @@ This code is executed if a gain focus event is received by this object.
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			try:
-				newInfo=focus.makeTextInfo(TextInfos.POSITION_SELECTION)
+				newInfo=focus.makeTextInfo(textInfos.POSITION_SELECTION)
 			except:
 				return
 			speech.speakSelectionChange(oldInfo,newInfo)
@@ -797,7 +797,7 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 	def initAutoSelectDetection(self):
 		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
 		try:
-			self._lastSelectionPos=self.makeTextInfo(TextInfos.POSITION_SELECTION)
+			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
 		self.hasContentChangedSinceLastSelection=False
@@ -808,7 +808,7 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 		if not oldInfo:
 			return
 		try:
-			newInfo=self.makeTextInfo(TextInfos.POSITION_SELECTION)
+			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
 			return

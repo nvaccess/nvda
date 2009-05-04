@@ -451,9 +451,9 @@ class MouseSettingsDialog(SettingsDialog):
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution"))
 		textUnitSizer.Add(textUnitLabel)
-		import TextInfos
-		self.textUnits=[TextInfos.UNIT_CHARACTER,TextInfos.UNIT_WORD,TextInfos.UNIT_LINE,TextInfos.UNIT_PARAGRAPH]
-		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[TextInfos.unitLabels[x] for x in self.textUnits])
+		import textInfos
+		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
+		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textInfos.unitLabels[x] for x in self.textUnits])
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
 		except:

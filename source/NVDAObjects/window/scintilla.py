@@ -1,7 +1,7 @@
 import ctypes
 import IAccessibleHandler
 import speech
-import TextInfos.offsets
+import textInfos.offsets
 import winKernel
 import winUser
 import globalVars
@@ -57,13 +57,13 @@ class TextRangeStruct(ctypes.Structure):
 		('lpstrText',ctypes.c_char_p),
 	]
 
-class ScintillaTextInfo(TextInfos.offsets.OffsetsTextInfo):
+class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		point=TextInfos.Point(
+		point=textInfos.Point(
 		winUser.sendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
 		winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
@@ -93,7 +93,7 @@ class ScintillaTextInfo(TextInfos.offsets.OffsetsTextInfo):
 					break
 		else:
 			startOffset,endOffset=(self._startOffset,self._endOffset)
-		formatField=TextInfos.FormatField()
+		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 			fontNameBuf=ctypes.create_string_buffer(32)

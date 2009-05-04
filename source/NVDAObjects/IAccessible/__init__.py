@@ -7,7 +7,7 @@
 from comtypes import COMError
 import os
 import tones
-import TextInfos.offsets
+import textInfos.offsets
 import time
 import IAccessibleHandler
 import JABHandler
@@ -42,7 +42,7 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
-class IA2TextTextInfo(TextInfos.offsets.OffsetsTextInfo):
+class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
@@ -55,7 +55,7 @@ class IA2TextTextInfo(TextInfos.offsets.OffsetsTextInfo):
 			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		except:
 			raise NotImplementedError
-		point=TextInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
 		return point
 
 	def _get_unit_mouseChunk(self):
@@ -132,8 +132,8 @@ class IA2TextTextInfo(TextInfos.offsets.OffsetsTextInfo):
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
 		except COMError:
 			log.debugWarning("could not get attributes",exc_info=True)
-			return TextInfos.FormatField(),(self._startOffset,self._endOffset)
-		formatField=TextInfos.FormatField()
+			return textInfos.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textInfos.FormatField()
 		if not attribsString and offset>0:
 			try:
 				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
@@ -913,10 +913,10 @@ the NVDAObject for IAccessible
 			if not caretInDocument:
 				return
 			try:
-				info=self.makeTextInfo(TextInfos.POSITION_CARET)
+				info=self.makeTextInfo(textInfos.POSITION_CARET)
 			except RuntimeError:
 				return
-			info.expand(TextInfos.UNIT_CHARACTER)
+			info.expand(textInfos.UNIT_CHARACTER)
 			try:
 				char=ord(info.text)
 			except:
@@ -1055,7 +1055,7 @@ class Dialog(IAccessible):
 			#However, graphics, static text, separators and Windows are ok.
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 				continue
-			childText=child.makeTextInfo(TextInfos.POSITION_ALL).text
+			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
 				childText=child.basicText
 			textList.append(childText)

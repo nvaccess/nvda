@@ -15,7 +15,7 @@ from logHandler import log
 import globalVars
 import speech
 import queueHandler
-import TextInfos
+import textInfos
 from NVDAObjects import NVDAObjectTextInfo
 
 consoleObject=None #:The console window that is currently in the foreground.
@@ -227,7 +227,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 		relativeY=(characterY-consoleScreenBufferInfo.srWindow.Top)*characterHeight
 		x=relativeX+screenLeft
 		y=relativeY+screenTop
-		return TextInfos.Point(x,y)
+		return textInfos.Point(x,y)
 
 	def _getCaretOffset(self):
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
