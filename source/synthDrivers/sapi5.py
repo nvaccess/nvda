@@ -108,7 +108,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		else:
 			bookmarkXML=""
 		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
-		if isCharacter: text = "<spell>%s</spell>"%text
+		if isCharacter: text = "<spell>%s</spell>."%text
 		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
 
 	def speakText(self,text,index=None):
