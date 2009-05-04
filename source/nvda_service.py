@@ -10,6 +10,7 @@ import time
 if not getattr(sys, "frozen", None):
 	raise RuntimeError("Can only be run compiled with py2exe")
 
+CREATE_UNICODE_ENVIRONMENT=1024
 INFINITE = 0xffffffff
 UOI_NAME = 2
 SYNCHRONIZE = 0x100000
@@ -35,17 +36,17 @@ def debug(msg):
 
 def getInputDesktopName():
 	desktop = windll.user32.OpenInputDesktop(0, False, 0)
-	name = create_string_buffer(256)
-	windll.user32.GetUserObjectInformationA(desktop, UOI_NAME, byref(name), sizeof(name), None)
+	name = create_unicode_buffer(256)
+	windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, byref(name), sizeof(name), None)
 	windll.user32.CloseDesktop(desktop)
-	return r"winsta0\%s" % name.value
+	return ur"winsta0\%s" % name.value
 
 class STARTUPINFO(Structure):
 	_fields_=[
 		('cb',DWORD),
-		('lpReserved',LPSTR),
-		('lpDesktop',LPSTR),
-		('lpTitle',LPSTR),
+		('lpReserved',LPWSTR),
+		('lpDesktop',LPWSTR),
+		('lpTitle',LPWSTR),
 		('dwX',DWORD),
 		('dwY',DWORD),
 		('dwXSize',DWORD),
@@ -99,18 +100,21 @@ def executeProcess(desktop, token, executable, *argStrings):
 	argsString=" ".join(list(argStrings))
 	startupInfo=STARTUPINFO(cb=sizeof(STARTUPINFO),lpDesktop=desktop)
 	processInformation=PROCESS_INFORMATION()
+	cmdBuf=create_unicode_buffer(u'"%s" %s'%(executable,argsString))
 	if token:
-		if windll.advapi32.CreateProcessAsUserA(token, None, '"%s" %s'%(executable,argsString),None,None,False,0,None,None,byref(startupInfo),byref(processInformation)) == 0:
-			raise WinError()
+		env=c_void_p()
+		windll.userenv.CreateEnvironmentBlock(byref(env),token,False)
+		windll.advapi32.CreateProcessAsUserW(token, None, cmdBuf,None,None,False,CREATE_UNICODE_ENVIRONMENT,env,None,byref(startupInfo),byref(processInformation))
 		windll.kernel32.CloseHandle(token)
+		windll.userenv.DestroyEnvironmentBlock(env)
 	else:
-		windll.kernel32.CreateProcessA(None, '"%s" %s'%(executable,argsString),None,None,False,0,None,None,byref(startupInfo),byref(processInformation))
+		windll.kernel32.CreateProcessW(None, cmdBuf,None,None,False,0,None,None,byref(startupInfo),byref(processInformation))
 	return processInformation.hProcess
 
 def superviseSession():
 	origSession = windll.kernel32.WTSGetActiveConsoleSessionId()
 	session = origSession
-	desktopSwitchEvt = windll.kernel32.OpenEventA(SYNCHRONIZE, False, "WinSta0_DesktopSwitch")
+	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 
 	while session == origSession:
 		desktop = getInputDesktopName()
