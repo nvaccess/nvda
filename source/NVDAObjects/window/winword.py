@@ -12,7 +12,8 @@ import globalVars
 import speech
 from keyUtils import sendKey, key
 import config
-import textHandler
+import TextInfos
+import TextInfos.offsets
 import controlTypes
 from . import Window
  
@@ -56,20 +57,20 @@ wdGoToPage=1
 wdGoToLine=3
 
 NVDAUnitsToWordUnits={
-	textHandler.UNIT_CHARACTER:wdCharacter,
-	textHandler.UNIT_WORD:wdWord,
-	textHandler.UNIT_LINE:wdLine,
-	textHandler.UNIT_SENTENCE:wdSentence,
-	textHandler.UNIT_PARAGRAPH:wdParagraph,
-	textHandler.UNIT_TABLE:wdTable,
-	textHandler.UNIT_CELL:wdCell,
-	textHandler.UNIT_ROW:wdRow,
-	textHandler.UNIT_COLUMN:wdColumn,
-	textHandler.UNIT_STORY:wdStory,
-	textHandler.UNIT_READINGCHUNK:wdSentence,
+	TextInfos.UNIT_CHARACTER:wdCharacter,
+	TextInfos.UNIT_WORD:wdWord,
+	TextInfos.UNIT_LINE:wdLine,
+	TextInfos.UNIT_SENTENCE:wdSentence,
+	TextInfos.UNIT_PARAGRAPH:wdParagraph,
+	TextInfos.UNIT_TABLE:wdTable,
+	TextInfos.UNIT_CELL:wdCell,
+	TextInfos.UNIT_ROW:wdRow,
+	TextInfos.UNIT_COLUMN:wdColumn,
+	TextInfos.UNIT_STORY:wdStory,
+	TextInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-class WordDocumentTextInfo(textHandler.TextInfo):
+class WordDocumentTextInfo(TextInfos.TextInfo):
 
 	def _moveInTable(self,c=0,r=0):
 		try:
@@ -104,7 +105,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		sel.SetRange(oldSel.Start,oldSel.End)
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
-		formatField=textHandler.FormatField()
+		formatField=TextInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
 		if formatConfig["reportSpellingErrors"] and range.spellingErrors.count>0: 
@@ -168,24 +169,24 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textHandler.Point):
+		if isinstance(position,TextInfos.Point):
 			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.x,position.y)
-		elif position==textHandler.POSITION_SELECTION:
+		elif position==TextInfos.POSITION_SELECTION:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
-		elif position==textHandler.POSITION_CARET:
+		elif position==TextInfos.POSITION_CARET:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.Collapse()
-		elif position==textHandler.POSITION_ALL:
+		elif position==TextInfos.POSITION_ALL:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.Expand(wdStory)
-		elif position==textHandler.POSITION_FIRST:
+		elif position==TextInfos.POSITION_FIRST:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(0,0)
-		elif position==textHandler.POSITION_LAST:
+		elif position==TextInfos.POSITION_LAST:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.moveEnd(wdStory,1)
 			self._rangeObj.move(wdCharacter,-1)
-		elif isinstance(position,textHandler.Offsets):
+		elif isinstance(position,TextInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
 		else:
@@ -198,7 +199,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		range.Collapse()
 		if not formatConfig["detectFormatAfterCursor"]:
 			range.expand(wdCharacter)
-			field=textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig))
+			field=TextInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig))
 			return [field,self.text]
 		commandList=[]
 		endLimit=self._rangeObj.end
@@ -206,7 +207,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		range.Collapse()
 		while range.end<endLimit:
 			self._expandFormatRange(range)
-			commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
+			commandList.append(TextInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			commandList.append(range.text)
 			end=range.end
 			range.start=end
@@ -216,11 +217,11 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return commandList
 
 	def expand(self,unit):
-		if unit==textHandler.UNIT_LINE and self.basePosition not in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
-			unit=textHandler.UNIT_SENTENCE
-		if unit==textHandler.UNIT_LINE:
+		if unit==TextInfos.UNIT_LINE and self.basePosition not in (TextInfos.POSITION_CARET,TextInfos.POSITION_SELECTION):
+			unit=TextInfos.UNIT_SENTENCE
+		if unit==TextInfos.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
-		elif unit==textHandler.UNIT_CHARACTER:
+		elif unit==TextInfos.UNIT_CHARACTER:
 			self._rangeObj.moveEnd(wdCharacter,1)
 		elif unit in NVDAUnitsToWordUnits:
 			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
@@ -283,8 +284,8 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return text
 
 	def move(self,unit,direction,endPoint=None):
-		if unit==textHandler.UNIT_LINE:
-			unit=textHandler.UNIT_SENTENCE
+		if unit==TextInfos.UNIT_LINE:
+			unit=TextInfos.UNIT_SENTENCE
 		if unit in NVDAUnitsToWordUnits:
 			unit=NVDAUnitsToWordUnits[unit]
 		else:
@@ -299,7 +300,7 @@ class WordDocumentTextInfo(textHandler.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return textHandler.Offsets(self._rangeObj.Start,self._rangeObj.End)
+		return TextInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
 	def updateCaret(self):
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
@@ -336,7 +337,7 @@ class WordDocument(Window):
  			speech.speakMessage(_("not in table"))
 		if info._moveInTable(0,1):
 			info.updateCaret()
-			info.expand(textHandler.UNIT_CELL)
+			info.expand(TextInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakMessage("edge of table")
@@ -347,7 +348,7 @@ class WordDocument(Window):
  			speech.speakMessage(_("not in table"))
 		if info._moveInTable(0,-1):
 			info.updateCaret()
-			info.expand(textHandler.UNIT_CELL)
+			info.expand(TextInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakMessage("edge of table")
@@ -358,7 +359,7 @@ class WordDocument(Window):
  			speech.speakMessage(_("not in table"))
 		if info._moveInTable(1,0):
 			info.updateCaret()
-			info.expand(textHandler.UNIT_CELL)
+			info.expand(TextInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakMessage("edge of table")
@@ -369,7 +370,7 @@ class WordDocument(Window):
  			speech.speakMessage(_("not in table"))
 		if info._moveInTable(-1,0):
 			info.updateCaret()
-			info.expand(textHandler.UNIT_CELL)
+			info.expand(TextInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			speech.speakMessage("edge of table")

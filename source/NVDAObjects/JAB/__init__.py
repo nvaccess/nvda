@@ -7,7 +7,7 @@ import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
-import textHandler
+import TextInfos.offsets
 from .. import NVDAObjectTextInfo
 import NVDAObjects.IAccessible
 import globalVars
@@ -92,7 +92,7 @@ JABStatesToNVDAStates={
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
-class JABTextInfo(NVDAObjectTextInfo):
+class JABTextInfo(TextInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		info=self.obj.jabContext.getAccessibleTextInfo(x,y)
@@ -119,20 +119,11 @@ class JABTextInfo(NVDAObjectTextInfo):
 	def _setSelectionOffsets(self,start,end):
 		self.obj.jabContext.selectTextRange(start,end)
 
-	def _getStoryText(self):
-		if not hasattr(self,'_storyText'):
-			storyLength=self._getStoryLength()
-			self._storyText=self._getTextRange(0,storyLength)
-		return self._storyText
-
 	def _getStoryLength(self):
 		if not hasattr(self,'_storyLength'):
 			textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 			self._storyLength=textInfo.charCount
 		return self._storyLength
-
-	def _getLineCount(self):
-		return -1 
 
 	def _getTextRange(self,start,end):
 		#Java needs end of range as last character, not one past the last character

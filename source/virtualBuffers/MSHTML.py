@@ -5,7 +5,7 @@ import NVDAObjects.IAccessible.MSHTML
 import winUser
 import IAccessibleHandler
 from logHandler import log
-import textHandler
+import TextInfos
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -52,7 +52,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
-		newAttrs=textHandler.ControlField()
+		newAttrs=TextInfos.ControlField()
 		newAttrs.update(attrs)
 		if role:
 			newAttrs['role']=role

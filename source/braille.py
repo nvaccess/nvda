@@ -14,7 +14,7 @@ import config
 from logHandler import log
 import controlTypes
 import api
-import textHandler
+import TextInfos
 import speech
 
 __path__ = ["brailleDisplayDrivers"]
@@ -273,17 +273,17 @@ class TextInfoRegion(Region):
 	def _getSelection(self):
 		"""Retrieve the selection.
 		@return: The selection.
-		@rtype: L{textHandler.TextInfo}
+		@rtype: L{TextInfos.TextInfo}
 		"""
 		try:
-			return self.obj.makeTextInfo(textHandler.POSITION_SELECTION)
+			return self.obj.makeTextInfo(TextInfos.POSITION_SELECTION)
 		except:
-			return self.obj.makeTextInfo(textHandler.POSITION_FIRST)
+			return self.obj.makeTextInfo(TextInfos.POSITION_FIRST)
 
 	def _setSelection(self, info):
 		"""Set the selection.
 		@param info: The range to which the selection should be moved.
-		@type info: L{textHandler.TextInfo}
+		@type info: L{TextInfos.TextInfo}
 		"""
 		try:
 			info.updateSelection()
@@ -295,7 +295,7 @@ class TextInfoRegion(Region):
 		caret.collapse()
 		# Get the line at the caret.
 		self._line = line = caret.copy()
-		line.expand(textHandler.UNIT_LINE)
+		line.expand(TextInfos.UNIT_LINE)
 		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
 		# Therefore, grab the line in two parts.
 		# First, the chunk from the start of the line up to the caret.
@@ -311,7 +311,7 @@ class TextInfoRegion(Region):
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
 		self.rawText += (chunk.text or "").rstrip("\r\n\0\v\f") + " "
 		# If this is not the first line, hide all previous regions.
-		start = caret.obj.makeTextInfo(textHandler.POSITION_FIRST)
+		start = caret.obj.makeTextInfo(TextInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
@@ -324,12 +324,12 @@ class TextInfoRegion(Region):
 		dest = self._line.copy()
 		dest.collapse()
 		# and move pos characters from there.
-		dest.move(textHandler.UNIT_CHARACTER, pos)
+		dest.move(TextInfos.UNIT_CHARACTER, pos)
 		self._setSelection(dest)
 
 	def nextLine(self):
 		dest = self._line.copy()
-		moved = dest.move(textHandler.UNIT_LINE, 1)
+		moved = dest.move(TextInfos.UNIT_LINE, 1)
 		if not moved:
 			return
 		dest.collapse()
@@ -339,7 +339,7 @@ class TextInfoRegion(Region):
 		dest = self._line.copy()
 		dest.collapse()
 		# Move to the last character of the previous line.
-		moved = dest.move(textHandler.UNIT_CHARACTER, -1)
+		moved = dest.move(TextInfos.UNIT_CHARACTER, -1)
 		if not moved:
 			return
 		dest.collapse()

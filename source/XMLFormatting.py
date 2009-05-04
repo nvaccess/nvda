@@ -1,5 +1,5 @@
 from xml.parsers import expat
-import textHandler
+import TextInfos
 from logHandler import log
 
 class XMLTextParser(object): 
@@ -13,21 +13,21 @@ class XMLTextParser(object):
 
 	def _startElementHandler(self,tagName,attrs):
 		if tagName=='control':
-			newAttrs=textHandler.ControlField()
+			newAttrs=TextInfos.ControlField()
 			for name,value in attrs.iteritems():
 				newAttrs[name]=value
-			self._commandList.append(textHandler.FieldCommand("controlStart",newAttrs))
+			self._commandList.append(TextInfos.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
-			newAttrs=textHandler.FormatField()
+			newAttrs=TextInfos.FormatField()
 			for name,value in attrs.iteritems():
 				newAttrs[name.lower()]=value
-			self._commandList.append(textHandler.FieldCommand("formatChange",newAttrs))
+			self._commandList.append(TextInfos.FieldCommand("formatChange",newAttrs))
 		else:
 			raise ValueError("Unknown tag name: %s"%tagName)
 
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
-			self._commandList.append(textHandler.FieldCommand("controlEnd",None))
+			self._commandList.append(TextInfos.FieldCommand("controlEnd",None))
 		elif tagName=="text":
 			pass
 		else:

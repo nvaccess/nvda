@@ -9,7 +9,7 @@ import globalVars
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
-import textHandler
+import TextInfos
 import _default
 import speech
 import cursorManager
@@ -60,7 +60,7 @@ class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def event_gainFocus(self):
 		super(MSNHistory,self).event_gainFocus()
-		self.selection=self.makeTextInfo(textHandler.POSITION_LAST)
+		self.selection=self.makeTextInfo(TextInfos.POSITION_LAST)
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)

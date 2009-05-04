@@ -17,20 +17,14 @@ from keyUtils import key, sendKey
 from scriptHandler import isScriptWaiting
 import globalVars
 import api
-import textHandler
+import TextInfos.offsets
 import config
 import controlTypes
 import appModuleHandler
 import virtualBufferHandler
 import braille
 
-class NVDAObjectTextInfo(textHandler.TextInfo):
-
-	def __eq__(self,other):
-		if self is other or (isinstance(other,NVDAObjectTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
-			return True
-		else:
-			return False
+class NVDAObjectTextInfo(TextInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		return self.obj.basicText
@@ -38,293 +32,15 @@ class NVDAObjectTextInfo(textHandler.TextInfo):
 	def _getStoryLength(self):
 		return len(self._getStoryText())
 
-	def _getTextLineLength(self):
-		return self.obj.basicTextLineLength
-
-	def _getCaretOffset(self):
-		return self.obj.basicCaretOffset
-
-	def _setCaretOffset(self,offset):
-		self.obj.basicCaretOffset=offset
-
-	def _getSelectionOffsets(self):
-		return self.obj.basicSelectionOffsets
-
-	def _setSelectionOffsets(self,start,end):
-		self.obj.basicSelectionOffsets=(start,end)
-
 	def _getTextRange(self,start,end):
 		text=self._getStoryText()
 		return text[start:end]
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		formatField=textHandler.FormatField()
-		startOffset,endOffset=self._startOffset,self._endOffset
-		if formatConfig["reportLineNumber"]:
-			if calculateOffsets:
-				startOffset,endOffset=self._getLineOffsets(offset)
-			lineNum=self._getLineNumFromOffset(offset)
-			if lineNum is not None:
-				formatField["line-number"]=lineNum+1
-		return formatField,(startOffset,endOffset)
-
-	def _getCharacterOffsets(self,offset):
-		return [offset,offset+1]
-
-	def _getWordOffsets(self,offset):
-		lineStart,lineEnd=self._getLineOffsets(offset)
-		lineText=self._getTextRange(lineStart,lineEnd)
-		start=textHandler.findStartOfWord(lineText,offset-lineStart)+lineStart
-		end=textHandler.findEndOfWord(lineText,offset-lineStart)+lineStart
-		return [start,end]
-
-	def _getLineCount(self):
-		lineLength=self._getTextLineLength()
-		if lineLength:
-			storyLength=self._getStoryLength()
-			return storyLength/lineLength
-		else:
-			return -1
-
-	def _getLineNumFromOffset(self,offset):
-		lineLength=self._getTextLineLength()
-		if lineLength:
-			return offset/lineLength
-		else:
-			return -1
-
 	def _getLineOffsets(self,offset):
 		storyText=self._getStoryText()
-		lineLength=self._getTextLineLength()
-		start=textHandler.findStartOfLine(storyText,offset,lineLength=lineLength)
-		end=textHandler.findEndOfLine(storyText,offset,lineLength=lineLength)
+		start=TextInfos.offsets.findStartOfLine(storyText,offset)
+		end=TextInfos.offsets.findEndOfLine(storyText,offset)
 		return [start,end]
-
-	def _getSentenceOffsets(self,offset):
-		return self._getLineOffsets(offset)
-
-	def _getParagraphOffsets(self,offset):
-		return self._getLineOffsets(offset)
-
-	def _getFormatAndOffsets(self,offset,includes=set(),excludes=set()):
-		end=offset+1
-		formats=[]
-		if textHandler.isFormatEnabled(controlTypes.ROLE_LINE,includes=includes,excludes=excludes):
-			lineNum=self._getLineNumFromOffset(offset)
-			if lineNum>=0:
-				f=textHandler.FormatCommand(textHandler.FORMAT_CMD_CHANGE,textHandler.Format(controlTypes.ROLE_LINE,value=str(lineNum+1)))
-				formats.append(f)
-				lineStart,end=self._getLineOffsets(offset)
-		return (formats,offset,end)
-
-	def _getReadingChunkOffsets(self,offset):
-		return self._getSentenceOffsets(offset)
-
-	def _getUnitOffsets(self,unit,offset):
-		if unit==textHandler.UNIT_CHARACTER:
-			offsetsFunc=self._getCharacterOffsets
-		elif unit==textHandler.UNIT_WORD:
-			offsetsFunc=self._getWordOffsets
-		elif unit==textHandler.UNIT_LINE:
-			offsetsFunc=self._getLineOffsets
-		elif unit==textHandler.UNIT_SENTENCE:
-			offsetsFunc=self._getSentenceOffsets
-		elif unit==textHandler.UNIT_PARAGRAPH:
-			offsetsFunc=self._getParagraphOffsets
-		elif unit==textHandler.UNIT_READINGCHUNK:
-			offsetsFunc=self._getReadingChunkOffsets
-		else:
-			raise ValueError("unknown unit: %s"%unit)
-		return offsetsFunc(offset)
-
-	def _getPointFromOffset(self,offset):
-		raise NotImplementedError
-
-	def _getOffsetFromPoint(self,x,y):
-		raise NotImplementedError
-
-	def __init__(self,obj,position):
-		super(NVDAObjectTextInfo,self).__init__(obj,position)
-		if isinstance(position,textHandler.Point):
-			offset=self._getOffsetFromPoint(position.x,position.y)
-			position=textHandler.Offsets(offset,offset)
-		if position==textHandler.POSITION_FIRST:
-			self._startOffset=self._endOffset=0
-		elif position==textHandler.POSITION_LAST:
-			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
-		elif position==textHandler.POSITION_CARET:
-			self._startOffset=self._endOffset=self._getCaretOffset()
-		elif position==textHandler.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=self._getSelectionOffsets()
-		elif position==textHandler.POSITION_ALL:
-			self._startOffset=0
-			self._endOffset=self._getStoryLength()
-		elif isinstance(position,textHandler.Offsets):
-			self._startOffset=max(min(position.startOffset,self._getStoryLength()-1),0)
-			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
-		else:
-			raise NotImplementedError("position: %s not supported"%position)
-
-	def _get_pointAtStart(self):
-		return self._getPointFromOffset(self._startOffset)
-
-	def _get_isCollapsed(self):
-		if self._startOffset==self._endOffset:
-			return True
-		else:
-			return False
-
-	def collapse(self,end=False):
-		if not end:
-			self._endOffset=self._startOffset
-		else:
-			self._startOffset=self._endOffset
-
-	def expand(self,unit):
-		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
-
-	def copy(self):
-		o=self.__class__(self.obj,self.bookmark)
-		for item in self.__dict__.keys():
-			if item.startswith('_'):
-				o.__dict__[item]=self.__dict__[item]
-		return o
-
-	def compareEndPoints(self,other,which):
-		if which=="startToStart":
-			diff=self._startOffset-other._startOffset
-		elif which=="startToEnd":
-			diff=self._startOffset-other._endOffset
-		elif which=="endToStart":
-			diff=self._endOffset-other._startOffset
-		elif which=="endToEnd":
-			diff=self._endOffset-other._endOffset
-		else:
-			raise ValueError("bad argument - which: %s"%which)
-		if diff<0:
-			diff=-1
-		elif diff>0:
-			diff=1
-		return diff
-
-	def setEndPoint(self,other,which):
-		if which=="startToStart":
-			self._startOffset=other._startOffset
-		elif which=="startToEnd":
-			self._startOffset=other._endOffset
-		elif which=="endToStart":
-			self._endOffset=other._startOffset
-		elif which=="endToEnd":
-			self._endOffset=other._endOffset
-		else:
-			raise ValueError("bad argument - which: %s"%which)
-
-	def getTextWithFields(self,formatConfig=None):
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig['detectFormatAfterCursor']:
-			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
-			text=self.text
-			return [textHandler.FieldCommand('formatChange',field),text]
-		commandList=[]
-		offset=self._startOffset
-		while offset<self._endOffset:
-			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset,formatConfig)
-			if boundEnd<=boundStart:
-				boundEnd=boundStart+1
-			if boundEnd<=offset:
-				boundEnd=offset+1
-			command=textHandler.FieldCommand("formatChange",field)
-			commandList.append(command)
-			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
-			commandList.append(text)
-			offset=boundEnd
-		return commandList
-
-	def _get_text(self):
-		return self._getTextRange(self._startOffset,self._endOffset)
-
-	def unitIndex(self,unit):
-		if unit==textHandler.UNIT_LINE:  
-			return self._lineNumFromOffset(self._startOffset)
-		else:
-			raise NotImplementedError
-
-	def unitCount(self,unit):
-		if unit==textHandler.UNIT_LINE:
-			return self._getLineCount()
-		else:
-			raise NotImplementedError
-
-	def move(self,unit,direction,endPoint=None):
-		if direction==0:
-			return 0;
-		if endPoint=="end":
-			offset=self._endOffset
-		elif endPoint=="start":
-			offset=self._startOffset
-		else:
-			self.collapse()
-			offset=self._startOffset
-		lastOffset=None
-		count=0
-		lowLimit=0
-		highLimit=self._getStoryLength()
-		while count!=direction and (lastOffset is None or (direction>0 and offset>lastOffset) or (direction<0 and offset<lastOffset)) and (offset<highLimit or direction<0) and (offset>lowLimit or direction>0):
-			lastOffset=offset
-			if direction<0 and offset>lowLimit:
-				offset-=1
-			newStart,newEnd=self._getUnitOffsets(unit,offset)
-			if direction<0:
-				offset=newStart
-			elif direction>0:
-				offset=newEnd
-			count=count+1 if direction>0 else count-1
-		if endPoint=="start":
-			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
-				return 0
-			self._startOffset=offset
-		elif endPoint=="end":
-			if (direction>0 and offset<=self._endOffset) or (direction<0 and offset>=self._endOffset) or offset<lowLimit or offset>highLimit:
-				return 0
-			self._endOffset=offset
-		else:
-			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
-				return 0
-			self._startOffset=self._endOffset=offset
-		if self._startOffset>self._endOffset:
-			tempOffset=self._startOffset
-			self._startOffset=self._endOffset
-			self._endOffset=tempOffset
-		return count
-
-	def find(self,text,caseSensitive=False,reverse=False):
-		if reverse:
-			# When searching in reverse, we reverse both strings and do a forwards search.
-			text = text[::-1]
-			# Start searching one before the start to avoid finding the current match.
-			inText=self._getTextRange(0,self._startOffset)[::-1]
-		else:
-			# Start searching one past the start to avoid finding the current match.
-			inText=self._getTextRange(self._startOffset+1,self._getStoryLength())
-		m=re.search(re.escape(text),inText,re.IGNORECASE)
-		if not m:
-			return False
-		if reverse:
-			offset=self._startOffset-m.end()
-		else:
-			offset=self._startOffset+1+m.start()
-		self._startOffset=self._endOffset=offset
-		return True
-
-	def updateCaret(self):
-		return self._setCaretOffset(self._startOffset)
-
-	def updateSelection(self):
-		return self._setSelectionOffsets(self._startOffset,self._endOffset)
-
-	def _get_bookmark(self):
-		return textHandler.Offsets(self._startOffset,self._endOffset)
 
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
@@ -813,10 +529,10 @@ Tries to force this object to take the focus.
 		if not config.conf['mouse']['reportTextUnderMouse']:
 			return
 		try:
-			info=self.makeTextInfo(textHandler.Point(x,y))
+			info=self.makeTextInfo(TextInfos.Point(x,y))
 			info.expand(info.unit_mouseChunk)
 		except:
-			info=NVDAObjectTextInfo(self,textHandler.POSITION_ALL)
+			info=NVDAObjectTextInfo(self,TextInfos.POSITION_ALL)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -882,7 +598,7 @@ This code is executed if a gain focus event is received by this object.
 			braille.handler.handleCaretMove(self)
 			if globalVars.caretMovesReviewCursor:
 				try:
-					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+					api.setReviewPosition(self.makeTextInfo(TextInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
 					pass
 
@@ -897,26 +613,8 @@ This code is executed if a gain focus event is received by this object.
 			self._basicTextTime=newTime
 		return self._basicText
 
-	def _get_basicTextLineLength(self):
-		return None
-
-	def _get_basicCaretOffset(self):
-		raise NotImplementedError
-
-	def _set_basicCaretOffset(self,offset):
-		pass
-
-	def _get_basicSelectionOffsets(self):
-		return [0,0]
-
-	def _set_basicSelectionOffsets(self,offsets):
-		raise NotImplementedError
-
-
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-	def setCaret(self,info):
-		pass
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		elapsed = 0
@@ -934,7 +632,7 @@ This code is executed if a gain focus event is received by this object.
 				return True
 			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
-				newBookmark = self.makeTextInfo(textHandler.POSITION_CARET).bookmark
+				newBookmark = self.makeTextInfo(TextInfos.POSITION_CARET).bookmark
 				if newBookmark!=bookmark:
 					return True
 			except:
@@ -945,7 +643,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def script_moveByLine(self,keyPress):
 		try:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -956,17 +654,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(textHandler.UNIT_LINE)
+			info.expand(TextInfos.UNIT_LINE)
 			speech.speakTextInfo(info)
 
 	def script_moveByCharacter(self,keyPress):
 		try:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -977,17 +675,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER)
+			info.expand(TextInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER)
 
 	def script_moveByWord(self,keyPress):
 		try:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -998,17 +696,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(textHandler.UNIT_WORD)
-			speech.speakTextInfo(info,unit=textHandler.UNIT_WORD)
+			info.expand(TextInfos.UNIT_WORD)
+			speech.speakTextInfo(info,unit=TextInfos.UNIT_WORD)
 
 	def script_moveByParagraph(self,keyPress):
 		try:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -1019,25 +717,25 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(textHandler.UNIT_PARAGRAPH)
+			info.expand(TextInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
 	def script_backspace(self,keyPress):
 		try:
-			oldInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+			oldInfo=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
-		res=testInfo.move(textHandler.UNIT_CHARACTER,-1)
+		res=testInfo.move(TextInfos.UNIT_CHARACTER,-1)
 		if res<0:
-			testInfo.expand(textHandler.UNIT_CHARACTER)
+			testInfo.expand(TextInfos.UNIT_CHARACTER)
 			delChar=testInfo.text
 		else:
 			delChar=""
@@ -1046,7 +744,7 @@ This code is executed if a gain focus event is received by this object.
 			speech.speakSpelling(delChar)
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
@@ -1054,7 +752,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def script_delete(self,keyPress):
 		try:
-			info=self.makeTextInfo(textHandler.POSITION_CARET)
+			info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		except:
 			sendKey(keyPress)
 			return
@@ -1065,17 +763,17 @@ This code is executed if a gain focus event is received by this object.
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
-				info=focus.makeTextInfo(textHandler.POSITION_CARET)
+				info=focus.makeTextInfo(TextInfos.POSITION_CARET)
 			except:
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info.copy())
-			info.expand(textHandler.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textHandler.UNIT_CHARACTER)
+			info.expand(TextInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(info,unit=TextInfos.UNIT_CHARACTER)
 
 	def script_changeSelection(self,keyPress):
 		try:
-			oldInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+			oldInfo=self.makeTextInfo(TextInfos.POSITION_SELECTION)
 		except:
 			sendKey(keyPress)
 			return
@@ -1084,7 +782,7 @@ This code is executed if a gain focus event is received by this object.
 			api.processPendingEvents()
 			focus=api.getFocusObject()
 			try:
-				newInfo=focus.makeTextInfo(textHandler.POSITION_SELECTION)
+				newInfo=focus.makeTextInfo(TextInfos.POSITION_SELECTION)
 			except:
 				return
 			speech.speakSelectionChange(oldInfo,newInfo)
@@ -1099,7 +797,7 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 	def initAutoSelectDetection(self):
 		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
 		try:
-			self._lastSelectionPos=self.makeTextInfo(textHandler.POSITION_SELECTION)
+			self._lastSelectionPos=self.makeTextInfo(TextInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
 		self.hasContentChangedSinceLastSelection=False
@@ -1110,7 +808,7 @@ class AutoSelectDetectionNVDAObject(NVDAObject):
 		if not oldInfo:
 			return
 		try:
-			newInfo=self.makeTextInfo(textHandler.POSITION_SELECTION)
+			newInfo=self.makeTextInfo(TextInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
 			return

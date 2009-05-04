@@ -6,7 +6,7 @@
 
 """General functions for NVDA"""
 
-import textHandler
+import TextInfos
 import globalVars
 from logHandler import log
 import speech
@@ -172,11 +172,11 @@ def getReviewPosition():
 		except:
 			pass
 		try:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_CARET)
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(TextInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.navigatorObject
 			return globalVars.reviewPosition
 		except:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textHandler.POSITION_FIRST)
+			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(TextInfos.POSITION_FIRST)
 			globalVars.reviewPositionObj=globalVars.navigatorObject
 			return globalVars.reviewPosition
 

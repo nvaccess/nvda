@@ -13,7 +13,7 @@ import winUser
 import api
 import sayAllHandler
 import controlTypes
-import textHandler
+import TextInfos.offsets
 import globalVars
 import config
 import api
@@ -48,7 +48,7 @@ def dictToMultiValueAttribsString(d):
 
 VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
 
-class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
+class VirtualBufferTextInfo(TextInfos.offsets.OffsetsTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
 
@@ -78,7 +78,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		self.obj=obj
 		if isinstance(position,NVDAObjects.NVDAObject):
 			start,end=self._getOffsetsFromNVDAObject(position)
-			position=textHandler.Offsets(start,end)
+			position=TextInfos.offsets.Offsets(start,end)
 		super(VirtualBufferTextInfo,self).__init__(obj,position)
 
 	def _get_NVDAObjectAtStart(self):
@@ -118,7 +118,7 @@ class VirtualBufferTextInfo(NVDAObjects.NVDAObjectTextInfo):
 		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
-			if isinstance(commandList[index],textHandler.FieldCommand) and isinstance(commandList[index].field,textHandler.ControlField):
+			if isinstance(commandList[index],TextInfos.FieldCommand) and isinstance(commandList[index].field,TextInfos.ControlField):
 				commandList[index].field=self._normalizeControlField(commandList[index].field)
 		return commandList
 
@@ -248,7 +248,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		speech.cancelSpeech()
 		virtualBufferHandler.reportPassThrough(self)
 		speech.speakObjectProperties(self.rootNVDAObject,name=True)
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 
 	def event_virtualBuffer_gainFocus(self):
@@ -322,7 +322,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def script_activatePosition(self,keyPress):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
@@ -379,7 +379,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
 		try:
@@ -387,7 +387,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		except StopIteration:
 			speech.speakMessage(errorMessage)
 			return
-		info = self.makeTextInfo(textHandler.Offsets(startOffset, endOffset))
+		info = self.makeTextInfo(TextInfos.offsets.Offsets(startOffset, endOffset))
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -422,7 +422,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 
 		nodes = []
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
+		info=self.makeTextInfo(TextInfos.POSITION_CARET)
 		caretOffset=info._startOffset
 		defaultIndex = None
 		for node, startOffset, endOffset in self._iterNodesByType("link"):
@@ -433,7 +433,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				elif startOffset > caretOffset:
 					# The caret wasn't inside a link, so set the default selection to be the next link.
 					defaultIndex = len(nodes)
-			text = self.makeTextInfo(textHandler.Offsets(startOffset,endOffset)).text
+			text = self.makeTextInfo(TextInfos.offsets.Offsets(startOffset,endOffset)).text
 			nodes.append((text, startOffset, endOffset))
 
 		def action(args):
@@ -441,7 +441,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				return
 			activate, index, text = args
 			text, startOffset, endOffset = nodes[index]
-			info=self.makeTextInfo(textHandler.Offsets(startOffset,endOffset))
+			info=self.makeTextInfo(TextInfos.offsets.Offsets(startOffset,endOffset))
 			newCaret = info.copy()
 			newCaret.collapse()
 			self.selection = newCaret
@@ -494,13 +494,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
-		info = self.makeTextInfo(textHandler.POSITION_CARET)
+		info = self.makeTextInfo(TextInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
 		if keyPress[1] in ("extendedleft", "extendedup", "extendedprior"):
 			info.collapse()
 		else:
 			info.collapse(end=True)
-			info.move(textHandler.UNIT_CHARACTER, -1)
+			info.move(TextInfos.UNIT_CHARACTER, -1)
 		info.updateCaret()
 
 		scriptHandler.queueScript(script, keyPress)
@@ -541,9 +541,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		except:
 			return False
 		# We only want to override the tab order if the caret is not within the focused node.
-		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		caretInfo=self.makeTextInfo(TextInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
-		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		caretInfo.expand(TextInfos.UNIT_CHARACTER)
 		if focusInfo.isOverlapping(caretInfo):
 			return False
 
@@ -556,7 +556,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		# Finally, focus the node.
 		# TODO: Better way to get a field identifier from a node.
-		newInfo = self.makeTextInfo(textHandler.Offsets(newStart, newEnd))
+		newInfo = self.makeTextInfo(TextInfos.offsets.Offsets(newStart, newEnd))
 		obj = newInfo.NVDAObjectAtStart
 		if obj == api.getFocusObject():
 			# This node is already focused, so we need to move to and speak this node here.
@@ -627,9 +627,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return nextHandler()
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		caretInfo=self.makeTextInfo(TextInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		caretInfo.expand(TextInfos.UNIT_CHARACTER)
 		if not focusInfo.isOverlapping(caretInfo):
 			if not self.passThrough:
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
@@ -675,9 +675,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return False
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textHandler.POSITION_CARET)
+		caretInfo=self.makeTextInfo(TextInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textHandler.UNIT_CHARACTER)
+		caretInfo.expand(TextInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
 			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
 			scrollInfo.collapse()
@@ -687,10 +687,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 		return False
 
 	def _getCurrentCellCoords(self):
-		caret = self.makeTextInfo(textHandler.POSITION_CARET)
-		caret.expand(textHandler.UNIT_CHARACTER)
+		caret = self.makeTextInfo(TextInfos.POSITION_CARET)
+		caret.expand(TextInfos.UNIT_CHARACTER)
 		for field in reversed(caret.getTextWithFields()):
-			if not (isinstance(field, textHandler.FieldCommand) and field.command == "controlStart"):
+			if not (isinstance(field, TextInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
 			attrs = field.field
@@ -703,7 +703,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _getCell(self, tableID, row, column):
 		try:
 			node, start, end = next(self._iterNodesByAttribs({"table-id": [str(tableID)], "table-rownumber": [str(row)], "table-columnnumber": [str(column)]}))
-			info = self.makeTextInfo(textHandler.Offsets(start, end))
+			info = self.makeTextInfo(TextInfos.offsets.Offsets(start, end))
 		except StopIteration:
 			raise LookupError("No such table cell")
 		if info.isCollapsed:
@@ -799,7 +799,7 @@ qn("heading5", key="5", nextDoc=_("moves to the next heading at level 5"), nextE
 qn("heading6", key="6", nextDoc=_("moves to the next heading at level 6"), nextError=_("no next heading at level 6"),
 	prevDoc=_("moves to the previous heading at level 6"), prevError=_("no previous heading at level 6"))
 qn("table", key="t", nextDoc=_("moves to the next table"), nextError=_("no next table"),
-	prevDoc=_("moves to the previous table"), prevError=_("no previous table"), readUnit=textHandler.UNIT_LINE)
+	prevDoc=_("moves to the previous table"), prevError=_("no previous table"), readUnit=TextInfos.UNIT_LINE)
 qn("link", key="k", nextDoc=_("moves to the next link"), nextError=_("no next link"),
 	prevDoc=_("moves to the previous link"), prevError=_("no previous link"))
 qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextError=_("no next visited link"),
@@ -807,17 +807,17 @@ qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextErro
 qn("unvisitedLink", key="u", nextDoc=_("moves to the next unvisited link"), nextError=_("no next unvisited link"),
 	prevDoc=_("moves to the previous unvisited link"), prevError=_("no previous unvisited link"))
 qn("formField", key="f", nextDoc=_("moves to the next form field"), nextError=_("no next form field"),
-	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"), readUnit=textHandler.UNIT_LINE)
+	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"), readUnit=TextInfos.UNIT_LINE)
 qn("list", key="l", nextDoc=_("moves to the next list"), nextError=_("no next list"),
-	prevDoc=_("moves to the previous list"), prevError=_("no previous list"), readUnit=textHandler.UNIT_LINE)
+	prevDoc=_("moves to the previous list"), prevError=_("no previous list"), readUnit=TextInfos.UNIT_LINE)
 qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("no next list item"),
 	prevDoc=_("moves to the previous list item"), prevError=_("no previous list item"))
 qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no next button"),
 	prevDoc=_("moves to the previous button"), prevError=_("no previous button"))
 qn("edit", key="e", nextDoc=_("moves to the next edit field"), nextError=_("no next edit field"),
-	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"), readUnit=textHandler.UNIT_LINE)
+	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"), readUnit=TextInfos.UNIT_LINE)
 qn("frame", key="m", nextDoc=_("moves to the next frame"), nextError=_("no next frame"),
-	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"), readUnit=textHandler.UNIT_LINE)
+	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"), readUnit=TextInfos.UNIT_LINE)
 qn("separator", key="s", nextDoc=_("moves to the next separator"), nextError=_("no next separator"),
 	prevDoc=_("moves to the previous separator"), prevError=_("no previous separator"))
 qn("radioButton", key="r", nextDoc=_("moves to the next radio button"), nextError=_("no next radio button"),

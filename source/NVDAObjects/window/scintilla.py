@@ -1,7 +1,7 @@
 import ctypes
 import IAccessibleHandler
 import speech
-import textHandler
+import TextInfos.offsets
 import winKernel
 import winUser
 import globalVars
@@ -57,13 +57,13 @@ class TextRangeStruct(ctypes.Structure):
 		('lpstrText',ctypes.c_char_p),
 	]
 
-class ScintillaTextInfo(NVDAObjectTextInfo):
+class ScintillaTextInfo(TextInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		point=textHandler.Point(
+		point=TextInfos.Point(
 		winUser.sendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
 		winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
@@ -71,7 +71,6 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			return point
 		else:
 			raise NotImplementedError
-
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
@@ -94,7 +93,7 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 					break
 		else:
 			startOffset,endOffset=(self._startOffset,self._endOffset)
-		formatField=textHandler.FormatField()
+		formatField=TextInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 			fontNameBuf=ctypes.create_string_buffer(32)
@@ -112,7 +111,6 @@ class ScintillaTextInfo(NVDAObjectTextInfo):
 			formatField["italic"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
 			formatField["underline"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0))
 		return formatField,(startOffset,endOffset)
-
 
 	def _getCaretOffset(self):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
