@@ -28,7 +28,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import braille
 
-ignoreCaretEvents=False
+selOffsetsAtLastCaretEvent=None
 
 #Edit control window messages
 EM_GETSEL=176
@@ -340,7 +340,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif self.basePosition in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION) and self.obj==api.getFocusObject():
+		elif self.obj==api.getFocusObject():
 			if offset>=(self._getStoryLength()-1):
 				return [offset,offset+1]
 			oldSel=self._getSelectionOffsets()
@@ -365,11 +365,8 @@ class EditTextInfo(NVDAObjectTextInfo):
 			return super(EditTextInfo,self)._getWordOffsets(offset)
 
 	def _getLineNumFromOffset(self,offset):
-		global ignoreCaretEvents
 		if self.obj.editAPIVersion>=1:
-			ignoreCaretEvents=True
 			res=winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
-			ignoreCaretEvents=False
 			return res
 		else:
 			return winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
@@ -716,15 +713,19 @@ class Edit(Window):
 		return controlTypes.ROLE_EDITABLETEXT
 
 	def event_caret(self):
+		global selOffsetsAtLastCaretEvent
+		#Fetching formatting and calculating word offsets needs to move the caret, so try to ignore these events
+		selOffsets=self.makeTextInfo(textHandler.POSITION_SELECTION).bookmark
+		if selOffsets==selOffsetsAtLastCaretEvent:
+			return
+		selOffsetsAtLastCaretEvent=selOffsets
 		#Make sure that this object *really* has the focus before bothering to speak any possible selection change
 		api.processPendingEvents()
 		if self is not api.getFocusObject() or eventHandler.isPendingEvents('gainFocus'):
 			return
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
-		if globalVars.caretMovesReviewCursor:
-			api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
-		braille.handler.handleCaretMove(self)
+		super(Edit,self).event_caret()
 		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
