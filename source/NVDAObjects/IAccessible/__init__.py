@@ -308,7 +308,12 @@ the NVDAObject for IAccessible
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
-		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
+		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
+		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
+		if normalizedWindowClassName!=windowClassName:
+			keys.insert(1,(normalizedWindowClassName,role))
+			keys.append((normalizedWindowClassName,None))
+		for key in keys: 
 			newCls=None
 			classString=_staticMap.get(key,None)
 			if classString and classString.find('.')>0:
@@ -1231,6 +1236,7 @@ _staticMap={
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
+	("TaskSwitcherWnd",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
