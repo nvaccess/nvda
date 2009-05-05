@@ -181,10 +181,13 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		debug("session logged on: %r" % self.isSessionLoggedOn)
 
 		if self.isSessionLoggedOn:
+			# The session is logged on, so treat this as a normal desktop switch.
 			self.handleDesktopSwitch()
 			execBg(self.desktopSwitchSupervisor)
 		else:
+			# We're at the logon screen, so always start NVDA.
 			execBg(self.startLauncher)
+			# The desktop switch supervisor will be started by the logon event.
 
 	def desktopSwitchSupervisor(self):
 		if self.desktopSwitchSupervisorStarted:
@@ -233,10 +236,12 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		elif event == WTS_SESSION_LOGOFF:
 			debug("logoff %d" % session)
 			self.isSessionLoggedOn = False
+			# We may be heading back to the logon screen.
 			execBg(self.startLauncher)
 		elif event == WTS_SESSION_LOCK:
 			debug("lock %d" % session)
 			if session == self.session:
+				# We always start NVDA for the lock/switch user screen.
 				self.startLauncher()
 
 	def startLauncher(self):
