@@ -100,6 +100,8 @@ logHandler.log.setLevel(logLevel)
 
 log.info("Starting NVDA")
 winUser.setSystemScreenReaderFlag(True)
+# Make this the last application to be shut down and don't display a retry dialog box.
+winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 try:
 	import core
 	core.main()

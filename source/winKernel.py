@@ -95,6 +95,9 @@ def writeProcessMemory(*args):
 def waitForSingleObject(handle,timeout):
 	return kernel32.WaitForSingleObject(handle,timeout)
 
+SHUTDOWN_NORETRY = 0x00000001
 
-
-
+def SetProcessShutdownParameters(level, flags):
+	res = kernel32.SetProcessShutdownParameters(level, flags)
+	if res == 0:
+		raise ctypes.WinError()
