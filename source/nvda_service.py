@@ -7,9 +7,6 @@ import sys
 import os
 import time
 
-if not getattr(sys, "frozen", None):
-	raise RuntimeError("Can only be run compiled with py2exe")
-
 CREATE_UNICODE_ENVIRONMENT=1024
 INFINITE = 0xffffffff
 UOI_NAME = 2
@@ -104,11 +101,15 @@ def executeProcess(desktop, token, executable, *argStrings):
 	if token:
 		env=c_void_p()
 		windll.userenv.CreateEnvironmentBlock(byref(env),token,False)
-		windll.advapi32.CreateProcessAsUserW(token, None, cmdBuf,None,None,False,CREATE_UNICODE_ENVIRONMENT,env,None,byref(startupInfo),byref(processInformation))
-		windll.kernel32.CloseHandle(token)
-		windll.userenv.DestroyEnvironmentBlock(env)
+		try:
+			if windll.advapi32.CreateProcessAsUserW(token, None, cmdBuf,None,None,False,CREATE_UNICODE_ENVIRONMENT,env,None,byref(startupInfo),byref(processInformation)) == 0:
+				raise WinError()
+		finally:
+			windll.kernel32.CloseHandle(token)
+			windll.userenv.DestroyEnvironmentBlock(env)
 	else:
-		windll.kernel32.CreateProcessW(None, cmdBuf,None,None,False,0,None,None,byref(startupInfo),byref(processInformation))
+		if windll.kernel32.CreateProcessW(None, cmdBuf,None,None,False,0,None,None,byref(startupInfo),byref(processInformation)) == 0:
+			raise WinError()
 	return processInformation.hProcess
 
 def superviseSession():
@@ -152,6 +153,15 @@ def exitNVDA(desktop):
 	process = executeProcess(desktop, None, nvdaExec, "-q")
 	windll.kernel32.WaitForSingleObject(process, 10000)
 	windll.kernel32.CloseHandle(process)
+
+def isUserRunningNVDA(session):
+	token = getSessionSystemToken(session)
+	process = executeProcess(ur"winsta0\Default", token, nvdaExec, u"--check-running")
+	windll.kernel32.WaitForSingleObject(process, INFINITE)
+	exitCode = DWORD()
+	windll.kernel32.GetExitCodeProcess(process, byref(exitCode))
+	windll.kernel32.CloseHandle(process)
+	return exitCode.value == 0
 
 class NVDAService(win32serviceutil.ServiceFramework):
 
@@ -210,4 +220,6 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		self.exitEvent.set()
 
 if __name__=='__main__':
+	if not getattr(sys, "frozen", None):
+		raise RuntimeError("Can only be run compiled with py2exe")
 	win32serviceutil.HandleCommandLine(NVDAService)
