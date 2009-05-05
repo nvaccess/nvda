@@ -5,7 +5,7 @@ import NVDAObjects.IAccessible
 import winUser
 import IAccessibleHandler
 from logHandler import log
-import textHandler
+import textInfos
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -24,7 +24,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
-		newAttrs=textHandler.ControlField()
+		newAttrs=textInfos.ControlField()
 		newAttrs.update(attrs)
 		newAttrs['role']=role
 		newAttrs['states']=states

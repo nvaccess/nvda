@@ -281,6 +281,9 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.beepForCapsCheckBox = wx.CheckBox(self, wx.NewId(), label = _("&Beep for capitals"))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		self.useSpellingFunctionalityCheckBox = wx.CheckBox(self, wx.NewId(), label = _("Use &spelling functionality if supported"))
+		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][getSynth().name]["useSpellingFunctionality"])
+		settingsSizer.Add(self.useSpellingFunctionalityCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		if hasattr(self,'voiceList'):
@@ -377,6 +380,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
 
 class KeyboardSettingsDialog(SettingsDialog):
@@ -447,9 +451,9 @@ class MouseSettingsDialog(SettingsDialog):
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution"))
 		textUnitSizer.Add(textUnitLabel)
-		import textHandler
-		self.textUnits=[textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_LINE,textHandler.UNIT_PARAGRAPH]
-		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textHandler.unitLabels[x] for x in self.textUnits])
+		import textInfos
+		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
+		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textInfos.unitLabels[x] for x in self.textUnits])
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
 		except:

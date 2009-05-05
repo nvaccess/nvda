@@ -40,6 +40,9 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def speakText(self,text,index=None):
 		_espeak.speak(text, index=index)
 
+	def speakCharacter(self,character,index=None):
+		_espeak.speak(character, index=index,isCharacter=True)
+
 	def cancel(self):
 		_espeak.stop()
 
