@@ -1,3 +1,3 @@
 if __name__ == "__main__":
 	import nvda_service
-	nvda_service.superviseSession()
+	nvda_service.nvdaLauncher()

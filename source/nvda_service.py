@@ -24,9 +24,11 @@ WTS_SESSION_LOGON = 0x5
 WTS_SESSION_LOGOFF = 0x6
 WTS_SESSION_LOCK = 0x7
 WTS_SESSION_UNLOCK = 0x8
+WTS_CURRENT_SERVER_HANDLE = 0
+WTSUserName = 5
 
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
-supervisorExec = os.path.join(sys.prefix,"nvda_service_sessionSupervisor.exe")
+launcherExec = os.path.join(sys.prefix,"nvda_service_nvdaLauncher.exe")
 
 def debug(msg):
 	file(r"c:\windows\temp\nvdaserv", "a").write(msg + "\n")
@@ -36,7 +38,7 @@ def getInputDesktopName():
 	name = create_unicode_buffer(256)
 	windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, byref(name), sizeof(name), None)
 	windll.user32.CloseDesktop(desktop)
-	return ur"winsta0\%s" % name.value
+	return ur"WinSta0\%s" % name.value
 
 class STARTUPINFO(Structure):
 	_fields_=[
@@ -112,31 +114,16 @@ def executeProcess(desktop, token, executable, *argStrings):
 			raise WinError()
 	return processInformation.hProcess
 
-def superviseSession():
-	origSession = windll.kernel32.WTSGetActiveConsoleSessionId()
-	session = origSession
+def nvdaLauncher():
+	desktop = getInputDesktopName()
+	if desktop == ur"WinSta0\Default":
+		return
+
+	startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
-
-	while session == origSession:
-		desktop = getInputDesktopName()
-
-		if os.path.basename(desktop) in ("Winlogon", "Screen-saver"):
-			startNVDA(desktop)
-			started = True
-		else:
-			started = False
-			#startNVDAUIAccess(session, desktop)
-
-		# Wait for the input desktop to change.
-		windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
-		# The input desktop has changed.
-		if started:
-			exitNVDA(desktop)
-
-		session = windll.kernel32.WTSGetActiveConsoleSessionId()
-
+	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
-	debug("supervisor dying, orig %d session %d" % (origSession, session))
+	exitNVDA(desktop)
 
 def startNVDA(desktop):
 	process = executeProcess(desktop, None, nvdaExec)
@@ -156,24 +143,70 @@ def exitNVDA(desktop):
 
 def isUserRunningNVDA(session):
 	token = getSessionSystemToken(session)
-	process = executeProcess(ur"winsta0\Default", token, nvdaExec, u"--check-running")
+	process = executeProcess(ur"WinSta0\Default", token, nvdaExec, u"--check-running")
 	windll.kernel32.WaitForSingleObject(process, INFINITE)
 	exitCode = DWORD()
 	windll.kernel32.GetExitCodeProcess(process, byref(exitCode))
 	windll.kernel32.CloseHandle(process)
 	return exitCode.value == 0
 
+def isSessionLoggedOn(session):
+	username = c_wchar_p()
+	size = DWORD()
+	windll.wtsapi32.WTSQuerySessionInformationW(WTS_CURRENT_SERVER_HANDLE, session, WTSUserName, byref(username), byref(size))
+	ret = bool(username.value)
+	windll.wtsapi32.WTSFreeMemory(username)
+	return ret
+
+def execBg(func):
+	t = threading.Thread(target=func)
+	t.setDaemon(True)
+	t.start()
+
 class NVDAService(win32serviceutil.ServiceFramework):
 
 	_svc_name_="nvda"
 	_svc_display_name_="nonVisual Desktop Access"
 
-	def __init__(self, args):
-		win32serviceutil.ServiceFramework.__init__(self, args)
-		self.sessionSupervisorProcess = None
-
 	def GetAcceptedControls(self):
 		return win32serviceutil.ServiceFramework.GetAcceptedControls(self) | win32service.SERVICE_ACCEPT_SESSIONCHANGE
+
+	def initSession(self, session):
+		debug("init session %d" % session)
+		self.session = session
+		self.launcherLock = threading.RLock()
+		self.isSessionLoggedOn = isSessionLoggedOn(session)
+		debug("session logged on: %r" % self.isSessionLoggedOn)
+		if self.isSessionLoggedOn:
+			execBg(self.desktopSwitchSupervisor)
+		else:
+			execBg(self.startLauncher)
+
+	def desktopSwitchSupervisor(self):
+		origSession = self.session
+		debug("starting desktop switch supervisor, session %d" % origSession)
+		desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"Session\%d\WinSta0_DesktopSwitch" % self.session)
+		if not desktopSwitchEvt:
+			try:
+				raise WinError()
+			except Exception, e:
+				debug("error opening event: %s" % e)
+				raise
+
+		while self.session == origSession and self.isSessionLoggedOn:
+			with self.launcherLock:
+				self.launcherStarted = False
+
+			if isUserRunningNVDA(self.session):
+				self.startLauncher()
+			else:
+				debug("not starting launcher; session logged on and user not running NVDA")
+
+			windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
+			debug("desktop switch, session %r" % self.session)
+
+		windll.kernel32.CloseHandle(desktopSwitchEvt)
+		debug("desktop switch supervisor terminated, session %d" % origSession)
 
 	def SvcOtherEx(self, control, eventType, data):
 		if control == win32service.SERVICE_CONTROL_SESSIONCHANGE:
@@ -182,39 +215,40 @@ class NVDAService(win32serviceutil.ServiceFramework):
 	def handleSessionChange(self, event, session):
 		if event == WTS_CONSOLE_CONNECT:
 			debug("connect %d" % session)
-			# A connect can occur without an intervening disconnect.
-			self.stopSessionSupervisor()
+			self.initSession(session)
+		elif event == WTS_SESSION_LOGON:
+			debug("logon %d" % session)
+			self.isSessionLoggedOn = True
+			execBg(self.desktopSwitchSupervisor)
+		elif event == WTS_SESSION_LOGOFF:
+			debug("logoff %d" % session)
+			self.isSessionLoggedOn = False
+		elif event == WTS_SESSION_LOCK:
+			debug("lock %d" % session)
+			if session == self.session:
+				self.startLauncher()
+
+	def startLauncher(self):
+		with self.launcherLock:
+			if self.launcherStarted:
+				return
+
+			debug("attempt launcher start")
+			token = getSessionSystemToken(self.session)
 			try:
-				self.startSessionSupervisor(session)
+				process = executeProcess(ur"WinSta0\Winlogon", token, launcherExec)
+				self.launcherStarted = True
+				debug("launcher started")
+				windll.kernel32.CloseHandle(process)
 			except Exception, e:
-				debug(str(e))
-		elif event == WTS_CONSOLE_DISCONNECT:
-			debug("disconnect %d" % session)
-			self.stopSessionSupervisor()
-		elif event in (WTS_SESSION_LOGON, WTS_SESSION_LOGOFF):
-			debug("event %d session %d" % (event, session))
-
-	def startSessionSupervisor(self, session):
-		debug("attempt start")
-		if self.sessionSupervisorProcess:
-			# Session supervisor already running.
-			return
-		token = getSessionSystemToken(session)
-		self.sessionSupervisorProcess = executeProcess(r"winsta0\Winlogon", token, supervisorExec)
-		debug("session supervisor started, process %d" % self.sessionSupervisorProcess)
-
-	def stopSessionSupervisor(self):
-		if not self.sessionSupervisorProcess:
-			return
-		windll.kernel32.TerminateProcess(self.sessionSupervisorProcess, 0)
-		windll.kernel32.CloseHandle(self.sessionSupervisorProcess)
-		self.sessionSupervisorProcess = None
+				debug("error starting launcher: %s" % e)
 
 	def SvcDoRun(self):
+		debug("service starting")
 		self.exitEvent = threading.Event()
-		self.startSessionSupervisor(windll.kernel32.WTSGetActiveConsoleSessionId())
+		self.initSession(windll.kernel32.WTSGetActiveConsoleSessionId())
 		self.exitEvent.wait()
-		self.stopSessionSupervisor()
+		debug("service exiting")
 
 	def SvcStop(self):
 		self.exitEvent.set()

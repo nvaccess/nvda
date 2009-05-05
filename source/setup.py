@@ -107,7 +107,7 @@ setup(
 			"product_version":version,
 			"copyright":copyright,
 		},
-		"nvda_service_sessionSupervisor.py"
+		"nvda_service_nvdaLauncher.py"
 	],
 	service=[{
 		"modules": ["nvda_service"],
