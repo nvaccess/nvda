@@ -134,6 +134,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		UIAClassName=UIAElement.cachedClassName
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
+		if UIAClassName=="ControlPanelLink":
+			clsList.append(ControlPanelLink)
 		if UIAClassName=="UIColumnHeader":
 			clsList.append(UIColumnHeader)
 		elif UIAClassName=="UIItem":
@@ -459,3 +461,16 @@ class SensitiveSlider(UIA):
 			speech.speakObjectProperties(self,value=True,reason=speech.REASON_CHANGE)
 		else:
 			super(SensitiveSlider,self).event_valueChange()
+
+class ControlPanelLink(UIA):
+
+	def _get_description(self):
+		desc=super(ControlPanelLink,self).description
+		try:
+			i=desc.find('\n')
+		except:
+			i=None
+		if i:
+			desc=desc[i+1:]
+		return desc
+
