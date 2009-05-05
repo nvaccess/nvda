@@ -7,9 +7,12 @@ from comInterfaces.UIAutomationClient import *
 import api
 import queueHandler
 import controlTypes
+import winUser
 import NVDAObjects.UIA
 import eventHandler
 from logHandler import log
+
+badUIAWindowClassNames=["SysTreeView32","WuDuiListView","ComboBox"]
 
 UIAControlTypesToNVDARoles={
 	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
@@ -149,7 +152,11 @@ class UIAHandler(object):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
-			isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+			windowClassName=winUser.getClassName(hwnd)
+			if windowClassName in badUIAWindowClassNames:
+				isUIA=False
+			else:
+				isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 			self.UIAWindowHandleCache[hwnd]=(isUIA,now)
 			return isUIA
 		return v[0]
