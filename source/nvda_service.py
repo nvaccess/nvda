@@ -175,6 +175,8 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		debug("init session %d" % session)
 		self.session = session
 		self.launcherLock = threading.RLock()
+		self.launcherStarted = False
+		self.desktopSwitchSupervisorStarted = False
 		self.isSessionLoggedOn = isSessionLoggedOn(session)
 		debug("session logged on: %r" % self.isSessionLoggedOn)
 		if self.isSessionLoggedOn:
@@ -183,6 +185,9 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			execBg(self.startLauncher)
 
 	def desktopSwitchSupervisor(self):
+		if self.desktopSwitchSupervisorStarted:
+			return
+		self.desktopSwitchSupervisorStarted = True
 		origSession = self.session
 		debug("starting desktop switch supervisor, session %d" % origSession)
 		desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"Session\%d\WinSta0_DesktopSwitch" % self.session)
@@ -193,7 +198,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				debug("error opening event: %s" % e)
 				raise
 
-		while self.session == origSession and self.isSessionLoggedOn:
+		while self.session == origSession:
 			with self.launcherLock:
 				self.launcherStarted = False
 
@@ -215,7 +220,8 @@ class NVDAService(win32serviceutil.ServiceFramework):
 	def handleSessionChange(self, event, session):
 		if event == WTS_CONSOLE_CONNECT:
 			debug("connect %d" % session)
-			self.initSession(session)
+			if session != self.session:
+				self.initSession(session)
 		elif event == WTS_SESSION_LOGON:
 			debug("logon %d" % session)
 			self.isSessionLoggedOn = True
@@ -223,6 +229,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		elif event == WTS_SESSION_LOGOFF:
 			debug("logoff %d" % session)
 			self.isSessionLoggedOn = False
+			execBg(self.startLauncher)
 		elif event == WTS_SESSION_LOCK:
 			debug("lock %d" % session)
 			if session == self.session:
