@@ -267,7 +267,7 @@ class ReviewCursorManager(CursorManager):
 
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()
-		self._selection = super(ReviewCursorManager, self).makeTextInfo(textInfos.POSITION_SELECTION)
+		self._selection = super(ReviewCursorManager, self).makeTextInfo(textInfos.POSITION_FIRST)
 
 	def makeTextInfo(self, position):
 		if position == textInfos.POSITION_SELECTION:
