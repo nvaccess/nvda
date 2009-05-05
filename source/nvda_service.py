@@ -179,7 +179,9 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		self.desktopSwitchSupervisorStarted = False
 		self.isSessionLoggedOn = isSessionLoggedOn(session)
 		debug("session logged on: %r" % self.isSessionLoggedOn)
+
 		if self.isSessionLoggedOn:
+			self.handleDesktopSwitch()
 			execBg(self.desktopSwitchSupervisor)
 		else:
 			execBg(self.startLauncher)
@@ -199,19 +201,21 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				raise
 
 		while self.session == origSession:
-			with self.launcherLock:
-				self.launcherStarted = False
-
-			if isUserRunningNVDA(self.session):
-				self.startLauncher()
-			else:
-				debug("not starting launcher; session logged on and user not running NVDA")
-
 			windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 			debug("desktop switch, session %r" % self.session)
+			self.handleDesktopSwitch()
 
 		windll.kernel32.CloseHandle(desktopSwitchEvt)
 		debug("desktop switch supervisor terminated, session %d" % origSession)
+
+	def handleDesktopSwitch(self):
+		with self.launcherLock:
+			self.launcherStarted = False
+
+		if not self.isSessionLoggedOn or isUserRunningNVDA(self.session):
+			self.startLauncher()
+		else:
+			debug("not starting launcher; session logged on and user not running NVDA")
 
 	def SvcOtherEx(self, control, eventType, data):
 		if control == win32service.SERVICE_CONTROL_SESSIONCHANGE:
