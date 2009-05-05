@@ -19,7 +19,7 @@ import speech
 import winKernel
 import api
 import winUser
-import textHandler
+import textInfos.offsets
 from keyUtils import key, sendKey
 from scriptHandler import isScriptWaiting
 import IAccessibleHandler
@@ -159,7 +159,7 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
-class EditTextInfo(NVDAObjectTextInfo):
+class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
 		if self.obj.editAPIVersion==1:
@@ -170,10 +170,10 @@ class EditTextInfo(NVDAObjectTextInfo):
 			winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,offset)
 			winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
-			point=textHandler.Point(p.x,p.y)
+			point=textInfos.Point(p.x,p.y)
 		else:
 			res=winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
-			point=textHandler.Point(winUser.LOWORD(res),winUser.HIWORD(res))
+			point=textInfos.Point(winUser.LOWORD(res),winUser.HIWORD(res))
 		(left,top,width,height)=self.obj.location
 		if point.x and point.y:
 			point.x=point.x+left
@@ -224,7 +224,7 @@ class EditTextInfo(NVDAObjectTextInfo):
 			startOffset,endOffset=self._getWordOffsets(offset)
 		else:
 			startOffset,endOffset=self._startOffset,self._endOffset
-		formatField=textHandler.FormatField()
+		formatField=textInfos.FormatField()
 		charFormat=None
 		if formatConfig["reportFontName"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
@@ -392,28 +392,28 @@ class EditTextInfo(NVDAObjectTextInfo):
 		return self._getLineOffsets(offset)
 
 ITextDocumentUnitsToNVDAUnits={
-	comInterfaces.tom.tomCharacter:textHandler.UNIT_CHARACTER,
-	comInterfaces.tom.tomWord:textHandler.UNIT_WORD,
-	comInterfaces.tom.tomLine:textHandler.UNIT_LINE,
-	comInterfaces.tom.tomSentence:textHandler.UNIT_SENTENCE,
-	comInterfaces.tom.tomParagraph:textHandler.UNIT_PARAGRAPH,
-	comInterfaces.tom.tomStory:textHandler.UNIT_STORY,
+	comInterfaces.tom.tomCharacter:textInfos.UNIT_CHARACTER,
+	comInterfaces.tom.tomWord:textInfos.UNIT_WORD,
+	comInterfaces.tom.tomLine:textInfos.UNIT_LINE,
+	comInterfaces.tom.tomSentence:textInfos.UNIT_SENTENCE,
+	comInterfaces.tom.tomParagraph:textInfos.UNIT_PARAGRAPH,
+	comInterfaces.tom.tomStory:textInfos.UNIT_STORY,
 }
 
 NVDAUnitsToITextDocumentUnits={
-	textHandler.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
-	textHandler.UNIT_WORD:comInterfaces.tom.tomWord,
-	textHandler.UNIT_LINE:comInterfaces.tom.tomLine,
-	textHandler.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
-	textHandler.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
-	textHandler.UNIT_STORY:comInterfaces.tom.tomStory,
-	textHandler.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
+	textInfos.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
+	textInfos.UNIT_WORD:comInterfaces.tom.tomWord,
+	textInfos.UNIT_LINE:comInterfaces.tom.tomLine,
+	textInfos.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
+	textInfos.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
+	textInfos.UNIT_STORY:comInterfaces.tom.tomStory,
+	textInfos.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
 }
 
-class ITextDocumentTextInfo(textHandler.TextInfo):
+class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
-		p=textHandler.Point(0,0)
+		p=textInfos.Point(0,0)
 		(p.x,p.y)=self._rangeObj.GetPoint(comInterfaces.tom.tomStart)
 		if p.x and p.y:
 			return p
@@ -443,7 +443,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		return charFormat
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
-		formatField=textHandler.FormatField()
+		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
 		charFormat=None
@@ -539,23 +539,23 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textHandler.Point):
+		if isinstance(position,textInfos.Point):
 			self._rangeObj=self.obj.ITextDocumentObject.rangeFromPoint(position.x,position.y)
-		elif position==textHandler.POSITION_ALL:
+		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 			self._rangeObj.expand(comInterfaces.tom.tomStory)
-		elif position==textHandler.POSITION_SELECTION:
+		elif position==textInfos.POSITION_SELECTION:
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
-		elif position==textHandler.POSITION_CARET:
+		elif position==textInfos.POSITION_CARET:
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
 			self._rangeObj.Collapse(True)
-		elif position==textHandler.POSITION_FIRST:
+		elif position==textInfos.POSITION_FIRST:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
-		elif position==textHandler.POSITION_LAST:
+		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 			self._rangeObj.move(comInterfaces.tom.tomStory,1)
 			self._rangeObj.moveStart(comInterfaces.tom.tomCharacter,-1)
-		elif isinstance(position,textHandler.Offsets):
+		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.ITextDocumentObject.range(position.startOffset,position.endOffset)
 		else:
 			raise NotImplementedError("position: %s"%position)
@@ -581,7 +581,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		while range.end<endLimit:
 			self._expandFormatRange(range,formatConfig)
 			if hasLoopedOnce:
-				commandList.append(textHandler.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
+				commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			else:
 				hasLoopedOnce=True
 			commandList.append(self._getTextAtRange(range))
@@ -665,7 +665,7 @@ class ITextDocumentTextInfo(textHandler.TextInfo):
 		return res
 
 	def _get_bookmark(self):
-		return textHandler.Offsets(self._rangeObj.start,self._rangeObj.end)
+		return textInfos.offsets.Offsets(self._rangeObj.start,self._rangeObj.end)
 
 	def updateCaret(self):
 		self.obj.ITextSelectionObject.start=self.obj.ITextSelectionObject.end=self._rangeObj.start
@@ -679,7 +679,7 @@ class Edit(Window):
 	editAPIVersion=0
 	editAPIUnicode=True
 	useITextDocumentSupport=False
-	editValueUnit=textHandler.UNIT_LINE
+	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
 		if self.editAPIVersion>1 and self.useITextDocumentSupport and self.ITextDocumentObject:
@@ -715,7 +715,7 @@ class Edit(Window):
 	def event_caret(self):
 		global selOffsetsAtLastCaretEvent
 		#Fetching formatting and calculating word offsets needs to move the caret, so try to ignore these events
-		selOffsets=self.makeTextInfo(textHandler.POSITION_SELECTION).bookmark
+		selOffsets=self.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
 		if selOffsets==selOffsetsAtLastCaretEvent:
 			return
 		selOffsetsAtLastCaretEvent=selOffsets

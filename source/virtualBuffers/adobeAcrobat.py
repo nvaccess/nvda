@@ -4,7 +4,7 @@ import NVDAObjects.IAccessible
 import winUser
 import IAccessibleHandler
 from logHandler import log
-import textHandler
+import textInfos
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 	stdNamesToRoles = {
@@ -49,7 +49,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
-		newAttrs=textHandler.ControlField()
+		newAttrs=textInfos.ControlField()
 		newAttrs.update(attrs)
 		newAttrs['role']=role
 		newAttrs['states']=states
