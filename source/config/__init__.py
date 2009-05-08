@@ -48,6 +48,7 @@ outputDevice = string(default=default)
 		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
+		useSpellingFunctionality = boolean(default=true)
 
 # Braille settings
 [braille]
@@ -65,7 +66,6 @@ outputDevice = string(default=default)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
-		sayStateFirst = boolean(default=False)
 	[[progressBarUpdates]]
 		reportBackgroundProgressBars = boolean(default=false)
 		#output modes are beep, speak, both, or off

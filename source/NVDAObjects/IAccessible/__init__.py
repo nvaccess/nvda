@@ -7,7 +7,7 @@
 from comtypes import COMError
 import os
 import tones
-import textHandler
+import textInfos.offsets
 import time
 import IAccessibleHandler
 import JABHandler
@@ -42,7 +42,7 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
-class IA2TextTextInfo(NVDAObjectTextInfo):
+class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
@@ -55,7 +55,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		except:
 			raise NotImplementedError
-		point=textHandler.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
 		return point
 
 	def _get_unit_mouseChunk(self):
@@ -132,8 +132,8 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
 		except COMError:
 			log.debugWarning("could not get attributes",exc_info=True)
-			return textHandler.FormatField(),(self._startOffset,self._endOffset)
-		formatField=textHandler.FormatField()
+			return textInfos.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textInfos.FormatField()
 		if not attribsString and offset>0:
 			try:
 				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
@@ -308,7 +308,12 @@ the NVDAObject for IAccessible
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
-		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
+		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
+		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
+		if normalizedWindowClassName!=windowClassName:
+			keys.insert(1,(normalizedWindowClassName,role))
+			keys.append((normalizedWindowClassName,None))
+		for key in keys: 
 			newCls=None
 			classString=_staticMap.get(key,None)
 			if classString and classString.find('.')>0:
@@ -339,19 +344,10 @@ the NVDAObject for IAccessible
 			return clsList,kwargs
 
 	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
-		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
-			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,x,y)
-		else:
-			res=None
+	def objectFromPoint(cls,x,y,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
 		if not res:
-			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-		if not res:
-			res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,IAccessibleHandler.OBJID_CLIENT,0)
-		if not res:
-			return
-		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
-			return oldNVDAObject
+			return None
 		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	@classmethod
@@ -902,11 +898,6 @@ the NVDAObject for IAccessible
 		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_CARET:
 			return
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if globalVars.caretMovesReviewCursor:
-				try:
-					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
-				except (NotImplementedError, RuntimeError):
-					pass
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
@@ -927,10 +918,10 @@ the NVDAObject for IAccessible
 			if not caretInDocument:
 				return
 			try:
-				info=self.makeTextInfo(textHandler.POSITION_CARET)
+				info=self.makeTextInfo(textInfos.POSITION_CARET)
 			except RuntimeError:
 				return
-			info.expand(textHandler.UNIT_CHARACTER)
+			info.expand(textInfos.UNIT_CHARACTER)
 			try:
 				char=ord(info.text)
 			except:
@@ -1069,7 +1060,7 @@ class Dialog(IAccessible):
 			#However, graphics, static text, separators and Windows are ok.
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 				continue
-			childText=child.makeTextInfo(textHandler.POSITION_ALL).text
+			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
 				childText=child.basicText
 			textList.append(childText)
@@ -1245,6 +1236,7 @@ _staticMap={
 	("TWizardForm",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"SysLink",
 	("#32771",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
+	("TaskSwitcherWnd",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",IAccessibleHandler.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",

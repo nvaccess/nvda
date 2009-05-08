@@ -18,7 +18,7 @@ import config
 import tones
 from synthDriverHandler import *
 import re
-import textHandler
+import textInfos
 import characterSymbols
 import queueHandler
 import speechDictHandler
@@ -174,7 +174,10 @@ def _speakSpellingGen(text):
 			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		getSynth().speakText(char,index=index)
+		if len(char) == 1 and config.conf["speech"][getSynth().name]["useSpellingFunctionality"]:
+			getSynth().speakCharacter(char,index=index)
+		else:
+			getSynth().speakText(char,index=index)
 		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
 			getSynth().pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
@@ -243,7 +246,7 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role==controlTypes.ROLE_EDITABLETEXT or controlTypes.STATE_EDITABLE in obj.states))
+	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
@@ -258,14 +261,14 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
 		try:
-			info=obj.makeTextInfo(textHandler.POSITION_SELECTION)
+			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
-				info.expand(textHandler.UNIT_READINGCHUNK)
+				info.expand(textInfos.UNIT_READINGCHUNK)
 				speakTextInfo(info,reason=reason)
 		except:
-			newInfo=obj.makeTextInfo(textHandler.POSITION_ALL)
+			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,reason=reason)
 
 
@@ -300,9 +303,9 @@ def speakSelectionMessage(message,text):
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
-	@type oldInfo: L{TextHandler.TextInfo}
+	@type oldInfo: L{textInfos.TextInfo}
 	@param newInfo: a TextInfo instance representing what the selection is now
-	@type newInfo: L{textHandler.TextInfo}
+	@type newInfo: L{textInfos.TextInfo}
 	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
 	@type generalize: boolean
 	"""
@@ -394,6 +397,7 @@ silentRolesOnFocus=set([
 silentValuesForRoles=set([
 	controlTypes.ROLE_CHECKBOX,
 	controlTypes.ROLE_RADIOBUTTON,
+	controlTypes.ROLE_LINK,
 ])
 
 def processPositiveStates(role, states, reason, positiveStates):
@@ -441,7 +445,9 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleSymbols=False,reason=REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=False,reason=REASON_QUERY,index=None):
+	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
+		extraDetail=True
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -450,11 +456,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
 	#Make a new controlFieldStack and formatField from the textInfo's initialFields
 	newControlFieldStack=[]
-	newFormatField=textHandler.FormatField()
+	newFormatField=textInfos.FormatField()
 	textWithFields=info.getTextWithFields(formatConfig)
 	initialFields=[]
 	for field in textWithFields:
-		if isinstance(field,textHandler.FieldCommand) and field.command=="controlStart":
+		if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 			initialFields.append(field.field)
 		else:
 			break
@@ -462,7 +468,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		del textWithFields[0:len(initialFields)]
 	endFieldCount=0
 	for field in reversed(textWithFields):
-		if isinstance(field,textHandler.FieldCommand) and field.command=="controlEnd":
+		if isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
 			endFieldCount+=1
 		else:
 			break
@@ -470,13 +476,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 		del textWithFields[0-endFieldCount:]
 	if len(textWithFields)>0:
 		firstField=textWithFields[0]
-		if isinstance(firstField,textHandler.FieldCommand) and firstField.command=="formatChange":
+		if isinstance(firstField,textInfos.FieldCommand) and firstField.command=="formatChange":
 			initialFields.append(firstField.field)
 			del textWithFields[0]
 	for field in initialFields:
-		if isinstance(field,textHandler.ControlField):
+		if isinstance(field,textInfos.ControlField):
 			newControlFieldStack.append(field)
-		elif isinstance(field,textHandler.FormatField):
+		elif isinstance(field,textInfos.FormatField):
 			newFormatField.update(field)
 		else:
 			raise ValueError("unknown field: %s"%field)
@@ -518,13 +524,17 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 			textListBlankLen+=1
 		textList.append(text)
 
-	if handleSymbols:
+	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
 		text=" ".join(textList)
 		if text:
 			speakText(text,index=index)
 		text=info.text
 		if len(text)==1:
-			speakSpelling(text)
+			if unit==textInfos.UNIT_CHARACTER:
+				speakSpelling(text)
+			else:
+				text=processSymbol(text)
+				speakText(text)
 		else:
 			speakText(text,index=index)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
@@ -547,13 +557,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 				else:
 					relativeTextList.append(text)
 					lastTextOkToMerge=True
-		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlStart":
+		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlStart":
 			lastTextOkToMerge=False
 			text=getControlFieldSpeech(commandList[count].field,"start_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
-		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="controlEnd":
+		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlEnd":
 			lastTextOkToMerge=False
 			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",formatConfig,extraDetail,reason=reason)
 			if text:
@@ -561,7 +571,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,extraDetail=False,handleS
 			del newControlFieldStack[-1]
 			if commonFieldCount>len(newControlFieldStack):
 				commonFieldCount=len(newControlFieldStack)
-		elif isinstance(commandList[count],textHandler.FieldCommand) and commandList[count].command=="formatChange":
+		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="formatChange":
 			text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,formatConfig,extraDetail=extraDetail)
 			if text:
 				relativeTextList.append(text)

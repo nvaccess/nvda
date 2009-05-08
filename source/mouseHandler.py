@@ -91,7 +91,7 @@ def executeMouseMoveEvent(x,y):
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 	oldMouseObject=api.getMouseObject()
-	mouseObject=desktopObject.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
+	mouseObject=desktopObject.objectFromPoint(x,y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
 	if not mouseObject:

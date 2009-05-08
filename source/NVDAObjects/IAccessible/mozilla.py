@@ -7,7 +7,7 @@
 import IAccessibleHandler
 import controlTypes
 from . import IAccessible
-import textHandler
+import textInfos
 
 class Mozilla(IAccessible):
 
@@ -68,5 +68,5 @@ class Label(Mozilla):
 	def _get_name(self):
 		name=super(Label,self)._get_name()
 		if not name or name=="":
-			name=self.makeTextInfo(textHandler.POSITION_ALL).text
+			name=self.makeTextInfo(textInfos.POSITION_ALL).text
 		return name

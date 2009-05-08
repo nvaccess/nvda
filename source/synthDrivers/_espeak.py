@@ -163,17 +163,20 @@ def _execWhenDone(func, *args, **kwargs):
 	else:
 		func(*args, **kwargs)
 
-def _speak(msg, index=None):
+def _speak(msg, index=None,isCharacter=False):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
-	return espeakDLL.espeak_Synth(unicode(msg),0,0,0,0,espeakCHARS_WCHAR,byref(uniqueID),index)
+	flags = espeakCHARS_WCHAR 
+	if isCharacter: 
+		flags |= espeakSSML
+		msg = "<say-as type=spell-out>%s</say-as>"%msg
 
-def speak(msg, index=None, wait=False):
+	return espeakDLL.espeak_Synth(unicode(msg),0,0,0,0,flags,byref(uniqueID),index)
+
+def speak(msg, index=None,isCharacter=False):
 	global bgQueue
-	_execWhenDone(_speak, msg, index, mustBeAsync=True)
-	if wait:
-		bgQueue.join()
+	_execWhenDone(_speak, msg, index, isCharacter, mustBeAsync=True)
 
 def stop():
 	global isSpeaking, bgQueue

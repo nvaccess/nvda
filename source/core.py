@@ -137,6 +137,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	JABHandler.initialize()
+	import winConsoleHandler
+	log.debug("Initializing winConsole support")
+	winConsoleHandler.initialize()
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
 	IAccessibleHandler.initialize()
@@ -202,6 +205,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		IAccessibleHandler.terminate()
 	except:
 		log.error("Error terminating IAccessible support",exc_info=True)
+	log.debug("Terminating winConsole support")
+	try:
+		winConsoleHandler.terminate()
+	except:
+		log.error("Error terminating winConsole support",exc_info=True)
 	log.debug("Terminating Java Access Bridge support")
 	try:
 		JABHandler.terminate()

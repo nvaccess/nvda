@@ -6,7 +6,7 @@
 
 import winUser
 import controlTypes
-import textHandler
+import textInfos
 import api
 import eventHandler
 import IAccessibleHandler
@@ -44,7 +44,7 @@ class AppModule(_default.AppModule):
 		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
 			obj.useITextDocumentSupport=True
-			obj.editValueUnit=textHandler.UNIT_STORY
+			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()

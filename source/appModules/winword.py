@@ -7,7 +7,7 @@
 import comtypes.client
 import comtypes.automation
 import controlTypes
-import textHandler
+import textInfos
 import winUser
 import IAccessibleHandler
 import NVDAObjects.IAccessible
@@ -39,12 +39,12 @@ class SpellCheckErrorField(WordDocument):
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
-		info=self.makeTextInfo(textHandler.POSITION_CARET)
-		info.move(textHandler.UNIT_WORD,-1,endPoint="start")
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.move(textInfos.UNIT_WORD,-1,endPoint="start")
 		try:
 			error=info._rangeObj.spellingErrors[1].text
 		except:
-			info.expand(textHandler.UNIT_STORY)
+			info.expand(textInfos.UNIT_STORY)
 			speech.speakText(info.text)
 			return
 		speech.speakText(error)
