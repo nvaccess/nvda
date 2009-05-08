@@ -509,9 +509,6 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.descriptionCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object &descriptions"))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
 		settingsSizer.Add(self.descriptionCheckBox,border=10,flag=wx.BOTTOM)
-		self.stateFirstCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Say object &state first"))
-		self.stateFirstCheckBox.SetValue(config.conf["presentation"]["sayStateFirst"])
-		settingsSizer.Add(self.stateFirstCheckBox,border=10,flag=wx.BOTTOM)
 		progressSizer=wx.BoxSizer(wx.HORIZONTAL)
 		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output"))
 		progressSizer.Add(progressLabel)
@@ -538,7 +535,6 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
-		config.conf["presentation"]["sayStateFirst"]=self.stateFirstCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
