@@ -258,6 +258,17 @@ class CursorManager(baseObject.ScriptableObject):
 		):
 			self.bindKey_runtime(keyName, scriptName)
 
+class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
+	"""For use with L{ReviewCursorManager}.
+	Overrides L{updateCaret} and L{updateSelection} to use the selection property on the underlying object.
+	"""
+
+	def updateCaret(self):
+		self.obj.selection = self
+
+	def updateSelection(self):
+		self.obj.selection = self
+
 class ReviewCursorManager(CursorManager):
 	"""
 	A cursor manager used for review.
@@ -267,7 +278,9 @@ class ReviewCursorManager(CursorManager):
 
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()
-		self._selection = super(ReviewCursorManager, self).makeTextInfo(textInfos.POSITION_FIRST)
+		realTI = self.TextInfo
+		self.TextInfo = type("ReviewCursorManager_%s" % realTI.__name__, (_ReviewCursorManagerTextInfo, realTI), {})
+		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
 
 	def makeTextInfo(self, position):
 		if position == textInfos.POSITION_SELECTION:
