@@ -4,6 +4,7 @@
 import globalVars
 import _winreg
 import os
+import sys
 from cStringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
@@ -205,3 +206,20 @@ def getUserDefaultConfigPath():
 		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
 			return u'%s\\nvda'%buf.value
 	return u'.\\'
+
+RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+
+def getStartAfterLogon():
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
+		val = _winreg.QueryValueEx(k, u"nvda")[0]
+		return os.stat(val) == os.stat(sys.argv[0])
+	except (WindowsError, OSError):
+		return False
+
+def setStartAfterLogon(enable):
+	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
+	if enable:
+		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
+	else:
+		_winreg.DeleteValue(k, u"nvda")
