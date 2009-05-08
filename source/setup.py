@@ -115,6 +115,7 @@ setup(
 		"version": "0.0.0.0",
 		"product_version": version,
 		"copyright": copyright,
+		"uac_info": ("requireAdministrator", False),
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
