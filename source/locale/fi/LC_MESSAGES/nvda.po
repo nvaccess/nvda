@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2901\n"
+"Project-Id-Version: r2910\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-05-02 10:32+0300\n"
+"PO-Revision-Date: 2009-05-08 13:19+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:895
+#: IAccessibleHandler.py:894
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
-#: IAccessibleHandler.py:901
+#: IAccessibleHandler.py:900
 msgid "Inaccessible to NVDA"
 msgstr "Saavuttamaton NVDA:lle"
 
@@ -33,15 +33,15 @@ msgstr "%d prosenttia"
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: NVDAObjects\window\edit.py:531
+#: NVDAObjects\window\edit.py:528
 msgid "unknown"
 msgstr "tuntematon"
 
-#: NVDAObjects\window\edit.py:533
+#: NVDAObjects\window\edit.py:530
 msgid "%s embedded object"
 msgstr "%s upotettu objekti"
 
-#: NVDAObjects\window\edit.py:535 controlTypes.py:236
+#: NVDAObjects\window\edit.py:532 controlTypes.py:236
 msgid "embedded object"
 msgstr "upotettu objekti"
 
@@ -69,8 +69,8 @@ msgstr "kautta"
 msgid "has formula"
 msgstr "sisältää kaavan"
 
-#: NVDAObjects\window\winword.py:336 NVDAObjects\window\winword.py:347
-#: NVDAObjects\window\winword.py:358 NVDAObjects\window\winword.py:369
+#: NVDAObjects\window\winword.py:337 NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:359 NVDAObjects\window\winword.py:370
 msgid "not in table"
 msgstr "ei taulukossa"
 
@@ -1547,7 +1547,7 @@ msgstr "otsikko viisi"
 msgid "heading 6"
 msgstr "otsikko kuusi"
 
-#: controlTypes.py:219 textHandler.py:136
+#: controlTypes.py:219 textInfos\__init__.py:114
 msgid "paragraph"
 msgstr "kappale"
 
@@ -1723,7 +1723,7 @@ msgstr "vipupainike"
 msgid "border"
 msgstr "reuna"
 
-#: controlTypes.py:265 textHandler.py:133
+#: controlTypes.py:265 textInfos\__init__.py:111
 msgid "character"
 msgstr "merkki"
 
@@ -1839,7 +1839,7 @@ msgstr "salasanan syöttökenttä"
 msgid "font chooser"
 msgstr "fontinvalitsin"
 
-#: controlTypes.py:295 textHandler.py:135
+#: controlTypes.py:295 textInfos\__init__.py:113
 msgid "line"
 msgstr "rivi"
 
@@ -2589,204 +2589,200 @@ msgstr "Lue objektien p&aikkatiedot"
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui\settingsDialogs.py:512
-msgid "Say object &state first"
-msgstr "Lue &ensin objektin tila"
-
-#: gui\settingsDialogs.py:516
+#: gui\settingsDialogs.py:513
 msgid "Progress &bar output"
 msgstr "E&distymispalkit"
 
-#: gui\settingsDialogs.py:519
+#: gui\settingsDialogs.py:516
 msgid "Progress bar output"
 msgstr "Edistymispalkkien päivitykset"
 
-#: gui\settingsDialogs.py:528
+#: gui\settingsDialogs.py:525
 msgid "Report background progress bars"
 msgstr "Ilmoita taustalla olevien edistymispalkkien päivitykset"
 
-#: gui\settingsDialogs.py:547
+#: gui\settingsDialogs.py:543
 msgid "virtual buffers"
 msgstr "Näennäispuskurit"
 
-#: gui\settingsDialogs.py:550
+#: gui\settingsDialogs.py:546
 msgid "&Maximum number of characters on one line"
 msgstr "Merkk&ien enimmäismäärä rivillä"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:551
 msgid "&Number of lines per page"
 msgstr "R&ivien enimmäismäärä sivulla"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:556
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua (Firefox 3)"
 
-#: gui\settingsDialogs.py:564
+#: gui\settingsDialogs.py:560
 msgid "Report &virtual presentation on focus changes"
 msgstr "Ilmoita koh&distuksen muuttuessa"
 
-#: gui\settingsDialogs.py:567
+#: gui\settingsDialogs.py:563
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen kohdistustila kohdistusmuutoksille"
 
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:566
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen kohdistustila kohdistimen liikuttamiseen"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:569
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise kohdistus- ja selaustilat äänimerkillä"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:597
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:600
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
-#: gui\settingsDialogs.py:607
+#: gui\settingsDialogs.py:603
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:610
+#: gui\settingsDialogs.py:606
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:609
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:612
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:619
+#: gui\settingsDialogs.py:615
 msgid "Report st&yle"
 msgstr "Ilmoita tyylim&ääritteet"
 
-#: gui\settingsDialogs.py:622
+#: gui\settingsDialogs.py:618
 msgid "Report spelling errors"
 msgstr "Ilmoita kirjoitusv&irheet"
 
-#: gui\settingsDialogs.py:625
+#: gui\settingsDialogs.py:621
 msgid "Report &pages"
 msgstr "Ilmoita sivunume&rot"
 
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:624
 msgid "Report &line numbers"
 msgstr "Ilmoita rivi&numerot"
 
-#: gui\settingsDialogs.py:631
+#: gui\settingsDialogs.py:627
 msgid "Report &tables"
 msgstr "Ilmoita t&aulukot"
 
-#: gui\settingsDialogs.py:634
+#: gui\settingsDialogs.py:630
 msgid "Report &links"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:633
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:636
 msgid "Report l&ists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:643
+#: gui\settingsDialogs.py:639
 msgid "Report block &quotes"
 msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
 
-#: gui\settingsDialogs.py:670
+#: gui\settingsDialogs.py:666
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:673
+#: gui\settingsDialogs.py:669
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:672
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:679
+#: gui\settingsDialogs.py:675
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:682
+#: gui\settingsDialogs.py:678
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:684
+#: gui\settingsDialogs.py:680
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:702
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:705
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:710
+#: gui\settingsDialogs.py:706
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:711
+#: gui\settingsDialogs.py:707
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:712
+#: gui\settingsDialogs.py:708
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:709
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:716
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:723
+#: gui\settingsDialogs.py:719
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:726
+#: gui\settingsDialogs.py:722
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:793
+#: gui\settingsDialogs.py:789
 msgid "Braille Settings"
 msgstr "Pistenäytön asetukset"
 
-#: gui\settingsDialogs.py:797
+#: gui\settingsDialogs.py:793
 msgid "Braille &display"
 msgstr "Piste&näyttö"
 
-#: gui\settingsDialogs.py:811
+#: gui\settingsDialogs.py:807
 msgid "Translation &table"
 msgstr "Piste&taulukko"
 
-#: gui\settingsDialogs.py:823
+#: gui\settingsDialogs.py:819
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:824
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumistaajuus (ms)"
 
-#: gui\settingsDialogs.py:836
+#: gui\settingsDialogs.py:832
 msgid "Message timeout (sec)"
 msgstr "&Ilmoitusten aikakatkaisu (sek)"
 
-#: gui\settingsDialogs.py:849
+#: gui\settingsDialogs.py:845
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
-#: gui\settingsDialogs.py:849
+#: gui\settingsDialogs.py:845
 msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
@@ -3193,7 +3189,7 @@ msgstr "Puheääni"
 msgid "variant"
 msgstr "muunnelma"
 
-#: textHandler.py:134
+#: textInfos\__init__.py:112
 msgid "word"
 msgstr "sana"
 
